@@ -88,27 +88,27 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_DefinitionKind, &_tc_TAO_tc_CORBA_DefinitionKind)
 TAO_NAMESPACE_END
-CORBA::IRObject_ptr CORBA::IRObject::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_IRObject_ptr CORBA_IRObject::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::IRObject::_nil ();
+    return CORBA_IRObject::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/IRObject:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::IRObject::_nil ());
+  ACE_CHECK_RETURN (CORBA_IRObject::_nil ());
   if (is_a == 0)
-    return CORBA::IRObject::_nil ();
-  return CORBA::IRObject::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_IRObject::_nil ();
+  return CORBA_IRObject::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::IRObject_ptr CORBA::IRObject::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_IRObject_ptr CORBA_IRObject::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::IRObject::_nil ();
+    return CORBA_IRObject::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_IRObject_Stub_Factory_function_pointer != 0)
@@ -117,31 +117,31 @@ CORBA::IRObject_ptr CORBA::IRObject::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::IRObject(stub);
+  return new CORBA_IRObject(stub);
 }
 
-CORBA::IRObject_ptr 
-CORBA::IRObject::_duplicate (CORBA::IRObject_ptr obj)
+CORBA_IRObject_ptr 
+CORBA_IRObject::_duplicate (CORBA_IRObject_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::DefinitionKind CORBA::IRObject::def_kind (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::DefinitionKind CORBA_IRObject::def_kind (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::DefinitionKind _tao_retval = (CORBA::DefinitionKind)0;
+ CORBA::DefinitionKind _tao_retval = (CORBA::DefinitionKind)0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -166,7 +166,7 @@ CORBA::DefinitionKind CORBA::IRObject::def_kind (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -176,15 +176,15 @@ CORBA::DefinitionKind CORBA::IRObject::def_kind (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::IRObject::destroy (
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_IRObject::destroy (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -193,7 +193,7 @@ void CORBA::IRObject::destroy (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -218,7 +218,7 @@ void CORBA::IRObject::destroy (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -227,7 +227,7 @@ void CORBA::IRObject::destroy (
   
 }
 
-CORBA::Boolean CORBA::IRObject::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_IRObject::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
@@ -237,7 +237,7 @@ CORBA::Boolean CORBA::IRObject::_is_a (const CORBA::Char *value, CORBA::Environm
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::IRObject::_interface_repository_id (void) const
+const char* CORBA_IRObject::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/IRObject:1.0";
 }
@@ -248,7 +248,7 @@ static const CORBA::Long _oc_CORBA_IRObject[] =
   31, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4952), ACE_NTOHL (0x4f626a65), ACE_NTOHL (0x63743a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/IRObject:1.0
   9, ACE_NTOHL (0x49524f62), ACE_NTOHL (0x6a656374), ACE_NTOHL (0x0),  // name = IRObject
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_IRObject (CORBA::tk_objref, sizeof (_oc_CORBA_IRObject), (char *) &_oc_CORBA_IRObject, 0, sizeof (CORBA::IRObject));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_IRObject (CORBA::tk_objref, sizeof (_oc_CORBA_IRObject), (char *) &_oc_CORBA_IRObject, 0, sizeof (CORBA_IRObject));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_IRObject, &_tc_TAO_tc_CORBA_IRObject)
@@ -266,27 +266,27 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_VersionSpec, &_tc_TAO_tc_CORBA_VersionSpec)
 TAO_NAMESPACE_END
-CORBA::Contained_ptr CORBA::Contained::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_Contained_ptr CORBA_Contained::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::Contained::_nil ();
+    return CORBA_Contained::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/Contained:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Contained::_nil ());
+  ACE_CHECK_RETURN (CORBA_Contained::_nil ());
   if (is_a == 0)
-    return CORBA::Contained::_nil ();
-  return CORBA::Contained::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_Contained::_nil ();
+  return CORBA_Contained::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::Contained_ptr CORBA::Contained::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_Contained_ptr CORBA_Contained::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::Contained::_nil ();
+    return CORBA_Contained::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_Contained_Stub_Factory_function_pointer != 0)
@@ -295,22 +295,22 @@ CORBA::Contained_ptr CORBA::Contained::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::Contained(stub);
+  return new CORBA_Contained(stub);
 }
 
-CORBA::Contained_ptr 
-CORBA::Contained::_duplicate (CORBA::Contained_ptr obj)
+CORBA_Contained_ptr 
+CORBA_Contained::_duplicate (CORBA_Contained_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-char * CORBA::Contained::id (
-    CORBA::Environment &ACE_TRY_ENV
+char * CORBA_Contained::id (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -319,7 +319,7 @@ char * CORBA::Contained::id (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -344,7 +344,7 @@ char * CORBA::Contained::id (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -354,16 +354,16 @@ char * CORBA::Contained::id (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::Contained::id (
+void CORBA_Contained::id (
     const char * id,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -372,7 +372,7 @@ void CORBA::Contained::id (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -391,7 +391,7 @@ void CORBA::Contained::id (
     if (!(
           (_tao_out << id)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -403,7 +403,7 @@ void CORBA::Contained::id (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -412,11 +412,11 @@ void CORBA::Contained::id (
   
 }
 
-char * CORBA::Contained::name (
-    CORBA::Environment &ACE_TRY_ENV
+char * CORBA_Contained::name (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -425,7 +425,7 @@ char * CORBA::Contained::name (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -450,7 +450,7 @@ char * CORBA::Contained::name (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -460,16 +460,16 @@ char * CORBA::Contained::name (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::Contained::name (
+void CORBA_Contained::name (
     const char * name,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -478,7 +478,7 @@ void CORBA::Contained::name (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -497,7 +497,7 @@ void CORBA::Contained::name (
     if (!(
           (_tao_out << name)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -509,7 +509,7 @@ void CORBA::Contained::name (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -518,11 +518,11 @@ void CORBA::Contained::name (
   
 }
 
-char * CORBA::Contained::version (
-    CORBA::Environment &ACE_TRY_ENV
+char * CORBA_Contained::version (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -531,7 +531,7 @@ char * CORBA::Contained::version (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -556,7 +556,7 @@ char * CORBA::Contained::version (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -566,16 +566,16 @@ char * CORBA::Contained::version (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::Contained::version (
+void CORBA_Contained::version (
     const char * version,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -584,7 +584,7 @@ void CORBA::Contained::version (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -603,7 +603,7 @@ void CORBA::Contained::version (
     if (!(
           (_tao_out << version)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -615,7 +615,7 @@ void CORBA::Contained::version (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -624,20 +624,20 @@ void CORBA::Contained::version (
   
 }
 
-CORBA::Container_ptr CORBA::Contained::defined_in (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_Container_ptr CORBA_Contained::defined_in (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::Container_ptr _tao_retval = CORBA::Container::_nil ();
+  CORBA_Container_ptr _tao_retval = CORBA_Container::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -662,7 +662,7 @@ CORBA::Container_ptr CORBA::Contained::defined_in (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -672,15 +672,15 @@ CORBA::Container_ptr CORBA::Contained::defined_in (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-char * CORBA::Contained::absolute_name (
-    CORBA::Environment &ACE_TRY_ENV
+char * CORBA_Contained::absolute_name (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -689,7 +689,7 @@ char * CORBA::Contained::absolute_name (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -714,7 +714,7 @@ char * CORBA::Contained::absolute_name (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -724,24 +724,24 @@ char * CORBA::Contained::absolute_name (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::Repository_ptr CORBA::Contained::containing_repository (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_Repository_ptr CORBA_Contained::containing_repository (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::Repository_ptr _tao_retval = CORBA::Repository::_nil ();
+  CORBA_Repository_ptr _tao_retval = CORBA_Repository::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -766,7 +766,7 @@ CORBA::Repository_ptr CORBA::Contained::containing_repository (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -776,7 +776,7 @@ CORBA::Repository_ptr CORBA::Contained::containing_repository (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -822,25 +822,25 @@ static const CORBA::Long _oc_CORBA_Contained_Description[] =
   CORBA::tk_any,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_Contained_Description (CORBA::tk_struct, sizeof (_oc_CORBA_Contained_Description), (char *) &_oc_CORBA_Contained_Description, 0, sizeof (CORBA::Contained::Description));
-CORBA::TypeCode_ptr CORBA::Contained::_tc_Description = &_tc_TAO_tc_CORBA_Contained_Description;
+static CORBA::TypeCode _tc_TAO_tc_CORBA_Contained_Description (CORBA::tk_struct, sizeof (_oc_CORBA_Contained_Description), (char *) &_oc_CORBA_Contained_Description, 0, sizeof (CORBA_Contained::Description));
+CORBA::TypeCode_ptr CORBA_Contained::_tc_Description = &_tc_TAO_tc_CORBA_Contained_Description;
 
-CORBA::Contained::Description * CORBA::Contained::describe (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_Contained::Description * CORBA_Contained::describe (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::Contained::Description* _tao_retval = 0;
+  CORBA_Contained::Description* _tao_retval = 0;
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::Contained::Description, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_Contained::Description, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "describe",
@@ -863,7 +863,7 @@ CORBA::Contained::Description * CORBA::Contained::describe (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -873,18 +873,18 @@ CORBA::Contained::Description * CORBA::Contained::describe (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::Contained::move (
-    CORBA::Container_ptr new_container,
+void CORBA_Contained::move (
+    CORBA_Container_ptr new_container,
     const char * new_name,
     const char * new_version,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -893,7 +893,7 @@ void CORBA::Contained::move (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -914,7 +914,7 @@ void CORBA::Contained::move (
           (_tao_out << new_name) &&
           (_tao_out << new_version)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -926,7 +926,7 @@ void CORBA::Contained::move (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -935,7 +935,7 @@ void CORBA::Contained::move (
   
 }
 
-CORBA::Boolean CORBA::Contained::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_Contained::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
@@ -946,7 +946,7 @@ CORBA::Boolean CORBA::Contained::_is_a (const CORBA::Char *value, CORBA::Environ
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::Contained::_interface_repository_id (void) const
+const char* CORBA_Contained::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Contained:1.0";
 }
@@ -957,7 +957,7 @@ static const CORBA::Long _oc_CORBA_Contained[] =
   32, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f436f), ACE_NTOHL (0x6e746169), ACE_NTOHL (0x6e65643a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/Contained:1.0
   10, ACE_NTOHL (0x436f6e74), ACE_NTOHL (0x61696e65), ACE_NTOHL (0x64000000),  // name = Contained
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_Contained (CORBA::tk_objref, sizeof (_oc_CORBA_Contained), (char *) &_oc_CORBA_Contained, 0, sizeof (CORBA::Contained));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_Contained (CORBA::tk_objref, sizeof (_oc_CORBA_Contained), (char *) &_oc_CORBA_Contained, 0, sizeof (CORBA_Contained));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Contained, &_tc_TAO_tc_CORBA_Contained)
@@ -972,15 +972,15 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_allocate_buffer (CORBA::ULong length)
   {
-    CORBA::InterfaceDef **tmp = 0;
+    CORBA_InterfaceDef **tmp = 0;
     tmp = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (length);
     
     if (this->buffer_ != 0)
     {
-      CORBA::InterfaceDef **old = ACE_reinterpret_cast (CORBA::InterfaceDef**, this->buffer_);
+      CORBA_InterfaceDef **old = ACE_reinterpret_cast (CORBA_InterfaceDef**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         if (!this->release_)
-          tmp[i] = CORBA::InterfaceDef::_duplicate (old[i]);
+          tmp[i] = CORBA_InterfaceDef::_duplicate (old[i]);
         else
           tmp[i] = old[i];
         
@@ -996,11 +996,11 @@ TAO_NAMESPACE_END
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    CORBA::InterfaceDef **tmp = ACE_reinterpret_cast (CORBA::InterfaceDef**, this->buffer_);
+    CORBA_InterfaceDef **tmp = ACE_reinterpret_cast (CORBA_InterfaceDef**, this->buffer_);
     for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       CORBA::release (tmp[i]);
-      tmp[i] = CORBA::InterfaceDef::_nil ();
+      tmp[i] = CORBA_InterfaceDef::_nil ();
     }
     _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::freebuf (tmp);
     this->buffer_ = 0;
@@ -1014,12 +1014,12 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
   {
-    CORBA::InterfaceDef **tmp = ACE_reinterpret_cast (CORBA::InterfaceDef**, this->buffer_);
+    CORBA_InterfaceDef **tmp = ACE_reinterpret_cast (CORBA_InterfaceDef**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
     {
       CORBA::release (tmp[i]);
-      tmp[i] = CORBA::InterfaceDef::_nil ();
+      tmp[i] = CORBA_InterfaceDef::_nil ();
     }
   }
   void 
@@ -1029,14 +1029,14 @@ TAO_NAMESPACE_END
       CORBA_Environment &ACE_TRY_ENV
     )
   {
-    CORBA::InterfaceDef **tmp = ACE_static_cast (CORBA::InterfaceDef**, target);
-    *tmp = CORBA::InterfaceDef::_narrow (src, ACE_TRY_ENV);
+    CORBA_InterfaceDef **tmp = ACE_static_cast (CORBA_InterfaceDef**, target);
+    *tmp = CORBA_InterfaceDef::_narrow (src, ACE_TRY_ENV);
   }
 
   CORBA_Object*
   _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_upcast (void *src) const
   {
-    CORBA::InterfaceDef **tmp = ACE_static_cast (CORBA::InterfaceDef**, src);
+    CORBA_InterfaceDef **tmp = ACE_static_cast (CORBA_InterfaceDef**, src);
     return *tmp;
   }
   
@@ -1049,39 +1049,39 @@ TAO_NAMESPACE_END
 #define _CORBA_INTERFACEDEFSEQ_CS_
 
 // *************************************************************
-// CORBA::InterfaceDefSeq
+// CORBA_InterfaceDefSeq
 // *************************************************************
 
-CORBA::InterfaceDefSeq::CORBA_InterfaceDefSeq (void)
+CORBA_InterfaceDefSeq::CORBA_InterfaceDefSeq (void)
 {}
-CORBA::InterfaceDefSeq::CORBA_InterfaceDefSeq (CORBA::ULong max) // uses max size
+CORBA_InterfaceDefSeq::CORBA_InterfaceDefSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::InterfaceDef,CORBA::InterfaceDef_var>
+  TAO_Unbounded_Object_Sequence<CORBA_InterfaceDef,CORBA_InterfaceDef_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::InterfaceDefSeq::CORBA_InterfaceDefSeq (CORBA::ULong max, CORBA::ULong length, CORBA::InterfaceDef_ptr *buffer, CORBA::Boolean release)
+CORBA_InterfaceDefSeq::CORBA_InterfaceDefSeq (CORBA::ULong max, CORBA::ULong length, CORBA_InterfaceDef_ptr *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::InterfaceDef,CORBA::InterfaceDef_var>
+  TAO_Unbounded_Object_Sequence<CORBA_InterfaceDef,CORBA_InterfaceDef_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::InterfaceDefSeq::CORBA_InterfaceDefSeq (const CORBA_InterfaceDefSeq &seq) // copy ctor
+CORBA_InterfaceDefSeq::CORBA_InterfaceDefSeq (const CORBA_InterfaceDefSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::InterfaceDef,CORBA::InterfaceDef_var>
+  TAO_Unbounded_Object_Sequence<CORBA_InterfaceDef,CORBA_InterfaceDef_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::InterfaceDefSeq::~CORBA_InterfaceDefSeq (void) // dtor
+CORBA_InterfaceDefSeq::~CORBA_InterfaceDefSeq (void) // dtor
 {}
 
 
@@ -1104,7 +1104,7 @@ static const CORBA::Long _oc_CORBA_InterfaceDefSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_InterfaceDefSeq (CORBA::tk_alias, sizeof (_oc_CORBA_InterfaceDefSeq), (char *) &_oc_CORBA_InterfaceDefSeq, 0, sizeof (CORBA::InterfaceDefSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_InterfaceDefSeq (CORBA::tk_alias, sizeof (_oc_CORBA_InterfaceDefSeq), (char *) &_oc_CORBA_InterfaceDefSeq, 0, sizeof (CORBA_InterfaceDefSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_InterfaceDefSeq, &_tc_TAO_tc_CORBA_InterfaceDefSeq)
@@ -1119,15 +1119,15 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_allocate_buffer (CORBA::ULong length)
   {
-    CORBA::ValueDef **tmp = 0;
+    CORBA_ValueDef **tmp = 0;
     tmp = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (length);
     
     if (this->buffer_ != 0)
     {
-      CORBA::ValueDef **old = ACE_reinterpret_cast (CORBA::ValueDef**, this->buffer_);
+      CORBA_ValueDef **old = ACE_reinterpret_cast (CORBA_ValueDef**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         if (!this->release_)
-          tmp[i] = CORBA::ValueDef::_duplicate (old[i]);
+          tmp[i] = CORBA_ValueDef::_duplicate (old[i]);
         else
           tmp[i] = old[i];
         
@@ -1143,11 +1143,11 @@ TAO_NAMESPACE_END
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    CORBA::ValueDef **tmp = ACE_reinterpret_cast (CORBA::ValueDef**, this->buffer_);
+    CORBA_ValueDef **tmp = ACE_reinterpret_cast (CORBA_ValueDef**, this->buffer_);
     for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       CORBA::release (tmp[i]);
-      tmp[i] = CORBA::ValueDef::_nil ();
+      tmp[i] = CORBA_ValueDef::_nil ();
     }
     _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::freebuf (tmp);
     this->buffer_ = 0;
@@ -1161,12 +1161,12 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
   {
-    CORBA::ValueDef **tmp = ACE_reinterpret_cast (CORBA::ValueDef**, this->buffer_);
+    CORBA_ValueDef **tmp = ACE_reinterpret_cast (CORBA_ValueDef**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
     {
       CORBA::release (tmp[i]);
-      tmp[i] = CORBA::ValueDef::_nil ();
+      tmp[i] = CORBA_ValueDef::_nil ();
     }
   }
   void 
@@ -1176,14 +1176,14 @@ TAO_NAMESPACE_END
       CORBA_Environment &ACE_TRY_ENV
     )
   {
-    CORBA::ValueDef **tmp = ACE_static_cast (CORBA::ValueDef**, target);
-    *tmp = CORBA::ValueDef::_narrow (src, ACE_TRY_ENV);
+    CORBA_ValueDef **tmp = ACE_static_cast (CORBA_ValueDef**, target);
+    *tmp = CORBA_ValueDef::_narrow (src, ACE_TRY_ENV);
   }
 
   CORBA_Object*
   _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_upcast (void *src) const
   {
-    CORBA::ValueDef **tmp = ACE_static_cast (CORBA::ValueDef**, src);
+    CORBA_ValueDef **tmp = ACE_static_cast (CORBA_ValueDef**, src);
     return *tmp;
   }
   
@@ -1196,39 +1196,39 @@ TAO_NAMESPACE_END
 #define _CORBA_VALUEDEFSEQ_CS_
 
 // *************************************************************
-// CORBA::ValueDefSeq
+// CORBA_ValueDefSeq
 // *************************************************************
 
-CORBA::ValueDefSeq::CORBA_ValueDefSeq (void)
+CORBA_ValueDefSeq::CORBA_ValueDefSeq (void)
 {}
-CORBA::ValueDefSeq::CORBA_ValueDefSeq (CORBA::ULong max) // uses max size
+CORBA_ValueDefSeq::CORBA_ValueDefSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::ValueDef,CORBA::ValueDef_var>
+  TAO_Unbounded_Object_Sequence<CORBA_ValueDef,CORBA_ValueDef_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::ValueDefSeq::CORBA_ValueDefSeq (CORBA::ULong max, CORBA::ULong length, CORBA::ValueDef_ptr *buffer, CORBA::Boolean release)
+CORBA_ValueDefSeq::CORBA_ValueDefSeq (CORBA::ULong max, CORBA::ULong length, CORBA_ValueDef_ptr *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::ValueDef,CORBA::ValueDef_var>
+  TAO_Unbounded_Object_Sequence<CORBA_ValueDef,CORBA_ValueDef_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::ValueDefSeq::CORBA_ValueDefSeq (const CORBA_ValueDefSeq &seq) // copy ctor
+CORBA_ValueDefSeq::CORBA_ValueDefSeq (const CORBA_ValueDefSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::ValueDef,CORBA::ValueDef_var>
+  TAO_Unbounded_Object_Sequence<CORBA_ValueDef,CORBA_ValueDef_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::ValueDefSeq::~CORBA_ValueDefSeq (void) // dtor
+CORBA_ValueDefSeq::~CORBA_ValueDefSeq (void) // dtor
 {}
 
 
@@ -1251,7 +1251,7 @@ static const CORBA::Long _oc_CORBA_ValueDefSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueDefSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ValueDefSeq), (char *) &_oc_CORBA_ValueDefSeq, 0, sizeof (CORBA::ValueDefSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueDefSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ValueDefSeq), (char *) &_oc_CORBA_ValueDefSeq, 0, sizeof (CORBA_ValueDefSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ValueDefSeq, &_tc_TAO_tc_CORBA_ValueDefSeq)
@@ -1266,15 +1266,15 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_allocate_buffer (CORBA::ULong length)
   {
-    CORBA::Contained **tmp = 0;
+    CORBA_Contained **tmp = 0;
     tmp = _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (length);
     
     if (this->buffer_ != 0)
     {
-      CORBA::Contained **old = ACE_reinterpret_cast (CORBA::Contained**, this->buffer_);
+      CORBA_Contained **old = ACE_reinterpret_cast (CORBA_Contained**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         if (!this->release_)
-          tmp[i] = CORBA::Contained::_duplicate (old[i]);
+          tmp[i] = CORBA_Contained::_duplicate (old[i]);
         else
           tmp[i] = old[i];
         
@@ -1290,11 +1290,11 @@ TAO_NAMESPACE_END
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    CORBA::Contained **tmp = ACE_reinterpret_cast (CORBA::Contained**, this->buffer_);
+    CORBA_Contained **tmp = ACE_reinterpret_cast (CORBA_Contained**, this->buffer_);
     for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       CORBA::release (tmp[i]);
-      tmp[i] = CORBA::Contained::_nil ();
+      tmp[i] = CORBA_Contained::_nil ();
     }
     _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::freebuf (tmp);
     this->buffer_ = 0;
@@ -1308,12 +1308,12 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
   {
-    CORBA::Contained **tmp = ACE_reinterpret_cast (CORBA::Contained**, this->buffer_);
+    CORBA_Contained **tmp = ACE_reinterpret_cast (CORBA_Contained**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
     {
       CORBA::release (tmp[i]);
-      tmp[i] = CORBA::Contained::_nil ();
+      tmp[i] = CORBA_Contained::_nil ();
     }
   }
   void 
@@ -1323,14 +1323,14 @@ TAO_NAMESPACE_END
       CORBA_Environment &ACE_TRY_ENV
     )
   {
-    CORBA::Contained **tmp = ACE_static_cast (CORBA::Contained**, target);
-    *tmp = CORBA::Contained::_narrow (src, ACE_TRY_ENV);
+    CORBA_Contained **tmp = ACE_static_cast (CORBA_Contained**, target);
+    *tmp = CORBA_Contained::_narrow (src, ACE_TRY_ENV);
   }
 
   CORBA_Object*
   _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_upcast (void *src) const
   {
-    CORBA::Contained **tmp = ACE_static_cast (CORBA::Contained**, src);
+    CORBA_Contained **tmp = ACE_static_cast (CORBA_Contained**, src);
     return *tmp;
   }
   
@@ -1343,39 +1343,39 @@ TAO_NAMESPACE_END
 #define _CORBA_CONTAINEDSEQ_CS_
 
 // *************************************************************
-// CORBA::ContainedSeq
+// CORBA_ContainedSeq
 // *************************************************************
 
-CORBA::ContainedSeq::CORBA_ContainedSeq (void)
+CORBA_ContainedSeq::CORBA_ContainedSeq (void)
 {}
-CORBA::ContainedSeq::CORBA_ContainedSeq (CORBA::ULong max) // uses max size
+CORBA_ContainedSeq::CORBA_ContainedSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::Contained,CORBA::Contained_var>
+  TAO_Unbounded_Object_Sequence<CORBA_Contained,CORBA_Contained_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::ContainedSeq::CORBA_ContainedSeq (CORBA::ULong max, CORBA::ULong length, CORBA::Contained_ptr *buffer, CORBA::Boolean release)
+CORBA_ContainedSeq::CORBA_ContainedSeq (CORBA::ULong max, CORBA::ULong length, CORBA_Contained_ptr *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::Contained,CORBA::Contained_var>
+  TAO_Unbounded_Object_Sequence<CORBA_Contained,CORBA_Contained_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::ContainedSeq::CORBA_ContainedSeq (const CORBA_ContainedSeq &seq) // copy ctor
+CORBA_ContainedSeq::CORBA_ContainedSeq (const CORBA_ContainedSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::Contained,CORBA::Contained_var>
+  TAO_Unbounded_Object_Sequence<CORBA_Contained,CORBA_Contained_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::ContainedSeq::~CORBA_ContainedSeq (void) // dtor
+CORBA_ContainedSeq::~CORBA_ContainedSeq (void) // dtor
 {}
 
 
@@ -1398,7 +1398,7 @@ static const CORBA::Long _oc_CORBA_ContainedSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ContainedSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ContainedSeq), (char *) &_oc_CORBA_ContainedSeq, 0, sizeof (CORBA::ContainedSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ContainedSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ContainedSeq), (char *) &_oc_CORBA_ContainedSeq, 0, sizeof (CORBA_ContainedSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ContainedSeq, &_tc_TAO_tc_CORBA_ContainedSeq)
@@ -1429,7 +1429,7 @@ static const CORBA::Long _oc_CORBA_StructMember[] =
     8, ACE_NTOHL (0x49444c54), ACE_NTOHL (0x79706500),  // name = IDLType
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_StructMember (CORBA::tk_struct, sizeof (_oc_CORBA_StructMember), (char *) &_oc_CORBA_StructMember, 0, sizeof (CORBA::StructMember));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_StructMember (CORBA::tk_struct, sizeof (_oc_CORBA_StructMember), (char *) &_oc_CORBA_StructMember, 0, sizeof (CORBA_StructMember));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_StructMember, &_tc_TAO_tc_CORBA_StructMember)
@@ -1443,12 +1443,12 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::_allocate_buffer (CORBA::ULong length)
   {
-    CORBA::StructMember* tmp = 0;
+    CORBA_StructMember* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (length);
     
     if (this->buffer_ != 0)
     {
-      CORBA::StructMember *old = ACE_reinterpret_cast (CORBA::StructMember *,this->buffer_);
+      CORBA_StructMember *old = ACE_reinterpret_cast (CORBA_StructMember *,this->buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
@@ -1466,7 +1466,7 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     
-    CORBA::StructMember *tmp = ACE_reinterpret_cast (CORBA::StructMember *,this->buffer_);
+    CORBA_StructMember *tmp = ACE_reinterpret_cast (CORBA_StructMember *,this->buffer_);
     
     _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::freebuf (tmp);
     this->buffer_ = 0;
@@ -1487,39 +1487,39 @@ TAO_NAMESPACE_END
 #define _CORBA_STRUCTMEMBERSEQ_CS_
 
 // *************************************************************
-// CORBA::StructMemberSeq
+// CORBA_StructMemberSeq
 // *************************************************************
 
-CORBA::StructMemberSeq::CORBA_StructMemberSeq (void)
+CORBA_StructMemberSeq::CORBA_StructMemberSeq (void)
 {}
-CORBA::StructMemberSeq::CORBA_StructMemberSeq (CORBA::ULong max) // uses max size
+CORBA_StructMemberSeq::CORBA_StructMemberSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_StructMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::StructMember>
+  TAO_Unbounded_Sequence<CORBA_StructMember>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::StructMemberSeq::CORBA_StructMemberSeq (CORBA::ULong max, CORBA::ULong length, CORBA::StructMember *buffer, CORBA::Boolean release)
+CORBA_StructMemberSeq::CORBA_StructMemberSeq (CORBA::ULong max, CORBA::ULong length, CORBA_StructMember *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_StructMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::StructMember>
+  TAO_Unbounded_Sequence<CORBA_StructMember>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::StructMemberSeq::CORBA_StructMemberSeq (const CORBA_StructMemberSeq &seq) // copy ctor
+CORBA_StructMemberSeq::CORBA_StructMemberSeq (const CORBA_StructMemberSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_StructMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::StructMember>
+  TAO_Unbounded_Sequence<CORBA_StructMember>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::StructMemberSeq::~CORBA_StructMemberSeq (void) // dtor
+CORBA_StructMemberSeq::~CORBA_StructMemberSeq (void) // dtor
 {}
 
 
@@ -1562,7 +1562,7 @@ static const CORBA::Long _oc_CORBA_StructMemberSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_StructMemberSeq (CORBA::tk_alias, sizeof (_oc_CORBA_StructMemberSeq), (char *) &_oc_CORBA_StructMemberSeq, 0, sizeof (CORBA::StructMemberSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_StructMemberSeq (CORBA::tk_alias, sizeof (_oc_CORBA_StructMemberSeq), (char *) &_oc_CORBA_StructMemberSeq, 0, sizeof (CORBA_StructMemberSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_StructMemberSeq, &_tc_TAO_tc_CORBA_StructMemberSeq)
@@ -1612,7 +1612,7 @@ static const CORBA::Long _oc_CORBA_Initializer[] =
 
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_Initializer (CORBA::tk_struct, sizeof (_oc_CORBA_Initializer), (char *) &_oc_CORBA_Initializer, 0, sizeof (CORBA::Initializer));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_Initializer (CORBA::tk_struct, sizeof (_oc_CORBA_Initializer), (char *) &_oc_CORBA_Initializer, 0, sizeof (CORBA_Initializer));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Initializer, &_tc_TAO_tc_CORBA_Initializer)
@@ -1626,12 +1626,12 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Sequence_CORBA_InitializerSeq::_allocate_buffer (CORBA::ULong length)
   {
-    CORBA::Initializer* tmp = 0;
+    CORBA_Initializer* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (length);
     
     if (this->buffer_ != 0)
     {
-      CORBA::Initializer *old = ACE_reinterpret_cast (CORBA::Initializer *,this->buffer_);
+      CORBA_Initializer *old = ACE_reinterpret_cast (CORBA_Initializer *,this->buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
@@ -1649,7 +1649,7 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     
-    CORBA::Initializer *tmp = ACE_reinterpret_cast (CORBA::Initializer *,this->buffer_);
+    CORBA_Initializer *tmp = ACE_reinterpret_cast (CORBA_Initializer *,this->buffer_);
     
     _TAO_Unbounded_Sequence_CORBA_InitializerSeq::freebuf (tmp);
     this->buffer_ = 0;
@@ -1670,39 +1670,39 @@ TAO_NAMESPACE_END
 #define _CORBA_INITIALIZERSEQ_CS_
 
 // *************************************************************
-// CORBA::InitializerSeq
+// CORBA_InitializerSeq
 // *************************************************************
 
-CORBA::InitializerSeq::CORBA_InitializerSeq (void)
+CORBA_InitializerSeq::CORBA_InitializerSeq (void)
 {}
-CORBA::InitializerSeq::CORBA_InitializerSeq (CORBA::ULong max) // uses max size
+CORBA_InitializerSeq::CORBA_InitializerSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_InitializerSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Initializer>
+  TAO_Unbounded_Sequence<CORBA_Initializer>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::InitializerSeq::CORBA_InitializerSeq (CORBA::ULong max, CORBA::ULong length, CORBA::Initializer *buffer, CORBA::Boolean release)
+CORBA_InitializerSeq::CORBA_InitializerSeq (CORBA::ULong max, CORBA::ULong length, CORBA_Initializer *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_InitializerSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Initializer>
+  TAO_Unbounded_Sequence<CORBA_Initializer>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::InitializerSeq::CORBA_InitializerSeq (const CORBA_InitializerSeq &seq) // copy ctor
+CORBA_InitializerSeq::CORBA_InitializerSeq (const CORBA_InitializerSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_InitializerSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Initializer>
+  TAO_Unbounded_Sequence<CORBA_Initializer>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::InitializerSeq::~CORBA_InitializerSeq (void) // dtor
+CORBA_InitializerSeq::~CORBA_InitializerSeq (void) // dtor
 {}
 
 
@@ -1764,7 +1764,7 @@ static const CORBA::Long _oc_CORBA_InitializerSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_InitializerSeq (CORBA::tk_alias, sizeof (_oc_CORBA_InitializerSeq), (char *) &_oc_CORBA_InitializerSeq, 0, sizeof (CORBA::InitializerSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_InitializerSeq (CORBA::tk_alias, sizeof (_oc_CORBA_InitializerSeq), (char *) &_oc_CORBA_InitializerSeq, 0, sizeof (CORBA_InitializerSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_InitializerSeq, &_tc_TAO_tc_CORBA_InitializerSeq)
@@ -1798,7 +1798,7 @@ static const CORBA::Long _oc_CORBA_UnionMember[] =
     8, ACE_NTOHL (0x49444c54), ACE_NTOHL (0x79706500),  // name = IDLType
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_UnionMember (CORBA::tk_struct, sizeof (_oc_CORBA_UnionMember), (char *) &_oc_CORBA_UnionMember, 0, sizeof (CORBA::UnionMember));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_UnionMember (CORBA::tk_struct, sizeof (_oc_CORBA_UnionMember), (char *) &_oc_CORBA_UnionMember, 0, sizeof (CORBA_UnionMember));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UnionMember, &_tc_TAO_tc_CORBA_UnionMember)
@@ -1812,12 +1812,12 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::_allocate_buffer (CORBA::ULong length)
   {
-    CORBA::UnionMember* tmp = 0;
+    CORBA_UnionMember* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (length);
     
     if (this->buffer_ != 0)
     {
-      CORBA::UnionMember *old = ACE_reinterpret_cast (CORBA::UnionMember *,this->buffer_);
+      CORBA_UnionMember *old = ACE_reinterpret_cast (CORBA_UnionMember *,this->buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
@@ -1835,7 +1835,7 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     
-    CORBA::UnionMember *tmp = ACE_reinterpret_cast (CORBA::UnionMember *,this->buffer_);
+    CORBA_UnionMember *tmp = ACE_reinterpret_cast (CORBA_UnionMember *,this->buffer_);
     
     _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::freebuf (tmp);
     this->buffer_ = 0;
@@ -1856,39 +1856,39 @@ TAO_NAMESPACE_END
 #define _CORBA_UNIONMEMBERSEQ_CS_
 
 // *************************************************************
-// CORBA::UnionMemberSeq
+// CORBA_UnionMemberSeq
 // *************************************************************
 
-CORBA::UnionMemberSeq::CORBA_UnionMemberSeq (void)
+CORBA_UnionMemberSeq::CORBA_UnionMemberSeq (void)
 {}
-CORBA::UnionMemberSeq::CORBA_UnionMemberSeq (CORBA::ULong max) // uses max size
+CORBA_UnionMemberSeq::CORBA_UnionMemberSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::UnionMember>
+  TAO_Unbounded_Sequence<CORBA_UnionMember>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::UnionMemberSeq::CORBA_UnionMemberSeq (CORBA::ULong max, CORBA::ULong length, CORBA::UnionMember *buffer, CORBA::Boolean release)
+CORBA_UnionMemberSeq::CORBA_UnionMemberSeq (CORBA::ULong max, CORBA::ULong length, CORBA_UnionMember *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::UnionMember>
+  TAO_Unbounded_Sequence<CORBA_UnionMember>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::UnionMemberSeq::CORBA_UnionMemberSeq (const CORBA_UnionMemberSeq &seq) // copy ctor
+CORBA_UnionMemberSeq::CORBA_UnionMemberSeq (const CORBA_UnionMemberSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::UnionMember>
+  TAO_Unbounded_Sequence<CORBA_UnionMember>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::UnionMemberSeq::~CORBA_UnionMemberSeq (void) // dtor
+CORBA_UnionMemberSeq::~CORBA_UnionMemberSeq (void) // dtor
 {}
 
 
@@ -1934,7 +1934,7 @@ static const CORBA::Long _oc_CORBA_UnionMemberSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_UnionMemberSeq (CORBA::tk_alias, sizeof (_oc_CORBA_UnionMemberSeq), (char *) &_oc_CORBA_UnionMemberSeq, 0, sizeof (CORBA::UnionMemberSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_UnionMemberSeq (CORBA::tk_alias, sizeof (_oc_CORBA_UnionMemberSeq), (char *) &_oc_CORBA_UnionMemberSeq, 0, sizeof (CORBA_UnionMemberSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UnionMemberSeq, &_tc_TAO_tc_CORBA_UnionMemberSeq)
@@ -1944,12 +1944,12 @@ TAO_NAMESPACE_END
 #define _CORBA_ENUMMEMBERSEQ_CS_
 
 // *************************************************************
-// CORBA::EnumMemberSeq
+// CORBA_EnumMemberSeq
 // *************************************************************
 
-CORBA::EnumMemberSeq::CORBA_EnumMemberSeq (void)
+CORBA_EnumMemberSeq::CORBA_EnumMemberSeq (void)
 {}
-CORBA::EnumMemberSeq::CORBA_EnumMemberSeq (CORBA::ULong max) // uses max size
+CORBA_EnumMemberSeq::CORBA_EnumMemberSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -1958,7 +1958,7 @@ CORBA::EnumMemberSeq::CORBA_EnumMemberSeq (CORBA::ULong max) // uses max size
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::EnumMemberSeq::CORBA_EnumMemberSeq (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
+CORBA_EnumMemberSeq::CORBA_EnumMemberSeq (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -1967,7 +1967,7 @@ CORBA::EnumMemberSeq::CORBA_EnumMemberSeq (CORBA::ULong max, CORBA::ULong length
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::EnumMemberSeq::CORBA_EnumMemberSeq (const CORBA_EnumMemberSeq &seq) // copy ctor
+CORBA_EnumMemberSeq::CORBA_EnumMemberSeq (const CORBA_EnumMemberSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -1976,7 +1976,7 @@ CORBA::EnumMemberSeq::CORBA_EnumMemberSeq (const CORBA_EnumMemberSeq &seq) // co
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::EnumMemberSeq::~CORBA_EnumMemberSeq (void) // dtor
+CORBA_EnumMemberSeq::~CORBA_EnumMemberSeq (void) // dtor
 {}
 
 
@@ -2001,32 +2001,32 @@ static const CORBA::Long _oc_CORBA_EnumMemberSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_EnumMemberSeq (CORBA::tk_alias, sizeof (_oc_CORBA_EnumMemberSeq), (char *) &_oc_CORBA_EnumMemberSeq, 0, sizeof (CORBA::EnumMemberSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_EnumMemberSeq (CORBA::tk_alias, sizeof (_oc_CORBA_EnumMemberSeq), (char *) &_oc_CORBA_EnumMemberSeq, 0, sizeof (CORBA_EnumMemberSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_EnumMemberSeq, &_tc_TAO_tc_CORBA_EnumMemberSeq)
 TAO_NAMESPACE_END
-CORBA::Container_ptr CORBA::Container::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_Container_ptr CORBA_Container::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::Container::_nil ();
+    return CORBA_Container::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/Container:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Container::_nil ());
+  ACE_CHECK_RETURN (CORBA_Container::_nil ());
   if (is_a == 0)
-    return CORBA::Container::_nil ();
-  return CORBA::Container::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_Container::_nil ();
+  return CORBA_Container::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::Container_ptr CORBA::Container::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_Container_ptr CORBA_Container::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::Container::_nil ();
+    return CORBA_Container::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_Container_Stub_Factory_function_pointer != 0)
@@ -2035,32 +2035,32 @@ CORBA::Container_ptr CORBA::Container::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::Container(stub);
+  return new CORBA_Container(stub);
 }
 
-CORBA::Container_ptr 
-CORBA::Container::_duplicate (CORBA::Container_ptr obj)
+CORBA_Container_ptr 
+CORBA_Container::_duplicate (CORBA_Container_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::Contained_ptr CORBA::Container::lookup (
+CORBA_Contained_ptr CORBA_Container::lookup (
     const char * search_name,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::Contained_ptr _tao_retval = CORBA::Contained::_nil ();
+  CORBA_Contained_ptr _tao_retval = CORBA_Contained::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2079,7 +2079,7 @@ CORBA::Contained_ptr CORBA::Container::lookup (
     if (!(
           (_tao_out << search_name)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -2091,7 +2091,7 @@ CORBA::Contained_ptr CORBA::Container::lookup (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -2101,29 +2101,29 @@ CORBA::Contained_ptr CORBA::Container::lookup (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::ContainedSeq * CORBA::Container::contents (
-    CORBA::DefinitionKind limit_type,
+CORBA_ContainedSeq * CORBA_Container::contents (
+   CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ContainedSeq* _tao_retval = 0;
+  CORBA_ContainedSeq* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::ContainedSeq, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_ContainedSeq, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "contents",
@@ -2139,9 +2139,9 @@ CORBA::ContainedSeq * CORBA::Container::contents (
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
     if (!(
           (_tao_out << limit_type) &&
-          (_tao_out << CORBA::Any::from_boolean (exclude_inherited))
+          (_tao_out << CORBA_Any::from_boolean (exclude_inherited))
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -2153,7 +2153,7 @@ CORBA::ContainedSeq * CORBA::Container::contents (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -2163,31 +2163,31 @@ CORBA::ContainedSeq * CORBA::Container::contents (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::ContainedSeq * CORBA::Container::lookup_name (
+CORBA_ContainedSeq * CORBA_Container::lookup_name (
     const char * search_name,
     CORBA::Long levels_to_search,
-    CORBA::DefinitionKind limit_type,
+   CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ContainedSeq* _tao_retval = 0;
+  CORBA_ContainedSeq* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::ContainedSeq, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_ContainedSeq, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "lookup_name",
@@ -2205,9 +2205,9 @@ CORBA::ContainedSeq * CORBA::Container::lookup_name (
           (_tao_out << search_name) &&
           (_tao_out << levels_to_search) &&
           (_tao_out << limit_type) &&
-          (_tao_out << CORBA::Any::from_boolean (exclude_inherited))
+          (_tao_out << CORBA_Any::from_boolean (exclude_inherited))
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -2219,7 +2219,7 @@ CORBA::ContainedSeq * CORBA::Container::lookup_name (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -2229,7 +2229,7 @@ CORBA::ContainedSeq * CORBA::Container::lookup_name (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -2282,8 +2282,8 @@ static const CORBA::Long _oc_CORBA_Container_Description[] =
   CORBA::tk_any,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_Container_Description (CORBA::tk_struct, sizeof (_oc_CORBA_Container_Description), (char *) &_oc_CORBA_Container_Description, 0, sizeof (CORBA::Container::Description));
-CORBA::TypeCode_ptr CORBA::Container::_tc_Description = &_tc_TAO_tc_CORBA_Container_Description;
+static CORBA::TypeCode _tc_TAO_tc_CORBA_Container_Description (CORBA::tk_struct, sizeof (_oc_CORBA_Container_Description), (char *) &_oc_CORBA_Container_Description, 0, sizeof (CORBA_Container::Description));
+CORBA::TypeCode_ptr CORBA_Container::_tc_Description = &_tc_TAO_tc_CORBA_Container_Description;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -2292,38 +2292,38 @@ CORBA::TypeCode_ptr CORBA::Container::_tc_Description = &_tc_TAO_tc_CORBA_Contai
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_CONTAINER_DESCRIPTIONSEQ_CS_
 
   void
-  CORBA::Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_allocate_buffer (CORBA::ULong length)
+  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_allocate_buffer (CORBA::ULong length)
   {
-    CORBA::Container::Description* tmp = 0;
-    tmp = CORBA::Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (length);
+    CORBA_Container::Description* tmp = 0;
+    tmp = CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (length);
     
     if (this->buffer_ != 0)
     {
-      CORBA::Container::Description *old = ACE_reinterpret_cast (CORBA::Container::Description *,this->buffer_);
+      CORBA_Container::Description *old = ACE_reinterpret_cast (CORBA_Container::Description *,this->buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
       
       if (this->release_)
-        CORBA::Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::freebuf (old);
+        CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::freebuf (old);
       
     }
     this->buffer_ = tmp;
   }
   
   void
-  CORBA::Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_deallocate_buffer (void)
+  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     
-    CORBA::Container::Description *tmp = ACE_reinterpret_cast (CORBA::Container::Description *,this->buffer_);
+    CORBA_Container::Description *tmp = ACE_reinterpret_cast (CORBA_Container::Description *,this->buffer_);
     
-    CORBA::Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::freebuf (tmp);
+    CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::freebuf (tmp);
     this->buffer_ = 0;
   } 
   
-  CORBA::Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (void) // Dtor.
+  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
@@ -2338,39 +2338,39 @@ CORBA::TypeCode_ptr CORBA::Container::_tc_Description = &_tc_TAO_tc_CORBA_Contai
 #define _CORBA_CONTAINER_DESCRIPTIONSEQ_CS_
 
 // *************************************************************
-// CORBA::Container::DescriptionSeq
+// CORBA_Container::DescriptionSeq
 // *************************************************************
 
-CORBA::Container::DescriptionSeq::DescriptionSeq (void)
+CORBA_Container::DescriptionSeq::DescriptionSeq (void)
 {}
-CORBA::Container::DescriptionSeq::DescriptionSeq (CORBA::ULong max) // uses max size
+CORBA_Container::DescriptionSeq::DescriptionSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Container::Description>
+  TAO_Unbounded_Sequence<CORBA_Container::Description>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::Container::DescriptionSeq::DescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA::Container::Description *buffer, CORBA::Boolean release)
+CORBA_Container::DescriptionSeq::DescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA_Container::Description *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Container::Description>
+  TAO_Unbounded_Sequence<CORBA_Container::Description>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::Container::DescriptionSeq::DescriptionSeq (const DescriptionSeq &seq) // copy ctor
+CORBA_Container::DescriptionSeq::DescriptionSeq (const DescriptionSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Container::Description>
+  TAO_Unbounded_Sequence<CORBA_Container::Description>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::Container::DescriptionSeq::~DescriptionSeq (void) // dtor
+CORBA_Container::DescriptionSeq::~DescriptionSeq (void) // dtor
 {}
 
 
@@ -2436,29 +2436,29 @@ static const CORBA::Long _oc_CORBA_Container_DescriptionSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_Container_DescriptionSeq (CORBA::tk_alias, sizeof (_oc_CORBA_Container_DescriptionSeq), (char *) &_oc_CORBA_Container_DescriptionSeq, 0, sizeof (CORBA::Container::DescriptionSeq));
-CORBA::TypeCode_ptr CORBA::Container::_tc_DescriptionSeq = &_tc_TAO_tc_CORBA_Container_DescriptionSeq;
+static CORBA::TypeCode _tc_TAO_tc_CORBA_Container_DescriptionSeq (CORBA::tk_alias, sizeof (_oc_CORBA_Container_DescriptionSeq), (char *) &_oc_CORBA_Container_DescriptionSeq, 0, sizeof (CORBA_Container::DescriptionSeq));
+CORBA::TypeCode_ptr CORBA_Container::_tc_DescriptionSeq = &_tc_TAO_tc_CORBA_Container_DescriptionSeq;
 
-CORBA::Container::DescriptionSeq * CORBA::Container::describe_contents (
-    CORBA::DefinitionKind limit_type,
+CORBA_Container::DescriptionSeq * CORBA_Container::describe_contents (
+   CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::Container::DescriptionSeq* _tao_retval = 0;
+  CORBA_Container::DescriptionSeq* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::Container::DescriptionSeq, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_Container::DescriptionSeq, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "describe_contents",
@@ -2474,10 +2474,10 @@ CORBA::Container::DescriptionSeq * CORBA::Container::describe_contents (
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
     if (!(
           (_tao_out << limit_type) &&
-          (_tao_out << CORBA::Any::from_boolean (exclude_inherited)) &&
+          (_tao_out << CORBA_Any::from_boolean (exclude_inherited)) &&
           (_tao_out << max_returned_objs)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -2489,7 +2489,7 @@ CORBA::Container::DescriptionSeq * CORBA::Container::describe_contents (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -2499,27 +2499,27 @@ CORBA::Container::DescriptionSeq * CORBA::Container::describe_contents (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::ModuleDef_ptr CORBA::Container::create_module (
+CORBA_ModuleDef_ptr CORBA_Container::create_module (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ModuleDef_ptr _tao_retval = CORBA::ModuleDef::_nil ();
+  CORBA_ModuleDef_ptr _tao_retval = CORBA_ModuleDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2540,7 +2540,7 @@ CORBA::ModuleDef_ptr CORBA::Container::create_module (
           (_tao_out << name) &&
           (_tao_out << version)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -2552,7 +2552,7 @@ CORBA::ModuleDef_ptr CORBA::Container::create_module (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -2562,29 +2562,29 @@ CORBA::ModuleDef_ptr CORBA::Container::create_module (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::ConstantDef_ptr CORBA::Container::create_constant (
+CORBA_ConstantDef_ptr CORBA_Container::create_constant (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr type,
-    const CORBA::Any & value,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_IDLType_ptr type,
+    const CORBA_Any & value,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ConstantDef_ptr _tao_retval = CORBA::ConstantDef::_nil ();
+  CORBA_ConstantDef_ptr _tao_retval = CORBA_ConstantDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2607,7 +2607,7 @@ CORBA::ConstantDef_ptr CORBA::Container::create_constant (
           (_tao_out << type) &&
           (_tao_out << value)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -2619,7 +2619,7 @@ CORBA::ConstantDef_ptr CORBA::Container::create_constant (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -2629,28 +2629,28 @@ CORBA::ConstantDef_ptr CORBA::Container::create_constant (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::StructDef_ptr CORBA::Container::create_struct (
+CORBA_StructDef_ptr CORBA_Container::create_struct (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::StructMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV
+    const CORBA_StructMemberSeq & members,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::StructDef_ptr _tao_retval = CORBA::StructDef::_nil ();
+  CORBA_StructDef_ptr _tao_retval = CORBA_StructDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2672,7 +2672,7 @@ CORBA::StructDef_ptr CORBA::Container::create_struct (
           (_tao_out << version) &&
           (_tao_out << members)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -2684,7 +2684,7 @@ CORBA::StructDef_ptr CORBA::Container::create_struct (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -2694,29 +2694,29 @@ CORBA::StructDef_ptr CORBA::Container::create_struct (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::UnionDef_ptr CORBA::Container::create_union (
+CORBA_UnionDef_ptr CORBA_Container::create_union (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr discriminator_type,
-    const CORBA::UnionMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_IDLType_ptr discriminator_type,
+    const CORBA_UnionMemberSeq & members,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::UnionDef_ptr _tao_retval = CORBA::UnionDef::_nil ();
+  CORBA_UnionDef_ptr _tao_retval = CORBA_UnionDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2739,7 +2739,7 @@ CORBA::UnionDef_ptr CORBA::Container::create_union (
           (_tao_out << discriminator_type) &&
           (_tao_out << members)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -2751,7 +2751,7 @@ CORBA::UnionDef_ptr CORBA::Container::create_union (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -2761,28 +2761,28 @@ CORBA::UnionDef_ptr CORBA::Container::create_union (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::EnumDef_ptr CORBA::Container::create_enum (
+CORBA_EnumDef_ptr CORBA_Container::create_enum (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::EnumMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV
+    const CORBA_EnumMemberSeq & members,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::EnumDef_ptr _tao_retval = CORBA::EnumDef::_nil ();
+  CORBA_EnumDef_ptr _tao_retval = CORBA_EnumDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2804,7 +2804,7 @@ CORBA::EnumDef_ptr CORBA::Container::create_enum (
           (_tao_out << version) &&
           (_tao_out << members)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -2816,7 +2816,7 @@ CORBA::EnumDef_ptr CORBA::Container::create_enum (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -2826,28 +2826,28 @@ CORBA::EnumDef_ptr CORBA::Container::create_enum (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::AliasDef_ptr CORBA::Container::create_alias (
+CORBA_AliasDef_ptr CORBA_Container::create_alias (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr original_type,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_IDLType_ptr original_type,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::AliasDef_ptr _tao_retval = CORBA::AliasDef::_nil ();
+  CORBA_AliasDef_ptr _tao_retval = CORBA_AliasDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2869,7 +2869,7 @@ CORBA::AliasDef_ptr CORBA::Container::create_alias (
           (_tao_out << version) &&
           (_tao_out << original_type)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -2881,7 +2881,7 @@ CORBA::AliasDef_ptr CORBA::Container::create_alias (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -2891,28 +2891,28 @@ CORBA::AliasDef_ptr CORBA::Container::create_alias (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::InterfaceDef_ptr CORBA::Container::create_interface (
+CORBA_InterfaceDef_ptr CORBA_Container::create_interface (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::InterfaceDefSeq & base_interfaces,
-    CORBA::Environment &ACE_TRY_ENV
+    const CORBA_InterfaceDefSeq & base_interfaces,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::InterfaceDef_ptr _tao_retval = CORBA::InterfaceDef::_nil ();
+  CORBA_InterfaceDef_ptr _tao_retval = CORBA_InterfaceDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2934,7 +2934,7 @@ CORBA::InterfaceDef_ptr CORBA::Container::create_interface (
           (_tao_out << version) &&
           (_tao_out << base_interfaces)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -2946,7 +2946,7 @@ CORBA::InterfaceDef_ptr CORBA::Container::create_interface (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -2956,34 +2956,34 @@ CORBA::InterfaceDef_ptr CORBA::Container::create_interface (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::ValueDef_ptr CORBA::Container::create_value (
+CORBA_ValueDef_ptr CORBA_Container::create_value (
     const char * id,
     const char * name,
     const char * version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
-    CORBA::ValueDef_ptr base_value,
+    CORBA_ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const CORBA::ValueDefSeq & abstract_base_values,
-    CORBA::InterfaceDef_ptr supported_interface,
-    const CORBA::InitializerSeq & initializers,
-    CORBA::Environment &ACE_TRY_ENV
+    const CORBA_ValueDefSeq & abstract_base_values,
+    CORBA_InterfaceDef_ptr supported_interface,
+    const CORBA_InitializerSeq & initializers,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ValueDef_ptr _tao_retval = CORBA::ValueDef::_nil ();
+  CORBA_ValueDef_ptr _tao_retval = CORBA_ValueDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -3003,15 +3003,15 @@ CORBA::ValueDef_ptr CORBA::Container::create_value (
           (_tao_out << id) &&
           (_tao_out << name) &&
           (_tao_out << version) &&
-          (_tao_out << CORBA::Any::from_boolean (is_custom)) &&
-          (_tao_out << CORBA::Any::from_boolean (is_abstract)) &&
+          (_tao_out << CORBA_Any::from_boolean (is_custom)) &&
+          (_tao_out << CORBA_Any::from_boolean (is_abstract)) &&
           (_tao_out << base_value) &&
-          (_tao_out << CORBA::Any::from_boolean (is_truncatable)) &&
+          (_tao_out << CORBA_Any::from_boolean (is_truncatable)) &&
           (_tao_out << abstract_base_values) &&
           (_tao_out << supported_interface) &&
           (_tao_out << initializers)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -3023,7 +3023,7 @@ CORBA::ValueDef_ptr CORBA::Container::create_value (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -3033,28 +3033,28 @@ CORBA::ValueDef_ptr CORBA::Container::create_value (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::ValueBoxDef_ptr CORBA::Container::create_value_box (
+CORBA_ValueBoxDef_ptr CORBA_Container::create_value_box (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr original_type_def,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_IDLType_ptr original_type_def,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ValueBoxDef_ptr _tao_retval = CORBA::ValueBoxDef::_nil ();
+  CORBA_ValueBoxDef_ptr _tao_retval = CORBA_ValueBoxDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -3076,7 +3076,7 @@ CORBA::ValueBoxDef_ptr CORBA::Container::create_value_box (
           (_tao_out << version) &&
           (_tao_out << original_type_def)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -3088,7 +3088,7 @@ CORBA::ValueBoxDef_ptr CORBA::Container::create_value_box (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -3098,28 +3098,28 @@ CORBA::ValueBoxDef_ptr CORBA::Container::create_value_box (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::ExceptionDef_ptr CORBA::Container::create_exception (
+CORBA_ExceptionDef_ptr CORBA_Container::create_exception (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::StructMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV
+    const CORBA_StructMemberSeq & members,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ExceptionDef_ptr _tao_retval = CORBA::ExceptionDef::_nil ();
+  CORBA_ExceptionDef_ptr _tao_retval = CORBA_ExceptionDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -3141,7 +3141,7 @@ CORBA::ExceptionDef_ptr CORBA::Container::create_exception (
           (_tao_out << version) &&
           (_tao_out << members)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -3153,7 +3153,7 @@ CORBA::ExceptionDef_ptr CORBA::Container::create_exception (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -3163,11 +3163,11 @@ CORBA::ExceptionDef_ptr CORBA::Container::create_exception (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::Boolean CORBA::Container::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_Container::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Container:1.0")) ||
@@ -3178,7 +3178,7 @@ CORBA::Boolean CORBA::Container::_is_a (const CORBA::Char *value, CORBA::Environ
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::Container::_interface_repository_id (void) const
+const char* CORBA_Container::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Container:1.0";
 }
@@ -3189,32 +3189,32 @@ static const CORBA::Long _oc_CORBA_Container[] =
   32, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f436f), ACE_NTOHL (0x6e746169), ACE_NTOHL (0x6e65723a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/Container:1.0
   10, ACE_NTOHL (0x436f6e74), ACE_NTOHL (0x61696e65), ACE_NTOHL (0x72000000),  // name = Container
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_Container (CORBA::tk_objref, sizeof (_oc_CORBA_Container), (char *) &_oc_CORBA_Container, 0, sizeof (CORBA::Container));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_Container (CORBA::tk_objref, sizeof (_oc_CORBA_Container), (char *) &_oc_CORBA_Container, 0, sizeof (CORBA_Container));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Container, &_tc_TAO_tc_CORBA_Container)
 TAO_NAMESPACE_END
-CORBA::IDLType_ptr CORBA::IDLType::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_IDLType_ptr CORBA_IDLType::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::IDLType::_nil ();
+    return CORBA_IDLType::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/IDLType:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
+  ACE_CHECK_RETURN (CORBA_IDLType::_nil ());
   if (is_a == 0)
-    return CORBA::IDLType::_nil ();
-  return CORBA::IDLType::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_IDLType::_nil ();
+  return CORBA_IDLType::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::IDLType_ptr CORBA::IDLType::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_IDLType_ptr CORBA_IDLType::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::IDLType::_nil ();
+    return CORBA_IDLType::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_IDLType_Stub_Factory_function_pointer != 0)
@@ -3223,22 +3223,22 @@ CORBA::IDLType_ptr CORBA::IDLType::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::IDLType(stub);
+  return new CORBA_IDLType(stub);
 }
 
-CORBA::IDLType_ptr 
-CORBA::IDLType::_duplicate (CORBA::IDLType_ptr obj)
+CORBA_IDLType_ptr 
+CORBA_IDLType::_duplicate (CORBA_IDLType_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::TypeCode_ptr CORBA::IDLType::type (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::TypeCode_ptr CORBA_IDLType::type (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -3247,7 +3247,7 @@ CORBA::TypeCode_ptr CORBA::IDLType::type (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -3272,7 +3272,7 @@ CORBA::TypeCode_ptr CORBA::IDLType::type (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -3282,11 +3282,11 @@ CORBA::TypeCode_ptr CORBA::IDLType::type (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::Boolean CORBA::IDLType::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_IDLType::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IDLType:1.0")) ||
@@ -3297,7 +3297,7 @@ CORBA::Boolean CORBA::IDLType::_is_a (const CORBA::Char *value, CORBA::Environme
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::IDLType::_interface_repository_id (void) const
+const char* CORBA_IDLType::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/IDLType:1.0";
 }
@@ -3308,7 +3308,7 @@ static const CORBA::Long _oc_CORBA_IDLType[] =
   30, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4944), ACE_NTOHL (0x4c547970), ACE_NTOHL (0x653a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/IDLType:1.0
   8, ACE_NTOHL (0x49444c54), ACE_NTOHL (0x79706500),  // name = IDLType
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_IDLType (CORBA::tk_objref, sizeof (_oc_CORBA_IDLType), (char *) &_oc_CORBA_IDLType, 0, sizeof (CORBA::IDLType));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_IDLType (CORBA::tk_objref, sizeof (_oc_CORBA_IDLType), (char *) &_oc_CORBA_IDLType, 0, sizeof (CORBA_IDLType));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_IDLType, &_tc_TAO_tc_CORBA_IDLType)
@@ -3346,27 +3346,27 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PrimitiveKind, &_tc_TAO_tc_CORBA_PrimitiveKind)
 TAO_NAMESPACE_END
-CORBA::Repository_ptr CORBA::Repository::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_Repository_ptr CORBA_Repository::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::Repository::_nil ();
+    return CORBA_Repository::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/Repository:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Repository::_nil ());
+  ACE_CHECK_RETURN (CORBA_Repository::_nil ());
   if (is_a == 0)
-    return CORBA::Repository::_nil ();
-  return CORBA::Repository::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_Repository::_nil ();
+  return CORBA_Repository::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::Repository_ptr CORBA::Repository::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_Repository_ptr CORBA_Repository::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::Repository::_nil ();
+    return CORBA_Repository::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_Repository_Stub_Factory_function_pointer != 0)
@@ -3375,32 +3375,32 @@ CORBA::Repository_ptr CORBA::Repository::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::Repository(stub);
+  return new CORBA_Repository(stub);
 }
 
-CORBA::Repository_ptr 
-CORBA::Repository::_duplicate (CORBA::Repository_ptr obj)
+CORBA_Repository_ptr 
+CORBA_Repository::_duplicate (CORBA_Repository_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::Contained_ptr CORBA::Repository::lookup_id (
+CORBA_Contained_ptr CORBA_Repository::lookup_id (
     const char * search_id,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::Contained_ptr _tao_retval = CORBA::Contained::_nil ();
+  CORBA_Contained_ptr _tao_retval = CORBA_Contained::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -3419,7 +3419,7 @@ CORBA::Contained_ptr CORBA::Repository::lookup_id (
     if (!(
           (_tao_out << search_id)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -3431,7 +3431,7 @@ CORBA::Contained_ptr CORBA::Repository::lookup_id (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -3441,25 +3441,25 @@ CORBA::Contained_ptr CORBA::Repository::lookup_id (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::PrimitiveDef_ptr CORBA::Repository::get_primitive (
+CORBA_PrimitiveDef_ptr CORBA_Repository::get_primitive (
     CORBA::PrimitiveKind kind,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::PrimitiveDef_ptr _tao_retval = CORBA::PrimitiveDef::_nil ();
+  CORBA_PrimitiveDef_ptr _tao_retval = CORBA_PrimitiveDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -3478,7 +3478,7 @@ CORBA::PrimitiveDef_ptr CORBA::Repository::get_primitive (
     if (!(
           (_tao_out << kind)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -3490,7 +3490,7 @@ CORBA::PrimitiveDef_ptr CORBA::Repository::get_primitive (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -3500,25 +3500,25 @@ CORBA::PrimitiveDef_ptr CORBA::Repository::get_primitive (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::StringDef_ptr CORBA::Repository::create_string (
+CORBA_StringDef_ptr CORBA_Repository::create_string (
     CORBA::ULong bound,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::StringDef_ptr _tao_retval = CORBA::StringDef::_nil ();
+  CORBA_StringDef_ptr _tao_retval = CORBA_StringDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -3537,7 +3537,7 @@ CORBA::StringDef_ptr CORBA::Repository::create_string (
     if (!(
           (_tao_out << bound)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -3549,7 +3549,7 @@ CORBA::StringDef_ptr CORBA::Repository::create_string (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -3559,25 +3559,25 @@ CORBA::StringDef_ptr CORBA::Repository::create_string (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::WstringDef_ptr CORBA::Repository::create_wstring (
+CORBA_WstringDef_ptr CORBA_Repository::create_wstring (
     CORBA::ULong bound,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::WstringDef_ptr _tao_retval = CORBA::WstringDef::_nil ();
+  CORBA_WstringDef_ptr _tao_retval = CORBA_WstringDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -3596,7 +3596,7 @@ CORBA::WstringDef_ptr CORBA::Repository::create_wstring (
     if (!(
           (_tao_out << bound)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -3608,7 +3608,7 @@ CORBA::WstringDef_ptr CORBA::Repository::create_wstring (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -3618,26 +3618,26 @@ CORBA::WstringDef_ptr CORBA::Repository::create_wstring (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::SequenceDef_ptr CORBA::Repository::create_sequence (
+CORBA_SequenceDef_ptr CORBA_Repository::create_sequence (
     CORBA::ULong bound,
-    CORBA::IDLType_ptr element_type,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_IDLType_ptr element_type,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::SequenceDef_ptr _tao_retval = CORBA::SequenceDef::_nil ();
+  CORBA_SequenceDef_ptr _tao_retval = CORBA_SequenceDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -3657,7 +3657,7 @@ CORBA::SequenceDef_ptr CORBA::Repository::create_sequence (
           (_tao_out << bound) &&
           (_tao_out << element_type)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -3669,7 +3669,7 @@ CORBA::SequenceDef_ptr CORBA::Repository::create_sequence (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -3679,26 +3679,26 @@ CORBA::SequenceDef_ptr CORBA::Repository::create_sequence (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::ArrayDef_ptr CORBA::Repository::create_array (
+CORBA_ArrayDef_ptr CORBA_Repository::create_array (
     CORBA::ULong length,
-    CORBA::IDLType_ptr element_type,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_IDLType_ptr element_type,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ArrayDef_ptr _tao_retval = CORBA::ArrayDef::_nil ();
+  CORBA_ArrayDef_ptr _tao_retval = CORBA_ArrayDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -3718,7 +3718,7 @@ CORBA::ArrayDef_ptr CORBA::Repository::create_array (
           (_tao_out << length) &&
           (_tao_out << element_type)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -3730,7 +3730,7 @@ CORBA::ArrayDef_ptr CORBA::Repository::create_array (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -3740,26 +3740,26 @@ CORBA::ArrayDef_ptr CORBA::Repository::create_array (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::FixedDef_ptr CORBA::Repository::create_fixed (
+CORBA_FixedDef_ptr CORBA_Repository::create_fixed (
     CORBA::UShort digits,
     CORBA::Short scale,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::FixedDef_ptr _tao_retval = CORBA::FixedDef::_nil ();
+  CORBA_FixedDef_ptr _tao_retval = CORBA_FixedDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -3779,7 +3779,7 @@ CORBA::FixedDef_ptr CORBA::Repository::create_fixed (
           (_tao_out << digits) &&
           (_tao_out << scale)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -3791,7 +3791,7 @@ CORBA::FixedDef_ptr CORBA::Repository::create_fixed (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -3801,11 +3801,11 @@ CORBA::FixedDef_ptr CORBA::Repository::create_fixed (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::Boolean CORBA::Repository::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_Repository::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Repository:1.0")) ||
@@ -3817,7 +3817,7 @@ CORBA::Boolean CORBA::Repository::_is_a (const CORBA::Char *value, CORBA::Enviro
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::Repository::_interface_repository_id (void) const
+const char* CORBA_Repository::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Repository:1.0";
 }
@@ -3828,32 +3828,32 @@ static const CORBA::Long _oc_CORBA_Repository[] =
   33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5265), ACE_NTOHL (0x706f7369), ACE_NTOHL (0x746f7279), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Repository:1.0
   11, ACE_NTOHL (0x5265706f), ACE_NTOHL (0x7369746f), ACE_NTOHL (0x72790000),  // name = Repository
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_Repository (CORBA::tk_objref, sizeof (_oc_CORBA_Repository), (char *) &_oc_CORBA_Repository, 0, sizeof (CORBA::Repository));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_Repository (CORBA::tk_objref, sizeof (_oc_CORBA_Repository), (char *) &_oc_CORBA_Repository, 0, sizeof (CORBA_Repository));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Repository, &_tc_TAO_tc_CORBA_Repository)
 TAO_NAMESPACE_END
-CORBA::ModuleDef_ptr CORBA::ModuleDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_ModuleDef_ptr CORBA_ModuleDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ModuleDef::_nil ();
+    return CORBA_ModuleDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/ModuleDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::ModuleDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_ModuleDef::_nil ());
   if (is_a == 0)
-    return CORBA::ModuleDef::_nil ();
-  return CORBA::ModuleDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_ModuleDef::_nil ();
+  return CORBA_ModuleDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::ModuleDef_ptr CORBA::ModuleDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_ModuleDef_ptr CORBA_ModuleDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ModuleDef::_nil ();
+    return CORBA_ModuleDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_ModuleDef_Stub_Factory_function_pointer != 0)
@@ -3862,18 +3862,18 @@ CORBA::ModuleDef_ptr CORBA::ModuleDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::ModuleDef(stub);
+  return new CORBA_ModuleDef(stub);
 }
 
-CORBA::ModuleDef_ptr 
-CORBA::ModuleDef::_duplicate (CORBA::ModuleDef_ptr obj)
+CORBA_ModuleDef_ptr 
+CORBA_ModuleDef::_duplicate (CORBA_ModuleDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::Boolean CORBA::ModuleDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_ModuleDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/ModuleDef:1.0")) ||
@@ -3886,7 +3886,7 @@ CORBA::Boolean CORBA::ModuleDef::_is_a (const CORBA::Char *value, CORBA::Environ
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::ModuleDef::_interface_repository_id (void) const
+const char* CORBA_ModuleDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ModuleDef:1.0";
 }
@@ -3897,7 +3897,7 @@ static const CORBA::Long _oc_CORBA_ModuleDef[] =
   32, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4d6f), ACE_NTOHL (0x64756c65), ACE_NTOHL (0x4465663a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ModuleDef:1.0
   10, ACE_NTOHL (0x4d6f6475), ACE_NTOHL (0x6c654465), ACE_NTOHL (0x66000000),  // name = ModuleDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ModuleDef (CORBA::tk_objref, sizeof (_oc_CORBA_ModuleDef), (char *) &_oc_CORBA_ModuleDef, 0, sizeof (CORBA::ModuleDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ModuleDef (CORBA::tk_objref, sizeof (_oc_CORBA_ModuleDef), (char *) &_oc_CORBA_ModuleDef, 0, sizeof (CORBA_ModuleDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ModuleDef, &_tc_TAO_tc_CORBA_ModuleDef)
@@ -3945,32 +3945,32 @@ static const CORBA::Long _oc_CORBA_ModuleDescription[] =
     0U, // string length
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ModuleDescription (CORBA::tk_struct, sizeof (_oc_CORBA_ModuleDescription), (char *) &_oc_CORBA_ModuleDescription, 0, sizeof (CORBA::ModuleDescription));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ModuleDescription (CORBA::tk_struct, sizeof (_oc_CORBA_ModuleDescription), (char *) &_oc_CORBA_ModuleDescription, 0, sizeof (CORBA_ModuleDescription));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ModuleDescription, &_tc_TAO_tc_CORBA_ModuleDescription)
 TAO_NAMESPACE_END
-CORBA::ConstantDef_ptr CORBA::ConstantDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_ConstantDef_ptr CORBA_ConstantDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ConstantDef::_nil ();
+    return CORBA_ConstantDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/ConstantDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::ConstantDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_ConstantDef::_nil ());
   if (is_a == 0)
-    return CORBA::ConstantDef::_nil ();
-  return CORBA::ConstantDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_ConstantDef::_nil ();
+  return CORBA_ConstantDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::ConstantDef_ptr CORBA::ConstantDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_ConstantDef_ptr CORBA_ConstantDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ConstantDef::_nil ();
+    return CORBA_ConstantDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_ConstantDef_Stub_Factory_function_pointer != 0)
@@ -3979,22 +3979,22 @@ CORBA::ConstantDef_ptr CORBA::ConstantDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::ConstantDef(stub);
+  return new CORBA_ConstantDef(stub);
 }
 
-CORBA::ConstantDef_ptr 
-CORBA::ConstantDef::_duplicate (CORBA::ConstantDef_ptr obj)
+CORBA_ConstantDef_ptr 
+CORBA_ConstantDef::_duplicate (CORBA_ConstantDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::TypeCode_ptr CORBA::ConstantDef::type (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::TypeCode_ptr CORBA_ConstantDef::type (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -4003,7 +4003,7 @@ CORBA::TypeCode_ptr CORBA::ConstantDef::type (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -4028,7 +4028,7 @@ CORBA::TypeCode_ptr CORBA::ConstantDef::type (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -4038,24 +4038,24 @@ CORBA::TypeCode_ptr CORBA::ConstantDef::type (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::IDLType_ptr CORBA::ConstantDef::type_def (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_IDLType_ptr CORBA_ConstantDef::type_def (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::IDLType_ptr _tao_retval = CORBA::IDLType::_nil ();
+  CORBA_IDLType_ptr _tao_retval = CORBA_IDLType::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -4080,7 +4080,7 @@ CORBA::IDLType_ptr CORBA::ConstantDef::type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -4090,16 +4090,16 @@ CORBA::IDLType_ptr CORBA::ConstantDef::type_def (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ConstantDef::type_def (
-    CORBA::IDLType_ptr type_def,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_ConstantDef::type_def (
+    CORBA_IDLType_ptr type_def,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -4108,7 +4108,7 @@ void CORBA::ConstantDef::type_def (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -4127,7 +4127,7 @@ void CORBA::ConstantDef::type_def (
     if (!(
           (_tao_out << type_def)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -4139,7 +4139,7 @@ void CORBA::ConstantDef::type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -4148,23 +4148,23 @@ void CORBA::ConstantDef::type_def (
   
 }
 
-CORBA::Any * CORBA::ConstantDef::value (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_Any * CORBA_ConstantDef::value (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::Any* _tao_retval = 0;
+  CORBA_Any* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::Any, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_Any, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""value",
@@ -4187,7 +4187,7 @@ CORBA::Any * CORBA::ConstantDef::value (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -4197,16 +4197,16 @@ CORBA::Any * CORBA::ConstantDef::value (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ConstantDef::value (
-    const CORBA::Any & value,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_ConstantDef::value (
+    const CORBA_Any & value,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -4215,7 +4215,7 @@ void CORBA::ConstantDef::value (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -4234,7 +4234,7 @@ void CORBA::ConstantDef::value (
     if (!(
           (_tao_out << value)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -4246,7 +4246,7 @@ void CORBA::ConstantDef::value (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -4255,7 +4255,7 @@ void CORBA::ConstantDef::value (
   
 }
 
-CORBA::Boolean CORBA::ConstantDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_ConstantDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/ConstantDef:1.0")) ||
@@ -4267,7 +4267,7 @@ CORBA::Boolean CORBA::ConstantDef::_is_a (const CORBA::Char *value, CORBA::Envir
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::ConstantDef::_interface_repository_id (void) const
+const char* CORBA_ConstantDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ConstantDef:1.0";
 }
@@ -4278,7 +4278,7 @@ static const CORBA::Long _oc_CORBA_ConstantDef[] =
   34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f436f), ACE_NTOHL (0x6e737461), ACE_NTOHL (0x6e744465), ACE_NTOHL (0x663a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/ConstantDef:1.0
   12, ACE_NTOHL (0x436f6e73), ACE_NTOHL (0x74616e74), ACE_NTOHL (0x44656600),  // name = ConstantDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ConstantDef (CORBA::tk_objref, sizeof (_oc_CORBA_ConstantDef), (char *) &_oc_CORBA_ConstantDef, 0, sizeof (CORBA::ConstantDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ConstantDef (CORBA::tk_objref, sizeof (_oc_CORBA_ConstantDef), (char *) &_oc_CORBA_ConstantDef, 0, sizeof (CORBA_ConstantDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ConstantDef, &_tc_TAO_tc_CORBA_ConstantDef)
@@ -4332,32 +4332,32 @@ static const CORBA::Long _oc_CORBA_ConstantDescription[] =
   CORBA::tk_any,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ConstantDescription (CORBA::tk_struct, sizeof (_oc_CORBA_ConstantDescription), (char *) &_oc_CORBA_ConstantDescription, 0, sizeof (CORBA::ConstantDescription));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ConstantDescription (CORBA::tk_struct, sizeof (_oc_CORBA_ConstantDescription), (char *) &_oc_CORBA_ConstantDescription, 0, sizeof (CORBA_ConstantDescription));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ConstantDescription, &_tc_TAO_tc_CORBA_ConstantDescription)
 TAO_NAMESPACE_END
-CORBA::TypedefDef_ptr CORBA::TypedefDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_TypedefDef_ptr CORBA_TypedefDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::TypedefDef::_nil ();
+    return CORBA_TypedefDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/TypedefDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypedefDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_TypedefDef::_nil ());
   if (is_a == 0)
-    return CORBA::TypedefDef::_nil ();
-  return CORBA::TypedefDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_TypedefDef::_nil ();
+  return CORBA_TypedefDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::TypedefDef_ptr CORBA::TypedefDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_TypedefDef_ptr CORBA_TypedefDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::TypedefDef::_nil ();
+    return CORBA_TypedefDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_TypedefDef_Stub_Factory_function_pointer != 0)
@@ -4366,18 +4366,18 @@ CORBA::TypedefDef_ptr CORBA::TypedefDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::TypedefDef(stub);
+  return new CORBA_TypedefDef(stub);
 }
 
-CORBA::TypedefDef_ptr 
-CORBA::TypedefDef::_duplicate (CORBA::TypedefDef_ptr obj)
+CORBA_TypedefDef_ptr 
+CORBA_TypedefDef::_duplicate (CORBA_TypedefDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::Boolean CORBA::TypedefDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_TypedefDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/TypedefDef:1.0")) ||
@@ -4390,7 +4390,7 @@ CORBA::Boolean CORBA::TypedefDef::_is_a (const CORBA::Char *value, CORBA::Enviro
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::TypedefDef::_interface_repository_id (void) const
+const char* CORBA_TypedefDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/TypedefDef:1.0";
 }
@@ -4401,7 +4401,7 @@ static const CORBA::Long _oc_CORBA_TypedefDef[] =
   33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5479), ACE_NTOHL (0x70656465), ACE_NTOHL (0x66446566), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/TypedefDef:1.0
   11, ACE_NTOHL (0x54797065), ACE_NTOHL (0x64656644), ACE_NTOHL (0x65660000),  // name = TypedefDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_TypedefDef (CORBA::tk_objref, sizeof (_oc_CORBA_TypedefDef), (char *) &_oc_CORBA_TypedefDef, 0, sizeof (CORBA::TypedefDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_TypedefDef (CORBA::tk_objref, sizeof (_oc_CORBA_TypedefDef), (char *) &_oc_CORBA_TypedefDef, 0, sizeof (CORBA_TypedefDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_TypedefDef, &_tc_TAO_tc_CORBA_TypedefDef)
@@ -4452,32 +4452,32 @@ static const CORBA::Long _oc_CORBA_TypeDescription[] =
   CORBA::tk_TypeCode,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_TypeDescription (CORBA::tk_struct, sizeof (_oc_CORBA_TypeDescription), (char *) &_oc_CORBA_TypeDescription, 0, sizeof (CORBA::TypeDescription));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_TypeDescription (CORBA::tk_struct, sizeof (_oc_CORBA_TypeDescription), (char *) &_oc_CORBA_TypeDescription, 0, sizeof (CORBA_TypeDescription));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_TypeDescription, &_tc_TAO_tc_CORBA_TypeDescription)
 TAO_NAMESPACE_END
-CORBA::StructDef_ptr CORBA::StructDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_StructDef_ptr CORBA_StructDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::StructDef::_nil ();
+    return CORBA_StructDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/StructDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::StructDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_StructDef::_nil ());
   if (is_a == 0)
-    return CORBA::StructDef::_nil ();
-  return CORBA::StructDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_StructDef::_nil ();
+  return CORBA_StructDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::StructDef_ptr CORBA::StructDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_StructDef_ptr CORBA_StructDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::StructDef::_nil ();
+    return CORBA_StructDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_StructDef_Stub_Factory_function_pointer != 0)
@@ -4486,34 +4486,34 @@ CORBA::StructDef_ptr CORBA::StructDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::StructDef(stub);
+  return new CORBA_StructDef(stub);
 }
 
-CORBA::StructDef_ptr 
-CORBA::StructDef::_duplicate (CORBA::StructDef_ptr obj)
+CORBA_StructDef_ptr 
+CORBA_StructDef::_duplicate (CORBA_StructDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::StructMemberSeq * CORBA::StructDef::members (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_StructMemberSeq * CORBA_StructDef::members (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::StructMemberSeq* _tao_retval = 0;
+  CORBA_StructMemberSeq* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::StructMemberSeq, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_StructMemberSeq, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""members",
@@ -4536,7 +4536,7 @@ CORBA::StructMemberSeq * CORBA::StructDef::members (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -4546,16 +4546,16 @@ CORBA::StructMemberSeq * CORBA::StructDef::members (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::StructDef::members (
-    const CORBA::StructMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_StructDef::members (
+    const CORBA_StructMemberSeq & members,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -4564,7 +4564,7 @@ void CORBA::StructDef::members (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -4583,7 +4583,7 @@ void CORBA::StructDef::members (
     if (!(
           (_tao_out << members)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -4595,7 +4595,7 @@ void CORBA::StructDef::members (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -4604,7 +4604,7 @@ void CORBA::StructDef::members (
   
 }
 
-CORBA::Boolean CORBA::StructDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_StructDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/StructDef:1.0")) ||
@@ -4619,7 +4619,7 @@ CORBA::Boolean CORBA::StructDef::_is_a (const CORBA::Char *value, CORBA::Environ
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::StructDef::_interface_repository_id (void) const
+const char* CORBA_StructDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/StructDef:1.0";
 }
@@ -4630,32 +4630,32 @@ static const CORBA::Long _oc_CORBA_StructDef[] =
   32, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5374), ACE_NTOHL (0x72756374), ACE_NTOHL (0x4465663a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/StructDef:1.0
   10, ACE_NTOHL (0x53747275), ACE_NTOHL (0x63744465), ACE_NTOHL (0x66000000),  // name = StructDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_StructDef (CORBA::tk_objref, sizeof (_oc_CORBA_StructDef), (char *) &_oc_CORBA_StructDef, 0, sizeof (CORBA::StructDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_StructDef (CORBA::tk_objref, sizeof (_oc_CORBA_StructDef), (char *) &_oc_CORBA_StructDef, 0, sizeof (CORBA_StructDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_StructDef, &_tc_TAO_tc_CORBA_StructDef)
 TAO_NAMESPACE_END
-CORBA::UnionDef_ptr CORBA::UnionDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_UnionDef_ptr CORBA_UnionDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::UnionDef::_nil ();
+    return CORBA_UnionDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/UnionDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::UnionDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_UnionDef::_nil ());
   if (is_a == 0)
-    return CORBA::UnionDef::_nil ();
-  return CORBA::UnionDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_UnionDef::_nil ();
+  return CORBA_UnionDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::UnionDef_ptr CORBA::UnionDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_UnionDef_ptr CORBA_UnionDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::UnionDef::_nil ();
+    return CORBA_UnionDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_UnionDef_Stub_Factory_function_pointer != 0)
@@ -4664,22 +4664,22 @@ CORBA::UnionDef_ptr CORBA::UnionDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::UnionDef(stub);
+  return new CORBA_UnionDef(stub);
 }
 
-CORBA::UnionDef_ptr 
-CORBA::UnionDef::_duplicate (CORBA::UnionDef_ptr obj)
+CORBA_UnionDef_ptr 
+CORBA_UnionDef::_duplicate (CORBA_UnionDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::TypeCode_ptr CORBA::UnionDef::discriminator_type (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::TypeCode_ptr CORBA_UnionDef::discriminator_type (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -4688,7 +4688,7 @@ CORBA::TypeCode_ptr CORBA::UnionDef::discriminator_type (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -4713,7 +4713,7 @@ CORBA::TypeCode_ptr CORBA::UnionDef::discriminator_type (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -4723,24 +4723,24 @@ CORBA::TypeCode_ptr CORBA::UnionDef::discriminator_type (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::IDLType_ptr CORBA::UnionDef::discriminator_type_def (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_IDLType_ptr CORBA_UnionDef::discriminator_type_def (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::IDLType_ptr _tao_retval = CORBA::IDLType::_nil ();
+  CORBA_IDLType_ptr _tao_retval = CORBA_IDLType::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -4765,7 +4765,7 @@ CORBA::IDLType_ptr CORBA::UnionDef::discriminator_type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -4775,16 +4775,16 @@ CORBA::IDLType_ptr CORBA::UnionDef::discriminator_type_def (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::UnionDef::discriminator_type_def (
-    CORBA::IDLType_ptr discriminator_type_def,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_UnionDef::discriminator_type_def (
+    CORBA_IDLType_ptr discriminator_type_def,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -4793,7 +4793,7 @@ void CORBA::UnionDef::discriminator_type_def (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -4812,7 +4812,7 @@ void CORBA::UnionDef::discriminator_type_def (
     if (!(
           (_tao_out << discriminator_type_def)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -4824,7 +4824,7 @@ void CORBA::UnionDef::discriminator_type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -4833,23 +4833,23 @@ void CORBA::UnionDef::discriminator_type_def (
   
 }
 
-CORBA::UnionMemberSeq * CORBA::UnionDef::members (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_UnionMemberSeq * CORBA_UnionDef::members (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::UnionMemberSeq* _tao_retval = 0;
+  CORBA_UnionMemberSeq* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::UnionMemberSeq, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_UnionMemberSeq, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""members",
@@ -4872,7 +4872,7 @@ CORBA::UnionMemberSeq * CORBA::UnionDef::members (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -4882,16 +4882,16 @@ CORBA::UnionMemberSeq * CORBA::UnionDef::members (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::UnionDef::members (
-    const CORBA::UnionMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_UnionDef::members (
+    const CORBA_UnionMemberSeq & members,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -4900,7 +4900,7 @@ void CORBA::UnionDef::members (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -4919,7 +4919,7 @@ void CORBA::UnionDef::members (
     if (!(
           (_tao_out << members)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -4931,7 +4931,7 @@ void CORBA::UnionDef::members (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -4940,7 +4940,7 @@ void CORBA::UnionDef::members (
   
 }
 
-CORBA::Boolean CORBA::UnionDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_UnionDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/UnionDef:1.0")) ||
@@ -4955,7 +4955,7 @@ CORBA::Boolean CORBA::UnionDef::_is_a (const CORBA::Char *value, CORBA::Environm
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::UnionDef::_interface_repository_id (void) const
+const char* CORBA_UnionDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/UnionDef:1.0";
 }
@@ -4966,32 +4966,32 @@ static const CORBA::Long _oc_CORBA_UnionDef[] =
   31, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f556e), ACE_NTOHL (0x696f6e44), ACE_NTOHL (0x65663a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/UnionDef:1.0
   9, ACE_NTOHL (0x556e696f), ACE_NTOHL (0x6e446566), ACE_NTOHL (0x0),  // name = UnionDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_UnionDef (CORBA::tk_objref, sizeof (_oc_CORBA_UnionDef), (char *) &_oc_CORBA_UnionDef, 0, sizeof (CORBA::UnionDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_UnionDef (CORBA::tk_objref, sizeof (_oc_CORBA_UnionDef), (char *) &_oc_CORBA_UnionDef, 0, sizeof (CORBA_UnionDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UnionDef, &_tc_TAO_tc_CORBA_UnionDef)
 TAO_NAMESPACE_END
-CORBA::EnumDef_ptr CORBA::EnumDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_EnumDef_ptr CORBA_EnumDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::EnumDef::_nil ();
+    return CORBA_EnumDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/EnumDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::EnumDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_EnumDef::_nil ());
   if (is_a == 0)
-    return CORBA::EnumDef::_nil ();
-  return CORBA::EnumDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_EnumDef::_nil ();
+  return CORBA_EnumDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::EnumDef_ptr CORBA::EnumDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_EnumDef_ptr CORBA_EnumDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::EnumDef::_nil ();
+    return CORBA_EnumDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_EnumDef_Stub_Factory_function_pointer != 0)
@@ -5000,34 +5000,34 @@ CORBA::EnumDef_ptr CORBA::EnumDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::EnumDef(stub);
+  return new CORBA_EnumDef(stub);
 }
 
-CORBA::EnumDef_ptr 
-CORBA::EnumDef::_duplicate (CORBA::EnumDef_ptr obj)
+CORBA_EnumDef_ptr 
+CORBA_EnumDef::_duplicate (CORBA_EnumDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::EnumMemberSeq * CORBA::EnumDef::members (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_EnumMemberSeq * CORBA_EnumDef::members (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::EnumMemberSeq* _tao_retval = 0;
+  CORBA_EnumMemberSeq* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::EnumMemberSeq, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_EnumMemberSeq, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""members",
@@ -5050,7 +5050,7 @@ CORBA::EnumMemberSeq * CORBA::EnumDef::members (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -5060,16 +5060,16 @@ CORBA::EnumMemberSeq * CORBA::EnumDef::members (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::EnumDef::members (
-    const CORBA::EnumMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_EnumDef::members (
+    const CORBA_EnumMemberSeq & members,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -5078,7 +5078,7 @@ void CORBA::EnumDef::members (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -5097,7 +5097,7 @@ void CORBA::EnumDef::members (
     if (!(
           (_tao_out << members)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -5109,7 +5109,7 @@ void CORBA::EnumDef::members (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -5118,7 +5118,7 @@ void CORBA::EnumDef::members (
   
 }
 
-CORBA::Boolean CORBA::EnumDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_EnumDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/EnumDef:1.0")) ||
@@ -5132,7 +5132,7 @@ CORBA::Boolean CORBA::EnumDef::_is_a (const CORBA::Char *value, CORBA::Environme
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::EnumDef::_interface_repository_id (void) const
+const char* CORBA_EnumDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/EnumDef:1.0";
 }
@@ -5143,32 +5143,32 @@ static const CORBA::Long _oc_CORBA_EnumDef[] =
   30, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f456e), ACE_NTOHL (0x756d4465), ACE_NTOHL (0x663a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/EnumDef:1.0
   8, ACE_NTOHL (0x456e756d), ACE_NTOHL (0x44656600),  // name = EnumDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_EnumDef (CORBA::tk_objref, sizeof (_oc_CORBA_EnumDef), (char *) &_oc_CORBA_EnumDef, 0, sizeof (CORBA::EnumDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_EnumDef (CORBA::tk_objref, sizeof (_oc_CORBA_EnumDef), (char *) &_oc_CORBA_EnumDef, 0, sizeof (CORBA_EnumDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_EnumDef, &_tc_TAO_tc_CORBA_EnumDef)
 TAO_NAMESPACE_END
-CORBA::AliasDef_ptr CORBA::AliasDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_AliasDef_ptr CORBA_AliasDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::AliasDef::_nil ();
+    return CORBA_AliasDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/AliasDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::AliasDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_AliasDef::_nil ());
   if (is_a == 0)
-    return CORBA::AliasDef::_nil ();
-  return CORBA::AliasDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_AliasDef::_nil ();
+  return CORBA_AliasDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::AliasDef_ptr CORBA::AliasDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_AliasDef_ptr CORBA_AliasDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::AliasDef::_nil ();
+    return CORBA_AliasDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_AliasDef_Stub_Factory_function_pointer != 0)
@@ -5177,31 +5177,31 @@ CORBA::AliasDef_ptr CORBA::AliasDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::AliasDef(stub);
+  return new CORBA_AliasDef(stub);
 }
 
-CORBA::AliasDef_ptr 
-CORBA::AliasDef::_duplicate (CORBA::AliasDef_ptr obj)
+CORBA_AliasDef_ptr 
+CORBA_AliasDef::_duplicate (CORBA_AliasDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::IDLType_ptr CORBA::AliasDef::original_type_def (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_IDLType_ptr CORBA_AliasDef::original_type_def (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::IDLType_ptr _tao_retval = CORBA::IDLType::_nil ();
+  CORBA_IDLType_ptr _tao_retval = CORBA_IDLType::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -5226,7 +5226,7 @@ CORBA::IDLType_ptr CORBA::AliasDef::original_type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -5236,16 +5236,16 @@ CORBA::IDLType_ptr CORBA::AliasDef::original_type_def (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::AliasDef::original_type_def (
-    CORBA::IDLType_ptr original_type_def,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_AliasDef::original_type_def (
+    CORBA_IDLType_ptr original_type_def,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -5254,7 +5254,7 @@ void CORBA::AliasDef::original_type_def (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -5273,7 +5273,7 @@ void CORBA::AliasDef::original_type_def (
     if (!(
           (_tao_out << original_type_def)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -5285,7 +5285,7 @@ void CORBA::AliasDef::original_type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -5294,7 +5294,7 @@ void CORBA::AliasDef::original_type_def (
   
 }
 
-CORBA::Boolean CORBA::AliasDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_AliasDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/AliasDef:1.0")) ||
@@ -5308,7 +5308,7 @@ CORBA::Boolean CORBA::AliasDef::_is_a (const CORBA::Char *value, CORBA::Environm
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::AliasDef::_interface_repository_id (void) const
+const char* CORBA_AliasDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/AliasDef:1.0";
 }
@@ -5319,32 +5319,32 @@ static const CORBA::Long _oc_CORBA_AliasDef[] =
   31, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f416c), ACE_NTOHL (0x69617344), ACE_NTOHL (0x65663a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/AliasDef:1.0
   9, ACE_NTOHL (0x416c6961), ACE_NTOHL (0x73446566), ACE_NTOHL (0x0),  // name = AliasDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_AliasDef (CORBA::tk_objref, sizeof (_oc_CORBA_AliasDef), (char *) &_oc_CORBA_AliasDef, 0, sizeof (CORBA::AliasDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_AliasDef (CORBA::tk_objref, sizeof (_oc_CORBA_AliasDef), (char *) &_oc_CORBA_AliasDef, 0, sizeof (CORBA_AliasDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_AliasDef, &_tc_TAO_tc_CORBA_AliasDef)
 TAO_NAMESPACE_END
-CORBA::PrimitiveDef_ptr CORBA::PrimitiveDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_PrimitiveDef_ptr CORBA_PrimitiveDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::PrimitiveDef::_nil ();
+    return CORBA_PrimitiveDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/PrimitiveDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::PrimitiveDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_PrimitiveDef::_nil ());
   if (is_a == 0)
-    return CORBA::PrimitiveDef::_nil ();
-  return CORBA::PrimitiveDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_PrimitiveDef::_nil ();
+  return CORBA_PrimitiveDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::PrimitiveDef_ptr CORBA::PrimitiveDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_PrimitiveDef_ptr CORBA_PrimitiveDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::PrimitiveDef::_nil ();
+    return CORBA_PrimitiveDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_PrimitiveDef_Stub_Factory_function_pointer != 0)
@@ -5353,22 +5353,22 @@ CORBA::PrimitiveDef_ptr CORBA::PrimitiveDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::PrimitiveDef(stub);
+  return new CORBA_PrimitiveDef(stub);
 }
 
-CORBA::PrimitiveDef_ptr 
-CORBA::PrimitiveDef::_duplicate (CORBA::PrimitiveDef_ptr obj)
+CORBA_PrimitiveDef_ptr 
+CORBA_PrimitiveDef::_duplicate (CORBA_PrimitiveDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::PrimitiveKind CORBA::PrimitiveDef::kind (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::PrimitiveKind CORBA_PrimitiveDef::kind (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -5377,7 +5377,7 @@ CORBA::PrimitiveKind CORBA::PrimitiveDef::kind (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -5402,7 +5402,7 @@ CORBA::PrimitiveKind CORBA::PrimitiveDef::kind (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -5412,11 +5412,11 @@ CORBA::PrimitiveKind CORBA::PrimitiveDef::kind (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::Boolean CORBA::PrimitiveDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_PrimitiveDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/PrimitiveDef:1.0")) ||
@@ -5428,7 +5428,7 @@ CORBA::Boolean CORBA::PrimitiveDef::_is_a (const CORBA::Char *value, CORBA::Envi
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::PrimitiveDef::_interface_repository_id (void) const
+const char* CORBA_PrimitiveDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/PrimitiveDef:1.0";
 }
@@ -5439,32 +5439,32 @@ static const CORBA::Long _oc_CORBA_PrimitiveDef[] =
   35, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5072), ACE_NTOHL (0x696d6974), ACE_NTOHL (0x69766544), ACE_NTOHL (0x65663a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/PrimitiveDef:1.0
   13, ACE_NTOHL (0x5072696d), ACE_NTOHL (0x69746976), ACE_NTOHL (0x65446566), ACE_NTOHL (0x0),  // name = PrimitiveDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_PrimitiveDef (CORBA::tk_objref, sizeof (_oc_CORBA_PrimitiveDef), (char *) &_oc_CORBA_PrimitiveDef, 0, sizeof (CORBA::PrimitiveDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_PrimitiveDef (CORBA::tk_objref, sizeof (_oc_CORBA_PrimitiveDef), (char *) &_oc_CORBA_PrimitiveDef, 0, sizeof (CORBA_PrimitiveDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PrimitiveDef, &_tc_TAO_tc_CORBA_PrimitiveDef)
 TAO_NAMESPACE_END
-CORBA::StringDef_ptr CORBA::StringDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_StringDef_ptr CORBA_StringDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::StringDef::_nil ();
+    return CORBA_StringDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/StringDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::StringDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_StringDef::_nil ());
   if (is_a == 0)
-    return CORBA::StringDef::_nil ();
-  return CORBA::StringDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_StringDef::_nil ();
+  return CORBA_StringDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::StringDef_ptr CORBA::StringDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_StringDef_ptr CORBA_StringDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::StringDef::_nil ();
+    return CORBA_StringDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_StringDef_Stub_Factory_function_pointer != 0)
@@ -5473,22 +5473,22 @@ CORBA::StringDef_ptr CORBA::StringDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::StringDef(stub);
+  return new CORBA_StringDef(stub);
 }
 
-CORBA::StringDef_ptr 
-CORBA::StringDef::_duplicate (CORBA::StringDef_ptr obj)
+CORBA_StringDef_ptr 
+CORBA_StringDef::_duplicate (CORBA_StringDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::ULong CORBA::StringDef::bound (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::ULong CORBA_StringDef::bound (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -5497,7 +5497,7 @@ CORBA::ULong CORBA::StringDef::bound (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -5522,7 +5522,7 @@ CORBA::ULong CORBA::StringDef::bound (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -5532,16 +5532,16 @@ CORBA::ULong CORBA::StringDef::bound (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::StringDef::bound (
+void CORBA_StringDef::bound (
     CORBA::ULong bound,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -5550,7 +5550,7 @@ void CORBA::StringDef::bound (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -5569,7 +5569,7 @@ void CORBA::StringDef::bound (
     if (!(
           (_tao_out << bound)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -5581,7 +5581,7 @@ void CORBA::StringDef::bound (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -5590,7 +5590,7 @@ void CORBA::StringDef::bound (
   
 }
 
-CORBA::Boolean CORBA::StringDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_StringDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/StringDef:1.0")) ||
@@ -5602,7 +5602,7 @@ CORBA::Boolean CORBA::StringDef::_is_a (const CORBA::Char *value, CORBA::Environ
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::StringDef::_interface_repository_id (void) const
+const char* CORBA_StringDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/StringDef:1.0";
 }
@@ -5613,32 +5613,32 @@ static const CORBA::Long _oc_CORBA_StringDef[] =
   32, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5374), ACE_NTOHL (0x72696e67), ACE_NTOHL (0x4465663a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/StringDef:1.0
   10, ACE_NTOHL (0x53747269), ACE_NTOHL (0x6e674465), ACE_NTOHL (0x66000000),  // name = StringDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_StringDef (CORBA::tk_objref, sizeof (_oc_CORBA_StringDef), (char *) &_oc_CORBA_StringDef, 0, sizeof (CORBA::StringDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_StringDef (CORBA::tk_objref, sizeof (_oc_CORBA_StringDef), (char *) &_oc_CORBA_StringDef, 0, sizeof (CORBA_StringDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_StringDef, &_tc_TAO_tc_CORBA_StringDef)
 TAO_NAMESPACE_END
-CORBA::WstringDef_ptr CORBA::WstringDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_WstringDef_ptr CORBA_WstringDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::WstringDef::_nil ();
+    return CORBA_WstringDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/WstringDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::WstringDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_WstringDef::_nil ());
   if (is_a == 0)
-    return CORBA::WstringDef::_nil ();
-  return CORBA::WstringDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_WstringDef::_nil ();
+  return CORBA_WstringDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::WstringDef_ptr CORBA::WstringDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_WstringDef_ptr CORBA_WstringDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::WstringDef::_nil ();
+    return CORBA_WstringDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_WstringDef_Stub_Factory_function_pointer != 0)
@@ -5647,22 +5647,22 @@ CORBA::WstringDef_ptr CORBA::WstringDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::WstringDef(stub);
+  return new CORBA_WstringDef(stub);
 }
 
-CORBA::WstringDef_ptr 
-CORBA::WstringDef::_duplicate (CORBA::WstringDef_ptr obj)
+CORBA_WstringDef_ptr 
+CORBA_WstringDef::_duplicate (CORBA_WstringDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::ULong CORBA::WstringDef::bound (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::ULong CORBA_WstringDef::bound (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -5671,7 +5671,7 @@ CORBA::ULong CORBA::WstringDef::bound (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -5696,7 +5696,7 @@ CORBA::ULong CORBA::WstringDef::bound (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -5706,16 +5706,16 @@ CORBA::ULong CORBA::WstringDef::bound (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::WstringDef::bound (
+void CORBA_WstringDef::bound (
     CORBA::ULong bound,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -5724,7 +5724,7 @@ void CORBA::WstringDef::bound (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -5743,7 +5743,7 @@ void CORBA::WstringDef::bound (
     if (!(
           (_tao_out << bound)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -5755,7 +5755,7 @@ void CORBA::WstringDef::bound (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -5764,7 +5764,7 @@ void CORBA::WstringDef::bound (
   
 }
 
-CORBA::Boolean CORBA::WstringDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_WstringDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/WstringDef:1.0")) ||
@@ -5776,7 +5776,7 @@ CORBA::Boolean CORBA::WstringDef::_is_a (const CORBA::Char *value, CORBA::Enviro
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::WstringDef::_interface_repository_id (void) const
+const char* CORBA_WstringDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/WstringDef:1.0";
 }
@@ -5787,32 +5787,32 @@ static const CORBA::Long _oc_CORBA_WstringDef[] =
   33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5773), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x67446566), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/WstringDef:1.0
   11, ACE_NTOHL (0x57737472), ACE_NTOHL (0x696e6744), ACE_NTOHL (0x65660000),  // name = WstringDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_WstringDef (CORBA::tk_objref, sizeof (_oc_CORBA_WstringDef), (char *) &_oc_CORBA_WstringDef, 0, sizeof (CORBA::WstringDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_WstringDef (CORBA::tk_objref, sizeof (_oc_CORBA_WstringDef), (char *) &_oc_CORBA_WstringDef, 0, sizeof (CORBA_WstringDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_WstringDef, &_tc_TAO_tc_CORBA_WstringDef)
 TAO_NAMESPACE_END
-CORBA::FixedDef_ptr CORBA::FixedDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_FixedDef_ptr CORBA_FixedDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::FixedDef::_nil ();
+    return CORBA_FixedDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/FixedDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::FixedDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_FixedDef::_nil ());
   if (is_a == 0)
-    return CORBA::FixedDef::_nil ();
-  return CORBA::FixedDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_FixedDef::_nil ();
+  return CORBA_FixedDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::FixedDef_ptr CORBA::FixedDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_FixedDef_ptr CORBA_FixedDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::FixedDef::_nil ();
+    return CORBA_FixedDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_FixedDef_Stub_Factory_function_pointer != 0)
@@ -5821,22 +5821,22 @@ CORBA::FixedDef_ptr CORBA::FixedDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::FixedDef(stub);
+  return new CORBA_FixedDef(stub);
 }
 
-CORBA::FixedDef_ptr 
-CORBA::FixedDef::_duplicate (CORBA::FixedDef_ptr obj)
+CORBA_FixedDef_ptr 
+CORBA_FixedDef::_duplicate (CORBA_FixedDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::UShort CORBA::FixedDef::digits (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::UShort CORBA_FixedDef::digits (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -5845,7 +5845,7 @@ CORBA::UShort CORBA::FixedDef::digits (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -5870,7 +5870,7 @@ CORBA::UShort CORBA::FixedDef::digits (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -5880,16 +5880,16 @@ CORBA::UShort CORBA::FixedDef::digits (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::FixedDef::digits (
+void CORBA_FixedDef::digits (
     CORBA::UShort digits,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -5898,7 +5898,7 @@ void CORBA::FixedDef::digits (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -5917,7 +5917,7 @@ void CORBA::FixedDef::digits (
     if (!(
           (_tao_out << digits)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -5929,7 +5929,7 @@ void CORBA::FixedDef::digits (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -5938,11 +5938,11 @@ void CORBA::FixedDef::digits (
   
 }
 
-CORBA::Short CORBA::FixedDef::scale (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::Short CORBA_FixedDef::scale (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -5951,7 +5951,7 @@ CORBA::Short CORBA::FixedDef::scale (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -5976,7 +5976,7 @@ CORBA::Short CORBA::FixedDef::scale (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -5986,16 +5986,16 @@ CORBA::Short CORBA::FixedDef::scale (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::FixedDef::scale (
+void CORBA_FixedDef::scale (
     CORBA::Short scale,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -6004,7 +6004,7 @@ void CORBA::FixedDef::scale (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -6023,7 +6023,7 @@ void CORBA::FixedDef::scale (
     if (!(
           (_tao_out << scale)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -6035,7 +6035,7 @@ void CORBA::FixedDef::scale (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -6044,7 +6044,7 @@ void CORBA::FixedDef::scale (
   
 }
 
-CORBA::Boolean CORBA::FixedDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_FixedDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/FixedDef:1.0")) ||
@@ -6056,7 +6056,7 @@ CORBA::Boolean CORBA::FixedDef::_is_a (const CORBA::Char *value, CORBA::Environm
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::FixedDef::_interface_repository_id (void) const
+const char* CORBA_FixedDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/FixedDef:1.0";
 }
@@ -6067,32 +6067,32 @@ static const CORBA::Long _oc_CORBA_FixedDef[] =
   31, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4669), ACE_NTOHL (0x78656444), ACE_NTOHL (0x65663a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/FixedDef:1.0
   9, ACE_NTOHL (0x46697865), ACE_NTOHL (0x64446566), ACE_NTOHL (0x0),  // name = FixedDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_FixedDef (CORBA::tk_objref, sizeof (_oc_CORBA_FixedDef), (char *) &_oc_CORBA_FixedDef, 0, sizeof (CORBA::FixedDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_FixedDef (CORBA::tk_objref, sizeof (_oc_CORBA_FixedDef), (char *) &_oc_CORBA_FixedDef, 0, sizeof (CORBA_FixedDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_FixedDef, &_tc_TAO_tc_CORBA_FixedDef)
 TAO_NAMESPACE_END
-CORBA::SequenceDef_ptr CORBA::SequenceDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_SequenceDef_ptr CORBA_SequenceDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::SequenceDef::_nil ();
+    return CORBA_SequenceDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/SequenceDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::SequenceDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_SequenceDef::_nil ());
   if (is_a == 0)
-    return CORBA::SequenceDef::_nil ();
-  return CORBA::SequenceDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_SequenceDef::_nil ();
+  return CORBA_SequenceDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::SequenceDef_ptr CORBA::SequenceDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_SequenceDef_ptr CORBA_SequenceDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::SequenceDef::_nil ();
+    return CORBA_SequenceDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_SequenceDef_Stub_Factory_function_pointer != 0)
@@ -6101,22 +6101,22 @@ CORBA::SequenceDef_ptr CORBA::SequenceDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::SequenceDef(stub);
+  return new CORBA_SequenceDef(stub);
 }
 
-CORBA::SequenceDef_ptr 
-CORBA::SequenceDef::_duplicate (CORBA::SequenceDef_ptr obj)
+CORBA_SequenceDef_ptr 
+CORBA_SequenceDef::_duplicate (CORBA_SequenceDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::ULong CORBA::SequenceDef::bound (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::ULong CORBA_SequenceDef::bound (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -6125,7 +6125,7 @@ CORBA::ULong CORBA::SequenceDef::bound (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -6150,7 +6150,7 @@ CORBA::ULong CORBA::SequenceDef::bound (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -6160,16 +6160,16 @@ CORBA::ULong CORBA::SequenceDef::bound (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::SequenceDef::bound (
+void CORBA_SequenceDef::bound (
     CORBA::ULong bound,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -6178,7 +6178,7 @@ void CORBA::SequenceDef::bound (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -6197,7 +6197,7 @@ void CORBA::SequenceDef::bound (
     if (!(
           (_tao_out << bound)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -6209,7 +6209,7 @@ void CORBA::SequenceDef::bound (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -6218,11 +6218,11 @@ void CORBA::SequenceDef::bound (
   
 }
 
-CORBA::TypeCode_ptr CORBA::SequenceDef::element_type (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::TypeCode_ptr CORBA_SequenceDef::element_type (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -6231,7 +6231,7 @@ CORBA::TypeCode_ptr CORBA::SequenceDef::element_type (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -6256,7 +6256,7 @@ CORBA::TypeCode_ptr CORBA::SequenceDef::element_type (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -6266,24 +6266,24 @@ CORBA::TypeCode_ptr CORBA::SequenceDef::element_type (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::IDLType_ptr CORBA::SequenceDef::element_type_def (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_IDLType_ptr CORBA_SequenceDef::element_type_def (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::IDLType_ptr _tao_retval = CORBA::IDLType::_nil ();
+  CORBA_IDLType_ptr _tao_retval = CORBA_IDLType::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -6308,7 +6308,7 @@ CORBA::IDLType_ptr CORBA::SequenceDef::element_type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -6318,16 +6318,16 @@ CORBA::IDLType_ptr CORBA::SequenceDef::element_type_def (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::SequenceDef::element_type_def (
-    CORBA::IDLType_ptr element_type_def,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_SequenceDef::element_type_def (
+    CORBA_IDLType_ptr element_type_def,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -6336,7 +6336,7 @@ void CORBA::SequenceDef::element_type_def (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -6355,7 +6355,7 @@ void CORBA::SequenceDef::element_type_def (
     if (!(
           (_tao_out << element_type_def)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -6367,7 +6367,7 @@ void CORBA::SequenceDef::element_type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -6376,7 +6376,7 @@ void CORBA::SequenceDef::element_type_def (
   
 }
 
-CORBA::Boolean CORBA::SequenceDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_SequenceDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/SequenceDef:1.0")) ||
@@ -6388,7 +6388,7 @@ CORBA::Boolean CORBA::SequenceDef::_is_a (const CORBA::Char *value, CORBA::Envir
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::SequenceDef::_interface_repository_id (void) const
+const char* CORBA_SequenceDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/SequenceDef:1.0";
 }
@@ -6399,32 +6399,32 @@ static const CORBA::Long _oc_CORBA_SequenceDef[] =
   34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5365), ACE_NTOHL (0x7175656e), ACE_NTOHL (0x63654465), ACE_NTOHL (0x663a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/SequenceDef:1.0
   12, ACE_NTOHL (0x53657175), ACE_NTOHL (0x656e6365), ACE_NTOHL (0x44656600),  // name = SequenceDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_SequenceDef (CORBA::tk_objref, sizeof (_oc_CORBA_SequenceDef), (char *) &_oc_CORBA_SequenceDef, 0, sizeof (CORBA::SequenceDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_SequenceDef (CORBA::tk_objref, sizeof (_oc_CORBA_SequenceDef), (char *) &_oc_CORBA_SequenceDef, 0, sizeof (CORBA_SequenceDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_SequenceDef, &_tc_TAO_tc_CORBA_SequenceDef)
 TAO_NAMESPACE_END
-CORBA::ArrayDef_ptr CORBA::ArrayDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_ArrayDef_ptr CORBA_ArrayDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ArrayDef::_nil ();
+    return CORBA_ArrayDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/ArrayDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::ArrayDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_ArrayDef::_nil ());
   if (is_a == 0)
-    return CORBA::ArrayDef::_nil ();
-  return CORBA::ArrayDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_ArrayDef::_nil ();
+  return CORBA_ArrayDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::ArrayDef_ptr CORBA::ArrayDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_ArrayDef_ptr CORBA_ArrayDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ArrayDef::_nil ();
+    return CORBA_ArrayDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_ArrayDef_Stub_Factory_function_pointer != 0)
@@ -6433,22 +6433,22 @@ CORBA::ArrayDef_ptr CORBA::ArrayDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::ArrayDef(stub);
+  return new CORBA_ArrayDef(stub);
 }
 
-CORBA::ArrayDef_ptr 
-CORBA::ArrayDef::_duplicate (CORBA::ArrayDef_ptr obj)
+CORBA_ArrayDef_ptr 
+CORBA_ArrayDef::_duplicate (CORBA_ArrayDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::ULong CORBA::ArrayDef::length (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::ULong CORBA_ArrayDef::length (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -6457,7 +6457,7 @@ CORBA::ULong CORBA::ArrayDef::length (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -6482,7 +6482,7 @@ CORBA::ULong CORBA::ArrayDef::length (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -6492,16 +6492,16 @@ CORBA::ULong CORBA::ArrayDef::length (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ArrayDef::length (
+void CORBA_ArrayDef::length (
     CORBA::ULong length,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -6510,7 +6510,7 @@ void CORBA::ArrayDef::length (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -6529,7 +6529,7 @@ void CORBA::ArrayDef::length (
     if (!(
           (_tao_out << length)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -6541,7 +6541,7 @@ void CORBA::ArrayDef::length (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -6550,11 +6550,11 @@ void CORBA::ArrayDef::length (
   
 }
 
-CORBA::TypeCode_ptr CORBA::ArrayDef::element_type (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::TypeCode_ptr CORBA_ArrayDef::element_type (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -6563,7 +6563,7 @@ CORBA::TypeCode_ptr CORBA::ArrayDef::element_type (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -6588,7 +6588,7 @@ CORBA::TypeCode_ptr CORBA::ArrayDef::element_type (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -6598,24 +6598,24 @@ CORBA::TypeCode_ptr CORBA::ArrayDef::element_type (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::IDLType_ptr CORBA::ArrayDef::element_type_def (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_IDLType_ptr CORBA_ArrayDef::element_type_def (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::IDLType_ptr _tao_retval = CORBA::IDLType::_nil ();
+  CORBA_IDLType_ptr _tao_retval = CORBA_IDLType::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -6640,7 +6640,7 @@ CORBA::IDLType_ptr CORBA::ArrayDef::element_type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -6650,16 +6650,16 @@ CORBA::IDLType_ptr CORBA::ArrayDef::element_type_def (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ArrayDef::element_type_def (
-    CORBA::IDLType_ptr element_type_def,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_ArrayDef::element_type_def (
+    CORBA_IDLType_ptr element_type_def,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -6668,7 +6668,7 @@ void CORBA::ArrayDef::element_type_def (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -6687,7 +6687,7 @@ void CORBA::ArrayDef::element_type_def (
     if (!(
           (_tao_out << element_type_def)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -6699,7 +6699,7 @@ void CORBA::ArrayDef::element_type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -6708,7 +6708,7 @@ void CORBA::ArrayDef::element_type_def (
   
 }
 
-CORBA::Boolean CORBA::ArrayDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_ArrayDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/ArrayDef:1.0")) ||
@@ -6720,7 +6720,7 @@ CORBA::Boolean CORBA::ArrayDef::_is_a (const CORBA::Char *value, CORBA::Environm
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::ArrayDef::_interface_repository_id (void) const
+const char* CORBA_ArrayDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ArrayDef:1.0";
 }
@@ -6731,32 +6731,32 @@ static const CORBA::Long _oc_CORBA_ArrayDef[] =
   31, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4172), ACE_NTOHL (0x72617944), ACE_NTOHL (0x65663a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ArrayDef:1.0
   9, ACE_NTOHL (0x41727261), ACE_NTOHL (0x79446566), ACE_NTOHL (0x0),  // name = ArrayDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ArrayDef (CORBA::tk_objref, sizeof (_oc_CORBA_ArrayDef), (char *) &_oc_CORBA_ArrayDef, 0, sizeof (CORBA::ArrayDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ArrayDef (CORBA::tk_objref, sizeof (_oc_CORBA_ArrayDef), (char *) &_oc_CORBA_ArrayDef, 0, sizeof (CORBA_ArrayDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ArrayDef, &_tc_TAO_tc_CORBA_ArrayDef)
 TAO_NAMESPACE_END
-CORBA::ExceptionDef_ptr CORBA::ExceptionDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_ExceptionDef_ptr CORBA_ExceptionDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ExceptionDef::_nil ();
+    return CORBA_ExceptionDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/ExceptionDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::ExceptionDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_ExceptionDef::_nil ());
   if (is_a == 0)
-    return CORBA::ExceptionDef::_nil ();
-  return CORBA::ExceptionDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_ExceptionDef::_nil ();
+  return CORBA_ExceptionDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::ExceptionDef_ptr CORBA::ExceptionDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_ExceptionDef_ptr CORBA_ExceptionDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ExceptionDef::_nil ();
+    return CORBA_ExceptionDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_ExceptionDef_Stub_Factory_function_pointer != 0)
@@ -6765,22 +6765,22 @@ CORBA::ExceptionDef_ptr CORBA::ExceptionDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::ExceptionDef(stub);
+  return new CORBA_ExceptionDef(stub);
 }
 
-CORBA::ExceptionDef_ptr 
-CORBA::ExceptionDef::_duplicate (CORBA::ExceptionDef_ptr obj)
+CORBA_ExceptionDef_ptr 
+CORBA_ExceptionDef::_duplicate (CORBA_ExceptionDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::TypeCode_ptr CORBA::ExceptionDef::type (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::TypeCode_ptr CORBA_ExceptionDef::type (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -6789,7 +6789,7 @@ CORBA::TypeCode_ptr CORBA::ExceptionDef::type (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -6814,7 +6814,7 @@ CORBA::TypeCode_ptr CORBA::ExceptionDef::type (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -6824,27 +6824,27 @@ CORBA::TypeCode_ptr CORBA::ExceptionDef::type (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::StructMemberSeq * CORBA::ExceptionDef::members (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_StructMemberSeq * CORBA_ExceptionDef::members (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::StructMemberSeq* _tao_retval = 0;
+  CORBA_StructMemberSeq* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::StructMemberSeq, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_StructMemberSeq, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""members",
@@ -6867,7 +6867,7 @@ CORBA::StructMemberSeq * CORBA::ExceptionDef::members (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -6877,16 +6877,16 @@ CORBA::StructMemberSeq * CORBA::ExceptionDef::members (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ExceptionDef::members (
-    const CORBA::StructMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_ExceptionDef::members (
+    const CORBA_StructMemberSeq & members,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -6895,7 +6895,7 @@ void CORBA::ExceptionDef::members (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -6914,7 +6914,7 @@ void CORBA::ExceptionDef::members (
     if (!(
           (_tao_out << members)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -6926,7 +6926,7 @@ void CORBA::ExceptionDef::members (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -6935,7 +6935,7 @@ void CORBA::ExceptionDef::members (
   
 }
 
-CORBA::Boolean CORBA::ExceptionDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_ExceptionDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/ExceptionDef:1.0")) ||
@@ -6948,7 +6948,7 @@ CORBA::Boolean CORBA::ExceptionDef::_is_a (const CORBA::Char *value, CORBA::Envi
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::ExceptionDef::_interface_repository_id (void) const
+const char* CORBA_ExceptionDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ExceptionDef:1.0";
 }
@@ -6959,7 +6959,7 @@ static const CORBA::Long _oc_CORBA_ExceptionDef[] =
   35, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4578), ACE_NTOHL (0x63657074), ACE_NTOHL (0x696f6e44), ACE_NTOHL (0x65663a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ExceptionDef:1.0
   13, ACE_NTOHL (0x45786365), ACE_NTOHL (0x7074696f), ACE_NTOHL (0x6e446566), ACE_NTOHL (0x0),  // name = ExceptionDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ExceptionDef (CORBA::tk_objref, sizeof (_oc_CORBA_ExceptionDef), (char *) &_oc_CORBA_ExceptionDef, 0, sizeof (CORBA::ExceptionDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ExceptionDef (CORBA::tk_objref, sizeof (_oc_CORBA_ExceptionDef), (char *) &_oc_CORBA_ExceptionDef, 0, sizeof (CORBA_ExceptionDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ExceptionDef, &_tc_TAO_tc_CORBA_ExceptionDef)
@@ -7010,7 +7010,7 @@ static const CORBA::Long _oc_CORBA_ExceptionDescription[] =
   CORBA::tk_TypeCode,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ExceptionDescription (CORBA::tk_struct, sizeof (_oc_CORBA_ExceptionDescription), (char *) &_oc_CORBA_ExceptionDescription, 0, sizeof (CORBA::ExceptionDescription));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ExceptionDescription (CORBA::tk_struct, sizeof (_oc_CORBA_ExceptionDescription), (char *) &_oc_CORBA_ExceptionDescription, 0, sizeof (CORBA_ExceptionDescription));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ExceptionDescription, &_tc_TAO_tc_CORBA_ExceptionDescription)
@@ -7029,27 +7029,27 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_AttributeMode, &_tc_TAO_tc_CORBA_AttributeMode)
 TAO_NAMESPACE_END
-CORBA::AttributeDef_ptr CORBA::AttributeDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_AttributeDef_ptr CORBA_AttributeDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::AttributeDef::_nil ();
+    return CORBA_AttributeDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/AttributeDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::AttributeDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_AttributeDef::_nil ());
   if (is_a == 0)
-    return CORBA::AttributeDef::_nil ();
-  return CORBA::AttributeDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_AttributeDef::_nil ();
+  return CORBA_AttributeDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::AttributeDef_ptr CORBA::AttributeDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_AttributeDef_ptr CORBA_AttributeDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::AttributeDef::_nil ();
+    return CORBA_AttributeDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_AttributeDef_Stub_Factory_function_pointer != 0)
@@ -7058,22 +7058,22 @@ CORBA::AttributeDef_ptr CORBA::AttributeDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::AttributeDef(stub);
+  return new CORBA_AttributeDef(stub);
 }
 
-CORBA::AttributeDef_ptr 
-CORBA::AttributeDef::_duplicate (CORBA::AttributeDef_ptr obj)
+CORBA_AttributeDef_ptr 
+CORBA_AttributeDef::_duplicate (CORBA_AttributeDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::TypeCode_ptr CORBA::AttributeDef::type (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::TypeCode_ptr CORBA_AttributeDef::type (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -7082,7 +7082,7 @@ CORBA::TypeCode_ptr CORBA::AttributeDef::type (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -7107,7 +7107,7 @@ CORBA::TypeCode_ptr CORBA::AttributeDef::type (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -7117,24 +7117,24 @@ CORBA::TypeCode_ptr CORBA::AttributeDef::type (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::IDLType_ptr CORBA::AttributeDef::type_def (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_IDLType_ptr CORBA_AttributeDef::type_def (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::IDLType_ptr _tao_retval = CORBA::IDLType::_nil ();
+  CORBA_IDLType_ptr _tao_retval = CORBA_IDLType::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -7159,7 +7159,7 @@ CORBA::IDLType_ptr CORBA::AttributeDef::type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -7169,16 +7169,16 @@ CORBA::IDLType_ptr CORBA::AttributeDef::type_def (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::AttributeDef::type_def (
-    CORBA::IDLType_ptr type_def,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_AttributeDef::type_def (
+    CORBA_IDLType_ptr type_def,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -7187,7 +7187,7 @@ void CORBA::AttributeDef::type_def (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -7206,7 +7206,7 @@ void CORBA::AttributeDef::type_def (
     if (!(
           (_tao_out << type_def)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -7218,7 +7218,7 @@ void CORBA::AttributeDef::type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -7227,11 +7227,11 @@ void CORBA::AttributeDef::type_def (
   
 }
 
-CORBA::AttributeMode CORBA::AttributeDef::mode (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::AttributeMode CORBA_AttributeDef::mode (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -7240,7 +7240,7 @@ CORBA::AttributeMode CORBA::AttributeDef::mode (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -7265,7 +7265,7 @@ CORBA::AttributeMode CORBA::AttributeDef::mode (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -7275,16 +7275,16 @@ CORBA::AttributeMode CORBA::AttributeDef::mode (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::AttributeDef::mode (
+void CORBA_AttributeDef::mode (
     CORBA::AttributeMode mode,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -7293,7 +7293,7 @@ void CORBA::AttributeDef::mode (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -7312,7 +7312,7 @@ void CORBA::AttributeDef::mode (
     if (!(
           (_tao_out << mode)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -7324,7 +7324,7 @@ void CORBA::AttributeDef::mode (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -7333,7 +7333,7 @@ void CORBA::AttributeDef::mode (
   
 }
 
-CORBA::Boolean CORBA::AttributeDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_AttributeDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/AttributeDef:1.0")) ||
@@ -7345,7 +7345,7 @@ CORBA::Boolean CORBA::AttributeDef::_is_a (const CORBA::Char *value, CORBA::Envi
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::AttributeDef::_interface_repository_id (void) const
+const char* CORBA_AttributeDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/AttributeDef:1.0";
 }
@@ -7356,7 +7356,7 @@ static const CORBA::Long _oc_CORBA_AttributeDef[] =
   35, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4174), ACE_NTOHL (0x74726962), ACE_NTOHL (0x75746544), ACE_NTOHL (0x65663a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/AttributeDef:1.0
   13, ACE_NTOHL (0x41747472), ACE_NTOHL (0x69627574), ACE_NTOHL (0x65446566), ACE_NTOHL (0x0),  // name = AttributeDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_AttributeDef (CORBA::tk_objref, sizeof (_oc_CORBA_AttributeDef), (char *) &_oc_CORBA_AttributeDef, 0, sizeof (CORBA::AttributeDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_AttributeDef (CORBA::tk_objref, sizeof (_oc_CORBA_AttributeDef), (char *) &_oc_CORBA_AttributeDef, 0, sizeof (CORBA_AttributeDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_AttributeDef, &_tc_TAO_tc_CORBA_AttributeDef)
@@ -7417,7 +7417,7 @@ static const CORBA::Long _oc_CORBA_AttributeDescription[] =
     14, ACE_NTOHL (0x41545452), ACE_NTOHL (0x5f524541), ACE_NTOHL (0x444f4e4c), ACE_NTOHL (0x59000000),  // name = ATTR_READONLY
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_AttributeDescription (CORBA::tk_struct, sizeof (_oc_CORBA_AttributeDescription), (char *) &_oc_CORBA_AttributeDescription, 0, sizeof (CORBA::AttributeDescription));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_AttributeDescription (CORBA::tk_struct, sizeof (_oc_CORBA_AttributeDescription), (char *) &_oc_CORBA_AttributeDescription, 0, sizeof (CORBA_AttributeDescription));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_AttributeDescription, &_tc_TAO_tc_CORBA_AttributeDescription)
@@ -7488,7 +7488,7 @@ static const CORBA::Long _oc_CORBA_ParameterDescription[] =
     12, ACE_NTOHL (0x50415241), ACE_NTOHL (0x4d5f494e), ACE_NTOHL (0x4f555400),  // name = PARAM_INOUT
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ParameterDescription (CORBA::tk_struct, sizeof (_oc_CORBA_ParameterDescription), (char *) &_oc_CORBA_ParameterDescription, 0, sizeof (CORBA::ParameterDescription));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ParameterDescription (CORBA::tk_struct, sizeof (_oc_CORBA_ParameterDescription), (char *) &_oc_CORBA_ParameterDescription, 0, sizeof (CORBA_ParameterDescription));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ParameterDescription, &_tc_TAO_tc_CORBA_ParameterDescription)
@@ -7502,12 +7502,12 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_allocate_buffer (CORBA::ULong length)
   {
-    CORBA::ParameterDescription* tmp = 0;
+    CORBA_ParameterDescription* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (length);
     
     if (this->buffer_ != 0)
     {
-      CORBA::ParameterDescription *old = ACE_reinterpret_cast (CORBA::ParameterDescription *,this->buffer_);
+      CORBA_ParameterDescription *old = ACE_reinterpret_cast (CORBA_ParameterDescription *,this->buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
@@ -7525,7 +7525,7 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     
-    CORBA::ParameterDescription *tmp = ACE_reinterpret_cast (CORBA::ParameterDescription *,this->buffer_);
+    CORBA_ParameterDescription *tmp = ACE_reinterpret_cast (CORBA_ParameterDescription *,this->buffer_);
     
     _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::freebuf (tmp);
     this->buffer_ = 0;
@@ -7546,39 +7546,39 @@ TAO_NAMESPACE_END
 #define _CORBA_PARDESCRIPTIONSEQ_CS_
 
 // *************************************************************
-// CORBA::ParDescriptionSeq
+// CORBA_ParDescriptionSeq
 // *************************************************************
 
-CORBA::ParDescriptionSeq::CORBA_ParDescriptionSeq (void)
+CORBA_ParDescriptionSeq::CORBA_ParDescriptionSeq (void)
 {}
-CORBA::ParDescriptionSeq::CORBA_ParDescriptionSeq (CORBA::ULong max) // uses max size
+CORBA_ParDescriptionSeq::CORBA_ParDescriptionSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::ParameterDescription>
+  TAO_Unbounded_Sequence<CORBA_ParameterDescription>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::ParDescriptionSeq::CORBA_ParDescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA::ParameterDescription *buffer, CORBA::Boolean release)
+CORBA_ParDescriptionSeq::CORBA_ParDescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA_ParameterDescription *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::ParameterDescription>
+  TAO_Unbounded_Sequence<CORBA_ParameterDescription>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::ParDescriptionSeq::CORBA_ParDescriptionSeq (const CORBA_ParDescriptionSeq &seq) // copy ctor
+CORBA_ParDescriptionSeq::CORBA_ParDescriptionSeq (const CORBA_ParDescriptionSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::ParameterDescription>
+  TAO_Unbounded_Sequence<CORBA_ParameterDescription>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::ParDescriptionSeq::~CORBA_ParDescriptionSeq (void) // dtor
+CORBA_ParDescriptionSeq::~CORBA_ParDescriptionSeq (void) // dtor
 {}
 
 
@@ -7632,7 +7632,7 @@ static const CORBA::Long _oc_CORBA_ParDescriptionSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ParDescriptionSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ParDescriptionSeq), (char *) &_oc_CORBA_ParDescriptionSeq, 0, sizeof (CORBA::ParDescriptionSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ParDescriptionSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ParDescriptionSeq), (char *) &_oc_CORBA_ParDescriptionSeq, 0, sizeof (CORBA_ParDescriptionSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ParDescriptionSeq, &_tc_TAO_tc_CORBA_ParDescriptionSeq)
@@ -7661,12 +7661,12 @@ TAO_NAMESPACE_END
 #define _CORBA_CONTEXTIDSEQ_CS_
 
 // *************************************************************
-// CORBA::ContextIdSeq
+// CORBA_ContextIdSeq
 // *************************************************************
 
-CORBA::ContextIdSeq::CORBA_ContextIdSeq (void)
+CORBA_ContextIdSeq::CORBA_ContextIdSeq (void)
 {}
-CORBA::ContextIdSeq::CORBA_ContextIdSeq (CORBA::ULong max) // uses max size
+CORBA_ContextIdSeq::CORBA_ContextIdSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -7675,7 +7675,7 @@ CORBA::ContextIdSeq::CORBA_ContextIdSeq (CORBA::ULong max) // uses max size
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::ContextIdSeq::CORBA_ContextIdSeq (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
+CORBA_ContextIdSeq::CORBA_ContextIdSeq (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -7684,7 +7684,7 @@ CORBA::ContextIdSeq::CORBA_ContextIdSeq (CORBA::ULong max, CORBA::ULong length, 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::ContextIdSeq::CORBA_ContextIdSeq (const CORBA_ContextIdSeq &seq) // copy ctor
+CORBA_ContextIdSeq::CORBA_ContextIdSeq (const CORBA_ContextIdSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -7693,7 +7693,7 @@ CORBA::ContextIdSeq::CORBA_ContextIdSeq (const CORBA_ContextIdSeq &seq) // copy 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::ContextIdSeq::~CORBA_ContextIdSeq (void) // dtor
+CORBA_ContextIdSeq::~CORBA_ContextIdSeq (void) // dtor
 {}
 
 
@@ -7724,7 +7724,7 @@ static const CORBA::Long _oc_CORBA_ContextIdSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ContextIdSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ContextIdSeq), (char *) &_oc_CORBA_ContextIdSeq, 0, sizeof (CORBA::ContextIdSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ContextIdSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ContextIdSeq), (char *) &_oc_CORBA_ContextIdSeq, 0, sizeof (CORBA_ContextIdSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ContextIdSeq, &_tc_TAO_tc_CORBA_ContextIdSeq)
@@ -7739,15 +7739,15 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_allocate_buffer (CORBA::ULong length)
   {
-    CORBA::ExceptionDef **tmp = 0;
+    CORBA_ExceptionDef **tmp = 0;
     tmp = _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::allocbuf (length);
     
     if (this->buffer_ != 0)
     {
-      CORBA::ExceptionDef **old = ACE_reinterpret_cast (CORBA::ExceptionDef**, this->buffer_);
+      CORBA_ExceptionDef **old = ACE_reinterpret_cast (CORBA_ExceptionDef**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         if (!this->release_)
-          tmp[i] = CORBA::ExceptionDef::_duplicate (old[i]);
+          tmp[i] = CORBA_ExceptionDef::_duplicate (old[i]);
         else
           tmp[i] = old[i];
         
@@ -7763,11 +7763,11 @@ TAO_NAMESPACE_END
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    CORBA::ExceptionDef **tmp = ACE_reinterpret_cast (CORBA::ExceptionDef**, this->buffer_);
+    CORBA_ExceptionDef **tmp = ACE_reinterpret_cast (CORBA_ExceptionDef**, this->buffer_);
     for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       CORBA::release (tmp[i]);
-      tmp[i] = CORBA::ExceptionDef::_nil ();
+      tmp[i] = CORBA_ExceptionDef::_nil ();
     }
     _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::freebuf (tmp);
     this->buffer_ = 0;
@@ -7781,12 +7781,12 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
   {
-    CORBA::ExceptionDef **tmp = ACE_reinterpret_cast (CORBA::ExceptionDef**, this->buffer_);
+    CORBA_ExceptionDef **tmp = ACE_reinterpret_cast (CORBA_ExceptionDef**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
     {
       CORBA::release (tmp[i]);
-      tmp[i] = CORBA::ExceptionDef::_nil ();
+      tmp[i] = CORBA_ExceptionDef::_nil ();
     }
   }
   void 
@@ -7796,14 +7796,14 @@ TAO_NAMESPACE_END
       CORBA_Environment &ACE_TRY_ENV
     )
   {
-    CORBA::ExceptionDef **tmp = ACE_static_cast (CORBA::ExceptionDef**, target);
-    *tmp = CORBA::ExceptionDef::_narrow (src, ACE_TRY_ENV);
+    CORBA_ExceptionDef **tmp = ACE_static_cast (CORBA_ExceptionDef**, target);
+    *tmp = CORBA_ExceptionDef::_narrow (src, ACE_TRY_ENV);
   }
 
   CORBA_Object*
   _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_upcast (void *src) const
   {
-    CORBA::ExceptionDef **tmp = ACE_static_cast (CORBA::ExceptionDef**, src);
+    CORBA_ExceptionDef **tmp = ACE_static_cast (CORBA_ExceptionDef**, src);
     return *tmp;
   }
   
@@ -7816,39 +7816,39 @@ TAO_NAMESPACE_END
 #define _CORBA_EXCEPTIONDEFSEQ_CS_
 
 // *************************************************************
-// CORBA::ExceptionDefSeq
+// CORBA_ExceptionDefSeq
 // *************************************************************
 
-CORBA::ExceptionDefSeq::CORBA_ExceptionDefSeq (void)
+CORBA_ExceptionDefSeq::CORBA_ExceptionDefSeq (void)
 {}
-CORBA::ExceptionDefSeq::CORBA_ExceptionDefSeq (CORBA::ULong max) // uses max size
+CORBA_ExceptionDefSeq::CORBA_ExceptionDefSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::ExceptionDef,CORBA::ExceptionDef_var>
+  TAO_Unbounded_Object_Sequence<CORBA_ExceptionDef,CORBA_ExceptionDef_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::ExceptionDefSeq::CORBA_ExceptionDefSeq (CORBA::ULong max, CORBA::ULong length, CORBA::ExceptionDef_ptr *buffer, CORBA::Boolean release)
+CORBA_ExceptionDefSeq::CORBA_ExceptionDefSeq (CORBA::ULong max, CORBA::ULong length, CORBA_ExceptionDef_ptr *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::ExceptionDef,CORBA::ExceptionDef_var>
+  TAO_Unbounded_Object_Sequence<CORBA_ExceptionDef,CORBA_ExceptionDef_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::ExceptionDefSeq::CORBA_ExceptionDefSeq (const CORBA_ExceptionDefSeq &seq) // copy ctor
+CORBA_ExceptionDefSeq::CORBA_ExceptionDefSeq (const CORBA_ExceptionDefSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::ExceptionDef,CORBA::ExceptionDef_var>
+  TAO_Unbounded_Object_Sequence<CORBA_ExceptionDef,CORBA_ExceptionDef_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::ExceptionDefSeq::~CORBA_ExceptionDefSeq (void) // dtor
+CORBA_ExceptionDefSeq::~CORBA_ExceptionDefSeq (void) // dtor
 {}
 
 
@@ -7871,7 +7871,7 @@ static const CORBA::Long _oc_CORBA_ExceptionDefSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ExceptionDefSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ExceptionDefSeq), (char *) &_oc_CORBA_ExceptionDefSeq, 0, sizeof (CORBA::ExceptionDefSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ExceptionDefSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ExceptionDefSeq), (char *) &_oc_CORBA_ExceptionDefSeq, 0, sizeof (CORBA_ExceptionDefSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ExceptionDefSeq, &_tc_TAO_tc_CORBA_ExceptionDefSeq)
@@ -7885,12 +7885,12 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_allocate_buffer (CORBA::ULong length)
   {
-    CORBA::ExceptionDescription* tmp = 0;
+    CORBA_ExceptionDescription* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::allocbuf (length);
     
     if (this->buffer_ != 0)
     {
-      CORBA::ExceptionDescription *old = ACE_reinterpret_cast (CORBA::ExceptionDescription *,this->buffer_);
+      CORBA_ExceptionDescription *old = ACE_reinterpret_cast (CORBA_ExceptionDescription *,this->buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
@@ -7908,7 +7908,7 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     
-    CORBA::ExceptionDescription *tmp = ACE_reinterpret_cast (CORBA::ExceptionDescription *,this->buffer_);
+    CORBA_ExceptionDescription *tmp = ACE_reinterpret_cast (CORBA_ExceptionDescription *,this->buffer_);
     
     _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::freebuf (tmp);
     this->buffer_ = 0;
@@ -7929,39 +7929,39 @@ TAO_NAMESPACE_END
 #define _CORBA_EXCDESCRIPTIONSEQ_CS_
 
 // *************************************************************
-// CORBA::ExcDescriptionSeq
+// CORBA_ExcDescriptionSeq
 // *************************************************************
 
-CORBA::ExcDescriptionSeq::CORBA_ExcDescriptionSeq (void)
+CORBA_ExcDescriptionSeq::CORBA_ExcDescriptionSeq (void)
 {}
-CORBA::ExcDescriptionSeq::CORBA_ExcDescriptionSeq (CORBA::ULong max) // uses max size
+CORBA_ExcDescriptionSeq::CORBA_ExcDescriptionSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::ExceptionDescription>
+  TAO_Unbounded_Sequence<CORBA_ExceptionDescription>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::ExcDescriptionSeq::CORBA_ExcDescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA::ExceptionDescription *buffer, CORBA::Boolean release)
+CORBA_ExcDescriptionSeq::CORBA_ExcDescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA_ExceptionDescription *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::ExceptionDescription>
+  TAO_Unbounded_Sequence<CORBA_ExceptionDescription>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::ExcDescriptionSeq::CORBA_ExcDescriptionSeq (const CORBA_ExcDescriptionSeq &seq) // copy ctor
+CORBA_ExcDescriptionSeq::CORBA_ExcDescriptionSeq (const CORBA_ExcDescriptionSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::ExceptionDescription>
+  TAO_Unbounded_Sequence<CORBA_ExceptionDescription>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::ExcDescriptionSeq::~CORBA_ExcDescriptionSeq (void) // dtor
+CORBA_ExcDescriptionSeq::~CORBA_ExcDescriptionSeq (void) // dtor
 {}
 
 
@@ -8024,32 +8024,32 @@ static const CORBA::Long _oc_CORBA_ExcDescriptionSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ExcDescriptionSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ExcDescriptionSeq), (char *) &_oc_CORBA_ExcDescriptionSeq, 0, sizeof (CORBA::ExcDescriptionSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ExcDescriptionSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ExcDescriptionSeq), (char *) &_oc_CORBA_ExcDescriptionSeq, 0, sizeof (CORBA_ExcDescriptionSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ExcDescriptionSeq, &_tc_TAO_tc_CORBA_ExcDescriptionSeq)
 TAO_NAMESPACE_END
-CORBA::OperationDef_ptr CORBA::OperationDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_OperationDef_ptr CORBA_OperationDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::OperationDef::_nil ();
+    return CORBA_OperationDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/OperationDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::OperationDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_OperationDef::_nil ());
   if (is_a == 0)
-    return CORBA::OperationDef::_nil ();
-  return CORBA::OperationDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_OperationDef::_nil ();
+  return CORBA_OperationDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::OperationDef_ptr CORBA::OperationDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_OperationDef_ptr CORBA_OperationDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::OperationDef::_nil ();
+    return CORBA_OperationDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_OperationDef_Stub_Factory_function_pointer != 0)
@@ -8058,22 +8058,22 @@ CORBA::OperationDef_ptr CORBA::OperationDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::OperationDef(stub);
+  return new CORBA_OperationDef(stub);
 }
 
-CORBA::OperationDef_ptr 
-CORBA::OperationDef::_duplicate (CORBA::OperationDef_ptr obj)
+CORBA_OperationDef_ptr 
+CORBA_OperationDef::_duplicate (CORBA_OperationDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::TypeCode_ptr CORBA::OperationDef::result (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::TypeCode_ptr CORBA_OperationDef::result (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -8082,7 +8082,7 @@ CORBA::TypeCode_ptr CORBA::OperationDef::result (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -8107,7 +8107,7 @@ CORBA::TypeCode_ptr CORBA::OperationDef::result (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -8117,24 +8117,24 @@ CORBA::TypeCode_ptr CORBA::OperationDef::result (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::IDLType_ptr CORBA::OperationDef::result_def (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_IDLType_ptr CORBA_OperationDef::result_def (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::IDLType_ptr _tao_retval = CORBA::IDLType::_nil ();
+  CORBA_IDLType_ptr _tao_retval = CORBA_IDLType::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -8159,7 +8159,7 @@ CORBA::IDLType_ptr CORBA::OperationDef::result_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -8169,16 +8169,16 @@ CORBA::IDLType_ptr CORBA::OperationDef::result_def (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::OperationDef::result_def (
-    CORBA::IDLType_ptr result_def,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_OperationDef::result_def (
+    CORBA_IDLType_ptr result_def,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -8187,7 +8187,7 @@ void CORBA::OperationDef::result_def (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -8206,7 +8206,7 @@ void CORBA::OperationDef::result_def (
     if (!(
           (_tao_out << result_def)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -8218,7 +8218,7 @@ void CORBA::OperationDef::result_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -8227,23 +8227,23 @@ void CORBA::OperationDef::result_def (
   
 }
 
-CORBA::ParDescriptionSeq * CORBA::OperationDef::params (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_ParDescriptionSeq * CORBA_OperationDef::params (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ParDescriptionSeq* _tao_retval = 0;
+  CORBA_ParDescriptionSeq* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::ParDescriptionSeq, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_ParDescriptionSeq, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""params",
@@ -8266,7 +8266,7 @@ CORBA::ParDescriptionSeq * CORBA::OperationDef::params (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -8276,16 +8276,16 @@ CORBA::ParDescriptionSeq * CORBA::OperationDef::params (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::OperationDef::params (
-    const CORBA::ParDescriptionSeq & params,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_OperationDef::params (
+    const CORBA_ParDescriptionSeq & params,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -8294,7 +8294,7 @@ void CORBA::OperationDef::params (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -8313,7 +8313,7 @@ void CORBA::OperationDef::params (
     if (!(
           (_tao_out << params)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -8325,7 +8325,7 @@ void CORBA::OperationDef::params (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -8334,11 +8334,11 @@ void CORBA::OperationDef::params (
   
 }
 
-CORBA::OperationMode CORBA::OperationDef::mode (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::OperationMode CORBA_OperationDef::mode (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -8347,7 +8347,7 @@ CORBA::OperationMode CORBA::OperationDef::mode (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -8372,7 +8372,7 @@ CORBA::OperationMode CORBA::OperationDef::mode (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -8382,16 +8382,16 @@ CORBA::OperationMode CORBA::OperationDef::mode (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::OperationDef::mode (
+void CORBA_OperationDef::mode (
     CORBA::OperationMode mode,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -8400,7 +8400,7 @@ void CORBA::OperationDef::mode (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -8419,7 +8419,7 @@ void CORBA::OperationDef::mode (
     if (!(
           (_tao_out << mode)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -8431,7 +8431,7 @@ void CORBA::OperationDef::mode (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -8440,23 +8440,23 @@ void CORBA::OperationDef::mode (
   
 }
 
-CORBA::ContextIdSeq * CORBA::OperationDef::contexts (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_ContextIdSeq * CORBA_OperationDef::contexts (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ContextIdSeq* _tao_retval = 0;
+  CORBA_ContextIdSeq* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::ContextIdSeq, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_ContextIdSeq, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""contexts",
@@ -8479,7 +8479,7 @@ CORBA::ContextIdSeq * CORBA::OperationDef::contexts (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -8489,16 +8489,16 @@ CORBA::ContextIdSeq * CORBA::OperationDef::contexts (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::OperationDef::contexts (
-    const CORBA::ContextIdSeq & contexts,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_OperationDef::contexts (
+    const CORBA_ContextIdSeq & contexts,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -8507,7 +8507,7 @@ void CORBA::OperationDef::contexts (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -8526,7 +8526,7 @@ void CORBA::OperationDef::contexts (
     if (!(
           (_tao_out << contexts)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -8538,7 +8538,7 @@ void CORBA::OperationDef::contexts (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -8547,23 +8547,23 @@ void CORBA::OperationDef::contexts (
   
 }
 
-CORBA::ExceptionDefSeq * CORBA::OperationDef::exceptions (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_ExceptionDefSeq * CORBA_OperationDef::exceptions (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ExceptionDefSeq* _tao_retval = 0;
+  CORBA_ExceptionDefSeq* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::ExceptionDefSeq, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_ExceptionDefSeq, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""exceptions",
@@ -8586,7 +8586,7 @@ CORBA::ExceptionDefSeq * CORBA::OperationDef::exceptions (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -8596,16 +8596,16 @@ CORBA::ExceptionDefSeq * CORBA::OperationDef::exceptions (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::OperationDef::exceptions (
-    const CORBA::ExceptionDefSeq & exceptions,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_OperationDef::exceptions (
+    const CORBA_ExceptionDefSeq & exceptions,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -8614,7 +8614,7 @@ void CORBA::OperationDef::exceptions (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -8633,7 +8633,7 @@ void CORBA::OperationDef::exceptions (
     if (!(
           (_tao_out << exceptions)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -8645,7 +8645,7 @@ void CORBA::OperationDef::exceptions (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -8654,7 +8654,7 @@ void CORBA::OperationDef::exceptions (
   
 }
 
-CORBA::Boolean CORBA::OperationDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_OperationDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/OperationDef:1.0")) ||
@@ -8666,7 +8666,7 @@ CORBA::Boolean CORBA::OperationDef::_is_a (const CORBA::Char *value, CORBA::Envi
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::OperationDef::_interface_repository_id (void) const
+const char* CORBA_OperationDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/OperationDef:1.0";
 }
@@ -8677,7 +8677,7 @@ static const CORBA::Long _oc_CORBA_OperationDef[] =
   35, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4f70), ACE_NTOHL (0x65726174), ACE_NTOHL (0x696f6e44), ACE_NTOHL (0x65663a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OperationDef:1.0
   13, ACE_NTOHL (0x4f706572), ACE_NTOHL (0x6174696f), ACE_NTOHL (0x6e446566), ACE_NTOHL (0x0),  // name = OperationDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_OperationDef (CORBA::tk_objref, sizeof (_oc_CORBA_OperationDef), (char *) &_oc_CORBA_OperationDef, 0, sizeof (CORBA::OperationDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_OperationDef (CORBA::tk_objref, sizeof (_oc_CORBA_OperationDef), (char *) &_oc_CORBA_OperationDef, 0, sizeof (CORBA_OperationDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_OperationDef, &_tc_TAO_tc_CORBA_OperationDef)
@@ -8871,7 +8871,7 @@ static const CORBA::Long _oc_CORBA_OperationDescription[] =
 
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_OperationDescription (CORBA::tk_struct, sizeof (_oc_CORBA_OperationDescription), (char *) &_oc_CORBA_OperationDescription, 0, sizeof (CORBA::OperationDescription));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_OperationDescription (CORBA::tk_struct, sizeof (_oc_CORBA_OperationDescription), (char *) &_oc_CORBA_OperationDescription, 0, sizeof (CORBA_OperationDescription));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_OperationDescription, &_tc_TAO_tc_CORBA_OperationDescription)
@@ -8881,12 +8881,12 @@ TAO_NAMESPACE_END
 #define _CORBA_REPOSITORYIDSEQ_CS_
 
 // *************************************************************
-// CORBA::RepositoryIdSeq
+// CORBA_RepositoryIdSeq
 // *************************************************************
 
-CORBA::RepositoryIdSeq::CORBA_RepositoryIdSeq (void)
+CORBA_RepositoryIdSeq::CORBA_RepositoryIdSeq (void)
 {}
-CORBA::RepositoryIdSeq::CORBA_RepositoryIdSeq (CORBA::ULong max) // uses max size
+CORBA_RepositoryIdSeq::CORBA_RepositoryIdSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -8895,7 +8895,7 @@ CORBA::RepositoryIdSeq::CORBA_RepositoryIdSeq (CORBA::ULong max) // uses max siz
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::RepositoryIdSeq::CORBA_RepositoryIdSeq (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
+CORBA_RepositoryIdSeq::CORBA_RepositoryIdSeq (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -8904,7 +8904,7 @@ CORBA::RepositoryIdSeq::CORBA_RepositoryIdSeq (CORBA::ULong max, CORBA::ULong le
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::RepositoryIdSeq::CORBA_RepositoryIdSeq (const CORBA_RepositoryIdSeq &seq) // copy ctor
+CORBA_RepositoryIdSeq::CORBA_RepositoryIdSeq (const CORBA_RepositoryIdSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -8913,7 +8913,7 @@ CORBA::RepositoryIdSeq::CORBA_RepositoryIdSeq (const CORBA_RepositoryIdSeq &seq)
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::RepositoryIdSeq::~CORBA_RepositoryIdSeq (void) // dtor
+CORBA_RepositoryIdSeq::~CORBA_RepositoryIdSeq (void) // dtor
 {}
 
 
@@ -8938,7 +8938,7 @@ static const CORBA::Long _oc_CORBA_RepositoryIdSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_RepositoryIdSeq (CORBA::tk_alias, sizeof (_oc_CORBA_RepositoryIdSeq), (char *) &_oc_CORBA_RepositoryIdSeq, 0, sizeof (CORBA::RepositoryIdSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_RepositoryIdSeq (CORBA::tk_alias, sizeof (_oc_CORBA_RepositoryIdSeq), (char *) &_oc_CORBA_RepositoryIdSeq, 0, sizeof (CORBA_RepositoryIdSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RepositoryIdSeq, &_tc_TAO_tc_CORBA_RepositoryIdSeq)
@@ -8952,12 +8952,12 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_allocate_buffer (CORBA::ULong length)
   {
-    CORBA::OperationDescription* tmp = 0;
+    CORBA_OperationDescription* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (length);
     
     if (this->buffer_ != 0)
     {
-      CORBA::OperationDescription *old = ACE_reinterpret_cast (CORBA::OperationDescription *,this->buffer_);
+      CORBA_OperationDescription *old = ACE_reinterpret_cast (CORBA_OperationDescription *,this->buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
@@ -8975,7 +8975,7 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     
-    CORBA::OperationDescription *tmp = ACE_reinterpret_cast (CORBA::OperationDescription *,this->buffer_);
+    CORBA_OperationDescription *tmp = ACE_reinterpret_cast (CORBA_OperationDescription *,this->buffer_);
     
     _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::freebuf (tmp);
     this->buffer_ = 0;
@@ -8996,39 +8996,39 @@ TAO_NAMESPACE_END
 #define _CORBA_OPDESCRIPTIONSEQ_CS_
 
 // *************************************************************
-// CORBA::OpDescriptionSeq
+// CORBA_OpDescriptionSeq
 // *************************************************************
 
-CORBA::OpDescriptionSeq::CORBA_OpDescriptionSeq (void)
+CORBA_OpDescriptionSeq::CORBA_OpDescriptionSeq (void)
 {}
-CORBA::OpDescriptionSeq::CORBA_OpDescriptionSeq (CORBA::ULong max) // uses max size
+CORBA_OpDescriptionSeq::CORBA_OpDescriptionSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::OperationDescription>
+  TAO_Unbounded_Sequence<CORBA_OperationDescription>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::OpDescriptionSeq::CORBA_OpDescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA::OperationDescription *buffer, CORBA::Boolean release)
+CORBA_OpDescriptionSeq::CORBA_OpDescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA_OperationDescription *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::OperationDescription>
+  TAO_Unbounded_Sequence<CORBA_OperationDescription>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::OpDescriptionSeq::CORBA_OpDescriptionSeq (const CORBA_OpDescriptionSeq &seq) // copy ctor
+CORBA_OpDescriptionSeq::CORBA_OpDescriptionSeq (const CORBA_OpDescriptionSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::OperationDescription>
+  TAO_Unbounded_Sequence<CORBA_OperationDescription>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::OpDescriptionSeq::~CORBA_OpDescriptionSeq (void) // dtor
+CORBA_OpDescriptionSeq::~CORBA_OpDescriptionSeq (void) // dtor
 {}
 
 
@@ -9234,7 +9234,7 @@ static const CORBA::Long _oc_CORBA_OpDescriptionSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_OpDescriptionSeq (CORBA::tk_alias, sizeof (_oc_CORBA_OpDescriptionSeq), (char *) &_oc_CORBA_OpDescriptionSeq, 0, sizeof (CORBA::OpDescriptionSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_OpDescriptionSeq (CORBA::tk_alias, sizeof (_oc_CORBA_OpDescriptionSeq), (char *) &_oc_CORBA_OpDescriptionSeq, 0, sizeof (CORBA_OpDescriptionSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_OpDescriptionSeq, &_tc_TAO_tc_CORBA_OpDescriptionSeq)
@@ -9248,12 +9248,12 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_allocate_buffer (CORBA::ULong length)
   {
-    CORBA::AttributeDescription* tmp = 0;
+    CORBA_AttributeDescription* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (length);
     
     if (this->buffer_ != 0)
     {
-      CORBA::AttributeDescription *old = ACE_reinterpret_cast (CORBA::AttributeDescription *,this->buffer_);
+      CORBA_AttributeDescription *old = ACE_reinterpret_cast (CORBA_AttributeDescription *,this->buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
@@ -9271,7 +9271,7 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     
-    CORBA::AttributeDescription *tmp = ACE_reinterpret_cast (CORBA::AttributeDescription *,this->buffer_);
+    CORBA_AttributeDescription *tmp = ACE_reinterpret_cast (CORBA_AttributeDescription *,this->buffer_);
     
     _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::freebuf (tmp);
     this->buffer_ = 0;
@@ -9292,39 +9292,39 @@ TAO_NAMESPACE_END
 #define _CORBA_ATTRDESCRIPTIONSEQ_CS_
 
 // *************************************************************
-// CORBA::AttrDescriptionSeq
+// CORBA_AttrDescriptionSeq
 // *************************************************************
 
-CORBA::AttrDescriptionSeq::CORBA_AttrDescriptionSeq (void)
+CORBA_AttrDescriptionSeq::CORBA_AttrDescriptionSeq (void)
 {}
-CORBA::AttrDescriptionSeq::CORBA_AttrDescriptionSeq (CORBA::ULong max) // uses max size
+CORBA_AttrDescriptionSeq::CORBA_AttrDescriptionSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::AttributeDescription>
+  TAO_Unbounded_Sequence<CORBA_AttributeDescription>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::AttrDescriptionSeq::CORBA_AttrDescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA::AttributeDescription *buffer, CORBA::Boolean release)
+CORBA_AttrDescriptionSeq::CORBA_AttrDescriptionSeq (CORBA::ULong max, CORBA::ULong length, CORBA_AttributeDescription *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::AttributeDescription>
+  TAO_Unbounded_Sequence<CORBA_AttributeDescription>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::AttrDescriptionSeq::CORBA_AttrDescriptionSeq (const CORBA_AttrDescriptionSeq &seq) // copy ctor
+CORBA_AttrDescriptionSeq::CORBA_AttrDescriptionSeq (const CORBA_AttrDescriptionSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::AttributeDescription>
+  TAO_Unbounded_Sequence<CORBA_AttributeDescription>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::AttrDescriptionSeq::~CORBA_AttrDescriptionSeq (void) // dtor
+CORBA_AttrDescriptionSeq::~CORBA_AttrDescriptionSeq (void) // dtor
 {}
 
 
@@ -9397,32 +9397,32 @@ static const CORBA::Long _oc_CORBA_AttrDescriptionSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_AttrDescriptionSeq (CORBA::tk_alias, sizeof (_oc_CORBA_AttrDescriptionSeq), (char *) &_oc_CORBA_AttrDescriptionSeq, 0, sizeof (CORBA::AttrDescriptionSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_AttrDescriptionSeq (CORBA::tk_alias, sizeof (_oc_CORBA_AttrDescriptionSeq), (char *) &_oc_CORBA_AttrDescriptionSeq, 0, sizeof (CORBA_AttrDescriptionSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_AttrDescriptionSeq, &_tc_TAO_tc_CORBA_AttrDescriptionSeq)
 TAO_NAMESPACE_END
-CORBA::InterfaceDef_ptr CORBA::InterfaceDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_InterfaceDef_ptr CORBA_InterfaceDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::InterfaceDef::_nil ();
+    return CORBA_InterfaceDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/InterfaceDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::InterfaceDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_InterfaceDef::_nil ());
   if (is_a == 0)
-    return CORBA::InterfaceDef::_nil ();
-  return CORBA::InterfaceDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_InterfaceDef::_nil ();
+  return CORBA_InterfaceDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::InterfaceDef_ptr CORBA::InterfaceDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_InterfaceDef_ptr CORBA_InterfaceDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::InterfaceDef::_nil ();
+    return CORBA_InterfaceDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_InterfaceDef_Stub_Factory_function_pointer != 0)
@@ -9431,34 +9431,34 @@ CORBA::InterfaceDef_ptr CORBA::InterfaceDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::InterfaceDef(stub);
+  return new CORBA_InterfaceDef(stub);
 }
 
-CORBA::InterfaceDef_ptr 
-CORBA::InterfaceDef::_duplicate (CORBA::InterfaceDef_ptr obj)
+CORBA_InterfaceDef_ptr 
+CORBA_InterfaceDef::_duplicate (CORBA_InterfaceDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::InterfaceDefSeq * CORBA::InterfaceDef::base_interfaces (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_InterfaceDefSeq * CORBA_InterfaceDef::base_interfaces (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::InterfaceDefSeq* _tao_retval = 0;
+  CORBA_InterfaceDefSeq* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::InterfaceDefSeq, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_InterfaceDefSeq, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""base_interfaces",
@@ -9481,7 +9481,7 @@ CORBA::InterfaceDefSeq * CORBA::InterfaceDef::base_interfaces (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -9491,16 +9491,16 @@ CORBA::InterfaceDefSeq * CORBA::InterfaceDef::base_interfaces (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::InterfaceDef::base_interfaces (
-    const CORBA::InterfaceDefSeq & base_interfaces,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_InterfaceDef::base_interfaces (
+    const CORBA_InterfaceDefSeq & base_interfaces,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -9509,7 +9509,7 @@ void CORBA::InterfaceDef::base_interfaces (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -9528,7 +9528,7 @@ void CORBA::InterfaceDef::base_interfaces (
     if (!(
           (_tao_out << base_interfaces)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -9540,7 +9540,7 @@ void CORBA::InterfaceDef::base_interfaces (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -9549,12 +9549,12 @@ void CORBA::InterfaceDef::base_interfaces (
   
 }
 
-CORBA::Boolean CORBA::InterfaceDef::is_a (
+CORBA::Boolean CORBA_InterfaceDef::is_a (
     const char * interface_id,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -9563,7 +9563,7 @@ CORBA::Boolean CORBA::InterfaceDef::is_a (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -9582,7 +9582,7 @@ CORBA::Boolean CORBA::InterfaceDef::is_a (
     if (!(
           (_tao_out << interface_id)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -9594,7 +9594,7 @@ CORBA::Boolean CORBA::InterfaceDef::is_a (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -9602,9 +9602,9 @@ CORBA::Boolean CORBA::InterfaceDef::is_a (
   }
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
   if (!(
-        (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
+        (_tao_in >> CORBA_Any::to_boolean (_tao_retval))
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -9946,25 +9946,25 @@ static const CORBA::Long _oc_CORBA_InterfaceDef_FullInterfaceDescription[] =
   CORBA::tk_boolean,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_InterfaceDef_FullInterfaceDescription (CORBA::tk_struct, sizeof (_oc_CORBA_InterfaceDef_FullInterfaceDescription), (char *) &_oc_CORBA_InterfaceDef_FullInterfaceDescription, 0, sizeof (CORBA::InterfaceDef::FullInterfaceDescription));
-CORBA::TypeCode_ptr CORBA::InterfaceDef::_tc_FullInterfaceDescription = &_tc_TAO_tc_CORBA_InterfaceDef_FullInterfaceDescription;
+static CORBA::TypeCode _tc_TAO_tc_CORBA_InterfaceDef_FullInterfaceDescription (CORBA::tk_struct, sizeof (_oc_CORBA_InterfaceDef_FullInterfaceDescription), (char *) &_oc_CORBA_InterfaceDef_FullInterfaceDescription, 0, sizeof (CORBA_InterfaceDef::FullInterfaceDescription));
+CORBA::TypeCode_ptr CORBA_InterfaceDef::_tc_FullInterfaceDescription = &_tc_TAO_tc_CORBA_InterfaceDef_FullInterfaceDescription;
 
-CORBA::InterfaceDef::FullInterfaceDescription * CORBA::InterfaceDef::describe_interface (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_InterfaceDef::FullInterfaceDescription * CORBA_InterfaceDef::describe_interface (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::InterfaceDef::FullInterfaceDescription* _tao_retval = 0;
+  CORBA_InterfaceDef::FullInterfaceDescription* _tao_retval = 0;
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::InterfaceDef::FullInterfaceDescription, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_InterfaceDef::FullInterfaceDescription, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "describe_interface",
@@ -9987,7 +9987,7 @@ CORBA::InterfaceDef::FullInterfaceDescription * CORBA::InterfaceDef::describe_in
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -9997,29 +9997,29 @@ CORBA::InterfaceDef::FullInterfaceDescription * CORBA::InterfaceDef::describe_in
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::AttributeDef_ptr CORBA::InterfaceDef::create_attribute (
+CORBA_AttributeDef_ptr CORBA_InterfaceDef::create_attribute (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr type,
+    CORBA_IDLType_ptr type,
     CORBA::AttributeMode mode,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::AttributeDef_ptr _tao_retval = CORBA::AttributeDef::_nil ();
+  CORBA_AttributeDef_ptr _tao_retval = CORBA_AttributeDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -10042,7 +10042,7 @@ CORBA::AttributeDef_ptr CORBA::InterfaceDef::create_attribute (
           (_tao_out << type) &&
           (_tao_out << mode)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -10054,7 +10054,7 @@ CORBA::AttributeDef_ptr CORBA::InterfaceDef::create_attribute (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -10064,32 +10064,32 @@ CORBA::AttributeDef_ptr CORBA::InterfaceDef::create_attribute (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::OperationDef_ptr CORBA::InterfaceDef::create_operation (
+CORBA_OperationDef_ptr CORBA_InterfaceDef::create_operation (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr result,
+    CORBA_IDLType_ptr result,
     CORBA::OperationMode mode,
-    const CORBA::ParDescriptionSeq & params,
-    const CORBA::ExceptionDefSeq & exceptions,
-    const CORBA::ContextIdSeq & contexts,
-    CORBA::Environment &ACE_TRY_ENV
+    const CORBA_ParDescriptionSeq & params,
+    const CORBA_ExceptionDefSeq & exceptions,
+    const CORBA_ContextIdSeq & contexts,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::OperationDef_ptr _tao_retval = CORBA::OperationDef::_nil ();
+  CORBA_OperationDef_ptr _tao_retval = CORBA_OperationDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -10115,7 +10115,7 @@ CORBA::OperationDef_ptr CORBA::InterfaceDef::create_operation (
           (_tao_out << exceptions) &&
           (_tao_out << contexts)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -10127,7 +10127,7 @@ CORBA::OperationDef_ptr CORBA::InterfaceDef::create_operation (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -10137,11 +10137,11 @@ CORBA::OperationDef_ptr CORBA::InterfaceDef::create_operation (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::Boolean CORBA::InterfaceDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_InterfaceDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/InterfaceDef:1.0")) ||
@@ -10155,7 +10155,7 @@ CORBA::Boolean CORBA::InterfaceDef::_is_a (const CORBA::Char *value, CORBA::Envi
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::InterfaceDef::_interface_repository_id (void) const
+const char* CORBA_InterfaceDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/InterfaceDef:1.0";
 }
@@ -10166,7 +10166,7 @@ static const CORBA::Long _oc_CORBA_InterfaceDef[] =
   35, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f496e), ACE_NTOHL (0x74657266), ACE_NTOHL (0x61636544), ACE_NTOHL (0x65663a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/InterfaceDef:1.0
   13, ACE_NTOHL (0x496e7465), ACE_NTOHL (0x72666163), ACE_NTOHL (0x65446566), ACE_NTOHL (0x0),  // name = InterfaceDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_InterfaceDef (CORBA::tk_objref, sizeof (_oc_CORBA_InterfaceDef), (char *) &_oc_CORBA_InterfaceDef, 0, sizeof (CORBA::InterfaceDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_InterfaceDef (CORBA::tk_objref, sizeof (_oc_CORBA_InterfaceDef), (char *) &_oc_CORBA_InterfaceDef, 0, sizeof (CORBA_InterfaceDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_InterfaceDef, &_tc_TAO_tc_CORBA_InterfaceDef)
@@ -10237,7 +10237,7 @@ static const CORBA::Long _oc_CORBA_InterfaceDescription[] =
   CORBA::tk_boolean,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_InterfaceDescription (CORBA::tk_struct, sizeof (_oc_CORBA_InterfaceDescription), (char *) &_oc_CORBA_InterfaceDescription, 0, sizeof (CORBA::InterfaceDescription));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_InterfaceDescription (CORBA::tk_struct, sizeof (_oc_CORBA_InterfaceDescription), (char *) &_oc_CORBA_InterfaceDescription, 0, sizeof (CORBA_InterfaceDescription));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_InterfaceDescription, &_tc_TAO_tc_CORBA_InterfaceDescription)
@@ -10325,7 +10325,7 @@ static const CORBA::Long _oc_CORBA_ValueMember[] =
 
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueMember (CORBA::tk_struct, sizeof (_oc_CORBA_ValueMember), (char *) &_oc_CORBA_ValueMember, 0, sizeof (CORBA::ValueMember));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueMember (CORBA::tk_struct, sizeof (_oc_CORBA_ValueMember), (char *) &_oc_CORBA_ValueMember, 0, sizeof (CORBA_ValueMember));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ValueMember, &_tc_TAO_tc_CORBA_ValueMember)
@@ -10339,12 +10339,12 @@ TAO_NAMESPACE_END
   void
   _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_allocate_buffer (CORBA::ULong length)
   {
-    CORBA::ValueMember* tmp = 0;
+    CORBA_ValueMember* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::allocbuf (length);
     
     if (this->buffer_ != 0)
     {
-      CORBA::ValueMember *old = ACE_reinterpret_cast (CORBA::ValueMember *,this->buffer_);
+      CORBA_ValueMember *old = ACE_reinterpret_cast (CORBA_ValueMember *,this->buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
@@ -10362,7 +10362,7 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     
-    CORBA::ValueMember *tmp = ACE_reinterpret_cast (CORBA::ValueMember *,this->buffer_);
+    CORBA_ValueMember *tmp = ACE_reinterpret_cast (CORBA_ValueMember *,this->buffer_);
     
     _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::freebuf (tmp);
     this->buffer_ = 0;
@@ -10383,39 +10383,39 @@ TAO_NAMESPACE_END
 #define _CORBA_VALUEMEMBERSEQ_CS_
 
 // *************************************************************
-// CORBA::ValueMemberSeq
+// CORBA_ValueMemberSeq
 // *************************************************************
 
-CORBA::ValueMemberSeq::CORBA_ValueMemberSeq (void)
+CORBA_ValueMemberSeq::CORBA_ValueMemberSeq (void)
 {}
-CORBA::ValueMemberSeq::CORBA_ValueMemberSeq (CORBA::ULong max) // uses max size
+CORBA_ValueMemberSeq::CORBA_ValueMemberSeq (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::ValueMember>
+  TAO_Unbounded_Sequence<CORBA_ValueMember>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::ValueMemberSeq::CORBA_ValueMemberSeq (CORBA::ULong max, CORBA::ULong length, CORBA::ValueMember *buffer, CORBA::Boolean release)
+CORBA_ValueMemberSeq::CORBA_ValueMemberSeq (CORBA::ULong max, CORBA::ULong length, CORBA_ValueMember *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::ValueMember>
+  TAO_Unbounded_Sequence<CORBA_ValueMember>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::ValueMemberSeq::CORBA_ValueMemberSeq (const CORBA_ValueMemberSeq &seq) // copy ctor
+CORBA_ValueMemberSeq::CORBA_ValueMemberSeq (const CORBA_ValueMemberSeq &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::ValueMember>
+  TAO_Unbounded_Sequence<CORBA_ValueMember>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::ValueMemberSeq::~CORBA_ValueMemberSeq (void) // dtor
+CORBA_ValueMemberSeq::~CORBA_ValueMemberSeq (void) // dtor
 {}
 
 
@@ -10494,32 +10494,32 @@ static const CORBA::Long _oc_CORBA_ValueMemberSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueMemberSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ValueMemberSeq), (char *) &_oc_CORBA_ValueMemberSeq, 0, sizeof (CORBA::ValueMemberSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueMemberSeq (CORBA::tk_alias, sizeof (_oc_CORBA_ValueMemberSeq), (char *) &_oc_CORBA_ValueMemberSeq, 0, sizeof (CORBA_ValueMemberSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ValueMemberSeq, &_tc_TAO_tc_CORBA_ValueMemberSeq)
 TAO_NAMESPACE_END
-CORBA::ValueMemberDef_ptr CORBA::ValueMemberDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_ValueMemberDef_ptr CORBA_ValueMemberDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ValueMemberDef::_nil ();
+    return CORBA_ValueMemberDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/ValueMemberDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::ValueMemberDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_ValueMemberDef::_nil ());
   if (is_a == 0)
-    return CORBA::ValueMemberDef::_nil ();
-  return CORBA::ValueMemberDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_ValueMemberDef::_nil ();
+  return CORBA_ValueMemberDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::ValueMemberDef_ptr CORBA::ValueMemberDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_ValueMemberDef_ptr CORBA_ValueMemberDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ValueMemberDef::_nil ();
+    return CORBA_ValueMemberDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_ValueMemberDef_Stub_Factory_function_pointer != 0)
@@ -10528,22 +10528,22 @@ CORBA::ValueMemberDef_ptr CORBA::ValueMemberDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::ValueMemberDef(stub);
+  return new CORBA_ValueMemberDef(stub);
 }
 
-CORBA::ValueMemberDef_ptr 
-CORBA::ValueMemberDef::_duplicate (CORBA::ValueMemberDef_ptr obj)
+CORBA_ValueMemberDef_ptr 
+CORBA_ValueMemberDef::_duplicate (CORBA_ValueMemberDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::TypeCode_ptr CORBA::ValueMemberDef::type (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::TypeCode_ptr CORBA_ValueMemberDef::type (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -10552,7 +10552,7 @@ CORBA::TypeCode_ptr CORBA::ValueMemberDef::type (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -10577,7 +10577,7 @@ CORBA::TypeCode_ptr CORBA::ValueMemberDef::type (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -10587,24 +10587,24 @@ CORBA::TypeCode_ptr CORBA::ValueMemberDef::type (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::IDLType_ptr CORBA::ValueMemberDef::type_def (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_IDLType_ptr CORBA_ValueMemberDef::type_def (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::IDLType_ptr _tao_retval = CORBA::IDLType::_nil ();
+  CORBA_IDLType_ptr _tao_retval = CORBA_IDLType::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -10629,7 +10629,7 @@ CORBA::IDLType_ptr CORBA::ValueMemberDef::type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -10639,16 +10639,16 @@ CORBA::IDLType_ptr CORBA::ValueMemberDef::type_def (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ValueMemberDef::type_def (
-    CORBA::IDLType_ptr type_def,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_ValueMemberDef::type_def (
+    CORBA_IDLType_ptr type_def,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -10657,7 +10657,7 @@ void CORBA::ValueMemberDef::type_def (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -10676,7 +10676,7 @@ void CORBA::ValueMemberDef::type_def (
     if (!(
           (_tao_out << type_def)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -10688,7 +10688,7 @@ void CORBA::ValueMemberDef::type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -10697,11 +10697,11 @@ void CORBA::ValueMemberDef::type_def (
   
 }
 
-CORBA::Visibility CORBA::ValueMemberDef::access (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::Visibility CORBA_ValueMemberDef::access (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -10710,7 +10710,7 @@ CORBA::Visibility CORBA::ValueMemberDef::access (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -10735,7 +10735,7 @@ CORBA::Visibility CORBA::ValueMemberDef::access (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -10745,16 +10745,16 @@ CORBA::Visibility CORBA::ValueMemberDef::access (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ValueMemberDef::access (
+void CORBA_ValueMemberDef::access (
     CORBA::Visibility access,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -10763,7 +10763,7 @@ void CORBA::ValueMemberDef::access (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -10782,7 +10782,7 @@ void CORBA::ValueMemberDef::access (
     if (!(
           (_tao_out << access)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -10794,7 +10794,7 @@ void CORBA::ValueMemberDef::access (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -10803,7 +10803,7 @@ void CORBA::ValueMemberDef::access (
   
 }
 
-CORBA::Boolean CORBA::ValueMemberDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_ValueMemberDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/ValueMemberDef:1.0")) ||
@@ -10815,7 +10815,7 @@ CORBA::Boolean CORBA::ValueMemberDef::_is_a (const CORBA::Char *value, CORBA::En
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::ValueMemberDef::_interface_repository_id (void) const
+const char* CORBA_ValueMemberDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ValueMemberDef:1.0";
 }
@@ -10826,32 +10826,32 @@ static const CORBA::Long _oc_CORBA_ValueMemberDef[] =
   37, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5661), ACE_NTOHL (0x6c75654d), ACE_NTOHL (0x656d6265), ACE_NTOHL (0x72446566), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/ValueMemberDef:1.0
   15, ACE_NTOHL (0x56616c75), ACE_NTOHL (0x654d656d), ACE_NTOHL (0x62657244), ACE_NTOHL (0x65660000),  // name = ValueMemberDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueMemberDef (CORBA::tk_objref, sizeof (_oc_CORBA_ValueMemberDef), (char *) &_oc_CORBA_ValueMemberDef, 0, sizeof (CORBA::ValueMemberDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueMemberDef (CORBA::tk_objref, sizeof (_oc_CORBA_ValueMemberDef), (char *) &_oc_CORBA_ValueMemberDef, 0, sizeof (CORBA_ValueMemberDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ValueMemberDef, &_tc_TAO_tc_CORBA_ValueMemberDef)
 TAO_NAMESPACE_END
-CORBA::ValueDef_ptr CORBA::ValueDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_ValueDef_ptr CORBA_ValueDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ValueDef::_nil ();
+    return CORBA_ValueDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/ValueDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::ValueDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_ValueDef::_nil ());
   if (is_a == 0)
-    return CORBA::ValueDef::_nil ();
-  return CORBA::ValueDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_ValueDef::_nil ();
+  return CORBA_ValueDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::ValueDef_ptr CORBA::ValueDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_ValueDef_ptr CORBA_ValueDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ValueDef::_nil ();
+    return CORBA_ValueDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_ValueDef_Stub_Factory_function_pointer != 0)
@@ -10860,31 +10860,31 @@ CORBA::ValueDef_ptr CORBA::ValueDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::ValueDef(stub);
+  return new CORBA_ValueDef(stub);
 }
 
-CORBA::ValueDef_ptr 
-CORBA::ValueDef::_duplicate (CORBA::ValueDef_ptr obj)
+CORBA_ValueDef_ptr 
+CORBA_ValueDef::_duplicate (CORBA_ValueDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::InterfaceDef_ptr CORBA::ValueDef::supported_interface (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_InterfaceDef_ptr CORBA_ValueDef::supported_interface (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::InterfaceDef_ptr _tao_retval = CORBA::InterfaceDef::_nil ();
+  CORBA_InterfaceDef_ptr _tao_retval = CORBA_InterfaceDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -10909,7 +10909,7 @@ CORBA::InterfaceDef_ptr CORBA::ValueDef::supported_interface (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -10919,16 +10919,16 @@ CORBA::InterfaceDef_ptr CORBA::ValueDef::supported_interface (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ValueDef::supported_interface (
-    CORBA::InterfaceDef_ptr supported_interface,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_ValueDef::supported_interface (
+    CORBA_InterfaceDef_ptr supported_interface,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -10937,7 +10937,7 @@ void CORBA::ValueDef::supported_interface (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -10956,7 +10956,7 @@ void CORBA::ValueDef::supported_interface (
     if (!(
           (_tao_out << supported_interface)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -10968,7 +10968,7 @@ void CORBA::ValueDef::supported_interface (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -10977,23 +10977,23 @@ void CORBA::ValueDef::supported_interface (
   
 }
 
-CORBA::InitializerSeq * CORBA::ValueDef::initializers (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_InitializerSeq * CORBA_ValueDef::initializers (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::InitializerSeq* _tao_retval = 0;
+  CORBA_InitializerSeq* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::InitializerSeq, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_InitializerSeq, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""initializers",
@@ -11016,7 +11016,7 @@ CORBA::InitializerSeq * CORBA::ValueDef::initializers (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -11026,16 +11026,16 @@ CORBA::InitializerSeq * CORBA::ValueDef::initializers (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ValueDef::initializers (
-    const CORBA::InitializerSeq & initializers,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_ValueDef::initializers (
+    const CORBA_InitializerSeq & initializers,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -11044,7 +11044,7 @@ void CORBA::ValueDef::initializers (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11063,7 +11063,7 @@ void CORBA::ValueDef::initializers (
     if (!(
           (_tao_out << initializers)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -11075,7 +11075,7 @@ void CORBA::ValueDef::initializers (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -11084,20 +11084,20 @@ void CORBA::ValueDef::initializers (
   
 }
 
-CORBA::ValueDef_ptr CORBA::ValueDef::base_value (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_ValueDef_ptr CORBA_ValueDef::base_value (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ValueDef_ptr _tao_retval = CORBA::ValueDef::_nil ();
+  CORBA_ValueDef_ptr _tao_retval = CORBA_ValueDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11122,7 +11122,7 @@ CORBA::ValueDef_ptr CORBA::ValueDef::base_value (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -11132,16 +11132,16 @@ CORBA::ValueDef_ptr CORBA::ValueDef::base_value (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ValueDef::base_value (
-    CORBA::ValueDef_ptr base_value,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_ValueDef::base_value (
+    CORBA_ValueDef_ptr base_value,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -11150,7 +11150,7 @@ void CORBA::ValueDef::base_value (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11169,7 +11169,7 @@ void CORBA::ValueDef::base_value (
     if (!(
           (_tao_out << base_value)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -11181,7 +11181,7 @@ void CORBA::ValueDef::base_value (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -11190,23 +11190,23 @@ void CORBA::ValueDef::base_value (
   
 }
 
-CORBA::ValueDefSeq * CORBA::ValueDef::abstract_base_values (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_ValueDefSeq * CORBA_ValueDef::abstract_base_values (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ValueDefSeq* _tao_retval = 0;
+  CORBA_ValueDefSeq* _tao_retval = 0;
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::ValueDefSeq, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_ValueDefSeq, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""abstract_base_values",
@@ -11229,7 +11229,7 @@ CORBA::ValueDefSeq * CORBA::ValueDef::abstract_base_values (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -11239,16 +11239,16 @@ CORBA::ValueDefSeq * CORBA::ValueDef::abstract_base_values (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ValueDef::abstract_base_values (
-    const CORBA::ValueDefSeq & abstract_base_values,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_ValueDef::abstract_base_values (
+    const CORBA_ValueDefSeq & abstract_base_values,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -11257,7 +11257,7 @@ void CORBA::ValueDef::abstract_base_values (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11276,7 +11276,7 @@ void CORBA::ValueDef::abstract_base_values (
     if (!(
           (_tao_out << abstract_base_values)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -11288,7 +11288,7 @@ void CORBA::ValueDef::abstract_base_values (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -11297,11 +11297,11 @@ void CORBA::ValueDef::abstract_base_values (
   
 }
 
-CORBA::Boolean CORBA::ValueDef::is_abstract (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::Boolean CORBA_ValueDef::is_abstract (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -11310,7 +11310,7 @@ CORBA::Boolean CORBA::ValueDef::is_abstract (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11335,7 +11335,7 @@ CORBA::Boolean CORBA::ValueDef::is_abstract (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -11343,18 +11343,18 @@ CORBA::Boolean CORBA::ValueDef::is_abstract (
   }
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
   if (!(
-        (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
+        (_tao_in >> CORBA_Any::to_boolean (_tao_retval))
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ValueDef::is_abstract (
+void CORBA_ValueDef::is_abstract (
     CORBA::Boolean is_abstract,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -11363,7 +11363,7 @@ void CORBA::ValueDef::is_abstract (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11380,9 +11380,9 @@ void CORBA::ValueDef::is_abstract (
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
     if (!(
-          (_tao_out << CORBA::Any::from_boolean (is_abstract))
+          (_tao_out << CORBA_Any::from_boolean (is_abstract))
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -11394,7 +11394,7 @@ void CORBA::ValueDef::is_abstract (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -11403,11 +11403,11 @@ void CORBA::ValueDef::is_abstract (
   
 }
 
-CORBA::Boolean CORBA::ValueDef::is_custom (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::Boolean CORBA_ValueDef::is_custom (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -11416,7 +11416,7 @@ CORBA::Boolean CORBA::ValueDef::is_custom (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11441,7 +11441,7 @@ CORBA::Boolean CORBA::ValueDef::is_custom (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -11449,18 +11449,18 @@ CORBA::Boolean CORBA::ValueDef::is_custom (
   }
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
   if (!(
-        (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
+        (_tao_in >> CORBA_Any::to_boolean (_tao_retval))
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ValueDef::is_custom (
+void CORBA_ValueDef::is_custom (
     CORBA::Boolean is_custom,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -11469,7 +11469,7 @@ void CORBA::ValueDef::is_custom (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11486,9 +11486,9 @@ void CORBA::ValueDef::is_custom (
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
     if (!(
-          (_tao_out << CORBA::Any::from_boolean (is_custom))
+          (_tao_out << CORBA_Any::from_boolean (is_custom))
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -11500,7 +11500,7 @@ void CORBA::ValueDef::is_custom (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -11509,11 +11509,11 @@ void CORBA::ValueDef::is_custom (
   
 }
 
-CORBA::Boolean CORBA::ValueDef::is_truncatable (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA::Boolean CORBA_ValueDef::is_truncatable (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -11522,7 +11522,7 @@ CORBA::Boolean CORBA::ValueDef::is_truncatable (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11547,7 +11547,7 @@ CORBA::Boolean CORBA::ValueDef::is_truncatable (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -11555,18 +11555,18 @@ CORBA::Boolean CORBA::ValueDef::is_truncatable (
   }
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
   if (!(
-        (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
+        (_tao_in >> CORBA_Any::to_boolean (_tao_retval))
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ValueDef::is_truncatable (
+void CORBA_ValueDef::is_truncatable (
     CORBA::Boolean is_truncatable,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -11575,7 +11575,7 @@ void CORBA::ValueDef::is_truncatable (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11592,9 +11592,9 @@ void CORBA::ValueDef::is_truncatable (
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
     if (!(
-          (_tao_out << CORBA::Any::from_boolean (is_truncatable))
+          (_tao_out << CORBA_Any::from_boolean (is_truncatable))
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -11606,7 +11606,7 @@ void CORBA::ValueDef::is_truncatable (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -11615,12 +11615,12 @@ void CORBA::ValueDef::is_truncatable (
   
 }
 
-CORBA::Boolean CORBA::ValueDef::is_a (
+CORBA::Boolean CORBA_ValueDef::is_a (
     const char * value_id,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -11629,7 +11629,7 @@ CORBA::Boolean CORBA::ValueDef::is_a (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11648,7 +11648,7 @@ CORBA::Boolean CORBA::ValueDef::is_a (
     if (!(
           (_tao_out << value_id)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -11660,7 +11660,7 @@ CORBA::Boolean CORBA::ValueDef::is_a (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -11668,9 +11668,9 @@ CORBA::Boolean CORBA::ValueDef::is_a (
   }
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
   if (!(
-        (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
+        (_tao_in >> CORBA_Any::to_boolean (_tao_retval))
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -12178,25 +12178,25 @@ static const CORBA::Long _oc_CORBA_ValueDef_FullValueDescription[] =
   CORBA::tk_TypeCode,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueDef_FullValueDescription (CORBA::tk_struct, sizeof (_oc_CORBA_ValueDef_FullValueDescription), (char *) &_oc_CORBA_ValueDef_FullValueDescription, 0, sizeof (CORBA::ValueDef::FullValueDescription));
-CORBA::TypeCode_ptr CORBA::ValueDef::_tc_FullValueDescription = &_tc_TAO_tc_CORBA_ValueDef_FullValueDescription;
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueDef_FullValueDescription (CORBA::tk_struct, sizeof (_oc_CORBA_ValueDef_FullValueDescription), (char *) &_oc_CORBA_ValueDef_FullValueDescription, 0, sizeof (CORBA_ValueDef::FullValueDescription));
+CORBA::TypeCode_ptr CORBA_ValueDef::_tc_FullValueDescription = &_tc_TAO_tc_CORBA_ValueDef_FullValueDescription;
 
-CORBA::ValueDef::FullValueDescription * CORBA::ValueDef::describe_value (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_ValueDef::FullValueDescription * CORBA_ValueDef::describe_value (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ValueDef::FullValueDescription* _tao_retval = 0;
+  CORBA_ValueDef::FullValueDescription* _tao_retval = 0;
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::ValueDef::FullValueDescription, _tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_ValueDef::FullValueDescription, _tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "describe_value",
@@ -12219,7 +12219,7 @@ CORBA::ValueDef::FullValueDescription * CORBA::ValueDef::describe_value (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -12229,29 +12229,29 @@ CORBA::ValueDef::FullValueDescription * CORBA::ValueDef::describe_value (
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::ValueMemberDef_ptr CORBA::ValueDef::create_value_member (
+CORBA_ValueMemberDef_ptr CORBA_ValueDef::create_value_member (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr type,
+    CORBA_IDLType_ptr type,
     CORBA::Visibility access,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::ValueMemberDef_ptr _tao_retval = CORBA::ValueMemberDef::_nil ();
+  CORBA_ValueMemberDef_ptr _tao_retval = CORBA_ValueMemberDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -12274,7 +12274,7 @@ CORBA::ValueMemberDef_ptr CORBA::ValueDef::create_value_member (
           (_tao_out << type) &&
           (_tao_out << access)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -12286,7 +12286,7 @@ CORBA::ValueMemberDef_ptr CORBA::ValueDef::create_value_member (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -12296,29 +12296,29 @@ CORBA::ValueMemberDef_ptr CORBA::ValueDef::create_value_member (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::AttributeDef_ptr CORBA::ValueDef::create_attribute (
+CORBA_AttributeDef_ptr CORBA_ValueDef::create_attribute (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr type,
+    CORBA_IDLType_ptr type,
     CORBA::AttributeMode mode,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::AttributeDef_ptr _tao_retval = CORBA::AttributeDef::_nil ();
+  CORBA_AttributeDef_ptr _tao_retval = CORBA_AttributeDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -12341,7 +12341,7 @@ CORBA::AttributeDef_ptr CORBA::ValueDef::create_attribute (
           (_tao_out << type) &&
           (_tao_out << mode)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -12353,7 +12353,7 @@ CORBA::AttributeDef_ptr CORBA::ValueDef::create_attribute (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -12363,32 +12363,32 @@ CORBA::AttributeDef_ptr CORBA::ValueDef::create_attribute (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::OperationDef_ptr CORBA::ValueDef::create_operation (
+CORBA_OperationDef_ptr CORBA_ValueDef::create_operation (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::IDLType_ptr result,
+    CORBA_IDLType_ptr result,
     CORBA::OperationMode mode,
-    const CORBA::ParDescriptionSeq & params,
-    const CORBA::ExceptionDefSeq & exceptions,
-    const CORBA::ContextIdSeq & contexts,
-    CORBA::Environment &ACE_TRY_ENV
+    const CORBA_ParDescriptionSeq & params,
+    const CORBA_ExceptionDefSeq & exceptions,
+    const CORBA_ContextIdSeq & contexts,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::OperationDef_ptr _tao_retval = CORBA::OperationDef::_nil ();
+  CORBA_OperationDef_ptr _tao_retval = CORBA_OperationDef::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -12414,7 +12414,7 @@ CORBA::OperationDef_ptr CORBA::ValueDef::create_operation (
           (_tao_out << exceptions) &&
           (_tao_out << contexts)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+      ACE_THROW_RETURN (CORBA_MARSHAL (), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -12426,7 +12426,7 @@ CORBA::OperationDef_ptr CORBA::ValueDef::create_operation (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -12436,11 +12436,11 @@ CORBA::OperationDef_ptr CORBA::ValueDef::create_operation (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-CORBA::Boolean CORBA::ValueDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_ValueDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/ValueDef:1.0")) ||
@@ -12454,7 +12454,7 @@ CORBA::Boolean CORBA::ValueDef::_is_a (const CORBA::Char *value, CORBA::Environm
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::ValueDef::_interface_repository_id (void) const
+const char* CORBA_ValueDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ValueDef:1.0";
 }
@@ -12465,7 +12465,7 @@ static const CORBA::Long _oc_CORBA_ValueDef[] =
   31, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5661), ACE_NTOHL (0x6c756544), ACE_NTOHL (0x65663a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ValueDef:1.0
   9, ACE_NTOHL (0x56616c75), ACE_NTOHL (0x65446566), ACE_NTOHL (0x0),  // name = ValueDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueDef (CORBA::tk_objref, sizeof (_oc_CORBA_ValueDef), (char *) &_oc_CORBA_ValueDef, 0, sizeof (CORBA::ValueDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueDef (CORBA::tk_objref, sizeof (_oc_CORBA_ValueDef), (char *) &_oc_CORBA_ValueDef, 0, sizeof (CORBA_ValueDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ValueDef, &_tc_TAO_tc_CORBA_ValueDef)
@@ -12560,32 +12560,32 @@ static const CORBA::Long _oc_CORBA_ValueDescription[] =
     0U, // string length
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueDescription (CORBA::tk_struct, sizeof (_oc_CORBA_ValueDescription), (char *) &_oc_CORBA_ValueDescription, 0, sizeof (CORBA::ValueDescription));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueDescription (CORBA::tk_struct, sizeof (_oc_CORBA_ValueDescription), (char *) &_oc_CORBA_ValueDescription, 0, sizeof (CORBA_ValueDescription));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ValueDescription, &_tc_TAO_tc_CORBA_ValueDescription)
 TAO_NAMESPACE_END
-CORBA::ValueBoxDef_ptr CORBA::ValueBoxDef::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_ValueBoxDef_ptr CORBA_ValueBoxDef::_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ValueBoxDef::_nil ();
+    return CORBA_ValueBoxDef::_nil ();
   CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/ValueBoxDef:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::ValueBoxDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_ValueBoxDef::_nil ());
   if (is_a == 0)
-    return CORBA::ValueBoxDef::_nil ();
-  return CORBA::ValueBoxDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+    return CORBA_ValueBoxDef::_nil ();
+  return CORBA_ValueBoxDef::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
-CORBA::ValueBoxDef_ptr CORBA::ValueBoxDef::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+CORBA_ValueBoxDef_ptr CORBA_ValueBoxDef::_unchecked_narrow (
+    CORBA_Object_ptr obj,
+    CORBA_Environment &
   )
 {
   if (CORBA::is_nil (obj))
-    return CORBA::ValueBoxDef::_nil ();
+    return CORBA_ValueBoxDef::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (obj->_is_collocated () && _TAO_collocation_CORBA_ValueBoxDef_Stub_Factory_function_pointer != 0)
@@ -12594,31 +12594,31 @@ CORBA::ValueBoxDef_ptr CORBA::ValueBoxDef::_unchecked_narrow (
       if (retv != 0)
         return retv;
     }
-  return new CORBA::ValueBoxDef(stub);
+  return new CORBA_ValueBoxDef(stub);
 }
 
-CORBA::ValueBoxDef_ptr 
-CORBA::ValueBoxDef::_duplicate (CORBA::ValueBoxDef_ptr obj)
+CORBA_ValueBoxDef_ptr 
+CORBA_ValueBoxDef::_duplicate (CORBA_ValueBoxDef_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
 }
 
-CORBA::IDLType_ptr CORBA::ValueBoxDef::original_type_def (
-    CORBA::Environment &ACE_TRY_ENV
+CORBA_IDLType_ptr CORBA_ValueBoxDef::original_type_def (
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
-  CORBA::IDLType_ptr _tao_retval = CORBA::IDLType::_nil ();
+  CORBA_IDLType_ptr _tao_retval = CORBA_IDLType::_nil ();
   
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA_INTERNAL (), _tao_retval);
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -12643,7 +12643,7 @@ CORBA::IDLType_ptr CORBA::ValueBoxDef::original_type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -12653,16 +12653,16 @@ CORBA::IDLType_ptr CORBA::ValueBoxDef::original_type_def (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA_MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
-void CORBA::ValueBoxDef::original_type_def (
-    CORBA::IDLType_ptr original_type_def,
-    CORBA::Environment &ACE_TRY_ENV
+void CORBA_ValueBoxDef::original_type_def (
+    CORBA_IDLType_ptr original_type_def,
+    CORBA_Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA_SystemException
   ))
 {
   
@@ -12671,7 +12671,7 @@ void CORBA::ValueBoxDef::original_type_def (
   
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA_INTERNAL ());
 
   
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -12690,7 +12690,7 @@ void CORBA::ValueBoxDef::original_type_def (
     if (!(
           (_tao_out << original_type_def)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA_MARSHAL ());
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -12702,7 +12702,7 @@ void CORBA::ValueBoxDef::original_type_def (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA_UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -12711,7 +12711,7 @@ void CORBA::ValueBoxDef::original_type_def (
   
 }
 
-CORBA::Boolean CORBA::ValueBoxDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+CORBA::Boolean CORBA_ValueBoxDef::_is_a (const CORBA::Char *value, CORBA_Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/ValueBoxDef:1.0")) ||
@@ -12723,7 +12723,7 @@ CORBA::Boolean CORBA::ValueBoxDef::_is_a (const CORBA::Char *value, CORBA::Envir
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::ValueBoxDef::_interface_repository_id (void) const
+const char* CORBA_ValueBoxDef::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ValueBoxDef:1.0";
 }
@@ -12734,7 +12734,7 @@ static const CORBA::Long _oc_CORBA_ValueBoxDef[] =
   34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5661), ACE_NTOHL (0x6c756542), ACE_NTOHL (0x6f784465), ACE_NTOHL (0x663a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/ValueBoxDef:1.0
   12, ACE_NTOHL (0x56616c75), ACE_NTOHL (0x65426f78), ACE_NTOHL (0x44656600),  // name = ValueBoxDef
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueBoxDef (CORBA::tk_objref, sizeof (_oc_CORBA_ValueBoxDef), (char *) &_oc_CORBA_ValueBoxDef, 0, sizeof (CORBA::ValueBoxDef));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueBoxDef (CORBA::tk_objref, sizeof (_oc_CORBA_ValueBoxDef), (char *) &_oc_CORBA_ValueBoxDef, 0, sizeof (CORBA_ValueBoxDef));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ValueBoxDef, &_tc_TAO_tc_CORBA_ValueBoxDef)
@@ -12768,10 +12768,10 @@ TAO_NAMESPACE_TYPE (const CORBA::Short)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (const CORBA::Short, VM_TRUNCATABLE, 3)
 TAO_NAMESPACE_END
-void operator<<= (CORBA::Any &_tao_any, CORBA::DefinitionKind _tao_elem)
+void operator<<= (CORBA_Any &_tao_any,CORBA::DefinitionKind _tao_elem)
 {
-  CORBA::DefinitionKind *_any_val;
-  ACE_NEW (_any_val, CORBA::DefinitionKind (_tao_elem));
+ CORBA::DefinitionKind *_any_val;
+  ACE_NEW (_any_val,CORBA::DefinitionKind (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -12786,7 +12786,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::DefinitionKind _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DefinitionKind &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA::DefinitionKind &_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -12807,16 +12807,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DefinitionKind &_
   return 0;
 }
 
-CORBA::IRObject_ptr (*_TAO_collocation_CORBA_IRObject_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_IRObject_ptr (*_TAO_collocation_CORBA_IRObject_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::IRObject_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_IRObject_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::IRObject::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_IRObject::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_IRObject, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -12827,25 +12827,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::IRObject_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::IRObject_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_IRObject_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::IRObject::_nil ();
+    _tao_elem = CORBA_IRObject::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_IRObject, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_IRObject, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::IRObject::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_IRObject::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_IRObject, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_IRObject, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -12861,23 +12861,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::IRObject_ptr &_ta
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::IRObject,CORBA::IRObject_var>;
-template class TAO_Object_Manager<CORBA::IRObject,CORBA::IRObject_var>;
+  template class TAO_Object_Field_T<CORBA_IRObject,CORBA_IRObject_var>;
+template class TAO_Object_Manager<CORBA_IRObject,CORBA_IRObject_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::IRObject,CORBA::IRObject_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::IRObject,CORBA::IRObject_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_IRObject,CORBA_IRObject_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_IRObject,CORBA_IRObject_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-CORBA::Contained_ptr (*_TAO_collocation_CORBA_Contained_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_Contained_ptr (*_TAO_collocation_CORBA_Contained_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::Contained_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_Contained_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::Contained::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_Contained::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_Contained, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -12888,25 +12888,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::Contained_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Contained_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_Contained_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::Contained::_nil ();
+    _tao_elem = CORBA_Contained::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_Contained, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_Contained, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::Contained::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_Contained::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_Contained, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_Contained, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -12922,21 +12922,21 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Contained_ptr &_t
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::Contained,CORBA::Contained_var>;
-template class TAO_Object_Manager<CORBA::Contained,CORBA::Contained_var>;
+  template class TAO_Object_Field_T<CORBA_Contained,CORBA_Contained_var>;
+template class TAO_Object_Manager<CORBA_Contained,CORBA_Contained_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::Contained,CORBA::Contained_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::Contained,CORBA::Contained_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_Contained,CORBA_Contained_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_Contained,CORBA_Contained_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::Contained::Description &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_Contained::Description &_tao_elem) // copying
 {
-  CORBA::Contained::Description *_any_val;
-  ACE_NEW (_any_val, CORBA::Contained::Description (_tao_elem));
+  CORBA_Contained::Description *_any_val;
+  ACE_NEW (_any_val, CORBA_Contained::Description (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::Contained::_tc_Description, _any_val, 1, ACE_TRY_ENV); // copy the value
+    _tao_any.replace (CORBA_Contained::_tc_Description, _any_val, 1, ACE_TRY_ENV); // copy the value
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -12946,37 +12946,37 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::Contained::Description &_ta
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::Contained::Description *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_Contained::Description *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::Contained::_tc_Description, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    _tao_any.replace (CORBA_Contained::_tc_Description, _tao_elem, 1, ACE_TRY_ENV); // consume it
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY {}
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Contained::Description *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_Contained::Description *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (CORBA::Contained::_tc_Description, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equal (CORBA_Contained::_tc_Description, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::Contained::Description *)_tao_any.value ();
+      _tao_elem = (CORBA_Contained::Description *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::Contained::Description, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_Contained::Description, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-      if (stream.decode (CORBA::Contained::_tc_Description, _tao_elem, 0, ACE_TRY_ENV)
+      if (stream.decode (CORBA_Contained::_tc_Description, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::Contained::_tc_Description, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA_Contained::_tc_Description, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -12996,12 +12996,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Contained::Descri
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::InterfaceDefSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_InterfaceDefSeq &_tao_elem
   ) // copying
 {
-  CORBA::InterfaceDefSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::InterfaceDefSeq (_tao_elem));
+  CORBA_InterfaceDefSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_InterfaceDefSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -13015,7 +13015,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDefSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_InterfaceDefSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -13026,7 +13026,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDefSeq *_tao_elem) // no
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDefSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_InterfaceDefSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -13035,17 +13035,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDefSeq *
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::InterfaceDefSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_InterfaceDefSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::InterfaceDefSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_InterfaceDefSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_InterfaceDefSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_InterfaceDefSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_InterfaceDefSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -13065,12 +13065,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDefSeq *
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::ValueDefSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_ValueDefSeq &_tao_elem
   ) // copying
 {
-  CORBA::ValueDefSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ValueDefSeq (_tao_elem));
+  CORBA_ValueDefSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_ValueDefSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -13084,7 +13084,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDefSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ValueDefSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -13095,7 +13095,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDefSeq *_tao_elem) // non co
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDefSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ValueDefSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -13104,17 +13104,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDefSeq *&_ta
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ValueDefSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_ValueDefSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ValueDefSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ValueDefSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_ValueDefSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ValueDefSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ValueDefSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -13134,12 +13134,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDefSeq *&_ta
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::ContainedSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_ContainedSeq &_tao_elem
   ) // copying
 {
-  CORBA::ContainedSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ContainedSeq (_tao_elem));
+  CORBA_ContainedSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_ContainedSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -13153,7 +13153,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ContainedSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ContainedSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -13164,7 +13164,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ContainedSeq *_tao_elem) // non c
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContainedSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ContainedSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -13173,17 +13173,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContainedSeq *&_t
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ContainedSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_ContainedSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ContainedSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ContainedSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_ContainedSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ContainedSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ContainedSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -13202,10 +13202,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContainedSeq *&_t
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::StructMember &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_StructMember &_tao_elem) // copying
 {
-  CORBA::StructMember *_any_val;
-  ACE_NEW (_any_val, CORBA::StructMember (_tao_elem));
+  CORBA_StructMember *_any_val;
+  ACE_NEW (_any_val, CORBA_StructMember (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -13219,7 +13219,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::StructMember &_tao_elem) //
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::StructMember *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_StructMember *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -13230,7 +13230,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::StructMember *_tao_elem) // non c
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMember *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_StructMember *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -13239,17 +13239,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMember *&_t
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::StructMember *)_tao_any.value ();
+      _tao_elem = (CORBA_StructMember *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::StructMember, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_StructMember, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_StructMember, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_StructMember, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_StructMember, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -13269,12 +13269,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMember *&_t
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::StructMemberSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_StructMemberSeq &_tao_elem
   ) // copying
 {
-  CORBA::StructMemberSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::StructMemberSeq (_tao_elem));
+  CORBA_StructMemberSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_StructMemberSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -13288,7 +13288,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::StructMemberSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_StructMemberSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -13299,7 +13299,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::StructMemberSeq *_tao_elem) // no
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMemberSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_StructMemberSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -13308,17 +13308,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMemberSeq *
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::StructMemberSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_StructMemberSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::StructMemberSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_StructMemberSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_StructMemberSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_StructMemberSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_StructMemberSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -13337,10 +13337,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMemberSeq *
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::Initializer &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_Initializer &_tao_elem) // copying
 {
-  CORBA::Initializer *_any_val;
-  ACE_NEW (_any_val, CORBA::Initializer (_tao_elem));
+  CORBA_Initializer *_any_val;
+  ACE_NEW (_any_val, CORBA_Initializer (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -13354,7 +13354,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::Initializer &_tao_elem) // 
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::Initializer *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_Initializer *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -13365,7 +13365,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::Initializer *_tao_elem) // non co
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Initializer *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_Initializer *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -13374,17 +13374,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Initializer *&_ta
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::Initializer *)_tao_any.value ();
+      _tao_elem = (CORBA_Initializer *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::Initializer, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_Initializer, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_Initializer, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_Initializer, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_Initializer, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -13404,12 +13404,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Initializer *&_ta
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::InitializerSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_InitializerSeq &_tao_elem
   ) // copying
 {
-  CORBA::InitializerSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::InitializerSeq (_tao_elem));
+  CORBA_InitializerSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_InitializerSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -13423,7 +13423,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::InitializerSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_InitializerSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -13434,7 +13434,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::InitializerSeq *_tao_elem) // non
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InitializerSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_InitializerSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -13443,17 +13443,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InitializerSeq *&
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::InitializerSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_InitializerSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::InitializerSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_InitializerSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_InitializerSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_InitializerSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_InitializerSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -13472,10 +13472,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InitializerSeq *&
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::UnionMember &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_UnionMember &_tao_elem) // copying
 {
-  CORBA::UnionMember *_any_val;
-  ACE_NEW (_any_val, CORBA::UnionMember (_tao_elem));
+  CORBA_UnionMember *_any_val;
+  ACE_NEW (_any_val, CORBA_UnionMember (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -13489,7 +13489,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::UnionMember &_tao_elem) // 
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::UnionMember *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_UnionMember *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -13500,7 +13500,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::UnionMember *_tao_elem) // non co
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMember *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_UnionMember *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -13509,17 +13509,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMember *&_ta
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::UnionMember *)_tao_any.value ();
+      _tao_elem = (CORBA_UnionMember *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::UnionMember, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_UnionMember, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_UnionMember, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_UnionMember, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_UnionMember, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -13539,12 +13539,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMember *&_ta
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::UnionMemberSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_UnionMemberSeq &_tao_elem
   ) // copying
 {
-  CORBA::UnionMemberSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::UnionMemberSeq (_tao_elem));
+  CORBA_UnionMemberSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_UnionMemberSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -13558,7 +13558,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::UnionMemberSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_UnionMemberSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -13569,7 +13569,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::UnionMemberSeq *_tao_elem) // non
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMemberSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_UnionMemberSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -13578,17 +13578,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMemberSeq *&
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::UnionMemberSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_UnionMemberSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::UnionMemberSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_UnionMemberSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_UnionMemberSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_UnionMemberSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_UnionMemberSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -13608,12 +13608,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMemberSeq *&
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::EnumMemberSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_EnumMemberSeq &_tao_elem
   ) // copying
 {
-  CORBA::EnumMemberSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::EnumMemberSeq (_tao_elem));
+  CORBA_EnumMemberSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_EnumMemberSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -13627,7 +13627,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::EnumMemberSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_EnumMemberSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -13638,7 +13638,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::EnumMemberSeq *_tao_elem) // non 
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::EnumMemberSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_EnumMemberSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -13647,17 +13647,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::EnumMemberSeq *&_
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::EnumMemberSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_EnumMemberSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::EnumMemberSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_EnumMemberSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_EnumMemberSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_EnumMemberSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_EnumMemberSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -13676,16 +13676,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::EnumMemberSeq *&_
   return 0;
 }
 
-CORBA::Container_ptr (*_TAO_collocation_CORBA_Container_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_Container_ptr (*_TAO_collocation_CORBA_Container_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::Container_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_Container_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::Container::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_Container::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_Container, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -13696,25 +13696,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::Container_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_Container_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::Container::_nil ();
+    _tao_elem = CORBA_Container::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_Container, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_Container, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::Container::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_Container::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_Container, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_Container, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -13730,21 +13730,21 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container_ptr &_t
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::Container,CORBA::Container_var>;
-template class TAO_Object_Manager<CORBA::Container,CORBA::Container_var>;
+  template class TAO_Object_Field_T<CORBA_Container,CORBA_Container_var>;
+template class TAO_Object_Manager<CORBA_Container,CORBA_Container_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::Container,CORBA::Container_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::Container,CORBA::Container_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_Container,CORBA_Container_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_Container,CORBA_Container_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::Container::Description &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_Container::Description &_tao_elem) // copying
 {
-  CORBA::Container::Description *_any_val;
-  ACE_NEW (_any_val, CORBA::Container::Description (_tao_elem));
+  CORBA_Container::Description *_any_val;
+  ACE_NEW (_any_val, CORBA_Container::Description (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::Container::_tc_Description, _any_val, 1, ACE_TRY_ENV); // copy the value
+    _tao_any.replace (CORBA_Container::_tc_Description, _any_val, 1, ACE_TRY_ENV); // copy the value
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -13754,37 +13754,37 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::Container::Description &_ta
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::Container::Description *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_Container::Description *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::Container::_tc_Description, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    _tao_any.replace (CORBA_Container::_tc_Description, _tao_elem, 1, ACE_TRY_ENV); // consume it
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY {}
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container::Description *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_Container::Description *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (CORBA::Container::_tc_Description, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equal (CORBA_Container::_tc_Description, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::Container::Description *)_tao_any.value ();
+      _tao_elem = (CORBA_Container::Description *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::Container::Description, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_Container::Description, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-      if (stream.decode (CORBA::Container::_tc_Description, _tao_elem, 0, ACE_TRY_ENV)
+      if (stream.decode (CORBA_Container::_tc_Description, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::Container::_tc_Description, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA_Container::_tc_Description, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -13804,16 +13804,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container::Descri
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::Container::DescriptionSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_Container::DescriptionSeq &_tao_elem
   ) // copying
 {
-  CORBA::Container::DescriptionSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::Container::DescriptionSeq (_tao_elem));
+  CORBA_Container::DescriptionSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_Container::DescriptionSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::Container::_tc_DescriptionSeq, _tao_any_val, 1, ACE_TRY_ENV); // copy the value
+    _tao_any.replace (CORBA_Container::_tc_DescriptionSeq, _tao_any_val, 1, ACE_TRY_ENV); // copy the value
     ACE_TRY_CHECK; 
   }
   ACE_CATCHANY
@@ -13823,37 +13823,37 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::Container::DescriptionSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_Container::DescriptionSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::Container::_tc_DescriptionSeq, _tao_elem, 0, ACE_TRY_ENV);
+    _tao_any.replace (CORBA_Container::_tc_DescriptionSeq, _tao_elem, 0, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY {}
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container::DescriptionSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_Container::DescriptionSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (CORBA::Container::_tc_DescriptionSeq, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equal (CORBA_Container::_tc_DescriptionSeq, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::Container::DescriptionSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_Container::DescriptionSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::Container::DescriptionSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_Container::DescriptionSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-      if (stream.decode (CORBA::Container::_tc_DescriptionSeq, _tao_elem, 0, ACE_TRY_ENV)
+      if (stream.decode (CORBA_Container::_tc_DescriptionSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::Container::_tc_DescriptionSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA_Container::_tc_DescriptionSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -13872,16 +13872,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container::Descri
   return 0;
 }
 
-CORBA::IDLType_ptr (*_TAO_collocation_CORBA_IDLType_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_IDLType_ptr (*_TAO_collocation_CORBA_IDLType_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::IDLType_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_IDLType_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::IDLType::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_IDLType::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_IDLType, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -13892,25 +13892,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::IDLType_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::IDLType_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_IDLType_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::IDLType::_nil ();
+    _tao_elem = CORBA_IDLType::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_IDLType, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_IDLType, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::IDLType::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_IDLType::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_IDLType, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_IDLType, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -13926,14 +13926,14 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::IDLType_ptr &_tao
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::IDLType,CORBA::IDLType_var>;
-template class TAO_Object_Manager<CORBA::IDLType,CORBA::IDLType_var>;
+  template class TAO_Object_Field_T<CORBA_IDLType,CORBA_IDLType_var>;
+template class TAO_Object_Manager<CORBA_IDLType,CORBA_IDLType_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::IDLType,CORBA::IDLType_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::IDLType,CORBA::IDLType_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_IDLType,CORBA_IDLType_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_IDLType,CORBA_IDLType_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::PrimitiveKind _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA::PrimitiveKind _tao_elem)
 {
   CORBA::PrimitiveKind *_any_val;
   ACE_NEW (_any_val, CORBA::PrimitiveKind (_tao_elem));
@@ -13951,7 +13951,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::PrimitiveKind _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PrimitiveKind &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA::PrimitiveKind &_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -13972,16 +13972,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PrimitiveKind &_t
   return 0;
 }
 
-CORBA::Repository_ptr (*_TAO_collocation_CORBA_Repository_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_Repository_ptr (*_TAO_collocation_CORBA_Repository_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::Repository_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_Repository_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::Repository::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_Repository::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_Repository, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -13992,25 +13992,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::Repository_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Repository_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_Repository_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::Repository::_nil ();
+    _tao_elem = CORBA_Repository::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_Repository, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_Repository, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::Repository::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_Repository::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_Repository, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_Repository, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -14026,23 +14026,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Repository_ptr &_
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::Repository,CORBA::Repository_var>;
-template class TAO_Object_Manager<CORBA::Repository,CORBA::Repository_var>;
+  template class TAO_Object_Field_T<CORBA_Repository,CORBA_Repository_var>;
+template class TAO_Object_Manager<CORBA_Repository,CORBA_Repository_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::Repository,CORBA::Repository_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::Repository,CORBA::Repository_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_Repository,CORBA_Repository_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_Repository,CORBA_Repository_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-CORBA::ModuleDef_ptr (*_TAO_collocation_CORBA_ModuleDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_ModuleDef_ptr (*_TAO_collocation_CORBA_ModuleDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::ModuleDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_ModuleDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ModuleDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_ModuleDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_ModuleDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -14053,25 +14053,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ModuleDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ModuleDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ModuleDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::ModuleDef::_nil ();
+    _tao_elem = CORBA_ModuleDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_ModuleDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_ModuleDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::ModuleDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_ModuleDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ModuleDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ModuleDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -14087,17 +14087,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ModuleDef_ptr &_t
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::ModuleDef,CORBA::ModuleDef_var>;
-template class TAO_Object_Manager<CORBA::ModuleDef,CORBA::ModuleDef_var>;
+  template class TAO_Object_Field_T<CORBA_ModuleDef,CORBA_ModuleDef_var>;
+template class TAO_Object_Manager<CORBA_ModuleDef,CORBA_ModuleDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::ModuleDef,CORBA::ModuleDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::ModuleDef,CORBA::ModuleDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_ModuleDef,CORBA_ModuleDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_ModuleDef,CORBA_ModuleDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::ModuleDescription &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_ModuleDescription &_tao_elem) // copying
 {
-  CORBA::ModuleDescription *_any_val;
-  ACE_NEW (_any_val, CORBA::ModuleDescription (_tao_elem));
+  CORBA_ModuleDescription *_any_val;
+  ACE_NEW (_any_val, CORBA_ModuleDescription (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -14111,7 +14111,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::ModuleDescription &_tao_ele
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ModuleDescription *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ModuleDescription *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -14122,7 +14122,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ModuleDescription *_tao_elem) // 
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ModuleDescription *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ModuleDescription *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -14131,17 +14131,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ModuleDescription
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ModuleDescription *)_tao_any.value ();
+      _tao_elem = (CORBA_ModuleDescription *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ModuleDescription, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ModuleDescription, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_ModuleDescription, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ModuleDescription, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ModuleDescription, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -14160,16 +14160,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ModuleDescription
   return 0;
 }
 
-CORBA::ConstantDef_ptr (*_TAO_collocation_CORBA_ConstantDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_ConstantDef_ptr (*_TAO_collocation_CORBA_ConstantDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::ConstantDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_ConstantDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ConstantDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_ConstantDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_ConstantDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -14180,25 +14180,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ConstantDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstantDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ConstantDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::ConstantDef::_nil ();
+    _tao_elem = CORBA_ConstantDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_ConstantDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_ConstantDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::ConstantDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_ConstantDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ConstantDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ConstantDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -14214,17 +14214,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstantDef_ptr &
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::ConstantDef,CORBA::ConstantDef_var>;
-template class TAO_Object_Manager<CORBA::ConstantDef,CORBA::ConstantDef_var>;
+  template class TAO_Object_Field_T<CORBA_ConstantDef,CORBA_ConstantDef_var>;
+template class TAO_Object_Manager<CORBA_ConstantDef,CORBA_ConstantDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::ConstantDef,CORBA::ConstantDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::ConstantDef,CORBA::ConstantDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_ConstantDef,CORBA_ConstantDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_ConstantDef,CORBA_ConstantDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::ConstantDescription &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_ConstantDescription &_tao_elem) // copying
 {
-  CORBA::ConstantDescription *_any_val;
-  ACE_NEW (_any_val, CORBA::ConstantDescription (_tao_elem));
+  CORBA_ConstantDescription *_any_val;
+  ACE_NEW (_any_val, CORBA_ConstantDescription (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -14238,7 +14238,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::ConstantDescription &_tao_e
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ConstantDescription *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ConstantDescription *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -14249,7 +14249,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ConstantDescription *_tao_elem) /
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstantDescription *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ConstantDescription *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -14258,17 +14258,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstantDescripti
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ConstantDescription *)_tao_any.value ();
+      _tao_elem = (CORBA_ConstantDescription *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ConstantDescription, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ConstantDescription, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_ConstantDescription, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ConstantDescription, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ConstantDescription, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -14287,16 +14287,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstantDescripti
   return 0;
 }
 
-CORBA::TypedefDef_ptr (*_TAO_collocation_CORBA_TypedefDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_TypedefDef_ptr (*_TAO_collocation_CORBA_TypedefDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::TypedefDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_TypedefDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::TypedefDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_TypedefDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_TypedefDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -14307,25 +14307,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::TypedefDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypedefDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_TypedefDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::TypedefDef::_nil ();
+    _tao_elem = CORBA_TypedefDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_TypedefDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_TypedefDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::TypedefDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_TypedefDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_TypedefDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_TypedefDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -14341,17 +14341,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypedefDef_ptr &_
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::TypedefDef,CORBA::TypedefDef_var>;
-template class TAO_Object_Manager<CORBA::TypedefDef,CORBA::TypedefDef_var>;
+  template class TAO_Object_Field_T<CORBA_TypedefDef,CORBA_TypedefDef_var>;
+template class TAO_Object_Manager<CORBA_TypedefDef,CORBA_TypedefDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::TypedefDef,CORBA::TypedefDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::TypedefDef,CORBA::TypedefDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_TypedefDef,CORBA_TypedefDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_TypedefDef,CORBA_TypedefDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::TypeDescription &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_TypeDescription &_tao_elem) // copying
 {
-  CORBA::TypeDescription *_any_val;
-  ACE_NEW (_any_val, CORBA::TypeDescription (_tao_elem));
+  CORBA_TypeDescription *_any_val;
+  ACE_NEW (_any_val, CORBA_TypeDescription (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -14365,7 +14365,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::TypeDescription &_tao_elem)
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::TypeDescription *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_TypeDescription *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -14376,7 +14376,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::TypeDescription *_tao_elem) // no
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypeDescription *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_TypeDescription *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -14385,17 +14385,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypeDescription *
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::TypeDescription *)_tao_any.value ();
+      _tao_elem = (CORBA_TypeDescription *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::TypeDescription, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_TypeDescription, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_TypeDescription, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_TypeDescription, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_TypeDescription, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -14414,16 +14414,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypeDescription *
   return 0;
 }
 
-CORBA::StructDef_ptr (*_TAO_collocation_CORBA_StructDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_StructDef_ptr (*_TAO_collocation_CORBA_StructDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::StructDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_StructDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::StructDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_StructDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_StructDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -14434,25 +14434,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::StructDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_StructDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::StructDef::_nil ();
+    _tao_elem = CORBA_StructDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_StructDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_StructDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::StructDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_StructDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_StructDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_StructDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -14468,23 +14468,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructDef_ptr &_t
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::StructDef,CORBA::StructDef_var>;
-template class TAO_Object_Manager<CORBA::StructDef,CORBA::StructDef_var>;
+  template class TAO_Object_Field_T<CORBA_StructDef,CORBA_StructDef_var>;
+template class TAO_Object_Manager<CORBA_StructDef,CORBA_StructDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::StructDef,CORBA::StructDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::StructDef,CORBA::StructDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_StructDef,CORBA_StructDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_StructDef,CORBA_StructDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-CORBA::UnionDef_ptr (*_TAO_collocation_CORBA_UnionDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_UnionDef_ptr (*_TAO_collocation_CORBA_UnionDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::UnionDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_UnionDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::UnionDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_UnionDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_UnionDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -14495,25 +14495,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::UnionDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_UnionDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::UnionDef::_nil ();
+    _tao_elem = CORBA_UnionDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_UnionDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_UnionDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::UnionDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_UnionDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_UnionDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_UnionDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -14529,23 +14529,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionDef_ptr &_ta
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::UnionDef,CORBA::UnionDef_var>;
-template class TAO_Object_Manager<CORBA::UnionDef,CORBA::UnionDef_var>;
+  template class TAO_Object_Field_T<CORBA_UnionDef,CORBA_UnionDef_var>;
+template class TAO_Object_Manager<CORBA_UnionDef,CORBA_UnionDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::UnionDef,CORBA::UnionDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::UnionDef,CORBA::UnionDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_UnionDef,CORBA_UnionDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_UnionDef,CORBA_UnionDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-CORBA::EnumDef_ptr (*_TAO_collocation_CORBA_EnumDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_EnumDef_ptr (*_TAO_collocation_CORBA_EnumDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::EnumDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_EnumDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::EnumDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_EnumDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_EnumDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -14556,25 +14556,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::EnumDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::EnumDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_EnumDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::EnumDef::_nil ();
+    _tao_elem = CORBA_EnumDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_EnumDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_EnumDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::EnumDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_EnumDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_EnumDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_EnumDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -14590,23 +14590,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::EnumDef_ptr &_tao
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::EnumDef,CORBA::EnumDef_var>;
-template class TAO_Object_Manager<CORBA::EnumDef,CORBA::EnumDef_var>;
+  template class TAO_Object_Field_T<CORBA_EnumDef,CORBA_EnumDef_var>;
+template class TAO_Object_Manager<CORBA_EnumDef,CORBA_EnumDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::EnumDef,CORBA::EnumDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::EnumDef,CORBA::EnumDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_EnumDef,CORBA_EnumDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_EnumDef,CORBA_EnumDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-CORBA::AliasDef_ptr (*_TAO_collocation_CORBA_AliasDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_AliasDef_ptr (*_TAO_collocation_CORBA_AliasDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::AliasDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_AliasDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::AliasDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_AliasDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_AliasDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -14617,25 +14617,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::AliasDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AliasDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_AliasDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::AliasDef::_nil ();
+    _tao_elem = CORBA_AliasDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_AliasDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_AliasDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::AliasDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_AliasDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_AliasDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_AliasDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -14651,23 +14651,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AliasDef_ptr &_ta
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::AliasDef,CORBA::AliasDef_var>;
-template class TAO_Object_Manager<CORBA::AliasDef,CORBA::AliasDef_var>;
+  template class TAO_Object_Field_T<CORBA_AliasDef,CORBA_AliasDef_var>;
+template class TAO_Object_Manager<CORBA_AliasDef,CORBA_AliasDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::AliasDef,CORBA::AliasDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::AliasDef,CORBA::AliasDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_AliasDef,CORBA_AliasDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_AliasDef,CORBA_AliasDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-CORBA::PrimitiveDef_ptr (*_TAO_collocation_CORBA_PrimitiveDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_PrimitiveDef_ptr (*_TAO_collocation_CORBA_PrimitiveDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::PrimitiveDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_PrimitiveDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::PrimitiveDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_PrimitiveDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_PrimitiveDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -14678,25 +14678,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::PrimitiveDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PrimitiveDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_PrimitiveDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::PrimitiveDef::_nil ();
+    _tao_elem = CORBA_PrimitiveDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_PrimitiveDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_PrimitiveDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::PrimitiveDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_PrimitiveDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_PrimitiveDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_PrimitiveDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -14712,23 +14712,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PrimitiveDef_ptr 
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::PrimitiveDef,CORBA::PrimitiveDef_var>;
-template class TAO_Object_Manager<CORBA::PrimitiveDef,CORBA::PrimitiveDef_var>;
+  template class TAO_Object_Field_T<CORBA_PrimitiveDef,CORBA_PrimitiveDef_var>;
+template class TAO_Object_Manager<CORBA_PrimitiveDef,CORBA_PrimitiveDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::PrimitiveDef,CORBA::PrimitiveDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::PrimitiveDef,CORBA::PrimitiveDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_PrimitiveDef,CORBA_PrimitiveDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_PrimitiveDef,CORBA_PrimitiveDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-CORBA::StringDef_ptr (*_TAO_collocation_CORBA_StringDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_StringDef_ptr (*_TAO_collocation_CORBA_StringDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::StringDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_StringDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::StringDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_StringDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_StringDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -14739,25 +14739,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::StringDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StringDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_StringDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::StringDef::_nil ();
+    _tao_elem = CORBA_StringDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_StringDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_StringDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::StringDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_StringDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_StringDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_StringDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -14773,23 +14773,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StringDef_ptr &_t
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::StringDef,CORBA::StringDef_var>;
-template class TAO_Object_Manager<CORBA::StringDef,CORBA::StringDef_var>;
+  template class TAO_Object_Field_T<CORBA_StringDef,CORBA_StringDef_var>;
+template class TAO_Object_Manager<CORBA_StringDef,CORBA_StringDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::StringDef,CORBA::StringDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::StringDef,CORBA::StringDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_StringDef,CORBA_StringDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_StringDef,CORBA_StringDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-CORBA::WstringDef_ptr (*_TAO_collocation_CORBA_WstringDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_WstringDef_ptr (*_TAO_collocation_CORBA_WstringDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::WstringDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_WstringDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::WstringDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_WstringDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_WstringDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -14800,25 +14800,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::WstringDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::WstringDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_WstringDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::WstringDef::_nil ();
+    _tao_elem = CORBA_WstringDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_WstringDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_WstringDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::WstringDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_WstringDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_WstringDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_WstringDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -14834,23 +14834,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::WstringDef_ptr &_
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::WstringDef,CORBA::WstringDef_var>;
-template class TAO_Object_Manager<CORBA::WstringDef,CORBA::WstringDef_var>;
+  template class TAO_Object_Field_T<CORBA_WstringDef,CORBA_WstringDef_var>;
+template class TAO_Object_Manager<CORBA_WstringDef,CORBA_WstringDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::WstringDef,CORBA::WstringDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::WstringDef,CORBA::WstringDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_WstringDef,CORBA_WstringDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_WstringDef,CORBA_WstringDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-CORBA::FixedDef_ptr (*_TAO_collocation_CORBA_FixedDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_FixedDef_ptr (*_TAO_collocation_CORBA_FixedDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::FixedDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_FixedDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::FixedDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_FixedDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_FixedDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -14861,25 +14861,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::FixedDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::FixedDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_FixedDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::FixedDef::_nil ();
+    _tao_elem = CORBA_FixedDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_FixedDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_FixedDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::FixedDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_FixedDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_FixedDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_FixedDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -14895,23 +14895,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::FixedDef_ptr &_ta
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::FixedDef,CORBA::FixedDef_var>;
-template class TAO_Object_Manager<CORBA::FixedDef,CORBA::FixedDef_var>;
+  template class TAO_Object_Field_T<CORBA_FixedDef,CORBA_FixedDef_var>;
+template class TAO_Object_Manager<CORBA_FixedDef,CORBA_FixedDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::FixedDef,CORBA::FixedDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::FixedDef,CORBA::FixedDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_FixedDef,CORBA_FixedDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_FixedDef,CORBA_FixedDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-CORBA::SequenceDef_ptr (*_TAO_collocation_CORBA_SequenceDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_SequenceDef_ptr (*_TAO_collocation_CORBA_SequenceDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::SequenceDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_SequenceDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::SequenceDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_SequenceDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_SequenceDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -14922,25 +14922,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::SequenceDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::SequenceDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_SequenceDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::SequenceDef::_nil ();
+    _tao_elem = CORBA_SequenceDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_SequenceDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_SequenceDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::SequenceDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_SequenceDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_SequenceDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_SequenceDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -14956,23 +14956,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::SequenceDef_ptr &
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::SequenceDef,CORBA::SequenceDef_var>;
-template class TAO_Object_Manager<CORBA::SequenceDef,CORBA::SequenceDef_var>;
+  template class TAO_Object_Field_T<CORBA_SequenceDef,CORBA_SequenceDef_var>;
+template class TAO_Object_Manager<CORBA_SequenceDef,CORBA_SequenceDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::SequenceDef,CORBA::SequenceDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::SequenceDef,CORBA::SequenceDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_SequenceDef,CORBA_SequenceDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_SequenceDef,CORBA_SequenceDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-CORBA::ArrayDef_ptr (*_TAO_collocation_CORBA_ArrayDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_ArrayDef_ptr (*_TAO_collocation_CORBA_ArrayDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::ArrayDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_ArrayDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ArrayDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_ArrayDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_ArrayDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -14983,25 +14983,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ArrayDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ArrayDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ArrayDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::ArrayDef::_nil ();
+    _tao_elem = CORBA_ArrayDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_ArrayDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_ArrayDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::ArrayDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_ArrayDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ArrayDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ArrayDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -15017,23 +15017,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ArrayDef_ptr &_ta
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::ArrayDef,CORBA::ArrayDef_var>;
-template class TAO_Object_Manager<CORBA::ArrayDef,CORBA::ArrayDef_var>;
+  template class TAO_Object_Field_T<CORBA_ArrayDef,CORBA_ArrayDef_var>;
+template class TAO_Object_Manager<CORBA_ArrayDef,CORBA_ArrayDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::ArrayDef,CORBA::ArrayDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::ArrayDef,CORBA::ArrayDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_ArrayDef,CORBA_ArrayDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_ArrayDef,CORBA_ArrayDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-CORBA::ExceptionDef_ptr (*_TAO_collocation_CORBA_ExceptionDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_ExceptionDef_ptr (*_TAO_collocation_CORBA_ExceptionDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::ExceptionDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_ExceptionDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ExceptionDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_ExceptionDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_ExceptionDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -15044,25 +15044,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ExceptionDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ExceptionDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::ExceptionDef::_nil ();
+    _tao_elem = CORBA_ExceptionDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_ExceptionDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_ExceptionDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::ExceptionDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_ExceptionDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ExceptionDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ExceptionDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -15078,17 +15078,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDef_ptr 
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::ExceptionDef,CORBA::ExceptionDef_var>;
-template class TAO_Object_Manager<CORBA::ExceptionDef,CORBA::ExceptionDef_var>;
+  template class TAO_Object_Field_T<CORBA_ExceptionDef,CORBA_ExceptionDef_var>;
+template class TAO_Object_Manager<CORBA_ExceptionDef,CORBA_ExceptionDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::ExceptionDef,CORBA::ExceptionDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::ExceptionDef,CORBA::ExceptionDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_ExceptionDef,CORBA_ExceptionDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_ExceptionDef,CORBA_ExceptionDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::ExceptionDescription &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_ExceptionDescription &_tao_elem) // copying
 {
-  CORBA::ExceptionDescription *_any_val;
-  ACE_NEW (_any_val, CORBA::ExceptionDescription (_tao_elem));
+  CORBA_ExceptionDescription *_any_val;
+  ACE_NEW (_any_val, CORBA_ExceptionDescription (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -15102,7 +15102,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::ExceptionDescription &_tao_
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ExceptionDescription *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ExceptionDescription *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -15113,7 +15113,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ExceptionDescription *_tao_elem) 
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDescription *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ExceptionDescription *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -15122,17 +15122,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDescript
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ExceptionDescription *)_tao_any.value ();
+      _tao_elem = (CORBA_ExceptionDescription *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ExceptionDescription, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ExceptionDescription, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_ExceptionDescription, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ExceptionDescription, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ExceptionDescription, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -15151,7 +15151,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDescript
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::AttributeMode _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA::AttributeMode _tao_elem)
 {
   CORBA::AttributeMode *_any_val;
   ACE_NEW (_any_val, CORBA::AttributeMode (_tao_elem));
@@ -15169,7 +15169,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::AttributeMode _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeMode &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA::AttributeMode &_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -15190,16 +15190,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeMode &_t
   return 0;
 }
 
-CORBA::AttributeDef_ptr (*_TAO_collocation_CORBA_AttributeDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_AttributeDef_ptr (*_TAO_collocation_CORBA_AttributeDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::AttributeDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_AttributeDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::AttributeDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_AttributeDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_AttributeDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -15210,25 +15210,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::AttributeDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_AttributeDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::AttributeDef::_nil ();
+    _tao_elem = CORBA_AttributeDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_AttributeDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_AttributeDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::AttributeDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_AttributeDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_AttributeDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_AttributeDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -15244,17 +15244,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeDef_ptr 
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::AttributeDef,CORBA::AttributeDef_var>;
-template class TAO_Object_Manager<CORBA::AttributeDef,CORBA::AttributeDef_var>;
+  template class TAO_Object_Field_T<CORBA_AttributeDef,CORBA_AttributeDef_var>;
+template class TAO_Object_Manager<CORBA_AttributeDef,CORBA_AttributeDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::AttributeDef,CORBA::AttributeDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::AttributeDef,CORBA::AttributeDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_AttributeDef,CORBA_AttributeDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_AttributeDef,CORBA_AttributeDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::AttributeDescription &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_AttributeDescription &_tao_elem) // copying
 {
-  CORBA::AttributeDescription *_any_val;
-  ACE_NEW (_any_val, CORBA::AttributeDescription (_tao_elem));
+  CORBA_AttributeDescription *_any_val;
+  ACE_NEW (_any_val, CORBA_AttributeDescription (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -15268,7 +15268,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::AttributeDescription &_tao_
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::AttributeDescription *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_AttributeDescription *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -15279,7 +15279,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::AttributeDescription *_tao_elem) 
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeDescription *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_AttributeDescription *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -15288,17 +15288,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeDescript
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::AttributeDescription *)_tao_any.value ();
+      _tao_elem = (CORBA_AttributeDescription *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::AttributeDescription, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_AttributeDescription, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_AttributeDescription, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_AttributeDescription, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_AttributeDescription, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -15317,7 +15317,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeDescript
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::OperationMode _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA::OperationMode _tao_elem)
 {
   CORBA::OperationMode *_any_val;
   ACE_NEW (_any_val, CORBA::OperationMode (_tao_elem));
@@ -15335,7 +15335,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::OperationMode _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationMode &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA::OperationMode &_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -15356,7 +15356,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationMode &_t
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ParameterMode _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA::ParameterMode _tao_elem)
 {
   CORBA::ParameterMode *_any_val;
   ACE_NEW (_any_val, CORBA::ParameterMode (_tao_elem));
@@ -15374,7 +15374,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ParameterMode _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParameterMode &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA::ParameterMode &_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -15395,10 +15395,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParameterMode &_t
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::ParameterDescription &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_ParameterDescription &_tao_elem) // copying
 {
-  CORBA::ParameterDescription *_any_val;
-  ACE_NEW (_any_val, CORBA::ParameterDescription (_tao_elem));
+  CORBA_ParameterDescription *_any_val;
+  ACE_NEW (_any_val, CORBA_ParameterDescription (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -15412,7 +15412,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::ParameterDescription &_tao_
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ParameterDescription *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ParameterDescription *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -15423,7 +15423,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ParameterDescription *_tao_elem) 
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParameterDescription *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ParameterDescription *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -15432,17 +15432,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParameterDescript
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ParameterDescription *)_tao_any.value ();
+      _tao_elem = (CORBA_ParameterDescription *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ParameterDescription, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ParameterDescription, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_ParameterDescription, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ParameterDescription, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ParameterDescription, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -15462,12 +15462,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParameterDescript
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::ParDescriptionSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_ParDescriptionSeq &_tao_elem
   ) // copying
 {
-  CORBA::ParDescriptionSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ParDescriptionSeq (_tao_elem));
+  CORBA_ParDescriptionSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_ParDescriptionSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -15481,7 +15481,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ParDescriptionSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ParDescriptionSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -15492,7 +15492,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ParDescriptionSeq *_tao_elem) // 
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParDescriptionSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ParDescriptionSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -15501,17 +15501,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParDescriptionSeq
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ParDescriptionSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_ParDescriptionSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ParDescriptionSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ParDescriptionSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_ParDescriptionSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ParDescriptionSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ParDescriptionSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -15531,12 +15531,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParDescriptionSeq
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::ContextIdSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_ContextIdSeq &_tao_elem
   ) // copying
 {
-  CORBA::ContextIdSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ContextIdSeq (_tao_elem));
+  CORBA_ContextIdSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_ContextIdSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -15550,7 +15550,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ContextIdSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ContextIdSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -15561,7 +15561,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ContextIdSeq *_tao_elem) // non c
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContextIdSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ContextIdSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -15570,17 +15570,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContextIdSeq *&_t
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ContextIdSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_ContextIdSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ContextIdSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ContextIdSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_ContextIdSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ContextIdSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ContextIdSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -15600,12 +15600,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContextIdSeq *&_t
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::ExceptionDefSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_ExceptionDefSeq &_tao_elem
   ) // copying
 {
-  CORBA::ExceptionDefSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ExceptionDefSeq (_tao_elem));
+  CORBA_ExceptionDefSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_ExceptionDefSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -15619,7 +15619,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ExceptionDefSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ExceptionDefSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -15630,7 +15630,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ExceptionDefSeq *_tao_elem) // no
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDefSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ExceptionDefSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -15639,17 +15639,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDefSeq *
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ExceptionDefSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_ExceptionDefSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ExceptionDefSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ExceptionDefSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_ExceptionDefSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ExceptionDefSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ExceptionDefSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -15669,12 +15669,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDefSeq *
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::ExcDescriptionSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_ExcDescriptionSeq &_tao_elem
   ) // copying
 {
-  CORBA::ExcDescriptionSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ExcDescriptionSeq (_tao_elem));
+  CORBA_ExcDescriptionSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_ExcDescriptionSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -15688,7 +15688,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ExcDescriptionSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ExcDescriptionSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -15699,7 +15699,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ExcDescriptionSeq *_tao_elem) // 
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExcDescriptionSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ExcDescriptionSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -15708,17 +15708,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExcDescriptionSeq
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ExcDescriptionSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_ExcDescriptionSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ExcDescriptionSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ExcDescriptionSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_ExcDescriptionSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ExcDescriptionSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ExcDescriptionSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -15737,16 +15737,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExcDescriptionSeq
   return 0;
 }
 
-CORBA::OperationDef_ptr (*_TAO_collocation_CORBA_OperationDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_OperationDef_ptr (*_TAO_collocation_CORBA_OperationDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::OperationDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_OperationDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::OperationDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_OperationDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_OperationDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -15757,25 +15757,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::OperationDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_OperationDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::OperationDef::_nil ();
+    _tao_elem = CORBA_OperationDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_OperationDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_OperationDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::OperationDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_OperationDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_OperationDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_OperationDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -15791,17 +15791,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationDef_ptr 
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::OperationDef,CORBA::OperationDef_var>;
-template class TAO_Object_Manager<CORBA::OperationDef,CORBA::OperationDef_var>;
+  template class TAO_Object_Field_T<CORBA_OperationDef,CORBA_OperationDef_var>;
+template class TAO_Object_Manager<CORBA_OperationDef,CORBA_OperationDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::OperationDef,CORBA::OperationDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::OperationDef,CORBA::OperationDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_OperationDef,CORBA_OperationDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_OperationDef,CORBA_OperationDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::OperationDescription &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_OperationDescription &_tao_elem) // copying
 {
-  CORBA::OperationDescription *_any_val;
-  ACE_NEW (_any_val, CORBA::OperationDescription (_tao_elem));
+  CORBA_OperationDescription *_any_val;
+  ACE_NEW (_any_val, CORBA_OperationDescription (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -15815,7 +15815,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::OperationDescription &_tao_
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::OperationDescription *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_OperationDescription *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -15826,7 +15826,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::OperationDescription *_tao_elem) 
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationDescription *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_OperationDescription *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -15835,17 +15835,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationDescript
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::OperationDescription *)_tao_any.value ();
+      _tao_elem = (CORBA_OperationDescription *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::OperationDescription, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_OperationDescription, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_OperationDescription, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_OperationDescription, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_OperationDescription, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -15865,12 +15865,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationDescript
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::RepositoryIdSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_RepositoryIdSeq &_tao_elem
   ) // copying
 {
-  CORBA::RepositoryIdSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::RepositoryIdSeq (_tao_elem));
+  CORBA_RepositoryIdSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_RepositoryIdSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -15884,7 +15884,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::RepositoryIdSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_RepositoryIdSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -15895,7 +15895,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::RepositoryIdSeq *_tao_elem) // no
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::RepositoryIdSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_RepositoryIdSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -15904,17 +15904,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::RepositoryIdSeq *
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::RepositoryIdSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_RepositoryIdSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::RepositoryIdSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_RepositoryIdSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_RepositoryIdSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_RepositoryIdSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_RepositoryIdSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -15934,12 +15934,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::RepositoryIdSeq *
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::OpDescriptionSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_OpDescriptionSeq &_tao_elem
   ) // copying
 {
-  CORBA::OpDescriptionSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::OpDescriptionSeq (_tao_elem));
+  CORBA_OpDescriptionSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_OpDescriptionSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -15953,7 +15953,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::OpDescriptionSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_OpDescriptionSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -15964,7 +15964,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::OpDescriptionSeq *_tao_elem) // n
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OpDescriptionSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_OpDescriptionSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -15973,17 +15973,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OpDescriptionSeq 
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::OpDescriptionSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_OpDescriptionSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::OpDescriptionSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_OpDescriptionSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_OpDescriptionSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_OpDescriptionSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_OpDescriptionSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -16003,12 +16003,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OpDescriptionSeq 
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::AttrDescriptionSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_AttrDescriptionSeq &_tao_elem
   ) // copying
 {
-  CORBA::AttrDescriptionSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::AttrDescriptionSeq (_tao_elem));
+  CORBA_AttrDescriptionSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_AttrDescriptionSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -16022,7 +16022,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::AttrDescriptionSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_AttrDescriptionSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -16033,7 +16033,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::AttrDescriptionSeq *_tao_elem) //
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttrDescriptionSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_AttrDescriptionSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -16042,17 +16042,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttrDescriptionSe
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::AttrDescriptionSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_AttrDescriptionSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::AttrDescriptionSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_AttrDescriptionSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_AttrDescriptionSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_AttrDescriptionSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_AttrDescriptionSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -16071,16 +16071,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttrDescriptionSe
   return 0;
 }
 
-CORBA::InterfaceDef_ptr (*_TAO_collocation_CORBA_InterfaceDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_InterfaceDef_ptr (*_TAO_collocation_CORBA_InterfaceDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_InterfaceDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::InterfaceDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_InterfaceDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_InterfaceDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -16091,25 +16091,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_InterfaceDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::InterfaceDef::_nil ();
+    _tao_elem = CORBA_InterfaceDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_InterfaceDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_InterfaceDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::InterfaceDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_InterfaceDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_InterfaceDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_InterfaceDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -16125,21 +16125,21 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDef_ptr 
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::InterfaceDef,CORBA::InterfaceDef_var>;
-template class TAO_Object_Manager<CORBA::InterfaceDef,CORBA::InterfaceDef_var>;
+  template class TAO_Object_Field_T<CORBA_InterfaceDef,CORBA_InterfaceDef_var>;
+template class TAO_Object_Manager<CORBA_InterfaceDef,CORBA_InterfaceDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::InterfaceDef,CORBA::InterfaceDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::InterfaceDef,CORBA::InterfaceDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_InterfaceDef,CORBA_InterfaceDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_InterfaceDef,CORBA_InterfaceDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::InterfaceDef::FullInterfaceDescription &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_InterfaceDef::FullInterfaceDescription &_tao_elem) // copying
 {
-  CORBA::InterfaceDef::FullInterfaceDescription *_any_val;
-  ACE_NEW (_any_val, CORBA::InterfaceDef::FullInterfaceDescription (_tao_elem));
+  CORBA_InterfaceDef::FullInterfaceDescription *_any_val;
+  ACE_NEW (_any_val, CORBA_InterfaceDef::FullInterfaceDescription (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::InterfaceDef::_tc_FullInterfaceDescription, _any_val, 1, ACE_TRY_ENV); // copy the value
+    _tao_any.replace (CORBA_InterfaceDef::_tc_FullInterfaceDescription, _any_val, 1, ACE_TRY_ENV); // copy the value
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -16149,37 +16149,37 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::InterfaceDef::FullInterface
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDef::FullInterfaceDescription *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_InterfaceDef::FullInterfaceDescription *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::InterfaceDef::_tc_FullInterfaceDescription, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    _tao_any.replace (CORBA_InterfaceDef::_tc_FullInterfaceDescription, _tao_elem, 1, ACE_TRY_ENV); // consume it
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY {}
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDef::FullInterfaceDescription *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_InterfaceDef::FullInterfaceDescription *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (CORBA::InterfaceDef::_tc_FullInterfaceDescription, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equal (CORBA_InterfaceDef::_tc_FullInterfaceDescription, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::InterfaceDef::FullInterfaceDescription *)_tao_any.value ();
+      _tao_elem = (CORBA_InterfaceDef::FullInterfaceDescription *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::InterfaceDef::FullInterfaceDescription, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_InterfaceDef::FullInterfaceDescription, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-      if (stream.decode (CORBA::InterfaceDef::_tc_FullInterfaceDescription, _tao_elem, 0, ACE_TRY_ENV)
+      if (stream.decode (CORBA_InterfaceDef::_tc_FullInterfaceDescription, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::InterfaceDef::_tc_FullInterfaceDescription, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA_InterfaceDef::_tc_FullInterfaceDescription, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -16198,10 +16198,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDef::Ful
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::InterfaceDescription &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_InterfaceDescription &_tao_elem) // copying
 {
-  CORBA::InterfaceDescription *_any_val;
-  ACE_NEW (_any_val, CORBA::InterfaceDescription (_tao_elem));
+  CORBA_InterfaceDescription *_any_val;
+  ACE_NEW (_any_val, CORBA_InterfaceDescription (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -16215,7 +16215,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::InterfaceDescription &_tao_
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDescription *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_InterfaceDescription *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -16226,7 +16226,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDescription *_tao_elem) 
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDescription *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_InterfaceDescription *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -16235,17 +16235,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDescript
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::InterfaceDescription *)_tao_any.value ();
+      _tao_elem = (CORBA_InterfaceDescription *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::InterfaceDescription, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_InterfaceDescription, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_InterfaceDescription, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_InterfaceDescription, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_InterfaceDescription, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -16264,10 +16264,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDescript
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::ValueMember &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_ValueMember &_tao_elem) // copying
 {
-  CORBA::ValueMember *_any_val;
-  ACE_NEW (_any_val, CORBA::ValueMember (_tao_elem));
+  CORBA_ValueMember *_any_val;
+  ACE_NEW (_any_val, CORBA_ValueMember (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -16281,7 +16281,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::ValueMember &_tao_elem) // 
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ValueMember *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ValueMember *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -16292,7 +16292,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ValueMember *_tao_elem) // non co
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMember *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ValueMember *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -16301,17 +16301,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMember *&_ta
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ValueMember *)_tao_any.value ();
+      _tao_elem = (CORBA_ValueMember *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ValueMember, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ValueMember, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_ValueMember, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ValueMember, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ValueMember, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -16331,12 +16331,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMember *&_ta
 }
 
 void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::ValueMemberSeq &_tao_elem
+    CORBA_Any &_tao_any,
+    const CORBA_ValueMemberSeq &_tao_elem
   ) // copying
 {
-  CORBA::ValueMemberSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ValueMemberSeq (_tao_elem));
+  CORBA_ValueMemberSeq *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_ValueMemberSeq (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -16350,7 +16350,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ValueMemberSeq *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ValueMemberSeq *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -16361,7 +16361,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ValueMemberSeq *_tao_elem) // non
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMemberSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ValueMemberSeq *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -16370,17 +16370,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMemberSeq *&
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ValueMemberSeq *)_tao_any.value ();
+      _tao_elem = (CORBA_ValueMemberSeq *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ValueMemberSeq, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ValueMemberSeq, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_ValueMemberSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ValueMemberSeq, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ValueMemberSeq, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -16399,16 +16399,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMemberSeq *&
   return 0;
 }
 
-CORBA::ValueMemberDef_ptr (*_TAO_collocation_CORBA_ValueMemberDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_ValueMemberDef_ptr (*_TAO_collocation_CORBA_ValueMemberDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::ValueMemberDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_ValueMemberDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ValueMemberDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_ValueMemberDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_ValueMemberDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -16419,25 +16419,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ValueMemberDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMemberDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ValueMemberDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::ValueMemberDef::_nil ();
+    _tao_elem = CORBA_ValueMemberDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_ValueMemberDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_ValueMemberDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::ValueMemberDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_ValueMemberDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ValueMemberDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ValueMemberDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -16453,23 +16453,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMemberDef_pt
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::ValueMemberDef,CORBA::ValueMemberDef_var>;
-template class TAO_Object_Manager<CORBA::ValueMemberDef,CORBA::ValueMemberDef_var>;
+  template class TAO_Object_Field_T<CORBA_ValueMemberDef,CORBA_ValueMemberDef_var>;
+template class TAO_Object_Manager<CORBA_ValueMemberDef,CORBA_ValueMemberDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::ValueMemberDef,CORBA::ValueMemberDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::ValueMemberDef,CORBA::ValueMemberDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_ValueMemberDef,CORBA_ValueMemberDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_ValueMemberDef,CORBA_ValueMemberDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-CORBA::ValueDef_ptr (*_TAO_collocation_CORBA_ValueDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_ValueDef_ptr (*_TAO_collocation_CORBA_ValueDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_ValueDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ValueDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_ValueDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_ValueDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -16480,25 +16480,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ValueDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::ValueDef::_nil ();
+    _tao_elem = CORBA_ValueDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_ValueDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_ValueDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::ValueDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_ValueDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ValueDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ValueDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -16514,21 +16514,21 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDef_ptr &_ta
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::ValueDef,CORBA::ValueDef_var>;
-template class TAO_Object_Manager<CORBA::ValueDef,CORBA::ValueDef_var>;
+  template class TAO_Object_Field_T<CORBA_ValueDef,CORBA_ValueDef_var>;
+template class TAO_Object_Manager<CORBA_ValueDef,CORBA_ValueDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::ValueDef,CORBA::ValueDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::ValueDef,CORBA::ValueDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_ValueDef,CORBA_ValueDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_ValueDef,CORBA_ValueDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::ValueDef::FullValueDescription &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_ValueDef::FullValueDescription &_tao_elem) // copying
 {
-  CORBA::ValueDef::FullValueDescription *_any_val;
-  ACE_NEW (_any_val, CORBA::ValueDef::FullValueDescription (_tao_elem));
+  CORBA_ValueDef::FullValueDescription *_any_val;
+  ACE_NEW (_any_val, CORBA_ValueDef::FullValueDescription (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::ValueDef::_tc_FullValueDescription, _any_val, 1, ACE_TRY_ENV); // copy the value
+    _tao_any.replace (CORBA_ValueDef::_tc_FullValueDescription, _any_val, 1, ACE_TRY_ENV); // copy the value
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -16538,37 +16538,37 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::ValueDef::FullValueDescript
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDef::FullValueDescription *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ValueDef::FullValueDescription *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::ValueDef::_tc_FullValueDescription, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    _tao_any.replace (CORBA_ValueDef::_tc_FullValueDescription, _tao_elem, 1, ACE_TRY_ENV); // consume it
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY {}
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDef::FullValueDescription *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ValueDef::FullValueDescription *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (CORBA::ValueDef::_tc_FullValueDescription, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equal (CORBA_ValueDef::_tc_FullValueDescription, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ValueDef::FullValueDescription *)_tao_any.value ();
+      _tao_elem = (CORBA_ValueDef::FullValueDescription *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ValueDef::FullValueDescription, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ValueDef::FullValueDescription, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-      if (stream.decode (CORBA::ValueDef::_tc_FullValueDescription, _tao_elem, 0, ACE_TRY_ENV)
+      if (stream.decode (CORBA_ValueDef::_tc_FullValueDescription, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::ValueDef::_tc_FullValueDescription, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA_ValueDef::_tc_FullValueDescription, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -16587,10 +16587,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDef::FullVal
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::ValueDescription &_tao_elem) // copying
+void operator<<= (CORBA_Any &_tao_any, const CORBA_ValueDescription &_tao_elem) // copying
 {
-  CORBA::ValueDescription *_any_val;
-  ACE_NEW (_any_val, CORBA::ValueDescription (_tao_elem));
+  CORBA_ValueDescription *_any_val;
+  ACE_NEW (_any_val, CORBA_ValueDescription (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -16604,7 +16604,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::ValueDescription &_tao_elem
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDescription *_tao_elem) // non copying
+void operator<<= (CORBA_Any &_tao_any, CORBA_ValueDescription *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -16615,7 +16615,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDescription *_tao_elem) // n
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDescription *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ValueDescription *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -16624,17 +16624,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDescription 
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ValueDescription *)_tao_any.value ();
+      _tao_elem = (CORBA_ValueDescription *)_tao_any.value ();
       return 1;
       }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ValueDescription, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ValueDescription, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::_tc_ValueDescription, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ValueDescription, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ValueDescription, _tao_elem, 1, ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -16653,16 +16653,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDescription 
   return 0;
 }
 
-CORBA::ValueBoxDef_ptr (*_TAO_collocation_CORBA_ValueBoxDef_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+CORBA_ValueBoxDef_ptr (*_TAO_collocation_CORBA_ValueBoxDef_Stub_Factory_function_pointer) (
+    CORBA_Object_ptr obj
   ) = 0;
-void operator<<= (CORBA::Any &_tao_any, CORBA::ValueBoxDef_ptr _tao_elem)
+void operator<<= (CORBA_Any &_tao_any, CORBA_ValueBoxDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  CORBA_Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ValueBoxDef::_duplicate (_tao_elem);
+    ACE_NEW (_tao_obj_ptr, CORBA_Object_ptr);
+    *_tao_obj_ptr = CORBA_ValueBoxDef::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_ValueBoxDef, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -16673,25 +16673,25 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ValueBoxDef_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueBoxDef_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA_Any &_tao_any, CORBA_ValueBoxDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
+  CORBA_Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::ValueBoxDef::_nil ();
+    _tao_elem = CORBA_ValueBoxDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_ValueBoxDef, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-    CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+    CORBA_Object_var _tao_obj_var;
+    ACE_NEW_RETURN (tmp, CORBA_Object_ptr, 0);
     if (stream.decode (CORBA::_tc_ValueBoxDef, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::ValueBoxDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_ValueBoxDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ValueBoxDef, tmp, 1, ACE_TRY_ENV);
+      *tmp = (CORBA_Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA_Any *)&_tao_any)->replace (CORBA::_tc_ValueBoxDef, tmp, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return 1;
     }
@@ -16707,18 +16707,18 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueBoxDef_ptr &
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::ValueBoxDef,CORBA::ValueBoxDef_var>;
-template class TAO_Object_Manager<CORBA::ValueBoxDef,CORBA::ValueBoxDef_var>;
+  template class TAO_Object_Field_T<CORBA_ValueBoxDef,CORBA_ValueBoxDef_var>;
+template class TAO_Object_Manager<CORBA_ValueBoxDef,CORBA_ValueBoxDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::ValueBoxDef,CORBA::ValueBoxDef_var>
-#  pragma instantiate TAO_Object_Manager<CORBA::ValueBoxDef,CORBA::ValueBoxDef_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA_ValueBoxDef,CORBA_ValueBoxDef_var>
+#  pragma instantiate TAO_Object_Manager<CORBA_ValueBoxDef,CORBA_ValueBoxDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::InterfaceDefSeq &_tao_sequence
+    const CORBA_InterfaceDefSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -16734,7 +16734,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::InterfaceDefSeq &_tao_sequence
+    CORBA_InterfaceDefSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -16753,7 +16753,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::ValueDefSeq &_tao_sequence
+    const CORBA_ValueDefSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -16769,7 +16769,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::ValueDefSeq &_tao_sequence
+    CORBA_ValueDefSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -16788,7 +16788,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::ContainedSeq &_tao_sequence
+    const CORBA_ContainedSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -16804,7 +16804,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::ContainedSeq &_tao_sequence
+    CORBA_ContainedSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -16823,7 +16823,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::StructMemberSeq &_tao_sequence
+    const CORBA_StructMemberSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -16839,7 +16839,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::StructMemberSeq &_tao_sequence
+    CORBA_StructMemberSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -16858,7 +16858,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::InitializerSeq &_tao_sequence
+    const CORBA_InitializerSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -16874,7 +16874,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::InitializerSeq &_tao_sequence
+    CORBA_InitializerSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -16893,7 +16893,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::UnionMemberSeq &_tao_sequence
+    const CORBA_UnionMemberSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -16909,7 +16909,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::UnionMemberSeq &_tao_sequence
+    CORBA_UnionMemberSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -16928,7 +16928,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::EnumMemberSeq &_tao_sequence
+    const CORBA_EnumMemberSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -16944,7 +16944,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::EnumMemberSeq &_tao_sequence
+    CORBA_EnumMemberSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -16963,7 +16963,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::Container::DescriptionSeq &_tao_sequence
+    const CORBA_Container::DescriptionSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -16979,7 +16979,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::Container::DescriptionSeq &_tao_sequence
+    CORBA_Container::DescriptionSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -16998,7 +16998,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::ParDescriptionSeq &_tao_sequence
+    const CORBA_ParDescriptionSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -17014,7 +17014,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::ParDescriptionSeq &_tao_sequence
+    CORBA_ParDescriptionSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -17033,7 +17033,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::ContextIdSeq &_tao_sequence
+    const CORBA_ContextIdSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -17049,7 +17049,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::ContextIdSeq &_tao_sequence
+    CORBA_ContextIdSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -17068,7 +17068,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::ExceptionDefSeq &_tao_sequence
+    const CORBA_ExceptionDefSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -17084,7 +17084,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::ExceptionDefSeq &_tao_sequence
+    CORBA_ExceptionDefSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -17103,7 +17103,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::ExcDescriptionSeq &_tao_sequence
+    const CORBA_ExcDescriptionSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -17119,7 +17119,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::ExcDescriptionSeq &_tao_sequence
+    CORBA_ExcDescriptionSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -17138,7 +17138,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::RepositoryIdSeq &_tao_sequence
+    const CORBA_RepositoryIdSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -17154,7 +17154,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::RepositoryIdSeq &_tao_sequence
+    CORBA_RepositoryIdSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -17173,7 +17173,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::OpDescriptionSeq &_tao_sequence
+    const CORBA_OpDescriptionSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -17189,7 +17189,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::OpDescriptionSeq &_tao_sequence
+    CORBA_OpDescriptionSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -17208,7 +17208,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::AttrDescriptionSeq &_tao_sequence
+    const CORBA_AttrDescriptionSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -17224,7 +17224,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::AttrDescriptionSeq &_tao_sequence
+    CORBA_AttrDescriptionSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -17243,7 +17243,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::ValueMemberSeq &_tao_sequence
+    const CORBA_ValueMemberSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -17259,7 +17259,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::ValueMemberSeq &_tao_sequence
+    CORBA_ValueMemberSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
