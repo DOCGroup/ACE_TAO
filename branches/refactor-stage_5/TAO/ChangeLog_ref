@@ -1,3 +1,9 @@
+Tue Aug 26 10:05:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp: Included the new header for AMI
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp: Added ";" after
+	  generating the array of arguments.
+
 Mon Aug 25 20:08:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp

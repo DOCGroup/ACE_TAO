@@ -1386,7 +1386,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
   if (be_global->ami_call_back () == I_TRUE)
     {
       this->gen_standard_include (this->client_stubs_,
-                                  "tao/Messaging/Twoway_Asynch_Invocation.h");
+                                  "tao/Messaging/Asynch_Invocation_Adapter.h");
 
       // If a valuetype has been seen, this will be in the header file.
       if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
