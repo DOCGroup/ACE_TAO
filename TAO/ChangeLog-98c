@@ -1,5 +1,23 @@
 Wed Jul  1 13:59:30 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+	
+	* tao/TAO.{h,cpp}: Passing in argc to the TAO_ORB_Manager by
+	reference, since ORB_init takes argc by reference.
 
+	* orbsvcs/Trading_Service/Trading_Service.{h,cpp}:
+	* orbsvcs/Trading_Service/Makefile:
+	Made Trading Service app resemble other orbsvcs apps. Accepts -TS* 
+	command line arguments. Has the ability to form a complete graph
+	federation with other traders on the same multicast network.
+
+	* orbsvcs/tests/Trading/Offer_Exporter.{h,cpp}:
+	* orbsvcs/tests/Trading/Offer_Importer.{h,cpp}:
+	* orbsvcs/tests/Trading/Service_Type_Exporter.{h,cpp}:
+	* orbsvcs/tests/Trading/export_test.cpp:
+	* orbsvcs/tests/Trading/Makfile:
+	export_test will now export service types and offers to all
+	traders linked to the multicast-enabled trader, so import_test
+	will test federated queries. 
+	
 	* orbsvcs/orbsvcs/IOR_Multicast.{h,cpp}: Added an init method for
 	initialization outside the constructor.
 

@@ -31,25 +31,26 @@ Simple_DP_Evaluation_Handler<T>::evalDP (const CORBA::Any& extra_info,
 					 CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
-  T* copy;
   CORBA::Any* return_value = 0;
 
   ACE_NEW_RETURN (return_value, CORBA::Any, 0);
-  ACE_NEW_RETURN (copy, T (this->dp_), 0);
 
-  (*return_value) <<= copy;
+  (*return_value) <<= *(new T (this->dp_));
   return return_value;
 }
 
 TAO_Offer_Exporter::
-TAO_Offer_Exporter (PortableServer::POA_ptr poa_object,
-		    CosTrading::Register_ptr register_if,
+TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
 		    CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
-    : register_ (register_if)
 {
+  // Initialize the offer sequences and structures.
   this->create_offers ();
-  this->admin_ = register_if->admin_if (_env);
+
+  // Obtain the necessary trading service interfaces.
+  this->register_ = lookup_if->register_if (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->admin_ = lookup_if->admin_if (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 }
 
@@ -60,33 +61,56 @@ TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
 void
 TAO_Offer_Exporter::export_offers (CORBA::Environment& _env)
 {
-  ACE_DEBUG ((LM_DEBUG, "TAO_Offer_Exporter::Exporting offers.\n"));
+  ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Exporting offers.\n"));
+
+  for (int i = 0; i < NUM_OFFERS; i++)
+    {
+      this->props_plotters_[i][4].value <<= "Default";
+      this->props_printers_[i][4].value <<= "Default";
+      this->props_fs_[i][4].value <<= "Default";
+    }
   
+  this->export_to (this->register_.in (), _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+}
+
+void
+TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg,
+                               CORBA::Environment& _env)
+  TAO_THROW_SPEC ((CORBA::SystemException, 
+                   CosTrading::Register::InvalidObjectRef, 
+                   CosTrading::IllegalServiceType, 
+                   CosTrading::UnknownServiceType, 
+                   CosTrading::Register::InterfaceTypeMismatch, 
+                   CosTrading::IllegalPropertyName, 
+                   CosTrading::PropertyTypeMismatch, 
+                   CosTrading::ReadonlyDynamicProperty, 
+                   CosTrading::MissingMandatoryProperty, 
+                   CosTrading::DuplicatePropertyName))
+{
   TAO_TRY
     {
       for (int i = 0; i < NUM_OFFERS; i++)
 	{
 	  CosTrading::OfferId_var offer_id = 
-	    this->register_->export (this->plotter_[i]._this (TAO_TRY_ENV),
+	    reg->export (this->plotter_[i]._this (TAO_TRY_ENV),
 				     TT_Info::INTERFACE_NAMES[1],
 				     this->props_plotters_[i],
 				     TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	  ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
 
-	  offer_id = 
-	    this->register_->export (this->printer_[i]._this (TAO_TRY_ENV),
-				     TT_Info::INTERFACE_NAMES[2],
-				     this->props_printers_[i],
-				     TAO_TRY_ENV);
+	  offer_id = reg->export (this->printer_[i]._this (TAO_TRY_ENV),
+                                   TT_Info::INTERFACE_NAMES[2],
+                                   this->props_printers_[i],
+                                   TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	  ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
 
-	  offer_id = 
-	  this->register_->export (this->fs_[i]._this (TAO_TRY_ENV),
-				   TT_Info::INTERFACE_NAMES[3],
-				   this->props_fs_[i],
-				   TAO_TRY_ENV);
+	  offer_id = reg->export (this->fs_[i]._this (TAO_TRY_ENV),
+                                  TT_Info::INTERFACE_NAMES[3],
+                                  this->props_fs_[i],
+                                  TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	  ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
 	}
@@ -100,13 +124,80 @@ TAO_Offer_Exporter::export_offers (CORBA::Environment& _env)
 }
 
 void
+TAO_Offer_Exporter::export_offers_to_all (CORBA::Environment& _env)
+  TAO_THROW_SPEC ((CORBA::SystemException, 
+                   CosTrading::Register::InvalidObjectRef, 
+                   CosTrading::IllegalServiceType, 
+                   CosTrading::UnknownServiceType, 
+                   CosTrading::Register::InterfaceTypeMismatch, 
+                   CosTrading::IllegalPropertyName, 
+                   CosTrading::PropertyTypeMismatch, 
+                   CosTrading::ReadonlyDynamicProperty, 
+                   CosTrading::MissingMandatoryProperty, 
+                   CosTrading::DuplicatePropertyName))
+{
+  ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Exporting to all.\n"));
+  
+  ACE_DEBUG ((LM_DEBUG, "Obtaining link interface.\n"));
+  CosTrading::Link_var link_if = this->register_->link_if (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  ACE_DEBUG ((LM_DEBUG, "Obtaining references to traders directly"
+              " linked to the root trader.\n"));
+  CosTrading::LinkNameSeq_var link_name_seq = link_if->list_links (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  ACE_DEBUG ((LM_DEBUG, "Registering offers with each of the linked"
+              " traders.\n"));
+  for (int i = link_name_seq->length () - 1; i >= 0; i--)
+    {
+      TAO_TRY
+        {
+          ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
+                      ACE_static_cast (const char*, link_name_seq[i])));
+          CosTrading::Link::LinkInfo_var link_info =
+            link_if->describe_link (link_name_seq[i], _env);
+
+          for (int j = 0; j < NUM_OFFERS; j++)
+            {
+              this->props_plotters_[j][4].value <<= link_name_seq[i];
+              this->props_printers_[j][4].value <<= link_name_seq[i];
+              this->props_fs_[j][4].value <<= link_name_seq[i];
+            }
+
+          ACE_DEBUG ((LM_DEBUG, "Exporting offers to %s\n",
+                      ACE_static_cast (const char*, link_name_seq[i])));
+
+          CosTrading::Register_ptr remote_reg;
+#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
+          CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
+          CORBA::Object_var obj = orb->string_to_object (link_info->target_reg, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+          remote_reg = CosTrading::Register::_narrow (obj, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+#else 
+          remote_reg = link_info->target_reg;
+#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
+          
+          this->export_to (remote_reg, _env);
+          TAO_CHECK_ENV_RETURN_VOID (_env);
+        }
+      TAO_CATCHANY
+        {
+        }
+      TAO_ENDTRY;
+    }
+}
+
+
+void
 TAO_Offer_Exporter::withdraw_offers (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException, 
 		   CosTrading::IllegalOfferId, 
 		   CosTrading::UnknownOfferId, 
 		   CosTrading::Register::ProxyOfferId))
 {
-  ACE_DEBUG ((LM_DEBUG, "TAO_Offer_Exporter::Withdrawing all offers.\n"));
+  ACE_DEBUG ((LM_DEBUG, "***TAO_Offer_Exporter::Withdrawing all offers.\n"));
   
   TAO_TRY
     {
@@ -141,7 +232,7 @@ TAO_Offer_Exporter::describe_offers (CORBA::Environment& _env)
 		   CosTrading::UnknownOfferId, 
 		   CosTrading::Register::ProxyOfferId))
 {
-  ACE_DEBUG ((LM_DEBUG, "TAO_Offer_Exporter::Describing all offers.\n"));
+  ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Describing all offers.\n"));
   
   TAO_TRY
     {
@@ -245,7 +336,11 @@ TAO_Offer_Exporter::grab_offerids (CORBA::Environment& _env)
 		(*offer_id_seq)[i + old_length] = (*id_seq)[i];
 
 	      delete id_seq;
-	    } while (any_left);	      
+	    }
+          while (any_left);
+
+          offer_id_iter->destroy (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 	}
 
       ACE_DEBUG ((LM_DEBUG, "\tThe following offer ids are registered:\n"));
@@ -276,6 +371,10 @@ TAO_Offer_Exporter::create_offers (void)
 
   CosTradingDynamic::DynamicProp* dp_user_queue;
   CosTradingDynamic::DynamicProp* dp_file_queue;
+  CosTradingDynamic::DynamicProp* dp_space_left;
+
+  ACE_INET_Addr addr ((u_short) 0);
+  const char* hostname = addr.get_host_name ();
   
   // Initialize plotters
   string_seq.length (QUEUE_SIZE);
@@ -313,7 +412,7 @@ TAO_Offer_Exporter::create_offers (void)
 	 new Simple_DP_Evaluation_Handler<TAO_Sequences::ULongSeq> (ulong_seq),
 	 CORBA::B_TRUE);
       
-      this->props_plotters_[i].length (9);
+      this->props_plotters_[i].length (11);
 
       this->props_plotters_[i][0].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME]);
       this->props_plotters_[i][0].value <<= CORBA::string_dup (name);
@@ -321,18 +420,22 @@ TAO_Offer_Exporter::create_offers (void)
       this->props_plotters_[i][1].value <<= TT_Info::LOCATIONS[i];
       this->props_plotters_[i][2].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION]);
       this->props_plotters_[i][2].value <<= CORBA::string_dup (description);
-      this->props_plotters_[i][3].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_NUM_COLORS]);
-      this->props_plotters_[i][3].value <<= (CORBA::Long)(i * 2);
-      this->props_plotters_[i][4].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_AUTO_LOADING]);
-      this->props_plotters_[i][4].value <<= CORBA::Any::from_boolean ((CORBA::Boolean) (i % 2));
-      this->props_plotters_[i][5].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_COST_PER_PAGE]);
-      this->props_plotters_[i][5].value <<= (CORBA::Float) i;
-      this->props_plotters_[i][6].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_MODEL_NUMBER]);
-      this->props_plotters_[i][6].value <<= CORBA::string_dup (TT_Info::MODEL_NUMBERS[i]);
-      this->props_plotters_[i][7].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE];
-      this->props_plotters_[i][7].value <<= *dp_user_queue;
-      this->props_plotters_[i][8].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING];
-      this->props_plotters_[i][8].value <<= *dp_file_queue;
+      this->props_plotters_[i][3].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::HOST_NAME]);
+      this->props_plotters_[i][3].value <<= CORBA::string_dup (hostname);
+      this->props_plotters_[i][4].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::TRADER_NAME]);
+      this->props_plotters_[i][4].value <<= "Default";
+      this->props_plotters_[i][5].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_NUM_COLORS]);
+      this->props_plotters_[i][5].value <<= (CORBA::Long)(i * 2);
+      this->props_plotters_[i][6].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_AUTO_LOADING]);
+      this->props_plotters_[i][6].value <<= CORBA::Any::from_boolean ((CORBA::Boolean) (i % 2));
+      this->props_plotters_[i][7].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_COST_PER_PAGE]);
+      this->props_plotters_[i][7].value <<= (CORBA::Float) i;
+      this->props_plotters_[i][8].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_MODEL_NUMBER]);
+      this->props_plotters_[i][8].value <<= CORBA::string_dup (TT_Info::MODEL_NUMBERS[i]);
+      this->props_plotters_[i][9].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE];
+      this->props_plotters_[i][9].value <<= *dp_user_queue;
+      this->props_plotters_[i][10].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING];
+      this->props_plotters_[i][10].value <<= *dp_file_queue;
     }
 
   // Initialize printers
@@ -349,78 +452,87 @@ TAO_Offer_Exporter::create_offers (void)
 	  ulong_seq[j] = counter * 10000;
 	}
 
-      dp_user_queue = this->dp_plotters_[i].construct_dynamic_prop
+      dp_user_queue = this->dp_printers_[i].construct_dynamic_prop
 	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE],
 	 TAO_Sequences::_tc_StringSeq,
 	 extra_info);
 
-      dp_file_queue = this->dp_plotters_[i].construct_dynamic_prop
+      dp_file_queue = this->dp_printers_[i].construct_dynamic_prop
 	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING],
 	 TAO_Sequences::_tc_ULongSeq,
 	 extra_info);
       
-      this->dp_plotters_[i].register_handler
+      this->dp_printers_[i].register_handler
 	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE],
 	 new Simple_DP_Evaluation_Handler<TAO_Sequences::StringSeq> (string_seq),
 	 CORBA::B_TRUE);
 
-      this->dp_plotters_[i].register_handler
+      this->dp_printers_[i].register_handler
 	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING],
 	 new Simple_DP_Evaluation_Handler<TAO_Sequences::ULongSeq> (ulong_seq),
 	 CORBA::B_TRUE);
 
-      this->props_printers_[i].length (10);
+      this->props_printers_[i].length (12);
       this->props_printers_[i][0].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME]);
       this->props_printers_[i][0].value <<= CORBA::string_dup (name);
       this->props_printers_[i][1].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION]);
-      this->props_printers_[i][1].value <<= TT_Info::LOCATIONS[i];
+      this->props_printers_[i][1].value <<= TT_Info::LOCATIONS[i];      
       this->props_printers_[i][2].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION]);
       this->props_printers_[i][2].value <<= CORBA::string_dup (description);
-      this->props_printers_[i][3].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COLOR]);
-      this->props_printers_[i][3].value <<= CORBA::Any::from_boolean ((CORBA::Boolean) (i % 2));
-      this->props_printers_[i][4].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_DOUBLE_SIDED]);
-      this->props_printers_[i][4].value <<= CORBA::Any::from_boolean ((CORBA::Boolean) ((i + 1) % 2));
-      this->props_printers_[i][5].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COST_PER_PAGE]);
-      this->props_printers_[i][5].value <<= (CORBA::Float) i;
-      this->props_printers_[i][6].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_MODEL_NUMBER]);
-      this->props_printers_[i][6].value <<= CORBA::string_dup (TT_Info::MODEL_NUMBERS[i]);
-      this->props_printers_[i][7].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_PAGES_PER_SEC]);
-      this->props_printers_[i][7].value <<= (CORBA::UShort) i;
-      this->props_printers_[i][8].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE];
-      this->props_printers_[i][8].value <<= *dp_user_queue;
-      this->props_printers_[i][9].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING];
-      this->props_printers_[i][9].value <<= *dp_file_queue;
+      this->props_printers_[i][3].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::HOST_NAME]);
+      this->props_printers_[i][3].value <<= CORBA::string_dup (hostname);
+      this->props_printers_[i][4].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::TRADER_NAME]);
+      this->props_printers_[i][4].value <<= "Default";
+      this->props_printers_[i][5].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COLOR]);
+      this->props_printers_[i][5].value <<= CORBA::Any::from_boolean ((CORBA::Boolean) (i % 2));
+      this->props_printers_[i][6].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_DOUBLE_SIDED]);
+      this->props_printers_[i][6].value <<= CORBA::Any::from_boolean ((CORBA::Boolean) ((i + 1) % 2));
+      this->props_printers_[i][7].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COST_PER_PAGE]);
+      this->props_printers_[i][7].value <<= (CORBA::Float) i;
+      this->props_printers_[i][8].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_MODEL_NUMBER]);
+      this->props_printers_[i][8].value <<= CORBA::string_dup (TT_Info::MODEL_NUMBERS[i]);
+      this->props_printers_[i][9].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_PAGES_PER_SEC]);
+      this->props_printers_[i][9].value <<= (CORBA::UShort) i;
+      this->props_printers_[i][10].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE];
+      this->props_printers_[i][10].value <<= *dp_user_queue;
+      this->props_printers_[i][11].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING];
+      this->props_printers_[i][11].value <<= *dp_file_queue;
     }
 
   // Initialize FileSystem
   for (i = 0; i < NUM_OFFERS; i++)
     {
-      CosTradingDynamic::DynamicProp_var dp_space_left;
-      
       ACE_OS::sprintf (name, "File System #%d", i);
       ACE_OS::sprintf (description,
 		       "%s is a File System. It stores stuff. Like files.",
 		       name);
-      /*
-      dp_space_left =
-	this->dp_fs_[i].register_handler
+
+      dp_space_left = this->dp_fs_[i].construct_dynamic_prop
+        (TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING],
+	 CORBA::_tc_ulong,
+	 extra_info);
+
+      this->dp_fs_[i].register_handler
 	(TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING],
-	 TT_Info::FILESYSTEM_PROPERTY_TYPES[TT_Info::SPACE_REMAINING],
-	 extra_info,
-	 new Simple_DP_Evaluation_Handler<CORBA::ULong> (i * 4434343));
-	 */      
-      this->props_fs_[i].length (5);
+	 new Simple_DP_Evaluation_Handler<CORBA::ULong> (i * 4434343),
+	 CORBA::B_TRUE);
+
+      this->props_fs_[i].length (8);
       this->props_fs_[i][0].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME]);
       this->props_fs_[i][0].value <<= CORBA::string_dup (name);
       this->props_fs_[i][1].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION]);
       this->props_fs_[i][1].value <<= CORBA::string_dup (TT_Info::LOCATIONS[i]);
       this->props_fs_[i][2].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION]);
       this->props_fs_[i][2].value <<= CORBA::string_dup (description);
-      this->props_fs_[i][3].name = CORBA::string_dup (TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::DISK_SIZE]);
-      this->props_fs_[i][3].value <<= (CORBA::ULong) (i * 2000000);
-      this->props_fs_[i][4].name = CORBA::string_dup (TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::PERMISSION_LEVEL]);
-      this->props_fs_[i][4].value <<= (CORBA::UShort) (i + 1);
-      //      this->props_fs_[i][6].name = TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING];
-      //      this->props_fs_[i][6].value <<= dp_space_left.in ();
+      this->props_fs_[i][3].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::HOST_NAME]);
+      this->props_fs_[i][3].value <<= CORBA::string_dup (hostname);
+      this->props_fs_[i][4].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::TRADER_NAME]);
+      this->props_fs_[i][4].value <<= "Default";
+      this->props_fs_[i][5].name = CORBA::string_dup (TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::DISK_SIZE]);
+      this->props_fs_[i][5].value <<= (CORBA::ULong) (i * 2000000);
+      this->props_fs_[i][6].name = CORBA::string_dup (TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::PERMISSION_LEVEL]);
+      this->props_fs_[i][6].value <<= (CORBA::UShort) (i + 1);
+      this->props_fs_[i][7].name = TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING];
+      this->props_fs_[i][7].value <<= *dp_space_left;
     }
 }
