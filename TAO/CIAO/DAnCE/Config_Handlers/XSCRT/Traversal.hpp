@@ -13,7 +13,7 @@
 // using std::wcerr;
 // using std::endl;
 
-#include <XSCRT/ExtendedTypeInfo.hpp>
+#include "XSCRT/ExtendedTypeInfo.hpp"
 
 namespace XSCRT
 {

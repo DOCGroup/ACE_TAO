@@ -6,7 +6,7 @@
 #define XMLSCHEMA_TYPES_HPP
 
 #include <string>
-#include <XSCRT/Elements.hpp>
+#include "XSCRT/Elements.hpp"
 
 /**
  * @@ HACK: VC7
@@ -576,7 +576,7 @@ namespace XMLSchema
   };
 }
 
-#include <XMLSchema/Types.ipp>
-#include <XMLSchema/Types.tpp>
+#include "XMLSchema/Types.ipp"
+#include "XMLSchema/Types.tpp"
 
 #endif  // XMLSCHEMA_TYPES_HPP

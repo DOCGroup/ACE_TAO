@@ -3,6 +3,7 @@
 #define DEPLOYMENT_HPP
 
 #include "vc6-4786.h"
+#include "Config_Handlers_Export.h"
 
 // Forward declarations.
 //
@@ -15,7 +16,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include <XMLSchema/Types.hpp>
+#include "XMLSchema/Types.hpp"
 
 #include "Basic_Deployment_Data.hpp"
 
@@ -43,6 +44,7 @@ namespace CIAO
     ::CIAO::Config_Handlers::Domain
     domain (xercesc::DOMDocument const*);
 
+    Config_Handlers_Export
     ::CIAO::Config_Handlers::DeploymentPlan
     deploymentPlan (xercesc::DOMDocument const*);
 

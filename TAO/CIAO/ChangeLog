@@ -1,3 +1,35 @@
+Wed Mar 30 21:48:14 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* DAnCE/Config_Handlers/Deployment.hpp: Made the function
+	  deploymentPlan an export function since it will be accessed
+	  externally.  The handler test program needed this change to
+	  compile on Win32.
+
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
+	* DAnCE/Config_Handlers/Config_Handlers.mpc:
+	* DAnCE/Config_Handlers/ccd.hpp:
+	* DAnCE/Config_Handlers/cdd.hpp:
+	* DAnCE/Config_Handlers/cdp.hpp:
+	* DAnCE/Config_Handlers/cid.hpp:
+	* DAnCE/Config_Handlers/cpd.hpp:
+	* DAnCE/Config_Handlers/iad.hpp:
+	* DAnCE/Config_Handlers/pcd.hpp:
+	* DAnCE/Config_Handlers/toplevel.hpp:
+	* DAnCE/Config_Handlers/XMLSchema/Types.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Elements.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Parser.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Traversal.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Writer.hpp:
+	* DAnCE/Config_Handlers/XSCRT/XML.hpp: Changed all local include
+	  files to use the right syntax.  I.e., they should be in the form
+	  of:
+
+	    #include "foo/bar.h"
+
+	  instead of
+
+	    #include <foo/bar.h>
+
 Wed Mar 30 22:03:23 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
 	* docs/schema/xsc-banner.cpp
