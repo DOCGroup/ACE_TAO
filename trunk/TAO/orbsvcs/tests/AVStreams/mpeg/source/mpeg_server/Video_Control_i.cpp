@@ -127,7 +127,7 @@ Video_Control_i::set_peer (const char *peer,
                            CORBA::Environment &_tao_environment)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) set_peer called: %s",
+              "(%P|%t) set_peer called: %s\n",
               peer));
 
   ACE_INET_Addr client_data_addr (peer);
