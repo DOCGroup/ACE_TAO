@@ -24,10 +24,13 @@
 
 // Force test of ACE_U_LongLong class on all platforms except
 // ACE_WIN32 and with ACE_HAS_64BIT_LONGS.  ACE_U_LongLong isn't used
-// on those platforms.  (And the ACE_U_LongLong declaration is in an
-// inconvenient place on ace/OS.h to play this game on ACE_WIN32.)
+// on those platforms.
 #if defined (ACE_HAS_HI_RES_TIMER) || \
    (defined (ACE_HAS_LONGLONG_T) && !defined (ACE_HAS_64BIT_LONGS))
+
+# include <limits.h>
+# undef ULLONG_MAX
+
 # if defined (ACE_HAS_HI_RES_TIMER)
 #   undef ACE_HAS_HI_RES_TIMER
 # endif /* ACE_HAS_HI_RES_TIMER */
@@ -115,11 +118,6 @@ main (int, char *[])
   int ret = 0;
 
   ACE_START_TEST ("Time_Value_Test");
-
-  ACE_DEBUG ((LM_DEBUG, "This is ACE Version %u.%u.%u\n",
-              ACE::major_version (),
-              ACE::minor_version(),
-              ACE::beta_version()));
 
   ACE_Time_Value tv1;
   ACE_Time_Value tv2 (2);
