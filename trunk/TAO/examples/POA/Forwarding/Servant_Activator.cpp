@@ -38,7 +38,7 @@ MyFooServantActivator::etherealize (const PortableServer::ObjectId &,
                                     PortableServer::Servant servant,
                                     CORBA::Boolean,
                                     CORBA::Boolean
-                                    TAO_ENV_ARG_DECL)
+                                    TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   delete servant;
