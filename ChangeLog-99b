@@ -1,3 +1,12 @@
+Sat Jan 23 17:50:22 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/MT_SOCK_Test.cpp: 1. Check for EAGAIN as well as EWOULDBLOCK
+          after an accept fail (this change will probably be removed at some
+          point when we figure out how to handle EAGAIN/EWOULDBLOCK).
+          2. Close the ACE_SOCK_Acceptor in the server before going into
+          the "reap children" loop so any half-connected clients will get
+          closed.
+
 Sat Jan 23 17:25:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager_T.{h,cpp}: Reverted changes made since the
