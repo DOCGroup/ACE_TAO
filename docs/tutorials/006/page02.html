@@ -15,191 +15,140 @@
 
 <P>
 <HR WIDTH="100%">
-
 <P>Again, we begin with <A HREF="server.cpp">server.cpp.</A>&nbsp; If you
 look closely you will see that the only difference between this and the
 Tutorial 5 implementation is a single comment.
 
 <P>
 <HR WIDTH="100%"><FONT FACE="Arial,Helvetica"></FONT>
+<PRE>
+<font color=red>// $Id$</font>
 
-<P><FONT FACE="Arial,Helvetica">// $Id: server.cpp,v 1.1 1998/08/30 13:38:28
-jcej Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   We try to keep main() very simple.  One of the ways we do that is to push
+   much of the complicated stuff into worker objects.  In this case, we only 
+   need to include the acceptor header in our main source file.  We let it
+   worry about the "<font color=green>real work</font>".     
+ */</font>
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; We try to keep main() very
-simple.&nbsp; One of the ways we do that is to push</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; much of the complicated stuff
-into worker objects.&nbsp; In this case, we only</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; need to include the acceptor
-header in our main source file.&nbsp; We let it</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; worry about the "real work".</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=blue>#include</font> "<font color=green>client_acceptor.h</font>"
 
-<P><FONT FACE="Arial,Helvetica">#include "client_acceptor.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   As before, we create a simple signal handler that will set our finished
+   flag.  There are, of course, more elegant ways to handle program shutdown 
+   requests but that isn't really our focus right now, so we'll just do the
+   easiest thing.     
+ */</font>
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; As before, we create a simple
-signal handler that will set our finished</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; flag.&nbsp; There are, of
-course, more elegant ways to handle program shutdown</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; requests but that isn't really
-our focus right now, so we'll just do the</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; easiest thing.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
+static sig_atomic_t finished = 0;
+extern "<font color=green>C</font>" void handler (int)
+{
+  finished = 1;
+}
 
-<P><FONT FACE="Arial,Helvetica">static sig_atomic_t finished = 0;</FONT>
-<BR><FONT FACE="Arial,Helvetica">extern "C" void handler (int)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; finished = 1;</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   A server has to listen for clients at a known TCP/IP port.  The default ACE
+   port is 10002 (at least on my system) and that's good enough for what  we
+   want to do here.  Obviously, a more robust application would take a command
+   line parameter or read from a configuration file or do some other  clever
+   thing.  Just like the signal handler above, though, that's what we want to
+   focus on, so we're taking the easy way out.     
+ */</font>
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; A server has to listen for
-clients at a known TCP/IP port.&nbsp; The default ACE</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; port is 10002 (at least on
-my system) and that's good enough for what&nbsp; we</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; want to do here.&nbsp; Obviously,
-a more robust application would take a command</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; line parameter or read from
-a configuration file or do some other&nbsp; clever</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; thing.&nbsp; Just like the
-signal handler above, though, that's what we want to</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; focus on, so we're taking
-the easy way out.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
+static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
-<P><FONT FACE="Arial,Helvetica">static const u_short PORT = ACE_DEFAULT_SERVER_PORT;</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   Finally, we get to main.  Some C++ compilers will complain loudly if your
+   function signature doesn't match the prototype.  Even though we're not 
+   going to use the parameters, we still  have to specify them.     
+ */</font>
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Finally, we get to main.&nbsp;
-Some C++ compilers will complain loudly if your</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; function signature doesn't
-match the prototype.&nbsp; Even though we're not</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; going to use the parameters,
-we still&nbsp; have to specify them.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
+int main (int argc, char *argv[])
+{
+<font color=red>/*
+   In our earlier servers, we used a global pointer to get to the reactor. I've 
+   never really liked that idea, so I've moved it into main() this time. When
+   we  get to the Client_Handler object you'll see how we manage to get a
+   pointer back to this reactor.     
+ */</font>
+  ACE_Reactor reactor;
 
-<P><FONT FACE="Arial,Helvetica">int main (int argc, char *argv[])</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; In our earlier servers, we
-used a global pointer to get to the reactor. I've</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; never really liked that idea,
-so I've moved it into main() this time. When</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; we&nbsp; get to the Client_Handler
-object you'll see how we manage to get a</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; pointer back to this reactor.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_Reactor reactor;</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  <font color=red>/*
+     The acceptor will take care of letting clients connect to us.  It will
+     also arrange for a  Client_Handler to be created for each new client.
+     Since we're only going to listen at one  TCP/IP port, we only need one
+     acceptor.  If we wanted, though, we could create several of these  and
+     listen at several ports.  (That's what we would do if we wanted to rewrite 
+     inetd for  instance.)     
+   */</font>
+  Client_Acceptor peer_acceptor;
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; The acceptor
-will take care of letting clients connect to us.&nbsp; It will</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; also arrange
-for a&nbsp; Client_Handler to be created for each new client.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Since we're only
-going to listen at one&nbsp; TCP/IP port, we only need one</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; acceptor.&nbsp;
-If we wanted, though, we could create several of these&nbsp; and</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; listen at several
-ports.&nbsp; (That's what we would do if we wanted to rewrite</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; inetd for&nbsp;
-instance.)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; Client_Acceptor peer_acceptor;</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  <font color=red>/*
+     Create an ACE_INET_Addr that represents our endpoint of a connection. We
+     then open our acceptor object with that Addr.  Doing so tells the acceptor 
+     where to listen for connections.  Servers generally listen at "<font color=green>well known</font>" 
+     addresses.  If not, there must be some mechanism by which the client is
+     informed of the server's address.
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Create an ACE_INET_Addr
-that represents our endpoint of a connection. We</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; then open our
-acceptor object with that Addr.&nbsp; Doing so tells the acceptor</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; where to listen
-for connections.&nbsp; Servers generally listen at "well known"</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; addresses.&nbsp;
-If not, there must be some mechanism by which the client is</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; informed of the
-server's address.</FONT><FONT FACE="Arial,Helvetica"></FONT>
+     Note how ACE_ERROR_RETURN is used if we fail to open the acceptor.  This
+     technique is used over and over again in our tutorials.    
+   */</font>
+  if (peer_acceptor.open (ACE_INET_Addr (PORT), &reactor) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>open</font>"), -1);
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Note how ACE_ERROR_RETURN
-is used if we fail to open the acceptor.&nbsp; This</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; technique is
-used over and over again in our tutorials.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; if (peer_acceptor.open (ACE_INET_Addr
-(PORT), &amp;reactor) == -1)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR,
-"%p\n", "open"), -1);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  <font color=red>/*
+     As with Tutorial 5, we know that we're now registered with our reactor
+	 so we don't have to mess with that step.
+   */</font>
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; As with Tutorial
-5, we know that we're now registered with our reactor</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; so we don't have
-to mess with that step.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  <font color=red>/*
+     Install our signal handler.  You can actually register signal handlers
+     with the reactor.  You might do that when the signal handler is
+     responsible for performing "<font color=green>real</font>" work.  Our simple flag-setter doesn't
+     justify deriving from ACE_Event_Handler and providing a callback function
+     though.    
+   */</font>
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Install our signal
-handler.&nbsp; You can actually register signal handlers</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; with the reactor.&nbsp;
-You might do that when the signal handler is</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; responsible for
-performing "real" work.&nbsp; Our simple flag-setter doesn't</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; justify deriving
-from ACE_Event_Handler and providing a callback function</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; though.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_Sig_Action sa ((ACE_SignalHandler)
-handler, SIGINT);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  <font color=red>/*
+     Like ACE_ERROR_RETURN, the ACE_DEBUG macro gets used quite a bit.  It's a
+     handy way to generate uniform debug output from your program.    
+   */</font>
+  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) starting up server daemon\n</font>"));
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Like ACE_ERROR_RETURN,
-the ACE_DEBUG macro gets used quite a bit.&nbsp; It's a</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; handy way to
-generate uniform debug output from your program.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t)
-starting up server daemon\n"));</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  <font color=red>/*
+     This will loop "<font color=green>forever</font>" invoking the handle_events() method of our
+     reactor. handle_events() watches for activity on any registered handlers
+     and invokes their appropriate callbacks when necessary.  Callback-driven
+     programming is a big thing in ACE, you should get used to it. If the
+     signal handler catches something, the finished flag will be set and we'll
+     exit.  Conveniently enough, handle_events() is also interrupted by signals 
+     and will exit back to the while() loop.  (If you want your event loop to
+     not be interrupted by signals, checkout the &lt;i>restart&lt;/i> flag on the
+     open() method of ACE_Reactor if you're interested.)    
+   */</font>
+  while (!finished)
+    reactor.handle_events ();
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; This will loop
-"forever" invoking the handle_events() method of our</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; reactor. handle_events()
-watches for activity on any registered handlers</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; and invokes their
-appropriate callbacks when necessary.&nbsp; Callback-driven</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; programming is
-a big thing in ACE, you should get used to it. If the</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; signal handler
-catches something, the finished flag will be set and we'll</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; exit.&nbsp; Conveniently
-enough, handle_events() is also interrupted by signals</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; and will exit
-back to the while() loop.&nbsp; (If you want your event loop to</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; not be interrupted
-by signals, checkout the &lt;i>restart&lt;/i> flag on the</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; open() method
-of ACE_Reactor if you're interested.)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; while (!finished)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; reactor.handle_events
-();</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) shutting down server daemon\n</font>"));
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t) shutting
-down server daemon\n"));</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  return 0;
+}
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT>
-
-<P>
+<font color=blue>#if !defined</font>(<font color=purple>ACE_HAS_GNU_REPO</font>)
+<font color=blue>#if defined</font> (<font color=purple>ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION</font>)
+template class ACE_Acceptor &lt;Client_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+<font color=blue>#elif defined</font> (<font color=purple>ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA</font>)
+<font color=blue>#pragma</font> <font color=purple>instantiate</font> ACE_Acceptor &lt;Client_Handler, ACE_SOCK_ACCEPTOR>
+<font color=blue>#pragma</font> <font color=purple>instantiate</font> ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+<font color=blue>#endif</font> <font color=red>/* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */</font>
+<font color=blue>#endif</font> <font color=red>/* ACE_HAS_GNU_REPO */</font>
+</PRE>
 <HR WIDTH="100%">
 
 <P>Let's move along and see what happend to the Client_Acceptor.
 
 <P>
-<HR WIDTH="100%">
-<CENTER>[<A HREF="..">Tutorial
-Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>
-
-</BODY>
-</HTML>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>

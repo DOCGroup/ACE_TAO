@@ -84,7 +84,7 @@ int Client_Handler::open (void *_acceptor)
      get_remote_addr() method to get get an ACE_INET_Addr having our client's
      address information. As with most ACE methods, we'll get back (and return) 
      a -1 if there was any kind of error.  Once we have the ACE_INET_Addr, we
-     can query it to find out the clien's host name, TCP/IP address, TCP/IP
+     can query it to find out the client's host name, TCP/IP address, TCP/IP
      port value and so forth.  One word of warning:   the get_host_name()
      method of ACE_INET_Addr may return you an empty string if your name server 
      can't resolve it.  On the other hand, get_host_addr() will always give you 
