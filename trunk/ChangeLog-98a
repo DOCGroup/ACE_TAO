@@ -33,6 +33,10 @@ Wed Jan 14 06:45:52 1998  David L. Levine  <levine@cs.wustl.edu>
           const timeval * and then to a timeval * so that they will
           compile.
 
+        * tests/Time_Value_Test.cpp (test_ace_u_longlong): made divisors of
+          operator/ tests explicitly unsigned, to avoid overloading problems
+          now that there are two division operators.
+
 Tue Jan 13 16:31:48 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.i: Changed the signature of ACE_Time_Value::operator
