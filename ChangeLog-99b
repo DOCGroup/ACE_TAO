@@ -1,3 +1,16 @@
+Tue Jun 29 12:07:08 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* README:
+	* THANKS:
+
+	  Moved list of contributors to the file `THANKS' to bring the
+	  distribution closer to conventional distribution standards.
+
+	* Makefile:
+
+	  Added the THANKS file to the list of controlled files so that it 
+	  gets distributed with ACE.
+
 Tue Jun 29 11:27:23 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* ace/Containers_T.i: Modified next method in ACE_DLList_Iterator
