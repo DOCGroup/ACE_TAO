@@ -43,6 +43,9 @@
 // The second #undef protects against being reset in a config.h file.
 #undef ACE_NDEBUG
 
+#undef ACE_TEXT
+#define ACE_TEXT ACE_LIB_TEXT
+
 #if defined (ACE_HAS_WINCE)
 # define ACE_LOG_DIRECTORY ACE_TEXT ("log\\")
 # define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\"#X)
@@ -75,7 +78,7 @@ const size_t ACE_MAX_ITERATIONS = 10;
 const size_t ACE_MAX_PROCESSES = 10;
 const size_t ACE_MAX_THREADS = 4;
 
-char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 #define ACE_START_TEST(NAME) \
   const ACE_TCHAR *program = NAME; \
@@ -165,7 +168,7 @@ private:
 
 typedef ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex> ace_file_stream;
 
-ACE_Test_Output::ACE_Test_Output (void)
+inline ACE_Test_Output::ACE_Test_Output (void)
   : output_file_ (0)
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -173,7 +176,7 @@ ACE_Test_Output::ACE_Test_Output (void)
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 }
 
-ACE_Test_Output::~ACE_Test_Output (void)
+inline ACE_Test_Output::~ACE_Test_Output (void)
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_PSOS)
   ACE_LOG_MSG->msg_ostream (&cerr);
@@ -187,7 +190,7 @@ ACE_Test_Output::~ACE_Test_Output (void)
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 }
 
-int
+inline int
 ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 {
 #if defined (ACE_HAS_PHARLAP)
@@ -257,13 +260,13 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   return 0;
 }
 
-OFSTREAM *
+inline OFSTREAM *
 ACE_Test_Output::output_file (void)
 {
   return this->output_file_;
 }
 
-void
+inline void
 ACE_Test_Output::close (void)
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -275,7 +278,7 @@ ACE_Test_Output::close (void)
 #endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
 }
 
-void
+inline void
 randomize (int array[], size_t size)
 {
   size_t i;

@@ -189,10 +189,8 @@ worker (void *args)
                           0);
         /* NOTREACHED */
       case 0:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%t) Reactor shutdown\n")),
-                          0);
-        /* NOTREACHED */
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Reactor shutdown\n")));
+        return 0;
       }
 
   ACE_NOTREACHED (return 0);
