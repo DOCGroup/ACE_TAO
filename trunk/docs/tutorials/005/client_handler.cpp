@@ -227,5 +227,16 @@ int Client_Handler::process (char *_rdbuf, int _rdbuf_len)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) from client: %s", _rdbuf));
     }
 
+   /*
+     It's also worth mentioning that recv() has a cousin:  recv_n().
+     recv_n() will receive exactly the number of bytes you provide
+     it.  This is very good when you know exactly how much you expect
+     to receive.  For the application here, unfortunately, we don't
+     have any idea how much the client will be sending.  recv() will
+     read up-to-but-not-more-than the number of bytes we specify
+     (e.g. -- _rdbuf_len).  That works well when we don't know how
+     much the client will provide.
+    */
+
   return 0;
 }

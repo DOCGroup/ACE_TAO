@@ -1,3 +1,25 @@
+1999-01-21  James CE Johnson  <jcej@lads.com>
+
+        * docs/tutorials/001/Makefile:
+        * docs/tutorials/001/page01.html:
+        * docs/tutorials/001/page02.html:
+        * docs/tutorials/001/page03.html:
+        * docs/tutorials/001/page04.html:
+        * docs/tutorials/001/page05.html:
+        * docs/tutorials/005/client_handler.cpp:
+        * docs/tutorials/005/page02.html:
+        * docs/tutorials/005/page03.html:
+        * docs/tutorials/005/page04.html:
+        * docs/tutorials/005/page05.html:
+        * docs/tutorials/005/page06.html:
+        * docs/tutorials/006/client_handler.cpp:
+        * docs/tutorials/006/page01.html:
+        * docs/tutorials/006/page02.html:
+        * docs/tutorials/006/page03.html:
+        * docs/tutorials/006/page04.html:
+        * docs/tutorials/006/page05.html:
+	  Incorporated new comments from Vishal, Yamuna and Pradeep.
+	
 Thu Jan 21 13:05:31 1999  Steve Huston  <shuston@riverace.com>
 
         * docs/tutorials/Makefile:  Removed include .depend to allow the
