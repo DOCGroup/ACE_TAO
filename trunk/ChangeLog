@@ -1,3 +1,8 @@
+Wed Oct 30 13:47:14 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Thread_Exit.cpp: Add #include "ace/Managed_Object.h" to get
+          the definition of ACE_Managed_Object.
+
 Wed Oct 30 11:38:36 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* ace\Timeprobe.h: Fixed formatting of comments that somehow got
