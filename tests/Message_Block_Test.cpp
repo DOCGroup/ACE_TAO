@@ -264,7 +264,7 @@ ACE_Cached_Allocator<MEMORY_CHUNK,
 struct
 {
   ACE_Allocator *strategy_;
-  LPCTSTR name_;
+  ASYS_TCHAR *name_;
   ACE_Profile_Timer::ACE_Elapsed_Time et_;
 } alloc_struct[ACE_ALLOC_STRATEGY_NO] =
 {

@@ -118,7 +118,7 @@ create_reactor (void)
 static void
 print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 {
-  LPCTSTR reactor_type = 0;
+  ASYS_TCHAR *reactor_type = 0;
   if (opt_wfmo_reactor)
     reactor_type = ASYS_TEXT ("WFMO_Reactor");
   else if (opt_select_reactor)
