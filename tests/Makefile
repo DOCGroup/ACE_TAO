@@ -106,10 +106,13 @@ endif
 #----------------------------------------------------------------------------
 
 libDLL_Test.$(SOEXT): DLL_Test.cpp
+ifdef TEMPINCDIR
+	$(RM) .obj/DLL_Test.o
+endif
 	@$(MAKE) -f Makefile.DLL
 
 realclean: clean
-	-/bin/rm -rf libDLL_Test.$(SOEXT)
+	-$(RM) libDLL_Test.$(SOEXT)
 
 #----------------------------------------------------------------------------
 #       Dependencies
