@@ -1,3 +1,9 @@
+Sat Apr 26 10:42:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Reactor_Exceptions_Test.cpp:
+          Changed Borland specific defines to Borland and Win32, to fix
+          Kylix compile error.
+
 Sat Apr 26 08:50:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_borland.GNU:

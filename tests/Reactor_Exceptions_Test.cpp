@@ -105,18 +105,18 @@ public:
 
     try
       {
-#       if defined (__BORLANDC__)
+#       if defined (ACE_WIN32) && defined (__BORLANDC__)
         // BCB does not catch structured exceptions with catch (...).
         // Actually, the ANSI spec says that system exceptions are not
         // supposed to be caught with catch.  Borland may add this, and
         // make it "switchable" in the future...
         try
         {
-#       endif /* defined (__BORLANDC__) */
+#       endif /* defined (ACE_WIN32 && __BORLANDC__) */
 
         ret = ACE_Reactor::handle_events (max_wait_time);
 
-#       if defined (__BORLANDC__)
+#       if defined (ACE_WIN32) && defined (__BORLANDC__)
         }
         __except (EXCEPTION_EXECUTE_HANDLER)
         {
@@ -124,7 +124,7 @@ public:
           // and throw something that represents the structured exception
           throw "Win32 Structured Exception";
         }
-#       endif /* defined (__BORLANDC__) */
+#       endif /* defined (ACE_WIN32 &&__BORLANDC__) */
       }
     catch (...)
       {
@@ -133,7 +133,6 @@ public:
         ret = -1;
         // do your thing, etc.
       }
-//}
     return ret;
   }
 
