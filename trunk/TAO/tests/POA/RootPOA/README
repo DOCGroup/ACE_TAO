@@ -7,4 +7,5 @@ Run the application as follows.
 Comments:
 ========
 
-- It prints out the name of the Root POA.
+- It prints out the name of the Root POA. Currently, the name of the
+  RootPOA in TAO is an empty string.

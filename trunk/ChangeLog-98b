@@ -1,3 +1,13 @@
+Fri Jul 31 12:07:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/XtReactor.cpp (XtWaitForMultipleEvents): The first select()
+ 	  is made with the correct width.  In XtAppProcessEvent(), the
+ 	  descriptor set may change, so the underlying handle_max may also
+ 	  have changed. The second select() is made with an incorrect
+ 	  value for the width.  The solution is to reinitialize width
+ 	  before calling select() again. Thanks to J-M Strauss
+ 	  <strauss@limeil.cea.fr> for suggesting this change.
+
 Fri Jul 31 11:18:24 1998  Steve Huston  <shuston@riverace.com>
 
 	* ACE-INSTALL.html: Removed the direction to set global include/library

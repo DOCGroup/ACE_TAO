@@ -168,6 +168,9 @@ ACE_XtReactor::XtWaitForMultipleEvents (int width,
   // Wait for something to happen.
   ::XtAppProcessEvent (context_, XtIMAll);
 
+  // Reset the width, in case it changed during the upcalls.
+  width = this->handler_rep_.max_handlep1 ();
+
   // Now actually read the result needed by the <Select_Reactor> using
   // <select>.
   return ACE_OS::select (width,
