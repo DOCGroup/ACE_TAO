@@ -67,7 +67,7 @@ Simple_Server_i::validate_protocol (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   if (this->validated_ == VALIDATED_NOSUCCESS)
-    ACE_THROW ((Simple_Server::WrongProtocolType));
+    ACE_THROW (Simple_Server::WrongProtocolType ());
 }
 
 CORBA::Long
