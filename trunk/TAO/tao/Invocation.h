@@ -1,11 +1,12 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Invocation.h
  *
  *  $Id$
  *
- *  Encapsulate the logic for   remote invocations, oneways or
+ *  Encapsulate the logic for remote invocations, oneways or
  *  twoways.
  *
  * THREADING NOTE: Threads should never manipulate another
@@ -32,6 +33,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "Stub.h"
 #include "Any.h"
 #include "Synch_Reply_Dispatcher.h"
 #include "TAOC.h"
@@ -164,7 +166,7 @@ public:
   /// for the current reply is TAO_INVOKE_RESTART.
   CORBA::Object_ptr forward_reference (void);
 
-  /// Returns true if a location forward was 
+  /// Returns true if a location forward was
   CORBA::Boolean received_location_forward (void) const;
 
 protected:
@@ -201,7 +203,7 @@ protected:
    *
    * The forward object reference can be retrieved by invoking the
    * forward_reference() method in this class.
-   */  
+   */
   void location_forward_i (TAO_Stub *stubobj,
                            CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -254,7 +256,7 @@ protected:
 #if (TAO_HAS_RT_CORBA == 1)
 
   /// Store information used by endpoint_selector_ for making endpoint
-  /// selection decisions. 
+  /// selection decisions.
   TAO_Endpoint_Selection_State endpoint_selection_state_;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -291,7 +293,7 @@ protected:
    * receive an exception from the server asking for this info.  The
    * exception that the client receives is LOC_NEEDS_ADDRESSING_MODE.
    * If we receive an exception we will fill up this data at most
-   * *once* and send it to the server. 
+   * *once* and send it to the server.
    */
   IOP::IOR ior_info_;
 
@@ -314,7 +316,7 @@ protected:
   /**
    * Object reference returned in a LOCATION_FORWARD reply.  This
    * reference is only valid when the reply status is
-   * TAO_INVOKE_RESTART and 
+   * TAO_INVOKE_RESTART and
    */
   CORBA::Object_var forward_reference_;
 
