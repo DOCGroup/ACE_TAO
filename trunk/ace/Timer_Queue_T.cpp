@@ -349,15 +349,7 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::registration (TIMER_QUEUE &,
                                                                  ACE_Event_Handler *event_handler,
                                                                  const void *)
 {
-  int requires_reference_counting =
-    event_handler->reference_counting_policy ().value () ==
-    ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
-
-  if (requires_reference_counting)
-    {
-      event_handler->add_reference ();
-    }
-
+  event_handler->add_reference ();
   return 0;
 }
 

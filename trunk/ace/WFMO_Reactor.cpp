@@ -654,14 +654,7 @@ ACE_WFMO_Reactor_Handler_Repository::bind_i (int io_entry,
 
       this->handles_to_be_added_++;
 
-      int requires_reference_counting =
-        event_handler->reference_counting_policy ().value () ==
-        ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
-
-      if (requires_reference_counting)
-        {
-          event_handler->add_reference ();
-        }
+      event_handler->add_reference ();
 
       // Wake up all threads in WaitForMultipleObjects so that they can
       // reconsult the handle set
@@ -1596,16 +1589,7 @@ ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
       }
 
   if (event_handler)
-    {
-      int requires_reference_counting =
-        event_handler->reference_counting_policy ().value () ==
-        ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
-
-      if (requires_reference_counting)
-        {
-          event_handler->add_reference ();
-        }
-    }
+    event_handler->add_reference ();
 
   return event_handler;
 }
@@ -2515,14 +2499,7 @@ ACE_WFMO_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
           return -1;
         }
 
-      int requires_reference_counting =
-        event_handler->reference_counting_policy ().value () ==
-        ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
-
-      if (requires_reference_counting)
-        {
-          event_handler->add_reference ();
-        }
+      event_handler->add_reference ();
     }
 
   return this->wakeup_one_thread_.signal ();
@@ -2598,14 +2575,7 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
         {
           ACE_Event_Handler *event_handler = buffer->eh_;
 
-          int requires_reference_counting =
-            event_handler->reference_counting_policy ().value () ==
-            ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
-
-          if (requires_reference_counting)
-            {
-              event_handler->remove_reference ();
-            }
+          event_handler->remove_reference ();
 
           mb->release ();
           ++number_purged;
