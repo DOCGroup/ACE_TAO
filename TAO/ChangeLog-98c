@@ -1,3 +1,10 @@
+Mon Oct 26 00:05:54 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB.cpp (multicast_to_service): Changed htons to ACE_HTONS.
+  	  This change allows TAO to have reduced dependencies to system
+ 	  libraries.  Thanks to Paul K. Fisher <pfisher@plexware.com> for
+ 	  suggesting this change.
+
 Mon Oct 26 00:03:44 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.34 released.
