@@ -9,7 +9,7 @@ project : namingexe, mfc {
   specific(em3, nmake, vc6) {
     subsystem = windows
   }
-  specific(vc7, vc71) {
+  specific(vc7, vc71, vc8) {
     subsystem = 2
   }
 
