@@ -8,7 +8,7 @@ OBJFILES = \
 	$(OBJDIR)\Active_Object_Map.obj \
 	$(OBJDIR)\Collocated_Object.obj \
 	$(OBJDIR)\Default_Acceptor_Filter.obj \
-	$(OBJDIR)\Direct_Object_Proxy_Impl \
+	$(OBJDIR)\Direct_Object_Proxy_Impl.obj \
 	$(OBJDIR)\DomainS.obj \
 	$(OBJDIR)\Forwarding_Servant.obj \
 	$(OBJDIR)\ImplRepoC.obj \
