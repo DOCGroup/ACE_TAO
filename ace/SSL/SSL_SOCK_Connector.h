@@ -12,8 +12,8 @@
 // = AUTHOR
 //    John Heitmann
 //    Chris Zimman
-//    Carlos O'Ryan <coryan@cs.wustl.edu>
-//    Ossama Othman <othman@cs.wustl.edu>
+//    Carlos O'Ryan <coryan@ece.uci.edu>
+//    Ossama Othman <othman@ece.uci.edu>
 //
 // ============================================================================
 
@@ -189,6 +189,10 @@ private:
   ACE_SOCK_Connector connector_;
   // The class that does all of the non-secure socket connection.
   // It is default contructed, and subsequently used by connect().
+
+  int non_ssl_connect_done_;
+  // Set to 1 once basic connection (i.e. prior to SSL handshake) is
+  // done.  This is used primarily during non-blocking connects.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -23,6 +23,10 @@
 
 #if defined (ACE_HAS_SSL)
 
+#include <openssl/err.h>
+
+#include "ace/Synch_T.h"
+
 #include "SSL_SOCK.h"
 #include "SSL_Context.h"
 
@@ -40,15 +44,14 @@ class ACE_SSL_Export ACE_SSL_SOCK_Stream : public ACE_SSL_SOCK
   //    This adds SSL functionality to an <ACE_SOCK_IO> interface by
   //    wrapping around an <ACE_SSL_SOCK_Stream> implementation.
   //
+
+  friend class ACE_SSL_SOCK_Connector;
+  friend class ACE_SSL_SOCK_Acceptor;
+
 public:
-  // = Initializtion and termination functions.
+  // = Initialization and termination functions.
 
   ACE_SSL_SOCK_Stream (ACE_SSL_Context *context =
-                         ACE_SSL_Context::instance ());
-  // Constructor
-
-  ACE_SSL_SOCK_Stream (ACE_HANDLE h,
-                       ACE_SSL_Context *context =
                          ACE_SSL_Context::instance ());
   // Constructor
 
@@ -206,19 +209,28 @@ public:
   ACE_SSL_Context *context (void) const;
   // Return a pointer to the underlying SSL context.
 
-  SSL *ssl (void) const;
-  // Return a pointer to the underlying SSL structure.
-
-  friend class ACE_SSL_SOCK_Connector;
-  // friend class ACE_SSL_SOCK_Acceptor;
-
   void set_handle (ACE_HANDLE fd);
   // Overridden set_handle() method.
+  //
+  // Only an ACE_SSL_SOCK_Acceptor or ACE_SSL_SOCK_Connector should
+  // access this method since some state in the underlying <ssl_> data
+  // structure is set during SSL connection establishment.
 
 protected:
 
+  SSL *ssl (void) const;
+  // Return a pointer to the underlying SSL structure.
+
+
+
   ACE_SOCK_Stream & peer (void);
   // Return the underlying <ACE_SOCK_Stream> which SSL runs atop of.
+
+private:
+
+  // = Prevent assignment and initialization.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_SSL_SOCK_Stream &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &))
 
 protected:
 
