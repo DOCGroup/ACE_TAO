@@ -212,7 +212,7 @@ ACE_ReactorEx::dispatch (ACE_Event_Handler *wait_all_callback)
 int
 ACE_ReactorEx::dispatch (size_t index)
 {
-  while (index < active_handles_)
+  for (;;)
     {
       // Tim, if this call fails is there really anything we
       // can/should do about it? It seems that regardless of the
@@ -220,6 +220,10 @@ ACE_ReactorEx::dispatch (size_t index)
       // otherwise we might just iterate endlessly!
       this->dispatch_handler (index);
       index++;
+
+      // We're done.
+      if (index >= this->active_handles_)
+	return 0;
 
       DWORD wait_status = 
 	::WaitForMultipleObjects (active_handles_ - index,
@@ -244,8 +248,6 @@ ACE_ReactorEx::dispatch (size_t index)
 	    index += waitstatus - WAIT_ABANDONED_0;
 	}
     }
-
-  return 0;
 }
 
 // Dispatches a single handler.  Returns 0 on success, -1 if the
