@@ -17,11 +17,12 @@ Time_Client_i::~Time_Client_i (void)
 }
 
 int
-Time_Client_i::run (int argc,
+Time_Client_i::run (char *name,
+                    int argc,
                     char *argv[])
 {
   // Initialize the client.
-  if (client.init (argc, argv) == -1)
+  if (client.init (name, argc, argv) == -1)
     return -1;
 
   ACE_TRY_NEW_ENV 
