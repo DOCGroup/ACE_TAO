@@ -1,3 +1,7 @@
+Sat Jun 15 20:56:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/tests.dsw: Added Proactor_Timer_Test.dsp.
+
 Sat Jun 15 20:30:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_Acceptor.{h cpp}: Added a new template method,
