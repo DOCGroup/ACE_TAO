@@ -358,6 +358,10 @@ SOURCE=.\Server_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Services.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\skip.cpp
 # End Source File
 # Begin Source File
@@ -678,6 +682,10 @@ SOURCE=.\Server_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Services.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\singletons.h
 # End Source File
 # Begin Source File
@@ -887,6 +895,10 @@ SOURCE=.\Servant_Base.i
 # Begin Source File
 
 SOURCE=.\Server_Request.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Services.i
 # End Source File
 # Begin Source File
 
