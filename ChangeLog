@@ -1,3 +1,9 @@
+Thu Mar  6 14:49:37 2003  Steve Huston  <shuston@riverace.com>
+
+	* apps/mkcsregdb/mkcsregdb.cpp: const_cast pointers that need to be
+	  delete[]-ed sp MSVC 6 doesn't complain. static_cast result of
+	  strtol() to ACE_CDR::UShort when needed.
+
 Thu Mar  6 11:41:46 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
