@@ -19,10 +19,6 @@
 #include "UIPMC_Transport.h"
 #include "UIPMC_Endpoint.h"
 
-#if !defined (__ACE_INLINE__)
-# include "UIPMC_Connection_Handler.i"
-#endif /* ! __ACE_INLINE__ */
-
 ACE_RCSID(tao, UIPMC_Connect, "$Id$")
 
 TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *t)

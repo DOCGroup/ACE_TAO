@@ -143,9 +143,5 @@ namespace TAO
   }
 }
 
-#if defined (__ACE_INLINE__)
-# include "HTIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif  /* HTIOP_PROFILE_H */

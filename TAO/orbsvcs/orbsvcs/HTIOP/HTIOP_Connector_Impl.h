@@ -109,10 +109,6 @@ namespace TAO
   }
 }
 
-#if defined(__ACE_INLINE__)
-#include "HTIOP_Connector_Impl.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "HTIOP_Connector_Impl.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

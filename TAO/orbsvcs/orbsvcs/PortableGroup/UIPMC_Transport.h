@@ -123,9 +123,5 @@ private:
   TAO_Pluggable_Messaging *messaging_object_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "UIPMC_Transport.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif  /* TAO_UIPMC_TRANSPORT_H */

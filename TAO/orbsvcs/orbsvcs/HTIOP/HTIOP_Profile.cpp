@@ -11,15 +11,10 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-//#include "tao/iiop_endpoints.h"
 
 ACE_RCSID(HTIOP,
           TAO_HTIOP_Profile,
           "$Id$")
-
-#if !defined (__ACE_INLINE__)
-# include "HTIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
 
 static const char prefix_[] = "htiop";
 

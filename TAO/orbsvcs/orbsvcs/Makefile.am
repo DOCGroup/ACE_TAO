@@ -4081,13 +4081,7 @@ nobase_include_HEADERS += \
   HTIOPS.h \
   HTIOPS_T.h \
   HTIOP/HTIOP_Acceptor.i \
-  HTIOP/HTIOP_Acceptor_Impl.i \
-  HTIOP/HTIOP_Completion_Handler.i \
-  HTIOP/HTIOP_Connection_Handler.i \
-  HTIOP/HTIOP_Connector_Impl.i \
   HTIOP/HTIOP_Endpoint.i \
-  HTIOP/HTIOP_Profile.i \
-  HTIOP/HTIOP_Transport.i \
   HTIOP/htiop_endpointsC.inl \
   HTIOPC.inl \
   HTIOPS.inl \
