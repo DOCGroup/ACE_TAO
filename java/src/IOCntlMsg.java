@@ -109,6 +109,11 @@ public class IOCntlMsg
     this.rval_ = r; 
   }
 
+  public String toString ()
+  {
+    return (new Integer (this.cmd_)).toString ();
+  }
+
   private int cmd_;
   // Command.
 
