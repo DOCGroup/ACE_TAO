@@ -945,7 +945,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
                                          ACE_TRY_ENV);
         }
 
-      delete default_init_ref;
+      delete [] default_init_ref;
     }
 
   // Did not find it in the InitRef table, or in the DefaultInitRef
@@ -1856,7 +1856,7 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
 
 // Add a mapping ObjectID->IOR to the table.
 int
-CORBA_ORB::_tao_add_to_IOR_table (ACE_CString &object_id,
+CORBA_ORB::_tao_add_to_IOR_table (const ACE_CString &object_id,
                                   CORBA::Object_ptr obj)
 {
   if (CORBA::is_nil (obj))
@@ -1882,7 +1882,7 @@ CORBA_ORB::_tao_add_to_IOR_table (ACE_CString &object_id,
 
 // Find an IOR in the table for the given ObjectID.
 int
-CORBA_ORB::_tao_find_in_IOR_table (ACE_CString &object_id,
+CORBA_ORB::_tao_find_in_IOR_table (const ACE_CString &object_id,
                                    CORBA::Object_ptr &obj)
 {
   if (TAO_debug_level > 0)
