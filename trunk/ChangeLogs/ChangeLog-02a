@@ -1,3 +1,8 @@
+Wed Apr 11 08:04:21 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/SString.i (operator+): Fixed an "inlined before use" warning.
+	  Thanks to Bala for reporting this.
+
 Tue Apr 10 16:58:54 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.h (ACE_DEFAULT_FILE_PERMS, ACE_DEFAULT_DIR_PERMS):

@@ -312,16 +312,6 @@ ACE_CString::hash (void) const
   return ACE::hash_pjw (this->rep_, this->len_);
 }
 
-ACE_INLINE ACE_WString
-operator+ (const ACE_WString &s,
-           const ACE_WString &t)
-{
-  ACE_WString temp (s.length() + t.length());
-  temp = s;
-  temp += t;
-  return temp;
-}
-
 ACE_INLINE ACE_CString
 operator+ (const ACE_CString &s, const ACE_CString &t)
 {
@@ -497,6 +487,23 @@ ACE_SString::length (void) const
 {
   ACE_TRACE ("ACE_SString::length");
   return this->len_;
+}
+
+ACE_INLINE size_t
+ACE_WString::length (void) const
+{
+  ACE_TRACE ("ACE_WString::length");
+  return this->len_;
+}
+
+ACE_INLINE ACE_WString
+operator+ (const ACE_WString &s,
+           const ACE_WString &t)
+{
+  ACE_WString temp (s.length () + t.length ());
+  temp = s;
+  temp += t;
+  return temp;
 }
 
 ACE_INLINE ACE_WString
@@ -675,13 +682,6 @@ ACE_WString::rfind (ACE_WSTRING_TYPE c, int pos) const
       return i;
 
   return ACE_WString::npos;
-}
-
-ACE_INLINE size_t
-ACE_WString::length (void) const
-{
-  ACE_TRACE ("ACE_WString::length");
-  return this->len_;
 }
 
 ACE_INLINE size_t
