@@ -74,8 +74,7 @@ realclean: clean
 
 
 .obj/TAO_Time_Service_Server.o .obj/TAO_Time_Service_Server.so .shobj/TAO_Time_Service_Server.o .shobj/TAO_Time_Service_Server.so: Time/TAO_Time_Service_Server.cpp \
- Time/TAO_UTO.h \
- $(ACE_ROOT)/ace/pre.h \
+ Time/TAO_UTO.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -1826,8 +1825,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i
 
 .obj/TimeServiceS.o .obj/TimeServiceS.so .shobj/TimeServiceS.o .shobj/TimeServiceS.so: TimeServiceS.cpp TimeServiceS.h \
- $(ACE_ROOT)/ace/pre.h \
- TimeBaseS.h \
+ $(ACE_ROOT)/ace/pre.h TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \

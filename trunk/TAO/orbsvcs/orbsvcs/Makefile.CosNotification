@@ -16340,8 +16340,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
 .obj/CosNotifyFilterS.o .obj/CosNotifyFilterS.so .shobj/CosNotifyFilterS.o .shobj/CosNotifyFilterS.so: CosNotifyFilterS.cpp CosNotifyFilterS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosNotifyCommS.h CosNotificationS.h CosNotificationC.h \
+ $(ACE_ROOT)/ace/pre.h CosNotifyCommS.h \
+ CosNotificationS.h CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -16691,8 +16691,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
 .obj/CosEventCommS.o .obj/CosEventCommS.so .shobj/CosEventCommS.o .shobj/CosEventCommS.so: CosEventCommS.cpp CosEventCommS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosEventCommC.h \
+ $(ACE_ROOT)/ace/pre.h CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -17037,8 +17036,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
 
 .obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.so .shobj/CosEventChannelAdminS.o .shobj/CosEventChannelAdminS.so: CosEventChannelAdminS.cpp \
  CosEventChannelAdminS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosEventCommS.h CosEventCommC.h \
+ $(ACE_ROOT)/ace/pre.h CosEventCommS.h \
+ CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -17384,8 +17383,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
 .obj/CosTradingS.o .obj/CosTradingS.so .shobj/CosTradingS.o .shobj/CosTradingS.so: CosTradingS.cpp CosTradingS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosTradingC.h \
+ $(ACE_ROOT)/ace/pre.h CosTradingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -17728,8 +17726,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
 .obj/CosTradingReposS.o .obj/CosTradingReposS.so .shobj/CosTradingReposS.o .shobj/CosTradingReposS.so: CosTradingReposS.cpp CosTradingReposS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosTradingS.h CosTradingC.h \
+ $(ACE_ROOT)/ace/pre.h CosTradingS.h \
+ CosTradingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \

@@ -1066,8 +1066,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
 .obj/RtecBaseS.o .obj/RtecBaseS.so .shobj/RtecBaseS.o .shobj/RtecBaseS.so: RtecBaseS.cpp RtecBaseS.h \
- $(ACE_ROOT)/ace/pre.h \
- RtecBaseC.h \
+ $(ACE_ROOT)/ace/pre.h RtecBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \

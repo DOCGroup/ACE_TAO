@@ -705,8 +705,7 @@ realclean: clean
  $(TAO_ROOT)/tao/StringSeq.h \
  $(TAO_ROOT)/tao/StringSeq.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
- TCF_Loader.h \
+ $(TAO_ROOT)/tao/ORB.i TCF_Loader.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \

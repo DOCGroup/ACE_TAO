@@ -471,8 +471,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/ArrayDef_i.o .obj/ArrayDef_i.so .shobj/ArrayDef_i.o .shobj/ArrayDef_i.so: ArrayDef_i.cpp ArrayDef_i.h IDLType_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1418,8 +1417,7 @@ realclean: clean
 
 .obj/ComponentRepository_i.o .obj/ComponentRepository_i.so .shobj/ComponentRepository_i.o .shobj/ComponentRepository_i.so: ComponentRepository_i.cpp \
  ComponentRepository_i.h Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2999,8 +2997,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/EmitsDef_i.o .obj/EmitsDef_i.so .shobj/EmitsDef_i.o .shobj/EmitsDef_i.so: EmitsDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3624,8 +3621,7 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h
 
 .obj/EventDef_i.o .obj/EventDef_i.so .shobj/EventDef_i.o .shobj/EventDef_i.so: EventDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -4876,8 +4872,7 @@ realclean: clean
  IFR_macro.h FinderDef_i.h OperationDef_i.h Contained_i.h
 
 .obj/FixedDef_i.o .obj/FixedDef_i.so .shobj/FixedDef_i.o .shobj/FixedDef_i.so: FixedDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5188,8 +5183,7 @@ realclean: clean
  IFR_macro.h FixedDef_i.h IDLType_i.h
 
 .obj/HomeDef_i.o .obj/HomeDef_i.so .shobj/HomeDef_i.o .shobj/HomeDef_i.so: HomeDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -12383,8 +12377,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/UsesDef_i.o .obj/UsesDef_i.so .shobj/UsesDef_i.o .shobj/UsesDef_i.so: UsesDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -13011,8 +13004,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/ValueDef_i.o .obj/ValueDef_i.so .shobj/ValueDef_i.o .shobj/ValueDef_i.so: ValueDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \

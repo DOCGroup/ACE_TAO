@@ -749,8 +749,7 @@ realclean:	clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- arrayC.i \
+ $(TAO_ROOT)/tao/BoundsC.i arrayC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -5215,8 +5214,7 @@ realclean:	clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- unionC.i \
+ $(TAO_ROOT)/tao/BoundsC.i unionC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -5866,8 +5864,7 @@ realclean:	clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- arrayC.i
+ $(TAO_ROOT)/tao/BoundsC.i arrayC.i
 
 .obj/constantsC.o .obj/constantsC.so .shobj/constantsC.o .shobj/constantsC.so: constantsC.cpp constantsC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -9870,8 +9867,7 @@ realclean:	clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- unionC.i
+ $(TAO_ROOT)/tao/BoundsC.i unionC.i
 
 .obj/reopened_modulesC.o .obj/reopened_modulesC.so .shobj/reopened_modulesC.o .shobj/reopened_modulesC.so: reopened_modulesC.cpp reopened_modulesC.h \
  $(TAO_ROOT)/tao/corba.h \

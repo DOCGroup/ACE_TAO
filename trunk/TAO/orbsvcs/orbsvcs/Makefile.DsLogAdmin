@@ -2793,8 +2793,7 @@ realclean: clean
  Log/log_export.h Log/Log_Constraint_Visitors.h
 
 .obj/DsLogAdminS.o .obj/DsLogAdminS.so .shobj/DsLogAdminS.o .shobj/DsLogAdminS.so: DsLogAdminS.cpp DsLogAdminS.h \
- $(ACE_ROOT)/ace/pre.h \
- TimeBaseS.h \
+ $(ACE_ROOT)/ace/pre.h TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \

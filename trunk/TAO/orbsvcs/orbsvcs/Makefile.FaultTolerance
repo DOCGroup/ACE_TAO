@@ -1418,8 +1418,7 @@ realclean: clean
  FaultTolerance/FT_Policy_i.i
 
 .obj/FT_CORBAS.o .obj/FT_CORBAS.so .shobj/FT_CORBAS.o .shobj/FT_CORBAS.so: FT_CORBAS.cpp FT_CORBAS.h \
- $(ACE_ROOT)/ace/pre.h \
- TimeBaseS.h \
+ $(ACE_ROOT)/ace/pre.h TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
