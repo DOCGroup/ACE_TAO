@@ -1,3 +1,7 @@
+Fri Mar 27 20:08:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/params.cpp: Removed the extra inclusion of <params.i>.
+
 Fri Mar 27 14:10:34 1998  Steve Huston  <shuston@riverace.com>
 
         * TAO_IDL/driver/drv_preproc.cpp: (also see my entry from 09:50)
