@@ -1,3 +1,8 @@
+Tue May 18 15:01:39 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp: Added #include "ace/SString.h" to catch def for
+          ACE_Tokenizer in Winsock 1.1 mode.
+
 Tue May 18 13:30:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/rules.nested.GNU: FOR is not an excutable on
