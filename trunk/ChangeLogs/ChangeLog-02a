@@ -1,3 +1,10 @@
+Tue Mar 14 15:01:46 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/Malloc_Test.cpp: Disable mapping the file into different
+          address ranges for HP-UX because the PA-RISC architecture does not
+          allow it. See the DEPENDENCIES section of the mmap man page for
+          all the details.
+
 Mon Mar 13 22:18:20 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/create_ace_build: default $directory_mode to 0777,
