@@ -135,10 +135,10 @@ TAO_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
 
 void 
 TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr request_info,
-				RTScheduling::Current::IdType_out guid_out,
-				CORBA::String_out name,
-				CORBA::Policy_out sched_param,
-				CORBA::Policy_out implicit_sched_param
+				RTScheduling::Current::IdType_out /*guid_out*/,
+				CORBA::String_out /*name*/,
+				CORBA::Policy_out /*sched_param*/,
+				CORBA::Policy_out /*implicit_sched_param*/
 				ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
