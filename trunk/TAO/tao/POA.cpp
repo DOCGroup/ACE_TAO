@@ -515,24 +515,14 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
     if (this->server_object_)
       {
-        PortableServer::POA_var root_poa = this->server_object_->_default_POA ();
+        PortableServer::ObjectId_var id =
+          this->servant_to_id_i (this->server_object_, ACE_TRY_ENV);
+        ACE_CHECK;
 
-        if (CORBA::is_nil (root_poa.in ()))
-          {
-            // No root POA.  This seems bad.
-            ACE_ERROR ((LM_ERROR, "Server_Object's Default POA is bad\n"));
-          }
-        else
-          {
-            PortableServer::ObjectId_var id =
-              root_poa->servant_to_id (this->server_object_, ACE_TRY_ENV);
-            ACE_CHECK;
+        this->deactivate_object_i (id.in (), ACE_TRY_ENV);
+        ACE_CHECK;
 
-            root_poa->deactivate_object (id.in (), ACE_TRY_ENV);
-            ACE_CHECK;
-
-            this->server_object_->_remove_ref ();
-          }
+        this->server_object_->_remove_ref ();
       }
   }
 #endif /* TAO_HAS_MINIMUM_CORBA */
