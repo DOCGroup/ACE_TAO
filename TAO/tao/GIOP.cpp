@@ -1110,8 +1110,6 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
                     "but client is not waiting a response\n"));
       return;
     }
-#else
-  ACE_UNUSED_ARG (response_required);
 #endif /* TAO_HAS_EXCEPTIONS */
   ACE_ENDTRY;
 
