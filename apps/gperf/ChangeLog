@@ -1,3 +1,11 @@
+Sat Oct  3 19:36:52 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* src/Options.h:
+	* src/Options.cpp:
+	* src/Key_List.h:
+	* src/Key_List.cpp:
+		Reverted all the changes done for Binary Search.
+
 Sat Oct  3 17:51:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/test-6.exp: 
