@@ -251,7 +251,7 @@
 
 #if defined (ACE_UINT64_TYPE)
   typedef ACE_UINT64_TYPE	ACE_UINT64;
-#eif defined (ACE_HAS_UINT64_T)
+#elif defined (ACE_HAS_UINT64_T)
   typedef uint64_t		ACE_UINT64;
 #elif ACE_SIZEOF_LONG == 8
   typedef unsigned long		ACE_UINT64;
