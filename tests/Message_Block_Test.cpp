@@ -28,6 +28,12 @@
 // Number of memory allocation strategies used in this test.
 static const int ACE_ALLOC_STRATEGY_NO = 2;
 
+// Size of a memory block (multiple of ACE_MALLOC_ALIGN)
+static const int ACE_ALLOC_SIZE = 5;
+
+// Amount of memory block preallocated
+static const size_t ACE_ALLOC_AMOUNT = 48;
+
 #if defined (ACE_HAS_THREADS)
 
 // Number of iterations to run the test.
@@ -36,92 +42,6 @@ static size_t n_iterations = ACE_MAX_ITERATIONS;
 static ACE_Lock_Adapter<ACE_SYNCH_MUTEX> lock_adapter_;
 // Serialize access to <ACE_Message_Block> reference count, which will
 // be decremented from multiple threads.
-
-template <class TYPE>
-class Mem_Pool_Node
-// Mem_Pool_Node keeps unused memory within free list
-// Free list structure is kept within the memory being kept.
-// The length of a piece of unused memory must be greater than
-// sizeof (void*).  This makes sense because we'll waste even 
-// more memory if we keep them in a separate data structure.
-{
-public:
-  TYPE *addr (void) { return &this->obj_; }
-  // return the address of free memory
-
-  Mem_Pool_Node<TYPE> *get_next (void) { return this->next_; }
-  // get the next Mem_Pool_Node
-
-  void  set_next (Mem_Pool_Node<TYPE> * ptr) { this->next_ = ptr; }
-  // set the next Mem_Pool_Node 
-
-private:
-  union
-  {
-    TYPE obj_;
-    Mem_Pool_Node<TYPE> *next_;
-  } ;
-};
-
-template <class TYPE, class LOCK>
-class Cached_Memory_Pool_Allocator : public ACE_New_Allocator
-{
-public:
-  Cached_Memory_Pool_Allocator (size_t n_chunks);
-  // Create a cached memory poll with <n_chunks> chunks 
-  // each with sizeof (TYPE) size.  
-
-  ~Cached_Memory_Pool_Allocator (void);
-  // clear things up
-
-  void* malloc (size_t);
-  // get a chunk of memory
-
-  void free (void *);
-  // return a chunk of memory
-
-private:
-  TYPE *pool_;
-
-  ACE_Locked_Simple_Free_List<Mem_Pool_Node<TYPE>, LOCK> free_list_;
-};
-
-template <class TYPE, class LOCK>
-Cached_Memory_Pool_Allocator<TYPE, LOCK>::Cached_Memory_Pool_Allocator (size_t n_chunks)
-  : pool_ (0)
-{
-  ACE_NEW (this->pool_, TYPE [n_chunks]);
-  // ERRNO could be lost because this is within ctor
-  
-  for (size_t c = 0 ; c < n_chunks ; c++)
-    this->free_list_.add (new (&this->pool_ [c]) Mem_Pool_Node<TYPE>);
-  // put into free list using placement contructor, no real memory
-  // allocation in the above new
-}
-
-template <class TYPE, class LOCK>
-Cached_Memory_Pool_Allocator<TYPE, LOCK>::~Cached_Memory_Pool_Allocator (void)
-{
-  delete [] this->pool_;
-}
-
-template <class TYPE, class LOCK> void *
-Cached_Memory_Pool_Allocator<TYPE, LOCK>::malloc (size_t nbytes)
-{
-  // Check if size requested fits within pre-determined size.
-  if (sizeof (TYPE) < nbytes)
-    return NULL;
-
-  // addr() call is really not absolutely necessary because of the way
-  // Mem_Pool_Node's internal structure is arranged.
-  return this->free_list_.remove ()->addr ();
-}
-
-template <class TYPE, class LOCK> void
-Cached_Memory_Pool_Allocator<TYPE, LOCK>::free (void * ptr)
-{
-  this->free_list_.add ((Mem_Pool_Node<TYPE> *) ptr) ;
-}
 
 class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -313,28 +233,28 @@ produce (Worker_Task &worker_task, ACE_Allocator *alloc_strategy)
   return 0;
 }
 
-typedef char MEMORY_CHUNK[ACE_MALLOC_ALIGN * 5];
+typedef char MEMORY_CHUNK[ACE_MALLOC_ALIGN * ACE_ALLOC_SIZE];
 
-Cached_Memory_Pool_Allocator<MEMORY_CHUNK,
-                             ACE_SYNCH_MUTEX> 
-			     mem_allocator (48);
+ACE_Cached_Allocator<MEMORY_CHUNK,
+                     ACE_SYNCH_MUTEX> 
+                     mem_allocator (ACE_ALLOC_AMOUNT);
 
 struct
 {
   ACE_Allocator *strategy_;
   char *name_;
   ACE_Profile_Timer::ACE_Elapsed_Time et_;
-} alloc_struct[2] =
+} alloc_struct[ACE_ALLOC_STRATEGY_NO] =
 {
   { NULL, "Default" },
   { &mem_allocator, "Cached Memory" }
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class Cached_Memory_Pool_Allocator<MEMORY_CHUNK, ACE_SYNCH_MUTEX>;
-template class Mem_Pool_Node<MEMORY_CHUNK>;
-template class ACE_Locked_Simple_Free_List<Mem_Pool_Node<MEMORY_CHUNK>, ACE_SYNCH_MUTEX>;
-template class ACE_Free_List<Mem_Pool_Node<MEMORY_CHUNK> >;
+template class ACE_Cached_Allocator<MEMORY_CHUNK, ACE_SYNCH_MUTEX>;
+template class ACE_Cached_Mem_Pool_Node_T<MEMORY_CHUNK>;
+template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node_T<MEMORY_CHUNK>, ACE_SYNCH_MUTEX>;
+template class ACE_Free_List<ACE_Cached_Mem_Pool_Node_T<MEMORY_CHUNK> >;
 template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
 template class ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
 template class ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>;
