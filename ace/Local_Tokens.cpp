@@ -64,11 +64,11 @@ ACE_TPQ_Entry::dump (void) const
 
   if (next_ != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("next:.\n")));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("next:.\n")));
       next_->dump ();
     }
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_TPQ_Entry::dump end.\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("ACE_TPQ_Entry::dump end.\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -194,12 +194,21 @@ ACE_TSS_TPQ_Entry::make_TSS_TYPE (void) const
 
 ACE_TSS_TPQ_Entry::operator ACE_TPQ_Entry * (void)
 {
-  ACE_TRACE ("ACE_TSS_TPQ_Entry::operator");
+#if !defined (ACE_NO_TSS_TOKENS)
   return  (ACE_TPQ_Entry *) (*((ACE_TSS<ACE_TPQ_Entry> *) this));
+#else
+  // Not sure this is the right thing to do, but it seems to work.
+  // The base class ALSO has a proxy_ and client_id_ members (weird?)
+  // which don't get initialised.  The following two lines make this
+  // the same as the subclass, so that the slicing works .
+  ACE_TPQ_ENTRY::proxy ((ACE_Token_Proxy *)(this->proxy_));
+  ACE_TPQ_ENTRY::client_id (this->client_id_);
+  return  (ACE_TPQ_Entry *) this;;
+#endif /* !ACE_NO_TSS_TOKENS */
 }
 
 ACE_TPQ_Iterator::ACE_TPQ_Iterator (ACE_Token_Proxy_Queue &q)
-: current_ (q.head_)
+  : current_ (q.head_)
 {
   ACE_TRACE ("ACE_TPQ_Iterator::ACE_TPQ_Iterator");
 }
@@ -248,14 +257,14 @@ ACE_Token_Proxy_Queue::dump (void) const
 {
   ACE_TRACE ("ACE_Token_Proxy_Queue::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Token_Proxy_Queue::dump:\n")
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("ACE_Token_Proxy_Queue::dump:\n")
 			ASYS_TEXT (" size_ = %d\n"),
 			size_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("head_ and tail_\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("head_ and tail_\n")));
   if (this->head_ != 0)
     this->head_->dump ();
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Token_Proxy_Queue::dump end.\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("ACE_Token_Proxy_Queue::dump end.\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -302,7 +311,9 @@ ACE_Token_Proxy_Queue::enqueue (ACE_TPQ_Entry *tpq,
   // walk through list to insertion point
   ACE_TPQ_Entry *temp = head_;
 
-  for (int x = position; x > 1; --x)
+  for (int x = position;
+       x > 1;
+       --x)
     {
       // end of queue?
       if (temp->next_ == 0)
@@ -334,7 +345,9 @@ ACE_Token_Proxy_Queue::dequeue (void)
   --this->size_;
 
   if (this->head_ == 0 && this->size_ != 0)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("incorrect size = %d\n"), this->size_));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("incorrect size = %d\n"),
+                this->size_));
 }
 
 /*
@@ -343,7 +356,9 @@ ACE_Token_Proxy_Queue::member (const ASYS_TCHAR *id)
 {
   ACE_TRACE ("ACE_Token_Proxy_Queue::member");
 
-  for (ACE_TPQ_Entry *temp = this->head_; temp != 0; temp = temp->next_)
+  for (ACE_TPQ_Entry *temp = this->head_;
+       temp != 0;
+       temp = temp->next_)
     if (ACE_OS::strcmp (temp->client_id (), id) == 0)
       // We found it!
       return 1;
@@ -1028,16 +1043,20 @@ ACE_Token_Proxy::dump (void) const
     this->token_->dump ();
 
   this->waiter_.dump ();
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Token_Proxy::dump end.\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("ACE_Token_Proxy::dump end.\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-const ASYS_TCHAR*
+const ASYS_TCHAR *
 ACE_Token_Proxy::client_id (void) const
 {
   ACE_TRACE ("ACE_Token_Proxy::client_id");
   // Thread-specific.
-  const ASYS_TCHAR *id = this->waiter_->client_id ();
+  ACE_Token_Proxy *nc_this =
+    ACE_const_cast (ACE_Token_Proxy *, this);
+  const ACE_TPQ_Entry *temp =
+    nc_this->waiter_.operator->();
+  const ASYS_TCHAR *id = temp->client_id ();
 
   if (id == 0)
     return ASYS_TEXT ("ERROR NO CLIENT ID");
@@ -1176,11 +1195,11 @@ ACE_Token_Proxy::acquire (int notify,
 			this->token_->owner_id (),
 			token_->no_of_waiters ()));
 
-	  // no error, but would block,
-	  // if error, return error (-1), otherwise, return whether we
-	  // called the holder or not.
+	  // no error, but would block, if error, return error (-1),
+	  // otherwise, return whether we called the holder or not.
 	  int return_value;
-	  if (this->handle_options (options, waiter_->cond_var_) == -1)
+	  if (this->handle_options (options,
+                                    waiter_->cond_var_) == -1)
 	    return_value = -1;
 	  else
 	    return_value = notify == 1;
@@ -1191,14 +1210,17 @@ ACE_Token_Proxy::acquire (int notify,
 	default :
 	  waiter_->cond_var_.mutex ().release ();
 	  ACE_ERROR_RETURN ((LM_ERROR,
-			     ASYS_TEXT ("%p\n"),ASYS_TEXT ("Token Proxy acquire.")), -1);
+			     ASYS_TEXT ("%p\n"),
+                             ASYS_TEXT ("Token Proxy acquire.")),
+                            -1);
 	}
     }
   else
     // we have the token
     {
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%t) acquired %s\n"),
+	ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("(%t) acquired %s\n"),
 		    this->name ()));
       waiter_->cond_var_.mutex ().release ();
     }
@@ -1213,7 +1235,9 @@ ACE_Token_Proxy::tryacquire (void (*sleep_hook)(void *))
   if (this->token_ == 0)
     {
       errno = ENOENT;
-      ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Not open.\n")), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("Not open.\n")),
+                        -1);
     }
 
   this->waiter_->sleep_hook (sleep_hook);
@@ -1229,7 +1253,9 @@ ACE_Token_Proxy::renew (int requeue_position,
   if (this->token_ == 0)
     {
       errno = ENOENT;
-      ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Not open.\n")), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("Not open.\n")),
+                        -1);
     }
 
   // Make sure no one calls our token_acquired until we have a chance
