@@ -2,7 +2,7 @@ Sun Oct 03 10:34:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/SV_Shared_Memory_Test.cpp (main): only delete
           parent_mutex and parent_synch in the parent, to prevent
-          double deletion by the child.
+          double deletion by the child. [Bug 91]
 
 Sun Oct 03 10:21:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
