@@ -1,3 +1,9 @@
+Tue Jan 15 12:03:54 2002  Ossama Othman  <ossama@uci.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Updated Security Service and SSLIOP release notes.
+
 Tue Jan 15 14:02:04 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup.bor:
