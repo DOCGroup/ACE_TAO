@@ -70,7 +70,7 @@ TAO_EC_Sched_Filter::filter_nocopy (RtecEventComm::EventSet &event,
 }
 
 // This is private, so we can make it inline in the .cpp file...
-ACE_INLINE void
+void
 TAO_EC_Sched_Filter::compute_qos_info (TAO_EC_QOS_Info& qos_info,
                                        CORBA::Environment &ACE_TRY_ENV)
 {

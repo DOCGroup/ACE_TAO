@@ -50,7 +50,7 @@ TAO_EC_Disjunction_Filter::end (void) const
   return this->children_ + this->n_;
 }
 
-ACE_INLINE int
+int
 TAO_EC_Disjunction_Filter::size (void) const
 {
   return this->n_;
