@@ -196,8 +196,18 @@ int be_interface::gen_client_header (void)
           *ch << ": ";
           for (i = 0; i < n_inherits (); i++)
             {
+              be_interface *inherited = be_interface::narrow_from_decl
+                (this->inherits ()[i]);
+              be_decl *scope = 0;
+              if (inherited->is_nested ())
+                {
+                  // inherited node is used in the scope of "this" node
+                  scope = be_scope::narrow_from_scope (this->defined_in
+                                                       ())->decl ();
+                }
+
               *ch << "public virtual ";
-              *ch << inherits ()[i]->name ();  // dump the scoped name
+              *ch << inherited->nested_type_name (scope);  // dump the scoped name
               if (i < n_inherits () - 1) // this is the case of multiple
                 // inheritance
                 {

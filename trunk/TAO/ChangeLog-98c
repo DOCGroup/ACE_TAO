@@ -53,6 +53,9 @@ Wed Jan  7 12:00:14 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	turns out to be a child of the first. Thanks to Carlos O'Ryan for
 	reporting the error.
 
+	In addition, we use the nested_type_name for the inherited classes
+	in the class definition.
+
 	* TAO_IDL/be/be_type.cpp: We generate relative paths instead of
 	the ACE_NESTED_CLASS macro. However, I am going to make this an
 	IDL option at a later point.
