@@ -482,3 +482,70 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
       }
 #endif /* !ACE_WIN32 && !ACE_HAS_BIG_FD_SET */
 }
+
+
+void
+ACE_Handle_Set_Iterator::reset_state (void)
+{
+  ACE_TRACE ("ACE_Handle_Set_Iterator::reset_state");
+
+#if !defined (ACE_HAS_BIG_FD_SET) || defined (ACE_WIN32)
+  this->handle_index_  = 0;
+  this->word_num_ = -1;
+#elif defined (ACE_HAS_BIG_FD_SET)
+  this->oldlsb_ = 0;
+  this->word_max_  =
+    this->handles_.max_handle_ == ACE_INVALID_HANDLE  ? 0
+    : ((ACE_DIV_BY_WORDSIZE (this->handles_.max_handle_)) + 1);
+#endif /* ACE_HAS_BIG_FD_SET */
+
+#if !defined (ACE_WIN32) && !defined (ACE_HAS_BIG_FD_SET)
+  // No sense searching further than the max_handle_ + 1;
+  ACE_HANDLE maxhandlep1 =
+    this->handles_.max_handle_ + 1;
+
+  fd_mask *maskp =
+    (fd_mask *)(this->handles_.mask_.fds_bits);
+
+  // Loop until we've found the first non-zero bit or we run past the
+  // <maxhandlep1> of the bitset.
+  while (this->handle_index_ < maxhandlep1
+         && maskp[++this->word_num_] == 0)
+    this->handle_index_ += ACE_Handle_Set::WORDSIZE;
+
+  // If the bit index becomes >= the maxhandlep1 that means there
+  // weren't any bits set.  Therefore, we'll just store the
+  // maxhandlep1, which will cause <operator()> to return
+  // <ACE_INVALID_HANDLE> immediately.
+  if (this->handle_index_ >= maxhandlep1)
+    this->handle_index_ = maxhandlep1;
+  else
+    // Loop until we get <word_val_> to have its least significant bit
+    // enabled, keeping track of which <handle_index> this represents
+    // (this information is used by <operator()>).
+#  if defined (ACE_PSOS) // bits are in reverse order, MSB (sign bit) = bit 0.
+    for (this->word_val_ = maskp[this->word_num_];
+         this->word_val_ > 0;
+         this->word_val_ = (this->word_val_ << 1))
+      this->handle_index_++;
+#  else
+    for (this->word_val_ = maskp[this->word_num_];
+         ACE_BIT_DISABLED (this->word_val_, 1)
+           && this->handle_index_ < maxhandlep1;
+         this->handle_index_++)
+      this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
+#  endif /* ACE_PSOS */
+#elif !defined (ACE_WIN32) && defined (ACE_HAS_BIG_FD_SET)
+    if (this->word_max_==0)
+      {
+        this->word_num_ = -1;
+        this->word_val_ = 0;
+      }
+    else
+      {
+        this->word_num_ =
+          ACE_DIV_BY_WORDSIZE (this->handles_.min_handle_) - 1;
+        this->word_val_ = 0;
+      }
+#endif /* !ACE_WIN32 && !ACE_HAS_BIG_FD_SET */
+}
