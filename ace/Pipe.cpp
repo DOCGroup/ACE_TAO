@@ -58,9 +58,9 @@ ACE_Pipe::open (void)
   if (result == -1)
     return -1;
 
+#if !defined (ACE_LACKS_TCP_NODELAY)
   int one = 1;
 
-#ifndef ACE_LACKS_TCP_NODELAY
   // Make sure that the TCP stack doesn't try to buffer small writes.
   // Since this communication is purely local to the host it doesn't
   // affect network performance.
@@ -72,7 +72,7 @@ ACE_Pipe::open (void)
   if (writer.set_option (level, TCP_NODELAY,
                          &one, sizeof one) == -1)
     return -1;
-#endif /* ACE_LACKS_TCP_NODELAY */
+#endif /* ! ACE_LACKS_TCP_NODELAY */
 
   this->handles_[0] = reader.get_handle ();
   this->handles_[1] = writer.get_handle ();
