@@ -579,7 +579,7 @@ main (int, ASYS_TCHAR *[])
     // instance at this moment
 
     // The stuff below might crash the process if the <operator=>
-    // implementation was bad
+    // implementation was bad.
     int value = 0;
 
     ACE_Time_Value timeout (ACE_OS::gettimeofday () + ACE_Time_Value (10));

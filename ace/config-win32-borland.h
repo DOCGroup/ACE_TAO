@@ -2,7 +2,8 @@
 // $Id$
 
 // The following configuration file contains the defines
-// common to all Borland compilers.
+// common to all Borland compilers.  Do not include this file directly
+// -- just include config-win32-common.h, which includes this file.
 
 #ifndef ACE_WIN32_BORLAND_H
 #define ACE_WIN32_BORLAND_H
