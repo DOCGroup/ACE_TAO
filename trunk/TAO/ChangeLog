@@ -1,3 +1,9 @@
+Fri Oct 18 15:59:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/AMH/Sink_Server/mt_server.cpp: 
+	* examples/AMH/Sink_Server/st_server.cpp: Removed strange inl file
+	  inclusions in the above files.
+
 Fri Oct 18 15:56:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/AMH/Sink_Server/Base_Server.h: Included the inline

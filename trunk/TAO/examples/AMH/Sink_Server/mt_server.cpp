@@ -2,7 +2,6 @@
 
 #include "MT_AMH_Server.h"
 #include "AMH_Servant.h"
-#include "Base_Server.inl"
 
 int
 main (int argc, char *argv[])
