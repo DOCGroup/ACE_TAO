@@ -19,7 +19,10 @@ const char *ior = "file://test1.ior";
 int do_shutdown = 1;
 int enable_dynamic_scheduling = 1;
 int enable_yield = 1;
-
+int niteration = 1000;
+int workload = 30;
+int period = 50;
+ 
 class Worker : public ACE_Task_Base
 {
   // = TITLE
@@ -59,7 +62,7 @@ private:
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:s");
+  ACE_Get_Opt get_opts (argc, argv, "ks:n:w:p");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -73,13 +76,27 @@ parse_args (int argc, char *argv[])
         enable_yield = 0;
         break;
 
+      case 'n':
+        niteration = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+    
+      case 'w':
+        workload = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+  
+      case 'p':
+        period = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-x (do shutdown)"
                            "-k <ior> "
                            "-s (disable yield)"
+			   "-n <niterations>"
+                           "-w <workload>"
+                           "-p <period>"
                            "\n",
                            argv [0]),
                           -1);
@@ -374,6 +391,8 @@ Worker::svc (void)
 
   ACE_DEBUG ((LM_DEBUG, "(%t|%T) worker activated with prio %d\n", prio));
 
+  for (int i=0; i<niteration; i++) 
+  {
   if (enable_dynamic_scheduling)
     {
       EDF_Scheduling::SchedulingParameter sched_param;
@@ -381,6 +400,8 @@ Worker::svc (void)
       sched_param.importance = importance_;
       sched_param.deadline = deadline_;
       sched_param_policy = scheduler_->create_scheduling_parameter (sched_param);
+
+      //If we do not define implicit_sched_param, the new spawned DT will have the default lowest prio.
       CORBA::Policy_var implicit_sched_param = sched_param_policy;
 
       /* MEASURE: Start of scheduling segment */
@@ -415,6 +436,9 @@ Worker::svc (void)
       scheduler_current_->end_scheduling_segment (name);
       ACE_CHECK_RETURN (-1);
     }
+
+  ACE_OS::sleep(period);
+  }
 
   ACE_DEBUG ((LM_DEBUG, "client worker thread (%t) done\n"));
 
