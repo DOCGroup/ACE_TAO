@@ -1077,7 +1077,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                                                      self.in (),
                                                      (*iterator).int_id_,
                                                      CORBA::B_TRUE,
-                                                     CORBA::B_FALSE,
+                                                     CORBA::B_FALSE, // @@
                                                      env);
             }
         }
@@ -1468,14 +1468,22 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &oid,
   PortableServer::POA_var self = this->_this (env);
   if (env.exception () != 0)
     return;
-
+  
   if (!CORBA::is_nil (this->servant_activator_.in ()))
-    this->servant_activator_->etherealize (oid,
-                                           self.in (),
-                                           servant,
-                                           0,
-                                           CORBA::B_FALSE,
-                                           env);
+    {
+      CORBA::Boolean remaining_activations;
+      if (this->active_object_map ().find (servant) != -1)
+        remaining_activations = CORBA::B_TRUE;
+      else
+        remaining_activations = CORBA::B_FALSE;    
+
+      this->servant_activator_->etherealize (oid,
+                                             self.in (),
+                                             servant,
+                                             CORBA::B_FALSE,
+                                             remaining_activations,
+                                             env);
+    }
 }
 
 CORBA::Object_ptr
@@ -1829,7 +1837,7 @@ TAO_POA::the_activator (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
 
-  return PortableServer::AdapterActivator::_duplicate (this->adapter_activator_);
+  return PortableServer::AdapterActivator::_duplicate (this->adapter_activator_.in ());
 }
 
 void
