@@ -6,7 +6,8 @@
 template <class T> ACE_INLINE T * 
 ACE_Cached_Mem_Pool_Node<T>::addr (void)
 {
-  return (T *) this;
+  return ACE_reinterpret_cast (T *,
+                               this);
 }
 
 template <class T> ACE_INLINE ACE_Cached_Mem_Pool_Node<T> *

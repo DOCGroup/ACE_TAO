@@ -216,4 +216,7 @@
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
+#define ACE_HAS_SIGISMEMBER_BUG
+#define ACE_HAS_BROKEN_XTI_MACROS
+
 #define ACE_HAS_UALARM

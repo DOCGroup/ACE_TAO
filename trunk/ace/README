@@ -63,6 +63,7 @@ ACE_HAS_BROKEN_SENDMSG                  OS/compiler omits the const from the sen
 ACE_HAS_BROKEN_SETRLIMIT                OS/compiler omits the const from the rlimit parameter in the setrlimit() prototype.
 ACE_HAS_BROKEN_TIMESPEC_MEMBERS         platform define struct timespec members as ts_sec and ts_nsec instead of tv_sec and tv_nsec.  This is highly non-portable.  Currently only FreeBSD 2.1.x uses it.
 ACE_HAS_BROKEN_WRITEV                   OS/compiler omits the const from the iovec parameter in the writev() prototype.
+ACE_HAS_BROKEN_XTI_MACROS               OS header files have some problems with XTI (HP/UX 11).
 ACE_HAS_BSTRING                         Platform has <bstring.h> (which contains bzero() prototype)
 ACE_HAS_BYTESEX_H                       Platform has <bytesex.h>.
 ACE_HAS_CANCEL_IO                       Platform supports the Win32 CancelIO() function (WinNT 4.0 and beyond).
@@ -152,6 +153,7 @@ ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL For Win32: Use Select_Reactor as default
 ACE_HAS_SEMUN                           Compiler/platform defines a union semun for SysV shared memory
 ACE_HAS_SET_T_ERRNO                     Platform has a function to set t_errno (e.g., Tandem).
 ACE_HAS_SIGINFO_T                       Platform supports SVR4 extended signals
+ACE_HAS_SIGISMEMBER_BUG                 Platform has bug with sigismember() (HP/UX 11).
 ACE_HAS_SIG_MACROS                      Platform/compiler has macros for sig{empty,fill,add,del}set (e.g., SCO and FreeBSD)
 ACE_HAS_SIGNAL_OBJECT_AND_WAIT          Platform supports the Win32 SignalObjectAndWait() function (WinNT 4.0 and beyond).
 ACE_HAS_SIGNAL_SAFE_OS_CALLS            Automatically restart OS system calls when EINTR occurs

@@ -9566,6 +9566,13 @@ ACE_INLINE int
 ACE_OS::sigismember (sigset_t *s, int signum)
 {
 #if !defined (ACE_LACKS_SIGSET)
+#if defined (ACE_HAS_SIGISMEMBER_BUG)
+  if (signum < 1 || signum >= ACE_NSIG) 
+    {
+      errno = EINVAL ;
+      return -1 ;                 // Invalid signum, return error
+    }
+#endif /* ACE_HAS_SIGISMEMBER_BUG */
   ACE_OSCALL_RETURN (::sigismember (s, signum), int, -1);
 #else
   if (s == NULL) {

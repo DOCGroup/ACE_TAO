@@ -3200,6 +3200,10 @@ extern "C" {
 #     if defined (ACE_HAS_TIUSER_H)
 #       include /**/ <tiuser.h>
 #     else
+#       if defined (ACE_HAS_BROKEN_XTI_MACROS)
+#         undef TCP_NODELAY
+#         undef TCP_MAXSEG
+#       endif /* ACE_HAS_BROKEN_XTI_MACROS */
 #       include /**/ <xti.h>
 #     endif /* ACE_HAS_TIUSER_H */
 #     if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
