@@ -1,3 +1,17 @@
+Sun Jan  9 10:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Base.{h,cpp,i}:
+        * tao/PortableServer/Local_Servant_Base.{h,cpp,inl}:
+          Moved TAO_Local_ServantBase to its own file. Also changed
+          TAO_RefCountServantBase::_ref_count to
+          TAO_RefCountServantBase::_refcount_value, the first was TAO
+          specific, the second is defined by the corba spec. This fixes
+          bugzilla [1951]. Thanks to Frank Pilhofer <fp at mc dot com>
+          for reporting this
+
+        * tao/Makefile.am:
+          Updated for change above
+
 Sat Jan  8 14:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Conn.mpc:
