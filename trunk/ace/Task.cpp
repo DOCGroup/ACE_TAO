@@ -202,7 +202,7 @@ ACE_Task_Base::svc_run (void *args)
   // Call the Task's svc() hook method.
   int svc_status = t->svc ();
   ACE_THR_FUNC_RETURN status;
-#if (defined (__BORLANDC__) && (__BORLANDC__ < 0x570)) || defined (__MINGW32__) || (defined (_MSC_VER) && (_MSC_VER <= 1200))
+#if (defined (__BORLANDC__) && (__BORLANDC__ < 0x570)) || defined (__MINGW32__) || (defined (_MSC_VER) && (_MSC_VER <= 1310))
   // Some compilers complain about reinterpret_cast from int to unsigned long...
   status = ACE_static_cast (ACE_THR_FUNC_RETURN, svc_status);
 #else
