@@ -99,6 +99,6 @@ main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "XT not configured for this platform\n"),
-                    0));
+                    0);
 }
 #endif /* ACE_HAS_XT */
