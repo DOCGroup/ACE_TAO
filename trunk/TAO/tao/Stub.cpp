@@ -1167,12 +1167,16 @@ TAO_Stub::sync_strategy (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 template class auto_ptr<TAO_Policy_Manager_Impl>;
 template class ACE_Auto_Basic_Ptr<TAO_Policy_Manager_Impl>;
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 #pragma instantiate auto_ptr<TAO_Policy_Manager_Impl>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Policy_Manager_Impl>
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
