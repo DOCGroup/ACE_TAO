@@ -272,48 +272,55 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (CORBA::Environment &env
                       -1);
   return 0;
 }
-
-
-
 // ----------------------------------------------------------------------
-// TAO_AV_Endpoint_Reactive_Strategy_A
+// TAO_AV_Endpoint_Reactive_Strategy
 // ----------------------------------------------------------------------
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager)
+TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy (TAO_ORB_Manager *orb_manager)
   : orb_manager_ (orb_manager)
 {
 }
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::create_A ()
+TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate (void)
 {
+  if ( (this->activate_stream_endpoint () == -1) ||
+       (this->activate_vdev () == -1) ||
+       (this->activate_mediactrl () == -1))
+    return -1;
+  else
+    return 0;
+}
 
-  T_StreamEndpoint *stream_endpoint;
-  ACE_NEW_RETURN (stream_endpoint,
-                  T_StreamEndpoint,
-                  -1);
-
-  T_VDev *vdev;
-  ACE_NEW_RETURN (vdev,
-                  T_VDev,
-                  -1);
-  
-  T_MediaCtrl *media_ctrl;
-  ACE_NEW_RETURN (media_ctrl,
-                  T_MediaCtrl,
-                  -1);
-
-  this->orb_manager_->activate_under_child_poa ("Stream_Endpoint_A",
-                                                stream_endpoint,
-                                                env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+int
+TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_vdev (void)
+{
+  // Bridge pattern. Allow subclasses to override this behavior
+  this->vdev_ = 0;
+  if (this->make_vdev (this->vdev_) == -1)
+    return -1;
 
   this->orb_manager_->activate_under_child_poa ("VDev",
                                                 vdev,
                                                 env);
   TAO_CHECK_ENV_RETURN (env, -1);
-  
+  return 0;
+}
+
+
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+int
+TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_mediactrl (void)
+{
+  T_MediaCtrl *media_ctrl;
+  ACE_NEW_RETURN (media_ctrl,
+                  T_MediaCtrl,
+                  -1);
+
+  TAO_CHECK_ENV_RETURN (env, -1);
+
   this->orb_manager_->activate_under_child_poa ("MediaCtrl",
                                                 media_ctrl,
                                                 env);
@@ -323,12 +330,56 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::cre
   anyval <<= this->orb_manager_->orb ()->object_to_string (media_ctrl->_this (env));
   TAO_CHECK_ENV_RETURN (env, -1);
   
-  vdev->define_property ("Related_MediaCtrl",
-                         anyval,
-                         env);
+  this->vdev_->define_property ("Related_MediaCtrl",
+                                anyval,
+                                env);
 
   TAO_CHECK_ENV_RETURN (env, -1);
 
+  return 0;
+}
+
+// ----------------------------------------------------------------------
+
+// ----------------------------------------------------------------------
+// TAO_AV_Endpoint_Reactive_Strategy_A
+// ----------------------------------------------------------------------
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager)
+  : TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev,
+    T_MediaCtrl> (orb_manager)
+{
+}
+
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+int
+TAO_AV_Endpoint_Reactive_Strategy_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
+                                                                                      AVStreams::VDev_ptr &vdev,
+                                                                                      CORBA::Environment &env)
+{
+  if (this->activate () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"),
+                      -1);
+  
+  stream_endpoint = this->stream_endpoint_a_;
+  vdev = this->vdev_;
+  return 0;
+  
+}
+
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+int
+TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_stream_endpoint (void)
+{
+  this->stream_endpoint_a_ = 0;
+  ACE_NEW_RETURN (this->stream_endpoint_a_,
+                  T_StreamEndpoint,
+                  -1);
+  this->orb_manager_->activate_under_child_poa ("Stream_Endpoint_A",
+                                                this->stream_endpoint_a_,
+                                                env);
+  TAO_CHECK_ENV_RETURN (env, -1);
   return 0;
 }
 
@@ -337,54 +388,41 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::cre
 // ----------------------------------------------------------------------
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_B (TAO_ORB_Manager *orb_manager)
-  : orb_manager_ (orb_manager)
+  : TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev,
+    T_MediaCtrl> (orb_manager)
 {
 }
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::create_B ()
+TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_stream_endpoint (void)
 {
-
-  T_StreamEndpoint *stream_endpoint;
-  ACE_NEW_RETURN (T_StreamEndpoint,
-                  stream_endpoint,
+  this->stream_endpoint_b_ = 0;
+  ACE_NEW_RETURN (this->stream_endpoint_b_,
+                  T_StreamEndpoint,
                   -1);
-
-  T_VDev *vdev;
-  ACE_NEW_RETURN (vdev,
-                  T_VDev,
-                  -1);
-
-  T_MediaCtrl *media_ctrl;
-  ACE_NEW_RETURN (media_ctrl,
-                  T_MediaCtrl,
-                  -1);
-
-  this->orb_manager_.activate ("Stream_Endpoint_B",
-                               stream_endpoint,
-                               env);
+  this->orb_manager_->activate_under_child_poa ("Stream_Endpoint_B",
+                                                this->stream_endpoint_b_,
+                                                env);
   TAO_CHECK_ENV_RETURN (env, -1);
-
-  this->orb_manager_.activate ("VDev",
-                               vdev,
-                               env);
-  TAO_CHECK_ENV_RETURN (env, -1);
-
-  this->orb_manager_.activate ("MediaCtrl",
-                               media_ctrl,
-                               env);
-  TAO_CHECK_ENV_RETURN (env, -1);
-
-  CORBA::Any anyval;
-  anyval <<= media_ctrl->_this ();
-  vdev->define_property ("Related_MediaCtrl",
-                         anyval,
-                         env);
-
-  TAO_CHECK_ENV_RETURN (env, -1);
-
   return 0;
+}
+
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+int
+TAO_AV_Endpoint_Reactive_Strategy_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
+                                                                                     AVStreams::VDev_ptr &vdev,
+                                                                                     CORBA::Environment &env)
+{
+  if (this->activate () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"),
+                      -1);
+  
+  stream_endpoint = this->stream_endpoint_b_;
+  vdev = this->vdev_;
+  return 0;
+  
 }
 
 // ----------------------------------------------------------------------
