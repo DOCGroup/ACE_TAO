@@ -160,7 +160,9 @@ Logging_Handler::handle_input (ACE_HANDLE)
 	ACE_Log_Record lp;
 
         len = ntohl (len);
-	if ((n = this->peer ().recv_n ((void *) &lp, len)) != len)
+	n = this->peer ().recv_n ((void *) &lp, len);
+
+	if (n != len)
 	  ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p at host %s\n",
 			    "client logger", this->peer_name_), -1);
 	/* NOTREACHED */

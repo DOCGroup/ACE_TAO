@@ -59,7 +59,7 @@ consumer (void *)
   int iter = options.iterations ();
   int verb = options.verbose ();
   int msiz = options.message_size ();
-  int secs, par1, par2, i;
+  int secs, par1, par2;
   time_t currsec;
 
   if (verb)
@@ -72,7 +72,6 @@ consumer (void *)
   else
     cout << "consumer :we're connected" << endl;
 
-  char buf[BUFSIZ];
   int n;
   ACE_Message_Block *mb_p;
 
