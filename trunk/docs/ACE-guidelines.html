@@ -480,6 +480,13 @@ bgcolor="#ffffff">
         <code>ACE_UNIMPLEMENTED_FUNC</code> can be used with non-template
         classes as well.  Though for consistency and maximum safety, it
         should be avoided for non-template classes.<p>
+
+    <li>Never use <code>bool</code>, <code>BOOL</code>, or similar
+        types.   (CORBA::Boolean is acceptable).  Use <code>int</code>
+        or <code>u_int</code> instead for boolean types.<p>
+
+    <li>Functions should always return -1 to indicate failure, and
+        0 or greater to indicate success.<p>
   </ul>
 
   <li><strong>I/O</strong><p>
