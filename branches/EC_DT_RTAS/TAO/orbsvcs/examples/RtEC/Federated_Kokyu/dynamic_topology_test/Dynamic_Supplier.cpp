@@ -30,7 +30,7 @@ Dynamic_Supplier::~Dynamic_Supplier(void)
 
 ///Overrides Supplier::timeout_occurred()
 void
-Dynamic_Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
+Dynamic_Supplier::timeout_occured (Object_ID& oid ACE_ENV_ARG_DECL)
 {
   if (this->handler_ != 0)
     {
@@ -70,7 +70,6 @@ Dynamic_Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
     }
   }
 
-  Object_ID oid = ACE_OBJECT_COUNTER->increment();
   eventA[0].header.eid.id = oid.id;
   eventA[0].header.eid.tid = oid.tid;
   eventA[0].header.eid.pid = oid.pid;

@@ -1,21 +1,23 @@
 // $Id$
-// Automatically generated header file "federated_dsui_families.h"  by dsui-parse.py 
+
+// Automatically generated header file "federated_dsui_families.h"  by dsui-parse.py
 #ifndef _federated_DSUI_FAMILIES_H
 #define _federated_DSUI_FAMILIES_H
 
-#define federated_NUM_FAMILIES 3
+#define NUM_FAMILIES 3
 
 /* DSUI Family: TEST_ONE
  * "Description"
  */
 #define TEST_ONE_FAM 1
-#define NUM_EVENTS_TEST_ONE 3
+#define NUM_EVENTS_TEST_ONE 4
 #define NUM_COUNTERS_TEST_ONE 0
 #define NUM_HISTOGRAMS_TEST_ONE 0
 
 #define START_SERVICE 0
 #define DEADLINE_MISSED 1
 #define STOP_SERVICE 2
+#define FUTURE_EVENT 3
 
 
 

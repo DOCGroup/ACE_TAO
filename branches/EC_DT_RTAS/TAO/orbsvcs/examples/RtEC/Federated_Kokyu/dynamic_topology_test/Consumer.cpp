@@ -23,7 +23,8 @@ ACE_RCSID(EC_Examples, Consumer, "$Id$")
 Consumer::Consumer (SourceID normal_type,
                     SourceID ft_type,
                     Supplier *fwddest, Service_Handler * handler)
-  : worktime_(0,0)
+  : deadline_missed_(0)
+  , worktime_(0,0)
   , fwddest_(fwddest)
   , handler_(handler)
   , norm_type_(normal_type)
@@ -35,7 +36,8 @@ Consumer::Consumer (SourceID normal_type,
                     SourceID ft_type,
                     ACE_Time_Value& worktime,
                     Supplier *fwddest, Service_Handler *handler)
-  : worktime_(worktime)
+  : deadline_missed_(0)
+  , worktime_(worktime)
   , fwddest_(fwddest)
   , handler_(handler)
   , norm_type_(normal_type)
@@ -62,22 +64,6 @@ Consumer::push (const RtecEventComm::EventSet& events
   ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t) we received event type %d\n",
               events[0].header.type));
 
-  Supplier::mode_t mode;
-  if (events[0].header.type == this->ft_type_)
-    {
-      mode = Supplier::FAULT_TOLERANT;
-    }
-  else if (events[0].header.type == this->norm_type_)
-    {
-      mode = Supplier::NORMAL;
-    }
-  else
-    {
-      //default
-      ACE_DEBUG((LM_DEBUG,"Consumer (%P|%t) received unknown type %d; ignoring\n",events[0].header.type));
-      return;
-    }
-
   if (this->handler_ != 0)
     {
       ACE_DEBUG((LM_DEBUG,"Consumer (%P|%t) calling handle_service_start()\n"));
@@ -99,6 +85,22 @@ Consumer::push (const RtecEventComm::EventSet& events
 
   ACE_TIMEPROBE("START_SERVICE");
   DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+
+  Supplier::mode_t mode;
+  if (events[0].header.type == this->ft_type_)
+    {
+      mode = Supplier::FAULT_TOLERANT;
+    }
+  else if (events[0].header.type == this->norm_type_)
+    {
+      mode = Supplier::NORMAL;
+    }
+  else
+    {
+      //default
+      ACE_DEBUG((LM_DEBUG,"Consumer (%P|%t) received unknown type %d; ignoring\n",events[0].header.type));
+      return;
+    }
 
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
@@ -176,7 +178,7 @@ Consumer::push (const RtecEventComm::EventSet& events
       //trigger next subtask; we assume we are the only ones who set the Supplier's mode!
       ACE_DEBUG((LM_DEBUG,"Consumer (%P|%t) triggering next subtask\n"));
       this->fwddest_->mode(mode);
-      this->fwddest_->timeout_occured(ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->fwddest_->timeout_occured(oid ACE_ENV_ARG_PARAMETER);
     }
 
   if (this->handler_ != 0)

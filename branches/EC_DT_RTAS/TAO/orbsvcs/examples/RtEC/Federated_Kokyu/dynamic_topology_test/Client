@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./Supplier_EC -s edf -o client.ior -i middle1.ior -i middle2.ior
+./Supplier_EC -s edf -o client.ior -i middle1.ior -i middle2.ior $@

@@ -52,25 +52,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-  /*
-  int deadline_missed_;
-  ACE_Time_Value worktime_;
-
-  Supplier *fwddest_;
-  //RtecScheduler::handle_t rt_info_;
-  InfoHandle rt_info_;
-
-  Service_Handler * handler_;
-
-  EventType norm_type_;
-  EventType ft_type_;
-  */
-
   EventType norm_type2_;
   EventType ft_type2_;
 
-  bool received_ft_type1_;
-  bool received_ft_type2_;
+  long window_; //ordinal of instance of execution
 };
 
 #endif /* DYNAMIC_CONSUMER_H */
