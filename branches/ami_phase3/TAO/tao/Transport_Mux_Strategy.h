@@ -217,11 +217,14 @@ protected:
   // Used to generate a different request_id on each call to
   // request_id().
 
+  ACE_SYNCH_MUTEX request_id_lock_;
+  // Lock to protect the state of the request id generator. 
+
   typedef ACE_Hash_Map_Manager_Ex <CORBA::ULong,
                                    TAO_Reply_Dispatcher *,
                                    ACE_Hash <CORBA::ULong>,
                                    ACE_Equal_To <CORBA::ULong>,
-                                   ACE_Null_Mutex> REQUEST_DISPATCHER_TABLE;
+                                   ACE_SYNCH_MUTEX> REQUEST_DISPATCHER_TABLE;
 
   REQUEST_DISPATCHER_TABLE dispatcher_table_;
   // Table of <Request ID, Reply Dispatcher> pairs.

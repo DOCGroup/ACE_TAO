@@ -162,7 +162,9 @@ TAO_Muxed_TMS::~TAO_Muxed_TMS (void)
 CORBA::ULong
 TAO_Muxed_TMS::request_id (void)
 {
-  // @@ I am sure we need lock for this in the MT case. (Alex). 
+  // @@ What is a good error return value?
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+                    this->request_id_lock_, 0);
   return this->request_id_generator_++;
 }
 
@@ -282,7 +284,7 @@ template class ACE_Hash_Map_Manager_Ex <CORBA::ULong,
                                         TAO_Reply_Dispatcher *,
                                         ACE_Hash <CORBA::ULong>,
                                         ACE_Equal_To <CORBA::ULong>,
-                                        ACE_Null_Mutex>;
+                                        ACE_SYNCH_MUTEX>;
 
 template class ACE_Hash_Map_Entry<CORBA::ULong,
                                   TAO_Reply_Dispatcher *>;
@@ -291,19 +293,19 @@ template class ACE_Hash_Map_Iterator_Base_Ex<CORBA::ULong,
                                              TAO_Reply_Dispatcher *,
                                              ACE_Hash<unsigned int>, 
                                              ACE_Equal_To<unsigned int>, 
-                                             ACE_Null_Mutex>;
+                                             ACE_SYNCH_MUTEX>;
 
 template class ACE_Hash_Map_Iterator_Ex<CORBA::ULong,
                                         TAO_Reply_Dispatcher*,
                                         ACE_Hash<CORBA::ULong>,
                                         ACE_Equal_To<CORBA::ULong>,
-                                        ACE_Null_Mutex>;
+                                        ACE_SYNCH_MUTEX>;
 
 template class ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong,
                                                 TAO_Reply_Dispatcher*,
                                                 ACE_Hash<CORBA::ULong>,
                                                 ACE_Equal_To<CORBA::ULong>,
-                                                ACE_Null_Mutex>;
+                                                ACE_SYNCH_MUTEX>;
 template class ACE_Equal_To <CORBA::ULong>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -311,7 +313,7 @@ template class ACE_Equal_To <CORBA::ULong>;
                                              TAO_Reply_Dispatcher *,
                                              ACE_Hash <CORBA::ULong>,
                                              ACE_Equal_To <CORBA::ULong>,
-                                             ACE_Null_Mutex>
+                                             ACE_SYNCH_MUTEX>
 
 #pragma instantiate ACE_Hash_Map_Entry<CORBA::ULong,
                                        TAO_Reply_Dispatcher *>
@@ -320,19 +322,19 @@ template class ACE_Equal_To <CORBA::ULong>;
                                                   TAO_Reply_Dispatcher *,
                                                   ACE_Hash<unsigned int>, 
                                                   ACE_Equal_To<unsigned int>, 
-                                                  ACE_Null_Mutex>
+                                                  ACE_SYNCH_MUTEX>
 
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<CORBA::ULong,
                                              TAO_Reply_Dispatcher*,
                                              ACE_Hash<CORBA::ULong>,
                                              ACE_Equal_To<CORBA::ULong>,
-                                             ACE_Null_Mutex>
+                                             ACE_SYNCH_MUTEX>
 
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong,
                                                      TAO_Reply_Dispatcher*,
                                                      ACE_Hash<CORBA::ULong>,
                                                      ACE_Equal_To<CORBA::ULong>,
-                                                     ACE_Null_Mutex>
+                                                     ACE_SYNCH_MUTEX>
 
 #pragma instantiate ACE_Equal_To <CORBA::ULong>
 
