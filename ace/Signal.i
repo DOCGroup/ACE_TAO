@@ -14,10 +14,12 @@ ACE_INLINE
 ACE_Sig_Set::ACE_Sig_Set (int fill)
 {
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
+#if !defined (ACE_WIN32)
   if (fill)
     ACE_OS::sigfillset (&this->sigset_);
   else
     ACE_OS::sigemptyset (&this->sigset_);
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE
