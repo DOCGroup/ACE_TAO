@@ -1,3 +1,9 @@
+Fri Dec 22 10:54:13 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* sys/socket.s
+
+	  Moved socket.h to sys/socket.h.
+
 Thu Dec 21 18:22:28 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* docs/index.html: 	
