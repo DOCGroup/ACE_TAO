@@ -269,21 +269,6 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Connect.cpp
-
-!IF  "$(CFG)" == "TAO - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Connector_Registry.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -690,6 +675,21 @@ SOURCE=.\GIOP_Server_Request.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Acceptor.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Connect.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
 
@@ -1576,10 +1576,6 @@ SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\connect.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Connector_Registry.h
 # End Source File
 # Begin Source File
@@ -1673,6 +1669,10 @@ SOURCE=.\GIOP_Server_Request.h
 # Begin Source File
 
 SOURCE=.\IIOP_Acceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Connect.h
 # End Source File
 # Begin Source File
 
@@ -1928,10 +1928,6 @@ SOURCE=.\cdr.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\connect.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Context.i
 # End Source File
 # Begin Source File
@@ -1977,6 +1973,10 @@ SOURCE=.\giop.i
 # Begin Source File
 
 SOURCE=.\GIOP_Server_Request.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Connect.i
 # End Source File
 # Begin Source File
 
