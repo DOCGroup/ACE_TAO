@@ -941,18 +941,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
     }
 
   // Initialize the "ORB" pseudo-object now.
-  CORBA::ORB_ptr temp_orb = CORBA::ORB::_nil ();
-
-  ACE_NEW_THROW_EX (temp_orb,
-                    CORBA::ORB (this),
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_ORB_CORE_INIT_LOCATION_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (-1);
-
-  this->orb_ = temp_orb;
+  this->orb_ = CORBA::ORB::_tao_make_ORB (this);
 
   // This should probably move into the ORB Core someday rather then
   // being done at this level.
