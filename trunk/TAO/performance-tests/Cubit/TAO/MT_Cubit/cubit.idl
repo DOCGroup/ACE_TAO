@@ -18,19 +18,19 @@ interface Cubit
   };
 
   octet cube_octet (in octet o);
-  // cube an octet
+  // Cube an octet.
 
   short cube_short (in short s);
-  // cube a short
+  // Cube a short.
 
   long cube_long (in long l);
-  // cube a long
+  // Cube a long.
 
   Many cube_struct (in Many values);
-  // cube each of the members of a struct
+  // Cube each of the members of a struct.
 
   oneway void noop ();
-  // null operation
+  // Null operation.
 
   oneway void shutdown ();
   // shut down the application

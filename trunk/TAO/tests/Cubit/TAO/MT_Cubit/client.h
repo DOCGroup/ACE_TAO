@@ -43,12 +43,13 @@ public:
   ~Client_i (void);
   // destructor.
 
-  int init (int argc,char **argv);
-  // initialize the state of Client_i.
+  int init (int argc, char *argv[]);
+  // Initialize the state of <Client_i>.
 
   void run (void);
-  // run the tests.
+  // Run the tests.
 
+  // @@ Naga, can you please add comments for these methods?
   int do_priority_inversion_test (ACE_Thread_Manager *thread_manager);
 
   int do_thread_per_rate_test (ACE_Thread_Manager *thread_manager);
@@ -60,45 +61,46 @@ public:
 #if defined (VXWORKS)
   void output_taskinfo (void);
 #endif /* VXWORKS */
+
 private:
   void init_low_priority (void);
-  // sets the priority to be used for the low priority clients.
+  // Sets the priority to be used for the low priority clients.
 
   void calc_util_time (void);
-  // calculate the time for one util computation.
+  // Calculate the time for one util computation.
 
   int activate_high_client (ACE_Thread_Manager *thread_manager);
-  // activates the high priority client.
+  // Activates the high priority client.
 
   int activate_low_client (ACE_Thread_Manager *thread_manager);
-  // activates the low priority client.
+  // Activates the low priority client.
 
   int activate_util_thread (void);
-  // activates the utilization thread.
+  // Activates the utilization thread.
 
   void print_priority_inversion_stats (void);
-  // prints the results of the tests.
+  // Prints the results of the tests.
 
   void print_context_stats (void);
-  // prints the context switch results.
+  // Prints the context switch results.
 
   void print_util_stats (void);
-  // prints the utilization test results.
+  // Prints the utilization test results.
 
   void print_latency_stats (void);
-  // prints the latency and jitter results.
+  // Prints the latency and jitter results.
 
   Client *high_priority_client_;
-  // pointer to the high priority client object.
+  // Pointer to the high priority client object.
 
   Client **low_priority_client_;
-  // array to hold pointers to the low priority tasks.
+  // Array to hold pointers to the low priority tasks.
 
   ACE_High_Res_Timer timer_;
   // Timer for timing the tests.
   
   MT_Priority priority_;
-  // priority helper object.
+  // Priority helper object.
 
   Util_Thread *util_thread_;
   // Utilization thread.
@@ -107,30 +109,31 @@ private:
   // Utilization thread manager.
 
   ACE_timer_t util_task_duration_;
-  // time for one computation of utilization thread.
+  // Time for one computation of utilization thread.
 
   Task_State *ts_;
-  // pointer to task state.
+  // Pointer to task state.
 
   ACE_Sched_Priority high_priority_;
-  // priority used for the high priority client.
+  // Priority used for the high priority client.
 
   ACE_Sched_Priority low_priority_;
-  // priority used by the low priority clients.
+  // Priority used by the low priority clients.
 
   u_int num_low_priority_;
-  // number of low priority clients
+  // Number of low priority clients
 
   u_int num_priorities_;
-  // number of priorities used.
+  // Number of priorities used.
 
   u_int grain_;
-  // Granularity of the assignment of the priorities.  Some OSs
-  // have fewer levels of priorities than we have threads in our
-  // test, so with this mechanism we assign priorities to groups
-  // of threads when there are more threads than priorities.
+  // Granularity of the assignment of the priorities.  Some OSs have
+  // fewer levels of priorities than we have threads in our test, so
+  // with this mechanism we assign priorities to groups of threads
+  // when there are more threads than priorities.
 
   u_int counter_;
+  // @@ Naga, can you please add a comment here?
 
   char *task_id_;
   // Set a task_id string starting with "@", so we are able to
@@ -140,17 +143,24 @@ private:
   // elapsed time for the latency tests.
 
   int argc_;
+  // @@ Naga, can you please add a comment here?
 
   char **argv_;
+  // @@ Naga, can you please add a comment here?
 
   ACE_Thread_Manager client_thread_manager_;
-  // Create a separate manager for the client.  This allows the use
-  // of its wait () method on VxWorks, without interfering with the
+  // Create a separate manager for the client.  This allows the use of
+  // its wait () method on VxWorks, without interfering with the
   // server's (global) thread manager.
 
   ACE_timer_t total_latency_;
+  // @@ Naga, can you please add a comment here?
+
   ACE_timer_t total_latency_high_;
+  // @@ Naga, can you please add a comment here?
+
   ACE_timer_t total_util_task_duration_;
+  // @@ Naga, can you please add a comment here?
 
   u_int context_switch_;
   // Stores the total number of context switches incurred by the
@@ -159,7 +169,7 @@ private:
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
   ACE_Profile_Timer timer_for_context_switch;
   ACE_Profile_Timer::Rusage usage;
-#endif
+#endif /* (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32) */
 };
 
 
