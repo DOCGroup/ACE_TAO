@@ -15,7 +15,8 @@
 #include "tao/Invocation.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Stub.h"
-
+#include "tao/Transport_Connector.h"
+#include "tao/Connect_Strategy.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (TAO_SSLIOP,
@@ -339,7 +340,6 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                                       ACE_ENV_ARG_DECL)
 {
   TAO_Transport *&transport = invocation->transport ();
-  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
 
   const SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
 
