@@ -283,7 +283,8 @@ TAO_POA::create_reference (const char *intf
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
 
-  return this->create_reference_i (intf
+  return this->create_reference_i (intf,
+                                   this->cached_policies_.server_priority ()
                                    ACE_ENV_ARG_PARAMETER);
 }
 
@@ -298,7 +299,8 @@ TAO_POA::create_reference_with_id (const PortableServer::ObjectId &id,
   TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
 
   return this->create_reference_with_id_i (id,
-                                           intf
+                                           intf,
+                                           this->cached_policies_.server_priority ()
                                            ACE_ENV_ARG_PARAMETER);
 }
 

@@ -84,8 +84,8 @@ TAO_ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
 
 CORBA::Object_ptr
 TAO_ObjectReferenceTemplate::make_object (
-    const char * intf,
-    const PortableInterceptor::ObjectId & id
+    const char *,
+    const PortableInterceptor::ObjectId &
   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -94,13 +94,5 @@ TAO_ObjectReferenceTemplate::make_object (
   if (this->poa_ == 0)
     ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), CORBA::Object::_nil ());
 
-  PortableServer::ObjectId oid;
-  oid.replace (id.maximum (),
-               id.length (),
-               ACE_const_cast (CORBA::Octet *, id.get_buffer ()),
-               0);
-
-  return this->poa_->invoke_key_to_object (intf,
-                                           oid
-                                           ACE_ENV_ARG_PARAMETER);
+  return this->poa_->invoke_key_to_object (ACE_ENV_ARG_PARAMETER);
 }
