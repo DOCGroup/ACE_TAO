@@ -81,7 +81,7 @@ my $gnu2 = '/usr/local/bin:/usr/bin';
 $ENV{'PATH'} = "$gnu2" . ':' . $ENV{'PATH'};
 
 my $export_dir = '/project/deuce/ftp/pub/ACE+TAO-distribution';
-my $old_versions_dir = '/project/deuce/ftp/pub/previous_versions';
+my $old_versions_dir = '/project/deuce/ftp/pub/previous_verions';
 my $diffs_dir = "$export_dir/diffs";
 my $exec_prefix = '';
 my $install = 0;
@@ -287,7 +287,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
     chdir "ACE_wrappers"  ||  die "$0: unable to chdir ACE_wrappers\n";
     &ex ("$cvs -q export -r$tao_tag -kv TAO > /dev/null")  &&
       die "$0: failed cvs export of $tao_tag in $stage_dir\n";
-    &ex ("cd TAO  &&  $make INSTALL")  &&
+    &ex ("cd TAO  &&  $make TAO-INSTALL")  &&
       die "$0: failed make INSTALL in " .
           "$stage_dir/ACE_wrappers/TAO\n";
   }
@@ -296,12 +296,12 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
     chdir "TAO"  ||  die "$0: unable to chdir ACE_wrappers/TAO\n";
     &ex ("$cvs -q export -r$ciao_tag -kv CIAO > /dev/null")  &&
       die "$0: failed cvs export of $ciao_tag in $stage_dir\n";
-    &ex ("cd CIAO  &&  $make INSTALL")  &&
+    &ex ("cd CIAO  &&  $make CIAO-INSTALL")  &&
       die "$0: failed make INSTALL in " .
           "$stage_dir/ACE_wrappers/TAO\n";
   }
 
-  chdir "../../../";
+  chdir "../../";
 
   $status = &generate_makefiles ();
 
@@ -781,6 +781,7 @@ sub generate_makefiles () {
     # Need todo a common chmod on the file lists!
     my $here = Cwd::getcwd();
 
+    print "My current wok in generate makefiles $here \n";
     my $exclude_option = '-exclude ASNMP/asnmp.mwc,TAO/TAOACE.mwc,TAO/CIAO/CIAOTAO.mwc';
     my $tmp_mpc_option =
         '-recurse -hierarchy -relative ACE_ROOT=';
@@ -878,7 +879,7 @@ sub create_kit () {
   # These files don't get LF->CRLF conversions done when making the zip.
   my $bin_files =
     "\"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|" .
-    "\\.gif|\\.vcp|\\.vcproj|\\.vcw|\\.sln\|\\.dfm\|\\.jpg\"";
+    "\\.gif|\\.vcp|\\.vcproj|\\.vcw|\\.sln\|\\.dfm\|\\.jpg\|\\.png\"";
 
   my $build_command;
   my $archives;
