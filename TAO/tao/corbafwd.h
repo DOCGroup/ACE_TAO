@@ -1498,12 +1498,6 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // http://www.omg.org/cgi-bin/doc?ptc/99-02-01
 //
 
-// The standard profile tags, they are listed here only to avoid
-// putting the raw literal in the code,
-// #define TAO_TAG_INVALID_PROFILE -1
-// #define TAO_TAG_IIOP_PROFILE 0
-// #define TAO_TAG_MULTIPLE_COMPONENT_PROFILE 1
-
 /**
  * @name TAO-Specific Profile IDs
  *
