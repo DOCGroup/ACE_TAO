@@ -51,7 +51,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 CPPFLAGS += -DSH_MEM -DNDEBUG 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)#-H
 
-.PRECIOUS: Video_RepositoryC.cpp
+.PRECIOUS: Video_RepositoryC.cpp 
 
 idl_stubs: $(addsuffix .h, $(IDL_FILES))
 
