@@ -68,23 +68,32 @@
 // Compiler can't handle calls like foo->operator T *()
 #  define ACE_HAS_BROKEN_CONVERSIONS
 
-// Compiler supports C++ exception handling. However, the user can ask for this
-// to be turned off. If so (using make exceptions=0) then this def is not set.
-// By default, it is set in wrapper_macros.GNU.
-// #    define ACE_HAS_EXCEPTIONS 1
+// Compiler supports C++ exception handling. It's on by default. If the
+// +noeh compiler option is used to disable exceptions, the compiler defines
+// __HPACC_NOEH.
+#    if !defined (__HPACC_NOEH)
+#      define ACE_HAS_EXCEPTIONS 1
+#    endif
 
 // Compiler enforces need for 'template<>" when specializing template
 // classes.
 #  define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 
-// If the platform_macros.GNU file turned on ACE_HAS_STANDARD_CPP_LIBRARY
-// then we're using the -AA option, so we have standard C++ library,
-// including the standard iostreams. Else, we have the old iostreams.
-#  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-#    define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#  else
-#    define ACE_USES_OLD_IOSTREAMS
-#  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+// If the -AA compile option is used, the compiler defines _HP_NAMESPACE_STD.
+// The -AA option enables the 2.0 standard C++ library. If not used, then
+// we have the old, 1.2.1 C++ library.
+#    if defined (_HP_NAMESPACE_STD)
+#      if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+#        undef ACE_HAS_STANDARD_CPP_LIBRARY
+#      endif
+#      define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#      if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+#        undef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+#      endif
+#      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#    else
+#      define ACE_USES_OLD_IOSTREAMS
+#    endif /* _HP_NAMESPACE_STD */
 
 // Compiler enforces proper use of 'typename'
 #  define ACE_HAS_TYPENAME_KEYWORD
