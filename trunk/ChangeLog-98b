@@ -1,5 +1,15 @@
 Thu Jul 16 15:41:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/IPC_SAP/UPIPE_SAP/ex2.cpp,
+	  examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.i,
+	  examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.i,
+	  examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.i,
+	  examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.i,
+	  examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.i,
+	  examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.i,
+	  examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
+	  Changed all uses of SIGIO to ACE_SIGIO.
+
 	* ace/IPC_SAP: Cleaned up the enable() and disable() methods and
  	  documentation so they correctly use the new ACE_* macros
  	  described in the following bullet.
@@ -8,6 +18,11 @@ Thu Jul 16 15:41:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  that should be used instead of the SIGIO or SIGURG, etc., in
  	  order to ensure uniqueness.  However, legacy code will continue
  	  to work.
+
+	* ace/IO_SAP.cpp: Added new ACE_SIGIO, ACE_SIGURG, and ACE_CLOEXEC
+ 	  flags that should be used instead of the SIGIO or SIGURG, etc.,
+ 	  in order to ensure uniqueness.  However, legacy code will
+ 	  continue to work.
 
 Thu Jul 16 15:02:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
