@@ -42,10 +42,10 @@ public:
   ~Nestea_Server_i (void);
   // Destructor
 
-  int init (int argc, char **argv, CORBA::Environment& env);
+  int init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
   // Initialize the Server state - parsing arguments and waiting
 
-  int run (CORBA::Environment& env);
+  int run (CORBA::Environment &ACE_TRY_ENV);
   // Run the orb 
 
 private:

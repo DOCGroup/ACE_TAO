@@ -82,21 +82,22 @@ Airplane_Client_i::get_planes (size_t count)
 {
   for (size_t i = 0; i < count; i++)
     {
-      TAO_TRY
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
         {
-          TAO_TRY_ENV.clear ();
+          ACE_TRY_ENV.clear ();
           CORBA::String_var response =
-            this->server_->get_plane (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+            this->server_->get_plane (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "Plane %d is %s\n", i, response.in ()));
         }
-      TAO_CATCHANY
+      ACE_CATCHANY
         {
           ACE_ERROR ((LM_ERROR, "Plane %d exception:\n", i));
-          TAO_TRY_ENV.print_exception ("get_planes");
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "get_planes");
         }
-      TAO_ENDTRY;
+      ACE_ENDTRY;
     }
 }
 
@@ -128,14 +129,15 @@ Airplane_Client_i::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "internet",
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -148,11 +150,11 @@ Airplane_Client_i::init (int argc, char **argv)
                           -1);
 
       CORBA::Object_var server_object =
-        this->orb_->string_to_object (this->server_key_, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        this->orb_->string_to_object (this->server_key_, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      this->server_ = Paper_Airplane_Server::_narrow (server_object.in(), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->server_ = Paper_Airplane_Server::_narrow (server_object.in(), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -160,12 +162,12 @@ Airplane_Client_i::init (int argc, char **argv)
                            this->server_key_),
                           -1);
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Airplane_Client_i::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Airplane_Client_i::init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }

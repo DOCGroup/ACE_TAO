@@ -49,7 +49,7 @@ public:
   ~Airplane_i (void);
   // Destructor
 
-  virtual char *get_plane (CORBA::Environment &_env);
+  virtual char *get_plane (CORBA::Environment &ACE_TRY_ENV);
   // Returns a random plane.
 
 private:
