@@ -23,11 +23,6 @@
 
 ACE_RCSID(tests, Process_Mutex_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 #if !defined (ACE_LACKS_FORK)
 static int release_mutex = 1;
 static int child_process = 0;

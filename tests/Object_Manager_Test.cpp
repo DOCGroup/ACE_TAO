@@ -1,5 +1,5 @@
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -12,12 +12,14 @@
 //    Tests the basic functions of the ACE_Object_Manager.
 //
 // = AUTHOR
-//    David L. Levine
+//    David L. Levine <levine@cs.wustl.edu>
 //
 // ============================================================================
 
 #include "test_config.h"
 #include "ace/Object_Manager.h"
+
+ACE_RCSID(tests, Object_Manager_Test, "$Id$")
 
 static u_int *ip;
 

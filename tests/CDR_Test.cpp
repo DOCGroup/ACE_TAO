@@ -25,11 +25,6 @@
 
 ACE_RCSID(tests, CDR_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 static int n = 4096;
 static int nloops = 100;
 

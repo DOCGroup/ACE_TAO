@@ -1,12 +1,10 @@
 #
-# Makefile for building the Trading Service executable
+# Makefile for building the Notification Service executable
 #
 
-NAME = Trading_Service
+NAME = Notify_Service
 
-OBJFILES = \
-	$(OBJDIR)\Trading_Service.obj \
-	$(OBJDIR)\Trading_Server.obj
+OBJFILES = $(OBJDIR)\Notify_Service.obj 
 
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(ORBSVCS_CFLAGS)
 

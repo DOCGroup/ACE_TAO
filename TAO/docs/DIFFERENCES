@@ -1,5 +1,14 @@
 @(#)DIFFERENCES	1.1 95/09/13
 
+Note -- this documentation was distributed with the original SunSoft
+IIOP reference implementation and has very little relevance to what's
+in TAO.  We include it here only for "historical" reference, i.e., you
+should disregard most of what's in this document.
+
+        Doug Schmidt 
+
+----------------------------------------
+
 [ NOTE that the CORBA 2.0 specifications have now been published, but are
 not yet sufficiently available that this document can usefully just list
 any differences between that specification and this software.  As a rule,

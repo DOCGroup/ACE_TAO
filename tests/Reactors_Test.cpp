@@ -13,7 +13,9 @@
 //      <ACE_Reactors> and <ACE_Tasks> in the same process.
 //
 // = AUTHOR
-//    Prashant Jain, Detlef Becker, and Douglas C. Schmidt
+//    Prashant Jain <pjain@cs.wustl.edu>, 
+//    Detlef Becker <Detlef.Becker@med.siemens.de>, and 
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -22,11 +24,6 @@
 #include "ace/Task.h"
 
 ACE_RCSID(tests, Reactors_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_HAS_THREADS)
 

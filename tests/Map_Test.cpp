@@ -13,7 +13,7 @@
 //     use the forward and reverse iterators.
 //
 // = AUTHOR
-//    Irfan Pyarali
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -24,13 +24,6 @@
 #include "ace/Synch.h"
 
 ACE_RCSID(tests, Map_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
-////////////////////////////////////////////////////////////////////////////////
 
 // Value type.
 typedef size_t VALUE;

@@ -18,7 +18,7 @@
 //      3) a test/usage example of ACE_Message_Queue_Vx.
 //
 // = AUTHORS
-//    Irfan Pyarali and David L. Levine
+//    Irfan Pyarali <irfan@cs.wustl.edu> and David L. Levine <levine@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -29,11 +29,6 @@
 #include "ace/High_Res_Timer.h"
 
 ACE_RCSID(tests, Message_Queue_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 const ASYS_TCHAR usage[] = ASYS_TEXT ("usage: Message_Queue_Test <number of messages>\n");
 

@@ -2,30 +2,20 @@
 # Makefile for building the TAO tests
 #
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+DIRS = \
+	CDR \
+	Collocation \
+	Connection_Purging \
+	DynAny_Test \
+	Endpoint_Per_Priority \
+	Explicit_Event_Loop \
+	Faults \
+	IDL_Test \
+	InterOp-Naming \
+	Interceptors \
+	IORManipulation \
+	MProfile \
+	Param_Test \
+	Timeout
 
-tests:
-	cd $(ACE_ROOT)\TAO\tests\CDR
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\tests\Connection_Purging
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\tests\DynAny_Test
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\tests\Endpoint_Per_Priority
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\tests\Explicit_Event_Loop
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\tests\Faults
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\tests\IDL_Test
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\tests\IORManipulation
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\tests\InterOp-Naming
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\tests\Interceptors
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\tests\MProfile
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\tests\Param_Test
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

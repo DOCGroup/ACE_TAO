@@ -2,13 +2,6 @@
 # Makefile for building the netsvcs
 #
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+DIRS = lib clients servers
 
-all:
-	cd $(ACE_ROOT)\netsvcs\lib
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\netsvcs\clients
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\netsvcs\servers
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

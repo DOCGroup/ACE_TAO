@@ -26,11 +26,6 @@
 
 ACE_RCSID(tests, Reactor_Timer_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 static int done = 0;
 static int count = 0;
 static int odd = 0;

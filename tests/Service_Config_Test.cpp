@@ -13,7 +13,7 @@
 //      working correctly.
 //
 // = AUTHOR
-//    David Levine
+//    David Levine <levine@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -22,11 +22,6 @@
 #include "ace/Service_Config.h"
 
 ACE_RCSID(tests, Service_Config_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 static const u_int VARIETIES = 3;
 

@@ -1,9 +1,3 @@
+DIRS = Blobby Caching
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
- 
-all:
-        cd $(ACE_ROOT)\apps\JAWS\clients\Blobby
-        $(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-        cd $(ACE_ROOT)\apps\JAWS\clients\Caching
-        $(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

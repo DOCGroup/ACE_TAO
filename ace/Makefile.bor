@@ -14,6 +14,12 @@ OBJFILES = \
 	$(OBJDIR)\ARGV.obj \
 	$(OBJDIR)\Asynch_IO.obj \
 	$(OBJDIR)\Asynch_IO_Impl.obj \
+	$(OBJDIR)\ATM_Acceptor.obj \
+	$(OBJDIR)\ATM_Addr.obj \
+	$(OBJDIR)\ATM_Connector.obj \
+	$(OBJDIR)\ATM_Params.obj \
+	$(OBJDIR)\ATM_QoS.obj \
+	$(OBJDIR)\ATM_Stream.obj \
 	$(OBJDIR)\Based_Pointer_Repository.obj \
 	$(OBJDIR)\Basic_Types.obj \
 	$(OBJDIR)\Capabilities.obj \
@@ -65,7 +71,13 @@ OBJFILES = \
 	$(OBJDIR)\LSOCK_Stream.obj \
 	$(OBJDIR)\Malloc.obj \
 	$(OBJDIR)\Map.obj \
+	$(OBJDIR)\MEM_Acceptor.obj \
+	$(OBJDIR)\MEM_Addr.obj \
+	$(OBJDIR)\MEM_Connector.obj \
+	$(OBJDIR)\MEM_IO.obj \
 	$(OBJDIR)\Mem_Map.obj \
+	$(OBJDIR)\MEM_SAP.obj \
+	$(OBJDIR)\MEM_Stream.obj \
 	$(OBJDIR)\Memory_Pool.obj \
 	$(OBJDIR)\Message_Block.obj \
 	$(OBJDIR)\Message_Queue.obj \
@@ -88,6 +100,8 @@ OBJFILES = \
 	$(OBJDIR)\Process.obj \
 	$(OBJDIR)\Process_Manager.obj \
 	$(OBJDIR)\Profile_Timer.obj \
+	$(OBJDIR)\QoS_Session_Factory.obj \
+	$(OBJDIR)\QoS_Session_Impl.obj \
 	$(OBJDIR)\Reactor.obj \
 	$(OBJDIR)\Read_Buffer.obj \
 	$(OBJDIR)\Registry.obj \

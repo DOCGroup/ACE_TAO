@@ -13,7 +13,7 @@
 //     than on success cases.
 //
 // = AUTHOR
-//    Steve Huston
+//    Steve Huston <shuston@riverace.com>
 //
 // ============================================================================
 
@@ -24,11 +24,6 @@
 #include "ace/SOCK_Stream.h"
 
 ACE_RCSID(tests, SOCK_Connector_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if !defined (ACE_LACKS_GETHOSTENT)
 // Determine if a host exists, is reachable, and is up.

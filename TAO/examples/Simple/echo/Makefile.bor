@@ -3,9 +3,7 @@
 # Makefile for building the Echo example
 # 
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+MAKEFILES = Echo_Client.bor Echo_Server.bor
 
-all:
-	$(MAKE) -f Echo_Client.bor $(MAKE_FLAGS)
-	$(MAKE) -f Echo_Server.bor $(MAKE_FLAGS)
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 

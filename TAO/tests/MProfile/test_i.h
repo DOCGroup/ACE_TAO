@@ -9,7 +9,7 @@
 //   test_i.h
 //
 // = AUTHOR
-//   Carlos O'Ryan
+//   Carlos O'Ryan <coryan@uci.edu>
 //
 // ============================================================================
 
@@ -35,7 +35,7 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void remote_call (CORBA::Environment &);
+  void remote_call (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));  
 
   void shutdown (CORBA::Environment&)

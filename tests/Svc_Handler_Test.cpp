@@ -24,11 +24,6 @@
 
 ACE_RCSID(tests, Svc_Handler_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 typedef ACE_Buffered_Svc_Handler <ACE_FILE_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
 
 static void

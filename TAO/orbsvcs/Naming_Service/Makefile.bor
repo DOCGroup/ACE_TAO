@@ -2,11 +2,6 @@
 # Makefile for building the Naming Service executables
 #
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+MAKEFILES = Naming_Service.bor
 
-console_only:
-	$(MAKE) -f Naming_Service.bor $(MAKE_FLAGS)
-
-all:
-	$(MAKE) -f Naming_Service.bor $(MAKE_FLAGS)
-	$(MAKE) -f NT_Naming_Service.bor $(MAKE_FLAGS)
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -101,9 +101,19 @@ EXE_STARTUP_OBJ = c0x32.obj
 
 LIB_CFLAGS =
 !ifdef DEBUG
-LIB_LFLAGS = /C /P2048
+LIB_LFLAGS = /C /P4096
 !else
 LIB_LFLAGS = /C /P512
+!endif
+
+#
+# VCL lib version number
+#
+
+!if $(BCBVER) == 5
+VCLVER = 50
+!else
+VCLVER = 40
 !endif
 
 #
@@ -112,15 +122,14 @@ LIB_LFLAGS = /C /P512
 
 !ifdef STATIC
 !ifdef PASCAL
-COMMON_LIBS = import32.lib vcl.lib vcl40.lib cp32mt.lib ws2_32.lib
+COMMON_LIBS = import32.lib vcl$(VCLVER).lib vcle$(VCLVER).lib cp32mt.lib ws2_32.lib
 !else
 COMMON_LIBS = import32.lib cw32mt.lib ws2_32.lib
 !endif
 !else
 !ifdef PASCAL
-COMMON_LIBS = import32.lib vcl.lib vcl40.bpi cp32mti.lib ws2_32.lib
+COMMON_LIBS = import32.lib vcl$(VCLVER).bpi vcle$(VCLVER).lib cp32mti.lib ws2_32.lib
 !else
 COMMON_LIBS = import32.lib cw32mti.lib ws2_32.lib
 !endif
 !endif
-

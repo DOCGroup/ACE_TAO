@@ -30,11 +30,6 @@
 
 ACE_RCSID(tests, New_Fail_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 // This test allocates all of the heap memory, forcing 'new' to fail
 // because of a lack of memory.  The ACE_NEW macros should prevent an
 // exception from being thrown past the ACE_NEW.  If this test doesn't

@@ -83,11 +83,6 @@ template class ACE_Write_Guard<ACE_File_Lock>;
 #pragma instantiate ACE_Write_Guard<ACE_File_Lock>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 // Define a <Strategy_Acceptor> that's parameterized by the
 // <Counting_Service>.
 

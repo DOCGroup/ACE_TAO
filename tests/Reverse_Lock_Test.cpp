@@ -14,18 +14,13 @@
 //    command line arguments are needed to run the test.
 //
 // = AUTHOR
-//    Irfan Pyarali
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
 #include "test_config.h"
 
 ACE_RCSID(tests, Reverse_Lock_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 typedef ACE_Reverse_Lock<ACE_SYNCH_MUTEX> REVERSE_MUTEX;
 

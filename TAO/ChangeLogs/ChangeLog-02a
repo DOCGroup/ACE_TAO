@@ -1,3 +1,15 @@
+Mon Feb 21 14:35:39 2000 Christopher Kohlhoff <chris@kohlhoff.com> 
+
+        * tao/Makefile.bor, TAO/orbsvcs/orbsvcs/Makefile.bor: Added new files.
+	  
+	* tests/MProfile/test_i.h: Removed extra semicolon.
+  
+Mon Feb 21 16:09:28 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* docs/DIFFERENCES: Clarified that this file doesn't reflect 
+	  what's in TAO any more.  Thanks to Alex Brown
+ 	  <abrown@3com-ne.com> for pointing this out.
+
 Mon Feb 21 15:54:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/IDL_Test/union.idl:

@@ -26,11 +26,6 @@
 
 ACE_RCSID(tests, Time_Service_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 #define APPLICATION \
 ACE_TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR \
 ACE_TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR \

@@ -2,9 +2,7 @@
 # Makefile for building the Grid example
 # 
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+MAKEFILES = Grid_Client.bor Grid_Server.bor
 
-all:
-	$(MAKE) -f Grid_Client.bor $(MAKE_FLAGS)
-	$(MAKE) -f Grid_Server.bor $(MAKE_FLAGS)
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 

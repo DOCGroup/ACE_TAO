@@ -2,8 +2,6 @@
 # Makefile for building the Interceptors test executables
 #
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+MAKEFILES = server.bor client.bor
 
-all:
-	$(MAKE) -f server.bor $(MAKE_FLAGS)
-	$(MAKE) -f client.bor $(MAKE_FLAGS)
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

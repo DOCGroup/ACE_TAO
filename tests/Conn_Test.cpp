@@ -198,11 +198,6 @@ template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 // Default number of clients/servers.
 #if defined (ACE_HAS_PHARLAP)
 // PharLap is, by default, resource contrained. Test for something that works

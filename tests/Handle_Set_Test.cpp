@@ -25,11 +25,6 @@
 
 ACE_RCSID(tests, Handle_Set_Test, "Handle_Set_Test.cpp,v 4.34 1999/09/19 15:53:54 schmidt Exp")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 static void
 test_duplicates (size_t count)
 {

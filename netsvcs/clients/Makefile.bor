@@ -1,11 +1,3 @@
+DIRS = Logger Naming Tokens
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
-
-all:
-	cd $(ACE_ROOT)\netsvcs\clients\Logger
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\netsvcs\clients\Naming
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\netsvcs\clients\Tokens
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -17,7 +17,7 @@
 //     components reduces the reliance on global variables.
 //
 // = AUTHOR
-//    Prashant Jain and Doug Schmidt
+//    Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -28,11 +28,6 @@
 #include "ace/Task.h"
 
 ACE_RCSID(tests, Buffer_Stream_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_HAS_THREADS)
 

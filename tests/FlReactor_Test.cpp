@@ -23,11 +23,6 @@
 
 ACE_RCSID(tests, FlReactor_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 #if !defined (ACE_HAS_FL)
 
 int main (int, char*[])
