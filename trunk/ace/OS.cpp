@@ -1278,7 +1278,7 @@ ACE_TSS_Ref::ACE_TSS_Ref (void)
 
 // Check for equality.
 int
-ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info)
+ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info) const
 {
 // ACE_TRACE ("ACE_TSS_Ref::operator==");
 
@@ -1288,7 +1288,7 @@ ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info)
 // Check for inequality.
 inline
 int
-ACE_TSS_Ref::operator!= (const ACE_TSS_Ref &tss_ref)
+ACE_TSS_Ref::operator!= (const ACE_TSS_Ref &tss_ref) const
 {
 // ACE_TRACE ("ACE_TSS_Ref::operator==");
 
@@ -3934,14 +3934,14 @@ ACE_Thread_ID::handle (ACE_hthread_t thread_handle)
 }
 
 int
-ACE_Thread_ID::operator== (const ACE_Thread_ID &rhs)
+ACE_Thread_ID::operator== (const ACE_Thread_ID &rhs) const
 {
   return ACE_OS::thr_cmp (this->thread_handle_, rhs.thread_handle_) == 0
     && ACE_OS::thr_equal (this->thread_id_, rhs.thread_id_) == 0;
 }
 
 int
-ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs)
+ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs) const
 {
   return !(*this == rhs);
 }

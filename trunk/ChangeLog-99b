@@ -1,7 +1,16 @@
 Sun Jan 24 20:25:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+	
+	* ace: When a class provides operator==, it must also provide
+ 	  operator!=.  Also, both these operators should be const.
 
-	* ace/Active_Map_Manager.i (operator==): operator== must be const.
+	  Fixed the above violations in:
 
+	  ACE_TSS_Ref
+	  ACE_Thread_ID
+	  ACE_Registry::Binding
+	  ACE_Registry::Name_Component
+	  ACE_Active_Map_Manager_Key
+	
 	* ace/Map_Manager: Renamed methods that may become identical if
  	  INT_ID is the same as size_t.  Thanks to Ossama for helping with
  	  this.

@@ -34,6 +34,12 @@ ACE_Registry::Name_Component::operator== (const Name_Component &rhs)
     rhs.kind_ == this->kind_;
 }
 
+int 
+ACE_Registry::Name_Component::operator!= (const Name_Component &rhs)
+{
+  return !this->operator== (rhs);
+}
+
 // Simple binding constructor
 ACE_Registry::Binding::Binding ()
   : name_ (),
@@ -68,6 +74,12 @@ ACE_Registry::Binding::operator== (const Binding &rhs)
   return 
     rhs.name_ == this->name_ &&
     rhs.type_ == this->type_;
+}
+
+int 
+ACE_Registry::Binding::operator!= (const Binding &rhs)
+{
+  return !this->operator== (rhs);
 }
 
 // Name accessor
