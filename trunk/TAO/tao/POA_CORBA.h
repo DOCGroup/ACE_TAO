@@ -102,7 +102,7 @@ public:
 
   class TAO_Export  Policy
 #if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-    :  public virtual TAO_Local_ServantBase
+    :  public virtual TAO_Locality_Constrained_ServantBase
 #else
     :  public virtual TAO_ServantBase
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
