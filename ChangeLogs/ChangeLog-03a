@@ -1,3 +1,8 @@
+Thu Jul 26 11:48:16 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/count_lines:
+          Add a few new file types.
+
 Wed Jul 25 23:49:43 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_tru64_g++.GNU:
@@ -16,35 +21,35 @@ Wed Jul 25 23:49:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Wed Jul 25 18:53:18 2001  Ossama Othman  <ossama@uci.edu>
 
-	* html/index.html:
+        * html/index.html:
 
-	  Added CORBA Security Service main page link to the list of
-	  documentation.
+          Added CORBA Security Service main page link to the list of
+          documentation.
 
 Wed Jul 25 17:41:43 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ltcf-c.sh:
-	* ltcf-cxx.sh:
-	* ltconfig:
+        * ltcf-c.sh:
+        * ltcf-cxx.sh:
+        * ltconfig:
 
-	  Removed these libtool related files.  New versions of libtool
-	  (GNU libtool >= 1.4b) no longer use them.
+          Removed these libtool related files.  New versions of libtool
+          (GNU libtool >= 1.4b) no longer use them.
 
-	* config.guess:
-	* config.sub:
-	* ltmain.sh:
+        * config.guess:
+        * config.sub:
+        * ltmain.sh:
 
-	  Removed these files.  We no longer need to keep custom copies
-	  lieing around since libtool 1.4b includes all of our local
-	  changes (i.e. our changes have been folded into the upstream
-	  libtool sources).
+          Removed these files.  We no longer need to keep custom copies
+          lieing around since libtool 1.4b includes all of our local
+          changes (i.e. our changes have been folded into the upstream
+          libtool sources).
 
-	* install-sh:
-	* missing:
-	* mkinstalldirs:
+        * install-sh:
+        * missing:
+        * mkinstalldirs:
 
-	  Removed these files.  Automake will automatically add these when
-	  necessary.
+          Removed these files.  Automake will automatically add these when
+          necessary.
 
 Wed Jul 25 16:29:48 2001  Steve Huston  <shuston@riverace.com>
 
