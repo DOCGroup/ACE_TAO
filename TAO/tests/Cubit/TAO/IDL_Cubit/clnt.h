@@ -118,4 +118,8 @@ private:
 
   FILE *cubit_factory_ior_file_;
   // File from which to obtain the IOR.
+
+  int use_naming_service;
+  // Flag to tell client to use Namingservice to find the cubit
+  // Factory.
 };
