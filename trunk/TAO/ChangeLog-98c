@@ -1,3 +1,12 @@
+Mon Aug 17 15:27:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/releasenotes/ec.html: 
+	  Updated the "Known Issues" section.
+
+	* docs/releasenotes/trader.html: 
+	  The problems in TAO that affected the trading server were
+	  solved.
+
 Mon Aug 17 15:16:13 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Removed some outdated notes 
