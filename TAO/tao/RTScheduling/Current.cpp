@@ -2,7 +2,7 @@
 #include "Current.h"
 #include "tao/ORB_Core.h"
 #include "Distributable_Thread.h"
-#include "ace/Atomic_Op.h"
+
 //#include "ThreadAction.h"
 
 
@@ -259,8 +259,11 @@ TAO_RTScheduler_Current_i::dt_hash (void)
   return this ->dt_hash_;
 }
 
-RTScheduling::Scheduler
-TAO_RTScheduler_Current_i::
+RTScheduling::Scheduler_ptr
+TAO_RTScheduler_Current_i::scheduler (void)
+{
+	return RTScheduling::Scheduler::_duplicate (this->scheduler_.in ());
+}
 
 TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
 						      DT_Hash_Map* dt_hash)
@@ -794,11 +797,7 @@ TAO_RTScheduler_Current_i::delete_all_currents (void)
     }
 }
 
-RTScheduling::Scheduler_ptr
-TAO_RTScheduler_Current_i::scheduler (void)
-{
-  return this->scheduler_.in ();
-}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

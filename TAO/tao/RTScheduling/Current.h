@@ -7,6 +7,7 @@
 #include "rtscheduler_export.h"
 #include "RTSchedulerC.h"
 #include "ace/Task.h"
+#include "ace/Atomic_Op.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +25,8 @@ class TAO_TSS_Resources;
  */
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> IdType;
+
+extern ACE_Atomic_Op<ACE_Thread_Mutex, long> guid_counter;
 
 class TAO_RTScheduler_Export TAO_DTId_Hash
 {
@@ -207,8 +210,6 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
   RTScheduling::Scheduler_ptr scheduler (void);
 
   DT_Hash_Map* dt_hash (void);
-
-  RTScheduling::Scheduler_ptr scheduler (void);
 
  private:
   RTScheduling::Scheduler_var scheduler_;
