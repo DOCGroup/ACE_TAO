@@ -421,10 +421,10 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     process_attributes_ (NULL),
     thread_attributes_ (NULL),
 #else /* ACE_WIN32 */
+    avoid_zombies_ (0),
     stdin_ (ACE_INVALID_HANDLE),
     stdout_ (ACE_INVALID_HANDLE),
     stderr_ (ACE_INVALID_HANDLE),
-    avoid_zombies_ (0),
     ruid_ ((uid_t) -1),
     euid_ ((uid_t) -1),
     rgid_ ((uid_t) -1),
@@ -878,4 +878,3 @@ ACE_Process_Options::passed_handles (ACE_Handle_Set &set) const
   set = this->handles_passed_;
   return 1;
 }
-
