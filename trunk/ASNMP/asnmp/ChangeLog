@@ -1,3 +1,11 @@
+Wed Aug 20 15:11:23 1997  Mike MacFaden  <mrm@tango.cs.wustl.edu>
+
+	* rebuilt Makefile using g++dep
+	
+	*  pdu.h pdu.cpp initialization errors fixed
+	
+        * address.h address.cpp IpAddress::to_octet() added
+	
 Fri Aug  1 19:23:52 1997  Mike MacFaden  (mrm@mrm-ss20)
 
       * NOTES: This first version only tested on Solaris 2.5
