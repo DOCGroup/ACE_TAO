@@ -222,7 +222,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
       // heap access ... also, to speed things up!
       if (kind < CORBA::TC_KIND_COUNT
           && (*tcp = __tc_consts [(u_int) kind]) != 0)
-        *tcp = __tc_consts [(u_int) kind];
+        *tcp = CORBA::TypeCode::_duplicate (__tc_consts [(u_int) kind]);
       else if (kind == ~(CORBA::ULong)0 || kind < CORBA::TC_KIND_COUNT)
         {
           // Either a non-constant typecode or an indirected typecode.
@@ -248,13 +248,15 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                     if (bound == 0)
                       {
                         if (kind == CORBA::tk_string)
-                          *tcp = CORBA::_tc_string;
+                          *tcp = CORBA::TypeCode::_duplicate
+                            (CORBA::_tc_string);
                         else
-                          *tcp = CORBA::_tc_wstring;
+                          *tcp = CORBA::TypeCode::_duplicate
+                            (CORBA::_tc_wstring);
                       }
                     else
                       {
-                        CORBA::Long _oc_bounded_string [2] =
+                        CORBA::Long _oc_bounded_string [] =
                         {TAO_ENCAP_BYTE_ORDER, 0};
                         _oc_bounded_string [1] = (CORBA::Long) bound;
                         // Bounded string. Save the bounds

@@ -218,7 +218,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (node->is_nested ())
     *os << "friend ";
   *os << "void operator<<= (CORBA::Any &, " << node->local_name ()
-      << "); // noncopying version" << be_nl;
+      << "*); // noncopying version" << be_nl;
   if (node->is_nested ())
     *os << "friend ";
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &, "
@@ -1171,7 +1171,12 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       << "if (stream.decode (" << node->tc_name ()
       << ", &_tao_elem, 0, _tao_env)" << be_nl
       << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
-      << "  return 1;" << be_nl
+      << "{" << be_idt_nl
+      << "((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), "
+      << "_tao_elem, 1, _tao_env);"
+      << be_nl
+      << "  return 1;" << be_uidt_nl
+      << "}" << be_nl
       << "else" << be_nl
       << "  return 0;" << be_uidt_nl
       << "}\n\n";

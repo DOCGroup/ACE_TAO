@@ -44,6 +44,9 @@ CORBA_Any::type (void) const
   return this->type_;
 }
 
+// TAO doesn't give any guarantees if the value returned by value can be cast
+// to the desired type. This is a deprecated routine and its use must be
+// avoided. Use the >>= operators.
 const void *
 CORBA_Any::value (void) const
 {
@@ -59,6 +62,7 @@ CORBA_Any::value (void) const
 CORBA_Any::CORBA_Any (void)
   : type_ (CORBA::_tc_null),
     value_ (0),
+    cdr_ (0),
     any_owns_data_ (CORBA::B_FALSE),
     refcount_ (1)
 {
@@ -72,6 +76,8 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
                       void *value,
                       CORBA::Boolean any_owns_data)
   : type_ (tc),
+    value_ (value),
+    cdr_ (0),
     any_owns_data_ (any_owns_data),
     refcount_ (1)
 {
@@ -83,27 +89,20 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
       CORBA::Environment env;
       TAO_OutputCDR stream;
 
-      stream.encode (tc, value, 0, env);
-      // retrieve the start of the message block chain and duplicate it
-      this->value_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
-                                                   stream.start ());
+      // encode the value
+      stream.encode (this->type_, this->value_, 0, env);
 
-      // we own the data. So first do a deep free and then deallocate it.
-      DEEP_FREE (tc, value, 0, env);
-      // @@ - address the following
-      // delete this->value_;
-
-    }
-  else
-    {
-      // we don't own it. Maintain a pointer to the value
-      this->value_ = value;
+      // retrieve the start of the message block chain and save it
+      this->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+                                                 stream.start ());
     }
 }
 
 // Copy constructor for "Any".
 CORBA_Any::CORBA_Any (const CORBA_Any &src)
   : type_ (src.type_ != 0 ? src.type_ : CORBA::_tc_null),
+    value_ (0),
+    cdr_ (0),
     any_owns_data_ (CORBA::B_TRUE),
     refcount_ (1)
 {
@@ -115,17 +114,20 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
   // form and must be encoded. Else we must simply duplicate the message block
   if (src.any_owns_data_)
     {
-      this->value_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
-                                                   src.value_);
+      // the data was already encoded in "src". We simply duplicate it to avoid
+      // copies.
+      this->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+                                                 src.cdr_);
     }
   else
     {
+      // "src" did not own the data. So we must do the encoding ourselves
       TAO_OutputCDR stream;
 
       stream.encode (this->type_, src.value_, 0, env);
       // retrieve the start of the message block chain and duplicate it
-      this->value_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
-                                                   stream.start ());
+      this->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+                                                 stream.start ());
     }
 }
 
@@ -134,7 +136,6 @@ CORBA_Any &
 CORBA_Any::operator= (const CORBA_Any &src)
 {
   CORBA::Environment env;
-  size_t size;
 
   // check if it is a self assignment
   if (this == &src)
@@ -147,13 +148,21 @@ CORBA_Any::operator= (const CORBA_Any &src)
   if (this->any_owns_data_)
     {
       // decrement the refcount on the Message_Block we hold
-      ACE_Message_Block::release ((ACE_Message_Block *) this->value_);
+      ACE_Message_Block::release ((ACE_Message_Block *) this->cdr_);
+
+      if (this->value_)
+        {
+          DEEP_FREE (this->type_, this->value_, 0, env);
+        }
+
       if (this->type_)
         this->type_->Release ();
     }
 
   // Now copy the contents of the source to ourselves.
   this->type_ = (src.type_) != 0 ? src.type_ : CORBA::_tc_null;
+  this->type_->AddRef ();
+  this->value_ = 0;
   this->any_owns_data_ = CORBA::B_TRUE;
   this->refcount_ = 1;
   this->type_->AddRef ();
@@ -162,7 +171,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
   // form and must be encoded. Else we must simply duplicate the message block
   if (src.any_owns_data_)
     {
-      this->value_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+      this->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
                                                    src.value_);
     }
   else
@@ -171,7 +180,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
 
       stream.encode (this->type_, src.value_, 0, env);
       // retrieve the start of the message block chain and duplicate it
-      this->value_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+      this->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
                                                    stream.start ());
     }
   return *this;
@@ -188,19 +197,25 @@ CORBA_Any::operator= (const CORBA_Any &src)
 
 CORBA_Any::~CORBA_Any (void)
 {
-  CORBA::Environment env;
-
   // assert (this->refcount_ == 0);
-
+  CORBA::Environment env;
   if (this->any_owns_data_)
     {
       // decrement the refcount on the Message_Block we hold
-      ACE_Message_Block::release ((ACE_Message_Block *) this->value_);
-      this->value_ = 0;
+      ACE_Message_Block::release ((ACE_Message_Block *) this->cdr_);
+      this->cdr_ = 0;
+
+      // free up the storage for the value
+      if (this->value_)
+        {
+          DEEP_FREE (this->type_, this->value_, 0, env);
+          this->value_ = 0;
+        }
     }
 
   if (this->type_)
     this->type_->Release ();
+
 }
 
 // All-at-once replacement of the contents of an "Any."
@@ -211,17 +226,31 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
                     CORBA::Boolean any_owns_data,
                     CORBA::Environment &env)
 {
+  // we may be replacing ourselves. So before releasing our typecode, we
+  // increment the refcount of the one that will be assigned to us.
+  tc->AddRef ();
+
   if (this->any_owns_data_)
     {
-      // decrement the refcount on the Message_Block we hold
-      ACE_Message_Block::release ((ACE_Message_Block *) this->value_);
+      // decrement the refcount on the Message_Block we currently hold
+      ACE_Message_Block::release ((ACE_Message_Block *) this->cdr_);
+
+      if (this->value_)
+        {
+          DEEP_FREE (this->type_, this->value_, 0, env);
+        }
     }
+
+  // release our current typecode
   if (this->type_ != 0)
     this->type_->Release ();
 
+  // assign new typecode
   this->type_ = tc;
-  tc->AddRef ();
+  this->value_ = (void *) value;
   this->any_owns_data_ = any_owns_data;
+  this->cdr_ = 0;
+
   // if the Any owns the data, we encode the "value" into a CDR stream and
   // store it. We also destroy the "value" since we own it.
   if (this->any_owns_data_)
@@ -231,19 +260,8 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 
       stream.encode (tc, value, 0, env);
       // retrieve the start of the message block chain and duplicate it
-      this->value_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
-                                                   stream.start ());
-
-      // we own the data. So first do a deep free and then deallocate it.
-      DEEP_FREE (tc, value, 0, env);
-      // @@ - address the following
-      // delete this->value_;
-
-    }
-  else
-    {
-      // we don't own it. Maintain a pointer to the value
-      this->value_ = (void *)value;
+      this->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+                                                 stream.start ());
     }
 }
 
@@ -253,7 +271,8 @@ CORBA_Any::operator<<= (from_string s)
 {
   // If the inserted string is bounded, we create a typecode.
   static CORBA::Long _oc_string [] =
-  {     // CDR typecode octets
+  {
+    // CDR typecode octets
     TAO_ENCAP_BYTE_ORDER,   // native endian + padding; "tricky"
     0                       // ... unbounded string to start with
   };
@@ -273,8 +292,9 @@ CORBA_Any::operator<<= (from_string s)
 
   CORBA::Environment env;
   if (s.nocopy_)
-      this->replace (tc, new char* (s.val_), CORBA::B_TRUE, env);
-  else // copying
+    this->replace (tc, new char* (s.val_), CORBA::B_TRUE, env);
+  else
+    // copying
     this->replace (tc, new char* (CORBA::string_dup (s.val_)),
                    CORBA::B_TRUE, env);
 }
@@ -292,7 +312,7 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
     {
       if (this->any_owns_data_)
         {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          TAO_InputCDR stream (this->cdr_);
           return stream.read_short (s);
         }
       else
@@ -314,7 +334,7 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
     {
       if (this->any_owns_data_)
         {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          TAO_InputCDR stream (this->cdr_);
           return stream.read_ushort (s);
         }
       else
@@ -336,7 +356,7 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
     {
       if (this->any_owns_data_)
         {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          TAO_InputCDR stream (this->cdr_);
           return stream.read_long (l);
         }
       else
@@ -358,7 +378,7 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
     {
       if (this->any_owns_data_)
         {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          TAO_InputCDR stream (this->cdr_);
           return stream.read_ulong (l);
         }
       else
@@ -380,7 +400,7 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
     {
       if (this->any_owns_data_)
         {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          TAO_InputCDR stream (this->cdr_);
           return stream.read_float (f);
         }
       else
@@ -402,7 +422,7 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
     {
       if (this->any_owns_data_)
         {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          TAO_InputCDR stream (this->cdr_);
           return stream.read_double (d);
         }
       else
@@ -424,7 +444,8 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
     {
       if (this->any_owns_data_)
         {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          TAO_InputCDR stream (this->cdr_);
+          // decode the CDR
           return (stream.decode (CORBA::_tc_any, &a, 0, env)
                   == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
         }
@@ -447,7 +468,7 @@ CORBA_Any::operator>>= (char *&s) const
     {
       if (this->any_owns_data_)
         {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          TAO_InputCDR stream (this->cdr_);
           return stream.read_string (s);
         }
       else
@@ -543,8 +564,9 @@ CORBA_Any::operator>>= (to_string s) const
         {
           if (this->any_owns_data_)
             {
-              TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
-              return stream.read_string (s.val_);
+              TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
+              CORBA::Boolean flag = stream.read_string (s.val_);
+              return flag;
             }
           else
             {
@@ -567,9 +589,13 @@ CORBA_Any::operator>>= (to_object obj) const
     {
       if (this->any_owns_data_)
         {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
-          return (stream.decode (CORBA::_tc_Object, &obj.ref_, 0, env)
-                  == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
+          TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
+          CORBA::Boolean flag = (stream.decode (CORBA::_tc_Object,
+                                                &obj.ref_, 0, env)
+                                 == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1:0;
+          // we own this allocated value
+          //          this->value_ = obj.ref_;
+          return flag;
         }
       else
         {
