@@ -4,8 +4,8 @@ Mon Mar  8 11:08:02 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  TAO_IDL/util/utl_scope.cpp:
 
           Incorporated the right scoping lookup rules based on the latest
-	  CORBA 2.3 revisions. Thanks to Torsten Kuepper
-	  <kuepper2@uni-wuppertal.de> for providing the patches.
+ 	  CORBA 2.3 revisions. Thanks to Torsten Kuepper
+ 	  <kuepper2@uni-wuppertal.de> for providing the patches.
 
 Sun Mar  7 19:29:06 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
