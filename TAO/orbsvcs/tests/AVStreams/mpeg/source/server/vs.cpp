@@ -39,9 +39,10 @@ Video_Child_Process::init (int argc,
     = -1;
 
   VIDEO_SINGLETON::instance ()->lastRefPtr = 0;
-
-  
+  return 1;
 }
+
+
 int
 Video_Child_Process::make_mediactrl (Video_Control_i *& media_ctrl)
 {
