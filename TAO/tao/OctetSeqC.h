@@ -27,10 +27,11 @@
 
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:151
-#ifndef _TAO_IDL_ORIG_OCTETSEQC_H_
-#define _TAO_IDL_ORIG_OCTETSEQC_H_
+
+#ifndef _TAO_IDL_ORIG__OCTETSEQC_H_
+#define _TAO_IDL_ORIG__OCTETSEQC_H_
 #include "ace/pre.h"
-#include "tao/Sequence.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,6 +39,8 @@
 
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
+#include "tao/Sequence.h"
+
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -67,22 +70,22 @@
 
 TAO_NAMESPACE  CORBA
 {
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_sequence/sequence_ch.cpp:89
+  // be/be_visitor_sequence/sequence_ch.cpp:100
 
 #if !defined (_CORBA_OCTETSEQ_CH_)
 #define _CORBA_OCTETSEQ_CH_
-
+  
   class OctetSeq;
-
+  
   typedef
     TAO_FixedSeq_Var_T<
         OctetSeq,
         CORBA::Octet
       >
     OctetSeq_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         OctetSeq,
@@ -90,7 +93,7 @@ TAO_NAMESPACE  CORBA
         CORBA::Octet
       >
     OctetSeq_out;
-
+  
   class TAO_Export OctetSeq
     : public
         TAO_Unbounded_Sequence<
@@ -103,14 +106,14 @@ TAO_NAMESPACE  CORBA
     OctetSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::Octet* buffer,
+        CORBA::Octet* buffer, 
         CORBA::Boolean release = 0
       );
     OctetSeq (const OctetSeq &);
     ~OctetSeq (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef OctetSeq_var _var_type;
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -123,10 +126,10 @@ TAO_NAMESPACE  CORBA
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_OctetSeq;
 
 // TAO_IDL - Generated from
@@ -171,7 +174,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:1018
+// be/be_codegen.cpp:1055
 
 #if defined (__ACE_INLINE__)
 #include "OctetSeqC.i"
@@ -187,3 +190,4 @@ TAO_Export CORBA::Boolean operator>> (
 
 #include "ace/post.h"
 #endif /* ifndef */
+
