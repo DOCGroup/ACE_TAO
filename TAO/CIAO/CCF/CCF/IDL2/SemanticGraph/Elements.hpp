@@ -96,6 +96,20 @@ namespace CCF
 
         Node ();
 
+        // This is a bunch of experimantal sink functions that allow
+        // extensions in the form of one-way edges (see Executor stuff
+        // in CIDL for example).
+        //
+        void
+        add_edge_left (Edge& e)
+        {
+        }
+
+        void
+        add_edge_right (Edge& e)
+        {
+        }
+
       private:
         CompilerElements::Context context_;
       };
@@ -304,9 +318,56 @@ namespace CCF
       std::set<Nameable*>
       Nameables;
 
+      class Scope;
+
+      class Extends : public virtual Edge
+      {
+      public:
+        Scope& extender () const
+        {
+          return *extender_;
+        }
+
+        Scope& extendee () const
+        {
+          return *extendee_;
+        }
+
+        static Introspection::TypeInfo const&
+        static_type_info ();
+
+      protected:
+        friend class Graph<Node, Edge>;
+
+        Extends ()
+        {
+          type_info (static_type_info ());
+        }
+
+        void
+        set_left_node (Scope& s)
+        {
+          extender_ = &s;
+        }
+
+        void
+        set_right_node (Scope& s)
+        {
+          extendee_ = &s;
+        }
+
+      private:
+        Scope* extender_;
+        Scope* extendee_;
+      };
+
       class Scope : public virtual Nameable
       {
       private:
+        typedef
+        std::vector<Extends*>
+        Extends_;
+
         typedef
         std::vector<Names*>
         Names_;
@@ -316,6 +377,27 @@ namespace CCF
         NamesMap_;
 
       public:
+        //
+        //
+        typedef
+        Extends_::const_iterator
+        ExtendsIterator;
+
+        ExtendsIterator
+        extends_begin () const
+        {
+          return extends_.begin ();
+        }
+
+        ExtendsIterator
+        extends_end () const
+        {
+          return extends_.end ();
+        }
+
+
+        //
+        //
         typedef
         Names_::const_iterator
         NamesIterator;
@@ -375,7 +457,23 @@ namespace CCF
           names_map_[e.name ()].push_back (&e);
         }
 
+        void
+        add_edge_left (Extends& e)
+        {
+          extends_.push_back (&e);
+        }
+
+        void
+        add_edge_right (Extends& e)
+        {
+          extends_.push_back (&e);
+        }
+
+        using Nameable::add_edge_right;
+
       private:
+        Extends_ extends_;
+
         Names_ names_;
         NamesMap_ names_map_;
       };
@@ -421,21 +519,8 @@ namespace CCF
         {
         }
 
-        //@@ this is a bunch of experimantal sink functions
-        //   that allow extensions (see Executor stuff in CIDL
-        //   for example). This code should eventually migrate
-        //   to Node if it is found really useful.
-        //
-
-        void
-        add_edge_left (Edge& e)
-        {
-        }
-
-        void
-        add_edge_right (Edge& e)
-        {
-        }
+        using Node::add_edge_right;
+        using Node::add_edge_left;
 
       private:
         typedef

@@ -58,9 +58,11 @@ namespace CCF
           {
             try
             {
-              ctx.tu ().new_edge<Inherits> (
-                now (),
+              SemanticGraph::Home& h (
                 resolve<SemanticGraph::Home> (from, name, Flags::defined));
+
+              ctx.tu ().new_edge<Inherits> (now (), h);
+              ctx.tu ().new_edge<Extends> (now (), h);
             }
             catch (Resolve const&)
             {
@@ -107,6 +109,7 @@ namespace CCF
                              i);
 
               ctx.tu ().new_edge<Supports> (now (), i);
+              ctx.tu ().new_edge<Extends> (now (), i);
             }
             catch (Resolve const&)
             {
