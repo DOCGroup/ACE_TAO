@@ -1,127 +1,132 @@
+Tue May 26 10:03:51 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/NestedUpcal/server.cpp (init_naming_service): dereferenced
+          the parameters to init () call.
+
 Tue May 26 09:51:20 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	This ChangeLog entry describes massive cleaning efforts to
-	remove all unwanted code as well as some more additions and
-	modifications to the TAO IDL compiler.
+        This ChangeLog entry describes massive cleaning efforts to
+        remove all unwanted code as well as some more additions and
+        modifications to the TAO IDL compiler.
 
-	* TAO_IDL/Makefile: Removed compilation of all the be_state*
-	files.
+        * TAO_IDL/Makefile: Removed compilation of all the be_state*
+        files.
 
-	* TAO_IDL/be_include/be_decl.h
-	  TAO_IDL/be/be_decl.cpp:
-	  Removed the gen_client_header, gen_client_inline,
-	  gen_client_stubs, gen_server_header, gen_server_inline,
-	  gen_server_skeleton methods.
+        * TAO_IDL/be_include/be_decl.h
+          TAO_IDL/be/be_decl.cpp:
+          Removed the gen_client_header, gen_client_inline,
+          gen_client_stubs, gen_server_header, gen_server_inline,
+          gen_server_skeleton methods.
 
-	* TAO_IDL/be_include/
+        * TAO_IDL/be_include/
 
-	  be_argument.h
-	  be_array.h
-	  be_attribute.h
-	  be_constant.h
-	  be_enum.h
-	  be_enum_val.h
-	  be_exception.h
-	  be_field.h
-	  be_interface.h
-	  be_interface_fwd.h
-	  be_module.h
-	  be_native.h
-	  be_operation.h
-	  be_predefined_type.h
-	  be_root.h
-	  be_scope.h
-	  be_sequence.h
-	  be_string.h
-	  be_structure.h
-	  be_typedef.h
-	  be_union.h
-	  be_union_branch.h
+          be_argument.h
+          be_array.h
+          be_attribute.h
+          be_constant.h
+          be_enum.h
+          be_enum_val.h
+          be_exception.h
+          be_field.h
+          be_interface.h
+          be_interface_fwd.h
+          be_module.h
+          be_native.h
+          be_operation.h
+          be_predefined_type.h
+          be_root.h
+          be_scope.h
+          be_sequence.h
+          be_string.h
+          be_structure.h
+          be_typedef.h
+          be_union.h
+          be_union_branch.h
 
-		AND
+                AND
 
-	TAO_IDL/be/
+        TAO_IDL/be/
 
-	  be_argument.cpp
-	  be_array.cpp
-	  be_attribute.cpp
-	  be_constant.cpp
-	  be_enum.cpp
-	  be_enum_val.cpp
-	  be_exception.cpp
-	  be_field.cpp
-	  be_interface.cpp
-	  be_interface_fwd.cpp
-	  be_module.cpp
-	  be_native.cpp
-	  be_operation.cpp
-	  be_predefined_type.cpp
-	  be_root.cpp
-	  be_scope.cpp
-	  be_sequence.cpp
-	  be_string.cpp
-	  be_structure.cpp
-	  be_typedef.cpp
-	  be_union.cpp
-	  be_union_branch.cpp
+          be_argument.cpp
+          be_array.cpp
+          be_attribute.cpp
+          be_constant.cpp
+          be_enum.cpp
+          be_enum_val.cpp
+          be_exception.cpp
+          be_field.cpp
+          be_interface.cpp
+          be_interface_fwd.cpp
+          be_module.cpp
+          be_native.cpp
+          be_operation.cpp
+          be_predefined_type.cpp
+          be_root.cpp
+          be_scope.cpp
+          be_sequence.cpp
+          be_string.cpp
+          be_structure.cpp
+          be_typedef.cpp
+          be_union.cpp
+          be_union_branch.cpp
 
-	  Removed the gen_client_header, gen_client_inline,
-	  gen_client_stubs, gen_server_header, gen_server_inline,
-	  gen_server_skeleton methods.
+          Removed the gen_client_header, gen_client_inline,
+          gen_client_stubs, gen_server_header, gen_server_inline,
+          gen_server_skeleton methods.
 
-	* TAO_IDL/be_include/be_codegen.h
-	  TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_codegen.h
+          TAO_IDL/be/be_codegen.cpp:
 
-	  Added a bunch of enumerations for code generation of the Any <<=
-	  and >>= operators for all the IDL types
+          Added a bunch of enumerations for code generation of the Any <<=
+          and >>= operators for all the IDL types
 
-	  Removed a bunch of methods and data members that were used for
-	  the state based approach.
+          Removed a bunch of methods and data members that were used for
+          the state based approach.
 
-	* TAO_IDL/be_interpretive.cpp: Added cases for the newly
-	introduced enumerations for the <<= and >>= operators.
+        * TAO_IDL/be_interpretive.cpp: Added cases for the newly
+        introduced enumerations for the <<= and >>= operators.
 
-	* TAO_IDL/be_produce.cpp: added more documentation.
+        * TAO_IDL/be_produce.cpp: added more documentation.
 
-	* TAO_IDL/be_include/
-		AND
-	  TAO_IDL/be
+        * TAO_IDL/be_include/
+                AND
+          TAO_IDL/be
 
         {be_visitor_enum, be_visitor_exception, be_visitor_interface,
-	be_visitor_module, be_visitor_root, be_visitor_sequence,
-	be_visitor_structure, be_visitor_typedef, be_visitor_union}.{h,
-	cpp}:
+        be_visitor_module, be_visitor_root, be_visitor_sequence,
+        be_visitor_structure, be_visitor_typedef, be_visitor_union}.{h,
+        cpp}:
 
-	Added visitors to each class called be_visitor_*_any_op_{ch,cs} to
-	each file. These generate the <<= and >>= operators for all the
-	types.
+        Added visitors to each class called be_visitor_*_any_op_{ch,cs} to
+        each file. These generate the <<= and >>= operators for all the
+        types.
 
-	* TAO_IDL/be_visitor_scope.cpp: Added a check to see if a node in
-	the scope is NUL or not.
+        * TAO_IDL/be_visitor_scope.cpp: Added a check to see if a node in
+        the scope is NUL or not.
 
-	* TAO_IDL/be_include/be_state.h
+        * TAO_IDL/be_include/be_state.h
 
-	 	AND
+                AND
 
-	  TAO_IDL/be/
-	{be_state, be_state_argument, be_state_array, be_state_attribute,
-	be_state_exception, be_state_exception, be_state_operation,
-	be_state_sequence, be_state_structure, be_state_typedef,
-	be_state_union}.cpp:
+          TAO_IDL/be/
+        {be_state, be_state_argument, be_state_array, be_state_attribute,
+        be_state_exception, be_state_exception, be_state_operation,
+        be_state_sequence, be_state_structure, be_state_typedef,
+        be_state_union}.cpp:
 
-	All these files are no longer needed.
+        All these files are no longer needed.
 
 Tue May 26 09:40:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Makefile:
-	  NestedUpcall was not on the list.
+        * tests/Makefile:
+          NestedUpcall was not on the list.
 
-	* tests/NestedUpcall/Makefile:
-	  Added a .PRECIOUS directive.
+        * tests/NestedUpcall/Makefile:
+          Added a .PRECIOUS directive.
 
-	* tests/NestedUpcall/Reactor.idl:
-	  The file was full of ^M (i.e. it was using DOS end-of-line)
-	  characters; that was confusing the IDL compiler.
+        * tests/NestedUpcall/Reactor.idl:
+          The file was full of ^M (i.e. it was using DOS end-of-line)
+          characters; that was confusing the IDL compiler.
 
 	* TAO_IDL/be/be_visitor_args.cpp: 
 	  The code generation for strings and anys as out parameters was
@@ -129,50 +134,50 @@ Tue May 26 09:40:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Tue May 26 01:46:23 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Timeprobe.h: Broke up this file in small pieces.  The time
- 	  probe map is now split over many files, reducing the
- 	  dependencies.
+        * tao/Timeprobe.h: Broke up this file in small pieces.  The time
+          probe map is now split over many files, reducing the
+          dependencies.
 
 Mon May 25 18:42:25 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp: added
-	-ORBobjrefstyle url and -ORBport 0 to both the client and server
-	arguments.
+        * tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp: added
+        -ORBobjrefstyle url and -ORBport 0 to both the client and server
+        arguments.
 
 Mon May 25 15:54:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Timeprobe.h:
-	  Protected the file against multiple inclusion.
+        * tao/Timeprobe.h:
+          Protected the file against multiple inclusion.
 
-	* tao/Makefile:
-	* tao/orbsvcs/orbsvcs/Makefile:
-	  Updated dependencies.
+        * tao/Makefile:
+        * tao/orbsvcs/orbsvcs/Makefile:
+          Updated dependencies.
 
 Sat Apr 18 01:27:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Timeprobe.h: Added more timeprobes to POA, ORB, and GIOP.
+        * tao/Timeprobe.h: Added more timeprobes to POA, ORB, and GIOP.
 
-	* TAO: Change the use of time probes.  The new ACE scheme is now
- 	  used.
+        * TAO: Change the use of time probes.  The new ACE scheme is now
+          used.
 
 Mon May 25 11:58:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Quoter/client.cpp:
-	* tests/Quoter/Factory_Finder.cpp:
-	* tests/Quoter/Generic_Factory.cpp:
-	* tests/Quoter/Life_Cycle_Service.cpp:
-	  Added several .in() calls to disambiguate things, otherwise g++
-	  gets really confused.
+        * tests/Quoter/client.cpp:
+        * tests/Quoter/Factory_Finder.cpp:
+        * tests/Quoter/Generic_Factory.cpp:
+        * tests/Quoter/Life_Cycle_Service.cpp:
+          Added several .in() calls to disambiguate things, otherwise g++
+          gets really confused.
 
 Mon May 25 10:04:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/GIOP.cpp:
-	  Removed some superflous memory allocations and copys.
+        * tao/GIOP.cpp:
+          Removed some superflous memory allocations and copys.
 
-	* tao/CDR.cpp:
-	  write_octet_array_mb() was returning -1, but it should return a
-	  CORBA_Boolean, thanks to David Levine (levine@cs.wust.edu) for
-	  detecting this one.
+        * tao/CDR.cpp:
+          write_octet_array_mb() was returning -1, but it should return a
+          CORBA_Boolean, thanks to David Levine (levine@cs.wust.edu) for
+          detecting this one.
 
 Mon May 25 09:55:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
