@@ -59,6 +59,7 @@ To run the client, type
        bd_strseq            for bounded sequences of strings
        var_struct           for variable structs
        nested_struct        for nested structs
+       objref_struct        for object references inside structures
        ub_struct_seq        for sequences of structs
        bd_struct_seq        for bounded sequences of structs
        any                  for Any

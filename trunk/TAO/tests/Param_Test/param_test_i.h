@@ -172,6 +172,12 @@ public:
                       CORBA::Environment &env);
   // test for nested structs
 
+  virtual Param_Test::Objref_Struct *
+  test_objref_struct (const Param_Test::Objref_Struct &s1,
+                      Param_Test::Objref_Struct &s2,
+                      Param_Test::Objref_Struct_out s3,
+                      CORBA::Environment &env);
+
   virtual Coffee_ptr
   make_coffee (CORBA::Environment &env);
   // make a coffee object

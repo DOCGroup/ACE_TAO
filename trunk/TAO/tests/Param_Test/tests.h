@@ -28,6 +28,7 @@
 #include "fixed_array.h"
 #include "fixed_struct.h"
 #include "nested_struct.h"
+#include "objref_struct.h"
 #include "objref.h"
 #include "short.h"
 #include "longlong.h"

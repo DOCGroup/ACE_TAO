@@ -169,6 +169,16 @@ interface Param_Test
   // Anys. We try to pump in all kinds of data types thru these Anys
   any test_any (in any a1, inout any a2, out any a3);
 
+  struct Objref_Struct
+  {
+    long x;
+    Coffee y;
+  };
+  Objref_Struct test_objref_struct (in Objref_Struct t1,
+				    inout Objref_Struct t2,
+				    out Objref_Struct t3);
+  // test structures that contain object references.
+  
   // arrays (fixed)
   const unsigned long DIM1 = 10;
   typedef long Fixed_Array [DIM1];

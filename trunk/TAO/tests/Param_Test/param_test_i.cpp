@@ -318,6 +318,31 @@ Param_Test::Coffee_Mix * Param_Test_i::test_coffe_mix (
     *ret = new Param_Test::Coffee_Mix,
     *out = new Param_Test::Coffee_Mix;
 
+#if 0
+  ACE_DEBUG ((LM_DEBUG,
+              "maximum = %d\n"
+              "length = %d\n",
+              s1.maximum (),
+              s1.length ()));
+  ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
+  for (CORBA::ULong i = 0; i < s1.length (); ++i)
+    {
+      Coffee_ptr c = s1[i];
+      if (CORBA::is_nil (c))
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Element #%d is nil\n", i));
+	  continue;
+	}
+      ACE_DEBUG ((LM_DEBUG,
+                  "Element #%d\n"
+                  "\ttype = <%s>\n",
+                  i,
+                  c->_interface_repository_id ()));
+    }
+#endif /* 0 */
+  
+
   s2 = s1;
   *out = s1;
   *ret = s1;
@@ -335,6 +360,31 @@ Param_Test::Bounded_Coffee_Mix * Param_Test_i::test_bounded_coffe_mix (
   Param_Test::Bounded_Coffee_Mix
     *ret = new Param_Test::Bounded_Coffee_Mix,
     *out = new Param_Test::Bounded_Coffee_Mix;
+
+#if 0
+  ACE_DEBUG ((LM_DEBUG,
+              "maximum = %d\n"
+              "length = %d\n",
+              s1.maximum (),
+              s1.length ()));
+  ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
+  for (CORBA::ULong i = 0; i < s1.length (); ++i)
+    {
+      Coffee_ptr c = s1[i];
+      if (CORBA::is_nil (c))
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Element #%d is nil\n", i));
+	  continue;
+	}
+      ACE_DEBUG ((LM_DEBUG,
+                  "Element #%d\n"
+                  "\ttype = <%s>\n",
+                  i,
+                  c->_interface_repository_id ()));
+    }
+#endif /* 0 */
+  
 
   s2 = s1;
   *out = s1;
@@ -401,6 +451,27 @@ Param_Test_i::test_nested_struct (const Param_Test::Nested_Struct &s1,
   Param_Test::Nested_Struct
     *ret = new Param_Test::Nested_Struct,
     *out = new Param_Test::Nested_Struct;
+
+  // now copy all elements of s1 into the others
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
+Param_Test::Objref_Struct *
+Param_Test_i::test_objref_struct (const Param_Test::Objref_Struct &s1,
+                                  Param_Test::Objref_Struct &s2,
+                                  Param_Test::Objref_Struct_out s3,
+                                  CORBA::Environment &env)
+{
+  ACE_UNUSED_ARG (env);
+  // we copy the "in" sequences into all the inout, out and return sequences.
+
+  Param_Test::Objref_Struct
+    *ret = new Param_Test::Objref_Struct,
+    *out = new Param_Test::Objref_Struct;
 
   // now copy all elements of s1 into the others
   s2 = s1;

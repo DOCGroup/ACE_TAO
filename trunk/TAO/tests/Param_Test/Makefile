@@ -44,6 +44,7 @@ CLI_FILES =	param_testC	\
 		fixed_array	\
 		fixed_struct	\
 		nested_struct	\
+		objref_struct	\
 		objref		\
 		short		\
 		longlong	\
