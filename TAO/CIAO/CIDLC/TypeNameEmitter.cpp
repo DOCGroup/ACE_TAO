@@ -15,6 +15,141 @@ TypeNameEmitter::TypeNameEmitter (ostream& os_)
 {
 }
 
+void
+TypeNameEmitter::traverse (Void&)
+{
+}
+
+void
+TypeNameEmitter::traverse (Boolean&)
+{
+}
+
+void
+TypeNameEmitter::traverse (Octet&)
+{
+}
+
+void
+TypeNameEmitter::traverse (Char&)
+{
+}
+
+void
+TypeNameEmitter::traverse (Wchar&)
+{
+}
+
+void
+TypeNameEmitter::traverse (Short&)
+{
+}
+
+void
+TypeNameEmitter::traverse (UnsignedShort&)
+{
+}
+
+void
+TypeNameEmitter::traverse (Long&)
+{
+}
+
+void
+TypeNameEmitter::traverse (UnsignedLong&)
+{
+}
+
+void
+TypeNameEmitter::traverse (LongLong&)
+{
+}
+
+void
+TypeNameEmitter::traverse (UnsignedLongLong&)
+{
+}
+
+void
+TypeNameEmitter::traverse (Float&)
+{
+}
+
+void
+TypeNameEmitter::traverse (Double&)
+{
+}
+
+void
+TypeNameEmitter::traverse (String&)
+{
+}
+
+void
+TypeNameEmitter::traverse (Wstring&)
+{
+}
+
+void
+TypeNameEmitter::traverse (Object&)
+{
+}
+
+void
+TypeNameEmitter::traverse (ValueBase&)
+{
+}
+
+void
+TypeNameEmitter::traverse (Any&)
+{
+}
+
+void
+TypeNameEmitter::traverse (SemanticGraph::Enum&)
+{
+}
+
+void
+TypeNameEmitter::traverse (SemanticGraph::Struct&)
+{
+}
+
+void
+TypeNameEmitter::traverse (SemanticGraph::Union&)
+{
+}
+
+void
+TypeNameEmitter::traverse (SemanticGraph::UnboundedSequence&)
+{
+}
+
+void
+TypeNameEmitter::traverse (SemanticGraph::Interface&)
+{
+}
+
+void
+TypeNameEmitter::traverse (SemanticGraph::ValueType&)
+{
+}
+
+void
+TypeNameEmitter::traverse (SemanticGraph::EventType&)
+{
+}
+
+void
+TypeNameEmitter::traverse (SemanticGraph::Component&)
+{
+}
+
+void
+TypeNameEmitter::traverse (SemanticGraph::Home&)
+{
+}
+
 // ====================================================================
 
 ReturnTypeNameEmitter::ReturnTypeNameEmitter (ostream& os_)
@@ -210,12 +345,6 @@ INArgTypeNameEmitter::INArgTypeNameEmitter (ostream& os_)
 }
 
 void
-INArgTypeNameEmitter::traverse (Void&)
-{
-  // No-op, but the base class method is pure virtual.
-}
-
-void
 INArgTypeNameEmitter::traverse (Boolean&)
 {
   os << "::CORBA::Boolean";
@@ -376,12 +505,6 @@ INArgTypeNameEmitter::traverse (SemanticGraph::Home& h)
 INOUTArgTypeNameEmitter::INOUTArgTypeNameEmitter (ostream& os_)
   : TypeNameEmitter (os_)
 {
-}
-
-void
-INOUTArgTypeNameEmitter::traverse (Void&)
-{
-  // No-op, but the base class method is pure virtual.
 }
 
 void
@@ -548,12 +671,6 @@ OUTArgTypeNameEmitter::OUTArgTypeNameEmitter (ostream& os_)
 }
 
 void
-OUTArgTypeNameEmitter::traverse (Void&)
-{
-  // No-op, but the base class method is pure virtual.
-}
-
-void
 OUTArgTypeNameEmitter::traverse (Boolean&)
 {
   os << "::CORBA::Boolean_out";
@@ -717,11 +834,6 @@ NullReturnEmitter::NullReturnEmitter (ostream& os_)
 }
 
 void
-NullReturnEmitter::traverse (Void&)
-{
-}
-
-void
 NullReturnEmitter::traverse (Boolean&)
 {
   os << "return false;";
@@ -826,7 +938,8 @@ NullReturnEmitter::traverse (Any&)
 void
 NullReturnEmitter::traverse (SemanticGraph::Enum& e)
 {
-  os << e.scoped_name ();
+  os << e.scoped_name () << " retval;" << endl
+     << "return retval;";
 }
 
 void
@@ -901,4 +1014,529 @@ NullReturnEmitter::traverse (SemanticGraph::Home& h)
   os << "return " << h.scoped_name () << "::_nil ();";
 }
 
+// ====================================================================
+
+NullRHSEmitter::NullRHSEmitter (ostream& os_)
+  : TypeNameEmitter (os_)
+{
+}
+
+void
+NullRHSEmitter::traverse (Boolean&)
+{
+  os << "= false;";
+}
+
+void
+NullRHSEmitter::traverse (Octet&)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (Char&)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (Wchar&)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (Short&)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (UnsignedShort&)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (Long&)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (UnsignedLong&)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (LongLong&)
+{
+  os << "= ACE_CDR_LONGLONG_INITIALIZER;";
+}
+
+void
+NullRHSEmitter::traverse (UnsignedLongLong&)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (Float&)
+{
+  os << "= 0.0f;";
+}
+
+void
+NullRHSEmitter::traverse (Double&)
+{
+  os << "= 0.0;";
+}
+
+void
+NullRHSEmitter::traverse (String&)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (Wstring&)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (Object&)
+{
+  os << "= ::CORBA::Object::_nil ();";
+}
+
+void
+NullRHSEmitter::traverse (ValueBase&)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (Any&)
+{
+  // This will hopefully work both if the lhs is a pointer (for example
+  // RetunrTypeNameEmitter) or not (for example INArgTypeNameEmitter).
+  os << ";";
+}
+
+void
+NullRHSEmitter::traverse (SemanticGraph::Enum& e)
+{
+  os << ";";
+}
+
+void
+NullRHSEmitter::traverse (SemanticGraph::Struct& s)
+{
+  // This should always be in the context, since the SizeTypeCalculator
+  // is executed before the servant code generators.
+  bool var_size = s.context ().get<bool> (STRS[VAR_SIZE]);
+  
+  if (var_size)
+  {
+    os << "= 0;";
+  }
+  else
+  {
+    os << ";";
+  }
+}
+
+void
+NullRHSEmitter::traverse (SemanticGraph::Union& u)
+{
+  // This should always be in the context, since the SizeTypeCalculator
+  // is executed before the servant code generators.
+  bool var_size = u.context ().get<bool> (STRS[VAR_SIZE]);
+  
+  if (var_size)
+  {
+    os << "= 0;";
+  }
+  else
+  {
+    os << ";";
+  }
+}
+
+void
+NullRHSEmitter::traverse (SemanticGraph::UnboundedSequence& s)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (SemanticGraph::Interface& i)
+{
+  os << "= " << i.scoped_name () << "::_nil ();";
+}
+
+void
+NullRHSEmitter::traverse (SemanticGraph::ValueType& v)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (SemanticGraph::EventType& e)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (SemanticGraph::Component& c)
+{
+  os << "= " << c.scoped_name () << "::_nil ();";
+}
+
+void
+NullRHSEmitter::traverse (SemanticGraph::Home& h)
+{
+  os << "= " << h.scoped_name () << "::_nil ();";
+}
+
+// ====================================================================
+
+ExtractedTypeDeclEmitter::ExtractedTypeDeclEmitter (ostream& os_)
+  : TypeNameEmitter (os_)
+{
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (Boolean&)
+{
+  os << "::CORBA::Boolean " << STRS[EXTRACT_TMP] << " = false;"
+     << "::CORBA::Any::to_boolean " << STRS[EXTRACT] 
+     << " (" << STRS[EXTRACT_TMP] << ");";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (Octet&)
+{
+  os << "::CORBA::Octet " << STRS[EXTRACT_TMP] << " = 0;"
+     << "::CORBA::Any::to_octet " << STRS[EXTRACT] 
+     << " (" << STRS[EXTRACT_TMP] << ");";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (Char&)
+{
+  os << "::CORBA::Char " << STRS[EXTRACT_TMP] << " = 0;"
+     << "::CORBA::Any::to_char " << STRS[EXTRACT] 
+     << " (" << STRS[EXTRACT_TMP] << ");";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (Wchar&)
+{
+  os << "::CORBA::WChar " << STRS[EXTRACT_TMP] << " = 0;"
+     << "::CORBA::Any::to_wchar " << STRS[EXTRACT] 
+     << " (" << STRS[EXTRACT_TMP] << ");";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (Short&)
+{
+  os << "::CORBA::Short " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (UnsignedShort&)
+{
+  os << "::CORBA::UShort " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (Long&)
+{
+  os << "::CORBA::Long " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (UnsignedLong&)
+{
+  os << "::CORBA::ULong " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (LongLong&)
+{
+  os << "::CORBA::LongLong " << STRS[EXTRACT] 
+     << " = ACE_CDR_LONGLONG_INITIALIZER;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (UnsignedLongLong&)
+{
+  os << "::CORBA::ULongLong " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (Float&)
+{
+  os << "::CORBA::Float " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (Double&)
+{
+  os << "::CORBA::Double " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (String&)
+{
+  os << "char * " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (Wstring&)
+{
+  os << "::CORBA::WChar * " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (Object&)
+{
+  os << "::CORBA::Object_ptr " << STRS[EXTRACT] 
+     << " = ::CORBA::Object::_nil ();";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (ValueBase&)
+{
+  os << "::CORBA::ValueBase * " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (Any&)
+{
+  os << "::CORBA::Any * " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (SemanticGraph::Enum& e)
+{
+  os << e.scoped_name () << "" << STRS[EXTRACT] << ";";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (SemanticGraph::Struct& s)
+{
+  os << s.scoped_name () << "" << STRS[EXTRACT] << ";";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (SemanticGraph::Union& u)
+{
+  os << u.scoped_name () << "" << STRS[EXTRACT] << ";";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (SemanticGraph::UnboundedSequence& s)
+{
+  os << s.scoped_name () << " * " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (SemanticGraph::Interface& i)
+{
+  os << i.scoped_name () << "_ptr " << STRS[EXTRACT] << " = "
+     << i.scoped_name () << "::_nil ();";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (SemanticGraph::ValueType& v)
+{
+  os << v.scoped_name () << " * " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (SemanticGraph::EventType& e)
+{
+  os << e.scoped_name () << " * " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (SemanticGraph::Component& c)
+{
+  os << c.scoped_name () << "_ptr " << STRS[EXTRACT] << " = "
+     << c.scoped_name () << "::_nil ();";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (SemanticGraph::Home& h)
+{
+  os << h.scoped_name () << "_ptr " << STRS[EXTRACT] << " = "
+     << h.scoped_name () << "::_nil ();";
+}
+
+// ====================================================================
+
+AssignFromExtractedEmitter::AssignFromExtractedEmitter (ostream& os_)
+  : TypeNameEmitter (os_)
+{
+}
+
+void
+AssignFromExtractedEmitter::traverse (Boolean&)
+{
+  os << STRS[EXTRACT] << ".ref_";
+}
+
+void
+AssignFromExtractedEmitter::traverse (Octet&)
+{
+  os << STRS[EXTRACT] << ".ref_";
+}
+
+void
+AssignFromExtractedEmitter::traverse (Char&)
+{
+  os << STRS[EXTRACT] << ".ref_";
+}
+
+void
+AssignFromExtractedEmitter::traverse (Wchar&)
+{
+  os << STRS[EXTRACT] << ".ref_";
+}
+
+void
+AssignFromExtractedEmitter::traverse (Short&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (UnsignedShort&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (Long&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (UnsignedLong&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (LongLong&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (UnsignedLongLong&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (Float&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (Double&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (String&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (Wstring&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (Object&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (ValueBase&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (Any&)
+{
+  os << "*" << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (SemanticGraph::Enum&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (SemanticGraph::Struct&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (SemanticGraph::Union&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (SemanticGraph::UnboundedSequence&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (SemanticGraph::Interface&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (SemanticGraph::ValueType&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (SemanticGraph::EventType&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (SemanticGraph::Component&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (SemanticGraph::Home&)
+{
+  os << STRS[EXTRACT];
+}
 
