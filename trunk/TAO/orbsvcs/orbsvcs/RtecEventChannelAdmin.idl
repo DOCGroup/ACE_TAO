@@ -285,14 +285,14 @@ module RtecEventChannelAdmin
   {
     /// A change in the list of consumers has ocurred.
     /**
-     * The disjunctionof the subscriptions is sent to the
+     * The disjunction of the subscriptions is sent to the
      * observer.
      */
     void update_consumer (in ConsumerQOS sub);
 
     /// A change in the list of suppliers has ocurred.
     /**
-     * The list of all the event publicastions is passed to the
+     * The list of all the event publications is passed to the
      * observer.
      */
     void update_supplier (in SupplierQOS pub);
