@@ -1,3 +1,12 @@
+Sat Dec 29 18:36:13 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS.i (putenv): Fixed a typo.  Thanks to Venkita for
+ 	  reporting this.
+	
+	* ace/OS.i (getenv): Return ACE_NOTSUP_RETURN(0) if we're
+	  compiling on a platform that lacks getenv(), e.g., WinCE.
+  	  Thanks to Venkita for reporting this.
+
 Sat Dec 29 16:14:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/OS.h: 
