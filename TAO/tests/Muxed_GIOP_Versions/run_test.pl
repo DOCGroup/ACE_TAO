@@ -2,7 +2,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id run_test.pl,v 1.9 2001/08/28 13:25:54 oci Exp$
+# $Id$
 # -*- perl -*-
 
 use lib '../../../bin';
