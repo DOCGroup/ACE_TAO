@@ -196,10 +196,10 @@
 // System include files are not in sys/, this gets rid of warning.
 #define __NO_INCLUDE_WARN__
 
-#if _POSIX_VERSION >= 199009L
-// The following are patches for LynxOS 4.0.0, which we'll add as soon
-// as we know the right incantations to avoid breaking earlier
-// versions of LynxOS!
+// socket.h from LynxOS 4.0.x defines SOCK_MAXADDRLEN.  Versions
+// of socket.h found on earlier releases of LynxOS do not define it.
+#include <socket.h>
+# if _POSIX_VERSION >= 199506L && defined (SOCK_MAXADDRLEN)
 
 // "changes signedness" error (OS.i and many other files)
 #define ACE_HAS_SOCKLEN_T
@@ -214,7 +214,7 @@
 
 // Requested for example: $ACE_ROOT/examples/IPC_SAP/DEV_SAP 
 #define ACE_HAS_TERM_IOCTLS
-#endif /* _POSIX_VERSION */
+#endif /* _POSIX_VERSION && SOCK_MAXADDRLEN */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */
