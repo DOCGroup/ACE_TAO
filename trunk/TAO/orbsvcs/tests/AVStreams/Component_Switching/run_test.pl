@@ -5,7 +5,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib '../../../../../bin';
+use lib $ENV{'ACE_ROOT'}."/bin";
 use PerlACE::Run_Test;
 
 # amount of delay between running the servers
@@ -21,16 +21,16 @@ $makefile = PerlACE::LocalFile ("input");
 
 unlink $nsior;
 
-$NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
-$SV1  = new PerlACE::Process ("sender", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
-$SV2  = new PerlACE::Process ("sender", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
-$SV3  = new PerlACE::Process ("sender", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
-$RE1 = new PerlACE::Process ("receiver", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s distributer -r receiver1 -f output1");
-$RE2 = new PerlACE::Process ("receiver", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s distributer -r receiver2 -f output2");
-$DI1 = new PerlACE::Process ("distributer", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
-$DI2 = new PerlACE::Process ("distributer", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
-$DI3 = new PerlACE::Process ("distributer", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
-$DI4 = new PerlACE::Process ("distributer", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
+$NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-ORBDottedDecimalAddresses 1 -ORBEndpoint iiop://128.89.73.40:0 -o $nsior");
+$SV1  = new PerlACE::Process ("sender", "-ORBDottedDecimalAddresses 1 ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
+$SV2  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
+$SV3  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
+$RE1 = new PerlACE::Process ("receiver", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s distributer -r receiver1 -f output1");
+$RE2 = new PerlACE::Process ("receiver", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s distributer -r receiver2 -f output2");
+$DI1 = new PerlACE::Process ("distributer", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
+$DI2 = new PerlACE::Process ("distributer", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
+$DI3 = new PerlACE::Process ("distributer", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
+$DI4 = new PerlACE::Process ("distributer", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
 
 print STDERR "\nReceiver 1 --> Receiver 2 --> Distributer 1 --> Sender1 --> Distributer 2 --> Distributer 3 --> Sender2 --> Sender3 --> Distributer4\n\n";
 
@@ -90,16 +90,11 @@ print STDERR "Starting Sender3\n";
 
 $SV3->Spawn ();
 
-sleep $distributer_time;
+sleep $distributor_time;
 
 print STDERR "\nStarting Distributer 4\n\n";
 
-$distributer4 = $DI4->SpawnWaitKill (1500);
-
-if ($distributer4 != 0) {
-    print STDERR "ERROR: distributer4 returned $distributer4\n";
-    $status = 1;
-}
+$DI4->Spawn ();
 
 $sender2 = $SV2->TerminateWaitKill (5);
 
@@ -154,6 +149,12 @@ $sender = $SV1->TerminateWaitKill (5);
 
 if ($sender != 0) {
     print STDERR "ERROR: sender returned $sender\n";
+    $status = 1;
+}
+
+$distributer4 = $DI4->TerminateWaitKill (5);
+if ($distributer4 != 0) {
+    print STDERR "ERROR: distributer4 returned $distributer4\n";
     $status = 1;
 }
 

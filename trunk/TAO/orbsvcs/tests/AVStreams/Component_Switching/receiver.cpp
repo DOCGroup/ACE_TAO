@@ -71,17 +71,6 @@ Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flows
       int result =
         connection_manager->streamctrls ().find (flowname);
 
-      /// If the flowname is found.
-      if (result == 0)
-        {
-          ACE_DEBUG ((LM_DEBUG, "\nReceiver switching distributers handle connection requested\n\n"));
-
-          ///Destroy old stream with the same flowname.
-
-          connection_manager->destroy (flowname);
-
-        }
-
       /// Store the related streamctrl.
       connection_manager->add_streamctrl (flowname.c_str (),
                                          this);

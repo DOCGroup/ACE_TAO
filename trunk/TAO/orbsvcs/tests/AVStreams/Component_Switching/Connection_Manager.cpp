@@ -438,43 +438,24 @@ Connection_Manager::add_streamctrl (const ACE_CString &flowname,
                                     ACE_ENV_ARG_DECL)
 {
   // Get the stream controller for this endpoint.
-  CORBA::Any_ptr streamctrl_any =
+  CORBA::Any_var streamctrl_any =
     endpoint->get_property_value ("Related_StreamCtrl"
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   AVStreams::StreamCtrl_ptr streamctrl;
 
-  *streamctrl_any >>= streamctrl;
-
-  this->streamctrls_.bind (flowname,
-                           streamctrl);
+  if( streamctrl_any.in() >>= streamctrl )
+  {
+    // the CORBA::Any_var owns the pointer, so we should
+    // _duplicate it before passing it around
+    AVStreams::StreamCtrl::_duplicate( streamctrl );
+    this->streamctrls_.unbind(flowname);
+    this->streamctrls_.bind (flowname,
+                             streamctrl);
+  }
 }
 
-void
-Connection_Manager::destroy (ACE_ENV_SINGLE_ARG_DECL)
-{
-  AVStreams::flowSpec stop_spec;
-
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Connection_Manager::destroy\n"));
-
-  StreamCtrls::iterator iterator = this->streamctrls_.begin ();
-  int size = this->streamctrls_.current_size ();
-  for (int i = 0 ; i < size; i++)
-    {
-      (*iterator).int_id_->destroy (stop_spec
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-      iterator.advance ();
-    }
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Finished with the destroy\n"));
-}
 
 void
 Connection_Manager::destroy (const ACE_CString &flowname
@@ -484,12 +465,14 @@ Connection_Manager::destroy (const ACE_CString &flowname
   this->receivers_.unbind (flowname);
 
   AVStreams::StreamCtrl_var streamctrl;
-  this->streamctrls_.unbind (flowname,
+  this->streamctrls_.find (flowname,
                              streamctrl);
 
   AVStreams::flowSpec stop_spec;
   streamctrl->destroy (stop_spec
                        ACE_ENV_ARG_PARAMETER);
+
+  this->streamctrls_.unbind(flowname);
   ACE_CHECK;
 }
 

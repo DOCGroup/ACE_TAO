@@ -64,9 +64,6 @@ public:
   void connect_to_sender (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Connect to the sender that we found.
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // Destroy all streams.
-
   void destroy (const ACE_CString &flowname
                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Destroy streams associated with <flowname>.

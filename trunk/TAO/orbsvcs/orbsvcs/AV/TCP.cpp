@@ -354,7 +354,6 @@ TAO_AV_TCP_Connector::TAO_AV_TCP_Connector (void)
 
 TAO_AV_TCP_Connector::~TAO_AV_TCP_Connector (void)
 {
-  delete this->entry_->handler ();
 }
 
 int
