@@ -1,3 +1,8 @@
+Mon Oct 16 11:17:08 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Makefile.am:
+          Fixed misnamed file.
+
 Mon Oct 16 11:07:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Log_Msg.cpp:
