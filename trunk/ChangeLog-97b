@@ -1,3 +1,19 @@
+Sun Oct 26 00:31:10 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Moved the CORBA portability macros from
+ 	  CORBA_Handler.h into OS.h so they will be accessible from TAO.
+
+	* ace/Filecache.cpp (finish): Replaced filename_ with filename()
+ 	  so that "const correctness" would work with template
+ 	  specialization.  Go figure!
+
+        * TAO/tests/IDL_Cubit/Makefile: Enhanced the "realclean" target to
+          remove the generated IDL stubs and skeletons.
+
+        * ace/OS.cpp (ace_sysconf_dump): Made a minor change to OS.cpp
+          to fix some typos.  Thanks to Wei Chiang <chiang@tele.nokia.fi>
+          for reporting this.
+
 Sun Oct 26 00:06:17 1997    <irfan@TWOSTEP>
 
 	* ace/Strategies_T.cpp (~ACE_Cached_Connect_Strategy): Must set
@@ -115,15 +131,6 @@ Sat Oct 25 17:41:57 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
         * examples/Timer_Queue/main_thread.cpp: 
           Added "#pragma instantiate" for template instantiations on 
           platforms that use pragmas instead, like SGI.
-
-Sat Oct 25 15:18:34 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * TAO/tests/IDL_Cubit/Makefile: Enhanced the "realclean" target to
-          remove the generated IDL stubs and skeletons.
-
-        * ace/OS.cpp (ace_sysconf_dump): Made a minor change to OS.cpp
-          to fix some typos.  Thanks to Wei Chiang <chiang@tele.nokia.fi>
-          for reporting this.
 
 Sat Oct 25 4:44:00 1997  Carlos O'Ryan <coryan@cs.wustl.edu>
 

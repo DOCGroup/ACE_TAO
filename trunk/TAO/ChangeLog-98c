@@ -1,9 +1,19 @@
+Sun Oct 26 00:32:29 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* TAO/TAO_IDL/fe/idl.ll: Reverted a change that Carlos had
+ 	overwritten.  I guess he's not getting enough sleep these
+ 	days... ;-)
+
 Sun Oct 26 00:31:38 1997    <irfan@TWOSTEP>
 
 	* tao/orb_core.i (hash_i): Redid the specialization in view of the
  	  new changes.
 
 Sat Oct 25 18:14:14 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp (be_interface): Worked around a
+ 	nasty MSVC++ compiler bug that doesn't like CORBA::Object
+	(object_ptr).  So we use an existing ACE macro for this.
 
 	* TAO_IDL/be/be_interface.cpp (be_interface): Fixed yet another
  	round of uninitialized data members.  It is clear that the
