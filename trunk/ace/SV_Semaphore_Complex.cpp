@@ -156,11 +156,11 @@ ACE_SV_Semaphore_Complex::open (const char *name,
 		     flags, initial_value, nsems, perms);
 }
 
-// Close a ACE_SV_Semaphore. Unlike the remove above, this function is
-// for a process to call before it exits, when it is done with the
-// ACE_SV_Semaphore. We "decrement" the counter of processes using the
-// ACE_SV_Semaphore, and if this was the last one, we can remove the
-// ACE_SV_Semaphore.
+// Close a ACE_SV_Semaphore.  Unlike the remove above, this function
+// is for a process to call before it exits, when it is done with the
+// ACE_SV_Semaphore.  We "decrement" the counter of processes using
+// the ACE_SV_Semaphore, and if this was the last one, we can remove
+// the ACE_SV_Semaphore.
 
 int 
 ACE_SV_Semaphore_Complex::close (void)
@@ -193,10 +193,8 @@ ACE_SV_Semaphore_Complex::close (void)
   else
     {
       int result = ACE_OS::semop (this->internal_id_, 
-			    &ACE_SV_Semaphore_Complex::op_unlock_[0], 1);
-
+				  &ACE_SV_Semaphore_Complex::op_unlock_[0], 1);
       this->init ();
-
       return result;
     }
 }

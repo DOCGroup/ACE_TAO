@@ -26,7 +26,7 @@
 
 class ACE_Export ACE_TTY_IO : public ACE_DEV_IO
   // = TITLE
-  //     Class definitions for TTY-specific features.
+  //     Class definitions for platform specific TTY features.
   //   
   // = DESCRIPTION
   //     This class represents an example interface for a specific

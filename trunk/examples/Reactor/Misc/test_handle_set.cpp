@@ -3,24 +3,22 @@
 
 #include "ace/Handle_Set.h"
 
-#define IS_ODD(X) (((X) & 1) != 0)
-
 void
 test1 (int count)
 {
   int duplicates = 0;
-  int sets	 = 0;
-  int clears	 = 0;
+  int sets = 0;
+  int clears = 0;
 
   ACE_Handle_Set handle_set;
 
   ACE_OS::srand (ACE_OS::time (0L));
 
-  for (int i = 0; i < count; i++)
+  for (int j = 0; j < count; j++)
     {
       int i = int (ACE_OS::rand () % ACE_Handle_Set::MAXSIZE);
 
-      if (IS_ODD (i))
+      if (ACE_ODD (i))
 	{
 	  if (handle_set.is_set (i))
 	    duplicates++;

@@ -19,16 +19,16 @@
 
 #include "ace/Service_Object.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Signal.h"
 #include "ace/Set.h"
-#include "ace/Proactor.h"
-#include "ace/ReactorEx.h"
 
 // Forward decl.
 class ACE_Service_Repository;
 class ACE_Service_Record;
 class ACE_Allocator;
 class ACE_Reactor;
-//class ACE_Proactor;
+class ACE_Proactor;
+class ACE_ReactorEx;
 
 struct ACE_Static_Svc_Descriptor
 {
@@ -346,5 +346,7 @@ private:
 
 // These must go here to avoid circular includes...
 #include "ace/Reactor.h"
+#include "ace/Proactor.h"
+#include "ace/ReactorEx.h"
 #include "ace/Svc_Conf_Tokens.h"
 #endif /* ACE_SERVICE_CONFIG_H */

@@ -69,7 +69,7 @@ Test_Task::open (void *args)
 }
 
 int 
-Test_Task::close (u_long flags)
+Test_Task::close (u_long)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, reclock_, -1);
 
@@ -81,8 +81,8 @@ Test_Task::close (u_long flags)
 }
 
 int 
-Test_Task::put (ACE_Message_Block *mb, 
-		ACE_Time_Value *tv)
+Test_Task::put (ACE_Message_Block *,
+		ACE_Time_Value *)
 {
   return 0;
 }
@@ -106,15 +106,15 @@ Test_Task::svc (void)
 }
 
 int 
-Test_Task::handle_close (ACE_HANDLE fd, 
-			 ACE_Reactor_Mask close_mask)
+Test_Task::handle_close (ACE_HANDLE,
+			 ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) handle_close\n"));
   return 0;
 }
 
 int 
-Test_Task::handle_input (ACE_HANDLE fd)
+Test_Task::handle_input (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) handle_input\n"));
 
