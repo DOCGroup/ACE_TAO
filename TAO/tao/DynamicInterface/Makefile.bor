@@ -32,7 +32,6 @@ INCLUDES = *.h *.inl
 LIBFILES = \
         $(ACE_LIB) \
         $(TAO_LIB) \
-        $(TAO_PORTABLESERVER_LIB) \
-        $(TAO_MESSAGING_LIB)
+        $(TAO_PORTABLESERVER_LIB) 
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

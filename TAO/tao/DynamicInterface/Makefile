@@ -12,7 +12,7 @@ LIBNAME  = libTAO_DynamicInterface
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-ACE_SHLIBS = -lTAO_Messaging -lTAO_PortableServer -lTAO -lACE
+ACE_SHLIBS = -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

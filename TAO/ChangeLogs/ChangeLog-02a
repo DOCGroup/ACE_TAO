@@ -1,3 +1,15 @@
+Sun Mar  3 17:48:19 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
+	  Remove include of "tao/Messaging/Asynch_Reply_Dispatcher.h"
+
+	* tao/DynamicInterface/Request.h:
+	  Remove include of "tao/Messaging/MessagingC.h"
+ 
+	* tao/DynamicInterface/Makefile:
+	* tao/DynamicInterface/Makefile.bor:
+	  Remove TAO_Messaging library.
+
 Sun Mar  3 17:35:32 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/performance-tests/EC_Federated_Scalability/Makefile:
