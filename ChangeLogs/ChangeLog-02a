@@ -1,3 +1,11 @@
+Wed Nov 15 08:32:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * apps/JAWS/server/Makefile:
+        * performance-tests/Misc/Makefile:
+          Change dependencies to ensure that the libraries are created
+          before we attempt to link the binaries, otherwise the
+          compilation fails with parallel builds.
+
 Tue Nov 14 17:55:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Makefile:

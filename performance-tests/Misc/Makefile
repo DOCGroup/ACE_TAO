@@ -22,7 +22,7 @@ LIB     = libPerf.a
 FILES   = basic_func
 LSRC    = $(addsuffix .cpp,$(FILES))
 LOBJ    = $(addsuffix .o,$(FILES))
-LDLIBS  = -lPerf
+LDLIBS  = #-lPerf
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 # See comment above about only building libPerf.a for max performance.
@@ -62,6 +62,14 @@ endif
 
 # For make depend.
 PSRC = $(addsuffix .cpp, $(BIN))
+
+ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
+    ifeq ($(static_libs_only),1)
+$(VBIN): $(VLIB)
+    else
+$(VBIN): $(VSHLIB)
+    endif
+endif # ! Other
 
 #----------------------------------------------------------------------------
 #       Dependencies
