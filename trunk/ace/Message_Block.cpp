@@ -1,4 +1,3 @@
-// Message_Block.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -125,15 +124,15 @@ ACE_Data_Block::size (size_t length)
       // We need to resize!
       char *buf;
       ACE_ALLOCATOR_RETURN (buf,
-			    (char *) this->allocator_strategy_->malloc (length),
-			    -1);
+                            (char *) this->allocator_strategy_->malloc (length),
+                            -1);
 
       ACE_OS::memcpy (buf, this->base_, this->cur_size_);
       if (ACE_BIT_DISABLED (this->flags_, ACE_Message_Block::DONT_DELETE))
-	this->allocator_strategy_->free ((void *) this->base_);
+        this->allocator_strategy_->free ((void *) this->base_);
       else
-	// We now assume ownership.
-	ACE_CLR_BITS (this->flags_, ACE_Message_Block::DONT_DELETE);
+        // We now assume ownership.
+        ACE_CLR_BITS (this->flags_, ACE_Message_Block::DONT_DELETE);
 
       this->max_size_ = length;
       this->cur_size_ = length;
@@ -181,11 +180,11 @@ ACE_Data_Block::ACE_Data_Block (void)
 }
 
 ACE_Data_Block::ACE_Data_Block (size_t size,
-				ACE_Message_Block::ACE_Message_Type msg_type,
-				const char *msg_data,
-				ACE_Allocator *allocator_strategy,
-				ACE_Lock *locking_strategy,
-				ACE_Message_Block::Message_Flags flags)
+                                ACE_Message_Block::ACE_Message_Type msg_type,
+                                const char *msg_data,
+                                ACE_Allocator *allocator_strategy,
+                                ACE_Lock *locking_strategy,
+                                ACE_Message_Block::Message_Flags flags)
   : type_ (msg_type),
     cur_size_ (size),
     max_size_ (size),
@@ -204,27 +203,27 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
 
   if (msg_data == 0)
     ACE_ALLOCATOR (this->base_,
-		   (char *) this->allocator_strategy_->malloc (size));
+                   (char *) this->allocator_strategy_->malloc (size));
   else
     this->base_ = (char *) msg_data;
 }
 
 ACE_Message_Block::ACE_Message_Block (const char *data,
-				      size_t size)
+                                      size_t size)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
   if (this->init_i (size,    // size
-		    MB_DATA, // type
-		    0,       // cont
-		    data,    // data
-		    0,       // allocator
-		    0,       // locking strategy
-		    ACE_Message_Block::DONT_DELETE, // flags
-		    0, // priority
-                    ACE_Time_Value::zero, // execution time
-                    ACE_Time_Value::max, // absolute time of deadline
-		    0) == -1) // data block
+                    MB_DATA, // type
+                    0,       // cont
+                    data,    // data
+                    0,       // allocator
+                    0,       // locking strategy
+                    ACE_Message_Block::DONT_DELETE, // flags
+                    0, // priority
+                    ACE_Time_Value::zero,     // execution time
+                    ACE_Time_Value::max_time, // absolute time of deadline
+                    0) == -1) // data block
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
@@ -233,116 +232,116 @@ ACE_Message_Block::ACE_Message_Block (void)
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
   if (this->init_i (0,       // size
-		    MB_DATA, // type
-		    0,       // cont
-		    0,       // data
-		    0,       // allocator
-		    0,       // locking strategy
-		    ACE_Message_Block::DONT_DELETE, // flags
-		    0, // priority
-                    ACE_Time_Value::zero, // execution time
-                    ACE_Time_Value::max, // absolute time of deadline
-		    0) == -1) // data block
+                    MB_DATA, // type
+                    0,       // cont
+                    0,       // data
+                    0,       // allocator
+                    0,       // locking strategy
+                    ACE_Message_Block::DONT_DELETE, // flags
+                    0, // priority
+                    ACE_Time_Value::zero,     // execution time
+                    ACE_Time_Value::max_time, // absolute time of deadline
+                    0) == -1) // data block
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
 ACE_Message_Block::ACE_Message_Block (size_t size,
-				      ACE_Message_Type msg_type,
-				      ACE_Message_Block *msg_cont,
-				      const char *msg_data,
-				      ACE_Allocator *allocator_strategy,
-				      ACE_Lock *locking_strategy,
-				      u_long priority,
+                                      ACE_Message_Type msg_type,
+                                      ACE_Message_Block *msg_cont,
+                                      const char *msg_data,
+                                      ACE_Allocator *allocator_strategy,
+                                      ACE_Lock *locking_strategy,
+                                      u_long priority,
                                       const ACE_Time_Value & execution_time,
                                       const ACE_Time_Value & deadline_time)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
   if (this->init_i (size,
-		    msg_type,
-		    msg_cont,
-		    msg_data,
-		    allocator_strategy,
-		    locking_strategy,
-		    msg_data ? ACE_Message_Block::DONT_DELETE : 0,
-		    priority,
+                    msg_type,
+                    msg_cont,
+                    msg_data,
+                    allocator_strategy,
+                    locking_strategy,
+                    msg_data ? ACE_Message_Block::DONT_DELETE : 0,
+                    priority,
                     execution_time,
                     deadline_time,
-		    0) == -1) // data block
+                    0) == -1) // data block
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
 int
 ACE_Message_Block::init (size_t size,
-			 ACE_Message_Type msg_type,
-			 ACE_Message_Block *msg_cont,
-			 const char *msg_data,
-			 ACE_Allocator *allocator_strategy,
-			 ACE_Lock *locking_strategy,
-			 u_long priority,
+                         ACE_Message_Type msg_type,
+                         ACE_Message_Block *msg_cont,
+                         const char *msg_data,
+                         ACE_Allocator *allocator_strategy,
+                         ACE_Lock *locking_strategy,
+                         u_long priority,
                          const ACE_Time_Value & execution_time,
                          const ACE_Time_Value & deadline_time)
 {
   ACE_TRACE ("ACE_Message_Block::init");
 
   return this->init_i (size,
-		       msg_type,
-		       msg_cont,
-		       msg_data,
-		       allocator_strategy,
-		       locking_strategy,
-		       msg_data ? ACE_Message_Block::DONT_DELETE : 0,
-		       priority,
+                       msg_type,
+                       msg_cont,
+                       msg_data,
+                       allocator_strategy,
+                       locking_strategy,
+                       msg_data ? ACE_Message_Block::DONT_DELETE : 0,
+                       priority,
                        execution_time,
                        deadline_time,
-		       0); // data block
+                       0); // data block
 }
 
 int
 ACE_Message_Block::init (const char *data,
-			 size_t size)
+                         size_t size)
 {
   ACE_TRACE ("ACE_Message_Block::init");
   // Should we also initialize all the other fields, as well?
 
   return this->init_i (size,    // size
-		       MB_DATA, // type
-		       0,       // cont
-		       data,    // data
-		       0,       // allocator
-		       0,       // locking strategy
-		       ACE_Message_Block::DONT_DELETE,  // flags
-		       0,  // priority
-                       ACE_Time_Value::zero, // execution time
-                       ACE_Time_Value::max, // absolute time of deadline
-		       0); // data block
+                       MB_DATA, // type
+                       0,       // cont
+                       data,    // data
+                       0,       // allocator
+                       0,       // locking strategy
+                       ACE_Message_Block::DONT_DELETE,  // flags
+                       0,  // priority
+                       ACE_Time_Value::zero,     // execution time
+                       ACE_Time_Value::max_time, // absolute time of deadline
+                       0); // data block
 }
 
 ACE_Message_Block::ACE_Message_Block (size_t size,
-				      ACE_Message_Type msg_type,
-				      ACE_Message_Block *msg_cont,
-				      const char *msg_data,
-				      ACE_Allocator *allocator_strategy,
-				      ACE_Lock *locking_strategy,
-				      Message_Flags flags,
-				      u_long priority,
+                                      ACE_Message_Type msg_type,
+                                      ACE_Message_Block *msg_cont,
+                                      const char *msg_data,
+                                      ACE_Allocator *allocator_strategy,
+                                      ACE_Lock *locking_strategy,
+                                      Message_Flags flags,
+                                      u_long priority,
                                       const ACE_Time_Value & execution_time,
                                       const ACE_Time_Value & deadline_time,
-				      ACE_Data_Block *db)
+                                      ACE_Data_Block *db)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
   if (this->init_i (size,
-		    msg_type,
-		    msg_cont,
-		    msg_data,
-		    allocator_strategy,
-		    locking_strategy,
-		    flags,
-		    priority,
+                    msg_type,
+                    msg_cont,
+                    msg_data,
+                    allocator_strategy,
+                    locking_strategy,
+                    flags,
+                    priority,
                     execution_time,
                     deadline_time,
-		    db) == -1)
+                    db) == -1)
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
@@ -351,31 +350,31 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block)
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
   if (this->init_i (0,         // size
-		    MB_NORMAL, // type
-		    0,         // cont
-		    0,         // data
-		    0,         // allocator
-		    0,         // locking strategy
-		    0,         // flags
-		    0,         // priority
+                    MB_NORMAL, // type
+                    0,         // cont
+                    0,         // data
+                    0,         // allocator
+                    0,         // locking strategy
+                    0,         // flags
+                    0,         // priority
                     ACE_Time_Value::zero, // execution time
                     ACE_Time_Value::max, // absolute time of deadline
-		    data_block) == -1) // data block
+                    data_block) == -1) // data block
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
 int
 ACE_Message_Block::init_i (size_t size,
-			   ACE_Message_Type msg_type,
-			   ACE_Message_Block *msg_cont,
-			   const char *msg_data,
-			   ACE_Allocator *allocator_strategy,
-			   ACE_Lock *locking_strategy,
-			   Message_Flags flags,
-			   u_long priority,
+                           ACE_Message_Type msg_type,
+                           ACE_Message_Block *msg_cont,
+                           const char *msg_data,
+                           ACE_Allocator *allocator_strategy,
+                           ACE_Lock *locking_strategy,
+                           Message_Flags flags,
+                           u_long priority,
                            const ACE_Time_Value & execution_time,
                            const ACE_Time_Value & deadline_time,
-			   ACE_Data_Block *db)
+                           ACE_Data_Block *db)
 {
   ACE_TRACE ("ACE_Message_Block::init_i");
 
@@ -391,13 +390,13 @@ ACE_Message_Block::init_i (size_t size,
     // Allocate the <ACE_Data_Block> portion, which is reference
     // counted.
     ACE_NEW_RETURN (db,
-		    ACE_Data_Block (size,
-				    msg_type,
-				    msg_data,
-				    allocator_strategy,
-				    locking_strategy,
-				    flags),
-		    -1);
+                    ACE_Data_Block (size,
+                                    msg_type,
+                                    msg_data,
+                                    allocator_strategy,
+                                    locking_strategy,
+                                    flags),
+                    -1);
 
   // Reset the data_block_ pointer.
   this->data_block (db);
@@ -453,13 +452,13 @@ ACE_Data_Block::release (ACE_Lock *lock)
     {
       // Make sure that the lock passed in and our lock are the same
       if (lock == this->locking_strategy_)
-	// In this case no locking is required.
-	lock_to_be_used = 0;
+        // In this case no locking is required.
+        lock_to_be_used = 0;
 
       // The lock passed in does not match our lock
       else
-	// Lock to be used is our lock
-	lock_to_be_used = this->locking_strategy_;
+        // Lock to be used is our lock
+        lock_to_be_used = this->locking_strategy_;
     }
   // This is the case when no lock was passed in
   else
@@ -502,17 +501,17 @@ ACE_Message_Block::release (void)
 
       // if we have a lock
       if (lock != 0)
-	{
-	  // One guard for all
-	  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *lock, 0);
+        {
+          // One guard for all
+          ACE_GUARD_RETURN (ACE_Lock, ace_mon, *lock, 0);
 
-	  // Call non-guarded release with <lock>
-	  result = this->release_i (lock);
-	}
+          // Call non-guarded release with <lock>
+          result = this->release_i (lock);
+        }
       // This is the case when we have a valid data block but no lock
       else
-	// Call non-guarded release with no lock
-	result = this->release_i (0);
+        // Call non-guarded release with no lock
+        result = this->release_i (0);
     }
   else
     // This is the case when we don't even have a valid data block
@@ -609,22 +608,22 @@ ACE_Message_Block::duplicate (void) const
   // the message block fields, but a reference counted duplicate of
   // the <ACE_Data_Block>.
   ACE_NEW_RETURN (nb,
-		  ACE_Message_Block (0, // size
-				     ACE_Message_Type (0), // type
-				     0, // cont
-				     0, // data
-				     0, // allocator
-				     0, // locking strategy
-				     0, // flags
-				     this->priority_, // priority
+                  ACE_Message_Block (0, // size
+                                     ACE_Message_Type (0), // type
+                                     0, // cont
+                                     0, // data
+                                     0, // allocator
+                                     0, // locking strategy
+                                     0, // flags
+                                     this->priority_, // priority
                                      this->execution_time_, // execution time
                                      this->deadline_time_, // absolute time to deadline
-				     // Get a pointer to a
-				     // "duplicated" <ACE_Data_Block>
-				     // (will simply increment the
-				     // reference count).
-				     this->data_block ()->duplicate ()), // data block
-		  0);
+                                     // Get a pointer to a
+                                     // "duplicated" <ACE_Data_Block>
+                                     // (will simply increment the
+                                     // reference count).
+                                     this->data_block ()->duplicate ()), // data block
+                  0);
 
   // Set the read and write pointers in the new <Message_Block> to the
   // same relative offset as in the existing <Message_Block>.  Note
@@ -641,10 +640,10 @@ ACE_Message_Block::duplicate (void) const
       // If things go wrong, release all of our resources and return
       // 0.
       if (nb->cont_ == 0)
-	{
-	  nb->release ();
-	  nb = 0;
-	}
+        {
+          nb->release ();
+          nb = 0;
+        }
     }
 
   return nb;
@@ -673,13 +672,13 @@ ACE_Data_Block::clone (ACE_Message_Block::Message_Flags mask) const
   ACE_Data_Block *nb;
 
   ACE_NEW_RETURN (nb,
-		  ACE_Data_Block (this->max_size_, // size
-				  this->type_,     // type
-				  0,               // data
-				  this->allocator_strategy_, // allocator
-				  this->locking_strategy_, // locking strategy
-				  this->flags_), // flags
-		  0);
+                  ACE_Data_Block (this->max_size_, // size
+                                  this->type_,     // type
+                                  0,               // data
+                                  this->allocator_strategy_, // allocator
+                                  this->locking_strategy_, // locking strategy
+                                  this->flags_), // flags
+                  0);
 
   // Copy all of the payload memory into the new object.
   ACE_OS::memcpy (nb->base_, this->base_, this->max_size_);
@@ -704,16 +703,16 @@ ACE_Message_Block::clone (Message_Flags mask) const
 
   ACE_Message_Block *nb =
     new ACE_Message_Block (0, // size
-			   ACE_Message_Type (0), // type
-			   0, // cont
-			   0, // data
-			   0, // allocator
-			   0, // locking strategy
-			   0, // flags
-			   this->priority_, // priority
+                           ACE_Message_Type (0), // type
+                           0, // cont
+                           0, // data
+                           0, // allocator
+                           0, // locking strategy
+                           0, // flags
+                           this->priority_, // priority
                            this->execution_time_, // execution time
                            this->deadline_time_, // absolute time to deadline
-			   db); // data_block
+                           db); // data_block
   if (nb == 0)
     {
       db->release ();
@@ -762,13 +761,13 @@ ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (u_long static_bit_fi
 {
 }
 // ctor
-  
+
 ACE_Dynamic_Message_Strategy::~ACE_Dynamic_Message_Strategy ()
 {
 }
 // dtor
 
-void 
+void
 ACE_Dynamic_Message_Strategy::dump (void) const
 {
   ACE_TRACE ("ACE_Dynamic_Message_Strategy::dump");
@@ -815,14 +814,14 @@ ACE_Deadline_Message_Strategy:: ACE_Deadline_Message_Strategy (u_long static_bit
 {
 }
 // ctor
-  
+
 ACE_Deadline_Message_Strategy::~ACE_Deadline_Message_Strategy ()
 {
 }
 // dtor
 
 
-void 
+void
 ACE_Deadline_Message_Strategy::dump (void) const
 {
   ACE_TRACE ("ACE_Deadline_Message_Strategy::dump");
@@ -854,14 +853,14 @@ ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (u_long static_bit_fiel
 {
 }
 // ctor
-  
+
 ACE_Laxity_Message_Strategy::~ACE_Laxity_Message_Strategy ()
 {
 }
 // dtor
 
 
-void 
+void
 ACE_Laxity_Message_Strategy::dump (void) const
 {
   ACE_TRACE ("ACE_Laxity_Message_Strategy::dump");
@@ -894,5 +893,3 @@ template class ACE_Guard<ACE_Lock>;
 // #pragma instantiate ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >
 #pragma instantiate ACE_Guard<ACE_Lock>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-

@@ -81,9 +81,9 @@ public:
     MB_PCEVENT  = 0x8b, // post an event to an event queue
 
     // Message class masks
-    MB_NORMAL	= 0x00, // Normal priority messages
+    MB_NORMAL   = 0x00, // Normal priority messages
     MB_PRIORITY = 0x80, // High priority control messages
-    MB_USER	= 0x200 // User-defined control messages
+    MB_USER     = 0x200 // User-defined control messages
   };
 
   typedef u_long Message_Flags;
@@ -91,7 +91,7 @@ public:
   enum
   {
     DONT_DELETE = 01, // Don't delete the data on exit since we don't own it.
-    USER_FLAGS = 0x1000	// user defined flags start here
+    USER_FLAGS = 0x1000 // user defined flags start here
   };
 
   // = Initialization and termination.
@@ -102,21 +102,21 @@ public:
   // Create an <ACE_Message_Block> that owns the <ACE_Data_Block> *.
 
   ACE_Message_Block (const char *data,
-		     size_t size = 0);
+                     size_t size = 0);
   // Create a Message Block that assumes ownership of <data> without
   // copying it (i.e., we don't delete it since we don't malloc it!).
   // Note that the <size> of the <Message_Block> will be <size>, but
   // the <length> will be 0 until <wr_ptr> is set.
 
   ACE_Message_Block (size_t size,
-		     ACE_Message_Type type = MB_DATA,
-		     ACE_Message_Block *cont = 0,
-		     const char *data = 0,
-		     ACE_Allocator *allocator_strategy = 0,
-		     ACE_Lock *locking_strategy = 0,
-		     u_long priority = 0,
+                     ACE_Message_Type type = MB_DATA,
+                     ACE_Message_Block *cont = 0,
+                     const char *data = 0,
+                     ACE_Allocator *allocator_strategy = 0,
+                     ACE_Lock *locking_strategy = 0,
+                     u_long priority = 0,
                      const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
-                     const ACE_Time_Value & deadline_time = ACE_Time_Value::max);
+                     const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
@@ -129,21 +129,21 @@ public:
   // <wr_ptr> is set.
 
   int init (const char *data,
-	    size_t size = 0);
+            size_t size = 0);
   // Create a Message Block that assumes ownership of <data> (i.e.,
   // doesn't delete it since it didn't malloc it!).  Note that the
   // <size> of the <Message_Block> will be <size>, but the <length>
   // will be 0 until <wr_ptr> is set.
 
   int init (size_t size,
-	    ACE_Message_Type type = MB_DATA,
-	    ACE_Message_Block *cont = 0,
-	    const char *data = 0,
-	    ACE_Allocator *allocator_strategy = 0,
-	    ACE_Lock *locking_strategy = 0,
-	    u_long priority = 0,
+            ACE_Message_Type type = MB_DATA,
+            ACE_Message_Block *cont = 0,
+            const char *data = 0,
+            ACE_Allocator *allocator_strategy = 0,
+            ACE_Lock *locking_strategy = 0,
+            u_long priority = 0,
             const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
-            const ACE_Time_Value & deadline_time = ACE_Time_Value::max);
+            const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
@@ -247,8 +247,8 @@ public:
 
 #if 0
   void base (char *data,
-	     size_t size,
-	     Message_Flags = DONT_DELETE);
+             size_t size,
+             Message_Flags = DONT_DELETE);
   // Set message data (doesn't reallocate).
 #endif /* 0 */
 
@@ -324,32 +324,32 @@ public:
 private:
   // = Internal initialization methods.
   ACE_Message_Block (size_t size,
-		     ACE_Message_Type type,
-		     ACE_Message_Block *cont,
-		     const char *data,
-		     ACE_Allocator *allocator_strategy,
-		     ACE_Lock *locking_strategy,
-		     Message_Flags flags,
-		     u_long priority,
+                     ACE_Message_Type type,
+                     ACE_Message_Block *cont,
+                     const char *data,
+                     ACE_Allocator *allocator_strategy,
+                     ACE_Lock *locking_strategy,
+                     Message_Flags flags,
+                     u_long priority,
                      const ACE_Time_Value & execution_time,
                      const ACE_Time_Value & deadline_time,
-		     ACE_Data_Block *db);
+                     ACE_Data_Block *db);
   // Perform the actual initialization.
 
   ACE_Message_Block *release_i (ACE_Lock *lock);
   // Internal release implementation
 
   int init_i (size_t size,
-	      ACE_Message_Type type,
-	      ACE_Message_Block *cont,
-	      const char *data,
-	      ACE_Allocator *allocator_strategy,
-	      ACE_Lock *locking_strategy,
-	      Message_Flags flags,
-	      u_long priority,
+              ACE_Message_Type type,
+              ACE_Message_Block *cont,
+              const char *data,
+              ACE_Allocator *allocator_strategy,
+              ACE_Lock *locking_strategy,
+              Message_Flags flags,
+              u_long priority,
               const ACE_Time_Value & execution_time,
               const ACE_Time_Value & deadline_time,
-	      ACE_Data_Block *db);
+              ACE_Data_Block *db);
   // Perform the actual initialization.
 
   char *rd_ptr_;
@@ -404,11 +404,11 @@ public:
   // Default "do-nothing" constructor.
 
   ACE_Data_Block (size_t size,
-		  ACE_Message_Block::ACE_Message_Type msg_type,
-		  const char *msg_data,
-		  ACE_Allocator *allocator_strategy,
-		  ACE_Lock *locking_strategy,
-		  ACE_Message_Block::Message_Flags flags);
+                  ACE_Message_Block::ACE_Message_Type msg_type,
+                  const char *msg_data,
+                  ACE_Allocator *allocator_strategy,
+                  ACE_Lock *locking_strategy,
+                  ACE_Message_Block::Message_Flags flags);
   // Initialize.
 
   virtual ~ACE_Data_Block (void);
@@ -424,8 +424,8 @@ public:
   // Get message data pointer
 
   void base (char *data,
-	     size_t size,
-	     ACE_Message_Block::Message_Flags mflags = ACE_Message_Block::DONT_DELETE);
+             size_t size,
+             ACE_Message_Block::Message_Flags mflags = ACE_Message_Block::DONT_DELETE);
   // Set message data pointer (doesn't reallocate).
 
   char *end (void) const;
@@ -524,7 +524,7 @@ class ACE_Export ACE_Dynamic_Message_Strategy
   //     An abstract base class which provides dynamic priority evaluation
   //     methods for use by the ACE_Dynamic_Message_Queue class
   //     or any other class which needs to manage the priorities
-  //     of a collection of ACE_Message_Blocks dynamically 
+  //     of a collection of ACE_Message_Blocks dynamically
   //
   // = DESCRIPTION
   //     Methods for deadline and laxity based priority evaluation
@@ -536,7 +536,7 @@ class ACE_Export ACE_Dynamic_Message_Strategy
   //     priority field of 10 bits.  This corresponds to the initial
   //     values of the static class members.  To provide a different
   //     partitioning, assign a different set of values to the static
-  //     class memebers before using the static member functions.  
+  //     class memebers before using the static member functions.
 public:
 
   enum Priority_Status
@@ -544,7 +544,7 @@ public:
     PENDING     = 0x01, // message can still make its deadline
     LATE        = 0x02, // message cannot make its deadline
     BEYOND_LATE = 0x04, // message is so late its priority is undefined
-    ANY_STATUS  = 0x07  // mask to match any priority status 
+    ANY_STATUS  = 0x07  // mask to match any priority status
   };
   // message priority status: values are defined as bit flags
   // so that status combinations may be specified easily.
@@ -554,7 +554,7 @@ public:
                                 u_long dynamic_priority_max,
                                 u_long dynamic_priority_offset);
   // ctor
-  
+
   virtual ~ACE_Dynamic_Message_Strategy ();
   // virtual dtor
 
@@ -591,7 +591,7 @@ public:
 
 protected:
 
-  virtual void convert_priority (ACE_Time_Value & priority, 
+  virtual void convert_priority (ACE_Time_Value & priority,
                                  const ACE_Message_Block & mb) = 0;
   // hook method for dynamic priority conversion
 
@@ -599,7 +599,7 @@ protected:
   // this is a bit mask with all ones in the static bit field
 
   u_long static_bit_field_shift_;
-  // this is a left shift value to make room for static bit 
+  // this is a left shift value to make room for static bit
   // field: this value should be the logarithm base 2 of
   // (static_bit_field_mask_ + 1)
 
@@ -611,12 +611,12 @@ protected:
 
   ACE_Time_Value max_late_;
   // maximum late time value that can be represented
- 
+
   ACE_Time_Value min_pending_;
   // minimum pending time value that can be represented
 
   ACE_Time_Value pending_shift_;
-  // time value by which to shift pending priority 
+  // time value by which to shift pending priority
 };
 
 class ACE_Export ACE_Deadline_Message_Strategy : public ACE_Dynamic_Message_Strategy
@@ -632,7 +632,7 @@ public:
   virtual ~ACE_Deadline_Message_Strategy ();
   // virtual dtor
 
-  virtual void convert_priority (ACE_Time_Value & priority, 
+  virtual void convert_priority (ACE_Time_Value & priority,
                                  const ACE_Message_Block & mb);
   // dynamic priority conversion function based on time to deadline
 
@@ -655,7 +655,7 @@ public:
   // virtual dtor
 
 
-  virtual void convert_priority (ACE_Time_Value & priority, 
+  virtual void convert_priority (ACE_Time_Value & priority,
                                  const ACE_Message_Block & mb);
   // dynamic priority conversion function based on laxity
 
@@ -670,4 +670,3 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_MESSAGE_BLOCK_H */
-

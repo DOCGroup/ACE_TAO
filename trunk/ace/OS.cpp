@@ -66,8 +66,8 @@ ACE_OS::netdb_release (void)
 const ACE_Time_Value ACE_Time_Value::zero;
 
 // Static constant representing `maximum-time'.
-const ACE_Time_Value ACE_Time_Value::max (LONG_MAX, 
-                                          ACE_ONE_SECOND_IN_USECS - 1);
+const ACE_Time_Value ACE_Time_Value::max_time (LONG_MAX,
+                                               ACE_ONE_SECOND_IN_USECS - 1);
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 
