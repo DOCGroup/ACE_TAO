@@ -86,7 +86,7 @@ public:
   // Null constructor.
 
   ACE_TPQ_Entry (const ACE_Token_Proxy *proxy,
-		 const ASYS_TCHAR *client_id);
+                 const ASYS_TCHAR *client_id);
   // Construction.
 
   ACE_TPQ_Entry (const ACE_TPQ_Entry &rhs);
@@ -175,7 +175,7 @@ class ACE_Export ACE_TSS_TPQ_Entry : public ACE_TPQ_ENTRY
   //     Not a public interface.
 public:
   ACE_TSS_TPQ_Entry (const ACE_Token_Proxy *proxy,
-		     const ASYS_TCHAR *client_id);
+                     const ASYS_TCHAR *client_id);
   // These are passed to the constructor of ACE_TPQ_Entry in
   // make_TSS_TYPE
 
@@ -272,7 +272,7 @@ public:
   // Destructor
 
   void enqueue (ACE_TPQ_Entry* new_entry,
-		int position);
+                int position);
   // Enqueue a proxy, nesting level, client_id, and a magic cookie at
   // the given position in the list.  If the position is -1, we
   // enqueue at the end of the list (I think).
@@ -334,15 +334,15 @@ public:
   // Destructor
 
   virtual int acquire (ACE_TPQ_Entry *caller,
-		       int ignore_deadlock,
-		       int notify) = 0;
+                       int ignore_deadlock,
+                       int notify) = 0;
   // No implementation.
 
   virtual int tryacquire (ACE_TPQ_Entry *caller) = 0;
   // No implementation.
 
   virtual int renew (ACE_TPQ_Entry *caller,
-		     int requeue_position) = 0;
+                     int requeue_position) = 0;
   // No implementation.
 
   virtual int release (ACE_TPQ_Entry *caller) = 0;
@@ -460,8 +460,8 @@ public:
   // token.
 
   virtual int acquire (ACE_TPQ_Entry *caller,
-		       int ignore_deadlock,
-		       int notify);
+                       int ignore_deadlock,
+                       int notify);
   // Returns 0 on success, -1 on failure with ACE_LOG_MSG->errnum() as
   // the reason.  If errnum == EWOULDBLOCK, and notify == 1,
   // ACE_Token_Proxy::sleep_hook() has been called on the current owner
@@ -472,7 +472,7 @@ public:
   // same as acquire, but fails if would block
 
   virtual int renew (ACE_TPQ_Entry *caller,
-		     int requeue_position);
+                     int requeue_position);
   // An optimized method that efficiently reacquires the token if no
   // other threads are waiting.  This is useful for situations where
   // you don't want to degrade the quality of service if there are
@@ -548,8 +548,8 @@ public:
   // token.
 
   virtual int acquire (ACE_TPQ_Entry *caller,
-		       int ignore_deadlock,
-		       int notify);
+                       int ignore_deadlock,
+                       int notify);
   // Returns 0 on success, -1 on failure with ACE_LOG_MSG->errnum() as
   // the reason.  If errnum == EWOULDBLOCK, and notify == 1,
   // ACE_Token_Proxy::sleep_hook() has been called on the current owner
@@ -560,7 +560,7 @@ public:
   // same as acquire except fails on would block
 
   virtual int renew (ACE_TPQ_Entry *caller,
-		     int requeue_position);
+                     int requeue_position);
   // An optimized method that efficiently reacquires the token if no
   // other threads are waiting.  This is useful for situations where
   // you don't want to degrade the quality of service if there are
@@ -697,8 +697,8 @@ public:
   // Death.
 
   virtual int open (const ASYS_TCHAR *name,
-		    int ignore_deadlock = 0,
-		    int debug = 0);
+                    int ignore_deadlock = 0,
+                    int debug = 0);
   // <name> is the string uniquely identifying the token.
   // <ignore_deadlock> can be 1 to disable deadlock notifications.
   // <debug> prints debug messages.
@@ -711,15 +711,15 @@ public:
   // multiple proxies to the same token.
 
   virtual int acquire (int notify = 0,
-		       void (*sleep_hook)(void *) = 0,
-		       ACE_Synch_Options &options =
-		       ACE_Synch_Options::defaults);
+                       void (*sleep_hook)(void *) = 0,
+                       ACE_Synch_Options &options =
+                       ACE_Synch_Options::defaults);
   // Calls acquire on the token.  Blocks the calling thread if would
   // block.
 
   virtual int renew (int requeue_position = -1,
-		     ACE_Synch_Options &options =
-		     ACE_Synch_Options::defaults);
+                     ACE_Synch_Options &options =
+                     ACE_Synch_Options::defaults);
   // Calls renew on the token.  Blocks the calling thread if would
   // block.
 
@@ -727,24 +727,24 @@ public:
   // Calls renew on the token.
 
   virtual int release (ACE_Synch_Options &options =
-		       ACE_Synch_Options::defaults);
+                       ACE_Synch_Options::defaults);
   // Calls release on the token.
 
   virtual int remove (ACE_Synch_Options &options =
-		      ACE_Synch_Options::defaults);
+                      ACE_Synch_Options::defaults);
   // Calls remove on the token.
 
   virtual int acquire_read (int notify = 0,
-			    void (*sleep_hook)(void *) = 0,
-			    ACE_Synch_Options &options =
-			    ACE_Synch_Options::defaults);
+                            void (*sleep_hook)(void *) = 0,
+                            ACE_Synch_Options &options =
+                            ACE_Synch_Options::defaults);
   // Since the locking mechanism doesn't support read locks then this
   // just calls <acquire>.
 
   virtual int acquire_write (int notify = 0,
-			     void (*sleep_hook)(void *) = 0,
-			     ACE_Synch_Options &options =
-			     ACE_Synch_Options::defaults);
+                             void (*sleep_hook)(void *) = 0,
+                             ACE_Synch_Options &options =
+                             ACE_Synch_Options::defaults);
   // Since the locking mechanism doesn't support write locks then this
   // just calls <acquire>.
 
@@ -814,7 +814,7 @@ protected:
   // proxies can reference the same ACE_Mutex_Token.
 
   int handle_options (ACE_Synch_Options &options,
-		      ACE_TOKEN_CONST::COND_VAR &cv);
+                      ACE_TOKEN_CONST::COND_VAR &cv);
   // Handles cond_var waits.
 
   ACE_TSS_TPQ_Entry waiter_;
@@ -831,32 +831,32 @@ class ACE_Export ACE_Null_Token : public ACE_Token_Proxy
   // = TITLE
   //   No op class for nonthreaded platform protocols.
 public:
-  ACE_INLINE_FOR_GNUC ACE_Null_Token (void);
+  ACE_Null_Token (void) {}
   // Construction.
 
-  ~ACE_Null_Token (void);
+  ~ACE_Null_Token (void) {}
   // Destructor
 
   virtual int acquire (int /* notify */ = 0,
-		       void (* /* sleep_hook */ )(void *) = 0,
-		       ACE_Synch_Options & /* options */ =
-		       ACE_Synch_Options::defaults) { return 0; }
+                       void (* /* sleep_hook */ )(void *) = 0,
+                       ACE_Synch_Options & /* options */ =
+                       ACE_Synch_Options::defaults) { return 0; }
   // Acquire.
 
   virtual int renew (int /* requeue_position */ = -1,
-		     ACE_Synch_Options & /* options */ =
-		     ACE_Synch_Options::defaults) { return 0; }
+                     ACE_Synch_Options & /* options */ =
+                     ACE_Synch_Options::defaults) { return 0; }
   // Renew.
 
   virtual int tryacquire (void (* /* sleep_hook */)(void *) = 0) { return 0; }
   // Try acquire.
 
   virtual int release (ACE_Synch_Options & /* options */ =
-		       ACE_Synch_Options::defaults) { return 0; }
+                       ACE_Synch_Options::defaults) { return 0; }
   // Release.
 
   virtual int remove (ACE_Synch_Options & /* options */ =
-		      ACE_Synch_Options::defaults) { return 0; }
+                      ACE_Synch_Options::defaults) { return 0; }
   // Remove.
 
   virtual ACE_Token_Proxy *clone (void) const { return new ACE_Null_Token; }
@@ -891,8 +891,8 @@ class ACE_Export ACE_Local_Mutex : public ACE_Token_Proxy
   //   ACE_Local_Mutex are that of a mutex.
 public:
   ACE_Local_Mutex (const ASYS_TCHAR *token_name = 0,
-		   int ignore_deadlock = 0,
-		   int debug = 0);
+                   int ignore_deadlock = 0,
+                   int debug = 0);
   // <token_name> uniquely id's the token.
   // <ignore_deadlock> will allow deadlock to occur (useful for
   // testing).  <debug> prints a bunch of messages.
@@ -941,8 +941,8 @@ public:
   // = Initialization and termination.
 
   ACE_Local_RLock (const ASYS_TCHAR *token_name = 0,
-		   int ignore_deadlock = 0,
-		   int debug = 0);
+                   int ignore_deadlock = 0,
+                   int debug = 0);
   // <token_name> uniquely id's the token.
   // <ignore_deadlock> will allow deadlock to occur (useful for
   // testing).  <debug> prints a bunch of messages.
@@ -994,8 +994,8 @@ public:
   // = Initialization and termination.
 
   ACE_Local_WLock (const ASYS_TCHAR *token_name = 0,
-		   int ignore_deadlock = 0,
-		   int debug = 0);
+                   int ignore_deadlock = 0,
+                   int debug = 0);
   // <token_name> uniquely id's the token.
   // <ignore_deadlock> will allow deadlock to occur (useful for
   // testing).  <debug> prints a bunch of messages.
