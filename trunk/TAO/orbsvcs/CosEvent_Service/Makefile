@@ -26,9 +26,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
-  ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-    BIN = $(BIN_UNCHECKED)
-  endif # ACE_HAS_GNUG_PRE_2_8
+  BIN = $(BIN_UNCHECKED)
 endif # CosEvent
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU

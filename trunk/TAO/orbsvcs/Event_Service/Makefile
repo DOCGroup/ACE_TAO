@@ -23,9 +23,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (RTOLDEvent,$(findstring RTOLDEvent,$(TAO_ORBSVCS)))
-  ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-    BIN = $(BIN2)
-  endif # ACE_HAS_GNUG_PRE_2_8
+  BIN = $(BIN2)
 endif # RTOLDEvent
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU

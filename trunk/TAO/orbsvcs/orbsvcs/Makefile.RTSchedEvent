@@ -29,14 +29,12 @@ override TAO_IDLFLAGS +=
 
 IDL_FILES +=
 
-ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
 CPP_SRCS += \
         Event/EC_Sched_Filter \
         Event/EC_Sched_Filter_Builder \
         Event/EC_Priority_Scheduling \
         Event/EC_Priority_Dispatching \
 	Event/EC_Sched_Factory
-endif # ACE_HAS_GNUG_PRE_2_8
 
 CPP_SRCS += \
         Event/EC_Gateway_Sched

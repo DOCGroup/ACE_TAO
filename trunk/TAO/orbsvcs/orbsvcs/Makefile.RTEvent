@@ -39,7 +39,6 @@ IDL_FILES += \
     RtecEventChannelAdmin \
     RtecUDPAdmin
 
-ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
 CPP_SRCS += \
         Event/EC_Event_Channel \
         Event/EC_ConsumerAdmin \
@@ -80,7 +79,6 @@ CPP_SRCS += \
         Event/EC_Masked_Type_Filter \
         Event/EC_Prefix_Filter_Builder \
         Event/EC_And_Filter
-endif # ACE_HAS_GNUG_PRE_2_8
 
 CPP_SRCS += \
         Event_Utilities \

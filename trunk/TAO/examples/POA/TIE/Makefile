@@ -33,14 +33,6 @@ TAO_IDLFLAGS += -Ge 1
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
-
-  # Because older g++ cannot handle nested classes properly, this test
-  # will not build on g++ prior to 2.8.0.
-  all clean realclean:
-	@echo POA/TIE is not built with older versions of g++
-
-else # ! ACE_HAS_GNUG_PRE_2_8
 ifeq (cxvx,$(findstring cxvx,$(CXX)))
 
   # Green Hills for VxWorks can't build this test.  It runs into
@@ -48,7 +40,7 @@ ifeq (cxvx,$(findstring cxvx,$(CXX)))
   all clean realclean:
 	@echo POA/TIE is not built with Green Hills $(CXX).
 
-else # ! ACE_HAS_GNUG_PRE_2_8  &&  ! ghs/VxWorks
+else # ! ghs/VxWorks
 ifeq (gcx,$(findstring gcx,$(CXX)))
 
   # Green Hills for Solaris can't build this test.  It runs into
@@ -56,7 +48,7 @@ ifeq (gcx,$(findstring gcx,$(CXX)))
   all clean realclean:
 	@echo POA/TIE is not built with Green Hills $(CXX).
 
-else # ! ACE_HAS_GNUG_PRE_2_8  &&  ! ghs
+else # ! ghs/VxWorks && ! ghs/Solaris
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
@@ -86,7 +78,6 @@ realclean: clean
 
 endif # ! ghs/Solaris
 endif # ! ghs/VxWorks
-endif # ! ACE_HAS_GNUG_PRE_2_8
 
 #----------------------------------------------------------------------------
 #       Dependencies

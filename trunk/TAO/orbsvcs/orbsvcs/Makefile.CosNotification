@@ -23,14 +23,6 @@ ACE_SHLIBS = -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -lTAO_PortableServer -l
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
-ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
-  # Since older g++ cannot handle templates properly,
-  # Notify will not build on g++ prior to 2.8.0.
-all clean realclean:
-	@echo TAO Notification Service is not built with older versions of g++
-
-else # ACE_HAS_GNUG_PRE_2_8
-
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
 override TAO_IDLFLAGS += \
@@ -118,7 +110,6 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
 realclean: clean
 	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
-endif # ACE_HAS_GNUG_PRE_2_8
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------

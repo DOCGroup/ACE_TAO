@@ -32,9 +32,7 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(minimum_corba),0)
-  ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-    BIN=$(BIN_UNCHECKED)
-  endif # ACE_HAS_GNUG_PRE_2_8
+  BIN=$(BIN_UNCHECKED)
 endif # minimum_corba
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
