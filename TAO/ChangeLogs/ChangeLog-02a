@@ -1,3 +1,12 @@
+Sat Apr 29 19:26:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	  Further change to my fix of Apr 27. Used the
+	  ACE_NESTED_CLASS macro on the generation of the
+	  pointer to the ancestor's _narrow() method in
+	  _tao_QueryInterface(). Thanks to Darrell for pointing
+	  out the error in the SUNCC5 build that prompted this.
+
 Sat Apr 29 15:44:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
