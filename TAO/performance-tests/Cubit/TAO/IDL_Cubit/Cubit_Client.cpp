@@ -38,7 +38,10 @@ ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")
   "Cubit_Client::cube_long_sequence - end",
 
   "Cubit_Client::cube_octet_sequence - start",
-  "Cubit_Client::cube_octet_sequence - end"
+  "Cubit_Client::cube_octet_sequence - end",
+
+  "Cubit_Client::cube_many_sequence - start",
+  "Cubit_Client::cube_many_sequence - end",
 
   "Cubit_Client::cube_rti_data - start",
   "Cubit_Client::cube_rti_data - end"
@@ -75,9 +78,11 @@ enum
   CUBIT_CLIENT_CUBE_OCTET_SEQUENCE_START,
   CUBIT_CLIENT_CUBE_OCTET_SEQUENCE_END,
 
-  CUBIT_CLIENT_CUBE_RTI_DATA_START,
-  CUBIT_CLIENT_CUBE_RTI_DATA_END,
+  CUBIT_CLIENT_CUBE_MANY_SEQUENCE_START,
+  CUBIT_CLIENT_CUBE_MANY_SEQUENCE_END,
 
+  CUBIT_CLIENT_CUBE_RTI_DATA_START,
+  CUBIT_CLIENT_CUBE_RTI_DATA_END
 };
 
 // Setup Timeprobes
@@ -516,6 +521,7 @@ Cubit_Client::cube_long_sequence (int i, int l)
         {
           ACE_ERROR ((LM_ERROR, "** cube sequence, wrong length\n"));
           this->error_count_++;
+          return;
         }
 
       u_int rl = output->length ();
@@ -585,6 +591,7 @@ Cubit_Client::cube_octet_sequence (int i, int l)
         {
           ACE_ERROR ((LM_ERROR, "** cube octet, wrong length\n"));
           this->error_count_++;
+          return;
         }
 
       u_int rl = output->length ();
@@ -605,6 +612,91 @@ Cubit_Client::cube_octet_sequence (int i, int l)
       if (x * x *x != output[0])
         {
           ACE_ERROR ((LM_ERROR, "** cube_octet ERROR\n"));
+          this->error_count_++;
+        }
+#endif
+    }
+}
+
+// Cube the many in a sequence
+
+void
+Cubit_Client::cube_many_sequence (int i, int l)
+{
+  this->call_count_++;
+
+  Cubit::many_seq input (l);
+  input.length (l);
+
+#if 0
+  // Fill in the input sequence...
+  for (int j = 0; j < l; ++j)
+    {
+      Cubit::Many &in = input[j];
+      in.l = j;
+      in.s = j;
+      in.o = j;
+    }
+#else
+  // Just set the first item, otherwise it is hard to compare the
+  // results for longer sequences, i.e. more than just marshalling
+  // gets in the way.
+  Cubit::Many &in = input[0];
+  in.l = 4;
+  in.s = 5;
+  in.o = 6;
+#endif
+
+  Cubit::many_seq_var output;
+  Cubit::many_seq_out vout (output);
+
+  // Cube the sequence
+  {
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_LONG_SEQUENCE_START);
+
+    this->cubit_->cube_many_sequence (input, vout, this->env_);
+  }
+
+  if (this->env_.exception () != 0)
+    {
+      this->env_.print_exception ("from cube_many_sequence");
+      this->error_count_++;
+    }
+  else
+    {
+      if (output->length () != input.length ())
+        {
+          ACE_ERROR ((LM_ERROR, "** cube sequence, wrong length\n"));
+          this->error_count_++;
+          return;
+        }
+
+      u_int rl = output->length ();
+      if (input.length () < rl)
+        rl = input.length ();
+#if 0
+      for (u_int j = 0; j < rl; ++j)
+        {
+          Cubit::Many &in  = input[j];
+          Cubit::Many &out = output[j];
+
+          if (in.l * in.l * in.l != out.l || 
+              in.s * in.s * in.s != out.s ||
+              in.o * in.o * in.o != out.o)
+            {
+              ACE_ERROR ((LM_ERROR, "** cube_long_sequence ERROR\n"));
+              this->error_count_++;
+            }
+        }
+#else
+      Cubit::Many &in  = input[0];
+      Cubit::Many &out = output[0];
+
+      if (in.l * in.l * in.l != out.l || 
+          in.s * in.s * in.s != out.s ||
+          in.o * in.o * in.o != out.o)
+        {
+          ACE_ERROR ((LM_ERROR, "** cube_long_sequence ERROR\n"));
           this->error_count_++;
         }
 #endif
@@ -845,6 +937,26 @@ Cubit_Client::run (int testing_collocation)
   timer.stop ();
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_large_sequence<octet>", elapsed_time);
+
+  // SMALL MANY SEQUENCES
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_many_sequence (this->loop_count_, 4);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_small_sequence<many>", elapsed_time);
+
+  // LARGE many SEQUENCES
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_many_sequence (this->loop_count_, 1024);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_large_sequence<many>", elapsed_time);
 
   // MIXIN
   this->call_count_ = 0;
