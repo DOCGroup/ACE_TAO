@@ -53,7 +53,8 @@ be_decl::be_decl (void)
     cli_stub_any_op_gen_ (I_FALSE),
     cli_hdr_cdr_op_gen_ (I_FALSE),
     cli_stub_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_op_gen_ (I_FALSE)
+    cli_inline_cdr_op_gen_ (I_FALSE),
+    cli_inline_cdr_decl_gen_ (I_FALSE)
 {
 }
 
@@ -74,7 +75,8 @@ be_decl::be_decl (AST_Decl::NodeType type,
     cli_stub_any_op_gen_ (I_FALSE),
     cli_hdr_cdr_op_gen_ (I_FALSE),
     cli_stub_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_op_gen_ (I_FALSE)
+    cli_inline_cdr_op_gen_ (I_FALSE),
+    cli_inline_cdr_decl_gen_ (I_FALSE)
 {
 }
 
