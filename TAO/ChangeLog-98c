@@ -1,3 +1,8 @@
+Wed Apr  1 17:33:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit: Cleaned up the formatting of the code
+ 	  to conform to the TAO programming style.
+
 Wed Apr  1 11:07:53 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* orbsvcs/tests/Simulator/DOVEBrowser/VisCompFactory.java:
