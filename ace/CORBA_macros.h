@@ -166,7 +166,7 @@
       return RETV
 
 // ACE_THROW_INT should not be used by the user.
-# define ACE_THROW_INT(EXCEPTION) ACE_TRY_ENV.exception (EXCEPTION)
+# define ACE_THROW_INT(EXCEPTION) ACE_TRY_ENV.exception (new EXCEPTION)
 
 // Throwing exceptions will inevitably cause an return from the current
 // function.  These two macros should _NOT_ be used within try blocks.
