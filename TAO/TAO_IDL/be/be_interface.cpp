@@ -762,10 +762,8 @@ int be_interface::gen_server_skeletons (void)
     nl;
   //  *ss << "this->sub_ = this; // set the most derived type to be
   //  us" << nl;
-  *ss << "CORBA::Environment _tao_environment;" << nl;
-  *ss << "if (oa) oa->bind (data->profile.object_key, " << nl
-      << "                  this->_this (_tao_environment)); "
-      << "// register ourselves\n";
+  *ss << "if (oa) oa->bind (data->profile.object_key, this);"
+      << " // register ourselves\n";
 
   ss->decr_indent ();
   *ss << "}\n\n";

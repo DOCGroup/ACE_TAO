@@ -180,6 +180,10 @@ SOURCE=.\object.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\objkeyC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\objtable.cpp
 # End Source File
 # Begin Source File
@@ -293,6 +297,10 @@ SOURCE=.\nvlist.h
 # Begin Source File
 
 SOURCE=.\object.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\objkeyC.h
 # End Source File
 # Begin Source File
 

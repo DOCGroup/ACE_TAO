@@ -320,6 +320,10 @@ SOURCE=.\be\be_state_attribute.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_state_exception.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_state_operation.cpp
 # End Source File
 # Begin Source File
@@ -369,6 +373,18 @@ SOURCE=.\be\be_union_branch.cpp
 # Begin Source File
 
 SOURCE=.\be\be_union_label.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_args.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_interface.cpp
 # End Source File
 # Begin Source File
 
@@ -737,6 +753,18 @@ SOURCE=.\be_include\be_union_branch.h
 # Begin Source File
 
 SOURCE=.\be_include\be_union_label.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_args.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_interface.h
 # End Source File
 # Begin Source File
 
