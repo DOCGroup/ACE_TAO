@@ -405,8 +405,8 @@ TAO_NAMESPACE CORBA
   typedef Char &Char_out;
 
   // = String memory management.
-  TAO_NAMESPACE_INLINE_FUNCTION char* string_alloc (ULong len);
-  TAO_NAMESPACE_STORAGE_CLASS  char* string_dup (const char *);
+  TAO_NAMESPACE_INLINE_FUNCTION char *string_alloc (ULong len);
+  TAO_NAMESPACE_STORAGE_CLASS  char *string_dup (const char *);
   TAO_NAMESPACE_INLINE_FUNCTION void string_free (char *);
 
   typedef CORBA_String_var String_var;

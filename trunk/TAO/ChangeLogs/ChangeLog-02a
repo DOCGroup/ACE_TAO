@@ -1,3 +1,9 @@
+Mon Nov  6 07:35:50 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/IORManipulation/Makefile (LDFLAGS): Added back a missing
+	  '+' to '+=' so that linking works properly.  Thanks to Albert
+ 	  Wijnja <albert.wijnja@meco.nl> for reporting this.
+	
 Sat Nov  4 18:34:10 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * TAOACE.dsw:
