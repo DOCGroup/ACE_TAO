@@ -1,3 +1,8 @@
+Sun Nov 28 15:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/notify_tests.GNU:
+          Removed this file, it is not needed anymore with MPC
+
 Sun Nov 28 15:02:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* examples/Simulator/Event_Supplier/Event_Con.cpp:
