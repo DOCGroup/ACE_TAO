@@ -30,7 +30,7 @@ ACE_Reactor * g_reactor;
 */
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
-int main (int, char **)
+int main (int, char *[])
 {
   /*
     Create a Reactor instance.  Again, a global pointer isn't exactly the
