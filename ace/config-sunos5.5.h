@@ -86,7 +86,6 @@
 #   define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # endif /* __STANDARD_CXX */
 
-# define ACE_HAS_BROKEN_ENUMS /* Necessary with 1.8.9, harmless with 1.8.8. */
 # define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_LONGLONG_T /* It really doesn't have it.  Boo. */
