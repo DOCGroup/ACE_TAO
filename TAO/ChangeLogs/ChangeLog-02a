@@ -1,14 +1,25 @@
+Fri Jul 20 23:58:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp: Fixed a subtle bug. The problem was when
+	  reading  a big message. We read part of the message into a stack
+	  allocated buffer. We then grow the buffer to read the rest of
+	  the message. This was working fine. But in the read after
+	  grwoing the  buffer, if we get an error we were just returning
+	  to the reactor. This was right. But we have to queue up the
+	  message before returning to the reactor incase we get a
+	  EWOULDBLOCK.
+
 Fri Jul 20 12:58:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.h:
 	* tao/IIOP_Connection_Handler.cpp: Removed the resumption of the
 	  handler in the  handle_output () call. Looks like we dont win
 	  anything by resuming the handler at this level. We need to get
-	  back to this after 1.2 if it is required.  
+	  back to this after 1.2 if it is required.
 
 	* tao/Connection_Handler.h: Removed some of the #defines
 	* tao/orbconf.h: Moved the #defines here from
-	  Connection_handler.h. 
+	  Connection_handler.h.
 
 	* tao/Strategies/DIOP_Connection_Handler.h:
 	* tao/Strategies/DIOP_Connection_Handler.cpp:
@@ -22,10 +33,10 @@ Fri Jul 20 12:58:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 
 Fri Jul 20 09:25:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
- 
+
         * tests/ior_corbaloc/run_test.pl:
         * tests/InterOp-Naming/run_test.pl:
- 
+
           Do not include ACEutils Perl module in scripts which use
           PerlACE::Run_Test module.  ACEutils prevents
           PerlACE::Run_Test from seeing the -ExeSubDir argument.
