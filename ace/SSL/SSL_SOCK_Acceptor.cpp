@@ -114,21 +114,6 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const
       return -1;
     }
 
-  long verify_error =
-    ::SSL_get_verify_result (new_stream.ssl ());
-
-  if (verify_error != X509_V_OK)
-    {
-#ifndef ACE_NDEBUG
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) X.509 certificate verification "
-                  "error:%s\n",
-                  ::X509_verify_cert_error_string (verify_error)));
-#endif  /* ACE_NDEBUG */
-
-      return -1;
-    }
-
   return 0;
 }
 
@@ -147,12 +132,14 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   // the ACE Acceptor strategies are not designed for protocols
   // that require additional handshakes after the initial accept.
   ACE_SSL_Accept_Handler eh (new_stream);
+  ACE_Reactor_Mask reactor_mask =
+    ACE_Event_Handler::READ_MASK |
+    ACE_Event_Handler::WRITE_MASK;
 
   if (this->reactor_->register_handler (
         new_stream.get_handle (),
         &eh,
-        ACE_Event_Handler::READ_MASK |
-        ACE_Event_Handler::WRITE_MASK) == -1)
+        reactor_mask) == -1)
     return -1;
 
   // Make the current thread take ownership of the Reactor.
@@ -164,9 +151,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   while (SSL_in_accept_init (new_stream.ssl ()))
     if (this->reactor_->handle_events (timeout) == -1)
       {
-        reactor_->remove_handler (&eh,
-                                  ACE_Event_Handler::READ_MASK |
-                                  ACE_Event_Handler::WRITE_MASK);
+        (void) this->reactor_->remove_handler (&eh, reactor_mask);
         return -1;
       }
 
@@ -174,8 +159,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   // handler from the Reactor, but don't close it.
   return
     this->reactor_->remove_handler (&eh,
-                                    ACE_Event_Handler::READ_MASK |
-                                    ACE_Event_Handler::WRITE_MASK |
+                                    reactor_mask |
                                     ACE_Event_Handler::DONT_CALL);
 }
 

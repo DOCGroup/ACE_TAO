@@ -1,3 +1,16 @@
+Tue Jul 10 19:26:15 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/ace_dll.dsp:
+
+	  Disabled generation of source browse information.  It was
+	  causing problems on some existing builds that didn't use it.
+
+	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+
+	  Removed certificate verification code.  It is up to the
+	  application, not the ACE_SSL library, to perform proper
+	  certificate verification.
+
 Tue Jul 10 23:02:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * tests/Log_Msg_Test.cpp:
@@ -342,10 +355,28 @@ Fri Jul  6 08:36:20 2001  Chad Elliott  <elliott_c@ociweb.com>
           contain Other.  The netsvcs library requires Naming_Context.
 
 Fri Jul  6 05:44:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+<<<<<<< ChangeLog
+=======
 
         * ace/Makefile (LOGGING_FILES): Added support for
           Log_Msg_UNIX_Syslog.
+>>>>>>> 4.2247
 
+<<<<<<< ChangeLog
+	* ace/Makefile (LOGGING_FILES): Added support for
+	  Log_Msg_UNIX_Syslog.
+
+	* ace/Log_Msg_UNIX_Syslog.{h,cpp}:
+	* ace/Log_Msg.cpp,
+	* ace/OS.h: Added support for a new UNIX syslog backend for the
+	  ACE_Log_Msg class.  Thanks to Jerry D. De Master
+ 	  <jdemaster@rite-solutions.com> and Robert Davidson
+ 	  <robert@rdavidson.freeserve.co.uk>.
+
+	* ace/SOCK_Dgram.h: Fixed a typo in one of the send() method
+	  comments.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be> for
+ 	  reporting this.
+=======
         * ace/Log_Msg_UNIX_Syslog.{h,cpp}:
         * ace/Log_Msg.cpp,
         * ace/OS.h: Added support for a new UNIX syslog backend for the
@@ -356,6 +387,7 @@ Fri Jul  6 05:44:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
         * ace/SOCK_Dgram.h: Fixed a typo in one of the send() method
           comments.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be> for
           reporting this.
+>>>>>>> 4.2247
 
         * ace/config-macosx.h: Added a new file courtesy of John
           Zorko so that things will work on MacOSX.
@@ -404,20 +436,41 @@ Sun Jun 24 11:25:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
           bug_575.
 
 Fri Jun 22 16:52:13 2001  Balachandran Natarajan <bala@cs.wustl.edu>
+<<<<<<< ChangeLog
+=======
 
         * ace/CDR_Stream.cpp: Changed the copy constructor for the
           ACE_InputCDR's. Instead of duplicating the ACE_Data_Block we
           now use the new copy constructor in the ACE_Message_Block.
+>>>>>>> 4.2247
 
+<<<<<<< ChangeLog
+	* ace/CDR_Stream.cpp: Changed the copy constructor for the
+	  ACE_InputCDR's. Instead of duplicating the ACE_Data_Block we
+	  now use the new copy constructor in the ACE_Message_Block.
+
+	* ace/Message_Block.h:
+	* ace/Message_Block.cpp: Added a new copy constructor to the
+	  ACE_Message_Block. This copy constructor does a deep copy from
+	  the data block if the data block of the incoming message block
+	  is on the stack or does a shallow copy of the data block (by
+	  incrementing the ref count) if it is on the heap.
+=======
         * ace/Message_Block.h:
         * ace/Message_Block.cpp: Added a new copy constructor to the
           ACE_Message_Block. This copy constructor does a deep copy from
           the data block if the data block of the incoming message block
           is on the stack or does a shallow copy of the data block (by
           incrementing the ref count) if it is on the heap.
+>>>>>>> 4.2247
 
+<<<<<<< ChangeLog
+	END of entries from bug_575_stage_2.
+
+=======
         END of entries from bug_575_stage_2.
 
+>>>>>>> 4.2247
 Thu Jul  5 22:07:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * bin/auto_run_tests.lst: Added the new perl script in LongUpcalls
