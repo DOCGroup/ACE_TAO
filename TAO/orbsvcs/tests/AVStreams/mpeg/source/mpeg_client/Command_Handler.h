@@ -35,6 +35,7 @@
 #include "mpeg_shared/Video_ControlC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/SOCK_CODgram.h"
+#include "ace/SOCK_Connector.h"
 
 class Command_Handler 
   : public virtual ACE_Event_Handler

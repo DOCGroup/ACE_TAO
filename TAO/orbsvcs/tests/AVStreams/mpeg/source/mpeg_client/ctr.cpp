@@ -238,10 +238,10 @@ static void SocketRead(int s, char *buf, int size)
   for (;;)
   {
     val = read(s, ptr, remain);
-    /*
+    
     fprintf(stderr, "CTR got from %sSocket %d of %d.\n",
 	    s == videoSocket ? "video" : "audio", val, remain);
-    */
+    
     if (val == -1 && errno == EINTR)
     {
       errno = 0;
