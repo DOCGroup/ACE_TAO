@@ -257,7 +257,11 @@ OTHER_FILES = \
   Naming_Context \
   Registry_Name_Space \
   Remote_Name_Space \
-  NT_Service \
+  NT_Service 
+
+METRICS_FILES = \
+  Metrics_Cache
+
 
 TEMPLATE_FILES = \
            Acceptor \
