@@ -1,3 +1,12 @@
+Fri Jun 18 12:17:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Native_Exceptions/client.cpp (main): Caught exception
+	  <fail> is not used.
+
+	* tests/Native_Exceptions/Native_Exception.dsw:
+	* tests/Native_Exceptions/client.dsp:
+	* tests/Native_Exceptions/server.dsp: New files.
+
 Fri Jun 18 11:50:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Native_Exceptions/Makefile:
@@ -9,7 +18,7 @@ Fri Jun 18 11:50:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tests/Native_Exceptions/test_i.h:
 	* tests/Native_Exceptions/test_i.i:
 	* tests/Native_Exceptions/test_i.cpp:
-	  Added new test that shows how to write applications using native 
+	  Added new test that shows how to write applications using native
 	  C++ exceptions, without any of the ACE_TRY macros.
 
 	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
