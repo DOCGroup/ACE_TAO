@@ -51,13 +51,7 @@ ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int block, int become_owner)
   : lock_ (&l),
     owner_ (become_owner == 0 ? -1 : 0)
 {
-  if (become_owner == -1)
-    {
-      if (block)
-        this->acquire ();
-      else
-        this->tryacquire ();
-    }
+  ACE_UNUSED_ARG (block);
 }
 
 // Implicitly and automatically acquire (or try to acquire) the
