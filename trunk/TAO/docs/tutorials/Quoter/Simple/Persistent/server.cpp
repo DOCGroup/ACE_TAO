@@ -52,10 +52,10 @@ main (int argc, char *argv[])
     policies.length (2);
 
     policies[0] =
-      PortableServer::IdAssignmentPolicy::_duplicate (idassignment);
+      PortableServer::IdAssignmentPolicy::_duplicate (idassignment.in ());
 
     policies[1] =
-      PortableServer::LifespanPolicy::_duplicate (lifespan);
+      PortableServer::LifespanPolicy::_duplicate (lifespan.in ());
 
     // Create the childPOA under the RootPOA.
     PortableServer::POA_var child_poa =
@@ -76,7 +76,7 @@ main (int argc, char *argv[])
 
     // Activate the Stock_Factory object.
     child_poa->activate_object_with_id (oid.in (),
-					&stock_factory_i);
+                                        &stock_factory_i);
 
     // Get the object reference.
     CORBA::Object_var stock_factory =

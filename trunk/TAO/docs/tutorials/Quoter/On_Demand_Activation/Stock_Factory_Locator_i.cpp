@@ -12,9 +12,9 @@ Quoter_Stock_Factory_Locator_i (CORBA::ORB_ptr orb)
 }
 
 PortableServer::Servant
-Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid, 
-                                           PortableServer::POA_ptr poa, 
-                                           const char * operation, 
+Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
+                                           PortableServer::POA_ptr /*poa*/,
+                                           const char * operation,
                                            void * & cookie )
   throw (CORBA::SystemException, PortableServer::ForwardRequest)
 {
@@ -23,39 +23,39 @@ Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
   try {
 
     // Get the ObjectID in string format
-    CORBA::String_var oid_str = 
+    CORBA::String_var oid_str =
       PortableServer::ObjectId_to_string (oid);
-    
+
     // Check if the ObjectId is valid
     if (strcmp (oid_str.in (), "Quoter/Stock_Factory") != 0) {
       // Create the required servant
-      PortableServer::Servant servant = 
+      PortableServer::Servant servant =
         new Quoter_Stock_Factory_i ();
       cookie = servant;
-      
+
       return servant;
     }
     else
     {
       throw CORBA::OBJECT_NOT_EXIST ();
-    }  
+    }
   }catch (const CORBA::BAD_PARAM &) {
     throw CORBA::OBJECT_NOT_EXIST ();
   }
 }
 
-void 
-Quoter_Stock_Factory_Locator_i::postinvoke (const PortableServer::ObjectId &oid, 
-                                            PortableServer::POA_ptr poa, 
-                                            const char * operation, 
-                                            void * cookie, 
+void
+Quoter_Stock_Factory_Locator_i::postinvoke (const PortableServer::ObjectId & /*oid*/,
+                                            PortableServer::POA_ptr poa,
+                                            const char * operation,
+                                            void * cookie,
                                             PortableServer::Servant servant)
   throw (CORBA::SystemException)
 {
-  
+
   // Delete the servant as it is no longer needed.
   PortableServer::Servant my_servant = (PortableServer::Servant) cookie;
   if (servant == my_servant)
     delete servant;
-  
+
 }
