@@ -294,20 +294,25 @@ protected:
   // with the Process handle becoming signaled.  No muss, no fuss, no
   // signal handler, and no dummy handle.
 
+#if !defined(ACE_WIN32)
   virtual int handle_input (ACE_HANDLE proc);
   // Collect one (or more, on unix) Process exit status
 
-#if !defined(ACE_WIN32)
   virtual ACE_HANDLE get_handle (void) const;
   // (unix only) : return dummy handle
+#endif // !defined(ACE_WIN32)
 
   virtual int handle_signal (int signum,
                              siginfo_t * = 0,
                              ucontext_t * = 0);
-  // (unix only) : called to handle SIGCHLD; tweaks Reactor so that
-  // it'll call handle_input() synchronously
-#endif // !defined(ACE_WIN32)
-    
+  // On Unix, this routine is called asynchronously when a SIGCHLD is
+  // received.  We just tweak the reactor so that it'll call back our
+  // <handle_input> function, which allows us to handle Process exits
+  // synchronously.
+  //
+  // On Win32, this routine is called synchronously, and is passed the
+  // HANDLE of the Process that exited, so we can do all our work here
+  
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
   // we're being removed from Reactor...on unix, close bogus handle.
