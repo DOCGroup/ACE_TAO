@@ -7,6 +7,7 @@
 #define ACE_BUILD_DLL
 #include "ace/Thread.h"
 #include "ace/Synch_T.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Synch_T.i"
