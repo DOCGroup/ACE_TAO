@@ -3697,6 +3697,87 @@ fi dnl test "$ac_cv_header_sys_priocntl_h" = yes
 dnl FIXME:  How do we check for a working sbrk()?  Do we need to?
 AC_CHECK_FUNC([sbrk],, [AC_DEFINE([ACE_LACKS_SBRK])])
 
+AC_CHECK_FUNC([wcscat],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSCAT])])
+
+AC_CHECK_FUNC([wcschr],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSCHR])])
+
+AC_CHECK_FUNC([wcscmp],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSCMP])])
+
+AC_CHECK_FUNC([wcscpy],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSCPY])])
+
+AC_CHECK_FUNC([wcscspn],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSCSPN])])
+
+AC_CHECK_FUNC([wcsdup],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSDUP])])
+
+AC_CHECK_FUNC([wcsicmp],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSICMP])])
+
+AC_CHECK_FUNC([wcslen],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSLEN])])
+
+AC_CHECK_FUNC([wcsncat],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSNCAT])])
+
+AC_CHECK_FUNC([wcsncmp],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSNCMP])])
+
+AC_CHECK_FUNC([wcsncpy],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSNCPY])])
+
+AC_CHECK_FUNC([wcsnicmp],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSNICMP])])
+
+AC_CHECK_FUNC([wcspbrk],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSPBRK])])
+
+AC_CHECK_FUNC([wcsrchr],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSRCHR])])
+
+AC_CHECK_FUNC([wcsspn],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSSPN])])
+
+AC_CHECK_FUNC([wcsstr],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSSTR])])
+
+AC_CHECK_FUNC([wcstod],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSTOD])])
+
+AC_CHECK_FUNC([wcstok],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSTOK])])
+
+AC_CHECK_FUNC([wcstol],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSTOL])])
+
+AC_CHECK_FUNC([wcstoul],
+  ,
+  [AC_DEFINE([ACE_LACKS_WCSTOUL])])
+
+
 dnl Check for SYSV IPC functions
 dnl
 dnl Although Darwin/OS X does not implement any of the SysV IPC API,
