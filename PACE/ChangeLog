@@ -1,16 +1,24 @@
+Tue Jun 27 9:51:43 2000 John Heitmann <jwh1@cs.wustl.edu>
+
+        * pace/tests/Makefile
+          Changed VLDLIBS := to +=
+
+        * pace/tests/Posix_SP_Test.c
+          Included pace/stdio.h
+
 Mon Jun 26 15:07:08 2000    <luther@cs.wustl.edu>
 
 	* pace/pace/win32/pace.dsw:
-	* pace/pace/win32/pace_dll.dsp:	
-	* pace/pace/win32/pace_lib.dsp:	
+	* pace/pace/win32/pace_dll.dsp:
+	* pace/pace/win32/pace_lib.dsp:
 
 	  Updated to link correctly.
 
 Mon Jun 26 13:27:02 2000    <luther@cs.wustl.edu>
 
 	* pace/pace/win32/pace.dsw:
-	* pace/pace/win32/pace_dll.dsp:	
-	* pace/pace/win32/pace_lib.dsp:	
+	* pace/pace/win32/pace_dll.dsp:
+	* pace/pace/win32/pace_lib.dsp:
 
 	  Added to repository.
 
