@@ -12,7 +12,8 @@ OBJFILES = \
 	$(OBJDIR)\Dynamic_Implementation.obj \
 	$(OBJDIR)\ExceptionList.obj \
 	$(OBJDIR)\Request.obj \
-	$(OBJDIR)\Server_Request.obj
+	$(OBJDIR)\Server_Request.obj |
+	$(OBJDIR)\Unknown_User_Exception.obj |
 
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_DYNAMICINTERFACE_CFLAGS)

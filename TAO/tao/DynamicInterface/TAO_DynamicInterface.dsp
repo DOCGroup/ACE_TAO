@@ -186,6 +186,10 @@ SOURCE=.\Request.cpp
 
 SOURCE=.\Server_Request.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\Unknown_User_Exception.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -225,6 +229,10 @@ SOURCE=.\Request.h
 # Begin Source File
 
 SOURCE=.\Server_Request.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Unknown_User_Exception.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
