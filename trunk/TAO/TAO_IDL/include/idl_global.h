@@ -310,11 +310,19 @@ public:
   static const char *be_get_server_skeleton (String *idl_file_name);
   static const char *be_get_server_inline (String *idl_file_name);
 
-  virtual String *export_macro (void) const;
+  virtual const char* export_macro (void) const;
   // returns the macro name for exporting classes in Win32 DLL.
 
-  virtual void export_macro (String *macro_name);
+  virtual void export_macro (const char* s);
   // set the macro name for export classes in Win32 DLL.
+
+  virtual const char* export_include (void) const;
+  // returns the name of the include file that contains the export
+  // macro definition.
+
+  virtual void export_include (const char* s);
+  // set the name of the include file that contains the export
+  // macro definition.
 
 private:
   // Data
@@ -351,7 +359,8 @@ private:
 							// before?
   String                        *pd_idl_src_file;       // IDL source file
 
-  String *export_macro_;
+  char* export_macro_;
+  char* export_include_;
 };
 
 #endif	//_IDL_IDL_GLOBAL_HH

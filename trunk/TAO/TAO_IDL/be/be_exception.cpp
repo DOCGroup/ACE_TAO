@@ -113,7 +113,8 @@ be_exception::gen_client_header (void)
       ch->gen_ifdef_macro (this->flatname ());
 
       ch->indent ();
-      *ch << "class " << this->local_name ()
+      *ch << "class " << idl_global->export_macro ()
+	  << " " << this->local_name ()
 	  << " : public CORBA::UserException" << nl;
       *ch << "{" << nl
 	  << "public:\n";
@@ -175,8 +176,10 @@ be_exception::gen_client_header (void)
         {
           // we are in the ROOT scope
           ch->indent ();
-          *ch << "extern CORBA::TypeCode_ptr " << this->tc_name
-            ()->last_component () << ";\n\n";
+          *ch << "extern "
+	      << idl_global->export_macro ()
+	      << " CORBA::TypeCode_ptr "
+	      << this->tc_name ()->last_component () << ";\n\n";
         }
       ch->gen_endif ();
 

@@ -97,7 +97,8 @@ IDL_GlobalData::IDL_GlobalData()
       pd_n_alloced_file_names(0),
       pd_parse_state(PS_NoState),
       pd_idl_src_file (0),
-      export_macro_ (0)
+      export_macro_ (0),
+      export_include_ (0)
 {
   // empty
 }
@@ -577,13 +578,25 @@ IDL_GlobalData::be_get_server_inline_fname ()
   return be_get_server_inline (idl_global->idl_src_file ());
 }
 
-String *IDL_GlobalData::export_macro (void) const
+const char* IDL_GlobalData::export_macro (void) const
 {
+  if (this->export_macro_ == 0)
+    return "";
   return this->export_macro_;
 }
 
-void IDL_GlobalData::export_macro (String *s)
+void IDL_GlobalData::export_macro (const char *s)
 {
-  this->export_macro_ = s;
+  this->export_macro_ = ACE_OS::strdup (s);
+}
+
+const char* IDL_GlobalData::export_include (void) const
+{
+  return this->export_include_;
+}
+
+void IDL_GlobalData::export_include (const char *s)
+{
+  this->export_include_ = ACE_OS::strdup (s);
 }
 

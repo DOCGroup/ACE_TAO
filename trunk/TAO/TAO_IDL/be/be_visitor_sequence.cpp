@@ -136,7 +136,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     {
       // we are in the ROOT scope
       os.indent ();
-      os << "extern CORBA::TypeCode_ptr "
+      os << "extern "
+	 << idl_global->export_macro ()
+	 << " CORBA::TypeCode_ptr "
 	 << node->tc_name ()->last_component () << ";\n\n";
     }
 

@@ -145,7 +145,8 @@ be_union::gen_client_header (void)
       // generate the ifdefined macro for the array type
       ch->gen_ifdef_macro (this->flatname ());
       ch->indent (); // start with the current indentation level
-      *ch << "class " << local_name () << nl;
+      *ch << "class " << idl_global->export_macro ()
+      << " " << local_name () << nl;
       *ch << "{" << nl;
       *ch << "public:\n";
       ch->incr_indent ();
@@ -242,8 +243,10 @@ be_union::gen_client_header (void)
         {
           // we are in the ROOT scope
           ch->indent ();
-          *ch << "extern CORBA::TypeCode_ptr " << this->tc_name
-            ()->last_component () << ";\n\n";
+          *ch << "extern "
+	      << idl_global->export_macro ()
+	      << " CORBA::TypeCode_ptr "
+	      << this->tc_name ()->last_component () << ";\n\n";
         }
       ch->gen_endif ();
 
@@ -537,7 +540,8 @@ be_union::gen_var_defn (void)
   // for over here.
 
   ch->indent (); // start with whatever was our current indent level
-  *ch << "class " << namebuf << nl;
+  *ch << "class " << idl_global->export_macro ()
+      << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent ();
@@ -844,7 +848,8 @@ be_union::gen_out_defn (void)
   // generate the out definition (always in the client header)
   ch->indent (); // start with whatever was our current indent level
 
-  *ch << "class " << namebuf << nl;
+  *ch << "class " << idl_global->export_macro ()
+      << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent ();

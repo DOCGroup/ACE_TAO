@@ -74,6 +74,32 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * Since this is the dummy BE, it doesn't do anything with the passed string
  */
 void
-BE_prep_arg(char *, idl_bool)
+BE_prep_arg(char *s, idl_bool)
 {
+  const char arg_macro[]="export_macro=";
+  const char arg_include[]="export_include=";
+
+  char* last = 0;
+  for (char* arg = ACE_OS::strtok_r (s, ",", &last);
+       arg != 0;
+       arg = ACE_OS::strtok_r (0, ",", &last))
+    {
+      if (ACE_OS::strstr (arg, arg_macro) == arg)
+	{
+	  char* val = arg + sizeof (arg_macro) - 1;
+	  idl_global->export_macro (val);
+	}
+      else if (ACE_OS::strstr (arg, arg_include) == arg)
+	{
+	  char* val = arg + sizeof (arg_include) - 1;
+	  idl_global->export_include (val);
+	}
+      else
+	{
+	  cerr << idl_global->prog_name ()
+	       << ": invalid or unknown argument <"
+	       << arg
+	       << "> to back end\n";
+	}
+    }
 }

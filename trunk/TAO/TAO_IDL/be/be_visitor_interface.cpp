@@ -3,6 +3,7 @@
 //
 
 #include "idl.h"
+#include "global_extern.h"
 #include "nr_extern.h"
 #include "be.h"
 #include "be_visitor_args.h"
@@ -26,7 +27,8 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
   os->gen_ifdef_macro (node->flatname (), "_collocated");
 
   os->indent ();
-  *os << "class " << node->local_coll_name ();
+  *os << "class " << idl_global->export_macro ()
+      << " " << node->local_coll_name ();
   os->incr_indent ();
   *os << ": public virtual " << node->name ();
 

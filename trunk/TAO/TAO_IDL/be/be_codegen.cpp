@@ -220,6 +220,13 @@ TAO_CodeGen::client_header (const char *fname)
           this->client_header_->print ("#define %s\n\n", macro_name);
           *this->client_header_ << "#include \"tao/corba.h\"\n";
 
+	  if (idl_global->export_include () != 0)
+	    {
+	      *this->client_header_ << "#include \""
+				    << idl_global->export_include ()
+				    << "\"\n";
+	    }
+
 	  // We must include all the skeleton headers corresponding to
 	  // IDL files included by the current IDL file.
 	  for (size_t j = 0;
