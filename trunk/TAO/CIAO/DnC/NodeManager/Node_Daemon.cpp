@@ -29,6 +29,8 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ciao/Server_init.h"
+#include "ciao/CIAO_common.h"
 
 const char *ior_file_name_ = "nodedaemon.ior";
 char *default_svcconf_ = 0;
@@ -144,6 +146,8 @@ main (int argc, char *argv[])
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      CIAO::Server_init (orb.in ());
 
       if (parse_args (argc, argv) != 0)
         return -1;

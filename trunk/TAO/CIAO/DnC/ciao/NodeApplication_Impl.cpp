@@ -87,7 +87,11 @@ finishLaunch (const Deployment::Connections & providedReference,
     }
   }
   if (start)
-    ACE_DEBUG ((LM_DEBUG, "I don't know what I should do here!\n"));
+  {
+    ACE_DEBUG ((LM_DEBUG, "The Start value is true in FinishLaunch Call!\n"));
+    this->start ();
+    ACE_CHECK;
+  }
 }
 
 void
@@ -261,6 +265,9 @@ remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   }
 
   this->home_map_.unbind_all ();
+
+  ACE_DEBUG ((LM_DEBUG, "Shutting down this NodeApplication!\n"));
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
 void

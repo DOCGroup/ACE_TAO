@@ -1,3 +1,20 @@
+Thu Jun 10 10:17:00 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/ciao/Container_Base.h:
+	  Followed up a Jeff's Change in the old ciao.
+
+	* DnC/ExecutionManager/ExecutionManager_Impl.cpp:
+	* DnC/ExecutionManager/ExecutionManager_Impl.h:
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+	* DnC/RepositoryManager/Repository_Manager.cpp:
+	* DnC/NodeManager/Node_Daemon.cpp:
+	* DnC/ciao/NodeApplication_Impl.cpp:
+	* DnC/DomainApplicationMananger/NodeApplicationManager_Impl.cpp:
+
+	  Many adjustments, bug fixing, added missing functionalities.
+	  This is not a working version now.
+
 Wed Jun  9 11:17:31 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DnC/DomainApplicationManager_Impl.cpp
