@@ -106,6 +106,7 @@ NAMES = \
 	Timer_Queue_Test \
 	TkReactor_Test \
 	Tokens_Test \
+	TP_Reactor_Test \
 	TSS_Test \
         Vector_Test \
 	Upgradable_RW_Test \
