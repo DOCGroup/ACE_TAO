@@ -2751,7 +2751,7 @@ TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
   // sequence as a wchar string
 
   // Grab the id buffer
-  CORBA::WString id_buffer = (CORBA::WString) &id[0];
+  CORBA::WString id_buffer = (CORBA::WString) id.buffer ();
 
   // Create space and copy the contents
   return CORBA::wstring_dup (id_buffer);
@@ -2764,7 +2764,7 @@ TAO_POA::ObjectId_to_const_wstring (const PortableServer::ObjectId &id)
   // sequence as a wchar string
 
   // Grab the id buffer
-  return (CORBA::WString) &id[0];
+  return (CORBA::WString) id.buffer ();
 }
 
 char
