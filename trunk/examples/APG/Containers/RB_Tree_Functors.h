@@ -20,7 +20,7 @@ private:
   int val_;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class ACE_Less_Than<KeyType>
 {
 public:
