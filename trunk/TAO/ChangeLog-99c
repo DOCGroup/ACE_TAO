@@ -1,8 +1,31 @@
+Thu Aug 19 01:47:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/compiler.html: Added documentation for the new -Gl flag
+	  which generate locality constraint stubs/skeletons.
+
+	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/driver/drv_args.cpp: Trimmed down a lot of code
+	  generation if we are generating the locality constraint
+	  implementation templates.
+
 Wed Aug 18 21:32:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* PROBLEM-REPORT-FORM:
 	* TAO-INSTALL.html:
-	
+
 	  Updated with information about the bugzilla usage
 	  documentation.
 
@@ -21,7 +44,7 @@ Wed Aug 18 17:04:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  was initialized to 0. But if the discriminator is set
 	  to an implicit default value, the operator will just
 	  exit with a value of 0 and the (de)marshal will fail.
-	  Thanks to Anthony Shipman <als@aaii.oz.au> for 
+	  Thanks to Anthony Shipman <als@aaii.oz.au> for
 	  pointing this out and suggesting a fix (initialize
 	  the result variable to 1).
 
@@ -29,7 +52,7 @@ Wed Aug 18 16:22:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_union.cpp:
 	  Code generation for implementation of union_var's
-	  ptr() method was not happening in some cases. Thanks to 
+	  ptr() method was not happening in some cases. Thanks to
 	  Lothar Werzinger <werzinger.lothar@krones.de> for
 	  pointing this out.
 
@@ -48,7 +71,7 @@ Wed Aug 18 16:22:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Wed Aug 18 12:53:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Param_Test/run_test.pl: 
+	* tests/Param_Test/run_test.pl:
 	  Fixed typo.
 
 Wed Aug 18 10:49:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
