@@ -128,17 +128,14 @@ TAO_Tagged_Components::set_known_component_i (
 
   if (component.tag == IOP::TAG_ORB_TYPE)
     {
-  cout << "Amba 1 " << endl;
       CORBA::ULong orb_type;
       if ((cdr >> orb_type) == 0)
         return;
-
       this->orb_type_ = orb_type;
       this->orb_type_set_ = 1;
     }
   else if (component.tag == IOP::TAG_CODE_SETS)
     {
-  cout << "Amba 2 " << endl;
       CONV_FRAME::CodeSetComponentInfo ci;
       if ((cdr >> ci) == 0)
         return;
@@ -156,6 +153,7 @@ TAO_Tagged_Components::set_component_i (const IOP::TaggedComponent& component)
 {
   // @@ TODO Some components can show up multiple times, others
   //    can't find out and take appropiate action.
+
   for (CORBA::ULong i = 0; i != this->components_.length (); ++i)
     {
       if (component.tag == this->components_[i].tag)

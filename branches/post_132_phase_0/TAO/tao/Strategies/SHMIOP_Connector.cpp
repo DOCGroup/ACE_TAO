@@ -214,19 +214,16 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 
   if (result == -1)
     {
-      char buffer [MAXNAMELEN * 2];
-      desc->endpoint ()->addr_to_string (buffer,
-                                         (MAXNAMELEN * 2) - 1);
-
       // Give users a clue to the problem.
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %s:%u, connection to ")
-                      ACE_TEXT ("%s failed (%p)\n"),
+                      ACE_TEXT ("<%s:%p> failed (%p)\n"),
                       __FILE__,
                       __LINE__,
-                      buffer,
+                      shmiop_endpoint->host (),
+                      shmiop_endpoint->port (),
                       ACE_TEXT ("errno")));
         }
 
