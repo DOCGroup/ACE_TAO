@@ -162,17 +162,22 @@ private:
    ALLOCATOR *   allocator_;
 };
 
-template <class ACE_LOCK>
-class ACE_Timeprobe : public ACE_Timeprobe_Ex <ACE_LOCK, ACE_Allocator>
-{
-public:
-  // Initialize a ACE_Timeprobe with default size
-  ACE_Timeprobe (ACE_Allocator *allocator = ACE_Allocator::instance());
+// template <class ACE_LOCK>
+// class ACE_Timeprobe : public ACE_Timeprobe_Ex <ACE_LOCK, ACE_Allocator>
+// {
+// public:
+//   // Initialize a ACE_Timeprobe with default size
+//   ACE_Timeprobe (ACE_Allocator *allocator = ACE_Allocator::instance());
 
-  /// Create Timeprobes with <size> slots
-  ACE_Timeprobe (ACE_Allocator *allocator = ACE_Allocator::instance(),
-                 u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
-};
+//   /// Create Timeprobes with <size> slots
+//   ACE_Timeprobe (ACE_Allocator *allocator = ACE_Allocator::instance(),
+//                  u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
+// };
+
+/**
+ * ACE_Timeprobe
+ */
+typedef ACE_Timeprobe_Ex <ACE_LOCK, ACE_Allocator> ACE_Timeprobe;
 
 /**
  * @class ACE_Function_Timeprobe
