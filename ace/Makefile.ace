@@ -623,6 +623,72 @@ endif # GHS
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
+.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp ARGV.h \
+  pre.h \
+  ACE_export.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS.h \
+  OS_Dirent.h \
+  OS_Export.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
+  OS_String.h \
+  Basic_Types.h \
+  Basic_Types.i \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h OS.i \
+  Unbounded_Queue.h \
+  Node.h Node.cpp \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Malloc_Base.h \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  ARGV.i
+
+.obj/Argv_Type_Converter.o .obj/Argv_Type_Converter.so .shobj/Argv_Type_Converter.o .shobj/Argv_Type_Converter.so: Argv_Type_Converter.cpp \
+  Argv_Type_Converter.h \
+  pre.h \
+  ACE_export.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_Memory.h \
+  OS_Export.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Memory.inl \
+  Argv_Type_Converter.inl \
+  OS_String.h \
+  Basic_Types.h \
+  Basic_Types.i \
+  OS_String.inl
+
 .obj/Basic_Types.o .obj/Basic_Types.so .shobj/Basic_Types.o .shobj/Basic_Types.so: Basic_Types.cpp OS.h \
   pre.h \
   config-all.h \
@@ -1100,6 +1166,7 @@ endif # GHS
   Auto_Ptr.i \
   Auto_Ptr.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -1249,6 +1316,7 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -1295,72 +1363,6 @@ endif # GHS
   OS_Errno.inl \
   OS_Memory.h \
   OS_Memory.inl
-
-.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp ARGV.h \
-  pre.h \
-  ACE_export.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS.h \
-  OS_Dirent.h \
-  OS_Export.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h OS.i \
-  Unbounded_Queue.h \
-  Node.h Node.cpp \
-  Unbounded_Queue.inl \
-  Unbounded_Queue.cpp \
-  Malloc_Base.h \
-  Log_Msg.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  ARGV.i
-
-.obj/Argv_Type_Converter.o .obj/Argv_Type_Converter.so .shobj/Argv_Type_Converter.o .shobj/Argv_Type_Converter.so: Argv_Type_Converter.cpp \
-  Argv_Type_Converter.h \
-  pre.h \
-  ACE_export.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  OS_Memory.h \
-  OS_Export.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Memory.inl \
-  Argv_Type_Converter.inl \
-  OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
-  OS_String.inl
 
 .obj/Capabilities.o .obj/Capabilities.so .shobj/Capabilities.o .shobj/Capabilities.so: Capabilities.cpp \
   Capabilities.h \
@@ -1438,6 +1440,7 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -1548,8 +1551,8 @@ endif # GHS
 .obj/Configuration.o .obj/Configuration.so .shobj/Configuration.o .shobj/Configuration.so: Configuration.cpp \
   Configuration.h \
   pre.h SString.h \
-  String_Base.h \
-  ACE.h OS.h \
+  SStringfwd.h \
+  Basic_Types.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -1558,27 +1561,33 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_Dirent.h \
-  OS_Export.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
   ACE_export.h \
   Basic_Types.i \
+  String_Base.h \
+  String_Base_Const.h \
+  Global_Macros.h \
+  OS_Export.h \
+  OS_String.h \
   OS_String.inl \
   OS_Memory.h \
+  OS_Errno.h \
+  OS_Errno.inl \
   OS_Memory.inl \
+  String_Base.i \
+  Malloc_Base.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Dirent.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
+  String_Base.cpp \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -1589,12 +1598,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -1675,8 +1679,8 @@ endif # GHS
   pre.h \
   Configuration.h \
   SString.h \
-  String_Base.h \
-  ACE.h OS.h \
+  SStringfwd.h \
+  Basic_Types.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -1685,27 +1689,33 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_Dirent.h \
-  OS_Export.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
   ACE_export.h \
   Basic_Types.i \
+  String_Base.h \
+  String_Base_Const.h \
+  Global_Macros.h \
+  OS_Export.h \
+  OS_String.h \
   OS_String.inl \
   OS_Memory.h \
+  OS_Errno.h \
+  OS_Errno.inl \
   OS_Memory.inl \
+  String_Base.i \
+  Malloc_Base.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Dirent.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
+  String_Base.cpp \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -1716,12 +1726,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -2048,6 +2053,7 @@ endif # GHS
   Auto_Ptr.i \
   Auto_Ptr.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -2129,8 +2135,8 @@ endif # GHS
 
 .obj/Get_Opt.o .obj/Get_Opt.so .shobj/Get_Opt.o .shobj/Get_Opt.so: Get_Opt.cpp Get_Opt.h \
   pre.h SString.h \
-  String_Base.h \
-  ACE.h OS.h \
+  SStringfwd.h \
+  Basic_Types.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -2139,27 +2145,33 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_Dirent.h \
-  OS_Export.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
   ACE_export.h \
   Basic_Types.i \
+  String_Base.h \
+  String_Base_Const.h \
+  Global_Macros.h \
+  OS_Export.h \
+  OS_String.h \
   OS_String.inl \
   OS_Memory.h \
+  OS_Errno.h \
+  OS_Errno.inl \
   OS_Memory.inl \
+  String_Base.i \
+  Malloc_Base.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Dirent.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
+  String_Base.cpp \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -2170,12 +2182,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -2307,6 +2314,7 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -2567,9 +2575,18 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  OS_Export.h \
+  Time_Value.h \
+  Time_Value.inl \
+  Message_Block.i \
+  Message_Block_T.h \
+  Message_Block_T.i \
+  Message_Block_T.cpp \
+  Malloc_Base.h \
   OS.h \
   OS_Dirent.h \
-  OS_Export.h \
   OS_Errno.h \
   OS_Errno.inl \
   OS_Dirent.inl \
@@ -2581,18 +2598,9 @@ endif # GHS
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
-  Message_Block.i \
-  Message_Block_T.h \
-  Message_Block_T.i \
-  Message_Block_T.cpp \
-  Malloc_Base.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -2722,6 +2730,7 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -2927,6 +2936,7 @@ endif # GHS
   Unbounded_Set.cpp \
   Memory_Pool.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -3099,6 +3109,7 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -3512,8 +3523,8 @@ endif # GHS
 .obj/Logging_Strategy.o .obj/Logging_Strategy.so .shobj/Logging_Strategy.o .shobj/Logging_Strategy.so: Logging_Strategy.cpp \
   Get_Opt.h pre.h \
   SString.h \
-  String_Base.h \
-  ACE.h OS.h \
+  SStringfwd.h \
+  Basic_Types.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -3522,27 +3533,33 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_Dirent.h \
-  OS_Export.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
   ACE_export.h \
   Basic_Types.i \
+  String_Base.h \
+  String_Base_Const.h \
+  Global_Macros.h \
+  OS_Export.h \
+  OS_String.h \
   OS_String.inl \
   OS_Memory.h \
+  OS_Errno.h \
+  OS_Errno.inl \
   OS_Memory.inl \
+  String_Base.i \
+  Malloc_Base.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Dirent.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
+  String_Base.cpp \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -3553,12 +3570,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -3823,7 +3835,12 @@ endif # GHS
   Handle_Set.h \
   Handle_Set.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -3835,12 +3852,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -3941,7 +3953,12 @@ endif # GHS
   Handle_Set.h \
   Handle_Set.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -3953,12 +3970,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Malloc.i \
   Malloc_T.h \
   Malloc_Allocator.h \
@@ -5019,6 +5031,7 @@ endif # GHS
   Memory_Pool.i \
   Service_Config.h \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -5209,6 +5222,7 @@ endif # GHS
   Memory_Pool.i \
   Service_Config.h \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -5569,6 +5583,7 @@ endif # GHS
   Stream_Modules.cpp \
   Service_Config.h \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -5685,7 +5700,11 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -5697,11 +5716,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Malloc.i \
   Malloc_T.h \
   Malloc_Allocator.h \
@@ -6572,6 +6587,7 @@ endif # GHS
   Memory_Pool.i \
   Service_Config.h \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -7377,7 +7393,12 @@ endif # GHS
   Auto_Ptr.i \
   Auto_Ptr.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -7387,12 +7408,7 @@ endif # GHS
   Lib_Find.i \
   Init_ACE.h \
   Init_ACE.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Malloc.i \
   Malloc_T.h \
   Synch.h Synch.i \
@@ -7892,7 +7908,12 @@ endif # GHS
   Addr.h Addr.i \
   DEV_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -7902,12 +7923,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -7986,7 +8002,12 @@ endif # GHS
   Trace.h OS.i \
   DEV_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -7998,12 +8019,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -8089,7 +8105,12 @@ endif # GHS
   Addr.h Addr.i \
   DEV_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -8099,12 +8120,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -8191,7 +8207,12 @@ endif # GHS
   Addr.h Addr.i \
   DEV_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -8201,12 +8222,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -8546,7 +8562,12 @@ endif # GHS
   Flag_Manip.i \
   FILE_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -8556,12 +8577,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -8645,7 +8661,12 @@ endif # GHS
   Addr.h Addr.i \
   FILE_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -8655,12 +8676,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -8747,7 +8763,12 @@ endif # GHS
   Addr.h Addr.i \
   FILE_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -8757,12 +8778,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -8850,7 +8866,12 @@ endif # GHS
   Addr.h Addr.i \
   FILE_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -8860,12 +8881,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -9132,7 +9148,12 @@ endif # GHS
   Trace.h OS.i \
   SPIPE_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -9144,12 +9165,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -9233,7 +9249,12 @@ endif # GHS
   Addr.h Addr.i \
   SPIPE_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9243,12 +9264,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -9337,7 +9353,12 @@ endif # GHS
   Addr.h Addr.i \
   SPIPE_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9347,12 +9368,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -9442,7 +9458,12 @@ endif # GHS
   Addr.h Addr.i \
   SPIPE_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9452,12 +9473,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -9546,7 +9562,12 @@ endif # GHS
   Addr.h Addr.i \
   SPIPE_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9556,12 +9577,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -10058,7 +10074,12 @@ endif # GHS
   Addr.h Addr.i \
   DEV_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -10068,12 +10089,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -10308,6 +10324,7 @@ endif # GHS
   Addr.h Addr.i \
   SPIPE_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -10478,6 +10495,7 @@ endif # GHS
   Addr.h Addr.i \
   SPIPE_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -10645,6 +10663,7 @@ endif # GHS
   Addr.h Addr.i \
   SPIPE_Addr.i \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -11586,25 +11605,31 @@ endif # GHS
   ACE_export.h \
   Time_Value.inl \
   SString.h \
-  String_Base.h \
-  ACE.h OS.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  SStringfwd.h \
   Basic_Types.h \
   Basic_Types.i \
+  String_Base.h \
+  String_Base_Const.h \
+  Global_Macros.h \
+  OS_String.h \
   OS_String.inl \
   OS_Memory.h \
+  OS_Errno.h \
+  OS_Errno.inl \
   OS_Memory.inl \
+  String_Base.i \
+  Malloc_Base.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Dirent.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
+  String_Base.cpp \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -11615,12 +11640,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -12099,6 +12119,7 @@ endif # GHS
   Auto_Ptr.i \
   Auto_Ptr.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -12181,7 +12202,12 @@ endif # GHS
   Auto_Ptr.i \
   Auto_Ptr.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -12193,12 +12219,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Malloc.i \
   Malloc_T.h \
   Malloc_Allocator.h \
@@ -12283,7 +12304,11 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -12295,11 +12320,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Malloc.i \
   Malloc_T.h \
   Synch.h Synch.i \
@@ -12407,7 +12428,11 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -12419,11 +12444,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Malloc.i \
   Malloc_T.h \
   Synch.h Synch.i \
@@ -12627,6 +12648,7 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -12709,8 +12731,8 @@ endif # GHS
 .obj/Service_Manager.o .obj/Service_Manager.so .shobj/Service_Manager.o .shobj/Service_Manager.so: Service_Manager.cpp \
   Get_Opt.h pre.h \
   SString.h \
-  String_Base.h \
-  ACE.h OS.h \
+  SStringfwd.h \
+  Basic_Types.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -12719,27 +12741,33 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_Dirent.h \
-  OS_Export.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
   ACE_export.h \
   Basic_Types.i \
+  String_Base.h \
+  String_Base_Const.h \
+  Global_Macros.h \
+  OS_Export.h \
+  OS_String.h \
   OS_String.inl \
   OS_Memory.h \
+  OS_Errno.h \
+  OS_Errno.inl \
   OS_Memory.inl \
+  String_Base.i \
+  Malloc_Base.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Dirent.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
+  String_Base.cpp \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -12750,12 +12778,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -13227,6 +13250,7 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -13458,6 +13482,7 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -13581,6 +13606,7 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -13764,6 +13790,7 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -13804,9 +13831,20 @@ endif # GHS
   Basic_Types.h \
   ACE_export.h \
   Basic_Types.i \
+  Default_Constants.h \
+  CDR_Base.inl \
+  Message_Block.h \
+  Global_Macros.h \
+  OS_Export.h \
+  Time_Value.h \
+  Time_Value.inl \
+  Message_Block.i \
+  Message_Block_T.h \
+  Message_Block_T.i \
+  Message_Block_T.cpp \
+  Malloc_Base.h \
   OS.h \
   OS_Dirent.h \
-  OS_Export.h \
   OS_Errno.h \
   OS_Errno.inl \
   OS_Dirent.inl \
@@ -13816,20 +13854,9 @@ endif # GHS
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
-  CDR_Base.inl \
-  Message_Block.h \
-  Message_Block.i \
-  Message_Block_T.h \
-  Message_Block_T.i \
-  Message_Block_T.cpp \
-  Malloc_Base.h
+  Trace.h OS.i
 
 .obj/CDR_Stream.o .obj/CDR_Stream.so .shobj/CDR_Stream.o .shobj/CDR_Stream.so: CDR_Stream.cpp CDR_Stream.h \
   pre.h \
@@ -13845,28 +13872,39 @@ endif # GHS
   Basic_Types.h \
   ACE_export.h \
   Basic_Types.i \
-  OS.h \
-  OS_Dirent.h \
+  Default_Constants.h \
+  CDR_Base.inl \
+  SStringfwd.h \
+  OS_Memory.h \
   OS_Export.h \
   OS_Errno.h \
   OS_Errno.inl \
-  OS_Dirent.inl \
+  OS_Memory.inl \
   OS_String.h \
   OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
+  Message_Block.h \
+  Global_Macros.h \
   Time_Value.h \
   Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
+  Message_Block.i \
+  Message_Block_T.h \
+  Message_Block_T.i \
+  Message_Block_T.cpp \
+  Malloc_Base.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Dirent.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
-  CDR_Base.inl \
+  CDR_Stream.i \
   SString.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -13878,12 +13916,114 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
+  ACE.i Malloc.h \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  Malloc.i \
+  Malloc_T.h \
+  Synch.h Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Malloc_Allocator.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp \
+  Memory_Pool.h \
+  Event_Handler.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Unbounded_Set.h \
+  Node.h Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Memory_Pool.i \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.i
+
+.obj/Codeset_IBM1047.o .obj/Codeset_IBM1047.so .shobj/Codeset_IBM1047.o .shobj/Codeset_IBM1047.so: Codeset_IBM1047.cpp \
+  Codeset_IBM1047.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl
+
+.obj/Codeset_Registry.o .obj/Codeset_Registry.so .shobj/Codeset_Registry.o .shobj/Codeset_Registry.so: Codeset_Registry.cpp \
+  Codeset_Registry.h \
+  pre.h SString.h \
+  SStringfwd.h \
+  Basic_Types.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ACE_export.h \
+  Basic_Types.i \
+  String_Base.h \
   String_Base_Const.h \
+  Global_Macros.h \
+  OS_Export.h \
+  OS_String.h \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Memory.inl \
   String_Base.i \
   Malloc_Base.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Dirent.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h OS.i \
   String_Base.cpp \
-  Malloc.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -13927,16 +14067,15 @@ endif # GHS
   Auto_Ptr.i \
   Auto_Ptr.cpp \
   SString.i \
-  Message_Block.h \
-  Message_Block.i \
-  Message_Block_T.h \
-  Message_Block_T.i \
-  Message_Block_T.cpp \
-  CDR_Stream.i
+  CDR_Base.h \
+  CDR_Base.inl \
+  Codeset_Registry.inl
 
-.obj/Codeset_IBM1047.o .obj/Codeset_IBM1047.so .shobj/Codeset_IBM1047.o .shobj/Codeset_IBM1047.so: Codeset_IBM1047.cpp \
-  Codeset_IBM1047.h \
-  pre.h \
+.obj/Codeset_Registry_db.o .obj/Codeset_Registry_db.so .shobj/Codeset_Registry_db.o .shobj/Codeset_Registry_db.so: Codeset_Registry_db.cpp \
+  Codeset_Registry.h \
+  pre.h SString.h \
+  SStringfwd.h \
+  Basic_Types.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -13944,7 +14083,91 @@ endif # GHS
   config-g++-common.h \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl
+  ace_wchar.inl \
+  ACE_export.h \
+  Basic_Types.i \
+  String_Base.h \
+  String_Base_Const.h \
+  Global_Macros.h \
+  OS_Export.h \
+  OS_String.h \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Memory.inl \
+  String_Base.i \
+  Malloc_Base.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Dirent.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h OS.i \
+  String_Base.cpp \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i Malloc.h \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  Malloc.i \
+  Malloc_T.h \
+  Synch.h Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Malloc_Allocator.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp \
+  Memory_Pool.h \
+  Event_Handler.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Unbounded_Set.h \
+  Node.h Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Memory_Pool.i \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.i \
+  CDR_Base.h \
+  CDR_Base.inl \
+  Codeset_Registry.inl
 
 .obj/Message_Queue.o .obj/Message_Queue.so .shobj/Message_Queue.o .shobj/Message_Queue.so: Message_Queue.cpp \
   Message_Queue.h \
@@ -13959,9 +14182,18 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  OS_Export.h \
+  Time_Value.h \
+  Time_Value.inl \
+  Message_Block.i \
+  Message_Block_T.h \
+  Message_Block_T.i \
+  Message_Block_T.cpp \
+  Malloc_Base.h \
   OS.h \
   OS_Dirent.h \
-  OS_Export.h \
   OS_Errno.h \
   OS_Errno.inl \
   OS_Dirent.inl \
@@ -13973,18 +14205,9 @@ endif # GHS
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
-  Message_Block.i \
-  Message_Block_T.h \
-  Message_Block_T.i \
-  Message_Block_T.cpp \
-  Malloc_Base.h \
   IO_Cntl_Msg.h \
   Synch.h Synch.i \
   Synch_T.h \
@@ -14298,6 +14521,7 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -15026,7 +15250,11 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
@@ -15038,11 +15266,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Malloc.i \
   Malloc_T.h \
   Synch.h Synch.i \
@@ -15440,6 +15664,7 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -15561,6 +15786,7 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -15686,6 +15912,7 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -15782,6 +16009,7 @@ endif # GHS
   ACE.i \
   Local_Name_Space.h \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -15966,6 +16194,7 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   SString.h \
+  SStringfwd.h \
   String_Base.h \
   String_Base_Const.h \
   String_Base.i \
@@ -16028,8 +16257,7 @@ endif # GHS
 .obj/Name_Request_Reply.o .obj/Name_Request_Reply.so .shobj/Name_Request_Reply.o .shobj/Name_Request_Reply.so: Name_Request_Reply.cpp \
   Name_Request_Reply.h \
   pre.h \
-  Time_Value.h \
-  OS_Export.h \
+  Basic_Types.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -16039,86 +16267,30 @@ endif # GHS
   ace_wchar.h \
   ace_wchar.inl \
   ACE_export.h \
-  Time_Value.inl \
-  SString.h \
-  String_Base.h \
-  ACE.h OS.h \
+  Basic_Types.i \
+  Log_Msg.h \
+  Global_Macros.h \
+  OS_Export.h \
+  Default_Constants.h \
+  Log_Priority.h \
+  OS.h \
   OS_Dirent.h \
   OS_Errno.h \
   OS_Errno.inl \
   OS_Dirent.inl \
   OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
   OS_String.inl \
   OS_Memory.h \
   OS_Memory.inl \
   OS_TLI.h \
   OS_TLI.inl \
-  Default_Constants.h \
-  Global_Macros.h \
+  Time_Value.h \
+  Time_Value.inl \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
-  Log_Msg.h \
-  Log_Priority.h \
   OS_Log_Msg_Attributes.h \
-  OS_Log_Msg_Attributes.inl \
-  Malloc.i \
-  Malloc_T.h \
-  Synch.h Synch.i \
-  Synch_T.h \
-  Synch_T.i \
-  Thread.h \
-  Thread_Adapter.h \
-  Base_Thread_Adapter.h \
-  Base_Thread_Adapter.inl \
-  Thread_Adapter.inl \
-  Thread.i \
-  Synch_T.cpp \
-  Malloc_Allocator.h \
-  Malloc_Allocator.i \
-  Free_List.h \
-  Free_List.i \
-  Free_List.cpp \
-  Malloc_T.i \
-  Malloc_T.cpp \
-  Memory_Pool.h \
-  Event_Handler.h \
-  Event_Handler.i \
-  Signal.h \
-  Signal.i \
-  Mem_Map.h \
-  Mem_Map.i \
-  SV_Semaphore_Complex.h \
-  SV_Semaphore_Simple.h \
-  SV_Semaphore_Simple.i \
-  SV_Semaphore_Complex.i \
-  Unbounded_Set.h \
-  Node.h Node.cpp \
-  Unbounded_Set.inl \
-  Unbounded_Set.cpp \
-  Memory_Pool.i \
-  Auto_Ptr.h \
-  Auto_Ptr.i \
-  Auto_Ptr.cpp \
-  SString.i
+  OS_Log_Msg_Attributes.inl
 
 .obj/Name_Space.o .obj/Name_Space.so .shobj/Name_Space.o .shobj/Name_Space.so: Name_Space.cpp Name_Space.h \
   pre.h \
@@ -16132,28 +16304,34 @@ endif # GHS
   ace_wchar.h \
   ace_wchar.inl \
   SString.h \
-  String_Base.h \
-  ACE.h OS.h \
-  OS_Dirent.h \
-  OS_Export.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  SStringfwd.h \
   Basic_Types.h \
   Basic_Types.i \
+  String_Base.h \
+  String_Base_Const.h \
+  Global_Macros.h \
+  OS_Export.h \
+  OS_String.h \
   OS_String.inl \
   OS_Memory.h \
+  OS_Errno.h \
+  OS_Errno.inl \
   OS_Memory.inl \
+  String_Base.i \
+  Malloc_Base.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Dirent.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
+  String_Base.cpp \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -16164,12 +16342,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -16253,8 +16426,8 @@ endif # GHS
 .obj/Naming_Context.o .obj/Naming_Context.so .shobj/Naming_Context.o .shobj/Naming_Context.so: Naming_Context.cpp \
   Get_Opt.h pre.h \
   SString.h \
-  String_Base.h \
-  ACE.h OS.h \
+  SStringfwd.h \
+  Basic_Types.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -16263,27 +16436,33 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_Dirent.h \
-  OS_Export.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
   ACE_export.h \
   Basic_Types.i \
+  String_Base.h \
+  String_Base_Const.h \
+  Global_Macros.h \
+  OS_Export.h \
+  OS_String.h \
   OS_String.inl \
   OS_Memory.h \
+  OS_Errno.h \
+  OS_Errno.inl \
   OS_Memory.inl \
+  String_Base.i \
+  Malloc_Base.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Dirent.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
+  String_Base.cpp \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -16294,12 +16473,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -16459,28 +16633,34 @@ endif # GHS
   ace_wchar.h \
   ace_wchar.inl \
   SString.h \
-  String_Base.h \
-  ACE.h OS.h \
-  OS_Dirent.h \
-  OS_Export.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
+  SStringfwd.h \
   Basic_Types.h \
   Basic_Types.i \
+  String_Base.h \
+  String_Base_Const.h \
+  Global_Macros.h \
+  OS_Export.h \
+  OS_String.h \
   OS_String.inl \
   OS_Memory.h \
+  OS_Errno.h \
+  OS_Errno.inl \
   OS_Memory.inl \
+  String_Base.i \
+  Malloc_Base.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Dirent.inl \
   OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   streams.h \
   Trace.h OS.i \
+  String_Base.cpp \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -16491,12 +16671,7 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i \
-  String_Base_Const.h \
-  String_Base.i \
-  Malloc_Base.h \
-  String_Base.cpp \
-  Malloc.h \
+  ACE.i Malloc.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
