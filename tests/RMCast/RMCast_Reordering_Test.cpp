@@ -154,8 +154,8 @@ main (int, ACE_TCHAR *[])
     Tester tester;
     Task task (&tester);
     if (task.activate (THR_NEW_LWP|THR_JOINABLE, 4) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, 
-                         ACE_TEXT ("Cannot activate the threads\n")), 
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot activate the threads\n")),
                         1);
     ACE_Thread_Manager::instance ()->wait ();
   }
@@ -167,7 +167,7 @@ main (int, ACE_TCHAR *[])
 // ****************************************************************
 
 Tester::Tester (void)
-  : seed_ (ACE_static_cast(ACE_RANDR_TYPE,ACE_OS::gethrtime ()))
+  : seed_ (ACE_static_cast(ACE_RANDR_TYPE,ACE_OS::time (0)))
   , lowest_sequence_number_ (0)
   , next_expected_ (0)
 {
@@ -206,7 +206,7 @@ Tester::run (int iterations)
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Tester::run (%t) - %d messages received\n"),
                   this->next_expected_));
     }
@@ -274,7 +274,7 @@ int
 Tester::data (ACE_RMCast::Data &data)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-  
+
   if (this->next_expected_ != data.sequence_number)
     {
       ACE_ERROR ((LM_ERROR,

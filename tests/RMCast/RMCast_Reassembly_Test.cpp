@@ -146,8 +146,8 @@ ACE_RMCast_Reassembly_Tester::svc (void)
                         &received_pointer,
                         sizeof(received_pointer));
 
-        ACE_RANDR_TYPE seed = ACE_static_cast(ACE_RANDR_TYPE,
-                                              ACE_OS::gethrtime ());
+        ACE_RANDR_TYPE seed =
+          ACE_static_cast(ACE_RANDR_TYPE, ACE_OS::time (0));
         for (int i = 0; i != 100; ++i)
           {
             size_t offset = ACE_OS::rand_r (seed) % n;
