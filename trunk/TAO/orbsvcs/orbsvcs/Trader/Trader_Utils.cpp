@@ -1015,7 +1015,6 @@ TAO_Offer_Modifier (const char* type_name,
                     const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
                     CosTrading::Offer* offer)
   : type_ (type_name),
-    merge_props_ (0),
     offer_ (offer)
 {
   const CosTradingRepos::ServiceTypeRepository::PropStructSeq&

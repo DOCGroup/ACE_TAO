@@ -269,6 +269,7 @@ TAO_Service_Offer_Iterator<LOCK_TYPE>::
 TAO_Service_Offer_Iterator (const char* type,
 			    TAO_Offer_Database<LOCK_TYPE>& offer_database)
   : stm_ (offer_database),
+    lock_ (0),
     offer_iter_ (0),
     type_ (type)
 {
@@ -296,7 +297,7 @@ TAO_Service_Offer_Iterator<LOCK_TYPE>::~TAO_Service_Offer_Iterator (void)
 {  
   if (this->stm_.db_lock_.release () == -1)
     ;
-
+  
   if (this->lock_ != 0)
     {
       if (this->lock_->release () == -1)
