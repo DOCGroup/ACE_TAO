@@ -1,3 +1,33 @@
+Wed Jul 26 20:56:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynAny_i.cpp:
+	* tao/DynArray_i.cpp:
+	* tao/DynEnum_i.cpp:
+	* tao/DynSequence_i.cpp:
+	* tao/DynStruct_i.cpp:
+	* tao/DynUnion_i.cpp:
+
+	  Francois Bernier <fbernier@gel.ulaval.ca> reported some 
+  	  memory leaks in TAO_DynAny_i. Upon checking this out
+	  and making a pass through all the Dyn*_i files, I found a 
+	  lot more cases that needed fixing, stemming mostly from
+	  recent changes to CORBA::Any's TypeCode member
+	  and accessor. There were also some Dyn* accessors that
+	  I modified to return a duplicate, so the result may be
+	  put into a _var, as required by the spec.
+
+	* tests/DynAny_Test/driver.cpp:
+	* tests/DynAny_Test/test_dynany.cpp:
+	* tests/DynAny_Test/test_dynarray.cpp:
+	* tests/DynAny_Test/test_dynenum.cpp:
+	* tests/DynAny_Test/test_dynsequence.cpp:
+	* tests/DynAny_Test/test_dynstruct.cpp:
+	* tests/DynAny_Test/test_dynunion.cpp:
+
+	  For the reasons mentioned above, changes were necessary
+	  to the test code to fix memory leaks. I also made some
+	  cosmetic changes.
+
 Tue Jul 25 12:39:16 2000  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/orbsvcs/Makefile
 
