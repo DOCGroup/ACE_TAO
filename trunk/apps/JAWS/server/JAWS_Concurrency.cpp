@@ -7,7 +7,7 @@ JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
 }
 
 int
-JAWS_Concurrency_Base::put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0)
+JAWS_Concurrency_Base::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
   return this->putq (mb, tv);
 }
