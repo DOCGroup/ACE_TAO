@@ -61,7 +61,7 @@ public:
   ~TAO_SSLIOP_Connection_Handler (void);
 
   //@{
-  //** @name Connection Handler overloads
+  /** @name Connection Handler overloads
   */
   virtual int open_handler (void *);
   //@}
