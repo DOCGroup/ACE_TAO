@@ -1,8 +1,14 @@
+Sun May 02 22:05:46 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp (create_dispatching):
+          put ??? in a comment, so that old g++ doesn't complain
+          about encountering a trigraph.
+
 Sun May  2 15:57:33 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp: 
-	  Removed the call to remove_handlers () in the ~Command_Handler
-	  to avoid double deletion of the signal handler.
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp:
+          Removed the call to remove_handlers () in the ~Command_Handler
+          to avoid double deletion of the signal handler.
 
 Sun May 02 14:47:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
