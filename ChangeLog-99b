@@ -1,3 +1,10 @@
+Mon Feb  1 13:49:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/config-linux-common.h: 
+	  Added a definition for ACE_TIMER_SKEW, apparently it is only
+	  needed in multiple CPU machines (with SMP enabled); but it did
+	  solve the problems with MT_Reactor_Timer_Test.
+
 Mon Feb 01 13:08:11 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/CDR_Test.cpp:
