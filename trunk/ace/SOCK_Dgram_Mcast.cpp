@@ -196,7 +196,7 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
                                   protocol);
   // Check for the error case.
   if (result == -1)
-    return ACE_INVALID_HANDLE;
+    return -1;
 #if defined (ACE_WIN32)
   // @@ Note that this code is currently broken since <subscribe_i>
   // calls the wrong version of subscribe recursively!
