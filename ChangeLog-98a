@@ -1,4 +1,8 @@
-Wed Feb 25 21:41:36 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Wed Feb 25 23:08:44 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Svc_Conf.h: Fixed the prototype for
+ 	  ace_create_service_type() to reflect the elimination of "const
+ 	  void *".
 
 	* ace/Parse_Node: Eliminated more uses of "const void *" and
  	  changed them to plain ol' "void *".
