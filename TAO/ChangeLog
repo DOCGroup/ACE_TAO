@@ -1,3 +1,10 @@
+Wed Dec 15 09:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Any_Basic_Impl_T.cpp:
+          Replaced include of Exception.h with SystemException.h to get
+          CORBA::MARSHAL. Thanks to Jules Colding <jules@tdcadsl.dk>
+          for reporting this
+
 Tue Dec 14 17:38:16 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * performance-tests/Latency/Collocation/Client_Task.cpp:
