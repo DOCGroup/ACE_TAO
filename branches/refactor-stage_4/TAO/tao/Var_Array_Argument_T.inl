@@ -104,7 +104,7 @@ TAO::Out_Var_Array_SArgument_T<S_slice,S_var,S_forany>::arg (void)
 
 template<typename S_slice, typename S_var, typename S_forany>
 ACE_INLINE
-AO::Ret_Var_Array_SArgument_T<S_slice,S_var,S_forany>::
+TAO::Ret_Var_Array_SArgument_T<S_slice,S_var,S_forany>::
 Ret_Var_Array_SArgument_T (void)
 {}
 

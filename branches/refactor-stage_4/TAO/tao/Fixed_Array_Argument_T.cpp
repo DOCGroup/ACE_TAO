@@ -94,11 +94,11 @@ TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany>::demarshal (
   )
 {
   typedef TAO::Array_Traits<S,S_slice> ARRAY_TRAITS;
-  S_slice * tmp = 0;
-  ACE_ALLOCATOR_RETURN (tmp,
+  S_slice * tmp_ptr = 0;
+  ACE_ALLOCATOR_RETURN (tmp_ptr,
                         ARRAY_TRAITS::tao_alloc (),
                         0);
-  this->x_ = tmp;
+  this->x_ = tmp_ptr;
   S_forany tmp (this->x_.ptr ());
   return cdr >> tmp;
 }

@@ -102,10 +102,6 @@ TAO::Ret_Fixed_Size_Argument_T<S>::interceptor_replace (CORBA::Any & any)
 // ============================================================
 
 template<typename S>
-TAO::In_Fixed_Size_SArgument_T<S>::In_Fixed_Size_SArgument_T (void)
-{}
-
-template<typename S>
 CORBA::Boolean
 TAO::In_Fixed_Size_SArgument_T<S>::demarshal (TAO_InputCDR &cdr)
 {
