@@ -35,6 +35,28 @@ $MODULE='ACE_wrappers';
 
 # This are the sub-directories (in the module) we really compile.
 
+# Find out the command name.
+$CMD = basename($0);
+
+# Extract configuration information from command line.
+# TODO: Some validation and checking should be done here.
+$CHECKOUT = $ARGV[0];
+$BUILD    = $ARGV[1];
+$LOGDIR   = $ARGV[2];
+$ADMIN    = $ARGV[3];
+$MAIL = "mail";
+if ($#ARGV >= 4) {
+  $MAIL     = $ARGV[4];
+}
+
+if (0) {
+
+  @BUILD_LIST = ('ace');
+  @RUN_LIST = ('TAO/tests/OctetSeq , run_test.pl');
+  $ADMIN = $ENV{'USER'};
+
+} else {
+
 @BUILD_LIST=
     ('ace',
      'netsvcs',
@@ -57,6 +79,7 @@ $MODULE='ACE_wrappers';
       'TAO/tests/Param_Test , run_test.pl',
       'TAO/tests/Param_Test , run_test.pl -i dii',
       'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl',
+      'TAO/performance-tests/Latency , run_test.pl',
       'TAO/tests/OctetSeq , run_test.pl',
       'TAO/tests/Multiple_Inheritance , run_test.pl',
       'TAO/tests/MT_Client , run_test.pl',
@@ -105,54 +128,71 @@ $MODULE='ACE_wrappers';
 #      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
 #      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
     );
-
+}
 
 # We obtain our revision to report errors.
 $REVISION='$Revision$ ';
-
-# Find out the command name.
-$CMD = basename($0);
-
-# Extract configuration information from command line.
-# TODO: Some validation and checking should be done here.
-$CHECKOUT = $ARGV[0];
-$BUILD = $ARGV[1];
-$LOGDIR = $ARGV[2];
-$ADMIN = $ARGV[3];
-$MAKEFLAGS = $ARGV[4];
 
 # When an error is found we try to die gracefully and send some email
 # to ADMIN.
 
 $disable_file = $LOGDIR . '/.disable';
-
-sub mywarn {
-  local @msg = @_;
-  open(MAIL, "|mail $ADMIN")
-    || die "cannot open email pipe on error: $msg\n";
-  print MAIL 'The following message is brought to you by: ', "\n";
-  print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
-  print MAIL "\n";
-  local $m;
-  foreach $m (@msg) {
-    print MAIL $m, "\n";
-  }
-  print MAIL "\nPlease check log files for more info\n";
-  close(MAIL)
-    || die "cannot close email pipe on error: $msg\n";
-}
+$histfile = $LOGDIR . '/history';
+$LOGBASE = POSIX::strftime("%b%d_%Y.log", localtime);
+$LOGFILE = $LOGDIR . '/' . $LOGBASE;
+$HOST = `hostname`;
+chop $HOST;
+$LOG_NAME =  $HOST . "_" . $BUILD . "_" . $LOGBASE;
 
 sub mydie {
-  mywarn @_;
+  # First clear the lock, so the next execution works...
+  unlink $disable_file; # Ignore errors!
+
+  # Now send a summary of the errors to the ADMIN account...
+  local $to = $ADMIN;
+
+  open (MAIL, "|".$MAIL.' -s [AUTO_COMPILE] '.$to)
+    || die ("Cannot open mail pipe for: $msg\n");
+
+  print MAIL 'The following message is brought to you by: ', "\n";
+  print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
+
+  local $m;
+  foreach $m (@_) {
+    print MAIL $m, "\n";
+  }
+
+  print MAIL "\nPlease check the following log for more info:\n\n";
+  print MAIL 'http://www.cs.wustl.edu/~bugzilla/auto_compile_logs/',
+             $LOG_NAME, "\n\n";
+
+  close (MAIL); # Ignore errors....
+
+  # Now send the complete log to bugzilla...
+  local $bugs = 'bugzilla'.'@cs.wustl.edu';
+  open (MAIL, "|".$MAIL.' -s AUTO_COMPILE_LOG='.$LOG_NAME.' '.$bugs)
+    || die ("Cannot open mail pipe for: $LOG_NAME\n");
+
+  print MAIL 'This is the log for: ', "\n";
+  print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
+ 
+  print MAIL "\n================================================================\n";
+
+ if (open (THELOG, "$LOGFILE"))
+    {
+      while (<THELOG>) {
+	print MAIL $_;
+      }
+      close (THELOG);
+    }
+  close (MAIL); # Ignore errors....
+    
   print HIST 'FAILED', "\n";
-  unlink $disable_file
-    || die "cannot unlink disable file";
   exit 0;
 }
 
 ### MAIN FUNCTION
 
-$histfile = $LOGDIR . '/history';
 open(HIST, '>>' . $histfile)
     # Do not use 'mydie' to report the problem, it tries to use HIST....
     || die "cannot open history file \"$histfile\"\n";
@@ -162,8 +202,21 @@ $date = localtime;
 print HIST $CMD, ': running at ', $date, ' ';
 
 if (-f $disable_file) {
-    print HIST "DISABLED\n";
-    exit 0;
+  print HIST "DISABLED\n";
+
+  local $to = $ENV{'USER'};
+  open (MAIL, "|".$MAIL.' -s [AUTO_COMPILE] '.$to)
+    || die ("Cannot open mail pipe for: $msg\n");
+
+  print MAIL 'The following message is brought to you by: ', "\n";
+  print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
+
+  print MAIL "DISABLED\n";
+
+  close (MAIL)
+    || die ("Cannot send mail for DISABLED execution\n");
+
+  exit 0;
 }
 
 open (DISABLE, '>' . $disable_file)
@@ -172,7 +225,6 @@ print DISABLE "auto_compile <$date> is running\n";
 close (DISABLE)
     || mydie "cannot close disable file";
 
-$LOGFILE = $LOGDIR . '/' . POSIX::strftime("%b%d_%Y.log", localtime);
 open(LOG, '>' . $LOGFILE)
     || mydie "cannot open log file";
 
@@ -189,7 +241,7 @@ chdir($CHECKOUT)
 
 $date = localtime;
 print LOG "$CMD: starting checkout at ", $date, "\n";
-open(CVS, "cvs checkout -P $MODULE 2>&1 |")
+open(CVS, "cvs -q checkout -P $MODULE 2>&1 |")
     || mydie "cannot start checkout of $MODULE";
 
 $conflicts = 0;
@@ -213,7 +265,7 @@ chdir($MODULE)
 
 $date = localtime;
 print LOG "$CMD: starting clone at ", $date, "\n";
-open(MAKE, "bin/create_ace_build -a -v $BUILD 2>&1 |")
+open(MAKE, "perl bin/create_ace_build -a -v $BUILD 2>&1 |")
     || mydie "cannot clone directory";
 while(<MAKE>) {
     print LOG $_;
@@ -242,20 +294,26 @@ foreach $i (@BUILD_LIST) {
     local $current_dir = $i;
     local $last_error = "";
     while (<MAKE>) {
-	print LOG $_;
-	chop;
+        chop;
+        if ($^O eq 'hpux'
+            && m/^Warning:[ \t]+[0-9]+ future errors were detected/) {
+            next;
+        }
+        print LOG $_, "\n";
+
 	if (m/^make(\[[0-9]+\])?: Entering directory /) {
 	    s/^make(\[[0-9]+\])?: Entering directory //;
 	    s%^$ENV{'ACE_ROOT'}/%%;
 	    $current_dir = $_;
 	}
-	if (m/^make(\[[0-9]+\])?: \*\*\*/) {
+	if (m/error:/i || m/error /i
+	    || m/^make(\[[0-9]+\])?: \*\*\*/) {
 	    if ($last_error ne $current_dir) {
 		push @failures, "Error while compiling in $current_dir \n";
 		$last_error = $current_dir;
 	    }
 	}
-	if (m/Warning:/ || m/warning:/) {
+	if (m/warning:/i || m/warning /i) {
 	  if ($last_error ne $current_dir) {
 	    push @failures, "Warning while compiling in $current_dir\n";
 	    $last_error = $current_dir;
@@ -284,14 +342,17 @@ foreach $i (@RUN_LIST) {
 	|| mydie "cannot chdir to $subdir";
 
     $run_error = 0;
-    if (open(RUN, "$program 2>&1 |") == 0) {
+    if (open(RUN, "perl $program 2>&1 |") == 0) {
 	push @failures, "cannot run $program in $directory";
 	next;
     }
     while (<RUN>) {
 	print LOG $_;
-	if (m/Error/ || m/FAILED/ || m/EXCEPTION/) {
-	    $run_error = 1;
+	if (m/Error/
+	    || m/FAILED/
+	    || m/EXCEPTION/
+	    || m/pure virtual /i) {
+	  $run_error = 1;
 	}
     }
     if (close(RUN) == 0) {

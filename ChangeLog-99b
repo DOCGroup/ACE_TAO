@@ -1,3 +1,10 @@
+Thu Jul 29 01:04:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile:
+	* bin/auto_compile_wrapper:
+	  Updated to include the latest round of changes, new tests and
+	  several improvements to send email and stuff.
+
 Wed Jul 28 18:29:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/config-win32.h:
