@@ -32,6 +32,8 @@
 // Local Object
 #include "tao/LocalObject.h"
 
+#include "tao/PortableInterceptorC.h"
+
 class TAO_POA;
 class TAO_Object_Adapter;
 // Forward decl.
@@ -97,6 +99,11 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POAManager::AdapterInactive));
 
+  /// Method needed for notifying the IORInterceptors that the state
+  /// of POAManager changed.
+  void adapter_manager_state_changed (PortableServer::POAManager::State state,
+                                      CORBA::Environment &ACE_TRY_ENV);
+  
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   void hold_requests_i (CORBA::Boolean wait_for_completion
@@ -129,6 +136,9 @@ protected:
   POA_COLLECTION poa_collection_;
 
   TAO_Object_Adapter &object_adapter_;
+
+  static PortableInterceptor::AdapterManagerId poa_manager_id_;
+
 };
 
 #if defined (__ACE_INLINE__)

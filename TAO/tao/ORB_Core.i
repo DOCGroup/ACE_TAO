@@ -403,13 +403,19 @@ TAO_ORB_Core::resolve_typecodefactory (TAO_ENV_SINGLE_ARG_DECL)
   return CORBA::Object::_duplicate (this->typecode_factory_);
 }
 
+ACE_INLINE const char *
+TAO_ORB_Core::server_id (void) const
+{
+  return this->server_id_;
+}
+
 ACE_INLINE TAO_POA_PortableGroup_Hooks *
 TAO_ORB_Core::portable_group_poa_hooks (void) const
 {
   return this->portable_group_poa_hooks_;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 TAO_ORB_Core::portable_group_poa_hooks(TAO_POA_PortableGroup_Hooks *poa_hooks)
 {
   this->portable_group_poa_hooks_ = poa_hooks;

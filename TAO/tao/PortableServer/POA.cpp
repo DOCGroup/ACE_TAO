@@ -1,6 +1,6 @@
 // @(#) $Id$
 
-#include "POA.h"
+#include "tao/PortableServer/POA.h"
 
 //
 // ImplRepo related.
@@ -10,6 +10,11 @@
 # include "tao/PortableServer/ImplRepoC.h"
 # include "tao/PortableServer/ImplRepo_i.h"
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+#include "tao/PortableServer/IORInfo.h"
+#include "tao/PortableServer/ObjectReferenceTemplate.h"
+#include "tao/PortableServer/ObjectReferenceFactory.h"
+#include "tao/PortableServer/Default_Acceptor_Filter.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -154,6 +159,26 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
   return request_processing_policy;
 }
 
+void
+TAO_POA::set_obj_ref_factory (PortableInterceptor::ObjectReferenceFactory
+                              *current_factory
+                              TAO_ENV_ARG_DECL)
+{
+  TAO_ObjectReferenceFactory *tao_obj_ref_factory;
+
+  ACE_NEW_THROW_EX (tao_obj_ref_factory,
+                    TAO_ObjectReferenceFactory (this),
+                    CORBA::NO_MEMORY ());
+
+  PortableInterceptor::ObjectReferenceFactory *obj_ref_factory =
+    ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceFactory *,
+                          tao_obj_ref_factory);
+
+  obj_ref_factory = current_factory;
+
+  this->obj_ref_factory_ = obj_ref_factory;
+}
+
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 TAO_POA::TAO_POA (const TAO_POA::String &name,
@@ -167,6 +192,11 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
                   TAO_ENV_ARG_DECL)
   : name_ (name),
     poa_manager_ (poa_manager),
+    policy_list_ (0),
+    mprofile_ (0),
+    tagged_component_ (),
+    profile_id_ (0),
+    add_component_support_ (0),
     policies_ (policies),
     parent_ (parent),
     active_object_map_ (0),
@@ -203,7 +233,9 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     waiting_destruction_ (0),
     servant_deactivation_condition_ (thread_lock),
     waiting_servant_deactivation_ (0),
-    single_threaded_lock_ (0)
+    single_threaded_lock_ (0),
+    caller_key_to_object_ (0),
+    servant_for_key_to_object_ (0)
 {
   // Parse the policies that are used in the critical path in
   // a cache.
@@ -303,6 +335,31 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+    CORBA::String_var server_id = this->orb_core_.server_id();
+    CORBA::String_var orb_id = this->orb_core_.orbid ();
+
+    /// Create an ObjectReferenceTemplate for this POA.
+    TAO_ObjectReferenceTemplate *ort_template;
+
+    ACE_NEW_THROW_EX (ort_template,
+                      TAO_ObjectReferenceTemplate (server_id.in (),
+                                                   orb_id.in (),
+                                                   this->adapter_name (),
+                                                   this),
+                    CORBA::NO_MEMORY ());
+
+  this->ort_template_ = ort_template;
+
+  this->set_obj_ref_factory (this->ort_template_
+                             TAO_ENV_ARG_DECL);
+
+  // Iterate over the registered IOR interceptors so that they may be
+  // given the opportunity to add tagged components to the profiles
+  // for this servant.
+  this->tao_establish_components (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
 }
 
 TAO_POA::~TAO_POA (void)
@@ -665,12 +722,39 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
         }
     }
 
+  PortableInterceptor::ObjectReferenceTemplateSeq
+    *seq_obj_ref_template = 0;
+
+  ACE_NEW_THROW_EX (seq_obj_ref_template,
+                    PortableInterceptor::ObjectReferenceTemplateSeq,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
+
+  PortableInterceptor::ObjectReferenceTemplateSeq_var
+    seq_obj_ref_template_var = seq_obj_ref_template;
+
+  CORBA::ULong i = 0;
+
   // Remove all children POAs
   for (CHILDREN::iterator iterator = this->children_.begin ();
        iterator != this->children_.end ();
        ++iterator)
     {
       TAO_POA *child_poa = (*iterator).int_id_;
+
+      /// Get the adapter template related to the ChildPOA
+      const PortableInterceptor::ObjectReferenceTemplate *child_at =
+        child_poa->get_adapter_template ();
+
+      /// Add it to the sequence of object reference templates that
+      /// will be destroyed.
+      seq_obj_ref_template_var->length (i+1);
+
+      seq_obj_ref_template_var[i] = child_at;
+      ++i;
+
+      child_poa->adapter_state_ = PortableInterceptor::NON_EXISTENT;
+
       child_poa->destroy_i (etherealize_objects,
                             wait_for_completion
                             TAO_ENV_ARG_PARAMETER);
@@ -711,7 +795,6 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
   // execution are processed as if they were newly arrived, that is,
   // the POA will attempt to cause recreation of the POA by invoking
   // one or more adapter activators as described in Section 3.3.3.
-
   // If the wait_for_completion parameter is TRUE, the destroy
   // operation will return only after all requests in process have
   // completed and all invocations of etherealize have
@@ -734,6 +817,12 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
     {
       this->complete_destruction_i (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
+
+  this->adapter_state_ = PortableInterceptor::NON_EXISTENT;
+
+  this->adapter_state_changed (
+     (const PortableInterceptor::ObjectReferenceTemplateSeq *)seq_obj_ref_template,
+      this->adapter_state_);
     }
   else
     {
@@ -782,6 +871,153 @@ TAO_POA::the_children_i (TAO_ENV_SINGLE_ARG_DECL)
     }
 
   return children._retn ();
+}
+
+CORBA::StringSeq *
+TAO_POA::adapter_name_i (TAO_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  /// The adapter name is the sequence of names starting from the
+  /// RootPOA to the one whose name is requested. But, the sequence
+  /// shouldnt include the name of the RootPOA.
+
+  /// Empty adapter name sequence.
+  CORBA::StringSeq *name_seq = 0;
+  ACE_NEW_THROW_EX (name_seq,
+                    CORBA::StringSeq,
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
+
+  CORBA::StringSeq_var safe_args (name_seq);
+
+  CORBA::String_var current_poa_name =
+    this->the_name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  ACE_CHECK_RETURN (-1);
+
+  CORBA::ULong name_seq_length = 0;
+
+  PortableServer::POA_var current_poa =
+    PortableServer::POA::_duplicate (this);
+
+  // Should do it kind of a while loop .. get the poa_current and
+  // attach the name to the sequence and go further till the final
+  // name is the name of RootPOA and stop there.
+  // @@ TAO_OBJID_ROOTPOA
+  while (ACE_OS::strcmp (current_poa_name.in (),
+                         TAO_DEFAULT_ROOTPOA_NAME) != 0)
+    {
+      ++name_seq_length;
+
+      name_seq->length (name_seq_length);
+
+      (*name_seq) [name_seq_length-1] = current_poa_name.in ();
+
+      /// Make the parent name as the current_poa_name
+      /// Go up the ladder by one parent ;-)
+      PortableServer::POA_var current_poa_name_parent =
+        current_poa->the_parent (TAO_ENV_SINGLE_ARG_DECL);
+      ACE_CHECK_RETURN (-1);
+
+      current_poa_name =
+        current_poa_name_parent->the_name (TAO_ENV_SINGLE_ARG_DECL);
+      ACE_CHECK_RETURN (-1);
+
+      current_poa =
+        PortableServer::POA::_duplicate (current_poa_name_parent.in ());
+    }
+
+  return safe_args._retn ();
+}
+
+void
+TAO_POA::set_policy_list (CORBA::PolicyList *policy_list)
+{
+  this->policy_list_ = policy_list;
+}
+
+void
+TAO_POA::set_mprofile (TAO_MProfile *mprofile)
+{
+  this->mprofile_ = mprofile;
+}
+
+void
+TAO_POA::tao_add_ior_component (const IOP::TaggedComponent &component
+                                TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Add the given tagged component to all profiles.
+
+  CORBA::ULong profile_count = this->mprofile_->profile_count ();
+
+  for (CORBA::ULong i = 0; i < profile_count; ++i)
+    {
+      TAO_Profile *profile = this->mprofile_->get_profile (i);
+
+      profile->add_tagged_component (component TAO_ENV_ARG_DECL);
+      ACE_CHECK;
+
+    }
+}
+
+void
+TAO_POA::tao_add_ior_component_to_profile (
+    const IOP::TaggedComponent &component,
+    IOP::ProfileId profile_id
+    TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Add the given tagged component to all profiles matching the given
+  // ProfileId.
+
+  int found_profile = 0;
+
+  CORBA::ULong profile_count = this->mprofile_->profile_count ();
+  for (CORBA::ULong i = 0; i < profile_count; ++i)
+    {
+      TAO_Profile *profile = this->mprofile_->get_profile (i);
+
+      if (profile->tag () == profile_id)
+        {
+          profile->add_tagged_component (component TAO_ENV_ARG_DECL);
+          ACE_CHECK;
+
+          found_profile = 1;
+        }
+    }
+
+  // According to the Portable Interceptor specification, we're
+  // supposed to throw a CORBA::BAD_PARAM exception if no profile
+  // matched the given ProfileId.
+  if (found_profile == 0)
+    ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 29,
+                                 CORBA::COMPLETED_NO));
+}
+
+void
+TAO_POA::
+adapter_state_changed (const PortableInterceptor::ObjectReferenceTemplateSeq *seq_obj_ref_template,
+                       PortableInterceptor::AdapterState state)
+{
+  /// First get a list of all the interceptors.
+  TAO_IORInterceptor_List::TYPE &interceptors =
+    this->orb_core_.ior_interceptors ();
+
+  size_t interceptor_count = interceptors.size ();
+
+  if (interceptor_count == 0)
+    return;
+
+  for (size_t i = 0; i < interceptor_count; ++i)
+    {
+      interceptors[i]->adapter_state_changed ((*seq_obj_ref_template),
+                                              state);
+      ACE_CHECK;
+    }
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -1516,6 +1752,7 @@ TAO_POA::check_poa_manager_state (TAO_ENV_SINGLE_ARG_DECL)
       // is not a temporary state. When a POA manager is in the
       // inactive state, the associated POAs will reject new
       // requests. The rejection mechanism used is specific to the
+
       // vendor. The GIOP location forwarding mechanism and
       // CloseConnection message are examples of mechanisms that could
       // be used to indicate the rejection. If the client is
@@ -1531,8 +1768,7 @@ TAO_POA::check_poa_manager_state (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Object_ptr
-TAO_POA::create_reference_i (const char *intf,
-                             CORBA::Short priority
+TAO_POA::create_reference_i (const char *intf
                              TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
@@ -1545,26 +1781,25 @@ TAO_POA::create_reference_i (const char *intf,
                         CORBA::Object::_nil ());
     }
 
-  // This operation creates an object reference that encapsulates a
-  // POA-generated Object Id value and the specified interface
-  // repository id. This operation does not cause an activation to
-  // take place. The resulting reference may be passed to clients, so
-  // that subsequent requests on those references will cause the
-  // appropriate servant manager to be invoked, if one is
-  // available. The generated Object Id value may be obtained by
-  // invoking POA::reference_to_id with the created reference.
-
-  PortableServer::ObjectId_var system_id;
+  /// @@ What to do: Get an user_id. For this, first get a system id
+  ///    and conver that to a user id.
+  PortableServer::ObjectId *user_id;
+  ACE_NEW_THROW_EX (user_id,
+                    PortableServer::ObjectId,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Do the following if we going to retain this object in the active
   // object map.
   if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
     {
-      if (this->active_object_map ().bind_using_system_id_returning_system_id (0,
-                                                                               priority,
-                                                                               system_id.out ()) != 0)
+      if (this->active_object_map
+          ().bind_using_system_id_returning_user_id (
+              0,
+              this->cached_policies ().server_priority (),
+              user_id) != 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+         ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             CORBA::Object::_nil ());
         }
     }
@@ -1572,31 +1807,33 @@ TAO_POA::create_reference_i (const char *intf,
     {
       // Otherwise, it is the NON_RETAIN policy.  Therefore, any ol'
       // object id will do (even an empty one).
-      PortableServer::ObjectId *sys_id;
-      ACE_NEW_THROW_EX (sys_id,
+      PortableServer::ObjectId *any_id;
+      ACE_NEW_THROW_EX (any_id,
                         PortableServer::ObjectId,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-      system_id = sys_id;
+      user_id = any_id;
     }
 
-  // Create object key.
-  TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
+  this->caller_key_to_object_ = 0;
 
-  // Ask the ORB to create you a reference
-  return this->key_to_object (key.in (),
-                              intf,
-                              0,
-                              1,
-                              priority
-                              TAO_ENV_ARG_PARAMETER);
+  const PortableInterceptor::ObjectId *obj_id =
+    ACE_reinterpret_cast (const PortableInterceptor::ObjectId *,
+                          user_id);
+
+  CORBA::Object_var object =
+    this->obj_ref_factory_->make_object (intf,
+                                         *obj_id
+                                         TAO_ENV_ARG_DECL);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  return object._retn ();
 }
 
 CORBA::Object_ptr
 TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
-                                     const char *intf,
-                                     CORBA::Short priority
+                                     const char *intf
                                      TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
@@ -1617,58 +1854,19 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                         CORBA::Object::_nil ());
     }
 
-  // This operation creates an object reference that encapsulates the
-  // specified Object Id and interface repository Id values. This
-  // operation does not cause an activation to take place.  The
-  // resulting reference may be passed to clients, so that subsequent
-  // requests on those references will cause the object to be
-  // activated if necessary, or the default servant used, depending on
-  // the applicable policies.
+  this->caller_key_to_object_ = 0;
 
-  PortableServer::Servant servant = 0;
-  PortableServer::ObjectId_var system_id;
+  const PortableInterceptor::ObjectId *obj_id =
+    ACE_reinterpret_cast (const PortableInterceptor::ObjectId *,
+                          &user_id);
 
-  // Do the following if we going to retain this object in the active
-  // object map.
-  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
-    {
-      // @@ We need something that can find the system id using
-      // appropriate strategy, at the same time, return the servant if
-      // one is available.  Before we have that function,
-      // <create_reference_with_id_i> basically generates broken
-      // collocated object when DIRECT collocation strategy is used.
+  CORBA::Object_var obj_ptr =
+    this->obj_ref_factory_->make_object (intf,
+                                         *obj_id
+                                         TAO_ENV_ARG_DECL);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-      if (this->active_object_map ().find_system_id_using_user_id (user_id,
-                                                                   priority,
-                                                                   system_id.out ()) != 0)
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            CORBA::Object::_nil ());
-        }
-    }
-  else
-    {
-      // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
-      // is the same as system id.
-      PortableServer::ObjectId *sys_id;
-      ACE_NEW_THROW_EX (sys_id,
-                        PortableServer::ObjectId (user_id),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-      system_id = sys_id;
-    }
-
-  // Create object key.
-  TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
-
-  // Ask the ORB to create you a reference
-  return this->key_to_object (key.in (),
-                              intf,
-                              servant,
-                              1,
-                              priority
-                              TAO_ENV_ARG_PARAMETER);
+  return obj_ptr._retn ();
 }
 
 PortableServer::ObjectId *
@@ -1877,23 +2075,37 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant
   // reference. The real requirement here is that a reference is
   // produced that will behave appropriately (that is, yield a
   // consistent Object Id value when asked politely).
-  CORBA::Short priority =
-    this->cached_policies_.server_priority ();
-  PortableServer::ObjectId_var id = this->servant_to_system_id (servant,
-                                                                priority
-                                                                TAO_ENV_ARG_PARAMETER);
+
+  CORBA::Short priority = TAO_INVALID_PRIORITY;
+  PortableServer::ObjectId_var id =
+    this->servant_to_system_id (servant,
+                                priority
+                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  // Create object key.
-  TAO_ObjectKey_var key = this->create_object_key (id.in ());
+  PortableServer::ObjectId user_id;
 
-  // Ask the ORB to create you a reference
-  return this->key_to_object (key.in (),
-                              servant->_interface_repository_id (),
-                              servant,
-                              1,
-                              priority
-                              TAO_ENV_ARG_PARAMETER);
+  if (this->active_object_map ().
+      find_user_id_using_system_id (id.in (),
+                                    user_id) != 0)
+    {
+      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                        CORBA::Object::_nil ());
+    }
+
+  this->caller_key_to_object_ = 1;
+
+  const PortableInterceptor::ObjectId *obj_id =
+    ACE_reinterpret_cast (const PortableInterceptor::ObjectId *,
+                          &user_id);
+
+  CORBA::Object_var object =
+    this->obj_ref_factory_->make_object (servant->_interface_repository_id (),
+                                         *obj_id
+                                         TAO_ENV_ARG_DECL);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  return object._retn ();
 }
 
 PortableServer::Servant
@@ -3093,6 +3305,119 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 CORBA::Object_ptr
+TAO_POA::invoke_key_to_object (const char *intf,
+                               PortableServer::ObjectId &user_id
+                               TAO_ENV_ARG_DECL)
+{
+  CORBA::Short priority;
+
+  if (this->caller_key_to_object_ == 1)
+    {
+      priority = TAO_INVALID_PRIORITY;
+    }
+  else
+    {
+      priority = this->cached_policies ().server_priority ();
+    }
+
+  /// @@@ Get to the system id from the passed in user id.
+
+  // This operation creates an object reference that encapsulates the
+  // specified Object Id and interface repository Id values. This
+  // operation does not cause an activation to take place.  The
+  // resulting reference may be passed to clients, so that subsequent
+  // requests on those references will cause the object to be
+  // activated if necessary, or the default servant used, depending on
+  // the applicable policies.
+
+  //  PortableServer::Servant servant = 0;
+  PortableServer::ObjectId_var system_id;
+
+  // Do the following if we going to retain this object in the active
+  // object map.
+  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
+    {
+      // @@ We need something that can find the system id using
+      // appropriate strategy, at the same time, return the servant if
+      // one is available.  Before we have that function,
+      // <create_reference_with_id_i> basically generates broken
+      // collocated object when DIRECT collocation strategy is used.
+
+      if (this->active_object_map ().find_system_id_using_user_id (user_id,
+                                                                   priority,
+                                                                   system_id.out ()) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            CORBA::Object::_nil ());
+        }
+    }
+  else
+    {
+      // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
+      // is the same as system id.
+      PortableServer::ObjectId *sys_id;
+      ACE_NEW_THROW_EX (sys_id,
+                        PortableServer::ObjectId (user_id),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+      system_id = sys_id;
+    }
+
+  // Create object key.
+  TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
+
+  CORBA::Object_var object = 0;
+
+  if (this->caller_key_to_object_ == 1)
+    {
+      PortableServer::ObjectId user_id;
+
+      if (this->active_object_map ().
+          find_user_id_using_system_id (system_id.in (),
+                                        user_id) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            CORBA::Object::_nil ());
+        }
+
+      PortableServer::Servant servant = 0;
+
+      int result = this->active_object_map
+        ().find_servant_using_user_id (user_id,
+                                       servant);
+
+      if (result != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            CORBA::Object::_nil ());
+        }
+
+      /// @@ Servant to reference
+      // Ask the ORB to create you a reference
+      object = this->key_to_object (key.in (),
+                                    intf,
+                                    servant,
+                                    1,
+                                    priority
+                                    TAO_ENV_ARG_DECL);
+    }
+  else
+    {
+      // Ask the ORB to create you a reference
+      object = this->key_to_object (key.in (),
+                                    intf,
+                                    0,
+                                    1,
+                                    priority
+                                    TAO_ENV_ARG_DECL);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
+
+  return object._retn ();
+}
+
+CORBA::Object_ptr
 TAO_POA::key_to_object (const TAO_ObjectKey &key,
                         const char *type_id,
                         TAO_ServantBase *servant,
@@ -3173,7 +3498,7 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
                     ior.c_str ()));
 
       obj =
-        this->orb_core_.orb ()->string_to_object (ior.c_str ()TAO_ENV_ARG_PARAMETER);
+        this->orb_core_.orb ()->string_to_object (ior.c_str () TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (obj);
 
       return obj;
@@ -3244,6 +3569,10 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
                                    TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
+  /// Set the endpoints
+  (void) this->orb_core_.open (TAO_ENV_SINGLE_ARG_DECL);
+  ACE_CHECK_RETURN (0);
+
   TAO_Default_Acceptor_Filter filter;
   TAO_Stub *data =
     this->create_stub_object (key,
@@ -3255,6 +3584,131 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
   ACE_CHECK_RETURN (0);
 
   return data;
+}
+
+void
+TAO_POA::tao_establish_components (TAO_ENV_SINGLE_ARG_PARAMETER)
+{
+  PortableInterceptor::IORInfo_ptr info_temp;
+  ACE_NEW_THROW_EX (info_temp,
+                    TAO_IORInfo (&(this->orb_core_), this),
+                    CORBA::NO_MEMORY (
+                       CORBA_SystemException::_tao_minor_code (
+                          TAO_MPROFILE_CREATION_ERROR,
+                          ENOMEM),
+                       CORBA::COMPLETED_NO));
+  ACE_CHECK;
+
+  PortableInterceptor::IORInfo_var info = info_temp;
+
+  this->establish_components (info.in ()
+                              TAO_ENV_ARG_DECL);
+
+}
+
+void
+TAO_POA::establish_components (PortableInterceptor::IORInfo *info
+                               TAO_ENV_ARG_DECL)
+{
+  // Iterate over the registered IOR interceptors so that they may be
+  // given the opportunity to add tagged components to the profiles
+  // for this servant.
+  TAO_IORInterceptor_List::TYPE &interceptors =
+    this->orb_core_.ior_interceptors ();
+
+  size_t interceptor_count = interceptors.size ();
+  if (interceptor_count == 0)
+    return;
+
+  for (size_t i = 0; i < interceptor_count; ++i)
+    {
+      ACE_TRY
+        {
+          interceptors[i]->establish_components (
+            info
+            TAO_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // According to the Portable Interceptors specification,
+          // IORInterceptor::establish_components() must not throw an
+          // exception.  If it does, then the ORB is supposed to
+          // ignore it and continue processing the remaining
+          // IORInterceptors.
+          if (TAO_debug_level > 1)
+            {
+              CORBA::String_var name = interceptors[i]->name (
+                TAO_ENV_SINGLE_ARG_PARAMETER);
+              // @@ What do we do if we get an exception here?
+
+              if (name.in () != 0)
+                {
+                  ACE_DEBUG ((LM_WARNING,
+                              "(%P|%t) Exception thrown while processing "
+                              "IORInterceptor \"%s\">\n",
+                              name.in ()));
+                }
+
+              ACE_PRINT_TAO_EXCEPTION (ACE_ANY_EXCEPTION,
+                                       "Ignoring exception in "
+                                       "IORInterceptor::establish_components");
+            }
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+    }
+
+  /// All the establish_components methods are invoked. Now, call the
+  /// components_established method on all the IOR Interceptors.
+  for (size_t i = 0; i < interceptor_count; ++i)
+    {
+      ACE_TRY
+        {
+          interceptors[i]->components_established (
+            info
+            TAO_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          ACE_THROW (CORBA::OBJ_ADAPTER (TAO_OMG_VMCID | 6,
+                                         CORBA::COMPLETED_NO));
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+    }
+}
+
+TAO_MProfile *
+TAO_POA::get_mprofile ()
+{
+  return this->mprofile_;
+}
+
+CORBA::PolicyList *
+TAO_POA::get_policy_list ()
+{
+  return this->policy_list_;
+}
+
+void
+TAO_POA::save_ior_component (const IOP::TaggedComponent &component
+                             TAO_ENV_ARG_DECL)
+{
+  this->tagged_component_ = component;
+  this->add_component_support_ = 1;
+}
+
+void
+TAO_POA::
+save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
+                                   IOP::ProfileId profile_id
+                                   TAO_ENV_ARG_DECL)
+{
+  this->tagged_component_ = component;
+  this->profile_id_ = profile_id;
+  this->add_component_support_ = 1;
 }
 
 TAO_Stub *
@@ -3271,8 +3725,8 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
   size_t profile_count =
     acceptor_registry.endpoint_count ();
 
-   // Create a profile container and have acceptor registries populate
-   // it with profiles as appropriate.
+  // Create a profile container and have acceptor registries populate
+  // it with profiles as appropriate.
   TAO_MProfile mprofile (0);
 
   // Allocate space for storing the profiles.  There can never be more
@@ -3317,6 +3771,51 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
                           0),
                         CORBA::COMPLETED_NO),
                       0);
+
+  //  Add the Polices contained in "policy_list" to each profile
+  //  so that those policies will be exposed to the client in the IOR.
+  //  In particular each CORBA::Policy has to be converted in to
+  //  Messaging::PolicyValue, and then all the Messaging::PolicyValue
+  //  should be embedded inside a Messaging::PolicyValueSeq which became
+  //  in turns the "body" of the IOP::TaggedComponent. This conversion
+  //  is a responsability of the CORBA::Profile class.
+  //  (See orbos\98-05-05.pdf Section 5.4)
+
+  if (policy_list->length () != 0)
+    {
+      TAO_Profile * profile;
+
+      for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
+        {
+          // Get the ith profile
+          profile = mprofile.get_profile (i);
+          profile->policies (policy_list TAO_ENV_ARG_DECL);
+          ACE_CHECK_RETURN (0);
+        }
+    }
+
+  /// TAO_IORInfo needs 'policy_list'. So, save it.
+  this->set_policy_list (policy_list);
+  this->set_mprofile (&mprofile);
+
+  /// Add the saved tagged components (from IORInfo::add_ior_component
+  /// methods to the IOR... if needed.
+  if (this->add_component_support_ == 1)
+    {
+      if (this->profile_id_ == 0)
+        {
+          this->tao_add_ior_component (this->tagged_component_
+                                       TAO_ENV_ARG_DECL);
+          ACE_CHECK_RETURN (0);
+        }
+      else
+        {
+          this->tao_add_ior_component_to_profile (this->tagged_component_,
+                                                  this->profile_id_
+                                                  TAO_ENV_ARG_DECL);
+          ACE_CHECK_RETURN (0);
+        }
+    }
 
   return
     this->orb_core_.create_stub_object (mprofile,
