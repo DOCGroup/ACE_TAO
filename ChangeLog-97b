@@ -12,6 +12,10 @@ Thu Oct 16 10:22:48 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 Thu Oct 16 08:43:50 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/OS.i (sema_trywait): on VxWorks only, fixed to set errno to
+	  EBUSY if the semaphore couldn't be taken.  Thanks to Doug for
+	  suggesting this fix.
+
 	* performance-tests/Misc/preempt.cpp (main): fixed program name.
 
 	* include/makeinclude/platform_osf1_4.0.GNU: OCFLAGS instead of OFLAGS.
