@@ -1,3 +1,7 @@
+Sat May 03 06:56:10 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Map_Manager.cpp (dtor): removed void return (typo).
+
 Fri May  2 14:57:56 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Map_Manager.cpp: Added a no-op destructor to ACE_Map_Entry
@@ -68,6 +72,8 @@ Fri May 02 08:14:30 1997  David L. Levine  <levine@cs.wustl.edu>
 	* Log_Msg.cpp (VxWorks only): fixed used of ::taskDeleteHookAdd (it
 	  should only be called once for all Log_Msg instances) and added call
 	  to ::taskDeleteHookDelete to clean up when the last task exits.
+	  Thanks to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for
+	  reporting this.
 
 	* tests/Conn_Test.cpp: changed some fprintf print specifiers to avoid
 	  g++ warnings about printing pointer values.
