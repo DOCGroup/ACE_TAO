@@ -862,7 +862,7 @@ ACE_Thread_Manager::task_list (int grp_id,
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
   ACE_Task<ACE_SYNCH> **task_list_iterator = task_list;
-  int task_list_count = 0;
+  size_t task_list_count = 0;
 
   for (size_t i = 0; i < this->current_count_; i++) 
     if (task_list_count < n
@@ -886,7 +886,7 @@ ACE_Thread_Manager::thread_list (ACE_Task<ACE_SYNCH> *task,
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
   ACE_thread_t *thread_list_iterator = thread_list;
-  int thread_list_count = 0;
+  size_t thread_list_count = 0;
 
   for (size_t i = 0; i < this->current_count_; i++)
     if (thread_list_count < n && this->thr_table_[i].task_ == task)
@@ -909,7 +909,7 @@ ACE_Thread_Manager::hthread_list (ACE_Task<ACE_SYNCH> *task,
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
   ACE_hthread_t *hthread_list_iterator = hthread_list;
-  int hthread_list_count = 0;
+  size_t hthread_list_count = 0;
 
   for (size_t i = 0; i < this->current_count_; i++)
     if (this->thr_table_[i].task_ == task 
