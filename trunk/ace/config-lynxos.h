@@ -185,5 +185,25 @@ extern "C"
   int putenv (const char *);
 }
 
+#if 0
+// The following are patches for LynxOS 4.0.0, which we'll add as soon
+// as we know the right incantations to avoid breaking earlier
+// versions of LynxOS!
+
+// "changes signedness" error (OS.i and many other files)
+#define ACE_HAS_SOCKLEN_T
+
+// LSOCK.cpp uses a macro from param.h, not included
+#define ALIGNBYTES (sizeof(int) - 1)
+#define ALIGN(p) (((unsigned)p + ALIGNBYTES) & ~ALIGNBYTES)
+
+// Linking problems with alloca
+#undef ACE_HAS_ALLOCA
+#undef ACE_HAS_ALLOCA_H
+
+// Requested for example: $ACE_ROOT/examples/IPC_SAP/DEV_SAP 
+#define ACE_HAS_TERM_IOCTLS
+#endif /* 0 */
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */
