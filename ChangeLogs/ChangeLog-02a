@@ -1,3 +1,10 @@
+Fri Dec 28 10:45:33 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp: Make the string
+          arguments to ACE_SSL_Context char * - don't use any ACE_*
+          macros. Fixes build problems on Borland Unicode builds. Thanks
+          to Johnny Willemsen <johnny_willemsen@planet.nl> for this fix.
+
 Fri Dec 28 06:31:46 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* ace/Get_Opt.cpp: Changed #ifndef check to ACE_LACKS_ENV
