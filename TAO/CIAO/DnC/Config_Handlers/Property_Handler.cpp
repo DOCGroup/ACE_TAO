@@ -52,6 +52,10 @@ CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter
                         }
                     }
                 }
+              else if (length == 1)
+                {
+                  Any_Handler::process_Any (iter, property.value);
+                }
             }
           else
             // Process the value associated
