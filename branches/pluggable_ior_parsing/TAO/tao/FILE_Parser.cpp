@@ -1,7 +1,7 @@
 // $Id$
 
 #include "FILE_Parser.h"
-#include "tao/ior_dll/Object_Loader.h"
+#include "tao/Object_Loader.h"
 #include "tao/Object.h"
 #include "tao/ORB.h"
 #include "tao/Exception.h"

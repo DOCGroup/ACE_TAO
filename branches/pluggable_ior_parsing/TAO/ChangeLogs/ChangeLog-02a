@@ -1,3 +1,15 @@
+Tue Sep 12 17:00:58 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ior_corbaname/CORBANAME_Parser.cpp: 
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp: 
+	* tao/FILE_Parser.cpp (TAO_FILE_Parser): 
+	  
+	  Corrected some typos.
+	
+	* tao/Makefile: 
+	  
+	  Updated dependencies.
+	
 Tue Sep 12 15:41:48 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/IIOP_Profile.cpp (parse_string):
