@@ -10,15 +10,13 @@ link="#000fff"
 vlink="#ff0f0f"
 bgcolor="#ffffff">
 
-<p>We are in the process of revising TAO's Portable Interceptor
-implementation according to the <a
+<p>We have revised TAO's Portable Interceptor implementation according
+to the <a
 href="ftp://ftp.omg.org/pub/docs/orbos/99-12-02.pdf">Joint
 Submission</a> to bring it closer to the spec.  The purpose of this
 document is to provide a trasition guide for those who have used our
 old interceptors.  The old interceptors will no longer be supported
-once we have the new mechanism in place.</p>
-
-<p>The revised interceptor implementation will be available shortly.</p>
+now that we have the new mechanism in place.</p>
 
 <Hr><P>
 <h3><a name="toc">Table of Contents</a></h3>
@@ -61,16 +59,33 @@ prevented users from adding code that depended on the interceptor
 features which would not be supported when the spec gets
 finalized.</p>
 
-<p>As we are modifying TAO's interceptor interface to conform with the
-proposed spec., this document provide some guidelines on how you can
-revise your portable interceptors to work with the "standard." </p>
+<p>We have modifed TAO's interceptor interface to conform with the
+proposed spec.  The current version of interceptors consists of support
+for the Dynamic Module as well as the canonical interception points
+including (1) send_request, (2) receive_request, (3) send_reply, (4)
+receive_reply (5) send_exception, and (6) receive_exception.  Only
+Request Interceptors have been implemented as of now.  Every operation
+now has a RequestInfo object which encapsulates the details of the
+operation like arguments, etc.  The registeration of the client-side
+and server-side interceptors remians the same.</p>
+
+<p>
+Details of this implementation along with benchmarking is available in
+the paper on <a
+href="http://www.cs.wustl.edu/~schmidt/PDF/COOTS-00.pdf">Meta-programming
+mechanisms.</a>
+</p>
+
+<p> Examples on this new version of Portable Interceptors is available
+at $TAO_ROOT/tests/Portable_Interceptors. </p>
 
 <Hr><P>
-<h3><a name="api">Guide for Transitting from TAO's Old "Portable"
+<h3><a name="api">Transitting from TAO's Old "Portable"
 Interceptor APIs to the Standard Portable Interceptor APIs</a></h3>
 
 <p>Please refer to the working draft for details on the proposed
-Portable Interceptor interfaces.</p>
+Portable Interceptor interfaces. Below is the old but now obsolete
+interceptor version in TAO.</p>
 
 <pre>
 // -*- IDL -*- $Id$
@@ -270,6 +285,11 @@ module PortableInterceptor
 <Hr><P>
 <h3><a name="status">Current Status</a></h3>
 <ul>
+  <li>The basic infrastructure is in place as well as the canonical
+      points:  send_request, receive_request, send_exception,
+      receive_exception, send_reply, and receive reply.  The other
+      points are mostly for specific applications like AMI, FT, etc.
+      which will implemented as and when needed.
   <li>We will change the temporary interceptor implementation to
       conform with the proposed spec. shortly.
   <li>The current implementation does not go through the interceptor chain
@@ -279,14 +299,17 @@ module PortableInterceptor
 <Hr><P>
 <h2><a name="future">Future Work</a></h2>
 <ol>
-  <li><p>There will only be request-level interceptors.</p></li>
-
-  <li><p>Add support for <em>local</em> keyword.</p></li>
-
-  <li><p>Add support for "standard" portable interceptors.</p></li>
   <li>Add support for the interceptor chain to "ThruPOA" collocation
       optimization; the "Direct" collocation optimization will not go
       through the interceptor chain.
+  <li>The IOR interceptor is provides interception at object creation
+      time and can be used influence the existing policies used by the
+      POA at IOR creation.
+  <li>Multiple interceptors which will handled according to a flow
+      stack model.
+  <li>Making the registeration of interceptors conformant to the spec
+      which uses the ORBInitInfo class.
+            
 </ol>
 
 <Hr><P>
