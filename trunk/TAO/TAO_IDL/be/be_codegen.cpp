@@ -467,6 +467,25 @@ TAO_CodeGen::start_server_header (const char *fname)
           *this->server_header_ << "#include \""
                                 << idl_global->skel_export_include ()
                                 << "\"\n";
+
+          // generate the TAO_EXPORT_MACRO macro
+          *this->server_header_ << "#if defined (TAO_EXPORT_MACRO)\n";
+          *this->server_header_ << "#undef TAO_EXPORT_MACRO\n";
+          *this->server_header_ << "#endif\n";
+          *this->server_header_ << "#define TAO_EXPORT_MACRO "
+                                << idl_global->skel_export_macro ()
+                                << be_nl;
+
+          // Generate export macro for nested classes
+          *this->server_header_
+            << "#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
+            << "#  if defined (TAO_EXPORT_NESTED_MACRO)\n"
+            << "#    undef TAO_EXPORT_NESTED_MACRO\n"
+            << "#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */\n"
+            << "#  define TAO_EXPORT_NESTED_MACRO "
+            << idl_global->skel_export_macro ()
+            << be_nl
+            << "#endif /* TAO_EXPORT_NESTED_CLASSES */\n";
         }
 
       return 0;
