@@ -1,3 +1,20 @@
+Sun Oct 22 16:32:24 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.cpp:
+        * ace/OS_String.h:
+        * ace/OS_String.inl:
+        * ace/config-linux-common.h:
+
+          Renamed ACE_HAS_SAFE_WCSTOK to ACE_LACKS_WCSTOK to be 
+          consistent with the rest of the ACE_LACKS_WCS* macros.
+          
+          Fixed a signature for wcsncmp_emulation, as it was taking
+          in const wchar_t as the first arg instead of const 
+          wchar_t *.
+
+          Added wcscspn_emulation and an implementation for 
+          wcsncmp_emulation.
+
 Sun Oct 22 15:35:38 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Makefile.bor:

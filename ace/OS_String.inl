@@ -484,19 +484,13 @@ ACE_OS_String::strtok (char *s, const char *tokens)
 #endif /* ACE_HAS_PACE */
 }
 
-#if defined (ACE_HAS_WCHAR)
+#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOK)
 ACE_INLINE wchar_t *
 ACE_OS_String::strtok (wchar_t *s, const wchar_t *tokens)
 {
-# if defined (ACE_HAS_SAFE_WCSTOK)
-  ACE_UNUSED_ARG(s);
-  ACE_UNUSED_ARG(tokens);
-  ACE_NOTSUP_RETURN (0);
-# else
   return ::wcstok (s, tokens);
-# endif /* ACE_HAS_SAFE_WCSTOK */
 }
-#endif /* ACE_HAS_WCHAR */
+#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOK */
 
 
 ACE_INLINE int
