@@ -1434,11 +1434,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  && priority == -1)
 	{
 	  if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
-	    priority = PRI_FIFO_MIN + (PRI_FIFO_MAX - PRI_FIFO_MIN)/2;
+	    priority = ACE_THR_PRI_FIFO_DEF;
 	  else if (ACE_BIT_ENABLED(flags, THR_SCHED_RR))
-	    priority = PRI_RR_MIN + (PRI_RR_MAX - PRI_RR_MIN)/2;
+	    priority = ACE_THR_PRI_RR_DEF;
 	  else // THR_SCHED_DEFAULT
-	    priority = PRI_OTHER_MIN + (PRI_OTHER_MAX - PRI_OTHER_MIN)/2;
+	    priority = ACE_THR_PRI_OTHER_DEF;
 	}
 #      endif //ACE_HAS_PTHREADS_1003_DOT_1C
       if (priority != -1)
@@ -1458,17 +1458,17 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  if (ACE_BIT_ENABLED(flags, THR_SCHED_FIFO))
 	    {
 	      sparam.sched_priority = 
-		ACE_MIN(PRI_FIFO_MAX, ACE_MAX(PRI_FIFO_MIN, priority));
+		ACE_MIN(ACE_THR_PRI_FIFO_MAX, ACE_MAX(ACE_THR_PRI_FIFO_MIN, priority));
 	    }
 	  else if (ACE_BIT_ENABLED(flags, THR_SCHED_RR))
 	    {
 	      sparam.sched_priority =
-		ACE_MIN(PRI_RR_MAX, ACE_MAX(PRI_RR_MIN, priority));
+		ACE_MIN(ACE_THR_PRI_RR_MAX, ACE_MAX(ACE_THR_PRI_RR_MIN, priority));
 	    }
 	  else // Default policy, whether set or not
 	    {
 	      sparam.sched_priority =
-		ACE_MIN(PRI_OTHER_MAX, ACE_MAX(PRI_OTHER_MIN, priority));
+		ACE_MIN(ACE_THR_PRI_OTHER_MAX, ACE_MAX(ACE_THR_PRI_OTHER_MIN, priority));
 	    }
 #      else
 	  sparam.sched_priority = priority;

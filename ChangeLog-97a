@@ -4,6 +4,35 @@ Wed Apr 02 10:09:37 1997  David L. Levine  <levine@cs.wustl.edu>
 	  STDIN_Token::TID typedef public so that template
 	  specialization (w/ Sun C++ 4.2) can access it.
 
+Wed Apr  2 10:02:47 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/OS.h: Added definitions for THREAD- and PROCESS-LEVEL
+ 	  priorities because some implementations define these while
+ 	  others don't.  These are now
+ 	  ACE_{THR,PROC}_{FIFO,RR,OTHER}_{MIN,MAX,DEF}.  The only really
+	  NEW concept is the *_DEF, which is a default value assigned by
+	  ACE_OS::thr_create() if one isn't given.  Of special note is that
+ 	  we don't redefine a default values if it's already been
+ 	  defined, which allows individual programs to have their
+ 	  own ACE-wide "default".
+
+	* ace/OS.cpp (thr_create): Uses ACE_{THR,PROC}_* macros
+	  rather than the PRI_* macros.
+
+	* ace/Sched_Params.cpp (priority_min,priority_max): These now
+	  use ACE_{THR,PROC}_* macros to ignore OS-specific priority
+	  assignments.
+
+	* ace/config-linux-lxpthreads.h: Removed definitions of
+ 	  PRI_{FIFO,RR,OTHER}_{MIN,MAX}.
+
+	* include/makeinclude/platform_linux*.GNU (CCFLAGS): Added
+ 	  -fno-implicit-templates now that it's supported.  This
+ 	  eliminates messages of the sort 'ld: Warning size of
+ 	  <mangled template specialization name> change from xx to yy'
+ 	  when linking libACE.so.  Thanks to David Levine for making
+ 	  this possible!
+	
 Tue Apr  1 15:27:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* bin/g++dep: Removed the "/bin" prefix so that this won't fail on
