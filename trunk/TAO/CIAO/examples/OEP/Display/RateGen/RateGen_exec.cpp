@@ -257,8 +257,7 @@ MyImpl::RateGenHome_exec_i::~RateGenHome_exec_i ()
 ::Components::EnterpriseComponent_ptr
 MyImpl::RateGenHome_exec_i::new_RateGen (CORBA::Long hertz
                                             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return new MyImpl::RateGen_exec_i (hertz);
 }

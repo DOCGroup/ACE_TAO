@@ -257,8 +257,7 @@ MyImpl::ECHome_exec_i::~ECHome_exec_i ()
 ::Components::EnterpriseComponent_ptr
 MyImpl::ECHome_exec_i::new_EC (CORBA::Long hertz
                                ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return new MyImpl::EC_exec_i (hertz);
 }
