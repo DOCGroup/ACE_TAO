@@ -21,6 +21,7 @@
 #include "ace/Codeset_Registry.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
+#include "ace/OS_NS_ctype.h"
 #include "tao/corba.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/Messaging_PolicyValueC.h"
@@ -55,8 +56,8 @@ catiiop (char* string
 
   CORBA::Short  iiop_version_major, iiop_version_minor;
 
-  if (isdigit (string [0])
-      && isdigit (string [2])
+  if (ACE_OS::ace_isdigit (string [0])
+      && ACE_OS::ace_isdigit (string [2])
       && string [1] == '.'
       && string [3] == '/'
       && string [4] == '/')
@@ -172,7 +173,7 @@ catior (char* str
     {
       u_char byte;
 
-      if (! (isxdigit (tmp [0]) && isxdigit (tmp [1])))
+      if (! (ACE_OS::ace_isxdigit (tmp [0]) && ACE_OS::ace_isxdigit (tmp [1])))
         break;
 
       byte = (u_char) (ACE::hex2byte (tmp [0]) << 4);
@@ -829,7 +830,7 @@ cat_octet_seq (const char *object_name,
     {
       char c = objKey[i];
       int tmp = (unsigned char) c; // isprint doesn't work with negative vals.(except EOF)
-      if (isprint (tmp))
+      if (ACE_OS::ace_isprint (tmp))
         ACE_DEBUG ((LM_DEBUG, "%c", c));
       else
         ACE_DEBUG ((LM_DEBUG, "."));
