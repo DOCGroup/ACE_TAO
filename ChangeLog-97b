@@ -1,6 +1,16 @@
+Tue Oct 28 05:44:56 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (thr_create): use pthread_attr_setprio instead of
+          *_setsched with DCETHREADS, and check return values of
+          ACE_OS::thr_[gs]etconcurrency ().  Thanks to Stephen Coy
+          <stevec@magna.com.au> for tracking these problems down.
+
+        * tests/Conn_Test.cpp: 1) Added template instantiations.
+          2) Re-enabled with DEC_CXX.  3) Removed THR_DETACHED flags.
+
 Tue Oct 28 00:38:58 1997    <irfan@TWOSTEP>
 
-	* ace/Strategies_T: 
+	* ace/Strategies_T:
 
 	  ACE_Recycling_Strategy - Added new class ACE_Recycling_Strategy.
   	  It defines the interface (and default implementation) for
