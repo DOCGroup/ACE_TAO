@@ -126,7 +126,7 @@ TAO_NT_Notify_Service::init (int argc,
 int
 TAO_NT_Notify_Service::svc (void)
 {
-  TAO_Notify_Service notify_service;
+  TAO_Notify_Service_Driver notify_service;
 
   if (notify_service.init (argc_,
                            argv_) == -1)
