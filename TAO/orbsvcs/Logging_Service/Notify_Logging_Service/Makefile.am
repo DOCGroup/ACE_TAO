@@ -9,7 +9,7 @@ TAO_BUILDDIR = $(top_builddir)
 
 if !BUILD_MINIMUM_CORBA
 
-noinst_PROGRAMS = Notify_Logging_Service
+bin_PROGRAMS = Notify_Logging_Service
 
 Notify_Logging_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
