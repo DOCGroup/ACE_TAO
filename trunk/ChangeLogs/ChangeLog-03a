@@ -1,3 +1,15 @@
+Fri Oct 13 18:47:51 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Caching_Strategies_T.cpp:
+        * ace/Dynamic_Service.cpp:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Wheel_T.cpp:
+        * netsvcs/lib/Log_Message_Receiver.cpp: Added #include "ace/Log_Msg.h"
+          else IBM C++ can't compile the template at instantiation time.
+
+        * tests/Process_Strategy_Test.h: Added #include "ace/File_Lock.h" to
+          see ACE_File_Lock, so IBM C++ can compile the templates.
+
 Fri Oct 13 18:43:24 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/MM_Shared_Memory_Test.cpp: Changed SYNCHRONIZER ctor for
