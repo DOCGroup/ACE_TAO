@@ -1,3 +1,9 @@
+Thu Aug 29 12:20:17 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Removed the 1 after 2 defines, so that they are like the defines
+          in other files.
+
 Thu Aug 29 05:53:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Proactor/post_completions.cpp:
