@@ -75,8 +75,21 @@ RELEASE_FILES = ACE_wrappers/ACE-categories \
 		ACE_wrappers/performance-tests \
 		ACE_wrappers/tests
 
+ifeq ($(PWD),)
+  PWD := $(shell pwd)
+endif
+
+#### If creating the "official" ACE release, update the timestamp in VERSION.
+#### Detect if we are doing that by looking at the PWD.
+#### To disable this feature, add "TIMESTAMP=" to the make command line.
+ifeq ($(PWD),/project/adaptive/ACE_wrappers)
+  TIMESTAMP = perl -pi -e 'chop ($$date=`date`); s/(, released ).*/$$1$$date./' VERSION; cvs commit -m'make release: updated timestamp' VERSION; 
+else
+  TIMESTAMP =
+endif
+
 cleanrelease:
-	(make realclean; cd ..; /bin/rm -f ACE.tar.gz; tar cvf ACE.tar $(RELEASE_FILES); gzip -9 ACE.tar; chmod a+r ACE.tar.gz)
+	($(TIMESTAMP)make realclean; cd ..; /bin/rm -f ACE.tar.gz; tar cvf ACE.tar $(RELEASE_FILES); gzip -9 ACE.tar; chmod a+r ACE.tar.gz)
 
 release:
-	(cd ..; /bin/rm -f ACE.tar.gz; tar cvf ACE.tar $(RELEASE_FILES); gzip -9 ACE.tar; chmod a+r ACE.tar.gz)
+	($(TIMESTAMP)cd ..; /bin/rm -f ACE.tar.gz; tar cvf ACE.tar $(RELEASE_FILES); gzip -9 ACE.tar; chmod a+r ACE.tar.gz)
