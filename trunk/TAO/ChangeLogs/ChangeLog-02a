@@ -1,29 +1,51 @@
+Thu Mar 23 21:11:31 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/Control.h:
+        * orbsvcs/tests/Event/Basic/Control.cpp:
+        * orbsvcs/tests/Event/Basic/Control.dsp:
+        * orbsvcs/tests/Event/Basic/control.conf:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+          New test to check the ConsumerControl strategies, its consumers
+          are deactivated without disconnecting, the supplier continues
+          pushing events. It works on Linux, but there seems to be
+          problems on NT.
+
+        * orbsvcs/tests/Event/lib/Counting_Consumer.h:
+        * orbsvcs/tests/Event/lib/Counting_Consumer.cpp:
+          Implement a separate function to deactivate the servant, it is
+          used in the ConsumerControl strategy test.
+
+        * docs/cec_options.html:
+        * docs/ec_options.html:
+          Fixed some errors in the documentation.
+
 Thu Mar 23 22:06:57 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	Added this logic to recycle ids - when an object gets destroyed,
-	it informs its parent before going away.The parent then recycles the
-	id that was assigned to that child.
- 	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.{h,cpp}:
-	  added method proxy_pushsupplier_destroyed
-	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
-	  added method proxy_pushconsumer_destroyed
- 	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.{h,cpp}:
-	  added methods consumer_admin_destroyed, supplier_admin_destroyed
-	* orbsvcs/orbsvcs/Notify/Notify_Proxy_T.{h,cpp}:
-	  added CosNotifyChannelAdmin::ProxyID param to <init>.
-	  added CosNotifyChannelAdmin::ProxyID data member.
- 	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.{h,cpp}:
- 	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.{h,cpp}:
- 	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.{h,cpp}:
-	  removed extraneous <init> method. Notify_Proxy_T::init will suffice.
- 	* orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.{h,cpp}:
-	  updated comments.
+        Added this logic to recycle ids - when an object gets destroyed,
+        it informs its parent before going away.The parent then recycles the
+        id that was assigned to that child.
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.{h,cpp}:
+          added method proxy_pushsupplier_destroyed
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
+          added method proxy_pushconsumer_destroyed
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.{h,cpp}:
+          added methods consumer_admin_destroyed, supplier_admin_destroyed
+        * orbsvcs/orbsvcs/Notify/Notify_Proxy_T.{h,cpp}:
+          added CosNotifyChannelAdmin::ProxyID param to <init>.
+          added CosNotifyChannelAdmin::ProxyID data member.
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.{h,cpp}:
+          removed extraneous <init> method. Notify_Proxy_T::init will suffice.
+        * orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.{h,cpp}:
+          updated comments.
 
 Thu Mar 23 22:28:09 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/Makefile:
-	  Only the TAO_Svc_Utils library is needed in this directory.
+        * orbsvcs/ImplRepo_Service/Makefile:
+          Only the TAO_Svc_Utils library is needed in this directory.
 
 Thu Mar 23 20:49:43 2000  David L. Levine  <levine@cs.wustl.edu>
 
