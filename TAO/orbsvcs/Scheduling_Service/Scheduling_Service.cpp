@@ -312,12 +312,12 @@ template class ACE_Hash_Map_Manager_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<i
 template class ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Thread_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Thread_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Thread_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Thread_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Thread_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Entry<int, RtecScheduler::Config_Info *>;
 template class ACE_Hash_Map_Entry<int, RtecScheduler::Dependency_Set *>;
 template class ACE_Hash_Map_Entry<int, RtecScheduler::RT_Info *>;
@@ -350,12 +350,12 @@ template class TAO_RSE_Utilization_Visitor<TAO_MUF_Reconfig_Sched_Strategy>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Thread_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Thread_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Thread_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Thread_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Thread_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Thread_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Entry<int, RtecScheduler::Config_Info *>
 #pragma instantiate ACE_Hash_Map_Entry<int, RtecScheduler::Dependency_Set *>
 #pragma instantiate ACE_Hash_Map_Entry<int, RtecScheduler::RT_Info *>

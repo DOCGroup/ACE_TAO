@@ -1,3 +1,10 @@
+Thu Jul 29 19:10:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+	* orbsvcs/examples/RtEC/Schedule/Service.cpp:
+	  Changed ACE_Thread_Mutex to ACE_SYNCH_MUTEX, thanks to Ossama
+	  for pointing this out.
+
 Thu Jul 29 17:27:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/ORB.cpp (work_pending): Forward the work_pending() method to
