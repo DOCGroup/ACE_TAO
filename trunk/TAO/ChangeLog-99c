@@ -1,3 +1,53 @@
+Fri Jul  2 17:50:56 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/{IIOP,UIOP}_Profile.cpp (to_string):
+
+	  Removed code that adds one to length of string for the "null
+	  terminator" in calls to CORBA::string_alloc().
+	  CORBA::string_alloc() already allocates additional space for the
+	  null terminator.
+
+	* tao/Connector_Registry.{h,cpp}:
+
+	  Added an object_key_delimiter() method that returns the object
+	  key delimiter that the protocol in a provided URL style IOR
+	  uses.
+
+	* tao/Pluggable.h:
+	* tao/{IIOP,UIOP}_Connector.h:
+
+	  Made check_prefix() and object_key_delimiter() methods.  There
+	  is no need for them to be otherwise.  This change was also
+	  needed so that the TAO_Connector_Registry could call them.
+	
+	* tao/ORB.cpp (resolve_initial_references):
+
+	  Generalized this method so that it is now non-protocol
+	  specific by using the newly added object_key_delimiter() method
+	  in the TAO_Connector_Registry.
+	
+	* tao/ORB.{h,cpp}:
+
+	  Moved URL style string to object conversion code into a separate 
+	  routine to improve code readability.
+
+	  Updated some exception handling code.
+
+	  Various pluggable protocol related code cleanups and updates.
+
+	  Removed null pointer checks in *String_var destructors and
+	  assignment operators since it is safe to pass a null pointer to
+	  CORBA::string_free().
+
+	* tao/MProfile.h:
+
+	  Added default value of zero to TAO_MProfile (CORBA::ULong)
+	  constructor.  This is just a coding style change.
+
+	* tao/corbafwd.i: 
+
+	  Added a line to force Emacs into C++ mode.
+
 Fri Jul  2 15:29:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll:
