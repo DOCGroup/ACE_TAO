@@ -1,3 +1,11 @@
+Wed Jan  8 19:27:49 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Block.h: Doxygenized comments for release() and copy().
+
+        * ace/UPIPE_Stream.{h cpp}: Removed the remaining_ member; use the
+          ACE_Message_BLock::length() member function to find the amount
+          of remaining data.
+
 Wed Jan  8 12:17:10 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/ace-install: Fixed the improper usage of "or" in the "find "

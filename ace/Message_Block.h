@@ -325,9 +325,9 @@ public:
    * In all cases, this ACE_Message_Block is deleted - it must have come
    * from the heap, or there will be trouble.
    *
-   * <release> is designed to release the continuation chain; the
+   * release() is designed to release the continuation chain; the
    * destructor is not.  If we make the destructor release the
-   * continuation chain by calling <release> or delete on the message
+   * continuation chain by calling release() or delete on the message
    * blocks in the continuation chain, the following code will not
    * work since the message block in the continuation chain is not off
    * the heap:
@@ -337,11 +337,14 @@ public:
    *
    *  mb1.cont (&mb2);
    *
-   * And hence, call <release> on a dynamically allocated message
+   * And hence, call release() on a dynamically allocated message
    * block. This will release all the message blocks in the
    * continuation chain.  If you call delete or let the message block
    * fall off the stack, cleanup of the message blocks in the
    * continuation chain becomes the responsibility of the user.
+   *
+   * @retval 0, always, and the object this method was invoked on is no
+   *            longer valid.
    */
   virtual ACE_Message_Block *release (void);
 
@@ -356,20 +359,31 @@ public:
   // = Operations on Message data
 
   /**
-   * Copies <n> bytes from <buf> into the Message_Block starting at
-   * the <wr_ptr> offset.  Return 0 and increment <wr_ptr> by <n> if
-   * the method succeeds.  Returns -1 if the size of the message is
-   * too small, i.e., for this to work correct, <end> must be >=
-   * <wr_ptr>.
+   * Copies data into this ACE_Message_Block. Data is copied into the
+   * block starting at the current write pointer.
+   *
+   * @param buf  Pointer to the buffer to copy from.
+   * @param n    The number of bytes to copy.
+   *
+   * @retval 0  on success; the write pointer is advanced by @arg n.
+   * @retval -1 if the amount of free space following the write pointer
+   *            in the block is less than @arg n. Free space can be checked
+   *            by calling space().
    */
   int copy (const char *buf, size_t n);
 
   /**
-   * Copies <buf> into the Message_Block starting at the <wr_ptr>
-   * offset.  This call assumes that <buf> is NUL-terminated.  Return
-   * 0 and increment <wr_ptr> by <ACE_OS::strlen (buf) + 1> if the
-   * method succeeds.  Returns -1 if the size of the message is too
-   * small, i.e., for this to work correct, <end> must be >= <wr_ptr>.
+   * Copies a 0-terminated character string into this ACE_Message_Block.
+   * The string is copied into the block starting at the current write
+   * pointer. The 0-terminator is included in the copied data.
+   *
+   * @param buf  Pointer to the character string to copy from.
+   *
+   * @retval 0  on success; the write pointer is advanced by the string's
+   *            length, including the 0 terminator.
+   * @retval -1 if the amount of free space following the write pointer
+   *            in the block is less than required to hold the entire string.
+   *            Free space can be checked by calling space().
    */
   int copy (const char *buf);
 
