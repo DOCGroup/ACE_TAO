@@ -1,0 +1,330 @@
+--- orig/DomainS.h	Tue Apr  3 17:47:30 2001
++++ patched/DomainS.h	Tue Apr  3 20:44:14 2001
+@@ -23,9 +23,9 @@
+ #define _TAO_IDL_ORIG_DOMAINS_H_
+ 
+ #include "ace/pre.h"
+-#include "PolicyS.h"
+-#include "DomainC.h"
+-
++#include "domain_export.h"
++#include "tao/DomainC.h"
++#include "tao/PortableServer/PolicyS.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+@@ -47,216 +47,6 @@
+ #pragma option push -w-rvl -w-rch -w-ccc -w-inl
+ #endif /* __BORLANDC__ */
+ 
+-TAO_NAMESPACE  POA_CORBA
+-{
+-  class InterfaceDef;
+-  typedef InterfaceDef *InterfaceDef_ptr;
+-  // Forward Classes Declaration
+-  class _TAO_InterfaceDef_ThruPOA_Proxy_Impl;
+-  class _TAO_InterfaceDef_Direct_Proxy_Impl;
+-  class _TAO_InterfaceDef_Strategized_Proxy_Broker;
+-  
+-  class TAO_Export InterfaceDef :  public virtual PortableServer::ServantBase
+-  {
+-  protected:
+-    InterfaceDef (void);
+-
+-  public:
+-    InterfaceDef (const InterfaceDef& rhs);
+-    virtual ~InterfaceDef (void);
+-
+-
+-    virtual CORBA::Boolean _is_a (
+-        const char* logical_type_id,
+-        CORBA::Environment &ACE_TRY_ENV = 
+-          TAO_default_environment ()
+-      );
+-
+-    virtual void* _downcast (
+-        const char* logical_type_id
+-      );
+-
+-    static void _is_a_skel (
+-        TAO_ServerRequest &req,
+-        void *obj,
+-        void *context,
+-        CORBA::Environment &ACE_TRY_ENV = 
+-          TAO_default_environment ()
+-      );
+-
+-    static void _non_existent_skel (
+-        TAO_ServerRequest &req,
+-        void *obj,
+-        void *context,
+-        CORBA::Environment &ACE_TRY_ENV = 
+-          TAO_default_environment ()
+-      );
+-
+-    static void _interface_skel (
+-        TAO_ServerRequest &req,
+-        void *obj,
+-        void *context,
+-        CORBA::Environment &ACE_TRY_ENV = 
+-          TAO_default_environment ()
+-      );
+-
+-    virtual void _dispatch (
+-        TAO_ServerRequest &_tao_req,
+-        void *_tao_context,
+-        CORBA::Environment &ACE_TRY_ENV = 
+-          TAO_default_environment ()
+-      );
+-
+-    ::CORBA::InterfaceDef *_this (
+-        CORBA::Environment &ACE_TRY_ENV = 
+-          TAO_default_environment ()
+-      );
+-
+-    virtual const char* _interface_repository_id (void) const;
+-
+-
+-  };
+-
+-  
+-  ///////////////////////////////////////////////////////////////////////
+-  //               Strategized Proxy Broker Declaration 
+-  //
+-  
+-  class TAO_Export _TAO_InterfaceDef_Strategized_Proxy_Broker : public virtual ::CORBA::_TAO_InterfaceDef_Proxy_Broker
+-  {
+-  public: 
+-    _TAO_InterfaceDef_Strategized_Proxy_Broker (void);
+-    
+-    virtual ~_TAO_InterfaceDef_Strategized_Proxy_Broker (void);
+-    
+-    virtual ::CORBA::_TAO_InterfaceDef_Proxy_Impl &select_proxy (
+-      ::CORBA::InterfaceDef *object,
+-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+-    );
+-  
+-  private:
+-  
+-  // Helper methods that takes care to create the proxy
+-  // as soon as their use is necessary.
+-    void create_proxy (
+-      int collocation_strategy,
+-      CORBA::Environment &ACE_TRY_ENV
+-    );
+-  
+-  private:
+-    
+-    // Caches the proxy implementations. The proxy implementation
+-    // are totally stateless, and those can be shared by all the
+-    // instances of a given IDL interface type.
+-    ::CORBA::_TAO_InterfaceDef_Proxy_Impl
+-     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+-    
+-    TAO_SYNCH_MUTEX mutex_;
+-  // This funxtion is used to get an handle to the unique instance
+-  // of the Strategized Proxy Broker that is available for a given
+-  // interface.
+-  
+-  public:
+-    static _TAO_InterfaceDef_Strategized_Proxy_Broker *the_TAO_InterfaceDef_Strategized_Proxy_Broker (void);
+-  };
+-  
+-  
+-  //
+-  //            End Strategized Proxy Broker Declaration 
+-  ///////////////////////////////////////////////////////////////////////
+-  
+-  
+-///////////////////////////////////////////////////////////////////////
+-//                    ThruPOA  Impl. Declaration
+-//
+-
+-class TAO_Export _TAO_InterfaceDef_ThruPOA_Proxy_Impl : 
+-  public virtual ::CORBA::_TAO_InterfaceDef_Proxy_Impl,
+-  public virtual TAO_ThruPOA_Object_Proxy_Impl
+-{
+-public:
+-  _TAO_InterfaceDef_ThruPOA_Proxy_Impl (void);
+-  
+-  virtual ~_TAO_InterfaceDef_ThruPOA_Proxy_Impl (void) { }
+-  
+-  };
+-
+-
+-//
+-//                ThruPOA  Proxy Impl. Declaration
+-///////////////////////////////////////////////////////////////////////
+-
+-
+-///////////////////////////////////////////////////////////////////////
+-//                    Direct  Impl. Declaration
+-//
+-
+-class TAO_Export _TAO_InterfaceDef_Direct_Proxy_Impl : 
+-  public virtual CORBA::_TAO_InterfaceDef_Proxy_Impl,
+-  public virtual TAO_Direct_Object_Proxy_Impl
+-{
+-public:
+-  _TAO_InterfaceDef_Direct_Proxy_Impl (void);
+-  
+-  virtual ~_TAO_InterfaceDef_Direct_Proxy_Impl (void) { }
+-  
+-  };
+-
+-
+-//
+-//                Direct  Proxy Impl. Declaration
+-///////////////////////////////////////////////////////////////////////
+-
+-
+-#if defined (ACE_HAS_USING_KEYWORD)
+-// TIE class: Refer to CORBA v2.2, Section 20.34.4
+-template <class T>
+-class TAO_Export InterfaceDef_tie : public InterfaceDef
+-{
+-public:
+-  InterfaceDef_tie (T &t);
+-  // the T& ctor
+-  InterfaceDef_tie (T &t, PortableServer::POA_ptr poa);
+-  // ctor taking a POA
+-  InterfaceDef_tie (T *tp, CORBA::Boolean release=1);
+-  // ctor taking pointer and an ownership flag
+-  InterfaceDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
+-  // ctor with T*, ownership flag and a POA
+-  ~InterfaceDef_tie (void);
+-  // dtor
+-  
+-  // TIE specific functions
+-  T *_tied_object (void);
+-  // return the underlying object
+-  void _tied_object (T &obj);
+-  // set the underlying object
+-  void _tied_object (T *obj, CORBA::Boolean release=1);
+-  // set the underlying object and the ownership flag
+-  CORBA::Boolean _is_owner (void);
+-  // do we own it
+-  void _is_owner (CORBA::Boolean b);
+-  // set the ownership
+-  
+-  // overridden ServantBase operations
+-  PortableServer::POA_ptr _default_POA (
+-      CORBA::Environment &ACE_TRY_ENV = 
+-        TAO_default_environment ()
+-    );
+-private:
+-  T *ptr_;
+-  PortableServer::POA_var poa_;
+-  CORBA::Boolean rel_;
+-  
+-  // copy and assignment are not allowed
+-  InterfaceDef_tie (const InterfaceDef_tie &);
+-  void operator= (const InterfaceDef_tie &);
+-};
+-
+-#endif /* ACE_HAS_USING_KEYWORD */
+-
+-}
+-TAO_NAMESPACE_CLOSE
+-
+ class POA_CORBA_DomainManager;
+ typedef POA_CORBA_DomainManager *POA_CORBA_DomainManager_ptr;
+ // Forward Classes Declaration
+@@ -264,7 +54,7 @@
+ class _TAO_CORBA_DomainManager_Direct_Proxy_Impl;
+ class _TAO_CORBA_DomainManager_Strategized_Proxy_Broker;
+ 
+-class TAO_Export POA_CORBA_DomainManager :  public virtual PortableServer::ServantBase
++class TAO_Domain_Export POA_CORBA_DomainManager :  public virtual PortableServer::ServantBase
+ {
+ protected:
+   POA_CORBA_DomainManager (void);
+@@ -347,7 +137,7 @@
+ //               Strategized Proxy Broker Declaration 
+ //
+ 
+-class TAO_Export _TAO_CORBA_DomainManager_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_DomainManager_Proxy_Broker
++class TAO_Domain_Export _TAO_CORBA_DomainManager_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_DomainManager_Proxy_Broker
+ {
+ public: 
+   _TAO_CORBA_DomainManager_Strategized_Proxy_Broker (void);
+@@ -395,7 +185,7 @@
+ //                    ThruPOA  Impl. Declaration
+ //
+ 
+-class TAO_Export _TAO_CORBA_DomainManager_ThruPOA_Proxy_Impl : 
++class TAO_Domain_Export _TAO_CORBA_DomainManager_ThruPOA_Proxy_Impl :
+   public virtual ::_TAO_CORBA_DomainManager_Proxy_Impl,
+   public virtual TAO_ThruPOA_Object_Proxy_Impl
+ {
+@@ -425,7 +215,7 @@
+ //                    Direct  Impl. Declaration
+ //
+ 
+-class TAO_Export _TAO_CORBA_DomainManager_Direct_Proxy_Impl : 
++class TAO_Domain_Export _TAO_CORBA_DomainManager_Direct_Proxy_Impl :
+   public virtual _TAO_CORBA_DomainManager_Proxy_Impl,
+   public virtual TAO_Direct_Object_Proxy_Impl
+ {
+@@ -452,7 +242,7 @@
+ 
+ // TIE class: Refer to CORBA v2.2, Section 20.34.4
+ template <class T>
+-class TAO_Export POA_CORBA_DomainManager_tie : public POA_CORBA_DomainManager
++class TAO_Domain_Export POA_CORBA_DomainManager_tie : public POA_CORBA_DomainManager
+ {
+ public:
+   POA_CORBA_DomainManager_tie (T &t);
+@@ -510,7 +300,7 @@
+ class _TAO_CORBA_ConstructionPolicy_Direct_Proxy_Impl;
+ class _TAO_CORBA_ConstructionPolicy_Strategized_Proxy_Broker;
+ 
+-class TAO_Export POA_CORBA_ConstructionPolicy : public virtual POA_CORBA::Policy
++class TAO_Domain_Export POA_CORBA_ConstructionPolicy : public virtual POA_CORBA_Policy
+ {
+ protected:
+   POA_CORBA_ConstructionPolicy (void);
+@@ -618,7 +408,7 @@
+ //               Strategized Proxy Broker Declaration 
+ //
+ 
+-class TAO_Export _TAO_CORBA_ConstructionPolicy_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_ConstructionPolicy_Proxy_Broker
++class TAO_Domain_Export _TAO_CORBA_ConstructionPolicy_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_ConstructionPolicy_Proxy_Broker
+ {
+ public: 
+   _TAO_CORBA_ConstructionPolicy_Strategized_Proxy_Broker (void);
+@@ -666,10 +456,10 @@
+ //                    ThruPOA  Impl. Declaration
+ //
+ 
+-class TAO_Export _TAO_CORBA_ConstructionPolicy_ThruPOA_Proxy_Impl : 
++class TAO_Domain_Export _TAO_CORBA_ConstructionPolicy_ThruPOA_Proxy_Impl :
+   public virtual ::_TAO_CORBA_ConstructionPolicy_Proxy_Impl,
+   public virtual TAO_ThruPOA_Object_Proxy_Impl,
+-  public virtual ::POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl
++  public virtual _TAO_CORBA_Policy_ThruPOA_Proxy_Impl
+   
+ {
+ public:
+@@ -699,10 +489,10 @@
+ //                    Direct  Impl. Declaration
+ //
+ 
+-class TAO_Export _TAO_CORBA_ConstructionPolicy_Direct_Proxy_Impl : 
++class TAO_Domain_Export _TAO_CORBA_ConstructionPolicy_Direct_Proxy_Impl :
+   public virtual _TAO_CORBA_ConstructionPolicy_Proxy_Impl,
+   public virtual TAO_Direct_Object_Proxy_Impl,
+-  public virtual POA_CORBA::_TAO_Policy_Direct_Proxy_Impl
++  public virtual _TAO_CORBA_Policy_Direct_Proxy_Impl
+   
+ {
+ public:
+@@ -729,7 +519,7 @@
+ 
+ // TIE class: Refer to CORBA v2.2, Section 20.34.4
+ template <class T>
+-class TAO_Export POA_CORBA_ConstructionPolicy_tie : public POA_CORBA_ConstructionPolicy
++class TAO_Domain_Export POA_CORBA_ConstructionPolicy_tie : public POA_CORBA_ConstructionPolicy
+ {
+ public:
+   POA_CORBA_ConstructionPolicy_tie (T &t);

@@ -1,0 +1,367 @@
+--- orig/DomainC.cpp	Tue Apr  3 17:47:30 2001
++++ patched/DomainC.cpp	Tue Apr  3 20:30:02 2001
+@@ -27,6 +27,8 @@
+ #if TAO_HAS_INTERCEPTORS == 1
+ #include "tao/RequestInfo_Util.h"
+ #endif  /* TAO_HAS_INTERCEPTORS == 1 */
++#include "tao/IFR_Client_Adapter.h"
++#include "ace/Dynamic_Service.h"
+ 
+ #if defined (__BORLANDC__)
+ #pragma option -w-rvl -w-rch -w-ccc -w-aus
+@@ -38,242 +40,6 @@
+ 
+ 
+ #if (TAO_HAS_INTERCEPTORS == 1)
+-#endif /* TAO_HAS_INTERCEPTORS */
+-
+-///////////////////////////////////////////////////////////////////////
+-//                Base & Remote Proxy  Implementation. 
+-//
+-
+-CORBA::_TAO_InterfaceDef_Proxy_Impl::_TAO_InterfaceDef_Proxy_Impl (void)
+-{}
+-
+-CORBA::_TAO_InterfaceDef_Remote_Proxy_Impl::_TAO_InterfaceDef_Remote_Proxy_Impl (void)
+-{}
+-
+-// Remote Implementation of the IDL interface methods
+-
+-
+-//
+-//            End  Base & Remote  Proxy Implemeentation. 
+-///////////////////////////////////////////////////////////////////////
+-
+-
+-///////////////////////////////////////////////////////////////////////
+-//           Remote & Base  Proxy Broker Implementation
+-//
+-
+-CORBA::_TAO_InterfaceDef_Proxy_Broker::_TAO_InterfaceDef_Proxy_Broker (void)
+-{
+-}
+-
+-CORBA::_TAO_InterfaceDef_Proxy_Broker::~_TAO_InterfaceDef_Proxy_Broker (void)
+-{
+-}
+-
+-CORBA::_TAO_InterfaceDef_Proxy_Broker * (*CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_function_pointer) (
+-    CORBA::Object_ptr obj
+-  ) = 0;
+-
+-// Factory Member function Implementation.
+-CORBA::_TAO_InterfaceDef_Remote_Proxy_Broker *
+-CORBA::_TAO_InterfaceDef_Remote_Proxy_Broker::the_TAO_InterfaceDef_Remote_Proxy_Broker (void)
+-{
+-  static ::CORBA::_TAO_InterfaceDef_Remote_Proxy_Broker remote_proxy_broker;
+-  return &remote_proxy_broker;
+-}
+-
+-CORBA::_TAO_InterfaceDef_Remote_Proxy_Broker::_TAO_InterfaceDef_Remote_Proxy_Broker (void)
+-{
+-}
+-
+-CORBA::_TAO_InterfaceDef_Remote_Proxy_Broker::~_TAO_InterfaceDef_Remote_Proxy_Broker (void)
+-{
+-}
+-
+-CORBA::_TAO_InterfaceDef_Proxy_Impl&
+-CORBA::_TAO_InterfaceDef_Remote_Proxy_Broker::select_proxy (
+-  ::CORBA::InterfaceDef *,
+-  CORBA::Environment &
+-)
+-{
+-  return this->remote_proxy_impl_;
+-}
+-
+-
+-//
+-//           End Remote & Base Proxy Broker Implementation
+-///////////////////////////////////////////////////////////////////////
+-
+-
+-// default constructor
+-CORBA::InterfaceDef::InterfaceDef (int collocated)
+-{
+-  this->CORBA_InterfaceDef_setup_collocation (collocated);
+-}
+-
+-// destructor
+-CORBA::InterfaceDef::~InterfaceDef (void)
+-{}
+-
+-void
+-CORBA::InterfaceDef::CORBA_InterfaceDef_setup_collocation (int collocated)
+-{
+-  if (collocated)
+-    this->the_TAO_InterfaceDef_Proxy_Broker_ =
+-      ::CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_function_pointer (this);
+-  else
+-    this->the_TAO_InterfaceDef_Proxy_Broker_ =
+-      ::CORBA::_TAO_InterfaceDef_Remote_Proxy_Broker::the_TAO_InterfaceDef_Remote_Proxy_Broker ();
+-}
+-
+-void CORBA::InterfaceDef::_tao_any_destructor (void *x)
+-{
+-  InterfaceDef *tmp = ACE_static_cast (InterfaceDef*,x);
+-  CORBA::release (tmp);
+-}
+-
+-CORBA::InterfaceDef_ptr CORBA::InterfaceDef::_narrow (
+-    CORBA::Object_ptr obj,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  if (CORBA::is_nil (obj))
+-    return InterfaceDef::_nil ();
+-  if (! obj->_is_local ())
+-    {
+-      CORBA::Boolean is_a = obj->_is_a ("IDL:CORBA/InterfaceDef:1.0", ACE_TRY_ENV);
+-      ACE_CHECK_RETURN (InterfaceDef::_nil ());
+-      if (is_a == 0)
+-        return InterfaceDef::_nil ();
+-    }
+-  return InterfaceDef::_unchecked_narrow (obj, ACE_TRY_ENV);
+-}
+-
+-CORBA::InterfaceDef_ptr CORBA::InterfaceDef::_unchecked_narrow (
+-    CORBA::Object_ptr obj,
+-    CORBA::Environment &
+-  )
+-{
+-  if (CORBA::is_nil (obj))
+-    return InterfaceDef::_nil ();
+-  if (! obj->_is_local ())
+-    {
+-      TAO_Stub* stub = obj->_stubobj ();
+-      if (stub)
+-        stub->_incr_refcnt ();
+-      InterfaceDef_ptr default_proxy = InterfaceDef::_nil ();
+-
+-      if (
+-          !CORBA::is_nil (stub->servant_orb_var ().ptr ()) &&
+-          stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects () &&
+-          obj->_is_collocated () &&CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_function_pointer != 0
+-        )
+-      {
+-        ACE_NEW_RETURN (
+-          default_proxy,
+-          ::CORBA::InterfaceDef (
+-            stub,
+-            1,
+-            obj->_servant ()),
+-            
+-          InterfaceDef::_nil ());
+-        }
+-      if (CORBA::is_nil (default_proxy))
+-        ACE_NEW_RETURN (default_proxy, ::CORBA::InterfaceDef (stub, 0, obj->_servant ()), InterfaceDef::_nil ());
+-        return default_proxy;
+-      }
+-    else 
+-      return
+-        ACE_reinterpret_cast
+-          (
+-            InterfaceDef_ptr,
+-              obj->_tao_QueryInterface
+-                (
+-                  ACE_reinterpret_cast
+-                    (
+-                      ptr_arith_t,
+-                      &InterfaceDef::_narrow
+-                    )
+-                )
+-          );
+-}
+-
+-CORBA::InterfaceDef_ptr
+-CORBA::InterfaceDef::_duplicate (InterfaceDef_ptr obj)
+-{
+-  if (!CORBA::is_nil (obj))
+-    obj->_add_ref ();
+-  return obj;
+-}
+-
+-CORBA::Boolean CORBA::InterfaceDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
+-{
+-  if (
+-    (!ACE_OS::strcmp ((char *)value, "IDL:CORBA/InterfaceDef:1.0")) ||
+-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+-  return 1; // success using local knowledge
+-  else
+-    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
+-}
+-
+-void *CORBA::InterfaceDef::_tao_QueryInterface (ptr_arith_t type)
+-{
+-  void *retv = 0;
+-  if (type == ACE_reinterpret_cast
+-    (ptr_arith_t,
+-      &ACE_NESTED_CLASS (::CORBA, InterfaceDef)::_narrow))
+-    retv = ACE_reinterpret_cast (void*, this);
+-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+-    retv = ACE_reinterpret_cast (void *,
+-      ACE_static_cast (CORBA::Object_ptr, this));
+-    
+-  if (retv)
+-    this->_add_ref ();
+-  return retv;
+-}
+-
+-const char* CORBA::InterfaceDef::_interface_repository_id (void) const
+-{
+-  return "IDL:CORBA/InterfaceDef:1.0";
+-}
+-
+-static const CORBA::Long _oc_CORBA_InterfaceDef[] =
+-{
+-  TAO_ENCAP_BYTE_ORDER, // byte order
+-  27,
+-  ACE_NTOHL (0x49444c3a), 
+-  ACE_NTOHL (0x434f5242), 
+-  ACE_NTOHL (0x412f496e), 
+-  ACE_NTOHL (0x74657266), 
+-  ACE_NTOHL (0x61636544), 
+-  ACE_NTOHL (0x65663a31), 
+-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:CORBA/InterfaceDef:1.0
+-  13,
+-  ACE_NTOHL (0x496e7465), 
+-  ACE_NTOHL (0x72666163), 
+-  ACE_NTOHL (0x65446566), 
+-  ACE_NTOHL (0x0),  // name = InterfaceDef
+-};
+-
+-static CORBA::TypeCode _tc_TAO_tc_CORBA_InterfaceDef (
+-    CORBA::tk_objref,
+-    sizeof (_oc_CORBA_InterfaceDef),
+-    (char *) &_oc_CORBA_InterfaceDef,
+-    0,
+-    sizeof (CORBA::InterfaceDef)
+-  );
+-
+-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+-TAO_NAMESPACE_BEGIN (CORBA)
+-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_InterfaceDef, &_tc_TAO_tc_CORBA_InterfaceDef)
+-TAO_NAMESPACE_END
+-
+-TAO_NAMESPACE_TYPE (const CORBA::ULong)
+-TAO_NAMESPACE_BEGIN (CORBA)
+-TAO_NAMESPACE_DEFINE (const CORBA::ULong, SecConstruction, 11U)
+-TAO_NAMESPACE_END
+-
+-#if (TAO_HAS_INTERCEPTORS == 1)
+ class TAO_ClientRequestInfo_CORBA_DomainManager_get_domain_policy : public TAO_ClientRequestInfo
+ {
+ public:
+@@ -862,9 +628,17 @@
+   
+   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+     
++  TAO_IFR_Client_Adapter *adapter =
++    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
++        TAO_ORB_Core::ifr_client_adapter_name ()
++      );
++
+   CORBA::ULong length_object_type = parameter_list->length ();
+   parameter_list->length (length_object_type + 1);
+-  (*parameter_list)[length_object_type].argument <<=  this->object_type_;
++  adapter->interfacedef_any_insert (
++      (*parameter_list)[length_object_type].argument,
++      this->object_type_
++    );
+   
+   (*parameter_list)[length_object_type].mode = Dynamic::PARAM_IN;
+     
+@@ -950,6 +724,11 @@
+   
+ #endif  /* TAO_HAS_INTERCEPTORS */
+   
++  TAO_IFR_Client_Adapter *adapter =
++    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
++        TAO_ORB_Core::ifr_client_adapter_name ()
++      );
++
+   for (;;)
+     {
+       int _invoke_status = TAO_INVOKE_EXCEPTION;
+@@ -990,7 +769,7 @@
+           
+           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
+           if (!(
+-                            (_tao_out << object_type) &&
++              (adapter->interfacedef_cdr_insert (_tao_out, object_type)) &&
+               (_tao_out << CORBA::Any::from_boolean (constr_policy))
+             ))
+             TAO_INTERCEPTOR_THROW (
+@@ -1512,67 +1291,6 @@
+ CORBA::TypeCode_ptr _tc_CORBA_DomainManagerList =
+   &_tc_TAO_tc_CORBA_DomainManagerList;
+ 
+-void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDef_ptr _tao_elem)
+-{
+-  TAO_OutputCDR stream;
+-  if (stream << _tao_elem)
+-  {
+-    _tao_any._tao_replace (
+-        CORBA::_tc_InterfaceDef, 
+-        TAO_ENCAP_BYTE_ORDER,
+-        stream.begin (),
+-        1,
+-        CORBA::InterfaceDef::_duplicate (_tao_elem),
+-        CORBA::InterfaceDef::_tao_any_destructor
+-      );
+-  }
+-}
+-
+-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDef_ptr &_tao_elem)
+-{
+-  ACE_TRY_NEW_ENV
+-  {
+-    _tao_elem = CORBA::InterfaceDef::_nil ();
+-    CORBA::TypeCode_var type = _tao_any.type ();
+-    
+-    CORBA::Boolean result = type->equivalent (CORBA::_tc_InterfaceDef, ACE_TRY_ENV);
+-    ACE_TRY_CHECK;
+-    
+-    if (!result)
+-      return 0; // not equivalent
+-    
+-    TAO_InputCDR stream (
+-        _tao_any._tao_get_cdr (),
+-        _tao_any._tao_byte_order ()
+-      );
+-    if (stream >> _tao_elem)
+-    {
+-      ((CORBA::Any *)&_tao_any)->_tao_replace (
+-          CORBA::_tc_InterfaceDef,
+-          1,
+-          _tao_elem,
+-          CORBA::InterfaceDef::_tao_any_destructor
+-        );
+-      return 1;
+-    }
+-  }
+-  ACE_CATCHANY
+-  {
+-    _tao_elem = CORBA::InterfaceDef::_nil ();
+-    return 0;
+-  }
+-  ACE_ENDTRY;
+-  _tao_elem = CORBA::InterfaceDef::_nil ();
+-  return 0;
+-}
+-
+-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+-    defined (ACE_HAS_GNU_REPO)
+-    template class TAO_Object_Manager<CORBA::InterfaceDef,CORBA::InterfaceDef_var>;
+-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+-  #  pragma instantiate TAO_Object_Manager<CORBA::InterfaceDef,CORBA::InterfaceDef_var>
+-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+-
+ void operator<<= (CORBA::Any &_tao_any, CORBA_DomainManager_ptr _tao_elem)
+ {
+   TAO_OutputCDR stream;
+@@ -1827,4 +1545,3 @@
+   }
+   return 0; // error
+ }
+-
