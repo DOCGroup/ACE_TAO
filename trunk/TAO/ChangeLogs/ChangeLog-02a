@@ -1,3 +1,15 @@
+Thu May 25 12:14:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/TypeCodeFactory_i.h:
+	  Cosmetic changes.
+
+	* orbsvcs/TypeCodeFactory_i.cpp:
+	  Added create_union_tc() method. Every feature has not
+	  been tested with every discriminator type, but enum
+	  discriminators have been thoroughly tested, as well
+	  as default cases and multiple case labels. Recursive
+	  typecodes (structs and unions) are not yet supported.
+
 Thu May 25 11:09:24 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Smart_Proxies/client.cpp
