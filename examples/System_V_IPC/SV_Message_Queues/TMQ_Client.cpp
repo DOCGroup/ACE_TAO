@@ -1,8 +1,8 @@
 #include "ace/Typed_SV_Message_Queue.h"
 // $Id$
 
-
 #include "test.h"
+#include "ace/streams.h"
 
 int
 main (int, char *[])

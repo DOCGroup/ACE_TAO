@@ -61,7 +61,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -258,7 +258,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
 .obj/BCU.o .shobj/BCU.: BCU.cpp BCU.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -272,7 +272,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -436,7 +436,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -507,7 +507,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -593,7 +593,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -639,7 +639,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -704,7 +704,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -900,7 +900,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \

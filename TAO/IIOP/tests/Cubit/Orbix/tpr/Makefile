@@ -63,7 +63,7 @@ server: $(addprefix $(VDIR),$(SVR_OBJS))
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/config-sunos5.5-sunc++-4.x.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -76,7 +76,7 @@ server: $(addprefix $(VDIR),$(SVR_OBJS))
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/config-sunos5.5-sunc++-4.x.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
