@@ -116,6 +116,7 @@ ACE_Log_Record::ACE_Log_Record (void)
 // Print out the record on the stderr stream with the appropriate
 // format.
 
+#if !defined (ACE_HAS_WINCE)
 int
 ACE_Log_Record::print (const ASYS_TCHAR *host_name,
 		       u_long verbose_flag, 
@@ -167,7 +168,6 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
   return ret;
 }
 
-#if !defined (ACE_HAS_WINCE)
 int
 ACE_Log_Record::print (const ASYS_TCHAR host_name[],
 		       u_long verbose_flag, 
@@ -215,15 +215,10 @@ ACE_Log_Record::print (const ASYS_TCHAR host_name[],
 }
 #else /* ACE_HAS_WINCE */
 int
-ACE_Log_Record::print (const ASYS_TCHAR *host_name,
-		       u_long verbose_flag, 
-                       ACE_CE_Bridge *log_window)
+ACE_Log_Record::format_msg (const ASYS_TCHAR host_name[],
+                            u_long verbose_flag,
+                            CString *msg)
 {
-  // ACE_TRACE ("ACE_Log_Record::print");
-
-  int ret;
-  CString *msg = new CString ();
-
   if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE))
     {
       time_t now = this->time_stamp_.sec ();
@@ -257,10 +252,45 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
   else
     msg->Format (ASYS_TEXT ("%s"), this->msg_data_);
 
-  if (log_window == 0)
-    log_window = ACE_CE_Bridge::get_default_winbridge ();
-  log_window->write_msg (msg);
+  return 0;
+}
+
+int
+ACE_Log_Record::print (const ASYS_TCHAR *host_name,
+		       u_long verbose_flag, 
+		       FILE *fp)
+{
+  int ret = -1;
+  CString msg;
   
+  if (this->format_msg (host_name, verbose_flag, &msg) != -1 &&
+      fp != NULL)
+    {
+      ret = ACE_OS::fwrite (ACE_MULTIBYTE_STRING (msg),
+                      1,
+                      msg.GetLength (),
+                      fp);
+    }
   return ret;
+}
+
+int
+ACE_Log_Record::print (const ASYS_TCHAR *host_name,
+		       u_long verbose_flag, 
+                       ACE_CE_Bridge *log_window)
+{
+  // ACE_TRACE ("ACE_Log_Record::print");
+
+  CString *msg = new CString ();
+
+  if (this->format_msg (host_name, verbose_flag, msg) != -1)
+    {
+      if (log_window == 0)
+        log_window = ACE_CE_Bridge::get_default_winbridge ();
+      log_window->write_msg (msg);
+      return 0;
+    }
+  
+  return -1;
 }
 #endif /* ! ACE_HAS_WINCE */
