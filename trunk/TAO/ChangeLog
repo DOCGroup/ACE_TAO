@@ -1,3 +1,12 @@
+Tue Jul 22 03:35:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/examples/Notify/ThreadPool/Consumer.h:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.h:
+        * orbsvcs/examples/Notify/ThreadPool/ORB_Objects.h:
+        * orbsvcs/examples/Notify/ThreadPool/ORB_Run_Task.h:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier.h:
+          Fixed fuzz errors by adding "/**/" to the pre.h/post.h includes.
+
 Mon Jul 21 22:57:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * CIAO/ciao/*.h:
