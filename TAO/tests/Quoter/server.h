@@ -24,7 +24,7 @@
 #include "ace/Log_Msg.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
-#include "tao/tao.h"
+#include "tao/TAO.h"
 #include "Quoter_Impl.h"
 #include "QuoterC.h"
 

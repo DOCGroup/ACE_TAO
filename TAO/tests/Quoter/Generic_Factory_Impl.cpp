@@ -38,7 +38,7 @@ Quoter_Generic_Factory_Impl::supports (const CosLifeCycle::Key &factory_key,
 {
   ACE_UNUSED_ARG (factory_key);
   ACE_UNUSED_ARG (_env_there);
-  return true;
+  return 0;
 }
 
 CORBA::Object_ptr
@@ -163,7 +163,7 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
       ACE_DEBUG ((LM_DEBUG,
                   "Quoter Created\n"));
     
-      if (CORBA::is_nil (quoter_var))
+      if (CORBA::is_nil (quoter_var.in()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "null quoter objref returned by factory\n"),
                           0);

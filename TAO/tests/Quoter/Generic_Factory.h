@@ -14,7 +14,7 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
-#include "tao/tao.h"
+#include "tao/TAO.h"
 #include "Generic_Factory_Impl.h"
 
 #if !defined (GENERIC_FACTORY_H)
