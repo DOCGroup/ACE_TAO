@@ -1,3 +1,8 @@
+Tue Jul 13 10:40:31 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Cached_Connect_Strategy_T.cpp (purge_connections): There is
+	  no need to set the purge percentage again.
+
 Tue Jul 13 10:39:57 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* ace/Containers_T.h,i: Altered private member list_ of
