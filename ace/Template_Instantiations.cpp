@@ -1,13 +1,14 @@
 // $Id$
 
-// Note: this file has been created through concatenation of ALL explicit template
-// instantiations in ACE, and only those that interfered with the
-// multithreaded port of ACE to pSOS using the Diab D-C++ 4.1a compiler
-// have been wrapped with the appropriate preprocesor directives for
-// conditional compilation.  If you are trying to use this file, you will need
-// to ensure that any additional preprocessor directives needed are added.
-// Also, if you wish to extend this technique to instantiation pragmas,
-// you will need to modify the preprocesor directives below
+// Note: this file has been created through concatenation of ALL
+// explicit template instantiations in ACE, and only those that
+// interfered with the multithreaded port of ACE to pSOS using the
+// Diab D-C++ 4.1a compiler have been wrapped with the appropriate
+// preprocesor directives for conditional compilation.  If you are
+// trying to use this file, you will need to ensure that any
+// additional preprocessor directives needed are added.  Also, if you
+// wish to extend this technique to instantiation pragmas, you will
+// need to modify the preprocesor directives below
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_FILE)
 

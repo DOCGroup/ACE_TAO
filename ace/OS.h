@@ -1702,6 +1702,18 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
 # define ACE_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
   ACE_Read_Guard<MUTEX> OBJ (LOCK); \
     if (OBJ.locked () == 0) return RETURN;
+# define ACE_THREAD_GUARD(OBJ,LOCK) \
+  ACE_Thread_Mutex_Guard OBJ (LOCK); \
+    if (OBJ.locked () == 0) return;
+# define ACE_THREAD_GUARD_RETURN(OBJ,LOCK,RETURN) \
+  ACE_Thread_Mutex_Guard OBJ (LOCK); \
+    if (OBJ.locked () == 0) return RETURN;
+# define ACE_THREAD_GUARD_THROW(OBJ,LOCK,EXCEPTION) \
+  ACE_Thread_Mutex_Guard OBJ (LOCK); \
+    if (OBJ.locked () == 0) TAO_THROW (EXCEPTION);
+# define ACE_THREAD_GUARD_THROW_RETURN(OBJ,LOCK,EXCEPTION,RETURN) \
+  ACE_Thread_Mutex_Guard OBJ (LOCK); \
+    if (OBJ.locked () == 0) TAO_THROW_RETURN (EXCEPTION, RETURN);
 
 # if defined (ACE_HAS_POSIX_SEM)
 #   include /**/ <semaphore.h>
