@@ -608,12 +608,6 @@ namespace CORBA
     TAO_ValueFactory_Map *valuetype_factory_map_;
 #endif /**/
 
-    /// Pointer to the adapter..
-    /// @@ NOTE this should have ideally been in the ORB_core like the
-    /// others. Continuing on the earlier mistake we are adding it to
-    /// the ORB.
-    TAO_Valuetype_Adapter *valuetype_adapter_;
-
     /// Decides whether to use the URL notation or to use IOR notation.
     CORBA::Boolean use_omg_ior_format_;
 
