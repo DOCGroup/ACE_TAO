@@ -46,7 +46,9 @@ int
 be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
 {
   // already generated and/or we are imported. Don't do anything.
-  if (node->cli_inline_cdr_op_gen () || node->imported ())
+  if (node->cli_inline_cdr_op_gen () ||
+      node->imported () ||
+      node->is_local ())
     return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();

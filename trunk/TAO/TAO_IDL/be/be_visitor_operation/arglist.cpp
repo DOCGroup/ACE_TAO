@@ -71,7 +71,6 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
       switch (this->ctx_->state ())
         {
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
-        case TAO_CodeGen::TAO_LOCAL_OPERATION_ARGLIST_H:
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
           // last argument - is always CORBA::Environment
@@ -104,14 +103,13 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_LOCAL_OPERATION_ARGLIST_H:
-      *os << " = 0;\n\n";
-      break;
-      // Fall thru.
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
-      *os << ";\n\n";
+      if (node->is_local ())
+        *os << " = 0;\n\n";
+      else
+        *os << ";\n\n";
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
       // each method is pure virtual in the server header
@@ -167,7 +165,6 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
-    case TAO_CodeGen::TAO_LOCAL_OPERATION_ARGLIST_H:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_CH);
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS:

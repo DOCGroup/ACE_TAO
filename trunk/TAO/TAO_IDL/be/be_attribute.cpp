@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 ACE_RCSID(be, be_attribute, "$Id$")
 
@@ -34,11 +34,16 @@ be_attribute::be_attribute (void)
 {
 }
 
-be_attribute::be_attribute (idl_bool ro, AST_Type *ft, UTL_ScopedName *n,
-                            UTL_StrList *p)
-  : AST_Attribute (ro, ft, n, p),
+be_attribute::be_attribute (idl_bool ro,
+                            AST_Type *ft,
+                            UTL_ScopedName *n,
+                            UTL_StrList *p,
+                            idl_bool local,
+                            idl_bool abstract)
+  : AST_Attribute (ro, ft, n, p, local, abstract),
     AST_Field (AST_Decl::NT_attr, ft, n, p),
     AST_Decl (AST_Decl::NT_attr, n, p),
+    COMMON_Base (local, abstract),
     get_strategy_ (new be_operation_default_strategy (0)),
     set_strategy_ (new be_operation_default_strategy (0))
 {

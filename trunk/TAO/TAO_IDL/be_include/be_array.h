@@ -41,7 +41,11 @@ public:
   be_array (void);
   // default constructor
 
-  be_array (UTL_ScopedName *n, unsigned long ndims, UTL_ExprList *dims);
+  be_array (UTL_ScopedName *n,
+            unsigned long ndims,
+            UTL_ExprList *dims,
+            idl_bool local,
+            idl_bool abstract);
   // constructor
 
   ~be_array (void);

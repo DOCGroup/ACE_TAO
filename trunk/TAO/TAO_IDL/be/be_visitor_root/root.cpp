@@ -492,19 +492,13 @@ be_visitor_root::visit_interface (be_interface *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_ROOT_CH:
-      if (! node->is_local ())
-        ctx.state (TAO_CodeGen::TAO_INTERFACE_CH);
-      else
-        ctx.state (TAO_CodeGen::TAO_LOCAL_INTERFACE_H);
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_CH);
       break;
     case TAO_CodeGen::TAO_ROOT_CI:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_CI);
       break;
     case TAO_CodeGen::TAO_ROOT_CS:
-      if (! node->is_local ())
-        ctx.state (TAO_CodeGen::TAO_INTERFACE_CS);
-      else
-        ctx.state (TAO_CodeGen::TAO_LOCAL_INTERFACE_S);
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_CS);
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SH);

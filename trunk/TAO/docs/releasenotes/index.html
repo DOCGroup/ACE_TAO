@@ -1900,12 +1900,9 @@ local objects.</p>
 <p>Future Work (aka. known problems):</p>
 <ul>
   <li>Supposedly, any constructed types that contains local types
-      become local automatically.  TAO_IDL currently doesn't perform
-      this automatic conversion very well when a contructed type is
-      defined outside of a local interface.</li>
-  <li>TAO_IDL needs to support more comprehensive semantic check on
-      conflicts of using local types as operation arguments of a
-      regular (remote) interface.</li>
+      become local automatically.  TAO_IDL currently doesn't handle
+      the array type very well if one is defined outside the scope of
+      a local interface.</li>
   <li>Need to test local object support more systematically and
       comprehensively. (Does TAO throw a MARSHAL exception when trying
       to marshal a local type?)

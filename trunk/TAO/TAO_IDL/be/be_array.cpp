@@ -33,9 +33,14 @@ be_array::be_array (void)
 {
 }
 
-be_array::be_array (UTL_ScopedName *n, unsigned long ndims, UTL_ExprList *dims)
-  : AST_Array (n, ndims, dims),
+be_array::be_array (UTL_ScopedName *n,
+                    unsigned long ndims,
+                    UTL_ExprList *dims,
+                    idl_bool local,
+                    idl_bool abstract)
+  : AST_Array (n, ndims, dims, local, abstract),
     AST_Decl (AST_Decl::NT_array, n, NULL),
+    COMMON_Base (local, abstract),
     tao_name_ (0)
 {
 }

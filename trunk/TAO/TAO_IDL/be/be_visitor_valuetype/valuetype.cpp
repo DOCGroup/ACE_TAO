@@ -184,8 +184,12 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
   be_operation *op;
 
   // first the "get" operation
-  op = new be_operation (node->field_type (), AST_Operation::OP_noflags,
-                         node->name (), 0);
+  op = new be_operation (node->field_type (),
+                         AST_Operation::OP_noflags,
+                         node->name (),
+                         0,
+                         0,
+                         0);
   op->set_name ((UTL_IdList *) node->name ()->copy ());
   if (!op || this->visit_operation (op) == -1)
     {
@@ -214,8 +218,12 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                                       0);
   arg->set_name ((UTL_IdList *) node->name ()->copy ());
   // create the operation
-  op = new be_operation (rt, AST_Operation::OP_noflags,
-                         node->name (), 0);
+  op = new be_operation (rt,
+                         AST_Operation::OP_noflags,
+                         node->name (),
+                         0,
+                         0,
+                         0);
   op->set_name ((UTL_IdList *) node->name ()->copy ());
   op->add_argument_to_scope (arg);
 

@@ -84,9 +84,11 @@ public:
 
   // Constructor(s)
   AST_Array ();
-  AST_Array (UTL_ScopedName *n, 
-             unsigned long ndims, 
-             UTL_ExprList *dims);
+  AST_Array (UTL_ScopedName *n,
+             unsigned long ndims,
+             UTL_ExprList *dims,
+             idl_bool local,
+             idl_bool abstract);
 
   virtual ~AST_Array (void);
 

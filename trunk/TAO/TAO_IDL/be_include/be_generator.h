@@ -129,7 +129,9 @@ public:
   virtual AST_Operation *create_operation(AST_Type *rt,
                                           AST_Operation::Flags fl,
                                           UTL_ScopedName *n,
-                                          UTL_StrList *p);
+                                          UTL_StrList *p,
+                                          idl_bool local,
+                                          idl_bool abstract);
   virtual AST_Field     *create_field(AST_Type *ft, UTL_ScopedName *n,
                                       UTL_StrList *p,
                                       AST_Field::Visibility vis = AST_Field::vis_NA);
@@ -141,7 +143,9 @@ public:
   virtual AST_Attribute *create_attribute(idl_bool ro,
                                           AST_Type *ft,
                                           UTL_ScopedName *n,
-                                          UTL_StrList *p);
+                                          UTL_StrList *p,
+                                          idl_bool local,
+                                          idl_bool abstract);
   virtual AST_Union     *create_union(AST_ConcreteType *dt,
                                       UTL_ScopedName *n,
                                       UTL_StrList *p,
@@ -179,7 +183,9 @@ public:
                                          UTL_StrList *p);
   virtual AST_Array     *create_array(UTL_ScopedName *n,
                                       unsigned long ndims,
-                                      UTL_ExprList *dims);
+                                      UTL_ExprList *dims,
+                                      idl_bool local,
+                                      idl_bool abstract);
   virtual AST_Sequence  *create_sequence(AST_Expression *v,
                                          AST_Type *bt,
                                          idl_bool local,

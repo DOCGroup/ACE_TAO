@@ -31,9 +31,6 @@ public:
 
   // =code generation
 
-  virtual int member_count (void);
-  // return the count of members
-
   virtual idl_bool in_recursion (be_type *node = 0);
   // check if we or the parameter node is in recursion
 
@@ -50,15 +47,6 @@ public:
   DEF_NARROW_METHODS3 (be_exception, AST_Exception, be_scope, be_type);
   DEF_NARROW_FROM_DECL (be_exception);
   DEF_NARROW_FROM_SCOPE (be_exception);
-
-private:
-  //=helper
-
-  int compute_member_count (void);
-  // count the number of members
-
-  int member_count_;
-  // number of members
 };
 
 #endif // end of if !defined (...)

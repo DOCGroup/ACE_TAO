@@ -111,6 +111,12 @@ public:
   DEF_NARROW_FROM_DECL(AST_Structure);
   DEF_NARROW_FROM_SCOPE(AST_Structure);
 
+  virtual int member_count (void);
+  // return the count of members
+
+  virtual idl_bool      is_local (void);
+  // Overwrite the is_local method.
+
   // AST Dumping
   virtual void          dump(ostream &o);
 
@@ -123,6 +129,17 @@ private:
   virtual AST_Field     *fe_add_field(AST_Field         *f);
   virtual AST_Enum      *fe_add_enum(AST_Enum           *e);
   virtual AST_EnumVal   *fe_add_enum_val(AST_EnumVal    *v);
+
+  //=helper
+
+  int compute_member_count (void);
+  // count the number of members
+
+  int member_count_;
+  // number of members
+
+  idl_bool local_struct_;
+  // We also need to determine whether we contain any local type.
 };
 
 #endif           // _AST_STRUCTURE_AST_STRUCTURE_HH

@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_exception.h"
 
@@ -44,7 +44,9 @@ be_visitor_exception_any_op_ch::~be_visitor_exception_any_op_ch (void)
 int
 be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
 {
-  if (node->cli_hdr_any_op_gen () || node->imported ())
+  if (node->cli_hdr_any_op_gen () ||
+      node->imported () ||
+      node->is_local ())
     return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();

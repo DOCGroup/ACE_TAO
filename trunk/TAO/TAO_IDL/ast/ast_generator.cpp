@@ -98,8 +98,8 @@ ACE_RCSID(ast, ast_generator, "$Id$")
  */
 AST_PredefinedType *
 AST_Generator::create_predefined_type(AST_PredefinedType::PredefinedType t,
-                                    UTL_ScopedName *n,
-                                    UTL_StrList *p)
+                                      UTL_ScopedName *n,
+                                      UTL_StrList *p)
 {
   return new AST_PredefinedType(t, n, p);
 }
@@ -168,9 +168,9 @@ AST_Generator::create_interface_fwd(UTL_ScopedName *n,
  */
 AST_Interface *
 AST_Generator::create_valuetype(UTL_ScopedName *,
-                               AST_Interface ** /* ih */,
-                               long /* nih */,
-                               UTL_StrList *)
+                                AST_Interface ** /* ih */,
+                                long /* nih */,
+                                UTL_StrList *)
 {
   // Valuetypes are represented as be_valuetype derived from be_interface,
   // which derives from AST_Interface. If you construct a backend which
@@ -240,19 +240,23 @@ AST_Generator::create_enum(UTL_ScopedName *n,
  */
 AST_Operation   *
 AST_Generator::create_operation(AST_Type *rt,
-                               AST_Operation::Flags fl,
-                               UTL_ScopedName *n,
-                               UTL_StrList *p)
+                                AST_Operation::Flags fl,
+                                UTL_ScopedName *n,
+                                UTL_StrList *p,
+                                idl_bool local,
+                                idl_bool abstract)
 {
-  return new AST_Operation(rt, fl, n, p);
+  return new AST_Operation(rt, fl, n, p, local, abstract);
 }
 
 /*
  * Construct an AST_Field node (a field in a struct, union or exception)
  */
 AST_Field       *
-AST_Generator::create_field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p,
-                                                  AST_Field::Visibility vis)
+AST_Generator::create_field(AST_Type *ft,
+                            UTL_ScopedName *n,
+                            UTL_StrList *p,
+                            AST_Field::Visibility vis)
 {
   return new AST_Field(ft, n, p, vis);
 }
@@ -262,9 +266,9 @@ AST_Generator::create_field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p,
  */
 AST_Argument    *
 AST_Generator::create_argument(AST_Argument::Direction d,
-                              AST_Type *ft,
-                              UTL_ScopedName *n,
-                              UTL_StrList *p)
+                               AST_Type *ft,
+                               UTL_ScopedName *n,
+                               UTL_StrList *p)
 {
   return new AST_Argument(d, ft, n, p);
 }
@@ -274,11 +278,18 @@ AST_Generator::create_argument(AST_Argument::Direction d,
  */
 AST_Attribute   *
 AST_Generator::create_attribute(idl_bool ro,
-                               AST_Type *ft,
-                               UTL_ScopedName *n,
-                               UTL_StrList *p)
+                                AST_Type *ft,
+                                UTL_ScopedName *n,
+                                UTL_StrList *p,
+                                idl_bool local,
+                                idl_bool abstract)
 {
-  return new AST_Attribute(ro, ft, n, p);
+  return new AST_Attribute(ro,
+                           ft,
+                           n,
+                           p,
+                           local,
+                           abstract);
 }
 
 /*
@@ -303,9 +314,9 @@ AST_Generator::create_union(AST_ConcreteType *dt,
  */
 AST_UnionBranch *
 AST_Generator::create_union_branch(UTL_LabelList *ll,
-                                 AST_Type *ft,
-                                 UTL_ScopedName *n,
-                                 UTL_StrList *p)
+                                   AST_Type *ft,
+                                   UTL_ScopedName *n,
+                                   UTL_StrList *p)
 {
   return new AST_UnionBranch(ll, ft, n, p);
 }
@@ -315,7 +326,7 @@ AST_Generator::create_union_branch(UTL_LabelList *ll,
  */
 AST_UnionLabel  *
 AST_Generator::create_union_label(AST_UnionLabel::UnionLabel ul,
-                                AST_Expression *v)
+                                  AST_Expression *v)
 {
   return new AST_UnionLabel(ul, v);
 }
@@ -325,9 +336,9 @@ AST_Generator::create_union_label(AST_UnionLabel::UnionLabel ul,
  */
 AST_Constant    *
 AST_Generator::create_constant(AST_Expression::ExprType et,
-                              AST_Expression *ev,
-                              UTL_ScopedName *n,
-                              UTL_StrList *p)
+                               AST_Expression *ev,
+                               UTL_ScopedName *n,
+                               UTL_StrList *p)
 {
   return new AST_Constant(et, ev, n, p);
 }
@@ -345,7 +356,8 @@ AST_Generator::create_expr(UTL_ScopedName *n)
  * Construct an AST_Expression denoting a coercion
  */
 AST_Expression  *
-AST_Generator::create_expr(AST_Expression *v, AST_Expression::ExprType t)
+AST_Generator::create_expr(AST_Expression *v,
+                           AST_Expression::ExprType t)
 {
   return new AST_Expression(v, t);
 }
@@ -441,8 +453,8 @@ AST_Generator::create_expr(double d)
  */
 AST_EnumVal     *
 AST_Generator::create_enum_val(unsigned long v,
-                             UTL_ScopedName *n,
-                             UTL_StrList *p)
+                               UTL_ScopedName *n,
+                               UTL_StrList *p)
 {
   return new AST_EnumVal(v, n, p);
 }
@@ -452,10 +464,16 @@ AST_Generator::create_enum_val(unsigned long v,
  */
 AST_Array       *
 AST_Generator::create_array(UTL_ScopedName *n,
-                           unsigned long ndims,
-                           UTL_ExprList *dims)
+                            unsigned long ndims,
+                            UTL_ExprList *dims,
+                            idl_bool local,
+                            idl_bool abstract)
 {
-  return new AST_Array(n, ndims, dims);
+  return new AST_Array(n,
+                       ndims,
+                       dims,
+                       local,
+                       abstract);
 }
 
 /*
