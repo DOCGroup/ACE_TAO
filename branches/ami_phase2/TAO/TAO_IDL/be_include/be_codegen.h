@@ -272,15 +272,15 @@ public:
     TAO_OBV_OPERATION_ARGLIST_COLLOCATED_SH,   // ... for collocated server
     TAO_OBV_OPERATION_ARGLIST_OTHERS,          // ... for all other cases
 
-    TAO_OPERATION_AMI,                     // Visit the operation for
-                                           // AMI generation.  
+    // Emitting code for AMI.
+    TAO_OPERATION_AMI,                     // AMI stub generation.  
     TAO_OPERATION_ARGLIST_AMI,             // AMI stubs in client header
     TAO_OPERATION_ARG_AMI,                 // AMI stub.
     TAO_ARGUMENT_AMI,                      // Argument in AMI stub.
     TAO_ARGUMENT_ARGLIST_AMI,              // Arg list in AMI stub.
+    TAO_AMI_HANDLER_FWD_CH,                // FWD decl for AMI handler.           
 
-
-    // emitting code for root
+    // Emitting code for root.
     TAO_ROOT_CH,
     TAO_ROOT_CI,
     TAO_ROOT_CS,

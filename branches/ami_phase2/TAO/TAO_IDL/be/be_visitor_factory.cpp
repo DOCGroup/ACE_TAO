@@ -248,6 +248,9 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
     case TAO_CodeGen::TAO_ARGUMENT_ARGLIST_AMI:
       return new be_visitor_args_arglist_ami (new_ctx);
+
+    case TAO_CodeGen::TAO_AMI_HANDLER_FWD_CH:
+      return new be_visitor_ami_handler_fwd_ch (new_ctx);
 // #endif /* TAO_IDL_HAS_AMI */
       
     case TAO_CodeGen::TAO_STRUCT_CH:
