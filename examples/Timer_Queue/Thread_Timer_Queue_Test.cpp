@@ -216,7 +216,7 @@ Input_Task::shutdown_timer (void *argument)
 void
 Input_Task::dump (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->queue_->mutex ());
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->queue_->mutex ());
 
   ACE_DEBUG ((LM_DEBUG,
               "begin dumping timer queue\n"));
