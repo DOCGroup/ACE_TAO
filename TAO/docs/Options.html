@@ -828,9 +828,11 @@ would load all the options listed within "".
         RW selects a strategy that simply blocks in recv() when waiting for a
         response from the server instead of waiting in the Reactor.  The RW
         strategy only works when the application does not have to worry about
-        new request showing up when waiting for a response. Therefore, this
-        strategy is appropriate only for "pure" clients. Note that
-        applications with nested upcalls are not "pure" clients. Also note
+        new request showing up when waiting for a
+        response. Further, this strategy cannot be used with AMI
+        calls. Therefore, this strategy is appropriate only for "pure"
+        synchronous clients. Note that  applications with nested
+        upcalls are not "pure" synchronous clients. Also note 
         that this strategy will only effect two way calls, since there is no
         waiting for one way calls. This strategy can also be used in an
         application that is both a client and a server if the server side is
