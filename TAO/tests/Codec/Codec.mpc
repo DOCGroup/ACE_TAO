@@ -1,7 +1,0 @@
-project(*Client): taoclient {
-  Source_Files {
-    testC.cpp
-    client.cpp
-  }
-}
-

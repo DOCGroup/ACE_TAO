@@ -1,5 +1,0 @@
-project {
-  after    += RTCORBA_Common
-  libs     += RTCORBA_Common
-  includes += ../Common
-}
