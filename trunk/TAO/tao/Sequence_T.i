@@ -45,12 +45,14 @@ TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
   if (orphan == 0)
     {
       // We retain ownership.
-
       if (this->buffer_ == 0)
         {
-          result = TAO_Unbounded_Sequence<T>::allocbuf (this->length_);
-          this->buffer_ = result;
-	  this->release_ = 1;
+          if (this->length_ > 0)
+            {
+              result = TAO_Unbounded_Sequence<T>::allocbuf (this->length_);
+              this->buffer_ = result;
+	      this->release_ = 1;
+            }
         }
       else
         {
@@ -74,6 +76,7 @@ TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
           this->release_ = 0;
         }
     }
+
   return result;
 }
 
@@ -518,10 +521,15 @@ TAO_Unbounded_Array_Sequence<T, T_var>::get_buffer (CORBA::Boolean orphan)
 
       if (this->buffer_ == 0)
         {
-          result = 
-	    TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (this->length_);
-          this->buffer_ = result;
-	  this->release_ = 1;
+          if (this->length_ > 0)
+            {
+              result = 
+	        TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (
+                    this->length_
+                  );
+              this->buffer_ = result;
+	      this->release_ = 1;
+            }
         }
       else
         {

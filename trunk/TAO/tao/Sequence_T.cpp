@@ -1115,8 +1115,17 @@ operator= (const TAO_Unbounded_Array_Sequence<T, T_var> &rhs)
 
           TAO_Unbounded_Array_Sequence<T, T_var>::freebuf (tmp);
 
-          this->buffer_ =
-            TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (rhs.maximum_);
+          if (rhs.maximum_ == 0)
+            {
+              this->buffer_ = 0;
+            }
+          else
+            {
+              this->buffer_ =
+                TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (
+                    rhs.maximum_
+                  );
+            }
         }
     }
   else
