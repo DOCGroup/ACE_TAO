@@ -1,3 +1,11 @@
+Thu Jul 12 21:36:53 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile (MKLIST):
+
+	  The AV Service needs the CosNaming and CosProperty libraries.
+	  Add their Makefiles to the build list if they aren't already
+	  there.
+
 Thu Jul 12 20:40:51 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
