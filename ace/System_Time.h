@@ -23,19 +23,19 @@
 #include "ace/Malloc_T.h"
 
 class ACE_Export ACE_Date_Time
-  // TITLE
+{
+  // = TITLE
   //    This class holds internally date and time and has interfaces
   //    for getting month or compares of times and dates, etc.
-{
 public:
 };
 
 class ACE_Export ACE_System_Time
+{
   // = TITLE
   //     Defines the timer services of the OS interface to access the
   //     system time either on the local host or on the central time
   //     server in the network.
-{
 public:
   enum Sync_Mode { Jump, Adjust };
   // enumeration types to specify mode of synchronization with master

@@ -26,6 +26,7 @@ class ACE_Data_Block;
 class ACE_Lock;
 
 class ACE_Export ACE_Message_Block
+{
   // = TITLE
   //     Stores messages for use throughout ACE (particularly
   //     <ACE_Message_Queue>).
@@ -48,9 +49,9 @@ class ACE_Export ACE_Message_Block
   //     3. <ACE_Message_Blocks> can be linked together by <prev_> and
   //     <next_> pointers to form a queue of messages (e.g., this is how
   //     <ACE_Message_Queue> works).
-{
-  friend class ACE_Data_Block;
 public:
+  friend class ACE_Data_Block;
+
   enum ACE_Message_Type
   {
     // = Data and protocol messages (regular and priority)
@@ -359,6 +360,7 @@ private:
 };
 
 class ACE_Export ACE_Data_Block
+{
   // = TITLE
   //     Stores the data payload that is accessed via one or more
   //     <ACE_Message_Block>s.
@@ -369,7 +371,6 @@ class ACE_Export ACE_Data_Block
   //     protects the reference count from race conditions in
   //     concurrent programs) and the <allocation_strategy_> (which
   //     determines what memory pool is used to allocate the memory).
-{
 public:
   // = Initialization and termination methods.
   ACE_Data_Block (void);

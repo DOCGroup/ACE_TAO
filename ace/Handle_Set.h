@@ -23,8 +23,9 @@ class ACE_Export ACE_Handle_Set
 {
   // = TITLE
   //     C++ wrapper for the socket <FD_SET> abstraction.
-friend class ACE_Handle_Set_Iterator;
 public:
+  friend class ACE_Handle_Set_Iterator;
+
   // = Initialization and termination. 
 
   enum 
@@ -116,9 +117,9 @@ private:
 };
 
 class ACE_Export ACE_Handle_Set_Iterator
+{
   // = TITLE
   //     Iterator for the <ACE_Handle_Set> abstraction. 
-{
 public:
   ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs);
   // Constructor.

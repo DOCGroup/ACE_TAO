@@ -23,9 +23,9 @@
 
 template <class T>
 class ACE_Typed_SV_Message_Queue 
+{
   // = TITLE
   //    Defines the header file for the C++ wrapper for message queues.
-{
 public: 
   enum 
   {

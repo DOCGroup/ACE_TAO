@@ -27,6 +27,7 @@
 #include "ace/Token_Request_Reply.h"
 
 class ACE_Export ACE_Remote_Token_Proxy : public ACE_Token_Proxy
+{
   // = TITLE
   //    Proxy for acquiring, renewing, and releasing a distributed
   //    synchronization token.
@@ -39,7 +40,6 @@ class ACE_Export ACE_Remote_Token_Proxy : public ACE_Token_Proxy
   // = BUGS
   //   Distributed sleep_hooks have not been implemented.  owner_id ()
   //   is not implemented.
-{
 public:
   ACE_Remote_Token_Proxy (void);
   // Null construction.
@@ -132,19 +132,19 @@ protected:
 };
 
 class ACE_Export ACE_Remote_Mutex : public ACE_Remote_Token_Proxy
-// = TITLE
-//    Proxy for acquiring, renewing, and releasing a distributed
-//    mutex.
-//
-// = DESCRIPTION
-//    This is the remote equivalent to ACE_Local_Mutex.  The
-//    Remote_Mutex class offers methods for acquiring, renewing, and
-//    releasing a distributed synchronization mutex.  Similar to
-//    ACE_Local_Mutex, ACE_Remote_Token_Proxy offers recursive
-//    acquisition, FIFO waiter ordering, and deadlock detection.  It
-//    depends on the Token Server for its distributed synchronization
-//    semantics.
 {
+  // = TITLE
+  //    Proxy for acquiring, renewing, and releasing a distributed
+  //    mutex.
+  //
+  // = DESCRIPTION
+  //    This is the remote equivalent to ACE_Local_Mutex.  The
+  //    Remote_Mutex class offers methods for acquiring, renewing, and
+  //    releasing a distributed synchronization mutex.  Similar to
+  //    ACE_Local_Mutex, ACE_Remote_Token_Proxy offers recursive
+  //    acquisition, FIFO waiter ordering, and deadlock detection.  It
+  //    depends on the Token Server for its distributed synchronization
+  //    semantics.
 public:
   ACE_Remote_Mutex (void);
   // Null creation.  Remote_Token_Proxy::open must be called.
@@ -167,18 +167,18 @@ protected:
 };
 
 class ACE_Export ACE_Remote_RLock : public ACE_Remote_Token_Proxy
-// = TITLE
-//   Proxy for acquiring, renewing, and releasing a distributed
-//   readers lock.
-//
-// = DESCRIPTION
-//    This is the remote equivalent to ACE_Local_RLock. Multiple
-//    readers can hold the lock simultaneously when no writers have
-//    the lock.  Alternatively, when a writer holds the lock, no other
-//    participants (readers or writers) may hold the lock.
-//    ACE_Remote_RLock depends on the ACE Token Server for its
-//    distributed synchronization semantics.
 {
+  // = TITLE
+  //   Proxy for acquiring, renewing, and releasing a distributed
+  //   readers lock.
+  //
+  // = DESCRIPTION
+  //    This is the remote equivalent to ACE_Local_RLock. Multiple
+  //    readers can hold the lock simultaneously when no writers have
+  //    the lock.  Alternatively, when a writer holds the lock, no other
+  //    participants (readers or writers) may hold the lock.
+  //    ACE_Remote_RLock depends on the ACE Token Server for its
+  //    distributed synchronization semantics.
 public:
   ACE_Remote_RLock (void);
 
@@ -204,6 +204,7 @@ protected:
 };
 
 class ACE_Export ACE_Remote_WLock : public ACE_Remote_Token_Proxy
+{
   // = TITLE
   //   Proxy for acquiring, renewing, and releasing a distributed
   //   writers lock.
@@ -214,7 +215,6 @@ class ACE_Export ACE_Remote_WLock : public ACE_Remote_Token_Proxy
   //   Token Server uses to identify the token.  The client_id_ (also
   //   used by the Token Server,) identifies the owner of the token and
   //   is used for deadlock detection.
-{
 public:
   ACE_Remote_WLock (void);
 
@@ -240,6 +240,7 @@ protected:
 };
 
 class ACE_Export ACE_TSS_Connection : public ACE_TSS<ACE_SOCK_Stream>
+{
   // = TITLE
   //    Class for providing a connection per thread.
   //
@@ -247,7 +248,6 @@ class ACE_Export ACE_TSS_Connection : public ACE_TSS<ACE_SOCK_Stream>
   //    ACE_TSS_Connection provides a single access point for all
   //    threads to access thread-specific connections.  This prevents
   //    resource-sharing problems such as thread serialization.
-{
 public:
   // Necessary to make some compilers work...
   ACE_TSS_Connection (void);

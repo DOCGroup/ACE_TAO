@@ -22,6 +22,7 @@
 
 template <class TYPE>
 class ACE_Cleanup_Adapter : public ACE_Cleanup
+{
   // = TITLE
   //     Adapter for ACE_Cleanup objects that allows them to be readily
   //     managed by the ACE_Object_Manager.
@@ -33,7 +34,6 @@ class ACE_Cleanup_Adapter : public ACE_Cleanup
   //     typically used to replace a cast; but, it's a bit cleaner and
   //     allows insertion of, say, run-time type identification
   //     internally if desired.
-{
 public:
   ACE_Cleanup_Adapter (void);
   // Default constructor.
@@ -51,6 +51,7 @@ private:
 
 template <class TYPE>
 class ACE_Managed_Object
+{
   // = TITLE
   //     Wrapper for interface to allocate an object managed by the
   //     ACE_Object_Manager.
@@ -64,15 +65,15 @@ class ACE_Managed_Object
   //
   //     This interface is typically used to replace a static object
   //     with one that is dynamically allocated.  It helps to avoid
-  //     problems with order of static object construction/destruction.
-  //     Managed objects won't be allocated until needed, but should
-  //     be allocated when first needed.  And they are destroyed in
-  //     the reverse order of construction.
+  //     problems with order of static object
+  //     construction/destruction.  Managed objects won't be allocated
+  //     until needed, but should be allocated when first needed.  And
+  //     they are destroyed in the reverse order of construction.
   //
   //     get_preallocated_object () accesses a "preallocated" object,
   //     i.e., one that is identified by a value in the
-  //     ACE_Object_Manager::  Preallocated_Object enum.  These
-  //     objects are used internally by the ACE library.
+  //     ACE_Object_Manager:: Preallocated_Object enum.  These objects
+  //     are used internally by the ACE library.
   //
   //     Hooks are provided for the application to preallocate objects
   //     via the same mechanism.
@@ -80,10 +81,10 @@ class ACE_Managed_Object
   //     to define enum values;
   //     ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS can be used
   //     to define the corresponding objects.  The format of the ACE
-  //     internal library definitions should be followed.  And similarly,
-  //     ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS and
-  //     ACE_APPLICATION_PREALLOCATED_ARRAY_DEFINITIONS can be used to
-  //     preallocate arrays.
+  //     internal library definitions should be followed.  And
+  //     similarly, ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS
+  //     and ACE_APPLICATION_PREALLOCATED_ARRAY_DEFINITIONS can be
+  //     used to preallocate arrays.
   //
   //     By default, preallocation uses dynamic allocation.  The
   //     preallocated objects and arrays are allocated off the heap in
@@ -91,10 +92,8 @@ class ACE_Managed_Object
   //     preallocated objects in program global data instead of on the
   //     heap, #define ACE_HAS_STATIC_PREALLOCATION prior to building
   //     the ACE library.
-{
 public:
-  static TYPE *
-  get_preallocated_object (ACE_Object_Manager::Preallocated_Object id)
+  static TYPE *get_preallocated_object (ACE_Object_Manager::Preallocated_Object id)
   {
     // The preallocated objects are in a separate, "read-only" array so
     // that this function doesn't need a lock.  Also, because it is
@@ -112,8 +111,7 @@ public:
   // Note: the function definition is inlined here so that it compiles
   // on AIX 4.1 w/xlC v. 3.01.
 
-  static TYPE *
-  get_preallocated_array (ACE_Object_Manager::Preallocated_Array id)
+  static TYPE *get_preallocated_array (ACE_Object_Manager::Preallocated_Array id)
   {
     // The preallocated array are in a separate, "read-only" array so
     // that this function doesn't need a lock.  Also, because it is

@@ -25,10 +25,10 @@
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 class ACE_Export ACE_LSOCK_CODgram : public ACE_SOCK_CODgram, public ACE_LSOCK
-  // = TITLE
-  //     Defines the member functions for the ACE_LSOCK 
-  //     connected datagram abstraction. 
 {
+  // = TITLE
+  //     Defines the member functions for the <ACE_LSOCK> connected
+  //     datagram abstraction.
 public:
   // = Initialization methods.
   ACE_LSOCK_CODgram (void);

@@ -74,6 +74,7 @@ public:
 #endif /* ACE_HAS_STRING_CLASS */
 
 class ACE_Export ACE_Streambuf : public streambuf
+{
   // = TITLE
   //     Create your custom streambuf by providing and ACE_*_Stream
   //     object to this template.  I have tested it with
@@ -134,7 +135,6 @@ class ACE_Export ACE_Streambuf : public streambuf
   //     be no method for "syncing" the input.  However, since we
   //     maintain separate read/write buffers, no data is lost by
   //     "syncing" the input.  It simply remains buffered.
-{
 public:
 
   virtual ~ACE_Streambuf (void);

@@ -30,12 +30,14 @@
 #include "ace/Name_Request_Reply.h"
 
 class ACE_Export ACE_Name_Proxy : public ACE_Event_Handler
+{
   // = TITLE
-  //   Proxy for dealing with remote server process managing NET_LOCAL NameBindings
+  //   Proxy for dealing with remote server process managing NET_LOCAL
+  //   NameBindings.
   //
   // = DESCRIPTION
-  //   Shields applications from details of interacting with the ACE_Name Server.
-{
+  //   Shields applications from details of interacting with the
+  //   ACE_Name Server.
 public:
   ACE_Name_Proxy (void);
   // Default constructor.

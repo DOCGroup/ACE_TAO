@@ -27,19 +27,19 @@
 
 #if !defined (ACE_LACKS_SBRK)
 class ACE_Export ACE_Sbrk_Memory_Pool_Options
+{
   // = TITLE
   //     Helper class for constructor options.
   //
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many 
   //     compilers.
-{
 };
 
 class ACE_Export ACE_Sbrk_Memory_Pool
+{
   // = TITLE
   //     Make a memory pool that is based on <sbrk(2)>.
-{
 public:
   typedef ACE_Sbrk_Memory_Pool_Options OPTIONS;
 
@@ -95,13 +95,13 @@ protected:
 #if !defined (ACE_LACKS_SYSV_SHMEM)
 
 class ACE_Export ACE_Shared_Memory_Pool_Options
+{
   // = TITLE
   //     Helper class for constructor options.
   //
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many 
   //     compilers.
-{
 public:
   // = Initialization method.
   ACE_Shared_Memory_Pool_Options (char *base_addr = ACE_DEFAULT_BASE_ADDR,
@@ -123,11 +123,11 @@ public:
 };
 
 class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
+{
   // = TITLE
   //     Make a memory pool that is based on System V shared memory
   //     (shmget(2) etc.).  This implementation allows memory to be
   //     shared between processes.
-{
 public:
   typedef ACE_Shared_Memory_Pool_Options OPTIONS;
 
@@ -231,20 +231,21 @@ protected:
 #endif /* !ACE_LACKS_SYSV_SHMEM */
 
 class ACE_Export ACE_Local_Memory_Pool_Options
+{
   // = TITLE
   //     Helper class for constructor options.
   //
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many 
   //     compilers.
-{};
+};
 
 class ACE_Export ACE_Local_Memory_Pool
+{
   // = TITLE
   //   Make a memory pool that is based on C++ new/delete.  This is
   //   useful for integrating existing components that use new/delete
   //   into the ACE Malloc scheme...
-{
 public:
   typedef ACE_Local_Memory_Pool_Options OPTIONS;
 
@@ -297,13 +298,13 @@ protected:
 };
 
 class ACE_Export ACE_MMAP_Memory_Pool_Options
+{
   // = TITLE
   //     Helper class for constructor options.
   //
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many 
   //     compilers.
-{
 public:
   // = Initialization method.
   ACE_MMAP_Memory_Pool_Options (void *base_addr = ACE_DEFAULT_BASE_ADDR,
@@ -340,10 +341,10 @@ public:
 };
 
 class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
+{
   // = TITLE
   //     Make a memory pool that is based on <mmap(2)>.  This
   //     implementation allows memory to be shared between processes.
-{
 public:
   typedef ACE_MMAP_Memory_Pool_Options OPTIONS;
 
@@ -451,6 +452,7 @@ protected:
 };
 
 class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
+{
   // = TITLE
   //     Make a ``lighter-weight'' memory pool based <ACE_Mem_Map>.  
   // 
@@ -461,7 +463,6 @@ class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
   //     for the price of flushing the memory to the backing store on
   //     every update.  Naturally, this trades off increased
   //     performance for less reliability if the machine crashes.
-{
 public:
   // = Initialization and termination methods.
 

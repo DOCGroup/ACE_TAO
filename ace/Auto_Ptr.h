@@ -22,10 +22,10 @@
 
 template <class X>
 class ACE_Auto_Basic_Ptr 
+{
   // = TITLE
   //     Implements the draft C++ standard auto_ptr abstraction.
   //     This class allows one to work on non-object (basic) types
-{
 public:
   // = Initialization and termination methods
   /* explicit */ ACE_Auto_Basic_Ptr (X *p = 0);
@@ -59,9 +59,9 @@ using std::auto_ptr;
 
 template <class X>
 class auto_ptr : public ACE_Auto_Basic_Ptr <X>
+{
   // = TITLE
   //     Implements the draft C++ standard auto_ptr abstraction.
-{
 public:
   // = Initialization and termination methods
   /* explicit */ auto_ptr (X *p = 0);
@@ -73,11 +73,11 @@ public:
 
 template<class X>
 class ACE_Auto_Basic_Array_Ptr 
+{
   // = TITLE
   //     Implements an extension to the draft C++ standard auto_ptr
   //     abstraction.  This class allows one to work on non-object
   //     (basic) types
-{
 public:
   // = Initialization and termination methods.
   /* explicit */ ACE_Auto_Basic_Array_Ptr (X *p = 0);
@@ -103,10 +103,10 @@ protected:
 
 template<class X>
 class ACE_Auto_Array_Ptr : public ACE_Auto_Basic_Array_Ptr<X>
+{
   // = TITLE
   //     Implements an extension to the draft C++ standard auto_ptr
   //     abstraction.
-{
 public:
   // = Initialization and termination methods.
   /* explicit */ ACE_Auto_Array_Ptr (X *p = 0);

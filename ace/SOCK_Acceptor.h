@@ -21,9 +21,10 @@
 #include "ace/Time_Value.h"
 
 class ACE_Export ACE_SOCK_Acceptor : public ACE_SOCK
-  // = TITLE
-  //     Defines the format and interface for an ACE_SOCK ACE_Stream acceptor. 
 {
+  // = TITLE
+  //     Defines the format and interface for an <ACE_Stream>
+  //     acceptor.
 public:
   // = Initialization methods.
   ACE_SOCK_Acceptor (void);

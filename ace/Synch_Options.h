@@ -20,6 +20,7 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_Synch_Options
+{
   // = TITLE
   //     Contains the values of options used to determine the
   //     synchronous and asynchronous behavior.
@@ -51,7 +52,6 @@ class ACE_Export ACE_Synch_Options
   //          0,0  | no       | poll; but do not initiate a
   //               |          | nonblocking transaction
   //               |          | (don't use ACE_Reactor)    
-{
 public:
   // = Options flags for controlling synchronization.  Note that these
   // flags can be bit-wise "or'd" together if both options are

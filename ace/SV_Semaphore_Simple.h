@@ -20,11 +20,11 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_SV_Semaphore_Simple
+{
   // = TITLE
   //     This is a simple semaphore package that assumes there are
   //     no race conditions for initialization (i.e., the order of
   //     process startup must be well defined).
-{
 public:
   enum 
   {

@@ -21,12 +21,13 @@
 #include "ace/SPIPE_Addr.h"
 
 class ACE_Export ACE_SPIPE_Stream : public ACE_SPIPE
+{
   // = TITLE
   //     Define an ACE_SPIPE_Stream.
-{
-friend class ACE_SPIPE_Acceptor;
-friend class ACE_SPIPE_Connector;
 public:
+  friend class ACE_SPIPE_Acceptor;
+  friend class ACE_SPIPE_Connector;
+
   // = Initialization method.
   ACE_SPIPE_Stream (void);
   // Default constructor.

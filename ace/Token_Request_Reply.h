@@ -27,13 +27,13 @@
 #include "ace/Time_Value.h"
 
 class ACE_Export ACE_Token_Request
+{
   // = TITLE
   //   Message format for delivering requests to the ACE_Token Server.
   //
   // = DESCRIPTION
   //   This class is implemented to minimize data copying.  
   //   In particular, all marshaling is done in situ...
-{
 public:
   enum OPERATION
   {
@@ -164,13 +164,13 @@ private:
 };
 
 class ACE_Export ACE_Token_Reply
+{
   // = TITLE
   //     Message format for delivering replies from the ACE_Token Server.
   //
   // = DESCRIPTION
   //   This class is implemented to minimize data copying.  
   //   In particular, all marshaling is done in situ...
-{
 public:
   enum Constants
   {

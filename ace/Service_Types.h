@@ -21,6 +21,7 @@
 #include "ace/Synch.h"
 
 class ACE_Export ACE_Service_Type_Impl
+{
   // = TITLE
   //     The abstract base class of the hierarchy that defines the
   //     contents of the <ACE_Service_Repository>.  The subclasses of
@@ -32,7 +33,6 @@ class ACE_Export ACE_Service_Type_Impl
   //     of the "Bridge" pattern.  It maintains a pointer to the
   //     appropriate type of service implementation, i.e.,
   //     <ACE_Service_Object>, <ACE_Module>, or <ACE_Stream>.
-{
 public:
   // = Initialization and termination methods.
   ACE_Service_Type_Impl (const void *object, 
@@ -75,10 +75,10 @@ protected:
 };
 
 class ACE_Export ACE_Service_Object_Type : public ACE_Service_Type_Impl
+{
   // = TITLE
   //     Define the methods for handling the configuration of
   //     <ACE_Service_Objects>. 
-{
 public:
   // = Initialization method.
   ACE_Service_Object_Type (const void *so,
@@ -94,10 +94,10 @@ public:
 };
 
 class ACE_Export ACE_Module_Type : public ACE_Service_Type_Impl
+{
   // = TITLE
   //     Define the methods for handling the configuration of
   //     <ACE_Modules>. 
-{
 public:
   // = Initialization method.
   ACE_Module_Type (const void *m, // Really an <ACE_Module> *.
@@ -127,10 +127,10 @@ private:
 };
 
 class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl
+{
   // = TITLE
   //     Define the methods for handling the configuration of
   //     <ACE_Streams>. 
-{
 public:
   // = Initialization method.
   ACE_Stream_Type (const void *s, // Really an <ACE_Stream> *.

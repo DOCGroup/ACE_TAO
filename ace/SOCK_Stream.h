@@ -22,13 +22,13 @@
 #include "ace/INET_Addr.h"
 
 class ACE_Export ACE_SOCK_Stream : public ACE_SOCK_IO
+{
   // = TITLE
   //     Defines the methods in the <ACE_SOCK_Stream> abstraction.
   //     
   // = DESCRIPTION
   //     This adds additional wrapper methods atop the <ACE_SOCK_IO>
   //     class.
-{
 public:
   //= The following two methods use write and read system calls.
   ssize_t send_n (const void *buf, int n) const;

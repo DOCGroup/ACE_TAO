@@ -21,10 +21,10 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_Shared_Object
-  // = TITLE
-  //     Provide the abstract base class used to access dynamic linking 
-  // facilities 
 {
+  // = TITLE
+  //     Provide the abstract base class used to access dynamic
+  //     linking facilities.
 public:
   virtual int init (int argc, char *argv[]);
   // Initializes object when dynamic linking occurs.

@@ -45,9 +45,9 @@ private:
 };
 #else
 class ACE_Export ACE_Profile_Timer
+{
   // = TITLE
   //     A C++ wrapper for UNIX interval timers.
-{
 public:
   struct ACE_Elapsed_Time
     {

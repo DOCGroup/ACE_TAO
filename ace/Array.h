@@ -25,6 +25,8 @@ template <class T> class ACE_Array_Iterator;
 template <class T>
 class ACE_Array
 {
+  // = TITLE
+  //     Implement a dynamic array class.
 public:
   // Define a "trait"
   typedef T TYPE;
@@ -112,13 +114,15 @@ private:
 
 template <class T>
 class ACE_Array_Iterator
-  // = TITLE
-  //     Implement an iterator over an ACE_Array.  This iterator is
-  //     safe in the face of array element deletions.  But it is NOT
-  //     safe if the array is resized (via the ACE_Array assignment
-  //     operator) during iteration.  That would be very odd, and
-  //     dangerous.
 {
+  // = TITLE
+  //     Implement an iterator over an ACE_Array.
+  //
+  // = DESCRIPTION
+  //     This iterator is safe in the face of array element deletions.
+  //     But it is NOT safe if the array is resized (via the ACE_Array
+  //     assignment operator) during iteration.  That would be very
+  //     odd, and dangerous.
 public:
   // = Initialization method.
   ACE_Array_Iterator (ACE_Array<T> &);

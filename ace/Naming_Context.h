@@ -30,6 +30,7 @@
 class ACE_Name_Options;
 
 class ACE_Export ACE_Naming_Context : public ACE_Service_Object
+{
   // = TITLE
   //     Maintaining accesses Name Server Databases.  Allows to add
   //     NameBindings, change them, remove them and resolve
@@ -48,7 +49,6 @@ class ACE_Export ACE_Naming_Context : public ACE_Service_Object
   //     character strings. A Name Binding consists of a name string
   //     (that's the key), a value string and an optional type string
   //     (no wide chars).
-{
 public:
   enum Context_Scope_Type
     {
@@ -243,9 +243,9 @@ private:
 };
 
 class ACE_Export ACE_Name_Options
+{
   // = TITLE
   //     Manages the options for the ACE Name_Server.
-{
 public:
   // = Initialization and termination methods.
   ACE_Name_Options (void);

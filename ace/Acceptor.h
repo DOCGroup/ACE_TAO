@@ -24,6 +24,7 @@
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class ACE_Acceptor : public ACE_Service_Object
+{
   // = TITLE
   //     Abstract factory for creating a service handler
   //     (SVC_HANDLER), accepting into the SVC_HANDLER, and
@@ -45,7 +46,6 @@ class ACE_Acceptor : public ACE_Service_Object
   //     establishment, and service activation strategies.  These
   //     strategies can be overridden by subclasses individually or as
   //     a group.
-{
 public:
   // = Initialization and termination methods.
   ACE_Acceptor (ACE_Reactor * = 0);
@@ -161,6 +161,7 @@ private:
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class ACE_Strategy_Acceptor : public ACE_Acceptor <SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+{
   // = TITLE
   //     Abstract factory for creating a service handler
   //     (SVC_HANDLER), accepting into the SVC_HANDLER, and activating
@@ -173,7 +174,6 @@ class ACE_Strategy_Acceptor : public ACE_Acceptor <SVC_HANDLER, ACE_PEER_ACCEPTO
   //     passively accepting a new connection from a client into the
   //     SVC_HANDLER, and (3) activating the SVC_HANDLER with a
   //     particular concurrency mechanism.
-{
 public:
   // = Initialization and termination methods.
   ACE_Strategy_Acceptor (const char service_name[] = 0,
@@ -336,6 +336,7 @@ protected:
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class ACE_Oneshot_Acceptor : public ACE_Service_Object
+{
   // = TITLE
   //     Generic factory for passively connecting clients and creating
   //     exactly one service handler (SVC_HANDLER).
@@ -346,7 +347,6 @@ class ACE_Oneshot_Acceptor : public ACE_Service_Object
   //     user supplies the SVC_HANDLER) or an Accept_Strategy (since
   //     this class only accepts one connection and then removes all
   //     traces (e.g., from the ACE_Reactor).
-{
 public:
   // = Initialization and termination methods.
   ACE_Oneshot_Acceptor (void);

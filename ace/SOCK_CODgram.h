@@ -22,10 +22,10 @@
 #include "ace/Addr.h"
 
 class ACE_Export ACE_SOCK_CODgram : public ACE_SOCK_IO
+{
   // = TITLE
   //     Defines the member functions for the ACE_SOCK connected
-  // datagram abstraction. 
-{
+  //     datagram abstraction.
 public:
   // = Initialization methods.
   ACE_SOCK_CODgram (void);

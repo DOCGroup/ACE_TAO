@@ -24,6 +24,7 @@
 
 template <class T>
 class ACE_Cached_Mem_Pool_Node
+{
   // = TITLE
   //    <ACE_Cached_Mem_Pool_Node> keeps unused memory within a free
   //    list.
@@ -35,7 +36,6 @@ class ACE_Cached_Mem_Pool_Node
   //    This class should really be placed within the next class
   //    <ACE_Cached_Allocator>.  But this can't be done due to C++
   //    compiler portability problems.
-{
 public:
   T *addr (void);
   // return the address of free memory.
@@ -83,10 +83,10 @@ private:
 
 template <class MALLOC>
 class ACE_Allocator_Adapter : public ACE_Allocator
+{
   // = TITLE
   //    This class is an Adapter that allows the <ACE_Allocator> to
   //    use the <Malloc> class below.
-{
 public:
   // Trait.
   typedef MALLOC ALLOCATOR;
@@ -206,6 +206,7 @@ class ACE_Malloc_Iterator;
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Malloc
+{
   // = TITLE
   //     Define a C++ class that uses parameterized types to provide
   //     an extensible mechanism for encapsulating various of dynamic
@@ -215,9 +216,8 @@ class ACE_Malloc
   //     This class can be configured flexibly with different
   //     MEMORY_POOL strategies and different types of ACE_LOCK
   //     strategies.
-{
-friend class ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>;
 public:
+  friend class ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>;
   typedef ACE_MEM_POOL MEMORY_POOL;
   typedef ACE_MEM_POOL_OPTIONS MEMORY_POOL_OPTIONS;
 
@@ -378,17 +378,18 @@ private:
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Malloc_Iterator
+{
   // = TITLE
   //     Iterator for names stored in Malloc'd memory.
   //
   // = DESCRIPTION
   //     Does not allows deletions while iteration is occurring.
-{
 public:
   // = Initialization method.
-  ACE_Malloc_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc, const char *name = 0);
+  ACE_Malloc_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
+                       const char *name = 0);
   // if <name> = 0 it will iterate through everything else only
-  // through those entries whose <name> match
+  // through those entries whose <name> match.
 
   ~ACE_Malloc_Iterator (void);
 

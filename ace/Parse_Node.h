@@ -20,10 +20,10 @@
 #include "ace/Service_Types.h"
 
 class ACE_Export ACE_Parse_Node
+{
   // = TITLE
   //    Provide the base of the object hierarchy that defines the parse
   //    tree of Service Nodes.
-{
 public:
   ACE_Parse_Node (void);
   ACE_Parse_Node (const char *name);
@@ -48,9 +48,9 @@ private:
 };
 
 class ACE_Export ACE_Suspend_Node : public ACE_Parse_Node
+{
   // = TITLE
   //     Suspend a Service Node.
-{
 public:
   ACE_Suspend_Node (const char *name);
 
@@ -64,9 +64,9 @@ public:
 };
 
 class ACE_Export ACE_Resume_Node : public ACE_Parse_Node
+{
   // = TITLE
   //     Resume a Service Node.
-{
 public:
   ACE_Resume_Node (const char *name);
 
@@ -80,9 +80,9 @@ public:
 };
 
 class ACE_Export ACE_Remove_Node : public ACE_Parse_Node
+{
   // = TITLE
   //     Remove a Service Node.
-{
 public:
   ACE_Remove_Node (const char *name);
 
@@ -96,9 +96,9 @@ public:
 };
 
 class ACE_Export ACE_Static_Node : public ACE_Parse_Node
+{
   // = TITLE
   //     Handle a statically linked node.
-{
 public:
   ACE_Static_Node (const char *name, char *params = 0);
   virtual ~ACE_Static_Node (void);
@@ -118,9 +118,9 @@ private:
 };
 
 class ACE_Export ACE_Dynamic_Node : public ACE_Static_Node
+{
   // = TITLE
   //     Handle a dynamically linked node.
-{
 public:
   ACE_Dynamic_Node (const ACE_Service_Type *, char *params);
   virtual ~ACE_Dynamic_Node (void);
@@ -139,9 +139,9 @@ private:
 };
 
 class ACE_Export ACE_Stream_Node : public ACE_Parse_Node
+{
   // = TITLE
   //     Handle a Stream.
-{
 public:
   ACE_Stream_Node (const ACE_Static_Node *, const ACE_Parse_Node *);
   virtual ~ACE_Stream_Node (void);
@@ -160,9 +160,9 @@ private:
 };
 
 class ACE_Export ACE_Location_Node
+{
   // = TITLE
   //     Keep track of where a shared library is located.
-{
 public:
   ACE_Location_Node (void);
   virtual const void *symbol (void) = 0;
@@ -191,9 +191,9 @@ protected:
 };
 
 class ACE_Export ACE_Object_Node : public ACE_Location_Node
+{
   // = TITLE
   //   Keeps track of the symbol name for a shared object.
-{
 public:
   ACE_Object_Node (const char *pathname, const char *obj_name);
   virtual const void *symbol (void);
@@ -210,9 +210,9 @@ private:
 };
 
 class ACE_Export ACE_Function_Node : public ACE_Location_Node
+{
   // = TITLE
   //     Keeps track of the symbol name of for a shared function.
-{
 public:
   ACE_Function_Node (const char *pathname, const char *func_name);
   virtual const void *symbol (void);
@@ -229,9 +229,9 @@ private:
 };
 
 class ACE_Export ACE_Dummy_Node : public ACE_Parse_Node
+{
   // = TITLE
   //     I forget why this is here... ;-)
-{
 public:
   ACE_Dummy_Node (const ACE_Static_Node *, const ACE_Parse_Node *);
   ~ACE_Dummy_Node (void);
@@ -249,11 +249,11 @@ private:
 };
 
 class ACE_Export ACE_Static_Function_Node : public ACE_Location_Node
+{
   // = TITLE
   //     Keeps track of the symbol name for a function that is not
   //     linked in from a DLL, but is statically linked with the
   //     application. 
-{
 public:
   ACE_Static_Function_Node (const char *func_name);
   virtual const void *symbol (void);

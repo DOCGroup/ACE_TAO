@@ -23,6 +23,7 @@
 class ACE_Reactor;
 
 class ACE_Export ACE_Notification_Strategy
+{
   // = TITLE
   //     Abstract class used for notifing an interested party
   //
@@ -30,7 +31,6 @@ class ACE_Export ACE_Notification_Strategy
   //     A vehicle for extending the behavior of ACE_Message_Queue wrt
   //     notification *without subclassing*.  Thus, it's an example of
   //     the Bridge/Strategy patterns.
-{
 public:
   ACE_Notification_Strategy (ACE_Event_Handler *eh,
 			     ACE_Reactor_Mask mask);
@@ -54,13 +54,13 @@ protected:
 };
 
 class ACE_Export ACE_Reactor_Notification_Strategy : public ACE_Notification_Strategy
+{
   // = TITLE
   //     Used to notify an ACE_Reactor
   //
   // = DESCRIPTION
   //     Integrates the ACE_Message_Queue notification into the
   //     ACE_Reactor::notify() method.
-{
 public:
   ACE_Reactor_Notification_Strategy (ACE_Reactor *reactor,
 				     ACE_Event_Handler *eh,
@@ -80,13 +80,10 @@ protected:
 };
 
 class ACE_Export ACE_Connection_Recycling_Strategy
-  // = TITLE
-  //
-  //     Defines the interface for a connection recycler.
-  //
 {
+  // = TITLE
+  //     Defines the interface for a connection recycler.
 public:
-
   virtual ~ACE_Connection_Recycling_Strategy (void);
   // Virtual Destructor
 

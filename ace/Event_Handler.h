@@ -26,6 +26,7 @@ class ACE_Reactor;
 typedef u_long ACE_Reactor_Mask;
 
 class ACE_Export ACE_Event_Handler 
+{
   // = TITLE
   //     Provides an abstract interface for handling various types of
   //     I/O, timer, and signal events.
@@ -34,7 +35,6 @@ class ACE_Export ACE_Event_Handler
   //       Subclasses read/write input/output on an I/O descriptor,
   //       handle an exception raised on an I/O descriptor, handle a
   //       timer's expiration, or handle a signal.
-{
 public:
   enum 
   {
@@ -126,11 +126,12 @@ protected:
   ACE_Reactor *reactor_;
 };
 
-struct ACE_Export ACE_Notification_Buffer
+class ACE_Export ACE_Notification_Buffer
+{
   // = TITLE
   //     Simple wrapper for passing <ACE_Event_Handler *>s and
   //     <ACE_Reactor_Mask>s between threads.
-{
+public:
   ACE_Notification_Buffer (void);
 
   ACE_Notification_Buffer (ACE_Event_Handler *eh,

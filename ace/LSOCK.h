@@ -22,10 +22,10 @@
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 class ACE_Export ACE_LSOCK
+{
   // = TITLE
   //     Create a Local ACE_SOCK, which is used for passing file
   //     descriptors.  
-{
 public:
 #if defined (ACE_HAS_MSG)
   int send_handle (const ACE_HANDLE handle) const;	

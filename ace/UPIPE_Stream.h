@@ -29,12 +29,12 @@
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 
 class ACE_Export ACE_UPIPE_Stream : public ACE_SPIPE
+{
   // = TITLE
   //     Defines the method that transfer data on a UPIPE.
-{
+public:
   friend class ACE_UPIPE_Acceptor;
   friend class ACE_UPIPE_Connector;
-public:
 
   // = Initialization and Termination.
 

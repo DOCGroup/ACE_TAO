@@ -21,9 +21,9 @@
 #include "ace/FIFO.h"
 
 class ACE_Export ACE_FIFO_Send : public ACE_FIFO
+{
   // = TITLE
   //     Sender side for the bytestream C++ wrapper for UNIX FIFOs 
-{
 public:
   // = Initialization methods.
   ACE_FIFO_Send (void);

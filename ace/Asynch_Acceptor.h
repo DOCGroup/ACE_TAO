@@ -30,16 +30,15 @@ class ACE_INET_Addr;
 
 template <class HANDLER>
 class ACE_Asynch_Acceptor : public ACE_Handler 
-  //     
+{
   // = TITLE
-  //
   //     This class is an example of the Acceptor Pattern.  This class
   //     will accept new connections and create new HANDLER to handle
   //     the new connections.
-  // 
+  //
   // = DESCRIPTION
-  //     
-{
+  //     Unlike the <ACE_Acceptor>, however, this class is designed to
+  //     be used asynchronously.  
 public:
   ACE_Asynch_Acceptor (void);
   // A do nothing constructor.

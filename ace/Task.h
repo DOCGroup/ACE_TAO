@@ -21,6 +21,8 @@
 #include "ace/Thread_Manager.h"
 
 class ACE_Export ACE_Task_Flags
+{
+public:
   // = TITLE
   //    These flags are used within the ACE_Task.
   //
@@ -29,8 +31,6 @@ class ACE_Export ACE_Task_Flags
   //    HP/UX C++ compiler can't grok this...  Fortunately, there's no
   //    code defined here, so we don't have to worry about multiple
   //    definitions.
-{
-public:
   enum
   {
     ACE_READER     = 01,  // Identifies a Task as being the "reader" in a Module.
@@ -43,6 +43,7 @@ public:
 };
 
 class ACE_Export ACE_Task_Base : public ACE_Service_Object
+{
   // = TITLE
   //    Direct base class for the ACE_Task template.
   //
@@ -51,12 +52,14 @@ class ACE_Export ACE_Task_Base : public ACE_Service_Object
   //    reduce template bloat, as well as to make it possible for the
   //    <ACE_Thread_Manager> to store <ACE_Task_Base> *'s
   //    polymorphically.
-{
 public:
   // = Initialization method.
   ACE_Task_Base (ACE_Thread_Manager *);
 
-  // = Initialization and termination hooks (note that these *must* be defined by subclasses).
+  // = Initialization and termination hooks 
+
+  // Note that these methods *must* be defined by subclasses.
+
   virtual int open (void *args = 0);
   // Hook called to open a Task.  <args> can be used to pass arbitrary
   // information into <open>.

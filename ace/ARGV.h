@@ -22,11 +22,11 @@
 #include "ace/Containers.h"
 
 class ACE_Export ACE_ARGV
+{
   // = TITLE
   //     Transforms a string <buf> into an <argv> style vector of
   //     strings or an <argv> style vector of string <buf>, performing
   //     environment variable substitutions if necessary.
-{
 public:
   // = Initialization and termination.
   ACE_ARGV (const char buf[], int substitute_env_args = 1);

@@ -21,9 +21,9 @@
 #include "ace/Addr.h"
 
 class ACE_Export ACE_INET_Addr : public ACE_Addr
+{
   // = TITLE
   //    Defines the Internet domain address family address format.
-{
 public:
   // = Initialization methods.
   ACE_INET_Addr (void);

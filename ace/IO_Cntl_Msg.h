@@ -18,9 +18,9 @@
 #define ACE_IO_CNTL_MSG_H
 
 class ACE_Export ACE_IO_Cntl_Msg
+{
   // = TITLE
   //     Data format for IOCTL messages 
-{
 public:
   enum ACE_IO_Cntl_Cmds
   {

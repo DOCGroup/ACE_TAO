@@ -25,6 +25,7 @@
 #include "ace/Synch.h"
 
 class ACE_Export ACE_NS_String
+{
   // = TITLE
   //     This class and ACE_NS_Internal are used as Adapters to work
   //     with the Map_Manager.
@@ -34,7 +35,6 @@ class ACE_Export ACE_NS_String
   //     convert back and forth with ACE_WStrings.  Note that this
   //     class must not have a destructor since otherwise we'll have
   //     problems...
-{
 public:
   // = Initialization.
   ACE_NS_String (void);
@@ -81,10 +81,10 @@ private:
 };
 
 class ACE_Export ACE_NS_Internal
+{
   // = TITLE
   //     This class and ACE_NS_String are used as Adapters to work
   //     with the Map_Manager.
-{
 public:
   ACE_NS_Internal (void);
   // No-op constructor.
