@@ -1,9 +1,11 @@
-Sat Sep 12 19:18:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* ace/OS.i (qsort): Fixed a typo.  And removed "return" for this
-	  is a void function.
-
 Sat Sep 12 16:30:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ACE-INSTALL.html: Fixed a broken link.  Thanks to Tom Shields
+ 	  <Shields@MarsHotel.CMPU.NET> for reporting this.
+
+	* ace/OS.h (ACE_OS): Added wrappers for the passwd iterator.
+
+	* ace/OS.h (ACE_OS): Added wrappers for qsort() and bsearch().
 
 	* ace/README: Reformatted this file and also changed 
 	  ACE_REQUIRES_FUNC_DEFINITIONS     
@@ -21,6 +23,11 @@ Sat Sep 12 16:30:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  ACE_LACKS_WRITEV   
 
 	  respectively.
+
+Sat Sep 12 19:18:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (qsort): Fixed a typo.  And removed "return" for this
+	  is a void function.
 
 Sat Sep 12 13:13:39 EDT 1998  James CE Johnson <jcej@lads.com>
 
@@ -82,7 +89,8 @@ Fri Sep 11 08:54:41 EDT 1998  James CE Johnson <jcej@lads.com>
 	  Provide 'g_reactor' to the acceptor's open().  If you
 	  don't do this, the app will core dump on ^C
 
-	  Thanks to Krishna Padmasola for helping me see these.
+	  Thanks to Krishna Padmasola <pkrishna@cybercash.co.in> for
+ 	  helping me see these.
 
 Thu Sep 10 16:53:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

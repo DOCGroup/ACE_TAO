@@ -24,7 +24,7 @@ class HT_Client : public Hash_Table
   // = TITLE
   //   Provides the client's hash table abstraction. 
 public:
-  virtual Protocol_Record *insert (char *key_name,
+  virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN);
 };
 

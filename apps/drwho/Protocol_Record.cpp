@@ -23,72 +23,73 @@ Protocol_Record::~Protocol_Record (void)
 }
 
 Protocol_Record::Protocol_Record (void)
-  : is_active (0),
-    drwho_list (0),
-    key_name1 (0),
-    key_name2 (0),
-    next (0)
+  : is_active_ (0),
+    drwho_list_ (0),
+    key_name1_ (0),
+    key_name2_ (0),
+    next_ (0)
 {
 }
 
 Protocol_Record::Protocol_Record (int)
-  : is_active (0),
-    drwho_list (&Protocol_Record::drwho_node),
-    key_name1 (0),
-    key_name2 (0),
-    next (0)
+  : is_active_ (0),
+    drwho_list_ (&Protocol_Record::drwho_node),
+    key_name1_ (0),
+    key_name2_ (0),
+    next_ (0)
 {
 }
 
-Protocol_Record::Protocol_Record (char *kn1, Protocol_Record *next)
-  : is_active (0),
-    drwho_list (0),
-    key_name2 (0)
+Protocol_Record::Protocol_Record (const char *kn1, Protocol_Record *next)
+  : is_active_ (0),
+    drwho_list_ (0),
+    key_name2_ (0)
 {
-  this->key_name1 = kn1;
-  this->next = next;
+  this->key_name1_ = kn1;
+  this->next_ = next;
 }
 
 char *
 Protocol_Record::get_login (void) 
 { 
-  return this->key_name1; 
+  return this->key_name1_;
 }
 
 char *
-Protocol_Record::set_login (char *str)
+Protocol_Record::set_login (const char *str)
 { 
-  return this->key_name1 = str; 
+  this->key_name1_ = str;
+  return str;
 }
 
 char *
 Protocol_Record::get_real (void) 
 { 
-  return this->key_name2; 
+  return this->key_name2_;
 }
 
 char *
 Protocol_Record::get_host (void)
 {
-  return this->key_name1;
+  return this->key_name1_;
 }
 
 char *
-Protocol_Record::set_host (char *str)
+Protocol_Record::set_host (const char *str)
 { 
-  this->key_name1 = str;
+  this->key_name1_ = str;
   return str;
 }
 
 char *
-Protocol_Record::set_real (char *str)
+Protocol_Record::set_real (const char *str)
 {
-  this->key_name2 = str
+  this->key_name2_ = str
   return str;
 }
 
 Drwho_Node *
 Protocol_Record::get_drwho_list (void)
 {
-  return this->drwho_list;
+  return this->drwho_list_;
 }

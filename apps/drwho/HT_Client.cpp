@@ -7,7 +7,7 @@
 // that we do our own memory allocation here...
 
 Protocol_Record *
-HT_Client::insert (char *key_name, int max_len)
+HT_Client::insert (const char *key_name, int max_len)
 {
   Protocol_Record **frpp = 0;
 
@@ -26,7 +26,7 @@ HT_Client::insert (char *key_name, int max_len)
                       Protocol_Record (ACE::strnew (key_name),
                                        *frpp),
                       0);
-      this->count++;
+      this->count_++;
     }
 
   return *frpp;
