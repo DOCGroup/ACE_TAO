@@ -1,3 +1,9 @@
+Wed Dec 24 11:18:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/ORT/ORT.mpc:
+          Moved the sumserver.idl file to the server project, this needs to
+          compile this idl file.
+
 Wed Dec 24 11:01:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
