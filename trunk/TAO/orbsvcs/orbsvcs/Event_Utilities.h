@@ -222,7 +222,9 @@ private:
 class TAO_RTEvent_Export ACE_SupplierQOS_Factory
 {
 public:
-  ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer = 0);
+  // ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer = 0);
+  ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer = 0,
+                           int qos_max_len = 0);
   // Default construction.
 
   int insert (RtecEventComm::EventSourceID sid,

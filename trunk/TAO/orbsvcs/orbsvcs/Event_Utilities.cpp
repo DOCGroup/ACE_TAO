@@ -148,12 +148,19 @@ ACE_ConsumerQOS_Factory::debug (const RtecEventChannelAdmin::ConsumerQOS& qos)
 }
 
 // ************************************************************
-
 ACE_SupplierQOS_Factory::
-    ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer)
+    ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer,
+                             int qos_max_len)
   : event_initializer_ (initializer)
 {
   qos_.is_gateway = 0;
+
+  // Allocate the space requested by the application....
+  qos_.publications.length (qos_max_len);
+
+  // ... now reset the length, we do not want to use any elements in
+  // the sequence that have not been initialized....
+  qos_.publications.length (0);
 }
 
 int
@@ -162,15 +169,25 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
                                  RtecBase::handle_t rt_info,
                                  u_int ncalls)
 {
-  int l = qos_.publications.length ();
-  qos_.publications.length (l + 1);
+  CORBA::ULong l = this->qos_.publications.length ();
+  if (l >= this->qos_.publications.maximum ())
+    {
+      // There is not enough space for the next element, grow the
+      // buffer.
+      this->qos_.publications.length (l + 1);
+
+      // @@ TODO We may want to consider more efficient growing
+      // strategies here, for example, duplicating the size of the
+      // buffer, or growing in fixed sized chunks...
+    }
+
   if (this->event_initializer_ != 0)
     (*this->event_initializer_) (qos_.publications[l].event);
-  qos_.publications[l].event.header.source = sid;
-  qos_.publications[l].event.header.type = type;
-  // TODO: IDL union qos_.publications[l].event.data_.lval (0);
-  qos_.publications[l].dependency_info.rt_info = rt_info;
-  qos_.publications[l].dependency_info.number_of_calls = ncalls;
+  this->qos_.publications[l].event.header.source = sid;
+  this->qos_.publications[l].event.header.type = type;
+  // TODO: IDL union this->qos_.publications[l].event.data_.lval (0);
+  this->qos_.publications[l].dependency_info.rt_info = rt_info;
+  this->qos_.publications[l].dependency_info.number_of_calls = ncalls;
   return 0;
 }
 
