@@ -75,9 +75,9 @@ Step 1:
   application is running.  Here are some hints on how to start the
   daemons:
 
-    $(CIAO_ROOT)/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:10000 -n ../../../../tools/ComponentServer/ComponentServer
+    ${CIAO_ROOT}/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:10000 -n ../../../../tools/ComponentServer/ComponentServer
 
-    $(CIAO_ROOT)/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:12000 -n ../../../../tools/ComponentServer/ComponentServer
+    ${CIAO_ROOT}/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:12000 -n ../../../../tools/ComponentServer/ComponentServer
 
 Step 2:
 =======
@@ -86,7 +86,7 @@ Step 2:
   does the assembly work.  This should also be started in a separate
   shell window.
 
-    $(CIAO_ROOT)/tools/Assembly_Deployer/Assembly_Manager -o ior -c test.dat
+    ${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Manager -o ior -c test.dat
 
 Step 3:
 =======
@@ -94,7 +94,7 @@ Step 3:
   You then need to instruct the Assembly_Manager to deploy a specific
   compoennt assembly descriptor.  For example:
 
-    $(CIAO_ROOT)/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a HUDisplay.cad
+    ${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a HUDisplay.cad
 
   Replace "HUDisplay.cad" with other '.cad' files as you like.
 

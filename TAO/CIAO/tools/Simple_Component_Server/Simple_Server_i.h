@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Assembly_Service_Impl.h
+ *  @file    Simple_Server_i.h
  *
  *  $Id$
  *
@@ -11,11 +11,11 @@
 //=============================================================================
 
 
-#ifndef CIAO_ASSEMBLY_SERVICE_IMPL_H
-#define CIAO_ASSEMBLY_SERVICE_IMPL_H
+#ifndef CIAO_SIMPLE_SERVER_I_H
+#define CIAO_SIMPLE_SERVER_I_H
 #include "ace/pre.h"
 
-#include "Assembly_ServiceS.h"
+#include "Simple_ServerS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,25 +23,29 @@
 
 namespace CIAO
 {
-  class Assembly_Service_Impl
-    : public virtual POA_CIAO::Assembly_Service,
+  class Simple_Server_i
+    : public virtual POA_CIAO::Simple_Server,
       public virtual PortableServer::RefCountServantBase
   {
   public:
     /// Constructor
-    Assembly_Service_Impl (CORBA::ORB_ptr o,
-                           PortableServer::POA_ptr p,
-                           Components::Deployment::AssemblyFactory_ptr f);
+    Simple_Server_i (CORBA::ORB_ptr o,
+                     PortableServer::POA_ptr p,
+                     Components::CCMHome_ptr h);
 
     /// Destructor
-    virtual ~Assembly_Service_Impl (void);
+    virtual ~Simple_Server_i (void);
 
     /// Get the containing POA.  This operation does *not*
     /// increase the reference count of the POA.
     virtual PortableServer::POA_ptr _default_POA (void);
 
-    virtual ::Components::Deployment::AssemblyFactory_ptr
-    get_assemblyfactory (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual Components::CCMHome_ptr
+    get_home (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Components::CCMObject_ptr
+    get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -54,10 +58,13 @@ namespace CIAO
     /// Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
 
-    /// Cached AssemblyFactory reference.
-    Components::Deployment::AssemblyFactory_var factory_;
+    /// Cached CCMHome reference.
+    Components::CCMHome_var home_;
+
+    /// Cached CCMObject reference.
+    Components::CCMObject_var component_;
   };
 }
 
 #include "ace/post.h"
-#endif /* CIAO_ASSEMBLY_IMPL_H */
+#endif /* CIAO_SIMPLE_SERVER_H */

@@ -1,37 +1,51 @@
 // $Id$
 
+/**
+ * @file Simple_Component_Server.cpp
+ *
+ * This file contains a simple
+ */
+
 #include "ciao/Container_Base.h"
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
-#include "ciao/HomeRegistrar_i.h"
+#include "Simple_Server_i.h"
 
-char *ior_file_name_ = 0;
+//#include "ciao/HomeRegistrar_i.h"
+
+char *ior_filename = 0;
+//char *home_registrar_ior = 0;
 char *component_list_ = 0;
+int create_component = 0;       // If we need to create a cached component.
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:o:");
+  ACE_Get_Opt get_opts (argc, argv, "ci:o:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'o':  // get the file name to write to
-       ior_file_name_ = get_opts.opt_arg ();
+      case 'c':                 // Create cached component
+        create_component = 1;
+        break;
+
+      case 'o':  // get the server IOR output filename
+       ior_filename = get_opts.opt_arg ();
       break;
 
-      case 'i':                 // get
+      case 'i':                 // get component configuration
        component_list_ = get_opts.opt_arg ();
       break;
 
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           "-i <config file>"
-                           "-o <ior_output_file>"
+                           "usage:  %s\n"
+                           "-i <component config file>\n"
+                           "-o <server_ior_output_file>"
                            "\n",
                            argv [0]),
                           -1);
@@ -41,21 +55,20 @@ parse_args (int argc, char *argv[])
 }
 
 int
-write_IOR(const char *filename
-          const char *ior)
+write_IOR(const char *ior)
 {
-  if (filename == 0 || ior == 0)
+  if (ior_filename == 0 || ior == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "A valid filename and an IOR string are required for saving IOR\n"),
                       -1);
 
 
   FILE* ior_output_file_ =
-    ACE_OS::fopen (filename, "w");
+    ACE_OS::fopen (ior_filename, "w");
 
   if (ior_output_file_ == NULL)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open <%s> for writing\n", filename),
+                       "Unable to open <%s> for writing\n", ior_filename),
                       -1);
 
   ACE_OS::fprintf (ior_output_file_,
@@ -84,10 +97,10 @@ int breakdown (char *source,
   return cntr;
 }
 
-void
+Components::CCMHome_ptr
 install_homes (CIAO::Session_Container &container,
-               CORBA::ORB_ptr orb,
-               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+               CORBA::ORB_ptr orb
+               ACE_ENV_ARG_DECL)
 {
   if (component_list_ == 0)
     ACE_THROW (CORBA::BAD_PARAM ());
@@ -99,7 +112,8 @@ install_homes (CIAO::Session_Container &container,
     {
       ACE_Read_Buffer ior_buffer (config_file);
       char *data = 0;
-      while ((data = ior_buffer.read ('\n')) != 0)
+
+      if ((data = ior_buffer.read ('\n')) != 0)
         {
           char *items[10];
           auto_ptr<char> an_entry (data);
@@ -107,10 +121,10 @@ install_homes (CIAO::Session_Container &container,
                                10,
                                items);
 
-          if (len < 7)
+          if (len < 4)          // we only need the first 4 fields now.
             {
               ACE_DEBUG ((LM_DEBUG, "Error parsing configuration file\n"));
-              continue;
+              ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
             }
 
           // len should be at least such and such long so we have all
@@ -138,12 +152,14 @@ install_homes (CIAO::Session_Container &container,
 
           if (CORBA::is_nil (home))
             {
-              ACE_DEBUG ((LM_DEBUG, "Fail to create %s\n", items[6]));
-              continue;
+              ACE_DEBUG ((LM_DEBUG, "Fail to create home\n"));
+              ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
             }
+          return home._retn ();
         }
     }
   ACE_OS::fclose (config_file);
+  ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 }
 
 int
@@ -179,36 +195,6 @@ main (int argc, char *argv[])
       mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Configuring HomeRegistrar.
-      obj = orb->resolve_initial_references ("NameService"
-                                             ACE_ENV_ARG_PARAMETER);
-      CosNaming::NamingContext_var ns = CosNaming::NamingContext::_narrow (obj);
-      if (CORBA::is_nil (ns))
-        return -1;
-
-      PortableServer::Servant hr_svt = new CIAO::HomeRegistrar_Impl (ns);
-      PortableServer::ObjectId_var hr_oid
-        = poa->activate_object (hr_svt
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      obj = poa->id_to_reference (hr_oid
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CIAO::HomeRegistrar_var home_registrar =
-        CIAO::HomeRegistrar::_narrow (obj
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (home_registrar))
-        ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire HomeRegistrar interface\n"), -1);
-
-      CORBA::String_var str = orb->object_to_string (home_registrar.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      write_IOR (str.in ());
-      ACE_DEBUG ((LM_INFO, "HomeFinder IOR: %s\n", str.in ()));
-
       // Start Deployment part
 
       CIAO::Session_Container container (orb);
@@ -216,13 +202,38 @@ main (int argc, char *argv[])
 
       // install component
 
-      install_homes (container, orb, home_registrar ACE_ENV_ARG_PARAMETER);
+      Components::CCMHome_var home =
+        install_homes (container,
+                       orb
+                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // End Deployment part
+      CIAO::Simple_Server_i *servant = 0;
+      ACE_NEW_RETURN (servant,
+                      CIAO::Simple_Server_i (orb.in (),
+                                             poa.in (),
+                                             home.in ()),
+                      -1);
+      PortableServer::ServantBase_var safe_daemon (servant);
+      // Implicit activation
+      CIAO::Simple_Server_var server = servant->_this ();
+
+      CORBA::String_var str =
+        orb->object_to_string (server.in ()
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      write_IOR (str.in ());
+
+      if (create_component != 0)
+        {
+          Components::CCMObject_var temp
+            = server->get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Running generic server...\n"));
+                  "Running the simple generic server...\n"));
 
       // Run the main event loop for the ORB.
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -1,3 +1,22 @@
+Mon May 12 13:34:16 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* README: Updated the list of TAO librearies CIAO depends on.
+
+	* tools/Assembly_Deployer/Assembly_Service_Impl.h: Fixed
+	  mismatched comments. :)
+
+	* tools/Simple_Component_Server/Simple_Component_Server.cpp:
+	* tools/Simple_Component_Server/Simple_Component_Server.mpc:
+	* tools/Simple_Component_Server/Simple_Server.idl:
+	* tools/Simple_Component_Server/Simple_Server_Stub_Export.h:
+	* tools/Simple_Component_Server/Simple_Server_i.cpp:
+	* tools/Simple_Component_Server/Simple_Server_i.h:
+	* tools/Simple_Component_Server/sample_client.cpp: Revamped the
+	  simple_component_server to make debugging a single component
+	  implementation a more direct process.  There's also a
+	  sample_client that can be used as a blueprint to interfact with
+	  the simple component server.
+
 Fri May 09 12:51:03 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* README: Updated the list of libraries that CIAO depends on,

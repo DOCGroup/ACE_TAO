@@ -10,6 +10,8 @@ to compile them first.  Here is a non-exhaustive list:
         ACEXML,
 
         Valuetype
+        IORInterceptor
+        ObjRefTemplate
         Security
         PortableServer
         IFR_Client
