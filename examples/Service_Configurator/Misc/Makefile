@@ -20,6 +20,8 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 
 LDLIBS 	=
 
+ACE_SHLIBS += $(ACELIB)
+
 BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 
 #----------------------------------------------------------------------------

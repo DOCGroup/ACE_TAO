@@ -24,6 +24,8 @@ LSRC  	= Async_Timer_Queue_Test.cpp \
 
 LDLIBS 	=
 
+ACE_SHLIBS += $(ACELIB)
+
 BUILD = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 
 #----------------------------------------------------------------------------
