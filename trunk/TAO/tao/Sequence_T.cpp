@@ -268,12 +268,6 @@ TAO_Object_Manager<T,T_var>::operator=(T_var &p)
   return *this;
 }
 
-template <class T, class T_var>
-TAO_Object_Manager<T,T_var>::operator const T_var () const
-{
-  return T::_duplicate (*this->ptr_);
-}
-
 template <class T, class T_var> T *&
 TAO_Object_Manager<T,T_var>::out (void)
 {

@@ -13,11 +13,9 @@ DIRS = \
   PortableServer \
   DynamicAny \
   DynamicInterface \
-  IFR_Client \
   IORManipulation \
   IORTable \
   Strategies \
-  Domain \
   SmartProxies
 
 # These are headers for things which are exported and must be
@@ -391,6 +389,11 @@ BUILD   += TAO_COMPONENTS
 all.nested: all.local
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+  DIRS += IFR_Client Domain
+endif # ACE_HAS_GNUG_PRE_2_8
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU

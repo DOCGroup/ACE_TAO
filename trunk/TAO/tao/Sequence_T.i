@@ -235,6 +235,12 @@ TAO_Object_Manager<T,T_var>::operator-> (void) const
 }
 
 template <class T, class T_var> ACE_INLINE
+TAO_Object_Manager<T,T_var>::operator const T_var () const
+{
+  return T::_duplicate (*this->ptr_);
+}
+
+template <class T, class T_var> ACE_INLINE
 TAO_Object_Manager<T,T_var>::operator const T* () const // cast
 {
   return *this->ptr_;
