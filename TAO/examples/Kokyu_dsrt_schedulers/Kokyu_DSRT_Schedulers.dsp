@@ -79,38 +79,119 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=".\FP_Scheduler.cpp"
+
+!IF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Release"
+
+# ADD CPP /I "..\..\tao"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\FP_SchedulingC.cpp"
+
+!IF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Release"
+
+# ADD CPP /I "..\..\tao"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\Kokyu_qosC.cpp"
+
+!IF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Release"
+
+# ADD CPP /I "..\..\tao"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\MIF_Scheduler.cpp"
+
+!IF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Release"
+
+# ADD CPP /I "..\..\tao"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\MIF_SchedulingC.cpp"
+
+!IF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Release"
+
+# ADD CPP /I "..\..\tao"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\MUF_Scheduler.cpp"
+
+!IF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Release"
+
+# ADD CPP /I "..\..\tao"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\MUF_SchedulingC.cpp"
+
+!IF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Release"
+
+# ADD CPP /I "..\..\tao"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\Task_Stats.cpp"
+
+!IF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Release"
+
+# ADD CPP /I "..\..\tao"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\utils.cpp"
+
+!IF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Release"
+
+# ADD CPP /I "..\..\tao"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DSRT_Schedulers - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -202,7 +283,7 @@ InputPath=.\FP_Scheduling.idl
 InputName=FP_Scheduling
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I..\..\ $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I..\..\ -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -324,7 +405,7 @@ InputPath=.\MIF_Scheduling.idl
 InputName=MIF_Scheduling
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I..\..\ $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I..\..\ -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -392,7 +473,7 @@ InputPath=.\MUF_Scheduling.idl
 InputName=MUF_Scheduling
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I..\..\ $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I..\..\  -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
