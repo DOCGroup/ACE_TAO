@@ -9,11 +9,13 @@ BIN_UNCHECKED   = SAXPrint
 
 FILES = \
   main \
-  SAXPrint_Handler \
-  Print_Handler
+  Print_Handler \
+  SAXPrint_Handler
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
+
+ACE_SHLIBS = -lACE
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
@@ -21,7 +23,6 @@ BIN    = $(BIN_UNCHECKED)
 
 OBJS   = $(addsuffix .o, $(notdir $(FILES)))
 SRC    = $(addsuffix .cpp, $(FILES))
-ACELIB = -lACE
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -29,8 +30,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 CPPFLAGS     += -I../../..
-
-
 ifeq ($(static_libs),1)
   ifneq ($(LIB),)
     CPPFLAGS += -DACE_AS_STATIC_LIBS
