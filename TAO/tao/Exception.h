@@ -184,9 +184,6 @@ public:
   void minor (CORBA::ULong m);
   // Set the minor status.
 
-  virtual void _raise (void);
-  // To throw an exception of this type.
-
   CORBA::CompletionStatus completed (void) const;
   // Get the completion status.
 
