@@ -1,3 +1,4 @@
+# $Id$
 ##################################################################
 # This GNU file is for Notify tests only. It is a collosal waste to
 # include the list of libraries in every makefile in the test.
