@@ -12,7 +12,7 @@
 #### These options are hard-coded in ACE wrapper_macros.GNU.
 
 ####
-#### in addition to what's already in Purify's .purify.solaris2:
+#### In addition to what's already in Purify's .purify.solaris2:
 ####
 suppress miu malloc; *alloc; thr_setspecific
 suppress miu malloc; realloc; thr_keycreate
@@ -120,14 +120,16 @@ suppress fmr unsafe_ostream::flush(void); unsafe_ostream::~unsafe_ostream(void);
 ####    worker(void*)  [TSS_Test.cpp:125]
 ####    _thread_start  [libthread.so.1]
 ####   * There have been 0 frees since this block was freed thread 4.
-
+####
 suppress fmr thr_getspecific
 suppress fmr thr_setspecific
 
+####
 #### Write of one byte beyond the stack in ::pthread_setcanceltype ().
 #### This code fragment exhibits the BSW error:
 ####   int result;
 ####   return ::pthread_setcanceltype (PTHREAD_CANCEL_ASYNCHRONOUS, &result);
+####
 suppress bsw pthread_setcanceltype
 
 ####
@@ -140,5 +142,11 @@ suppress mlk malloc; __0OnWuI; operator new(unsigned int); ACE_TSS<*>::make_TSS_
 # suppress miu malloc; __bUiLtIn_nEw; __builtin_new; ACE_TSS<*>::make_TSS_TYPE () const
 # suppress mlk malloc; __bUiLtIn_nEw; __builtin_new; ACE_TSS<*>::make_TSS_TYPE () const
 # suppress plk malloc; __bUiLtIn_nEw; __builtin_new; ACE_TSS<*>::make_TSS_TYPE () const
+
+####
+#### SunOS 5.7's thread library has these leaks.
+####
+suppress miu malloc; _atfork_append; _t0init; _init
+suppress miu malloc; _atfork_append; _ld_concurrency; _t0init; _init
 
 #### EOF
