@@ -530,7 +530,7 @@ ACE_OutputCDR::write_array (const void *x,
 }
 
 CDR::Boolean
-ACE_OutputCDR::write_boolean_array (CDR::Boolean* x,
+ACE_OutputCDR::write_boolean_array (const CDR::Boolean* x,
                                     CDR::ULong length)
 {
   // It is hard to optimize this, the spec requires that on the wire
