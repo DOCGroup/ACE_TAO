@@ -50,13 +50,29 @@ get_state ()
 void Checkpointable::
 associate_state (CORBA::ORB_ptr orb, CORBA::Any const& state)
 {
-  CORBA::Object_var pic_obj =
-    orb->resolve_initial_references ("PICurrent");
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+  {
+    CORBA::Object_var pic_obj =
+      orb->resolve_initial_references ("PICurrent" ACE_ENV_ARG_PARAMETER);
 
-  PortableInterceptor::Current_var pic =
-    PortableInterceptor::Current::_narrow (pic_obj.in ());
+    ACE_TRY_CHECK;
 
-  pic->set_slot (state_slot_id (), state);
+    PortableInterceptor::Current_var pic =
+      PortableInterceptor::Current::_narrow (
+        pic_obj.in () ACE_ENV_ARG_PARAMETER);
+
+    ACE_TRY_CHECK;
+
+    pic->set_slot (state_slot_id (), state ACE_ENV_ARG_PARAMETER);
+
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception:");
+  }
+  ACE_ENDTRY;
 }
 
 // ReplyLogger
@@ -72,10 +88,23 @@ ReplicaController::
 ReplicaController (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
 {
-  CORBA::Object_var poa_object =
-    orb_->resolve_initial_references ("RootPOA");
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+  {
+    CORBA::Object_var poa_object =
+      orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-  root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
+    root_poa_ = PortableServer::POA::_narrow (
+      poa_object.in () ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception:");
+    ACE_OS::abort ();
+  }
+  ACE_ENDTRY;
 
   // Generate member id
   ACE_Utils::UUID uuid;
