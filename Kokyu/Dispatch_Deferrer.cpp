@@ -22,6 +22,7 @@ ACE_RCSID(Kokyu, Dispatch_Deferrer, "$Id$")
 
 namespace {
 
+  ACE_INLINE
   void print_time_value(ACE_Time_Value tv)
   {
     //For printing, assume a long is equivalent to an ACE_UINT64
@@ -58,9 +59,8 @@ Dispatch_Deferrer::dispatch (Dispatch_Queue_Item *qitem, ACE_Time_Value last_rel
   //setup timout
   //For now, assume period = deadline
   //Note that qitem deadline is absolute!
-  ACE_Time_Value now = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG, "Dispatch_Deferrer::dispatch() (%t) at %D: now is "));
-  print_time_value(now);
+  print_time_value(ACE_OS::gettimeofday());
   ACE_DEBUG((LM_DEBUG, "; deadline is "));
   print_time_value(qitem->qos_info().deadline_);
   ACE_DEBUG((LM_DEBUG, "; period is "));

@@ -81,13 +81,14 @@ Dispatcher_Task::enqueue_i (Dispatch_Queue_Item *qitem)
 #if defined (ACE_HAS_DSUI)
   // Grab msg queue associated with this task (ace/Task_T.h)
   // Get the msg count
-  ACE_Time_Value tv = ACE_OS::gettimeofday();
-  ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue_i() (%t) : event enqueue at %u\n",tv.msec()));
+  ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue_i() (%t) : event enqueue at %u\n",ACE_OS::gettimeofday().msec()));
 #endif //ACE_HAS_DSUI
 
 #if defined (KOKYU_HAS_RELEASE_GUARD)
-  //if qos_info is not in map, this should add it
-  this->releases_.rebind(qitem->qos_info(),release.msec());
+  //if qos_info is not in map, this should add it. A copy of the
+  //qitem's qos_info is stored in releases_, NOT a ref to the memory
+  //(which will be deallocated after the qitem is dispatched).
+  this->releases_.rebind(qitem->qos_info(),release);
 #endif //KOKYU_HAS_RELEASE_GUARD
 
   return 0;

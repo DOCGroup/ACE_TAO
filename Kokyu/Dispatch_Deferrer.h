@@ -26,7 +26,7 @@
 #include "ace/Synch_T.h"
 #include "ace/Message_Block.h"
 #include "ace/Reactor.h"
-#include "ace/Map_Manager.h"
+#include "ace/Map.h"
 
 namespace Kokyu
 {
@@ -68,6 +68,7 @@ class Dispatch_Deferrer : public ACE_Event_Handler
   //Dispatch_Queue_Item the timer is for as the key. Used to
   //cancel timers if they expire and are enqueued before the
   //callback happens.
+  //Can't use ACE_Hash_Map_Manager because pointers and longs don't have hash!
   typedef ACE_Map_Manager<Dispatch_Queue_Item*,long,ACE_Thread_Mutex> Timer_Map;
 
   Timer_Map timers_;
