@@ -23,7 +23,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
-#include "tao/tao_util.h"
+#include "tao/TAO.h"
 #include "orbsvcs/CosNamingC.h"
 #include "cubit_i.h"
 #include "orbsvcs/Naming/Naming_Utils.h"

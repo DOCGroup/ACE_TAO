@@ -156,67 +156,69 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_O
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/sequence.i \
- $(TAO_ROOT)/tao/sequence_T.h \
- $(TAO_ROOT)/tao/sequence_T.i \
- $(TAO_ROOT)/tao/objkeyC.h \
- $(TAO_ROOT)/tao/objkeyC.i \
- $(TAO_ROOT)/tao/any.h \
+ $(TAO_ROOT)/tao/Align.h \
+ $(TAO_ROOT)/tao/CORBA.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/client_factory.h \
- $(TAO_ROOT)/tao/server_factory.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/strategy_T.h \
- $(TAO_ROOT)/tao/strategy_T.i \
- $(TAO_ROOT)/tao/except.h \
- $(TAO_ROOT)/tao/orbobj.h \
- $(TAO_ROOT)/tao/nvlist.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/marshal.h \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/poa.h \
- $(TAO_ROOT)/tao/poaC.h \
- $(TAO_ROOT)/tao/poaC.i \
- $(TAO_ROOT)/tao/servant_base.h \
- $(TAO_ROOT)/tao/poaS.h \
- $(TAO_ROOT)/tao/poaS.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(TAO_ROOT)/tao/connect.h \
- $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/optable.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Connect.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/iiopobj.h \
- $(TAO_ROOT)/tao/iioporb.h \
- $(TAO_ROOT)/tao/giop.h \
- $(TAO_ROOT)/tao/orb_core.i \
+ $(TAO_ROOT)/tao/IIOP_Object.h \
+ $(TAO_ROOT)/tao/IIOP_ORB.h \
+ $(TAO_ROOT)/tao/IIOP_Interpreter.h \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/nvlist.i \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/stub.i \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/orbobj.i \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/giop.i \
- $(TAO_ROOT)/tao/iioporb.i \
- $(TAO_ROOT)/tao/iiopobj.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/IIOP_ORB.i \
+ $(TAO_ROOT)/tao/IIOP_Object.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/server_factory.i \
+ $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
- $(TAO_ROOT)/tao/connect.i \
+ $(TAO_ROOT)/tao/Connect.i \
+ $(TAO_ROOT)/tao/CORBA.i \
+ $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
