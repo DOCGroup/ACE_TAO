@@ -1,3 +1,8 @@
+Wed May  5 18:10:32 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp: Change #include
+	  <stdio.h> to "ace/OS_NS_stdio.h" since ACE_OS::fprintf() is used.
+
 Wed May  5 14:14:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Future.h (ACE_Future_Rep):
