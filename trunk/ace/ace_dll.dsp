@@ -366,6 +366,10 @@ SOURCE=.\Flag_Manip.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Framework_Component.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Functor.cpp
 # End Source File
 # Begin Source File
@@ -1351,6 +1355,10 @@ SOURCE=.\Filecache.h
 # Begin Source File
 
 SOURCE=.\Flag_Manip.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Framework_Component.h
 # End Source File
 # Begin Source File
 
@@ -2458,6 +2466,10 @@ SOURCE=.\Flag_Manip.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Framework_Component.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Free_List.i
 # End Source File
 # Begin Source File
@@ -3144,6 +3156,10 @@ SOURCE=.\Containers_T.cpp
 
 SOURCE=.\Dump_T.cpp
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Framework_Component_T.cpp
 # End Source File
 # Begin Source File
 
