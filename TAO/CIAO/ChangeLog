@@ -1,3 +1,22 @@
+Mon Nov 24 13:39:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/Collectors.hpp:
+        
+          Cosmetic changes.
+          
+        * CIDLC/Literals.hpp:
+        
+          Added /*  */ in a string literal around an arg name which
+          is never used in generated methods where it appears in the
+          argument list.
+          
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Commented out some unused arg names, and removed some extra
+          newlines. In the connect() operation generated for a 
+          component, added ACE_UNUSED_ARG() for an argument which is
+          unused if the component has no receptacles declared.
+
 Thu Nov 20 20:05:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/ComponentsS.h:
