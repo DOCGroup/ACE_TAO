@@ -316,6 +316,11 @@ public:
   ACE_Char_Codeset_Translator *char_translator (void) const;
   ACE_WChar_Codeset_Translator *wchar_translator (void) const;
 
+  /// Set the codeset translators.
+  void char_translator (ACE_Char_Codeset_Translator *);
+  void wchar_translator (ACE_WChar_Codeset_Translator *);
+  void wchar_allowed (int );
+
   /**
    * Return alignment of the wr_ptr(), with respect to the start of
    * the CDR stream.  This is not the same as the alignment of
@@ -443,6 +448,13 @@ protected:
   /// If not nil, invoke for translation of character and string data.
   ACE_Char_Codeset_Translator *char_translator_;
   ACE_WChar_Codeset_Translator *wchar_translator_;
+
+  /**
+   * There are some situations when it is an error to attempt wchar 
+   * i/o of any kind. This may be when using GIOP 1.0, or no valid
+   * NCSW defined.
+   */
+  int wchar_allowed_;
 };
 
 // ****************************************************************
@@ -801,6 +813,11 @@ public:
   ACE_Char_Codeset_Translator *char_translator (void) const;
   ACE_WChar_Codeset_Translator *wchar_translator (void) const;
 
+  /// Set the codeset translators.
+  void char_translator (ACE_Char_Codeset_Translator *);
+  void wchar_translator (ACE_WChar_Codeset_Translator *);
+  void wchar_allowed (int );
+
   /**
    * Returns (in <buf>) the next position in the buffer aligned to
    * <size>, it advances the Message_Block rd_ptr past the data
@@ -842,6 +859,13 @@ protected:
   /// If not nil, invoke for translation of character and string data.
   ACE_Char_Codeset_Translator *char_translator_;
   ACE_WChar_Codeset_Translator *wchar_translator_;
+
+  /**
+   * There are some situations when it is an error to attempt wchar 
+   * i/o of any kind. This may be when using GIOP 1.0, or no valid
+   * NCSW defined.
+   */
+  int wchar_allowed_;
 
 private:
   ACE_CDR::Boolean read_1 (ACE_CDR::Octet *x);
@@ -892,10 +916,20 @@ private:
  * This class is a base class for defining codeset translation
  * routines to handle the character set translations required by
  * both CDR Input streams and CDR Output streams.
+ *
+ * Translators are reference counted. This allows for stateful as well
+ * as stateless translators. Stateless translators will be allocated 
+ * once whereas CDR Streams own their own copy of a stateful translator.
  */
 class ACE_Export ACE_Char_Codeset_Translator
 {
 public:
+  ACE_Char_Codeset_Translator ();
+
+  /// Increment the reference count. 
+  void add_ref ();
+  void remove_ref ();
+
   /// Read a single character from the stream, converting from the
   /// stream codeset to the native codeset
   virtual ACE_CDR::Boolean read_char (ACE_InputCDR&,
@@ -929,6 +963,8 @@ public:
 					     const ACE_CDR::Char*,
 					     ACE_CDR::ULong) = 0;
 
+  virtual ACE_CDR::ULong ncs () = 0;
+  virtual ACE_CDR::ULong tcs () = 0;
 protected:
   /// Children have access to low-level routines because they cannot
   /// use read_char or something similar (it would recurse).
@@ -971,6 +1007,19 @@ protected:
 
   /// Used by derived classes to set errors in the CDR stream.
   void good_bit (ACE_OutputCDR& out, int bit);
+
+  /// Obtain the CDR Stream's major & minor version values.
+  ACE_CDR::Octet major_version (ACE_InputCDR& input);
+  ACE_CDR::Octet minor_version (ACE_InputCDR& input);
+  ACE_CDR::Octet major_version (ACE_OutputCDR& output);
+  ACE_CDR::Octet minor_version (ACE_OutputCDR& output);
+
+protected:
+  virtual ~ACE_Char_Codeset_Translator () {};
+
+private:
+  short refcount_;
+
 };
 
 // ****************************************************************
@@ -988,6 +1037,11 @@ protected:
 class ACE_Export ACE_WChar_Codeset_Translator
 {
 public:
+  ACE_WChar_Codeset_Translator ();
+
+  void add_ref ();
+  void remove_ref ();
+
   virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR&,
 				       ACE_CDR::WChar&) = 0;
   virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR&,
@@ -1054,6 +1108,21 @@ protected:
 
   /// Used by derived classes to set errors in the CDR stream.
   void good_bit (ACE_OutputCDR& out, int bit);
+
+  /// Obtain the CDR Stream's major & minor version values.
+  ACE_CDR::Octet major_version (ACE_InputCDR& input);
+  ACE_CDR::Octet minor_version (ACE_InputCDR& input);
+  ACE_CDR::Octet major_version (ACE_OutputCDR& output);
+  ACE_CDR::Octet minor_version (ACE_OutputCDR& output);
+
+  virtual ACE_CDR::ULong ncs () = 0;
+  virtual ACE_CDR::ULong tcs () = 0;
+protected:
+  virtual ~ACE_WChar_Codeset_Translator () {};
+
+private:
+  short refcount_;
+
 };
 
 // @@ These operators should not be inlined since they force SString.h

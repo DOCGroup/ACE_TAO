@@ -1,3 +1,39 @@
+Mon Dec 16 13:14:34 2002  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* ace/CDR_Stream.cpp:
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.i:
+	Preparing for codeset negotiation. The ACE input/output CDR streams'
+	support for wide character IO is enhanced by adding a flag to allow
+	or disallow wchar i/o regardless of whether a translator is present.
+	There are times when wchar is not allowed, such as GIOP 1.0, or when
+	a native codeset for wchar was not specified. In CORBA, a native wchar
+	codeset must be specified, it may not be defaulted. Within the ACE
+	CDR streams, wchar i/o is allowed by default, to ensure backwards 
+	compatibility.
+
+	I fixed a few of the reading and writing methods to ensure that the
+	good_bit_ flag is cleared if an error occurs. This was not happening in
+	all cases, leading to errors elsewhere.
+
+	I have extended the definition of the ACE_[W]Char_Codeset_Translator
+	classes to make them reference counted objects. There are some codesets
+	that support shifting and may be stateful. By using reference counting,
+	the CDR streams don't have to worry about ownership of stateful 
+	translators.
+
+	Finally, the translators now have pure virtual methods that return the
+	native and translated codeset ID values. These values refer to entries
+	in the DCE Code and Character Set Registry, which is the reference for
+	CORBA codeset ids. Anyone implementing a char or wchar codeset will 
+	have to supply a numeric value for the native codeset (ncs) and the 
+	translated codeset (tcs). NCS refers to the codeset of the text on the
+	application side of the stream, and TCS refers to the codset of the 
+	text on the "wire" side of the stream.
+
+	These changes are not everything that is required to support codeset
+	negotiation, but it is all the changes required to the CDR streams.
+	
 Sat Dec 14 08:56:23 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Timer_Queue_T.cpp (timeout): Commented out the change below
