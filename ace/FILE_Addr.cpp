@@ -27,22 +27,23 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
       ACE_OS::strcpy (this->filename_,
                       ACE_DEFAULT_TEMP_FILE);
 #else /* ACE_DEFAULT_TEMP_FILE */
-      if (ACE_Lib_Find::get_temp_dir (this->filename_, 
-                                      MAXPATHLEN - 15) == -1) 
+      if (ACE_Lib_Find::get_temp_dir (this->filename_,
+                                      MAXPATHLEN - 15) == -1)
         // -15 for ace-file-XXXXXX
         {
-          ACE_ERROR ((LM_ERROR, 
+          ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("Temporary path too long, ")
                       ACE_LIB_TEXT ("defaulting to current directory\n")));
           this->filename_[0] = 0;
         }
 
       // Add the filename to the end
-      ACE_OS::strcat (this->filename_, ACE_LIB_TEXT ("ace-file-XXXXXX"));
-  
+      ACE_OS::strcat (this->filename_, ACE_LIB_TEXT ("ace-fileXXXXXX"));
+
 #endif /* ACE_DEFAULT_TEMP_FILE */
-  
-      ACE_OS::mktemp (this->filename_);
+
+      if (ACE_OS::mktemp (this->filename_) == 0)
+        return -1;
       this->base_set (AF_FILE,
                       ACE_static_cast (int,
                                        ACE_OS::strlen (this->filename_) + 1));
