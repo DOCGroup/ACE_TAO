@@ -52,11 +52,13 @@ interface Implementation_Repository
   
   struct Process_Options  
   {    
-    string executable_name_;    
+    // @@string executable_name_;    
     // Executable name
-    Command_Line_Options command_line_options_;     
+    // @@Command_Line_Options command_line_options_;     
+    string command_line_;
     // Command line options
-    Environment environment_;     
+    // @@ Environment environment_;     
+    string environment_;
     // Environment    
     string working_directory_;    
     // Working directory    
@@ -86,9 +88,9 @@ interface Implementation_Repository
   // activated.    
   
   
-  //void register_server (in string server,
-  //                      in Process_Options options)
-  //  raises (Already_Registered);
+  void register_server (in string server,
+                        in Process_Options options)
+    raises (Already_Registered);
   // Restart server process when client is looking for <server>.      
   //
   // The <Already_Registered> exception is raised when <server> has

@@ -8,6 +8,7 @@ ACE_RCSID(ImplRepo, simple_object_impl, "$Id$")
 // Constructor
 
 Simple_i::Simple_i (const char *)
+: use_ir_ (1)
 {
 }
 
@@ -37,6 +38,7 @@ void Simple_i::shutdown (CORBA::Environment &env)
 
   ACE_DEBUG ((LM_DEBUG, "%s\n", "Simple_i is shutting down"));
 
-  TAO_ORB_Core_instance ()->orb ()->shutdown ();
+//  if (this->use_ir_ == 1)
+ //   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
 
