@@ -1,9 +1,14 @@
+Wed Jan 09 11:19:07 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Updated the comment for ACE_CE_Bridge to indicate that
+	  it's obsolete and will be removed in the future.
+
 Wed Jan 9 00:48:48 2002  Don Hinton <dhinton@gmx.net>
 
         * ace/Get_Opt.cpp:  Make sure to cast away constness
-	  before deleting an ACE_TCHAR array.  Thanks to 
+	  before deleting an ACE_TCHAR array.  Thanks to
 	  Bala for reporting this.
-	
+
 Tue Jan  8 17:29:33 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_SOCK_Connector.cpp: Don't try to dereference a 0
@@ -17,7 +22,7 @@ Tue Jan  8 15:51:06 2002  Don Hinton <dhinton@gmx.net>
           Moved the template instantiations from Service_Config.cpp to
           Get_Opt.cpp where they belong.
 
-        * ace/Get_Opt.{h.cpp}: Replaced ACE_TString with ACE_TCHAR for 
+        * ace/Get_Opt.{h.cpp}: Replaced ACE_TString with ACE_TCHAR for
           type of member variable ACE_Get_Opt_Long_Option since it
           wasn't really needed and took up space.
 
@@ -65,16 +70,16 @@ Mon Jan  7 15:55:26 2002  Ossama Othman  <ossama@uci.edu>
 Mon Jan  7 15:13:09 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* performance-tests/Misc/context_switch_time.cpp (main):
-	  Since the Yield_test does seem to work on VxWorks now (see 
+	  Since the Yield_test does seem to work on VxWorks now (see
 	  ChangeLog below), the 'ifdefs' for bypassing VxWorks for the
 	  Yield-Test have now been removed.
 
 Mon Jan  7 15:08:25 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* ace/OS.i (thr_yield):
-	  Changed ::taskDelay (1) to ::taskDelay (0) for VxWorks in 
+	  Changed ::taskDelay (1) to ::taskDelay (0) for VxWorks in
 	  thr_yield ().  The change with (0), now does seem to perform
-	  the yield correctly as reflected in the Yield-Test of 
+	  the yield correctly as reflected in the Yield-Test of
 	  context_switch_time.  Thanks to Charlie Grames
 	  <charlie.grames@windriver.com> for this tip.
 
@@ -306,4 +311,3 @@ Tue Jan  1 14:09:26 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 Tue Jan  1 00:02:12 2002  Nanbor Wang <nanbor@cs.wustl.edu>
 
         * ace/ace_dll.vcp: Added String_Base_Const.*.
-
