@@ -345,22 +345,41 @@ namespace
       write_belongs_.node_traverser (write_type_name_emitter_);
       read_belongs_.node_traverser (read_type_name_emitter_);
     }
-
+    
+    virtual void name (SemanticGraph::ReadWriteAttribute& a)
+    {
+      os << scope_.name () << "_Servant::" << a.name ();
+    }
+    
     virtual void traverse (SemanticGraph::ReadWriteAttribute& a)
     {
+      // Does nothing here, overridden for facet attributes.
+      this->pre (a);
+    
       Traversal::ReadWriteAttribute::belongs (a, read_belongs_);
 
-      os << endl
-         << scope_.name () << "_Servant::" << a.name () << " (" << endl
+      os << endl;
+      
+      // Overridden for facet attributes.
+      this->name (a);
+      
+      os << " (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "return this->executor_->" << a.name () << " (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl;
+         
+      // Does nothing here, overridden for facet attributes.
+      this->pre (a);
 
-      os << "void" << endl
-         << scope_.name () << "_Servant::" << a.name () << " (" << endl;
+      os << "void" << endl;
+      
+      // Overridden for facet attributes.
+      this->name (a);
+      
+       os << " (" << endl;
 
       Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
 
@@ -373,13 +392,15 @@ namespace
          << STRS[ENV_ARG] << ");" << endl
          << "}" << endl;
     }
+    
+  protected:
+    T& scope_;
 
   private:
     INArgTypeNameEmitter write_type_name_emitter_;
     ReturnTypeNameEmitter read_type_name_emitter_;
     Traversal::Belongs write_belongs_;
     Traversal::Belongs read_belongs_;
-    T& scope_;
   };
 
   // Generates operations associated with readonly attributes.
@@ -396,12 +417,24 @@ namespace
       read_belongs_.node_traverser (read_type_name_emitter_);
     }
 
+    virtual void name (SemanticGraph::ReadAttribute& a)
+    {
+      os << scope_.name () << "_Servant::" << a.name ();
+    }
+    
     virtual void traverse (SemanticGraph::ReadAttribute& a)
     {
+      // Does nothing here, overridden for facet attributes.
+      this->pre (a);
+    
       Traversal::ReadAttribute::belongs (a, read_belongs_);
 
-      os << endl
-         << scope_.name () << "_Servant::" << a.name () << " (" << endl
+      os << endl;
+      
+      // Overridden for facet attributes.
+      this->name (a);
+      
+      os << " (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
@@ -409,11 +442,13 @@ namespace
          << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl;
     }
+    
+  protected:
+    T& scope_;
 
   private:
     ReturnTypeNameEmitter read_type_name_emitter_;
     Traversal::Belongs read_belongs_;
-    T& scope_;
   };
 
   struct FacetEmitter : Traversal::UnconstrainedInterface,
@@ -423,7 +458,69 @@ namespace
       : EmitterBase (c)
     {
     }
+    
+    struct FacetOperationEmitter 
+      : OperationEmitter<SemanticGraph::UnconstrainedInterface>
+    {
+      FacetOperationEmitter (Context& c, 
+                             SemanticGraph::UnconstrainedInterface& i)
+        : OperationEmitter<SemanticGraph::UnconstrainedInterface> (c, i)
+      {}
+      
+      virtual void 
+      pre (Type&)
+      {
+        os << "template <typename T>" << endl;
+      }
 
+      virtual void
+      name (Type& o)
+      {
+        os << endl
+           << scope_.name () << "_Servant_T<T>::" << o.name ();
+      }
+    };
+    
+    struct FacetAttributeEmitter 
+      : AttributeEmitter<SemanticGraph::Interface>
+    {
+      FacetAttributeEmitter (Context& c, SemanticGraph::Interface& i)
+        : AttributeEmitter<SemanticGraph::Interface> (c, i)
+      {}
+
+      virtual void 
+      pre (SemanticGraph::ReadWriteAttribute&)
+      {
+        os << "template <typename T>" << endl;
+      }
+      
+      virtual void 
+      name (SemanticGraph::ReadWriteAttribute& a)
+      {
+        os << scope_.name () << "_Servant_T<T>::" << a.name ();
+      }
+    };
+    
+    struct FacetReadOnlyAttributeEmitter 
+      : ReadOnlyAttributeEmitter<SemanticGraph::Interface>
+    {
+      FacetReadOnlyAttributeEmitter (Context& c, SemanticGraph::Interface& i)
+        : ReadOnlyAttributeEmitter<SemanticGraph::Interface> (c, i)
+      {}
+
+      virtual void 
+      pre (SemanticGraph::ReadAttribute&)
+      {
+        os << "template <typename T>" << endl;
+      }
+      
+      virtual void 
+      name (SemanticGraph::ReadAttribute& a)
+      {
+        os << scope_.name () << "_Servant_T<T>::" << a.name ();
+      }
+    };
+    
     virtual void
     traverse (UnconstrainedInterface& i)
     {
@@ -435,7 +532,8 @@ namespace
                            "/::/_/")
          << "{";
 
-      os << i.name () << "_Servant::" << i.name ()
+      os << "template <typename T>" << endl
+         << i.name () << "_Servant_T<T>::" << i.name ()
          << "_Servant_T (" << endl
          << i.scoped_name ().scope_name () << "::CCM_" << i.name ()
          << "_ptr executor," << endl
@@ -446,8 +544,8 @@ namespace
          << "{"
          << "}" << endl;
 
-      os << "template <>" << endl
-         << i.name () << "_Servant::~" << i.name ()
+      os << "template <typename T>" << endl
+         << i.name () << "_Servant_T<T>::~" << i.name ()
          << "_Servant_T (void)" << endl
          << "{"
          << "}" << endl;
@@ -460,12 +558,12 @@ namespace
         interface_emitter.edge_traverser (defines_);
         interface_emitter.edge_traverser (inherits_);
 
-        AttributeEmitter<SemanticGraph::Interface> attribute_emitter (ctx, i);
-        ReadOnlyAttributeEmitter<SemanticGraph::Interface> read_only_attribute_emitter (ctx, i);
+        FacetAttributeEmitter attribute_emitter (ctx, i);
+        FacetReadOnlyAttributeEmitter read_only_attribute_emitter (ctx, i);
         defines_.node_traverser (attribute_emitter);
         defines_.node_traverser (read_only_attribute_emitter);
 
-        OperationEmitter<SemanticGraph::UnconstrainedInterface> operation_emitter (ctx, i);
+        FacetOperationEmitter operation_emitter (ctx, i);
         defines_.node_traverser (operation_emitter);
         inherits_.node_traverser (interface_emitter);
 
@@ -504,8 +602,9 @@ namespace
         names (i, defines_);
       }
 
-      os << "CORBA::Object_ptr" << endl
-         << i.name () << "_Servant::_get_component (" << endl
+      os << "template <typename T>" << endl
+         << "CORBA::Object_ptr" << endl
+         << i.name () << "_Servant_T<T>::_get_component (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << "ACE_THROW_SPEC ((CORBA::SystemException))" << endl
          << "{"
@@ -1809,7 +1908,7 @@ namespace
         os << "::_nil ());"
            << endl
            << "this->provide_" << p.name () << "_ = fo;" << endl
-           << "}" << endl << endl
+           << "}" << endl
            << "return ";
 
         Traversal::ProviderData::belongs (p, belongs_);
@@ -2054,7 +2153,7 @@ namespace
         
         Traversal::ConsumerData::belongs (c, belongs_);
         
-        os << ");";
+        os << ");" << endl;
       }
       
     private:
@@ -2845,8 +2944,7 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << endl
-         << "::Components::SessionComponent_var temp =" << endl
+      os << "::Components::SessionComponent_var temp =" << endl
          << "::Components::SessionComponent::_narrow (" << endl
          << "this->executor_.in ()" << endl
          << STRS[ENV_ARG] << ");"
@@ -2871,7 +2969,7 @@ namespace
          << "{"
          << "temp->ciao_postactivate (" << STRS[ENV_SNGL_ARG] << ");"
          << "ACE_CHECK;" << endl
-         << "}" << endl << endl
+         << "}" << endl
          << "this->populate_port_tables (" << STRS[ENV_SNGL_ARG] 
          << ");" << endl
          << "}" << endl;
