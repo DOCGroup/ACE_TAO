@@ -1,37 +1,44 @@
 Tue Nov 18 15:59:37 1997  Steve Huston  <shuston@riverace.com>
 
-	* tests/MT_SOCK_Test.cpp: Allow the test to run even if not all of
-	  the proceses can be forked.
+        * tests/MT_SOCK_Test.cpp: Allow the test to run even if not all of
+          the proceses can be forked.
 
 Tue Nov 18 15:27:37 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace/Timer_Queue_Adapters.cpp: Reordered include files.  Thanks
-	  to Torbjorn Lindgren <tl@funcom.no> for noticing the problem.
+        * ace/Timer_Queue_Adapters.cpp: Reordered include files.  Thanks
+          to Torbjorn Lindgren <tl@funcom.no> for noticing the problem.
 
 Tue Nov 18 11:40:18 1997  Steve Huston  <shuston@riverace.com>
 
-	* ace/IOStream.(cpp h): Added:   &&(ACE_HAS_STANDARD_CPP_LIBRARY != 0)
-	  to the #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) lines to only use
-	  the new iostreams things if that's been selected by the config file.
-	  In ACE_Streambuf::overflow(), changed:
-  	     if (!eback())  to    if (!pbase())
+        * ace/IOStream.(cpp h): Added:   &&(ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+          to the #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) lines to only use
+          the new iostreams things if that's been selected by the config file.
+          In ACE_Streambuf::overflow(), changed:
+             if (!eback())  to    if (!pbase())
 
 Tue Nov 18 08:23:53 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Thread_Pool_Test.cpp (open): Moved the activate() method
- 	  from the Thread_Pool constructor to the open() hook since the
- 	  Thread_Pool class invoked ACE_Task::activate, indirectly invokes
- 	  Thread_Pool::svc.  There existed a miniscule probability this
- 	  code would have crashed since on extremely broken C++ compilers
- 	  the virtual member function Thread_Pool::svc may not correctly
- 	  initialized in Thread_Pool constructor (i.e., it might point to
- 	  ACE_Task_Base::svc() at this point).  The chance of this
- 	  happening is incredibly remote, but it's still a good ideal to
- 	  put the call in the open() method so we can check the return
- 	  value in the application.  Thanks to Arturo for pointing this
- 	  out.
+        * tests/Thread_Pool_Test.cpp (open): Moved the activate() method
+          from the Thread_Pool constructor to the open() hook since the
+          Thread_Pool class invoked ACE_Task::activate, indirectly invokes
+          Thread_Pool::svc.  There existed a miniscule probability this
+          code would have crashed since on extremely broken C++ compilers
+          the virtual member function Thread_Pool::svc may not correctly
+          initialized in Thread_Pool constructor (i.e., it might point to
+          ACE_Task_Base::svc() at this point).  The chance of this
+          happening is incredibly remote, but it's still a good ideal to
+          put the call in the open() method so we can check the return
+          value in the application.  Thanks to Arturo for pointing this
+          out.
 
 Tue Nov 18 05:40:53 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (inet_aton): on Chorus only, use the native
+          ::inet_aton ().  Thanks to Wei for pointing this out.
+
+        * ace/OS.cpp (gethostby{addr,name}): on VxWorks only, don't htonl
+          the input address because it already should be in network byte
+          order.  Store the output address in network byte order.
 
         * include/makeinclude/wrapper_macros.GNU: add -DACE_PURIFY to
           CFLAGS if purify make flag is set, and -DACE_QUANTIFY if
@@ -49,23 +56,23 @@ Tue Nov 18 00:11:26 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Nov 17 22:35:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* examples/Shared_Malloc/test_malloc.cpp: Added some additional
- 	  calls to Malloc::instance ()->remove () to cleanup all the
- 	  semaphore locks.  Thanks to Tom Arbuckle
- 	  <arbuckle@uran.informatik.uni-bonn.de> for reporting this.
+        * examples/Shared_Malloc/test_malloc.cpp: Added some additional
+          calls to Malloc::instance ()->remove () to cleanup all the
+          semaphore locks.  Thanks to Tom Arbuckle
+          <arbuckle@uran.informatik.uni-bonn.de> for reporting this.
 
-	* ace/Memory_Pool.cpp (init_acquire): Fixed a problem caused by
- 	  failing to initialize the minimum_bytes_ field in the
- 	  ACE_Shared_Memory_Pool class.  Thanks to Tom Arbuckle
- 	  <arbuckle@uran.informatik.uni-bonn.de> for reporting this.
+        * ace/Memory_Pool.cpp (init_acquire): Fixed a problem caused by
+          failing to initialize the minimum_bytes_ field in the
+          ACE_Shared_Memory_Pool class.  Thanks to Tom Arbuckle
+          <arbuckle@uran.informatik.uni-bonn.de> for reporting this.
 
-	* examples/Shared_Malloc/test_malloc.cpp: Updated the Shared
- 	  Malloc test program to use the Singleton Thread Manager.
+        * examples/Shared_Malloc/test_malloc.cpp: Updated the Shared
+          Malloc test program to use the Singleton Thread Manager.
 
 Mon Nov 17 18:09:06 1997    <nw1@CUECA>
 
-	* All eight different configurations of ACE passed all tests on
- 	  our Alpha/NT.
+        * All eight different configurations of ACE passed all tests on
+          our Alpha/NT.
 
 Mon Nov 17 15:37:52 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -83,130 +90,130 @@ Mon Nov 17 02:09:57 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Nov 17 02:03:21 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/IOStream_T.cpp: Added a few more fixes for KCC C++ and its
- 	  standard C++ library support.
+        * ace/IOStream_T.cpp: Added a few more fixes for KCC C++ and its
+          standard C++ library support.
 
 Mon Nov 17 01:34:34 1997    <nw1@COYOTE>
 
-	* netsvcs/servers/main.cpp (main): Removed daemon and changed to
- 	  use the singleton service configurator.  Thanks to John Mulhern
-	  and Stephen Coy for tracing this down and Irfan for coming out
-	  with the fix.
+        * netsvcs/servers/main.cpp (main): Removed daemon and changed to
+          use the singleton service configurator.  Thanks to John Mulhern
+          and Stephen Coy for tracing this down and Irfan for coming out
+          with the fix.
 
 Sun Nov 16 21:58:51 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tests/*.dsp, ace/*.dsp: Added Release, Unicode Debug, and
-	  Unicode Release versions for each of the tests.
+        * tests/*.dsp, ace/*.dsp: Added Release, Unicode Debug, and
+          Unicode Release versions for each of the tests.
 
-	  Also found out that precompiled headers take up insane
-	  amounts of disk space when used with ACE and also slows
-	  the compilation down.  I turned it off for the tests and
-	  for the ace libraries
+          Also found out that precompiled headers take up insane
+          amounts of disk space when used with ACE and also slows
+          the compilation down.  I turned it off for the tests and
+          for the ace libraries
 
 Sun Nov 16 13:34:29 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
-	* tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking):
-	  Changed the line
+        * tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking):
+          Changed the line
 
-	  status = con.complete (sock);
+          status = con.complete (sock);
 
-	  to
+          to
 
-	  if (sock.get_handle () != ACE_INVALID_HANDLE)
-  	    status = con.complete (sock);
+          if (sock.get_handle () != ACE_INVALID_HANDLE)
+            status = con.complete (sock);
 
-	  The change worksaround a core dump due the the following
- 	  conditions:
+          The change worksaround a core dump due the the following
+          conditions:
 
-	  - the find_another_host function in SOCK_Connector_Test comes
-	    up with the entry for an NT machine.
+          - the find_another_host function in SOCK_Connector_Test comes
+            up with the entry for an NT machine.
 
-	  - the ACE_OS::connect call at line 64 of SOCK_Connector.cpp
-	    "successfully" fails returning -1 but in this case
-	    errno is set to ECONNREFUSED.
+          - the ACE_OS::connect call at line 64 of SOCK_Connector.cpp
+            "successfully" fails returning -1 but in this case
+            errno is set to ECONNREFUSED.
 
-	  - Since errno is not EINPROGRESS or EWOULDBLOCK the
-	    ACE_SOCK_Stream 'new_stream' close member function is called
-	    which, besides closing the "handle", also sets it to
-	    ACE_INVALID_HANDLE.
+          - Since errno is not EINPROGRESS or EWOULDBLOCK the
+            ACE_SOCK_Stream 'new_stream' close member function is called
+            which, besides closing the "handle", also sets it to
+            ACE_INVALID_HANDLE.
 
-	  - Since the errno was ECONNREFUSED the 'if' test at line 97 of
-	    SOCK_Connector_Test.cpp is true and the next statement
+          - Since the errno was ECONNREFUSED the 'if' test at line 97 of
+            SOCK_Connector_Test.cpp is true and the next statement
 
-	    status = con.complete (sock);
+            status = con.complete (sock);
 
-	    is called causing a core dump since sock.get_handle() is
-	    ACE_INVALID_HANDLE (-1 on Solaris).
+            is called causing a core dump since sock.get_handle() is
+            ACE_INVALID_HANDLE (-1 on Solaris).
 
-	  Thanks to Jack Erickson <jack@pinion.com> for reporting this.
+          Thanks to Jack Erickson <jack@pinion.com> for reporting this.
 
-	* ace/OS: Cast away the constness of the parameters to _tempnam()
- 	  for Borland C++.  Thanks to Valik Solrzano Barboza
- 	  <valik@xs4all.nl> for this.
+        * ace/OS: Cast away the constness of the parameters to _tempnam()
+          for Borland C++.  Thanks to Valik Solrzano Barboza
+          <valik@xs4all.nl> for this.
 
-	* ace/config-unixware-2.1.2-g++.h: Changed
- 	  ACE_HAS_OSF1_GETTIMEOFDAY to ACE_HAS_SVR4_GETTIMEOFDAY.  Thanks
- 	  to John Connett <jrc@skylon.demon.co.uk> for reporting this.
+        * ace/config-unixware-2.1.2-g++.h: Changed
+          ACE_HAS_OSF1_GETTIMEOFDAY to ACE_HAS_SVR4_GETTIMEOFDAY.  Thanks
+          to John Connett <jrc@skylon.demon.co.uk> for reporting this.
 
-	* ace/SPIPE_Addr.cpp (set): Fixed a problem where we were
- 	  potentially writing into character constants.  Thanks to Darrell
- 	  Brunsch for finding this.
+        * ace/SPIPE_Addr.cpp (set): Fixed a problem where we were
+          potentially writing into character constants.  Thanks to Darrell
+          Brunsch for finding this.
 
-	* ace/Get_Opt.cpp (operator): We need to make sure that all uses
- 	  of ACE_OS::strchr() are consistent with respect to const
- 	  correctness.  Thanks to Darrell Brunsch for finding this.
+        * ace/Get_Opt.cpp (operator): We need to make sure that all uses
+          of ACE_OS::strchr() are consistent with respect to const
+          correctness.  Thanks to Darrell Brunsch for finding this.
 
-	* ace/config-win32-common.h: Added a few minor changes for Borland
- 	  C++.  Thanks to Valik Solrzano Barboza <valik@xs4all.nl> for
- 	  this.
+        * ace/config-win32-common.h: Added a few minor changes for Borland
+          C++.  Thanks to Valik Solrzano Barboza <valik@xs4all.nl> for
+          this.
 
-	* ace/Log_Record.cpp (print): Changed the formal parameter from
- 	  "const char host_name[]" to "const char *hostname" so that we
- 	  can assign this in the function if necessary.  Thanks to Valik
- 	  Solrzano Barboza <valik@xs4all.nl> for this.
+        * ace/Log_Record.cpp (print): Changed the formal parameter from
+          "const char host_name[]" to "const char *hostname" so that we
+          can assign this in the function if necessary.  Thanks to Valik
+          Solrzano Barboza <valik@xs4all.nl> for this.
 
-	* ace/OS.cpp: Moved the constructor for ACE_Cleanup_Info into the
- 	  OS.cpp since it doesn't really need to be inline.
+        * ace/OS.cpp: Moved the constructor for ACE_Cleanup_Info into the
+          OS.cpp since it doesn't really need to be inline.
 
-	* ace/WFMO_Reactor.cpp (notify): Replaced a "sizeof
- 	  ACE_Notification_Buffer" with "sizeof
-	  (ACE_Notification_Buffer)".  It's odd that the first approach
-	  (which is incorrect) isn't flagged by MSVC++...  Thanks to Valik
- 	  Solrzano Barboza <valik@xs4all.nl> for this.
+        * ace/WFMO_Reactor.cpp (notify): Replaced a "sizeof
+          ACE_Notification_Buffer" with "sizeof
+          (ACE_Notification_Buffer)".  It's odd that the first approach
+          (which is incorrect) isn't flagged by MSVC++...  Thanks to Valik
+          Solrzano Barboza <valik@xs4all.nl> for this.
 
-	* ace/OS.i (sema_init): Added an ACE_ALLOCATOR_RETURN in the
- 	  appropriate spot.
+        * ace/OS.i (sema_init): Added an ACE_ALLOCATOR_RETURN in the
+          appropriate spot.
 
-	* ace/ACE.cpp: Moved the implementation of strsplit_r() into the
- 	  ACE.cpp file since it's rather long...
+        * ace/ACE.cpp: Moved the implementation of strsplit_r() into the
+          ACE.cpp file since it's rather long...
 
-	* ace/OS: To be more conformant to the standard C++ library,
-	  I've added a pair of methods for strstr(), strchr(), strrchr(),
-	  etc. e.g., the function signature strstr(const char*, const
-	  char*) is replaced by the two declarations:
+        * ace/OS: To be more conformant to the standard C++ library,
+          I've added a pair of methods for strstr(), strchr(), strrchr(),
+          etc. e.g., the function signature strstr(const char*, const
+          char*) is replaced by the two declarations:
 
-	  const char *strstr (const char* s1, const char* s2);
-	  char *strstr (char* s1, const char* s2);"
+          const char *strstr (const char* s1, const char* s2);
+          char *strstr (char* s1, const char* s2);"
 
-	  Thanks to Valik Solrzano Barboza <valik@xs4all.nl> for this.
+          Thanks to Valik Solrzano Barboza <valik@xs4all.nl> for this.
 
-	* ace: Added "ace.idl", which is a config file for Borland C++
-	  5.x.  Thanks to Valik Solrzano Barboza <valik@xs4all.nl> for
-	  this.
+        * ace: Added "ace.idl", which is a config file for Borland C++
+          5.x.  Thanks to Valik Solrzano Barboza <valik@xs4all.nl> for
+          this.
 
-	* include/makeinclude/platform_linux_kcc.GNU (SOFLAGS): Improved
- 	  this file a bit to work better with NULL pointers.  Thanks to
- 	  Ben Eng <ben@jetpen.com> for reporting this.
+        * include/makeinclude/platform_linux_kcc.GNU (SOFLAGS): Improved
+          this file a bit to work better with NULL pointers.  Thanks to
+          Ben Eng <ben@jetpen.com> for reporting this.
 
-	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp (main):
- 	  Changed allocator to alloc to avoid conflicts with STL.  Thanks
- 	  to Ben Eng <ben@jetpen.com> for reporting this.
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp (main):
+          Changed allocator to alloc to avoid conflicts with STL.  Thanks
+          to Ben Eng <ben@jetpen.com> for reporting this.
 
-	* ace/config-linux-kcc.h: Added some fixes for the KCC compiler.
-  	  Thanks to Ben Eng <ben@jetpen.com> for reporting this.
+        * ace/config-linux-kcc.h: Added some fixes for the KCC compiler.
+          Thanks to Ben Eng <ben@jetpen.com> for reporting this.
 
-	* ace/IOStream: Added fixes for the standard C++ library.  Thanks
- 	  to Ben Eng <ben@jetpen.com> for reporting this.
+        * ace/IOStream: Added fixes for the standard C++ library.  Thanks
+          to Ben Eng <ben@jetpen.com> for reporting this.
 
 Sat Nov 15 17:31:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -214,9 +221,9 @@ Sat Nov 15 17:31:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat Nov 15 15:55:52 1997  Steve Huston  <shuston@riverace.com>
 
-	* tests/Priority_Reactor_Test.cpp: Removed the writer->peer().close()
-	  call from client() that I added yesterday.  ACE_Svc_Handler::destroy
-	  will end up doing the close - thanks to Irfan for pointing this out.
+        * tests/Priority_Reactor_Test.cpp: Removed the writer->peer().close()
+          call from client() that I added yesterday.  ACE_Svc_Handler::destroy
+          will end up doing the close - thanks to Irfan for pointing this out.
 
 Sat Nov 15 01:31:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -224,11 +231,11 @@ Sat Nov 15 01:31:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Nov 14 23:36:12 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
-	* ace/{OS,ACE}.{h,i} (strsplit_r): Moved strsplit_r from ACE_OS to
- 	  ACE, which is where it should go.
+        * ace/{OS,ACE}.{h,i} (strsplit_r): Moved strsplit_r from ACE_OS to
+          ACE, which is where it should go.
 
-	* ace/ACE.cpp (ldfind): Changed uses of strsplit_r to be scoped
- 	  under ACE rather than ACE_OS.
+        * ace/ACE.cpp (ldfind): Changed uses of strsplit_r to be scoped
+          under ACE rather than ACE_OS.
 
 Fri Nov 14 22:57:04 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -253,16 +260,16 @@ Fri Nov 14 17:41:40 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Fri Nov 14 17:08:00 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
-	* ace/OS.i (strsplit_r): Added fixes so that this properly returns
- 	  the last piece.  Thanks to Scott Herscher <scott@expersoft.com> for
- 	  submitting this!  Also beefed up the comments.
+        * ace/OS.i (strsplit_r): Added fixes so that this properly returns
+          the last piece.  Thanks to Scott Herscher <scott@expersoft.com> for
+          submitting this!  Also beefed up the comments.
 
-	* ace/OS.h: Added definitions to work around VxWorks' lack of
- 	  proper ANSI C/C++ prototypes for the functions found in
- 	  <arpa/inet.h>.  The definitions were taken from Solaris 2.5.1, but
- 	  appear to work just fine.  For now this is only in effect when
- 	  compiling with the Green Hills (ghs) environment, but it should
- 	  probably be used for others (such as g++) as well.
+        * ace/OS.h: Added definitions to work around VxWorks' lack of
+          proper ANSI C/C++ prototypes for the functions found in
+          <arpa/inet.h>.  The definitions were taken from Solaris 2.5.1, but
+          appear to work just fine.  For now this is only in effect when
+          compiling with the Green Hills (ghs) environment, but it should
+          probably be used for others (such as g++) as well.
 
 Fri Nov 14 01:10:33 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
