@@ -1,3 +1,12 @@
+Sun Jun  6 20:34:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Synch.h:
+	* ace/Timer_Queue_T.h:
+	* ace/Timer_Queue.cpp:
+	* ace/Select_Reactor.cpp:
+	  Moved explicit template instantiations around, now ACE compiles
+	  and links with Sun/CC and inlining enabled.  TAO does not.
+
 Sun Jun  6 18:05:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Process.h:
