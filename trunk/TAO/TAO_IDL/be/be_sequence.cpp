@@ -308,13 +308,6 @@ be_sequence::decl (void)
   return this;
 }
 
-int be_sequence::write_as_return (TAO_OutStream *stream,
-                                  be_type *type)
-{
-  *stream << type->name () << " *";
-  return 0;
-}
-
 int
 be_sequence::accept (be_visitor *visitor)
 {

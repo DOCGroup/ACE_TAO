@@ -57,10 +57,6 @@ public:
   // Return the most "unaliased" type node for the base type (see
   // be_type.h).
 
-  virtual int write_as_return (TAO_OutStream *stream,
-			       be_type *type);
-  // write the mapping as a return value on the stream.
-
   // Visiting
   virtual int accept (be_visitor *visitor);
 

@@ -269,13 +269,6 @@ AST_Decl::NodeType be_type::base_node_type (void) const
   return ACE_const_cast(be_type*, this)->node_type ();
 }
 
-int be_type::write_as_return (TAO_OutStream *, be_type *)
-{
-  ACE_ERROR_RETURN ((LM_ERROR,
-		     "be_type::write_as_return - internal error,"
-		     " method shouldn't be invoked\n"), -1);
-}
-
 int
 be_type::accept (be_visitor *visitor)
 {
