@@ -1,3 +1,8 @@
+Mon May  6 09:12:15 2002  Ru Gunatilleke  <ru@ociweb.com>
+
+        * TAO/tests/Connection_Timeout:
+          Added link to TAO_Messaging.lib for Release configuration.
+
 Mon May  6 10:26:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Makefile.bor:
