@@ -43,7 +43,7 @@ TAO::CSI_Utils::create_sas_service_context (
     }
 }
 
-int
+bool
 TAO::CSI_Utils::extract_sas_service_context (
   const IOP::ServiceContext & sc,
   CSI::SASContextBody & sas_context)
@@ -51,20 +51,19 @@ TAO::CSI_Utils::extract_sas_service_context (
   // Demarshal CSI::SASContextBody union from ServiceContext.
   // (TAO's compiled marshaling is used for performance reasons.)
 
-  TAO_InputCDR cdr (ACE_reinterpret_cast (
-                      const char*,
+  TAO_InputCDR cdr (reinterpret_cast<const char*> (
                       sc.context_data.get_buffer ()),
                     sc.context_data.length ());
 
   CORBA::Boolean byte_order;
 
   if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
-    return 0;
+    return false;
 
-  cdr.reset_byte_order (ACE_static_cast (int, byte_order));
+  cdr.reset_byte_order (static_cast<int> (byte_order));
 
   if (!(cdr >> sas_context))
-    return 0;
+    return false;
 
-  return 1;
+  return true;
 }
