@@ -1637,15 +1637,6 @@ struct msghdr {};
 typedef int sig_atomic_t;
 #endif /* !ACE_HAS_SIG_ATOMIC_T */
 
-#if defined(ACE_HAS_IRIX62_THREADS)
-/*
- * This is an undocumented function on IRIX Pthreads, the name is
- * non-standard, the functionality is also non-standard, but the users
- * need it. (COR)
- */
-extern "C" int pthread_setconcurrency (int new_level);
-#endif /* ACE_HAS_IRIX62_THREADS */
-
 #if !defined (ACE_HAS_SSIZE_T)
 typedef int ssize_t;
 #endif /* ACE_HAS_SSIZE_T */
