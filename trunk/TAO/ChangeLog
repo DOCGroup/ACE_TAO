@@ -1,3 +1,9 @@
+Tue Jul 29 14:15:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+
+          Cleaned up formatting of generated code.
+
 Tue Jul 29 19:08:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event_Utilities.h:
