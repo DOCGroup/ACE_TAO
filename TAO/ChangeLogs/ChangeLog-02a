@@ -1,9 +1,21 @@
+Sun Feb 18 15:01:09 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Object_Loader.h:
+          Add CORBA::SystemException to create_object()'s throw spec.
+
+        * tao/RT_ORB_Loader.h:
+        * tao/RT_ORB_Loader.cpp:
+          Use the more lenient throw spec in the RT_ORB_Loader class.
+          Only the Borland C++ compiler caught this problem. I believe the
+          current solution is the "Right Thing"[tm], it is always possible
+          for a load operation to fail.
+
 Sun Feb 18 16:56:33 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/Makefile.BE:
-	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
-	Added -I(TAO_ROOT)/tao to LDFLAGS to remove warnings under cxx on
-	Tru64.
+        * orbsvcs/IFR_Service/Makefile.BE:
+        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+        Added -I(TAO_ROOT)/tao to LDFLAGS to remove warnings under cxx on
+        Tru64.
 
 Sun Feb 18 16:28:45 2001  Chris Gill  <cdgill@cs.wustl.edu>
 

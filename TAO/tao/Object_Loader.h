@@ -47,7 +47,7 @@ public:
                                            int argc,
                                            char *argv [],
                                            CORBA::Environment &)
-    ACE_THROW_SPEC (()) = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
 #if defined (__ACE_INLINE__)
