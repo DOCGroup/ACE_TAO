@@ -18,12 +18,12 @@ if (!getopts ('df:hs') || $opt_h) {
     print "\n";
     print "    -d         Turn on debug mode\n";
     print "    -f         Adds a dependency to another *_HAS_DLL macro\n";
-    print "    -s         Add in ACE_STATIC_LIBS check\n";
+    print "    -s         Add in ACE_AS_STATIC_LIBS check\n";
     print "\n";
     print "generate_export_file creates the *_export files that are used\n";
     print "in exporting of symbols for DLLs (and not exporting them when\n";
     print "the library is static).  If library_name is something like\n";
-    print "\"Foo\", then the file will contain definitions for Foo_Export\n"; 
+    print "\"Foo\", then the file will contain definitions for Foo_Export\n";
     print "and FOO_SINGLETON_DECLARE, etc. which will be controlled by\n";
     print "FOO_HAS_DLL, etc.\n";
     exit (1);
@@ -37,7 +37,7 @@ if (defined $opt_d) {
     }
 
     if (defined $opt_s) {
-        print "ACE_STATIC_LIBS turned on\n"; 
+        print "ACE_AS_STATIC_LIBS turned on\n";
     }
 }
 
@@ -72,9 +72,9 @@ $prologue = '
 if (defined $opt_s)
 {
     $static_stuff = "
-#if defined (ACE_STATIC_LIBS) && !defined (-UC-_HAS_DLL)
+#if defined (ACE_AS_STATIC_LIBS) && !defined (-UC-_HAS_DLL)
 #  define -UC-_HAS_DLL 0
-#endif /* ACE_STATIC_LIBS && -UC-_HAS_DLL */
+#endif /* ACE_AS_STATIC_LIBS && -UC-_HAS_DLL */
 ";
 }
 
