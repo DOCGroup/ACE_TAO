@@ -323,6 +323,17 @@
         TAO_OBJID_POLICYCURRENT, \
         TAO_OBJID_IORMANIPULATION
 
+// Service IDs for the services that are located through Multicast.
+enum MCAST_SERVICEID
+{
+  NAMESERVICE,
+  TRADINGSERVICE,
+  IMPLREPOSERVICE
+};
+
+// No. of services locatable through multicast.
+#define NO_OF_MCAST_SERVICES 3
+
 // TAO Naming Service.
 
 // Poa id of the root Naming Context in a Naming server.

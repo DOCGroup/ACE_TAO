@@ -728,18 +728,11 @@ protected:
 
 private:
 
-  CORBA_Object_ptr resolve_name_service (ACE_Time_Value *timeout,
-                                         CORBA::Environment& ACE_TRY_ENV);
-  // Resolve the name service
-
-  CORBA_Object_ptr resolve_trading_service (ACE_Time_Value *timeout,
-                                            CORBA::Environment& ACE_TRY_ENV);
-  // Resolve the trading object reference.
-
-  CORBA_Object_ptr resolve_implrepo_service (ACE_Time_Value *timeout,
-                                             CORBA::Environment& ACE_TRY_ENV);
-  // Resolve the Implementation Repository object reference.
-
+  CORBA_Object_ptr resolve_service (MCAST_SERVICEID service_id,
+                                    ACE_Time_Value *timeout,
+                                    CORBA::Environment& ACE_TRY_ENV);
+  // Resolve the given service based on the service ID.
+  
   int multicast_query (char* &buf,
                        const char *service_name,
                        u_short port,

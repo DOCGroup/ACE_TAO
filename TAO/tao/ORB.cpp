@@ -449,147 +449,82 @@ CORBA_ORB::resolve_ior_manipulation (CORBA::Environment& ACE_TRY_ENV)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_name_service (ACE_Time_Value *timeout,
-                                 CORBA::Environment& ACE_TRY_ENV)
+CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
+                            ACE_Time_Value *timeout,
+                            CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA_Object_var return_value = CORBA_Object::_nil ();
+  const char * env_service_ior [] = 
+  {
+    "NameServiceIOR",
+    "TradingServiceIOR",
+    "ImplRepoServiceIOR"
+  };
 
-  // By now, the table filled in with -ORBInitRef arguments has been
-  // checked.  We only get here if the table didn't contain an initial
-  // reference for the Name Service.
+  const char * env_service_port [] = 
+  {
+    "NameServicePort",
+    "TradingServicePort",
+    "ImplRepoServicePort"
+  };
 
-  // Check to see if the user has an environment variable.
-  ACE_CString name_service_ior = ACE_OS::getenv ("NameServiceIOR");
-
-  if (name_service_ior.length () != 0)
-    {
-      return_value =
-        this->string_to_object (name_service_ior.c_str (),
-                                ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA_Object::_nil ());
-    }
-  else
-    {
-      // First, determine if the port was supplied on the command line
-      u_short port =
-        this->orb_core_->orb_params ()->name_service_port ();
-
-      if (port == 0)
-        {
-          // Look for the port among our environment variables.
-          const char *port_number =
-            ACE_OS::getenv ("NameServicePort");
-
-          if (port_number != 0)
-            port = (u_short) ACE_OS::atoi (port_number);
-          else
-            port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
-        }
-
-      return_value =
-        this->multicast_to_service (TAO_OBJID_NAMESERVICE,
-                                    port,
-                                    timeout,
-                                    ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA_Object::_nil ());
-    }
-
-  // Return ior.
-  return return_value._retn ();
-}
-
-CORBA_Object_ptr
-CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
-                                    CORBA::Environment& ACE_TRY_ENV)
-{
-  CORBA_Object_var return_value = CORBA_Object::_nil ();
-
-  // By now, the table filled in with -ORBInitRef arguments has been
-  // checked.  We only get here if the table didn't contain an initial
-  // reference for the Trading Service.
-
-  // Check to see if the user has an environment variable.
-  ACE_CString trading_service_ior = ACE_OS::getenv ("TradingServiceIOR");
-
-  if (trading_service_ior.length () != 0)
-    {
-      return_value =
-        this->string_to_object (trading_service_ior.c_str (), ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA_Object::_nil ());
-    }
-  else
-    {
-      // First, determine if the port was supplied on the command line
-      u_short port =
-        this->orb_core_->orb_params ()->trading_service_port ();
-
-      if (port == 0)
-        {
-          // Look for the port among our environment variables.
-          const char *port_number = ACE_OS::getenv ("TradingServicePort");
-
-          if (port_number != 0)
-            port = (u_short) ACE_OS::atoi (port_number);
-          else
-            port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
-        }
-
-      return_value =
-        this->multicast_to_service (TAO_OBJID_TRADINGSERVICE,
-                                    port,
-                                    timeout,
-                                    ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA_Object::_nil ());
-    }
-
-  return return_value._retn ();
-}
-
-CORBA_Object_ptr
-CORBA_ORB::resolve_implrepo_service (ACE_Time_Value *timeout,
-                                     CORBA::Environment& ACE_TRY_ENV)
-{
-  CORBA_Object_var return_value = CORBA_Object::_nil ();
-
-  // By now, the table filled in with -ORBInitRef arguments has been
-  // checked.  We only get here if the table didn't contain an initial
-  // reference for the Implementation Repository.
-
-  // Check to see if the user has an environment variable.
-  ACE_CString implrepo_service_ior = ACE_OS::getenv ("ImplRepoServiceIOR");
-
-  if (implrepo_service_ior.length () != 0)
-    {
-      return_value =
-        this->string_to_object (implrepo_service_ior.c_str (), ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA_Object::_nil ());
-    }
-  else
-    {
-      // First, determine if the port was supplied on the command line
-      u_short port =
-        this->orb_core_->orb_params ()->implrepo_service_port ();
-
-      if (port == 0)
-        {
-          // Look for the port among our environment variables.
-          const char *port_number = ACE_OS::getenv ("ImplRepoServicePort");
-
-          if (port_number != 0)
-            port = (u_short) ACE_OS::atoi (port_number);
-          else
-            port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
-        }
-
-      return_value =
-        this->multicast_to_service (TAO_OBJID_IMPLREPOSERVICE,
-                                    port,
-                                    timeout,
-                                    ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA_Object::_nil ());
-    }
-
-    return return_value._retn ();
+ u_short default_service_port [] =
+ {
+   TAO_DEFAULT_NAME_SERVER_REQUEST_PORT,
+   TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT,
+   TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT
+ };
+   
+ const char * service_objid [] =
+ {
+   TAO_OBJID_NAMESERVICE,
+   TAO_OBJID_TRADINGSERVICE,
+   TAO_OBJID_IMPLREPOSERVICE
+ };
+ 
+ CORBA_Object_var return_value = CORBA_Object::_nil ();
+ 
+ // By now, the table filled in with -ORBInitRef arguments has been
+ // checked.  We only get here if the table didn't contain an initial
+ // reference for the requested Service.
+ 
+ // Check to see if the user has an environment variable.
+ ACE_CString service_ior = ACE_OS::getenv (env_service_ior[mcast_service_id]);
+ 
+ if (service_ior.length () != 0)
+   {
+     return_value =
+       this->string_to_object (service_ior.c_str (),
+                               ACE_TRY_ENV);
+     ACE_CHECK_RETURN (CORBA_Object::_nil ());
+   }
+ else
+   {
+     // First, determine if the port was supplied on the command line
+     u_short port =
+       this->orb_core_->orb_params ()->service_port (mcast_service_id);
+     
+     if (port == 0)
+       {
+         // Look for the port among our environment variables.
+         const char *port_number =
+           ACE_OS::getenv (env_service_port[mcast_service_id]);
+         
+         if (port_number != 0)
+           port = (u_short) ACE_OS::atoi (port_number);
+         else
+           port = default_service_port[mcast_service_id];
+       }
+     
+     return_value =
+       this->multicast_to_service (service_objid[mcast_service_id],
+                                   port,
+                                   timeout,
+                                   ACE_TRY_ENV);
+     ACE_CHECK_RETURN (CORBA_Object::_nil ());
+   }
+ 
+ // Return ior.
+ return return_value._retn ();
 }
 
 int
@@ -912,13 +847,13 @@ CORBA_ORB::resolve_initial_references (const char *name,
   // entry.... Try the hard-coded ways to find the basic services...
 
   if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
-    return this->resolve_name_service (timeout, ACE_TRY_ENV);
-
+    return this->resolve_service (NAMESERVICE, timeout, ACE_TRY_ENV);
+  
   else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
-    return this->resolve_trading_service (timeout, ACE_TRY_ENV);
-
+    return this->resolve_service (TRADINGSERVICE, timeout, ACE_TRY_ENV);
+  
   else if (ACE_OS::strcmp (name, TAO_OBJID_IMPLREPOSERVICE) == 0)
-    return this->resolve_implrepo_service (timeout, ACE_TRY_ENV);
+    return this->resolve_service (IMPLREPOSERVICE, timeout, ACE_TRY_ENV);
 
   else
     ACE_THROW_RETURN (CORBA::ORB::InvalidName (), CORBA::Object::_nil ());
@@ -1894,26 +1829,26 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
     this->orb_core_->connector_registry ()->make_mprofile (str,
                                                            mprofile,
                                                            ACE_TRY_ENV);
-
+  
   ACE_CHECK_RETURN (CORBA::Object::_nil ());   // Return nil.
-
+  
   if (retv != 0)
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                          CORBA_SystemException::_tao_minor_code (
-                            TAO_NULL_POINTER_MINOR_CODE,
-                            0),
-                          CORBA::COMPLETED_NO),
+                                           CORBA_SystemException::_tao_minor_code (
+                                                                                   TAO_NULL_POINTER_MINOR_CODE,
+                                                                                   0),
+                                           CORBA::COMPLETED_NO),
                         CORBA::Object::_nil ());
     }
-
+  
   // Now make the TAO_Stub.
   TAO_Stub *data = 0;
   ACE_NEW_THROW_EX (data,
                     TAO_Stub ((char *) 0, mprofile, this->orb_core_),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
+  
   TAO_Stub_Auto_Ptr safe_data (data);
 
   // Figure out if the servant is collocated.

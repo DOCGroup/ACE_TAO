@@ -103,40 +103,18 @@ TAO_ORB_Parameters::use_dotted_decimal_addresses (int x)
   this->use_dotted_decimal_addresses_ = x;
 }
 
+
 ACE_INLINE void
-TAO_ORB_Parameters::name_service_port (CORBA::UShort port)
+TAO_ORB_Parameters::service_port (MCAST_SERVICEID service_id,
+                                  CORBA::UShort port)
 {
-  this->name_service_port_ = port;
+  this->service_port_[service_id] = port;
 }
 
 ACE_INLINE CORBA::UShort
-TAO_ORB_Parameters::name_service_port (void) const
+TAO_ORB_Parameters::service_port (MCAST_SERVICEID service_id) const
 {
-  return this->name_service_port_;
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::trading_service_port (CORBA::UShort port)
-{
-  this->trading_service_port_ = port;
-}
-
-ACE_INLINE CORBA::UShort
-TAO_ORB_Parameters::trading_service_port (void) const
-{
-  return this->trading_service_port_;
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::implrepo_service_port (CORBA::UShort port)
-{
-  this->implrepo_service_port_ = port;
-}
-
-ACE_INLINE CORBA::UShort
-TAO_ORB_Parameters::implrepo_service_port (void) const
-{
-  return this->implrepo_service_port_;
+  return this->service_port_[service_id];
 }
 
 ACE_INLINE void
