@@ -1,3 +1,69 @@
+Sun Aug 30 00:14:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Svc_Handler: 
+	* ace/Dynamic: 
+
+	  Patrick J. McNerthney <pat@cartia.com> described this problem:
+	  ________________________________________
+
+	  ACE_Svc_Handler creates an
+ 	  ACE_TSS_Singleton<ACE_Dynamic,ACE_SYNCH_NULL_MUTEX> singleton
+ 	  object to determine if the ACE_Svc_Handler is a dynamically
+ 	  created object or not.  ACE_TSS_Singleton declares the internal
+ 	  single instance of the ACE_Dynamic object as a
+ 	  ACE_TSS<ACE_Dynamic> data type.
+
+	  The first time this object is "referenced",
+ 	  ACE_TSS<ACE_Dynamic>::ts_init() is called, which in turn calls
+ 	  ACE_Thread::keycreate and registers
+ 	  ACE_TSS<ACE_Dynamic>::cleanup with it.  Since ACE_TSS is a
+ 	  template class, the vtable and the code of this object resides
+ 	  in the dynamically loaded service DLL.
+
+	  During termination, the Object Manager closes down the Service
+ 	  Configurator, causing all services to be shutdown, and their
+ 	  DLLs are unloaded.
+
+	  The Object Manager then calls ACE_OS::cleanup_tss which attempts
+ 	  to call the above registered ACE_TSS<ACE_Dynamic>::cleanup
+ 	  method.  Since the DLL has already been unloaded, the
+ 	  application faults trying to access the vtable.
+	  ________________________________________
+	
+	  My earlier solution addressed this problem but only in
+ 	  ~Object_Manager(), i.e., at the end of the application, by
+ 	  carefully ordering the cleanup of singletons, tss, and the
+ 	  unlinking of libraries. To solve this more generically and to
+ 	  address this problem when DLLs are unlinked arbitrarily (and not
+ 	  only at the end of applications), I moved the typedef of
+ 	  ACE_TSS_Singleton<ACE_Dynamic> from Svc_Handler.h to
+ 	  Dynamic.h. Then the access to this singleton was changed from
+ 	  DYNAMIC::instance() to ACE_Dynamic::instance().
+
+  	  This will force the generation of the code for this class to be
+ 	  in the ACE library rather than in a user's DLL.  Hence when TSS
+ 	  cleanup hooks and Object Manager are trying to clean this object
+ 	  up from ~Object_Manager, it won't crash as the code for this
+ 	  class is in ACE and not in the unlinked DLL.
+
+	  This issue raised a couple of interesting observations about
+ 	  ACE_Singleton and ACE_TSS_Singleton and DLLs:
+	  
+	  It is ok to use ACE_Singleton and ACE_TSS_Singleton in DLLs that
+ 	  are going to be unlinked at the end of the program.  For DLLs
+ 	  that may get unlinked *before* the end of the program, they must
+ 	  not use ACE_Singleton or ACE_TSS_Singleton. ACE_Singleton
+ 	  registers with the Object_Manager for deletion and therefore is
+ 	  accessed at the end of the application.  ACE_TSS_Singleton is
+ 	  very similar to ACE_Singleton.  Moreover, it uses tss cleanup
+ 	  hooks to clean up the thread specific storage.  Therefore, if
+ 	  the DLL lives shorter than the thread and/or the application, it
+ 	  must *not* use ACE_Singleton and ACE_TSS_Singleton.
+
+	  This motivates the need for ACE_DLL_Singleton<T>.  As usual,
+ 	  contributions to ACE are always welcome ;-) Many, many thanks to
+ 	  Patrick J. McNerthney <pat@cartia.com> for all his help!
+
 Sat Aug 29 19:22:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Service_Configurator/Misc/main.cpp (main): Fixed a stray
