@@ -1663,7 +1663,7 @@ be_visitor_interface_collocated_ss::~be_visitor_interface_collocated_ss (void)
 int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = tao_cg->server_skeletons ();
-  unsigned long i;
+  long i;
 
   this->ctx_->node (node);
 
