@@ -384,7 +384,8 @@ TAO_GIOP::send_message (TAO_Transport *transport,
                         TAO_OutputCDR &stream,
                         TAO_ORB_Core *orb_core,
                         ACE_Time_Value *max_wait_time,
-                        TAO_Stub *stub)
+                        TAO_Stub *stub,
+                        int two_way)
 {
 
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_SEND_MESSAGE_START);
@@ -450,6 +451,7 @@ TAO_GIOP::send_message (TAO_Transport *transport,
 
   // This guarantees to send all data (bytes) or return an error.
   ssize_t n = transport->send (stub,
+                               two_way,
                                stream.begin (),
                                max_wait_time);
 

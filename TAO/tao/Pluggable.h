@@ -83,6 +83,7 @@ public:
   // handler used by the reactor.
 
   virtual ssize_t send (TAO_Stub *stub,
+                        int two_way,
                         const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0) = 0;
   virtual ssize_t send (const ACE_Message_Block *mblk,

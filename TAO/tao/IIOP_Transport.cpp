@@ -195,7 +195,8 @@ TAO_IIOP_Client_Transport::send_request (TAO_Stub *stub,
                               stream,
                               orb_core,
                               max_wait_time,
-                              stub) == -1)
+                              stub,
+                              two_way) == -1)
     return -1;
 
   return this->idle_after_send ();
@@ -311,10 +312,11 @@ TAO_IIOP_Client_Transport::register_handler (void)
 
 ssize_t
 TAO_IIOP_Transport::send (TAO_Stub *stub,
+                          int two_way,
                           const ACE_Message_Block *message_block,
                           const ACE_Time_Value *max_wait_time)
 {
-  if (stub == 0)
+  if (stub == 0 || two_way)
     {
       return this->send (message_block,
                          max_wait_time);
