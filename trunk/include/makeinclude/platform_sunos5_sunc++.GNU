@@ -23,7 +23,7 @@ debug = 1
 threads = 1
 
 ifeq ($(threads),1)
-  CFLAGS += -mt
+  CFLAGS += -mt 
   LDFLAGS += -mt
 endif # threads
 

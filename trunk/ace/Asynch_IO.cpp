@@ -804,18 +804,18 @@ private:
   // Queue of Result pointers that correspond to all the <accept>'s
   // pending.
 
-  ACE_Reactor* reactor_;
+  ACE_Reactor *reactor_;
   // Reactor used by the Asynch_Accept. We need this here to enable
   // and disable the <handle> now and then, depending on whether any
   // <accept> is pending or no.
 
-  ACE_Thread_Mutex lock_;
+  ACE_SYNCH_MUTEX lock_;
   // The lock to protect the  result queue which is shared. The queue
   // is updated by main thread in the register function call and
   // through the auxillary thread  in the deregister fun. So let us
   // mutex it.
 
-  ACE_Proactor* proactor_;
+  ACE_Proactor *proactor_;
   // Proactor used by the Asynch_Accept class.
 };
 
@@ -838,7 +838,7 @@ ACE_Asynch_Accept_Handler::register_accept_call (ACE_Asynch_Accept::Result* resu
   // The queue is updated by main thread in the register function call
   // and thru the auxillary thread in the deregister fun. So let us
   // mutex it.
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
   // Insert this result to the queue.
   int insert_result = this->result_queue_.enqueue_tail (result);
@@ -867,7 +867,7 @@ ACE_Asynch_Accept_Handler::deregister_accept_call (void)
   // The queue is updated by main thread in the register function call and
   // thru the auxillary thread  in the deregister fun. So let us mutex
   // it.
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
   // Get the first item (result ptr) from the Queue.
   ACE_Asynch_Accept::Result* result = 0;
