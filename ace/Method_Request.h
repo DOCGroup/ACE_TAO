@@ -56,6 +56,10 @@ public:
 protected:
   /// The priority of the request.
   u_long priority_;
+
+private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Method_Request &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Method_Request (const ACE_Method_Request &))
 };
 
 #include "ace/post.h"

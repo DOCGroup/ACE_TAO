@@ -40,7 +40,19 @@ Wed Nov 29 23:55:37 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
         * bin/auto_run_tests.lst:
           Commented out this test - its broken.
 
+Wed Nov 29 10:35:26 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp (parse_args): 
+	  Removed the colon after the "r" in the parse-args list.  Thanks
+ 	  to Mike Curtis <mccurry@my-deja.com> for pointing this out.
+
+	* ace/Method_Request.h: Added ACE_UNIMPLEMENTED_FUNC to the
+	  assignment operator and copy constructor of ACE_Method_Request.
+  	  Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for
+ 	  pointing this out.
+  
 Wed Nov 29 09:41:51 2000  Johnny Willemsen <jwillemsen@remedy.nl>
+  
         * examples/Reactor/Multicast/*.bor
           Added Borland C++ Builder specific makefiles. Thanks to
           Albert Wijna <albert.wijnja@meco.nl> for creating these.
@@ -94,10 +106,10 @@ Tue Nov 28 08:09:35 2000  David L. Levine <levine@cs.wustl.edu>
 Mon Nov 27 17:02:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ACE-INSTALL.html:
-
-          While checking to make sure I did remove all references to
-          .mdp files, I noticed that some of the Win32 instructions
-          could use some updating.
+          While following up on Johnny Willemsen's
+ 	  <johnny.willemsen@meco.nl> suggestion to make sure I removed all
+ 	  references to .mdp files, I noticed that some of the Win32
+ 	  instructions could use some updating.
 
 Mon Nov 27 17:44:52 2000  David L. Levine <levine@cs.wustl.edu>
 
@@ -173,6 +185,13 @@ Mon Nov 27 11:58:43 2000  David L. Levine <levine@cs.wustl.edu>
         * tests/run_test.pl: on platforms other than Win32, simply
           exec run_tests.sh.  run_tests.sh properly handles all of
           the current ACE tests.  [Bug 729]
+
+Mon Nov 27 14:12:09 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Activation_Queue.h: Added ACE_UNIMPLEMENTED_FUNC to the
+	  assignment operator and copy constructor of
+ 	  ACE_Activation_Queue.  Thanks to Johnny Willemsen
+ 	  <johnny.willemsen@meco.nl> for pointing this out.
 
 Sun Nov 26 19:07:48 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
