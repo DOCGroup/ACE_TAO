@@ -438,7 +438,23 @@ ACE contains project files for Microsoft Visual C++ 4.x (*.mdp) and
      <CODE>#define ACE_HAS_STANDARD_CPP_LIBRARY 1</CODE><BR>
      <BR>
      before the #include statement in ACE_ROOT\ace\config.h.<BR><BR>
-</OL>      
+     The default project files which build ACE library have various
+     configurations to build dynamic/static, with or without Unicode
+     support.  Although we recommend using the dynamic library, if,
+     for some reasons, you would rather work with static library,
+     you'll need to add the line <BR>
+     <BR>
+     <CODE>#define ACE_HAS_DLL 0</CODE><BR>
+     <BR>
+     before the #include statement in ACE_ROOT\ace\config.h.
+     Optionally but highly recommended, you can also add the line <BR>
+     <BR>
+     <CODE>#define __ACE_INLINE__ 0</CODE><BR>
+     <BR>
+     before the #include statement in ACE_ROOT\ace\config.h to disable
+     inline function and reduce the size of static libraries (and your
+     executables.)<BR><BR>
+</Ol>      
 
 <B>ACE TESTS</B> <P>
 
