@@ -15,8 +15,6 @@ ACE_RCSID (PortableServer,
            Lifespan_Strategy,
            "$Id$")
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 #include "tao/debug.h"
 #include "tao/PortableServer/ImplRepo_i.h"
 #include "tao/PortableServer/POA.h"
@@ -249,4 +247,3 @@ namespace TAO
   } /* namespace Portable_Server */
 } /* namespace TAO */
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */

@@ -778,8 +778,9 @@ namespace TAO
     }
 
     CORBA::Object_ptr
-    Retain_Servant_Retention_Strategy::servant_to_reference (PortableServer::Servant servant
-                            ACE_ENV_ARG_DECL)
+    Retain_Servant_Retention_Strategy::servant_to_reference (
+      PortableServer::Servant servant
+      ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                       PortableServer::POA::ServantNotActive,
                       PortableServer::POA::WrongPolicy))

@@ -5,8 +5,6 @@ ACE_RCSID (PortableServer,
            LifespanPolicyValue,
            "$Id$")
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
@@ -27,4 +25,3 @@ namespace TAO
   }
 }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */

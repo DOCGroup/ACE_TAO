@@ -29,8 +29,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
@@ -74,8 +72,6 @@ namespace TAO
     };
   }
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -9,8 +9,6 @@ ACE_RCSID (PortableServer,
            LifespanStrategyFactoryImpl,
            "$Id$")
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
@@ -63,6 +61,4 @@ namespace TAO
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 

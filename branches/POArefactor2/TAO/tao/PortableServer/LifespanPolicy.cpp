@@ -11,8 +11,6 @@ ACE_RCSID (PortableServer,
            POA_LifespanPolicy,
            "$Id$")
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
@@ -122,9 +120,6 @@ namespace TAO
     {
       return TAO_POLICY_POA_SCOPE;
     }
-
-
   }
 }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */

@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
@@ -54,8 +52,6 @@ namespace TAO
     };
   }
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ID_UNIQUENESS_STRATEGY_H */

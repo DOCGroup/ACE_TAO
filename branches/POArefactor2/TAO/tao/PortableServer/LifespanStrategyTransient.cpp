@@ -15,8 +15,6 @@ ACE_RCSID (PortableServer,
            Lifespan_Strategy,
            "$Id$")
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_string.h"
 #include "Creation_Time.h"
@@ -98,4 +96,3 @@ namespace TAO
   } /* namespace Portable_Server */
 } /* namespace TAO */
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
