@@ -43,11 +43,6 @@ static u_int errors = 0;
     (ACE_DEFAULT_THREAD_KEYS - ACE_MAX_THREADS) / (2 * ACE_MAX_THREADS) < 2
       ?  1
       :  (ACE_DEFAULT_THREAD_KEYS - ACE_MAX_THREADS) / (2 * ACE_MAX_THREADS);
-
-#elif defined (__Lynx__)
-  // LynxOS only has 16 native TSS keys, and most of those don't seem
-  // to be available.
-  static const int ITERATIONS = 1;
 #else
   // POSIX requires at least _POSIX_THREAD_KEYS_MAX (128) keys.  25
   // iterations with 4 worker threads should be sufficient to check
@@ -205,7 +200,7 @@ worker (void *c)
         }
 #endif /* !defined (ACE_HAS_BROKEN_EXPLICIT_TYPECAST_OPERATOR_INVOCATION) */
 
-#if !defined (__Lynx__) || defined (ACE_HAS_TSS_EMULATION)
+#if defined (ACE_HAS_TSS_EMULATION)
       key = ACE_OS::NULL_key;
 
       if (ACE_Thread::keycreate (&key, cleanup) == -1)
@@ -248,7 +243,7 @@ worker (void *c)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::keyfree")));
 #  endif /* !(PTHREADS_DRAFT4 or 6) || defined (ACE_HAS_TSS_EMULATION) */
-#endif /* ! __Lynx__ || ACE_HAS_TSS_EMULATION */
+#endif /* ACE_HAS_TSS_EMULATION */
     }
   return 0;
 }

@@ -1,3 +1,28 @@
+Mon Dec 20 16:47:08 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/Mem_Map.h:
+        * ace/Mem_Map.inl:
+        * ace/Mem_Map.cpp:
+        * ace/OS_NS_sys_mman.inl:
+          Replaced ACE_HAS_LYNX_BROKEN_MMAP with ACE_HAS_LYNXOS_BROKEN_MMAP
+          to be more consistent in macro naming.
+        
+        * ace/Time_Value.h:
+          Removed unnecessary LynxOS specific includes. 
+
+        * ace/config-lynxos.h:
+          Added #define ACE_HAS_LYNXOS_BROKEN_MMAP.
+        
+        * tests/Cached_Conn_Test.cpp:
+        * tests/Priority_Reactor_Test.cpp:
+        * tests/Reader_Writer_Test.cpp:
+        * tests/TSS_Test.cpp:
+        * tests/Thread_Mutex_Test.cpp:
+          Removed unnecessary LynxOS specific code.
+          
+        * tests/run_test.lst:
+          Enabled/disabled some test for LynxOS.
+
 Mon Dec 20 14:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-WinCE.h:
@@ -117,13 +142,13 @@ Mon Dec 20 10:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec 19 14:23:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* m4/ace.m4:
-	* m4/compiler.m4:
-	* m4/platform.m4:
+        * configure.ac:
+        * m4/ace.m4:
+        * m4/compiler.m4:
+        * m4/platform.m4:
 
-	  Replace use of $host with $target.  Needed if we're ever to
-	  support cross compilation.
+          Replace use of $host with $target.  Needed if we're ever to
+          support cross compilation.
 
 Sun Dec 19 17:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
