@@ -854,7 +854,7 @@ nobase_include_HEADERS += \
   WCharSeqC.inl \
   WStringSeqC.inl \
   Wait_Strategy.inl \
-  WrongTransactionC.i \
+  WrongTransactionC.inl \
   corbafwd.i \
   default_client.i \
   default_resource.i \
