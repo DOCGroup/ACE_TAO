@@ -1,21 +1,18 @@
 
 #
 # Makefile for building the test_mutex Misc performance-test
-# 
+#
 
 NAME = test_mutex
-  
+
 OBJFILES = \
 	$(OBJDIR)\test_mutex.obj
-  
-CPPDIR = .;..
 
-IDLDIR = .
-  
-!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
-  
-# 
-# IDL Build rules
-# 
-  
+CPPDIR = .
 
+LIBFILES = \
+        $(ACE_LIB)
+
+CFLAGS = $(ACE_CFLAGS)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
