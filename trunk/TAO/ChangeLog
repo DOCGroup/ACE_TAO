@@ -104,9 +104,9 @@ Thu Apr 15 11:41:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/examples/Buffered_AMI/client.cpp:
         * tao/examples/Buffered_Oneways/client.cpp:
         * tao/tests/AMI_Buffering/client.cpp:
-        * tests/Oneway_Buffering/client.cpp:
-        * tests/Policies/Manipulation.cpp:
-        * tests/Timed_Buffered_Oneways/client.cpp:
+        * tao/tests/Oneway_Buffering/client.cpp:
+        * tao/tests/Policies/Manipulation.cpp:
+        * tao/tests/Timed_Buffered_Oneways/client.cpp:
           Replaced include of tao/TAOA.h by tao/TAOC.h
 
 Thu Apr 15 07:11:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
