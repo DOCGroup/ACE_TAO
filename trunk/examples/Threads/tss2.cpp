@@ -55,7 +55,7 @@ Test_Task::Test_Task (void)
 {
   Test_Task::count_++;
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) Test_Task+: %d\n", Test_Task::count_.value ()));
+              "(%t) Test_Task+: %d\n", Test_Task::count_.value ()));
 }
 
 Test_Task::~Test_Task (void)
@@ -63,7 +63,7 @@ Test_Task::~Test_Task (void)
   Test_Task::count_--;
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) Test_Task-: %d\n", Test_Task::count_.value ()));
+              "(%t) Test_Task-: %d\n", Test_Task::count_.value ()));
   Test_Task::wait_count_--;
 }
 
@@ -80,7 +80,7 @@ Test_Task::svc (void *arg)
   Test_Task::max_count_++;
 
   ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting (data = %u)\n",
-	      arg));
+              arg));
 
   // Do a bunch of set operations on the TSS data just to make sure
   // that it's truly in TSS (it it weren't, the assertion would fail).
@@ -92,7 +92,7 @@ Test_Task::svc (void *arg)
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting finished (data = %u)\n",
-	      arg));
+              arg));
 
 #if 0
   ACE_ASSERT (TSS_DATA::instance ()->data () == arg);
@@ -124,46 +124,46 @@ main (int argc, char *argv[])
   for (int i = 0; i < MAX_ITERATIONS; i++)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "(%t) ********* iteration %d **********\n"
-		  "Test_Task::max_count_ %d\n",
-		  i,
-		  Test_Task::max_count_.value ()));
+                  "(%t) ********* iteration %d **********\n"
+                  "Test_Task::max_count_ %d\n",
+                  i,
+                  Test_Task::max_count_.value ()));
       Test_Task::max_count_ = 0;
 
       for (int j = 0; j < num_tasks; j++)
-	{
+        {
           ACE_NEW_RETURN (task_arr[j], Test_Task, -1);
-	  task_arr[j]->open (task_arr[j]);
-	}
+          task_arr[j]->open (task_arr[j]);
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) waiting for first thread started\n"));
 
       for (;;)
-	{
-	  ACE_Thread::yield ();
+        {
+          ACE_Thread::yield ();
 
-	  if (Test_Task::max_count_ != 0 )
-	    break;
-	}
+          if (Test_Task::max_count_ != 0 )
+            break;
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) First thread started\n"
-		  "Waiting for all threads finished\n"));
+                  "Waiting for all threads finished\n"));
 
       for (;;)
-	{
-	  if (!(Test_Task::max_count_ == num_tasks
-		&& Test_Task::wait_count_ == 0))
-	    {
-	      ACE_Thread::yield ();
-	      continue;
-	    }
-	  ACE_DEBUG ((LM_DEBUG,
-		      "(%t) Test_Task::max_count_ = %d,"
-		      " Test_Task::wait_count_ = %d",
-		      Test_Task::max_count_.value (),
-		      Test_Task::wait_count_.value ()));
-	  break;
-	}
+        {
+          if (!(Test_Task::max_count_ == num_tasks
+                && Test_Task::wait_count_ == 0))
+            {
+              ACE_Thread::yield ();
+              continue;
+            }
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) Test_Task::max_count_ = %d,"
+                      " Test_Task::wait_count_ = %d",
+                      Test_Task::max_count_.value (),
+                      Test_Task::wait_count_.value ()));
+          break;
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) all threads finished\n"));
     }
@@ -174,12 +174,14 @@ main (int argc, char *argv[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Atomic_Op<ACE_Token, int>;
+template class ACE_Guard<ACE_Token>;
 template class ACE_TSS<TSS_Data>;
 template class ACE_TSS<TSS_Obj>;
 template class ACE_TSS_Singleton<TSS_Data, ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Atomic_Op<ACE_Token, int>
+#pragma instantiate ACE_Guard<ACE_Token>
 #pragma instantiate ACE_TSS<TSS_Data>
 #pragma instantiate ACE_TSS<TSS_Obj>
 #pragma instantiate ACE_TSS_Singleton<TSS_Data, ACE_SYNCH_MUTEX>
