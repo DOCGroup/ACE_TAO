@@ -70,11 +70,11 @@ public:
   void shutdown (CORBA::Environment &ACE_TRY_ENV);
   // The application is shutting down, deactivate the consumer.
 
-  void accumulate (EC_Driver::Throughput_Stats& throughput,
-                   EC_Driver::Latency_Stats& latency) const;
+  void accumulate (ACE_Throughput_Stats& throughput) const;
   // Accumulate our statistics to the totals.
 
-  virtual void dump_results (const char* name);
+  virtual void dump_results (const char* name,
+                             ACE_UINT32 global_scale_factor);
   // Printout the statistics
 
   // = The RtecEventComm::PushConsumer methods
@@ -100,10 +100,10 @@ private:
   ACE_SYNCH_MUTEX lock_;
   // Protect internal state
 
-  EC_Driver::Throughput_Stats throughput_;
-  // Used for reporting stats
+  ACE_hrtime_t throughput_start_;
+  // The timestamp for the first message received
 
-  EC_Driver::Latency_Stats latency_;
+  ACE_Throughput_Stats throughput_;
   // Used for reporting stats
 
   int push_count_;

@@ -72,8 +72,8 @@ private:
   int disconnections_;
   // The number of disconnections
 
-  EC_Driver::Latency_Stats consumer_reconnect_;
-  EC_Driver::Latency_Stats supplier_reconnect_;
+  ACE_Throughput_Stats consumer_reconnect_;
+  ACE_Throughput_Stats supplier_reconnect_;
 };
 
 #endif /* EC_RECONNECT_H */

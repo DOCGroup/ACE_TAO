@@ -9,6 +9,23 @@ Thu Jul 22 15:05:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  even when there is no timeout. Thanks to Irfan for pointing this 
 	  out.
 
+	* orbsvcs/tests/Event/lib/Makefile:
+	* orbsvcs/tests/Event/lib/Consumer.h:
+	* orbsvcs/tests/Event/lib/Consumer.cpp:
+	* orbsvcs/tests/Event/lib/Driver.h:
+	* orbsvcs/tests/Event/lib/Driver.i:
+	* orbsvcs/tests/Event/lib/Driver.cpp:
+	* orbsvcs/tests/Event/lib/Supplier.h:
+	* orbsvcs/tests/Event/lib/Supplier.cpp:
+	* orbsvcs/tests/Event/Basic/Reconnect.h:
+	* orbsvcs/tests/Event/Basic/Reconnect.cpp:
+	* orbsvcs/tests/Event/Performance/Makefile:
+	* orbsvcs/tests/Event/Performance/Connect.h:
+	* orbsvcs/tests/Event/Performance/Connect.cpp:
+	  Changed to use the ACE_Throughput_Stats class, this is more
+	  portable and works on platforms without 64-bit support, thanks
+	  to David Levine for pointing this out.
+
 Thu Jul 22 14:10:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/AVStreams/benchmark/client.cpp:
