@@ -25,7 +25,7 @@
 #include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
 #include "orbsvcs/CosNotificationC.h"
 
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 
 #include "notify_serv_export.h"
 

@@ -1,3 +1,8 @@
+Wed Mar 30 07:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TypeCodeFactory_Adapter.h:
+          Corrected forward declarations
+
 Tue Mar 29 15:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Exception.{h,cpp}:

@@ -53,7 +53,7 @@
 #include "tao/Stub.h"
 #include "tao/IFR_Client_Adapter.h"
 #include "tao/Object_T.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/DynamicC.h"
 #include "tao/CDR.h"
 #include "tao/operation_details.h"
@@ -336,7 +336,7 @@ POA_CORBA::_TAO_DomainManager_Strategized_Proxy_Broker::dispatch (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:985
+// be\be_visitor_interface/interface_ss.cpp:999
 
 TAO::Collocation_Proxy_Broker *
 CORBA__TAO_DomainManager_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -420,28 +420,18 @@ POA_CORBA::DomainManager::DomainManager (const DomainManager& rhs)
 POA_CORBA::DomainManager::~DomainManager (void)
 {
 }
-
-// TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:165
-
-void POA_CORBA::DomainManager::get_domain_policy_skel (
-    TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_CORBA
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class get_domain_policy_DomainManager
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline get_domain_policy_DomainManager (
       POA_CORBA::DomainManager * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -473,11 +463,24 @@ void POA_CORBA::DomainManager::get_domain_policy_skel (
     }
   
   private:
-    
     POA_CORBA::DomainManager * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_operation/operation_ss.cpp:192
+
+void POA_CORBA::DomainManager::get_domain_policy_skel (
+    TAO_ServerRequest & server_request,
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -497,10 +500,9 @@ void POA_CORBA::DomainManager::get_domain_policy_skel (
   static size_t const nargs = 2;
   
   POA_CORBA::DomainManager * const impl =
-    static_cast<
-      POA_CORBA::DomainManager *> (servant);
-  
-  Upcall_Command command (
+    static_cast<POA_CORBA::DomainManager *> (servant);
+
+  get_domain_policy_DomainManager command (
     impl,
     server_request.operation_details (),
     args);
@@ -510,13 +512,11 @@ void POA_CORBA::DomainManager::get_domain_policy_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
@@ -525,24 +525,18 @@ void POA_CORBA::DomainManager::get_domain_policy_skel (
 // TAO_IDL - Generated from 
 // be\be_visitor_interface/interface_ss.cpp:169
 
-void POA_CORBA::DomainManager::_is_a_skel (
-    TAO_ServerRequest & server_request, 
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_CORBA
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class _is_a_DomainManager_Upcall_Command
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline _is_a_DomainManager_Upcall_Command (
       POA_CORBA::DomainManager * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -574,11 +568,19 @@ void POA_CORBA::DomainManager::_is_a_skel (
     }
   
   private:
-    
     POA_CORBA::DomainManager * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+void POA_CORBA::DomainManager::_is_a_skel (
+    TAO_ServerRequest & server_request, 
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -598,10 +600,9 @@ void POA_CORBA::DomainManager::_is_a_skel (
   static size_t const nargs = 2;
   
   POA_CORBA::DomainManager * const impl =
-    static_cast<
-      POA_CORBA::DomainManager *> (servant);
+    static_cast<POA_CORBA::DomainManager *> (servant);
   
-  Upcall_Command command (
+  _is_a_DomainManager_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
@@ -611,36 +612,28 @@ void POA_CORBA::DomainManager::_is_a_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
 }
 
-void POA_CORBA::DomainManager::_non_existent_skel (
-    TAO_ServerRequest & server_request, 
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_CORBA
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class _non_existent_DomainManager_Upcall_Command
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline _non_existent_DomainManager_Upcall_Command (
       POA_CORBA::DomainManager * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -665,11 +658,19 @@ void POA_CORBA::DomainManager::_non_existent_skel (
     }
   
   private:
-    
     POA_CORBA::DomainManager * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+void POA_CORBA::DomainManager::_non_existent_skel (
+    TAO_ServerRequest & server_request, 
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -687,10 +688,9 @@ void POA_CORBA::DomainManager::_non_existent_skel (
   static size_t const nargs = 1;
   
   POA_CORBA::DomainManager * const impl =
-    static_cast<
-      POA_CORBA::DomainManager *> (servant);
+    static_cast<POA_CORBA::DomainManager *> (servant);
   
-  Upcall_Command command (
+  _non_existent_DomainManager_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
@@ -700,13 +700,11 @@ void POA_CORBA::DomainManager::_non_existent_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
@@ -715,7 +713,7 @@ void POA_CORBA::DomainManager::_non_existent_skel (
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_interface/interface_ss.cpp:385
+// be\be_visitor_interface/interface_ss.cpp:393
 
 
 
@@ -738,8 +736,7 @@ void POA_CORBA::DomainManager::_interface_skel (
     }
   
   POA_CORBA::DomainManager * const impl =
-    static_cast<
-      POA_CORBA::DomainManager *> (servant);
+    static_cast<POA_CORBA::DomainManager *> (servant);
   CORBA::InterfaceDef_ptr _tao_retval = 
     impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -761,24 +758,18 @@ void POA_CORBA::DomainManager::_interface_skel (
     }
 }
 
-void POA_CORBA::DomainManager::_component_skel (
-    TAO_ServerRequest & server_request, 
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_CORBA
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class _get_component_DomainManager_Upcall_Command
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline _get_component_DomainManager_Upcall_Command (
       POA_CORBA::DomainManager * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -803,11 +794,19 @@ void POA_CORBA::DomainManager::_component_skel (
     }
   
   private:
-    
     POA_CORBA::DomainManager * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+void POA_CORBA::DomainManager::_component_skel (
+    TAO_ServerRequest & server_request, 
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -825,10 +824,9 @@ void POA_CORBA::DomainManager::_component_skel (
   static size_t const nargs = 1;
   
   POA_CORBA::DomainManager * const impl =
-    static_cast<
-      POA_CORBA::DomainManager *> (servant);
+    static_cast<POA_CORBA::DomainManager *> (servant);
   
-  Upcall_Command command (
+  _get_component_DomainManager_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
@@ -838,13 +836,11 @@ void POA_CORBA::DomainManager::_component_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
@@ -874,7 +870,7 @@ const char* POA_CORBA::DomainManager::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:926
+// be\be_visitor_interface/interface_ss.cpp:940
 
 void POA_CORBA::DomainManager::_dispatch (
     TAO_ServerRequest & req,
@@ -889,7 +885,7 @@ void POA_CORBA::DomainManager::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:877
+// be\be_visitor_interface/interface_ss.cpp:891
 
 CORBA::DomainManager *
 POA_CORBA::DomainManager::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -1105,7 +1101,7 @@ POA_CORBA::_TAO_ConstructionPolicy_Strategized_Proxy_Broker::dispatch (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:985
+// be\be_visitor_interface/interface_ss.cpp:999
 
 TAO::Collocation_Proxy_Broker *
 CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -1190,28 +1186,18 @@ POA_CORBA::ConstructionPolicy::ConstructionPolicy (const ConstructionPolicy& rhs
 POA_CORBA::ConstructionPolicy::~ConstructionPolicy (void)
 {
 }
-
-// TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:165
-
-void POA_CORBA::ConstructionPolicy::make_domain_manager_skel (
-    TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_CORBA
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class make_domain_manager_ConstructionPolicy
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline make_domain_manager_ConstructionPolicy (
       POA_CORBA::ConstructionPolicy * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -1243,11 +1229,24 @@ void POA_CORBA::ConstructionPolicy::make_domain_manager_skel (
     }
   
   private:
-    
     POA_CORBA::ConstructionPolicy * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_operation/operation_ss.cpp:192
+
+void POA_CORBA::ConstructionPolicy::make_domain_manager_skel (
+    TAO_ServerRequest & server_request,
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -1269,10 +1268,9 @@ void POA_CORBA::ConstructionPolicy::make_domain_manager_skel (
   static size_t const nargs = 3;
   
   POA_CORBA::ConstructionPolicy * const impl =
-    static_cast<
-      POA_CORBA::ConstructionPolicy *> (servant);
-  
-  Upcall_Command command (
+    static_cast<POA_CORBA::ConstructionPolicy *> (servant);
+
+  make_domain_manager_ConstructionPolicy command (
     impl,
     server_request.operation_details (),
     args);
@@ -1282,13 +1280,11 @@ void POA_CORBA::ConstructionPolicy::make_domain_manager_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
@@ -1297,24 +1293,18 @@ void POA_CORBA::ConstructionPolicy::make_domain_manager_skel (
 // TAO_IDL - Generated from 
 // be\be_visitor_interface/interface_ss.cpp:169
 
-void POA_CORBA::ConstructionPolicy::_is_a_skel (
-    TAO_ServerRequest & server_request, 
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_CORBA
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class _is_a_ConstructionPolicy_Upcall_Command
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline _is_a_ConstructionPolicy_Upcall_Command (
       POA_CORBA::ConstructionPolicy * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -1346,11 +1336,19 @@ void POA_CORBA::ConstructionPolicy::_is_a_skel (
     }
   
   private:
-    
     POA_CORBA::ConstructionPolicy * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+void POA_CORBA::ConstructionPolicy::_is_a_skel (
+    TAO_ServerRequest & server_request, 
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -1370,10 +1368,9 @@ void POA_CORBA::ConstructionPolicy::_is_a_skel (
   static size_t const nargs = 2;
   
   POA_CORBA::ConstructionPolicy * const impl =
-    static_cast<
-      POA_CORBA::ConstructionPolicy *> (servant);
+    static_cast<POA_CORBA::ConstructionPolicy *> (servant);
   
-  Upcall_Command command (
+  _is_a_ConstructionPolicy_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
@@ -1383,36 +1380,28 @@ void POA_CORBA::ConstructionPolicy::_is_a_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
 }
 
-void POA_CORBA::ConstructionPolicy::_non_existent_skel (
-    TAO_ServerRequest & server_request, 
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_CORBA
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class _non_existent_ConstructionPolicy_Upcall_Command
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline _non_existent_ConstructionPolicy_Upcall_Command (
       POA_CORBA::ConstructionPolicy * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -1437,11 +1426,19 @@ void POA_CORBA::ConstructionPolicy::_non_existent_skel (
     }
   
   private:
-    
     POA_CORBA::ConstructionPolicy * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+void POA_CORBA::ConstructionPolicy::_non_existent_skel (
+    TAO_ServerRequest & server_request, 
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -1459,10 +1456,9 @@ void POA_CORBA::ConstructionPolicy::_non_existent_skel (
   static size_t const nargs = 1;
   
   POA_CORBA::ConstructionPolicy * const impl =
-    static_cast<
-      POA_CORBA::ConstructionPolicy *> (servant);
+    static_cast<POA_CORBA::ConstructionPolicy *> (servant);
   
-  Upcall_Command command (
+  _non_existent_ConstructionPolicy_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
@@ -1472,13 +1468,11 @@ void POA_CORBA::ConstructionPolicy::_non_existent_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
@@ -1487,7 +1481,7 @@ void POA_CORBA::ConstructionPolicy::_non_existent_skel (
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_interface/interface_ss.cpp:385
+// be\be_visitor_interface/interface_ss.cpp:393
 
 
 
@@ -1510,8 +1504,7 @@ void POA_CORBA::ConstructionPolicy::_interface_skel (
     }
   
   POA_CORBA::ConstructionPolicy * const impl =
-    static_cast<
-      POA_CORBA::ConstructionPolicy *> (servant);
+    static_cast<POA_CORBA::ConstructionPolicy *> (servant);
   CORBA::InterfaceDef_ptr _tao_retval = 
     impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -1533,24 +1526,18 @@ void POA_CORBA::ConstructionPolicy::_interface_skel (
     }
 }
 
-void POA_CORBA::ConstructionPolicy::_component_skel (
-    TAO_ServerRequest & server_request, 
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_CORBA
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class _get_component_ConstructionPolicy_Upcall_Command
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline _get_component_ConstructionPolicy_Upcall_Command (
       POA_CORBA::ConstructionPolicy * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -1575,11 +1562,19 @@ void POA_CORBA::ConstructionPolicy::_component_skel (
     }
   
   private:
-    
     POA_CORBA::ConstructionPolicy * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+void POA_CORBA::ConstructionPolicy::_component_skel (
+    TAO_ServerRequest & server_request, 
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -1597,10 +1592,9 @@ void POA_CORBA::ConstructionPolicy::_component_skel (
   static size_t const nargs = 1;
   
   POA_CORBA::ConstructionPolicy * const impl =
-    static_cast<
-      POA_CORBA::ConstructionPolicy *> (servant);
+    static_cast<POA_CORBA::ConstructionPolicy *> (servant);
   
-  Upcall_Command command (
+  _get_component_ConstructionPolicy_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
@@ -1610,13 +1604,11 @@ void POA_CORBA::ConstructionPolicy::_component_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
@@ -1650,7 +1642,7 @@ const char* POA_CORBA::ConstructionPolicy::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:926
+// be\be_visitor_interface/interface_ss.cpp:940
 
 void POA_CORBA::ConstructionPolicy::_dispatch (
     TAO_ServerRequest & req,
@@ -1665,7 +1657,7 @@ void POA_CORBA::ConstructionPolicy::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:877
+// be\be_visitor_interface/interface_ss.cpp:891
 
 CORBA::ConstructionPolicy *
 POA_CORBA::ConstructionPolicy::_this (ACE_ENV_SINGLE_ARG_DECL)
