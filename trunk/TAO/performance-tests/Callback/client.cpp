@@ -7,6 +7,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Basic_Stats.h"
+#include "ace/Stats.h"
 #include "ace/Sched_Params.h"
 #include "ace/Task.h"
 
@@ -180,15 +181,11 @@ main (int argc, char *argv [])
 
       ACE_Basic_Stats stats;
       history.collect_basic_stats (stats);
-      stats.dump_results ("Latency", gsf);
+      stats.dump_results ("Total", gsf);
 
-      ACE_hrtime_t elapsed_microseconds = (end - start) / gsf;
-      double elapsed_seconds =
-        ACE_CU64_TO_CU32(elapsed_microseconds) / 1000000.0;
-      double throughput =
-        double(iterations) / elapsed_seconds;
-
-      ACE_DEBUG ((LM_DEBUG, "Throughtput: %f\n", throughput));
+      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+                                             end - start,
+                                             stats.samples_count ());
 
       server->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -279,11 +276,6 @@ Task::svc (void)
           // ACE_OS::sleep (tv);
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-          if (this->remaining_messages_ % 1000 == 0)
-            {
-              ACE_DEBUG ((LM_DEBUG, "Only %d messages to go\n",
-                          this->remaining_messages_));
-            }
 
           this->remaining_messages_--;
           if (this->remaining_messages_ == 0)
