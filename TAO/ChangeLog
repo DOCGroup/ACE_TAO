@@ -1,3 +1,8 @@
+Tue Oct 21 05:51:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/Notify/ThreadPool/Notify_ThreadPool.mpc:
+          Added missing files to fix Cygwin link errors
+
 Mon Oct 20 21:55:41 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEventClientORB/FTRT_ClientORB_Loader.cpp:
