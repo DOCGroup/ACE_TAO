@@ -5,39 +5,39 @@ Thu Jan 01 17:13:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Jan  1 12:04:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* apps/Gateway/Peer/Options.cpp (parse_args): Changed the option
- 	  to set the passive acceptor port from -p to -a.  This is now
- 	  consistent with the option for active connector port number,
- 	  which is -c.
+        * apps/Gateway/Peer/Options.cpp (parse_args): Changed the option
+          to set the passive acceptor port from -p to -a.  This is now
+          consistent with the option for active connector port number,
+          which is -c.
 
-	* apps/Gateway/Gateway/Gateway.cpp (fini): Added a call to
- 	  ACE::remove_stdin_handler(), which removes the handler for
- 	  ACE_STDIN so the gatewayd will shutdown cleanly.
+        * apps/Gateway/Gateway/Gateway.cpp (fini): Added a call to
+          ACE::remove_stdin_handler(), which removes the handler for
+          ACE_STDIN so the gatewayd will shutdown cleanly.
 
-	* ace/ACE: Added a new method, remove_stdin_handler(), which is
- 	  the inverse of the register_stdin_handler() method.  However,
- 	  I'm not sure how to make this work on NT!
+        * ace/ACE: Added a new method, remove_stdin_handler(), which is
+          the inverse of the register_stdin_handler() method.  However,
+          I'm not sure how to make this work on NT!
 
-	* examples/Reactor/Misc/notification.cpp: Removed some CHORUS-specific
-	  code, which should be a no-op with our new signal() and sigaction()
-	  scheme.
+        * examples/Reactor/Misc/notification.cpp: Removed some CHORUS-specific
+          code, which should be a no-op with our new signal() and sigaction()
+          scheme.
 
-	* ace/OS.i: Enhanced the signal() and sigaction() wrappers so that
- 	  they simply ignore signums of 0.  This means that we don't need
- 	  to special case all this stuff throughout ACE anymore.
+        * ace/OS.i: Enhanced the signal() and sigaction() wrappers so that
+          they simply ignore signums of 0.  This means that we don't need
+          to special case all this stuff throughout ACE anymore.
 
-	* ace/OS.h: Changed all the #defines for various SIG* so that they
- 	  are all 0.  This way, we can ensure that the signal() functions
- 	  in ACE_OS can correctly ignore these signals.  This should clean
- 	  up a ton of platform-dependent code throughout ACE.
+        * ace/OS.h: Changed all the #defines for various SIG* so that they
+          are all 0.  This way, we can ensure that the signal() functions
+          in ACE_OS can correctly ignore these signals.  This should clean
+          up a ton of platform-dependent code throughout ACE.
 
-	* apps/Gateway/Gateway/Gateway.cpp (init): Revised the code a bit
- 	  to factor out platform-dependent signal handling stuff in the
- 	  right place.
+        * apps/Gateway/Gateway/Gateway.cpp (init): Revised the code a bit
+          to factor out platform-dependent signal handling stuff in the
+          right place.
 
-	* apps/Gateway/Gateway/gatewayd.cpp: Cleaned up the gatewayd main
- 	  program so that it reuses more ACE components and so that it is
- 	  more portable.
+        * apps/Gateway/Gateway/gatewayd.cpp: Cleaned up the gatewayd main
+          program so that it reuses more ACE components and so that it is
+          more portable.
 
 Thu Jan 01 08:50:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -57,68 +57,68 @@ Thu Jan 01 07:56:17 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Jan 01 00:28:46 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* apps/Gateway/Peer/Peer.dsp: Added a new file "Options.cpp" into
- 	  this project.
+        * apps/Gateway/Peer/Peer.dsp: Added a new file "Options.cpp" into
+          this project.
 
-	* tests/Env_Value_Test.cpp (main): Changed variable name: 'environ'
- 	  to 'envp'.  Real OSes don't understand what the word means
- 	  and Access Violations will occur.
+        * tests/Env_Value_Test.cpp (main): Changed variable name: 'environ'
+          to 'envp'.  Real OSes don't understand what the word means
+          and Access Violations will occur.
 
-	* tests/run_tests.bat: Added Env_Value_Test.
+        * tests/run_tests.bat: Added Env_Value_Test.
 
-	* tests/version_tests/version_tests.dsw:
-	* tests/tests.dsw: Added Env_Value_Test.dsp.
+        * tests/version_tests/version_tests.dsw:
+        * tests/tests.dsw: Added Env_Value_Test.dsp.
 
-	* tests/version_tests/Env_Value_Test.dsp:
-	* tests/Env_Value_Test.dsp:  New file.
+        * tests/version_tests/Env_Value_Test.dsp:
+        * tests/Env_Value_Test.dsp:  New file.
 
 Thu Jan  1 00:00:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Happy New Year!  Here's a thought for the new year, courtesy of
- 	  Sumedh:
+        * Happy New Year!  Here's a thought for the new year, courtesy of
+          Sumedh:
 
           Nothing in the world is permanent,
-	  and we're foolish when we ask anything to last;
+          and we're foolish when we ask anything to last;
           but surely we're still more foolish
           not to take delight in it while we have it.
 
-	          - W.Somerset Maugham (Razor's Edge)
+                  - W.Somerset Maugham (Razor's Edge)
 
 Wed Dec 31 19:10:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* apps/Gateway/Peer/Peer: Added the hooks for making the Peer a
- 	  Connector, as well as an Acceptor.  Now it's time to have some
- 	  fun.
+        * apps/Gateway/Peer/Peer: Added the hooks for making the Peer a
+          Connector, as well as an Acceptor.  Now it's time to have some
+          fun.
 
-	* apps/Gateway/Peer/peerd.cpp: Cleaned up the peerd main program
- 	  so that it reuses more ACE components and so that it is more
- 	  portable.
+        * apps/Gateway/Peer/peerd.cpp: Cleaned up the peerd main program
+          so that it reuses more ACE components and so that it is more
+          portable.
 
-	* netsvcs/servers/main.cpp (main): Revised the code a bit to
- 	  factor out platform-dependent signal handling stuff in the right
- 	  place.
+        * netsvcs/servers/main.cpp (main): Revised the code a bit to
+          factor out platform-dependent signal handling stuff in the right
+          place.
 
-	* apps/Gateway/Peer: Factored out some common initialization code
- 	  to create an Options Singleton.  Yowza!
+        * apps/Gateway/Peer: Factored out some common initialization code
+          to create an Options Singleton.  Yowza!
 
-	* apps/Gateway/README: Improved the documentation so that its
- 	  easier to tell what's supposed to happen and how to configure
- 	  the system.
+        * apps/Gateway/README: Improved the documentation so that its
+          easier to tell what's supposed to happen and how to configure
+          the system.
 
-	* apps/Gateway/Peer/Peer: Moved the Peer_Acceptor into the Peer.h
- 	  file and updated the documentation to clarify what's going on
- 	  better.
+        * apps/Gateway/Peer/Peer: Moved the Peer_Acceptor into the Peer.h
+          file and updated the documentation to clarify what's going on
+          better.
 
-	* examples/Reactor/Dgram/: Enhanced the examples to make sure they
- 	  close() the dgram endpoint when the object is removed from the
- 	  Reactor.  Thanks to Evgeny Beskrovny
- 	  <evgeny_beskrovny@icomverse.com> for reporting this.
+        * examples/Reactor/Dgram/: Enhanced the examples to make sure they
+          close() the dgram endpoint when the object is removed from the
+          Reactor.  Thanks to Evgeny Beskrovny
+          <evgeny_beskrovny@icomverse.com> for reporting this.
 
-	* ace/Obstack.cpp: Fixed a stupid bug in the ACE_Obstack
- 	  constructor.  Thanks to David Levine for reporting this.
+        * ace/Obstack.cpp: Fixed a stupid bug in the ACE_Obstack
+          constructor.  Thanks to David Levine for reporting this.
 
-	* ace/Local_Name_Space_T.h: Updated the documentation for class
- 	  ACE_Name_Space_Map to make it more clear.
+        * ace/Local_Name_Space_T.h: Updated the documentation for class
+          ACE_Name_Space_Map to make it more clear.
 
 Wed Dec 31 21:21:50 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -131,20 +131,20 @@ Wed Dec 31 21:21:50 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Dec 31 16:25:16 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* ace/Env_Value_T.*: Added a new template (ACE_Env_Value) which is
- 	  a typesafe encapsulation of environment variables with the
- 	  ability to provide a value to be used as a default if the
- 	  variable isn't set.  An example of its use can be seen in the
- 	  corresponding test, tests/Env_Value_Test.cpp.  Thanks to Carlos
- 	  O'Ryan for giving me the seed that started this.
+        * ace/Env_Value_T.*: Added a new template (ACE_Env_Value) which is
+          a typesafe encapsulation of environment variables with the
+          ability to provide a value to be used as a default if the
+          variable isn't set.  An example of its use can be seen in the
+          corresponding test, tests/Env_Value_Test.cpp.  Thanks to Carlos
+          O'Ryan for giving me the seed that started this.
 
-	* tests/Env_Value_Test.cpp: Added test for the new template added
- 	  above.
+        * tests/Env_Value_Test.cpp: Added test for the new template added
+          above.
 
-	* tests/Makefile: Added new Env_Value_Test test to the Makefile.
+        * tests/Makefile: Added new Env_Value_Test test to the Makefile.
 
-	* ace/OS.{h,i} (strtod): Added new function for converting strings
- 	  to doubles.
+        * ace/OS.{h,i} (strtod): Added new function for converting strings
+          to doubles.
 
 Tue Dec 30 22:07:44 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -185,55 +185,55 @@ Tue Dec 30 22:07:44 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Dec 30 20:32:03 1997  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* ace/Map_Manager.{h,cpp}: Added STL-styled iterator function.
-  	  Changed the references to ACE_Map_Manager within interator
- 	  classes to pointers so we can check errors.
+        * ace/Map_Manager.{h,cpp}: Added STL-styled iterator function.
+          Changed the references to ACE_Map_Manager within interator
+          classes to pointers so we can check errors.
 
 Tue Dec 30 14:56:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Obstack: Enhanced ACE_Obstack so that it can be given a
- 	  pointer to an allocator strategy.  This allows users to take
- 	  complete control of where the memory comes from for the Obstack.
+        * ace/Obstack: Enhanced ACE_Obstack so that it can be given a
+          pointer to an allocator strategy.  This allows users to take
+          complete control of where the memory comes from for the Obstack.
 
-	* ace/Obstack: Changed the default value of "size" so that it is
-	  (4096 - sizeof (ACE_Obstack)).
+        * ace/Obstack: Changed the default value of "size" so that it is
+          (4096 - sizeof (ACE_Obstack)).
 
-	* ace/Obstack: Added a new ACE_Obchunk constructor to simplify
-	  some of the code.
+        * ace/Obstack: Added a new ACE_Obchunk constructor to simplify
+          some of the code.
 
 Mon Dec 29 20:21:32 1997  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/rules.lib.GNU: Adjusted dependencies on building
-	  a shared library to be on the object modules it will link in, not
-	  necessarily $(VSJOBJ).
+        * include/makeinclude/rules.lib.GNU: Adjusted dependencies on building
+          a shared library to be on the object modules it will link in, not
+          necessarily $(VSJOBJ).
 
 Mon Dec 29 18:53:35 1997  James C Hu  <jxh@cs.wustl.edu>
 
-	* ace/Filecache.h: Added an enum type, ACE_Filecache_Flag, which
-	  gets passed into the ACE_Filecache_Handle constuctor to help
-	  determine whether or not to use memory mapping (on Windows NT,
-	  we sometimes do not want to memory map).
+        * ace/Filecache.h: Added an enum type, ACE_Filecache_Flag, which
+          gets passed into the ACE_Filecache_Handle constuctor to help
+          determine whether or not to use memory mapping (on Windows NT,
+          we sometimes do not want to memory map).
 
-	* ace/Filecache.cpp: Required modifications to accomodate the
-	  ACE_Filecache_Flag parameter.
+        * ace/Filecache.cpp: Required modifications to accomodate the
+          ACE_Filecache_Flag parameter.
 
 Mon Dec 29 15:37:24 1997  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* ace/OS.i (event_timedwait): Added codes to guard against
-	  negative wait time since we are passing an absolute time value
-	  here, we may way past the target time when it gets called.
-	  Thanks to Norbert Rapp <NRapp@nexus-informatics.de> for pointing
-	  this.
+        * ace/OS.i (event_timedwait): Added codes to guard against
+          negative wait time since we are passing an absolute time value
+          here, we may way past the target time when it gets called.
+          Thanks to Norbert Rapp <NRapp@nexus-informatics.de> for pointing
+          this.
 
 Mon Dec 29 13:57:43 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* ace/XtReactor.cpp:
-	  Fixed syntax error, apparently some kind of typo.
+        * ace/XtReactor.cpp:
+          Fixed syntax error, apparently some kind of typo.
 
-	* ace/OS.h:
-	  The ACE_*_cast() macros had (IMHO) surprizing priority, added
-	  some parenthesis to make them behave as the new cast operators
-	  are supposed to do.
+        * ace/OS.h:
+          The ACE_*_cast() macros had (IMHO) surprizing priority, added
+          some parenthesis to make them behave as the new cast operators
+          are supposed to do.
 
 Mon Dec 29 08:59:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -264,12 +264,12 @@ Mon Dec 29 08:59:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Dec 29 08:35:17 1997  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_hpux_aCC.GNU: Removed the PRELIB
-	  and PRELIB_USES_OBJ_ONLY stuff; merged in macros for building
-	  on HP-UX 11.00.
-	* include/makeinclude/platform_hpux11_aCC.GNU - Removed this file.
-	  The 10.x and 11.x builds are now both controlled by
-	  platform_hpux_aCC.GNU.
+        * include/makeinclude/platform_hpux_aCC.GNU: Removed the PRELIB
+          and PRELIB_USES_OBJ_ONLY stuff; merged in macros for building
+          on HP-UX 11.00.
+        * include/makeinclude/platform_hpux11_aCC.GNU - Removed this file.
+          The 10.x and 11.x builds are now both controlled by
+          platform_hpux_aCC.GNU.
 
 Sun Dec 28 10:50:54 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -277,9 +277,9 @@ Sun Dec 28 10:50:54 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat Dec 27 18:03:52 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (dump): Sould test if we have a valid thr_desc
-	  before dumping the information of it.  Thanks to Luca Priorelli
-	  <lucapri@mbox.vol.it> for pointing this out.
+        * ace/Log_Msg.cpp (dump): Sould test if we have a valid thr_desc
+          before dumping the information of it.  Thanks to Luca Priorelli
+          <lucapri@mbox.vol.it> for pointing this out.
 
 Sat Dec 27 16:13:59 1997  David L. Levine  <levine@cs.wustl.edu>
 
