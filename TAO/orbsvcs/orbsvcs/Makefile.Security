@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 #----------------------------------------------------------------------------
 #
 # $Id$
@@ -14,16 +16,10 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:Security
 
-ACE_SHLIBS = -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
-
-default: all
-
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
@@ -41,10 +37,6 @@ IDL_FILES += \
 	SecurityLevel2 \
 	SecurityReplaceable
 
-IDL_SRC = \
-        $(addsuffix S.cpp, $(IDL_FILES)) \
-        $(addsuffix C.cpp, $(IDL_FILES))
-
 FILES = \
   Security/EstablishTrustPolicy \
   Security/InvocationCredentialsPolicy \
@@ -60,12 +52,9 @@ DEFS  = $(addsuffix .h,$(FILES))
 
 LSRC  = $(addsuffix .cpp,$(FILES)) $(notdir $(IDL_SRC))
 
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+ADDITIONAL_INCLUDE = $(TAO_ROOT)/rules.tao.GNU
+REQUIRED_COMPONENTS = Security
+include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
 
 #----------------------------------------------------------------------------
 #       Local targets (and local hacks)
@@ -86,11 +75,6 @@ endif
 endif
 
 # Extra dependencies not caught by make depend.
-
-.PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
-
-realclean: clean
-	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
 #----------------------------------------------------------------------------
 #       Dependencies

@@ -25,7 +25,7 @@ SRC = $(addsuffix .cpp, \
 
 CLIENT_OBJS = client.o Reply_Handler.o Client_Task.o $(IDL_SRC:.cpp=.o)
 SERVER_OBJS = server.o AMI_Buffering.o $(IDL_SRC:.cpp=.o)
-ADMIN_OBJS = admin.o AMI_Buffering_Admin.o $(IDL_SRC:.cpp=.o)
+ADMIN_OBJS = admin.o AMI_Buffering_Admin.o $(IDL_SRC:.cpp=.o) AMI_Buffering_Admin.o
 
 TAO_IDLFLAGS += -Ge 1 -GC
 #----------------------------------------------------------------------------
@@ -49,8 +49,6 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-.PRECIOUS: $(foreach ext, $(IDL_EXT), Test$(ext))
-
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_Messaging $(TAO_SRVR_LIBS) $(POSTLINK)
 
@@ -59,9 +57,6 @@ admin: $(addprefix $(VDIR),$(ADMIN_OBJS))
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_Messaging $(TAO_SRVR_LIBS) $(POSTLINK)
-
-realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), Test$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

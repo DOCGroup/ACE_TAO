@@ -1,6 +1,161 @@
+Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        This is a major reorganization of the make system, and was
+        motivated by intermittent build errors in the autobuilds as well
+        as the pending move to MPC.  Sorry if it's a little long, it's in
+        a quasi Irfan-Bala style...
+        
+        Specific changes are noted below, but here's a basic overview:
+        
+        clean: Cleans up only the objects actually created by the
+          current project.  If multiple makefiles exist in the same
+          directory, they no longer need to be completely rebuild because
+          another makefile issued clean.  This will help in large
+          directories like $(ACE_ROOT)tests or
+          $(TAO_ROOT)/orbsvcs/orbsvcs.  These objects are cleaned up even
+          if a particular feature is not enabled, e.g., rmcast, ssl,
+          Other, etc., as is not dependant on bin/ace_components or the
+          files it maintains.
+
+        realclean: Cleans up everything, including the removal of the
+          .obj or .shobj directory, and any IDL files, e.g., *C.h, etc.
+          Like clean:, it also cleans up objects whether or not the
+          feature is currently enabled, thus obviating reverseclean:
+          entirely.  Also removed the multiple $(RM) lines, each clean
+          target now only invokes $(RM) a single time, and they aren't
+          invoked at all in Makefiles that don't actually build anything.
+          This reduced the time to run realclean on TAO by about 10%.
+
+        BUILD:  It now includes $(IDL_SRC) as the first dependency, so
+          that idl_stubs is always invoked first if needed.  It also
+          includes, in order, $(VLIB), $(VSHLIB), and $(VSHLIBA),
+          depending on the values of static_libs and shared_libs.
+          Finally, it includes $(VBIN) so that it's the last thing built.
+          This ordering will always work even in parallel builds, -jn
+          with n > 1, since dependencies are processed in order.  Had
+          these target just satisfied other rules, but were not explicitly
+          ordered, make would have tried to build them at the same time.
+          This should fix most of the parallel build autobuild errors.
+
+        depend: Now depends on idl_studs, so you no longer have to run
+          both in order, depend will invoke idl_stubs if needed.  It also
+          uses $(VDIR) instead of a hard coded .obj/ value, and removes
+          the config-*h files even if it's run in the $(ACE_ROOT)/ace
+          directory, but leaves config-all.h and a new variable file,
+          $(ACE_PLATFORM_CONFIG), which can be set in the appropriate
+          platform_*.GNU file to correspond to the matching config-*.h
+          file.  For instance, it is set to config-linux.h in
+          platform_macros.GNU so that changes to config-linux.h will
+          insure recompilation on Linux.  It defaults to config.h if not
+          set in platform_*.GNU.  $(PSRC) is now set to $(addsuffix .cpp,
+          $(CLEANUP_BIN)), where $(CLEANUP_BIN) is either $(BIN) or
+          $(BIN_UNCHECKED) or $(BIN2), $(BIN_UNCHECKED) is heavily used in
+          TAO and MPC, and $(BIN2) is heavily used in ACE, so both are
+          maintained. This insures that it will be added to the
+          dependencies even if the developer forgets to add it to the
+          Makefile.  In fact, it's here so it doesn't have to be added to
+          the Makefile.
+
+        install/deinstall:  These are somewhat problematic, since they
+          *must* be installed to actually run anything, but now they
+          install exactly what you build, $(LIB) or $(SHLIB), and
+          deinstall the same even if the feature isn't enabled, as in
+          clean above.  Also, the versioning code was modified a bit to
+          make it easier to understand and make deinstall work correctly.
+
+        $(IDL_SRC): This target was added here, because adding it to
+          $(TAO)/rules_tao.GNU wouldn't work correctly due to backward
+          compatibility issues.  Anyway, it depends on $(IDL_FILES) and
+          will force idl_stubs to be run if any of the idl files change.
+          Unfortuately, we can't yet generate dependencies for idl files,
+          but perhaps that won't be hard to add in the future.
+
+        component_check.GNU:  Including this file is similar to calling a
+          function with named parameters, it's been altered to let you
+          include it as many times as you want.  It will probably evolve
+          over time, but currently, you add of list of all components that
+          you want to tests to an input variable, REQUIRED_COMPONENTS,
+          include the file, then test to see if the return variable,
+          MISSING_COMPONENTS, contains any of the components specified in
+          REQUIRED_COMPONENTS, if it does, these components are missing,
+          i.e., not specified in either platform_macros.GNU, the
+          commandline, or contained in any of the ace_components files.
+          For example, if you want to test for ssl and Other, you'd do
+          something like this: 
+        
+            REQUIRED_COMPONENTS = ssl Other
+            include $(ACE_ROOT)/include/makeinclude/component_check.GNU
+            ifneq ($(MISSING_COMPONENTS),)
+              all:
+                     @echo Missing $(MISSING_COMPONENTS)
+            endif
+
+          This should greatly simplify Makefiles in general and MPC
+          templates in particular.
+        
+        * include/makeinclude/all_in_one.GNU:
+        * include/makeinclude/component_check.GNU:
+          Moved the code that set the BIN, LIB, and SHLIB variable from
+          component_check.GNU to all_in_one.GNU, and removed the include
+          guards from component_check.GNU so it could be included multiple
+          times like a function call.  Also, set the BUILD to the correct
+          values depending on which variables are set (BUILD is also set
+          correctly in wrapper_macros.GNU, but this implementation should
+          be more correct if all_in_one.GNU is used instead of including
+          the other files individually).
+
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * bin/g++dep:
+          Added ACE_PLATFORM_CONFIG = config-linux.h, so that
+          config-linux.h will always be included in dependencies on
+          Linux.  Added default value of config.h to wrapper_macros.GNU,
+          and pass it to g++dep where it is used to replace the matching
+          file dependency with $(ACE_PLATFORM_CONFIG) so we can pick up
+          the correct dependency automatically on each platform. 
+
+        * include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/platform_sunos5_kcc.GNU:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          Moved the assignment of the CLEANUP_* variables to the top of
+          wrapper_macros.GNU, and changed the test in the two platform_*
+          files from BIN to CLEANUP_BIN, so they can be correctly tested
+          even if BIN_UNCHECKED of BIN2 was defined in the Makefile
+          instead of BIN.
+
+        * include/makeinclude/rules.bin.GNU:
+          Assign CLEANUP_BIN to PSRC so that it gets passed to depend and
+          dependencies are generated even if the component isn't enabled
+          or not explicitely included in VOBJS which is derived from SRC.
+
+        * include/makeinclude/rules.lib.GNU:
+          Modified the versioning variables and created CLEANUP_INSTALL so
+          that libraries can be installed and uninstalled correctly even
+          if components are currently enabled.  Cosmetic fixes to the
+          ifdef code to make it more readable, added comments.
+
+        * include/makeinclude/rules.local.GNU:
+          More cosmetic changes to make it more readable.  Added
+          CLEANUP_OBJDIRS to make it easier to keep track of what
+          directories need to be removed during clean and realclean.
+          Condensed the clean and install/deinstall target code to use
+          fewer rm calls and only call them if there's something to do.
+          Also, only cleanup the library or bin that was created,
+          including a specific version number if available.  These use the
+          special CLEANUP_* variables so they aren't dependant on whether
+          or not a feature or component is enabled.
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Added $(IDL_SRC) to all the BUILD variables (there are lots of
+          them), so that they are always generated first if defined.
+          Commented out the assignment of $(VSHDIR) to $(VDIR) is building
+          shared_libs_only and not on VXWORKS.  This doesn't seem right,
+          especially if we are building bins and libs in the same directory.
+
 Thu Nov 20 17:30:18 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/os_include/sys/socket.h: HP-UX supplies the socklen_t type
+	* ace/os_include/sys/os_socket.h: HP-UX supplies the socklen_t type
 	  unless some feature set less than _XOPEN_SOURCE_EXTENDED is
 	  specifically requested. However, it only actually uses the
 	  socklen_t type in supplied socket functions if

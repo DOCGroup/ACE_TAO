@@ -1,3 +1,89 @@
+Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * rules.tao.GNU:
+          Added IDL_SRC and IDL_OBJ variables.  If you define IDL_SRC in
+          your Makefile to be the name of an IDL file (without .idl),
+          these variables will automatically contain a list of
+          corresponding *.C.h and *S.h, and *C.o and *S.o files
+          respectively.  In a related ACE ChangeLog entry with the same
+          ChangeLogTag, $(IDL_SRC) was added as a target dependant on the
+          IDL_FILES, so if these files are modified, the IDL_SRC will be
+          automatically regenerated.  Also, the same ChangeLog entry
+          mentioned that $(IDL_SRC) is now alway listed as the first
+          dependency in the BUILD variable, so it will alway be generated
+          first an no longer constitute a problem for parallel builds.
+          Makefiles need do no more than define IDL_FILES and use IDL_SRC
+          and IDL_OBJS for this to work.
+
+        * docs/tutorials/Quoter/AMI/Makefile:
+        * docs/tutorials/Quoter/Event_Service/Makefile:
+        * docs/tutorials/Quoter/On_Demand_Activation/Makefile:
+        * docs/tutorials/Quoter/idl/Makefile:
+        * examples/AMH/Sink_Server/Makefile:
+        * examples/POA/Generic_Servant/Makefile.client:
+        * examples/POA/Generic_Servant/Makefile.generic_servant:
+        * examples/ior_corbaloc/Makefile:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+        * orbsvcs/tests/IOR_MCast/Makefile:
+        * orbsvcs/tests/Notify/Structured_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
+        * orbsvcs/tests/ior_corbaname/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+        * tests/AMH_Exceptions/Makefile:
+        * tests/AMI_Buffering/Makefile:
+        * tests/Codec/Makefile:
+        * tests/Collocation/Makefile.impl:
+        * tests/Collocation/Makefile.stub:
+        * tests/Collocation/Makefile.test:
+        * tests/DLL_ORB/Makefile.Test_Client_Module:
+        * tests/DLL_ORB/Makefile.Test_Server_Module:
+        * tests/Portable_Interceptors/Bug_1559/Makefile:
+        * tests/Smart_Proxies/On_Demand/Makefile:
+          Removed IDL_SRC and adjusted other variables in accordance with
+          the above changes.  Also removed the realclean and .PRECIOUS
+          targets as they are no longer needed.  These instances of
+          IDL_SRC did not include the .cpp extention.  All other instances
+          in TAO include the .cpp extention.
+
+        * orbsvcs/Makefile.CosConcurrency:
+        * orbsvcs/orbsvcs/Makefile.CosEvent:
+        * orbsvcs/orbsvcs/Makefile.CosLifeCycle:
+        * orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+        * orbsvcs/orbsvcs/Makefile.CosNaming:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/Makefile.CosProperty:
+        * orbsvcs/orbsvcs/Makefile.CosTime:
+        * orbsvcs/orbsvcs/Makefile.CosTrading:
+        * orbsvcs/orbsvcs/Makefile.DsEventLogAdmin:
+        * orbsvcs/orbsvcs/Makefile.DsLogAdmin:
+        * orbsvcs/orbsvcs/Makefile.DsNotifyLogAdmin:
+        * orbsvcs/orbsvcs/Makefile.ESF:
+        * orbsvcs/orbsvcs/Makefile.ETCL:
+        * orbsvcs/orbsvcs/Makefile.FTORB:
+        * orbsvcs/orbsvcs/Makefile.FaultTolerance:
+        * orbsvcs/orbsvcs/Makefile.IFRService:
+        * orbsvcs/orbsvcs/Makefile.Metrics:
+        * orbsvcs/orbsvcs/Makefile.PortableGroup:
+        * orbsvcs/orbsvcs/Makefile.RTCORBAEvent:
+        * orbsvcs/orbsvcs/Makefile.RTCosScheduling:
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/Makefile.RTEventLogAdmin:
+        * orbsvcs/orbsvcs/Makefile.RTKokyuEvent:
+        * orbsvcs/orbsvcs/Makefile.RTOLDEvent:
+        * orbsvcs/orbsvcs/Makefile.RTSched:
+        * orbsvcs/orbsvcs/Makefile.RTSchedEvent:
+        * orbsvcs/orbsvcs/Makefile.RT_Notification:
+        * orbsvcs/orbsvcs/Makefile.SSLIOP:
+        * orbsvcs/orbsvcs/Makefile.Security:
+        * orbsvcs/orbsvcs/Makefile.Svc_Utils:
+        * orbsvcs/orbsvcs/Makefile.av:
+          Modified these makefiles to use the new all_in_one.GNU file
+          which simplifies Makefiles by only requiring them to include a
+          single file and automatically handles conditional compiles based
+          on requirements list passed as a list assigned to
+          REQUIRED_COMPONENTS.  Updated dependencies.
+
 Thu Nov 20 21:02:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.cpp:

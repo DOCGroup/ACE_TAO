@@ -16,7 +16,6 @@ LDLIBS = -lTAO_CosEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Por
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 IDL_FILES = Quoter
-IDL_SRC = QuoterC.cpp QuoterS.cpp
 BIN2 = client server
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
@@ -49,16 +48,11 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-.PRECIOUS: $(foreach ext, $(IDL_EXT), Quoter$(ext))
-
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), Quoter$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

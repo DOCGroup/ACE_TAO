@@ -74,7 +74,7 @@ endif
 #### Create template repository to avoid compiler warning.
 TEMPLATE_REPOSITORY = Templates.DB
 
-ifdef BIN
+ifdef CLEANUP_BIN
   #### Builds .shobj/$*.o file, then .shobj/$*.so file.  The .o files
   #### are used for building libraries and executables.  But, it seems
   #### to be necessary to build the .so files (with -G) in order to get
@@ -95,7 +95,7 @@ else
   #### after building it.
   SOBUILD = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                       /bin/ln $(VSHDIR)$*.o $@
-endif # BIN
+endif # CLEANUP_BIN
 
 #### The following macro overrides enable creation of fast executables.
 #### They _don't_ support fast compilation :-)

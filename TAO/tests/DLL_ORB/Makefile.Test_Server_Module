@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 #----------------------------------------------------------------------------
 #       $Id$
 #----------------------------------------------------------------------------
@@ -16,17 +18,13 @@ endif # ! TAO_ROOT
 TAO_IDLFLAGS += -Ge 1
 
 IDL_FILES = Test
-IDL_SRC = TestC TestS
-
 
 LIB     = libTest_Server_Module.a
 SHLIB   = libTest_Server_Module.$(SOEXT)
-FILES   = Test_Server_Module Test_i $(IDL_SRC)
-LSRC    = $(addsuffix .cpp,$(FILES))
+FILES   = Test_Server_Module Test_i
+LSRC    = $(addsuffix .cpp,$(FILES)) $(IDL_SRC)
 
 LIBS   += -lTAO_PortableServer -lTAO $(ACELIB)
-
-BUILD   = $(VLIB) $(VSHLIB)
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
