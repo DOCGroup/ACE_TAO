@@ -51,16 +51,17 @@ Echo_i::echo_list (const char *message,
   (*list)[0] =
     orb_->resolve_initial_references ("NameService",
                                       ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   (*list)[1] =
     orb_->resolve_initial_references ("NameService",
-                                                 ACE_TRY_ENV);;
-  ACE_CHECK;
+                                      ACE_TRY_ENV);;
+  ACE_CHECK_RETURN (0);
+
   (*list)[2] =
     orb_->resolve_initial_references ("NameService",
-                                                 ACE_TRY_ENV);
-  ACE_CHECK;
+                                      ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   return list;
 }
