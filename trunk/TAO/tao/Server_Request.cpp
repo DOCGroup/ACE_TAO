@@ -447,7 +447,6 @@ IIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
               // Then just marshal the value.
               (void) this->outgoing_->encode (pdp->tc, ptr, 0, orb_env);
             }
-          continue;
         }
       else if ((pdp->mode == CORBA::ARG_INOUT)
           || (pdp->mode == CORBA::ARG_OUT))
