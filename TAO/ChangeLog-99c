@@ -1,3 +1,11 @@
+Wed Oct 27 20:24:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tests/Param_Test/helper.h:
+	* tests/Param_Test/param_test_i.h:
+	  Removed all uses of CORBA::WString, this was a non-standard type 
+	  and there is no need to introduce stuff like that in TAO.
+
 Wed Oct 27 14:57:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* rules.tao.GNU:
