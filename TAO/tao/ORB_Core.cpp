@@ -585,6 +585,9 @@ TAO_ORB_Core::fini (void)
   if (!this->server_factory_from_service_config_)
     delete server_factory_;
 
+  ACE_OS::socket_fini ();
+  // Closing down sockets.
+
   return 0;
 }
 
