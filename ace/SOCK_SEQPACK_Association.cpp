@@ -43,7 +43,7 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
     We will be calling ACE_OS::getsockname, which accepts (and
     potentially modifies) two reference parameters:
 
-    1.  a sockaddr* that points to a buffer
+    1.  a sockaddr_in* that points to a buffer
     2.  an int* that points to the size of this buffer
 
     The OpenSS7 implementation of SCTP copies an array of ipv4
@@ -53,26 +53,26 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
 
   */
 
-  // The array of sockaddr will be stored in an ACE_Auto_Array_Ptr,
+  // The array of sockaddr_in will be stored in an ACE_Auto_Array_Ptr,
   // which causes dynamically-allocated memory to be released as soon
   // as the ACE_Auto_Array_Ptr goes out of scope.
-  ACE_Auto_Array_Ptr<sockaddr> addr_structs;
+  ACE_Auto_Array_Ptr<sockaddr_in> addr_structs;
   
   // Allocate memory for this array.  Return -1 if the memory cannot
   // be allocated.  (This activity requires a temporary variable---a
-  // bare sockaddr* --- because ACE_NEW_RETURN cannot act directory on
+  // bare sockaddr_in* --- because ACE_NEW_RETURN cannot act directory on
   // an ACE_Auto_Array_Ptr.)
   {
-    sockaddr *addr_structs_bootstrap = 0;
+    sockaddr_in *addr_structs_bootstrap = 0;
     ACE_NEW_RETURN(addr_structs_bootstrap,
-                   sockaddr[size],
+                   sockaddr_in[size],
                    -1);
     addr_structs.reset(addr_structs_bootstrap);
   }
 
   // Physical size of this array is its logical size multiplied by
   // the physical size of one of its elements.
-  int physical_size = size * sizeof(sockaddr);
+  int physical_size = size * sizeof(sockaddr_in);
 
   /* Clear the array */
   ACE_OS::memset(addr_structs.get(),
@@ -83,20 +83,21 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
      call.  The variables addr_structs and phycisal_size are
      modified. */
   if (ACE_OS::getsockname (this->get_handle (),
-                           addr_structs.get(),
+                           ACE_reinterpret_cast (sockaddr *,
+                                                 addr_structs.get()),
                            &physical_size) == -1)
     return -1;
 
   /* Calculate the NEW physical size of the array */
-  size = physical_size / sizeof (sockaddr);
+  size = physical_size / sizeof (sockaddr_in);
 
-  /* Copy each sockaddr to the address structure of an ACE_Addr from
+  /* Copy each sockaddr_in to the address structure of an ACE_Addr from
      the passed-in array */
   for (size_t i = 0; i < size; ++i) {
 
-    addrs[i].set_addr(&(addr_structs[i]), sizeof(sockaddr));
-    addrs[i].set_type(addr_structs[i].sa_family);
-
+    addrs[i].set_addr(&(addr_structs[i]), sizeof(sockaddr_in));
+    addrs[i].set_type(addr_structs[i].sin_family);
+    addrs[i].set_size(sizeof(sockaddr_in));
   }
 
   return 0;
@@ -111,7 +112,7 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
     We will be calling ACE_OS::getpeername, which accepts (and
     potentially modifies) two reference parameters:
 
-    1.  a sockaddr* that points to a buffer
+    1.  a sockaddr_in* that points to a buffer
     2.  an int* that points to the size of this buffer
 
     The OpenSS7 implementation of SCTP copies an array of ipv4
@@ -121,26 +122,26 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
 
   */
 
-  // The array of sockaddr will be stored in an ACE_Auto_Array_Ptr,
+  // The array of sockaddr_in will be stored in an ACE_Auto_Array_Ptr,
   // which causes dynamically-allocated memory to be released as soon
   // as the ACE_Auto_Array_Ptr goes out of scope.
-  ACE_Auto_Array_Ptr<sockaddr> addr_structs;
+  ACE_Auto_Array_Ptr<sockaddr_in> addr_structs;
   
   // Allocate memory for this array.  Return -1 if the memory cannot
   // be allocated.  (This activity requires a temporary variable---a
-  // bare sockaddr* --- because ACE_NEW_RETURN cannot act directory on
+  // bare sockaddr_in* --- because ACE_NEW_RETURN cannot act directory on
   // an ACE_Auto_Array_Ptr.)
   {
-    sockaddr *addr_structs_bootstrap = 0;
+    sockaddr_in *addr_structs_bootstrap = 0;
     ACE_NEW_RETURN(addr_structs_bootstrap,
-                   sockaddr[size],
+                   sockaddr_in[size],
                    -1);
     addr_structs.reset(addr_structs_bootstrap);
   }
 
   // Physical size of this array is its logical size multiplied by
   // the physical size of one of its elements.
-  int physical_size = size * sizeof(sockaddr);
+  int physical_size = size * sizeof(sockaddr_in);
 
   /* Clear the array */
   ACE_OS::memset(addr_structs.get(),
@@ -151,20 +152,21 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
      call.  The variables addr_structs and phycisal_size are
      modified. */
   if (ACE_OS::getpeername (this->get_handle (),
-                           addr_structs.get(),
+                           ACE_reinterpret_cast (sockaddr *,
+                                                 addr_structs.get()),
                            &physical_size) == -1)
     return -1;
 
   /* Calculate the NEW physical size of the array */
-  size = physical_size / sizeof (sockaddr);
+  size = physical_size / sizeof (sockaddr_in);
 
-  /* Copy each sockaddr to the address structure of an ACE_Addr from
+  /* Copy each sockaddr_in to the address structure of an ACE_Addr from
      the passed-in array */
   for (size_t i = 0; i < size; ++i) {
 
-    addrs[i].set_addr(&(addr_structs[i]), sizeof(sockaddr));
-    addrs[i].set_type(addr_structs[i].sa_family);
-
+    addrs[i].set_addr(&(addr_structs[i]), sizeof(sockaddr_in));
+    addrs[i].set_type(addr_structs[i].sin_family);
+    addrs[i].set_size(sizeof(sockaddr_in));
   }
 
   return 0;
