@@ -1414,12 +1414,17 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  {
 	    int spolicy;
 
+#if defined (ACE_HAS_STHREADS)
+            // Solaris, thru version 2.5.1, only supports SCHED_OTHER.
+            spolicy = SCHED_OTHER;
+#else
 	    if (ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
 	      spolicy = SCHED_OTHER;
 	    else if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
 	      spolicy = SCHED_FIFO;
 	    else
 	      spolicy = SCHED_RR;
+#endif /* ACE_HAS_STHREADS */
 
 #if !defined (ACE_HAS_FSU_PTHREADS)
 #if defined (ACE_HAS_SETKIND_NP)
