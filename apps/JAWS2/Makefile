@@ -8,8 +8,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS	= HTTPU \
-	  JAWS
+DIRS	= JAWS \
+	  HTTPU
 
 BIN   	= main
 
@@ -22,7 +22,7 @@ FILES  	= HTTP_10 \
 SRC	= $(addsuffix .cpp,$(FILES))
 OBJ	= $(addsuffix .o,$(FILES))
 
-LDFLAGS += -L./JAWS
+LDFLAGS += -L./JAWS -L./HTTPU
 LDLIBS  = -lHTTPU -lJAWS2
 CFLAGS += -DJAWS_HAS_THREAD_SAFE_ACCEPT
 CPPFLAGS += -I.
