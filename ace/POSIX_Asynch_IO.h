@@ -88,6 +88,12 @@ public:
   int priority (void) const;
   // Priority of the operation.
 
+  int signal_number (void) const;
+  // POSIX4 real-time signal number to be used for the
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+  // on non-POSIX4 systems and returns 0.
+  
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor.
 
@@ -100,7 +106,8 @@ protected:
                            ACE_HANDLE event,
                            u_long offset,
                            u_long offset_high,
-                           int priority);
+                           int priority,
+                           int signal_number);
   // Constructor. <Event> is not used on POSIX.
 
   ACE_Handler &handler_;
@@ -140,11 +147,14 @@ public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor);
+            ACE_Proactor *proactor = 0);
   // Initializes the factory with information which will be used with
   // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
   // <ACE_Handler::handle> will be called on the <handler> to get the
-  // correct handle.
+  // correct handle. No need for the Proactor since the sub classes
+  // will know the correct implementation Proactor class, since this
+  // Operation class itself was created by the correct implementation
+  // Proactor class.
 
   int cancel (void);
   //
@@ -162,6 +172,12 @@ protected:
   virtual ~ACE_POSIX_Asynch_Operation (void);
   // Destructor.
 
+  virtual int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result) = 0;
+  // <Asynch_Operation> class call this method to register the <aio_>
+  // call with the Proactor, so that Proactor can do completion
+  // querying effectively. Different POSIX Proactor implementations do
+  // different things to register the <aio_>. 
+  
   ACE_Proactor *proactor_;
   // Proactor that this Asynch IO will be registered with.
 
@@ -228,6 +244,12 @@ protected:
 
   virtual ~ACE_POSIX_SIG_Asynch_Operation (void);
   // Destructor.
+
+  int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result);
+  // <Asynch_Operation> classes call this, to register the real-time
+  // signal used to issue the <aio_> call with the Proator. This
+  // should be done so that the Proactor can wait for completions of
+  // the asynchronous calls, issued using those signals.
 
   ACE_POSIX_SIG_Proactor *posix_sig_proactor_;
   // It is easy to get this specific implementation proactor here,
@@ -301,6 +323,12 @@ public:
   int priority (void) const;
   // The priority of the asynchronous operation.
 
+  int signal_number (void) const;
+  // POSIX4 real-time signal number to be used for the
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+  // on non-POSIX4 systems and returns 0.
+
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor.
 
@@ -311,7 +339,8 @@ protected:
                                        u_long bytes_to_read,
                                        const void* act,
                                        ACE_HANDLE event,
-                                       int priority);
+                                       int priority,
+                                       int signal_number);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Read_Stream factory.
   
@@ -353,7 +382,8 @@ public:
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             const void *act,
-            int priority);
+            int priority,
+            int signal_number = 0);
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
   // be read and stored in the <message_block>.
 
@@ -367,7 +397,7 @@ public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor);
+            ACE_Proactor *proactor = 0);
   // Initializes the factory with information which will be used with
   // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
   // <ACE_Handler::handle> will be called on the <handler> to get the
@@ -404,7 +434,8 @@ public:
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             const void *act,
-            int priority);
+            int priority,
+            int signal_number);
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
   // be read and stored in the <message_block>.
 
@@ -418,7 +449,7 @@ public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor);
+            ACE_Proactor *proactor = 0);
   // Initializes the factory with information which will be used with
   // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
   // <ACE_Handler::handle> will be called on the <handler> to get the
@@ -505,6 +536,12 @@ public:
   int priority (void) const;
   // The priority of the asynchronous operation.
 
+  int signal_number (void) const;
+  // POSIX4 real-time signal number to be used for the
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+  // on non-POSIX4 systems and returns 0.
+
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor.
 
@@ -515,7 +552,8 @@ protected:
                                         u_long bytes_to_write,
                                         const void* act,
                                         ACE_HANDLE event,
-                                        int priority);
+                                        int priority,
+                                        int signal_number);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Write_Stream factory.
 
@@ -558,7 +596,8 @@ public:
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              const void *act,
-             int priority);
+             int priority,
+             int signal_number = 0);
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be written from the <message_block>.
 
@@ -572,7 +611,7 @@ public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor);
+            ACE_Proactor *proactor =  0);
   // Initializes the factory with information which will be used with
   // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
   // <ACE_Handler::handle> will be called on the <handler> to get the
@@ -608,7 +647,8 @@ public:
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              const void *act,
-             int priority);
+             int priority,
+             int signal_number);
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be written from the <message_block>.
 
@@ -622,7 +662,7 @@ public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor);
+            ACE_Proactor *proactor = 0);
   // Initializes the factory with information which will be used with
   // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
   // <ACE_Handler::handle> will be called on the <handler> to get the
@@ -697,6 +737,12 @@ public:
   int priority (void) const;
   // The priority of the asynchronous operation.
 
+  int signal_number (void) const;
+  // POSIX4 real-time signal number to be used for the
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+  // on non-POSIX4 systems and returns 0.
+  
   // = The following methods belong to
   //   ACE_POSIX_Asynch_Read_Stream_Result. They are here to avoid 
   //   dominance warnings. These methods route their call to the
@@ -724,7 +770,8 @@ protected:
                                      u_long offset,
                                      u_long offset_high,
                                      ACE_HANDLE event,
-                                     int priority);
+                                     int priority,
+                                     int signal_number);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Read_File factory.
 
@@ -768,7 +815,8 @@ public:
             u_long offset,
             u_long offset_high,
             const void *act,
-            int priority);
+            int priority,
+            int signal_number = 0);
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
   // be read and stored in the <message_block>.  The read will start
   // at <offset> from the beginning of the file.
@@ -784,7 +832,7 @@ public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor);
+            ACE_Proactor *proactor = 0);
   // Initializes the factory with information which will be used with
   // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
   // <ACE_Handler::handle> will be called on the <handler> to get the
@@ -801,7 +849,8 @@ private:
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             const void *act,
-            int priority);
+            int priority,
+            int signal_number = 0);
   // This belongs to ACE_POSIX_AIOCB_Asynch_Read_Stream. We have
   // defined this here to avoid compiler warnings and forward the
   // method to <ACE_POSIX_AIOCB_Asynch_Read_Stream::read>.
@@ -834,7 +883,8 @@ public:
             u_long offset,
             u_long offset_high,
             const void *act,
-            int priority);
+            int priority,
+            int signal_number);
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
   // be read and stored in the <message_block>.  The read will start
   // at <offset> from the beginning of the file.
@@ -849,7 +899,7 @@ public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor);
+            ACE_Proactor *proactor = 0);
   // Initializes the factory with information which will be used with
   // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
   // <ACE_Handler::handle> will be called on the <handler> to get the
@@ -866,7 +916,8 @@ private:
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             const void *act,
-            int priority);
+            int priority,
+            int signal_number);
   // This belongs to ACE_POSIX_SIG_Asynch_Read_Stream. We have
   // defined this here to avoid compiler warnings and forward the
   // method to <ACE_POSIX_SIG_Asynch_Read_Stream::read>.
@@ -937,6 +988,12 @@ public:
   int priority (void) const;
   // The priority of the asynchronous operation.
 
+  int signal_number (void) const;
+  // POSIX4 real-time signal number to be used for the
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+  // on non-POSIX4 systems and returns 0.
+  
   // = The following methods belong to
   //   ACE_POSIX_Asynch_Write_Stream_Result. They are here to avoid
   //   dominace warnings. These methods route their call to the 
@@ -964,7 +1021,8 @@ protected:
                                       u_long offset,
                                       u_long offset_high,
                                       ACE_HANDLE event,
-                                      int priority);
+                                      int priority,
+                                      int signal_number);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Write_File factory.
 
@@ -999,7 +1057,8 @@ public:
              u_long offset,
              u_long offset_high,
              const void *act,
-             int priority);
+             int priority,
+             int signal_number = 0);
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be write and stored in the <message_block>.  The write will
   // start at <offset> from the beginning of the file.
@@ -1014,7 +1073,7 @@ public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor);
+            ACE_Proactor *proactor = 0);
   // Initializes the factory with information which will be used with
   // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
   // <ACE_Handler::handle> will be called on the <handler> to get the
@@ -1031,8 +1090,9 @@ private:
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              const void *act,
-             int priority);
-  // This <write> belongs to ACE_POSIX_SIG_Asynch_Write_Stream. We
+             int priority,
+             int signal_number = 0);
+  // This <write> belongs to ACE_POSIX_AIOCB_Asynch_Write_Stream. We
   // have put this here to avoid compiler warnings. We forward this
   // method call to the <ACE_POSIX_SIG_Asynch_Write_Stream::write>
   // one.
@@ -1065,7 +1125,8 @@ public:
              u_long offset,
              u_long offset_high,
              const void *act,
-             int priority);
+             int priority,
+             int signal_number);
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be write and stored in the <message_block>.  The write will
   // start at <offset> from the beginning of the file.
@@ -1080,7 +1141,7 @@ public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor);
+            ACE_Proactor *proactor = 0);
   // Initializes the factory with information which will be used with
   // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
   // <ACE_Handler::handle> will be called on the <handler> to get the
@@ -1097,7 +1158,8 @@ private:
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              const void *act,
-             int priority);
+             int priority,
+             int signal_number);
   // This <write> belongs to ACE_POSIX_SIG_Asynch_Write_Stream. We
   // have put this here to avoid compiler warnings. We forward this
   // method call to the <ACE_POSIX_SIG_Asynch_Write_Stream::write>
@@ -1175,6 +1237,12 @@ public:
   int priority (void) const;
   // The priority of the asynchronous operation. 
 
+  int signal_number (void) const;
+  // POSIX4 real-time signal number to be used for the
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+  // on non-POSIX4 systems and returns 0.
+  
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor.
 
@@ -1186,7 +1254,8 @@ protected:
                                   u_long bytes_to_read,
                                   const void* act,
                                   ACE_HANDLE event,
-                                  int priority);
+                                  int priority,
+                                  int signal_number);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Accept factory.
 
@@ -1227,7 +1296,7 @@ public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor);
+            ACE_Proactor *proactor = 0);
   // This <open> belongs to ACE_AIOCB_Asynch_Operation. We forward
   // this call to that method. We have put this here to avoid the
   // compiler warnings.
@@ -1236,7 +1305,8 @@ public:
               u_long bytes_to_read,
               ACE_HANDLE accept_handle,
               const void *act,
-              int priority);
+              int priority,
+              int signal_number = 0);
   // This starts off an asynchronous accept.  The asynchronous accept
   // call also allows any initial data to be returned to the
   // <handler>.  Upto <bytes_to_read> will be read and stored in the
@@ -1293,7 +1363,7 @@ public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor);
+            ACE_Proactor *proactor = 0);
   // This <open> belongs to ACE_SIG_Asynch_Operation. We forward this
   // call to that method. We have put this here to avoid the compiler
   // warnings.
@@ -1302,7 +1372,8 @@ public:
               u_long bytes_to_read,
               ACE_HANDLE accept_handle,
               const void *act,
-              int priority);
+              int priority,
+              int signal_number);
   // This starts off an asynchronous accept.  The asynchronous accept
   // call also allows any initial data to be returned to the
   // <handler>.  Upto <bytes_to_read> will be read and stored in the
@@ -1421,6 +1492,12 @@ public:
   int priority (void) const;
   // The priority of the asynchronous operation.
 
+  int signal_number (void) const;
+  // POSIX4 real-time signal number to be used for the
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+  // on non-POSIX4 systems and returns 0.
+  
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor.
 
@@ -1436,7 +1513,8 @@ protected:
                                          u_long flags,
                                          const void *act,
                                          ACE_HANDLE event,
-                                         int priority);
+                                         int priority,
+                                         int signal_number);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Transmit_File factory.
 
@@ -1488,7 +1566,8 @@ public:
                      u_long bytes_per_send,
                      u_long flags,
                      const void *act,
-                     int priority);
+                     int priority,
+                     int signal_number = 0);
   // This starts off an asynchronous transmit file. The <file> is a
   // handle to an open file.  <header_and_trailer> is a pointer to a
   // data structure that contains pointers to data to send before and
@@ -1509,7 +1588,7 @@ public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor);
+            ACE_Proactor *proactor = 0);
   // Initializes the factory with information which will be used with
   // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
   // <ACE_Handler::handle> will be called on the <handler> to get the
@@ -1545,7 +1624,8 @@ public:
                      u_long bytes_per_send,
                      u_long flags,
                      const void *act,
-                     int priority);
+                     int priority,
+                     int signal_number);
   // This starts off an asynchronous transmit file. The <file> is a
   // handle to an open file.  <header_and_trailer> is a pointer to a
   // data structure that contains pointers to data to send before and
@@ -1565,7 +1645,7 @@ public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor);
+            ACE_Proactor *proactor = 0);
   // Initializes the factory with information which will be used with
   // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
   // <ACE_Handler::handle> will be called on the <handler> to get the
