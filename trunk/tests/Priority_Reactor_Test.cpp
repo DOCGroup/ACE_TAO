@@ -55,37 +55,37 @@ static int opt_max_duration = 60;
 // -m option.
 static int max_retries = 5;
 
-typedef ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR> 
-	CONNECTOR;
-typedef ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR> 
-	ACCEPTOR;
+typedef ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR>
+        CONNECTOR;
+typedef ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR>
+        ACCEPTOR;
 
 int Read_Handler::waiting_ = 0;
 int Read_Handler::started_ = 0;
 
-void 
+void
 Read_Handler::set_countdown (int nchildren)
 {
   Read_Handler::waiting_ = nchildren;
 }
 
-int 
+int
 Read_Handler::get_countdown (void)
 {
   return Read_Handler::waiting_;
 }
 
-int 
+int
 Read_Handler::open (void *)
 {
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "(%P|%t) Read_Handler::open, "
+                       "(%P|%t) Read_Handler::open, "
                        "cannot set non blocking mode"), -1);
 
   if (reactor ()->register_handler (this, READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "(%P|%t) Read_Handler::open, "
+                       "(%P|%t) Read_Handler::open, "
                        "cannot register handler"), -1);
 
   // A number larger than the actual number of priorities, so some
@@ -96,14 +96,14 @@ Read_Handler::open (void *)
   started_++;
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) created svc_handler for handle %d "
-	      "with priority %d\n",
-	      get_handle (),
-	      priority ()));
+              "(%P|%t) created svc_handler for handle %d "
+              "with priority %d\n",
+              get_handle (),
+              priority ()));
   return 0;
 }
 
-int 
+int
 Read_Handler::handle_input (ACE_HANDLE h)
 {
   // ACE_DEBUG((LM_DEBUG,
@@ -117,7 +117,7 @@ Read_Handler::handle_input (ACE_HANDLE h)
   if (result <= 0)
     {
       if (result < 0 && errno == EWOULDBLOCK)
-	return 0;
+        return 0;
 
       if (result != 0)
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) %p\n",
@@ -125,30 +125,30 @@ Read_Handler::handle_input (ACE_HANDLE h)
       waiting_--;
 
       if (waiting_ == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Last svc_handler closed, shutting down\n"));
-	  ACE_Reactor::instance()->end_event_loop();
-	}
-      
-      ACE_DEBUG ((LM_DEBUG, 
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Last svc_handler closed, shutting down\n"));
+          ACE_Reactor::instance()->end_event_loop();
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Read_Handler::handle_input closing down\n"));
       return -1;
     }
-  
+
   // ACE_DEBUG((LM_DEBUG,
   // "(%P|%t) read %d bytes from handle %d, priority %d\n",
   // result, h, priority ()));
   return 0;
 }
 
-int 
+int
 Write_Handler::open (void *)
 {
   return 0;
 }
 
-int 
+int
 Write_Handler::svc (void)
 {
   // Send several short messages, doing pauses between each message.
@@ -158,8 +158,8 @@ Write_Handler::svc (void)
   for (int i = 0; i < opt_nloops; ++i)
     {
       if (this->peer ().send_n (ACE_ALPHABET,
-				sizeof (ACE_ALPHABET) - 1) == -1)
-	  ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "send_n"));
+                                sizeof (ACE_ALPHABET) - 1) == -1)
+          ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "send_n"));
       ACE_OS::sleep (pause);
     }
 
@@ -167,7 +167,7 @@ Write_Handler::svc (void)
 }
 
 // Execute the client tests.
-static void * 
+static void *
 client (void *arg)
 {
   ACE_INET_Addr *connection_addr = (ACE_INET_Addr *) arg;
@@ -180,43 +180,43 @@ client (void *arg)
   ACE_Synch_Options options = ACE_Synch_Options::synch;
 
   // Start with one msec timeouts.
-  ACE_Time_Value msec (0, 1000); 
+  ACE_Time_Value msec (0, 1000);
   options.timeout (msec);
 
   // Try up to <max_retries> to connect to the server.
   for (int i = 0; i < max_retries; i++)
     {
       if (connector.connect (writer,
-			     *connection_addr,
-			     options) == -1)
-	{
-	  // Double the timeout...
-	  ACE_Time_Value tmp = options.timeout ();
-	  tmp += options.timeout ();
-	  options.timeout (tmp);
-	  writer = 0;
-	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) still trying to connect\n"));
-	}
+                             *connection_addr,
+                             options) == -1)
+        {
+          // Double the timeout...
+          ACE_Time_Value tmp = options.timeout ();
+          tmp += options.timeout ();
+          options.timeout (tmp);
+          writer = 0;
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) still trying to connect\n"));
+        }
       else
-	{
-	  // Let the new Svc_Handler to its job...
-	  writer->svc ();
+        {
+          // Let the new Svc_Handler to its job...
+          writer->svc ();
 
-	  // then close the connection and release the Svc_Handler.
-	  writer->destroy ();
+          // then close the connection and release the Svc_Handler.
+          writer->destroy ();
 
-	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) finishing client\n"));
-	  return 0;
-	}
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) finishing client\n"));
+          return 0;
+        }
     }
 
-  ACE_ERROR ((LM_ERROR, 
-	      "(%P|%t) failed to connect after %d retries\n",
-	      max_retries));
+  ACE_ERROR ((LM_ERROR,
+              "(%P|%t) failed to connect after %d retries\n",
+              max_retries));
   return 0;
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   ACE_START_TEST ("Priority_Reactor_Test");
@@ -227,29 +227,29 @@ main (int argc, char *argv[])
     switch (c)
       {
       case 'd':
-	opt_priority_reactor = 0;
-	break;
+        opt_priority_reactor = 0;
+        break;
       case 'c':
-	opt_nchildren = atoi (getopt.optarg);
-	break;
+        opt_nchildren = atoi (getopt.optarg);
+        break;
       case 'l':
-	opt_nloops = atoi (getopt.optarg);
-	break;
+        opt_nloops = atoi (getopt.optarg);
+        break;
       case 'm':
-	max_retries = atoi (getopt.optarg);
-	break;
+        max_retries = atoi (getopt.optarg);
+        break;
       case 't':
-	opt_max_duration = atoi (getopt.optarg);
-	break;
+        opt_max_duration = atoi (getopt.optarg);
+        break;
       case '?':
       default:
-	ACE_ERROR_RETURN ((LM_ERROR, "Usage: Priority_Reactor_Test "
-			   "   [-d] (disable priority reactor)\n"
-			   "   [-c nchildren] (number of threads/processes)\n"
-			   "   [-l loops] (number of loops per child)\n"
-			   "   [-m maxretries] (attempts to connect)\n"
-			   "   [-t max_time] (limits test duration)\n"), -1);
-	ACE_NOTREACHED (break);
+        ACE_ERROR_RETURN ((LM_ERROR, "Usage: Priority_Reactor_Test "
+                           "   [-d] (disable priority reactor)\n"
+                           "   [-c nchildren] (number of threads/processes)\n"
+                           "   [-l loops] (number of loops per child)\n"
+                           "   [-m maxretries] (attempts to connect)\n"
+                           "   [-t max_time] (limits test duration)\n"), -1);
+        ACE_NOTREACHED (break);
       }
 
   // Manage memory automagically.
@@ -282,45 +282,45 @@ main (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "open"), -1);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) starting server at port %d\n",
-	      server_addr.get_port_number ()));
+              "(%P|%t) starting server at port %d\n",
+              server_addr.get_port_number ()));
 
   ACE_INET_Addr connection_addr (server_addr.get_port_number (),
-				 ACE_DEFAULT_SERVER_HOST);
-      
+                                 ACE_DEFAULT_SERVER_HOST);
+
   int i;
 
-#if defined (ACE_HAS_THREADS) 
+#if defined (ACE_HAS_THREADS)
   for (i = 0; i < opt_nchildren; ++i)
     {
       if (ACE_Thread_Manager::instance ()->spawn
-	  (ACE_THR_FUNC (client),
-	   (void *) &connection_addr,
-	   THR_NEW_LWP | THR_DETACHED) == -1)
-	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
+          (ACE_THR_FUNC (client),
+           (void *) &connection_addr,
+           THR_NEW_LWP | THR_DETACHED) == -1)
+        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
     }
-#elif !defined (ACE_WIN32) && !defined (VXWORKS) 
+#elif !defined (ACE_WIN32) && !defined (VXWORKS)
   for (i = 0; i < opt_nchildren; ++i)
     {
       switch (ACE_OS::fork ("child"))
-	{
-	case -1:
-	  ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
-	  exit (-1);
-	  /* NOTREACHED */
-	case 0:
-	  client (&connection_addr);
-	  exit (0);
-	  break;
-	  /* NOTREACHED */
-	default:
-	  break;
-	  /* NOTREACHED */
-	}
+        {
+        case -1:
+          ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
+          exit (-1);
+          /* NOTREACHED */
+        case 0:
+          client (&connection_addr);
+          exit (0);
+          break;
+          /* NOTREACHED */
+        default:
+          break;
+          /* NOTREACHED */
+        }
     }
 #else
   ACE_ERROR ((LM_ERROR,
-	      "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
+              "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
 #endif /* ACE_HAS_THREADS */
 
   ACE_Time_Value tv (opt_max_duration);
@@ -332,8 +332,8 @@ main (int argc, char *argv[])
   if (Read_Handler::get_countdown () != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "(%P|%t) running out of time, "
-		  "probably due to failed connections.\n"));
+                  "(%P|%t) running out of time, "
+                  "probably due to failed connections.\n"));
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) waiting for the children...\n"));
@@ -363,9 +363,9 @@ template class auto_ptr<ACE_Reactor>;
 template class ACE_Auto_Basic_Ptr<ACE_Reactor>;
 template class auto_ptr<ACE_Select_Reactor>;
 template class ACE_Auto_Basic_Ptr<ACE_Select_Reactor>;
-template class ACE_Map_Manager<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<int,ACE_Svc_Tuple<Write_Handler>*>;
+template class ACE_Map_Manager<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*>;
 template class ACE_Svc_Tuple<Write_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR>
@@ -375,8 +375,8 @@ template class ACE_Svc_Tuple<Write_Handler>;
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Reactor>
 #pragma instantiate auto_ptr<ACE_Select_Reactor>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Select_Reactor>
-#pragma instantiate ACE_Map_Manager<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<Write_Handler>*>
+#pragma instantiate ACE_Map_Manager<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*>
 #pragma instantiate ACE_Svc_Tuple<Write_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

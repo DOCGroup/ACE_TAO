@@ -306,7 +306,7 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "(%t) starting server at port %d\n",
               server_addr.get_port_number ()));
 
-  ACE_INET_Addr connection_addr (server_addr.get_port_number (), 
+  ACE_INET_Addr connection_addr (server_addr.get_port_number (),
                                  ACE_DEFAULT_SERVER_HOST);
 
   if (ACE_Thread_Manager::instance ()->spawn
@@ -342,9 +342,9 @@ template class auto_ptr<ACE_Reactor>;
 template class ACE_Auto_Basic_Ptr<ACE_Reactor>;
 template class auto_ptr<ACE_Reactor_Impl>;
 template class ACE_Auto_Basic_Ptr<ACE_Reactor_Impl>;
-template class ACE_Map_Manager<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<int,ACE_Svc_Tuple<Write_Handler>*>;
+template class ACE_Map_Manager<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*>;
 template class ACE_Svc_Tuple<Write_Handler>;
 template class ACE_Auto_Basic_Array_Ptr <char>;
 template class ACE_Auto_Basic_Array_Ptr <Write_Handler *>;
@@ -358,9 +358,9 @@ template class ACE_Auto_Array_Ptr <ACE_INET_Addr>;
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Reactor>
 #pragma instantiate auto_ptr<ACE_Reactor_Impl>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Reactor_Impl>
-#pragma instantiate ACE_Map_Manager<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<Write_Handler>*>
+#pragma instantiate ACE_Map_Manager<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*>
 #pragma instantiate ACE_Svc_Tuple<Write_Handler>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr <char>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr <Write_Handler *>
