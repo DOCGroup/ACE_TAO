@@ -2845,6 +2845,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   switch (::WaitForSingleObject (*s, msec_timeout))
     {
     case WAIT_OBJECT_0:
+      tv = ACE_OS::gettimeofday ();	// Update time to when acquired
       return 0;
     case WAIT_TIMEOUT:
       errno = ETIME;
@@ -2856,14 +2857,13 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     }
   /* NOTREACHED */
 #   else /* ACE_USES_WINCE_SEMA_SIMULATION */
-  // Record the starting time for later reference.  This is necessary
-  // because we may get signaled but cannot grab the semaphore before
+  // Note that in this mode, the acquire is done in two steps, and
+  // we may get signaled but cannot grab the semaphore before
   // timeout.  In that case, we'll need to restart the process with
   // updated timeout value.
-  ACE_Time_Value start_time = ACE_OS::gettimeofday ();
 
-  // Always wait <tv> time when we first start the wait.
-  ACE_Time_Value relative_time = tv;
+  // <tv> is an absolute time
+  ACE_Time_Value relative_time = tv - ACE_OS::gettimeofday ();
   int result = -1;
 
   // While we are not timeout yet.
@@ -2892,7 +2892,10 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
           // Only return when we successfully get the semaphore.
           if (result == 0)
-            return 0;
+	    {
+	      tv = ACE_OS::gettimeofday ();	// Update to time acquired
+	      return 0;
+	    }
           break;
 
           // We have timed out.
@@ -2909,7 +2912,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
       // Haven't been able to get the semaphore yet, update the
       // timeout value to reflect the remaining time we want to wait.
-      relative_time = tv - (ACE_OS::gettimeofday () - start_time);
+      relative_time = tv - ACE_OS::gettimeofday ();
     }
 
   // We have timed out.
