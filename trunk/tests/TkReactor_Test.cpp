@@ -27,7 +27,7 @@
 
 #include "test_config.h"
 
-ACE_RCSID(tests, TkReactor_Test, "$Id$");
+ACE_RCSID(tests, TkReactor_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
