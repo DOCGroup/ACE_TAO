@@ -65,6 +65,7 @@ namespace CIAO
     if (this->servant_map_.find (oid, servant) == 0)
       {
         servant->remove ();
+        ACE_DEBUG ((LM_DEBUG, "called the remove on the servant\n"));
         component_removed_ = 1;
       }
   }
