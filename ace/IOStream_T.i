@@ -53,19 +53,17 @@ template <class STREAM> ACE_INLINE int
 ACE_IOStream<STREAM>::eof (void) const
 {
   // Get the timeout value of the streambuf
-  ACE_Time_Value *timeout = this->streambuf_->recv_timeout (0);
+  ACE_Time_Value *timeout = ACE_Streambuf_T<STREAM>::recv_timeout (0);
 
   // Reset the timeout value of the streambuf.
-  (void) this->streambuf_->recv_timeout (timeout);
+  (void) ACE_Streambuf_T<STREAM>::recv_timeout (timeout);
 
   char c;
-  int rval = this->streambuf_->recv_n (&c,
-                                       sizeof c,
-                                       MSG_PEEK,
-                                       timeout);
+  int rval = ACE_Streambuf_T<STREAM>::recv_n (&c, sizeof c, MSG_PEEK,
+timeout);
 
   // Timeout, not an eof
-  if (this->streambuf_->timeout())
+  if (ACE_Streambuf_T<STREAM>::timeout())
     return 0;
 
   // No timeout, got enough data:  not eof
@@ -158,3 +156,4 @@ ACE_SOCK_Dgram_SC<STREAM>::get_remote_addr (ACE_INET_Addr &addr) const
   addr = peer_;
   return 0;
 }
+
