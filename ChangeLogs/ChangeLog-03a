@@ -1,3 +1,8 @@
+Thu Apr 25 06:51:58 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/CDR_Base.h (ACE_CDR): Improved the documentation of the consolidate()
+	  method.  Thanks to Alain Decamps for helping with this.
+
 Thu Apr 25 03:34:43 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/MT_Reactor_Upcall_Test.cpp: Changed the test such that the
@@ -28,7 +33,7 @@ Wed Apr 24 16:08:30 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Wed Apr 24 11:07:15 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/RMCast/Makefile (FILES): Removed a stray "\".  Thanks to
-	  <amir@fats.co.il> for reporting this.  Also reordered the files
+	  Amir Kunst <amir@fats.co.il> for reporting this.  Also reordered the files
 	  so they would be in alphabetical order.
 
 Wed Apr 24 11:17:31 2002  Steve Huston  <shuston@riverace.com>
@@ -2049,8 +2054,9 @@ Thu Mar 28 06:14:22 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 Wed Mar 27 20:00:31 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* include/makeinclude/platform_linux.GNU: Fixed a typo where
-	  PLATFORM_XT_LDFLAGS was spelled incorrectly.  Thanks to
-	  Eric Eide for reporting this.
+	  PLATFORM_XT_LDFLAGS was spelled incorrectly.  Thanks to Eric
+ 	  Eide and Ansgar Konermann <ansgar.konermann@inf.tu-dresden.de>
+ 	  for reporting this.
 
 Wed Mar 27 18:36:14 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
