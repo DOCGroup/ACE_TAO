@@ -2944,7 +2944,6 @@ CORBA::TypeCode::private_default_index_i (
 CORBA::Long
 CORBA::TypeCode::private_length (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_DEBUG ((LM_DEBUG, "sambaavi \n"));
   TAO_InputCDR stream (this->buffer_+4,
                        this->length_-4,
                        this->byte_order_);
