@@ -1,3 +1,9 @@
+Tue May  4 09:51:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release:
+	  
+	  Fix for [BUG 1798]. Thanks to Johnny for reporting this bug.
+
 Mon May  3 18:12:30 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/TMCast/MTQueue.hpp: Remove 'mutable' from the mutex_ member.
