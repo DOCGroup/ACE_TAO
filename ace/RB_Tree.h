@@ -416,6 +416,17 @@ protected:
   // is created, and the returned pointer addresses the existing item
   // associated with the existing key.
 
+  int insert_i (const EXT_ID &k, const INT_ID &t, 
+                ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
+  // Inserts a *copy* of the key and the item into the tree: both the
+  // key type EXT_ID and the item type INT_ID must have well defined semantics
+  // for copy construction.  The default implementation also requires that
+  // the key type support well defined < semantics.  This method passes back
+  // a pointer to the inserted (or existing) node, and the search status.  If 
+  // the node already exists, the method returns 1.  If the node does not
+  // exist, and a new one is successfully created, and the method returns 0.
+  // If there was an error, the method returns -1.
+
   int remove_i (const EXT_ID &k, INT_ID &i);
   // Removes the item associated with the given key from the tree and
   // destroys it.  Returns 1 if it found the item and successfully
@@ -462,6 +473,12 @@ public:
   // at the first element in the tree (if this integer is 0, the
   // iterator is positioned at the last element in the tree).
 
+  ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
+  // Copy constructor.
+
+  void operator= (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
+  // Assignment operator: copies both the tree reference and the position in the tree.
+
   ~ACE_RB_Tree_Iterator_Base (void);
   // Destructor.
 
@@ -507,7 +524,7 @@ protected:
 
   // = Protected members.
 
-  const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree_;
+  const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> *tree_;
   // Reference to the ACE_RB_Tree over which we're iterating.
 
   ACE_RB_Tree_Node <EXT_ID, INT_ID> *node_;

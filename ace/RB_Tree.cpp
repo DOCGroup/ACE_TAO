@@ -363,8 +363,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find_node (const EXT_ID &k,
       {
         // If the right subtree is empty, we're done searching,
         // and are positioned to the left of the insertion point.
-        break;
         result = LEFT;
+        break;
       }
     }
     else if (this->lessthan (k, current->key ()))
@@ -607,7 +607,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find_i (const EXT_ID &k,
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> INT_ID*
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, const INT_ID &t)
 {
-  ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i");
+  ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, const INT_ID &t)");
 
   // Find the closest matching node, if there is one.
   RB_SearchResult result = LEFT;
@@ -707,6 +707,127 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
       ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                          ASYS_TEXT ("\nmemory allocation to root_ failed in "
                                     "ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")), 0);
+    }
+  }
+}
+
+
+// Inserts a *copy* of the key and the item into the tree: both the
+// key type EXT_ID and the item type INT_ID must have well defined semantics
+// for copy construction.  The default implementation also requires that
+// the key type support well defined < semantics.  This method passes back
+// a pointer to the inserted (or existing) node, and the search status.  If 
+// the node already exists, the method returns 1.  If the node does not
+// exist, and a new one is successfully created, and the method returns 0.
+// If there was an error, the method returns -1.
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> int
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, const INT_ID &t, 
+                                                               ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry)
+{
+  ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, const INT_ID &t, "
+             "ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry)");
+
+  // Find the closest matching node, if there is one.
+  RB_SearchResult result = LEFT;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *current = find_node (k, result);
+  if (current)
+  {
+    // If the keys match, just return a pointer to the node's item.
+    if (result == EXACT)
+    {
+      entry = current;
+      return 1;
+    }
+    // Otherwise if we're to the left of the insertion
+    // point, insert into the right subtree.
+    else if (result == LEFT)
+    {
+      if (current->right ())
+      {
+        // If there is already a right subtree, complain.
+        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("\nright subtree already present in "
+                                      "ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")), -1);
+      }
+      else
+      {
+        // The right subtree is empty: insert new node there.
+        current->right (new ACE_RB_Tree_Node<EXT_ID, INT_ID> (k, t));
+        if (current->right ())
+        {
+          // If the node was successfully inserted, set its parent, rebalance
+          // the tree, color the root black, and return a pointer to the
+          // inserted item.
+          entry = current->right ();
+          current->right ()->parent (current);
+          RB_rebalance (current->right ());
+          root_->color (ACE_RB_Tree_Node_Base::BLACK);
+          ++current_size_;
+          return 0;
+        }
+        else
+        {
+          // Memory allocation failed.
+        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("\nmemory allocation to current->right_ failed "
+                                      "in ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")), -1);
+        }
+      }
+    }
+    // Otherwise, we're to the right of the insertion
+    // point, so insert into the left subtree.
+    else // (result == RIGHT)
+    {
+      if (current->left ())
+      {
+        // If there is already a left subtree, complain.
+        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("\nleft subtree already present in "
+                                      "ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")), -1);
+      }
+      else
+      {
+        // The left subtree is empty: insert new node there.
+        current->left (new ACE_RB_Tree_Node<EXT_ID, INT_ID> (k, t));
+        if (current->left ())
+        {
+          // If the node was successfully inserted, set its parent, rebalance
+          // the tree, color the root black, and return a pointer to the
+          // inserted item.
+          entry = current->left ();
+          current->left ()->parent (current);
+          RB_rebalance (current->left ());
+          root_->color (ACE_RB_Tree_Node_Base::BLACK);
+          ++current_size_;
+          return 0;
+        }
+        else
+        {
+          // Memory allocation failed.
+          ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("\nmemory allocation to current->left_ failed in "
+                                      "ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")), -1);
+        }
+      }
+    }
+  }
+  else
+  {
+    // The tree is empty: insert at the root and color the root black.
+    root_ = new ACE_RB_Tree_Node<EXT_ID, INT_ID> (k, t);
+    if (root_)
+    {
+      root_->color (ACE_RB_Tree_Node_Base::BLACK);
+      ++current_size_;
+      entry = root_;
+      return 0;
+    }
+    else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
+                         ASYS_TEXT ("\nmemory allocation to root_ failed in "
+                                    "ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")), -1);
     }
   }
 }
@@ -819,19 +940,39 @@ ACE_ALLOC_HOOK_DEFINE(ACE_RB_Tree_Iterator_Base)
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,               int set_first)
-  : tree_ (tree), node_ (0)
+  : tree_ (&tree), node_ (0)
 {
-  ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator_Base");
+  ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator_Base (ACE_RB_Tree, int)");
 
   // Position the iterator at the first (or last) node in the tree.
   if (set_first)
     {
-      node_ = tree_.RB_tree_minimum (tree_.root_);
+      node_ = tree_->RB_tree_minimum (tree_->root_);
     }
   else
     {
-      node_ = tree_.RB_tree_maximum (tree_.root_);
+      node_ = tree_->RB_tree_maximum (tree_->root_);
     }
+}
+
+// Copy constructor.
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter)
+  : tree_ (iter.tree_), 
+    node_ (iter.node_)
+{
+  ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator_Base (ACE_RB_Tree_Iterator_Base)");
+}
+
+// Assignment operator.
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
+ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator= (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter)
+{
+  ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator=");
+  tree_ = iter.tree_; 
+  node_ = iter.node_;
 }
 
 
