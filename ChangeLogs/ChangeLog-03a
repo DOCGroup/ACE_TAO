@@ -1,3 +1,9 @@
+Thu Apr  4 21:01:11 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* ace/SOCK_Dgram.cpp:
+	  I accidentally left out some code in my last change, without it
+	  platforms that lack IPV6 support will probably break. Whoopsie.
+
 Thu Apr  4 20:39:51 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* bin/g++dep:
