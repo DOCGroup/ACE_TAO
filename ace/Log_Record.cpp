@@ -29,8 +29,7 @@ const ACE_TCHAR *ACE_Log_Record::priority_names_[] =
   ACE_TEXT ("LM_ERROR"),
   ACE_TEXT ("LM_CRITICAL"),
   ACE_TEXT ("LM_ALERT"),
-  ACE_TEXT ("LM_EMERGENCY")
-};
+  ACE_TEXT ("LM_EMERGENCY")};
 
 const ACE_TCHAR *
 ACE_Log_Record::priority_name (ACE_Log_Priority p)

@@ -1,3 +1,11 @@
+Wed Jul 26 18:08:11 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
+
+	* ace/Log_Record.cpp
+	* ace/ACE.cpp
+	* ace/Handle_Set.cpp
+	* ace/Capabilities.{cpp, h}
+	  Cosmetic changes required for split-cpp.
+
 Wed Jul 26 13:20:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Cached_Connect_Strategy_T.h
