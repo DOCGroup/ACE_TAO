@@ -29,6 +29,11 @@ public:
   
   virtual ~TAO_Client_Strategy_Factory (void);
   // Destructor
+
+  virtual ACE_Lock* create_iiop_profile_lock (void);
+  // create the lock for the forwarding IIOP Profile used by 
+  // the TAO_GIOP_Invocation::location_forward and the 
+  // TAO_GIOP_Invocation::start
 };
 
 #endif /* TAO_CLIENT_STRATEGY_FACTORY_H */

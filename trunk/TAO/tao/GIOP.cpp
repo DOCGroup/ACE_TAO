@@ -695,7 +695,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   ACE_INET_Addr *server_addr_p = 0;
 
   {
-    ACE_MT (ACE_WRITE_GUARD (ACE_SYNCH_MUTEX, guard, data_->get_fwd_profile_lock ()));
+    ACE_MT (ACE_GUARD (ACE_Lock, guard, data_->get_fwd_profile_lock ()));
 
     if (data_->get_fwd_profile_i () != 0)
       {
@@ -922,10 +922,10 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // not just the connection.  Without reinitializing, we'd give
       // false error reports to applications.
       {
-        ACE_MT (ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX,
-                                       guard,
-                                       data_->get_fwd_profile_lock (),
-                                       TAO_GIOP_SYSTEM_EXCEPTION));
+        ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                                  guard,
+                                  data_->get_fwd_profile_lock (),
+                                  TAO_GIOP_SYSTEM_EXCEPTION));
 
 
         IIOP::Profile *old = data_->set_fwd_profile (0);
@@ -1295,7 +1295,10 @@ TAO_GIOP_Invocation::invoke (TAO_Exception_Data *excepts,
       // not just the connection.  Without reinitializing, we'd give
       // false error reports to applications.
       {
-        ACE_MT (ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->get_fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
+        ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
+                                  guard, 
+                                  data_->get_fwd_profile_lock (), 
+                                  TAO_GIOP_SYSTEM_EXCEPTION));
 
 
         IIOP::Profile *old = data_->set_fwd_profile (0);
