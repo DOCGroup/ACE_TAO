@@ -377,7 +377,11 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
 
       int flag = 0;
 
-      if (dispatch_info.event_handler_ != 0)
+      // Hack of the decade ;-). We make an extra check for the handle
+      // in addition to the event handler before we make a check for
+      // the resume_handler (). 
+      if (dispatch_info.event_handler_ != 0 &&
+	  this->handler_rep_.find (dispatch_info.handle_) != 0)
         {
          flag =
            dispatch_info.event_handler_->resume_handler ();
