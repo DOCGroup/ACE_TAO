@@ -26,10 +26,20 @@
 // for such ILD files to include each other, as long as 
 // they are part of the same build.
 
+module scope_test
+{
+  interface i_scope_test;
+};
+
 module mod2
 {
-  interface fwd;
+  struct scope_struct
+  {
+    scope_test::i_scope_test ss_member;
+  };
 
+  interface fwd;
+  
   interface full
   {
     fwd op (in fwd inarg,

@@ -128,6 +128,9 @@ public:
                                 const char *suffix = 0,
                                 const char *prefix = 0);
   // Type name of a node used when generating declarations.
+  
+  AST_Type *unaliased_type (void);
+  // Utility function to make sure we are using the unaliased type.
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Type, AST_Decl);
