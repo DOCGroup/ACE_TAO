@@ -635,6 +635,13 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
   va_end (ap);
   return result;
 }
+#else
+int
+fprintf (FILE *fp, char *format, const char *msg)
+{
+  ACE_DEBUG ((LM_DEBUG, ASYS_WIDE_STRING (format), ASYS_WIDE_STRING (msg)));
+  return 0;
+}
 #endif /* ! ACE_HAS_WINCE */
 
 #if defined (ACE_HAS_UNICODE)
