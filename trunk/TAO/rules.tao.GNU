@@ -88,6 +88,9 @@ CORBA_BE=$(OBJDIR)/bin/flick-c-pbe-iiopxx
 	$(CORBA_FE) $< && \
 	$(CORBA_PG) -s -o $*-server.prc $*.aoi && \
 	$(CORBA_BE) $*-server.prc --no_mu_stubs -o $*S.cpp -h $*S.h -F $*C.h && \
-	echo > $*S.i
+	echo > $*S.i && \
+        echo > $*S_T.h && \
+        echo > $*S_T.i && \
+        echo > $*S_T.cpp
 
 endif
