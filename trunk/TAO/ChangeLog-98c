@@ -1,3 +1,14 @@
+Wed Aug 19 21:03:38 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp} : 
+		Fixed memory leaks. Added a destructor to
+	Task_State.
+	* tests/Cubit/TAO/MT_Cubit/client.cpp:
+	  Added code to delete dynamically allocated 
+	  memory.
+	* tests/Cubit/TAO/MT_Cubit/server.cpp:
+	  Removed unnecessary argv code and fixed memory leaks.
+	
 Wed Aug 19 19:20:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp: 
