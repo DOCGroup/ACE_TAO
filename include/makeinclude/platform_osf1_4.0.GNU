@@ -50,7 +50,7 @@ RANLIB          = @true
 #### workaround recommended in PTR 43-4-204.
 SOFLAGS         = -hidden /usr/lib/cmplrs/cxx/libcxxstd.a -non_hidden \
                   -shared -use_ld_input $(ACELIB)
-SOBUILD         = /bin/rm -f $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
+SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
 
 ifndef exceptions
