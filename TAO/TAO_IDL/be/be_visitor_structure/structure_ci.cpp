@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_structure.h"
-
-ACE_RCSID(be_visitor_structure, structure_ci, "$Id$")
-
+ACE_RCSID (be_visitor_structure, 
+           structure_ci, 
+           "$Id$")
 
 // ******************************************************
 // for client inline

@@ -22,14 +22,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_valuetype.h"
-
-ACE_RCSID(be_visitor_valuetype_obv_ch, valuetype_obv_ch, "$Id$")
-
+ACE_RCSID (be_visitor_valuetype, 
+           valuetype_obv_ch, 
+           "$Id$")
 
 // ******************************************************
 // Valuetype visitor for client header

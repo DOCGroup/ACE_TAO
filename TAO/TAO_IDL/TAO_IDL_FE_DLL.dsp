@@ -342,10 +342,6 @@ SOURCE=.\fe\y.tab.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\include\ast.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\include\ast_argument.h
 # End Source File
 # Begin Source File
@@ -490,23 +486,11 @@ SOURCE=.\include\global_extern.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\include\idl.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\include\idl_bool.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\include\idl_defines.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\include\idl_extern.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\include\idl_fwd.h
 # End Source File
 # Begin Source File
 
@@ -523,10 +507,6 @@ SOURCE=.\include\nr_extern.h
 # Begin Source File
 
 SOURCE=.\TAO_IDL_FE_Export.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\include\util.h
 # End Source File
 # Begin Source File
 

@@ -18,22 +18,18 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_sequence.h"
-
-ACE_RCSID(be_visitor_sequence, elemtype, "$Id$")
-
+ACE_RCSID (be_visitor_sequence, 
+           elemtype, 
+           "$Id$")
 
 // ***********************************************************
 // sequence element type visitor for return types of [] methods
 // ***********************************************************
 
 
-be_visitor_sequence_elemtype::
-be_visitor_sequence_elemtype (be_visitor_context *ctx)
+be_visitor_sequence_elemtype::be_visitor_sequence_elemtype (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
@@ -50,14 +46,23 @@ be_visitor_sequence_elemtype::visit_node (be_type *node)
   be_type *bt;
 
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
-    *os << bt->nested_type_name (this->ctx_->scope ()) << " &";
+    {
+      *os << bt->nested_type_name (this->ctx_->scope ()) << " &";
+    }
   else
-    *os << bt->name () << " &";
+    {
+      *os << bt->name () << " &";
+    }
+
   return 0;
 }
 
@@ -68,9 +73,13 @@ be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
   be_type *bt;
 
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   switch (node->pt ())
     {
@@ -79,6 +88,7 @@ be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
         int is_pseudo_object =
           ACE_OS::strcmp (node->local_name ()->get_string (),
                           "Object") != 0;
+
         if (is_pseudo_object)
           {
             *os << "TAO_Pseudo_Object_Manager<";
@@ -87,6 +97,7 @@ be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
           {
             *os << "TAO_Object_Manager<";
           }
+
         if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
           {
             *os << bt->nested_type_name (this->ctx_->scope ()) << ",";
@@ -101,10 +112,15 @@ be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
       break;
     default:
       if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
-	      *os << bt->nested_type_name (this->ctx_->scope ()) << " &";
+        {
+	        *os << bt->nested_type_name (this->ctx_->scope ()) << " &";
+        }
       else
-	      *os << bt->name () << " &";
+        {
+	        *os << bt->name () << " &";
+        }
     }
+
   return 0;
 }
 
@@ -121,9 +137,13 @@ be_visitor_sequence_elemtype::visit_interface (be_interface *node)
   be_type *bt;
 
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
     {
@@ -148,9 +168,13 @@ be_visitor_sequence_elemtype::visit_valuetype (be_valuetype *node)
   be_type *bt;
 
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
     {
@@ -175,9 +199,13 @@ be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *node)
   be_type *bt;
 
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
     {
@@ -202,9 +230,13 @@ be_visitor_sequence_elemtype::visit_valuetype_fwd (be_valuetype_fwd *node)
   be_type *bt;
 
   if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
     {
@@ -273,6 +305,7 @@ int
 be_visitor_sequence_elemtype::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
+
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -281,6 +314,7 @@ be_visitor_sequence_elemtype::visit_typedef (be_typedef *node)
                          "accept on primitive type failed\n"),
                         -1);
     }
+
   this->ctx_->alias (0);
   return 0;
 }

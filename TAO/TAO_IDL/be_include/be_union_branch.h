@@ -26,8 +26,10 @@
 #include "ast_union_branch.h"
 
 class UTL_LabelList;
-class UTL_Type;
+class AST_Type;
 class be_visitor;
+class TAO_OutStream;
+class be_union;
 
 class be_union_branch : public virtual AST_UnionBranch,
                         public virtual be_decl

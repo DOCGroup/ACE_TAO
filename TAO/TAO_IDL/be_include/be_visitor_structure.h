@@ -22,12 +22,8 @@
 #ifndef TAO_BE_VISITOR_STRUCTURE_H
 #define TAO_BE_VISITOR_STRUCTURE_H
 
-#include "be_visitor.h"
 #include "be_visitor_scope.h"
-
-// generic visitor
 #include "be_visitor_structure/structure.h"
-// concrete visitors
 #include "be_visitor_structure/structure_ch.h"
 #include "be_visitor_structure/structure_ci.h"
 #include "be_visitor_structure/structure_cs.h"

@@ -18,29 +18,29 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_valuetype.h"
-
-ACE_RCSID(be_visitor_valuetype, ami_exception_holder_cs, "$Id$")
-
+ACE_RCSID (be_visitor_valuetype, 
+           ami_exception_holder_cs, 
+           "$Id$")
 
 // ************************************************************
 // Interface visitor for client stubs
 // ************************************************************
 
-be_visitor_valuetype_ami_exception_holder_cs::be_visitor_valuetype_ami_exception_holder_cs (be_visitor_context *ctx)
+be_visitor_valuetype_ami_exception_holder_cs::
+be_visitor_valuetype_ami_exception_holder_cs (be_visitor_context *ctx)
   : be_visitor_valuetype (ctx)
 {
 }
 
-be_visitor_valuetype_ami_exception_holder_cs::~be_visitor_valuetype_ami_exception_holder_cs (void)
+be_visitor_valuetype_ami_exception_holder_cs::
+~be_visitor_valuetype_ami_exception_holder_cs (void)
 {
 }
 
 int
-be_visitor_valuetype_ami_exception_holder_cs::visit_valuetype (be_valuetype *node)
+be_visitor_valuetype_ami_exception_holder_cs::visit_valuetype (
+    be_valuetype *node
+  )
 {
  TAO_OutStream *os = this->ctx_->stream ();
 

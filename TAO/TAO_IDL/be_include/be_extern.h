@@ -68,15 +68,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _BE_EXTERN_BE_EXTERN_HH
 
 #include "TAO_IDL_BE_Export.h"
-
-// be_extern.h - Defines the BE part of the BE<->FE protocol
+#include "be_global.h"
 
 extern TAO_IDL_BE_Export BE_GlobalData *be_global;
-extern TAO_IDL_BE_Export BE_GlobalData *set_be_global (BE_GlobalData *bg);
-
-// Functions:
-
-extern TAO_IDL_BE_Export void BE_produce (void);
-extern TAO_IDL_BE_Export void BE_abort (void);
 
 #endif           // _BE_EXTERN_BE_EXTERN_HH

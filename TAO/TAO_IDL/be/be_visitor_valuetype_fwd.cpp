@@ -18,20 +18,20 @@
 //
 // ============================================================================
 
-
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_valuetype.h"
+#include "be_valuetype_fwd.h"
+#include "be_extern.h"
+#include "be_helper.h"
 
 #include "be_visitor_valuetype_fwd.h"
+#include "be_visitor_context.h"
 
-// include all the individual files
-
-// Not implemented yet.
 #include "be_visitor_valuetype_fwd/valuetype_fwd_ch.cpp"
 #include "be_visitor_valuetype_fwd/valuetype_fwd_ci.cpp"
 #include "be_visitor_valuetype_fwd/cdr_op_ch.cpp"
 #include "be_visitor_valuetype_fwd/cdr_op_ci.cpp"
 
-ACE_RCSID(be, be_visitor_valuetype_fwd, "$Id$")
+ACE_RCSID (be, 
+           be_visitor_valuetype_fwd, 
+           "$Id$")
 

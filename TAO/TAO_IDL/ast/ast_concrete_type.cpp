@@ -67,10 +67,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_ConcreteType nodes denote all non-interface types of IDL.
 // They are AST_Type nodes.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_concrete_type.h"
 
-ACE_RCSID(ast, ast_concrete_type, "$Id$")
+ACE_RCSID (ast, 
+           ast_concrete_type, 
+           "$Id$")
 
 // Constructor(s) and destructor.
 AST_ConcreteType::AST_ConcreteType (void)

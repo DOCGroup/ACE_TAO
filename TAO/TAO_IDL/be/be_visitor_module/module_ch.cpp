@@ -17,14 +17,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_module.h"
-
-ACE_RCSID(be_visitor_module, module_ch, "$Id$")
-
+ACE_RCSID (be_visitor_module, 
+           module_ch, 
+           "$Id$")
 
 // ******************************************************
 // Module visitor for client header
@@ -42,13 +37,11 @@ be_visitor_module_ch::~be_visitor_module_ch (void)
 int
 be_visitor_module_ch::visit_module (be_module *node)
 {
-  TAO_OutStream *os; // output stream
-
   if (!node->cli_hdr_gen () && !node->imported ())
     {
-      os = this->ctx_->stream ();
-
+      TAO_OutStream *os = this->ctx_->stream ();
       os->indent ();
+
       *os << "TAO_NAMESPACE "
           << " " << node->local_name () << be_nl
           << "{" << be_idt_nl;
@@ -61,7 +54,8 @@ be_visitor_module_ch::visit_module (be_module *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_module_ch::"
                              "visit_module - "
-                             "codegen for scope failed\n"), -1);
+                             "codegen for scope failed\n"), 
+                            -1);
         }
 
       *os << be_uidt_nl

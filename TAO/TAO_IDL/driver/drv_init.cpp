@@ -64,14 +64,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-// Initialization for IDL compiler driver program
+ACE_RCSID (driver, 
+           drv_init, 
+           "$Id$")
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"drv_private.h"
-#include  "be.h"
-
-ACE_RCSID(driver, drv_init, "$Id$")
+extern long DRV_nfiles;
+extern long DRV_file_index;
 
 const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
 

@@ -1,31 +1,36 @@
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+//
+// $Id$
+//
 
-#include "be_visitor_interface.h"
+ACE_RCSID (be_visitor_interface, 
+           remote_proxy_impl_cs, 
+           "$Id$")
 
-ACE_RCSID (be_visitor_interface, remote_proxy_broker_impl_cs, "$Id$")
-
-be_visitor_interface_remote_proxy_impl_cs::be_visitor_interface_remote_proxy_impl_cs (be_visitor_context *ctx)
+be_visitor_interface_remote_proxy_impl_cs::
+be_visitor_interface_remote_proxy_impl_cs (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
   // No-Op.
 }
 
 
-be_visitor_interface_remote_proxy_impl_cs::~be_visitor_interface_remote_proxy_impl_cs (void)
+be_visitor_interface_remote_proxy_impl_cs::
+~be_visitor_interface_remote_proxy_impl_cs (void)
 {
   // No-Op.
 }
 
 int
-be_visitor_interface_remote_proxy_impl_cs::visit_interface (be_interface *node)
+be_visitor_interface_remote_proxy_impl_cs::visit_interface (
+    be_interface *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
   os->decr_indent (0);
 
   *os << be_nl
-      << "///////////////////////////////////////////////////////////////////////" << be_nl
+      << "///////////////////////////////////////////////////////////////////////" 
+      << be_nl
       << "//                Base & Remote Proxy  Implementation. " << be_nl
       << "//" << be_nl << be_nl;
   // Create the destructor implementation for the base
@@ -75,6 +80,7 @@ be_visitor_interface_remote_proxy_impl_cs::visit_interface (be_interface *node)
       << "//            End  Base & Remote  Proxy Implemeentation. " << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl << be_nl;
+
   return 0;
 
 }

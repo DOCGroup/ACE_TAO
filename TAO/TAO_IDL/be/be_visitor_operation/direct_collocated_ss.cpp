@@ -18,15 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_operation.h"
-
 ACE_RCSID (be_visitor_operation, 
            direct_collocated_ss, 
            "$Id$")
-
 
 // *************************************************************************
 //  This visitor generates code for the direct_collocated operation signature in a
@@ -34,7 +28,7 @@ ACE_RCSID (be_visitor_operation,
 // *************************************************************************
 
 be_visitor_operation_direct_collocated_ss::
-be_visitor_operation_direct_collocated_ss(be_visitor_context *ctx)
+be_visitor_operation_direct_collocated_ss (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }

@@ -67,18 +67,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
 #define _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
 
-// utl_identifier.hh
-//
-// Identifier
-
-/*
-** DEPENDENCIES: utl_string.hh
-**
-** USE: Included from util.hh
-*/
-
-#include        "idl_fwd.h"
-#include        "utl_string.h"
+#include "ace/OS.h"
+#include "TAO_IDL_FE_Export.h"
+#include "idl_bool.h"
 
 class TAO_IDL_FE_Export Identifier
 {
@@ -115,7 +106,7 @@ public:
   idl_bool escaped (void) const;
   // Accessor for the member.
 
-  virtual void  dump (ACE_OSTREAM_TYPE &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to an ostream.
 
   virtual void destroy (void);

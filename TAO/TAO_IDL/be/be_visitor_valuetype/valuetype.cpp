@@ -19,15 +19,6 @@
 //
 // ============================================================================
 
-#include "be_visitor_valuetype.h"
-#include "be_visitor_field.h"
-#include "be_visitor_constant.h"
-#include "be_visitor_enum.h"
-#include "be_visitor_exception.h"
-#include "be_visitor_structure.h"
-#include "be_visitor_typedef.h"
-#include "be_visitor_union.h"
-
 ACE_RCSID (be_visitor_valuetype, 
            valuetype, 
            "$Id$")

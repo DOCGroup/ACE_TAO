@@ -1,25 +1,29 @@
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+//
+// $Id$
+//
 
-#include "be_visitor_interface.h"
+ACE_RCSID (be_visitor_interface, 
+           remote_proxy_impl_ch, 
+           "$Id$")
 
-ACE_RCSID (be_visitor_interface, remote_proxy_broker_impl_ch, "$Id$")
-
-be_visitor_interface_remote_proxy_impl_ch::be_visitor_interface_remote_proxy_impl_ch (be_visitor_context *ctx)
+be_visitor_interface_remote_proxy_impl_ch::
+be_visitor_interface_remote_proxy_impl_ch (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
   // No-Op.
 }
 
 
-be_visitor_interface_remote_proxy_impl_ch::~be_visitor_interface_remote_proxy_impl_ch (void)
+be_visitor_interface_remote_proxy_impl_ch::
+~be_visitor_interface_remote_proxy_impl_ch (void)
 {
   // No-Op.
 }
 
 int
-be_visitor_interface_remote_proxy_impl_ch::visit_interface (be_interface *node)
+be_visitor_interface_remote_proxy_impl_ch::visit_interface (
+    be_interface *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -33,7 +37,8 @@ be_visitor_interface_remote_proxy_impl_ch::visit_interface (be_interface *node)
   *os << "class " << be_global->stub_export_macro ()
       << " " << node->remote_proxy_impl_name () << be_idt_nl;
   *os << ": " << "public virtual " << node->base_proxy_impl_name ()
-      << "," << be_idt_nl << "public virtual " << "TAO_Remote_Object_Proxy_Impl";
+      << "," << be_idt_nl << "public virtual " 
+      << "TAO_Remote_Object_Proxy_Impl";
 
   if (node->n_inherits () > 0)
     {

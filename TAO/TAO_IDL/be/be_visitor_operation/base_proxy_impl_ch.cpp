@@ -1,14 +1,8 @@
 // $Id$
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_operation.h"
-
 ACE_RCSID (be_visitor_operation, 
            x_proxy_impl_xh, 
            "$Id$")
-
 
 be_visitor_operation_base_proxy_impl_ch::
 be_visitor_operation_base_proxy_impl_ch (be_visitor_context *ctx)
@@ -16,7 +10,8 @@ be_visitor_operation_base_proxy_impl_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_base_proxy_impl_ch::~be_visitor_operation_base_proxy_impl_ch (void)
+be_visitor_operation_base_proxy_impl_ch::
+~be_visitor_operation_base_proxy_impl_ch (void)
 {
 }
 

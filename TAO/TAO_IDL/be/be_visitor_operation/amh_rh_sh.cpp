@@ -19,15 +19,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_operation.h"
-
 ACE_RCSID (be_visitor_operation, 
            operation_amh_rh_sh, 
            "$Id$")
-
 
 // ******************************************************
 // Visitor for generating AMH-RH skeleton for "operation"

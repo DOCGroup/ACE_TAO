@@ -19,7 +19,6 @@
 #define TAO_BE_VISITOR_VALUETYPE_H
 
 #include "be_visitor_scope.h"
-
 #include "be_visitor_valuetype/valuetype.h"
 #include "be_visitor_valuetype/valuetype_ch.h"
 #include "be_visitor_valuetype/valuetype_obv_ch.h"

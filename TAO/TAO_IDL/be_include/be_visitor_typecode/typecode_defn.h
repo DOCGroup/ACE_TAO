@@ -25,6 +25,7 @@
 
 #include "ace/CDR_Base.h"
 #include "ace/Containers_T.h"
+#include "be_visitor_decl.h"
 #include "be_visitor_scope.h"
 
 const int TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE = 1024;

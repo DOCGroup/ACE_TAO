@@ -67,6 +67,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_MODULE_AST_MODULE_HH
 #define _AST_MODULE_AST_MODULE_HH
 
+#include "ast_decl.h"
+#include "utl_scope.h"
+
 // Representation of module.
 //
 // NOTE: add(AST_EnumValue *) is defined here because enums can

@@ -67,6 +67,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_CONSTANT_AST_CONSTANT_HH
 #define _AST_CONSTANT_AST_CONSTANT_HH
 
+#include "ast_expression.h"
+#include "ast_decl.h"
+#include "global_extern.h"
+
 // Representation of constant declaration:
 //
 // NOTE: Part of the job of the constructor is to convert
@@ -80,9 +84,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Constant : public virtual AST_Decl
 {
 public:
-  // Operations.
-
-  // Constructor(s).
   AST_Constant (void);
 
   AST_Constant (AST_Expression::ExprType et,
@@ -94,12 +95,10 @@ public:
                 AST_Expression *ev,
                 UTL_ScopedName *n);
 
-  // Destructor.
   virtual ~AST_Constant (void);
 
   // Data Accessors.
   AST_Expression *constant_value (void);
-
   AST_Expression::ExprType et (void);
 
   // Accessors for the private member.
@@ -120,7 +119,6 @@ public:
   virtual void destroy (void);
 
 private:
-  // Data.
   AST_Expression *pd_constant_value;
   // The value.
 

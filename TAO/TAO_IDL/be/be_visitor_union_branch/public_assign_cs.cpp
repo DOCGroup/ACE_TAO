@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_union_branch.h"
-
-ACE_RCSID(be_visitor_union_branch, public_assign_cs, "$Id$")
-
+ACE_RCSID (be_visitor_union_branch, 
+           public_assign_cs, 
+           "$Id$")
 
 // **********************************************
 //  visitor for union_branch in the client stubs file generating the code for
@@ -33,21 +28,23 @@ ACE_RCSID(be_visitor_union_branch, public_assign_cs, "$Id$")
 // **********************************************
 
 // constructor
-be_visitor_union_branch_public_assign_cs::be_visitor_union_branch_public_assign_cs
-(be_visitor_context *ctx)
+be_visitor_union_branch_public_assign_cs::
+be_visitor_union_branch_public_assign_cs (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
 // destructor
-be_visitor_union_branch_public_assign_cs::~be_visitor_union_branch_public_assign_cs
-(void)
+be_visitor_union_branch_public_assign_cs::
+~be_visitor_union_branch_public_assign_cs (void)
 {
 }
 
 // visit the union_branch node
 int
-be_visitor_union_branch_public_assign_cs::visit_union_branch (be_union_branch *node)
+be_visitor_union_branch_public_assign_cs::visit_union_branch (
+    be_union_branch *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
 

@@ -71,12 +71,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // type that this node represents. There is only one node in the entire
 // AST which represents each predefined type, such as long etc.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_predefined_type.h"
+#include "ast_visitor.h"
+#include "utl_identifier.h"
+#include "ace/Log_Msg.h"
 
-ACE_RCSID(ast, ast_predefined_type, "$Id$")
+ACE_RCSID (ast, 
+           ast_predefined_type, 
+           "$Id$")
 
-// Constructor(s).
 AST_PredefinedType::AST_PredefinedType (void)
   : pd_pt (PT_long)
 {

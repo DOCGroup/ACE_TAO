@@ -18,18 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_union_branch.h"
-#include "be_visitor_array.h"
-#include "be_visitor_enum.h"
-#include "be_visitor_sequence.h"
-#include "be_visitor_structure.h"
-#include "be_visitor_union.h"
-
-ACE_RCSID(be_visitor_union_branch, cdr_op_ci, "$Id$")
-
+ACE_RCSID (be_visitor_union_branch, 
+           cdr_op_ci, 
+           "$Id$")
 
 // **********************************************
 //  Visitor for union_branch in the client stubs file.

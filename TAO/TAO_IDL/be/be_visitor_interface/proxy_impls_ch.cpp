@@ -2,11 +2,6 @@
 // $Id$
 //
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_interface.h"
-
 ACE_RCSID (be_visitor_interface, 
            base_proxy_broker_impl_ch, 
            "$Id$")

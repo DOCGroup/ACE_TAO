@@ -81,14 +81,36 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // the responsibility of those functions then to call the add()
 // function defined in the parent "AST_" class.
 
-#include "idl_fwd.h"
-#include "idl_narrow.h"
 #include "ast_decl.h"
 #include "ast_expression.h"
+#include "ast_typedef.h"
 #include "utl_scoped_name.h"
 
 // This is for AIX w/IBM C++.
 class Identifier;
+
+class AST_PredefinedType;
+class AST_Module;
+class AST_Interface;
+class AST_InterfaceFwd;
+class AST_Constant;
+class AST_Exception;
+class AST_Attribute;
+class AST_Operation;
+class AST_Argument;
+class AST_Union;
+class AST_UnionBranch;
+class AST_Structure;
+class AST_Field;
+class AST_Enum;
+class AST_EnumVal;
+class AST_Sequence;
+class AST_String;
+class AST_Array;
+class AST_Native;
+class AST_Factory;
+class UTL_StrList;
+class UTL_NameList;
 
 // Forward declaration of active iterator for UTL_Scope.
 class UTL_ScopeActiveIterator;
@@ -178,22 +200,22 @@ public:
   // Other Operations.
 
   // Name Lookup Mechanism
-  virtual AST_Decl *lookup_by_name (UTL_ScopedName *,
-                                    idl_bool treat_as_ref,
-                                    idl_bool in_parent = 1);
+  AST_Decl *lookup_by_name (UTL_ScopedName *,
+                            idl_bool treat_as_ref,
+                            idl_bool in_parent = 1);
 
   // Look up the Identifier * specified only in the local scope.
-  virtual AST_Decl *lookup_by_name_local (Identifier *,
-                                          long index);
+  AST_Decl *lookup_by_name_local (Identifier *,
+                                  long index);
 
   // Look up a predefined type by its ExprType.
-  virtual AST_Decl *lookup_primitive_type (AST_Expression::ExprType);
+  AST_Decl *lookup_primitive_type (AST_Expression::ExprType);
 
   // Look up one of the pseudo-object types.
   AST_Decl *lookup_pseudo (Identifier *);
 
   // How many entries are used?
-  virtual unsigned long nmembers (void);
+  unsigned long nmembers (void);
 
   // Add to decls. Node represents a local declaration
   // The new decl e is inserted after ex if ex is not 0.
@@ -248,8 +270,8 @@ protected:
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *,
                                        idl_bool treat_as_ref);
   // Lookup based on the local name.
-  virtual AST_Decl *lookup_for_add (AST_Decl *d,
-                                    idl_bool treat_as_ref);
+  AST_Decl *lookup_for_add (AST_Decl *d,
+                            idl_bool treat_as_ref);
 
   // Is there a (case-insensitive) clash between a local name
   // and an IDL keyword?
@@ -354,27 +376,32 @@ public:
                            UTL_Scope::ScopeIterationKind ik);
 
   // Advance to next item.
-  virtual void next (void);
+  void next (void);
 
   // Get current item.
-  virtual AST_Decl *item (void);
+  AST_Decl *item (void);
 
   // Have we iterated over entire scope?
-  virtual idl_bool is_done (void);
+  idl_bool is_done (void);
 
   // What kind of iterator is this?
-  virtual UTL_Scope::ScopeIterationKind iteration_kind (void);
+  UTL_Scope::ScopeIterationKind iteration_kind (void);
 
   // What stage are we in with this iterator?
-  virtual UTL_Scope::ScopeIterationKind iteration_stage (void);
+  UTL_Scope::ScopeIterationKind iteration_stage (void);
 
 private:
-  // Data.
+  // Scope to iterate over.
+  UTL_Scope *iter_source;
 
-  UTL_Scope *iter_source;                       // Scope to iterate over
-  UTL_Scope::ScopeIterationKind ik;             // What kind of iteration
-  UTL_Scope::ScopeIterationKind stage;          // What stage
-  long il;                                      // What location in stage
+  // What kind of iteration?
+  UTL_Scope::ScopeIterationKind ik;
+
+  // What stage?
+  UTL_Scope::ScopeIterationKind stage;
+
+  // What location in stage?
+  long il;
 };
 
 #endif           // _UTL_SCOPE_UTL_SCOPE_HH

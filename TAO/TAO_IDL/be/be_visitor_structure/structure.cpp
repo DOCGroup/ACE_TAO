@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_structure.h"
-#include "be_visitor_field.h"
-
 ACE_RCSID (be_visitor_structure, 
            structure, 
            "$Id$")
-
 
 be_visitor_structure::be_visitor_structure (be_visitor_context *ctx)
   : be_visitor_scope (ctx)

@@ -18,16 +18,13 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+ACE_RCSID (be_visitor_interface, 
+           cdr_op_cs, 
+           "$Id$")
 
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_interface, cdr_op_cs, "$Id$")
-
-be_visitor_interface_cdr_op_cs::be_visitor_interface_cdr_op_cs
-(be_visitor_context *ctx)
+be_visitor_interface_cdr_op_cs::be_visitor_interface_cdr_op_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_interface (ctx)
 {
 }
@@ -50,6 +47,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   // Set the substate as generating code for the types defined in our scope.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
+
   // Visit the scope and generate code.
   if (this->visit_scope (node) == -1)
     {

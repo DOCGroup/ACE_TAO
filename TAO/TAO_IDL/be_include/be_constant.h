@@ -25,7 +25,6 @@
 
 #include "be_decl.h"
 #include "ast_constant.h"
-#include "ast_expression.h"
 
 class be_visitor;
 

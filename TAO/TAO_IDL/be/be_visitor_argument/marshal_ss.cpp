@@ -19,11 +19,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "be.h"
-#include "be_visitor_argument.h"
-
-ACE_RCSID(be_visitor_argument, marshal_ss, "$Id$")
+ACE_RCSID (be_visitor_argument, 
+           marshal_ss, 
+           "$Id$")
 
 
 // ************************************************************************

@@ -68,13 +68,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // interface header as the interface is being parsed and before the
 // AST_Interface node used to represent this interface is created.
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "fe_private.h"
+#include "fe_interface_header.h"
+#include "ast_interface.h"
+#include "ast_module.h"
+#include "utl_namelist.h"
+#include "utl_err.h"
+#include "global_extern.h"
+#include "nr_extern.h"
 
-ACE_RCSID(fe, fe_interface_header, "$Id$")
-
-// Constructor(s) and destructor
+ACE_RCSID (fe, 
+           fe_interface_header, 
+           "$Id$")
 
 FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
                                         UTL_NameList *nl,

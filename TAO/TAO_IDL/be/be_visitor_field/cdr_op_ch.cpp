@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_field.h"
 #include "be_visitor_array/cdr_op_ch.h"
 #include "be_visitor_enum/cdr_op_ch.h"
 #include "be_visitor_sequence/cdr_op_ch.h"
@@ -30,7 +26,9 @@
 #include "be_visitor_union/union.h"
 #include "be_visitor_union/cdr_op_ch.h"
 
-ACE_RCSID(be_visitor_field, cdr_op_ch, "$Id$")
+ACE_RCSID (be_visitor_field, 
+           cdr_op_ch, 
+           "$Id$")
 
 
 // **********************************************

@@ -21,14 +21,9 @@
 //
 // ================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_valuetype_fwd.h"
-
-ACE_RCSID(be_visitor_valuetype_fwd, valuetype_fwd_cdr_op_ch, "$Id$")
-
+ACE_RCSID (be_visitor_valuetype_fwd, 
+           cdr_op_ch, 
+           "$Id$")
 
 be_visitor_valuetype_fwd_cdr_op_ch::be_visitor_valuetype_fwd_cdr_op_ch (
     be_visitor_context *ctx

@@ -370,10 +370,6 @@ SOURCE=.\be\be_visitor_valuetype_fwd.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\be_include\be.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\be_include\be_argument.h
 # End Source File
 # Begin Source File
@@ -411,6 +407,10 @@ SOURCE=.\be_include\be_exception.h
 # Begin Source File
 
 SOURCE=.\be_include\be_expression.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_extern.h
 # End Source File
 # Begin Source File
 
@@ -523,6 +523,10 @@ SOURCE=.\be_include\be_valuetype_fwd.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_amh_pre_proc.h
 # End Source File
 # Begin Source File
 

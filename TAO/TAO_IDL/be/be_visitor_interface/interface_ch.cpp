@@ -18,14 +18,11 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_interface.h"
 #include "be_visitor_typecode/typecode_decl.h"
 
-ACE_RCSID(be_visitor_interface, interface_ch, "$Id$")
-
+ACE_RCSID (be_visitor_interface, 
+           interface_ch, 
+           "$Id$")
 
 // ******************************************************
 // Interface visitor for client header

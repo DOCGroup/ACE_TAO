@@ -67,35 +67,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _FE_EXTERN_FE_EXTERN_HH
 #define _FE_EXTERN_FE_EXTERN_HH
 
-// fe_extern.hh
-//
+#include "TAO_IDL_FE_Export.h"
+
 // Declares all global functions for the FE
 
-/*
-** DEPENDENCIES: none
-**
-** USE: Included from idl_extern.hh
-*/
-
-// Functions:
-
-// Initialization:
-//
-// FE initialization is done in two stages, with the BE initialization
-// occurring in between. The first stage is responsible for creating
-// the sope stack. The BE initialization creates the generator object
-// which is then used in the second stage to create the global scope
-// and to populate it with nodes for the predefined types
-
 TAO_IDL_FE_Export void
-FE_init (void);       // Initialize FE
-
-// Interface to Yacc parser
+FE_init (void);
 
 class File;
 
 TAO_IDL_FE_Export int
-FE_yyparse (void);           // Invode yyparse
+FE_yyparse (void);
 
 TAO_IDL_FE_Export void
 FE_set_yyin (File *);    // Set yyin

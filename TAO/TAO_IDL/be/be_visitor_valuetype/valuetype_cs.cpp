@@ -19,14 +19,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_valuetype.h"
-#include "be_visitor_typecode/typecode_defn.h"
-
 ACE_RCSID (be_visitor_valuetype, 
            valuetype_cs, 
            "$Id$")
-
 
 // ************************************************************
 // Valuetype visitor for client stubs.

@@ -19,13 +19,14 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
 #include "be_visitor_decl.h"
+#include "be_visitor_context.h"
+#include "be_typedef.h"
+#include "be_type.h"
 
-ACE_RCSID(be, be_visitor_decl, "$Id$")
+ACE_RCSID (be, 
+           be_visitor_decl, 
+           "$Id$")
 
 
 // Root visitor for client header

@@ -62,37 +62,32 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-// utl_list.cc
-//
-// Implementation of generic single-linked lists
+// Implementation of generic single-linked list.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//	     It relies on a type-unsafe cast from UTL_List to subclasses, which
+//	     will cease to operate correctly if you use either multiple or
+//	     public virtual inheritance.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include	"utl_list.h"
 
-ACE_RCSID(util, utl_list, "$Id$")
+ACE_RCSID (util, 
+           utl_list, 
+           "$Id$")
 
-// Constructor
 UTL_List::UTL_List (UTL_List *c)
 	: pd_cdr_data (c)
 {
 }
 
-// Destructor
 UTL_List::~UTL_List (void)
 {
 }
 
-// Private operations
-
-// Compute list length
+// Compute list length.
 long
 UTL_List::list_length (long n)
 {
@@ -105,8 +100,6 @@ UTL_List::list_length (long n)
       return this->pd_cdr_data->list_length (n + 1);
     }
 }
-
-// Public operations
 
 // Smash last cdr with l.
 void
@@ -144,7 +137,7 @@ UTL_List::copy (void)
   return retval;
 }
 
-// Get next list
+// Get next list.
 UTL_List *
 UTL_List::tail (void)
 {
@@ -179,15 +172,10 @@ UTL_List::destroy (void)
 
 // UTL_List active iterator.
 
-// Constructor
 UTL_ListActiveIterator::UTL_ListActiveIterator (UTL_List *s)
   : source (s)
 {
 }
-
-/*
- * Public operations
- */
 
 // Is iterator done?
 idl_bool
@@ -196,9 +184,9 @@ UTL_ListActiveIterator::is_done (void)
   return (this->source == 0) ? I_TRUE : I_FALSE;
 }
 
-// Advance to next item
+// Advance to next item.
 void
-UTL_ListActiveIterator::next ()
+UTL_ListActiveIterator::next (void)
 {
   if (this->source != 0)
     {

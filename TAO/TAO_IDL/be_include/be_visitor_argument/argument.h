@@ -21,6 +21,8 @@
 #ifndef _BE_VISITOR_ARGUMENT_ARGUMENT_H_
 #define _BE_VISITOR_ARGUMENT_ARGUMENT_H_
 
+#include "ast_argument.h"
+
 class be_visitor_args : public be_visitor_decl
 {
   //
@@ -45,7 +47,8 @@ public:
   // destructor
 
   //= helper
-  virtual const char *type_name (be_type *type, const char *suffix=0);
+  virtual const char *type_name (be_type *type, 
+                                 const char *suffix = 0);
   // helper that produces either a nested name for header files or full name
   // for others
 

@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_structure.h"
-#include "be_visitor_typecode/typecode_decl.h"
-
 ACE_RCSID (be_visitor_structure, 
            structure_ch, 
            "$Id$")
-
 
 // ******************************************************
 // for client header

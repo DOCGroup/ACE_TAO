@@ -19,11 +19,12 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_helper.h"
+#include "be_codegen.h"
 
-ACE_RCSID(be, be_helper, "$Id$")
+ACE_RCSID (be, 
+           be_helper, 
+           "$Id$")
 
 static const char copyright[] =
 "// -*- C++ -*-\n"

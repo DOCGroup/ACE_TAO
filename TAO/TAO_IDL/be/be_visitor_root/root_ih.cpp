@@ -16,14 +16,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_root.h"
-
-ACE_RCSID(be_visitor_root, root_ih, "$Id$")
-
+ACE_RCSID (be_visitor_root, 
+           root_ih, 
+           "$Id$")
 
 // ***********************************
 // Root visitor for implementation header
@@ -41,7 +36,6 @@ be_visitor_root_ih::~be_visitor_root_ih (void)
 int
 be_visitor_root_ih::init (void)
 {
-  // open the file
   if (tao_cg->start_implementation_header (
           be_global->be_get_implementation_hdr_fname ()
         )
@@ -56,7 +50,6 @@ be_visitor_root_ih::init (void)
     }
 
 
-  // set the stream and the next state
   this->ctx_->stream (tao_cg->implementation_header ());
   return 0;
 }

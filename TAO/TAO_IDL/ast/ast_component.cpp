@@ -1,7 +1,10 @@
-#include "idl.h"
-#include "idl_extern.h"
+// $Id$
 
-ACE_RCSID(ast, ast_component, "$Id$")
+#include "ast_component.h"
+
+ACE_RCSID (ast, 
+           ast_component, 
+           "$Id$")
 
 // Constructor(s) and destructor.
 

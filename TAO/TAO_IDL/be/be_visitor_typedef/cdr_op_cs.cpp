@@ -18,22 +18,18 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-
-#include "be_visitor_typedef.h"
-
-ACE_RCSID(be_visitor_typedef, cdr_op_cs, "$Id$")
-
+ACE_RCSID (be_visitor_typedef, 
+           cdr_op_cs, 
+           "$Id$")
 
 // ***************************************************************************
 // Typedef visitor for generating CDR operator declarations in the client
 // stubs file
 // ***************************************************************************
 
-be_visitor_typedef_cdr_op_cs::be_visitor_typedef_cdr_op_cs
-(be_visitor_context *ctx)
+be_visitor_typedef_cdr_op_cs::be_visitor_typedef_cdr_op_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_typedef (ctx)
 {
 }
@@ -50,7 +46,7 @@ be_visitor_typedef_cdr_op_cs::visit_typedef (be_typedef *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // generate the CDR << and >> operator impls
+  // Generate the CDR << and >> operator impls.
 
   os->indent ();
 

@@ -22,14 +22,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_valuetype.h"
-
-ACE_RCSID(be_visitor_valuetype_obv_cs, valuetype_obv_cs, "$Id$")
-
+ACE_RCSID (be_visitor_valuetype, 
+           valuetype_obv_cs, 
+           "$Id$")
 
 // ******************************************************
 // Valuetype visitor for OBV_ class implementation

@@ -24,12 +24,13 @@
 
 #include "be_scope.h"
 #include "be_decl.h"
+#include "be_codegen.h"
 #include "ast_operation.h"
-#include "be_operation_strategy.h"
 
 class AST_Type;
 class be_visitor;
 class be_argument;
+class be_operation_strategy;
 
 class be_operation : public virtual AST_Operation,
                      public virtual be_scope,

@@ -18,27 +18,25 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_interface, interceptors_sh, "$Id$")
-
+ACE_RCSID (be_visitor_interface, 
+           interceptors_sh, 
+           "$Id$")
 
 // ************************************************************
 //  interceptor class in header
 // ************************************************************
 
 
-be_visitor_interface_interceptors_sh::be_visitor_interface_interceptors_sh
-(be_visitor_context *ctx)
+be_visitor_interface_interceptors_sh::be_visitor_interface_interceptors_sh (
+    be_visitor_context *ctx
+  )
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_interface_interceptors_sh::~be_visitor_interface_interceptors_sh (void)
+be_visitor_interface_interceptors_sh::~be_visitor_interface_interceptors_sh (
+    void
+  )
 {
 }
 

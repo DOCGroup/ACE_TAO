@@ -18,22 +18,18 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_exception.h"
-#include "be_visitor_field.h"
-
-ACE_RCSID(be_visitor_exception, cdr_op_ci, "$Id$")
+ACE_RCSID (be_visitor_exception, 
+           cdr_op_ci, 
+           "$Id$")
 
 // ***************************************************************************
 // Exception visitor for generating CDR operator declarations in the client
 // stubs file
 // ***************************************************************************
 
-be_visitor_exception_cdr_op_ci::be_visitor_exception_cdr_op_ci
-(be_visitor_context *ctx)
+be_visitor_exception_cdr_op_ci::be_visitor_exception_cdr_op_ci (
+    be_visitor_context *ctx
+  )
   : be_visitor_exception (ctx)
 {
 }
@@ -46,10 +42,12 @@ int
 be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
 {
   // already generated and/or we are imported. Don't do anything.
-  if (node->cli_inline_cdr_op_gen () ||
-      node->imported () ||
-      node->is_local ())
-    return 0;
+  if (node->cli_inline_cdr_op_gen () 
+      || node->imported () 
+      || node->is_local ())
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 

@@ -11,12 +11,9 @@
 */
 //=============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_interface.h"
-#include "be_visitor_operation.h"
+ACE_RCSID (be_visitor_interface, 
+           amh_sh, 
+           "$Id$")
 
 be_visitor_amh_interface_sh::be_visitor_amh_interface_sh (
     be_visitor_context *ctx

@@ -18,21 +18,17 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_union.h"
-#include "be_visitor_enum/enum_ch.h"
-
 ACE_RCSID (be_visitor_union, 
            discriminant_ch, 
            "$Id$")
-
 
 // *************************************************************************
 // Visitor for discriminant in client header file.
 // *************************************************************************
 
-be_visitor_union_discriminant_ch::be_visitor_union_discriminant_ch
-(be_visitor_context *ctx)
+be_visitor_union_discriminant_ch::be_visitor_union_discriminant_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }

@@ -18,11 +18,9 @@
 //
 // ============================================================================
 
-#include        "be.h"
-#include "be_visitor_sequence.h"
-
-ACE_RCSID(be_visitor_sequence, gen_bounded_sequence_ci, "$Id$")
-
+ACE_RCSID (be_visitor_sequence, 
+           gen_bounded_sequence_ci, 
+           "$Id$")
 
 int
 be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
@@ -33,12 +31,14 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
   // Retrieve the base type since we may need to do some code
   // generation for the base type.
   bt = be_type::narrow_from_decl (node->base_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ci::"
                          "visit_sequence - "
-                         "Bad element type\n"), -1);
+                         "Bad element type\n"), 
+                        -1);
     }
 
   // If we contain an anonymous sequence,

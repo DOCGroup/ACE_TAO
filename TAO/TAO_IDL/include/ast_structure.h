@@ -77,15 +77,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // enums are inserted in the enclosing scope. It is unlikely that
 // a BE writer will need to overload this function in AST_Structure.
 
+#include "ast_concrete_type.h"
+#include "utl_scope.h"
 #include "ace/Unbounded_Queue.h"
 
 class TAO_IDL_FE_Export AST_Structure : public virtual AST_ConcreteType,
                                         public virtual UTL_Scope
 {
 public:
-  // Operations.
-
-  // Constructor(s).
   AST_Structure (void);
 
   AST_Structure (UTL_ScopedName *n,
@@ -97,7 +96,6 @@ public:
                  idl_bool local,
                  idl_bool abstract);
 
-  // Destructor.
   virtual ~AST_Structure (void);
 
   // Narrowing.

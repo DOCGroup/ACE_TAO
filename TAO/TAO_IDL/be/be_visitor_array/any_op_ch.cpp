@@ -19,21 +19,18 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_array.h"
-
-ACE_RCSID(be_visitor_array, any_op_ch, "$Id$")
+ACE_RCSID (be_visitor_array, 
+           any_op_ch, 
+           "$Id$")
 
 
 // ***************************************************************************
 // Array visitor for generating Any operator declarations in the client header
 // ***************************************************************************
 
-be_visitor_array_any_op_ch::be_visitor_array_any_op_ch
-(be_visitor_context *ctx)
+be_visitor_array_any_op_ch::be_visitor_array_any_op_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }

@@ -20,15 +20,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_valuetype.h"
-#include "be_visitor_typecode/typecode_decl.h"
-#include "be_visitor_operation/rettype.h"
-
 ACE_RCSID (be_visitor_valuetype, 
            valuetype_ch, 
            "$Id$")
-
 
 // ******************************************************
 // Valuetype visitor for client header

@@ -62,14 +62,16 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _UTL_EXPRLIST_UTL_EXPRLIST_HH
 #define _UTL_EXPRLIST_UTL_EXPRLIST_HH
 
-// utl_exprlist.hh
-//
-// List of strings
+#include "utl_list.h"
+
+class AST_Expression;
+
+// List of expressions.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
@@ -77,39 +79,28 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //       will cease to operate correctly if you use either multiple or
 //       public virtual inheritance.
 
-/*
-** DEPENDENCIES: ast_expression.hh, utl_list.hh
-**
-** USE: Included from util.hh
-*/
-
 class TAO_IDL_FE_Export UTL_ExprList : public UTL_List
 {
 public:
-  // Operations
+  UTL_ExprList (AST_Expression *s, 
+                UTL_ExprList *cdr);
 
-  // Constructor(s)
-  UTL_ExprList(AST_Expression *s, UTL_ExprList *cdr);
-
-  // Get list item
-  AST_Expression                *head();
+  // Get list item.
+  AST_Expression *head (void);
 
 private:
-  // Data
-  AST_Expression                *pd_car_data;   // List item
+  // Data.
+  AST_Expression *pd_car_data;
 };
 
-// Active iterator for UTL_ExprList
+// Active iterator for UTL_ExprList.
 class   UTL_ExprlistActiveIterator : public UTL_ListActiveIterator
 {
 public:
-  // Operations
+  UTL_ExprlistActiveIterator (UTL_ExprList *s);
 
-  // Constructor(s)
-  UTL_ExprlistActiveIterator(UTL_ExprList *s);
-
-  // Get current item
-  AST_Expression                *item();
+  // Get current item.
+  AST_Expression *item (void);
 };
 
 #endif           // _UTL_EXPRLIST_UTL_EXPRLIST_HH

@@ -19,11 +19,15 @@
 // ============================================================================
 
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_valuetype.h"
+#include "be_visitor.h"
+#include "be_extern.h"
+#include "be_helper.h"
+#include "ast_module.h"
 
-ACE_RCSID(be, be_valuetype, "$Id$")
+ACE_RCSID (be, 
+           be_valuetype, 
+           "$Id$")
 
 // Default constructor.
 be_valuetype::be_valuetype (void)
@@ -136,8 +140,6 @@ be_valuetype::full_obv_skel_name (void)
 int
 be_valuetype::gen_var_defn (char *)
 {
-  TAO_OutStream *ch = 0;
-  TAO_NL be_nl;
   char namebuf [NAMEBUFSIZE];
 
   ACE_OS::memset (namebuf,
@@ -148,7 +150,7 @@ be_valuetype::gen_var_defn (char *)
                    "%s_var",
                    this->local_name ());
 
-  ch = tao_cg->client_header ();
+  TAO_OutStream *ch = tao_cg->client_header ();
 
   // Generate the var definition (always in the client header).
   // Depending upon the data type, there are some differences which we account

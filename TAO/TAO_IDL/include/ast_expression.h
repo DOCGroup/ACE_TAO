@@ -68,6 +68,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_EXPRESSION_AST_EXPRESSION_HH
 
 #include "ace/CDR_Stream.h"
+#include "utl_scoped_name.h"
+
+class UTL_String;
+class UTL_Scope;
+class ast_visitor;
 
 // Representation of expression values.
 

@@ -62,26 +62,18 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * utl_stack.cc - Implementation of class UTL_ScopeStack
- */
+#include "utl_stack.h"
+#include "utl_scope.h"
+#include "global_extern.h"
 
-#include "idl.h"
-#include "ast_decl.h"
-#include "idl_extern.h"
-
-ACE_RCSID(util, utl_stack, "$Id$")
-
-// Class UTL_ScopeStack
+ACE_RCSID (util, 
+           utl_stack, 
+           "$Id$")
 
 #undef	INCREMENT
 #define	INCREMENT	64
-
-/*
- * Constructor(s) and destructor
- */
 
 UTL_ScopeStack::UTL_ScopeStack (void)
   : pd_stack_data_nalloced (INCREMENT),
@@ -99,14 +91,6 @@ UTL_ScopeStack::~UTL_ScopeStack (void)
     }
 }
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
-
 // Push an element on the stack.
 UTL_ScopeStack *
 UTL_ScopeStack::push (UTL_Scope *el)
@@ -115,7 +99,7 @@ UTL_ScopeStack::push (UTL_Scope *el)
   long ostack_data_nalloced;
   long i;
 
-  // Make sure there's space for one more
+  // Make sure there's space for one more.
   if (this->pd_stack_data_nalloced == this->pd_stack_top)
     {
       ostack_data_nalloced = this->pd_stack_data_nalloced;
@@ -185,7 +169,7 @@ UTL_ScopeStack::bottom (void)
   return this->pd_stack_data[0];
 }
 
-// Clear entire stack
+// Clear entire stack.
 void
 UTL_ScopeStack::clear (void)
 {
@@ -199,13 +183,13 @@ UTL_ScopeStack::depth (void)
   return this->pd_stack_top;
 }
 
-// Return (top - 1) element on stack
+// Return (top - 1) element on stack.
 UTL_Scope *
 UTL_ScopeStack::next_to_top (void)
 {
   UTL_Scope	*tmp, *retval;
 
-  if (depth() < 2)
+  if (this->depth () < 2)
     {
       return 0;
     }
@@ -217,7 +201,7 @@ UTL_ScopeStack::next_to_top (void)
   return retval;	// Return next one down
 }
 
-// Return topmost non-NULL element
+// Return topmost non-NULL element.
 UTL_Scope *
 UTL_ScopeStack::top_non_null (void)
 {
@@ -232,29 +216,11 @@ UTL_ScopeStack::top_non_null (void)
   return 0;
 }
 
-/*
- * Redefinition of inherited virtual operations
- */
-
-// Class UTL_ScopeStackActiveIterator
-
-/*
- * Constructor(s)
- */
-
 UTL_ScopeStackActiveIterator::UTL_ScopeStackActiveIterator (UTL_ScopeStack &s)
 	: source (s),
 		il (s.pd_stack_top - 1)
 {
 }
-
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
 
 // Advance to next item
 void
@@ -263,7 +229,7 @@ UTL_ScopeStackActiveIterator::next (void)
   il--;
 }
 
-// Get current item
+// Get current item.
 UTL_Scope *
 UTL_ScopeStackActiveIterator::item (void)
 {

@@ -19,21 +19,18 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_union_branch.h"
-
-ACE_RCSID(be_visitor_union_branch, private_ch, "$Id$")
-
+ACE_RCSID (be_visitor_union_branch, 
+           private_ch, 
+           "$Id$")
 
 // **********************************************
 //  visitor for union_branch in the client header generating the private information
 // **********************************************
 
 // Constructor.
-be_visitor_union_branch_private_ch::be_visitor_union_branch_private_ch (be_visitor_context *ctx)
+be_visitor_union_branch_private_ch::be_visitor_union_branch_private_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
@@ -54,8 +51,7 @@ be_visitor_union_branch_private_ch::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_union_branch - "
-                         "Bad union_branch type\n"
-                         ),
+                         "Bad union_branch type\n"),
                         -1);
     }
 
@@ -66,15 +62,12 @@ be_visitor_union_branch_private_ch::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_union_branch - "
-                         "codegen for union_branch type failed\n"
-                         ),
+                         "codegen for union_branch type failed\n"),
                         -1);
     }
 
   return 0;
 }
-
-// Visit operations on all possible data types  that a union_branch can be.
 
 int
 be_visitor_union_branch_private_ch::visit_array (be_array *node)
@@ -83,7 +76,7 @@ be_visitor_union_branch_private_ch::visit_array (be_array *node)
   be_decl *bu = this->ctx_->scope ();
   be_type *bt;
 
-  // Check if we are visiting this node via a visit to a typedef node
+  // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
     {
       bt = this->ctx_->alias ();
@@ -98,8 +91,7 @@ be_visitor_union_branch_private_ch::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_array - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -144,8 +136,7 @@ be_visitor_union_branch_private_ch::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_enum - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -179,8 +170,7 @@ be_visitor_union_branch_private_ch::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_interface - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -214,8 +204,7 @@ be_visitor_union_branch_private_ch::visit_interface_fwd (be_interface_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_interface_fwd - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -251,8 +240,7 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_predefined_type - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -309,8 +297,7 @@ be_visitor_union_branch_private_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_sequence - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -335,8 +322,7 @@ be_visitor_union_branch_private_ch::visit_string (be_string *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_string - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -376,8 +362,7 @@ be_visitor_union_branch_private_ch::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_structure - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -412,8 +397,7 @@ be_visitor_union_branch_private_ch::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_typedef - "
-                         "Bad primitive type\n"
-                         ),
+                         "Bad primitive type\n"),
                         -1);
     }
 
@@ -443,8 +427,7 @@ be_visitor_union_branch_private_ch::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_union - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 

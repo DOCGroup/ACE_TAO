@@ -20,13 +20,20 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be_visitor_interface.h"
-#include "be.h"
+#include "be_interface.h"
 #include "be_interface_strategy.h"
+#include "be_visitor.h"
+#include "be_helper.h"
+#include "be_stream_factory.h"
+#include "be_extern.h"
+#include "utl_identifier.h"
+#include "ast_attribute.h"
+#include "global_extern.h"
+#include "ace/Process.h"
 
-ACE_RCSID(be, be_interface, "$Id$")
+ACE_RCSID (be, 
+           be_interface, 
+           "$Id$")
 
 // Default constructor.
 be_interface::be_interface (void)

@@ -18,33 +18,30 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "be.h"
-#include "be_visitor_operation.h"
-
-ACE_RCSID(be_visitor_argument, interceptors_result, "$Id$")
-
+ACE_RCSID (be_visitor_argument, 
+           interceptors_result, 
+           "$Id$")
 
 // ************************************************************
 // be_visitor_operation_interceptors_result for generating the result as
 // stored in the request info for interceptors
 // ************************************************************
 
-be_visitor_operation_interceptors_result::be_visitor_operation_interceptors_result (be_visitor_context *ctx)
+be_visitor_operation_interceptors_result::
+be_visitor_operation_interceptors_result (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_operation_interceptors_result::~be_visitor_operation_interceptors_result (void)
+be_visitor_operation_interceptors_result::
+~be_visitor_operation_interceptors_result (void)
 {
 }
 
 int
 be_visitor_operation_interceptors_result::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-
-  // if the current type is an alias, use that
+  TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt;
 
   if (this->ctx_->alias ())
@@ -66,7 +63,7 @@ be_visitor_operation_interceptors_result::visit_array (be_array *node)
 int
 be_visitor_operation_interceptors_result::visit_enum (be_enum *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "(*result_any) <<= this->_result;" << be_nl;
 
@@ -76,7 +73,7 @@ be_visitor_operation_interceptors_result::visit_enum (be_enum *)
 int
 be_visitor_operation_interceptors_result::visit_interface (be_interface *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "(*result_any) <<= this->_result;" << be_nl;
 
@@ -86,7 +83,7 @@ be_visitor_operation_interceptors_result::visit_interface (be_interface *)
 int
 be_visitor_operation_interceptors_result::visit_interface_fwd (be_interface_fwd *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "(*result_any) <<= this->_result;" << be_nl;
 
@@ -121,7 +118,7 @@ be_visitor_operation_interceptors_result::visit_valuetype_fwd (be_valuetype_fwd 
 int
 be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "(*result_any) <<= ";
 
@@ -167,7 +164,7 @@ be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_t
 int
 be_visitor_operation_interceptors_result::visit_sequence (be_sequence *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "(*result_any) <<= this->_result;" << be_nl;
 
@@ -177,14 +174,14 @@ be_visitor_operation_interceptors_result::visit_sequence (be_sequence *)
 int
 be_visitor_operation_interceptors_result::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "(*result_any) <<= ";
 
-  // we need to make a distinction between bounded and unbounded strings
+  // We need to make a distinction between bounded and unbounded strings.
   if (node->max_size ()->ev ()->u.ulval != 0)
     {
-      // bounded strings
+      // Bounded strings.
       if (node->width () == (long) sizeof (char))
         {
           *os << "CORBA::Any::from_string ((char *)";
@@ -209,7 +206,7 @@ return 0;
 int
 be_visitor_operation_interceptors_result::visit_structure (be_structure *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "(*result_any) <<= this->_result;" << be_nl;
 
@@ -220,7 +217,7 @@ be_visitor_operation_interceptors_result::visit_structure (be_structure *)
 int
 be_visitor_operation_interceptors_result::visit_union (be_union *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "(*result_any) <<= this->_result;" << be_nl;
 

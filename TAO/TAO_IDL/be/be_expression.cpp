@@ -19,9 +19,8 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_expression.h"
+#include "be_visitor.h"
 
 ACE_RCSID (be, 
            be_expression, 

@@ -62,62 +62,59 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _UTL_STACK_UTL_STACK_HH
 #define _UTL_STACK_UTL_STACK_HH
 
-// utl_stack.hh - Defines the UTL_ScopeStack class - a stack of scopes
-//
-// UTL_ScopeStack implements scope nesting
+#include "TAO_IDL_FE_Export.h"
 
-/*
-** DEPENDENCIES: utl_scope.hh
-**
-** USE: Included from util.hh
-*/
+class UTL_Scope;
 
-// Forward declaration of active iterator for UTL_ScopeStack
+// UTL_ScopeStack implements scope nesting.
+
+// Forward declaration of active iterator for UTL_ScopeStack.
 class UTL_ScopeStackActiveIterator;
 
 class TAO_IDL_FE_Export UTL_ScopeStack
 {
 public:
-  // Operations
-
-  // Constructor and destructor.
   UTL_ScopeStack (void);
-  virtual ~UTL_ScopeStack (void);
+  ~UTL_ScopeStack (void);
 
   // Return top element.
-  virtual UTL_Scope *top (void);
+  UTL_Scope *top (void);
 
   // Pop top element.
-  virtual void pop (void);
+  void pop (void);
 
   // Clear entire stack.
-  virtual void clear (void);
+  void clear (void);
 
   // Push an element on the stack and return stack.
-  virtual UTL_ScopeStack *push (UTL_Scope *el);
+  UTL_ScopeStack *push (UTL_Scope *el);
 
   // How deep is the stack now?
-  virtual unsigned long depth (void);
+  unsigned long depth (void);
 
   // Return bottom element.
-  virtual UTL_Scope *bottom (void);
+  UTL_Scope *bottom (void);
 
   // Return (top - 1) element.
-  virtual UTL_Scope *next_to_top (void);
+  UTL_Scope *next_to_top (void);
 
   // return topmost non-NULL element.
-  virtual UTL_Scope *top_non_null (void);
+  UTL_Scope *top_non_null (void);
 
 private:
-  // Data.
-  UTL_Scope **pd_stack_data;            // Store scopes stack
-  unsigned long pd_stack_data_nalloced; // How many allocated?
-  unsigned long pd_stack_top;           // How many used?
+  // Store scopes stack
+  UTL_Scope **pd_stack_data;
+
+  // How many allocated?
+  unsigned long pd_stack_data_nalloced;
+
+  // How many used?
+  unsigned long pd_stack_top;
 
   // Friend active iterator class for UTL_ScopeStack.
   friend class UTL_ScopeStackActiveIterator;
@@ -127,24 +124,23 @@ private:
 class TAO_IDL_FE_Export UTL_ScopeStackActiveIterator
 {
 public:
-  // Operations
-
-  // Constructor
-  UTL_ScopeStackActiveIterator( UTL_ScopeStack &s);
+  UTL_ScopeStackActiveIterator (UTL_ScopeStack &s);
 
   // Advance to next element.
-  virtual void next (void);
+  void next (void);
 
   // Get current item.
-  virtual UTL_Scope*item (void);
+  UTL_Scope*item (void);
 
   // Is the iteration finished?
-  virtual long is_done (void);
+  long is_done (void);
 
 private:
-  // Data.
-  UTL_ScopeStack &source;          // On what to iterate?
-  long il;                        // Where are we in iteration?
+  // On what to iterate?
+  UTL_ScopeStack &source;
+
+  // Where are we in iteration?
+  long il;
 };
 
 #endif           // _UTL_STACK_UTL_STACK_HH

@@ -18,15 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_sequence.h"
-
 ACE_RCSID (be_visitor_sequence, 
            sequence_cs, 
            "$Id$")
-
 
 // ************************************************************
 // Root visitor for client stub class

@@ -19,30 +19,29 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_interface, thru_poa_collocated_ss, "$Id$")
+ACE_RCSID (be_visitor_interface, 
+           thru_poa_collocated_ss, 
+           "$Id$")
 
 
 // ************************************************************
 //  be_visitor_interface_collacted_ss
 // ************************************************************
 
-be_visitor_interface_thru_poa_collocated_ss::be_visitor_interface_thru_poa_collocated_ss
-(be_visitor_context *ctx)
+be_visitor_interface_thru_poa_collocated_ss::
+be_visitor_interface_thru_poa_collocated_ss (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_interface_thru_poa_collocated_ss::~be_visitor_interface_thru_poa_collocated_ss (void)
+be_visitor_interface_thru_poa_collocated_ss::
+~be_visitor_interface_thru_poa_collocated_ss (void)
 {
 }
 
-int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *node)
+int be_visitor_interface_thru_poa_collocated_ss::visit_interface (
+    be_interface *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -59,7 +58,10 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
   // @@ We should call the constructor for all base classes, since we
   // are using multiple inheritance.
 
-  if (node->traverse_inheritance_graph (be_visitor_interface_thru_poa_collocated_ss::collocated_ctor_helper, os)
+  if (node->traverse_inheritance_graph (
+          be_visitor_interface_thru_poa_collocated_ss::collocated_ctor_helper,
+          os
+        )
       == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -75,7 +77,8 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
   *os << "}" << be_nl << be_nl;
 
   // Generate _is_a implementation.
-  *os << "CORBA::Boolean " << node->full_coll_name (be_interface::THRU_POA) << "::"
+  *os << "CORBA::Boolean " 
+      << node->full_coll_name (be_interface::THRU_POA) << "::"
       << "_is_a"  << be_idt
       << "(" << be_idt_nl
       << "const CORBA::Char *logical_type_id" << be_nl
@@ -101,11 +104,13 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
       << "servant_upcall.servant ()->_downcast (" << be_idt << be_idt_nl
       << "\"" << node->repoID ()  << "\"" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
-      << ")->_is_a (logical_type_id ACE_ENV_ARG_PARAMETER);" << be_uidt << be_uidt_nl
+      << ")->_is_a (logical_type_id ACE_ENV_ARG_PARAMETER);" 
+      << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl << be_nl;
 
   // Generate _non_existent implementation.
-  *os << "CORBA::Boolean " << node->full_coll_name (be_interface::THRU_POA) << "::"
+  *os << "CORBA::Boolean " 
+      << node->full_coll_name (be_interface::THRU_POA) << "::"
       << "_non_existent"  << be_idt
       << "(" << be_idt_nl
       << "ACE_ENV_SINGLE_ARG_DECL" << be_uidt_nl
@@ -130,7 +135,8 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
       << "servant_upcall.servant ()->_downcast (" << be_idt << be_idt_nl
       << "\"" << node->repoID ()  << "\"" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
-      << ")->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt << be_uidt_nl
+      << ")->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);" 
+      << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl << be_nl;
 
   if (this->visit_scope (node) == -1)
@@ -146,25 +152,32 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
 }
 
 int
-be_visitor_interface_thru_poa_collocated_ss::collocated_ctor_helper (be_interface *derived,
-                                                                     be_interface *base,
-                                                                     TAO_OutStream *os)
+be_visitor_interface_thru_poa_collocated_ss::collocated_ctor_helper (
+    be_interface *derived,
+    be_interface *base,
+    TAO_OutStream *os
+  )
 {
   if (derived == base)
-    // we are the same. Don't do anything, otherwise we will end up calling
-    // ourself
-    return 0;
+    {
+      // We are the same. Don't do anything, otherwise we will end up calling
+      // ourself.
+      return 0;
+    }
 
   if (base->is_nested ())
     {
       be_decl *scope;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
+
       *os << "  ACE_NESTED_CLASS (POA_" << scope->full_name () << ","
-          << base->local_coll_name (be_interface::THRU_POA) << ") (stub)," << be_nl;
+          << base->local_coll_name (be_interface::THRU_POA) << ") (stub)," 
+          << be_nl;
     }
   else
     {
-      *os << "  " << base->full_coll_name (be_interface::THRU_POA) << " (stub)," << be_nl;
+      *os << "  " << base->full_coll_name (be_interface::THRU_POA) 
+          << " (stub)," << be_nl;
     }
 
   return 0;

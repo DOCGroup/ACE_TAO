@@ -74,20 +74,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // records the type of the node. This may be useful for BEs to be able
 // to distinguish the real type of a node given only a superclass.
 
-/*
-** DEPENDENCIES: utl_scope.hh, utl_scoped_name.hh, utl_strlist.hh
-**
-** USE: Included from ast.hh
-*/
-
-#include "idl_fwd.h"
-#include "idl_narrow.h"
-#include "idl_bool.h"
 #include "utl_scoped_name.h"
-#include "utl_string.h"
+#include "idl_narrow.h"
 
 // This is for AIX w/IBM C++
 class Identifier;
+
+class UTL_Scope;
+class UTL_String;
+class ast_visitor;
 
 // This class is needed (only for g++) to get around a bug in g++ which
 // causes virtual operations to not be looked up correctly if an operation

@@ -10,11 +10,9 @@
 */
 //=============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-
-#include "be_visitor_operation.h"
+ACE_RCSID (be_visitor_operation,
+           amh_ss,
+           "$Id$")
 
 be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (
     be_visitor_context *ctx

@@ -18,21 +18,16 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_enum.h"
-
-ACE_RCSID(be_visitor_enum, cdr_op_ch, "$Id$")
+ACE_RCSID (be_visitor_enum, 
+           cdr_op_ch, 
+           "$Id$")
 
 
 // ***************************************************************************
 // Enum visitor for generating Cdr operator declarations in the client header
 // ***************************************************************************
 
-be_visitor_enum_cdr_op_ch::be_visitor_enum_cdr_op_ch
-(be_visitor_context *ctx)
+be_visitor_enum_cdr_op_ch::be_visitor_enum_cdr_op_ch (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }

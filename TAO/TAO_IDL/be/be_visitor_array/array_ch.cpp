@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_array.h"
-
-ACE_RCSID(be_visitor_array, array_ch, "$Id$")
+ACE_RCSID (be_visitor_array, 
+           array_ch, 
+           "$Id$")
 
 
 // ************************************************************************
@@ -43,17 +39,18 @@ be_visitor_array_ch::~be_visitor_array_ch (void)
 int be_visitor_array_ch::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
   be_decl *scope = this->ctx_->scope ();
 
   // Nothing to do if we are imported or code is already generated.
   if (node->imported () || (node->cli_hdr_gen ()))
-    return 0;
+    {
+      return 0;
+    }
 
   this->ctx_->node (node);
 
   // Retrieve the type.
-  bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
 
   if (!bt)
     {

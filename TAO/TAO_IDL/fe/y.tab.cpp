@@ -3,10 +3,35 @@
 char tao_yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
  Modified 5/2/90 by J. Roskind to support graphic debugging modes";
 #endif
-#include "idl.h"
-#include "idl_extern.h"
-#include "fe_private.h"
-#include <stdio.h>
+#include "utl_strlist.h"
+#include "utl_namelist.h"
+#include "fe_interface_header.h"
+#include "utl_exprlist.h"
+#include "utl_labellist.h"
+#include "utl_decllist.h"
+#include "ast_field.h"
+#include "ast_expression.h"
+#include "ast_argument.h"
+#include "ast_operation.h"
+#include "global_extern.h"
+#include "utl_identifier.h"
+#include "utl_err.h"
+#include "ast_generator.h"
+#include "ast_module.h"
+#include "ast_interface.h"
+#include "ast_interface_fwd.h"
+#include "utl_string.h"
+#include "ast_constant.h"
+#include "fe_declarator.h"
+#include "ast_union.h"
+#include "ast_extern.h"
+#include "ast_enum.h"
+#include "ast_root.h"
+#include "ast_sequence.h"
+#include "ast_string.h"
+#include "ast_factory.h"
+#include "ast_exception.h"
+#include "ast_array.h"
 
 #if (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 extern  "C" int tao_yywrap();
@@ -3679,10 +3704,15 @@ case 269:
                 }
               else 
                 {
+                  Identifier id ("sequence");
+                  UTL_ScopedName sn (&id,
+                                     0);
+
                   tao_yyval.dcval = 
                     idl_global->gen ()->create_sequence (
                                             tao_yyvsp[-2].exval,
                                             tp,
+                                            &sn,
                                             s->is_local (),
                                             s->is_abstract ()
                                           );
@@ -3722,10 +3752,15 @@ case 270:
                 }
               else 
                 {
+                  Identifier id ("sequence");
+                  UTL_ScopedName sn (&id,
+                                     0);
+
                   tao_yyval.dcval =
                     idl_global->gen ()->create_sequence (
                         idl_global->gen ()->create_expr ((unsigned long) 0),
                         tp,
+                        &sn,
                         s->is_local (),
                         s->is_abstract ()
                       );

@@ -19,13 +19,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_valuetype.h"
-
 ACE_RCSID (be_visitor_valuetype, 
            valuetype_ci, 
            "$Id$")
-
 
 // **************************************************
 // Valuetype visitor for client inline.

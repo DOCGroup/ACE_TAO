@@ -67,16 +67,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_ERR_UTL_ERR_HH
 #define _UTL_ERR_UTL_ERR_HH
 
-// utl_err.hh
-//
-// Defines error codes and error handling class for UTL
-// This will change as a result of internationalization
+#include "AST_Expression.h"
+#include "idl_global.h"
+#include "utl_scoped_name.h"
 
-/*
-** DEPENDENCIES: ast.hh
-**
-** USE: Included from util.hh
-*/
+class AST_Decl;
+class AST_Interface;
+class AST_Enum;
+class AST_Union;
+class AST_UnionLabel;
+class UTL_String;
 
 class TAO_IDL_FE_Export UTL_Error
 {
@@ -155,7 +155,7 @@ public:
                  AST_Decl *t3);
 
   // Report a syntax error in IDL input
-  void syntax_error(IDL_GlobalData::ParseState ps);
+  void syntax_error (IDL_GlobalData::ParseState ps);
 
   // Report clash of declared and referenced indentifiers
   void redef_error (char *n,

@@ -19,20 +19,17 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_exception.h"
-
-ACE_RCSID(be_visitor_exception, cdr_op_ch, "$Id$")
+ACE_RCSID (be_visitor_exception, 
+           cdr_op_ch, 
+           "$Id$")
 
 // ***************************************************************************
 // Exception visitor for generating CDR operator declarations in the client header
 // ***************************************************************************
 
-be_visitor_exception_cdr_op_ch::be_visitor_exception_cdr_op_ch
-(be_visitor_context *ctx)
+be_visitor_exception_cdr_op_ch::be_visitor_exception_cdr_op_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_exception (ctx)
 {
 }
@@ -44,15 +41,16 @@ be_visitor_exception_cdr_op_ch::~be_visitor_exception_cdr_op_ch (void)
 int
 be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
 {
-  if (node->cli_hdr_cdr_op_gen () ||
-      node->imported () ||
-      node->is_local ())
-    return 0;
+  if (node->cli_hdr_cdr_op_gen () || node->imported () || node->is_local ())
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // generate the CDR << and >> operator declarations
+  // Generate the CDR << and >> operator declarations.
   os->indent ();
+
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &, const " << node->name ()
       << " &);" << be_nl;

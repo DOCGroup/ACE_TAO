@@ -70,10 +70,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // subtype of AST_ConcreteType. This means that we cannot have
 // arrays of AST_Interfaces???
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_array.h"
+#include "ast_expression.h"
+#include "ast_visitor.h"
+#include "utl_exprlist.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(ast, ast_array, "$Id$")
+ACE_RCSID (ast, 
+           ast_array, 
+           "$Id$")
 
 // Constructor(s) and destructor.
 
@@ -142,13 +147,17 @@ void
 AST_Array::dump (ACE_OSTREAM_TYPE &o)
 {
   pd_base_type->dump (o);
+
   o << " ";
+
   this->local_name ()->dump (o);
 
   for (unsigned long i = 0; i < this->pd_n_dims; i++)
     {
       o << "[";
+
       pd_dims[i]->dump (o);
+
       o << "]";
     }
 }

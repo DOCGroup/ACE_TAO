@@ -19,22 +19,18 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_sequence.h"
-
-ACE_RCSID(be_visitor_sequence, cdr_op_ci, "$Id$")
-
+ACE_RCSID (be_visitor_sequence, 
+           cdr_op_ci, 
+           "$Id$")
 
 // ***************************************************************************
 // Sequence visitor for generating CDR operator declarations in the client
 // stubs file
 // ***************************************************************************
 
-be_visitor_sequence_cdr_op_ci::be_visitor_sequence_cdr_op_ci
-(be_visitor_context *ctx)
+be_visitor_sequence_cdr_op_ci::be_visitor_sequence_cdr_op_ci (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
@@ -46,10 +42,12 @@ be_visitor_sequence_cdr_op_ci::~be_visitor_sequence_cdr_op_ci (void)
 int
 be_visitor_sequence_cdr_op_ci::visit_sequence (be_sequence *node)
 {
-  if (node->cli_inline_cdr_op_gen () ||
-      node->imported () ||
-      node->is_local ())
-    return 0;
+  if (node->cli_inline_cdr_op_gen ()
+      || node->imported ()
+      || node->is_local ())
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 

@@ -57,6 +57,7 @@ public:
 
   be_sequence (AST_Expression *v,
                AST_Type *bt,
+               UTL_ScopedName *n,
                idl_bool local,
                idl_bool abstract);
   // Constructor.

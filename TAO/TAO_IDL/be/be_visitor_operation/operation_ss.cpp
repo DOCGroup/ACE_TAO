@@ -18,16 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_operation.h"
-#include "be_visitor_argument.h"
-
 ACE_RCSID (be_visitor_operation,
            operation_ss,
            "$Id$")
-
 
 // ************************************************************
 // Operation visitor for server skeletons

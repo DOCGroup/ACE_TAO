@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_field.h"
 #include "be_visitor_array/cdr_op_ci.h"
 #include "be_visitor_enum/cdr_op_ci.h"
 #include "be_visitor_sequence/cdr_op_ci.h"

@@ -18,12 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_enum.h"
-
-ACE_RCSID(be_visitor_enum, cdr_op_ci, "$Id$")
+ACE_RCSID (be_visitor_enum, 
+           cdr_op_ci, 
+           "$Id$")
 
 
 // ***************************************************************************

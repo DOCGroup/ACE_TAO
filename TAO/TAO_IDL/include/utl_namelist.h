@@ -62,14 +62,14 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _UTL_NAMELIST_UTL_NAMELIST_HH
 #define _UTL_NAMELIST_UTL_NAMELIST_HH
 
-// utl_namelist.hh
-//
-// List of UTL_ScopedName nodes
+#include "utl_scoped_name.h"
+
+// List of UTL_ScopedName nodes.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
@@ -77,39 +77,28 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //       will cease to operate correctly if you use either multiple or
 //       public virtual inheritance.
 
-/*
-** DEPENDENCIES: utl_list.hh, utl_scoped_name.hh
-**
-** USE: Included from util.hh
-*/
-
 class TAO_IDL_FE_Export UTL_NameList : public UTL_List
 {
 public:
-  // Operations
+  UTL_NameList (UTL_ScopedName *s, 
+                UTL_NameList *cdr);
 
-  // Constructor(s)
-  UTL_NameList(UTL_ScopedName *s, UTL_NameList *cdr);
-
-  // Get list item
-  UTL_ScopedName        *head();
+  // Get list item.
+  UTL_ScopedName *head (void);
 
 private:
-  // Data
-  UTL_ScopedName        *pd_car_data;   // List item
+  // List item.
+  UTL_ScopedName *pd_car_data;
 };
 
-// Active iterator for UTL_NameList
+// Active iterator for UTL_NameList.
 class   UTL_NamelistActiveIterator : public UTL_ListActiveIterator
 {
 public:
-  // Operations
+  UTL_NamelistActiveIterator (UTL_NameList *source);
 
-  // Constructor(s)
-  UTL_NamelistActiveIterator(UTL_NameList *source);
-
-  // Get current item
-  UTL_ScopedName        *item();
+  // Get current item.
+  UTL_ScopedName *item (void);
 };
 
 #endif           // _UTL_NAMELIST_UTL_NAMELIST_HH

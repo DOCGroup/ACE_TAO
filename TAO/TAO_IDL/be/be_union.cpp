@@ -19,11 +19,17 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_union.h"
+#include "be_visitor.h"
+#include "be_codegen.h"
+#include "be_helper.h"
+#include "be_extern.h"
+#include "ast_union_branch.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(be, be_union, "$Id$")
+ACE_RCSID (be, 
+           be_union, 
+           "$Id$")
 
 
 be_union::be_union (void)
@@ -58,8 +64,6 @@ be_union::be_union (AST_ConcreteType *dt,
 int
 be_union::gen_var_defn (char *)
 {
-  TAO_OutStream *ch = 0;
-  TAO_NL be_nl;
   char namebuf [NAMEBUFSIZE];
 
   ACE_OS::memset (namebuf,
@@ -70,7 +74,7 @@ be_union::gen_var_defn (char *)
                    "%s_var",
                    this->local_name ()->get_string ());
 
-  ch = tao_cg->client_header ();
+  TAO_OutStream *ch = tao_cg->client_header ();
 
   // Generate the var definition (always in the client header).
   // Depending upon the data type, there are some differences which we account

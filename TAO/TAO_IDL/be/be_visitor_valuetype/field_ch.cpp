@@ -20,17 +20,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_array.h"
-#include "be_visitor_enum.h"
-#include "be_visitor_sequence.h"
-#include "be_visitor_structure.h"
-#include "be_visitor_union.h"
-
 ACE_RCSID (be_visitor_valuetype, 
            field_ch, 
            "$Id$")
-
 
 be_visitor_valuetype_field_ch::be_visitor_valuetype_field_ch (
     be_visitor_context *ctx

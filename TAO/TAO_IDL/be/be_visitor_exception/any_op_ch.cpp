@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_exception.h"
-
-ACE_RCSID(be_visitor_exception, any_op_ch, "$Id$")
+ACE_RCSID (be_visitor_exception, 
+           any_op_ch, 
+           "$Id$")
 
 
 // ***************************************************************************

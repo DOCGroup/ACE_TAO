@@ -67,8 +67,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_IDLIST_UTL_IDLIST_HH
 #define _UTL_IDLIST_UTL_IDLIST_HH
 
-// utl_idlist.hh
-//
 // List of Identifiers
 
 // NOTE: This list class only works correctly because we use single public
@@ -77,16 +75,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //       will cease to operate correctly if you use either multiple or
 //       public virtual inheritance.
 
-/*
-** DEPENDENCIES: utl_list.hh, utl_identifier.hh
-**
-** USE: Included from util.hh
-*/
+#include "TAO_IDL_FE_Export.h"
+#include "utl_list.h"
+#include "ace/OS.h"
 
-#include        "idl_fwd.h"
-#include        "utl_list.h"
-#include        "utl_identifier.h"
-#include        "utl_string.h"
+class Identifier;
 
 class TAO_IDL_FE_Export UTL_IdList : public UTL_List
 {
@@ -103,29 +96,25 @@ public:
   virtual ~UTL_IdList (void) {}
   // destructor
 
-  // =AST Dumping
-
   virtual void dump (ACE_OSTREAM_TYPE &o);
-  // dump to ostream
+  // Dump to ostream.
 
   virtual void destroy (void);
   // Cleanup function.
 
-  // Other operations
-
   UTL_List *copy (void);
-  // Copy the list
+  // Copy the list.
 
   Identifier *head (void);
-  // get element
+  // Get element.
 
   Identifier *last_component (void);
-  // Get last element in this list
+  // Get last element in this list.
 private:
   Identifier *pd_car_data;
 };
 
-// Active iterator for UTL_IdList
+// Active iterator for UTL_IdList.
 
 class TAO_IDL_FE_Export UTL_IdListActiveIterator
   : public UTL_ListActiveIterator
@@ -136,10 +125,9 @@ class TAO_IDL_FE_Export UTL_IdListActiveIterator
   //  Iterator for the IDList
 public:
   UTL_IdListActiveIterator (UTL_IdList *s);
-  // Constructor(s)
 
-  Identifier *item ();
-  // retrieves the next item
+  Identifier *item (void);
+  // Retrieves the next item.
 };
 
 #endif          // _UTL_IDLIST_UTL_IDLIST_HH

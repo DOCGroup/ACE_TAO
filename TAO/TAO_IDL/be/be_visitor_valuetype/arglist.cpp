@@ -20,14 +20,9 @@
 //
 // ============================================================================
 
-#include "be.h"
-#include "be_visitor_operation.h"
-#include "be_visitor_argument.h"
-
 ACE_RCSID (be_visitor_valuetype, 
            arglist, 
            "$Id$")
-
 
 // ************************************************************
 //   Operation visitor to generate the argument list.

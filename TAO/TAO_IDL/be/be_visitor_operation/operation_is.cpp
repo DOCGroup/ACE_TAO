@@ -16,12 +16,6 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "ace/SString.h"
-#include "be_visitor_operation.h"
-
 ACE_RCSID (be_visitor_operation, 
            operation_is, 
            "$Id$")

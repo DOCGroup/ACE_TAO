@@ -18,16 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_typedef.h"
-#include "be_visitor_typecode/typecode_defn.h"
-
 ACE_RCSID (be_visitor_typedef, 
            typedef_cs, 
            "$Id$")
-
 
 // ******************************************************
 // Typedef visitor for client stubs

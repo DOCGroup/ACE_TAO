@@ -18,11 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "be.h"
-#include "be_visitor_argument.h"
-
-ACE_RCSID(be_visitor_argument, request_info_result, "$Id$")
+ACE_RCSID (be_visitor_argument, 
+           request_info_result, 
+           "$Id$")
 
 
 // ************************************************************
@@ -30,12 +28,16 @@ ACE_RCSID(be_visitor_argument, request_info_result, "$Id$")
 // stored in the request info for interceptors
 // ************************************************************
 
-be_visitor_args_request_info_result::be_visitor_args_request_info_result (be_visitor_context *ctx)
+be_visitor_args_request_info_result::be_visitor_args_request_info_result (
+    be_visitor_context *ctx
+  )
   : be_visitor_args (ctx)
 {
 }
 
-be_visitor_args_request_info_result::~be_visitor_args_request_info_result (void)
+be_visitor_args_request_info_result::~be_visitor_args_request_info_result (
+    void
+  )
 {
 }
 

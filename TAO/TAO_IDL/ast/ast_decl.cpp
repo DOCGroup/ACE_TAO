@@ -62,11 +62,9 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 /*
- * ast_decl.cc - Implementation of class AST_Decl
- *
  * AST_Decl is the base class for all AST nodes except AST_Expression.
  * AST_Decls have a node type (a value from the enum AST_Decl::NodeType)
  * and a name (a UTL_ScopedName).
@@ -76,11 +74,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * main file or an #include'd file.
  */
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "ace/SString.h"
+#include "ast_interface.h"
+#include "ast_visitor.h"
+#include "global_extern.h"
+#include "nr_extern.h"
+#include "utl_identifier.h"
+#include "utl_scope.h"
+#include "utl_err.h"
 
-ACE_RCSID(ast, ast_decl, "$Id$")
+ACE_RCSID (ast, 
+           ast_decl, 
+           "$Id$")
 
 COMMON_Base::COMMON_Base (idl_bool local,
                           idl_bool abstract)

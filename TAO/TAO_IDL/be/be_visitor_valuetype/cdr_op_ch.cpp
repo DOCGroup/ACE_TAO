@@ -20,17 +20,13 @@
 //
 // ============================================================================
 
+ACE_RCSID (be_visitor_valuetype, 
+           cdr_op_ch, 
+           "$Id$")
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_valuetype.h"
-
-ACE_RCSID(be_visitor_valuetype, cdr_op_ch, "$Id$")
-
-be_visitor_valuetype_cdr_op_ch::be_visitor_valuetype_cdr_op_ch
-(be_visitor_context *ctx)
+be_visitor_valuetype_cdr_op_ch::be_visitor_valuetype_cdr_op_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_valuetype (ctx)
 {
 }
@@ -50,8 +46,6 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
   os->indent (); //start with whatever indentation level we are at now
 
-
-
   if (!node->cli_hdr_cdr_op_gen ())
   {
     // Generate helper functions declaration.
@@ -60,10 +54,9 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_cdr_op_ch::"
                            "visit_valuetype - "
-                           "codegen for helper functions failed\n"), -1);
+                           "codegen for helper functions failed\n"), 
+                          -1);
       }
-
-      // generate the CDR << and >> operator declarations (prototypes)
 
       os->indent (); //start with whatever indentation level we are at now
 
@@ -78,29 +71,25 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
       node->cli_hdr_cdr_op_gen (1);
     }
 
-
-  // set the substate as generating code for the types defined in our scope
+  // Set the substate as generating code for the types defined in our scope.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
-  // all we have to do is to visit the scope and generate code
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_cdr_op_ch::"
                          "visit_valuetype - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
 
-  //@@ Boris: that's suck!
   if (!node->is_abstract_valuetype ())
     {
-      // functions that marshal state
-      be_visitor_context* new_ctx  =
-        new be_visitor_context (*this->ctx_);
-      be_visitor_valuetype_marshal_ch visitor (new_ctx);
+      // Functions that marshal state.
+      be_visitor_context new_ctx (*this->ctx_);
+      be_visitor_valuetype_marshal_ch visitor (&new_ctx);
       visitor.visit_valuetype (node);
   }
-
-
 
   return 0;
 }

@@ -64,18 +64,31 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-// Implementation of class AST_Module
-
 // AST_Modules denote IDL module declarations
 // AST_Modules are subclasses of AST_Decl (they are not a type!) and
 // of UTL_Scope.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_module.h"
+#include "ast_predefined_type.h"
+#include "ast_interface.h"
+#include "ast_interface_fwd.h"
+#include "ast_constant.h"
+#include "ast_exception.h"
+#include "ast_union.h"
+#include "ast_enum.h"
+#include "ast_enum_val.h"
+#include "ast_native.h"
+#include "ast_generator.h"
+#include "ast_visitor.h"
+#include "utl_err.h"
+#include "utl_identifier.h"
+#include "utl_indenter.h"
+#include "global_extern.h"
+#include "nr_extern.h"
 
-ACE_RCSID(ast, ast_module, "$Id$")
-
-// Constructor(s) and destructor.
+ACE_RCSID (ast, 
+           ast_module, 
+           "$Id$")
 
 AST_Module::AST_Module (void)
 {

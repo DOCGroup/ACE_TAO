@@ -67,27 +67,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _FE_INTERFACE_HEADER_FE_INTERFACE_HH
 #define _FE_INTERFACE_HEADER_FE_INTERFACE_HH
 
-// FE_InterfaceHeader
-//
+#include "TAO_IDL_FE_Export.h"
+#include "utl_scoped_name.h"
+
+class UTL_NameList;
+class AST_Interface;
+
 // Internal class for FE to describe interface headers
 //
 // FE_obv_header
 // Internal class for FE to describe valuetype headers
 //
 
-/*
-** DEPENDENCIES: utl_scoped_name.hh, ast_interface.hh, utl_scope.hh,
-**               ast_decl.hh
-**
-** USE: Included from fe.hh
-*/
-
 class TAO_IDL_FE_Export FE_InterfaceHeader
 {
 public:
-  // Operations
-
-  // Constructor(s)
   FE_InterfaceHeader (UTL_ScopedName *n,
                       UTL_NameList *l,
                       UTL_NameList *supports = 0,

@@ -17,11 +17,14 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_global.h"
+#include "utl_string.h"
+#include "global_extern.h"
+#include "ace/ACE.h"
 
-ACE_RCSID(be, be_global, "$Id$")
+ACE_RCSID (be, 
+           be_global, 
+           "$Id$")
 
 TAO_IDL_BE_Export BE_GlobalData *be_global = 0;
 

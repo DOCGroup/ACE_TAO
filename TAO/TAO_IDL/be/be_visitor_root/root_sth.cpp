@@ -18,15 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_root.h"
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_root, root_sth, "$Id$")
-
+ACE_RCSID (be_visitor_root, 
+           root_sth, 
+           "$Id$")
 
 // ****************************************
 // Root visitor for server template header

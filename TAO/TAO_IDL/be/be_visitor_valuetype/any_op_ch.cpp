@@ -20,14 +20,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_valuetype.h"
-
-ACE_RCSID(be_visitor_valuetype, any_op_ch, "$Id$")
-
+ACE_RCSID (be_visitor_valuetype, 
+           any_op_ch, 
+           "$Id$")
 
 // ***************************************************************************
 // Valuetype visitor for generating Any operator declarations.

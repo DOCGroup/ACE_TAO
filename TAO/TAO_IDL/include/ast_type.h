@@ -67,15 +67,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_TYPE_AST_TYPE_HH
 #define _AST_TYPE_AST_TYPE_HH
 
+#include "ast_decl.h"
+
 // Class for all IDL types
 //
 // This is useful wherever any IDL type defining construct can appear
 // such as the base type for a typedef or array.
-
-#include "idl_fwd.h"
-#include "idl_narrow.h"
-#include "ast_decl.h"
-
 
 class TAO_IDL_FE_Export AST_Type : public virtual AST_Decl
 {

@@ -62,20 +62,18 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-// utl_identifier - Implementation of identifiers
+#include "utl_identifier.h"
+#include "global_extern.h"
+#include "utl_err.h"
+#include "utl_string.h"
 
-#include        "idl.h"
-#include        "idl_extern.h"
+ACE_RCSID (util, 
+           utl_identifier, 
+           "$Id$")
 
-ACE_RCSID(util, utl_identifier, "$Id$")
-
-/*
- * Constructors
- */
-
-Identifier::Identifier ()
+Identifier::Identifier (void)
   : pv_string (0),
     escaped_ (0)
 {

@@ -19,21 +19,18 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_interface_fwd.h"
-
-ACE_RCSID(be_visitor_interface_fwd, any_op_ch, "$Id$")
+ACE_RCSID (be_visitor_interface_fwd, 
+           any_op_ch, 
+           "$Id$")
 
 
 // ***************************************************************************
 // Generates Any operator declarations in the client header
 // ***************************************************************************
 
-be_visitor_interface_fwd_any_op_ch::be_visitor_interface_fwd_any_op_ch
-(be_visitor_context *ctx)
+be_visitor_interface_fwd_any_op_ch::be_visitor_interface_fwd_any_op_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
@@ -43,7 +40,9 @@ be_visitor_interface_fwd_any_op_ch::~be_visitor_interface_fwd_any_op_ch (void)
 }
 
 int
-be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
+    be_interface_fwd *node
+  )
 {
   AST_Interface *fd = node->full_definition ();
 
@@ -75,6 +74,5 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (be_interface_fwd *node)
       << node->name () << " *&);\n";
 
   node->cli_hdr_any_op_gen (1);
-
   return 0;
 }

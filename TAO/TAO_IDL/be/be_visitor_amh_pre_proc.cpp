@@ -13,19 +13,25 @@
 //=============================================================================
 
 #include "be_visitor_amh_pre_proc.h"
+#include "be_visitor_context.h"
+#include "be_root.h"
+#include "be_module.h"
+#include "be_interface.h"
+#include "be_valuetype.h"
+#include "be_attribute.h"
+#include "be_operation.h"
+#include "be_predefined_type.h"
+#include "be_argument.h"
+#include "utl_identifier.h"
 
 be_visitor_amh_pre_proc::be_visitor_amh_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-
-
 be_visitor_amh_pre_proc::~be_visitor_amh_pre_proc (void)
 {
 }
-
-
 
 int
 be_visitor_amh_pre_proc::visit_root (be_root *node)
@@ -41,8 +47,6 @@ be_visitor_amh_pre_proc::visit_root (be_root *node)
   return 0;
 }
 
-
-
 int
 be_visitor_amh_pre_proc::visit_module (be_module *node)
 {
@@ -57,8 +61,6 @@ be_visitor_amh_pre_proc::visit_module (be_module *node)
   return 0;
 }
 
-
-
 int
 be_visitor_amh_pre_proc::visit_interface (be_interface *node)
 {
@@ -68,7 +70,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
       return 0;
     }
 
-  // don't generate AMH classes for imported or local interfaces
+  // Don't generate AMH classes for imported or local interfaces
   // either...
   // @@ Mayur, maybe we do want to insert the AMH node for imported
   // interfaces, not because we want to generate code for them, but
@@ -131,7 +133,6 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
   return 0;
 }
 
-
 be_interface *
 be_visitor_amh_pre_proc::create_response_handler (
     be_interface *node,
@@ -176,7 +177,6 @@ be_visitor_amh_pre_proc::create_response_handler (
 
   return response_handler;
 }
-
 
 int
 be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
@@ -228,7 +228,6 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
 
   return 1;
 }
-
 
 int
 be_visitor_amh_pre_proc::create_response_handler_operation (
@@ -449,7 +448,6 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
   return 0;
 }
 
-
 int
 be_visitor_amh_pre_proc::visit_operation (be_operation *node)
 {
@@ -478,7 +476,6 @@ be_visitor_amh_pre_proc::visit_operation (be_operation *node)
 
   return 0;
 }
-
 
 int
 be_visitor_amh_pre_proc::visit_attribute (be_attribute *node)
@@ -615,69 +612,10 @@ be_visitor_amh_pre_proc::visit_scope (be_scope *node)
 be_valuetype *
 be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
 {
-#if 0
-  // Create a virtual module named "Messaging" and a valuetype
-  // "ExceptionHolder" from which we inherit.
-  UTL_ScopedName *inherit_name = 0;
-  ACE_NEW_RETURN (inherit_name,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  ACE_NEW_RETURN (id,
-                  Identifier ("ExceptionHolder"),
-                  0);
-
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  inherit_name->nconc (sn);
-
-  be_valuetype *inherit_vt = 0;
-  ACE_NEW_RETURN (inherit_vt,
-                  be_valuetype (inherit_name,
-                                0,
-                                0,
-                                0),
-                  0);
-
-  inherit_vt->set_name (inherit_name);
-  inherit_vt->set_imported (I_TRUE);
-
-  ACE_NEW_RETURN (id,
-                  Identifier ("Messaging"),
-                  0);
-
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  be_module *msg = 0;
-  ACE_NEW_RETURN (msg,
-                  be_module (sn),
-                  0);
-
-  // Notice the valuetype "ExceptionHolder" that it is defined in the
-  // "Messaging" module.
-  inherit_vt->set_defined_in (msg);
-
-  const int inherit_count = 1;
-  AST_Interface **p_intf = 0;
-  ACE_NEW_RETURN (p_intf,
-                  AST_Interface*[1],
-                  0);
-
-  p_intf[0] = ACE_static_cast (AST_Interface *,
-                               inherit_vt);
-#else
   const int inherit_count = 0;
   AST_Interface **p_intf = 0;
-#endif
 
- UTL_ScopedName *excep_holder_name =
+  UTL_ScopedName *excep_holder_name =
     node->compute_name ("AMH_", "ExceptionHolder");
 
   be_valuetype *excep_holder = 0;
@@ -845,9 +783,11 @@ be_visitor_amh_pre_proc::create_raise_operation (
 
   // Set the proper strategy.
   be_operation_ami_exception_holder_raise_strategy *ehrs = 0;
-  ACE_NEW_RETURN (ehrs,
-                  be_operation_ami_exception_holder_raise_strategy (operation),
-                  -1);
+  ACE_NEW_RETURN (
+      ehrs,
+      be_operation_ami_exception_holder_raise_strategy (operation),
+      -1
+    );
 
   be_operation_strategy *old_strategy =
     operation->set_strategy (ehrs);
@@ -911,7 +851,9 @@ be_visitor_amh_pre_proc::generate_get_operation (be_attribute *node)
 be_operation *
 be_visitor_amh_pre_proc::generate_set_operation (be_attribute *node)
 {
-  ACE_CString original_op_name (node->name ()->last_component ()->get_string ());
+  ACE_CString original_op_name (
+      node->name ()->last_component ()->get_string ()
+    );
   ACE_CString new_op_name = ACE_CString ("set_") + original_op_name;
 
   UTL_ScopedName *set_name = ACE_static_cast (UTL_ScopedName *,

@@ -67,10 +67,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_PREDEFINED_TYPE_AST_PREDEFINED_TYPE_HH
 #define _AST_PREDEFINED_TYPE_AST_PREDEFINED_TYPE_HH
 
-// Representation of predefined types:
-//
-// Instances of this class are inserted into the global context by
-// the front end before the start of parsing.
+#include "ast_concrete_type.h"
+
+class ast_visitor;
 
 class TAO_IDL_FE_Export AST_PredefinedType : public virtual AST_ConcreteType
 {

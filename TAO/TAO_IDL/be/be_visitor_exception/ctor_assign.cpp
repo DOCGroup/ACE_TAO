@@ -19,13 +19,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_exception.h"
-
-ACE_RCSID(be_visitor_exception, ctor_assign, "$Id$")
-
+ACE_RCSID (be_visitor_exception, 
+           ctor_assign, 
+           "$Id$")
 
 // ************************************************************************
 // Used for the body of the assignment operator and the copy constructor.

@@ -66,10 +66,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // AST_Expression nodes denote IDL expressions used in the IDL input.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_expression.h"
+#include "ast_constant.h"
+#include "ast_visitor.h"
+#include "global_extern.h"
+#include "utl_err.h"
+#include "utl_scope.h"
+#include "utl_string.h"
 
-ACE_RCSID(ast, ast_expression, "$Id$")
+ACE_RCSID (ast, 
+           ast_expression, 
+           "$Id$")
 
 // Helper function to fill out the details of where this expression
 // is defined.
@@ -2372,7 +2379,7 @@ dump_expr_val (ACE_OSTREAM_TYPE &o,
       o << (ev->u.bval == I_TRUE ? "TRUE" : "FALSE");
       break;
     case AST_Expression::EV_string:
-      if (ev->u.strval != NULL)
+      if (ev->u.strval != 0)
         ev->u.strval->dump(o);
     case AST_Expression::EV_longlong:
 #if ! defined (ACE_LACKS_LONGLONG_T)

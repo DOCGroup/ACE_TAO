@@ -67,8 +67,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_DECLLIST_UTL_DECLLIST_HH
 #define _UTL_DECLLIST_UTL_DECLLIST_HH
 
-// utl_decllist.hh
-//
+#include "TAO_IDL_FE_Export.h"
+#include "utl_list.h"
+
 // List of FE_Declarator nodes
 
 // NOTE: This list class only works correctly because we use single public
@@ -77,11 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //       will cease to operate correctly if you use either multiple or
 //       public virtual inheritance.
 
-/*
-** DEPENDENCIES: utl_list.hh, fe_declarator.hh
-**
-** USE: Included from util.hh
-*/
+class FE_Declarator;
 
 class TAO_IDL_FE_Export UTL_DeclList : public UTL_List
 {

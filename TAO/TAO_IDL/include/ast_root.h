@@ -67,14 +67,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ROOT_AST_ROOT_HH
 #define _AST_ROOT_AST_ROOT_HH
 
+#include "ast_module.h"
+
 // Representation of root of AST.
 
 class TAO_IDL_FE_Export AST_Root : public virtual AST_Module
 {
 public:
-  // Operations.
-
-  // Constructor(s) and destructor.
   AST_Root (void);
 
   AST_Root (UTL_ScopedName *n);

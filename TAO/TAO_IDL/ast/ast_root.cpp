@@ -69,12 +69,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // to subclass it to associate their own information with an entire
 // AST.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_root.h"
+#include "ast_sequence.h"
+#include "ast_string.h"
+#include "ast_array.h"
+#include "ast_visitor.h"
+#include "utl_identifier.h"
 
-ACE_RCSID(ast, ast_root, "$Id$")
+ACE_RCSID (ast, 
+           ast_root, 
+           "$Id$")
 
-// Constructor(s) and destructor.
 AST_Root::AST_Root (void)
 {
 }
@@ -89,8 +94,6 @@ AST_Root::AST_Root (UTL_ScopedName *n)
 AST_Root::~AST_Root (void)
 {
 }
-
-// Add protocol.
 
 // Add this AST_Sequence to the locally defined types in this scope.
 AST_Sequence *

@@ -18,18 +18,6 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_interface.h"
-#include "be_visitor_attribute.h"
-#include "be_visitor_constant.h"
-#include "be_visitor_enum.h"
-#include "be_visitor_exception.h"
-#include "be_visitor_structure.h"
-#include "be_visitor_typedef.h"
-#include "be_visitor_union.h"
-
 ACE_RCSID (be_visitor_interface, 
            interface, 
            "$Id$")
@@ -574,9 +562,12 @@ be_visitor_interface::visit_operation (be_operation *node)
   // will be modified ased on what type of node we are visiting
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
+  int status = 1;
 
   switch (this->ctx_->state ())
     {
+    // These first two cases may have the context state changed
+    // by a strategy, so we use the visitor factory below.
     case TAO_CodeGen::TAO_INTERFACE_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
       break;
@@ -584,82 +575,168 @@ be_visitor_interface::visit_operation (be_operation *node)
       ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_SH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_SH);
+        be_visitor_operation_sh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_IH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_IH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_IH);
+        be_visitor_operation_ih visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_SS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_SS);
+        be_visitor_operation_ss visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_IS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_IS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_IS);
+        be_visitor_operation_is visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SH);
+        be_visitor_operation_tie_sh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
+        be_visitor_operation_tie_si visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SH);
+        be_visitor_operation_thru_poa_collocated_sh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SS);
+        be_visitor_operation_thru_poa_collocated_ss visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SH);
+        be_visitor_operation_direct_collocated_sh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS);
+        be_visitor_operation_direct_collocated_ss visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CH);
+        be_visitor_operation_smart_proxy_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS);
+        be_visitor_operation_smart_proxy_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CH);
+        be_visitor_operation_interceptors_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CS);
+        be_visitor_operation_interceptors_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_SH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_SH);
+        be_visitor_operation_interceptors_sh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_SS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_SS);
+        be_visitor_operation_interceptors_ss visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_IMPL_CH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_BASE_PROXY_IMPL_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_BASE_PROXY_IMPL_CH);
+        be_visitor_operation_base_proxy_impl_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CH:
     case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_PROXY_IMPL_XH);
-      break;
-
-      // AMH stuff
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_PROXY_IMPL_XH);
+        be_visitor_operation_proxy_impl_xh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_AMH_RH_SH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_AMH_RH_SH);
+        be_visitor_amh_rh_operation_sh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_AMH_RH_SS);
-      break;
-
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_AMH_RH_SS);
+        be_visitor_amh_rh_operation_ss visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_REMOTE_PROXY_IMPL_CS);
-      break;
-
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_REMOTE_PROXY_IMPL_CS);
+        be_visitor_operation_remote_proxy_impl_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_PROXY_IMPL_SS);
-      break;
-
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_PROXY_IMPL_SS);
+        be_visitor_operation_thru_poa_proxy_impl_ss visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_PROXY_IMPL_SS);
-      break;
-
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_PROXY_IMPL_SS);
+        be_visitor_operation_direct_proxy_impl_ss visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
@@ -678,11 +755,24 @@ be_visitor_interface::visit_operation (be_operation *node)
       }
     }
 
+  if (status == 0)
+    {
+      return 0;
+    }
+  else if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface::"
+                         "visit_operation - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
   // Change the state depending on the kind of node strategy.
   ctx.state (node->next_state (ctx.state ()));
 
 
-  // grab the appropriate visitor
+  // Grab the appropriate visitor.
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
   if (!visitor)

@@ -19,14 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_module.h"
-
-ACE_RCSID(be_visitor_module, any_op, "$Id$")
-
+ACE_RCSID (be_visitor_module, 
+           any_op, 
+           "$Id$")
 
 // ***************************************************************************
 // Module visitor for generating Any operator declarations in the client header
@@ -45,12 +40,13 @@ be_visitor_module_any_op::~be_visitor_module_any_op (void)
 int
 be_visitor_module_any_op::visit_module (be_module *node)
 {
-  // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_module::visit_module - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
+
   return 0;
 }

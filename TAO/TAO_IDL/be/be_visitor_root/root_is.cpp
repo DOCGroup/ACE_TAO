@@ -14,14 +14,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_root.h"
-
-//ACE_RCSID(be_visitor_root, root_ss, "$Id$")
-
+ACE_RCSID (be_visitor_root, 
+           root_is, 
+           "$Id$")
 
 // ******************************************************
 // Root visitor for implementation  skeletons
@@ -39,7 +34,7 @@ be_visitor_root_is::~be_visitor_root_is (void)
 int
 be_visitor_root_is::init (void)
 {
-  // first open the file for writing
+  // First open the file for writing.
   if (tao_cg->start_implementation_skeleton (
           be_global->be_get_implementation_skel_fname ()
         )
@@ -47,10 +42,10 @@ be_visitor_root_is::init (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_is::init - "
-                         "Error opening implementation skeletons file\n"), -1);
+                         "Error opening implementation skeletons file\n"), 
+                        -1);
     }
 
-  // set stream
   this->ctx_->stream (tao_cg->implementation_skeleton ());
   return 0;
 }

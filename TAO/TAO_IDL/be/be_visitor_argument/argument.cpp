@@ -18,15 +18,13 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "be.h"
-#include "be_visitor_argument.h"
-
-ACE_RCSID(be_visitor_argument, argument, "$Id$")
+ACE_RCSID (be_visitor_argument, 
+           argument, 
+           "$Id$")
 
 be_visitor_args::be_visitor_args (be_visitor_context *ctx)
-  : be_visitor_decl (ctx)
-  , fixed_direction_ (-1)
+  : be_visitor_decl (ctx),
+    fixed_direction_ (-1)
 {
 }
 

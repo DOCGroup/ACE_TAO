@@ -18,21 +18,18 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_interface_fwd.h"
-
-ACE_RCSID(be_visitor_interface_fwd, interface_fwd_ch, "$Id$")
-
+ACE_RCSID (be_visitor_interface_fwd, 
+           interface_fwd_ch, 
+           "$Id$")
 
 // ********************************************************************
 // Visitor implementation for the Interface_Fwd type
 // This one for the client header file
 // ********************************************************************
 
-be_visitor_interface_fwd_ch::be_visitor_interface_fwd_ch (be_visitor_context *ctx)
+be_visitor_interface_fwd_ch::be_visitor_interface_fwd_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
