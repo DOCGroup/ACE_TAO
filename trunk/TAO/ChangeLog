@@ -1,3 +1,26 @@
+Sat Mar 22 15:51:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/CurrentC.i:
+        * tao/DomainC.cpp:
+        * tao/DomainC.i:
+        * tao/IOPC.cpp:
+        * tao/IOPC.i:
+        * tao/ObjectReferenceTemplateC.cpp:
+        * tao/ObjectReferenceTemplateC.h:
+        * tao/ObjectReferenceTemplateC.i:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.i:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.i:
+        * tao/TAOC.cpp:
+        * tao/TAOC.i:
+
+ 	  Moved Any template method specializations to
+	  the corresponding inline files, to avoid a
+	  compile problem with BCB.
+
 Sat Mar 22 12:55:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
