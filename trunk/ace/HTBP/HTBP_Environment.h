@@ -3,7 +3,7 @@
 
 #ifndef ACE_HTBP_ENVIRONMENT_H
 #define ACE_HTBP_ENVIRONMENT_H
-#include <ace/pre.h>
+#include /**/ "ace/pre.h"
 
 #include "HTBP_Export.h"
 
@@ -72,10 +72,10 @@ namespace ACE
       int set_proxy_port (unsigned int proxy_port);
       /// @}
 
-      /// Import the configuration from the @filename
+      /// Import the configuration from the filename
       int import_config (const ACE_TCHAR *filename);
 
-      /// Export the configuration to the @filename
+      /// Export the configuration to the filename
       int export_config (const ACE_TCHAR *filename);
 
     private:
@@ -103,5 +103,5 @@ namespace ACE
   };
 };
 
-#include <ace/post.h>
+#include /**/ "ace/post.h"
 #endif /* ACE_HTBP_ENVIRONMENT_H */

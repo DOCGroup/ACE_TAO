@@ -3,7 +3,7 @@
 
 #ifndef HTID_REQUESTOR_H
 #define HTID_REQUESTOR_H
-#include <ace/pre.h>
+#include /**/ "ace/pre.h"
 
 #include "HTBP_Export.h"
 #include "ace/SString.h"
@@ -54,5 +54,5 @@ namespace ACE
 
   };
 };
-#include <ace/post.h>
+#include /**/ "ace/post.h"
 #endif /* HTID_REQUESTOR_H */

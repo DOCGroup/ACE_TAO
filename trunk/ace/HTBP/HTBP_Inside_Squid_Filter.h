@@ -12,7 +12,7 @@
 
 #ifndef ACE_HTBP_INSIDE_SQUID_FILTER_H
 #define ACE_HTBP_INSIDE_SQUID_FILTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -83,5 +83,5 @@ namespace ACE
 #include "HTBP_Inside_Squid_Filter.inl"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_HTBP_FILTER_H */

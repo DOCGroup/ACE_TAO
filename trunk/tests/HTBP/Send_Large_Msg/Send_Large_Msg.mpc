@@ -1,3 +1,7 @@
+// -*- MPC -*-
+//
+// $Id$
+
 project(*Server): aceexe {
   libs += ACE_HTBP
   exename = server

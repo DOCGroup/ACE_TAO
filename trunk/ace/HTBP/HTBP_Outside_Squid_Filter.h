@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    ACE_HTBP_Outside_Squid_Filter.h
+ *  @file    HTBP_Outside_Squid_Filter.h
  *
  *  $Id$
  *
@@ -12,7 +12,7 @@
 
 #ifndef ACE_HTBP_OUTSIDE_SQUID_FILTER_H
 #define ACE_HTBP_OUTSIDE_SQUID_FILTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -78,5 +78,5 @@ namespace ACE
 #include "HTBP_Outside_Squid_Filter.inl"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_HTBP_OUTSIDE_FILTER_H */

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    ACE_HTBP_Session.h
+ *  @file    HTBP_Session.h
  *
  *  $Id$
  *
@@ -12,7 +12,7 @@
 
 #ifndef ACE_HTBP_SESSION_H
 #define ACE_HTBP_SESSION_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SOCK_IO.h"
 #include "ace/Hash_Map_Manager.h"
@@ -46,7 +46,7 @@ namespace ACE
       Addr    peer_;
 
       u_long hash () const;
-      int operator ==(const Session_Id_t &other) const;
+      bool operator ==(const Session_Id_t &other) const;
     };
 
     /**
@@ -189,5 +189,5 @@ namespace ACE
 #include "HTBP_Session.inl"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_HTBP_SESSION_H */
