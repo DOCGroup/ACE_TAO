@@ -409,7 +409,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     Null_Condition.h
     Null_Mutex.h
     Null_Semaphore.h
-    OS_Export.h
     OS_NS_macros.h
     Proactor_Impl.h
     Reactor_Impl.h
@@ -433,7 +432,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     config-win32-borland.h
     config-win32-common.h
     config-win32-ghs.h
-    config-win32-msvc-5.h
     config-win32-msvc-6.h
     config-win32-msvc-7.h
     config-win32-msvc.h
