@@ -1850,9 +1850,8 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
          iter.advance ())
       // If threads are created as THR_DETACHED or THR_DAEMON, we can't help much here.
       if (iter.next ()->task_ == task &&
-          (ACE_BIT_DISABLED (iter.next ()->flags_,
-                             (THR_DETACHED | THR_DAEMON)))
-           || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE))
+          (ACE_BIT_DISABLED (iter.next ()->flags_, THR_DETACHED | THR_DAEMON)
+           || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
         {
           iter.next ()->thr_state_ = ACE_THR_JOINING;
           copy_table[copy_count++] = *iter.next ();
