@@ -1,3 +1,8 @@
+Fri Aug 18 15:07:51 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+	
+	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection.cpp:
+	  Temporarily reverted changes causing VxWorks warnings.
+	
 Fri Aug 18 13:33:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
