@@ -18,6 +18,9 @@
 // So until -fhandle-exceptions gets fixed, we can't use this with g++ . . .
 // #define ACE_HAS_EXCEPTIONS
 
+// Platform supports pread() and pwrite()
+#define ACE_HAS_P_READ_WRITE
+
 #define ACE_HAS_UNICODE
 
 // G++ doesn't support template typedefs fully (yet).
