@@ -30,9 +30,8 @@ ACE_Pipe::open (void)
   ACE_SOCK_Stream writer;
   int result = 0;
 
-  // Bind listener to any port, make sure to enable the "reuse addr"
-  // flag.
-  if (acceptor.open (ACE_Addr::sap_any, 1) == -1)
+  // Bind listener to any port
+  if (acceptor.open (ACE_Addr::sap_any) == -1)
     result = -1;
   else if (acceptor.get_local_addr (my_addr) == -1)
     result = -1;
