@@ -1,3 +1,10 @@
+Thu May 17 13:42:12 2001  Johnny Willemsen
+
+        * tao/Makefile.bor
+        * tao/PortableServer/Makefile.bor
+        * tao/Strategies/Makefile.bor
+          Updated makefiles with changes of yesterday
+
 Thu May 17 04:13:54 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO_IDL/be/be_interface_strategy.cpp:
@@ -41,8 +48,8 @@ Thu May 17 03:15:42 2001  Darrell Brunsch <brunsch@uci.edu>
         * TAO_IDL/be_include/be_visitor_operation/amh_ss.h: (added)
         * TAO_IDL/driver/drv_args.cpp:
 
-          Just checking in the beginnings of support for AMH in the 
-          TAO_IDL compiler, allowing the torch to be passed to the 
+          Just checking in the beginnings of support for AMH in the
+          TAO_IDL compiler, allowing the torch to be passed to the
           next person.
 
 Wed May 16 21:28:22 2001  Ossama Othman  <ossama@uci.edu>
@@ -75,7 +82,7 @@ Wed May 16 20:58:51 2001  Jeff Parsons <parsons@cs.wustl.edu>
           full scoped name is declared in a third opening of the module,
           the IDL compiler would go into an endless loop instead of
           reporting the error. Fixed with the addition of a check to
-          lookup_by_nane_local(). Thanks to Russell Mora 
+          lookup_by_nane_local(). Thanks to Russell Mora
           <rd.mora@econz.co.nz> for reporting this bug, and for sending
           in an example IDL file.
 
