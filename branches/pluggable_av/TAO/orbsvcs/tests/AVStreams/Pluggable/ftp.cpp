@@ -2,17 +2,21 @@
 
 #include "ftp.h"
 
-FTP_SFP_Object::FTP_SFP_Object (FTP_Client_SFP_Flow_Handler *handler)
+FTP_Client_Callback::FTP_Client_Callback (FTP_Client_Flow_Handler *handler)
   :handler_ (handler)
 {
-  handler_->set_sfp_object (this);
 }
 
 int
-FTP_SFP_Object::start (void)
+FTP_Client_Callback::handle_start (void)
 {
-  this->handler_->start ();
-  return 0;
+  return this->handler_->start ();
+}
+
+int
+FTP_Client_Callback::handle_stop (void)
+{
+  return this->handler_->stop ();
 }
 
 FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (TAO_ORB_Manager *orb_manager)
@@ -22,134 +26,97 @@ FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (TAO_ORB_Manager *orb_manag
 }
 
 int
-FTP_Client_StreamEndPoint::make_udp_flow_handler (TAO_AV_UDP_Flow_Handler *&handler)
+FTP_Client_StreamEndPoint::get_callback (const char *flowname,
+                                         TAO_AV_Callback *&callback)
 {
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::make_udp_flow_handler"));
-  ACE_NEW_RETURN (handler,
-                  FTP_Client_UDP_Flow_Handler (this->orb_manager_),
+  ACE_Time_Value timeout (2);
+  ACE_NEW_RETURN (this->handler_,
+                  FTP_Client_Flow_Handler (this->orb_manager_,
+                                           timeout),
                   -1);
-}
-
-int
-FTP_Client_StreamEndPoint::make_tcp_flow_handler (TAO_AV_TCP_Flow_Handler *&handler)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::make_tcp_flow_handler"));
-  ACE_NEW_RETURN (handler,
-                  FTP_Client_TCP_Flow_Handler (this->orb_manager_),
+  ACE_NEW_RETURN (this->callback_,
+                  FTP_Client_Callback (this->handler_),
                   -1);
-}
-
-int
-FTP_Client_StreamEndPoint::make_dgram_mcast_flow_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::make_udp_flow_handler"));
-  ACE_NEW_RETURN (handler,
-                  FTP_Client_UDP_MCast_Flow_Handler (this->orb_manager_),
-                  -1);
-}
-
-int 
-FTP_Client_StreamEndPoint::get_sfp_object (const char *flowname,
-                                           TAO_SFP_Object *&sfp_object)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::set_sfp_object\n"));
-  FTP_Client_SFP_Flow_Handler *handler;
-  ACE_NEW_RETURN (handler,
-                  FTP_Client_SFP_Flow_Handler (this->orb_manager_),
-                  -1);
-  ACE_NEW_RETURN (sfp_object,
-                  FTP_SFP_Object (handler),
-                  -1);
+  callback = this->callback_;
   return 0;
 }
 
-FTP_Client_Flow_Handler::FTP_Client_Flow_Handler (TAO_ORB_Manager *orb_manager)
+int
+FTP_Client_StreamEndPoint::set_protocol_object (const char *flowname,
+                                                TAO_AV_Protocol_Object *object)
+{
+  int result = this->handler_->set_protocol_object (object);
+  ACE_CString flow_string (flowname);
+  if (flow_string.find ("RTP") != flow_string.npos)
+    {
+      // Set the policies.
+      TAO_AV_Policy_Manager policy_manager;
+      CORBA::ULong ssrc = 25;
+      int payload_type = 1;
+      PolicyList list (2);
+      list.length (2);
+      list [0] = policy_manager.create_policy (TAO_AV_Policy::TAO_AV_SSRC_POLICY,
+                                               &ssrc);
+      list [1] = policy_manager.create_policy (TAO_AV_Policy::TAO_AV_PAYLOAD_TYPE_POLICY,
+                                               &payload_type);
+      object->set_policies (list);
+    }
+  return 0;
+}
+
+FTP_Client_Flow_Handler::FTP_Client_Flow_Handler (TAO_ORB_Manager *orb_manager,
+                                                  ACE_Time_Value &timeout)
   :orb_manager_ (orb_manager),
-   count_ (0)
+   count_ (0),
+   protocol_object_ (0),
+   timeout_ (timeout)
 {
 }
 
 int
-FTP_Client_UDP_Flow_Handler::start (void)
+FTP_Client_Flow_Handler::start (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::start"));
-  ACE_Time_Value interval (2);
+  ACE_DEBUG ((LM_DEBUG,"FTP_Client_Flow_Handler::start"));
   ACE_Time_Value delta = ACE_Time_Value::zero;
   this->timer_id_ =  
     TAO_AV_CORE::instance ()->reactor ()->schedule_timer (this,
                                                           0,
                                                           delta,
-                                                          interval);
+                                                          this->timeout_);
   return 0;
 }
 
 int
-FTP_Client_TCP_Flow_Handler::start (void)
+FTP_Client_Flow_Handler::stop (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::start"));
-  ACE_Time_Value interval (2);
-  ACE_Time_Value delta = ACE_Time_Value::zero;
-  this->timer_id_ =  
-    TAO_AV_CORE::instance ()->reactor ()->schedule_timer (this,
-                                                          0,
-                                                          delta,
-                                                          interval);
+  ACE_DEBUG ((LM_DEBUG,"FTP_Client_Flow_Handler::start"));
+  int result = TAO_AV_CORE::instance ()->reactor ()->cancel_timer (this->timer_id_);
+  if (result < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::stop cancel timer failed\n"),-1);
   return 0;
 }
 
 int
-FTP_Client_UDP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                         const void *arg)
+FTP_Client_Flow_Handler::set_protocol_object (TAO_AV_Protocol_Object *object)
 {
-  return FTP_Client_Flow_Handler::handle_timeout (tv,arg);
-}
-
-int
-FTP_Client_TCP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                         const void *arg)
-{
-  return FTP_Client_Flow_Handler::handle_timeout (tv,arg);
-}
-
-FTP_Client_UDP_MCast_Flow_Handler::FTP_Client_UDP_MCast_Flow_Handler (TAO_ORB_Manager *orb_manager)
-  :FTP_Client_Flow_Handler (orb_manager)
-{
-}
-
-int
-FTP_Client_UDP_MCast_Flow_Handler::start (void)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::start"));
-  ACE_Time_Value interval (2);
-  ACE_Time_Value delta = ACE_Time_Value::zero;
-  this->timer_id_ =  
-    TAO_AV_CORE::instance ()->reactor ()->schedule_timer (this,
-                                                          0,
-                                                          delta,
-                                                          interval);
+  this->protocol_object_ = object;
   return 0;
 }
-
-int
-FTP_Client_UDP_MCast_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                         const void *arg)
-{
-  return FTP_Client_Flow_Handler::handle_timeout (tv,arg);
-}
-
 int
 FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
                                          const void *arg)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::handle_timeout"));
-  char buf [BUFSIZ];
-  int result = ACE_OS::fread(buf,BUFSIZ,1,CLIENT::instance ()->file ());
-  if (result < 0)
+  ACE_Message_Block mb (BUFSIZ);
+  char *buf = mb.rd_ptr ();
+  cerr << "message block size" << mb.size () << endl;
+  int n = ACE_OS::fread(buf,mb.size (),1,CLIENT::instance ()->file ());
+  if (n < 0)
     {
       TAO_AV_CORE::instance ()->reactor ()->cancel_timer (this->timer_id_);
       ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread end of file\n"),-1);
     }
-  if (result == 0)
+  if (n == 0)
     {
       if (::feof (CLIENT::instance ()->file ()))
         {
@@ -161,7 +128,7 @@ FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
               AVStreams::flowSpec stop_spec (1);
               stop_spec.length (1);
               ACE_DECLARE_NEW_CORBA_ENV;
-              stop_spec [0] = CORBA::string_dup ("Data");
+              stop_spec [0] = CORBA::string_dup (CLIENT::instance ()->flowname ());
               CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
               ACE_CHECK_RETURN (-1);
             }
@@ -171,96 +138,14 @@ FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
       else
         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread error\n"),-1);
     }
-  u_int len = BUFSIZ;
-  result = this->transport_->send (buf,
-                                   len);
+  cerr << "read bytes = " << n << endl;
+  mb.wr_ptr (n*BUFSIZ);
+  int result = this->protocol_object_->send_frame (&mb);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send \n"),-1);
-  if (result != len)
-    ACE_DEBUG ((LM_DEBUG,"transport->send failed:%p",""));
   ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent succesfully\n"));
 }
 
-FTP_Client_UDP_Flow_Handler::FTP_Client_UDP_Flow_Handler (TAO_ORB_Manager *orb_manager)
-  :FTP_Client_Flow_Handler (orb_manager)
-{
-}
-
-FTP_Client_TCP_Flow_Handler::FTP_Client_TCP_Flow_Handler (TAO_ORB_Manager *orb_manager)
-  :FTP_Client_Flow_Handler (orb_manager)
-{
-}
-
-TAO_AV_Transport*
-FTP_Client_SFP_Flow_Handler::transport (void)
-{
-  return 0;
-}
-
-void
-FTP_Client_SFP_Flow_Handler::set_sfp_object (TAO_SFP_Object *object)
-{
-  this->sfp_object_ = object;
-}
-
-int
-FTP_Client_SFP_Flow_Handler::start (void)
-{
-  ACE_Time_Value interval (2);
-  ACE_Time_Value delta = ACE_Time_Value::zero;
-  this->timer_id_ =  
-    TAO_AV_CORE::instance ()->reactor ()->schedule_timer (this,
-                                                          0,
-                                                          delta,
-                                                          interval);
-  if (this->timer_id_ < 0)
-    return -1;
-  return 0;
-}
-
-
-FTP_Client_SFP_Flow_Handler::FTP_Client_SFP_Flow_Handler (TAO_ORB_Manager *orb_manager)
-  :FTP_Client_Flow_Handler (orb_manager)
-{
-}
-
-int
-FTP_Client_SFP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                             const void *arg)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_SFP_Flow_Handler::handle_timeout"));
-  ACE_Message_Block mb (BUFSIZ);
-  char *buf = mb.rd_ptr ();
-  int result = ACE_OS::fread(buf,BUFSIZ,1,CLIENT::instance ()->file ());
-  if (result < 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_SFP_Flow_Handler::fread end of file\n"),-1);
-      TAO_AV_CORE::instance ()->reactor ()->cancel_timer (this->timer_id_);
-      return -1;
-    }
-  if (result == 0)
-    {
-      if (::feof (CLIENT::instance ()->file ()))
-        {
-          // wait for sometime for the data to be flushed to the other side.
-          ACE_DEBUG ((LM_DEBUG,"FTP_Client_SFP_Flow_Handler::handle_timeout:End of file\n"));
-          result = this->sfp_object_->end_stream ();
-          TAO_AV_CORE::instance ()->reactor ()->cancel_timer (this->timer_id_);
-          if (result < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_SFP_Flow_Handler::end stream failed\n"),-1);
-          return -1;
-        }
-      else
-        ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_SFP_Flow_Handler::fread error\n"),-1);
-    }
-  cerr << result << endl;
-  mb.wr_ptr (BUFSIZ*result);
-  result = this->sfp_object_->send_frame (&mb);
-  if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send \n"),-1);
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_SFP_Flow_Handler::handle_timeout::buffer sent succesfully\n"));
-  return 0;
-}
 
 Endpoint_Reactive_Strategy::Endpoint_Reactive_Strategy (TAO_ORB_Manager *orb_manager,
                                                         Client *client)
@@ -318,6 +203,12 @@ Client::file (void)
   return this->fp_;
 }
 
+char*
+Client::flowname (void)
+{
+  return this->flowname_;
+}
+
 TAO_StreamCtrl*
 Client::streamctrl (void)
 {
@@ -341,25 +232,12 @@ Client::bind_to_server (void)
 
   ACE_TRY
     {
-      /*
-	CORBA::Object_var naming_obj =
-	this->orb_manager_->orb ()->resolve_initial_references ("NameService");
-	if (CORBA::is_nil (naming_obj.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-	" (%P|%t) Unable to resolve the Name Service.\n"),
-	-1);
-	CosNaming::NamingContext_var naming_context =
-	CosNaming::NamingContext::_narrow (naming_obj.in (),
-	TAO_TRY_ENV);
-	TAO_CHECK_ENV;
-      */
-
       // Initialize the naming services
       if (my_naming_client_.init (this->orb_manager_->orb ()) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize "
-			   "the TAO_Naming_Client. \n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize "
+                           "the TAO_Naming_Client. \n"),
+                          -1);
       
       CosNaming::Name server_mmdevice_name (1);
       server_mmdevice_name.length (1);
@@ -463,7 +341,13 @@ Client::run (void)
       this->orb_manager_->activate_poa_manager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       ACE_INET_Addr addr (this->address_);
-      TAO_Forward_FlowSpec_Entry entry ("Data",
+      ACE_NEW_RETURN (this->flowname_,
+                      char [BUFSIZ],
+                      0);
+      ACE_OS::sprintf (this->flowname_,
+                       "Data_%s",
+                       this->protocol_);
+      TAO_Forward_FlowSpec_Entry entry (this->flowname_,
                                         "IN",
                                         "USER_DEFINED",
                                         flow_protocol_str,
@@ -482,7 +366,7 @@ Client::run (void)
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs failed\n"),-1);
       AVStreams::flowSpec start_spec (1);
       start_spec.length (1);
-      start_spec [0] = "Data";
+      start_spec [0] = CORBA::string_dup (this->flowname_);
       this->streamctrl_.start (start_spec,ACE_TRY_ENV);
       ACE_TRY_CHECK;
       // Schedule a timer for the for the flow handler.

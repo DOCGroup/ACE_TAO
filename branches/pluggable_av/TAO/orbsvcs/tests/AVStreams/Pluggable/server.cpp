@@ -8,139 +8,28 @@ FTP_Server_StreamEndPoint::FTP_Server_StreamEndPoint (void)
 }
 
 int
-FTP_Server_StreamEndPoint::make_udp_flow_handler (TAO_AV_UDP_Flow_Handler *&handler)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::make_udp_flow_handler"));
-  ACE_NEW_RETURN (handler,
-                  FTP_Server_UDP_Flow_Handler,
-                  -1);
-}
-
-int
-FTP_Server_StreamEndPoint::make_tcp_flow_handler (TAO_AV_TCP_Flow_Handler *&handler)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::make_tcp_flow_handler"));
-  ACE_NEW_RETURN (handler,
-                  FTP_Server_TCP_Flow_Handler,
-                  -1);
-}
-
-int
-FTP_Server_StreamEndPoint::make_dgram_mcast_flow_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::make_udp_flow_handler"));
-  ACE_NEW_RETURN (handler,
-                  FTP_Server_UDP_MCast_Flow_Handler,
-                  -1);
-}
-
-
-int
-FTP_Server_StreamEndPoint::get_sfp_callback (const char *flowname,
-                                             TAO_SFP_Callback *&callback)
+FTP_Server_StreamEndPoint::get_callback (const char *flowname,
+                                         TAO_AV_Callback *&callback)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::get_sfp_callback\n"));
   ACE_NEW_RETURN (callback,
-                  FTP_SFP_Callback,
+                  FTP_Server_Callback,
                   -1);
   return 0;
 }
 
-
-FTP_Server_Flow_Handler::FTP_Server_Flow_Handler (void)
-{
-}
-
 int
-FTP_Server_Flow_Handler::start (void)
+FTP_Server_Callback::handle_stop (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"FTP_Server_Flow_Handler::start"));
-  return 0;
-}
-
-int
-FTP_Server_Flow_Handler::stop (void)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::stop"));
+  ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop"));
   ACE_OS::fclose (SERVER::instance ()->file ());
-  CORBA::ORB_var orb = TAO_AV_CORE::instance ()->orb_manager ()->orb ();
-  orb->shutdown ();
   return 0;
 }
 
 int
-FTP_Server_Flow_Handler::input (ACE_HANDLE fd)
+FTP_Server_Callback::receive_frame (ACE_Message_Block *frame)
 {
-  ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::handle_input"));
-  char buf[BUFSIZ];
-  int result = this->transport_->recv (buf,
-                                       BUFSIZ);
-  if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"FTP_Server_Flow_Handler::recv failed\n"),-1);
-  result = ACE_OS::fwrite (buf,BUFSIZ,1,SERVER::instance ()->file ());
-  if (result == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"FTP_Server_Flow_Handler::fwrite failed\n"),-1);
-  return 0;
-}
-
-int
-FTP_Server_UDP_Flow_Handler::handle_input (ACE_HANDLE fd)
-{
-  return FTP_Server_Flow_Handler::input (fd);
-}
-
-int
-FTP_Server_TCP_Flow_Handler::handle_input (ACE_HANDLE fd)
-{
-  return FTP_Server_Flow_Handler::input (fd);
-}
-
-int
-FTP_Server_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE fd)
-{
-  return FTP_Server_Flow_Handler::input (fd);
-}
-
-int
-FTP_Server_TCP_Flow_Handler::get_handle (void) const
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Server_TCP_Flow_Handler::get_handle\n"));
-  return this->peer ().get_handle ();
-}
-
-int
-FTP_Server_TCP_Flow_Handler::start (void)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Server_TCP_Flow_Handler::start "));
-  ACE_HANDLE handle = this->peer ().get_handle ();
-  ACE_Event_Handler *handler = 0;
-  int result = TAO_AV_CORE::instance ()->orb_manager ()->orb ()->orb_core ()->reactor ()->handler (handle,
-                                                                                                   ACE_Event_Handler::READ_MASK,
-                                                                                                   &handler);
-  if (handler == 0)
-    ACE_DEBUG ((LM_DEBUG,"FTP_Server_Flow_Handler::start:handler is null\n"));
-  return 0;
-}
-
-
-int
-FTP_SFP_Callback::start_failed (void)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_SFP_Callback::start_failed\n"));
-  return 0;
-}
-
-int
-FTP_SFP_Callback::stream_established (void)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_SFP_Callback::stream_established\n"));
-  return 0;
-}
-
-int
-FTP_SFP_Callback::receive_frame (ACE_Message_Block *frame)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_SFP_Callback::receive_frame\n"));
+  ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::receive_frame\n"));
   while (frame != 0)
     {
       int result = ACE_OS::fwrite (frame->rd_ptr (),
@@ -154,13 +43,13 @@ FTP_SFP_Callback::receive_frame (ACE_Message_Block *frame)
   return 0;
 }
 
-void
-FTP_SFP_Callback::end_stream (void)
+int
+FTP_Server_Callback::handle_end_stream (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_SFP_Callback::end_stream\n"));
-  ACE_OS::fclose (SERVER::instance ()->file ());
   CORBA::ORB_var orb = TAO_AV_CORE::instance ()->orb_manager ()->orb ();
   orb->shutdown ();
+  return 0;
 }
 
 Server::Server (void)
