@@ -1,4 +1,7 @@
 # $Id$
+package ACE;
+
+require Process;
 
 # Returns a unique id, uid for unix, last digit of IP for NT
 sub uniqueid
@@ -11,7 +14,7 @@ sub uniqueid
 
     while (<IPNUM>)
     {
-	if (/Address/)
+      if (/Address/)
       {
         $uid = (split (/: (\d+)\.(\d+)\.(\d+)\.(\d+)/))[4];
       }
@@ -33,5 +36,7 @@ sub waitforfile
   local($file) = @_;
   sleep 1 while (!(-e $file));
 }
+
+$sleeptime = 5;
 
 1;
