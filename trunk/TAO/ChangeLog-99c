@@ -99,18 +99,11 @@ Fri Feb 12 21:20:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO/tests/NestedUpcall/Traingle_Test/Object_B_i.cpp:
 	* TAO/tests/NestedUpcall/Traingle_Test/Initiator_i.cpp:
 	* TAO/tests/NestedUpcall/Traingle_Test/initiator.cpp:
-
 	  This takes care of the g++ unused arg warnings for all except
-	  IDL-generated code. I'm sure there are some mistakes in here,
-	  and I may have missed a file or two. I'll build what I can before
-	  I go tonight, but there will still be a few mistakes, I'm sure.
-
-	  Carlos warned me the other day about files with the same name,
-	  even if in different projects. I noticed that we have
-	  TAO/orbsvcs/Time_Service/Server_i.cpp          and
-	  TAO/examples/Simple/bank/Server_i.cpp.
-	  I don't even want to think about how many files we have named
-	  client.cpp ;-).
+ 	  IDL-generated code. I'm sure there are some mistakes in here,
+ 	  and I may have missed a file or two. I'll build what I can
+ 	  before I go tonight, but there will still be a few mistakes, I'm
+ 	  sure.
 
 Fri Feb 12 17:30:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
