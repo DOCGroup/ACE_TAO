@@ -1,0 +1,23 @@
+# file      : Example/CodeGnerationKit/Indentation/IDL/Makefile.alt
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $id$
+
+root = ../../../..
+
+include $(root)/Bootstrap.rules
+
+$(call include, $(root)/Config.rules)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Executable.pre.rules)
+
+cxx_translation_units := indent_idl.cpp
+
+module_base           := indent_idl
+module_prefix         :=
+module_suffix         :=
+
+CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT)
+
+CXX_LINK_LIBS         += -L$(root)/CCF/CodeGenerationKit -lCodeGenerationKit
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Executable.post.rules)
