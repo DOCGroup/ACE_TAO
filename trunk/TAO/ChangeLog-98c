@@ -1,3 +1,11 @@
+Mon Oct  5 10:47:52 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	  
+	  Had to remove the code that Carlos had added to propagate the
+	  exception from the _tao_skel_env to the _tao_env parameter. This
+	  was necessary since we no longer use the _tao_skel_env parameter.
+
 Mon Oct  5 07:54:21 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
