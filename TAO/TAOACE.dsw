@@ -402,7 +402,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FT_ORB"=.\orbsvcs\orbsvcs\FT_ORB.dsp - Package Owner=<4>
+Project: "FT ORB"=.\orbsvcs\orbsvcs\FT_ORB.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -438,7 +438,7 @@ Package=<4>
     Project_Dep_Name ACE DLL
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name FT_ORB
+    Project_Dep_Name FT ORB
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name CosEvent
