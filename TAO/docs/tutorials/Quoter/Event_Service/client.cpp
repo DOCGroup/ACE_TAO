@@ -2,8 +2,8 @@
 // $Id$
 //
 
-#include "orbsvcs/CosNamingC.h"
 #include "Stock_Consumer.h"
+#include <orbsvcs/CosNamingC.h>
 #include <iostream>
 
 int main (int argc, char* argv[])

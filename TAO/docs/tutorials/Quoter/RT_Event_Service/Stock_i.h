@@ -6,8 +6,8 @@
 #define TAO_TUTORIAL_QUOTER_RT_EVENT_SERVICE_STOCK_I_H
 
 #include "QuoterS.h"
-#include "orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
+#include <orbsvcs/RtecEventCommS.h>
+#include <orbsvcs/RtecEventChannelAdminC.h>
 
 class Quoter_Stock_i
   : public virtual POA_Quoter::Modify_Stock,

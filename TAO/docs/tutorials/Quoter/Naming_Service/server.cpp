@@ -3,7 +3,7 @@
 //
 
 #include "Stock_Factory_i.h"
-#include "orbsvcs/CosNamingC.h"
+#include <orbsvcs/CosNamingC.h>
 #include <iostream>
 
 int main (int argc, char* argv[])
