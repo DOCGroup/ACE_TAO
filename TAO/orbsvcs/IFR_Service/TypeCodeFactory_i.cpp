@@ -97,7 +97,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
   for (CORBA::ULong index = 0; index < len; index++)
     {
-      cdr << members[index].in ();
+      cdr << members[index];
     }
 
   CORBA::TypeCode_ptr enum_typecode = 
@@ -379,8 +379,29 @@ TAO_TypeCodeFactory_i::create_value_box_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0; 
+  TAO_OutputCDR cdr;
+
+  cdr << TAO_ENCAP_BYTE_ORDER;
+
+  cdr << id;
+
+  cdr << name;
+
+  cdr << boxed_type;
+
+  CORBA::TypeCode_ptr value_box_typecode = 
+    CORBA::TypeCode::_nil ();
+
+  ACE_NEW_THROW_EX (value_box_typecode,
+                    CORBA_TypeCode (CORBA::tk_value_box,
+                                    cdr.total_length (),
+                                    cdr.buffer (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  return value_box_typecode;
 }
 
 CORBA::TypeCode_ptr 
@@ -391,8 +412,27 @@ TAO_TypeCodeFactory_i::create_native_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0; 
+  TAO_OutputCDR cdr;
+
+  cdr << TAO_ENCAP_BYTE_ORDER;
+
+  cdr << id;
+
+  cdr << name;
+
+  CORBA::TypeCode_ptr native_typecode = 
+    CORBA::TypeCode::_nil ();
+
+  ACE_NEW_THROW_EX (native_typecode,
+                    CORBA_TypeCode (CORBA::tk_native,
+                                    cdr.total_length (),
+                                    cdr.buffer (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  return native_typecode;
 }
 
 CORBA::TypeCode_ptr 
