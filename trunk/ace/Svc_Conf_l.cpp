@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/config.h"
 #if defined (ACE_HAS_TERM_IOCTLS) /* to avoid conflict with sys/termios.h ECHO */
 #undef ACE_HAS_TERM_IOCTLS

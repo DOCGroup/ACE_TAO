@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+// $Id$
+
 #define ACE_DYNAMIC 257
 #define ACE_STATIC 258
 #define ACE_SUSPEND 259

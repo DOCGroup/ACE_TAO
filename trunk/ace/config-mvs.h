@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+// $Id$
+
 // The following configuration file is designed to work for MVS with
 // OpenEdition.
 

@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+// $Id$
+
 // The following configuration file is designed to work for SCO UNIX
 // version 5.0 *without* threads.
 
