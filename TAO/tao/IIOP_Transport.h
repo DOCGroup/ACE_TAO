@@ -154,7 +154,8 @@ public:
   // concurrency strategies, typically using the leader-follower
   // pattern.
 
-  int handle_client_input (int block = 0);
+  int handle_client_input (int block = 0,
+                           ACE_Time_Value *max_time_value = 0);
   // Read and handle the reply. Returns 0 when there is Short Read on
   // the connection. Returns 1 when the full reply is read and
   // handled. If <block> is 1, then reply is read in a blocking

@@ -164,13 +164,14 @@ public:
   // Get request id for the current invocation from the TMSobject.
 
   int bind_reply_dispatcher (CORBA::ULong request_id,
-                              TAO_Reply_Dispatcher *rd);
+                             TAO_Reply_Dispatcher *rd);
   // Bind the reply dispatcher with the TMS object.
 
   virtual int wait_for_reply (ACE_Time_Value *max_wait_time);
   // Wait for the reply depending on the strategy.
 
-  virtual int handle_client_input (int block = 0);
+  virtual int handle_client_input (int block = 0,
+                                   ACE_Time_Value *max_wait_time = 0);
   // Read and handle the reply. Returns 0 when there is Short Read on
   // the connection. Returns 1 when the full reply is read and
   // handled. Returns -1 on errors.

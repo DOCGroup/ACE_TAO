@@ -219,7 +219,8 @@ TAO_UIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
 // @@ This code should go in the TAO_Transport class is repeated for
 //    each transport!!
 int
-TAO_UIOP_Client_Transport::handle_client_input (int /* block */)
+TAO_UIOP_Client_Transport::handle_client_input (int /* block */,
+                                                ACE_Time_Value *max_wait_time)
 {
   // When we multiplex several invocations over a connection we need
   // to allocate the CDR stream *here*, but when there is a single
@@ -261,7 +262,8 @@ TAO_UIOP_Client_Transport::handle_client_input (int /* block */)
 
   int result = TAO_GIOP::handle_input (this,
                                        this->orb_core_,
-                                       *message_state);
+                                       *message_state,
+                                       max_wait_time);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -295,7 +297,7 @@ TAO_UIOP_Client_Transport::handle_client_input (int /* block */)
       return -1;
     }
 
-  result = 
+  result =
     this->tms_->dispatch_reply (request_id,
                                 reply_status,
                                 message_state->giop_version,
@@ -484,24 +486,29 @@ TAO_UIOP_Transport::send (const iovec *iov,
 ssize_t
 TAO_UIOP_Transport::recv (char *buf,
                           size_t len,
-                          ACE_Time_Value *)
+                          ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
 
-  return this->handler_->peer ().recv_n (buf, len);
+  return ACE::recv_n (this->handler_->peer ().get_handle (),
+                      buf,
+                      len,
+                      max_wait_time);
 }
 
 ssize_t
 TAO_UIOP_Transport::recv (char *buf,
                           size_t len,
                           int flags,
-                          ACE_Time_Value *)
+                          ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
 
-  return this->handler_->peer ().recv_n (buf,
-                                         len,
-                                         flags);
+  return ACE::recv_n (this->handler_->peer ().get_handle (),
+                      buf,
+                      len,
+                      flags,
+                      max_wait_time);
 }
 
 ssize_t

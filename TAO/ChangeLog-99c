@@ -1,3 +1,22 @@
+Tue Jul  6 15:31:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/GIOP.h:
+	* tao/GIOP.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/IIOP_Transport.cpp:
+	* tao/Pluggable.h:
+	* tao/Pluggable.cpp:
+	* tao/UIOP_Transport.h:
+	* tao/UIOP_Transport.cpp:
+	* tao/Wait_Strategy.cpp:
+	  Completed the implementation of timeouts when using
+	  Block_On_Read (RW) and Block_On_Select (ST) client connection
+	  handlers. [BUG ID 12]
+
+	* tests/Timeout/run_test.pl:
+	  Fine tune the test so there are more significant samples in the
+	  execution.
+
 Tue Jul 06 15:05:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/Scheduling_Service/Makefile:  added

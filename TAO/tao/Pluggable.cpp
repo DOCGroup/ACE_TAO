@@ -220,7 +220,8 @@ TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
 // If <block> is 1, then reply is read in a blocking manner.
 
 int
-TAO_Transport::handle_client_input (int /* block */)
+TAO_Transport::handle_client_input (int /* block */,
+                                    ACE_Time_Value * /* max_wait_time */)
 {
   ACE_NOTSUP_RETURN (-1);
 }
