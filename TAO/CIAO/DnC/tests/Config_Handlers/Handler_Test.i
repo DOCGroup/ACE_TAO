@@ -143,12 +143,11 @@ int run_test (int argc, ACE_TCHAR *argv[], void (HANDLER::*func) (DATA&))
         {
           return 1;
         }
-      HANDLER handler (doc,
-                       DOMNodeFilter::SHOW_ELEMENT |
-                       DOMNodeFilter::SHOW_TEXT);
+      HANDLER obj (doc, DOMNodeFilter::SHOW_ELEMENT |
+                        DOMNodeFilter::SHOW_TEXT);
 
       DATA data;
-      handler.*func(data);
+      (obj.*func)(data);
       Deployment::DnC_Dump::dump (data);
       //domain_handler.dump(domain);
 
