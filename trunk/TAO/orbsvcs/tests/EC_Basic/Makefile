@@ -73,10 +73,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
@@ -94,6 +90,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler_Generic.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Runtime_Scheduler.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Runtime_Scheduler.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
