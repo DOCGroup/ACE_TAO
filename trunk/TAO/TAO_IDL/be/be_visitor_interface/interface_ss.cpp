@@ -98,19 +98,20 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       if (idl_global->gen_direct_collocation ())
         *os << "if (obj->_servant () != 0)" << be_idt_nl
             << "{" << be_idt_nl
-            << node->full_skel_name () << "* servant = ACE_reinterpret_cast ("
+            << node->full_skel_name () << " *servant = ACE_reinterpret_cast ("
             << node->full_skel_name () << "*, obj->_servant ()->_downcast (\""
             << node->repoID () << "\"));" << be_nl
             << "if (servant != 0)" << be_idt_nl
             << "{" << be_idt_nl
-            << node->full_skel_name () << "*retval = 0;" << be_nl
+            << node->full_name () << " *retval = 0;" << be_nl
             << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
             << "retval," << be_nl
             << node->full_coll_name (be_interface::DIRECT)
             << " (servant, stub)," << be_nl
             << "0" << be_uidt_nl
             << ");" << be_uidt_nl
-            << "return retval;" << be_nl
+            << "return retval;" << be_uidt_nl
+            << "}" << be_uidt << be_uidt_nl
             << "}" << be_uidt_nl;
 
       *os << "break;" << be_uidt_nl
@@ -370,7 +371,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << node->full_name () << " *retval = 0;" << be_nl
         << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
         << "retval," << be_nl
-        << node->full_coll_name (be_interface::DIRECT) 
+        << node->full_coll_name (be_interface::DIRECT)
         << " (this, stub)," << be_nl
         << "0" << be_uidt_nl
         << ");" << be_uidt_nl
@@ -496,7 +497,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     {
       be_interface_type_strategy *old_strategy =
         node->set_strategy (new be_interface_ami_handler_strategy (node));
-      
+
       // = Generate the Servant Skeleton code.
 
       // Set the context.
