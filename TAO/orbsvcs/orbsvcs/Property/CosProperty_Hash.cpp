@@ -30,7 +30,8 @@ CosProperty_Hash_Key::operator == (const CosProperty_Hash_Key &CosProperty_Hash_
   ACE_DEBUG ((LM_DEBUG, "CosProperty_Hash_Key::operator == : %s == %s \n",
               this->pname_.in (), CosProperty_Hash_Key.pname_.in ()));
 
-  return ACE_OS::strcmp (this->pname_.in (), CosProperty_Hash_Key.pname_.in ()) == 0;
+  return ACE_OS::strcmp (this->pname_.in (),
+                         CosProperty_Hash_Key.pname_.in ()) == 0;
 }
 
 u_long
@@ -38,8 +39,11 @@ CosProperty_Hash_Key::hash (void) const
 {
   u_long ret = ACE::hash_pjw (this->pname_.in ());
 
-  ACE_DEBUG ((LM_DEBUG, "CosProperty_Hash_Key::hash : hasing %s : val : %d \n",
-              this->pname_.in (), ret));
+  ACE_DEBUG ((LM_DEBUG, 
+              "CosProperty_Hash_Key::hash : hasing %s : val : %d \n",
+              this->pname_.in (),
+              ret));
+
   return ret;
 }
 
