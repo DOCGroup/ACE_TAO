@@ -1,3 +1,13 @@
+Fri May 14 12:34:27 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Request.i: 
+	* tao/Request.cpp: Moved two methods CORBA::release () and
+	CORBA_Request::_nil () from the Request.i to Request.cpp. This
+	would help us to avoid annoying warnings with Sun_g++ which was
+	complaining about these two methods being inline as they were used
+	before they were declared so. This seems to be a easier way to get
+	around this.
+
 Fri May 14 12:20:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ValueBase.h:
