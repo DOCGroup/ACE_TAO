@@ -31,15 +31,15 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
 
 <ul>
   <li><p>Trying to figure out a better <em>resource</em> management
-	  scheme.  <em>Resouces</em> here include ORB, POA, connections,
-	  profiles.... that provide services for CORBA invocations.
-	</p>
-	<P>[STATUS]: The current version keeps very few objects
-	  managed by the resource factory. Most are ORB specific. It
-	  seems like the correct implementation is to make the few
-	  remaining resources (such as the Reactor) a
-	  per-ORB-per-thread entity.
-	</P>
+          scheme.  <em>Resouces</em> here include ORB, POA, connections,
+          profiles.... that provide services for CORBA invocations.
+        </p>
+        <P>[STATUS]: The current version keeps very few objects
+          managed by the resource factory. Most are ORB specific. It
+          seems like the correct implementation is to make the few
+          remaining resources (such as the Reactor) a
+          per-ORB-per-thread entity.
+        </P>
   </li>
 </ul>
 
@@ -399,22 +399,22 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
      for values.  <code>CORBA_SystemException::print_exception_tao_ ()</code>
      should be used to print system exceptions.  If a known (expected)
      errno had been received, then it is printed.  Otherwise, the low
-     7 bits of the errno are printed (in decimal).  The can be a bit
+     7 bits of the errno are printed (in decimal).  They can be a bit
      tricky to interpret, for example, because it might have been generated
      on the server.  We only maintain the low 7 bits because of size
      restrictions on the minor status component.</p>
   </li>
 
   <li><p>The <CODE>CORBA::ORB_init()</CODE> function returns the same
-	  ORB if it is called twice with the same ORBid parameter or
-	  if the "-ORBid value" option is present in the argv-list.
-	  Please consult the CORBA specification for more details.
-	</p>
+          ORB if it is called twice with the same ORBid parameter or
+          if the "-ORBid value" option is present in the argv-list.
+          Please consult the CORBA specification for more details.
+        </p>
   </li>
 
   <li><p>We implemented <CODE>GIOP 1.1</CODE>, including the support
-	  for tagged components in IIOP profiles.
-	</p>
+          for tagged components in IIOP profiles.
+        </p>
   </li>
 
   <li><p>Added CORBA compliant collocated stubs implementation.  The new
