@@ -24,8 +24,7 @@ TAO_NS_PushConsumer::~TAO_NS_PushConsumer ()
 void
 TAO_NS_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
 {
-  this->push_consumer_ = CosEventComm::PushConsumer::_narrow (push_consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->push_consumer_ = CosEventComm::PushConsumer::_duplicate (push_consumer);
 
   ACE_TRY
     {
@@ -34,8 +33,7 @@ TAO_NS_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer ACE_ENV_
     }
   ACE_CATCHANY
     {
-      // Ignore
-      // if the client is not running an event loop and _narrow goes remote, we get a transient exception!
+      // _narrow failed which probably means the interface is CosEventComm type.
     }
   ACE_ENDTRY;
 }

@@ -18,11 +18,11 @@ TAO_NS_StructuredPushSupplier::~TAO_NS_StructuredPushSupplier ()
 }
 
 void
-TAO_NS_StructuredPushSupplier::init (CosNotifyComm::StructuredPushSupplier_ptr push_supplier ACE_ENV_ARG_DECL)
+TAO_NS_StructuredPushSupplier::init (CosNotifyComm::StructuredPushSupplier_ptr push_supplier ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->push_supplier_ = CosNotifyComm::StructuredPushSupplier::_duplicate (push_supplier);
 
-  this->subscribe_ = CosNotifyComm::NotifySubscribe::_narrow (push_supplier ACE_ENV_ARG_PARAMETER);
+  this->subscribe_ = CosNotifyComm::NotifySubscribe::_duplicate (push_supplier);
 }
 
 void

@@ -19,21 +19,12 @@ TAO_NS_StructuredPushConsumer::~TAO_NS_StructuredPushConsumer ()
 }
 
 void
-TAO_NS_StructuredPushConsumer::init (CosNotifyComm::StructuredPushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
+TAO_NS_StructuredPushConsumer::init (CosNotifyComm::StructuredPushConsumer_ptr push_consumer ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->push_consumer_ = CosNotifyComm::StructuredPushConsumer::_duplicate (push_consumer);
 
-  ACE_TRY
-    {
-      this->publish_ = CosNotifyComm::NotifyPublish::_narrow (push_consumer ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      // Ignore
-      // if the client is not running an event loop and _narrow goes remote, we get a transient exception!
-    }
-  ACE_ENDTRY;
+  this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (push_consumer);
+
 }
 
 void

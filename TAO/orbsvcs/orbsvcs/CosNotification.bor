@@ -35,13 +35,13 @@ OBJFILES = \
         $(OBJDIR)\Event_Manager.obj \
         $(OBJDIR)\Admin.obj \
         $(OBJDIR)\AdminProperties.obj \
-        $(OBJDIR)\Any\AnyEvent.obj \
-        $(OBJDIR)\Any\CosEC_ProxyPushConsumer.obj \
-        $(OBJDIR)\Any\CosEC_ProxyPushSupplier.obj \
-        $(OBJDIR)\Any\ProxyPushConsumer.obj \
-        $(OBJDIR)\Any\ProxyPushSupplier.obj \
-        $(OBJDIR)\Any\PushConsumer.obj \
-        $(OBJDIR)\Any\PushSupplier.obj \
+        $(OBJDIR)\AnyEvent.obj \
+        $(OBJDIR)\CosEC_ProxyPushConsumer.obj \
+        $(OBJDIR)\CosEC_ProxyPushSupplier.obj \
+        $(OBJDIR)\ProxyPushConsumer.obj \
+        $(OBJDIR)\ProxyPushSupplier.obj \
+        $(OBJDIR)\PushConsumer.obj \
+        $(OBJDIR)\PushSupplier.obj \
         $(OBJDIR)\Buffering_Strategy.obj \
         $(OBJDIR)\Builder.obj \
         $(OBJDIR)\Consumer.obj \
@@ -73,17 +73,17 @@ OBJFILES = \
         $(OBJDIR)\QoSProperties.obj \
         $(OBJDIR)\Reactive_Task.obj \
         $(OBJDIR)\Refcountable.obj \
-        $(OBJDIR)\Sequence\EventBatch.obj \
-        $(OBJDIR)\Sequence\Method_Request_Dispatch_EventBatch.obj \
-        $(OBJDIR)\Sequence\SequenceProxyPushConsumer.obj \
-        $(OBJDIR)\Sequence\SequenceProxyPushSupplier.obj \
-        $(OBJDIR)\Sequence\SequencePushConsumer.obj \
-        $(OBJDIR)\Sequence\SequencePushSupplier.obj \
-        $(OBJDIR)\Structured\StructuredEvent.obj \
-        $(OBJDIR)\Structured\StructuredProxyPushConsumer.obj \
-        $(OBJDIR)\Structured\StructuredProxyPushSupplier.obj \
-        $(OBJDIR)\Structured\StructuredPushConsumer.obj \
-        $(OBJDIR)\Structured\StructuredPushSupplier.obj \
+        $(OBJDIR)\EventBatch.obj \
+        $(OBJDIR)\Method_Request_Dispatch_EventBatch.obj \
+        $(OBJDIR)\SequenceProxyPushConsumer.obj \
+        $(OBJDIR)\SequenceProxyPushSupplier.obj \
+        $(OBJDIR)\SequencePushConsumer.obj \
+        $(OBJDIR)\SequencePushSupplier.obj \
+        $(OBJDIR)\StructuredEvent.obj \
+        $(OBJDIR)\StructuredProxyPushConsumer.obj \
+        $(OBJDIR)\StructuredProxyPushSupplier.obj \
+        $(OBJDIR)\StructuredPushConsumer.obj \
+        $(OBJDIR)\StructuredPushSupplier.obj \
         $(OBJDIR)\Supplier.obj \
         $(OBJDIR)\Subscription_Change_Worker.obj \
         $(OBJDIR)\SupplierAdmin.obj \
@@ -93,7 +93,12 @@ OBJFILES = \
         $(OBJDIR)\ETCL_Filter.obj \
         $(OBJDIR)\ETCL_FilterFactory.obj \
         $(OBJDIR)\Constraint_Interpreter.obj \
-        $(OBJDIR)\Constraint_Visitors.obj
+        $(OBJDIR)\Constraint_Visitors.obj \
+        $(OBJDIR)\Notify_Default_CO_Factory.obj \
+        $(OBJDIR)\Notify_Default_Collection_Factory.obj \
+        $(OBJDIR)\Notify_Default_EMO_Factory.obj \
+        $(OBJDIR)\Notify_Default_POA_Factory.obj \
+        $(OBJDIR)\Notify_EventChannelFactory_i.obj
 
 RESOURCE = $(OBJDIR)\CosNotification.res
 
@@ -108,7 +113,7 @@ CFLAGS = \
 	$(TAO_NOTIFY_CFLAGS) \
 	-DTAO_NOTIFY_BUILD_DLL
 
-CPPDIR = .;Notify;Notify\Any;Notify\Structured\;Notify\Sequence;
+CPPDIR = .;Notify;Notify\Any;Notify\Structured\;Notify\Sequence
 
 IDLDIR = .
 

@@ -149,7 +149,12 @@ CPP_SRCS += \
         Notify/SupplierAdmin \
         Notify/ThreadPool_Task \
         Notify/Types \
-        Notify/Worker_Task
+        Notify/Worker_Task \
+	Notify/Notify_Default_CO_Factory \
+        Notify/Notify_Default_Collection_Factory \
+        Notify/Notify_Default_EMO_Factory \
+        Notify/Notify_Default_POA_Factory \
+        Notify/Notify_EventChannelFactory_i
 
 CPP_SRCS += \
         Notify/ETCL_Filter \

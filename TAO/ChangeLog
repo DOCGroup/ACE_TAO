@@ -1,7 +1,74 @@
 Mon Nov  4 19:03:12 CST 2002 Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.CosNotification:
-	  Added missing "/" after $ACE_ROOT
+	* (Removed previous bogus ChangeLog entry).
+	
+	* orbsvcs/orbsvcs/CosNotification.bor:
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com>, Johnny
+          Willemsen <jwillemsen@remedy.nl>, Irfan, Nanbor and Bala for help in
+          correcting the .bor file.
+
+        * tao/Messaging/Makefile.bor:
+          Applied change in INCLUDE provided by Christopher Kohlhoff
+          <chris@kohlhoff.com>.
+
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+          In method <build_filter_factory> create a filter factory if we
+          could not obtain one as a dynamic service.
+
+        * orbsvcs/orbsvcs/Notify/Event_Map_Observer_T.cpp:
+          TAO_NS_Update_Added_Worker<PROXY>::work, moved call to
+          type_added inside the "if" statement.
+
+          Following files were modified for backward compatibility as some
+          application might be calling their <init_svc> method.
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.h:
+
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
+          static <create> method maintained for backward compatibility.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Service.h:
+          In method TAO_NS_Notify_Service::init - added old options for
+          backward compatibility.
+          Revived Service Object
+          Notify_Default_Event_Manager_Objects_Factory.
+
+        * orbsvcs/orbsvcs/Notify/Properties.cpp:
+        * orbsvcs/orbsvcs/Notify/Properties.h:
+          Defined TAO_NS_DEFAULT_UPDATES_PERIOD instead of using a magic
+          number for the subscription/publication change update
+          notification interval.
+
+        * orbsvcs/orbsvcs/Notify/Proxy.cpp:
+          Added missing initialization of updates_off_ data member.
+
+        * orbsvcs/orbsvcs/Notify/Service.h:
+          Defined the string name for the Notify_Default_Event_Manager_Objects_Factory.
+
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
+          Check if narrow fails because CosEventComm client was connecting
+          and does not support NotifySubscribe.
+
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp:
+          Replaced unnecessary calls to _narrow with _duplicate. Thanks to
+          Irfan for pointing this out.
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+          Remove explicit instantiation of Dynamic_Service<TAO_NS_Service>
+          as its now defined in Notify_EventChannelFactory_i.cpp.
 
 Mon Nov  4 14:21:18 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
