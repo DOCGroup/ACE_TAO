@@ -1,3 +1,14 @@
+Fri Nov 7 21:12:37 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README: 	
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp: 	
+
+	  Replaced the recording of frame rate with the recording of
+	  inter-frame arrival time. This does not use the
+	  ACE_Countdown_Time class and hence does not use the incorrect
+	  restart method on that class. This should fix the compile
+	  errors.
+	
 Fri Nov  7 20:11:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Time_Service/Server_i.cpp:
