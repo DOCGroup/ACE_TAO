@@ -1,3 +1,23 @@
+Wed Nov 27 13:36:11 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
+
+	* orbsvcs/examples/Log/Basic/main.cpp: 
+	* orbsvcs/examples/Log/Basic/TLS_Client.cpp:
+	* orbsvcs/examples/Log/Basic/TLS_Client.h:
+	* orbsvcs/examples/Log/Event/Event_Consumer.cpp:
+	* orbsvcs/examples/Log/Event/Event_Consumer.h:
+	* orbsvcs/examples/Log/Event/Event_Supplier.cpp:
+	* orbsvcs/examples/Log/Event/Event_Supplier.h:
+	* orbsvcs/examples/Log/Notify/Notify_Consumer.cpp:
+	* orbsvcs/examples/Log/Notify/Notify_Consumer.h:
+	* orbsvcs/examples/Log/Notify/Notify_Supplier.cpp:
+	* orbsvcs/examples/Log/Notify/Notify_Supplier.h:
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.cpp:
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.h:
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp:
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.h:
+
+	Documenation changes to files.
+
 Wed Nov 27 07:18:54 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1361_Regression/Server_Thread_Pool.h:
@@ -11,8 +31,8 @@ Wed Nov 27 13:19:19 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/orbsvcs/Makefile.RTEventLogAdmin:
 
 	  Files amended for new *LogConsumer files.
-
-2002-11-27  D A Hanvey  <d.hanvey@qub.ac.uk>
+	
+Wed Nov 27 13:12:54 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
