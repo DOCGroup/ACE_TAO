@@ -1,3 +1,10 @@
+Wed Feb 23 13:53:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/acedefaults.mpb:
+	* bin/MakeProjectCreator/config/taodefaults.mpb:
+
+	  Add automake specific am_version variable.
+
 Wed Feb 23 19:56:01 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Stack.h: Added export macros.
