@@ -2079,7 +2079,7 @@ void
 ACE_TSS_Emulation::tss_close ()
 {
 #if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  ACE_OS::thr_keyfree (native_tss_key_);
+  // Free native_tss_key_ here.
 #endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 }
 
