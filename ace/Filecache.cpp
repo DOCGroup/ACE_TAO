@@ -767,7 +767,7 @@ ACE_Filecache_Object::update (void) const
     result = 1;
   else
     // non-portable code may follow
-    result = (ACE_OS::difftime (this->stat_.st_mtime, statbuf.st_mtime) < 0);
+    result = ACE_OS::difftime (this->stat_.st_mtime, statbuf.st_mtime) < 0;
 
   return result;
 }
@@ -784,12 +784,12 @@ template class ACE_Hash_Map_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Nu
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-#pragma instantiate ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>;
-#pragma instantiate ACE_Hash_Map_Manager<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
-#pragma instantiate ACE_Hash_Map_Iterator<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>
+#pragma instantiate ACE_Hash_Map_Manager<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>
 #else
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, ACE_Filecache_Object *>;
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, ACE_Filecache_Object *>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
