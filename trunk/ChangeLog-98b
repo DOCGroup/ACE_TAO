@@ -3,6 +3,15 @@ Wed Dec 09 07:02:06 1998  David L. Levine  <levine@cs.wustl.edu>
         * README, VERSION: expanded mention of BUG-REPORT-FORM.
 
         * docs/ACE-guidelines.html: strengthened mention of ACE_ASSERT danger.
+          Thanks to Irfan for the example.
+
+        * tests/run_tests.vxworks: re-enabled Timeprobe_Test, now that
+          ACE_ASSERTs have been fixed in ACE's Containers.
+
+        * ace/config-linux-common.h,config-osf1-{3.2,4.0}.h:
+          removed ACE_LACKS_GETPGID.  Thanks to
+          Ivan Pascal <pascal@info.tsu.ru> for reporting that
+          getpid () is supported on those platforms.
 
 1998-12-09  Irfan Pyarali  <irfan@cs.wustl.edu>
 
