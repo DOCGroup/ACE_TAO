@@ -232,4 +232,6 @@ module SecurityReplaceable {
 
 };
 
+#pragma prefix ""
+
 #endif /* _SECURITY_REPLACEABLE_IDL_ */

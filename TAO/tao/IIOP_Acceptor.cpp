@@ -69,6 +69,10 @@ TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
   delete this->accept_strategy_;
 
   delete [] this->addrs_;
+
+  for (size_t i = 0; i < this->endpoint_count_; ++i)
+    CORBA::string_free (this->hosts_[i]);
+
   delete [] this->hosts_;
 }
 
@@ -105,7 +109,7 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
       // @@ Use autopointer here.
       TAO_IIOP_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
-                      TAO_IIOP_Profile (this->hosts_[i].c_str (),
+                      TAO_IIOP_Profile (this->hosts_[i],
                                         this->addrs_[i].get_port_number (),
                                         object_key,
                                         this->addrs_[i],
@@ -163,7 +167,7 @@ TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
   if (iiop_profile == 0)
     {
       ACE_NEW_RETURN (iiop_profile,
-                      TAO_IIOP_Profile (this->hosts_[0].c_str (),
+                      TAO_IIOP_Profile (this->hosts_[0],
                                         this->addrs_[0].get_port_number (),
                                         object_key,
                                         this->addrs_[0],
@@ -201,7 +205,7 @@ TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
     {
       TAO_IIOP_Endpoint *endpoint = 0;
       ACE_NEW_RETURN (endpoint,
-                      TAO_IIOP_Endpoint (this->hosts_[index].c_str (),
+                      TAO_IIOP_Endpoint (this->hosts_[index],
                                          this->addrs_[index].get_port_number (),
                                          this->addrs_[index]),
                       -1);
@@ -316,7 +320,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                   -1);
 
   ACE_NEW_RETURN (this->hosts_,
-                  ACE_CString[this->endpoint_count_],
+                  char *[this->endpoint_count_],
                   -1);
 
   if (this->hostname (orb_core,
@@ -442,7 +446,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\nTAO (%P|%t) IIOP_Acceptor::open_i - ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
-                      this->hosts_[i].c_str (),
+                      this->hosts_[i],
                       this->addrs_[i].get_port_number ()));
         }
     }
@@ -453,7 +457,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
 int
 TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
                              ACE_INET_Addr &addr,
-                             ACE_CString &host)
+                             char *&host)
 {
   char tmp_host[MAXHOSTNAMELEN + 1];
 
@@ -472,10 +476,10 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
           return -1;
         }
 
-      host = tmp;
+      host = CORBA::string_dup (tmp);
     }
   else
-    host = tmp_host;
+    host = CORBA::string_dup (tmp_host);
 
   return 0;
 }
@@ -540,7 +544,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
                   -1);
 
   ACE_NEW_RETURN (this->hosts_,
-                  ACE_CString[this->endpoint_count_],
+                  char *[this->endpoint_count_],
                   -1);
 
   // The number of hosts/interfaces we want to cache may not be the

@@ -16,12 +16,6 @@ ACE_RCSID(tao, CORBA_String, "$Id$")
 // String utility support; this needs to be integrated with the ORB's
 // own memory allocation subsystem.
 
-char *
-CORBA::string_copy (const char *str)
-{
-  return CORBA::string_dup (str);
-}
-
 CORBA_String_var::CORBA_String_var (char *p)
   : ptr_ (p)
 {

@@ -139,4 +139,6 @@ module SecurityAdmin {
     };
 };
 
+#pragma prefix ""
+
 #endif /* _SECURITY_ADMIN_IDL_ */

@@ -25,6 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/CORBA_String.h"
 #include "ace/SString.h"
 
 // Forward decls.
@@ -87,8 +88,8 @@ public:
   // Set/Get the port of services locatable through multicast.
 
   const char *mcast_discovery_endpoint (void) const;
-  void mcast_discovery_endpoint (const ACE_CString &mde);
-  // Set/Get address:port for Multicast Discovery Protocol for
+  void mcast_discovery_endpoint (const char *mde);
+  // Get/Set address:port for Multicast Discovery Protocol for
   // the Naming Service.
 
   int sock_rcvbuf_size (void) const;
@@ -122,7 +123,7 @@ public:
   // default we use the full ascii names.
 
   char *default_init_ref (void) const;
-  void default_init_ref (const ACE_CString &default_init_ref);
+  void default_init_ref (const char *default_init_ref);
   // Set/Get the Init Reference of an arbitrary ObjectID.
 
   int std_profile_components (void) const;
@@ -161,12 +162,9 @@ private:
   CORBA::UShort service_port_[NO_OF_MCAST_SERVICES];
   // Port numbers of the configured services.
 
-  ACE_CString mcast_discovery_endpoint_;
+  CORBA::String_var mcast_discovery_endpoint_;
   // address:port for Multicast Discovery Protocol for the Naming
   // Service.
-
-  ACE_CString init_ref_;
-  // Initial Reference supplied as <ObjectID>:<IOR>
 
   ACE_CString default_init_ref_;
   // List of comma separated prefixes from ORBDefaultInitRef.

@@ -251,4 +251,6 @@ module SecurityLevel2 {
     };
 };
 
+#pragma prefix ""
+
 #endif /* _SECURITY_LEVEL_2_IDL_ */

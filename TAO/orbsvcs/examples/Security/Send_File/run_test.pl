@@ -18,7 +18,7 @@ $ENV{'SSL_CERT_FILE'} = 'cacert.pem';
 $iorfile = "server.ior";
 unlink $iorfile;
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
-                       " -ORBsvcconf server_nopasswd.conf "
+                       " -ORBSvcConf server_nopasswd.conf "
                        . " -o $iorfile");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
@@ -28,7 +28,7 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
 }
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-                       " -ORBsvcconf client_nopasswd.conf "
+                       " -ORBSvcConf client_nopasswd.conf "
                        . " -k file://$iorfile < client.cpp");
 
 $client = $CL->TimedWait (60);

@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 ACE_INLINE
@@ -47,18 +49,7 @@ TAO_Tagged_Components::unique_tag (IOP::ComponentId tag) const
           || tag == IOP::TAG_CODE_SETS
           || tag == IOP::TAG_POLICIES
           || tag == TAO_TAG_ENDPOINTS
-          || tag == TAO_TAG_SSL_ENDPOINTS
           // || tag == IOP::TAG_ALTERNATE_IIOP_ADDRESS
-          || tag == IOP::TAG_ASSOCIATION_OPTIONS
-          || tag == IOP::TAG_SEC_NAME
-          || tag == IOP::TAG_SPKM_1_SEC_MECH
-          || tag == IOP::TAG_SPKM_2_SEC_MECH
-          || tag == IOP::TAG_KerberosV5_SEC_MECH
-          || tag == IOP::TAG_CSI_ECMA_Secret_SEC_MECH
-          || tag == IOP::TAG_CSI_ECMA_Hybrid_SEC_MECH
-          || tag == IOP::TAG_SSL_SEC_TRANS
-          || tag == IOP::TAG_CSI_ECMA_Public_SEC_MECH
-          || tag == IOP::TAG_GENERIC_SEC_MECH
           || tag == IOP::TAG_COMPLETE_OBJECT_KEY
           || tag == IOP::TAG_ENDPOINT_ID_POSITION
           || tag == IOP::TAG_LOCATION_POLICY
@@ -66,8 +57,7 @@ TAO_Tagged_Components::unique_tag (IOP::ComponentId tag) const
           || tag == IOP::TAG_FT_GROUP
           || tag == IOP::TAG_DCE_STRING_BINDING
           || tag == IOP::TAG_DCE_BINDING_NAME
-          || tag == IOP::TAG_DCE_NO_PIPES
-          || tag == IOP::TAG_DCE_SEC_MECH);
+          || tag == IOP::TAG_DCE_NO_PIPES);
 }
 
 ACE_INLINE IOP::MultipleComponentProfile&

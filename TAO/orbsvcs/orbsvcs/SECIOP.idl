@@ -200,4 +200,7 @@ module SECIOP {
         SecurityName                    security_name;
     };
 };
+
+#pragma prefix ""
+
 #endif /* _SECIOP_IDL_ */

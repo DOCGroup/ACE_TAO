@@ -391,12 +391,9 @@ TAO_NAMESPACE CORBA
   typedef Char &Char_out;
 
   // = String memory management.
-  TAO_NAMESPACE_INLINE_FUNCTION Char* string_alloc (ULong len);
-  TAO_NAMESPACE_STORAGE_CLASS  Char* string_dup (const Char *);
-  TAO_NAMESPACE_INLINE_FUNCTION void string_free (Char *);
-
-  // This is a TAO extension and must go away....
-  TAO_NAMESPACE_STORAGE_CLASS Char* string_copy (const Char *);
+  TAO_NAMESPACE_INLINE_FUNCTION char* string_alloc (ULong len);
+  TAO_NAMESPACE_STORAGE_CLASS  char* string_dup (const char *);
+  TAO_NAMESPACE_INLINE_FUNCTION void string_free (char *);
 
   typedef CORBA_String_var String_var;
   typedef CORBA_String_out String_out;
@@ -958,7 +955,6 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 
 // Tag for storing multiple endpoints within a single profile.
 #define TAO_TAG_ENDPOINTS 0x54414f00U
-#define TAO_TAG_SSL_ENDPOINTS 0x54414f01U
 
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
 // define our own service context list entries.
