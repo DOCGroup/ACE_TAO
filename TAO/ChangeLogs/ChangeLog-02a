@@ -1,3 +1,11 @@
+Mon Jan 10 11:51:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+	  Turned out to be the same change as below, but these
+	  were warnings from SunCC.
+
 Mon Jan 10 11:40:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
