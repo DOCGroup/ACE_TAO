@@ -463,8 +463,6 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBDropRepliesDuringShutdown")) == 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    "IN HERE \n"));
         ++curarg;
         if (curarg < argc)
           {
