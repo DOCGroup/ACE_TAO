@@ -63,27 +63,35 @@ public:
 
   // = Enqueue and dequeue methods.
 
-  // For the following enqueue and dequeue methods if <timeout> == 0,
-  // the caller will block until action is possible, else will wait
-  // until the absolute time specified in *<timeout> elapses).  These
-  // calls will return, however, when queue is closed, deactivated,
-  // when a signal occurs, or if the time specified in timeout
-  // elapses, (in which case errno = EWOULDBLOCK).
+  // For the following enqueue and dequeue methods, the caller will
+  // block until action is possible if <timeout> == 0.  Otherwise, it
+  // will wait until the absolute time specified in *<timeout>
+  // elapses.  These calls will -1 when queue is closed, deactivated
+  // (in which case <errno> == <ESHUTDOWN>), when a signal occurs (in
+  // which case <errno> == <EINTR>, or if the time specified in
+  // timeout elapses (in which case <errno> == <EWOULDBLOCK>).
 
   virtual int enqueue_tail (ACE_Message_Block *new_item,
                             ACE_Time_Value *timeout = 0) = 0;
+  // Enqueue a <ACE_Message_Block *> into the tail of the queue.
+  // Returns number of items in queue if the call succeeds or -1
+  // otherwise.
   virtual int enqueue (ACE_Message_Block *new_item,
                        ACE_Time_Value *timeout = 0) = 0;
   // Enqueue a <ACE_Message_Block *> into the tail of the queue.
-  // Return -1 on failure, number of items in queue otherwise.
+  // Returns number of items in queue if the call succeeds or -1
+  // otherwise.
 
   virtual int dequeue_head (ACE_Message_Block *&first_item,
                             ACE_Time_Value *timeout = 0) = 0;
+  // Dequeue and return the <ACE_Message_Block *> at the head of the
+  // queue.  Returns number of items in queue if the call succeeds or
+  // -1 otherwise.
   virtual int dequeue (ACE_Message_Block *&first_item,
                        ACE_Time_Value *timeout = 0) = 0;
   // Dequeue and return the <ACE_Message_Block *> at the head of the
-  // queue.  Returns -1 on failure, else the number of items still on
-  // the queue.
+  // queue.  Returns number of items in queue if the call succeeds or
+  // -1 otherwise.
 
   // = Check if queue is full/empty.
   virtual int is_full (void) = 0;
