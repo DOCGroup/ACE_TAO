@@ -117,7 +117,7 @@ ifneq ("$(BIN_UNCHECKED)","")
 endif
 
 include $(TGT_DIR)/h/make/defs.default
-include $(TGT_DIR)/h/make/defs.link
+##include $(TGT_DIR)/h/make/defs.link
 include $(TGT_DIR)/h/make/defs.$(WIND_HOST_TYPE)
 include $(TGT_DIR)/h/make/defs.$(PRJ_TYPE)
 include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
