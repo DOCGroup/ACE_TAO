@@ -20,11 +20,11 @@
 #ifndef IMPLREPO_I_H
 #define IMPLREPO_I_H
 
+#include "ace/Process_Manager.h"
 #include "tao/ImplRepoS.h"
 #include "orbsvcs/IOR_Multicast.h"
 #include "tao/IOR_LookupTable.h"
 #include "Repository.h"
-//#include "tao/TAO.h"
 
 // Forward declarations.
 class ImplRepo_i;
@@ -164,6 +164,9 @@ private:
                      ImplementationRepository::Administration::CannotActivate));
   // Implementation of activate_server.  <check_startup> is a flag to check 
   // the activation mode before attempting to start it.  
+
+  ACE_Process_Manager process_mgr_;
+  // The Process Manager.
 
   IMR_Forwarder *forwarder_impl_;
   // The class that handles the forwarding.

@@ -124,7 +124,7 @@ ImplRepo_i::activate_server (const char *server,
                      ImplementationRepository::Administration::CannotActivate))
 {
   // Since this is called through the Admin interface, we should ignore some
-  // of the activation.  Ignore the return value.
+  // of the activation modes.  Also ignore the return value.
   this->activate_server_i (server, 0, ACE_TRY_ENV);
 }
 
@@ -138,6 +138,7 @@ ImplRepo_i::activate_server_i (const char *server,
                      ImplementationRepository::Administration::CannotActivate))
 {
   int start = 0;
+  int spawned_pid = 0;
   ACE_TString server_object_ior, location;
 
   if (OPTIONS::instance()->debug () >= 1)
@@ -248,17 +249,20 @@ ImplRepo_i::activate_server_i (const char *server,
           proc_opts.command_line (startup.c_str ());
           proc_opts.working_directory (working.c_str ());
 
-          ACE_Process proc;
-
-          if (proc.spawn (proc_opts) == -1)
+          spawned_pid = this->process_mgr_.spawn (proc_opts);
+          
+          if (spawned_pid == ACE_INVALID_PID)
             {
               ACE_ERROR ((LM_ERROR,
                          "Error: Cannot activate server <%s> using <%s>\n",
                           server,
                           startup.c_str ()));
-              ACE_THROW_RETURN (ImplementationRepository::Administration::CannotActivate (CORBA::string_dup ("N/A")),
+              ACE_THROW_RETURN (ImplementationRepository::Administration::CannotActivate (CORBA::string_dup ("Process Creation Failed")),
                                 "");
             }
+          else if (OPTIONS::instance ()->debug () >= 2)
+            ACE_DEBUG ((LM_DEBUG, "Process ID is %d\n", spawned_pid));
+          
         }
 
       // Now that the server has been started up, we need to go back into the event
@@ -267,12 +271,31 @@ ImplRepo_i::activate_server_i (const char *server,
 
       int starting_up;
 
+      ACE_Time_Value timeout = OPTIONS::instance ()->startup_timeout ();
+
       while ((starting_up = this->repository_.starting_up (server)) == 1)
         {
           if (OPTIONS::instance()->debug () >= 2)
             ACE_DEBUG ((LM_DEBUG, "activate_server: Going into handle_events\n"));
-          orb_core->reactor ()->handle_events ();
+
+          int result = orb_core->reactor ()->handle_events (&timeout);
+
+          if (result == 0 && timeout == ACE_Time_Value::zero)
+            {
+              this->repository_.starting_up (server, 0);
+              ACE_ERROR ((LM_ERROR,
+                         "Error: Cannot activate server <%s> using <%s>, terminating it.\n",
+                          server,
+                          startup.c_str ()));
+
+              // Kill the server
+              this->process_mgr_.terminate (spawned_pid);
+              
+              ACE_THROW_RETURN (ImplementationRepository::Administration::CannotActivate (CORBA::string_dup ("Timeout")),
+                                "");
+            }
         }
+
       if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG, "activate_server: Got out of handle_events loop\n"));
 
@@ -285,7 +308,7 @@ ImplRepo_i::activate_server_i (const char *server,
           ACE_THROW_RETURN (ImplementationRepository::Administration::NotFound (), "");
         }
 
-      // Now it should be started.
+      // Now it should be started up.
     }
 
   if (this->repository_.get_running_info (server, location, server_object_ior) != 0)
@@ -294,7 +317,6 @@ ImplRepo_i::activate_server_i (const char *server,
                   "ImplRepo_i::activate_server: cannot resolve server <%s>\n",
                   server));
     }
-//  ACE_TRY_ENV.clear ();
 
   if (activation == Server_Info::PER_CLIENT && check_startup)
   {
@@ -652,12 +674,18 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
       this->root_poa_->the_activator (activator.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Get reactor instance from TAO.
+      ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
+
+      // = Set up the process manager
+
+      // Init the Process Manager.
+      this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE, reactor);
+
 #if defined (ACE_HAS_IP_MULTICAST)
       //
       // Install ior multicast handler.
       //
-      // Get reactor instance from TAO.
-      ACE_Reactor *reactor = TAO_ORB_Core_instance ()->reactor ();
 
       // See if the -ORBMulticastDiscoveryEndpoint option was specified.
       ACE_CString mde (TAO_ORB_Core_instance ()->orb_params ()->mcast_discovery_endpoint ());
@@ -714,7 +742,6 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
       if (OPTIONS::instance ()->debug () > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "Implementation Repository: The multicast server setup is done.\n"));
-
 #endif /* ACE_HAS_IP_MULTICAST */
 
       // Initialize the persistent storage
@@ -728,7 +755,6 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-
   return 0;
 }
 
