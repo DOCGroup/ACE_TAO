@@ -2,11 +2,13 @@ Fri Jan 16 11:27:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
         
-          Modified the -g <gperf path> command line option to automatically
-          append "\gperf.exe" if we are on Windows. CreateProcess (called
-          under the hood when the gperf process is spawned) apparently
-          needs it this way. Thanks to Brian Mendel 
-          <brian.r.mendel@boeing.com> for reporting the problem.
+          Modified the -g <gperf path> command line option to
+ 	  automatically append "\gperf.exe" if we are on
+ 	  Windows. CreateProcess (called under the hood when the gperf
+ 	  process is spawned) apparently needs it this way. Thanks to Brad
+ 	  Orner <bradley_p_orner@raytheon.com> for reporting the problem
+ 	  and Brian Mendel <brian.r.mendel@boeing.com> for providing the
+ 	  fix.
 
 Fri Jan 16 15:34:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 

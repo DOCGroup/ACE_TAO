@@ -1,3 +1,11 @@
+Fri Jan 16 15:04:17 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Bcast.cpp (close): Set the this->if_list_
+	  field to 0 to let applications close and re-open the socket.
+  	  Without it, a second close will delete already delete'd memory.
+  	  Thanks to Shannon Barber <shannon.barber@myrealbox.com> for
+	  this fix.
+
 Fri Jan 16 12:29:48 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac (AC_CONFIG_AUX_DIR):

@@ -40,6 +40,7 @@ ACE_SOCK_Dgram_Bcast::close (void)
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::close");
 
   ACE_Bcast_Node *temp = this->if_list_;
+  this->if_list_ = 0;
 
   // Release the dynamically allocated memory.
 
