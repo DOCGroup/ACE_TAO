@@ -1,3 +1,17 @@
+Wed Feb 14 09:50:18 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/IIOP_Acceptor.cpp:
+	* tao/IIOP_Acceptor.h:
+	  Updated TAO_IIOP_Acceptor::open and TAO_IIOP_Acceptor::hostname
+	  to use the specified endpoint hostname instead of always
+	  resolving the hostname and then looking it back up for what to
+	  put in the IOR.  This fixed a problem on Windows 2000 when the 
+	  user specified an endpoint having the hostname "localhost".
+	  This would end up causing the actual hostname of the computer
+	  to be put into the IOR, but the server would bind to 127.0.0.1.
+	  As a result, clients wouldn't be able to connect to the server.
+	  This fix partially addresses bugzilla bug 506.
+
 Wed Feb 14 07:13:12 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Quoter/Quoter_i.cpp:
