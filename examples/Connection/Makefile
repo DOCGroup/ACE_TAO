@@ -10,8 +10,7 @@
 
 INFO  = README
 
-DIRS  = blocking \
-	misc \
+DIRS  = misc \
 	non_blocking
 
 #----------------------------------------------------------------------------

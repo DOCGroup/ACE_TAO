@@ -1,11 +1,8 @@
-Tue Apr 15 17:09:33 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
-
-	* examples/Connection/blocking/Makefile: Removed the Makefile
-	  for this test. This example is only suppose to work on WIN32
-	  and therefore the Makefile is not necessary. I have replace
-	  this file with a MSVC++ make file.
-
 Tue Apr 15 17:09:33 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.h: Added a #define for WNOHANG since this is missing on
+	  NT.  Thanks to Brian Mendel <bmendel@mdc.com> for reporting
+	  this.
 
 	* examples/Connection/non_blocking/test_sock_connector.cpp: Added
  	  a typedef for ACE_RW_Mutex so that the code compiles on non-MT
@@ -90,6 +87,13 @@ Tue Apr 15 13:01:13 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/IPC_SAP/SPIPE_SAP/server.cpp (main): moved
 	  declaration of local variable "handle" up before its first
 	  use. 
+
+Tue Apr 15 17:09:33 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* examples/Connection/blocking/Makefile: Removed the Makefile
+	  for this test. This example is only suppose to work on WIN32
+	  and therefore the Makefile is not necessary. I have replace
+	  this file with a MSVC++ make file.
 
 Mon Apr 14 23:08:27 1997    <irfan@TWOSTEP>
 
