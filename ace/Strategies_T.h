@@ -561,6 +561,56 @@ public:
   // This is a no-op.
 };
 
+template <class T>
+class ACE_Recyclable
+{
+public:
+
+  // = Initialization methods.
+  ACE_Recyclable (void);
+  // Default constructor.
+
+  ACE_Recyclable (const T &t, int recyclable = 0);
+  // Constructor.
+
+  ~ACE_Recyclable (void);
+  // Destructor.
+
+  int operator== (const ACE_Recyclable<T> &rhs) const;
+  // Compares two values.
+
+  // = Set/Get the recyclable bit
+  int recyclable (void) const;
+  void recyclable (int new_value);
+
+protected:
+  int recyclable_;
+  // We need to know if the <T> is "in-use".  If it is, we can
+  // operator==() can skip the comparison.
+
+  T t_;
+  // The underlying class.
+};
+
+template <class T>
+class ACE_Hash_Recyclable : public ACE_Recyclable<T>
+{
+public:
+
+  // = Initialization methods.
+  ACE_Hash_Recyclable (void);
+  // Default constructor.
+
+  ACE_Hash_Recyclable (const T &t, int recyclable = 0);
+  // Constructor.
+
+  ~ACE_Hash_Recyclable (void);
+  // Destructor.
+
+  u_long hash (void) const;
+  // Computes and returns hash value.  
+};
+
 template <class ADDR_T>
 class ACE_Hash_Addr
 {
@@ -580,11 +630,8 @@ public:
   ACE_Hash_Addr (const ADDR_T &a);
   // Pre-compute hash value.
 
-  ACE_Hash_Addr (const ADDR_T &a, int recyclable);
-  // Pre-compute hash value.
-
   ~ACE_Hash_Addr (void);
-  // Default destructor.
+  // Destructor.
 
   u_long hash (void) const;
   // Computes and returns hash value.  This "caches" the hash value to
@@ -593,10 +640,6 @@ public:
   int operator== (const ACE_Hash_Addr<ADDR_T> &rhs) const;
   // Compares two hash values.
 
-  // = Set/Get the recyclable bit
-  int recyclable (void) const;
-  void recyclable (int new_value);
-
 private:
   size_t hash_i (const ADDR_T &) const;
   // This is the method that actually performs the non-cached hash
@@ -604,10 +647,6 @@ private:
 
   u_long hash_value_;
   // Pre-computed hash-value.
-
-  int recyclable_;
-  // We need to know if the <SVC_HANDLER> is "in-use".  If it is, we
-  // can operator==() can skip the comparison.
 
   ADDR_T addr_;
   // The underlying address.
@@ -713,9 +752,10 @@ private:
 
   // = Typedefs for managing the map
   typedef ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> ADDRESS;
-  typedef ACE_Hash_Map_Manager <ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> CONNECTION_MAP;
-  typedef ACE_Hash_Map_Iterator <ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> CONNECTION_MAP_ITERATOR;
-  typedef ACE_Hash_Map_Entry<ADDRESS, SVC_HANDLER *> CONNECTION_MAP_ENTRY;
+  typedef ACE_Hash_Recyclable<ADDRESS> RECYCLABLE_ADDRESS;
+  typedef ACE_Hash_Map_Manager <RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> CONNECTION_MAP;
+  typedef ACE_Hash_Map_Iterator <RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> CONNECTION_MAP_ITERATOR;
+  typedef ACE_Hash_Map_Entry<RECYCLABLE_ADDRESS, SVC_HANDLER *> CONNECTION_MAP_ENTRY;
 
   CONNECTION_MAP connection_cache_;
   // Table that maintains the cache of connected <SVC_HANDLER>s.
