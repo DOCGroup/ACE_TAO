@@ -773,8 +773,12 @@ struct ACE_cond_t
 
   ACE_sema_t sema_;
   // Queue up threads waiting for the condition to become signaled.
-  
+
+#if defined (VXWORKS)
+  ACE_sema_t waiters_done_;
+#else
   ACE_event_t waiters_done_;
+#endif /* VXWORKS */
   // An auto reset event used by the broadcast/signal thread to wait
   // for the waiting thread(s) to wake up and get a chance at the
   // semaphore.

@@ -1060,6 +1060,9 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_destroy (cv), ace_result_), int, -1);
 #elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
+#if defined (VXWORKS)
+  ACE_OS::sema_destroy (&cv->waiters_done_);
+#endif /* VXWORKS */
   return ACE_OS::sema_destroy (&cv->sema_);
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -1120,7 +1123,11 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
     result = -1;
   else if (ACE_OS::mutex_init (&cv->waiters_lock_) = -1)
     result = -1;
+#if defined (VXWORKS)
+  else if (ACE_OS::sema_init (&cv->waiters_done_, 0, type) == -1)
+#else
   else if (ACE_OS::event_init (&cv->waiters_done_) == -1)
+#endif /* VXWORKS */
     result = -1;
   return result;
 #endif /* ACE_HAS_STHREADS */
@@ -1190,7 +1197,11 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
 
       // Wait for all the awakened threads to acquire their part of the
       // counting semaphore. 
+#if defined (VXWORKS)
+      else if (ACE_OS::sema_wait (&cv->waiters_done_) == -1)
+#else
       else if (ACE_OS::event_wait (&cv->waiters_done_) == -1)
+#endif /* VXWORKS */
 	result = -1;
 
       this->was_broadcast_ = 0;
@@ -1255,7 +1266,11 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 	      cv->waiters_--;
 	      // Release the signaler/broadcaster if we're the last waiter.	
 	      if (cv->waiters_ == 0)
+#if defined (VXWORKS)
+		ACE_OS::sema_post (cv->waiters_done_);
+#else
 		ACE_OS::event_signal (cv->waiters_done_);
+#endif /* VXWORKS */
 	      ACE_OS::mutex_unlock (cv->internal_mutex_);
 	    }
 	}
@@ -1340,7 +1355,11 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 	      cv->waiters_--;
 	      // Release the signaler/broadcaster if we're the last waiter.	
 	      if (cv->waiters_ == 0)
+#if defined (VXWORKS)
+		ACE_OS::sema_post (cv->waiters_done_);
+#else
 		ACE_OS::event_signal (cv->waiters_done_);
+#endif /* VXWORKS */
 	      ACE_OS::mutex_unlock (cv->internal_mutex_);
 	    }
 	}
@@ -1451,7 +1470,11 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 	      cv->waiters_--;
 	      // Release the signaler/broadcaster if we're the last waiter.	
 	      if (cv->waiters_ == 0)
+#if defined (VXWORKS)
+		ACE_OS::sema_post (cv->waiters_done_);
+#else
 		ACE_OS::event_signal (cv->waiters_done_);
+#endif /* VXWORKS */
 	      ACE_OS::thread_mutex_unlock (cv->internal_mutex_);
 	    }
 	}
@@ -1514,7 +1537,11 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 	      cv->waiters_--;
 	      // Release the signaler/broadcaster if we're the last waiter.	
 	      if (cv->waiters_ == 0)
+#if defined (VXWORKS)
+		ACE_OS::sema_post (cv->waiters_done_);
+#else
 		ACE_OS::event_signal (cv->waiters_done_);
+#endif /* VXWORKS */
 	      ACE_OS::thread_mutex_unlock (cv->internal_mutex_);
 	    }
 	}
