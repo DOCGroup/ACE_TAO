@@ -328,10 +328,10 @@ TAO_SHMIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   this->transport_.message_state_.reset (0);
 
   result = 
-    this->acceptor_factory_->process_connector_messages (this->transport (),
-                                                         this->orb_core_,
-                                                         input_cdr,
-                                                         message_type);
+    this->acceptor_factory_->process_client_message (this->transport (),
+                                                     this->orb_core_,
+                                                     input_cdr,
+                                                     message_type);
   if (result != -1)
     result = 0;
 

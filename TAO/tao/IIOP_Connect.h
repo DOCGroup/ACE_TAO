@@ -33,7 +33,7 @@
 #include "tao/Wait_Strategy.h"
 
 #include "tao/IIOP_Transport.h"
-#include "tao/Pluggable_Messaging.h"
+
 
 
 
@@ -42,10 +42,11 @@
 // Forward Decls
 class TAO_ORB_Core;
 class TAO_ORB_Core_TSS_Resources;
-
+class Pluggable_Messaging;
 
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
+
 
 // ****************************************************************
 
@@ -170,7 +171,7 @@ protected:
   TAO_IIOP_Server_Transport transport_;
   // @@ New transport object reference.
 
-  TAO_Pluggable_Messaging_Interface *acceptor_factory_;
+  TAO_Pluggable_Messaging *acceptor_factory_;
   // Messaging acceptor factory
 
   TAO_ORB_Core *orb_core_;

@@ -41,6 +41,7 @@
 #include "tao/Reply_Dispatcher.h"
 #include "tao/TAOC.h"
 #include "tao/operation_details.h"
+#include "tao/target_specification.h"
 
 struct TAO_Exception_Data;
 class TAO_Profile;

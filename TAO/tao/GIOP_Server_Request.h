@@ -43,14 +43,14 @@ class TAO_Export TAO_GIOP_ServerRequest : public CORBA_ServerRequest
   //    Class representing an GIOP ServerRequest object.
 public:
   // = Initialization and termination methods.
-  TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging_Interface *mesg_base,
+  TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                           TAO_InputCDR &input,
                           TAO_OutputCDR &output,
                           TAO_ORB_Core *orb_core,
                           const TAO_GIOP_Version &version);
                           
   // Constructor
-  TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging_Interface *mesg_base,
+  TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                           CORBA::ULong &request_id,
                           CORBA::Boolean &response_expected,
                           TAO_ObjectKey &object_key,
@@ -194,7 +194,7 @@ public:
   void message_size_offset (size_t len);
 
 private:
-  TAO_Pluggable_Messaging_Interface *mesg_base_;
+  TAO_Pluggable_Messaging *mesg_base_;
   
   ACE_CString operation_;
   // Operation name.

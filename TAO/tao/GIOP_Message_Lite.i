@@ -1,33 +1,6 @@
 //$Id$
 
-ACE_INLINE CORBA::Boolean
-TAO_GIOP_Message_Lite::
-  write_locate_request_header (CORBA::ULong request_id,
-                               TAO_Target_Specification &spec,
-                               TAO_OutputCDR &msg)
-{
-  msg << request_id;
 
-  // In this case we cannot recognise anything other than the Object
-  // key as the address disposition variable. But we do a sanity check
-  // anyway.
-  const TAO_ObjectKey *key = spec.object_key ();
-  if (key)
-    {
-      // Put in the object key
-      msg << *key;
-    }
-    else
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
-      return 0;
-    }
-
-
-  return 1;
-}
 
 ACE_INLINE int
 TAO_GIOP_Message_Lite::parse_header (TAO_GIOP_Message_State *state)

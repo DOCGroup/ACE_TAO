@@ -17,23 +17,40 @@
 #ifndef TAO_GIOP_MESSAGE_ACCEPT_STATE_H
 #include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_ACCEPT_STATE_H
-#include "tao/GIOP_Server_Request.h"
+
 #include "tao/GIOP_Assorted_Headers.h"
+
 
 // @@ Bala: do we want to have separate classes for the server side
 //    and client side?  IMHO not, with bi-directional connections the
 //    differences will be completely blurred.
+// @@ Carlos: Yes I agree in a perfect world. But if we look back we
+//    see our pluggabl_protocol framework having WELL driven a well
+//    defined wedge, which we have to live with. Unless, we think/redo
+//    some work on the pluggable_protocol framework to close these
+//    gaps, IMHO we need to keep making this division further. But,
+//    there is a hack for Bi-Dir GIOP till we solve the above
+//    problem. Hack can be applied to specific versions
+//    alone. Moreover, most of the protocols like HTTP-NG, HTTP have
+//    this server/client differentiation in their basic
+//    framework. Please let me know if I am wrong.
+
 //    Please think about designs that do not require separate state
 //    objects, a good side effect: that should reduce code size...
+// @@ Carlos:I need sometime to think on this. Will surely do.
+class TAO_GIOP_ServerRequest;
+class TAO_OutputCDR;
+class TAO_GIOP_Locate_Status_Msg;
+
 class TAO_GIOP_Message_Accept_State
 {
   // = TITLE
   //   TAO_GIOP_Message_Accept_State
   //
   // = DESCRIPTION
-  //   An abstract base class for different versions of GIOP. This is
-  //   similar to the base class in the strategy pattern
-  //   @@ Bala: Is it an strategy or not!?  
+  //   Strategy to determine which version of the GIOP request have we
+  //   received. This is to aid the server in replying back to the
+  //   client in the same version as that of the received request.
   //  
 public:
 
@@ -62,16 +79,18 @@ public:
  private:
 };
 
-// @@ Bala: again you have the inheritance reversed!  A 1.1 server (or
-//    client) must support 1.0, but not vice-versa.
+
+/*****************************************************************/ 
 // @@ Bala: a physical design issue: if the protocol is truly
 //    pluggable then you should be able to (and you should) put the
 //    classes for each protocol in separate files.
-class TAO_GIOP_Message_Accept_State_11 :
-  public TAO_GIOP_Message_Accept_State
+// @@ Carlos: Only GIOP/GIOPlite is pluggable and not the
+//    implementation details I think. Does that answer your question?
+ 
+class TAO_GIOP_Message_Accept_State_10 : public TAO_GIOP_Message_Accept_State
 {
   // = TITLE
-  //   TAO_GIOP_Message_Accept_State_11
+  //   TAO_GIOP_Message_Accept_State_10
   // = DESCRIPTION
   //   
   
@@ -98,24 +117,26 @@ public:
   virtual CORBA::Octet major_version (void);
   virtual CORBA::Octet minor_version (void);
   // Our versions
-
-private:
-
 };
 
-class TAO_GIOP_Message_Accept_State_10 :
-  public TAO_GIOP_Message_Accept_State_11
+/*****************************************************************/ 
+class TAO_GIOP_Message_Accept_State_11: public TAO_GIOP_Message_Accept_State_10
 {
   // = TITLE
+  //   TAO_GIOP_Message_Accept_State_11
   // = DESCRIPTION
 public:
   virtual CORBA::Octet minor_version (void);
 };
 
+/*****************************************************************/ 
+
 class TAO_GIOP_Message_Accept_Impl
 {
   // = TITLE
   // = DESCRIPTION
+  //   The class that would hold the actual references to the concrete
+  //   strategy.
  public:
   CORBA::Boolean check_revision (CORBA::Octet incoming_major,
                                  CORBA::Octet incoming_minor);
@@ -123,7 +144,7 @@ class TAO_GIOP_Message_Accept_Impl
 
   TAO_GIOP_Message_Accept_State_10 version_10;
   TAO_GIOP_Message_Accept_State_11 version_11;
-  
+  // The concrete implementations that we hold
 };
 
 #if defined (__ACE_INLINE__)

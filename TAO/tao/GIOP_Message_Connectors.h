@@ -17,19 +17,17 @@
 //
 // ============================================================================
 
-// @@ Bala: Please be consisten about the macros, if you are not,
-// somebody will use the same one in another file, it is hard to find
-// them and change them automatically, etc. etc.
-#ifndef TAO_GIOP_MESSAGE_CONNECTORS_
+#ifndef TAO_GIOP_MESSAGE_CONNECTORS_H
 #include "ace/pre.h"
-#define TAO_GIOP_MESSAGE_CONNECTORS_
+#define TAO_GIOP_MESSAGE_CONNECTORS_H
+
 #include "tao/GIOP_Message_Base.h"
 
-class TAO_Export TAO_GIOP_Message_Connectors:
-  public TAO_GIOP_Message_Base
+class TAO_Export TAO_GIOP_Message_Connectors: public TAO_GIOP_Message_Base
 {
   // = TITLE
   //   TAO_GIOP_Message_Connectors
+
   // = DESCRIPTION
   //   This class provides methods and code for the connector specific
   //   functionality of GIOP.The motivation for this class is to hold
@@ -38,7 +36,7 @@ class TAO_Export TAO_GIOP_Message_Connectors:
   
 protected:
   int parse_reply (TAO_Message_State_Factory &mesg_state,
-                   TAO_Pluggable_Connector_Params &params);
+                   TAO_Pluggable_Reply_Params &params);
   // Parse the reply message from the server
 
 private:
@@ -57,10 +55,10 @@ private:
   // class. There may be a feeling that this declaration may not be
   // required, but some of the code in the class look for this method
 
-   int process_connector_messages (TAO_Transport *transport,
-                                  TAO_ORB_Core *orb_core,
-                                  TAO_InputCDR &input,
-                                  CORBA::Octet message_type);
+  int process_client_message (TAO_Transport *transport,
+                              TAO_ORB_Core *orb_core,
+                              TAO_InputCDR &input,
+                              CORBA::Octet message_type);
   // Processes the messages from the connectors so that they can be
   // passed on to the appropriate states.
 };
@@ -69,17 +67,20 @@ private:
 // Version specific classes of GIOP
 //////////////////////////////////////////////////
 
-class TAO_Export TAO_GIOP_Message_Connector_11:
-  public TAO_GIOP_Message_Connectors
+/**************************************************************/
+class TAO_Export TAO_GIOP_Message_Connector_10: public TAO_GIOP_Message_Connectors
 {
   // = TITLE
   //   TAO_GIOP_Message_Connector_11
   // = DESCRIPTION
   //   This class provides methods methods that implements the GIOP
-  //   (1.1) specific stuff.
+  //   (1.0) specific stuff.
 public:
 
-private:
+  TAO_GIOP_Message_Connector_10 (void);
+  // Ctor
+  
+protected:
   virtual CORBA::Boolean 
   write_request_header (const TAO_Operation_Details &opdetails,
                         TAO_Target_Specification &spec,
@@ -93,7 +94,7 @@ private:
   // Write the locate request header in to the <msg>
   
   int parse_reply (TAO_Message_State_Factory &mesg_state,
-                   TAO_Pluggable_Connector_Params &params);
+                   TAO_Pluggable_Reply_Params &params);
   // Parse the reply messages from the server
 
   CORBA::Octet major_version (void);
@@ -101,23 +102,23 @@ private:
   // Our minor and major versions
 };
 
-// @@ Bala: this is *COMPLETELY* backwards, this way we have to change
-// all the classes everytime a new version comes out. We also may want
-// to compile TAO with only support for GIOP 1.1 (say because this is
-// an embedded application that does not need the cool GIOP 1.1 and
-// 1.2 features)!
-class TAO_Export TAO_GIOP_Message_Connector_10:
-  public TAO_GIOP_Message_Connector_11
+
+/*************************************************************/
+class TAO_Export TAO_GIOP_Message_Connector_11: public TAO_GIOP_Message_Connector_10
 {
   // = TITLE
-  //   TAO_GIOP_Message_Connector_10
+  //   TAO_GIOP_Message_Connector_11
   // = DESCRIPTION
-  //   This class is deribed from the 1.1 version of GIOP. At presnt
+  //   This class is deribed from the 1.0 version of GIOP. At presnt
   //   this only returns the right version number
 public:
 
+  TAO_GIOP_Message_Connector_11 (void);
+  // Ctor
+
 private:
   CORBA::Octet minor_version (void);
+  // Our minor version
 };
 
 #if defined (__ACE_INLINE__)
@@ -125,4 +126,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /*TAO_GIOP_MESSAGE_CONNECTORS*/
+#endif /*TAO_GIOP_MESSAGE_CONNECTORS_H*/
+

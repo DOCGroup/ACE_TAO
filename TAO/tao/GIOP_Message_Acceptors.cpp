@@ -1,18 +1,24 @@
+// -*- C++ -*-
 //$Id$
+
 #include "tao/GIOP_Message_Acceptors.h"
 #include "tao/POA.h"
+#include "tao/debug.h"
+#include "tao/GIOP_Utils.h"
+#include "tao/GIOP_Server_Request.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Acceptors.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(tao, GIOP_Message_Acceptors, "$Id$")
 
 int 
 TAO_GIOP_Message_Acceptors::
-  process_connector_messages (TAO_Transport *transport, 
-                              TAO_ORB_Core *orb_core,
-                              TAO_InputCDR &input,
-                              CORBA::Octet message_type)
+  process_client_message (TAO_Transport *transport, 
+                          TAO_ORB_Core *orb_core,
+                          TAO_InputCDR &input,
+                          CORBA::Octet message_type)
 {
   this->output_.reset ();
   switch (message_type)
@@ -21,14 +27,14 @@ TAO_GIOP_Message_Acceptors::
       // Should be taken care by the state specific invocations. They
       // could raise an exception or write things in the output CDR
       // stream
-      this->process_connector_request (transport,
-                                       orb_core,
-                                       input);
+      this->process_client_request (transport,
+                                    orb_core,
+                                    input);
       break;
     case TAO_GIOP_LOCATEREQUEST:
-      this->process_connector_locate (transport,
-                                      orb_core,
-                                      input);
+      this->process_client_locate (transport,
+                                   orb_core,
+                                   input);
       break;
     case TAO_GIOP_MESSAGERROR:
     case TAO_GIOP_REPLY:
@@ -47,9 +53,9 @@ TAO_GIOP_Message_Acceptors::
 
 int
 TAO_GIOP_Message_Acceptors::
-  process_connector_request (TAO_Transport *transport, 
-                             TAO_ORB_Core* orb_core,
-                             TAO_InputCDR &input)
+  process_client_request (TAO_Transport *transport, 
+                          TAO_ORB_Core* orb_core,
+                          TAO_InputCDR &input)
 {
   // Get the revision info
   TAO_GIOP_Version version (this->major_version (),
@@ -283,9 +289,9 @@ TAO_GIOP_Message_Acceptors::
 
 int
 TAO_GIOP_Message_Acceptors::
-  process_connector_locate (TAO_Transport *transport,
-                            TAO_ORB_Core* orb_core,
-                            TAO_InputCDR &input)
+  process_client_locate (TAO_Transport *transport,
+                         TAO_ORB_Core* orb_core,
+                         TAO_InputCDR &input)
 {
   // Get the revision info
   TAO_GIOP_Version version (this->major_version (),
@@ -581,6 +587,41 @@ TAO_GIOP_Message_Acceptors::
   return 0;
 }
 
+int
+TAO_GIOP_Message_Acceptors::
+  make_send_locate_reply (TAO_Transport *transport,
+                          TAO_GIOP_Locate_Request_Header &request,
+                          TAO_GIOP_Locate_Status_Msg &status_info)
+{
+  // Note here we are making the Locate reply header which is *QUITE*
+  // different from the reply header made by the make_reply () call.. 
+  // Make the GIOP message header
+  this->write_protocol_header (TAO_PLUGGABLE_MESSAGE_LOCATEREPLY,
+                               this->output_);             
+
+  // This writes the header & body
+  this->accept_state_->write_locate_reply_mesg (this->output_,
+                                                request.request_id (),
+                                                status_info);
+
+  // Send the message
+  int result = this->send_message (transport,
+                                   this->output_);
+                   
+  // Print out message if there is an error
+  if (result == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("TAO: (%P|%t) %p: cannot send reply\n"),
+                      ASYS_TEXT ("TAO_GIOP::process_server_message")));
+        }
+    }   
+  
+  return result;
+}
+
 ////////////////////////////////////////////////////////////
 // Methods that should not be called from the acceptor side 
 ////////////////////////////////////////////////////////////
@@ -606,7 +647,7 @@ TAO_GIOP_Message_Acceptors::
 int
 TAO_GIOP_Message_Acceptors::
 parse_reply (TAO_Message_State_Factory & /*mesg_state*/,
-             TAO_Pluggable_Connector_Params & /*params*/)
+             TAO_Pluggable_Reply_Params & /*params*/)
 {
   ACE_NOTSUP_RETURN (-1);
 }

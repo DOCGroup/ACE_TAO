@@ -22,9 +22,10 @@
 
 #include "tao/GIOP_Server_Request.h"
 #include "tao/GIOP_Assorted_Headers.h"
+#include "tao/target_specification.h"
+#include "tao/GIOP_Utils.h"
 
-class TAO_Export TAO_GIOP_Message_Lite :
-  public TAO_Pluggable_Messaging_Interface
+class TAO_Export TAO_GIOP_Message_Lite : public TAO_Pluggable_Messaging
 {
   // = TITLE
   //   Definitions got the GIOP lite
@@ -65,13 +66,13 @@ public:
   // Sends the encapsulated stream in <stream> on to the transport 
   
   int parse_reply (TAO_Message_State_Factory &mesg_state,
-                   TAO_Pluggable_Connector_Params &params);
+                   TAO_Pluggable_Reply_Params &params);
   // Parse the reply message from the server
   
-  int process_connector_messages (TAO_Transport *transport,
-                                  TAO_ORB_Core *orb_core,
-                                  TAO_InputCDR &input,
-                                  CORBA::Octet message_type);
+  int process_client_message (TAO_Transport *transport,
+                              TAO_ORB_Core *orb_core,
+                              TAO_InputCDR &input,
+                              CORBA::Octet message_type);
   // Processes the messages from the connectors so that they can be
   // passed on to the appropriate states.
 private:
@@ -91,9 +92,9 @@ private:
   // Parse the header
 
   
-  int process_connector_request (TAO_Transport *transport,
-                                 TAO_ORB_Core* orb_core,
-                                 TAO_InputCDR &input);
+  int process_client_request (TAO_Transport *transport,
+                              TAO_ORB_Core* orb_core,
+                              TAO_InputCDR &input);
   // A request was received on the server side. <transport> is the
   // source of the message (and thus where the  replies should be
   // sent). <orb_core> is the ORB that received the message <input>
@@ -102,9 +103,9 @@ private:
   // message processing.
 
 
-  int process_connector_locate (TAO_Transport *transport,
-                                TAO_ORB_Core* orb_core,
-                                TAO_InputCDR &input);
+  int process_client_locate (TAO_Transport *transport,
+                             TAO_ORB_Core* orb_core,
+                             TAO_InputCDR &input);
   // A LocateRequest was received on the server side. <transport> is
   // the source of the message (and thus where the replies should be
   // sent). <orb_core> is the ORB that received the message <input>

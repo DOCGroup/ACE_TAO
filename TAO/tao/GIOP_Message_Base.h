@@ -18,23 +18,15 @@
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
-#ifndef TAO_GIOP_MESSAGE_H
+
+#ifndef TAO_GIOP_MESSAGE_BASE_H
 #include "ace/pre.h"
-#define TAO_GIOP_MESSAGE_H
+#define TAO_GIOP_MESSAGE_BASE_H
 
-#include "tao/Pluggable_Messaging.h"
-// @@ Bala: Please try not to #include stuff too many times:
-//    GIOP_Utils.h includes Pluggable_Messaging already.
-#include "tao/GIOP_Utils.h"
+#include "tao/GIOP_Message_State.h"
 
-// @@ Bala: I bet you only need this file in the .cpp file, not in the
-//    .h file!
-#include "tao/debug.h"
 
-// @@ Bala: we put all this stuff in a single line.  I hate it too,
-//    but the tools that generate man pages get confused otherwise.
-class TAO_Export TAO_GIOP_Message_Base :
-  public TAO_Pluggable_Messaging_Interface
+class TAO_Export TAO_GIOP_Message_Base : public TAO_Pluggable_Messaging
 {
   // = TITLE
   //   Definitions of GIOP specific stuff
@@ -60,11 +52,10 @@ public:
                     ACE_Time_Value *max_time_value = 0);
   // Reads input from the transport 
   
-  virtual CORBA::Boolean 
-  write_message_header (const TAO_Operation_Details &opdetails,
-                        TAO_Pluggable_Header_Type header_type,
-                        TAO_Target_Specification &spec,
-                        TAO_OutputCDR &msg);
+  virtual CORBA::Boolean write_message_header   (const TAO_Operation_Details &opdetails,
+                                                 TAO_Pluggable_Header_Type header_type,
+                                                 TAO_Target_Specification &spec,
+                                                 TAO_OutputCDR &msg);
   // Write the  header defined by <header_type> in to <msg>
 
   int send_message (TAO_Transport *transport,
@@ -75,13 +66,13 @@ public:
   // Sends the encapsulated stream in <stream> on to the transport
   
   virtual int parse_reply (TAO_Message_State_Factory &mesg_state,
-                           TAO_Pluggable_Connector_Params &params) = 0;
+                           TAO_Pluggable_Reply_Params &params) = 0;
   // Parse the reply message from the server
 
-  int process_connector_messages (TAO_Transport *transport,
-                                  TAO_ORB_Core *orb_core,
-                                  TAO_InputCDR &input,
-                                  CORBA::Octet message_type) = 0;
+  int process_client_message (TAO_Transport *transport,
+                              TAO_ORB_Core *orb_core,
+                              TAO_InputCDR &input,
+                              CORBA::Octet message_type) = 0;
   // Processes the messages from the connectors so that they can be
   // passed on to the appropriate states.
 
@@ -94,34 +85,38 @@ protected:
   // are forced to use these methods
   // @@ Bala: we will never need this, right?  Each protocol knows how
   //    to parse its messages, right?
+  // @@ Carlos: It knows. But what about OMG at one stage deciding to
+  //    change things between versions. For example, today the
+  //    message_type is the 8th byte in the GIOP header. If they
+  //    decide to move that to 10th byte for GIOP2.8. Just
+  //    thinking ahead, that wouldn't cost anything today.
 
-  const size_t header_len (void);
+  size_t header_len (void);
   // This will give the size of the header for different versions of
   // GIOP. 
 
-  // @@ Bala: it makes *NO SENSE* to return const size_t! and some
-  // compliers hate it...
-  const size_t message_size_offset (void);
+  size_t message_size_offset (void);
   // This will give the message_size offset as specified by different
   // versions of GIOP
 
-  const size_t major_version_offset (void);
+  size_t major_version_offset (void);
   // This will give the major_version offset as specified by different
   // versions of GIOP
   
-  const size_t minor_version_offset (void);
+  size_t minor_version_offset (void);
   // This will give the minor_version offset as specified by different
   // versions of GIOP
   
-  const size_t flags_offset (void);
+  size_t flags_offset (void);
   // This will give the flags  offset as specified by different
   // versions of GIOP
 
-  const size_t message_type_offset (void);
+  size_t message_type_offset (void);
   // This will give the message type offset as specified by different
   // versions of GIOP
   // @@The above  methods may not be required. But we have it for a
   // later date use wherein things can changes in GIOP
+
 #endif /*if 0*/
 
   int  send_error (TAO_Transport *transport);
@@ -139,15 +134,15 @@ private:
   // of the GIOP classes that are active. 
 
   virtual CORBA::Boolean 
-  write_request_header (const TAO_Operation_Details &opdetails,
-                        TAO_Target_Specification &spec,
-                        TAO_OutputCDR &msg) = 0;
+      write_request_header (const TAO_Operation_Details &opdetails,
+                            TAO_Target_Specification &spec,
+                            TAO_OutputCDR &msg) = 0;
   // Write the GIOP request header in to <msg>
   
   virtual CORBA::Boolean 
-  write_locate_request_header (CORBA::ULong request_id,
-                               TAO_Target_Specification &spec,
-                               TAO_OutputCDR &msg) = 0;
+      write_locate_request_header (CORBA::ULong request_id,
+                                   TAO_Target_Specification &spec,
+                                   TAO_OutputCDR &msg) = 0;
   // Write the GIOP locate request header in to <msg>
   
   virtual int validate_version (TAO_GIOP_Message_State *state) = 0;
@@ -177,4 +172,5 @@ const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /*TAO_GIOP_MESSAGE_H*/
+#endif /*TAO_GIOP_MESSAGE_BASE_H*/
+

@@ -16,18 +16,17 @@
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
+
 #ifndef TAO_GIOP_MESSAGE_ACCEPTORS
 #include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_ACCEPTORS
 
 #include "tao/GIOP_Message_Base.h"
-#include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_Accept_State.h"
 #include "tao/ORB_Core.h"
-#include "tao/debug.h"
 
-class TAO_Export TAO_GIOP_Message_Acceptors:
-  public TAO_GIOP_Message_Base
+
+class TAO_Export TAO_GIOP_Message_Acceptors: public TAO_GIOP_Message_Base
 {
   // = TITLE
   //   TAO_GIOP_Message_Acceptors
@@ -40,20 +39,20 @@ public:
   TAO_GIOP_Message_Acceptors (TAO_ORB_Core *orb_core);
   // Ctor
 
-  int process_connector_messages (TAO_Transport *transport,
-                                  TAO_ORB_Core *orb_core,
-                                  TAO_InputCDR &input,
-                                  CORBA::Octet message_type);
+  int process_client_message (TAO_Transport *transport,
+                              TAO_ORB_Core *orb_core,
+                              TAO_InputCDR &input,
+                              CORBA::Octet message_type);
   // Processes the messages from the connectors so that they can be
   // passed on to the appropriate states.
   
   int parse_reply (TAO_Message_State_Factory &mesg_state,
-                   TAO_Pluggable_Connector_Params &params);
+                   TAO_Pluggable_Reply_Params &params);
 private:
   
-  int process_connector_request (TAO_Transport *transport,
-                                 TAO_ORB_Core* orb_core,
-                                 TAO_InputCDR &input);
+  int process_client_request (TAO_Transport *transport,
+                              TAO_ORB_Core* orb_core,
+                              TAO_InputCDR &input);
   // A request was received on the server side. <transport> is the
   // source of the message (and thus where the  replies should be
   // sent). <orb_core> is the ORB that received the message <input>
@@ -62,9 +61,9 @@ private:
   // message processing.
 
 
-  int process_connector_locate (TAO_Transport *transport,
-                                TAO_ORB_Core* orb_core,
-                                TAO_InputCDR &input);
+  int process_client_locate (TAO_Transport *transport,
+                             TAO_ORB_Core* orb_core,
+                             TAO_InputCDR &input);
   // A LocateRequest was received on the server side. <transport> is
   // the source of the message (and thus where the replies should be
   // sent). <orb_core> is the ORB that received the message <input>
@@ -134,6 +133,7 @@ private:
                                TAO_OutputCDR &msg);
   ///////////////////////////////////////////////////
 };
+
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Acceptors.i"
