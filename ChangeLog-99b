@@ -1,8 +1,17 @@
-Tue Jun  1 23:17:16 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+Wed Jun 02 00:07:44 1999    <alex@cs.wustl.edu>
 
-	* examples/Reactor/Proactor/test_cancel.cpp: 
-	* examples/Reactor/Proactor/README: 
-	* examples/Reactor/Proactor/Makefile:
+       * tao/test_cancel.dsp
+       * tao/post_completions.
+       * tao/test_end_event_lo
+       * tao/test_multiple_loo
+       * tao/test_proactor.dsp
+       * tao/test_proactor.dsw
+       * tao/test_timeout.dsp
+
+       * examples/Reactor/Proactor/test_cancel.cpp: 
+       * examples/Reactor/Proactor/README: 
+       * examples/Reactor/Proactor/Makefile:
+
 	Related to ChangeLog : Tue Jun  1 16:48:58 1999  Alexander Babu
 	Arulanthu  <alex@cs.wustl.edu> 
 				
