@@ -1,3 +1,11 @@
+Tue Feb 19 07:45:05 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.cpp: Added a fix for Jody ie. bug
+	  #1129.  Yet, to get a reply whether the fix is right or
+	  wrong. Now, we close the socket with the first call to
+	  handle_close () and delete it when the upcall count gets to
+	  zero.  
+
 Mon Feb 11 14:03:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.h: Removed the virtual declaration from the method
