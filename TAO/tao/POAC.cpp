@@ -351,7 +351,10 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -511,7 +514,10 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -671,7 +677,10 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -830,7 +839,10 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -992,7 +1004,10 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -1152,7 +1167,10 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -1312,7 +1330,10 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -3633,7 +3654,10 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =

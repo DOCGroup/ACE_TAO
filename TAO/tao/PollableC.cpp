@@ -137,7 +137,10 @@ CORBA::Boolean CORBA_Pollable::is_ready (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
@@ -194,7 +197,10 @@ CORBA_PollableSet_ptr CORBA_Pollable::create_pollable_set (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -564,7 +570,10 @@ CORBA::DIIPollable_ptr CORBA_PollableSet::create_dii_pollable (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -615,7 +624,10 @@ void CORBA_PollableSet::add_pollable (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK;
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
@@ -673,7 +685,10 @@ CORBA_Pollable_ptr CORBA_PollableSet::poll (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
@@ -735,7 +750,10 @@ void CORBA_PollableSet::remove (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK;
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
@@ -787,7 +805,10 @@ CORBA::UShort CORBA_PollableSet::number_left (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =

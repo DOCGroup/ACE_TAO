@@ -1676,7 +1676,10 @@ CORBA::Object_ptr Messaging::Poller::operation_target (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -1727,7 +1730,10 @@ char * Messaging::Poller::operation_name (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -1778,7 +1784,10 @@ Messaging::ReplyHandler_ptr Messaging::Poller::associated_handler (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -1829,7 +1838,10 @@ void Messaging::Poller::associated_handler (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK;
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
@@ -1881,7 +1893,10 @@ CORBA::Boolean Messaging::Poller::is_from_poller (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -1932,7 +1947,10 @@ CORBA::Object_ptr Messaging::Poller::target (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -1983,7 +2001,10 @@ char * Messaging::Poller::op_name (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
