@@ -248,27 +248,29 @@ ACE_Timer_Heap::grow_heap (void)
 
    ACE_NEW (new_timer_ids, int[new_size]);
 
-   ACE_OS::memcpy (new_timer_ids, this->timer_ids_, max_size_ * sizeof (int));
+   ACE_OS::memcpy (new_timer_ids, 
+		   this->timer_ids_, 
+		   max_size_ * sizeof *this->timer_ids_);
 
    delete [] timer_ids_;
    this->timer_ids_ = new_timer_ids;
 
-   // and add the new elements to the end of the "freelist"
+   // Add the new elements to the end of the "freelist"
    for (size_t i = this->max_size_; i < new_size; i++)
      this->timer_ids_[i] = -((int) (i + 1));
 
    // Grow the preallocation array (if using preallocation)
    if (this->preallocated_nodes_ != 0)
    {
-      // Create a new array with max_size elements to link in
-      // to existing list.
+      // Create a new array with max_size elements to link in to
+      // existing list.
       ACE_NEW (this->preallocated_nodes_, 
 	       ACE_Timer_Node[this->max_size_]);
 
-      // add it to the set for later deletion
+      // Add it to the set for later deletion
       this->preallocated_node_set_.insert (this->preallocated_nodes_);      
       
-      // link new nodes together (as for original list)
+      // Link new nodes together (as for original list).
       for (size_t k = 1; k < this->max_size_; k++)
 	this->preallocated_nodes_[k - 1].next_ = 
 	  &this->preallocated_nodes_[k];
@@ -276,7 +278,7 @@ ACE_Timer_Heap::grow_heap (void)
       // NULL-terminate the new list.
       this->preallocated_nodes_[this->max_size_ - 1].next_ = 0;
 
-      // link new array to the end of the existling list
+      // Link new array to the end of the existling list.
       if (this->preallocated_nodes_freelist_ == 0)
 	this->preallocated_nodes_freelist_ = &preallocated_nodes_[0];
       else
@@ -285,7 +287,7 @@ ACE_Timer_Heap::grow_heap (void)
 	
 	  for (ACE_Timer_Node* current = this->preallocated_nodes_freelist_->next_;
 	       current != 0;
-	      current = current->next_)
+	       current = current->next_)
 	    previous = current;
 
 	  previous->next_ = &this->preallocated_nodes_[0];
