@@ -1,10 +1,20 @@
+Mon May 21 16:37:18 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/Timer_Queue_Adapters.cpp:
+	* bin/make_pretty.pl:
+
+	Changed the make_pretty script to remove the false warning on
+	SunCC5. Added documentation in the affected files. This fixes
+	Bug Id 879.
+
 Sun May 20 08:48:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst: Added FORTE 6.1 to teh list.
 
 Sun May 20 07:37:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/POSIX_Proactor.cpp: Fixed a compile error with g++. 
+	* ace/POSIX_Proactor.cpp: Fixed a compile error with g++.
 
 Sun May 20 01:38:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
