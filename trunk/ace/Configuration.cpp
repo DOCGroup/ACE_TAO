@@ -1514,7 +1514,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
                                       ACE_Configuration_Section_Key& result)
 {
   ACE_ASSERT (this->allocator_);
-  if (validate_name (sub_section, true))
+  if (validate_name (sub_section, 1))    // 1 == allow_path
     return -1;
 
   result = base;
