@@ -1,21 +1,29 @@
+Wed Mar 08 22:19:26 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          moved VxWorks 5.4 (Tornado II) auto detection to
+          before CCFLAGS definition, so that it gets set
+          properly.  Thanks to Thomas Lockhart
+          <Thomas.Lockhart@jpl.nasa.gov> for reporting this. [Bug 481]
+
 Wed Mar  8 19:16:56 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Time_Service_Test.cpp (main): Added the ASYS_TEXT macro
-	  to the "ace-malloc-XXXXXX" string to avoid an error when
- 	  compiled with Unicode.  Thanks to Steve Huston
- 	  <shuston@riverace.com> for reporting this.  This fixes BUGID
- 	  479.
+        * tests/Time_Service_Test.cpp (main): Added the ASYS_TEXT macro
+          to the "ace-malloc-XXXXXX" string to avoid an error when
+          compiled with Unicode.  Thanks to Steve Huston
+          <shuston@riverace.com> for reporting this.  This fixes BUGID
+          479.
 
 Wed Mar  8 19:19:46 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-irix6.x-common.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
-	  to 2.
+        * ace/config-irix6.x-common.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
+          to 2.
 
 Wed Mar  8 15:59:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-hpux-10.x.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
-	  to 2.  The alignment computing macros didn't work in this case.
-	  Thanks to Steve H. for reporting this.
+        * ace/config-hpux-10.x.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
+          to 2.  The alignment computing macros didn't work in this case.
+          Thanks to Steve H. for reporting this.
 
 Wed Mar 08 15:26:31 2000  Steve Huston  <shuston@riverace.com>
 
@@ -39,20 +47,20 @@ Wed Mar 08 14:46:52 2000  Steve Huston  <shuston@riverace.com>
 
 Wed Mar  8 11:13:04 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (log): Reverted this change.
-	  Tue Mar  7 14:21:12 CST 2000  Loren Rittle
-	  <rittle@rsch.comm.mot.com>. The change gave compile errors on
-	  EGCS.
+        * ace/Log_Msg.cpp (log): Reverted this change.
+          Tue Mar  7 14:21:12 CST 2000  Loren Rittle
+          <rittle@rsch.comm.mot.com>. The change gave compile errors on
+          EGCS.
 
 Wed Mar  8 01:33:21 2000  Christopher Kohlhoff <chris@kohlhoff.com>
 
-	* tests/Makefile.bor: Added new test Process_Manager_Test.
+        * tests/Makefile.bor: Added new test Process_Manager_Test.
 
         * include/makeinclude/compiler.bor, make_flags.bor: Added support
-	  for BCB's codeguard memory checking tool.
+          for BCB's codeguard memory checking tool.
 
         * include/makeinclude/outputdir.bor: Allow a different directory
-	  creation tool to be substituted for "mkdir" on Win9x.
+          creation tool to be substituted for "mkdir" on Win9x.
 
 Tue Mar 07 18:37:26 2000  Tom Ziomek <tomz@cc701.comm.mot.com>
 
