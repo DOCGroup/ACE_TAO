@@ -1,3 +1,9 @@
+Mon Sep 13 11:01:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Shared_Malloc/test_persistence.cpp: Added comments on
+	  the use of scanf.  Thanks to Wenli Bai <bai@gsao.med.ge.com> for
+	  reporting the problem.
+
 Sun Sep 12 19:23:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ACE version 5.0.4 released.
@@ -9,12 +15,12 @@ Sat Sep 11 12:18:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  typo where we should have allocated an ACE_Managed_Process
  	  rather than an ACE_Process.  Thanks to Dave Madden for reporting
  	  this.
-	
+
 	* ace/Process_Manager.cpp: Added the ACE_CLASS_IS_NAMESPACE method
 	  to ACE_Managed_Process to make G++ happy.  Also, removed the
  	  trailing '_' since we don't need this because we've prefixed
  	  "ACE_" already.
-  
+
 Fri Sep 10 16:58:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc_T.cpp (open,shared_malloc): Added several placement
