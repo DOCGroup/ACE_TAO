@@ -11,6 +11,9 @@ Sat Apr 11 18:58:24 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/INET_Addr.cpp: Fixed missing paren.
 
+	* netsvcs/servers/servers4.mdp: Added ..\lib to include directories
+	  for Release build.
+
 Sat Apr 11 13:28:19 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.38, released Sat Apr 11 13:28:19 1998.
