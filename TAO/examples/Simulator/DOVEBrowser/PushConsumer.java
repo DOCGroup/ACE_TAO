@@ -1,27 +1,26 @@
-// $Id$
+// $Id $
 //
 // ============================================================================
 //
 // 
 // = FILENAME
-//    Display_Push_Consumer.java
+//    PushConsumer.java
 //
 // = AUTHOR
 //    Michael Kircher (mk1@cs.wustl.edu)
 //
 // = DESCRIPTION
-//    Implemenation of a PushConsumer
+//    This is a Push Consumer which takes the data field of the
+//    event and updates with it a Data Handler.
 // 
 //
 // ============================================================================
 
 
 
-
-
 // The Consumer has to implement the Skeleton Consumer
 
-public class Display_Push_Consumer extends RtecEventComm._PushConsumerImplBase
+public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 {
   
   public static final int ACE_ES_EVENT_ANY = 0;
@@ -40,27 +39,25 @@ public class Display_Push_Consumer extends RtecEventComm._PushConsumerImplBase
   // Store the number of received events
   private int total_received_ = 0;
   private org.omg.CORBA.ORB orb_;
-  private Navigation navigation_;
-  private Weapons weapons_;
-  private Display display_;
+  private DataHandler dataHandler_;
   private RtecScheduler.handle_tHolder rt_info_;
   private RtecEventChannelAdmin.EventChannel channel_admin_;
   private RtecEventChannelAdmin.ConsumerAdmin consumer_admin_;
   private RtecEventChannelAdmin.ProxyPushSupplier suppliers_;
   
-  public Display_Push_Consumer (org.omg.CORBA.ORB orb, Display display)
+  public PushConsumer (org.omg.CORBA.ORB orb, DataHandler dataHandler)
     {
       orb_ = orb;
-      display_ = display;
+      dataHandler_ = dataHandler;
     }
   
   
   public void push (RtecEventComm.Event[] events)
     {
-      //if (total_received_ < 5)	  
-      //	System.out.println ("Demo Consumer: Received an event! ->Number: " + total_received_);
-      //else if (total_received_ == 5)
-      //	System.out.println ("Demo Consumer: Everything is fine. Going to be mute.");
+      if (total_received_ < 5)	  
+	System.out.println ("Demo Consumer: Received an event! ->Number: " + total_received_);
+      else if (total_received_ == 5)
+	System.out.println ("Demo Consumer: Everything is fine. Going to be mute.");
       
       
       if (events.length == 0)
@@ -70,53 +67,14 @@ public class Display_Push_Consumer extends RtecEventComm._PushConsumerImplBase
       else
 	{
 	  total_received_++;
-	  /*
-	    if (total_received_ >= TOTAL_MESSAGES)
-	      {
-	      orb.disconnect (this);
-	      System.exit (0);
-	      } 
-	      */
+
 	  for (int i = 0; i < events.length; ++i)
 	    {
 	      if(events[i].type_ == ACE_ES_EVENT_NOTIFICATION) 
 		{
 		  try
-		    {		
-		      if (events[i].data_.any_value.type().equal (NavigationHelper.type()))
-			{
-			    navigation_ = NavigationHelper.extract (events[i].data_.any_value);
-			    display_.update_metrics (navigation_.utilization,
-						     navigation_.overhead,
-						     navigation_.arrival_time,
-						     navigation_.deadline_time,
-						     navigation_.completion_time,
-						     navigation_.computation_time);
-			    display_.update_simulation (Display_Object_Factory.ART_HORIZON_ENUM, this);
-			}
-		      else if (events[i].data_.any_value.type().equal (WeaponsHelper.type()))
-			{
-			  weapons_ = WeaponsHelper.extract (events[i].data_.any_value);
-			  display_.update_metrics (weapons_.utilization,
-						   weapons_.overhead,
-						   weapons_.arrival_time,
-						   weapons_.deadline_time,
-						   weapons_.completion_time,
-						   weapons_.computation_time);
-			    display_.update_simulation (Display_Object_Factory.WEAPONS_ENUM, this);			    
-			}
-		      else 
-			{		     
-			  System.out.println ("Demo Consumer: Received an event! ->Number: " + total_received_);
-			  System.out.println (">>TypeCode in the any does not match!");
-			  System.out.println ("Id: " + events[i].data_.any_value.type().id ());
-			  System.out.println ("Name: " + events[i].data_.any_value.type().name ());
-			  System.out.println ("Kind: " + events[i].data_.any_value.type().kind ());			
-			}		
-		    }
-		  catch (org.omg.CORBA.TypeCodePackage.BadKind e)
 		    {
-		      System.err.println (e);
+		      dataHandler_.update (events[i].data_.any_value);
 		    }
 		  catch(org.omg.CORBA.SystemException e) 
 		    {
@@ -224,17 +182,7 @@ public class Display_Push_Consumer extends RtecEventComm._PushConsumerImplBase
 	{
 	  System.err.println(e);
 	}		
-    }
-  public Navigation get_navigation ()
-    {
-	return navigation_;    
-    }
-  
-  public Weapons get_weapons ()
-    {
-      return weapons_;
-    } 
-  
+    }  
 }
   
 
