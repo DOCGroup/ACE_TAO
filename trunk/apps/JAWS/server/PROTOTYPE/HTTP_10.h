@@ -11,6 +11,8 @@ public:
   JAWS_HTTP_IO_Handler (JAWS_IO *io);
   ~JAWS_HTTP_IO_Handler (void);
 
+  ACE_Message_Block *state (void);
+
 protected:
   // The following methods are inherited from JAWS_IO_Handler
 
@@ -25,13 +27,28 @@ protected:
   virtual void write_error (void);
   virtual void confirmation_message_complete (void);
   virtual void error_message_complete (void);
-  
+
 private:
+  ACE_Message_Block *state_;
+  // This maintains the state of the request.
+
   JAWS_IO *io_;
   // The reference to our IO interface (synch vs. asynch)
 
-  void *state_;
-  // This maintains the state so that we can short circuit the stream calls
+  JAWS_Pipeline *pipeline_;
+  // This is a reference to the next stage of the pipeline when the IO
+  // request completes.
+
+  JAWS_HTTP_IO_Handler_Factory *factory_;
+};
+
+class JAWS_HTTP_Data_Block : public ACE_Data_Block
+{
+public:
+  JAWS_HTTP_Data_Block (void);
+  virtual ~JAWS_HTTP_Data_Block (void);
+
+private:
 };
 
 
