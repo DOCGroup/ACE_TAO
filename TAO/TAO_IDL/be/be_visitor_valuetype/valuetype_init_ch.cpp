@@ -78,12 +78,13 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
 
   // Generate the body.
   os << "{" << be_nl
-     << "public:" << be_idt_nl;
+     << "public:" << be_idt;
 
   if (factory_style == be_valuetype::FS_CONCRETE_FACTORY)
     {
       // Public constructor.
-      os << node->local_name () << "_init (void);" << be_nl;
+      os << be_nl
+         << node->local_name () << "_init (void);";
     }
 
   if (this->visit_valuetype_scope (node) == -1)
@@ -96,7 +97,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
     }
 
   // Generate _downcast method.
-  os << be_nl
+  os << be_nl << be_nl
      << "static " << node->local_name () << "_init* "
      << "_downcast (CORBA::ValueFactoryBase *);";
 
@@ -105,14 +106,19 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
       //@@ Boris: create_for_unmarshal is still public...
       // generate create_for_unmarshal
       os << be_nl << be_nl
-         << "virtual CORBA::ValueBase *"
-         << "create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);";
+         << "virtual CORBA::ValueBase *" << be_nl
+         << "create_for_unmarshal ("
+         << be_idt << be_idt_nl
+         << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+         << ");" << be_uidt;
 
       if (node->supports_abstract ())
         {
           os << be_nl << be_nl
-             << "virtual CORBA::AbstractBase_ptr "
-             << "create_for_unmarshal_abstract (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);";
+             << "virtual CORBA::AbstractBase_ptr" << be_nl
+             << "create_for_unmarshal_abstract (" << be_idt << be_idt_nl
+             << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+             << ");" << be_uidt;
         }
     }
 

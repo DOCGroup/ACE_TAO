@@ -41,21 +41,29 @@ be_visitor_valuetype_init_arglist_ch::visit_factory (be_factory *node)
 {
   TAO_OutStream& os = *(this->ctx_->stream ());
 
-  os << " (" << be_idt
-     << be_idt_nl;
+  os << " (";
+  
+  if (node->nmembers () > 0)
+    {  
+      os << be_idt << be_idt_nl;
 
-  // All we do is hand over code generation to our scope.
-  if (this->visit_scope (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_init_arglist_ch::"
-                         "visit_factory - "
-                         "codegen for scope failed\n"),
-                        -1);
+      // All we do is hand over code generation to our scope.
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "(%N:%l) be_visitor_valuetype_init_arglist_ch::"
+                            "visit_factory - "
+                            "codegen for scope failed\n"),
+                            -1);
+        }
+
+      os << be_uidt_nl
+         << ")";
     }
-
-  os << be_uidt_nl
-     << ")";
+  else
+    {
+      os << "void)" << be_idt;
+    }
 
   // Now generate the throw specs.
   if (this->gen_throw_spec (node) == -1)
