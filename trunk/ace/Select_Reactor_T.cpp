@@ -950,22 +950,17 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_notification_handlers
    int &number_of_active_handles,
    int &number_of_handlers_dispatched)
 {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   // Check to see if the ACE_HANDLE associated with the
   // Select_Reactor's notify hook is enabled.  If so, it means that
   // one or more other threads are trying to update the
-  // ACE_Select_Reactor_T's internal tables.  We'll handle all these
-  // threads and then break out to continue the event loop.
+  // ACE_Select_Reactor_T's internal tables or the notify pipe is
+  // enabled.  We'll handle all these threads and notifications, and
+  // then break out to continue the event loop.
 
   number_of_handlers_dispatched +=
     this->notify_handler_->dispatch_notifications (number_of_active_handles,
                                                    dispatch_set.rd_mask_);
   return this->state_changed_ ? -1 : 0;
-#else
-  ACE_UNUSED_ARG (number_of_active_handles);
-  ACE_UNUSED_ARG (dispatch_set);
-  return 0;
-#endif /* ACE_MT_SAFE */
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
