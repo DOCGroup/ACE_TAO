@@ -116,9 +116,8 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const
       (void) new_stream.close ();
       return -1;
     default:
-#ifndef ACE_NDEBUG
-      // ERR_print_errors_fp (stderr);
-#endif  /* ACE_NDEBUG */
+      ACE_SSL_Context::report_error ();
+
       return -1;
     }
 
@@ -146,12 +145,6 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
     ACE_Event_Handler::READ_MASK |
     ACE_Event_Handler::WRITE_MASK;
 
-  if (this->reactor_->register_handler (
-        new_stream.get_handle (),
-        &eh,
-        reactor_mask) == -1)
-    return -1;
-
   // In case a thread other than the one running the Reactor event
   // loop
   // performs the passive SSL connection establishment, transfer
@@ -164,11 +157,21 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
                              &old_owner) != 0)
     return -1;  // Failed to transfer ownership!  Should never happen!
 
+  if (this->reactor_->register_handler (
+        new_stream.get_handle (),
+        &eh,
+        reactor_mask) == -1)
+    return -1;
+
   // Have the Reactor complete the SSL passive connection.  Run the
   // event loop until the passive connection is completed.  Since
   // the Reactor is used, this isn't a busy wait.
   while (SSL_in_accept_init (ssl))
     {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TID = %t \t SSL = 0x%x\n",
+                  ssl));
+
       // Before blocking in the Reactor, do an SSL_accept() in case
       // OpenSSL buffered additional data sent within an SSL record
       // during session negotiation.  The buffered data must be
@@ -223,6 +226,9 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   (void) this->reactor_->remove_handler (&eh,
                                          reactor_mask |
                                          ACE_Event_Handler::DONT_CALL);
+
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) SSL accept completed.\n"));
 
   // Transfer control of the Reactor to the previous owner.
   return this->reactor_->owner (old_owner);

@@ -96,9 +96,7 @@ ACE_SSL_Accept_Handler::ssl_accept (void)
           break;
 
         default:
-#ifndef ACE_NDEBUG
-          ERR_print_errors_fp (stderr);
-#endif  /* ACE_NDEBUG */
+          ACE_SSL_Context::report_error ();
 
           return -1;
         }
@@ -108,5 +106,5 @@ ACE_SSL_Accept_Handler::ssl_accept (void)
   // Completed reading an SSL record, but SSL passive connection is
   // still pending completion.
 
-  return 0;
+  return 1;  // Have the reactor callback this event handler.
 }

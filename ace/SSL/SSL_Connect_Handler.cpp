@@ -81,9 +81,8 @@ ACE_SSL_Connect_Handler::ssl_connect (void)
           break;
 
         default:
-#ifndef ACE_NDEBUG
-          ERR_print_errors_fp (stderr);
-#endif  /* ACE_NDEBUG */
+          ACE_SSL_Context::report_error ();
+
           return -1;
         }
     }

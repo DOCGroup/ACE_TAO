@@ -201,9 +201,8 @@ ACE_SSL_Context::set_mode (int mode)
   this->context_ = ::SSL_CTX_new (method);
   if (this->context_ == 0)
     {
-#ifndef ACE_NDEBUG
-      ::ERR_print_errors_fp (stderr);
-#endif  /* ACE_NDEBUG */
+
+
       return -1;
     }
 
@@ -223,10 +222,7 @@ ACE_SSL_Context::set_mode (int mode)
                                        cert_file,
                                        cert_dir) <= 0)
     {
-#ifndef ACE_NDEBUG
-      // @@ For some reason, this call causes a seg fault.
-      // ::ERR_print_errors_fp (stderr);
-#endif  /* ACE_NDEBUG */
+      ACE_SSL_Context::report_error ();
 
       return -1;
     }
@@ -326,6 +322,25 @@ ACE_SSL_Context::seed_file (const char * seed_file, long bytes)
     return 0;
   else
     return -1;
+}
+
+void
+ACE_SSL_Context::report_error (unsigned long error_code)
+{
+  ACE_TCHAR error_string[256];
+
+  (void) ::ERR_error_string (error_code, error_string);
+
+  ACE_ERROR((LM_ERROR,
+             ACE_TEXT("SSL error: %u %s\n"),
+             error_code,
+             error_string));
+}
+
+void
+ACE_SSL_Context::report_error(void)
+{
+  ACE_SSL_Context::report_error (::ERR_get_error());
 }
 
 
