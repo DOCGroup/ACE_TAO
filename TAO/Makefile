@@ -99,12 +99,14 @@ endif
 #### Old versions of cpio might not, but the version that's shipped with
 #### Solaris 2.5.1, and gnu cpio 2.3, do support that option.
 
+FILTER = -name CVS -prune -o ! -name '.\#*' ! -name '\#*' ! -name '*~' -print
+
 cleanrelease:
 	@$(TIMESTAMP) (make realclean; cd ..; \
-	 find $(RELEASE_FILES) -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > TAO.tar.gz; \
+	 find $(RELEASE_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > TAO.tar.gz; \
 	 chmod a+r TAO.tar.gz; )
 
 release:
 	@$(TIMESTAMP) (cd ..; \
-	 find $(RELEASE_FILES) -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > TAO.tar.gz; \
+	 find $(RELEASE_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > TAO.tar.gz; \
 	 chmod a+r TAO.tar.gz; )
