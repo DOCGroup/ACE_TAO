@@ -24,6 +24,8 @@
 #include "Default_Stub_Factory.h"
 #include "Default_Endpoint_Selector_Factory.h"
 #include "Default_Protocols_Hooks.h"
+#include "Default_Thread_Lane_Resources_Manager.h"
+#include "Default_Collocation_Resolver.h"
 
 ACE_RCSID (tao,
            TAO_Internal,
@@ -227,6 +229,10 @@ TAO_Internal::open_services_i (int &argc,
         insert (&ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_Default_Protocols_Hooks);
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_Default_Thread_Lane_Resources_Manager_Factory);
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_Default_Collocation_Resolver);
 
       int result = 0;
 
@@ -241,8 +247,8 @@ TAO_Internal::open_services_i (int &argc,
       // Handle RTCORBA library special case.  Since RTCORBA needs
       // its init method call to register several hooks, call it here
       // if it hasn't already been called.
-      TAO_Object_Loader *rt_loader =
-        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_ORB_Loader");
+      ACE_Service_Object *rt_loader =
+        ACE_Dynamic_Service<ACE_Service_Object>::instance ("RT_ORB_Loader");
       if (rt_loader != 0)
           rt_loader->init (0, 0);
 

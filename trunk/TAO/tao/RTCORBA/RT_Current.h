@@ -17,7 +17,10 @@
 
 #include "tao/orbconf.h"
 
-#include "RTCORBA.h"
+#define TAO_RTCORBA_SAFE_INCLUDE
+#include "RTCORBAC.h"
+#undef TAO_RTCORBA_SAFE_INCLUDE
+
 #include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

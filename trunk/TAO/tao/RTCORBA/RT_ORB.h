@@ -19,9 +19,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "RTCORBA.h"
+#define TAO_RTCORBA_SAFE_INCLUDE
+#include "RTCORBAC.h"
+#undef TAO_RTCORBA_SAFE_INCLUDE
+
 #include "tao/LocalObject.h"
-#include "Thread_Pool.h"
 #include "ace/Hash_Map_Manager_T.h"
 
 #if defined(_MSC_VER)
@@ -33,6 +35,7 @@
 
 // Forward reference for TAO_Named_RT_Mutex_Manager
 class TAO_RT_Mutex;
+class TAO_Thread_Pool_Manager;
 
 /**
  * @class TAO_Named_RT_Mutex_Manager
@@ -255,6 +258,9 @@ public:
                                  TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Get the Thread Pool Manager.
+  TAO_Thread_Pool_Manager &tp_manager (void);
+
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
@@ -266,8 +272,8 @@ protected:
   /// mutex_mgr_ manages the names associated with named mutexes.
   TAO_Named_RT_Mutex_Manager mutex_mgr_;
 
-  /// Thread Pool Manager.
-  TAO_Thread_Pool_Manager tp_manager_;
+  /// Thread Pool Manager
+  TAO_Thread_Pool_Manager *tp_manager_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -27,9 +27,3 @@ TAO_Acceptor::tag (void) const
 {
   return this->tag_;
 }
-
-ACE_INLINE CORBA::Short
-TAO_Acceptor::priority (void) const
-{
-  return this->priority_;
-}

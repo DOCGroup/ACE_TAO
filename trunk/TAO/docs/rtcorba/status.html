@@ -13,8 +13,8 @@
 
 <p>Support for <a href="http://www.omg.org">OMG</a> <a
 href="http://cgi.omg.org/cgi-bin/doc?ptc/99-05-03">Real-Time CORBA 1.0 specification</a>
-is currently being added to TAO.&nbsp; The implementation effort is in full gear, so
-please check back often - these pages are updated frequently.&nbsp; For a list of recently
+is currently being added to TAO. The implementation effort is in full gear, so
+please check back often - these pages are updated frequently. For a list of recently
 added features and work in progress see the <a href="#status">Current Status</a> section
 below.</p>
 
@@ -22,7 +22,7 @@ below.</p>
 href="news:comp.soft-sys.ace">comp.soft-sys.ace</a> newsgroup, and bug reports can be
 submitted either through our web-based <a
 href="http://ace.cs.wustl.edu/bugzilla/index.cgi">bug-tracking system</a> (best) or by
-filling out the TAO/PROBLEM-REPORT-FORM and posting it to the newsgroup.&nbsp; Please
+filling out the TAO/PROBLEM-REPORT-FORM and posting it to the newsgroup. Please
 indicate &quot;RTCORBA&quot; in the component field when submitting a bug report. </p>
 
 <p>Points of contact for the project are: 
@@ -35,13 +35,13 @@ indicate &quot;RTCORBA&quot; in the component field when submitting a bug report
     documentation </li>
 </ul>
 
-<h2><a name="status">Current Status</a>&nbsp; </h2>
+<h2><a name="status">Current Status</a> </h2>
 
 <p>Status last updated on: $Date$ </p>
 
 <h3><a name="completed">Recently Completed</a></h3>
 
-<p>Items completed recently.&nbsp; (For a complete list of supported
+<p>Items completed recently. (For a complete list of supported
 features see <a href="#supported">this section</a>). 
 
 <ul>
@@ -63,17 +63,16 @@ features see <a href="#supported">this section</a>).
     <td width="34%" align="center"><strong>Contact</strong></td>
   </tr>
   <tr>
-    <td width="33%" align="left"><br>
-    Complete POA Threadpools support</td>
-    <td width="33%" align="center">8/15/00</td>
-    <td width="34%" align="center"><a href="mailto:irfan@cs.wustl.edu">Irfan Pyarali</a></td>
+    <td width="33%" align="left"></td>
+    <td width="33%" align="center"></td>
+    <td width="34%" align="center"></td>
   </tr>
 </table>
 
 <h3><a name="supported">Supported Features</a></h3>
 
 <p>Following is the complete list of features from the Real-Time CORBA 1.0 specification
-that are currently supported in TAO.&nbsp; (These do not include <a href="#in progress">work
+that are currently supported in TAO. (These do not include <a href="#in progress">work
 in progress</a>). 
 
 <ul>
@@ -108,18 +107,42 @@ for their implementation:
 <h3><a name="future">Future Work</a></h3>
 
 <ol>
-  <li>Improve current RT CORBA implementation through benchmarking and optimizations,
-    resolving known bugs and issues, adding examples, and other enhancements.</li>
-  <li>Implement an alternative real-time orb architecture using a <em>queue-per-lane</em>
-    approach, as described in the <a href="architecture.html">TAO Real-Time Architecture</a>
-    section.&nbsp; In this approach, each threadpool lane owns a queue, while I/O resources
-    are being shared among all the threadpool lanes of the same priority within a server.
-    Strategize TAO to use either <em>queue-per-lane</em> or <em>reactor-per-lane</em>
+
+  <li>Currently, persistent objects are not supported for RT POAs.  We
+    need to add this feature.</li>
+
+  <li>Currently, purging of connection only happens for the lane of
+    the thread that runs out of connection.  We need to change this
+    such that we allow system wide purging.</li>
+
+  <li>Currently, all user-created threads are part of the default
+    thread pool.  There is nothing done to separate out these threads
+    into different (implicit) lanes based on their priorities.  We may
+    need to add this separation to get better/predictable behavior
+    with respect to sharing of resources across threads of different
+    priorities.</li>
+
+  <li>Currently, some CDR memory pools are global.  We should
+    reevaluate them to see which of them can be made a per-lane
+    resource.</li>
+
+  <li>Improve current RT CORBA implementation through benchmarking and
+    optimizations, resolving known bugs and issues, adding examples,
+    and other enhancements.</li>
+
+  <li>Implement an alternative real-time orb architecture using a
+    <em>queue-per-lane</em> approach, as described in the <a
+    href="architecture.html">TAO Real-Time Architecture</a>
+    section. In this approach, each threadpool lane owns a queue,
+    while I/O resources are being shared among all the threadpool
+    lanes of the same priority within a server.  Strategize TAO to use
+    either <em>queue-per-lane</em> or <em>reactor-per-lane</em>
     implementation, and compare the two.</li>
-  <li>As both real-time and fault tolerance implementations mature separately, explore issues
-    in combining them, and, ultimately, enable TAO to provide applications with both real-time
-    and fault tolerance support at the same time. </li>
-</ol>
+
+  <li>As both real-time and fault tolerance implementations mature
+    separately, explore issues in combining them, and, ultimately,
+    enable TAO to provide applications with both real-time and fault
+    tolerance support at the same time. </li> </ol>
 
 <hr>
 <i>

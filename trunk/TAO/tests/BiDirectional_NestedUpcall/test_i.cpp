@@ -4,6 +4,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "tao/Thread_Lane_Resources.h"
 
 #if !defined(__ACE_INLINE__)
 #include "test_i.i"
@@ -48,7 +49,7 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback,
           this->callback_->callback_method (ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
 
-          if (this->orb_->orb_core ()->transport_cache ()->current_size () > 1)
+          if (this->orb_->orb_core ()->lane_resources ().transport_cache ().current_size () > 1)
             {
               ACE_ERROR ((LM_ERROR,
                           "(%P|%t) The cache has grown, aborting ..\n"));

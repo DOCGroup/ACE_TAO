@@ -356,6 +356,8 @@ protected:
   int unbind_persistent_poa (const poa_name &folded_name,
                              const poa_name &system_name);
 
+  void set_default_server_protocol_policy (CORBA::Environment &ACE_TRY_ENV);
+
   static ACE_Lock *create_lock (int enable_locking,
                                 TAO_SYNCH_MUTEX &thread_lock);
 
@@ -620,6 +622,7 @@ public:
   public:
 
     friend class TAO_POA;
+    friend class TAO_RT_Collocation_Resolver;
 
     // @@ PPOA: Servant_Upcall (TAO_Object_Adapter &object_adapter);
     Servant_Upcall (TAO_ORB_Core *orb_core);
@@ -633,6 +636,10 @@ public:
                             CORBA::Object_out forward_to,
                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
     // Locate POA and servant.
+
+    TAO_POA *lookup_POA (const TAO_ObjectKey &key,
+                         CORBA::Environment &ACE_TRY_ENV);
+    // Locate POA.
 
     TAO_POA &poa (void) const;
     // POA accessor.
@@ -675,6 +682,9 @@ public:
 
     void using_servant_locator (void);
     // We are using the servant locator for this upcall.
+
+    CORBA::Short priority (void) const;
+    // Get the priority for the current upcall.
 
   protected:
 

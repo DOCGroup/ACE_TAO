@@ -30,7 +30,6 @@ OBJFILES = \
 	$(OBJDIR)\TAO_Strategies_Internal.obj \
 	$(OBJDIR)\uiop_endpoints.obj \
 	$(OBJDIR)\advanced_resource.obj \
-	$(OBJDIR)\Reactor_Per_Priority.obj \
 	$(OBJDIR)\FIFO_Connection_Purging_Strategy.obj \
 	$(OBJDIR)\LFU_Connection_Purging_Strategy.obj \
 	$(OBJDIR)\NULL_Connection_Purging_Strategy.obj \

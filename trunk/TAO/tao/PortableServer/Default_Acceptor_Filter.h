@@ -52,11 +52,16 @@ class TAO_PortableServer_Export TAO_Default_Acceptor_Filter : public TAO_Accepto
 public:
   TAO_Default_Acceptor_Filter (void);
 
-  virtual int fill_mprofile (const TAO_ObjectKey &object_key,
-                             TAO_MProfile &mprofile,
-                             TAO_Acceptor **acceptors_begin,
-                             TAO_Acceptor **acceptors_end);
-  // Populate <mprofile> with all available endpoints.
+  /// Populate <mprofile> with all available endpoints.
+  int fill_profile (const TAO_ObjectKey &object_key,
+                    TAO_MProfile &mprofile,
+                    TAO_Acceptor **acceptors_begin,
+                    TAO_Acceptor **acceptors_end,
+                    CORBA::Short priority = TAO_INVALID_PRIORITY);
+
+  /// Encodes the endpoints in the profiles into the TAO_TAG_ENDPOINTS
+  /// tag component of profiles.
+  int encode_endpoints (TAO_MProfile &mprofile);
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -156,15 +156,15 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\Continuous_Priority_Mapping.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Direct_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Pool_Per_Endpoint.cpp
 # End Source File
 # Begin Source File
 
@@ -242,10 +242,18 @@ SOURCE=.\RTCORBAC.cpp
 
 SOURCE=.\Thread_Pool.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\RT_Thread_Lane_Resources_Manager.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\Continuous_Priority_Mapping.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\Direct_Priority_Mapping.h
@@ -253,10 +261,6 @@ SOURCE=.\Direct_Priority_Mapping.h
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Pool_Per_Endpoint.h
 # End Source File
 # Begin Source File
 
@@ -338,10 +342,18 @@ SOURCE=.\RTCORBAC.h
 
 SOURCE=.\Thread_Pool.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\RT_Thread_Lane_Resources_Manager.h
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
 # PROP Default_Filter ".i"
+# Begin Source File
+
+SOURCE=.\Continuous_Priority_Mapping.i
+# End Source File
 # Begin Source File
 
 SOURCE=.\Direct_Priority_Mapping.i
@@ -349,10 +361,6 @@ SOURCE=.\Direct_Priority_Mapping.i
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Pool_Per_Endpoint.i
 # End Source File
 # Begin Source File
 
@@ -397,6 +405,10 @@ SOURCE=.\RTCORBAC.i
 # Begin Source File
 
 SOURCE=.\Thread_Pool.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Thread_Lane_Resources_Manager.i
 # End Source File
 # End Group
 # Begin Group "Template Files"

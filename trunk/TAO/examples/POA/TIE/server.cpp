@@ -229,22 +229,6 @@ main (int argc, char **argv)
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#if defined (ACE_HAS_USING_KEYWORD)
-      ACE_DEBUG ((LM_DEBUG,
-                  "%s\n%s\n%s\n%s\n",
-                  first_ior.in (),
-                  second_ior.in (),
-                  third_ior.in (),
-                  forth_ior.in ()));
-
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "%s\n%s\n",
-                  fifth_ior.in (),
-                  sixth_ior.in ()));
-
-#endif /* ACE_HAS_USING_KEYWORD */
-
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

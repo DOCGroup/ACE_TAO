@@ -13,6 +13,7 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "tao/Thread_Lane_Resources.h"
 #include "SHMIOP_Endpoint.h"
 #include "tao/Resume_Handle.h"
 
@@ -247,8 +248,8 @@ TAO_SHMIOP_Connection_Handler::add_transport_to_cache (void)
   TAO_Base_Transport_Property prop (&endpoint);
 
   // Add the handler to Cache
-  return this->orb_core ()->transport_cache ()->cache_transport (&prop,
-                                                                 this->transport ());
+  return this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&prop,
+                                                                                  this->transport ());
 }
 
 
@@ -258,8 +259,8 @@ TAO_SHMIOP_Connection_Handler::handle_input (ACE_HANDLE)
   // Increase the reference count on the upcall that have passed us.
   this->incr_pending_upcalls ();
 
-  TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->get_handle ());
+  TAO_Resume_Handle resume_handle (this->orb_core (),
+                                   this->get_handle ());
 
   int retval = this->transport ()->handle_input_i (resume_handle);
 

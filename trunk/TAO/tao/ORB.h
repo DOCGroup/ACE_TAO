@@ -484,13 +484,6 @@ public:
   /// Resolve the POA.
   CORBA_Object_ptr resolve_root_poa (CORBA_Environment &ACE_TRY_ENV);
 
-  /// Delegates on the ORB_Core to create a TAO_Stub.
-  TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
-                                const char *type_id,
-                                CORBA::PolicyList *policy_list,
-                                TAO_Acceptor_Filter *acceptor_filter,
-                                CORBA_Environment &ACE_TRY_ENV);
-
   /// Initialize the ORB globals correctly, i.e., only when they
   /// haven't been initialized yet.
   static void init_orb_globals (CORBA_Environment &ACE_TRY_ENV =

@@ -47,6 +47,12 @@ public:
    */
   int sample (ACE_UINT64 value);
 
+  /// Returns the maximum number of samples
+  size_t max_samples (void) const;
+
+  /// Returns the current number of samples
+  size_t sample_count (void) const;
+
   /// Dump all the samples
   /**
    * Prints out all the samples, using @param msg as a prefix for each

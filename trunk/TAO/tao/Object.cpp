@@ -597,7 +597,6 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
     {
       objdata = orb_core->create_stub (type_hint.in (),
                                        mp,
-                                       orb_core,
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
@@ -610,7 +609,6 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
                              ACE_TEXT ("reference.\n"));
 
       return 0;
-
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);

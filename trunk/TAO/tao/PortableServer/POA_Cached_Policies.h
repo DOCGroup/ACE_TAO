@@ -46,7 +46,8 @@ public:
   enum PriorityModel
   {
     CLIENT_PROPAGATED,
-    SERVER_DECLARED
+    SERVER_DECLARED,
+    NOT_SPECIFIED
   };
 
   TAO_POA_Cached_Policies ();

@@ -2,9 +2,9 @@
 
 #include "testS.h"
 #include "ace/Get_Opt.h"
-
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
+#include "../check_supported_priorities.cpp"
 
 class Test_i : public POA_Test
 {
@@ -109,9 +109,11 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
 
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       // Standard initialization:
       // parse arguments and get all the references (ORB,

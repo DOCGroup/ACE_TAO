@@ -43,9 +43,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-RT_TAO_SRVR_LIBS := -lTAO_Strategies $(RT_TAO_SRVR_LIBS)
-RT_TAO_CLNT_LIBS := -lTAO_Strategies $(RT_TAO_CLNT_LIBS)
-
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
@@ -273,7 +270,10 @@ realclean: clean
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
   $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
+  ../check_supported_priorities.cpp \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp testC.h \
   $(TAO_ROOT)/tao/corba.h \
@@ -472,6 +472,7 @@ realclean: clean
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
   $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i \
+  ../check_supported_priorities.cpp \
   $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/Sched_Params.i
 

@@ -37,3 +37,8 @@ TAO_POA_Policy_Set::merge_policy (const CORBA::Policy_ptr policy,
   ACE_CHECK;
 }
 
+ACE_INLINE TAO_Policy_Set &
+TAO_POA_Policy_Set::policies (void)
+{
+  return this->impl_;
+}

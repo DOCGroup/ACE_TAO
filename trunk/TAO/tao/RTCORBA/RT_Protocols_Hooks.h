@@ -136,9 +136,11 @@ public:
   //@}
 
   /// 1. Sets ORB-level policy defaults for this ORB.  Currently sets
-  /// default RTCORBA policies: ServerProtocolPolicy and
-  /// ClientProtocolPolicy.
+  /// default RTCORBA policies: ClientProtocolPolicy.
   virtual int set_default_policies (CORBA::Environment &ACE_TRY_ENV);
+
+  int set_default_server_protocol_policy (TAO_Acceptor_Registry &acceptor_registry,
+                                          CORBA::Environment &ACE_TRY_ENV);
 
 protected:
   TAO_ORB_Core *orb_core_;
@@ -153,7 +155,6 @@ protected:
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
-ACE_STATIC_SVC_REQUIRE(TAO_RT_Protocols_Hooks)
 
 #include "ace/post.h"
 #endif /* TAO_RT_PROTOCOLS_HOOKS_H */

@@ -39,7 +39,8 @@ TAO_Strategized_Object_Proxy_Broker::select_proxy (CORBA::Object_ptr object,
                                                    CORBA::Environment &ACE_TRY_ENV)
 {
   int strategy =
-    TAO_ORB_Core::collocation_strategy (object);
+    TAO_ORB_Core::collocation_strategy (object, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
 
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];

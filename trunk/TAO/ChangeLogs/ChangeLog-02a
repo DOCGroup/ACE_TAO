@@ -1,3 +1,1207 @@
+Mon Sep 17 19:00:00 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * The following changes are to add support for thread pools and
+	  lanes to TAO.
+	
+	* tao/RTPortableServer/RT_POA.cpp: 
+
+	  - (thread_pool): Added member and accessor.
+
+          - (valid_priority): Renamed to validate_priority().  Instead
+            of trying to match acceptor priority and bands, we check
+            the following:
+
+            If this POA is using a thread pool with lanes, make sure
+            the priority matches one of the thread lanes.  Note that
+            in this case, bands do not matter since matching the lanes
+            priority is a stricter condition than meeting the band
+            ranges.  In addition, when the POA was created, the bands
+            had to match the lanes.
+
+            If we are dealing with a thread pool without lanes, check
+            if we have bands.  If we do have bands, make sure that the
+            priority is matching one of the bands.
+
+          - (endpoint_count): Counts the potentially relevant
+            endpoints for this POA.
+
+	  - (parse_rt_policies): Extract the POA's thread pool from
+            the policies specified by the user.
+
+          - (key_to_stub_i): Instead of trying to create different
+            kinds of acceptor filters, we check the following:
+
+            If this POA is using the default thread pool or a thread
+            pool without lanes, create the IOR with the acceptors in
+            the thread pool.
+
+            If this POA has the SERVER_DECLARED policy, create the IOR
+            with the acceptors in the only thread lane that matches
+            the priority of the object.
+
+            If this POA has the CLIENT_PROPAGATED policy, create the
+            IOR with the acceptors in the thread lanes that matches
+            the bands in this POA.  If there are no bands, all the
+            thread lanes are used.
+
+	* tao/RTPortableServer/RT_Policy_Validator.cpp: 
+
+	  - (validate_impl): Removed call to ORB_Core::open(). Added
+            thread-pool validation.
+
+          - (legal_policy_impl): Added <THREADPOOL_POLICY_TYPE> to the
+            legal policies.
+
+          - (validate_server_protocol): Previously, if we found one
+            protocol that matched, we returned success.  Now we return
+            return success only if we match all the protocols
+            specified by the user.
+
+          - (validate_lifespan): If a POA is using a RTCORBA thread
+            pool, make sure the lifespan policy is not persistent
+            since we cannot support it right now.
+
+          - (merge_policies_impl): Merging of policies specified at
+            the ORB level was not done before. Check if the user has
+            specified the priority model, server protocol, and thread
+            pool policies.  If not, check if the policy has been
+            specified at the ORB level.  If so, we'll use that policy.
+
+          - (validate_priorities): Revised this function to do the
+            following tests:
+
+	    Initialize <rt_priority_model> to NOT_SPECIFIED rather
+	    than CLIENT_PROPAGATED.
+	
+            If priority model was not specified, then we better not
+            have a thread pool with lanes since this configuration
+            does not make sense.
+
+            If priority banded connections are set, make sure that:
+
+             0. A priority model was specified.
+
+             1. There is at least one band.
+
+             2a. low is not < RTCORBA::minPriority
+             2b. low <= high
+             2c. high is not > RTCORBA::maxPriority
+
+             3. If priority model is SERVER_DECLARED, server_priority
+                must match one of the bands.
+
+             4. If this POA has a thread pool with lanes, then for
+                each band, there must be at least one thread lane that
+                can service it, i.e., whose priority falls into the
+                band's range.
+
+            If priority banded connections are not set, and the
+            priority model is SERVER_DECLARED, make sure we have at
+            least one thread lane that can provide service for the
+            specified SERVER_DECLARED priority.
+
+        * tao/RTPortableServer/RT_Acceptor_Filters.h
+        
+	  - (fill_mprofile): Renamed fill_mprofile() to fill_profile()
+	    and added a <priority> paramter to this function.
+
+          - (encode_endpoints): Also added a new function
+	    encode_endpoints() that encodes the endpoints in the
+	    profiles into the TAO_TAG_ENDPOINTS tag component of
+	    profiles.
+
+          - (TAO_Priority_Acceptor_Filter; TAO_Bands_Acceptor_Filter;
+            validate_acceptor): Removed: POA decides with acceptor
+            registries to include in the stub.  Therefore, these
+            classes and functions are not longer required.
+
+	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+
+	  - (~RT_Priority_Model_Processing): Removed code duplication
+            and called post_invoke() directly.
+
+          - (pre_invoke): Changed the upcall thread preprocessing to
+            do the following:
+
+            Don't mess with the priority of threads in lanes.
+
+            For the SERVER_DECLARED PriorityModel processing, use the
+            request associated with the servant.
+            
+            Previously, for the CLIENT_PROPAGATED policy, if the
+            server priority was <TAO_INVALID_PRIORITY>, then the
+            client propagated priority was ignored.  This was fixed.
+
+            Handle cases where the priority model policy was not
+            specified.
+
+            Distinguish between invalid target priorities and where
+            the original == target.
+
+	* tao/RTPortableServer/RT_Collocation_Resolver.cpp:
+	* tao/RTPortableServer/RT_Collocation_Resolver.h:
+	* tao/RTPortableServer/RT_Collocation_Resolver.i:
+
+          This class decides/resolves whether an object is collocated
+          with the servant.  The following check are done:
+
+          First we do the good ol' basic check: make sure that the
+          servant is in the same ORB that created this object.
+
+          Then we lookup the thread pool used by the POA where the
+          servant is located.  At the same time we figure out which
+          thread pool the calling thread belongs to by looking at it's
+          TSS resources.          
+          
+          If the POA's thread pool and the calling thread's thread
+          pool don't match, then the object is not collocated.  
+
+          If they do match and they don't have lanes, we are
+          collocated.  Note that this includes the default thread
+          pool.
+
+          Then we inspect the priority model policy of the target POA.
+          If it is CLIENT_PROPAGATED, then the object is not
+          collocated.  
+
+          Note that the priority model policy cannot be NOT_SPECIFIED
+          because NOT_SPECIFIED is not allowed with thread pool with
+          lanes.
+
+          If it is SERVER_DECLARED, then we lookup the servant's
+          priority.  If that matches the current thread's priority,
+          then the object is not collocated.  Otherwise, it is not
+          collocated.
+
+	* tao/RTPortableServer/RT_POA_Initializer.cpp
+	  (init_rt_default_policies): Removed: it was merging the ORB
+	  level policies with the default POA policies at initialization
+	  time.  It correct thing to do would be to merge the ORB level
+	  policies with the user provided policies when a POA is being
+	  created.
+          
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
+
+          - (create): No need to setup the POA Extension Initializer.
+            Setup the servant dispatcher and the policy validator on
+            the Object Adapter after creating it.
+
+          - (Constructor): Set the name of the collocation resolver to
+            be RT_Collocation_Resolver and add it to the service
+            configurator.
+
+        * tao/RTPortableServer/RT_POA_Initializer.cpp:
+
+          Renamed TAO_RT_POA_Initializer::init() to
+          TAO_RTPortableServer_Initializer::TAO_RTPortableServer_Initializer().
+
+        * tao/RTPortableServer/RT_POA.h:
+
+          Include RTPortableServerC.h instead of RTPortableServer.h.
+
+        * tao/RTPortableServer/Makefile:
+        * tao/RTPortableServer/Makefile.bor:
+        * tao/RTPortableServer/TAO_RTPortableServer.dsp:
+        * tao/RTPortableServer/TAO_RTPortableServer_Static.dsp:
+
+          Removed RT_POA_Initializer.  Added RT_Collocation_Resolver.
+
+	* tao/RTCORBA/Thread_Pool.cpp:
+
+          - (set_tss_resources): Each lane thread on startup sets its
+            thread lane pointer in TSS.  This makes it easy to access
+            each thread's lane resources and also makes it easy to
+            identify which threads belong to thread pools and which
+            don't.
+
+          - (validate_and_map_priority): When a thread lane is opened,
+            its lane priority is validated and mapped to native
+            priority before the threads are spawned.
+
+          - (open): Open the acceptor registry when a thread lane is
+            opened.
+
+          - (fini): Finalize resources.
+
+          - (resources): Added TAO_Thread_Lane_Resources accessor.
+
+          - (with_lanes): Since a thread-pool without lanes is
+            implemented as a thread-pool with one lane, it is
+            difficult to tell them apart. Added a <with_lanes_> flag
+            to tell them apart.
+
+	  - (constructors): Make sure <allow_request_buffering> and
+	    <allow_borrowing> are disabled since we do not support
+	    them.
+
+          - (create_dynamic_threads): In addition to the default flags
+            (THR_NEW_LWP and THR_JOINABLE), add in flags to set the
+            scope and scheduling policies when creating RT threads.
+
+          - (native_priority): Each lane remembers its native priority
+            in addition to its CORBA priority.
+
+          - (destroy_threadpool_i): We now shutdown the reactors in
+            the thread pool, wait for the threads in the pool to exit,
+            finalize the resources in the pool, and only then delete
+            the thread pool.         
+
+          - (TAO_RT_New_Leader_Generator::no_leaders_available): This
+            method is called by the leader followers class when it is
+            out of threads to run the event loop.
+            
+            We grab the Thread Pool Manager lock, check if the current
+            number of threads in this lane does not exceed the
+            <static> + <dynamic> number of threads specified by the
+            user.  If it does not exceed <static> + <dynamic>, one
+            dynamic thread is created.
+
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp
+	  (set_default_server_protocol_policy): Don't include all the
+	  protocols that the ORB knows about in the default server
+	  protocol policy; only include protocols that the user has
+	  opened.
+
+	* tao/RTCORBA/RT_Protocols_Hooks.h: Removed
+          ACE_STATIC_SVC_REQUIRE directive since it is not needed.
+
+	* tao/RTCORBA/RT_ORB_Loader.cpp: 
+
+	  - Changed base class from TAO_Object_Loader to
+            ACE_Service_Object.
+
+          - (create_object): Removed.
+          
+          - (Initializer): Removed.       
+
+          - (init): Handle the scheduling policy variable in terms of
+            THR_SCHED_* values instead of ACE_SCHED_* values since
+            ACE_OS::thr_create expects THR_SCHED_* values.
+
+            However, ACE_Sched_Params::priority_min() and
+            ACE_Sched_Params::priority_max() expect ACE_SCHED_*
+            values.  Therefore, a conversion from THR_SCHED_* values
+            to ACE_SCHED_* values is done in
+            TAO_RT_ORBInitializer::pre_init().
+
+            Also, added the ability for the user to specify the
+            scheduling scope of the RT threads through the new
+            ORBScopePolicy option.  The option supports the PROCESS
+            and SYSTEM scopes with PROCESS being the default.
+  
+	* tao/RTCORBA/RT_ORB.cpp:
+
+	  - (TAO_RT_ORB): Cache the <tp_manager> from the
+	    TAO_RT_Thread_Lane_Resources_Manager.
+
+          - (pre_init): Register the
+            RT_Thread_Lane_Resources_Manager_Factory with the service
+            configurator.
+
+         - (TAO_RT_CORBA_Priority_Normalizer): Removed since it was no
+           longer needed.
+
+	* tao/RTCORBA/RT_Mutex.cpp (try_lock): Make sure that
+	  mutex::tryacquire() returning -1 with errno == EBUSY is not
+	  flagged as an error.
+
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+
+          - Added TAO_RT_Default_Endpoint_Selector.  Pretty much the
+            same as TAO_Default_Endpoint_Selector except private
+            connections are taken into account.
+
+	* tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp: 
+
+	  - Replaced TAO_Default_Endpoint_Selector with
+	    TAO_RT_Default_Endpoint_Selector so that we are sure to
+	    take private connection into account.
+
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp:        
+        
+          - Removed special code in the constructors that was added to
+            handle incorrect priorities reported by
+            ACE_Sched_Params::priority_min() and
+            ACE_Sched_Params::priority_max().  This code was not
+            needed after Joe's fixes.
+
+          - Changed <policy_> type from int to long.
+
+        * tao/RTCORBA/Direct_Priority_Mapping.cpp: Simplified this
+          class such that it is really direct, i.e., corba priority
+          maps verbatim to native priority and vice versa.
+
+        * tao/RTCORBA/Continuous_Priority_Mapping.cpp: Maps the first
+          n CORBA priorities to the range of native priorities, where
+          n is the number of native priorities.
+          
+          The lowest native priority is mapped to CORBA priority 0,
+          next higher native priority is mapped to CORBA priority 1,
+          and so on. Since in all the operating systems where TAO is
+          supported the native priority set contains less than 32767
+          priorities, part of the CORBA priority range is left unused.
+          Consider NT as an example. NT native priorities -15 -2 -1 0
+          1 2 15 are mapped to CORBA priorities 0 1 2 3 4 5 6,
+          respectively, and the rest of the CORBA priority range is
+          not used.
+
+          This class was previously called Direct_Priority_Mapping.
+
+	* tao/RTCORBA/RT_ORBInitializer.cpp (pre_init): Set the
+          scheduling policy and scope policy into ORB Parameters.
+          Also, converted THR_SCHED_* values into ACE_SCHED_* values.
+
+	* tao/RTCORBA/RTCORBA.cpp:
+
+	  - (init): Removed: functionality moved to the constructor.
+
+	  - (TAO_RTCORBA_Initializer): Removed the registration of
+	    TAO_RT_Protocols_Hooks into the service configurator - it
+	    is already done in TAO_RT_ORBInitializer::pre_init.
+
+	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp
+	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h
+	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.i
+
+          RT manager which manages multiple set of resources
+          associated with each thread lane and has a default set of
+          lane resources.
+
+        * tao/RTCORBA/RT_Current.h:
+        * tao/RTCORBA/RT_Mutex.h:
+        * tao/RTCORBA/RT_ORB.h:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        * tao/RTCORBA/RT_Policy_i.h:
+        * tao/RTCORBA/Thread_Pool.h
+        * tao/RTPortableServer/RTPortableServerC.h
+        * tao/RTPortableServer/RT_Acceptor_Filters.h:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.h:
+
+          Include RTCORBA.h instead of RTCORBAC.h.
+        
+	* tao/RTCORBA/Makefile.bor: 
+	* tao/RTCORBA/Makefile: 
+	* tao/RTCORBA/TAO_RTCORBA.dsp: 
+	* tao/RTCORBA/TAO_RTCORBA_Static.dsp: 
+
+	  Removed Pool_Per_Endpoint; added
+	  RT_Thread_Lane_Resources_Manager and
+	  Continuous_Priority_Mapping.
+
+	* tao/ORB_Core.cpp: 
+
+          - (Reactor_Registry): Removed from the ORB Core.  Each
+            thread lane how manages its own Leader/Follower object
+            which has its own Reactor.
+
+          - (Transport_Cache): Moved from the ORB Core to the thread
+            lane.
+
+          - (Acceptor_Registry): Moved from the ORB Core to the thread
+            lane.
+
+          - (Thread_Lane_Resources_Manager): The ORB Core now has a
+            pointer to a Thread_Lane_Resources_Manager.  It'll either
+            be the Default_Thread_Lane_Resources_Manager that manages
+            the default thread lane, or it'll be the
+            RT_Thread_Lane_Resources_Manager that manages the default
+            thread lane and the RT thread lanes.
+         
+         - (Thread_Lane_Resources_Manager_Factory):
+           Thread_Lane_Resources_Manager are created using this
+           factory.  This factory is accessed through the Service
+           Configurator.
+
+         - (reactor_): Removed unused member.
+
+         - (inherit_from_parent_thread): Removed dead code.
+
+         - (create_stub): No need to pass ORB_Core::create_stub() a
+	    pointer to the ORB_Core.
+
+         - (create_stub_object): Simplified this function. MProfile
+           creation is going to be done by the POA.
+
+         - (is_collocated): This function now checks with the lane
+           resources if the acceptor registry has been created.
+
+         - (leader_follower, lf_strategy): Access the Leader/Followers
+           and LF Strategy object from the thread lane resources
+           rather than from the Reactor Registry.
+
+         - (open): Removed: thread lanes resourced are opened when
+           thread pools are created; thread lanes resourced are opened
+           when the Root POA is created.
+
+         - (shutdown): Added missing ACE_CHECKs.
+
+         - (reactor): Removed acceptor based reactor selection.
+
+         - (poa_extension_initializer): Removed since it was no longer
+           needed.
+
+         - (TAO_CORBA_Priority_Normalizer): Removed since it was no
+           longer needed.
+
+         - (resource_factory_from_service_config_,
+            client_factory_from_service_config_, 
+            server_factory_from_service_config_):
+
+            Removed since it was no longer needed.
+
+         - (resource_factory_, stub_factory_,
+            endpoint_selector_factory_, protocols_hooks_,
+            client_factory_, server_factory_):
+
+            Simplified the creation of these factories.  Now there is
+            no need to include these files:
+
+            Default_Stub_Factory.h
+            Default_Endpoint_Selector_Factory.h
+            Default_Protocols_Hooks.h
+
+         - (collocation_strategy): When trying to select the
+           collocation strategy to use for a method call on an object,
+           it is no longer sufficient to check the <is_collocated>
+           flag on the object.   The decision is left to the
+           collocation resolver, which get interesting in the
+           collocated case.
+
+         - (is_collocated): Don't ask only the current thread lane
+           resources to see if the mprofile matches the acceptors;
+           instead ask all the thread lane resources in the ORB.  The
+           functionality is shifted over to the
+           Thread_Lane_Resources_Manager which knows how many lanes
+           there are in this ORB.
+
+         - (TAO_ORB_Core_TSS_Resources): Removed <transport_cache_>,
+           <reactor_registry_>, and <reactor_registry_cookie_t>; added
+           <lane_> from/to the per-ORB TSS resources.
+
+	* tao/ORB.cpp (create_stub_object): Removed unused method.  In
+	  addition, stub creation really belongs to the POA.
+
+	* tao/param.cpp: Added the scheduling policy and scope policy
+          for RTCORBA threads created by the ORB.
+
+	* tao/Tagged_Profile.cpp (extract_object_key): 
+	* tao/IIOP_Transport.cpp (set_bidir_context_info): 
+
+	  Acceptor registry is now accessed through the lane resources
+	  rather than through the ORB Core.
+
+	* tao/Transport.cpp:
+	* tao/Acceptor_Impl.cpp (make_svc_handler): 
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connection_Handler.cpp (add_transport_to_cache):
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp (add_transport_to_cache):
+	* tao/Strategies/DIOP_Connection_Handler.cpp (add_transport_to_cache):
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp (add_transport_to_cache):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp (add_transport_to_cache):
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (add_transport_to_cache):
+
+	  Transport cache is now accessed through the lane resources
+	  rather than through the ORB Core.
+
+	* tao/Pluggable.cpp: 
+	* tao/IIOP_Acceptor.cpp:
+	* tao/Strategies/DIOP_Acceptor.cpp:
+	* tao/Strategies/SHMIOP_Acceptor.cpp:
+	* tao/Strategies/UIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+
+          - Priority: Since endpoints are no longer associated with
+            priorities, the priority is explicitly passed in from the
+            thread lane when creating the shared profile.  If a
+            "priority" option is specified by the user, it'll be
+            flagged as an error.
+
+ 	  - (create_profile): Renamed create_mprofile() to
+            create_profile() while adding a <priority> parameter and
+            removing the <share_profile> parameter. Creation of a
+            shared profile can be done if we have a valid <priority>.
+            Otherwise, we create a new profile.
+
+          - (create_new_profile): Renamed create_new_profiles() to
+            create_new_profile() while adding a <priority> parameter.
+
+          - (create_shared_profile): Added a <priority> parameter.
+
+          - (open, open_i, open_default): Reactor is specified
+            explicitly rather than coming implicitly from the ORB
+            Core.
+
+	* tao/Thread_Lane_Resources.cpp
+	* tao/Thread_Lane_Resources.h
+	* tao/Thread_Lane_Resources.i
+
+          New class representing a thread lane's resources.  The class
+          has the following resources:
+
+          - Acceptor Registry
+          - Transport Cache
+          - Leader/Follower (and hence the Reactor also)
+
+          These resources use to be in the ORB Core.  However, with
+          the introduction of thread lanes, these resources were moved
+          to this class.  These resources will be managed by two kinds
+          of managers: (a) default (non-RT) manager which only has one
+          set of lane resources and approximates these resources being
+          in the ORB Core.  (b) RT manager which manages multiple set
+          of resources associated with each thread lane and has a
+          default set of lane resources.
+
+	* tao/Thread_Lane_Resources_Manager.cpp
+	* tao/Thread_Lane_Resources_Manager.h
+	* tao/Thread_Lane_Resources_Manager.i
+
+          Abstract manager and manager factory.
+
+	* tao/Default_Thread_Lane_Resources_Manager.cpp
+	* tao/Default_Thread_Lane_Resources_Manager.h
+	* tao/Default_Thread_Lane_Resources_Manager.i
+
+          Default (non-RT) manager which only has one set of lane
+          resources and approximates these resources being in the ORB
+          Core.
+
+	* tao/Endpoint.h (TAO_Endpoint): Changed default <priority> value
+	  in constructor to <TAO_INVALID_PRIORITY> instead of -1.
+
+	* tao/Protocols_Hooks.cpp:
+	* tao/Default_Protocols_Hooks.cpp:
+
+	  - (set_default_server_protocol_policy): Added no-op new
+	    method.  It'll be useful with RTCORBA.
+
+	* tao/Acceptor_Registry.cpp: 
+
+	  - (open, open_default, open_i): The reactor is explicitly
+	    passed to these methods instead of getting it from the ORB
+	    Core.
+
+	  - (open, open_i): The acceptor endpoints used by thread
+            lanes are selected randomly from the ones available on the
+            local machine.  There is no way for the user to associate
+            thread lanes with endpoints because the thread lanes are
+            unnamed.  
+
+            A new parameter <ignore_address> was added to open() and
+            open_i() that ignores the address specified in the
+            -ORBEndpoint option.  <ignore_address> is 1 for lane
+            acceptors and 0 for default acceptors.
+
+          - (make_mprofile): This function was removed because it was
+	    doing too much, i.e., calling fill_mprofile() which was
+	    creating and encoding the mprofile.  Since the POA has to
+	    now deal with multiple acceptor registries, this
+	    functionality was moved to the POA.
+
+	* tao/Default_Acceptor_Filter.h: 
+	* tao/Acceptor_Filter.h: 
+
+          - (fill_mprofile): Renamed fill_mprofile() to fill_profile()
+	    and added a <priority> paramter to this function.  
+
+          - (encode_endpoints): Also added a new function
+	    encode_endpoints() that encodes the endpoints in the
+	    profiles into the TAO_TAG_ENDPOINTS tag component of
+	    profiles.
+
+	* tao/Transport_Cache_Manager.cpp (open): Removed.
+
+	* tao/TAO_Internal.cpp (open_services_i): Insert the
+	  Default_Thread_Lane_Resources_Manager_Factory and the
+	  Default_Collocation_Resolver into the service configurator.
+	  Also, cast RT_ORB_Loader to ACE_Service_Object instead of
+	  TAO_Object_Loader.
+
+	* tao/default_resource.cpp:
+	* tao/Resource_Factory.cpp:
+	* tao/Strategies/advanced_resource.cpp: 
+
+	  - (reactor_registry): Removed since it was no longer needed.
+
+	  - (ORBReactorRegistry): Report error since this option is no
+	    longer supported.
+
+        * tao/ORB.cpp (url_ior_string_to_object):
+	* tao/CORBALOC_Parser.cpp (make_stub_from_mprofile): 
+	* tao/Stub.cpp (set_policy_overrides): 
+	* tao/Object.cpp (operator>>): 
+        * tao/IORManipulation/IORManipulation.cpp:
+
+	  No need to pass ORB_Core::create_stub() a pointer to the
+	  ORB_Core.
+
+	* tao/Collocation_Resolver.cpp:
+	* tao/Collocation_Resolver.h:
+	* tao/Collocation_Resolver.i:
+	* tao/Default_Collocation_Resolver.cpp:
+	* tao/Default_Collocation_Resolver.h:
+	* tao/Default_Collocation_Resolver.i:
+
+          This class decides/resolves whether an object is collocated
+          with the servant.  The default resolver simply does what was
+          done before which is to check the <is_collocated_> flag on
+          the object.  The RT resolver is more interesting.
+          
+        * tao/Leader_Follower.cpp (elect_new_leader): When we are out
+          of leader threads and there are no event loop threads
+          waiting and there are no followers available, we call on the
+          new leader generator class to create us a new leader thread.  
+
+	* tao/Makefile: 
+	* tao/Makefile.bor: 
+	* tao/Makefile.am: 
+        * tao/TAO.dsp: 
+        * tao/TAO_Static.dsp: 
+
+	  - Added new files:
+	   
+	    Thread_Lane_Resources 
+	    Thread_Lane_Resources_Manager 
+	    Default_Thread_Lane_Resources_Manager
+            Collocation_Resolver
+            Default_Collocation_Resolver
+
+	  - Removed these files:
+
+	    Reactor_Registry
+	    Single_Reactor
+            POA_Extension_Initializer
+
+	* tao/Makefile: 
+	* tao/Makefile.bor: 
+	* tao/Makefile.am: 
+
+	  - Removed the following *S_T.* files.  Since the *S.* are
+	    not needed, these will also not be needed:
+
+	    CONV_FRAMES_T 
+	    GIOPS_T 
+	    IOPS_T 
+	    PollableS_T 
+	    TAOS_T 
+	    TimeBaseS_T
+
+        * tao/TAO.dsp: 
+        * tao/TAO_Static.dsp: 
+
+	  - Removed these files:
+
+	    TimeBaseS
+	    CONV_FRAMES
+	    Connector_Impl
+	    TAO_Singleton
+
+	* tao/PortableServer/POA.cpp: 
+
+          - (create_POA_i): Before a POA is created (including the
+            RootPOA), any relevant policies at the ORB level should be
+            merged with the policies passed to create_POA() by the
+            user.
+
+          - (servant_to_id_i, servant_to_reference): Use the
+            <server_priority> from the priority model policy rather
+            than <TAO_INVALID_PRIORITY> for servants that are not
+            registered with explicit priorities.
+
+          - (create_stub_object): The POA is now responsible for
+            selecting which profiles to create the stub with.  This
+            change is more relevant for the RT POA.
+
+          - (thread_pool): No-op accessor added.  This change is more
+            relevant for the RT POA.
+
+          - (friend): Added TAO_RT_Collocation_Resolver as a friend so
+            that it can call lookup_servant_i().  This is safe because
+            Servant_Upcall has the lock held.
+
+	* tao/PortableServer/Object_Adapter.cpp:
+
+          - (open): 
+
+            Make sure that the default resources are open when the
+	    RootPOA is created.
+
+	    Make sure that the correct default Server Protocol Policy
+	    is set after we open the default resources.  Previously
+	    all the protocols supported were included in the default
+	    Server Protocol Policy.  This should be restricted to only
+	    the protocols opened by default (such as IIOP) and any
+	    other asked for by the user (such as SHMIOP).
+
+            Before a POA is created (including the RootPOA), any
+            relevant policies at the ORB level should be merged with
+            the policies passed to create_POA() by the user.
+            
+            No need to access the POA Initializer.
+            TAO_RT_Object_Adapter_Factory will set things up for us.
+
+          - (Servant_Upcall::lookup_POA): New method added to simply
+            lookup the POA. This method is needed for looking up the
+            POA when making collocation decisions.
+
+	* tao/PortableServer/POA_Cached_Policies.cpp
+	  (TAO_POA_Cached_Policies): Changed the default value of
+	  <priority_model_> from
+	  TAO_POA_Cached_Policies::CLIENT_PROPAGATED to
+	  TAO_POA_Cached_Policies::NOT_SPECIFIED.
+
+	* tao/PortableServer/Default_Policy_Validator.cpp: 
+	  
+	  - (merge_policies_impl): No-op method was added.
+
+	  - (Default_Policy_Validator): Pass-through-to-base-class
+	    constructor was added.
+
+	* tao/PortableServer/Default_Acceptor_Filter.cpp:
+
+	  - (fill_mprofile): Got renamed to fill_profile().
+
+          - (encode_endpoints): No-op method was added.
+
+	* tao/PortableServer/Policy_Validator.cpp (merge_policies): Merge
+	  any relevant policies at the ORB level into the current set.
+
+	* tao/PortableServer/POA_Policy_Set.i (policies): Added accessor
+	  to underlying TAO_Policy_Set implementation.
+
+	* tao/Strategies/Makefile.bor: 
+	* tao/Strategies/Makefile: 
+	* tao/Strategies/TAO_Strategies.dsp:
+	* tao/Strategies/TAO_Strategies_Static.dsp:
+
+	  Removed Reactor_Per_Priority.
+	
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/MessagingS.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
+        * orbsvcs/IFR_Service/IFR_BaseS.cpp:
+        * orbsvcs/IFR_Service/IFR_BasicS.cpp:
+        * orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
+        * orbsvcs/IFR_Service/IFR_ExtendedS.cpp:
+        * tao/Domain/DomainS.cpp:
+
+          Passed environment variable to
+          TAO_ORB_Core::collocation_strategy().
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+
+          - make_mprofile() was replaced by endpoint_count() and
+            fill_profile().
+            
+          - Access the acceptor registry through the lane resources
+            rather than through the ORB Core.
+
+          - Include "tao/Thread_Lane_Resources.h".
+
+	* tests/RTCORBA/Policy_Combinations: New test added that
+          combines and tests several RT policies in different ways.
+
+          - The IDL interface has two methods: method() and
+            prioritized_method(). 
+
+          - The client sets its thread to the default priority, calls
+            method() which returns a priority.  If the priority
+            returned is different from <TAO_INVALID_PRIORITY>, the
+            client sets its thread to the priority returned by the
+            server and calls prioritized_method()
+
+          - The servant returns the <client_priority_> member in
+            method().  In prioritized_method(), it makes sure that the
+            thread running the upcall is at priority
+            <server_priority_>.  These two members allow several
+            different policies to be tested with the same code.
+
+          - In addition to testing servants in the RootPOA and in a
+            simple child POA, the following policy combinations are
+            tested in this example:
+            ________________________________________________________________________________
+          
+            Thread-pool    BANDS   PRIORITY MODEL    Client Priority    Server Priority
+            ________________________________________________________________________________
+          
+            Default Pool     NO   CLIENT_PROPAGATED        3                  3
+            Default Pool     NO   SERVER_DECLARED          3                  5
+            Without Lanes    NO   CLIENT_PROPAGATED        1                  1
+            Without Lanes    NO   SERVER_DECLARED          1                  5
+            With Lanes       NO   CLIENT_PROPAGATED        2                  2
+            With Lanes       NO   SERVER_DECLARED          3                  5
+            Default Pool    YES   CLIENT_PROPAGATED        3                  3
+            Default Pool    YES   SERVER_DECLARED          1                  5
+            Without Lanes   YES   CLIENT_PROPAGATED        1                  1
+            Without Lanes   YES   SERVER_DECLARED          3                  5
+            With Lanes      YES   CLIENT_PROPAGATED        3                  2
+            With Lanes      YES   SERVER_DECLARED          1                  5
+
+            where the priorities are relative to the minimum priority
+            of the thread scheduling policy used for the test.
+
+          - This test uses the -ORBPriorityMapping continuous option.
+
+	* tests/RTCORBA/Linear_Priority: This is a test for the Linear
+          Priority mapping in TAO.  In addition, this test combines
+          and tests several RT policies in different ways.  This test
+          can also be used for testing the different scheduling
+          policies (e.g., FIFO, RR, OTHER) by using the ORBSchedPolicy
+          and ORBScopePolicy options in svc.conf file.
+
+          - The server can be setup to use bands or no bands and
+            thread lanes or no lanes.
+
+          - The client can be setup to use bands or no bands and
+            different invocation priorities.  It creates a thread for
+            each invocation priority and issues multiple requests to
+            the server from each thread.
+
+          - The following policy combinations are tested in this
+            example:
+            __________________________________________________
+
+            Server-side   Thread   Client-side  Multi-priority
+               Bands       Lanes      Bands        Clients
+            __________________________________________________
+
+                NO          NO          NO           NO
+                YES         NO          NO           NO
+                NO          YES         NO           NO
+                YES         YES         NO           NO
+                NO          NO          YES          NO
+                NO          YES         YES          NO
+                NO          NO          NO           YES
+                YES         NO          NO           YES
+                YES         YES         NO           YES      
+                NO          NO          YES          YES
+                NO          YES         YES          YES
+
+	* tests/RTCORBA/Thread_Pool:
+
+          - server.cpp: Associated the thread pools with POAs.
+            Produced three servants, one that uses the default thread
+            pool, the second uses an RT thread pool without lanes, and
+            the third that uses an RT thread pool with lanes. Also
+            added the use of CLIENT_PROPAGATED priority model.
+
+	  - client.cpp: Changed the default ior file from <ior> to
+	    <ior_1>.
+
+	  - run_test.pl: Spawn multiple clients for each servant.  The
+            servants with multiple threads in their thread-pool
+            respond faster than the servants with a single thread
+            thread-pool.
+
+          - test_i.cpp (method): Added debugging output to see which
+            lane/pool/thread is being used to run the upcall.
+
+	  - README: Updated to reflect changes in the test.
+
+	* tests/RTCORBA/Destroy_Thread_Pool: New test added that tests
+          the creation and destruction of thread pools (with and
+          without lanes).
+
+	* tests/RTCORBA/Persistent_IOR: New test added that:
+
+          - For POAs using the default thread pool, the user can
+            continue to use -ORBEndpoint option.
+
+          - Makes sure that if the user tries to combine thread pools
+            and persistence, an InvalidPolicy exception is thrown.
+
+          - Makes sure that for POAs using thread pools, the user can
+            specify the protocol selection, protocol version, and
+            other protocol specific options (basically everything
+            other than the endpoint address) through the -ORBEndpoint
+            option.
+
+	* tests/RTCORBA/Collocation: This is a new test for
+            collocation when using thread pools and lanes.  There are
+            multiple servants in this test:
+
+            (a) One servant is in the Root POA which is service by the default
+                thread pool.
+
+            (b) Another servant is in a POA which is serviced by a
+                thread pool without lanes.  Since a thread pool
+                without lanes is really a thread pool with one lane,
+                all requests will be handled by this one lane.
+                Therefore, setting the priority model policy was not
+                necessary for this POA.
+
+            (c) There are two servants is in a POA which is serviced
+                by a thread pool with lanes, with the
+                CLIENT_PROPAGATED policy.  Depending on the priority
+                of the caller, either one of the lanes processes the
+                request.
+
+            (d) There are two more servants is in a POA which is
+                serviced by a thread pool with lanes, with the
+                SERVER_DECLARED policy.  One servant is registered to
+                match one lane and the other servant matches the other
+                lane.
+
+             All six servants are put into a global array.  The main
+             thread starts off the testing by calling start() on each
+             servant in the array.  The implementation of start()
+             calls method() on each servant in the array.  Since the
+             upcalls will be handled by the lane corresponding to each
+             servant, all six lanes ends up calling into one another.
+
+             The main thread then changes its priority and calls
+             start() on each servant in the array.  This makes sure to
+             exercise the second lane in the thread pool with lanes
+             and the CLIENT_PROPAGATED priority.
+
+             The test also converts the objects into strings and back
+             to make sure that collocation works as expected for
+             imported objects.
+
+             This test has enough asserts to make sure that the
+             correct thread is making the upcall.
+
+	* tests/RTCORBA/Banded_Connections:
+
+	  - server.cpp: 
+
+            - We cache the RT_Current in the constructor instead of
+	      having to look it up on every call.
+
+            - Simplified some of the options and some parts of the code.
+
+	    - The POA priority is now deduced from the lane
+	      priorities.  Lane priorities are not deduced from the
+	      bands.
+
+	    - The old Reactor-per-Priority scheme was replaced by RT
+	      Thread-Pools.
+
+            - Removed dependency on advance resources in the
+              strategies library.
+
+            - Added check to make sure multiple priorities are
+              supported.
+
+	  - client.cpp: 
+
+            - Simplified some of the options and some parts of the
+	      code.
+
+            - Client thread priorities are now deduced from the bands.
+
+            - Added check to make sure multiple priorities are
+              supported.
+
+	  - test.idl (Test): test_method() now passes an additional
+	    boolean parameter <client_propagated> to indicate what
+	    kind of invocation it thinks it is making.  This is a
+	    useful sanity check.
+
+          - server.conf: The service configurator directives in this
+	    file were no longer needed; therefore this file was
+	    removed.
+
+	  - run_test.pl: Removed specification of endpoint priorities
+	    since they are no longer needed or supported.  Also
+	    simplified some of the other options used in this test.
+
+	  - client.dsp: 
+	  - server.dsp: 
+	    
+            Removed the static build configurations.
+
+	  - README: Updated to reflect changes in the test.
+
+	* tests/RTCORBA/Server_Declared: 
+
+          - server.cpp: 
+
+            - The old Reactor-per-Priority scheme was replaced by a
+              simple ORB::run().
+
+            - Exception test for an invalid servant priority was
+              removed since there is already a test that does this.
+
+            - Added check to make sure multiple priorities are
+              supported.
+
+            - Removed dependency on advance resources in the
+              strategies library.
+
+	  - client.cpp: Added check to make sure multiple priorities
+            are supported.
+
+	  - run_test.pl: Removed specification of endpoint priorities
+	    since they are no longer needed or supported.  Also
+	    simplified some of the other options used in this test.
+
+          - server.conf: The service configurator directives in this
+	    file were no longer needed; therefore this file was
+	    removed.
+
+	  - README: Updated to reflect changes in the test.
+
+	* tests/RTCORBA/MT_Client_Protocol_Priority
+
+          - server.cpp: 
+
+            - The old Reactor-per-Priority scheme was replaced by RT
+	      Thread-Pools.
+
+            - Added check to make sure multiple priorities are
+              supported.
+
+	  - client.cpp: 
+
+            - Added check to make sure multiple priorities are
+              supported.
+
+            - Removed dependency on advance resources in the
+              strategies library.
+
+	  - run_test.pl: Removed specification of endpoint priorities
+	    since they are no longer needed or supported.
+
+          - server.conf: Removed some of the service configurator
+	    directives in this file that were no longer needed.
+
+	  - README: Updated to reflect changes in the test.
+
+	* tests/RTCORBA/check_supported_priorities.cpp: Common check
+	  used by several RT tests to make sure multiple priorities
+	  are supported.
+
+        * tests/RTCORBA/Linear_Priority/client.cpp:
+        * tests/RTCORBA/Linear_Priority/server.cpp:
+
+          No need to use ACE_DEFAULT_THREAD_PRIORITY. 0 is a valid
+          CORBA priority for any range when using Linear mapping.
+
+        * tests/RTCORBA/Destroy_Thread_Pool/Destroy_Thread_Pool.cpp:
+        * tests/RTCORBA/Persistent_IOR/server.cpp:
+        * tests/RTCORBA/Policy_Combinations/client.cpp:
+        * tests/RTCORBA/Policy_Combinations/server.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp:
+
+          Removed dependency on ACE_DEFAULT_THREAD_PRIORITY by getting
+          the main thread's priority from the RT Current.
+
+       	* tests/RTCORBA/Banded_Connections/bands.nt: 
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+
+          Reworked priority values for NT after the direct mapping
+          became simple.  The only valid CORBA priorities with direct
+          mapping on NT are: 0, 1, 2, and 15.  For bands, only 0, 1,
+          and 2 are counted because of the emptiness between 2 and 15.
+
+	* tests/RTCORBA/RTCORBA_tests.dsw: 
+	* tests/RTCORBA/Makefile: 
+	* tests/RTCORBA/Makefile.bor: 
+
+	  Added new tests ORB_init, Policy_Combinations,
+	  Destroy_Thread_Pool, Persistent_IOR, Collocation, and
+	  Linear_Priority.
+
+        * tests/RTCORBA/Banded_Connections/Makefile:
+        * tests/RTCORBA/Banded_Connections/client.bor:
+        * tests/RTCORBA/Banded_Connections/client.dsp:
+        * tests/RTCORBA/Banded_Connections/server.bor:
+        * tests/RTCORBA/Banded_Connections/server.dsp:
+        * tests/RTCORBA/Client_Propagated/Makefile:
+        * tests/RTCORBA/Client_Propagated/client.bor:
+        * tests/RTCORBA/Client_Propagated/client.dsp:
+        * tests/RTCORBA/Client_Propagated/server.bor:
+        * tests/RTCORBA/Client_Propagated/server.dsp:
+        * tests/RTCORBA/Linear_Priority/client.dsp:
+        * tests/RTCORBA/Linear_Priority/server.dsp:
+        * tests/RTCORBA/Policy_Combinations/client.dsp:
+        * tests/RTCORBA/Policy_Combinations/server.dsp:
+        * tests/RTCORBA/Private_Connection/client.dsp:
+        * tests/RTCORBA/Private_Connection/server.dsp:
+        * tests/RTCORBA/Client_Propagated/Makefile:
+        * tests/RTCORBA/Client_Propagated/client.bor:
+        * tests/RTCORBA/Client_Propagated/client.dsp:
+        * tests/RTCORBA/Client_Propagated/server.bor:
+        * tests/RTCORBA/Client_Propagated/server.dsp:
+
+          Removed Strategies library since it is not needed.
+
+        * tests/RTCORBA/Client_Protocol/client.bor:
+        * tests/RTCORBA/Client_Protocol/client.dsp:
+        * tests/RTCORBA/Explicit_Binding/client.bor:
+        * tests/RTCORBA/Explicit_Binding/client.dsp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.bor:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.dsp:
+        * tests/RTCORBA/Private_Connection/client.bor:
+        * tests/RTCORBA/RTMutex/server.dsp:
+        * tests/RTCORBA/Server_Protocol/client.bor:
+        * tests/RTCORBA/Server_Protocol/client.dsp:
+
+          Removed PortableServer and RTPortableServer libraries since
+          they are not needed.
+
+        * tests/TAO_Tests.dsw:
+        * tests/BiDirectional/test_i.cpp:
+        * tests/BiDirectional_NestedUpcall/test_i.cpp:
+        * tests/Collocation/Coll_Test_Stubs.bor:
+        * tests/Collocation/Coll_Test_Stubs.dsp:
+        * tests/Collocation/Coll_Tester.cpp:
+        * tests/Collocation/Coll_Tester.h:
+        * tests/Collocation/Collocation.bor:
+        * tests/Collocation/Collocation.cpp:
+        * tests/Collocation/Collocation.dsp:
+        * tests/Collocation/Collocation.dsw:
+        * tests/Collocation/Collocation_Test_Stubs.bor:
+        * tests/Collocation/Collocation_Test_Stubs.dsp:
+        * tests/Collocation/Collocation_Tester.cpp:
+        * tests/Collocation/Collocation_Tester.h:
+        * tests/Collocation/Diamond.bor:
+        * tests/Collocation/Diamond.dsp:
+        * tests/Collocation/Makefile.bor:
+        * tests/Collocation/Makefile.test:
+        * tests/Collocation/README:
+        * tests/Connection_Purging/client.bor:
+        * tests/Connection_Purging/client.cpp:
+        * tests/Connection_Purging/client.dsp:
+        * tests/Connection_Purging/server.bor:
+        * tests/Connection_Purging/server.cpp:
+        * tests/Connection_Purging/server.dsp:
+        * tests/DLL_ORB/Test_Client_Module.dsp:
+        * tests/DLL_ORB/Test_Server_Module.dsp:
+        * tests/DLL_ORB/client.dsp:
+        * tests/DLL_ORB/server.dsp:
+        * tests/Exposed_Policies/Makefile:
+        * tests/Exposed_Policies/Policy_Tester.cpp:
+        * tests/Exposed_Policies/Policy_Verifier.cpp:
+        * tests/Exposed_Policies/run_test.pl:
+        * tests/Exposed_Policies/server.conf:
+        * tests/Exposed_Policies/svc.conf:
+        * tests/Faults/middle.dsp:
+        * tests/Multiple/Client.dsp:
+        * tests/Multiple/Server.dsp:
+        * tests/Oneways_Invoking_Twoways/Oneways_Invoking_Twoways.dsw:
+
+          Made a bunch of small changes to make code and makefiles
+          consistent.
+
+	* docs/rtcorba/features.html:
+	* docs/rtcorba/status.html:
+	* docs/rtcorba/issues.html:
+
+          Updated RTCORBA documentation to reflect new thread-pool
+          support.  Also added new issues that need to be addressed.
+
+        * docs/Options.html: Added documentation for new
+          -ORBScopePolicy option and updated documentation for
+          -ORBPriorityMapping option.
+
 Mon Sep 17 13:18:35 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/CosEventComm.idl:
