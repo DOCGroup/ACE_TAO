@@ -307,9 +307,7 @@ endif
 <%endif%>
 <%if(staticflags)%>
 ifeq ($(static_libs),1)
-  ifneq ($(LIB),)
-    CPPFLAGS +=<%foreach(staticflags)%> -D<%staticflag%><%endfor%>
-  endif
+  CPPFLAGS +=<%foreach(staticflags)%> -D<%staticflag%><%endfor%>
 endif
 <%endif%>
 
