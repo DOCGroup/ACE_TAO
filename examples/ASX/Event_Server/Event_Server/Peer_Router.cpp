@@ -118,7 +118,7 @@ Peer_Router_Context::~Peer_Router_Context (void)
 		    "(%t) closing down peer on handle %d\n", 
 		    ss->ext_id_));
 
-      if (ACE_Reactor::instance()->remove_handler
+      if (ACE_Reactor::instance ()->remove_handler
 	  (ss->ext_id_, ACE_Event_Handler::READ_MASK) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) p\n", "remove_handle"));
     }
@@ -245,7 +245,7 @@ Peer_Handler::open (void *)
 	      "(%t) Peer_Handler::open registering with Reactor for handle_input\n"));
 #else
   // Register with the Reactor to receive messages from our Peer.
-  if (ACE_Reactor::instance()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler 
       (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 #endif

@@ -97,16 +97,16 @@ Thread_Handler::Thread_Handler (int delay,
   this->id_ = 0;
 
   if (ACE::register_stdin_handler (this,
-				   ACE_Reactor::instance(),
+				   ACE_Reactor::instance (),
 				   ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
 
 #if !defined(CHORUS)
-  else if (ACE_Reactor::instance()->register_handler (sig_set, this) == -1)
+  else if (ACE_Reactor::instance ()->register_handler (sig_set, this) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "register_handler"));
 #endif
 
-  else if (ACE_Reactor::instance()->schedule_timer 
+  else if (ACE_Reactor::instance ()->schedule_timer 
       (this, 0, Thread_Handler::delay_, Thread_Handler::interval_) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "schedule_timer"));
    
@@ -137,11 +137,11 @@ Thread_Handler::notify (ACE_Time_Value *timeout)
   // Just do something to test the ACE_Reactor's multi-thread
   // capabilities...
 
-  if (ACE_Reactor::instance()->notify 
+  if (ACE_Reactor::instance ()->notify 
       (this, ACE_Event_Handler::EXCEPT_MASK, timeout) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", 
 		       "notification::notify:exception"), -1);
-  else if (ACE_Reactor::instance()->notify 
+  else if (ACE_Reactor::instance ()->notify 
 	   (this, ACE_Event_Handler::WRITE_MASK, timeout) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", 
 		       "notification::notify:write"), -1);
@@ -206,7 +206,7 @@ Thread_Handler::svc (void)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "notify"));
     }
 
-  ACE_Reactor::instance()->remove_handler(this, ALL_EVENTS_MASK);
+  ACE_Reactor::instance ()->remove_handler(this, ALL_EVENTS_MASK);
   ACE_DEBUG ((LM_DEBUG, "(%t) exiting svc\n"));
   return 0;
 }
@@ -289,7 +289,7 @@ main (int argc, char *argv[])
 
   Thread_Handler thr_handler (delay, interval, n_threads);
 
-  ACE_Reactor::run_event_loop();
+  ACE_Reactor::run_event_loop ();
   ACE_DEBUG ((LM_DEBUG, "exiting from main%a\n", 1));
   return 0;
 }

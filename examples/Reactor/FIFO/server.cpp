@@ -24,7 +24,7 @@ FIFO_Recv_Handler::FIFO_Recv_Handler (void)
     ACE_ERROR ((LM_ERROR, "%p\n", "open"));
 
   // Register with the Reactor.
-  if (ACE_Reactor::instance()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler 
       (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 }
@@ -74,7 +74,7 @@ main (int, char *argv[])
 
   FIFO_Recv_Handler fr_handler;
 
-  ACE_Reactor::run_event_loop();
+  ACE_Reactor::run_event_loop ();
 
   return 0;
 }

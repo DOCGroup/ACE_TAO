@@ -121,7 +121,7 @@ main (int argc, char *argv [])
 
   // Register ourselves to receive SIGINT and SIGQUIT so we can shut
   // down gracefully via signals.
-  if (ACE_Reactor::instance()->register_handler (sig_set, &sa) == -1)
+  if (ACE_Reactor::instance ()->register_handler (sig_set, &sa) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n"), -1);
 
   Logging_Acceptor peer_acceptor ;
@@ -129,13 +129,13 @@ main (int argc, char *argv [])
   if (peer_acceptor.open (ACE_INET_Addr (argc > 1 ? atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT)) == - 1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), - 1);
 
-  else if (ACE_Reactor::instance()->register_handler 
+  else if (ACE_Reactor::instance ()->register_handler 
 	   (&peer_acceptor, ACE_Event_Handler::READ_MASK) == - 1) 
     ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), - 1);
 	
   ACE_DEBUG ((LM_DEBUG, " (%P|%t) starting up daemon\n"));
 	
-  ACE_Reactor::run_event_loop();
+  ACE_Reactor::run_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG, " (%P|%t) shutting down server daemon\n"));
 

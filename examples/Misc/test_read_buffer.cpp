@@ -18,7 +18,7 @@ main (int argc, char *argv[])
   while ((buf = rb.read (term, search, replace)) != 0)
     {
       ::write (1, buf, rb.size ());
-      ACE_Allocator::instance()->free (buf);
+      ACE_Allocator::instance ()->free (buf);
     }
   return 0;
 }
