@@ -64,9 +64,10 @@ PRELINK         = nm$(TOOLENV) .obj/$@.o $(ACE_ROOT)/ace/libACE.a | munch | egre
 #### don't build shared objects:
 BUILD           = $(VOBJS) $(VLIB) $(VBIN)
 OBJDIRS         = .obj
+SHLIB           =
 SHOBJ           = $(addsuffix .o,$(FILES))
 SOEXT           = o
-VSHDIR		= .obj/
+VSHDIR          = .obj/
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
 LINK.c           = override
@@ -75,5 +76,3 @@ LINK.c.override  = $(LD) $(LDFLAGS) $(LDLIBS) $(LIBS)
 LINK.cc          = override
 LINK.cc.override = $(PRELINK) $(LD) $(PTDIRS)
 POSTLINK         = ; VX_CPU_FAMILY=$(TOOLENV) xsymDec < $@ > $@.sym
-
-
