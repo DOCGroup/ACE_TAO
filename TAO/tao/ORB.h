@@ -346,18 +346,16 @@ public:
   // Returns a pointer to a nil ORB, i.e., an non-existent ORB.  This
   // can be used for initialization or in comparisons.
 
-  virtual CORBA::Object_ptr string_to_object (
-                                              const char *str,
-                                              CORBA_Environment &ACE_TRY_ENV =
-                                              TAO_default_environment ());
+  CORBA::Object_ptr string_to_object (const char *str,
+                                      CORBA_Environment &ACE_TRY_ENV =
+                                          TAO_default_environment ());
   // Turn a string-ified object reference back into an object pointer.
   // Typically these strings are created using <object_to_string()>,
   // but not necessarily locally.
 
-  virtual CORBA::String object_to_string (
-                                          CORBA::Object_ptr obj,
-                                          CORBA_Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ());
+  CORBA::String object_to_string (CORBA::Object_ptr obj,
+                                  CORBA_Environment &ACE_TRY_ENV =
+                                      TAO_default_environment ());
   // Turn an object reference into a string.  Each type of ORB,
   // e.g. an IIOP ORB, must implement this.  This can be used by
   // servers to publish their whereabouts to clients.  The output of
@@ -368,15 +366,17 @@ public:
 #ifdef TAO_HAS_VALUETYPE
   // Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
   CORBA::ValueFactory_ptr register_value_factory (
-                                                  const char *repository_id,
-                                                  CORBA::ValueFactory_ptr factory,
-                                                  CORBA_Environment &ACE_TRY_ENV =
-                                                  TAO_default_environment () );
+         const char *repository_id,
+         CORBA::ValueFactory_ptr factory,
+         CORBA_Environment &ACE_TRY_ENV =
+             TAO_default_environment () );
   void unregister_value_factory (const char * repository_id,
                                  CORBA_Environment &ACE_TRY_ENV =
-                                 TAO_default_environment () );
-  CORBA::ValueFactory_ptr lookup_value_factory (const char *repository_id,
-                                                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment () );
+                                     TAO_default_environment () );
+  CORBA::ValueFactory_ptr lookup_value_factory (
+         const char *repository_id,
+         CORBA_Environment &ACE_TRY_ENV =
+             TAO_default_environment () );
 #endif /* TAO_HAS_VALUETYPE */
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -392,18 +392,18 @@ public:
   void create_list (CORBA::Long count,
                     CORBA::NVList_ptr &new_list,
                     CORBA_Environment &ACE_TRY_ENV =
-                    TAO_default_environment ());
+                        TAO_default_environment ());
 
   // The following are not implemented and just throw
   // CORBA::NO_IMPLEMENT.
 
   void create_named_value (CORBA::NamedValue_ptr &nmval,
                            CORBA_Environment &ACE_TRY_ENV =
-                           TAO_default_environment ());
+                               TAO_default_environment ());
 
   void create_exception_list (CORBA::ExceptionList_ptr &exclist,
                               CORBA_Environment &ACE_TRY_ENV =
-                              TAO_default_environment ());
+                                  TAO_default_environment ());
 
   void create_context_list (CORBA::ContextList_ptr &ctxtlist,
                             CORBA_Environment &ACE_TRY_ENV =
@@ -536,38 +536,40 @@ public:
   // = TAO-specific extensions to the CORBA specification.
   // ----------------------------------------------------------------
 
-  virtual TAO_SERVANT_LOCATION _get_collocated_servant (TAO_Stub *p,
-                                                        TAO_ServantBase *&servant);
+  TAO_SERVANT_LOCATION _get_collocated_servant (TAO_Stub *p,
+                                                TAO_ServantBase *&servant);
   // Return the object pointer of an collocated object it there is
   // one, otherwise, return 0.  Each type of ORB, e. g., IIOP ORB,
   // must implement this and determine what is a collocated object
   // based on information provided in the TAO_Stub.
 
-  virtual int _tao_add_to_IOR_table (const ACE_CString &object_id,
-                                     CORBA::Object_ptr obj);
+  int _tao_add_to_IOR_table (const ACE_CString &object_id,
+                             CORBA::Object_ptr obj);
   // Add a mapping ObjectID->IOR to the table.
 
-  virtual int _tao_find_in_IOR_table (const ACE_CString &object_id,
-                                      CORBA::Object_ptr &obj);
+  int _tao_find_in_IOR_table (const ACE_CString &object_id,
+                              CORBA::Object_ptr &obj);
   // Find the given ObjectID in the table.
 
   CORBA_Object_ptr resolve_root_poa (CORBA_Environment &ACE_TRY_ENV,
-                                     const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
+                                     const char *adapter_name =
+                                         TAO_DEFAULT_ROOTPOA_NAME,
                                      TAO_POA_Manager *poa_manager = 0,
                                      const TAO_POA_Policies *policies = 0);
   // Resolve the POA.
 
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
-                                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Makes sure that the ORB is open and then creates an IIOP object
-  // based on the endpoint.
+                                CORBA_Environment &ACE_TRY_ENV =
+                                    TAO_default_environment ());
+  // Delegates on the ORB_Core to create a TAO_Stub.
 
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
                                   const char *type_id,
                                   TAO_ServantBase *servant = 0,
                                   CORBA::Boolean collocated = 1,
-                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+                                  CORBA_Environment &ACE_TRY_ENV =
+                                      TAO_default_environment ());
   // Convert key into an object reference.  Return Object_ptr as out
   // parameter.  Errors will come through the environment.
   //
@@ -590,26 +592,18 @@ public:
   // ORB will not normally return OBJECT_NOT_EXIST unless the POA
   // reports that fault.
 
-  int open (void);
-  // Set up the ORB Core's acceptor to listen on the
-  // previously-specified port for requests.  Returns -1 on failure,
-  // else 0.
-
-  static void init_orb_globals (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  static void init_orb_globals (CORBA_Environment &ACE_TRY_ENV =
+                                    TAO_default_environment ());
   // Initialize the ORB globals correctly, i.e., only when they
   // haven't been initialized yet.
-
-  static CORBA::Boolean orb_free_resources (void);
-  // Indicates if we have reached a point where all ORB owned
-  // resources will be deallocated.
 
   // The function used by tao to handle the "unexpected" exceptions,
   // It raises CORBA::UNKNOWN.
   static void _tao_unexpected_exception (void);
 
   // Reference counting...
-  virtual CORBA::ULong _incr_refcnt (void);
-  virtual CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
 
   void _use_omg_ior_format (CORBA::Boolean ior);
   // Set the IOR flag.
@@ -633,7 +627,7 @@ public:
 protected:
   // We must be created via the <ORB_init> call.
   CORBA_ORB (TAO_ORB_Core *orb_core);
-  virtual ~CORBA_ORB (void);
+  ~CORBA_ORB (void);
 
   TAO_SERVANT_LOCATION _find_collocated_servant (TAO_Stub *sobj,
                                                  TAO_ORB_Core *orb_core,
@@ -658,11 +652,10 @@ protected:
 
 private:
 
-  CORBA_Object_ptr resolve_service (const char* service_name,
-                                    ACE_Time_Value *timeout,
-                                    CORBA::Environment& ACE_TRY_ENV);
-  // Resolve the service name.
-
+  CORBA_Object_ptr resolve_name_service (ACE_Time_Value *timeout,
+                                         CORBA::Environment& ACE_TRY_ENV);
+  // Resolve the name service
+  
   CORBA_Object_ptr resolve_trading_service (ACE_Time_Value *timeout,
                                             CORBA::Environment& ACE_TRY_ENV);
   // Resolve the trading object reference.
@@ -705,32 +698,6 @@ private:
   u_int refcount_;
   // Maintains a reference count of number of instantiations of the
   // ORB.
-
-  u_int open_called_;
-  // Flag which denotes that the open method was called.
-
-  ACE_SYNCH_MUTEX open_lock_;
-  // Mutual exclusion for calling open.
-
-  CORBA_Object_ptr name_service_;
-  // If this is non-_nil(), then this is the object reference to our
-  // configured Naming Context.
-
-  CORBA_Object_ptr schedule_service_;
-  // If this is non-_nil(), then this is the object reference to our
-  // configured RtecScheduler::Scheduler.
-
-  CORBA_Object_ptr event_service_;
-  // If this is non-_nil(), then this is the object reference to our
-  // configured Event Channel.
-
-  CORBA_Object_ptr trading_service_;
-  // If this is non-_nil(), then this is the object reference to our
-  // configured Trading.
-
-  CORBA_Object_ptr implrepo_service_;
-  // If this is non-_nil(), then this is the object reference to our
-  // configured Implementation Repository.
 
   static int orb_init_count_;
   // Count of the number of times that <ORB_init> has been called.

@@ -1,3 +1,21 @@
+Wed Aug 25 22:31:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.h:
+	* tao/ORB.i:
+	* tao/ORB.cpp:
+	  Eliminated cached references to the Naming, Trading and ImplRepo
+	  because otherwise doing resolve_initial_references() after the
+	  server restarts does not return the new IOR.
+	  Also removed the place holders for the scheduling and event
+	  services that were not used at all and now can be replaced by
+	  the -ORBInitRef option.
+	  
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	  Moved the open() and create_stub_object() methods from the ORB
+	  class to the ORB_Core class, this is their natural location and
+	  eliminate cross calls between them.
+
 Wed Aug 25 18:18:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:

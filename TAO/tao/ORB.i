@@ -291,12 +291,6 @@ CORBA_ORB::_nil (void)
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean
-CORBA_ORB::orb_free_resources (void)
-{
-  return !CORBA_ORB::orb_init_count_;
-}
-
 ACE_INLINE void
 CORBA_ORB::_use_omg_ior_format (CORBA::Boolean ior)
 {
