@@ -162,7 +162,7 @@ Fri Sep 26 14:28:36 1997  Nanbor Wang  <nw1@CHA-CHA>
 	  to "ACE_LACKS_FORK".
 
 	* ace/SOCK_Stream.cpp (close): Added checking for invalid handle
-	  before shuuting down the write end.
+	  before shutting down the write end.
 
 Fri Sep 26 11:55:27 1997  Steve Huston  <shuston@riverace.com>
 
