@@ -1,3 +1,10 @@
+Thu Feb  8 19:25:03 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* performance-tests/RPC/run_test.pl:
+	* performance-tests/TCP/run_test.pl:
+	* performance-tests/UDP/run_test.pl:
+	  Add driver strings
+
 Thu Feb 08 19:18:36 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst:
