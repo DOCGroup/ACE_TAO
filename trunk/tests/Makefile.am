@@ -16,7 +16,7 @@
 ##           WinCE \
 ##           version_tests
 
-INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
 
 
 if BUILD_SSL
@@ -36,7 +36,7 @@ SUBDIRS = \
 
 
 ## Local lib directory
-libdir = $(shell pwd)
+libdir = @ACE_TESTS_DIR@
 
 ## LDFLAGS =
 ## Libtool will automatically link against the "proper" library.

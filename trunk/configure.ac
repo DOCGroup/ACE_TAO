@@ -170,7 +170,7 @@ dnl Special handling for some UNIX variants and Cygwin32
 dnl AC_AIX
 
 dnl AC_MINIX
-AC_DIAGNOSE([obsolete],[AC_CYGWIN is obsolete: use AC_CANONICAL_HOST and $host_os])
+
 case $host_os in
   *cygwin* ) CYGWIN=yes;;
          * ) CYGWIN=no;;
@@ -370,9 +370,12 @@ AC_LIBTOOL_DLOPEN
 dnl Enable support for "clean" DLLs.
 AC_LIBTOOL_WIN32_DLL
 
+dnl
+dnl  ###### Relies on the as of yet unreleased Libtool 1.6 distribuion ###
+dnl
 dnl Only enable C++ libtool support.  Support for other languages is
 dnl unnecessary.
-AC_LIBTOOL_TAGS([CXX])
+dnl AC_LIBTOOL_TAGS([CXX])
 
 dnl FIXME: Temporary hack to make libtool work with g++.
 dnl        Shared library support will only work with GNU g++ and GNU ld
@@ -686,7 +689,7 @@ ACE_BROKEN_XTI_MACROS
 fi
 
 if test "$ac_cv_header_tiuser_h" = yes; then
-  ACE_CACHE_CHECK([if tiuser.h is protected by extern \"C\"],
+  ACE_CACHE_CHECK([if tiuser.h is protected by extern "C"],
       [ace_cv_lib_tiuser_with_extern_c],[
         AC_EGREP_HEADER([extern \"C\"],[tiuser.h],
           [
@@ -1113,7 +1116,7 @@ dnl as extern "C" in dlfcn.h.
 dnl TODO: This check looks feeble to me...
 dnl NOTE: Linux header files ARE protected with extern "C" by the
 dnl       __BEGIN_DECLS macro, so don't be surprised!
-ACE_CACHE_CHECK([if dlfcn.h is protected by extern \"C\"],
+ACE_CACHE_CHECK([if dlfcn.h is protected by extern "C"],
     [ace_cv_lib_dlfcn_with_extern_c],[
       AC_EGREP_HEADER([extern \"C\"],[dlfcn.h],
         [
@@ -1678,7 +1681,7 @@ dnl SECTION 9: checks for compiler characteristics
 
 dnl Check if compiler accepts "#pragma once" directive
 ACE_CONVERT_WARNINGS_TO_ERRORS([
-  ACE_CACHE_CHECK([if compiler accepts \"pragma once\" directive],
+  ACE_CACHE_CHECK([if compiler accepts "pragma once" directive],
     [ace_cv_has_pragma_once],
     [
      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
@@ -1700,7 +1703,7 @@ if test "$GXX" = yes; then
   CXXFLAGS="$CXXFLAGS -pipe"
   PREPIPECFLAGS="$CFLAGS"
   CFLAGS="$CFLAGS -pipe"
-  ACE_CACHE_CHECK([if \"-pipe\" compiler flag is supported],
+  ACE_CACHE_CHECK([if "-pipe" compiler flag is supported],
     [ace_cv_feature_gxx_has_pipe],
     [
      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]],[[int a = 0;]])],[
@@ -1953,7 +1956,7 @@ ACE_CACHE_CHECK([for C++ namespace support],
   ],,[AC_DEFINE([ACE_HAS_BROKEN_NAMESPACES])])
 
 dnl Check for C++ "std" namespace
-ACE_CACHE_CHECK([for C++ \"std\" namespace],
+ACE_CACHE_CHECK([for C++ "std" namespace],
   [ace_cv_feature_posix_uses_std_namespace],[
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <iostream.h>
@@ -1967,7 +1970,7 @@ ACE_CACHE_CHECK([for C++ \"std\" namespace],
   ],[AC_DEFINE([ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB])],)
 
 dnl Check for C++ "using" keyword support
-ACE_CACHE_CHECK([for C++ \"using\" keyword support],
+ACE_CACHE_CHECK([for C++ "using" keyword support],
   [ace_cv_feature_cxx_using_keyword],
   [
    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
@@ -3278,7 +3281,7 @@ else
  ACE_CONVERT_WARNINGS_TO_ERRORS([
   dnl Check for functions necessary for ACE's alternate implementation
   dnl of the now obsolete cuserid() function.
-  ACE_CACHE_CHECK([checking if ACE cuserid implementation should be used],
+  ACE_CACHE_CHECK([checking if ACE cuserid() implementation should be used],
     [ace_cv_lib_use_alt_cuserid],
     [
      AC_LINK_IFELSE([AC_LANG_PROGRAM([[
@@ -4284,7 +4287,7 @@ int foo = PTHREAD_PROCESS_SHARED;
 dnl Check if pthread_create requires an extern "C" start routine
 ACE_CONVERT_WARNINGS_TO_ERRORS(
 [
-ACE_CACHE_CHECK([if pthread_create requires an extern \"C\" start routine],
+ACE_CACHE_CHECK([if pthread_create requires an extern "C" start routine],
   [ace_cv_lib_pthread_c_func],[
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <pthread.h>
@@ -4358,7 +4361,7 @@ ${ace_pthread_key_create}(0, ace_destructor);
 
 dnl Check if pthread_key_create requires an extern "C" start routine
 ACE_CONVERT_WARNINGS_TO_ERRORS([
-ACE_CACHE_CHECK([if pthread_key_create requires an extern \"C\" start routine],
+ACE_CACHE_CHECK([if pthread_key_create requires an extern "C" start routine],
   [ace_cv_lib_pthread_c_dest],[
     if test "$ac_cv_func_pthread_key_create" = yes; then
       ace_pthread_key_create=pthread_key_create
@@ -4658,7 +4661,7 @@ dnl Check if dlopen takes a char * arg instead of const char *
 ACE_CONVERT_WARNINGS_TO_ERRORS([
 dnl Check if "getby" functions use a non-const  char * argument
  if test "$ac_cv_func_gethostbyaddr" = yes; then
-  ACE_CACHE_CHECK([\"getby\" functions take a non-const char *],
+  ACE_CACHE_CHECK(["getby" functions take a non-const char *],
     [ace_cv_lib_nonconst_getby],
     [
      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
@@ -5130,7 +5133,7 @@ dnl Check if msync is broken, i.e. doesn't accept third "sync" argument.
 dnl This test should come after the test for checking if mmap takes a void*
 dnl argument since we need the ACE_MMAP_TYPE type for this test.
 if test "$ac_cv_func_msync" = yes; then
-ACE_CACHE_CHECK([if msync accepts a third \"sync\" argument],
+ACE_CACHE_CHECK([if msync accepts a third "sync" argument],
   [ace_cv_lib_broken_msync],
   [
    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
@@ -7367,6 +7370,12 @@ dnl These definitions are expanded in the makefile and ace-config
 
 dnl Force CXXFLAGS to be substituted in Makefiles that don't "need" them.
 AC_SUBST([CXXFLAGS])
+
+dnl Precompute the absolute pathname of the ACE tests directory so
+dnl that we can avoid using GNU Make extensions in the ACE tests
+dnl Makefile.
+ACE_TESTS_DIR=`pwd`/tests
+AC_SUBST([ACE_TESTS_DIR])
 
 dnl
 dnl SECTION 16: AC_CONFIG_FILES([FILE...])

@@ -8,9 +8,7 @@
 ##  Process this file with automake to create Makefile.in
 ##
 
-INCLUDES = -I$(top_builddir) -I$(top_srcdir)
-
-AM_CPPFLAGS = @ACE_TLS_CPPFLAGS@
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir) @ACE_TLS_CPPFLAGS@
 
 noinst_PROGRAMS = Thread_Pool_Reactor_SSL_Test
 
