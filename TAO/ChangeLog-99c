@@ -1,3 +1,27 @@
+Mon Jun 28 16:15:21 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Consumer_Handler.cpp
+	* examples/Callback_Quoter/Consumer_Input_Handler.cpp 
+	* examples/Callback_Quoter/Consumer_i.cpp:
+	  Added an <interactive> flag which helped in having a run_test.pl
+	  for this example. Activated the poa_manager on the consumer side
+	  as it was an callback client. Removed any obsolete
+	  print_exception calls and modified it to ACE_PRINT_EXCEPTION
+	  macro calls.
+	
+	* examples/Callback_Quoter/Notifier_Input_Handler.cpp 
+	* examples/Callback_Quoter/Notifier_i.cpp:
+	* examples/Callback_Quoter/notifier.cpp:
+	  Removed any obsolete print_exception calls and modified it to
+	  ACE_PRINT_EXCEPTION macro calls.
+
+	* examples/Callback_Quoter/Supplier_i.{h, cpp}: 
+	  Added a file_ptr variable to handle input form a file for the
+	  non-interactive run_test.pl execution.
+
+	* examples/Callback_Quoter/README: 
+	  Added extra information on execution of this example.
+
 Mon Jun 28 15:44:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp (operator <):
