@@ -43,9 +43,7 @@ struct string_traits_base<char>
 
   inline static void release(char_type * s)
   {
-    // @@ Carlos, MSVC6 doesn't like to see a "return statement" in
-    // here, since its declared a void.
-    return CORBA::string_free(s);
+    CORBA::string_free(s);
   }
 };
 
@@ -68,9 +66,7 @@ struct string_traits_base<CORBA::WChar>
 
   inline static void release(char_type * s)
   {
-    // @@ Carlos, MSVC6 doesn't like to see a "return statement" in
-    // here, since its declared a void.
-    return CORBA::wstring_free(s);
+    CORBA::wstring_free(s);
   }
 };
 
