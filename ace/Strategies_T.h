@@ -232,6 +232,10 @@ protected:
   ACE_Reactor_Mask mask_;
   // The mask that we pass to the <Reactor> when we register the
   // <SVC_HANDLER>.
+
+  int flags_;
+  // Flags that are parsed to set options for the connected
+  // <SVC_HANDLER>.
 };
 
 template <class SVC_HANDLER>
