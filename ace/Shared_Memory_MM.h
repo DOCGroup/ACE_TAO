@@ -1,18 +1,17 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Shared_Memory_MM.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_SHARED_MALLOC_MM_H)
@@ -30,42 +29,42 @@ public:
   ACE_Shared_Memory_MM (void);
   // Default constructor.
 
-  ACE_Shared_Memory_MM (ACE_HANDLE handle, 
-			int length = -1, 
-			int prot = PROT_RDWR, 
-			int share = MAP_PRIVATE, 
-			char *addr = 0, 
-			off_t pos = 0);
+  ACE_Shared_Memory_MM (ACE_HANDLE handle,
+                        int length = -1,
+                        int prot = PROT_RDWR,
+                        int share = ACE_MAP_PRIVATE,
+                        char *addr = 0,
+                        off_t pos = 0);
   // Constructor.
 
-  ACE_Shared_Memory_MM (LPTSTR file_name, 
-			int len = -1, 
-			int flags = O_RDWR | O_CREAT,
-			int mode = ACE_DEFAULT_FILE_PERMS, 
-			int prot = PROT_RDWR, 
-			int share = MAP_SHARED, 
-			char *addr = 0, off_t pos = 0);
+  ACE_Shared_Memory_MM (LPTSTR file_name,
+                        int len = -1,
+                        int flags = O_RDWR | O_CREAT,
+                        int mode = ACE_DEFAULT_FILE_PERMS,
+                        int prot = PROT_RDWR,
+                        int share = ACE_MAP_SHARED,
+                        char *addr = 0, off_t pos = 0);
   // Constructor.
 
-  int open (ACE_HANDLE handle, 
-	    int length = -1, 
-	    int prot = PROT_RDWR, 
-	    int share = MAP_PRIVATE, 
-	    char *addr = 0, 
-	    off_t pos = 0);
+  int open (ACE_HANDLE handle,
+            int length = -1,
+            int prot = PROT_RDWR,
+            int share = ACE_MAP_PRIVATE,
+            char *addr = 0,
+            off_t pos = 0);
   // Open method.
 
-  int open (LPTSTR file_name, 
-	    int len = -1, 
-	    int flags = O_RDWR | O_CREAT, 
-	    int mode = ACE_DEFAULT_FILE_PERMS, 
-	    int prot = PROT_RDWR, 
-	    int share = MAP_SHARED, 
-	    char *addr = 0, 
-	    off_t pos = 0);
+  int open (LPTSTR file_name,
+            int len = -1,
+            int flags = O_RDWR | O_CREAT,
+            int mode = ACE_DEFAULT_FILE_PERMS,
+            int prot = PROT_RDWR,
+            int share = ACE_MAP_SHARED,
+            char *addr = 0,
+            off_t pos = 0);
   // Open method.
 
-  const TCHAR *filename (void) const;	
+  const TCHAR *filename (void) const;
   // Return the name of file that is mapped (if any).
 
   virtual int close (void);
@@ -81,10 +80,10 @@ public:
   virtual int free (void *p);
   // Free a chuck of memory allocated by
   // <ACE_Shared_Memory_MM::malloc>.
-  
+
   virtual int get_segment_size (void) const;
   // Return the size of the shared memory segment.
-  
+
   virtual ACE_HANDLE get_id (void) const;
   // Return the ID of the shared memory segment (i.e., an ACE_HANDLE).
 
