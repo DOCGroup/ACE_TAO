@@ -128,7 +128,7 @@ Test_DynSequence::run_test (void)
       CORBA_Any out_any2 = (*as_out)[2];
       CORBA::String str_out;
       out_any2 >>= CORBA::Any::to_string (str_out, 0);
-      if (!ACE_OS::strcmp (str_out, data.m_string1))
+      if (ACE_OS::strcmp (str_out, data.m_string1))
         ++this->error_count_;
       if (this->error_count_ == 0)
         ACE_DEBUG ((LM_DEBUG,
