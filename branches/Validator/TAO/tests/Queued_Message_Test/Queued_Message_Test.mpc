@@ -1,0 +1,4 @@
+project(Queued Message Test): taoexe {
+  exename = Queued_Message_Test
+}
+

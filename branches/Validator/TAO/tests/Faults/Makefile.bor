@@ -1,0 +1,7 @@
+#
+# Makefile for building the Faults test executables
+#
+
+MAKEFILES = server.bor middle.bor client.bor ping.bor pong.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

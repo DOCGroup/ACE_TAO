@@ -1,0 +1,220 @@
+<!-- $Id$ -->
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 016</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 016</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Making ACE_Condition easier to use</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+We'll look first at the declaration of the wrapper class.
+<P>
+The way you use ACE_Condition is something like this:
+<UL>
+<LI>First, the setup...
+<UL>
+<LI>Create a variable using your choice of data types
+<LI>Create a mutex that will provide thread-safe access to that
+variable
+<LI>Create an ACE_Condition that uses the mutex
+</UL>
+<P>
+<LI>Waiting for the condition...
+<UL>
+<PRE>
+the_mutex.acquire();
+while( the_variable != some_desired_state_or_value )
+  the_condition.wait();
+the_mutex.release();
+</PRE>
+Note that when <i>the_condition</i> is created, it must be given a
+reference to the mutex.  That's because the wait() method will implicitly release
+the mutex before waiting and reacquire it after being signaled.
+</UL>
+<P>
+<LI>Setting the condition...
+<UL>
+<PRE>
+the_mutex.acquire();
+the_variable = some_new_value_or_state;
+the_condition.signal() <i>OR</i> the_condition.broadcast()
+the_mutex.release();
+</pre>
+</UL>
+</UL>
+<P>
+The problem I have is remembering to setup everything and co-ordinate
+the locking, waiting and signaling.  Even if I remember it all
+correctly it just makes my application code more complex than it
+should be.
+<P>
+To help out with that, I've created the class below to encapsulate the
+three elements necessary for the condition to work.  I've then added
+methods for manipulation of the condition variable and waiting for the
+condition to occur.
+<HR>
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>CONDITION_H</font>
+<font color=blue>#define</font> <font color=purple>CONDITION_H</font>
+
+<font color=blue>#include</font> "<A HREF="../../../ace/Synch.h">ace/Synch.h</A>"
+
+<font color=red>/** A wrapper for ACE_Condition&lt;>.  When you're using an
+    ACE_Condition&lt;> you have to have three things: - Some variable
+    that embodies the condition you're looking for - A mutex to
+    prevent simultaneous access to that variable from different
+    threads - An ACE_Condition&lt;> that enables blocking on state
+    changes in the variable The class I create here will contain those
+    three things.  For the actual condition variable I've chosen an
+    integer.  You could easily turn this class into a template
+    parameterized on the condition variable's data type if 'int' isn't
+    what you want.  */</font>
+class Condition
+{
+public:
+  <font color=red>// From here on I'll use value_t instead of 'int' to make any</font>
+  <font color=red>// future upgrades easier.</font>
+  typedef int value_t;
+
+  <font color=red>// Initialize the condition variable</font>
+  Condition (value_t value = 0);
+  ~Condition (void);
+
+  <font color=red>/* I've created a number of arithmetic operators on the class that
+     pass their operation on to the variable.  If you turn this into a
+     template then some of these may not be appropriate...  For the
+     ones that take a parameter, I've stuck with 'int' instead of
+     'value_t' to reinforce the fact that you'll need a close look at
+     these if you choose to change the 'value_t' typedef.  */</font>
+
+  <font color=red>// Increment & decrement</font>
+  Condition &operator++ (void);
+  Condition &operator-- (void);
+
+  <font color=red>// Increase & decrease</font>
+  Condition &operator+= (int inc);
+  Condition &operator-= (int inc);
+
+  <font color=red>// Just to be complete</font>
+  Condition &operator*= (int inc);
+  Condition &operator/= (int inc);
+  Condition &operator%= (int inc);
+
+  <font color=red>// Set/Reset the condition variable's value</font>
+  Condition &operator= (value_t value);
+
+  <font color=red>/* These four operators perform the actual waiting.  For instance:
+
+     operator!=(int _value)
+
+     is implemented as:
+
+     Guard guard(mutex_)
+     while( value_ != _value )
+     condition_.wait();
+
+     This is the "<font color=green>typical</font>" use for condition mutexes.  Each of the
+     operators below behaves this way for their respective
+     comparisions.
+
+     To use one of these in code, you would simply do:
+
+     Condition mycondition;
+     ...
+     <font color=red>// Wait until the condition variable has the value 42</font>
+     mycondition != 42
+     ...  */</font>
+
+  <font color=red>// As long as the condition variable is NOT EQUAL TO &lt;value>, we wait</font>
+  int operator!= (value_t value);
+
+  <font color=red>// As long as the condition variable is EXACTLY EQUAL TO &lt;value>, we</font>
+  <font color=red>// wait</font>
+  int operator== (value_t value);
+
+  <font color=red>// As long as the condition variable is LESS THAN OR EQUAL TO</font>
+  <font color=red>// &lt;value>, we wait</font>
+  int operator&lt;= (value_t value);
+
+  <font color=red>// As long as the condition variable is GREATER THAN OR EQUAL TO</font>
+  <font color=red>// &lt;value>, we wait</font>
+  int operator>= (value_t value);
+
+  <font color=red>// Return the value of the condition variable</font>
+  operator value_t (void);
+
+  <font color=red>/* In addition to the four ways of waiting above, I've also create a
+     method that will invoke a function object for each iteration of
+     the while() loop.  Derive yourself an object from
+     <font color=#008888>Condition::Compare</font> and overload operator()(value_t) to take
+     advantage of this.  Have the function return non-zero when you
+     consider the condition to be met.  */</font>
+  class Compare
+  {
+  public:
+    virtual int operator() (value_t value) = 0;
+  };
+
+  <font color=red>/* Wait on the condition until _compare(value) returns non-zero.
+     This is a little odd since we're not really testing equality.
+     Just be sure that _compare(value_) will return non-zero when you
+     consider the condition to be met.  */</font>
+  int operator== (Compare & compare);
+
+private:
+  <font color=red>// Prevent copy construction and assignment.</font>
+  Condition (const Condition &condition);
+  Condition &operator= (const Condition &condition);
+
+  <font color=red>/* Typedefs make things easier to change later.
+     ACE_Condition_Thread_Mutex is used as a shorthand for
+     ACE_Condition&lt;ACE_Thread_Mutex> and also because it may provide
+     optimizations we can use.  */</font>
+  typedef ACE_Thread_Mutex mutex_t;
+  typedef ACE_Condition_Thread_Mutex condition_t;
+  typedef ACE_Guard&lt;mutex_t> guard_t;
+
+  <font color=red>// The mutex that keeps the data save</font>
+  mutex_t mutex_;
+
+  <font color=red>// The condition mutex that makes waiting on the condition easier.</font>
+  condition_t *condition_;
+
+  <font color=red>// The acutal variable that embodies the condition we're waiting</font>
+  <font color=red>// for.</font>
+  value_t value_;
+
+  <font color=red>// Accessors for the two mutexes.</font>
+  mutex_t &mutex (void)
+  {
+    return this->mutex_;
+  }
+
+  condition_t &condition (void)
+  {
+    return *this->condition_;
+  }
+
+  <font color=red>// This particular accessor will make things much easier if we</font>
+  <font color=red>// decide that 'int' isn't the correct datatype for value_.  Note</font>
+  <font color=red>// that we keep this private and force clients of the class to use</font>
+  <font color=red>// the cast operator to get a copy of the value.</font>
+  value_t &value (void)
+  {
+    return this->value_;
+  }
+};
+
+<font color=blue>#endif</font> <font color=red>/* CONDITION_H */</font>
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>
+

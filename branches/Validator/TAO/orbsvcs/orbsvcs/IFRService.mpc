@@ -1,0 +1,17 @@
+project(IFRService) : orbsvcslib, core {
+  depends    += TypeCodeFactory Svc_Utils IFR_Client IORTable PortableServer
+  sharedname  = TAO_IFRService
+  libs       += TAO_TypeCodeFactory TAO_Svc_Utils TAO_IFR_Client TAO_IORTable TAO_PortableServer TAO
+  dllflags    = TAO_IFRSERVICE_BUILD_DLL
+  tagchecks   = IFRService
+  include_dir = orbsvcs
+
+  IDL_Files {
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    IFRService {
+      IFRService
+    }
+  }
+}

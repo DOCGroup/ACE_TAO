@@ -1,0 +1,10 @@
+#!build
+default:
+	program
+	:debuglevel=multi
+client.cpp
+	C++
+Task_Client.cpp
+	C++
+cubitC.cpp
+	C++

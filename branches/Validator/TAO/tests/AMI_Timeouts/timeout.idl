@@ -1,0 +1,27 @@
+//
+// $Id$
+// 
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/AMI_Timeouts
+//
+// = FILENAME
+//    timeout.idl
+//
+// = DESCRIPTION
+//    Interface of the test CORBA object.
+//
+// = AUTHOR
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
+
+
+interface TimeoutObj {
+
+  void sendTimeToWait (in long msec);
+
+  oneway void shutdown ();
+};

@@ -1,0 +1,40 @@
+#
+# Makefile for building the ACE Threads examples
+#
+
+NAMES = \
+	auto_event \
+	barrier1 \
+	barrier2 \
+	cancel \
+	future1 \
+	future2 \
+	manual_event \
+	process_manager \
+	process_mutex \
+	process_semaphore \
+	reader_writer \
+	recursive_mutex \
+	task_one \
+	task_two \
+	task_three \
+	task_four \
+	task_five \
+	thread_manager \
+	thread_pool \
+	thread_specific \
+	token \
+	tss1 \
+	tss2 \
+	wfmo
+
+OBJFILES = $(OBJDIR)\$(NAME).obj
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
