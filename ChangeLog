@@ -1,3 +1,8 @@
+Thu Feb 14 01:14:40 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/ace_flags.bor: Updated ACE_XML_CFLAGS.
+	  Thanks to Johnny Willemsen for reminding this.
+
 Thu Feb 14 01:01:10 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ACEXML/ACEXML.dsw:
