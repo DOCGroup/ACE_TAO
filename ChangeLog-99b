@@ -15,6 +15,10 @@ Tue Mar 09 21:54:39 1999  David L. Levine  <levine@cs.wustl.edu>
         * performance-tests/Misc/Makefile: don't build test_naming
           if ACE_COMPONENTS is defined and doesn't contain Other.
 
+        * ace/Log_Record.i (length): cast the long argument to ACE_UINT32,
+          to avoid warning message if long is greater than 4 bytes.
+          Thanks to Hao Ruan <hruan@lucent.com> for reporting this.
+
 Tue Mar  9 20:56:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * include/makeinclude/rules.nested.GNU:
