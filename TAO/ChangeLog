@@ -1,3 +1,33 @@
+Thu Sep 16 09:28:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/orbsvcs/PortableGroup/MIOP.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/MIOP.h:
+
+	  New file that has a magic static constructor, which when added
+	  to the application source will load UIPMC protocl factory for
+	  static builds. 
+	
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.cpp:
+
+	  Cosmetic fixes. 
+	
+	* orbsvcs/tests/Miop/McastHello/server.conf:
+
+	  Commented out the dynamic parts of the service
+	  configurator. Just retain the static directives. 
+	
+	* orbsvcs/tests/Miop/McastHello/server.cpp:
+
+	  #included MIOP.h
+
+	* orbsvcs/tests/Miop/McastHello/README:
+
+	  Updated the file with info on static and dynamic library
+	  configuration of MIOP.
+
+	  Thanks to  Rob Boyer <RBOYER at euphonix dot com> for motivating
+	  this change. 
+
 Thu Sep 16 10:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RTCORBA.pidl:

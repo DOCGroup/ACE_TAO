@@ -4,10 +4,11 @@
 
 #include "PortableGroup_Loader.h"
 #include "PortableGroup_ORBInitializer.h"
+#include "ace/Dynamic_Service.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (PortableGroup, 
-           PortableGroup_Loader, 
+ACE_RCSID (PortableGroup,
+           PortableGroup_Loader,
            "$Id$")
 
 TAO_PortableGroup_Loader::TAO_PortableGroup_Loader (void)
@@ -18,8 +19,9 @@ int
 TAO_PortableGroup_Loader::init (int /*argc*/,
                                 char* /*argv*/ [])
 {
-  ACE_TRACE ("TAO_PortableGroup_Loader::init");
 
+  ACE_DEBUG ((LM_DEBUG, " BIGGER DEAL AMBA \n"));
+  ACE_TRACE ("TAO_PortableGroup_Loader::init");
   // Register the ORB initializer.
   ACE_TRY_NEW_ENV
     {
@@ -56,10 +58,17 @@ TAO_PortableGroup_Loader::init (int /*argc*/,
 int
 TAO_PortableGroup_Loader::Initializer (void)
 {
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_PortableGroup_Loader);
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_PortableGroup_Loader);
+  TAO_PortableGroup_Loader *tmp =
+    ACE_Dynamic_Service<TAO_PortableGroup_Loader>::instance (
+      "PortableGroup_Loader");
 
-  return 0;
+  if (tmp != 0)
+    {
+      return tmp->init (0, 0);
+    }
+
+  return -1;
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_PortableGroup_Loader,
