@@ -223,7 +223,7 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
                                 ACE_Allocator *allocator_strategy,
                                 ACE_Lock *locking_strategy,
                                 ACE_Message_Block::Message_Flags flags,
-				ACE_Allocator *data_block_allocator)
+                                ACE_Allocator *data_block_allocator)
   : type_ (msg_type),
     cur_size_ (size),
     max_size_ (size),
@@ -268,7 +268,7 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
                     ACE_Time_Value::zero,     // execution time
                     ACE_Time_Value::max_time, // absolute time of deadline
                     0,  // data block
-		    0) == -1) // data_block allocator
+                    0) == -1) // data_block allocator
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
@@ -287,7 +287,7 @@ ACE_Message_Block::ACE_Message_Block (void)
                     ACE_Time_Value::zero,     // execution time
                     ACE_Time_Value::max_time, // absolute time of deadline
                     0, // data block
-		    0) == -1) // data_block allocator
+                    0) == -1) // data_block allocator
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
@@ -300,7 +300,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       u_long priority,
                                       const ACE_Time_Value & execution_time,
                                       const ACE_Time_Value & deadline_time,
-				      ACE_Allocator *data_block_allocator)
+                                      ACE_Allocator *data_block_allocator)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -315,7 +315,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                     execution_time,
                     deadline_time,
                     0, // data block
-		    data_block_allocator) == -1)
+                    data_block_allocator) == -1)
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
@@ -329,7 +329,7 @@ ACE_Message_Block::init (size_t size,
                          u_long priority,
                          const ACE_Time_Value & execution_time,
                          const ACE_Time_Value & deadline_time,
-			 ACE_Allocator *data_block_allocator)
+                         ACE_Allocator *data_block_allocator)
 {
   ACE_TRACE ("ACE_Message_Block::init");
 
@@ -344,7 +344,7 @@ ACE_Message_Block::init (size_t size,
                        execution_time,
                        deadline_time,
                        0,  // data block
-		       data_block_allocator);
+                       data_block_allocator);
 }
 
 int
@@ -365,7 +365,7 @@ ACE_Message_Block::init (const char *data,
                        ACE_Time_Value::zero,     // execution time
                        ACE_Time_Value::max_time, // absolute time of deadline
                        0,  // data block
-		       0);
+                       0);
 }
 
 ACE_Message_Block::ACE_Message_Block (size_t size,
@@ -379,7 +379,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       const ACE_Time_Value & execution_time,
                                       const ACE_Time_Value & deadline_time,
                                       ACE_Data_Block *db,
-				      ACE_Allocator *data_block_allocator)
+                                      ACE_Allocator *data_block_allocator)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -394,7 +394,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                     execution_time,
                     deadline_time,
                     db,
-		    data_block_allocator) == -1)
+                    data_block_allocator) == -1)
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
@@ -413,7 +413,7 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block)
                     ACE_Time_Value::zero,     // execution time
                     ACE_Time_Value::max_time, // absolute time of deadline
                     data_block,
-		    data_block->data_block_allocator ()) == -1) // data block
+                    data_block->data_block_allocator ()) == -1) // data block
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
@@ -429,7 +429,7 @@ ACE_Message_Block::init_i (size_t size,
                            const ACE_Time_Value & execution_time,
                            const ACE_Time_Value & deadline_time,
                            ACE_Data_Block *db,
-			   ACE_Allocator *data_block_allocator)
+                           ACE_Allocator *data_block_allocator)
 {
   ACE_TRACE ("ACE_Message_Block::init_i");
   ACE_FUNCTION_TIMEPROBE (ACE_MESSAGE_BLOCK_INIT_I_ENTER);
@@ -445,24 +445,24 @@ ACE_Message_Block::init_i (size_t size,
   if (db == 0)
     {
       if (data_block_allocator == 0)
-	ACE_ALLOCATOR_RETURN (data_block_allocator,
-			      ACE_Allocator::instance (), -1);
+        ACE_ALLOCATOR_RETURN (data_block_allocator,
+                              ACE_Allocator::instance (), -1);
 
       ACE_TIMEPROBE (ACE_MESSAGE_BLOCK_INIT_I_DB_ALLOC);
 
       // Allocate the <ACE_Data_Block> portion, which is reference
       // counted.
       ACE_NEW_MALLOC_RETURN (db,
-			     ACE_static_cast(ACE_Data_Block*,
-					     data_block_allocator->malloc (sizeof (ACE_Data_Block))),
-			     ACE_Data_Block (size,
-					     msg_type,
-					     msg_data,
-					     allocator_strategy,
-					     locking_strategy,
-					     flags,
-					     data_block_allocator),
-			     -1);
+                             ACE_static_cast(ACE_Data_Block*,
+                                             data_block_allocator->malloc (sizeof (ACE_Data_Block))),
+                             ACE_Data_Block (size,
+                                             msg_type,
+                                             msg_data,
+                                             allocator_strategy,
+                                             locking_strategy,
+                                             flags,
+                                             data_block_allocator),
+                             -1);
       ACE_TIMEPROBE (ACE_MESSAGE_BLOCK_INIT_I_DB_CTOR);
     }
 
@@ -692,7 +692,7 @@ ACE_Message_Block::duplicate (void) const
                                      // (will simply increment the
                                      // reference count).
                                      this->data_block ()->duplicate  (),
-				     this->data_block ()->data_block_allocator ()),
+                                     this->data_block ()->data_block_allocator ()),
                   0);
 
   // Set the read and write pointers in the new <Message_Block> to the
@@ -742,16 +742,16 @@ ACE_Data_Block::clone (ACE_Message_Block::Message_Flags mask) const
   ACE_Data_Block *nb;
 
   ACE_NEW_MALLOC_RETURN (nb,
-			 ACE_static_cast(ACE_Data_Block*,
-					 this->data_block_allocator_->malloc (sizeof (ACE_Data_Block))),
-			 ACE_Data_Block (this->max_size_, // size
-					 this->type_,     // type
-					 0,               // data
-					 this->allocator_strategy_, // allocator
-					 this->locking_strategy_, // locking strategy
-					 this->flags_,  // flags
-					 this->data_block_allocator_),
-			 0);
+                         ACE_static_cast(ACE_Data_Block*,
+                                         this->data_block_allocator_->malloc (sizeof (ACE_Data_Block))),
+                         ACE_Data_Block (this->max_size_, // size
+                                         this->type_,     // type
+                                         0,               // data
+                                         this->allocator_strategy_, // allocator
+                                         this->locking_strategy_, // locking strategy
+                                         this->flags_,  // flags
+                                         this->data_block_allocator_),
+                         0);
 
   // Copy all of the payload memory into the new object.
   ACE_OS::memcpy (nb->base_, this->base_, this->max_size_);
@@ -786,7 +786,7 @@ ACE_Message_Block::clone (Message_Flags mask) const
                            this->execution_time_, // execution time
                            this->deadline_time_, // absolute time to deadline
                            db,  // data_block
-			   db->data_block_allocator ());
+                           db->data_block_allocator ());
   if (nb == 0)
     {
       db->release ();
@@ -818,8 +818,8 @@ ACE_Message_Block::operator= (const ACE_Message_Block &)
 
 void
 ACE_Data_Block::base (char *msg_data,
-		      size_t msg_length,
-		      ACE_Message_Block::Message_Flags msg_flags)
+                      size_t msg_length,
+                      ACE_Message_Block::Message_Flags msg_flags)
 {
   if (ACE_BIT_DISABLED (this->flags_, ACE_Message_Block::DONT_DELETE))
     this->allocator_strategy_->free (this->base_);
@@ -965,12 +965,14 @@ ACE_Laxity_Message_Strategy::dump (void) const
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Guard <ACE_Lock>;
 // These specializations aren't needed for the ACE library because
 // Service_Config.cpp has them:
 //
 // template class ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
 // template class ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Guard <ACE_Lock>
 // These specializations aren't needed for the ACE library because
 // Service_Config.cpp has them:
 //
