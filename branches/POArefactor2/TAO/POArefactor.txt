@@ -1,3 +1,13 @@
+Mon Jan 31 11:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*:
+          Added destroy method to all strategy factories, this will call
+          strategy_cleanup on the strategy. When requiring a service object
+          just get it using ACE_Dynamic_Service and when it return 0 we output
+          an error. We assume that all strategies are put in the service
+          repository in portableserver.cpp. This make all the code much
+          easier.
+
 Fri Jan 28 13:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
