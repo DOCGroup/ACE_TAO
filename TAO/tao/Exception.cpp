@@ -909,8 +909,11 @@ TAO_Exceptions::create_system_exception (const char *id,
 void
 TAO_Exceptions::fini (void)
 {
-  delete TAO_Exceptions::system_exceptions;
-  TAO_Exceptions::system_exceptions = 0;
+  if (TAO_Exceptions::system_exceptions != 0)
+    {
+      TAO_Exceptions::system_exceptions->_destroy ();
+      TAO_Exceptions::system_exceptions = 0;
+    }
 
 #define TAO_SYSTEM_EXCEPTION(name) \
   CORBA::release (CORBA::_tc_ ## name); \
@@ -918,7 +921,7 @@ TAO_Exceptions::fini (void)
   STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
-  delete CORBA::_tc_UnknownUserException;
+  CORBA::release (CORBA::_tc_UnknownUserException);
   CORBA::_tc_UnknownUserException = 0;
 
   delete TAO_Exceptions::global_allocator_;
@@ -929,7 +932,8 @@ TAO_Exceptions::fini (void)
 int \
 CORBA_##name ::_is_a (const char* interface_id) const \
 { \
-  return ((ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/" #name ":1.0")==0) \
+  return ((ACE_OS::strcmp (interface_id, \
+                           "IDL:omg.org/CORBA/" #name ":1.0") == 0) \
           || CORBA_SystemException::_is_a (interface_id)); \
 }
 STANDARD_EXCEPTION_LIST
@@ -1158,17 +1162,14 @@ CORBA_ExceptionList::remove (CORBA::ULong, CORBA::Environment &ACE_TRY_ENV)
 CORBA_ExceptionList_ptr
 CORBA_ExceptionList::_duplicate (void)
 {
-  ++this->ref_count_;
+  this->_incr_refcnt ();
   return this;
 }
 
 void
 CORBA_ExceptionList::_destroy (void)
 {
-  CORBA::ULong current = --this->ref_count_;
-
-  if (current == 0)
-    delete this;
+  this->_decr_refcnt ();
 }
 
 void

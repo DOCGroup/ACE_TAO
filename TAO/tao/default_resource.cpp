@@ -42,7 +42,8 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     purge_percentage_ (TAO_PURGE_PERCENT),
     reactor_mask_signals_ (1),
     sched_policy_ (ACE_SCHED_OTHER),
-    priority_mapping_type_ (TAO_PRIORITY_MAPPING_DIRECT)
+    priority_mapping_type_ (TAO_PRIORITY_MAPPING_DIRECT),
+    dynamically_allocated_reactor_ (0)
 {
 }
 
@@ -729,9 +730,19 @@ TAO_Default_Resource_Factory::get_reactor (void)
       delete reactor;
       reactor = 0;
     }
+  else
+    this->dynamically_allocated_reactor_ = 1;
 
   return reactor;
 }
+
+void
+TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
+{
+  if (this->dynamically_allocated_reactor_ == 1)
+    delete reactor;
+}
+
 
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> NULL_LOCK_MALLOC;
 typedef ACE_Allocator_Adapter<NULL_LOCK_MALLOC> NULL_LOCK_ALLOCATOR;
