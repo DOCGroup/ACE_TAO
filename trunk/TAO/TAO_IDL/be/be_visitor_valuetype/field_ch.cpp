@@ -523,7 +523,7 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
 
 // visit string type
 int
-be_visitor_valuetype_field_ch::visit_string (be_string *)
+be_visitor_valuetype_field_ch::visit_string (be_string *node)
 {
   TAO_OutStream *os; // output stream
   be_decl *ub = this->ctx_->node (); // get state member
@@ -541,19 +541,39 @@ be_visitor_valuetype_field_ch::visit_string (be_string *)
   os = this->ctx_->stream ();
 
   os->indent ();
+
   // three methods to set the string value
-  *os << pre_op()
-      << "void " << ub->local_name () << " (char *)"
-      << post_op() << "     // set" << be_nl;
-  *os << pre_op()
-      << "void " << ub->local_name () << " (const char *)"
-      << post_op() << "     // set" << be_nl;
-  *os << pre_op()
-      << "void " << ub->local_name () << " (const CORBA::String_var&)"
-      << post_op() << "     // set" << be_nl;
-  //get method
-  *os << pre_op() << "const char *" << ub->local_name ()
-      << " (void) const" << post_op() << "     // get method\n\n";
+  if (node->width () == sizeof (char))
+    {
+      *os << pre_op()
+          << "void " << ub->local_name () << " (char *)"
+          << post_op() << "     // set" << be_nl;
+      *os << pre_op()
+          << "void " << ub->local_name () << " (const char *)"
+          << post_op() << "     // set" << be_nl;
+      *os << pre_op()
+          << "void " << ub->local_name () << " (const CORBA::String_var&)"
+          << post_op() << "     // set" << be_nl;
+      //get method
+      *os << pre_op() << "const char *" << ub->local_name ()
+          << " (void) const" << post_op() << "     // get method\n\n";
+    }
+  else
+    {
+      *os << pre_op()
+          << "void " << ub->local_name () << " (CORBA::WChar *)"
+          << post_op() << "     // set" << be_nl;
+      *os << pre_op()
+          << "void " << ub->local_name () << " (const CORBA::WChar *)"
+          << post_op() << "     // set" << be_nl;
+      *os << pre_op()
+          << "void " << ub->local_name () << " (const CORBA::WString_var&)"
+          << post_op() << "     // set" << be_nl;
+      //get method
+      *os << pre_op() << "const CORBA::WChar *" << ub->local_name ()
+          << " (void) const" << post_op() << "     // get method\n\n";
+    }
+
   return 0;
 }
 

@@ -167,11 +167,19 @@ be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
-be_visitor_sequence_elemtype::visit_string (be_string *)
+be_visitor_sequence_elemtype::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "TAO_SeqElem_String_Manager ";
+  if (node->width () == sizeof (char))
+    {
+      *os << "TAO_SeqElem_String_Manager ";
+    }
+  else
+    {
+      *os << "TAO_SeqElem_WString_Manager ";
+    }
+
   return 0;
 }
 

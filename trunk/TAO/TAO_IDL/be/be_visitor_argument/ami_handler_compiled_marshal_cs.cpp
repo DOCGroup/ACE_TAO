@@ -564,8 +564,16 @@ int be_visitor_args_ami_handler_compiled_marshal_cs::visit_string (be_string *no
             }
           else
             {
-              *os << "CORBA::Any::to_string ("
-                  << arg->local_name () << ".out (), "
+              if (node->width () == sizeof (char))
+                {
+                  *os << "CORBA::Any::to_string (";
+                }
+              else
+                {
+                  *os << "CORBA::Any::to_wstring (";
+                }
+
+              *os << arg->local_name () << ".out (), "
                   << node->max_size ()->ev ()->u.ulval - 1
                   << ")";
             }

@@ -584,7 +584,7 @@ be_visitor_union_branch_cdr_op_ci::visit_sequence (be_sequence *node)
 
 // visit string type
 int
-be_visitor_union_branch_cdr_op_ci::visit_string (be_string *)
+be_visitor_union_branch_cdr_op_ci::visit_string (be_string *node)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();
@@ -605,8 +605,16 @@ be_visitor_union_branch_cdr_op_ci::visit_string (be_string *)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "CORBA::String_var _tao_union_tmp;" << be_nl
-          << "result = strm >> _tao_union_tmp.out ();" << be_nl
+      if (node->width () == sizeof (char))
+        {
+          *os << "CORBA::String_var _tao_union_tmp;" << be_nl;
+        }
+      else
+        {
+          *os << "CORBA::WString_var _tao_union_tmp;" << be_nl;
+        }
+
+      *os << "result = strm >> _tao_union_tmp.out ();" << be_nl
           << "if (result)" << be_idt_nl
           << "_tao_union."
           << f->local_name () << " (_tao_union_tmp);" << be_uidt;

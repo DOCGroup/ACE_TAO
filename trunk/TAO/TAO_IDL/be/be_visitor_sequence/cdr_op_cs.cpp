@@ -510,6 +510,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
       switch (bt->node_type ())
         {
         case AST_Decl::NT_string:
+        case AST_Decl::NT_wstring:
           {
             be_string *str = be_string::narrow_from_decl (bt);
 
@@ -528,8 +529,15 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
               }
             else
               {
-                *os << "CORBA::Any::to_string (_tao_sequence[i].out (), "
-                    << str->max_size ()->ev ()->u.ulval << ")";
+                if (str->width () == sizeof (char))
+                  {
+                    *os << "CORBA::Any::to_string (_tao_sequence[i].out (), ";
+                  }
+                else
+                  {
+                    *os << "CORBA::Any::to_wstring (_tao_sequence[i].out (), ";
+                  }
+                *os << str->max_size ()->ev ()->u.ulval << ")";
               }
           }
           break;
@@ -570,6 +578,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
       switch (bt->node_type ())
         {
         case AST_Decl::NT_string:
+        case AST_Decl::NT_wstring:
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
           *os << ".in ()";

@@ -256,6 +256,7 @@ AST_Decl * add_type(AST_Type *type)
         idl_global->root()->add_sequence(AST_Sequence::narrow_from_decl(type));
       break;
     case AST_Decl::NT_string:
+    case AST_Decl::NT_wstring:
       result =
         idl_global->root()->add_string(AST_String::narrow_from_decl(type));
       break;
@@ -672,6 +673,7 @@ AST_Decl *UTL_Scope::call_add()
         result = add_sequence(AST_Sequence::narrow_from_decl(decl));
         break;
       case AST_Decl::NT_string:
+      case AST_Decl::NT_wstring:
         result = add_string(AST_String::narrow_from_decl(decl));
         break;
       case AST_Decl::NT_struct:

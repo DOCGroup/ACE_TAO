@@ -509,7 +509,7 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
 
 // visit string type
 int
-be_visitor_union_branch_public_ch::visit_string (be_string *)
+be_visitor_union_branch_public_ch::visit_string (be_string *node)
 {
   TAO_OutStream *os; // output stream
   be_decl *ub = this->ctx_->node (); // get union branch
@@ -527,15 +527,31 @@ be_visitor_union_branch_public_ch::visit_string (be_string *)
   os = this->ctx_->stream ();
 
   os->indent ();
+
   // three methods to set the string value
-  *os << "void " << ub->local_name () << " (char *); // set" << be_nl;
-  *os << "void " << ub->local_name () << " (const char *); // set"
-      << be_nl;
-  *os << "void " << ub->local_name () << " (const CORBA::String_var&); // set"
-      << be_nl;
-  //get method
-  *os << "const char *" << ub->local_name ()
-      << " (void) const; // get method\n\n";
+  if (node->width () == sizeof (char))
+    {
+      *os << "void " << ub->local_name () << " (char *); // set" << be_nl;
+      *os << "void " << ub->local_name () << " (const char *); // set"
+          << be_nl;
+      *os << "void " << ub->local_name () << " (const CORBA::String_var&); // set"
+          << be_nl;
+      //get method
+      *os << "const char *" << ub->local_name ()
+          << " (void) const; // get method\n\n";
+    }
+  else
+    {
+      *os << "void " << ub->local_name () << " (CORBA::WChar *); // set" << be_nl;
+      *os << "void " << ub->local_name () << " (const CORBA::WChar *); // set"
+          << be_nl;
+      *os << "void " << ub->local_name () << " (const CORBA::WString_var&); // set"
+          << be_nl;
+      //get method
+      *os << "const CORBA::WChar *" << ub->local_name ()
+          << " (void) const; // get method\n\n";
+    }
+
   return 0;
 }
 
