@@ -32,10 +32,12 @@ public:
   // Destructor.
 
   virtual void push (const RtecEventComm::EventSet & data,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // This method is called by the RTEvent Channel to supply data.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV);
+  virtual void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnects the consumer from the event channel.
 
 private:
@@ -62,6 +64,7 @@ TAO_CosEC_PushConsumerWrapper::~TAO_CosEC_PushConsumerWrapper ()
 void
 TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set,
                                      CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0;
        i < set.length ();
@@ -72,6 +75,7 @@ TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set,
 
 void
 TAO_CosEC_PushConsumerWrapper::disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deactivate the supplier proxy.
   this->consumer_->disconnect_push_consumer (ACE_TRY_ENV);
@@ -111,6 +115,7 @@ TAO_CosEC_ProxyPushSupplier_i::~TAO_CosEC_ProxyPushSupplier_i (void)
 
 void
 TAO_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->pps_->disconnect_push_supplier (ACE_TRY_ENV);
   ACE_CHECK;
@@ -134,9 +139,11 @@ TAO_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (CORBA::Environment &ACE
 }
 
 void
-TAO_CosEC_ProxyPushSupplier_i::connect_push_consumer
-(CosEventComm::PushConsumer_ptr push_consumer,
- CORBA::Environment &ACE_TRY_ENV)
+TAO_CosEC_ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushConsumer_ptr push_consumer,
+                                                      CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosEventChannelAdmin::AlreadyConnected,
+                       CosEventChannelAdmin::TypeError))
 {
   if (this->connected ())
     ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());

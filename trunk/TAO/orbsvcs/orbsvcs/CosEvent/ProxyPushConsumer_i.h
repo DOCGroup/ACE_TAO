@@ -57,14 +57,18 @@ public:
   // Destructor.
 
   virtual void push (const CORBA::Any &data,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // Suppliers call this method to pass data to connected consumers.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV);
+  virtual void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnects the supplier from the event communication.
 
   virtual void connect_push_supplier(CosEventComm::PushSupplier_ptr push_supplier,
-                                     CORBA::Environment &ACE_TRY_ENV);
+                                     CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosEventChannelAdmin::AlreadyConnected));
   // Connects a push supplier.
 
 private:
