@@ -3973,6 +3973,9 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPrioritySet (thr_id, prio), 
 				       ace_result_), 
 		     int, -1);
+#else
+  // for example, platforms that support Pthreads but LACK_SETSCHED
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);
