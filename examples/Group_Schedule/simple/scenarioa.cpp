@@ -45,70 +45,70 @@ void my_sleep(int secs){
 
 void child_process(SchedGroup& grp, const char* process_name)
 {
-	DSTRM_EVENT(SCENARIOA_FAM, JOINING_GROUP, getpid(), 0, NULL);
-	Seq_QoS qos;
-	SchedThread thr_member(&grp, qos, process_name);
+  DSTRM_EVENT(SCENARIOA_FAM, JOINING_GROUP, getpid(), 0, NULL);
+  Seq_QoS qos;
+  SchedThread thr_member(&grp, qos, process_name);
 
-	if(!thr_member.is_valid()){
+  if(!thr_member.is_valid()){
     printf("Error! in join_grp\n");
     return;
-	}
-	
+  }
+  
 
-	for (int k = 0; k < 3; ++k) {
-	  DSTRM_EVENT(SCENARIOA_FAM,IN_WHILE_LOOP, getpid(), 0, NULL);
+  for (int k = 0; k < 3; ++k) {
+    DSTRM_EVENT(SCENARIOA_FAM,IN_WHILE_LOOP, getpid(), 0, NULL);
     int j;
-	  for(int i=0; i<100000; i++)
-	    j++;
-	
+    for(int i=0; i<100000; i++)
+      j++;
+  
     DSTRM_EVENT(SCENARIOA_FAM, CALLING_SLEEP, getpid(), 0, NULL);
-	 	my_sleep(2);
-	  DSTRM_EVENT(SCENARIOA_FAM, AFTER_SLEEP, getpid(), 0, NULL);
-	}
-	
+    my_sleep(2);
+    DSTRM_EVENT(SCENARIOA_FAM, AFTER_SLEEP, getpid(), 0, NULL);
+  }
+  
   DSTRM_EVENT(SCENARIOA_FAM, EXITING, getpid(), 0, NULL);
-  return;   		
+  return;       
 }
 
 int main(int argc, char **argv){
-	int pid=0, num_processes=0;
+  int pid=0, num_processes=0;
 
-	if(argc!=3){
-		printf("usage\n");
-		printf("scenarioa <name of process> <number of processes>\n");
-		exit(0);
-	}
+  if(argc!=3){
+    printf("usage\n");
+    printf("scenarioa <name of process> <number of processes>\n");
+    exit(0);
+  }
 
-	num_processes=atoi(argv[2]);
-	
-	Seq_QoS qos;
-	
-	SchedGroup top_group("SS", qos);
-		
-	if (top_group.set_as_top() == -1) {
-		fprintf (stderr, "Error in setting top group\n");
-		exit(1);
-	}
+  num_processes=atoi(argv[2]);
+  
+  Seq_QoS qos;
+  
+  SchedGroup top_group("SS", qos);
+    
+  if (top_group.set_as_top() == -1) {
+    fprintf (stderr, "Error in setting top group\n");
+    exit(1);
+  }
 
 
-	DSUI_INIT("scenarioa", "scenarioa_enable.dsui");
+  DSUI_INIT("scenarioa", "scenarioa_enable.dsui");
 
-	for(int i=0;i<num_processes;i++) {
-	    char    process_name[100];
+  for(int i=0;i<num_processes;i++) {
+      char    process_name[100];
 
-	    DSTRM_EVENT(SCENARIOA_FAM, CREATING_THREAD, getpid(), 0, NULL);
-	    pid=fork();
-	    sprintf(process_name,"%s%d", "THREAD",i);
+      DSTRM_EVENT(SCENARIOA_FAM, CREATING_THREAD, getpid(), 0, NULL);
+      pid=fork();
+      sprintf(process_name,"%s%d", "THREAD",i);
 
-	    if(pid==0){
-	      child_process(top_group, process_name);
+      if(pid==0){
+        child_process(top_group, process_name);
         exit(0);
       }
-	}
+  }
 
-	/* Make the main thread sleep for 10 secs */
-	sleep(10);
+  /* Make the main thread sleep for 10 secs */
+  sleep(10);
   DSTRM_EVENT(SCENARIOA_FAM, EXITING, getpid(), 0, NULL);
 
-	return 0;
+  return 0;
 }
