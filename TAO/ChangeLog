@@ -1,3 +1,11 @@
+Sun Nov 28 11:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/notify_persist_export.h:
+          Fixed this file for static builds
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+          Removed commented out stuff
+
 Sun Nov 28 11:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/PluggableTopology/Test_Saver.cpp:
