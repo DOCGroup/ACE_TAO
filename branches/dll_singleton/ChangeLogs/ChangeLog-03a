@@ -1,3 +1,26 @@
+Mon May 20 09:39:32 UTC 2002  Don Hinton  <dhinton@ieee.org>
+	
+	* ace/Service_Object.{h,cpp}:
+
+	  Changed dll_ member variable to be a ACE_DLL instead
+	  of a pointer to one.  Reduces heap usages.  
+
+	  Temporarily turned on tracing for this file.
+
+	* ace/Parse_Node.{h,cpp}:
+
+	  Reverted ACE_Location_Node to contain an ACE_DLL, not a pointer.
+	  And altered new get_dll() method to return a const reference to
+	  the contained member.
+
+	* ace/DLL.{h,cpp}:
+
+	  Added copy constructor that takes ownership of the dll.  Added
+	  open_mode_ variable so that the newly constructed copy can call
+	  open() with the same parameters as the original.
+
+	  Temporarily turned on tracing for this file.
+
 Sun May 19 09:20:15 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/Makefile:
@@ -17,7 +40,7 @@ Sun May 19 09:20:15 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	* bin/generate_export_file.pl:
 
 	  Added code to generate library specifig XXX_TRACE macros
-	  that use the new ACE_TRACE_IMPL macor below based on 
+	  that use the new ACE_TRACE_IMPL macro below based on 
 	  XXX_NTRACE.  This mimics the normal ACE_TRACE usage, but
 	  makes it possible to easily control tracing on a per
 	  library basis.

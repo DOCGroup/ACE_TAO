@@ -55,6 +55,9 @@ public:
            int open_mode = ACE_DEFAULT_SHLIB_MODE,
            int close_on_destruction = 1);
 
+  /// Copy constructor.
+  ACE_DLL (const ACE_DLL &);
+
   /**
    * This method opens and dynamically links <dll_name>.  The default
    * mode is <RTLD_LAZY>, which loads identifier symbols but not the
@@ -106,6 +109,9 @@ private:
   /// This is a handle to the DLL.
   ACE_SHLIB_HANDLE handle_;
 
+  /// Open mode.
+  int open_mode_;
+
   /// Keep track of the name of the loaded dll, so it can be used
   /// to remove framework components, singletons that live in the dll,
   /// prior to unloading the dll in the close() method.
@@ -125,7 +131,7 @@ private:
   ACE_TCHAR *last_error_;
 
   // = Disallow copying and assignment since we don't handle these.
-  ACE_UNIMPLEMENTED_FUNC (ACE_DLL (const ACE_DLL &))
+  //ACE_UNIMPLEMENTED_FUNC (ACE_DLL (const ACE_DLL &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_DLL &))
 };
 

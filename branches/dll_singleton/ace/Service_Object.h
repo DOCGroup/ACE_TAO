@@ -87,7 +87,7 @@ public:
   // = Initialization and termination methods.
   ACE_Service_Type (const ACE_TCHAR *n,
                     ACE_Service_Type_Impl *o,
-                    ACE_DLL *dll,
+                    const ACE_DLL &dll,
                     int active);
   ~ACE_Service_Type (void);
 
@@ -126,7 +126,7 @@ private:
   const ACE_Service_Type_Impl *type_;
 
   /// ACE_DLL representing the shared object file (non-zero if dynamically linked).
-  ACE_DLL *dll_;
+  ACE_DLL dll_;
 
   /// 1 if svc is currently active, otherwise 0.
   int active_;

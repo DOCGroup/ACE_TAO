@@ -9,6 +9,9 @@
 
 ACE_RCSID(ace, DLL, "$Id$")
 
+#undef ACE_TRACE
+#define ACE_TRACE(X) ACE_TRACE_IMPL(X)
+
 // Default constructor. Also, by default, the object will be closed
 // before it is destroyed.
 
@@ -16,10 +19,36 @@ sig_atomic_t ACE_DLL::open_called_ = 0;
 
 ACE_DLL::ACE_DLL (int close_on_destruction)
   : handle_ (ACE_SHLIB_INVALID_HANDLE),
+    open_mode_ (0),
     dll_name_ (0),
     close_on_destruction_ (close_on_destruction),
     last_error_ (0)
 {
+  ACE_TRACE ("ACE_DLL::ACE_DLL (int)");
+}
+
+ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
+{
+  ACE_TRACE ("ACE_DLL::ACE_DLL (const ACE_DLL &)");
+  // Have to do this since open() calls close()...
+  this->handle_ = ACE_SHLIB_INVALID_HANDLE;
+  this->dll_name_ = 0;
+  this->last_error_ = 0;
+
+  if (rhs.handle_ != ACE_SHLIB_INVALID_HANDLE)
+    {
+      // Since we call ACE_OS::dlopen(), we always assume the responsibility 
+      // of calling ACE_OS::dlclose()
+      this->open (rhs.dll_name_, rhs.open_mode_, 1);
+    }
+  else
+    {
+      // Make copy without calling open.
+      this->open_mode_ = rhs.open_mode_;
+      this->dll_name_ = ACE::strnew (rhs.dll_name_);
+      this->close_on_destruction_ = 1;
+      this->last_error_ = ACE::strnew (rhs.last_error_);
+    }
 }
 
 // If the library name and the opening mode are specified than on
@@ -29,6 +58,7 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
                   int open_mode,
                   int close_on_destruction)
   : handle_ (ACE_SHLIB_INVALID_HANDLE),
+    open_mode_ (open_mode),
     dll_name_ (0),
     close_on_destruction_ (close_on_destruction),
     last_error_ (0)
@@ -84,9 +114,10 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
   ACE::strdelete (this->dll_name_);
   this->dll_name_ = ACE::strnew (dll_filename);
 
-  // Reset the flag
+  // Reset the flags
+  this->open_mode_ = open_mode;
   this->close_on_destruction_ = close_on_destruction;
-
+ 
   // Find out where the library is
   ACE_TCHAR dll_pathname[MAXPATHLEN + 1];
 
@@ -98,7 +129,7 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
 
   // The ACE_SHLIB_HANDLE object is obtained.
   this->handle_ = ACE_OS::dlopen (dll_pathname,
-                                  open_mode);
+                                  open_mode_);
 
 #if defined (AIX)
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
