@@ -2,9 +2,14 @@
 
 <HTML>
 <HEAD>
-<TITLE>Building and Installing TAO</TITLE>
+  <TITLE>Building and Installing TAO</TITLE>
+  <link rev=made href="mailto:schmidt@cs.wustl.edu">
 </HEAD>
-<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+
+<BODY text    = "#000000"
+      link    = "#000fff"
+      vlink   = "#ff0f0f"
+      bgcolor = "#ffffff">
 
 <HR>
 <H3>Building and Installing TAO</H3>
@@ -74,10 +79,9 @@ likely unpredictable and erroneous results. <P>
       </UL>
 
   <LI>Set <CODE>TAO_ROOT</CODE> environment variable to
-      <CODE>$ACE_ROOT/TAO</CODE>. <P>
+      <CODE>$ACE_ROOT/TAO</CODE>.<P>
 
-  <LI>Build and install the TAO release under
-        <CODE>$TAO_ROOT</CODE>.<P>
+  <LI>Build and install the TAO release under <CODE>$TAO_ROOT</CODE>.
 
         <P>The easiest and recommended way to compile the
           <B>complete</B> TAO distribution by simply simply executing
@@ -184,8 +188,7 @@ and set it to the compiler you want to use.  This variable will
 override the default.  </P>
 
 <P>Set <CODE>ACE_ROOT</CODE> environment variable as outlined in the
-    <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">
-	ACE installation notes</A>.
+    <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">ACE installation notes</A>.
       This is only required if you are planning to use the
       &lt;orb.idl&gt; standard include in your IDL code.
       Notice that some of the TAO services use this feature, so you
@@ -367,6 +370,14 @@ by using <CODE>make minimum_corba=1</CODE> when you compile TAO.</P>
 
 <HR>
 <P>
+
+<HR><P>
+<H3><A NAME="resource requirements">System Resource Requirements</A></H3>
+Please see the
+<a href="../ACE-INSTALL.html#resource requirements">ACE-INSTALL.html System
+Resource Requirement discussion</a> for information on system resources
+required to build ACE and TAO.<p>
+
 
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A> home page.
 
