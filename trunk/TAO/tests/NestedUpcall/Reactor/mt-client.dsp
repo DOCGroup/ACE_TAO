@@ -99,7 +99,7 @@ InputPath=.\Reactor.idl
 InputName=Reactor
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -137,7 +137,7 @@ InputPath=.\Reactor.idl
 InputName=Reactor
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
