@@ -19,6 +19,9 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+#ifndef TAO_IDL_INTERFACES_CPP
+#define TAO_IDL_INTERFACES_CPP
+
 #include "InterfaceS.h"
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Operation_Table.h"
@@ -24570,4 +24573,6 @@ POA_IR::HomeDef::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA::Object_var obj = tmp;
   return IR_HomeDef::_unchecked_narrow (obj.in ());
 }
+
+#endif /* ifndef TAO_IDL_INTERFACES_CPP */
 
