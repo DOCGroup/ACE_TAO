@@ -13,9 +13,9 @@
 //    This class implements the  interface calls for RMI.
 //
 // = AUTHOR
-// @@ Bala, please update the author!
-//    Darrell Brunsch <brunsch@cs.wustl.edu>
-//
+//    
+//   Balachandran Natarajan <bala@cs.wustl.edu>
+//    
 // ============================================================================
 
 #ifndef TIME_CLIENT_I_H
@@ -43,6 +43,11 @@ public:
 
   virtual int run (int, char** );
   // Execute the methods
+
+private:
+
+  Client<Time,Time_var> client;
+  // Instantiate the client object
 };
 
 #endif /* TIME_CLIENT_I_H */
