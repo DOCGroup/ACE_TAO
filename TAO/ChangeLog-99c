@@ -3,7 +3,7 @@ Tue Apr 06 16:29:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tao/ORB.cpp (ORB_init): Some how, calling to init_orb_globals()
 	  got moved before ORB Core initialization.  This must come AFTER
 	  the initialization of ORB Core.  Otherwise, all hell breaks
-	  loss.
+	  loose.
 
 Tue Apr  6 16:29:55 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
