@@ -84,7 +84,7 @@ TAO_IIOP_Connection_Handler::open (void*)
     this->orb_core ()->get_protocols_hooks ();
 
   bool client =
-    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;;
+    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -122,7 +122,7 @@ TAO_IIOP_Connection_Handler::open (void*)
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
                                 (void *) &protocol_properties.no_delay_,
-                                sizeof (int)) == -1)
+                                sizeof (protocol_properties.no_delay_)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 

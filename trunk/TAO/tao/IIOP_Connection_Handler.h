@@ -63,7 +63,7 @@ public:
 
   TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = 0);
 
-  /// Constructor. 
+  /// Constructor.
   TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core,
                                CORBA::Boolean flag);
 
@@ -101,7 +101,7 @@ public:
 
   /// Set Diff-Serv codepoint on outgoing packets.
   int set_dscp_codepoint (CORBA::Boolean set_network_priority);
-  
+
   virtual int open_handler (void *);
 
 protected:

@@ -50,9 +50,9 @@ public:
 
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
-  CORBA::Boolean keep_alive_;
-  CORBA::Boolean dont_route_;
-  CORBA::Boolean no_delay_;
+  int keep_alive_;
+  int dont_route_;
+  int no_delay_;
   CORBA::Boolean enable_network_priority_;
 };
 
@@ -74,9 +74,9 @@ public:
 
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
-  CORBA::Boolean keep_alive_;
-  CORBA::Boolean dont_route_;
-  CORBA::Boolean no_delay_;
+  int keep_alive_;
+  int dont_route_;
+  int no_delay_;
   CORBA::Long preallocate_buffer_size_;
   ACE_CString mmap_filename_;
   ACE_CString mmap_lockname_;
@@ -99,9 +99,9 @@ public:
 
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
-  CORBA::Boolean keep_alive_;
-  CORBA::Boolean dont_route_;
-  CORBA::Boolean no_delay_;
+  int keep_alive_;
+  int dont_route_;
+  int no_delay_;
   CORBA::Boolean enable_network_priority_;
 };
 
