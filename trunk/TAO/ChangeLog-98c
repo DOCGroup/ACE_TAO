@@ -1,4 +1,7 @@
-Mon Nov 23 10:10:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Nov 23 17:09:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IIOP_Object.cpp (do_static_call): Explicitly initialize
+	  <status> to avoid gcc warnings.
 
 	* tao/try_macros.h: Fixed a typo.
 
