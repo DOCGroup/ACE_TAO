@@ -13,13 +13,13 @@ LDLIBS     =  -lTAO
 IDL_HDR	= param_testC.h param_testS.h
 IDL_SRC	= param_testC.cpp param_testS.cpp
 PROG_SRCS =	$(IDL_SRC) server.cpp client.cpp param_test_i.cpp helper.cpp \
-		driver.cpp options.cpp results.cpp tests.cpp
+		driver.cpp options.cpp results.cpp tests.cpp tmplinst.cpp
 
 LSRC = $(PROG_SRCS)
 
-PARAM_TEST_SVR_OBJS = param_testC.o param_testS.o server.o param_test_i.o
+PARAM_TEST_SVR_OBJS = param_testC.o param_testS.o server.o param_test_i.o tmplinst.o
 PARAM_TEST_CLT_OBJS = param_testC.o driver.o client.o options.o results.o \
-						tests.o helper.o
+			tmplinst.o tests.o helper.o
 
 BIN = server client
 BUILD = $(BIN)
