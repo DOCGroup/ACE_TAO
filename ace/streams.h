@@ -45,7 +45,10 @@
 #     include /**/ <iostream.h>
 #     include /**/ <fstream.h>
   // This has been commented as it is not needed and causes problems with Qt. 
-  //#     include /**/ <iomanip.h>
+  // (brunsch) But has been uncommented since it should be included.  Qt 
+  // probably should have some sort of macro that will prevent including this 
+  // when it is used.
+#     include /**/ <iomanip.h>
 #     if defined (_MSC_VER)
 #       include /**/ <strstrea.h>
 #     else

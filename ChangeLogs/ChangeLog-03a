@@ -1,3 +1,14 @@
+Mon May 15 08:31:13 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/streams.h: 
+
+          Undid the commenting out of #include <iomanip.h> for 
+          ACE_USES_OLD_IOSTREAMS.  It had previously been commented
+          out because of a problem with Qt.  A better solution would
+          be to not include it only when ACE is used with Qt.
+
+          This problem was showing up with Explicit_Event_Loop.
+
 Sun May 14 12:43:35 2000  Darrell Brunsch <brunsch@uci.edu>
 
         (On behalf of Christopher Kohlhoff <chris@kohlhoff.com>)
