@@ -98,8 +98,20 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
+  // = Meta-type info
+  typedef ACE_FILE_Addr PEER_ADDR;
+
+  int get_local_addr (ACE_Addr &) const;
+  // Return the local endpoint address in the referenced ACE_Addr.
+  // Returns 0 if successful, else -1.
+ 
+  int get_remote_addr (ACE_Addr &) const;
+  // Return the address of the remotely connected peer (if there is
+  // one), in the referenced ACE_Addr. Returns 0 if successful, else
+  // -1.
+
 private:
-  ACE_FILE_Addr remote_addr_;
+  ACE_FILE_Addr addr_;
   // File we are "connected" with...
 };
 
