@@ -33,7 +33,7 @@ class TAO_Offer_Iterator_Collection : public POA_CosTrading::OfferIterator
 //   offer_iterator. This is that collection. The results of
 //   collecting all the iterators in this way is a distributed tree of 
 //   iterators, which could conceivably become hugely inefficient if
-//   the trader graphs is deep enough.
+//   the trader graph is deep enough.
 {
 public:
 
