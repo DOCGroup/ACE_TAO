@@ -1770,7 +1770,7 @@ sig_handler (int sig_num, siginfo_t *, ucontext_t *)
 }
 
 int
-ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
+ACE_POSIX_SIG_Proactor::setup_signal_handler (int ) const
 {
   // Set up the specified signal so that signal information will be
   // passed to sigwaitinfo/sigtimedwait. Don't change the default

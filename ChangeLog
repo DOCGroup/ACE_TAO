@@ -1,3 +1,9 @@
+Tue Mar  9 09:22:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/POSIX_Proactor.cpp:
+
+	  Fixed a unused variable warning.
+
 Tue Mar  9 14:31:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Reactor/WFMO_Reactor/run_test.pl:
