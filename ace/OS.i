@@ -6347,7 +6347,7 @@ ACE_OS::recvv (ACE_HANDLE handle,
   else
     return (ssize_t) bytes_received;
 #else  
-  return ACE_OS::readv (handle, iov, iovcnt);
+  return ACE_OS::readv (handle, buffers, n);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -6373,7 +6373,7 @@ ACE_OS::sendv (ACE_HANDLE handle,
   else
     return (ssize_t) bytes_sent;
 #else
-  return ACE_OS::writev (handle, buffers
+  return ACE_OS::writev (handle, buffers, n);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
