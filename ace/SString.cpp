@@ -305,8 +305,7 @@ ACE_CString::set (const char *s,
 {
   // Case 1. Going from memory to more memory
   size_t new_buf_len = len + 1;
-  if (s != 0 && len != 0 && s[0] != '\0' && release
-      && this->buf_len_ < new_buf_len)
+  if (s != 0 && len != 0 && release && this->buf_len_ < new_buf_len)
     {
       char *temp;
       ACE_ALLOCATOR (temp,
@@ -328,7 +327,7 @@ ACE_CString::set (const char *s,
   else
     {
       // Free memory if necessary and figure out future ownership
-      if (!release || s == 0 || s[0] == '\0' || len == 0)
+      if (!release || s == 0 || len == 0)
         if (this->release_)
           {
             this->allocator_->free (this->rep_);
@@ -337,7 +336,7 @@ ACE_CString::set (const char *s,
       // else - stay with whatever value for release_ we have.
 
       // Populate data.
-      if (s == 0 || s[0] == '\0' || len == 0)
+      if (s == 0 || len == 0)
         {
           this->buf_len_ = 0;
           this->len_ = 0;
