@@ -154,8 +154,8 @@ TAO_UIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 }
 
 int
-TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
-                                           ACE_Reactor_Mask rm)
+TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE,
+                                           ACE_Reactor_Mask)
 {
   ACE_ASSERT (0);
   return 0;
