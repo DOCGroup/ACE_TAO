@@ -23,10 +23,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
+#include "ace/SString.h"
 
 class TAO_Acceptor;
 class TAO_Connector;
-class ACE_CString;
 
 class TAO_Export TAO_Protocol_Factory : public ACE_Service_Object
 {
