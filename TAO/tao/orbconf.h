@@ -182,13 +182,7 @@ const size_t TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
 # define TAO_MAXIMUM_NATIVE_TYPE_SIZE 128
 #endif /* TAO_MAXIMUM_NATIVE_TYPE_SIZE */
 
-// By default connection purging and recycling are done to provide robust
-// connection management in TAO.
-#if !defined (ACE_MVS)
-# define TAO_USES_ROBUST_CONNECTION_MGMT
-#endif /* ! ACE_MVS */
-
-// @@todo: The connection caching strategy defeinition shoudl probably
+// @@todo: The connection caching strategy definition should probably
 // go.
 #if !defined (TAO_CONNECTION_CACHING_STRATEGY)
 # define TAO_CONNECTION_CACHING_STRATEGY TAO_Resource_Factory::LRU
@@ -969,14 +963,6 @@ enum TAO_Policy_Scope
 #if !defined (TAO_DEF_MIOP_MINOR)
 #define TAO_DEF_MIOP_MINOR 0
 #endif /* TAO_DEF_MIOP_MINOR */
-
-#if !defined (TAO_CONNECTION_HANDLER_STACK_BUF_SIZE)
-#   define TAO_CONNECTION_HANDLER_STACK_BUF_SIZE 1024
-#endif /*TAO_CONNECTION_HANDLER_STACK_BUF_SIZE */
-
-#if !defined (TAO_RESUMES_CONNECTION_HANDLER)
-#   define TAO_RESUMES_CONNECTION_HANDLER 1
-#endif /*TAO_RESUMES_CONNECTION_HANDLER*/
 
 /// By default we use Muxed Transports
 #if !defined (TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY)
