@@ -1,5 +1,5 @@
 Thu Jul 29 18:19:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
-
+ 
 	* ace/config-irix6.x-common.h:
 	* ace/config-irix6.x-g++.h:
 	* ace/config-irix6.x-kcc.h:
