@@ -1,3 +1,27 @@
+Fri Sep 25 12:15:00 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace: The following ACE_TRACE calls being made during the
+ 	  creation of the ACE_Log_Msg instance.  The ACE_TRACE calls then
+ 	  try to create the ACE_Log_Msg instance which then ends up
+ 	  executing the ACE_TRACE's.  Etc, etc, etc...
+
+	  Here are the methods with the ACE_TRACEs that I commented out to
+ 	  get ACE to run:
+	
+	  ACE_IPC_SAP::~ACE_IPC_SAP
+	  ACE_SOCK::ACE_SOCK
+	  ACE_SOCK::~ACE_SOCK
+	  ACE_SOCK_IO::ACE_SOCK_IO
+	  ACE_SOCK_IO::~ACE_SOCK_IO
+	  ACE_SOCK_Stream::ACE_SOCK_Stream
+	  ACE_SOCK_Stream::~ACE_SOCK_Stream
+	  ACE_Thread::keycreate
+	  ACE_Thread::setspecific
+	  ACE_Thread::getspecific
+
+	  Thanks to "Patrick J. McNerthney" <pat@cartia.com> for this bug
+ 	  report.
+
 Fri Sep 25 10:10:12 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.i (cond_timedwait): Add EINTR to the list of errno values

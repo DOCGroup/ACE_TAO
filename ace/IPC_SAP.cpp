@@ -31,7 +31,7 @@ pid_t ACE_IPC_SAP::pid_ = 0;
 ACE_IPC_SAP::ACE_IPC_SAP (void)
   : handle_ (ACE_INVALID_HANDLE)
 {
-//  ACE_TRACE ("ACE_IPC_SAP::ACE_IPC_SAP");
+  // ACE_TRACE ("ACE_IPC_SAP::ACE_IPC_SAP");
 }
 
 int

@@ -106,7 +106,7 @@ ACE_SOCK::ACE_SOCK (int type,
                     int protocol,
                     int reuse_addr)
 {
-  ACE_TRACE ("ACE_SOCK::ACE_SOCK");
+  // ACE_TRACE ("ACE_SOCK::ACE_SOCK");
   if (this->open (type, protocol_family, 
                   protocol, reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("ACE_SOCK::ACE_SOCK")));

@@ -16,7 +16,7 @@ ACE_Thread::keycreate (ACE_thread_key_t *keyp,
 #endif /* ACE_HAS_THR_C_DEST */
 		       void *inst)
 {
-  ACE_TRACE ("ACE_Thread::keycreate");
+  // ACE_TRACE ("ACE_Thread::keycreate");
   return ACE_OS::thr_keycreate (keyp, destructor, inst);
 }
 
@@ -35,7 +35,7 @@ ACE_Thread::keyfree (ACE_thread_key_t key)
 ACE_INLINE int 
 ACE_Thread::setspecific (ACE_thread_key_t key, void *value)
 {
-  ACE_TRACE ("ACE_Thread::setspecific");
+  // ACE_TRACE ("ACE_Thread::setspecific");
   return ACE_OS::thr_setspecific (key, value);
 }
 
@@ -45,7 +45,7 @@ ACE_Thread::setspecific (ACE_thread_key_t key, void *value)
 ACE_INLINE int 
 ACE_Thread::getspecific (ACE_thread_key_t key, void **valuep)
 {
-  ACE_TRACE ("ACE_Thread::getspecific");
+  // ACE_TRACE ("ACE_Thread::getspecific");
   return ACE_OS::thr_getspecific (key, valuep);
 }
 
