@@ -19,7 +19,9 @@ TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (
 }
 
 TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (const TAO_RelativeRoundtripTimeoutPolicy_i &rhs)
-  : poa_ (rhs.poa_),
+  : PortableServer::RefCountServantBase (rhs),
+    POA_Messaging::RelativeRoundtripTimeoutPolicy (rhs),
+    poa_ (rhs.poa_),
     relative_expiry_ (rhs.relative_expiry_)
 {
 }
@@ -135,7 +137,9 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronizati
 }
 
 TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
-  : synchronization_ (rhs.synchronization_),
+  : PortableServer::RefCountServantBase (rhs),
+    POA_Messaging::SyncScopePolicy (rhs),
+    synchronization_ (rhs.synchronization_),
     poa_ (rhs.poa_)
 {
 }

@@ -18,7 +18,9 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::Buf
 }
 
 TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs)
-  : buffering_constraint_ (rhs.buffering_constraint_),
+  : PortableServer::RefCountServantBase (rhs),
+    POA_TAO::BufferingConstraintPolicy (rhs),
+    buffering_constraint_ (rhs.buffering_constraint_),
     poa_ (rhs.poa_)
 {
 }
