@@ -1,7 +1,6 @@
 # $Id$
 
 BIN = EC_Multiple
-BUILD = $(BIN)
 SRC = $(BIN:%=%$(VAR).cpp)
 LDLIBS= -lorbsvcs -lTAO
 
