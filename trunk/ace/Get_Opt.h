@@ -47,14 +47,14 @@ public:
    * following <argv>-element, and returned in <optarg>.
    *
    * If an option character is seen that is not listed in <optstring>,
-   * return '?' after printing an error message.  If you set <opterr>
-   * to zero, the error message is suppressed but we still return '?'.
+   * return '?' after printing an error message.  If you set
+   * <report_errors> to zero, the error message is suppressed but we
+   * still return '?'.
    *
    * If a char in <optstring> is followed by a colon, that means it
    * wants an arg, so the following text in the same <argv>-element,
    * or the text of the following <argv>-element, is returned in
-   * <optarg>.
-   */
+   * <optarg>.  */
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
                const ACE_TCHAR *optstring,
