@@ -402,9 +402,9 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
 
 
     }
-  ACE_CATCHANY
+  ACE_CATCHANY 
     {
-      ACE_TRY_ENV.print_exception ("Client_i::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client_i::init");
       return -1;
     }
   ACE_ENDTRY;
@@ -443,7 +443,7 @@ Client<INTERFACE_OBJECT, Var>::obtain_initial_references (CORBA::Environment &AC
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Client::obtain_initial_references");
+       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client::obtain_initial_references");
       return -1;
     }
   ACE_ENDTRY;
