@@ -52,6 +52,9 @@ release</A> of <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
 <A HREF="ec.html">TAO's Real-time Event Service</A></LI>
 
 <LI>
+<A HREF="#scheduling">TAO's Scheduling Service</A></LI>
+
+<LI>
 <A HREF="#logging">TAO's Logging Service</A></LI>
 
 <LI>
@@ -617,6 +620,51 @@ events in this configuration.</LI>
 
 <P><HR><!--#include virtual="ec.html" -->
 <P>
+<H3><A NAME="scheduling"></A>TAO's Scheduling Service</H3>
+Point of contact:&nbsp; <A HREF="mailto:cdgill@cs.wustl.edu">Chris Gill</A>
+and <A HREF="mailto:levine@cs.wustl.edu">David Levine</A>
+
+<P>Currently Implemented Features:
+<UL>
+<LI>
+The scheduling service can be built to use either a null 
+implementation or a strategized implementation of the configuration scheduler.
+</LI>
+<LI>
+The null scheduler implementation, which is built by default, allows the 
+configuration scheduler to be used with applications that require a scheduling
+service interface, but do not (at least in the current stage of their 
+development, in certain configurations, etc.) make use of the real-time 
+scheduling features it provides.
+</LI>
+<LI>
+The strategized scheduler implementation can be built by #defining
+TAO_USES_STRATEGY_SCHEDULER, and the appropriate scheduling strategy macro
+(TAO_USES_RMS_SCHEDULING, TAO_USES_EDF_SCHEDULING, TAO_USES_MUF_SCHEDULING,
+or TAO_USES_MUF_SCHEDULING) in $ACE_ROOT/ace/config.h. This allows the 
+configuration scheduler to be used with applications that require a specific
+scheduling strategy.  Each scheduling strategy will produce a set of static
+scheduling priorities, which it will assign to operations based on their
+RT_Infos.  For each static priority, a strategy will also determine the
+run-time (dynamic) scheduling strategy to use for that priority level.
+</LI>
+</UL>
+Future work:
+<UL>
+<LI>
+&nbsp;Implement heap-based dispatching queues.</LI>
+<LI>
+&nbsp;Add support for additional configurability, especially in the type
+of dispatching strategy (list vs. heap) that will be used to dispatch 
+operations at a given static priority level.</LI>
+<LI>
+&nbsp;Benchmark the various alternative strategies to obtain performance
+profiles across different operation loads and OS platforms.</LI>
+<LI>
+&nbsp;Add increased functionality. Requests and suggestions are welcome.</LI>
+</UL>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
 <HR>
 <H3><A NAME="logging"></A>TAO's Logging Service</H3>
 Point of contact:&nbsp; <A HREF="mailto:mjb2@cs.wustl.edu">Matt Braun</A>

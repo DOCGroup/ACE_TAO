@@ -1,3 +1,7 @@
+Sun Jan  3 20:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* docs/releasenotes/index.html: added TAO Scheduling Service section
+
 Sun Jan  3 19:22:23 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
