@@ -1,6 +1,6 @@
 // $Id$
 
-#include "IR_Helper.h"
+#include "orbsvcs/IR_Helper.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/IIOP_Acceptor.h"
 #include "tao/Acceptor_Registry.h"
@@ -110,7 +110,7 @@ IR_Helper::~IR_Helper ()
 
 int
 IR_Helper::register_server (const char *comm_line,
-                            const char */*environment*/,
+                            const char * /*environment*/,
                             const char *working_dir,
                             CORBA_Environment &ACE_TRY_ENV)
 {

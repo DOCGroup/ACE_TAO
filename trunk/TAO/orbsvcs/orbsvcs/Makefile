@@ -246,7 +246,7 @@ endif # Time
 
 ifneq (,$(findstring ImplRepo,$(TAO_ORBSVCS)))
   IDL_SRCS += ImplRepo
-  TAO_ORBSVCS_SRCS +=
+  TAO_ORBSVCS_SRCS += IR_Helper
 endif # ImplRepo
 
 ifneq (,$(findstring Naming,$(TAO_ORBSVCS)))
