@@ -4,6 +4,10 @@ Thu May 21 17:36:37 1998  David L. Levine  <levine@cs.wustl.edu>
           extensions.  Thanks to J. Russell Noseworthy
           <rnosewor@objectsciences.com> for providing this support.
 
+        * ace/Local_Tokens.{h,i}: inlined ACE_Null_Token ctor and dtor
+          in class header because the clone () method needs the ctor
+          inlined, and it's too difficult to get it right with macros.
+
 Thu May 21 15:28:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/test_config.h: Modified to write output from tests into
