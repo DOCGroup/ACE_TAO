@@ -1923,7 +1923,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #    endif /* ACE_LACKS_SETDETACH */
 
       // *** Set Policy
-#    if !defined (ACE_LACKS_SETSCHED)
+#    if !defined (ACE_LACKS_SETSCHED) || defined (ACE_HAS_DCETHREADS)
       // If we wish to set the priority explicitly, we have to enable
       // explicit scheduling, and a policy, too.
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
@@ -2111,7 +2111,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
               return -1;
             }
         }
-#    endif /* ACE_LACKS_SETSCHED */
+#    endif /* ACE_LACKS_SETSCHED || ACE_HAS_DCETHREADS */
 
 
       // *** Set Scope
