@@ -15,6 +15,10 @@ Wed Mar 10 11:05:39 1999  David L. Levine  <levine@cs.wustl.edu>
           <Terry.Rosenbaum@Radiology.MSU.edu> for reporting that
           it was missing.
 
+        * include/makeinclude/platform_osf1_4.0.GNU: disable msg 1136 with
+          cxx 6.1-029.  Thanks to Doug Anderson <doug@clark.net> for
+          reporting this.
+
 Wed Mar 10 10:57:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/Basic_Types.h:
