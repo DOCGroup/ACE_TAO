@@ -40,7 +40,7 @@ static size_t n_readers = 6;
 static size_t n_writers = 4;
 
 // Thread id of last writer.
-static volatile int shared_data;  
+static ACE_thread_t shared_data;  
 
 // Lock for shared_data.
 static ACE_RW_Mutex rw_mutex;     
@@ -77,12 +77,13 @@ reader (void *)
       if (current_writers > 0)
         ACE_DEBUG ((LM_DEBUG, "(%t) writers found!!!\n"));
 	
-      int data = shared_data;
+      ACE_thread_t data = shared_data;
 
       for (size_t loop = 1; loop <= n_loops; loop++)
         {
 	  ACE_Thread::yield();
-	  if (shared_data != data)
+
+	  if (!ACE_OS::thr_equal (shared_data, data))
             ACE_DEBUG ((LM_DEBUG, 
 			"(%t) somebody changed %d to %d\n", 
 			data, shared_data));
@@ -120,14 +121,18 @@ writer (void *)
       if (current_readers > 0)
         ACE_DEBUG ((LM_DEBUG, "(%t) readers found!!!\n"));
 	
-      int self = (int) ACE_Thread::self ();
+      ACE_thread_t self = ACE_Thread::self ();
+
       shared_data = self;
 
       for (size_t loop = 1; loop <= n_loops; loop++)
         {
 	  ACE_Thread::yield();
-	  if (shared_data != self)
-            ACE_DEBUG ((LM_DEBUG, "(%t) somebody wrote on my data %d\n", shared_data));
+
+	  if (!ACE_OS::thr_equal (shared_data, self))
+            ACE_DEBUG ((LM_DEBUG, 
+			"(%t) somebody wrote on my data %d\n", 
+			shared_data));
         }
 
       --current_writers;

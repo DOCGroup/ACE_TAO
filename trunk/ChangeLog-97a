@@ -1,5 +1,50 @@
 Wed Jan 15 02:06:21 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Timer_Queue.cpp (expire): Changed a line of code from
+	
+	  ACE_Timer_Queue_Iterator &iterator (this->iterator ());
+
+	  to
+
+	  ACE_Timer_Queue_Iterator &iterator = this->iterator ();
+
+	  so that the Visual C++ compiler can grok it.  Thanks to John
+ 	  Morey for reporting this.
+
+	* ace/Reactor.cpp: Modified the close() method so that it can be
+ 	  called multiple times with no bad side-effects.
+
+	* ace/Pipe.cpp: Modified the close() method so that it can be
+ 	  called multiple times with no bad side-effects.
+
+	* ace/Reactor: Added an initialized() method that indicates
+ 	  whether the Reactor was successfully initialized.  Also
+ 	  rearranged the code in ACE_Reactor::open() so that initialized_
+ 	  is only set at the end of the method when everything succeeds.
+  	  If things *don't* succeed, we call close() on the way out.
+  	  Thanks to Luca for these suggestions.
+
+	* ace/Reactor.cpp (close): When closing down the ACE_Reactor, we
+ 	  now set initialized_ back to 0 so that it can be reopened again
+ 	  later.
+
+	* tests/Reader_Writer_Test.cpp: There were some problems with this
+ 	  test due to the fact that on many pthreads platforms pthread_t
+ 	  isn't an int (it's a struct).  Thanks to Chuck Gehr
+ 	  <gehr@sweng.stortek.com> for the fix.
+
+	* ace/OS.i (exit): In WIN32 when the process exits through an
+ 	  ExitProcess() call, some process resources (e.g., file handles)
+ 	  are freed before the static variable destructors are
+ 	  called. This results in an application error when tracing is
+ 	  enabled. Calling ACE_LOG_MSG->stop_tracing() before the
+ 	  ExitProcess() does the job.  Thanks to Luca for this fix.
+
+	* ace/OS: Fixed the implementation of semaphores for the POSIX
+ 	  port (POSIX lacks semaphores).  The trick was to add a "waiters"
+ 	  field, along with the semaphore count.  Thanks to John Bossom
+ 	  <John.Bossom@Cognos.COM> for reporting this.
+
 	* examples/Threads/wfmo.cpp: Added a new test program that seems
  	  to indicate that the Win32 WaitForMultipleObjects() function can
  	  be called in multiple threads, all of which wait on the same set

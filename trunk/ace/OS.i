@@ -2996,6 +2996,8 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
       && ACE_OS::mutex_lock (&s->lock_) == 0)
     {
       s->count_ = count;
+      s->waiters_ = 0;
+
       if (ACE_OS::mutex_unlock (&s->lock_) == 0)
 	result = 0;
     }
@@ -3034,21 +3036,19 @@ ACE_OS::sema_post (ACE_sema_t *s)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_post (s), ace_result_), int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-
   int result = -1;
   int count_was_zero;
 
   if (ACE_OS::mutex_lock (&s->lock_) == 0)
     {
-      count_was_zero = s->count_++ == 0;
-      if (ACE_OS::mutex_unlock (&s->lock_) == 0)
-	{
-	  if (count_was_zero)
-	    // Allows a waiter to continue.
-	    result = ACE_OS::cond_signal (&s->count_nonzero_);
-	  else
-	    result = 0;
-	}
+      // Always allow a waiter to continue if there is one.
+      if (s->waiters_ > 0)
+	result = ACE_OS::cond_signal (&s->count_nonzero_);
+      else
+	result = 0;
+
+      this->count_++;
+      ACE_OS::mutex_unlock (&s->lock_);
     }
   return result;
 #elif defined (ACE_HAS_WTHREADS)
@@ -3145,16 +3145,24 @@ ACE_OS::sema_wait (ACE_sema_t *s)
     result = -1;
   else
     {
+      // Keep track of the number of waiters so that we can signal
+      // them properly in <ACE_OS::sema_post>.
+      s->waiters_++;
+
+      // Wait until the semaphore count is > 0.
       while (s->count_ == 0)
 	if (ACE_OS::cond_wait (&s->count_nonzero_, &s->lock_) == -1)
 	  {
 	    result = -2;
 	    break;
 	  }
+
+      s->waiters_--;
     }
 
   if (result == 0)
     --s->count_;
+
   if (result != -1)
     ACE_OS::mutex_unlock (&s->lock_);
   pthread_cleanup_pop (1);
@@ -4589,6 +4597,12 @@ ACE_OS::exit (int status)
 {
   // ACE_TRACE ("ACE_OS::exit");
 #if defined (ACE_WIN32)
+  // In WIN32 when the process exits through an exit() call, some
+  // process resources (I think file handles) are freed before the
+  // static variable destructors are called. This results in an
+  // application error when tracing is enabled. Calling
+  // ACE_LOG_MSG->stop_tracing() before the exit() does the job.
+  ACE_LOG_MSG->stop_tracing ();
   ::ExitProcess ((UINT) status);
 #else
   ::exit (status);

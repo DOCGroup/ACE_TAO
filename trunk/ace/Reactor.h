@@ -561,6 +561,9 @@ public:
   // bound to a signal.  Return the <eh> associated with this
   // <handler> if <eh> != 0.
 
+  int initialized (void);
+  // Returns true if we've been successfully initialized, else false.
+
   void dump (void) const;
   // Dump the state of an object.
 
