@@ -1,3 +1,7 @@
+Thu Nov 06 02:08:26 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.23, released Thu Nov 06 02:08:26 1997.
+
 Thu Nov  6 02:04:32 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 	* TAO_IDL/driver/{drv_preproc.cpp, drv_fork.cpp}: NetBSD has
