@@ -194,8 +194,10 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
    // the refcount whether the connection is successful ot not.
 
    // REFCNT: Matches with TAO_Connect_Strategy<>::make_svc_handler()
-   svc_handler->decr_refcount ();
+   long refcount = svc_handler->decr_refcount ();
 
+   ACE_ASSERT (refcount >= 0);
+ 
    if (result == -1)
      {
        // Give users a clue to the problem.
