@@ -1,3 +1,41 @@
+Sun Aug 24 19:04:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ASNMP/agent/agent_impl.cpp:
+          Removed unused args to quash a warning.
+
+        * ASNMP/agent/snmp_agent.cpp:
+        * ASNMP/asnmp/octet.cpp:
+        * ASNMP/asnmp/octet.h:
+        * ASNMP/asnmp/oid.cpp:
+        * ASNMP/asnmp/oid.h:
+        * ASNMP/asnmp/pdu.cpp:
+        * ASNMP/asnmp/pdu.h:
+        * ASNMP/asnmp/smival.h:
+        * ASNMP/asnmp/snmp.cpp:
+        * ASNMP/asnmp/snmp.h:
+        * ASNMP/asnmp/snmperrs.h:
+        * ASNMP/asnmp/vb.cpp:
+        * ASNMP/asnmp/vb.h:
+        * ASNMP/examples/get/get.cpp:
+        * ASNMP/examples/get/get_async.cpp:
+        * ASNMP/examples/next/next.cpp:
+        * ASNMP/examples/set/set.cpp:
+        * ASNMP/examples/trap/trap.cpp:
+        * ASNMP/examples/walk/walk.cpp:
+          Fixed const warnings.
+
+        * ASNMP/asnmp/address.cpp:
+        * ASNMP/asnmp/counter.cpp:
+        * ASNMP/asnmp/gauge.cpp:
+        * ASNMP/asnmp/integer.cpp:
+        * ASNMP/asnmp/timetick.cpp:
+          Explicitly initialized base class in the copy constructor to
+          quash warning.
+
+        * ASNMP/asnmp/transaction.cpp:
+        * ASNMP/asnmp/wpdu.cpp:
+          Cast void* to char* in delete [] statement to quash warning.
+
 Sun Aug 24 09:45:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* samewise: Removed contents of this directory since the new

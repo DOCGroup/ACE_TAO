@@ -72,7 +72,7 @@ typedef struct {                /* smiVALUE portion of VarBind */
 class ACE_Export SnmpSyntax {
 
 public:
-  virtual char * to_string() = 0;
+  virtual const char * to_string() = 0;
   // virtual function for getting a printable ASCII value for any SNMP Value
 
   virtual SmiUINT32 get_syntax() = 0;

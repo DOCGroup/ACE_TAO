@@ -108,13 +108,13 @@ int agent_impl::get_response(Vb& vb)
   return 0;
 }
 
-int agent_impl::handle_get_next( Pdu &pdu, UdpTarget &target)
+int agent_impl::handle_get_next( Pdu &, UdpTarget &)
 {
    ACE_TRACE("agent_impl::handle_get_next -NI");
   return 0;
 }
 
-int agent_impl::handle_set( Pdu &pdu, UdpTarget &target)
+int agent_impl::handle_set( Pdu &, UdpTarget &)
 {
  ACE_TRACE("agent_impl::handle_set -NI");
  return 0;

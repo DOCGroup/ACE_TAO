@@ -363,7 +363,7 @@ void wpdu::free_smival_descriptor( SmiVALUE *smival )
 
 wpdu::~wpdu()
 {
-  delete [] iovec_.iov_base;
+  delete [] (char*) iovec_.iov_base;
 }
 
 const iovec& wpdu::get_buffer() const

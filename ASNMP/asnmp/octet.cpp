@@ -472,7 +472,7 @@ SnmpSyntax * OctetStr::clone() const
 }
 
 //================[ ASCII format return ]=============================
-char  * OctetStr::to_string()
+const char  * OctetStr::to_string()
 {
   for ( unsigned long i=0; i < smival.value.string.len; i++) {
     if (( smival.value.string.ptr[i] != '\r')&&
@@ -519,7 +519,7 @@ SnmpSyntax& OctetStr::operator=( SnmpSyntax &val)
 }
 
 //================[ format the output into hex ]========================
-char *OctetStr::to_string_hex()
+const char *OctetStr::to_string_hex()
 {
   int cnt;
   char char_buf[80];              // holds ASCII representation of data

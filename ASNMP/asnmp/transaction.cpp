@@ -48,7 +48,7 @@ transaction::~transaction()
   ACE_Reactor::instance()->remove_handler(this, READ_MASK | DONT_CALL);
   ACE_Reactor::instance()->cancel_timer(this);
 
-  delete [] receive_iovec_.iov_base;
+  delete [] (char *) receive_iovec_.iov_base;
 }
 
 // implement state machine, send, wait (timeout/results) return
@@ -118,11 +118,11 @@ int transaction::run(transaction_result * r)
 int transaction::handle_input (ACE_HANDLE)
 {
   // OS allocates iovec_.iov_base ptr and len
-  delete [] receive_iovec_.iov_base;
+  delete [] (char*) receive_iovec_.iov_base;
   reset_receive_buffer(receive_iovec_);
   int rc = session_.recv(&receive_iovec_, receive_addr_, 0);
   if (rc == -1) {
-      delete [] receive_iovec_.iov_base;
+      delete [] (char*) receive_iovec_.iov_base;
       reset_receive_buffer(receive_iovec_);
       if (result_)
           result_->result(this, SNMP_CLASS_RESOURCE_UNAVAIL);
