@@ -375,7 +375,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_factories (
 }
 
 int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
-  PortableGroup::ObjectGroup_ptr iogr,
+  const PortableGroup::ObjectGroup_ptr iogr,
   const PortableGroup::Location & location,
   int & object_is_primary)
 {
