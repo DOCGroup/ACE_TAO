@@ -1,3 +1,10 @@
+Mon Aug  2 15:33:27 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Containers_T.cpp (ACE_Fixed_Set_Iterator::remove()): Had to
+	  qualify 'iterated_items_' with 'this->' to make it visible in this
+	  class now that iterated_items_ is in an inherited class. This per
+	  HP-UX aC++, citing [temp.dep], 14.6.2(3) in the C++ Standard.
+
 Mon Aug  2 15:20:37 2004  Steve Huston  <shuston@riverace.com>
 
 	* apps/JAWS3/jaws3/Event_Result.h: Added #include
