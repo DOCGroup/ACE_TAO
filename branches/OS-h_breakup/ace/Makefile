@@ -669,6 +669,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -701,7 +702,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   OS_Thread_Adapter.h \
   Base_Thread_Adapter.h \
@@ -763,6 +764,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_TLI.h \
@@ -778,7 +780,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h
 
 .obj/OS_Memory.o .obj/OS_Memory.so .shobj/OS_Memory.o .shobj/OS_Memory.so: OS_Memory.cpp \
@@ -935,6 +937,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -967,7 +970,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h
 
 .obj/OS_Log_Msg_Attributes.o .obj/OS_Log_Msg_Attributes.so .shobj/OS_Log_Msg_Attributes.o .shobj/OS_Log_Msg_Attributes.so: OS_Log_Msg_Attributes.cpp \
@@ -1000,56 +1003,9 @@ endif # GHS
   ace_wchar.inl \
   ace_new.h \
   OS_Export.h \
-  OS.h \
-  ace_dlfcn.h \
-  ace_fcntl.h \
+  Object_Manager_Base.h \
   ace_sys_types.h \
-  ace_poll.h \
-  ace_pwd.h \
-  ace_signal.h \
-  ace_stdio.h \
-  ace_stdlib.h \
-  ace_stropts.h \
-  ace_threads.h \
-  ace_time.h \
-  ace_sys_resource.h \
-  ace_sys_sem.h \
-  ace_sys_socket.h \
-  ace_sys_stat.h \
-  ace_sys_utsname.h \
-  ace_sys_wait.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  ace_errno.h \
-  OS_Errno.inl \
-  ace_dirent.h \
-  ace_unistd.h \
-  Basic_Types.h \
-  ACE_export.h \
-  ace_limits.h \
-  Basic_Types.i \
-  OS_Dirent.inl \
-  OS_String.h \
-  OS_String.inl \
-  ace_string.h \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  Sched_Params.h \
-  Sched_Params.i \
-  Trace.h \
-  OS.i \
-  ace_sys_mman.h \
-  ace_sys_msg.h \
-  ace_sys_shm.h \
-  ace_sys_uio.h \
-  Main_Macros.h
+  Global_Macros.h
 
 .obj/Sched_Params.o .obj/Sched_Params.so .shobj/Sched_Params.o .shobj/Sched_Params.so: Sched_Params.cpp \
   Sched_Params.h \
@@ -1154,6 +1110,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -1184,7 +1141,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -1302,6 +1259,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -1326,7 +1284,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -1497,6 +1455,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -1519,7 +1478,7 @@ endif # GHS
   OS.i \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h
 
 .obj/Argv_Type_Converter.o .obj/Argv_Type_Converter.so .shobj/Argv_Type_Converter.o .shobj/Argv_Type_Converter.so: Argv_Type_Converter.cpp \
@@ -1580,6 +1539,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -1610,7 +1570,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -1761,15 +1721,15 @@ endif # GHS
   streams.h \
   ace_stdio.h \
   OS_Log_Msg_Attributes.inl \
-  Unbounded_Queue.h \
-  OS_Memory.h \
   OS_Errno.h \
   ace_errno.h \
   OS_Errno.inl \
+  Trace.h \
+  Unbounded_Queue.h \
+  OS_Memory.h \
   OS_Memory.inl \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
-  Trace.h \
   Containers_T.i \
   Containers_T.cpp
 
@@ -1809,6 +1769,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -1839,7 +1800,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -1977,6 +1938,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -2007,7 +1969,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -2210,6 +2172,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -2239,7 +2202,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -2315,6 +2278,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -2345,7 +2309,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h
 
 .obj/Framework_Component.o .obj/Framework_Component.so .shobj/Framework_Component.o .shobj/Framework_Component.so: Framework_Component.cpp \
@@ -2381,6 +2345,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -2411,7 +2376,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -2492,6 +2457,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -2522,7 +2488,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -2574,6 +2540,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -2604,7 +2571,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -2719,6 +2686,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -2748,7 +2716,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -2959,6 +2927,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -2988,7 +2957,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h
 
 .obj/Init_ACE.o .obj/Init_ACE.so .shobj/Init_ACE.o .shobj/Init_ACE.so: Init_ACE.cpp \
@@ -3006,23 +2975,36 @@ endif # GHS
   ace_new.h \
   Init_ACE.i \
   Object_Manager.h \
-  OS.h \
-  ace_dlfcn.h \
-  ace_fcntl.h \
+  Object_Manager_Base.h \
   ace_sys_types.h \
+  OS_Export.h \
+  Global_Macros.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  ace_signal.h \
+  ace_threads.h \
+  Event_Handler.i \
+  ace_dlfcn.h \
+  Service_Object.i \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_fcntl.h \
   ace_poll.h \
   ace_pwd.h \
-  ace_signal.h \
   ace_stdio.h \
   ace_stdlib.h \
   ace_stropts.h \
-  OS_Export.h \
-  ace_threads.h \
   ace_time.h \
   ace_sys_resource.h \
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -3045,26 +3027,14 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   Sched_Params.h \
   Sched_Params.i \
-  Trace.h \
   OS.i \
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
   Main_Macros.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
-  ACE.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -3123,6 +3093,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -3146,7 +3117,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h
 
 .obj/Message_Block.o .obj/Message_Block.so .shobj/Message_Block.o .shobj/Message_Block.so: Message_Block.cpp \
@@ -3183,6 +3154,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -3213,7 +3185,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -3296,7 +3268,7 @@ endif # GHS
 .obj/Object_Manager.o .obj/Object_Manager.so .shobj/Object_Manager.o .shobj/Object_Manager.so: Object_Manager.cpp \
   Object_Manager.h \
   pre.h \
-  OS.h \
+  Object_Manager_Base.h \
   config-all.h \
   config.h \
   config-linux.h \
@@ -3306,22 +3278,36 @@ endif # GHS
   ace_wchar.h \
   ace_wchar.inl \
   ace_new.h \
-  ace_dlfcn.h \
-  ace_fcntl.h \
   ace_sys_types.h \
+  OS_Export.h \
+  Global_Macros.h \
+  Service_Object.h \
+  Shared_Object.h \
+  ACE_export.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  ace_signal.h \
+  ace_threads.h \
+  Event_Handler.i \
+  ace_dlfcn.h \
+  Service_Object.i \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_fcntl.h \
   ace_poll.h \
   ace_pwd.h \
-  ace_signal.h \
   ace_stdio.h \
   ace_stdlib.h \
   ace_stropts.h \
-  OS_Export.h \
-  ace_threads.h \
   ace_time.h \
   ace_sys_resource.h \
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -3331,7 +3317,6 @@ endif # GHS
   ace_dirent.h \
   ace_unistd.h \
   Basic_Types.h \
-  ACE_export.h \
   ace_limits.h \
   Basic_Types.i \
   OS_Dirent.inl \
@@ -3345,26 +3330,14 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   Sched_Params.h \
   Sched_Params.i \
-  Trace.h \
   OS.i \
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
   Main_Macros.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
-  ACE.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -3482,6 +3455,70 @@ endif # GHS
   Containers_T.i \
   Containers_T.cpp
 
+.obj/Object_Manager_Base.o .obj/Object_Manager_Base.so .shobj/Object_Manager_Base.o .shobj/Object_Manager_Base.so: Object_Manager_Base.cpp \
+  Object_Manager_Base.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  ace_sys_types.h \
+  OS_Export.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_threads.h \
+  ace_signal.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stdio.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_uio.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ACE_export.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  Trace.h \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  Main_Macros.h
+
 .obj/Registry.o .obj/Registry.so .shobj/Registry.o .shobj/Registry.so: Registry.cpp \
   Registry.h \
   pre.h \
@@ -3511,6 +3548,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -3543,7 +3581,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h
 
 .obj/String_Base_Const.o .obj/String_Base_Const.so .shobj/String_Base_Const.o .shobj/String_Base_Const.so: String_Base_Const.cpp \
@@ -3595,6 +3633,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -3625,7 +3664,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -3725,6 +3764,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -3755,7 +3795,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -3828,6 +3868,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -3855,8 +3896,177 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h
+
+.obj/Filecache.o .obj/Filecache.so .shobj/Filecache.o .shobj/Filecache.so: Filecache.cpp \
+  Filecache.h \
+  pre.h \
+  Mem_Map.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_param.h \
+  ace_stdlib.h \
+  ace_sys_mman.h \
+  ace_stdio.h \
+  ace_fcntl.h \
+  ace_sys_types.h \
+  Global_Macros.h \
+  OS_Export.h \
+  Default_Constants.h \
+  Mem_Map.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stropts.h \
+  ace_threads.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_uio.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  Object_Manager_Base.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch.h \
+  Synch.i \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Log_Msg.h \
+  Log_Priority.h \
+  Hash_Map_Manager.h \
+  Hash_Map_Manager_T.h \
+  Functor.h \
+  Functor.i \
+  Functor_T.h \
+  Functor_T.i \
+  Functor_T.cpp \
+  Hash_Map_Manager_T.i \
+  Hash_Map_Manager_T.cpp \
+  Service_Config.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  Event_Handler.i \
+  Service_Object.i \
+  Signal.h \
+  Signal.i \
+  Unbounded_Queue.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Malloc_Base.h \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  SString.h \
+  String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  String_Base.cpp \
+  Malloc.h \
+  Malloc.i \
+  Malloc_T.h \
+  Malloc_Allocator.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp \
+  Memory_Pool.h \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Memory_Pool.i \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.i \
+  Service_Config.i \
+  Reactor.h \
+  Handle_Set.h \
+  Handle_Set.i \
+  Timer_Queue.h \
+  Timer_Queue_T.h \
+  Test_and_Set.h \
+  Test_and_Set.i \
+  Test_and_Set.cpp \
+  Timer_Queue_T.i \
+  Timer_Queue_T.cpp \
+  Reactor.i \
+  Reactor_Impl.h \
+  Svc_Conf_Tokens.h \
+  Object_Manager.h \
+  Object_Manager.i \
+  Managed_Object.h \
+  Managed_Object.i \
+  Managed_Object.cpp
 
 .obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp \
   Dump.h \
@@ -3873,24 +4083,37 @@ endif # GHS
   ACE_export.h \
   Dump_T.h \
   Dump_T.cpp \
+  Trace.h \
   Object_Manager.h \
-  OS.h \
-  ace_dlfcn.h \
-  ace_fcntl.h \
+  Object_Manager_Base.h \
   ace_sys_types.h \
+  OS_Export.h \
+  Global_Macros.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  ace_signal.h \
+  ace_threads.h \
+  Event_Handler.i \
+  ace_dlfcn.h \
+  Service_Object.i \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  OS.h \
+  ace_fcntl.h \
   ace_poll.h \
   ace_pwd.h \
-  ace_signal.h \
   ace_stdio.h \
   ace_stdlib.h \
   ace_stropts.h \
-  OS_Export.h \
-  ace_threads.h \
   ace_time.h \
   ace_sys_resource.h \
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -3913,26 +4136,14 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Default_Constants.h \
-  Global_Macros.h \
   Min_Max.h \
   Sched_Params.h \
   Sched_Params.i \
-  Trace.h \
   OS.i \
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
   Main_Macros.h \
-  Service_Object.h \
-  Shared_Object.h \
-  Shared_Object.i \
-  Event_Handler.h \
-  Event_Handler.i \
-  Service_Object.i \
-  ACE.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -3998,6 +4209,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -4028,7 +4240,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -4182,6 +4394,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -4212,7 +4425,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -4284,6 +4497,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -4314,7 +4528,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -4388,6 +4602,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -4408,7 +4623,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -4457,6 +4672,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -4487,7 +4703,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -4608,48 +4824,8 @@ endif # GHS
   streams.h \
   ace_stdio.h \
   OS_Log_Msg_Attributes.inl \
-  OS.h \
-  ace_dlfcn.h \
-  ace_fcntl.h \
-  ace_poll.h \
-  ace_pwd.h \
-  ace_stropts.h \
-  ace_time.h \
-  ace_sys_resource.h \
-  ace_sys_sem.h \
-  ace_sys_socket.h \
-  ace_sys_stat.h \
-  ace_sys_utsname.h \
-  ace_sys_wait.h \
-  OS_Dirent.h \
-  OS_Errno.h \
-  ace_errno.h \
-  OS_Errno.inl \
-  ace_dirent.h \
-  ace_unistd.h \
-  Basic_Types.h \
-  ace_limits.h \
-  Basic_Types.i \
-  OS_Dirent.inl \
-  OS_String.h \
-  OS_String.inl \
-  ace_string.h \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Global_Macros.h \
-  Min_Max.h \
-  Sched_Params.h \
-  Sched_Params.i \
-  OS.i \
-  ace_sys_mman.h \
-  ace_sys_msg.h \
-  ace_sys_shm.h \
-  ace_sys_uio.h \
-  Main_Macros.h
+  Object_Manager_Base.h \
+  Global_Macros.h
 
 .obj/Activation_Queue.o .obj/Activation_Queue.so .shobj/Activation_Queue.o .shobj/Activation_Queue.so: Activation_Queue.cpp \
   Activation_Queue.h \
@@ -4685,6 +4861,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -4715,7 +4892,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.i \
   Thread.h \
@@ -4828,6 +5005,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -4857,7 +5035,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -4962,6 +5140,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -4992,7 +5171,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -5086,6 +5265,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -5116,7 +5296,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -5181,6 +5361,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -5211,7 +5392,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -5258,6 +5439,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -5288,7 +5470,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -5361,6 +5543,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -5391,7 +5574,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -5457,6 +5640,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -5488,7 +5672,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   RW_Process_Mutex.inl \
   Log_Msg.h \
@@ -5542,6 +5726,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -5573,7 +5758,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Log_Msg.h \
   ace_sys_param.h \
@@ -5616,6 +5801,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -5646,7 +5832,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -5702,6 +5888,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -5732,7 +5919,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -5840,6 +6027,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -5871,7 +6059,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Thread_Manager.h \
   Thread.h \
@@ -5968,6 +6156,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -5999,7 +6188,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Thread_Control.inl \
   Synch.h \
@@ -6073,6 +6262,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -6105,7 +6295,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Thread_Control.inl \
   Thread_Manager.h \
@@ -6208,6 +6398,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -6238,7 +6429,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -6306,6 +6497,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -6336,7 +6528,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -6503,6 +6695,7 @@ endif # GHS
   ace_sys_resource.h \
   ace_sys_sem.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -6530,7 +6723,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.i \
   Thread.h \
@@ -6735,6 +6928,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -6757,7 +6951,7 @@ endif # GHS
   OS.i \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -6871,6 +7065,7 @@ endif # GHS
   ace_sys_resource.h \
   ace_sys_sem.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -6898,7 +7093,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -7097,6 +7292,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -7126,7 +7322,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -7274,6 +7470,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -7304,7 +7501,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -7403,6 +7600,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -7433,7 +7631,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -7562,6 +7760,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -7592,7 +7791,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -7752,6 +7951,7 @@ endif # GHS
   ace_sys_resource.h \
   ace_sys_sem.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -7779,7 +7979,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -7955,6 +8155,7 @@ endif # GHS
   ace_sys_resource.h \
   ace_sys_sem.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -7982,7 +8183,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -8221,6 +8422,7 @@ endif # GHS
   ace_sys_resource.h \
   ace_sys_sem.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -8244,7 +8446,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h
 
 .obj/IPC_SAP.o .obj/IPC_SAP.so .shobj/IPC_SAP.o .shobj/IPC_SAP.so: IPC_SAP.cpp \
@@ -8279,6 +8481,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -8309,7 +8512,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Log_Msg.h \
   ace_sys_param.h \
@@ -8355,6 +8558,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -8385,7 +8589,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -8448,6 +8652,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -8478,7 +8683,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -8549,6 +8754,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -8579,7 +8785,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -8649,6 +8855,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -8679,7 +8886,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -8751,6 +8958,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -8781,7 +8989,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -8848,6 +9056,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -8878,7 +9087,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -8945,6 +9154,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -8975,7 +9185,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9036,6 +9246,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -9066,7 +9277,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9143,6 +9354,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -9173,7 +9385,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9258,6 +9470,7 @@ endif # GHS
   ace_sys_resource.h \
   ace_sys_sem.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -9283,7 +9496,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9377,6 +9590,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -9407,7 +9621,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9472,6 +9686,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -9502,7 +9717,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9587,6 +9802,7 @@ endif # GHS
   ace_sys_resource.h \
   ace_sys_sem.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -9614,7 +9830,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9676,6 +9892,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -9706,7 +9923,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9765,6 +9982,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -9795,7 +10013,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -9852,6 +10070,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -9882,7 +10101,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -10027,6 +10246,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -10057,7 +10277,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   DEV_Addr.h \
   Addr.h \
@@ -10141,6 +10361,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -10171,7 +10392,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   DEV_Addr.h \
   Addr.h \
@@ -10234,6 +10455,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -10264,7 +10486,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   DEV_Addr.h \
   Addr.h \
@@ -10325,6 +10547,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -10355,7 +10578,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   ace_sys_param.h \
   FIFO.i \
@@ -10399,6 +10622,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -10429,7 +10653,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   ace_sys_param.h \
   FIFO.i \
@@ -10488,6 +10712,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -10518,7 +10743,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   ace_sys_param.h \
   FIFO.i \
@@ -10577,6 +10802,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -10607,7 +10833,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   ace_sys_param.h \
   FIFO.i \
@@ -10666,6 +10892,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -10696,7 +10923,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   ace_sys_param.h \
   FIFO.i \
@@ -10756,6 +10983,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -10786,7 +11014,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   FILE_Addr.i \
   Lib_Find.h \
@@ -10831,6 +11059,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -10861,7 +11090,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   FILE_Addr.h \
   Addr.h \
@@ -10906,6 +11135,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -10936,7 +11166,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   FILE_Addr.h \
   Addr.h \
@@ -10999,6 +11229,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -11029,7 +11260,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   FILE_Addr.h \
   Addr.h \
@@ -11089,6 +11320,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -11119,7 +11351,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Log_Msg.h \
   ace_sys_param.h \
@@ -11141,7 +11373,69 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  ace_new.h
+  ace_new.h \
+  ACE_export.h \
+  ace_sys_types.h \
+  Time_Value.h \
+  OS_Export.h \
+  Time_Value.inl \
+  streams.h \
+  IOStream_T.h \
+  INET_Addr.h \
+  Addr.h \
+  Addr.i \
+  ace_sys_socket.h \
+  ace_stdio.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  INET_Addr.i \
+  Trace.h \
+  Handle_Set.h \
+  Global_Macros.h \
+  Handle_Set.i \
+  IOStream_T.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  ace_threads.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_stat.h \
+  ace_sys_uio.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Default_Constants.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  Object_Manager_Base.h \
+  Main_Macros.h \
+  IOStream_T.cpp
 
 .obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp \
   Pipe.h \
@@ -11177,6 +11471,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -11207,7 +11502,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -11276,6 +11571,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -11306,7 +11602,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -11402,6 +11698,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -11432,7 +11729,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -11534,6 +11831,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -11564,7 +11862,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   SPIPE_Addr.h \
   Addr.h \
@@ -11675,6 +11973,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -11705,7 +12004,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   SPIPE_Addr.h \
   Addr.h \
@@ -11817,6 +12116,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -11847,7 +12147,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   SPIPE_Addr.h \
   Addr.h \
@@ -11959,6 +12259,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -11989,7 +12290,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   SPIPE_Addr.h \
   Addr.h \
@@ -12100,6 +12401,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -12130,7 +12432,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -12178,6 +12480,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -12208,7 +12511,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -12266,6 +12569,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -12296,7 +12600,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -12352,6 +12656,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -12382,7 +12687,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -12437,6 +12742,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -12467,7 +12773,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -12520,6 +12826,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -12550,7 +12857,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Addr.h \
   Addr.i
@@ -12589,6 +12896,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -12619,7 +12927,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Addr.h \
   Addr.i \
@@ -12668,6 +12976,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -12698,7 +13007,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Addr.h \
   Addr.i \
@@ -12745,6 +13054,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -12775,7 +13085,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Addr.h \
   Addr.i \
@@ -12830,6 +13140,7 @@ endif # GHS
   ace_sys_resource.h \
   ace_sys_sem.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -12852,7 +13163,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   DEV.i \
   DEV_IO.i \
@@ -12922,6 +13233,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -12951,7 +13263,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -13001,6 +13313,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -13031,7 +13344,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -13199,6 +13512,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -13229,7 +13543,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -13395,6 +13709,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -13425,7 +13740,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -13591,6 +13906,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -13621,7 +13937,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -13761,6 +14077,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -13791,7 +14108,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -13853,6 +14170,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -13883,7 +14201,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -14023,6 +14341,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -14053,7 +14372,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -14184,6 +14503,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -14214,7 +14534,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -14329,6 +14649,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -14359,7 +14680,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -14523,6 +14844,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -14549,7 +14871,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Stats.h \
   ACE.h \
@@ -14637,6 +14959,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -14667,7 +14990,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -14718,6 +15041,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -14750,7 +15074,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Memory_Pool.h \
   ACE.h \
@@ -14875,6 +15199,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -14907,7 +15232,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h
 
 .obj/Timer_Hash.o .obj/Timer_Hash.so .shobj/Timer_Hash.o .shobj/Timer_Hash.so: Timer_Hash.cpp \
@@ -14947,6 +15272,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -14977,7 +15303,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.i \
   Thread.h \
@@ -15068,6 +15394,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -15098,7 +15425,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.i \
   Thread.h \
@@ -15183,6 +15510,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -15213,7 +15541,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.i \
   Thread.h \
@@ -15294,15 +15622,15 @@ endif # GHS
   streams.h \
   ace_stdio.h \
   OS_Log_Msg_Attributes.inl \
-  Unbounded_Queue.h \
-  OS_Memory.h \
   OS_Errno.h \
   ace_errno.h \
   OS_Errno.inl \
+  Trace.h \
+  Unbounded_Queue.h \
+  OS_Memory.h \
   OS_Memory.inl \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
-  Trace.h \
   Containers_T.i \
   Containers_T.cpp \
   Timer_Queue.h \
@@ -15319,6 +15647,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -15341,7 +15670,7 @@ endif # GHS
   OS.i \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -15416,6 +15745,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -15446,7 +15776,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.i \
   Thread.h \
@@ -15527,6 +15857,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -15556,7 +15887,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Lib_Find.h \
   Lib_Find.i
@@ -15602,6 +15933,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -15632,7 +15964,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -15760,6 +16092,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -15790,7 +16123,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -15960,6 +16293,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -15990,7 +16324,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -16167,6 +16501,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -16197,7 +16532,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -16353,6 +16688,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -16383,7 +16719,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -16456,6 +16792,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -16486,7 +16823,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -16563,6 +16900,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -16593,7 +16931,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -16737,6 +17075,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -16767,7 +17106,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -16953,6 +17292,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -16985,7 +17325,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Object_Manager.h \
   Service_Object.h \
@@ -17156,6 +17496,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -17178,7 +17519,7 @@ endif # GHS
   OS.i \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -17345,6 +17686,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -17375,7 +17717,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -17512,6 +17854,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -17539,7 +17882,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -17642,6 +17985,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -17669,7 +18013,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -17790,6 +18134,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -17820,7 +18165,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -17933,6 +18278,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -17962,7 +18308,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -18046,6 +18392,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -18076,7 +18423,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -18209,6 +18556,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -18239,7 +18587,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Synch_T.h \
   Synch_T.i \
@@ -18375,6 +18723,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -18405,7 +18754,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -18506,6 +18855,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -18536,7 +18886,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -18648,6 +18998,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -18678,7 +19029,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -18755,6 +19106,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -18785,7 +19137,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -18879,6 +19231,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -18906,7 +19259,7 @@ endif # GHS
   OS.i \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Log_Msg.h \
   Log_Priority.h \
@@ -18948,6 +19301,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -18978,7 +19332,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -19080,6 +19434,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -19110,7 +19465,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -19206,6 +19561,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -19236,7 +19592,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -19331,6 +19687,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -19361,7 +19718,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -19486,6 +19843,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -19516,7 +19874,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -19564,6 +19922,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -19594,7 +19953,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -19646,6 +20005,7 @@ endif # GHS
   ace_sys_sem.h \
   ace_sys_socket.h \
   ace_sys_stat.h \
+  ace_sys_uio.h \
   ace_sys_utsname.h \
   ace_sys_wait.h \
   OS_Dirent.h \
@@ -19676,7 +20036,7 @@ endif # GHS
   ace_sys_mman.h \
   ace_sys_msg.h \
   ace_sys_shm.h \
-  ace_sys_uio.h \
+  Object_Manager_Base.h \
   Main_Macros.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -19692,5 +20052,1682 @@ endif # GHS
   ace_sys_ipc.h \
   SV_Shared_Memory.i \
   Shared_Memory_SV.i
+
+.obj/Local_Tokens.o .obj/Local_Tokens.so .shobj/Local_Tokens.o .shobj/Local_Tokens.so: Local_Tokens.cpp \
+  Local_Tokens.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  Local_Tokens.i
+
+.obj/Remote_Tokens.o .obj/Remote_Tokens.so .shobj/Remote_Tokens.o .shobj/Remote_Tokens.so: Remote_Tokens.cpp \
+  Remote_Tokens.h \
+  pre.h \
+  INET_Addr.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  Addr.h \
+  ACE_export.h \
+  Addr.i \
+  ace_sys_socket.h \
+  ace_stdio.h \
+  ace_sys_types.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  INET_Addr.i \
+  Trace.h \
+  SOCK_Connector.h \
+  SOCK_Stream.h \
+  SOCK_IO.h \
+  SOCK.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_stat.h \
+  ace_sys_uio.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  Object_Manager_Base.h \
+  Main_Macros.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
+  IPC_SAP.h \
+  IPC_SAP.i \
+  SOCK.i \
+  SOCK_IO.i \
+  SOCK_Stream.i \
+  SOCK_Connector.i \
+  Synch_Options.h \
+  Synch_Options.i \
+  Local_Tokens.h \
+  Local_Tokens.i \
+  Token_Request_Reply.h \
+  Token_Request_Reply.i \
+  Remote_Tokens.i \
+  Singleton.h \
+  Synch.h \
+  Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Log_Msg.h \
+  ace_sys_param.h \
+  Log_Priority.h \
+  Singleton.i \
+  Singleton.cpp \
+  Object_Manager.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  Event_Handler.i \
+  Service_Object.i \
+  Object_Manager.i \
+  Managed_Object.h \
+  Managed_Object.i \
+  Managed_Object.cpp
+
+.obj/Token_Collection.o .obj/Token_Collection.so .shobj/Token_Collection.o .shobj/Token_Collection.so: Token_Collection.cpp \
+  Token_Collection.h \
+  pre.h \
+  Map_Manager.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  Synch.h \
+  ace_threads.h \
+  ace_sys_types.h \
+  OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stdio.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_uio.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  Trace.h \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  Object_Manager_Base.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Log_Msg.h \
+  ace_sys_param.h \
+  Log_Priority.h \
+  Map_Manager.i \
+  Map_Manager.cpp \
+  Malloc.h \
+  Malloc.i \
+  Malloc_T.h \
+  Malloc_Allocator.h \
+  Malloc_Base.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp \
+  Memory_Pool.h \
+  Event_Handler.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Unbounded_Set.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Memory_Pool.i \
+  Service_Config.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Service_Object.i \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  SString.h \
+  String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  String_Base.cpp \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.i \
+  Service_Config.i \
+  Reactor.h \
+  Handle_Set.h \
+  Handle_Set.i \
+  Timer_Queue.h \
+  Timer_Queue_T.h \
+  Test_and_Set.h \
+  Test_and_Set.i \
+  Test_and_Set.cpp \
+  Timer_Queue_T.i \
+  Timer_Queue_T.cpp \
+  Reactor.i \
+  Reactor_Impl.h \
+  Svc_Conf_Tokens.h \
+  Local_Tokens.h \
+  Local_Tokens.i \
+  Token_Collection.i
+
+.obj/Token_Invariants.o .obj/Token_Invariants.so .shobj/Token_Invariants.o .shobj/Token_Invariants.so: Token_Invariants.cpp \
+  Token_Invariants.h \
+  pre.h \
+  Synch.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  ace_threads.h \
+  ace_sys_types.h \
+  OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stdio.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_uio.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  Trace.h \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  Object_Manager_Base.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Log_Msg.h \
+  ace_sys_param.h \
+  Log_Priority.h \
+  Map_Manager.h \
+  Map_Manager.i \
+  Map_Manager.cpp \
+  Malloc.h \
+  Malloc.i \
+  Malloc_T.h \
+  Malloc_Allocator.h \
+  Malloc_Base.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp \
+  Memory_Pool.h \
+  Event_Handler.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Unbounded_Set.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Memory_Pool.i \
+  Service_Config.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Service_Object.i \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  SString.h \
+  String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  String_Base.cpp \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.i \
+  Service_Config.i \
+  Reactor.h \
+  Handle_Set.h \
+  Handle_Set.i \
+  Timer_Queue.h \
+  Timer_Queue_T.h \
+  Test_and_Set.h \
+  Test_and_Set.i \
+  Test_and_Set.cpp \
+  Timer_Queue_T.i \
+  Timer_Queue_T.cpp \
+  Reactor.i \
+  Reactor_Impl.h \
+  Svc_Conf_Tokens.h \
+  Local_Tokens.h \
+  Local_Tokens.i \
+  Object_Manager.h \
+  Object_Manager.i \
+  Managed_Object.h \
+  Managed_Object.i \
+  Managed_Object.cpp
+
+.obj/Token_Manager.o .obj/Token_Manager.so .shobj/Token_Manager.o .shobj/Token_Manager.so: Token_Manager.cpp \
+  Token_Manager.h \
+  pre.h \
+  Synch.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  ace_threads.h \
+  ace_sys_types.h \
+  OS_Export.h \
+  ace_signal.h \
+  ACE_export.h \
+  Global_Macros.h \
+  Synch.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_stdio.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_uio.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  Trace.h \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  Object_Manager_Base.h \
+  Main_Macros.h \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Log_Msg.h \
+  ace_sys_param.h \
+  Log_Priority.h \
+  Map_Manager.h \
+  Map_Manager.i \
+  Map_Manager.cpp \
+  Malloc.h \
+  Malloc.i \
+  Malloc_T.h \
+  Malloc_Allocator.h \
+  Malloc_Base.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp \
+  Memory_Pool.h \
+  Event_Handler.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Unbounded_Set.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Memory_Pool.i \
+  Service_Config.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Service_Object.i \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  SString.h \
+  String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  String_Base.cpp \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.i \
+  Service_Config.i \
+  Reactor.h \
+  Handle_Set.h \
+  Handle_Set.i \
+  Timer_Queue.h \
+  Timer_Queue_T.h \
+  Test_and_Set.h \
+  Test_and_Set.i \
+  Test_and_Set.cpp \
+  Timer_Queue_T.i \
+  Timer_Queue_T.cpp \
+  Reactor.i \
+  Reactor_Impl.h \
+  Svc_Conf_Tokens.h \
+  Local_Tokens.h \
+  Local_Tokens.i \
+  Token_Manager.i \
+  Object_Manager.h \
+  Object_Manager.i \
+  Managed_Object.h \
+  Managed_Object.i \
+  Managed_Object.cpp
+
+.obj/Token_Request_Reply.o .obj/Token_Request_Reply.so .shobj/Token_Request_Reply.o .shobj/Token_Request_Reply.so: Token_Request_Reply.cpp \
+  Token_Request_Reply.h \
+  pre.h \
+  Local_Tokens.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  Local_Tokens.i \
+  Time_Value.h \
+  OS_Export.h \
+  ACE_export.h \
+  Time_Value.inl \
+  Token_Request_Reply.i
+
+.obj/Local_Name_Space.o .obj/Local_Name_Space.so .shobj/Local_Name_Space.o .shobj/Local_Name_Space.so: Local_Name_Space.cpp \
+  ACE.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_sys_types.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdio.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_uio.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  Object_Manager_Base.h \
+  Main_Macros.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
+  Local_Name_Space.h \
+  SString.h \
+  String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
+  Malloc.h \
+  Log_Msg.h \
+  ace_sys_param.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Malloc.i \
+  Malloc_T.h \
+  Synch.h \
+  Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Malloc_Allocator.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp \
+  Memory_Pool.h \
+  Event_Handler.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Unbounded_Set.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Memory_Pool.i \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.i \
+  Local_Name_Space_T.h \
+  Name_Space.h \
+  Name_Proxy.h \
+  INET_Addr.h \
+  Addr.h \
+  Addr.i \
+  INET_Addr.i \
+  SOCK_Connector.h \
+  SOCK_Stream.h \
+  SOCK_IO.h \
+  SOCK.h \
+  IPC_SAP.h \
+  IPC_SAP.i \
+  SOCK.i \
+  SOCK_IO.i \
+  SOCK_Stream.i \
+  SOCK_Connector.i \
+  Service_Config.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Service_Object.i \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Service_Config.i \
+  Reactor.h \
+  Handle_Set.h \
+  Handle_Set.i \
+  Timer_Queue.h \
+  Timer_Queue_T.h \
+  Test_and_Set.h \
+  Test_and_Set.i \
+  Test_and_Set.cpp \
+  Timer_Queue_T.i \
+  Timer_Queue_T.cpp \
+  Reactor.i \
+  Reactor_Impl.h \
+  Svc_Conf_Tokens.h \
+  Synch_Options.h \
+  Synch_Options.i \
+  Name_Request_Reply.h \
+  Naming_Context.h \
+  Containers.h \
+  Containers.i \
+  Containers_T.h \
+  Array_Base.h \
+  Array_Base.inl \
+  Array_Base.cpp \
+  Containers_T.i \
+  Containers_T.cpp \
+  Hash_Map_Manager.h \
+  Hash_Map_Manager_T.h \
+  Functor.h \
+  Functor.i \
+  Functor_T.h \
+  Functor_T.i \
+  Functor_T.cpp \
+  Hash_Map_Manager_T.i \
+  Hash_Map_Manager_T.cpp \
+  Local_Name_Space_T.cpp \
+  RW_Process_Mutex.h \
+  File_Lock.h \
+  File_Lock.inl \
+  RW_Process_Mutex.inl
+
+.obj/Name_Proxy.o .obj/Name_Proxy.so .shobj/Name_Proxy.o .shobj/Name_Proxy.so: Name_Proxy.cpp \
+  Name_Proxy.h \
+  pre.h \
+  INET_Addr.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  Addr.h \
+  ACE_export.h \
+  Addr.i \
+  ace_sys_socket.h \
+  ace_stdio.h \
+  ace_sys_types.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  INET_Addr.i \
+  Trace.h \
+  SOCK_Connector.h \
+  SOCK_Stream.h \
+  SOCK_IO.h \
+  SOCK.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_stat.h \
+  ace_sys_uio.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  Object_Manager_Base.h \
+  Main_Macros.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
+  IPC_SAP.h \
+  IPC_SAP.i \
+  SOCK.i \
+  SOCK_IO.i \
+  SOCK_Stream.i \
+  SOCK_Connector.i \
+  Service_Config.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Event_Handler.h \
+  Event_Handler.i \
+  Service_Object.i \
+  Signal.h \
+  Synch.h \
+  Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Log_Msg.h \
+  ace_sys_param.h \
+  Log_Priority.h \
+  Signal.i \
+  Unbounded_Queue.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Malloc_Base.h \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  SString.h \
+  String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  String_Base.cpp \
+  Malloc.h \
+  Malloc.i \
+  Malloc_T.h \
+  Malloc_Allocator.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp \
+  Memory_Pool.h \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Memory_Pool.i \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.i \
+  Service_Config.i \
+  Reactor.h \
+  Handle_Set.h \
+  Handle_Set.i \
+  Timer_Queue.h \
+  Timer_Queue_T.h \
+  Test_and_Set.h \
+  Test_and_Set.i \
+  Test_and_Set.cpp \
+  Timer_Queue_T.i \
+  Timer_Queue_T.cpp \
+  Reactor.i \
+  Reactor_Impl.h \
+  Svc_Conf_Tokens.h \
+  Synch_Options.h \
+  Synch_Options.i \
+  Name_Request_Reply.h
+
+.obj/Name_Request_Reply.o .obj/Name_Request_Reply.so .shobj/Name_Request_Reply.o .shobj/Name_Request_Reply.so: Name_Request_Reply.cpp \
+  Name_Request_Reply.h \
+  pre.h \
+  Time_Value.h \
+  OS_Export.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  ACE_export.h \
+  Time_Value.inl \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  ace_sys_param.h \
+  ace_stdlib.h \
+  Log_Msg.h \
+  Log_Priority.h \
+  Default_Constants.h \
+  ace_threads.h \
+  ace_sys_types.h \
+  ace_signal.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  ace_stdio.h \
+  OS_Log_Msg_Attributes.inl \
+  Trace.h \
+  Global_Macros.h \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h
+
+.obj/Name_Space.o .obj/Name_Space.so .shobj/Name_Space.o .shobj/Name_Space.so: Name_Space.cpp \
+  Name_Space.h \
+  pre.h \
+  ACE.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_sys_types.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdio.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_uio.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  Object_Manager_Base.h \
+  Main_Macros.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
+  SString.h \
+  String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
+  Malloc.h \
+  Log_Msg.h \
+  ace_sys_param.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Malloc.i \
+  Malloc_T.h \
+  Synch.h \
+  Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Malloc_Allocator.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp \
+  Memory_Pool.h \
+  Event_Handler.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Unbounded_Set.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Memory_Pool.i \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.i \
+  Name_Proxy.h \
+  INET_Addr.h \
+  Addr.h \
+  Addr.i \
+  INET_Addr.i \
+  SOCK_Connector.h \
+  SOCK_Stream.h \
+  SOCK_IO.h \
+  SOCK.h \
+  IPC_SAP.h \
+  IPC_SAP.i \
+  SOCK.i \
+  SOCK_IO.i \
+  SOCK_Stream.i \
+  SOCK_Connector.i \
+  Service_Config.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Service_Object.i \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Service_Config.i \
+  Reactor.h \
+  Handle_Set.h \
+  Handle_Set.i \
+  Timer_Queue.h \
+  Timer_Queue_T.h \
+  Test_and_Set.h \
+  Test_and_Set.i \
+  Test_and_Set.cpp \
+  Timer_Queue_T.i \
+  Timer_Queue_T.cpp \
+  Reactor.i \
+  Reactor_Impl.h \
+  Svc_Conf_Tokens.h \
+  Synch_Options.h \
+  Synch_Options.i \
+  Name_Request_Reply.h
+
+.obj/Naming_Context.o .obj/Naming_Context.so .shobj/Naming_Context.o .shobj/Naming_Context.so: Naming_Context.cpp \
+  Get_Opt.h \
+  pre.h \
+  SString.h \
+  String_Base.h \
+  ACE.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_sys_types.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdio.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_uio.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  Object_Manager_Base.h \
+  Main_Macros.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
+  Malloc.h \
+  Log_Msg.h \
+  ace_sys_param.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Malloc.i \
+  Malloc_T.h \
+  Synch.h \
+  Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Malloc_Allocator.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp \
+  Memory_Pool.h \
+  Event_Handler.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Unbounded_Set.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Memory_Pool.i \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.i \
+  Containers.h \
+  Containers.i \
+  Containers_T.h \
+  Array_Base.h \
+  Array_Base.inl \
+  Array_Base.cpp \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Containers_T.i \
+  Containers_T.cpp \
+  Get_Opt.i \
+  Naming_Context.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Service_Object.i \
+  Name_Proxy.h \
+  INET_Addr.h \
+  Addr.h \
+  Addr.i \
+  INET_Addr.i \
+  SOCK_Connector.h \
+  SOCK_Stream.h \
+  SOCK_IO.h \
+  SOCK.h \
+  IPC_SAP.h \
+  IPC_SAP.i \
+  SOCK.i \
+  SOCK_IO.i \
+  SOCK_Stream.i \
+  SOCK_Connector.i \
+  Service_Config.h \
+  Service_Config.i \
+  Reactor.h \
+  Handle_Set.h \
+  Handle_Set.i \
+  Timer_Queue.h \
+  Timer_Queue_T.h \
+  Test_and_Set.h \
+  Test_and_Set.i \
+  Test_and_Set.cpp \
+  Timer_Queue_T.i \
+  Timer_Queue_T.cpp \
+  Reactor.i \
+  Reactor_Impl.h \
+  Svc_Conf_Tokens.h \
+  Synch_Options.h \
+  Synch_Options.i \
+  Name_Request_Reply.h \
+  Name_Space.h \
+  Remote_Name_Space.h \
+  Local_Name_Space_T.h \
+  Local_Name_Space.h \
+  Hash_Map_Manager.h \
+  Hash_Map_Manager_T.h \
+  Functor.h \
+  Functor.i \
+  Functor_T.h \
+  Functor_T.i \
+  Functor_T.cpp \
+  Hash_Map_Manager_T.i \
+  Hash_Map_Manager_T.cpp \
+  Local_Name_Space_T.cpp \
+  Registry_Name_Space.h \
+  RW_Process_Mutex.h \
+  File_Lock.h \
+  File_Lock.inl \
+  RW_Process_Mutex.inl
+
+.obj/Registry_Name_Space.o .obj/Registry_Name_Space.so .shobj/Registry_Name_Space.o .shobj/Registry_Name_Space.so: Registry_Name_Space.cpp \
+  Registry_Name_Space.h \
+  pre.h \
+  OS.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_sys_types.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdio.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_uio.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ACE_export.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  Trace.h \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  Object_Manager_Base.h \
+  Main_Macros.h
+
+.obj/Remote_Name_Space.o .obj/Remote_Name_Space.so .shobj/Remote_Name_Space.o .shobj/Remote_Name_Space.so: Remote_Name_Space.cpp \
+  Remote_Name_Space.h \
+  pre.h \
+  ACE.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  ace_new.h \
+  Flag_Manip.h \
+  ACE_export.h \
+  Flag_Manip.i \
+  Trace.h \
+  OS.h \
+  ace_dlfcn.h \
+  ace_fcntl.h \
+  ace_sys_types.h \
+  ace_poll.h \
+  ace_pwd.h \
+  ace_signal.h \
+  ace_stdio.h \
+  ace_stdlib.h \
+  ace_stropts.h \
+  OS_Export.h \
+  ace_threads.h \
+  ace_time.h \
+  ace_sys_resource.h \
+  ace_sys_sem.h \
+  ace_sys_socket.h \
+  ace_sys_stat.h \
+  ace_sys_uio.h \
+  ace_sys_utsname.h \
+  ace_sys_wait.h \
+  OS_Dirent.h \
+  OS_Errno.h \
+  ace_errno.h \
+  OS_Errno.inl \
+  ace_dirent.h \
+  ace_unistd.h \
+  Basic_Types.h \
+  ace_limits.h \
+  Basic_Types.i \
+  OS_Dirent.inl \
+  OS_String.h \
+  OS_String.inl \
+  ace_string.h \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  Sched_Params.h \
+  Sched_Params.i \
+  OS.i \
+  ace_sys_mman.h \
+  ace_sys_msg.h \
+  ace_sys_shm.h \
+  Object_Manager_Base.h \
+  Main_Macros.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  ace_ctype.h \
+  SString.h \
+  String_Base.h \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
+  Malloc.h \
+  Log_Msg.h \
+  ace_sys_param.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  streams.h \
+  OS_Log_Msg_Attributes.inl \
+  Malloc.i \
+  Malloc_T.h \
+  Synch.h \
+  Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Malloc_Allocator.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp \
+  Memory_Pool.h \
+  Event_Handler.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  ace_sys_ipc.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Unbounded_Set.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Memory_Pool.i \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.i \
+  Name_Proxy.h \
+  INET_Addr.h \
+  Addr.h \
+  Addr.i \
+  INET_Addr.i \
+  SOCK_Connector.h \
+  SOCK_Stream.h \
+  SOCK_IO.h \
+  SOCK.h \
+  IPC_SAP.h \
+  IPC_SAP.i \
+  SOCK.i \
+  SOCK_IO.i \
+  SOCK_Stream.i \
+  SOCK_Connector.i \
+  Service_Config.h \
+  Service_Object.h \
+  Shared_Object.h \
+  Shared_Object.i \
+  Service_Object.i \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Service_Config.i \
+  Reactor.h \
+  Handle_Set.h \
+  Handle_Set.i \
+  Timer_Queue.h \
+  Timer_Queue_T.h \
+  Test_and_Set.h \
+  Test_and_Set.i \
+  Test_and_Set.cpp \
+  Timer_Queue_T.i \
+  Timer_Queue_T.cpp \
+  Reactor.i \
+  Reactor_Impl.h \
+  Svc_Conf_Tokens.h \
+  Synch_Options.h \
+  Synch_Options.i \
+  Name_Request_Reply.h \
+  Name_Space.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
