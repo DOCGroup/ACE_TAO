@@ -1,3 +1,9 @@
+Wed Dec  8 16:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/LongSeqA.cpp:
+        * tao/LongSeqC.{h,cpp,inl}:
+          Regenerated
+
 Wed Dec  8 16:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOPC.{h,cpp,i,inl}:
