@@ -22,7 +22,7 @@ TAO_NamingContext::TAO_NamingContext (PortableServer::POA_ptr poa,
                                       const char *poa_id,
                                       size_t default_hash_table_size,
                                       int root)
-  : context_ (hash_table_size_),
+  : context_ (default_hash_table_size_),
     root_ (root),
     lock_ (0),
     poa_ (PortableServer::POA::_duplicate (poa)),
