@@ -2859,6 +2859,9 @@ public:
   static int connect (ACE_HANDLE handle, struct sockaddr *addr, int
                       addrlen); 
   static int closesocket (ACE_HANDLE s);
+  static struct passwd *getpwnam (const char *user);
+  static struct passwd *getpwnam_r (const char *name, struct passwd *pwent,
+                                    char *buffer, int buflen);
   static struct hostent *gethostbyaddr (const char *addr, int length,
                                         int type); 
   static struct hostent *gethostbyname (const char *name);

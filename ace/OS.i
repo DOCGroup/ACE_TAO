@@ -3043,6 +3043,43 @@ ACE_OS::free (void *ptr)
   ::free (ACE_MALLOC_T (ptr));
 }
 
+// Accessors to PWD file.
+
+ACE_INLINE struct passwd *
+ACE_OS::getpwnam (const char *name)
+{
+#if !defined(ACE_LACKS_PWD_FUNCTIONS)
+# if !defined(ACE_WIN32)
+  return ::getpwnam(name);
+# else
+  ACE_NOTSUP_RETURN (0);
+# endif /* ACE_WIN32 */
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_LACKS_PWD_FUNCTIONS */
+}
+
+ACE_INLINE struct passwd *
+ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
+                    char *buffer, int buflen)
+{
+#if !defined(ACE_LACKS_PWD_FUNCTIONS)
+# if defined(ACE_HAS_REENTRANT_FUNCTIONS) && defined(ACE_MT_SAFE)
+#  if !defined(ACE_LACKS_PWD_REENTRANT_FUNCTIONS)
+  return ::getpwnam_r(name, pwent, buffer, buflen);
+#  else 
+  ACE_NOTSUP_RETURN (0);
+#  endif /* NOT ACE_LACKS_PWD_REENTRANT_FUNCTIONS */
+# else
+  ACE_NOTSUP_RETURN (0);
+# endif /* ACE_HAS_REENTRANT_FUNCTIONS */
+  ACE_NOTSUP_RETURN (0);
+#endif /* NOT ACE_LACKS_PWD_FUNCTIONS */
+}
+
+
+// DNS accessors.
+
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyaddr_r (const char *addr, int length, int type, 
 			 hostent *result, ACE_HOSTENT_DATA buffer, 
