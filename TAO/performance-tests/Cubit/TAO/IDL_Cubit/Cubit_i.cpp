@@ -23,7 +23,9 @@
 
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(IDL_Cubit, Cubit_Client, "Cubit_i.cpp,v 1.8 1999/07/07 15:01:28 irfan Exp")
+ACE_RCSID (IDL_Cubit,
+           Cubit_i,
+           "Cubit_i.cpp,v 1.8 1999/07/07 15:01:28 irfan Exp")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -450,7 +452,7 @@ void Cubit_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 
-void 
+void
 Cubit_i::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

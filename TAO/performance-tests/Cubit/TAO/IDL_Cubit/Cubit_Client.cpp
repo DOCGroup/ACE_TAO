@@ -15,7 +15,9 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(IDL_Cubit, Cubit_Client, "Cubit_Client.cpp,v 1.31 1999/08/04 07:15:14 nanbor Exp")
+ACE_RCSID (IDL_Cubit,
+           Cubit_Client,
+           "Cubit_Client.cpp,v 1.31 1999/08/04 07:15:14 nanbor Exp")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -1638,21 +1640,21 @@ Cubit_Client::run ()
 
           this->print_stats ("cube_any_struct",
                              elapsed_time);
-	}
+        }
 
       this->shutdown_server (this->shutdown_
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_TRY_EX (SHM)
-	{
-	  this->cubit_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
-	  ACE_TRY_CHECK_EX (SHM);
-	}
+        {
+          this->cubit_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (SHM);
+        }
       ACE_CATCHANY
-	{
-	  // Dont do anything..
-	}
+        {
+          // Dont do anything..
+        }
       ACE_ENDTRY;
     }
   ACE_CATCHANY
