@@ -1,0 +1,9 @@
+#
+# Makefile for building the ACE examples
+#
+
+DIRS = \
+        Log_Msg \
+        Map_Manager
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
