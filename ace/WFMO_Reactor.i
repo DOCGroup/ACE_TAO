@@ -863,7 +863,7 @@ ACE_WFMO_Reactor::notify (ACE_Event_Handler *event_handler,
                           ACE_Reactor_Mask mask,
                           ACE_Time_Value *timeout)
 {
-  return this->notify_handler_.notify (event_handler, mask, timeout);
+  return this->notify_handler_->notify (event_handler, mask, timeout);
 }
 
 ACE_INLINE int
