@@ -1,3 +1,10 @@
+Tue Aug 31 00:21:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-unixware-7.1.0.h:
+	* ace/config-unixware-7.1.0.udk.h:
+
+	  Removed vestigial ACE_HAS_LAZY_V definition.
+
 Tue Aug 31 00:17:45 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-unixware-7.1.0.h:
