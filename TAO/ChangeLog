@@ -1,3 +1,24 @@
+Tue Oct  8 11:56:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.i:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.i:
+	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.h:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.i:
+	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
+
+	  Removed sources left over from the old load balancer prototype.
+	  They are no longer used.
+
 Tue Oct  8 11:29:21 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
