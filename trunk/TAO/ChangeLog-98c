@@ -2,7 +2,14 @@ Tue Jul 28 11:09:35 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.cpp : 
 		Removed unnecessary commented code.
-
+	* tests/Cubit/TAO/Mt_Cubit/Task_Client.cpp:
+		Added argument processing code for option "-r" which 
+		enables the thread-per-rate test.
+	* tests/Cubit/TAO/MT_Cubit/client.cpp:
+		Added code so that the main thread waits on a condition
+		variable after activating the CB_20_HZ_CONSUMER thread so
+		that it finishes the argument processing.
+	
 Tue Jul 28 10:17:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
          * orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h:

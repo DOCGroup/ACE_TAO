@@ -74,6 +74,9 @@ Task_State::parse_args (int argc,char **argv)
     case 'x':
       shutdown_ = 1;
       break;
+    case 'r':
+      thread_per_rate_ = 1;
+      break;
     case 'd':
       datatype = ACE_OS::atoi (opts.optarg);
       switch (datatype)
