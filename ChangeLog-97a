@@ -1,3 +1,9 @@
+Thu May 15 17:40:06 1997    <irfan@TWOSTEP>
+
+	* ace/IOStream.h: Added /**/ after #include directives.
+	
+	* ace: Update Win32 makefiles to include UNICODE make option.
+
 Thu May 15 13:10:12 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* include/makeinclude/platform_osf1_4.0.GNU (CXX): Added
