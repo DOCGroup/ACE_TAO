@@ -111,14 +111,14 @@ PLUGGABLE_PROTOCOLS_FILES = \
   UIOP_Connector \
   UIOP_Acceptor \
   UIOP_Connect \
-  UIOP_Endpoint
-#  SHMIOP_Factory \
-#  SHMIOP_Profile \
-#  SHMIOP_Transport \
-#  SHMIOP_Connector \
-#  SHMIOP_Acceptor \
-#  SHMIOP_Connect \
-#  SHMIOP_Endpoint
+  UIOP_Endpoint \
+  SHMIOP_Factory \
+  SHMIOP_Profile \
+  SHMIOP_Transport \
+  SHMIOP_Connector \
+  SHMIOP_Acceptor \
+  SHMIOP_Connect \
+  SHMIOP_Endpoint
 
 PLUGGABLE_MESSAGING_FILES = \
   Pluggable_Messaging \
