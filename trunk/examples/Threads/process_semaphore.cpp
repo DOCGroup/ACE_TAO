@@ -17,7 +17,7 @@ handler (int)
 int
 main (int argc, char *argv[])
 {
-  char *name = argc == 1 ? "hello" : argv[1];
+  const char *name = argc == 1 ? "hello" : argv[1];
   int iterations =  argc > 2 ? ACE_OS::atoi (argv[2]) : 100;
 
   ACE_Process_Semaphore pm (1, name);
