@@ -12,8 +12,10 @@
 #define TAO_LRU_PURGING_STRATEGY_H
 #include "ace/pre.h"
 
+// @@ Chad: PRAMA please...
 #include "tao/Connection_Purging_Strategy.h"
 
+// @@ Chad:Class description...
 class TAO_Export TAO_LRU_Connection_Purging_Strategy: public TAO_ULong_Connection_Purging_Strategy
 {
 public:

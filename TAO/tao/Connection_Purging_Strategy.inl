@@ -50,7 +50,7 @@ TAO_Connection_Purging_Strategy::purge ()
     {
       this->close_entries (sorted_set);
     }
-     
+
   return 0;
 }
 
@@ -59,12 +59,12 @@ ACE_INLINE int
 TAO_Connection_Purging_Strategy::add_to_cache (TAO_DESCRIPTOR_INTERFACE* prop,
                                                TAO_PURGING_CACHE_ITEM* item)
 {
-  if (TAO_debug_level > 0) 
+  if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
                             ACE_TEXT ("TAO_Connection_Purging_Strategy")
                             ACE_TEXT ("::add_to_cache (0x%x, 0x%x)\n"),
-                            prop, item)); 
+                            prop, item));
     }
   int status = this->cache_manager_.cache_transport (prop, item);
 
@@ -81,7 +81,7 @@ TAO_Connection_Purging_Strategy::add_to_cache (TAO_DESCRIPTOR_INTERFACE* prop,
 
 ACE_INLINE int
 TAO_Connection_Purging_Strategy::find_in_cache (
-                                   TAO_DESCRIPTOR_INTERFACE* prop,     
+                                   TAO_DESCRIPTOR_INTERFACE* prop,
                                    TAO_PURGING_CACHE_ITEM*& item)
 {
   int status = this->cache_manager_.find_transport (prop, item);
@@ -101,12 +101,15 @@ ACE_INLINE int
 TAO_Connection_Purging_Strategy::purge_from_cache (
                                    TAO_PURGING_MAP_ENTRY*& entry)
 {
-  if (TAO_debug_level > 0) 
+  if (TAO_debug_level > 0)
     {
+      // @@ Chad: Please see how big the ACE_DEBUG expands too. Do you
+      // think the compilers can inline such a big macros. I dont
+      // believe so...
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
                             ACE_TEXT ("TAO_Connection_Purging_Strategy")
                             ACE_TEXT ("::purge_from_cache (0x%x)\n"),
-                            entry)); 
+                            entry));
     }
 
   // Usa a small scope.  No need to hold our lock while
@@ -174,4 +177,3 @@ TAO_ULong_Connection_Purging_Strategy::tracking_map ()
 {
   return this->tracking_map_;
 }
-
