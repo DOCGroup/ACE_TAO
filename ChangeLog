@@ -1,3 +1,7 @@
+Wed Feb 23 19:56:01 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Stack.h: Added export macros.
+
 Wed Feb 23 19:48:59 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Bits.h:
