@@ -1,3 +1,7 @@
+Thu Aug  1 13:54:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing: Updated dependencies.  
+
 Thu Aug  1 11:20:39 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* examples/AMH/Sink_Server/mt_server.cpp (main):
