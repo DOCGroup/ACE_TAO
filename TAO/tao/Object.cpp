@@ -371,6 +371,12 @@ CORBA::Object::_proxy_broker (void)
 CORBA::Boolean
 CORBA::Object::is_nil_i (CORBA::Object_ptr obj)
 {
+  // If the profile length is zero for a non-evaluted IOR it is a
+  // null-object.
+  if ((!obj->is_evaluated ()) &&
+      obj->ior ().profiles.length () == 0)
+  return 1;
+
   // To accomodate new definitions.
   if (obj->orb_core_)
     {
