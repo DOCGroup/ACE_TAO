@@ -118,7 +118,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       *os << "TAO_"
           << node->flat_name () << "_Proxy_Factory_Adapter (void)" <<be_idt_nl
           << " : proxy_factory_ (0)," << be_idt_nl
-          << "   one_shot_factory_ (0)," <<be_nl 
+          << "   one_shot_factory_ (0)," <<be_nl
           << "   disable_factory_ (0)"<<be_uidt << be_uidt_nl
           << "{"<< be_nl
           << "}\n\n";
@@ -159,6 +159,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "this->lock_, 0));" <<be_uidt_nl
           << "// Remove any existing <proxy_factory_> and replace with the new one."<<be_nl
           << "this->unregister_proxy_factory (ACE_TRY_ENV);" << be_nl
+          << "ACE_CHECK_RETURN (-1);" << be_nl
           << "this->proxy_factory_ = df;"<< be_nl
           << "this->one_shot_factory_ = one_shot_factory;" << be_uidt << be_uidt_nl
           << "return 0;" << be_uidt << be_uidt_nl

@@ -1,64 +1,102 @@
+Sun Apr  1 16:06:15 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Messaging.pidl:
+          Improved documentation of how the file is pre-compiled and the
+          patches are applied.
+
+        * tao/Messaging.h:
+          Instead of hacking MessagingC.h we use Messaging.h to define the
+          TAO internal enum and function pointer type used in the AMI
+          implementation.
+        * tao/Asynch_Reply_Dispatcher.h:
+          Must #include "tao/Messaging.h" now
+
+        * tao/MessagingC.h:
+        * tao/MessagingC.i:
+        * tao/MessagingC.cpp:
+        * tao/PortableServer/MessagingS.h:
+        * tao/PortableServer/MessagingS.i:
+        * tao/PortableServer/MessagingS.cpp:
+        * tao/PortableServer/MessagingS_T.h:
+        * tao/PortableServer/MessagingS_T.i:
+        * tao/PortableServer/MessagingS_T.cpp:
+        * tao/diffs/MessagingC.h.diff:
+        * tao/diffs/MessagingC.i.diff:
+        * tao/diffs/MessagingC.cpp.diff:
+        * tao/diffs/MessagingS.h.diff:
+        * tao/diffs/MessagingS_T.i.diff:
+        * tao/diffs/MessagingS.cpp.diff:
+          Regenerate the code using a newer version of the IDL compiler.
+          Update the patch files to match the new version.
+
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+          Generate ACE_CHECK_RETURN when unregister_proxy_factory(), the
+          use of ACE_TRY_ENV on this code is fishy though, nothing throws
+          exceptions, and all the methods return an error code.  The error
+          code is also suspicious, because it is not checked and all
+          methods return 0.
+
 2001-04-01  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast/server.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp: 
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: 		
-	* orbsvcs/orbsvcs/AV/Flows_T.cpp: 	
-	
-	  Fixed Fuzz errors.
-	
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * orbsvcs/orbsvcs/AV/Flows_T.cpp:
+
+          Fixed Fuzz errors.
+
 Sun Apr  1 14:56:14 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
-	* docs/tutorials/Quoter/Simple/Client/index.html: 
-	* docs/tutorials/Quoter/Simple/Server/index.html: 
-	* docs/tutorials/Quoter/Simple/Impl-Repo/index.html: 
-	* docs/tutorials/Quoter/Simple/ImprovedServer/index.html: 
-	* docs/tutorials/Quoter/Simple/Persistent/index.html: 
-	* docs/tutorials/Quoter/RT_Event_Service/index.html:
-	* docs/tutorials/Quoter/RT_Event_Service/index.html: 
-	* docs/tutorials/Quoter/On_Demand_Activation/index.html:
-	* docs/tutorials/Quoter/Naming_Service/index.html: Thanks to John
-	Ashmun <John.ASHMUN@esca.com> for these proof-read pages.
+        * docs/tutorials/Quoter/Simple/Client/index.html:
+        * docs/tutorials/Quoter/Simple/Server/index.html:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/index.html:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
+        * docs/tutorials/Quoter/Simple/Persistent/index.html:
+        * docs/tutorials/Quoter/RT_Event_Service/index.html:
+        * docs/tutorials/Quoter/RT_Event_Service/index.html:
+        * docs/tutorials/Quoter/On_Demand_Activation/index.html:
+        * docs/tutorials/Quoter/Naming_Service/index.html: Thanks to John
+        Ashmun <John.ASHMUN@esca.com> for these proof-read pages.
 
 Sun Apr  1 13:56:20 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
-	* docs/tutorials/Quoter/Event_Service/index.html: Thanks to John
-	Ashmun <John.ASHMUN@esca.com> for this proof-read page. The
-	tutorial, now, doesn't mention the ec.conf file any longer;
-	defaults work best.
+        * docs/tutorials/Quoter/Event_Service/index.html: Thanks to John
+        Ashmun <John.ASHMUN@esca.com> for this proof-read page. The
+        tutorial, now, doesn't mention the ec.conf file any longer;
+        defaults work best.
 
 Thu Mar 29 15:36:38 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
-	* docs/tutorials/Quoter/AMI/index.html: Thanks to John Ashmun
-	<John.ASHMUN@esca.com> for this proof-read page. Plus some sanity
-	checks on all the links.
+        * docs/tutorials/Quoter/AMI/index.html: Thanks to John Ashmun
+        <John.ASHMUN@esca.com> for this proof-read page. Plus some sanity
+        checks on all the links.
 
 Sun Apr  1 16:51:24 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
-	* tao/RT_ORB.cpp:
-	  Fixed several ACE_TRY fuzz errors.
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+        * tao/RT_ORB.cpp:
+          Fixed several ACE_TRY fuzz errors.
 
 Sun Apr  1 09:29:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/*/Makefile: Updated dependencies. The last
-	  dependency generation did not catch many of them.
+        * docs/tutorials/Quoter/*/Makefile: Updated dependencies. The last
+          dependency generation did not catch many of them.
 
 Sun Apr  1 09:21:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/MT_Timeout:
-	* orbsvcs/*/Makefile: Updated dependencies. The last dependency
-	  generation did not catch many of them.
+        * tests/MT_Timeout:
+        * orbsvcs/*/Makefile: Updated dependencies. The last dependency
+          generation did not catch many of them.
 
 Sat Mar 31 16:29:22 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -1039,29 +1077,29 @@ Wed Mar 28 21:40:36 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Wed Mar 28 20:16:32 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-	  Changed reference to opdetails.service_context () to
-	  opdetails.request_service_context () to be consistent
-	  with the fix for bug #806 which separates the request
-	  and reply service contexts.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          Changed reference to opdetails.service_context () to
+          opdetails.request_service_context () to be consistent
+          with the fix for bug #806 which separates the request
+          and reply service contexts.
 
 Wed Mar 28 17:24:57 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
-	* orbsvcs/tests/ImplRepo/NameService/Makefile : Added
-	libTAO_PortableServer and libTAO_IORTable to LinkList to make QNX
-	happy. Thanks to Thomas Groth <groth.th@nord-com.net> for the 
+        * orbsvcs/tests/ImplRepo/NameService/Makefile : Added
+        libTAO_PortableServer and libTAO_IORTable to LinkList to make QNX
+        happy. Thanks to Thomas Groth <groth.th@nord-com.net> for the
     suggestion.
 
 Wed Mar 28 17:12:06 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
-	* orbsvcs/examples/Log/test/Makefile : Added libTAO_DynamicAny and
-	libTAO_IORTable to LinkList to make QNX happy. Thanks to Thomas 
+        * orbsvcs/examples/Log/test/Makefile : Added libTAO_DynamicAny and
+        libTAO_IORTable to LinkList to make QNX happy. Thanks to Thomas
     Groth <groth.th@nord-com.net> for the suggestion.
 
 Wed Mar 28 16:54:47 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
-	* orbsvcs/examples/Log/Client/Makefile: Added libTAO_DynamicAny to
-	LinkList to make QNX happy. Thanks to Thomas Groth 
+        * orbsvcs/examples/Log/Client/Makefile: Added libTAO_DynamicAny to
+        LinkList to make QNX happy. Thanks to Thomas Groth
     <groth.th@nord-com.net> for the suggestion.
 
 Wed Mar 28 16:51:01 2001  Carlos O'Ryan  <coryan@uci.edu>
