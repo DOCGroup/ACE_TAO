@@ -160,13 +160,10 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::op
                       -1);
 
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
-  this->receiver_.m_ = ACE_CString (client_addr.get_host_name (),
-                                    MAXHOSTNAMELEN + 1);
+  this->receiver_.m_ = ACE_CString (client_addr.get_host_name ());
 #else
-  this->host_name_ = ACE_CString (client_addr.get_host_name (),
-                                  MAXHOSTNAMELEN + 1);
+  this->host_name_ = ACE_CString (client_addr.get_host_name ());
 #endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
-
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) accepted connection from host %s on fd %d\n",
