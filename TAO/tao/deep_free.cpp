@@ -424,7 +424,7 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
       if (discrim_matched)
         {
           // deep_free the discriminator value
-          retval = DEEP_FREE (discrim_tc,
+          retval = DEEP_FREE (discrim_tc.in (),
                               discrim_val,
                               data2,
                               ACE_TRY_ENV);
@@ -446,7 +446,7 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
   // we are here only if there was no match
 
   // deep_free the discriminator value
-  retval = DEEP_FREE (discrim_tc,
+  retval = DEEP_FREE (discrim_tc.in (),
                       discrim_val,
                       data2,
                       ACE_TRY_ENV);
