@@ -2034,13 +2034,13 @@ ACE::fork (const char *program_name,
         return -1;
 
       // child terminated by calling exit()?
-      if (WIFEXITED (status))
+      if (WIFEXITED ((status)))
         {
           // child terminated normally?
-          if (WEXITSTATUS (status) == 0)
+          if (WEXITSTATUS ((status)) == 0)
             return 1;
           else
-            errno = WEXITSTATUS (status);
+            errno = WEXITSTATUS ((status));
         }
       else
         // child didn't call exit(); perhaps it received a signal?

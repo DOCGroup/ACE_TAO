@@ -1,3 +1,10 @@
+Wed Mar  3 05:48:24 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/ACE.cpp (fork): Added an extra pair of parens within the
+ 	  WIFE*() macros to work around GCC bugs.  Thanks to Alexandre
+ 	  Karev <Alexandre.Karev@cern.ch> and Andre Folkers
+ 	  <folkers@informatik.mu-leubeck.de> for reporting this.
+
 Tue Mar  2 22:50:18 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * ace/POSIX_Asynch_IO.h:
