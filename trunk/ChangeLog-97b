@@ -13,6 +13,10 @@ Thu Sep 04 10:26:11 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h (ACE_Cleanup_Info): added default ctor.
 
+	* ace/Log_Msg.cpp (close): delete main thread's Log_Msg instance,
+	  on Solaris if ACE_HAS_EXCEPTIONS is not defined, because main
+	  thread TSS dtors apparently don't get called.
+
 	* ace/Token_Manager.{h,cpp}: register ACE_Token_Manager singleton
 	  for deletion with ACE_Object_Manager.
 
@@ -28,7 +32,7 @@ Thu Sep 04 10:26:11 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/Reactors_Test (~Test_Task): moved ASSERT after the printout,
 	  so we can see why it failed.  (svc): added printout with thread ID.
- 	  (main): deleted reactor at end of test to prevent leak.
+	  (main): deleted reactor at end of test to prevent leak.
 
 	* include/makeinclude/wrapper_macros.GNU: added -max_threads=100 to
 	  Quantify options.
