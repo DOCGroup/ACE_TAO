@@ -86,7 +86,7 @@ getapp::getapp(int argc, char *argv[]): valid_(0)
       return;
    }
 
-   ACE_Get_Opt get_opt (argc, argv, "o:c:r:t:");
+   ACE_Get_Opt get_opt (argc, argv, "o:c:r:t:p:");
    for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
@@ -156,7 +156,7 @@ int getapp::run()
        " GET SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
    target_.get_address(address_); // target updates port used
    int rc;
-   char *name = address_.friendly_name(rc);
+   char *name = address_.resolve_hostname(rc);
    if (rc)
       name = "<< did not resolve via gethostbyname() >>";
 
@@ -184,7 +184,8 @@ int getapp::run()
     char *ptr = snmp_.error_string();
     cout << "ASNMP:ERROR: get command failed reason: " << ptr << endl;
   }
-  cout << "ASNMP:INFO:command completed normally. ACE RULES!\n"<< endl;
+
+  cout << "\nASNMP:INFO: command completed normally.\n"<< endl;
   return 0;
 } 
 

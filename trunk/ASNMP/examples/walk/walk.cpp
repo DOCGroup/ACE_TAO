@@ -227,7 +227,7 @@ int walkapp::run()
        " WALK SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
    target_.get_address(address_); // target updates port used
    int rc;
-   char *name = address_.friendly_name(rc);
+   char *name = address_.resolve_hostname(rc);
    if (rc)
       name = "<< did not resolve via gethostbyname() >>";
 
