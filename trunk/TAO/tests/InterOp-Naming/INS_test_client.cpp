@@ -88,7 +88,7 @@ main (int argc, char *argv[])
 
               ACE_DEBUG ((LM_DEBUG,
                           "\nResult of Remote Call : %s\n",
-                          test_ins_result));
+                          test_ins_result.in ()));
             }
         }
     }
