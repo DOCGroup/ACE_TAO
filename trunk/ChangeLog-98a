@@ -7,6 +7,9 @@ Fri Jan 02 07:06:44 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.i (rw_trywrlock_upgrade): added ACE_UNUSED_ARG (rw) with
           STHREADS.
 
+        * ace/Synch.i (tryacquire_write_upgrade): only define if
+          ACE_HAS_THREADS.
+
 Fri Jan 02 00:47:33 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.13, released Fri Jan 02 00:47:33 1998.
