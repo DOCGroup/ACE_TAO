@@ -38,7 +38,7 @@ parse_args (int argc, char *argv[])
 }
 
 void
-dump_node (BaseNode_ptr bn, int indent)
+dump_node (BaseNode *bn, int indent)
 {
   if (bn == 0) return;
 
@@ -46,7 +46,7 @@ dump_node (BaseNode_ptr bn, int indent)
   int i = indent;
   for (; i != 0; i--) ACE_DEBUG ((LM_DEBUG, "  "));
 
-  StringNode_ptr sn = StringNode::_downcast (bn);
+  StringNode *sn = StringNode::_downcast (bn);
   if (sn != 0)
   {
     ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %s\n",
@@ -65,7 +65,7 @@ dump_node (BaseNode_ptr bn, int indent)
 }
 
 void
-dump_tree (TreeController_ptr tc)
+dump_tree (TreeController *tc)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) start tree dump <%x>\n",

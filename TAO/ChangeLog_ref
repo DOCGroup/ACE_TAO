@@ -1,3 +1,38 @@
+Sat Apr 12 02:52:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+
+	  Fixed errors in generated code for exception holders
+	  and reply/response handlers.
+
+        * tests/AMH_Exceptions/client.dsp:
+        * tests/AMH_Exceptions/server.dsp:
+        * tests/AMH_Oneway/client.dsp:
+        * tests/AMH_Oneway/server.dsp:
+        * tests/AMI/AMI_Test_Client.dsp:
+        * tests/AMI/AMI_Test_Server.dsp:
+        * tests/AMI_Timeouts/client.dsp:
+        * tests/AMI_Timeouts/server.dsp:
+        * tests/OBV/Factory/client.dsp:
+        * tests/OBV/Factory/server.dsp:
+        * tests/OBV/Forward/client.dsp:
+        * tests/OBV/Forward/server.dsp:
+
+	  Removed obsolete -Gv option from IDL compiler
+	  command lines for the above tests.
+
+        * tests/OBV/Forward/client.cpp:
+
+	  Changed instances of <valuetype>_ptr to
+	  <valuetype> *.
+
 Fri Apr 11 21:50:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/array_ch.cpp:

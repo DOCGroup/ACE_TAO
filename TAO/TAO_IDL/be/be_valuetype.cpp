@@ -122,35 +122,10 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
         }
     }
 
-  AST_Decl *parent = ScopeAsDecl (this->defined_in ());
-  Identifier *segment = 0;
-  char *tmp = 0;
-
-  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+  if (n != 0 && this->fwd_helper_name_ == "") 
     {
-      for (UTL_IdListActiveIterator i (parent->name ());
-           !i.is_done ();
-           i.next ())
-        {
-          segment = i.item ();
-          tmp = segment->get_string ();
-
-          if (ACE_OS::strcmp (tmp, "") == 0)
-            {
-              continue;
-            }
-
-          this->fwd_helper_name_ += tmp;
-          this->fwd_helper_name_ += "::";
-        }
+      this->gen_fwd_helper_name ();
     }
-  else
-    {
-      this->fwd_helper_name_= "";
-    }
-
-  this->fwd_helper_name_ += "tao_";
-  this->fwd_helper_name_ += this->local_name ();
 }
 
 be_valuetype::~be_valuetype (void)
@@ -306,9 +281,14 @@ be_valuetype:: gen_var_out_seq_decls (void)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  // Generate the ifdefined macro for this interface.
+  os->gen_ifdef_macro (this->flat_name (),
+                       "odds_n_ends");
+
   const char *lname = this->local_name ();
 
-  *os << "class " << lname << ";" << be_nl
+  *os << be_nl << be_nl
+      << "class " << lname << ";" << be_nl
       << "struct tao_" << lname << "_life;" << be_nl << be_nl
       << "typedef" << be_idt_nl
       << "TAO_Value_Var_T<" << be_idt << be_idt_nl
@@ -331,6 +311,8 @@ be_valuetype:: gen_var_out_seq_decls (void)
       << lname << " *);" << be_nl
       << "static void tao_remove_ref (" << lname << " *);" << be_uidt_nl
       << "};";
+
+  os->gen_endif ();
 
   this->var_out_seq_decls_gen_ = 1;
 }

@@ -54,6 +54,8 @@ public:
   // Type name of a node used when generating declarations for smart
   // proxies.
 
+  void gen_fwd_helper_name (void);
+
   const char *fwd_helper_name (void) const;
   // Accessor to the member.
 

@@ -155,9 +155,6 @@ private:
 
   int var_out_seq_decls_gen_;
   // Have these been done already?
-
-  ACE_CString fwd_helper_name_;
-  // Calculate this in one place.
 };
 
 #endif  // if !defined
