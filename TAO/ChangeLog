@@ -1,3 +1,10 @@
+Sat Oct 19 09:47:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile: Prevent ImplRepo from being compiled
+	  in minimum_corba setting. The fix "Fri Oct 18 15:52:11 2002
+	  Priyanka Gontla  <pgontla@ociweb.com>" seems goofy. Need to get
+	  Criag and Priyanka to take a look.
+
 Sat Oct 19 08:40:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:

@@ -78,7 +78,8 @@ ifndef TAO_ORBSVCS
 
     # The PortableGroup library requires several methods in the POA,
     # which are disabled by Minimum CORBA.
-    TAO_ORBSVCS += PortableGroup
+    TAO_ORBSVCS += PortableGroup \
+	ImplRepo
 
   endif # minimum_corba
 
@@ -86,8 +87,7 @@ ifndef TAO_ORBSVCS
     TAO_ORBSVCS += Security SSLIOP
   endif # ssl
 
-  TAO_ORBSVCS += Notify \
-	ImplRepo
+  TAO_ORBSVCS += Notify 
 
 endif # TAO_ORBSVCS
 
