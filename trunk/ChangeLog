@@ -1,3 +1,21 @@
+Tue Mar 13 00:35:35 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Select_Reactor_T.i (deactivated): Reverted this change
+	  regarding Select_Reactor_T::deactivated():
+
+	  Thu Feb 22 12:28:15 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	  Though my change improved correctness of access and change to
+	  the <deactivated_> variable, it had a negative consequence: the
+	  event loop calls Select_Reactor_T::deactivated() before calling
+	  Select_Reactor_T::handle_events() to make sure that the reactor
+	  is not closed yet.  Unfortunately, if
+	  Select_Reactor_T::deactivated() has a guard, it will send a null
+	  event waking up the current leader and thus lead to unnecessary
+	  thrashing.  For now, I have removed the guard from the
+	  Select_Reactor_T::deactivated() methods.  We should revisit this
+	  issue some time again.  This fixes bug 816.
+
 Mon Mar 12 16:30:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Logging_Strategy_Test.cpp (main): Fixed the rest of the
