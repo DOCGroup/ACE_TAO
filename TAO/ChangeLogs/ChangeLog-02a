@@ -1,17 +1,24 @@
+Mon Dec 11 15:30:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ORB.cpp:
+        * tao/Object_KeyC.cpp:
+          In some platforms 'byte' is a system macro.  Undefine it before
+          using it in the code.
+
 Mon Dec 11 16:26:49 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 
-	* orbsvcs/tests/AVStreams/benchmark/child_process.cpp: 
-	* orbsvcs/orbsvcs/Makefile.av: 
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/child_process.cpp:
+        * orbsvcs/orbsvcs/Makefile.av:
 
-	  Fixed compile errors.
+          Fixed compile errors.
 
 Sun Dec 10 14:05:35 2000  Angelo Corsaro  <angelo@cs.wustl.edu>
 
-	* docs/releasenotes/index.html: 
+        * docs/releasenotes/index.html:
 
-	  Fixed link problem to the RT-CORBA documentation.
+          Fixed link problem to the RT-CORBA documentation.
 
 Sat Dec  9 23:17:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -23,10 +30,10 @@ Sat Dec  9 23:17:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Dec  9 21:00:42 2000  Angelo Corsaro  <angelo@cs.wustl.edu>
 
-	* docs/releasenotes/RTCorba.html (RTCORBA): 
-	 
+        * docs/releasenotes/RTCorba.html (RTCORBA):
+
           Updated the status of the Collocation Task to completed.
-	
+
 Fri Dec  9 15:30:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/AV.dsp:
@@ -41,47 +48,47 @@ Fri Dec  9 15:30:42 2000  Darrell Brunsch <brunsch@uci.edu>
         * orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
         * orbsvcs/orbsvcs/AV/Protocol_Factory.h:
 
-          Removed the TAO_AV_Transport_Factory since it is also in 
+          Removed the TAO_AV_Transport_Factory since it is also in
           Transport.h and Transport.cpp.
 
 Sat Dec  9 07:55:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h: Fixed some
-	  typos. This should fix the compile errors on MSVC.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h: Fixed some
+          typos. This should fix the compile errors on MSVC.
 
 Fri Dec  8 19:55:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsw: Added teh new SSLIOP files.
+        * orbsvcs/orbsvcs/orbsvcs.dsw: Added teh new SSLIOP files.
 
 Fri Dec  8 13:06:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Replicated changes
-	  that have been made to IIOP.
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Replicated changes
+          that have been made to IIOP.
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i: New files
-	  for the connection handler.
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i: New files
+          for the connection handler.
 
-	* orbsvcs/orbsvcs/Makefile.SSLIOP: Added new files and updated
-	  dependencies.
+        * orbsvcs/orbsvcs/Makefile.SSLIOP: Added new files and updated
+          dependencies.
 
-	* tao/IIOP_Connector.cpp: Fixed some typos in #pragma
-	  instantiation.
+        * tao/IIOP_Connector.cpp: Fixed some typos in #pragma
+          instantiation.
 
 Fri Dec  8 07:48:32 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -92,351 +99,351 @@ Fri Dec  8 07:48:32 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Fri Dec  8 06:06:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.cpp (process_request_message):
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Generator_Parser.inl:
-	* tao/GIOP_Message_Generator_Parser_12.inl: Fixed warnings in KCC.
+        * tao/GIOP_Message_Lite.cpp (process_request_message):
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Generator_Parser.inl:
+        * tao/GIOP_Message_Generator_Parser_12.inl: Fixed warnings in KCC.
 
 Thu Dec 07 23:15:38 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
 
-	  Changed default value of protocol1 to be SHMIOP.
+          Changed default value of protocol1 to be SHMIOP.
 
-	* tests/RTCORBA/MT_Client_Protocol_Priority/README:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/README:
 
-	  Added test description.
+          Added test description.
 
-	* tests/RTCORBA/MT_Client_Protocol_Priority/process-output.pl:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/process-output.pl:
 
-	  Modified to provide more descriptive messages in case of errors.
+          Modified to provide more descriptive messages in case of errors.
 
 Thu Dec 07 22:20:12 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Object.cpp (_is_a): Checking the hint of the object can be
-	  done in the CORBA::Object class before invoking the appropriate
-	  proxy implementation.  The hint check is common for all
-	  implementations and not just the remote case.  Therefore, the
-	  code was removed from TAO_Remote_Object_Proxy_Impl::_is_a() and
-	  moved to CORBA::Object::_is_a().  Thanks to Russell L. Carter
-	  <rcarter@consys.com> for reporting this problem.
+        * tao/Object.cpp (_is_a): Checking the hint of the object can be
+          done in the CORBA::Object class before invoking the appropriate
+          proxy implementation.  The hint check is common for all
+          implementations and not just the remote case.  Therefore, the
+          code was removed from TAO_Remote_Object_Proxy_Impl::_is_a() and
+          moved to CORBA::Object::_is_a().  Thanks to Russell L. Carter
+          <rcarter@consys.com> for reporting this problem.
 
 Thu Dec 07 20:00:59 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/MT_Client_Protocol_Priority/client.dsp
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.dsp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.dsp
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.dsp:
 
           Fixed include directory for Strategies library.
 
 Thu Dec  7 18:32:27 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Removed the
-	  inclusion of inline file.
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Removed the
+          inclusion of inline file.
 
 Thu Dec  7 17:36:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
           This set of changes aim to satisfy the demands placed for the
-	  inclusion of Bi-Dir GIOP in TAO. The fundamental problem was the
-	  way TAO's protocol layer was structured. The Connector and
-	  Acceptor's had their own connection handler and
-	  transports. Further, the connection handlers had a prior
-	  knowledge of messages that they were sending and receiving. This
-	  does not hold any more with Bi-Dir GIOP. As a first step,
-	  changes have been made so that
+          inclusion of Bi-Dir GIOP in TAO. The fundamental problem was the
+          way TAO's protocol layer was structured. The Connector and
+          Acceptor's had their own connection handler and
+          transports. Further, the connection handlers had a prior
+          knowledge of messages that they were sending and receiving. This
+          does not hold any more with Bi-Dir GIOP. As a first step,
+          changes have been made so that
 
-	  (1) The Acceptors and Connectors make use of the same connection
-	      handler and transports
+          (1) The Acceptors and Connectors make use of the same connection
+              handler and transports
 
-	  (2) The connection handler and transport does not have a prior
-	      knowledge of the type of messages that they can receive or
-	      send.
+          (2) The connection handler and transport does not have a prior
+              knowledge of the type of messages that they can receive or
+              send.
 
-  	* tao/IIOP_Connection_Handler.h:
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/IIOP_Connection_Handler.i: The new
-	  TAO_IIOP_Connection_Handler class. This replaces the Server and
-	  Client connection handler classes defined in
-	  IIOP_Connect.{h,cpp,i}
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.i: The new
+          TAO_IIOP_Connection_Handler class. This replaces the Server and
+          Client connection handler classes defined in
+          IIOP_Connect.{h,cpp,i}
 
-	* tao/IIOP_Acceptor.cpp:
-	* tao/IIOP_Acceptor.h: Removed references to the server connection
-	  handler. Replaced them with the simple connection handler
-	  classes.
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Acceptor.h: Removed references to the server connection
+          handler. Replaced them with the simple connection handler
+          classes.
 
-	* tao/Connector_Impl.cpp:
-	* tao/Connector_Impl.h:
-	* tao/Connector_Impl.inl: Template helper classes for the
-	  connector implementation. This is similar to the classes
-	  declared and defined in Acceptor_Impl.{h,cpp,i}
+        * tao/Connector_Impl.cpp:
+        * tao/Connector_Impl.h:
+        * tao/Connector_Impl.inl: Template helper classes for the
+          connector implementation. This is similar to the classes
+          declared and defined in Acceptor_Impl.{h,cpp,i}
 
-	* tao/IIOP_Connector.cpp:
-	* tao/IIOP_Connector.h: Used the helper classes for the connector
-	  implemenation
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Connector.h: Used the helper classes for the connector
+          implemenation
 
-	* tao/IIOP_Endpoint.cpp:
-	* tao/IIOP_Endpoint.h:
-	* tao/IIOP_Endpoint.i: Removed references to the client connection
-	  handler classes.
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Endpoint.h:
+        * tao/IIOP_Endpoint.i: Removed references to the client connection
+          handler classes.
 
-	* tao/IIOP_Transport.cpp:
-	* tao/IIOP_Transport.h:
-	* tao/IIOP_Transport.i: Removed client and server side
-	  transports. Now, there will be only one transport which will be
-	  used by the connection handler. The methods that were declared
-	  in the server and client side transports have been merged in to
-	  this single class.
+        * tao/IIOP_Transport.cpp:
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.i: Removed client and server side
+          transports. Now, there will be only one transport which will be
+          used by the connection handler. The methods that were declared
+          in the server and client side transports have been merged in to
+          this single class.
 
-	* tao/Acceptor_Impl.cpp: Cache the connection during the call to
-	  activate_svc_handler ().
+        * tao/Acceptor_Impl.cpp: Cache the connection during the call to
+          activate_svc_handler ().
 
-	* tao/Reply_Dispatcher.h:
-	* tao/Synch_Reply_Dispatcher.h:
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/Asynch_Reply_Dispatcher.h:
-	* tao/Asynch_Reply_Dispatcher.cpp: The call to dispatch_reply ()
-	  had around 4 parameters. They have been changed to have only one
-	  parameter, that has all the necessary information required to
-	  handle the reply. Further, the references to GIOP_Message_State
-	  has been removed. The message state was used to have the reply
-	  that was read from the connection. But the reply dispatcher never
-	  used all the information in the message state. It only used the
-	  CDR stream in the class. We now, pass the CDR stream through the
-	  TAO_Pluggable_Reply_Params class which has other information
-	  necessary for the reply dispatcher. The asynch reply dispatcher
-	  classes will now take a pointer to the ORB_Core as a parameter.
+        * tao/Reply_Dispatcher.h:
+        * tao/Synch_Reply_Dispatcher.h:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/Asynch_Reply_Dispatcher.h:
+        * tao/Asynch_Reply_Dispatcher.cpp: The call to dispatch_reply ()
+          had around 4 parameters. They have been changed to have only one
+          parameter, that has all the necessary information required to
+          handle the reply. Further, the references to GIOP_Message_State
+          has been removed. The message state was used to have the reply
+          that was read from the connection. But the reply dispatcher never
+          used all the information in the message state. It only used the
+          CDR stream in the class. We now, pass the CDR stream through the
+          TAO_Pluggable_Reply_Params class which has other information
+          necessary for the reply dispatcher. The asynch reply dispatcher
+          classes will now take a pointer to the ORB_Core as a parameter.
 
-	* tao/Asynch_Invocation.i: Added ORB_Core to the list of
-	  parameters that are used to construct the reply dispatcher
-	  object.
+        * tao/Asynch_Invocation.i: Added ORB_Core to the list of
+          parameters that are used to construct the reply dispatcher
+          object.
 
-	* tao/Transport_Mux_Strategy.h:
-	* tao/Muxed_TMS.h:
-	* tao/Muxed_TMS.cpp:
-	* tao/Exclusive_TMS.h:
-	* tao/Exclusive_TMS.cpp: Made changes similar to the changes for
-	  reply dispatcher. Further, the memory allocation for the GIOP
-	  message state goes away. We now, create a CDR stream on the
-	  stack for every reply that we go to read. Once the reply is
-	  read, we steal the contents from the CDR stream to pass it on to
-	  the reply dispatcher. This seems to work. Moreover, the way
-	  things were done, does not seem to do what it was intended --
-	  ie. create a message state for every thread that goes to read
-	  the reply for the Muxed_TMS case. Please see the comments in the
-	  IIOP_Transport.cpp for more information regarding this.
+        * tao/Transport_Mux_Strategy.h:
+        * tao/Muxed_TMS.h:
+        * tao/Muxed_TMS.cpp:
+        * tao/Exclusive_TMS.h:
+        * tao/Exclusive_TMS.cpp: Made changes similar to the changes for
+          reply dispatcher. Further, the memory allocation for the GIOP
+          message state goes away. We now, create a CDR stream on the
+          stack for every reply that we go to read. Once the reply is
+          read, we steal the contents from the CDR stream to pass it on to
+          the reply dispatcher. This seems to work. Moreover, the way
+          things were done, does not seem to do what it was intended --
+          ie. create a message state for every thread that goes to read
+          the reply for the Muxed_TMS case. Please see the comments in the
+          IIOP_Transport.cpp for more information regarding this.
 
-	* tao/Pluggable.cpp:
-	* tao/Pluggable.h:
-	* tao/Pluggable.i: Changed the name of the method
-	  handle_client_input () to read_process_message () in
-	  TAO_Transport.
+        * tao/Pluggable.cpp:
+        * tao/Pluggable.h:
+        * tao/Pluggable.i: Changed the name of the method
+          handle_client_input () to read_process_message () in
+          TAO_Transport.
 
- 	* tao/Pluggable_Messaging.h:
-	* tao/Pluggable_Messaging.cpp: The interface to pluggable
-	  messaging has been totally revamped. Incorporated most of the
-	  suggestions/discussions in that file. The interface provides
-	  methods for creating, parsing and reading messages. The
-	  concrete implementations of the interface would do the bulk of
-	  the work ie. preparing message in the format required, making
-	  upcalls, maintaining states of the messages etc. The interface
-	  binds the implementations to use CDR.
+        * tao/Pluggable_Messaging.h:
+        * tao/Pluggable_Messaging.cpp: The interface to pluggable
+          messaging has been totally revamped. Incorporated most of the
+          suggestions/discussions in that file. The interface provides
+          methods for creating, parsing and reading messages. The
+          concrete implementations of the interface would do the bulk of
+          the work ie. preparing message in the format required, making
+          upcalls, maintaining states of the messages etc. The interface
+          binds the implementations to use CDR.
 
-	* tao/Pluggable_Messaging_Utils.h:
-	* tao/Pluggable_Messaging_Utils.cpp:
-	* tao/Pluggable_Messaging_Utils.i: Added a CDR stream to hold the
-	  stream appearing on the connection.
+        * tao/Pluggable_Messaging_Utils.h:
+        * tao/Pluggable_Messaging_Utils.cpp:
+        * tao/Pluggable_Messaging_Utils.i: Added a CDR stream to hold the
+          stream appearing on the connection.
 
-	  Revamped the whole GIOP implementation. The differences between
-	  server and client side have been removed. Most of the code has
-	  been used from the GIOP_Message_Connectors,
-	  GIOP_Message_Acceptors, GIOP_Message_Accept_State classes. This
-	  should help adding Bi-Dir GIOP pretty easily.
+          Revamped the whole GIOP implementation. The differences between
+          server and client side have been removed. Most of the code has
+          been used from the GIOP_Message_Connectors,
+          GIOP_Message_Acceptors, GIOP_Message_Accept_State classes. This
+          should help adding Bi-Dir GIOP pretty easily.
 
-	* tao/GIOP_Message_Base.h:
-	* tao/GIOP_Message_Base.cpp: Implements all of the interfaces
-	  that are prescribed by Pluggable_Messaging interface. Delegates
-	  the responsibility of generation and parsing of version specific
-	  headers and messages to the right strategies.
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.cpp: Implements all of the interfaces
+          that are prescribed by Pluggable_Messaging interface. Delegates
+          the responsibility of generation and parsing of version specific
+          headers and messages to the right strategies.
 
-	* tao/GIOP_Message_Generator_Parser.cpp:
-	* tao/GIOP_Message_Generator_Parser.h:
-	* tao/GIOP_Message_Generator_Parser.inl:  A strategy class for the
-	  generation of GIOP headers and messages.
+        * tao/GIOP_Message_Generator_Parser.cpp:
+        * tao/GIOP_Message_Generator_Parser.h:
+        * tao/GIOP_Message_Generator_Parser.inl:  A strategy class for the
+          generation of GIOP headers and messages.
 
-	* tao/GIOP_Message_Generator_Parser_10.cpp:
-	* tao/GIOP_Message_Generator_Parser_10.h:
-	* tao/GIOP_Message_Generator_Parser_10.inl: A concrete strategy
-	  for GIOP v1.0.
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.h:
+        * tao/GIOP_Message_Generator_Parser_10.inl: A concrete strategy
+          for GIOP v1.0.
 
-	* tao/GIOP_Message_Generator_Parser_11.cpp:
-	* tao/GIOP_Message_Generator_Parser_11.h:
-	* tao/GIOP_Message_Generator_Parser_11.inl: A concrete strategy
-	  for GIOP v1.1.
+        * tao/GIOP_Message_Generator_Parser_11.cpp:
+        * tao/GIOP_Message_Generator_Parser_11.h:
+        * tao/GIOP_Message_Generator_Parser_11.inl: A concrete strategy
+          for GIOP v1.1.
 
-	* tao/GIOP_Message_Generator_Parser_12.cpp:
-	* tao/GIOP_Message_Generator_Parser_12.h:
-	* tao/GIOP_Message_Generator_Parser_12.inl: A concrete strategy
-	  for GIOP v1.2.
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.h:
+        * tao/GIOP_Message_Generator_Parser_12.inl: A concrete strategy
+          for GIOP v1.2.
 
-	* tao/GIOP_Message_Generator_Parser_Impl.cpp:
-	* tao/GIOP_Message_Generator_Parser_Impl.h:
-	* tao/GIOP_Message_Generator_Parser_Impl.inl: A place holder
-	  class that creates all the GIOP version specific objects on the
-	  stack.
+        * tao/GIOP_Message_Generator_Parser_Impl.cpp:
+        * tao/GIOP_Message_Generator_Parser_Impl.h:
+        * tao/GIOP_Message_Generator_Parser_Impl.inl: A place holder
+          class that creates all the GIOP version specific objects on the
+          stack.
 
-	* tao/GIOP_Message_Locate_Header.cpp:
-	* tao/GIOP_Message_Locate_Header.h:
-	* tao/GIOP_Message_Locate_Header.i: Changed the name of the file
-	  GIOP_Message_Headers to GIOP_Message_Loacte_Header.
+        * tao/GIOP_Message_Locate_Header.cpp:
+        * tao/GIOP_Message_Locate_Header.h:
+        * tao/GIOP_Message_Locate_Header.i: Changed the name of the file
+          GIOP_Message_Headers to GIOP_Message_Loacte_Header.
 
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Message_Lite.h:
-	* tao/GIOP_Message_Lite.i: Made the changes to suit the new
-	  interface specified by the Pluggable_Messaging.
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Lite.i: Made the changes to suit the new
+          interface specified by the Pluggable_Messaging.
 
-	* tao/GIOP_Message_State.h:
-	* tao/GIOP_Utils.h: Addressed some of the comments.
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Utils.h: Addressed some of the comments.
 
-	* tao/TAO_Server_Request.cpp
-	* tao/TAO_Server_Request.h: Made changes to suit the interface of
-	  the Pluggable_Messaging class.
+        * tao/TAO_Server_Request.cpp
+        * tao/TAO_Server_Request.h: Made changes to suit the interface of
+          the Pluggable_Messaging class.
 
-	* tao/Wait_On_Read.cpp: Changed the call handle_client_input ()
-	  on the transport to read_process_message ().
+        * tao/Wait_On_Read.cpp: Changed the call handle_client_input ()
+          on the transport to read_process_message ().
 
-	* tao/IIOP_Connect.h:
-	* tao/IIOP_Connect.cpp:
-	* tao/GIOP_Message_Acceptors.h:
-	* tao/GIOP_Message_Acceptors.cpp:
-	* tao/GIOP_Message_Acceptors.i:
-	* tao/GIOP_Message_Connectors.h:
-	* tao/GIOP_Message_Connectors.cpp:
-	* tao/GIOP_Message_Connectors.i: These files are removed from the
-	  repository.
+        * tao/IIOP_Connect.h:
+        * tao/IIOP_Connect.cpp:
+        * tao/GIOP_Message_Acceptors.h:
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/GIOP_Message_Acceptors.i:
+        * tao/GIOP_Message_Connectors.h:
+        * tao/GIOP_Message_Connectors.cpp:
+        * tao/GIOP_Message_Connectors.i: These files are removed from the
+          repository.
 
-	* tao/Invocation.cpp: Included a header.
-	* tao/Wait_Strategy.h: Changed a comment.
-	* tao/Makefile: Added new files and removed old ones.
+        * tao/Invocation.cpp: Included a header.
+        * tao/Wait_Strategy.h: Changed a comment.
+        * tao/Makefile: Added new files and removed old ones.
 
-	* tao/Strategies/SHMIOP_Acceptor.h:
-	* tao/Strategies/SHMIOP_Acceptor.cpp
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp
-	* tao/Strategies/SHMIOP_Connection_Handler.h
-	* tao/Strategies/SHMIOP_Connection_Handler.inl
-	* tao/Strategies/SHMIOP_Connector.cpp:
-	* tao/Strategies/SHMIOP_Connector.h:
-	* tao/Strategies/SHMIOP_Endpoint.cpp:
-	* tao/Strategies/SHMIOP_Endpoint.h:
-	* tao/Strategies/SHMIOP_Endpoint.i:
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* tao/Strategies/SHMIOP_Transport.h:
-	* tao/Strategies/SHMIOP_Transport.i:
-	* tao/Strategies/UIOP_Acceptor.h:
-	* tao/Strategies/UIOP_Acceptor.cpp
-	* tao/Strategies/UIOP_Connection_Handler.cpp
-	* tao/Strategies/UIOP_Connection_Handler.h
-	* tao/Strategies/UIOP_Connection_Handler.inl
-	* tao/Strategies/UIOP_Connector.cpp:
-	* tao/Strategies/UIOP_Connector.h:
-	* tao/Strategies/UIOP_Endpoint.cpp:
-	* tao/Strategies/UIOP_Endpoint.h:
-	* tao/Strategies/UIOP_Endpoint.i:
-	* tao/Strategies/UIOP_Transport.cpp:
-	* tao/Strategies/UIOP_Transport.h:
-	* tao/Strategies/UIOP_Transport.i: All changes to IIOP were
-	  replicated for both SHMIOP and UIOP.
+        * tao/Strategies/SHMIOP_Acceptor.h:
+        * tao/Strategies/SHMIOP_Acceptor.cpp
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp
+        * tao/Strategies/SHMIOP_Connection_Handler.h
+        * tao/Strategies/SHMIOP_Connection_Handler.inl
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connector.h:
+        * tao/Strategies/SHMIOP_Endpoint.cpp:
+        * tao/Strategies/SHMIOP_Endpoint.h:
+        * tao/Strategies/SHMIOP_Endpoint.i:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.i:
+        * tao/Strategies/UIOP_Acceptor.h:
+        * tao/Strategies/UIOP_Acceptor.cpp
+        * tao/Strategies/UIOP_Connection_Handler.cpp
+        * tao/Strategies/UIOP_Connection_Handler.h
+        * tao/Strategies/UIOP_Connection_Handler.inl
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.h:
+        * tao/Strategies/UIOP_Endpoint.cpp:
+        * tao/Strategies/UIOP_Endpoint.h:
+        * tao/Strategies/UIOP_Endpoint.i:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/Strategies/UIOP_Transport.i: All changes to IIOP were
+          replicated for both SHMIOP and UIOP.
 
-	* tao/Strategies/TAO_Strategies.dsp: Added the new files.
-	* tao/TAO.dsp
-	* tao/TAO_Static.dsp: Added new files and remove old ones.
+        * tao/Strategies/TAO_Strategies.dsp: Added the new files.
+        * tao/TAO.dsp
+        * tao/TAO_Static.dsp: Added new files and remove old ones.
 
-	* tao/DynamicInterface/DII_Invocation.inl:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.h: Replicated changes
-	  done in the Asynch_invocation and Asynch_Reply_Dispatcher
-	  classes.
+        * tao/DynamicInterface/DII_Invocation.inl:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.h: Replicated changes
+          done in the Asynch_invocation and Asynch_Reply_Dispatcher
+          classes.
 
-	* tao/DII Request.cpp: Added a header.
+        * tao/DII Request.cpp: Added a header.
 
-	* tao/*/Makefile:
-	* */Makefile:Updated dependencies.
+        * tao/*/Makefile:
+        * */Makefile:Updated dependencies.
 
 Thu Dec  7 19:48:42 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Latency/control.cpp:
-	* orbsvcs/tests/AVStreams/Latency/pong.cpp:
-	* orbsvcs/tests/AVStreams/Latency/ping.cpp:
+        * orbsvcs/tests/AVStreams/Latency/control.cpp:
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp:
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.h:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.h:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.h:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.h:
 
-	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
-	* orbsvcs/tests/AVStreams/Multicast/server.h:
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Multicast/ftp.h:
+        * orbsvcs/tests/AVStreams/Multicast/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/server.h:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.h:
 
-	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
-	* orbsvcs/tests/AVStreams/Pluggable/server.h:
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.h:
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/server.h:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.h:
 
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.h:
-	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
-	* orbsvcs/tests/AVStreams/Full_Profile/server.h:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.h:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.h:
 
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
-	* orbsvcs/tests/AVStreams/benchmark/client.h:
-	* orbsvcs/tests/AVStreams/benchmark/server.cpp:
-	* orbsvcs/tests/AVStreams/benchmark/server.h:
-	* orbsvcs/tests/AVStreams/benchmark/child.cpp:
-	* orbsvcs/tests/AVStreams/benchmark/child.h:
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/client.h:
+        * orbsvcs/tests/AVStreams/benchmark/server.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/server.h:
+        * orbsvcs/tests/AVStreams/benchmark/child.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/child.h:
 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h:
-	* orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h:
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
 
-	  Removed the use of ORB_Manager
+          Removed the use of ORB_Manager
 
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
 
-	  Moved the TAO_AV_Core class definitions to the newly added
-	  AV_Core.cpp
+          Moved the TAO_AV_Core class definitions to the newly added
+          AV_Core.cpp
 
-	* orbsvcs/orbsvcs/AV/Transport.i:
-	* orbsvcs/orbsvcs/AV/Transport.cpp:
-	* orbsvcs/orbsvcs/AV/Transport.h:
+        * orbsvcs/orbsvcs/AV/Transport.i:
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
+        * orbsvcs/orbsvcs/AV/Transport.h:
 
-	  Moved the TAO_AV_Core class definitions to AV_Core.cpp
+          Moved the TAO_AV_Core class definitions to AV_Core.cpp
 
 Thu Dec  7 11:59:28 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/Strategies/simple_test.idl:
-	* tests/Strategies/client.cpp:
-	* tests/Strategies/server.cpp:
-	* tests/Strategies/simple_test_i.h:
-	* tests/Strategies/simple_test_i.i:
-	* tests/Strategies/simple_test_i.cpp:
-	* tests/Strategies/Makefile :
-	* tests/Strategies/svc.conf:
-	* tests/Strategies/advanced_svc.conf:
-	* tests/Strategies/README:
+        * tests/Strategies/simple_test.idl:
+        * tests/Strategies/client.cpp:
+        * tests/Strategies/server.cpp:
+        * tests/Strategies/simple_test_i.h:
+        * tests/Strategies/simple_test_i.i:
+        * tests/Strategies/simple_test_i.cpp:
+        * tests/Strategies/Makefile :
+        * tests/Strategies/svc.conf:
+        * tests/Strategies/advanced_svc.conf:
+        * tests/Strategies/README:
 
-	  Moved the test that shows the ways to load default and
-	  advanced strategies to the correct place.
+          Moved the test that shows the ways to load default and
+          advanced strategies to the correct place.
 
-	* tao/Strategies/tests/simple_test.idl:
-	* tao/Strategies/tests/client.cpp:
-	* tao/Strategies/tests/server.cpp:
-	* tao/Strategies/tests/simple_test_i.h:
-	* tao/Strategies/tests/simple_test_i.i:
-	* tao/Strategies/tests/simple_test_i.cpp:
-	* tao/Strategies/tests/Makefile :
-	* tao/Strategies/tests/svc.conf:
-	* tao/Strategies/tests/advanced_svc.conf:
-	* tao/Strategies/tests/README:
-	  Removed.
+        * tao/Strategies/tests/simple_test.idl:
+        * tao/Strategies/tests/client.cpp:
+        * tao/Strategies/tests/server.cpp:
+        * tao/Strategies/tests/simple_test_i.h:
+        * tao/Strategies/tests/simple_test_i.i:
+        * tao/Strategies/tests/simple_test_i.cpp:
+        * tao/Strategies/tests/Makefile :
+        * tao/Strategies/tests/svc.conf:
+        * tao/Strategies/tests/advanced_svc.conf:
+        * tao/Strategies/tests/README:
+          Removed.
 
 Thu Dec  7 11:44:14 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -449,31 +456,31 @@ Thu Dec  7 11:44:14 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Dec  7 13:45:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynAny_i.cpp:
 
-	  Cosmetic changes.
+          Cosmetic changes.
 
-	* tao/DynamicAny/DynArray_i.cpp:
-	* tao/DynamicAny/DynEnum_i.cpp:
-	* tao/DynamicAny/DynSequence_i.cpp:
-	* tao/DynamicAny/DynStruct_i.cpp:
-	* tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
 
-	  Fixed a bug in _tao_QueryInterface(). The last line
-	  was making a call to DynAny::_tao_QueryInterface()
-	  instead of the override in the immediate base class. Thanks
-	  to Michael Rushton <miker@mbmnz.co.nz> for reporting
-	  the failure of DynStruct::_narrow(), which led to this
-	  discovery.
+          Fixed a bug in _tao_QueryInterface(). The last line
+          was making a call to DynAny::_tao_QueryInterface()
+          instead of the override in the immediate base class. Thanks
+          to Michael Rushton <miker@mbmnz.co.nz> for reporting
+          the failure of DynStruct::_narrow(), which led to this
+          discovery.
 
-	* tao/DynamicAny/DynamicAnyC.cpp:
-	* tao/DynamicAny/DynamicAnyC.h:
-	* tao/DynamicAny/DynamicAnyC.i:
-	* tao/DynamicAny/diffs/DynamicAnyC.cpp.diff:
-	* tao/DynamicAny/diffs/DynamicAnyC.h.diff:
-	* tao/DynamicAny/diffs/DynamicAnyC.i.diff:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicAny/DynamicAnyC.h:
+        * tao/DynamicAny/DynamicAnyC.i:
+        * tao/DynamicAny/diffs/DynamicAnyC.cpp.diff:
+        * tao/DynamicAny/diffs/DynamicAnyC.h.diff:
+        * tao/DynamicAny/diffs/DynamicAnyC.i.diff:
 
-	  Regenerated the stub files updated the diff files.
+          Regenerated the stub files updated the diff files.
 
 Thu Dec  7 03:01:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -485,40 +492,40 @@ Thu Dec  7 03:01:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Dec  7 03:04:51 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/MT_Client_Protocol_Priority/README
-	* tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp
-	* tests/RTCORBA/MT_Client_Protocol_Priority/process-output.pl
-	* tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.conf
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp
-	* tests/RTCORBA/README:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/README
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp
+        * tests/RTCORBA/MT_Client_Protocol_Priority/process-output.pl
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.conf
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp
+        * tests/RTCORBA/README:
 
-	  Added perl script which processes test output and reports
-	  any errors to the user.  Other fixes and enhancements, e.g.,
-	  number of iterations can be specified on the command-line, etc.
+          Added perl script which processes test output and reports
+          any errors to the user.  Other fixes and enhancements, e.g.,
+          number of iterations can be specified on the command-line, etc.
 
-	* tao/IIOP_Connect.cpp
-	* tao/Strategies/SHMIOP_Connect.cpp
-	* tao/Strategies/UIOP_Connect.cpp
-	* tao/PortableServer/Object_Adapter.cpp:
+        * tao/IIOP_Connect.cpp
+        * tao/Strategies/SHMIOP_Connect.cpp
+        * tao/Strategies/UIOP_Connect.cpp
+        * tao/PortableServer/Object_Adapter.cpp:
 
-	  Debug messages.
+          Debug messages.
 
 Wed Dec  6 23:52:48 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
-	  The <init> method was creating a "event listener" task instead of a
-	  "event source" task. This was causing the cmd line options to break.
-	* orbsvcs/Notify_Service/Notify_Service.{h.cpp}:
-	  Added a new option to specify worker threads when the Notify
-	  Service is run with a TP reactor.
-	* orbsvcs/Notify_Service/README:
-	  Updated the usage section to show how the "-Notify_TPReactor"option.
-	* orbsvcs/orbsvcs/Notify/README:
-	  Updated with some explaination of the various MT options for the
-	  Notify.
-	  Thanks to Sarabjeet Duhra <sarabjeet_duhra@hp.com> for
-	  reporting the problem with the -MTListenerEval option
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
+          The <init> method was creating a "event listener" task instead of a
+          "event source" task. This was causing the cmd line options to break.
+        * orbsvcs/Notify_Service/Notify_Service.{h.cpp}:
+          Added a new option to specify worker threads when the Notify
+          Service is run with a TP reactor.
+        * orbsvcs/Notify_Service/README:
+          Updated the usage section to show how the "-Notify_TPReactor"option.
+        * orbsvcs/orbsvcs/Notify/README:
+          Updated with some explaination of the various MT options for the
+          Notify.
+          Thanks to Sarabjeet Duhra <sarabjeet_duhra@hp.com> for
+          reporting the problem with the -MTListenerEval option
 
 Wed Dec  6 16:20:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -559,250 +566,250 @@ Wed Dec  6 16:20:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Dec  6 18:02:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
 
-	  Small change to keep the indentation from growing and
-	  growing in long IDL files.
+          Small change to keep the indentation from growing and
+          growing in long IDL files.
 
 Wed Dec  6 17:06:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
-	* TAO_IDL/be/be_visitor_argument/arglist.cpp:
-	* tao/corbafwd.h:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * tao/corbafwd.h:
 
-	  Fixed code generation for CORBA::TCKind as an argument
-	  or a return type. We were adding '_ptr' to the scoped
-	  name. This fix also involved adding
-	  'typedef TCKind &TCKind_out' to corbafwd.h, the same
-	  as would be generated for an IDL enum.
+          Fixed code generation for CORBA::TCKind as an argument
+          or a return type. We were adding '_ptr' to the scoped
+          name. This fix also involved adding
+          'typedef TCKind &TCKind_out' to corbafwd.h, the same
+          as would be generated for an IDL enum.
 
 Wed Dec  6 14:32:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Asynch_Invocation.cpp
-	* tao/Asynch_Invocation.h
-	* tao/Asynch_Invocation.i
-	* tao/Asynch_Reply_Dispatcher.cpp
-	* tao/Asynch_Reply_Dispatcher.h
-	* tao/Asynch_Reply_Dispatcher.i
-	* tao/Dynamic_Adapter.cpp
-	* tao/Dynamic_Adapter.h
-	* tao/NVList.cpp
-	* tao/NVList.h
-	* tao/Object.cpp
-	* tao/Object.h
-	* tao/corbafwd.h
-	* tao/DynamicInterface/Context.cpp
-	* tao/DynamicInterface/Context.h
-	* tao/DynamicInterface/DII_Invocation.cpp
-	* tao/DynamicInterface/DII_Invocation.h
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp
-	* tao/DynamicInterface/DII_Reply_Dispatcher.h
-	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp
-	* tao/DynamicInterface/Dynamic_Adapter_Impl.h
-	* tao/DynamicInterface/Dynamic_Implementation.cpp
-	* tao/DynamicInterface/Dynamic_Implementation.h
-	* tao/DynamicInterface/ExceptionList.cpp
-	* tao/DynamicInterface/ExceptionList.h
-	* tao/DynamicInterface/Request.cpp
-	* tao/DynamicInterface/Request.h
-	* tao/DynamicInterface/Server_Request.cpp
-	* tao/DynamicInterface/Server_Request.h
+        * tao/Asynch_Invocation.cpp
+        * tao/Asynch_Invocation.h
+        * tao/Asynch_Invocation.i
+        * tao/Asynch_Reply_Dispatcher.cpp
+        * tao/Asynch_Reply_Dispatcher.h
+        * tao/Asynch_Reply_Dispatcher.i
+        * tao/Dynamic_Adapter.cpp
+        * tao/Dynamic_Adapter.h
+        * tao/NVList.cpp
+        * tao/NVList.h
+        * tao/Object.cpp
+        * tao/Object.h
+        * tao/corbafwd.h
+        * tao/DynamicInterface/Context.cpp
+        * tao/DynamicInterface/Context.h
+        * tao/DynamicInterface/DII_Invocation.cpp
+        * tao/DynamicInterface/DII_Invocation.h
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp
+        * tao/DynamicInterface/DII_Reply_Dispatcher.h
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.cpp
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.h
+        * tao/DynamicInterface/Dynamic_Implementation.cpp
+        * tao/DynamicInterface/Dynamic_Implementation.h
+        * tao/DynamicInterface/ExceptionList.cpp
+        * tao/DynamicInterface/ExceptionList.h
+        * tao/DynamicInterface/Request.cpp
+        * tao/DynamicInterface/Request.h
+        * tao/DynamicInterface/Server_Request.cpp
+        * tao/DynamicInterface/Server_Request.h
 
-	  Removed #if (TAO_HAS_MINIMUM_CORBA == 0)
-	  guards from code pertaining to DII or DSI in these files.
+          Removed #if (TAO_HAS_MINIMUM_CORBA == 0)
+          guards from code pertaining to DII or DSI in these files.
 
-	* tao/RT_ORBInitializer.h
+        * tao/RT_ORBInitializer.h
 
-	  Added #if TAO_HAS_RT_CORBA == 1 guard to this file
-	  to correspond with a similar guard in the .cpp file.
+          Added #if TAO_HAS_RT_CORBA == 1 guard to this file
+          to correspond with a similar guard in the .cpp file.
 
-	* tao/Messaging_Policy_i.cpp
+        * tao/Messaging_Policy_i.cpp
 
-	  Added #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-	  guard to this file to correspond with a similar guard in
-	  the .h file.
+          Added #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+          guard to this file to correspond with a similar guard in
+          the .h file.
 
 Wed Dec  6 14:13:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
 
-	  Fixed init() method, which tried to make a call on
-	  the DynEnum's typecode member before it had been
-	  initialized.
+          Fixed init() method, which tried to make a call on
+          the DynEnum's typecode member before it had been
+          initialized.
 
-	* tao/DynamicAny/DynArray_i.cpp:
-	* tao/DynamicAny/DynSequence_i.cpp:
-	* tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
 
-	  Cosmetic changes and/or removed unused ACE_TRY block.
+          Cosmetic changes and/or removed unused ACE_TRY block.
 
 Wed Dec  6 01:17:17 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Banded_Connections/server.conf
-	* tests/RTCORBA/Server_Protocol/server_reverse.conf
-	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
-	* tests/RTCORBA/Banded_Connections/README
-	* tests/RTCORBA/Banded_Connections/run_test.pl
-	* tests/RTCORBA/Client_Propagated/run_test.pl
-	* tests/RTCORBA/Client_Protocol/run_test.pl
-	* tests/RTCORBA/Server_Protocol/run_test.pl:
+        * tests/RTCORBA/Banded_Connections/server.conf
+        * tests/RTCORBA/Server_Protocol/server_reverse.conf
+        * tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
+        * tests/RTCORBA/Banded_Connections/README
+        * tests/RTCORBA/Banded_Connections/run_test.pl
+        * tests/RTCORBA/Client_Propagated/run_test.pl
+        * tests/RTCORBA/Client_Protocol/run_test.pl
+        * tests/RTCORBA/Server_Protocol/run_test.pl:
 
-	 Updated.
+         Updated.
 
-	* tests/RTCORBA/Banded_Connections/client.conf
-	* tests/RTCORBA/Client_Protocol/client_nt.conf
-	* tests/RTCORBA/Client_Protocol/svc.conf
-	* tests/RTCORBA/Client_Protocol/svc_nt.conf
-	* tests/RTCORBA/Client_Protocol/svc_unix.conf
-	* tests/RTCORBA/Server_Protocol/client_nt.conf
-	* tests/RTCORBA/Server_Protocol/server.conf
-	* tests/RTCORBA/Server_Protocol/server_nt.conf
-	* tests/RTCORBA/Server_Protocol/server_uiop.conf
-	* tests/RTCORBA/Server_Protocol/svc.conf:
+        * tests/RTCORBA/Banded_Connections/client.conf
+        * tests/RTCORBA/Client_Protocol/client_nt.conf
+        * tests/RTCORBA/Client_Protocol/svc.conf
+        * tests/RTCORBA/Client_Protocol/svc_nt.conf
+        * tests/RTCORBA/Client_Protocol/svc_unix.conf
+        * tests/RTCORBA/Server_Protocol/client_nt.conf
+        * tests/RTCORBA/Server_Protocol/server.conf
+        * tests/RTCORBA/Server_Protocol/server_nt.conf
+        * tests/RTCORBA/Server_Protocol/server_uiop.conf
+        * tests/RTCORBA/Server_Protocol/svc.conf:
 
-	  Removed.
+          Removed.
 
-	  Cleaned up RTCORBA tests after Priyanka's Strategy
-	  library-related changes: removed unnecessary config files,
-	  modified perl scripts to not use them.
+          Cleaned up RTCORBA tests after Priyanka's Strategy
+          library-related changes: removed unnecessary config files,
+          modified perl scripts to not use them.
 
 Tue Dec  5 19:56:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
-	* tao/Object.cpp:
-	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/Object.cpp:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
 
-	  Added static const char* dynamic_adapter_name_ to
-	  TAO_ORB_Core, along with set and get methods. The get
-	  method is used in the CORBA::Object methods that create
-	  DII requests, and the set method is used in the static
-	  initializer in TAO_Dynamic_Adapter_Impl. These changes
-	  will make sure the TAO_DynamicInterface library will be
-	  build even on pure static builds. Thanks to Carlos for
-	  his help with this fix.
+          Added static const char* dynamic_adapter_name_ to
+          TAO_ORB_Core, along with set and get methods. The get
+          method is used in the CORBA::Object methods that create
+          DII requests, and the set method is used in the static
+          initializer in TAO_Dynamic_Adapter_Impl. These changes
+          will make sure the TAO_DynamicInterface library will be
+          build even on pure static builds. Thanks to Carlos for
+          his help with this fix.
 
 Tue Dec  5 19:39:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/InterfaceC.i:
-	* tao/diffs/InterfaceC.i.diff:
+        * tao/InterfaceC.i:
+        * tao/diffs/InterfaceC.i.diff:
 
-	  Replaced missing 'TAO_Export' macros on declarations
-	  of sequence CDR operators in the inline file used when
-	  __ACE_INLINE__ is defined, and removed #if !defined guards
-	  and extra CDR operator declarations. Also updated diff file.
-	  This fixes link errors in IFR_Service for the release build
-	  on Win32.
+          Replaced missing 'TAO_Export' macros on declarations
+          of sequence CDR operators in the inline file used when
+          __ACE_INLINE__ is defined, and removed #if !defined guards
+          and extra CDR operator declarations. Also updated diff file.
+          This fixes link errors in IFR_Service for the release build
+          on Win32.
 
 Tue Dec  5 15:47:23 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/IIOP_Profile.h (encode_endpoints)
-	* tao/IIOP_Profile.cpp (encode_endpoints)
-	* tao/Strategies/UIOP_Profile.h (encode_endpoints)
-	* tao/Strategies/UIOP_Profile.cpp (encode_endpoints)
-	* tao/Strategies/SHMIOP_Profile.h (encode_endpoints)
-	* tao/Strategies/SHMIOP_Profile.cpp (encode_endpoints)
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h (encode_endpoints)
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (encode_endpoints)
-	* tao/PortableServer/RT_Acceptor_Filters.cpp (fill_mprofile):
+        * tao/IIOP_Profile.h (encode_endpoints)
+        * tao/IIOP_Profile.cpp (encode_endpoints)
+        * tao/Strategies/UIOP_Profile.h (encode_endpoints)
+        * tao/Strategies/UIOP_Profile.cpp (encode_endpoints)
+        * tao/Strategies/SHMIOP_Profile.h (encode_endpoints)
+        * tao/Strategies/SHMIOP_Profile.cpp (encode_endpoints)
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h (encode_endpoints)
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (encode_endpoints)
+        * tao/PortableServer/RT_Acceptor_Filters.cpp (fill_mprofile):
 
-	  Added error checking.
+          Added error checking.
 
 Tue Dec  5 15:07:45 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Policy_Manager.h
-	* tao/Policy_Manager.cpp:
+        * tao/Policy_Manager.h
+        * tao/Policy_Manager.cpp:
 
-	  All policy accessors in TAO_Policy_Manager now use
-	  double-checked locking.  This should significantly improve
-	  performance on the critical path.
+          All policy accessors in TAO_Policy_Manager now use
+          double-checked locking.  This should significantly improve
+          performance on the critical path.
 
 Tue Dec  5 14:16:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
 
-	  Removed use of '_var_type' in generated code for the exception
-	  holder. This typedef is intended for use with template
-	  programming, which is not the case here. In addition, old g++
-	  does not see the typedef since the compiler does not scope
-	  it properly.
+          Removed use of '_var_type' in generated code for the exception
+          holder. This typedef is intended for use with template
+          programming, which is not the case here. In addition, old g++
+          does not see the typedef since the compiler does not scope
+          it properly.
 
 Tue Dec  5 12:57:33 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/Benchmark/server.cpp (main):
-	* tests/Portable_Interceptors/Dynamic/server.cpp (main):
-	* tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp
-	  (main):
+        * tests/Portable_Interceptors/Benchmark/server.cpp (main):
+        * tests/Portable_Interceptors/Dynamic/server.cpp (main):
+        * tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp
+          (main):
 
-	  Activate the POA before attempting to narrow an object
-	  reference.  This fixes a problem where a CORBA::TRANSIENT()
-	  exception was being thrown.
+          Activate the POA before attempting to narrow an object
+          reference.  This fixes a problem where a CORBA::TRANSIENT()
+          exception was being thrown.
 
 Tue Dec  5 11:40:28 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Added a tentative schedule/TODO list for TAO's CORBA Security
-	  Service.
+          Added a tentative schedule/TODO list for TAO's CORBA Security
+          Service.
 
 Tue Dec  5 11:18:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynamicInterface/TAO_DynamicInterface.dsp:
-	* tao/DynamicAny/TAO_DynamicAny.dsp:
-	* tao/PortableServer/TAO_PortableServer.dsp:
-	* tao/IORTable/TAO_IORTable.dsp:
-	* orbsvcs/orbsvcs/CosNaming.dsp:
+        * tao/DynamicInterface/TAO_DynamicInterface.dsp:
+        * tao/DynamicAny/TAO_DynamicAny.dsp:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/IORTable/TAO_IORTable.dsp:
+        * orbsvcs/orbsvcs/CosNaming.dsp:
 
-	  Set some overlooked values in the MFC versions of these
-	  projects. Thanks to John Morey <jmorey@tbi.com> for
-	  reporting them.
+          Set some overlooked values in the MFC versions of these
+          projects. Thanks to John Morey <jmorey@tbi.com> for
+          reporting them.
 
 Tue Dec  5 10:49:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/Smart_Proxies/client.dsp:
+        * tests/Smart_Proxies/client.dsp:
 
-	  Set some overlooked values in the release version.
+          Set some overlooked values in the release version.
 
 Mon Dec  4 18:11:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/IIOP_Acceptor.cpp
-	* tao/Strategies/UIOP_Acceptor.cpp:
+        * tao/IIOP_Acceptor.cpp
+        * tao/Strategies/UIOP_Acceptor.cpp:
 
-	  Fixed comments.
+          Fixed comments.
 
 Mon Dec  4 17:36:22 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
 
-	  Same as the change below.
+          Same as the change below.
 
 Mon Dec  4 15:58:47 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/IIOP_Profile.h
-	* tao/IIOP_Profile.cpp
-	* tao/Strategies/UIOP_Profile.h
-	* tao/Strategies/UIOP_Profile.cpp
-	* tao/Strategies/SHMIOP_Profile.h
-	* tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/IIOP_Profile.h
+        * tao/IIOP_Profile.cpp
+        * tao/Strategies/UIOP_Profile.h
+        * tao/Strategies/UIOP_Profile.cpp
+        * tao/Strategies/SHMIOP_Profile.h
+        * tao/Strategies/SHMIOP_Profile.cpp:
 
-	  Added error checks in <decode> and <decode_endpoints> methods.
-	  For efficiency, <decode_endpoints> is now called onlywith
-	  RTCORBA.
+          Added error checks in <decode> and <decode_endpoints> methods.
+          For efficiency, <decode_endpoints> is now called onlywith
+          RTCORBA.
 
-	* tao/IIOP_Endpoint.cpp (duplicate):
+        * tao/IIOP_Endpoint.cpp (duplicate):
 
-	  Added comment.
+          Added comment.
 
 Mon Dec  4 13:04:55 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Invocation.h
-	* tao/Invocation.cpp (create_ior_info):
+        * tao/Invocation.h
+        * tao/Invocation.cpp (create_ior_info):
 
-	  Updated the method to return proper index of the profile being
-	  used for the Invocation even when RTCORBA policies are used.  In
-	  other words, TAO_Target_Specification::Reference_Addr scheme now
-	  works with RTCORBA policies.
+          Updated the method to return proper index of the profile being
+          used for the Invocation even when RTCORBA policies are used.  In
+          other words, TAO_Target_Specification::Reference_Addr scheme now
+          works with RTCORBA policies.
 
 Sun Dec  3 00:21:09 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -812,14 +819,14 @@ Sun Dec  3 00:21:09 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Sat Dec  2 22:55:38 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (set_default_policies):
+        * tao/ORB_Core.cpp (set_default_policies):
 
-	  Use TAO_Protocol_Properties_Factory to initialize transport
-	  properties instead of replicating its logic.
+          Use TAO_Protocol_Properties_Factory to initialize transport
+          properties instead of replicating its logic.
 
-	* tao/Invocation_Endpoint_Selectors.h:
+        * tao/Invocation_Endpoint_Selectors.h:
 
-	  Added class and methods descriptions.
+          Added class and methods descriptions.
 
 Sat Dec  2 18:19:37 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -842,67 +849,67 @@ Sat Dec  2 18:19:37 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Sat Dec  2 16:15:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAOACE.dsw:
+        * TAOACE.dsw:
 
-	  This was left out of a previous checkin.
+          This was left out of a previous checkin.
 
-	  Fri Dec  1 13:16:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+          Fri Dec  1 13:16:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Sat Dec  2 00:23:10 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Explicit_Binding/Makefile:
+        * tests/RTCORBA/Explicit_Binding/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Fri Dec 01 23:00:32 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Explicit_Binding/Explicit_Binding.dsw
-	* tests/RTCORBA/Explicit_Binding/Makefile
-	* tests/RTCORBA/Explicit_Binding/Makefile.bor
-	* tests/RTCORBA/Explicit_Binding/README
-	* tests/RTCORBA/Explicit_Binding/client.bor
-	* tests/RTCORBA/Explicit_Binding/client.cpp
-	* tests/RTCORBA/Explicit_Binding/client.dsp
-	* tests/RTCORBA/Explicit_Binding/run_test.pl
-	* tests/RTCORBA/Explicit_Binding/server.bor
-	* tests/RTCORBA/Explicit_Binding/server.cpp
-	* tests/RTCORBA/Explicit_Binding/server.dsp
-	* tests/RTCORBA/Explicit_Binding/test.idl
-	* tests/RTCORBA/README
-	* tests/RTCORBA/Makefile
-	* tests/RTCORBA/Makefile.bor
-	* tests/RTCORBA/RTCORBA_tests.dsw:
+        * tests/RTCORBA/Explicit_Binding/Explicit_Binding.dsw
+        * tests/RTCORBA/Explicit_Binding/Makefile
+        * tests/RTCORBA/Explicit_Binding/Makefile.bor
+        * tests/RTCORBA/Explicit_Binding/README
+        * tests/RTCORBA/Explicit_Binding/client.bor
+        * tests/RTCORBA/Explicit_Binding/client.cpp
+        * tests/RTCORBA/Explicit_Binding/client.dsp
+        * tests/RTCORBA/Explicit_Binding/run_test.pl
+        * tests/RTCORBA/Explicit_Binding/server.bor
+        * tests/RTCORBA/Explicit_Binding/server.cpp
+        * tests/RTCORBA/Explicit_Binding/server.dsp
+        * tests/RTCORBA/Explicit_Binding/test.idl
+        * tests/RTCORBA/README
+        * tests/RTCORBA/Makefile
+        * tests/RTCORBA/Makefile.bor
+        * tests/RTCORBA/RTCORBA_tests.dsw:
 
           Added a test for <Object::_validate_connection>.
 
-	* tests/RTCORBA/Private_Connection/run_test.pl:
+        * tests/RTCORBA/Private_Connection/run_test.pl:
 
-	  Modified script to delete old ior files before starting.
+          Modified script to delete old ior files before starting.
 
-	* tao/Invocation.cpp
-	* tao/Invocation.i
-	* tao/Invocation.h
-	* tao/Invocation_Endpoint_Selectors.cpp
-	* tao/Invocation_Endpoint_Selectors.h
-	* tao/Stub.cpp (validate_connection):
+        * tao/Invocation.cpp
+        * tao/Invocation.i
+        * tao/Invocation.h
+        * tao/Invocation_Endpoint_Selectors.cpp
+        * tao/Invocation_Endpoint_Selectors.h
+        * tao/Stub.cpp (validate_connection):
 
-	  Modified <validate_connection> to work with RTCORBA policies and
-	  to populate <inconsistent_policies> parameter.
+          Modified <validate_connection> to work with RTCORBA policies and
+          to populate <inconsistent_policies> parameter.
 
 Fri Dec  1 19:05:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
 
-	  Replaced ACE_TRY_NEW_ENV with ACE_DELCARE_NEW_CORBA_ENV
-	  followed by ACE_TRY, which got rid of an egcs warning.
+          Replaced ACE_TRY_NEW_ENV with ACE_DELCARE_NEW_CORBA_ENV
+          followed by ACE_TRY, which got rid of an egcs warning.
 
 Fri Dec  1 17:10:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/tmplinst.cpp:
+        * orbsvcs/IFR_Service/tmplinst.cpp:
 
-	  Changed explicit instantiation of auto_ptr<char> to
-	  ACE_Auto_Basic_Ptr<char>, to reflect the recent change
-	  in ConstantDef_i.cpp.
+          Changed explicit instantiation of auto_ptr<char> to
+          ACE_Auto_Basic_Ptr<char>, to reflect the recent change
+          in ConstantDef_i.cpp.
 
 Fri Dec  1 15:09:06 2000  Carlos O'Ryan  <coryan@uci.edu>
 
