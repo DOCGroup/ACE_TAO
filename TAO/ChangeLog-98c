@@ -1,3 +1,14 @@
+Tue Nov 18 02:03:22 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* orbsvcs/tests/Logger/svr.cpp: 
+	* orbsvcs/tests/Logger/clnt.cpp: This test example now uses the
+ 	naming service in the server and client.  Also changed the code to
+ 	have a default use in case the naming service is not available.
+
+	* tao/orbobj.cpp (resolve_name_service): Fixed a bug, dealing with
+ 	closing the endpoint of communication for the response of the
+ 	multicast mechanism.
+
 Tue Nov 18 01:37:42 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/{be_operation.cpp,be_state_operation}.cpp: We now
