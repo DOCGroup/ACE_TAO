@@ -14,6 +14,8 @@
 //
 // ============================================================================
 
+#pragma prefix "omg.org"
+
 module CosNaming
   // = TITLE
   // This module provides interface for using COS Naming Service.

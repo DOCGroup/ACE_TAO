@@ -18,6 +18,8 @@
 
 #include "CosPropertyService.idl"
 
+#pragma prefix "omg.org"
+
 module AVStreams
 // = DESCRIPTION
 //    IDL for Control and Management of Audio/Video Streams

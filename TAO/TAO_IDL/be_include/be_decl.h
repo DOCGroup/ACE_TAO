@@ -63,14 +63,17 @@ public:
   virtual SIZE_TYPE size_type (void);
   // return our size type
 
-  const char *repoID (void);
-  // retrieve the repository ID
-
   const char *fullname (void);
   // return the stringified full name
 
   const char *flatname (void);
   // return the flattened full scoped name
+
+  const char *repoID (void);
+  // retrieve the repository ID
+
+  const char* prefix (void);
+  // retrive the repository ID prefix
 
   virtual idl_bool is_nested (void);
   // determines if we are inside of a nested scope or not
@@ -120,14 +123,17 @@ protected:
   virtual int compute_size_type (void);
   // determine our size type and set it if it is unknown
 
-  virtual void compute_repoID (void);
-  // computes the repoID
-
   virtual void compute_fullname (void);
   // computes the fully scoped name
 
   virtual void compute_flatname (void);
   // compute the flattened fully scoped name
+
+  virtual void compute_repoID (void);
+  // computes the repoID
+
+  virtual void compute_prefix (void);
+  // computes the prefix for the repoID
 
   virtual int tc_name2long (const char *name, long *&, long &);
   // name represented as a padded array of longs
@@ -157,6 +163,9 @@ protected:
 
   char *repoID_;
   // repository ID
+
+  char *prefix_;
+  // The repository ID prefix
 
   SIZE_TYPE size_type_;
   // whether we are fixed or variable size (by default fixed)

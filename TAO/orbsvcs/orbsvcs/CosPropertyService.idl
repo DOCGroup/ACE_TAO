@@ -19,6 +19,8 @@
 //
 // ================================================================
 
+#pragma prefix "omg.org"
+
 module CosPropertyService
 {
   // = TITLE

@@ -31,6 +31,8 @@
 #include <CosTransactions.idl>
 #endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
 
+#pragma prefix "omg.org"
+
 module CosConcurrencyControl 
 {
   // = TITLE

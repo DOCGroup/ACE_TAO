@@ -452,6 +452,8 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_DeclsDeclSeen:
     return GTDEVEL("Illegal syntax after declarator in declarators list");
 
+  case IDL_GlobalData::PS_PragmaPrefixSyntax:
+    return GTDEVEL ("Illegal syntax for #pragma prefix");
   default:
     return GTDEVEL("Some syntax error");
   }
