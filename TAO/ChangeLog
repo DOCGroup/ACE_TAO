@@ -1,3 +1,9 @@
+Sat Jan  3 11:23:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Smart_Proxies/Collocation/Collocation.dsp:
+
+	  Fixed the dsp file for the debug configuration.
+
 Sat Jan  3 11:00:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
