@@ -135,6 +135,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Message_Queue_Notifications_Test"=.\Message_Queue_Notifications_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Message_Queue_Test"=.\Message_Queue_Test.dsp - Package Owner=<4>
 
 Package=<5>
