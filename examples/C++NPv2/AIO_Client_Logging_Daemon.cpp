@@ -333,12 +333,11 @@ int AIO_Client_Logging_Daemon::svc (void) {
 class AIO_Client_Logging_Daemon : public ACE_Task<ACE_NULL_SYNCH> {
 public:
   // Service Configurator hook methods.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int init (int, ACE_TCHAR *[]);
   virtual int fini ();
 };
 
-int AIO_Client_Logging_Daemon::init
-      (int argc, ACE_TCHAR *argv[]) {
+int AIO_Client_Logging_Daemon::init (int, ACE_TCHAR *[]) {
 
   ACE_ERROR_RETURN
     ((LM_ERROR, ACE_TEXT ("This service requires AIO support\n")), -1);
