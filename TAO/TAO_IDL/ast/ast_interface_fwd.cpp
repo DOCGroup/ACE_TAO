@@ -87,7 +87,7 @@ AST_InterfaceFwd::AST_InterfaceFwd ()
 }
 
 AST_InterfaceFwd::AST_InterfaceFwd( AST_Interface *dummy,
-                                    UTL_ScopedName *n, 
+                                    UTL_ScopedName *n,
                                     UTL_StrList *p)
   : AST_Decl (AST_Decl::NT_interface_fwd, n, p)
 {
@@ -120,6 +120,12 @@ AST_InterfaceFwd::~AST_InterfaceFwd (void)
 idl_bool AST_InterfaceFwd::is_abstract_interface ()
 {
   return this->full_definition()->is_abstract_interface();
+}
+
+
+idl_bool AST_InterfaceFwd::is_local_interface ()
+{
+  return this->full_definition()->is_local_interface();
 }
 
 

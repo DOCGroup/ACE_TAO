@@ -121,21 +121,21 @@ be_generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
  */
 AST_Module *
 be_generator::create_module (UTL_Scope *s,
-                             UTL_ScopedName *n, 
+                             UTL_ScopedName *n,
                              UTL_StrList *p)
 {
   AST_Decl *d = 0;
-  UTL_ScopeActiveIterator *iter = 
+  UTL_ScopeActiveIterator *iter =
     new UTL_ScopeActiveIterator (s,
                                  UTL_Scope::IK_decls);
-  
+
   // We create this first so if we find a module with the
-  // same name from an included file, we can add its 
+  // same name from an included file, we can add its
   // members to the new module's scope.
   AST_Module *retval =  (AST_Module *) new be_module (n, p);
 
 
-  // Check for another module of the same name in this scope.                               
+  // Check for another module of the same name in this scope.
   while (!iter->is_done ())
     {
       d = iter->item ();
@@ -163,7 +163,7 @@ be_generator::create_module (UTL_Scope *s,
                   // one), but the one being created is not. We add
                   // the #included module's members to the new node
                   // and return it.
-                  UTL_ScopeActiveIterator *i = 
+                  UTL_ScopeActiveIterator *i =
                     new UTL_ScopeActiveIterator (DeclAsScope (d),
                                                  UTL_Scope::IK_decls);
 
@@ -182,7 +182,7 @@ be_generator::create_module (UTL_Scope *s,
                         }
 
                       i->next ();
-                    } 
+                    }
 
                   delete i;
                 }
@@ -213,30 +213,54 @@ be_generator::create_interface (UTL_ScopedName *n,
                                 long nih,
                                 AST_Interface **ih_flat,
                                 long nih_flat,
-                                UTL_StrList *p)
+                                UTL_StrList *p,
+                                idl_bool local,
+                                idl_bool abstract)
 {
-  return (AST_Interface *) new be_interface (n, 
-                                             ih, 
-                                             nih,
-                                             ih_flat,
-                                             nih_flat,
-                                             p);
+  if (! local && ! abstract)
+    return (AST_Interface *) new be_interface (n,
+                                               ih,
+                                               nih,
+                                               ih_flat,
+                                               nih_flat,
+                                               p);
+  else if (local && ! abstract)
+    return (AST_Interface *) new be_local_interface (n,
+                                                     ih,
+                                                     nih,
+                                                     ih_flat,
+                                                     nih_flat,
+                                                     p);
+  else if (abstract && !local)
+    return (AST_Interface *) new be_abstract_interface (n,
+                                                        ih,
+                                                        nih,
+                                                        ih_flat,
+                                                        nih_flat,
+                                                        p);
+  else
+    ACE_ASSERT (0);
+  return 0;
 }
 
 /*
  * Create a BE_InterfaceFwd node
  */
 AST_InterfaceFwd *
-be_generator::create_interface_fwd (UTL_ScopedName *n, 
-                                    UTL_StrList *p)
+be_generator::create_interface_fwd (UTL_ScopedName *n,
+                                    UTL_StrList *p,
+                                    idl_bool local,
+                                    idl_bool abstract)
 {
-  return (AST_InterfaceFwd *) new be_interface_fwd (this->create_interface (n, 
-                                                                            0, 
+  return (AST_InterfaceFwd *) new be_interface_fwd (this->create_interface (n,
+                                                                            0,
                                                                             -1,
                                                                             0,
-                                                                            0, 
-                                                                            p),
-                                                    n, 
+                                                                            0,
+                                                                            p,
+                                                                            local,
+                                                                            abstract),
+                                                    n,
                                                     p);
 }
 
@@ -537,7 +561,7 @@ be_generator::create_string(AST_Expression *v)
 AST_String *
 be_generator::create_wstring(AST_Expression *v)
 {
-  return (AST_String *) new be_string (v, 
+  return (AST_String *) new be_string (v,
                                        sizeof (ACE_CDR::WChar));
 }
 

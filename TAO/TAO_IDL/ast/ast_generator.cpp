@@ -109,7 +109,7 @@ AST_Generator::create_predefined_type(AST_PredefinedType::PredefinedType t,
  */
 AST_Module      *
 AST_Generator::create_module (UTL_Scope *,
-                              UTL_ScopedName *n, 
+                              UTL_ScopedName *n,
                               UTL_StrList *p)
 {
   return new AST_Module(n, p);
@@ -134,13 +134,15 @@ AST_Generator::create_interface (UTL_ScopedName *n,
                                  long nih,
                                  AST_Interface **ih_flat,
                                  long nih_flat,
-                                 UTL_StrList *p)
+                                 UTL_StrList *p,
+                                 idl_bool,
+                                 idl_bool)
 {
-  return new AST_Interface (n, 
-                            ih, 
-                            nih, 
-                            ih_flat, 
-                            nih_flat, 
+  return new AST_Interface (n,
+                            ih,
+                            nih,
+                            ih_flat,
+                            nih_flat,
                             p);
 }
 
@@ -149,9 +151,14 @@ AST_Generator::create_interface (UTL_ScopedName *n,
  * declaration of an interface)
  */
 AST_InterfaceFwd *
-AST_Generator::create_interface_fwd(UTL_ScopedName *n, UTL_StrList *p)
+AST_Generator::create_interface_fwd(UTL_ScopedName *n,
+                                    UTL_StrList *p,
+                                    idl_bool local,
+                                    idl_bool abstract)
 {
-  return new AST_InterfaceFwd (this->create_interface (n, 0, -1, 0, 0, p), n, p);
+  return new AST_InterfaceFwd (this->create_interface (n, 0, -1, 0, 0, p, local, abstract),
+                               n,
+                               p);
 }
 
 /*
@@ -179,7 +186,7 @@ AST_Generator::create_valuetype(UTL_ScopedName *,
  * Create a be_valuetype_fwd node
  */
 AST_InterfaceFwd *
-AST_Generator::create_valuetype_fwd (UTL_ScopedName *, 
+AST_Generator::create_valuetype_fwd (UTL_ScopedName *,
                                      UTL_StrList *)
 {
   // see note in create_valuetype()

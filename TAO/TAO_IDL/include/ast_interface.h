@@ -104,10 +104,10 @@ public:
 
   // Data Accessors
   static void fwd_redefinition_helper (AST_Interface *&i,
-                                       UTL_Scope *s, 
+                                       UTL_Scope *s,
                                        UTL_StrList *p);
 
-  virtual void redefine (AST_Interface *from, 
+  virtual void redefine (AST_Interface *from,
                          UTL_StrList *p);
 
   AST_Interface **inherits (void);
@@ -133,6 +133,7 @@ public:
   }
 
   virtual idl_bool is_abstract_interface (void);
+  virtual idl_bool is_local_interface (void);
   virtual idl_bool is_valuetype (void);
   virtual idl_bool is_abstract_valuetype (void);
   virtual void set_abstract_valuetype (void);
