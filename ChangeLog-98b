@@ -1,7 +1,7 @@
 Tue Sep  8 15:10:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Makefile: 
-	  Updated dependencies.
+        * tests/Makefile:
+          Updated dependencies.
 
 Tue Sep  8 13:16:37 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -28,6 +28,10 @@ Tue Sep 08 07:28:05 1998  David L. Levine  <levine@cs.wustl.edu>
           exceptions-related flags with g++.  It can also be used to
           suppress builds with old (pre-2.8) versions of g++; see
           TAO/tests/POA/TIE/Makefile for an example.
+
+        * apps/Gateway/Gateway/File_Parser.cpp (getint):
+          egcs 1.1b can't handle the FP_RETURN_TYPE typedef.  So,
+          use FP::Return_Type with __GNUG__.
 
 Mon Sep  7 22:12:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
