@@ -61,7 +61,7 @@ namespace TAO
   char *
   Invocation_Base::operation_name (void)
   {
-    return ACE_const_cast (char *, this->details_.opname ());
+    return const_cast<char *> (this->details_.opname ());
   }
 
   Dynamic::ParameterList *
@@ -105,7 +105,7 @@ namespace TAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Generate the result on demand.
-    CORBA::Boolean tk_void_any = 0;
+    static const CORBA::Boolean tk_void_any = 0;
     CORBA::Any *result_any =
       TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);

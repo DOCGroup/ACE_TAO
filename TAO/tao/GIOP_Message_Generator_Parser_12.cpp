@@ -556,9 +556,8 @@ TAO_GIOP_Message_Generator_Parser_12::process_bidir_context (
                          ACE_TEXT ("(%P|%t) Context info not found \n")),
                         -1);
 
-  TAO_InputCDR cdr (ACE_reinterpret_cast
-                    (const char*,
-                     context.context_data.get_buffer ()),
+  TAO_InputCDR cdr (reinterpret_cast<const char*> (
+                      context.context_data.get_buffer ()),
                     context.context_data.length ());
 
   return transport->tear_listen_point_list (cdr);

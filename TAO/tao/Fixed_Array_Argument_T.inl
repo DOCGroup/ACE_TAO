@@ -1,10 +1,12 @@
+// -*- C++ -*-
+//
 // $Id$
 
 template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
 TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::
 In_Fixed_Array_Argument_T (const S_slice * x)
-  : x_ (ACE_const_cast (S_slice *, x))
+  : x_ (const_cast<S_slice *> (x))
 {}
 
 template<typename S, typename S_slice, typename S_forany>
@@ -50,20 +52,20 @@ TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void)
 
 // ===========================================================================
 
-template<typename S, 
-         typename S_slice, 
-         typename S_var, 
-         typename S_forany, 
+template<typename S,
+         typename S_slice,
+         typename S_var,
+         typename S_forany,
          typename S_tag>
 ACE_INLINE
 TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::
 Ret_Fixed_Array_Argument_T (void)
 {}
 
-template<typename S, 
-         typename S_slice, 
-         typename S_var, 
-         typename S_forany, 
+template<typename S,
+         typename S_slice,
+         typename S_var,
+         typename S_forany,
          typename S_tag>
 ACE_INLINE
 S_slice *&
@@ -72,10 +74,10 @@ TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::arg (void)
   return this->x_.out ();
 }
 
-template<typename S, 
-         typename S_slice, 
-         typename S_var, 
-         typename S_forany, 
+template<typename S,
+         typename S_slice,
+         typename S_var,
+         typename S_forany,
          typename S_tag>
 ACE_INLINE
 S_slice *
@@ -84,10 +86,10 @@ TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::excp (void)
   return this->x_.ptr ();
 }
 
-template<typename S, 
-         typename S_slice, 
-         typename S_var, 
-         typename S_forany, 
+template<typename S,
+         typename S_slice,
+         typename S_var,
+         typename S_forany,
          typename S_tag>
 ACE_INLINE
 S_slice *
@@ -95,4 +97,3 @@ TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::retn (void)
 {
   return this->x_._retn ();
 }
-

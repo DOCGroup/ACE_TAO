@@ -85,9 +85,8 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
 
   if (result != 0)
     {
-      CORBA::ULong username_size =
-        ACE_static_cast (CORBA::ULong,
-                         ACE_OS::strlen (username));
+      const CORBA::ULong username_size =
+        static_cast<CORBA::ULong> (ACE_OS::strlen (username));
 
       CORBA::Octet *buffer =
         CORBA::OctetSeq::allocbuf (username_size + 1);

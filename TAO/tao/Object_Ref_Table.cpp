@@ -84,7 +84,7 @@ TAO_Object_Ref_Table::destroy (void)
        ++i)
     {
       // Deallocate the id.
-      CORBA::string_free (ACE_const_cast (char *, (*i).ext_id_));
+      CORBA::string_free (const_cast<char *> ((*i).ext_id_));
 
       // Release the Object.
       CORBA::release ((*i).int_id_);
@@ -161,7 +161,7 @@ TAO_Object_Ref_Table::unbind (const char *id)
       // Deallocate the external ID and obtain the ORB core pointer
       // before unbinding the entry since the entry is deallocated
       // during the call to unbind().
-      CORBA::string_free (ACE_const_cast (char *, entry->ext_id_));
+      CORBA::string_free (const_cast<char *> (entry->ext_id_));
       CORBA::Object_ptr obj = entry->int_id_;
 
       result = this->table_.unbind (entry);

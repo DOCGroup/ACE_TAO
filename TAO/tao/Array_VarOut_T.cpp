@@ -9,8 +9,8 @@
 #include "tao/Array_VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           Array_VarOut_T, 
+ACE_RCSID (tao,
+           Array_VarOut_T,
            "$Id$")
 
 template<typename T, typename T_slice, typename TAG>
@@ -24,7 +24,7 @@ TAO_FixedArray_Var_T<T,T_slice,TAG>::operator= (T_slice * p)
       TAO::Array_Traits<T,T_slice,TAG>::tao_free (this->ptr_);
       this->ptr_ = p;
     }
-  
+
   return *this;
 }
 
@@ -37,11 +37,11 @@ TAO_FixedArray_Var_T<T,T_slice,TAG>::operator= (
   if (this != &p)
     {
       TAO::Array_Traits<T,T_slice,TAG>::tao_free (this->ptr_);
-      
+
       // Deep copy.
       this->ptr_ = TAO::Array_Traits<T,T_slice,TAG>::tao_dup (p.in ());
     }
-  
+
   return *this;
 }
 
@@ -58,7 +58,7 @@ TAO_VarArray_Var_T<T,T_slice,TAG>::operator= (T_slice * p)
       TAO::Array_Traits<T,T_slice,TAG>::tao_free (this->ptr_);
       this->ptr_ = p;
     }
-  
+
   return *this;
 }
 
@@ -71,11 +71,11 @@ TAO_VarArray_Var_T<T,T_slice,TAG>::operator= (
   if (this != &p)
     {
       TAO::Array_Traits<T,T_slice,TAG>::tao_free (this->ptr_);
-      
+
       // Deep copy.
       this->ptr_ = TAO::Array_Traits<T,T_slice,TAG>::tao_dup (p.in ());
     }
-  
+
   return *this;
 }
 
@@ -87,7 +87,7 @@ TAO_Array_Forany_T<T,T_slice,TAG>::_tao_any_destructor (
     void * _tao_void_pointer
   )
 {
-  T_slice * tmp = ACE_static_cast (T_slice *, _tao_void_pointer);
+  T_slice * tmp = static_cast<T_slice *> (_tao_void_pointer);
   TAO::Array_Traits<T,T_slice,TAG>::tao_free (tmp);
 }
 

@@ -123,7 +123,7 @@ TAO_Connector::make_mprofile (const char *string,
 
   // Tell the MProfile object how many Profiles it should hold.
   // MProfile::set(size) returns the number profiles it can hold.
-  if (mprofile.set (profile_count) != ACE_static_cast (int, profile_count))
+  if (mprofile.set (profile_count) != static_cast<int> (profile_count))
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
                           CORBA::SystemException::_tao_minor_code (
@@ -160,7 +160,7 @@ TAO_Connector::make_mprofile (const char *string,
           end = objkey_index;  // Handle last endpoint differently
         }
 
-      if (end < ACE_static_cast (int, ior.length ()) && end != ior.npos)
+      if (end < static_cast<int> (ior.length ()) && end != ior.npos)
         {
           ACE_CString endpoint = ior.substring (begin, end - begin);
 

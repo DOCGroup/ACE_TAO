@@ -155,7 +155,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
       if (ACE_OS::strspn (tmp.in (), "1234567890") == length_port)
         {
           this->endpoint_.port_ =
-            ACE_static_cast (CORBA::UShort, ACE_OS::atoi (tmp.in ()));
+            static_cast<CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
         }
       else
         {
@@ -231,7 +231,7 @@ CORBA::Boolean
 TAO_IIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 {
   const TAO_IIOP_Profile *op =
-    ACE_dynamic_cast (const TAO_IIOP_Profile *, other_profile);
+    dynamic_cast<const TAO_IIOP_Profile *> (other_profile);
 
   // Make sure we have a TAO_IIOP_Profile.
   if (op == 0)
@@ -324,7 +324,7 @@ TAO_IIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    1 /* object key separator */ +
                    ACE_OS::strlen (key.in ()));
 
-  char * buf = CORBA::string_alloc (ACE_static_cast (CORBA::ULong, buflen));
+  char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
   static const char digits [] = "0123456789";
 
@@ -426,14 +426,14 @@ TAO_IIOP_Profile::decode_endpoints (void)
       const CORBA::Octet *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
+      TAO_InputCDR in_cdr (reinterpret_cast<const char *> (buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         return -1;
-      in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+      in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       TAO::IIOPEndpointSequence endpoints;

@@ -31,7 +31,7 @@
 
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (TAO,
+ACE_RCSID (tao,
            Exception,
            "$Id$")
 
@@ -164,10 +164,10 @@ CORBA::Exception::_tao_print_exception (const char *user_provided_info,
                                         FILE *) const
 {
   ACE_DEBUG ((LM_ERROR,
-              ACE_LIB_TEXT("(%P|%t) EXCEPTION, %s\n")
-              ACE_LIB_TEXT("%s\n"),
-              ACE_TEXT_CHAR_TO_TCHAR(user_provided_info),
-              ACE_TEXT_CHAR_TO_TCHAR(this->_info ().c_str ())));
+              ACE_LIB_TEXT ("(%P|%t) EXCEPTION, %s\n")
+              ACE_LIB_TEXT ("%s\n"),
+              ACE_TEXT_CHAR_TO_TCHAR (user_provided_info),
+              ACE_TEXT_CHAR_TO_TCHAR (this->_info ().c_str ())));
 }
 
 #if defined (ACE_USES_WCHAR)
@@ -185,7 +185,7 @@ CORBA::Exception::_tao_print_exception (const ACE_WCHAR_T *info,
 void
 CORBA::Exception::_tao_any_destructor (void *x)
 {
-  CORBA::Exception *tmp = ACE_static_cast (CORBA::Exception *, x);
+  CORBA::Exception *tmp = static_cast<CORBA::Exception *> (x);
   delete tmp;
 }
 
@@ -249,8 +249,7 @@ CORBA::UserException::_downcast (CORBA::Exception* exception)
 {
   if (exception->_is_a ("IDL:omg.org/CORBA/UserException:1.0"))
     {
-      return ACE_dynamic_cast (CORBA::UserException *,
-                               exception);
+      return dynamic_cast<CORBA::UserException *> (exception);
     }
 
   return 0;
@@ -261,8 +260,7 @@ CORBA::UserException::_downcast (const CORBA::Exception *exception)
 {
   if (exception->_is_a ("IDL:omg.org/CORBA/UserException:1.0"))
     {
-      return ACE_dynamic_cast (const CORBA::UserException *,
-                               exception);
+      return dynamic_cast<const CORBA::UserException *> (exception);
     }
 
   return 0;
@@ -350,8 +348,7 @@ CORBA::SystemException::_downcast (CORBA::Exception* exception)
 {
   if (exception->_is_a ("IDL:omg.org/CORBA/SystemException:1.0"))
     {
-      return ACE_dynamic_cast (CORBA::SystemException *,
-                               exception);
+      return dynamic_cast<CORBA::SystemException *> (exception);
     }
 
   return 0;
@@ -362,8 +359,7 @@ CORBA::SystemException::_downcast (const CORBA::Exception *exception)
 {
   if (exception->_is_a ("IDL:omg.org/CORBA/SystemException:1.0"))
     {
-      return ACE_dynamic_cast (const CORBA::SystemException *,
-                               exception);
+      return dynamic_cast<const CORBA::SystemException *> (exception);
     }
 
   return 0;
@@ -478,7 +474,7 @@ CORBA::SystemException::_tao_print_system_exception (FILE *) const
 {
   ACE_DEBUG ((LM_ERROR,
               ACE_LIB_TEXT("(%P|%t) system exception, ID '%s'\n"),
-              ACE_TEXT_CHAR_TO_TCHAR(this->_info ().c_str ())));
+              ACE_TEXT_CHAR_TO_TCHAR (this->_info ().c_str ())));
 }
 
 ACE_CString
@@ -639,7 +635,7 @@ CORBA::SystemException::_info (void) const
             // 7 bits of some other errno.
             ACE_OS::sprintf (unknown_errno,
                              "low 7 bits of errno: %3u %s",
-                             minor_code, ACE_OS::strerror(minor_code));
+                             minor_code, ACE_OS::strerror (minor_code));
 
             errno_indication = unknown_errno;
           }
@@ -965,10 +961,10 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp
                         TAO_Exceptions::global_allocator_,
                         ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
 
-  const char *interface_id =
+  static const char * interface_id =
     "IDL:omg.org/CORBA/UnknownUserException:1.0";
-  const char *name = "UnknownUserException";
-  const char *field_name = "exception";
+  static const char * name = "UnknownUserException";
+  static const char * field_name = "exception";
 
   const CORBA::Boolean result =
     (stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
@@ -1039,12 +1035,11 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   //    - number of members (2) [4 bytes ]
   //    - foreach member, { name string, typecode } [~40 bytes]
 
-  const char prefix[] = "IDL:omg.org/CORBA/";
-  const char suffix[] = ":1.0";
+  static const char prefix[] = "IDL:omg.org/CORBA/";
+  static const char suffix[] = ":1.0";
   char * full_id =
     CORBA::string_alloc (sizeof prefix
-                         + ACE_static_cast (CORBA::ULong,
-                                            ACE_OS::strlen (name))
+                         + static_cast<CORBA::ULong> (ACE_OS::strlen (name))
                          + sizeof suffix);
 
   CORBA::String_var safe_full_id = full_id;
@@ -1158,7 +1153,6 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 
 static CORBA::Long tc_buf_CORBA[TAO_TC_BUF_LEN / sizeof (CORBA::Long)];
 
-// static CORBA::Long tc_buf_CORBA_ ## name[TAO_TC_BUF_LEN / sizeof (CORBA::Long)];
 #define TAO_SYSTEM_EXCEPTION(name) \
   CORBA::TypeCode_ptr CORBA::_tc_ ## name = 0;
   STANDARD_EXCEPTION_LIST
@@ -1172,10 +1166,10 @@ static CORBA::Long tc_buf_CORBA[TAO_TC_BUF_LEN / sizeof (CORBA::Long)];
       &CORBA::_tc_null};
 
 // Since we add an extra element subtract 1
-static CORBA::ULong array_sz =
+static const CORBA::ULong array_sz =
     (sizeof (type_code_array) / sizeof (CORBA::TypeCode_ptr)) - 1;
 
-static char *repo_id_array [] = {
+static const char *repo_id_array [] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
                   (char *) "IDL:omg.org/CORBA/" #name ":1.0",
       STANDARD_EXCEPTION_LIST
@@ -1239,9 +1233,7 @@ CORBA::SystemException *
 TAO_Exceptions::create_system_exception (const char *id
                                          ACE_ENV_ARG_DECL_NOT_USED)
 {
-  for (CORBA::ULong i = 0;
-       i < array_sz;
-       ++i)
+  for (CORBA::ULong i = 0; i < array_sz; ++i)
     {
       if (ACE_OS::strcmp (id, repo_id_array[i]) == 0)
         return (*(excp_array[i])) ();
@@ -1253,9 +1245,7 @@ TAO_Exceptions::create_system_exception (const char *id
 void
 TAO_Exceptions::fini (void)
 {
-  for (CORBA::ULong i = 0;
-       i < array_sz;
-       ++i)
+  for (CORBA::ULong i = 0; i < array_sz; ++i)
     {
       CORBA::release (*type_code_array[i]);
       *type_code_array[i] = 0;
@@ -1273,7 +1263,7 @@ CORBA::name * \
 CORBA::name ::_downcast (CORBA::Exception* exception) \
 { \
   if (exception->_is_a ("IDL:omg.org/CORBA/" #name ":1.0")) \
-    return ACE_dynamic_cast (CORBA::name *, exception); \
+    return dynamic_cast<CORBA::name *> (exception); \
   return 0; \
 }
 
@@ -1325,7 +1315,7 @@ STANDARD_EXCEPTION_LIST
 void \
 CORBA::name ::_tao_any_destructor (void *x) \
 { \
-  CORBA::name *tmp = ACE_static_cast (CORBA::name *, x); \
+  CORBA::name *tmp = static_cast<CORBA::name *> (x); \
   delete tmp; \
 }
 

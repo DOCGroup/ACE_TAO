@@ -265,8 +265,7 @@ ACE_INLINE
 const CORBA::Octet *
 TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (void) const
 {
-  return ACE_reinterpret_cast (const CORBA::Octet * ACE_CAST_CONST,
-                               this->buffer_);
+  return reinterpret_cast<const CORBA::Octet * ACE_CAST_CONST> (this->buffer_);
 }
 
 ACE_INLINE
@@ -274,7 +273,7 @@ CORBA::Octet &
 TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i)
 {
   TAO_SEQUENCE_ASSERT (i, this->maximum_);
-  CORBA::Octet * tmp = ACE_reinterpret_cast(CORBA::Octet *, this->buffer_);
+  CORBA::Octet * tmp = reinterpret_cast<CORBA::Octet *> (this->buffer_);
   return tmp[i];
 }
 
@@ -284,7 +283,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i) const
 {
   TAO_SEQUENCE_ASSERT (i, this->maximum_);
   CORBA::Octet * const tmp =
-    ACE_reinterpret_cast (CORBA::Octet * ACE_CAST_CONST, this->buffer_);
+    reinterpret_cast<CORBA::Octet * ACE_CAST_CONST> (this->buffer_);
   return tmp[i];
 }
 

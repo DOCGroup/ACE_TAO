@@ -87,7 +87,7 @@ CORBA::ORB::InvalidName::_downcast (CORBA::Exception *exc)
   if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/ORB/InvalidName:1.0",
                        exc->_rep_id ()))
     {
-      return ACE_dynamic_cast (InvalidName *, exc);
+      return dynamic_cast<InvalidName *> (exc);
     }
   else
     {
@@ -300,7 +300,7 @@ CORBA::ORB::create_list (CORBA::Long count,
     {
       new_list->max_ = (CORBA::ULong) count;
 
-      for (CORBA::Long i = 0; i < count; i++)
+      for (CORBA::Long i = 0; i < count; ++i)
         {
           CORBA::NamedValue_ptr nv = 0;
           ACE_NEW_THROW_EX (nv,
@@ -1070,16 +1070,15 @@ CORBA::ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
                 10);
 
   CORBA::String_var port_ptr =
-  CORBA::string_alloc (ACE_static_cast (CORBA::ULong,
-                         ACE_OS::strlen ((const char *) port_char)));
+    CORBA::string_alloc (static_cast<CORBA::ULong> (
+                           ACE_OS::strlen ((const char *) port_char)));
 
   port_ptr = (const char *) port_char;
 
   CORBA::String_var def_init_ref =
-  CORBA::string_alloc (sizeof (prefix) +
-                       ACE_static_cast (CORBA::ULong,
-                         ACE_OS::strlen (port_ptr.in ())) +
-                       2);
+    CORBA::string_alloc (sizeof (prefix) +
+                         static_cast<CORBA::ULong> (
+                           ACE_OS::strlen (port_ptr.in ())) + 2);
 
   ACE_OS::strcpy (def_init_ref.inout (), prefix);
   ACE_OS::strcat (def_init_ref.inout (), port_ptr.in ());
@@ -1308,7 +1307,7 @@ CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
     }
   else
     {
-      CORBA::ORB::orb_init_count_++;
+      ++CORBA::ORB::orb_init_count_;
     }
 
   // initialize the system TypeCodes
@@ -1761,10 +1760,10 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
 
       char *cp;
       ACE_ALLOCATOR_RETURN (cp,
-                            CORBA::string_alloc (sizeof ior_prefix
-                                                 + 2 *
-                                                 ACE_static_cast (CORBA::ULong,
-                                                                  total_len)),
+                            CORBA::string_alloc (
+                              sizeof ior_prefix
+                              + 2
+                              * static_cast<CORBA::ULong> (total_len)),
                             0);
 
       CORBA::String_var string = cp;
@@ -1783,7 +1782,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
             {
               *cp++ = ACE::nibble2hex ((*bytes) >> 4);
               *cp++ = ACE::nibble2hex (*bytes);
-              bytes++;
+              ++bytes;
             }
         }
       // Null terminate the string..

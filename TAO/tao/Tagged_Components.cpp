@@ -79,7 +79,7 @@ TAO_Tagged_Components::set_component_i (IOP::ComponentId tag,
 
   // Make a *copy* of the CDR stream...
   size_t length = cdr.total_length ();
-  component.component_data.length (ACE_static_cast (CORBA::ULong, length));
+  component.component_data.length (static_cast<CORBA::ULong> (length));
   CORBA::Octet *buf = component.component_data.get_buffer ();
 
   for (const ACE_Message_Block *i = cdr.begin ();
@@ -133,9 +133,10 @@ void
 TAO_Tagged_Components::set_known_component_i (
     const IOP::TaggedComponent& component)
 {
-  TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
-                                          component.component_data.get_buffer ()),
+  TAO_InputCDR cdr (reinterpret_cast<const char*> (
+                      component.component_data.get_buffer ()),
                     component.component_data.length ());
+
   CORBA::Boolean byte_order;
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
@@ -143,7 +144,7 @@ TAO_Tagged_Components::set_known_component_i (
       return;
     }
 
-  cdr.reset_byte_order (ACE_static_cast(int,byte_order));
+  cdr.reset_byte_order (static_cast<int> (byte_order));
 
   if (component.tag == IOP::TAG_ORB_TYPE)
     {

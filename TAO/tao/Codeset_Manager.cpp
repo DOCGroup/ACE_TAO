@@ -168,14 +168,14 @@ TAO_Codeset_Manager::process_service_context (TAO_ServerRequest &request)
     {
       // Convert the Service Context to Codeset Context
       const char *buffer =
-        ACE_reinterpret_cast (const char*,context.context_data.get_buffer ());
+        reinterpret_cast<const char*> (context.context_data.get_buffer ());
 
       TAO_InputCDR cdr (buffer,context.context_data.length ());
       CORBA::Boolean byte_order;
 
       if (cdr >> TAO_InputCDR::to_boolean (byte_order))
         {
-          cdr.reset_byte_order (ACE_static_cast (int, byte_order));
+          cdr.reset_byte_order (static_cast<int> (byte_order));
           cdr >> tcs_c;
           cdr >> tcs_w;
         }
@@ -407,11 +407,11 @@ TAO_Codeset_Manager::init_codeset_factories_i (
   TAO_CodesetFactorySetItor iter = factset.begin ();
 
   CONV_FRAME::CodeSetId ncs = cs_comp.native_code_set;
-  cs_comp.conversion_code_sets.length(ACE_static_cast (CORBA::ULong,
-                                                       factset.size()));
+  cs_comp.conversion_code_sets.length (
+    static_cast<CORBA::ULong> (factset.size()));
   CORBA::ULong index;
 
-  for (index = 0; iter != end; iter++)
+  for (index = 0; iter != end; ++iter)
     {
       const char *name = (*iter)->codeset_name ();
       TAO_Codeset_Translator_Factory *trans =
@@ -486,14 +486,13 @@ TAO_Codeset_Translator_Factory *
 TAO_Codeset_Manager::get_translator_i (TAO_CodesetFactorySet& factset,
                                        CONV_FRAME::CodeSetId tcs)
 {
-  TAO_CodesetFactorySetItor end = factset.end ();
-  TAO_CodesetFactorySetItor iter = factset.begin ();
+  const TAO_CodesetFactorySetItor end = factset.end ();
 
-  for (; iter != end; iter++)
+  for (TAO_CodesetFactorySetItor iter = factset.begin (); iter != end; ++iter)
     {
       TAO_Codeset_Translator_Factory *fact = (*iter)->factory ();
 
-      if (fact && tcs == fact->tcs())
+      if (fact && tcs == fact->tcs ())
         {
           return fact;
         }

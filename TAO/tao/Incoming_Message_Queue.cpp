@@ -23,12 +23,12 @@ TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)
 
 TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
 {
-  int sz = this->size_;
+  const int sz = this->size_;
 
   // Delete all the nodes left behind
   for (int i = 0;
        i < sz;
-       i++)
+       ++i)
     {
       TAO_Queued_Data *qd = this->dequeue_head ();
       TAO_Queued_Data::release (qd);
@@ -184,10 +184,10 @@ TAO_Queued_Data::get_queued_data (ACE_Allocator *alloc)
   if (alloc)
     {
       ACE_NEW_MALLOC_RETURN (qd,
-                            ACE_static_cast (TAO_Queued_Data *,
-                              alloc->malloc (sizeof (TAO_Queued_Data))),
-                            TAO_Queued_Data (alloc),
-                            0);
+                             static_cast<TAO_Queued_Data *> (
+                               alloc->malloc (sizeof (TAO_Queued_Data))),
+                             TAO_Queued_Data (alloc),
+                             0);
 
       return qd;
     }
@@ -260,10 +260,10 @@ TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
   if (sqd.allocator_)
     {
       ACE_NEW_MALLOC_RETURN (qd,
-                             ACE_static_cast(TAO_Queued_Data *,
+                             static_cast<TAO_Queued_Data *> (
                                sqd.allocator_->malloc (sizeof (TAO_Queued_Data))),
                              TAO_Queued_Data (sqd),
-                            0);
+                             0);
 
       return qd;
     }

@@ -208,7 +208,7 @@ namespace CORBA
     WString_var &operator= (const WString_var &s);
 
     /// access and modify.
-    operator CORBA::WChar *();
+    operator CORBA::WChar *&();
 
     /// only read privileges.
     operator const CORBA::WChar *() const;

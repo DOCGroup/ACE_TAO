@@ -814,7 +814,7 @@ enum TAO_Policy_Scope
 };
 
 #define TAO_POLICY_DEFAULT_SCOPE \
-  (ACE_static_cast(TAO_Policy_Scope, \
+  (static_cast<TAO_Policy_Scope> ( \
                    TAO_POLICY_OBJECT_SCOPE | \
                    TAO_POLICY_THREAD_SCOPE | \
                    TAO_POLICY_ORB_SCOPE | \

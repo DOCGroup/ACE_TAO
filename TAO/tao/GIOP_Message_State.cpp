@@ -284,14 +284,14 @@ TAO_GIOP_Message_State::read_ulong (char *rd_ptr)
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
   if (!(this->byte_order_ != ACE_CDR_BYTE_ORDER))
     {
-      x = *ACE_reinterpret_cast (ACE_CDR::ULong*, buf);
+      x = *reinterpret_cast<ACE_CDR::ULong*> (buf);
     }
   else
     {
-      ACE_CDR::swap_4 (buf, ACE_reinterpret_cast (char*, &x));
+      ACE_CDR::swap_4 (buf, reinterpret_cast<char*> (&x));
     }
 #else
-  x = *ACE_reinterpret_cast(ACE_CDR::ULong*, buf);
+  x = *reinterpret_cast<ACE_CDR::ULong*> (buf);
 #endif /* ACE_DISABLE_SWAP_ON_READ */
 
   return x;

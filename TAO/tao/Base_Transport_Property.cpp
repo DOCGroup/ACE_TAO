@@ -7,8 +7,8 @@
 # include "tao/Base_Transport_Property.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           Base_Transport_Property, 
+ACE_RCSID (tao,
+           Base_Transport_Property,
            "$Id$")
 
 TAO_Base_Transport_Property::~TAO_Base_Transport_Property (void)
@@ -38,14 +38,8 @@ CORBA::Boolean
 TAO_Base_Transport_Property::is_equivalent (
     const TAO_Transport_Descriptor_Interface *rhs)
 {
-  // Do away with const.
-  TAO_Transport_Descriptor_Interface *r =
-    ACE_const_cast (TAO_Transport_Descriptor_Interface *,
-                    rhs);
-
-  TAO_Base_Transport_Property *other_desc =
-    ACE_dynamic_cast (TAO_Base_Transport_Property *,
-                      r);
+  const TAO_Base_Transport_Property *other_desc =
+    dynamic_cast<const TAO_Base_Transport_Property *> (rhs);
 
   if (other_desc == 0)
     return 0;

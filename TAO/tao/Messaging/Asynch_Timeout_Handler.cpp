@@ -7,7 +7,9 @@
 #include "tao/Transport_Mux_Strategy.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID(tao, Asynch_Timeout_Handler, "$Id$")
+ACE_RCSID (Messaging,
+           Asynch_Timeout_Handler,
+           "$Id$")
 
 
 TAO_Asynch_Timeout_Handler::TAO_Asynch_Timeout_Handler (

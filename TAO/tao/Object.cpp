@@ -151,7 +151,7 @@ CORBA::Object::_remove_ref (void)
 void
 CORBA::Object::_tao_any_destructor (void *x)
 {
-  CORBA::Object_ptr tmp = ACE_static_cast (CORBA::Object_ptr, x);
+  CORBA::Object_ptr tmp = static_cast<CORBA::Object_ptr> (x);
   CORBA::release (tmp);
 }
 
@@ -257,8 +257,8 @@ CORBA::Object::_hash (CORBA::ULong maximum
       // of CORBA::ULong since we need to first cast to an integer
       // large enough to hold an address to avoid compile-time
       // warnings on some 64-bit platforms.
-      CORBA::ULong hash = ACE_static_cast (CORBA::ULong,
-                            ACE_reinterpret_cast (ptrdiff_t, this));
+      const CORBA::ULong hash =
+        static_cast<CORBA::ULong> (reinterpret_cast<ptrdiff_t> (this));
 
       return hash % maximum;
     }
@@ -632,8 +632,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object* x)
     {
       // @@ This is too inefficient. Need to speed this up if this is
       // a bottle neck.
-      cdr << ACE_const_cast (IOP::IOR &,
-                             x->ior ());
+      cdr << const_cast<IOP::IOR &> (x->ior ());
       return cdr.good_bit ();
     }
 
