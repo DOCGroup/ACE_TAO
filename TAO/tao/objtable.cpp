@@ -48,7 +48,7 @@ TAO_Object_Table_Impl::find (const PortableServer::Servant servant,
       const TAO_Object_Table_Entry& item = i->item ();
       if (item.int_id_ == servant)
 	{
-	  if (id != 0)
+	  if (id.ptr () != 0)
 	    {
 	      // More than one match return -1.
 	      delete id.ptr ();
