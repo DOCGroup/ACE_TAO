@@ -1,5 +1,9 @@
 Fri Nov  7 10:30:59 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/tao_internals.cpp (fake_service_entries_i): Updated faked
+ 	service entries to include new Resource Factory.  This is the
+ 	fallback for VxWorks.
+
 	* tao/orb_core.h (TAO_Resource_Factory): Added much comments.
 
 Fri Nov 07 02:45:56 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
