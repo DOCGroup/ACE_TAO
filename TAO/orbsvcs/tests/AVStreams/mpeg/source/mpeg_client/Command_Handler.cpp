@@ -13,6 +13,12 @@ Command_Handler::Command_Handler (ACE_HANDLE command_handle)
 {
 }
 
+Command_Handler::~Command_Handler (void)
+{
+  ACE_Reactor::instance ()->remove_handler (this,
+                                            ACE_Event_Handler::READ_MASK);
+}
+
 int
 Command_Handler::init (void)
 {
@@ -1383,6 +1389,14 @@ Client_Sig_Handler::Client_Sig_Handler (Command_Handler *command_handler)
 {
 }
 
+Client_Sig_Handler::~Client_Sig_Handler (void)
+{
+  ACE_Reactor::instance ()->remove_handler (this,
+                                            ACE_Event_Handler::NULL_MASK);
+
+  ACE_Reactor::instance ()->remove_handler (this->sig_set);
+}
+
 int
 Client_Sig_Handler::register_handler (void)
 {
@@ -1404,13 +1418,12 @@ Client_Sig_Handler::register_handler (void)
                       -1);
 
   // Create a sigset_t corresponding to the signals we want to catch.
-  ACE_Sig_Set sig_set;
 
-  sig_set.sig_add (SIGINT);
-  sig_set.sig_add (SIGQUIT);
-  sig_set.sig_add (SIGALRM);  
-  sig_set.sig_add (SIGUSR1);
-  sig_set.sig_add (SIGUSR2);  
+  this->sig_set.sig_add (SIGINT);
+  this->sig_set.sig_add (SIGQUIT);
+  this->sig_set.sig_add (SIGALRM);  
+  this->sig_set.sig_add (SIGUSR1);
+  this->sig_set.sig_add (SIGUSR2);  
 
   // Register the signal handler object to catch the signals.
   if (ACE_Reactor::instance ()->register_handler (sig_set, 

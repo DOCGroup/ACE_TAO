@@ -52,6 +52,9 @@ public:
   Command_Handler (ACE_HANDLE command_handle);
   // Construct this handler with a control (UNIX) handle
 
+  ~Command_Handler (void);
+  // Destructor
+
   int init (void);
   // initialize the ORB
 
@@ -137,6 +140,9 @@ public:
   Client_Sig_Handler (Command_Handler *command_handler);
   // We need the command handler to call close ()
 
+  ~Client_Sig_Handler (void);
+  // Destructor
+
   virtual ACE_HANDLE get_handle (void) const;
 
   int register_handler (void);
@@ -158,7 +164,10 @@ public:
 private:
   ACE_HANDLE handle_;
   // dummy handle for the sig handler.
-  
+
+  ACE_Sig_Set sig_set;
+  // the signal set
+
   Command_Handler *command_handler_;
   // We need the command handler to call close ()
 
