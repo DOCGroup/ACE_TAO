@@ -1,3 +1,13 @@
+Tue Feb 23 15:24:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+	  Fixed some more g++ warnings in generated code. It was
+	  unused arg in the case of the union and an
+	  unnecessary ACE_NOTREACHED in the case of the objref. If
+	  g++ is going to complain now about this, we might need
+	  to add it to the list in the #define of ACE_NOTREACHED.
+
 Tue Feb 23 11:48:15 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp (start_client_stubs,
