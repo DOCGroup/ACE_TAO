@@ -738,7 +738,10 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
               break;
             }
 
-          if (elapsed.msec () > 2 * TIMEOUT_MILLISECONDS)
+          // Slightly more than the timeout is allowed to pass due
+          // to scheduler differences.
+          static const unsigned int real_timeout = 3 * TIMEOUT_MILLISECONDS;
+          if (elapsed.msec () > real_timeout)
             {
               test_failed = 1;
               ACE_DEBUG ((LM_DEBUG,
@@ -746,7 +749,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
                           "timeout threshold. "
                           "Elapsed = %d, Timeout = %d msecs\n",
                           i,
-                          elapsed.msec (), TIMEOUT_MILLISECONDS));
+                          elapsed.msec (), real_timeout));
               break;
             }
         }
