@@ -159,7 +159,7 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
   // compute the flattened fully scoped name
   compute_flat_name ();
 
- 
+
 }
 
 // overriden method
@@ -292,14 +292,13 @@ be_predefined_type::compute_tc_name (const char *prefix, const char *suffix)
 int
 be_predefined_type::compute_size_type (void)
 {
-  switch (this->pt ())
+  if (this->pt () == AST_PredefinedType::PT_any
+      || this->pt () == AST_PredefinedType::PT_pseudo)
     {
-    case AST_PredefinedType::PT_any:
-    case AST_PredefinedType::PT_pseudo:
-      // we are variable length type
       this->size_type (be_decl::VARIABLE);
-      break;
-    default:
+    }
+  else
+    {
       this->size_type (be_decl::FIXED);
     }
   return 0;
