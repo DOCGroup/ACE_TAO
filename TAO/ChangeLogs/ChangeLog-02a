@@ -1,3 +1,10 @@
+Mon Nov 13 17:40:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Invocation.i:
+
+	  Added missing ACE_INLINE for destructor of
+	  TAO_GIOP_Locate_Request_Invocation.
+
 Mon Nov 13 16:59:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* */Makefile*:
