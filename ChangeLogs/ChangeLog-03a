@@ -1,3 +1,21 @@
+Tue Feb  4 11:21:13 MST 2003 Rob Andzik <andzik@rtlogic.com>
+
+         * ACE_wrappers/include/makeinclude/platform_vxworks5.x_g++.GNU
+            - Added three new variables
+		         GCC_VERSION (defaults to gcc-2.96)
+		         VXWORKS_VERSION_FLAG (defaults to -DACE_VXWORKS=0x542)
+		         VXWORKS_STDINC_FLAG (defaults to <null>)
+
+            - Modified all sets of GCCLIB_DIR to use GCC_VERSION
+            - Modified all references to ACE_VXWORKS to use VXWORKS_VERSION_FLAG
+            - replaced -nostdinc with VXWORKS_STDINC_FLAG
+
+         * ACE_wrappers/ace/config-vxworks5.x.h
+            - Added define ACE_LACKS_CLEARERR (wrapped in ACE_VXWORKS check)
+
+         * ACE_wrappers/ace/OS.i
+            - Added ACE_UNUSED_ARG where warnings occurred.
+
 Mon Feb  3 16:33:02 2003  Heather Drury  <drury_h@ociweb.com>
 
 	* ace/config-freebsd.h: msgsnd() with const parameter was recently

@@ -2639,6 +2639,10 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
         return -1;
       ++state.relock_count_;
     }
+#    else /* not ACE_WIN32 */
+    // prevent warnings for unused variables
+    ACE_UNUSED_ARG (state);
+    ACE_UNUSED_ARG (m);
 #    endif /* ACE_WIN32 */
   return 0;
 #  else /* ACE_HAS_RECURSIVE_MUTEXES */
@@ -2717,6 +2721,11 @@ ACE_OS::recursive_mutex_cond_relock (ACE_recursive_thread_mutex_t *m,
       --state.relock_count_;
     }
   return;
+#    else /* not ACE_WIN32 */
+    // prevent warnings for unused variables
+    ACE_UNUSED_ARG (state);
+    ACE_UNUSED_ARG (m);
+
 #    endif /* ACE_WIN32 */
 #  else
   // Without recursive mutex support, it's somewhat trickier. On entry,

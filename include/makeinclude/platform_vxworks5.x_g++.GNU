@@ -78,8 +78,12 @@ endif # ! PERL_PATH
 ####  WIND_BASE = /project/doc/pkg/wind
 ####  WIND_HOST_TYPE = sun4-solaris2
 ####  CPU = I80486
+####  GCC_VERSION = gcc-2.96
 ####
 ####  include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_g++.GNU
+####
+####  NOTE: VxWorks 5.4 uses cygnus-2.7.2-960126
+####        VxWorks 5.4.1 uses gcc-2.96
 ####
 #### 2) modify the code below to set CPU, or
 #### 3) set CPU on the command line, e.g., "make CPU=I80486"
@@ -87,60 +91,78 @@ ifeq ($(CPU),)
   CPU = PPC604
 endif # default CPU
 
+ifeq ($(GCC_VERSION),)
+  GCC_VERSION = gcc-2.96
+endif # default GCC Version
+
+# These variables may be set on the command line if a different ACE_VXWORKS
+# flag is desired.
+                                               
+ifeq ($(VXWORKS_VERSION_FLAG),)
+   ifeq ($(GCC_VERSION),gcc-2.96)
+       VXWORKS_VERSION_FLAG = -DACE_VXWORKS=0x542
+   else
+       VXWORKS_VERSION_FLAG = -DACE_VXWORKS=0x540
+       VXWORKS_STDINC_FLAG = -nostdinc
+   endif # GCC_VERSION
+endif # VXWORKS_VERSION_FLAG
+   
+
+
 ifeq ($(CPU),SH7700)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7700 -m3
   CCFLAGS += $(TEMPLATES_FLAG)
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = sh
 else
 ifeq ($(CPU),SH7700LE)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7700 -m3 -ml
   CCFLAGS += $(TEMPLATES_FLAG)
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = sh
 else
 ifeq ($(CPU),SH7750)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7750 -m4
   CCFLAGS += $(TEMPLATES_FLAG)
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = sh
 else
 ifeq ($(CPU),SH7750LE)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7750 -m4 -ml -mspace
   CCFLAGS += $(TEMPLATES_FLAG)
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = sh
 else
 ifeq ($(CPU),PPC403)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC403 -mcpu=403
   CCFLAGS += $(TEMPLATES_FLAG)
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = ppc
 else
 ifeq ($(CPU),PPC604)
   BINXSYM_NAME = xsym
-  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC604
+  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC604 $(VXWORKS_VERSION_FLAG)
   CCFLAGS += $(TEMPLATES_FLAG) -mlongcall
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = ppc
 else
 ifeq ($(CPU),PPC603)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC603
   CCFLAGS += $(TEMPLATES_FLAG) -mlongcall
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = ppc
 else
 ifeq ($(CPU),PPC860)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC860 -mcpu=860
   CCFLAGS += $(TEMPLATES_FLAG) -mlongcall
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = ppc
 else
 ifeq ($(CPU),SIMNT)
@@ -149,7 +171,7 @@ ifeq ($(CPU),SIMNT)
             -U__WIN32 -U__WIN32__ -U__WIN32 -B$(GCCLIB_DIR) -DCPU=SIMNT
   CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = \
-    $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
+    $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = simpc
 else
 ifeq ($(CPU),PENTIUMPRO)
@@ -182,41 +204,41 @@ ifeq ($(CPU),SIMSPARCSOLARIS)
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SIMSPARCSOLARIS
   CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = \
-    $(HOST_DIR)/lib/gcc-lib/sparc-sun-solaris2.5.1/cygnus-2.7.2-960126
+    $(HOST_DIR)/lib/gcc-lib/sparc-sun-solaris2.5.1/$(GCC_VERSION)
   TOOLENV = simso
 else
 ifeq ($(CPU),SPARC)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SPARC
   CCFLAGS += $(TEMPLATES_FLAG)
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sparc-wrs-vxworks/cygnus-2.7.2-960126
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sparc-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = sparc
 else
 ifeq ($(CPU),MC68020)
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68020 -m68020 -m68881
-  CCFLAGS += $(TEMPLATES_FLAG) -DACE_VXWORKS=0x540
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/cygnus-2.7.2-960126
+  CCFLAGS += $(TEMPLATES_FLAG)  $(VXWORKS_VERSION_FLAG)
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = 68k
 else
 ifeq ($(CPU),MC68030)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68030 -m68030 -m68881
-  CCFLAGS += $(TEMPLATES_FLAG) -DACE_VXWORKS=0x540
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/cygnus-2.7.2-960126
+  CCFLAGS += $(TEMPLATES_FLAG)  $(VXWORKS_VERSION_FLAG)
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = 68k
 else
 ifeq ($(CPU),MC68040)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68040 -m68040 -m68881
-  CCFLAGS += $(TEMPLATES_FLAG) -DACE_VXWORKS=0x540
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/cygnus-2.7.2-960126
+  CCFLAGS += $(TEMPLATES_FLAG)  $(VXWORKS_VERSION_FLAG)
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = 68k
 else
 ifeq ($(CPU),MC68060)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68060 -m68040 -m68881
-  CCFLAGS += $(TEMPLATES_FLAG) -DACE_VXWORKS=0x540
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/cygnus-2.7.2-960126
+  CCFLAGS += $(TEMPLATES_FLAG)  $(VXWORKS_VERSION_FLAG)
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = 68k
 else
   BINXSYM_NAME = xsym
@@ -304,7 +326,7 @@ ifndef ACE_CC_VERSION
 endif # ! ACE_CC_VERSION
 ifeq (egcs,$(findstring egcs,$(ACE_CC_VERSION)))
   ACE_HAS_GNUG_PRE_2_8 := 0
-  CFLAGS += -DACE_VXWORKS=0x540
+  CFLAGS +=  $(VXWORKS_VERSION_FLAG)
   ifeq ($(TOOLENV),386)
     #### Tornado II should support -fno-implicit-templates for pc486.
     CCFLAGS += $(TEMPLATES_FLAG)
@@ -317,7 +339,7 @@ ifeq (egcs,$(findstring egcs,$(ACE_CC_VERSION)))
 endif # egcs
 
 CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
-                   -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -W -Wall
+                   -fvolatile $(VXWORKS_STDINC_FLAG) -nostdlib $(PIPE_OPT) -W -Wall
 CCFLAGS         += $(CFLAGS)
 ifeq (0,$(rtti))
   #### Don't use RTTI even with egcs, because Tornado 1.0.x libraries
