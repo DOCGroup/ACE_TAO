@@ -43,7 +43,7 @@ static int setup_signal_delivery (void);
 static int test_aio_calls (void);
 #endif /* ACE_HAS_AIO_CALLS */
 
-#if !defined (VXWORKS)
+#if defined (_POSIX_ASYNCHRONOUS_IO)
 static int do_sysconf (void)
 {
   // Call sysconf to find out runtime values.
@@ -122,7 +122,7 @@ static int do_sysconf (void)
 #endif /*  _SC_SIGQUEUE_MAX */
   return 0;
 }
-#endif /* !VXWORKS */
+#endif /* _POSIX_ASYNCHRONOUS_IO */
 
 #if defined (ACE_HAS_AIO_CALLS)
 static int
