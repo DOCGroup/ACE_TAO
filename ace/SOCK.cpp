@@ -3,7 +3,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/SOCK.h"
-#include "ace/Log_Msg.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK)
 

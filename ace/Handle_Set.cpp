@@ -1,10 +1,7 @@
 // Handle_Set.cpp
 // $Id$
 
-/* Wrapper for the ACE_HANDLE set abstraction. */
-
 #define ACE_BUILD_DLL
-#include "ace/Log_Msg.h"
 #include "ace/Handle_Set.h"
 
 #if !defined (__ACE_INLINE__)

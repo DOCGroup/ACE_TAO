@@ -1,4 +1,4 @@
-#include "ace/Log_Msg.h"
+
 // $Id$
 
 #include "ace/Event_Handler_T.h"

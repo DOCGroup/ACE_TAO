@@ -4,7 +4,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/SOCK_Dgram.h"
-#include "ace/Log_Msg.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram)
 

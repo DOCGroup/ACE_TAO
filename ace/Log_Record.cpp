@@ -2,7 +2,6 @@
 // $Id$
 
 #define ACE_BUILD_DLL
-#include "ace/Log_Msg.h"
 #include "ace/Log_Record.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)

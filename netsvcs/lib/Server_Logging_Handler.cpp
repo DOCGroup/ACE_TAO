@@ -5,7 +5,7 @@
 #include "ace/Synch.h"
 #include "ace/TLI_Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/Acceptor.h"
 #include "Server_Logging_Handler.h"

@@ -4,7 +4,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/TLI_Acceptor.h"
-#include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_TLI)
 

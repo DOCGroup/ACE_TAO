@@ -1,4 +1,4 @@
-#include "ace/Log_Msg.h"
+
 // $Id$
 
 #include "ace/Mem_Map.h"

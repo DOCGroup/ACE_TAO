@@ -19,7 +19,7 @@
 // 
 // ============================================================================
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
 #include "test_config.h"

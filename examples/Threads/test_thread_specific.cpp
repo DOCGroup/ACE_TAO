@@ -2,7 +2,8 @@
 // $Id$
 
 #include "ace/Synch.h"
-#include "ace/Log_Msg.h"
+
+#if defined (ACE_HAS_THREADS)
 
 // Define a class that will be stored in thread-specific data.  Note
 // that as far as this class is concerned it's just a regular C++
@@ -206,3 +207,13 @@ main (int argc, char *argv[])
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_TSS<Errno>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
+#else
+int 
+main (void)
+{
+  ACE_ERROR_RETURN ((LM_ERROR, 
+		     "ACE doesn't support support threads on this platform (yet)\n"),
+		    -1);
+}
+#endif /* ACE_HAS_THREADS */

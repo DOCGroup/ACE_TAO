@@ -19,7 +19,7 @@
 // 
 // ============================================================================
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Mem_Map.h"
 #include "test_config.h"
 

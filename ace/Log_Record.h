@@ -14,18 +14,19 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_LM_RECORD_H)
-#define ACE_LM_RECORD_H
-
-#include "ace/ACE.h"
+// These need to go outside of the #ifdef to avoid problems with
+// circular dependencies...
 #include "ace/Log_Priority.h"
+#include "ace/ACE.h"
+
+#if !defined (ACE_LOG_RECORD_H)
+#define ACE_LOG_RECORD_H
 
 class ACE_Export ACE_Log_Record
 {
   // = TITLE
   //     Defines the structure of an ACE logging record.
 public:
-friend ostream &operator << (ostream &, ACE_Log_Record &);
   enum 
   {
     MAXLOGMSGLEN = BUFSIZ * 4,	
@@ -134,4 +135,4 @@ private:
 };
 
 #include "ace/Log_Record.i"
-#endif /* ACE_LM_Record_H */
+#endif /* ACE_LOG_RECORD_H */

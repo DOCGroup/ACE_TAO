@@ -1,7 +1,7 @@
 #include "ace/Get_Opt.h"
 // $Id$
 
-#include "ace/Log_Msg.h"
+
 #include "Options.h"
 
 // Static Singleton instance.

@@ -3,8 +3,6 @@
 
 // Task.i
 
-#include "ace/Log_Msg.h"
-
 ACE_INLINE ACE_Thread_Manager *
 ACE_Task_Base::thr_mgr (void)
 {

@@ -27,7 +27,7 @@
 
 #include <math.h>
 #include "ace/Task.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/Synch.h"
 #include "ace/Message_Queue.h"
 #include "ace/Future.h"

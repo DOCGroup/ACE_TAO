@@ -2,7 +2,7 @@
 // $Id$
 
 
-#include "ace/Log_Msg.h"
+
 
 static void
 cleanup (void)

@@ -5,7 +5,7 @@
 // contents to the logging server.  It also computes how long it takes
 // to send this stuff. 
 
-#include "ace/Log_Msg.h"
+
 #include "Logger.h"
 
 // maximum message size

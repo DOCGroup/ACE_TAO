@@ -5,8 +5,8 @@
 #include "ace/Mem_Map.h"
 #include "ace/TLI_Connector.h"
 #include "ace/INET_Addr.h"
-#include "ace/Log_Msg.h"
-#include "ace/Log_Msg.h"
+
+
 #include "ace/Get_Opt.h"
 
 #if defined (ACE_HAS_TLI)

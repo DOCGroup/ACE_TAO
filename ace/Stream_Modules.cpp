@@ -31,7 +31,7 @@ ACE_Stream_Head<ACE_SYNCH_2>::dump (void) const
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::dump");
 }
 
-/* ACE_Module that act as the head and tail of a Stream. */
+// ACE_Module that act as the head and tail of a Stream.
 
 template <ACE_SYNCH_1> int
 ACE_Stream_Head<ACE_SYNCH_2>::open (void *)

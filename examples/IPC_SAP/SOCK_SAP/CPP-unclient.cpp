@@ -2,7 +2,7 @@
 // $Id$
 
                                                         
-#include "ace/Log_Msg.h"
+
 #include "ace/LSOCK_Connector.h"
 #include "ace/UNIX_Addr.h"                              
                                                         

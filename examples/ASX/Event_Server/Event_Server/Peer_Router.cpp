@@ -5,7 +5,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
-#include "ace/Log_Msg.h"
+
 #include "Options.h"
 #include "Peer_Router.h"
 

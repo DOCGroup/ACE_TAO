@@ -3,7 +3,7 @@
 
 #define SPIPE_ACCEPTOR_C
 
-#include "ace/Log_Msg.h"
+
 #include "ace/SPIPE_Addr.h"
 #include "ace/Time_Value.h"
 #include "ace/SPIPE_Acceptor.h"

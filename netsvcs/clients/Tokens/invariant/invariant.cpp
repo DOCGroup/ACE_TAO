@@ -16,7 +16,7 @@
 // ============================================================================
 
 #include "ace/OS.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Token_Invariants.h"

@@ -20,9 +20,9 @@
 #include "ace/SV_Shared_Memory.h"
 #include "test_config.h"
 
-#define SHMSZ 27
-#define SEM_KEY 1234
-#define SHM_KEY 5678
+const int SHMSZ = 27;
+const int SEM_KEY = 1234;
+const int SHM_KEY = 5678;
 
 static void
 client (void)
@@ -30,8 +30,7 @@ client (void)
   ACE_SV_Shared_Memory shm_client;
   char t = 'a';
 
-  if (shm_client.open_and_attach (SHM_KEY, SHMSZ) == -1)
-    ACE_OS::perror ("open"), ACE_OS::exit (1);
+  ACE_ASSERT (shm_client.open_and_attach (SHM_KEY, SHMSZ, ACE_SV_Shared_Memory::ACE_CREATE) != -1);
 
   for (char *s = (char *) shm_client.get_segment_ptr (); *s != '\0'; s++)
     {
@@ -48,8 +47,7 @@ server (void)
 {
   ACE_SV_Shared_Memory shm_server;
 
-  if (shm_server.open_and_attach (SHM_KEY, SHMSZ, ACE_SV_Shared_Memory::ACE_CREATE) == -1)
-    ACE_OS::perror ("open"), ACE_OS::exit (1);
+  ACE_ASSERT (shm_server.open_and_attach (SHM_KEY, SHMSZ, ACE_SV_Shared_Memory::ACE_CREATE) != -1);
 
   char *s = (char *) shm_server.get_segment_ptr ();
 
@@ -63,7 +61,6 @@ server (void)
 
   if (shm_server.remove () < 0)
     ACE_OS::perror ("remove"), ACE_OS::exit (1);
-  return;
 }
 
 int
@@ -76,7 +73,6 @@ main (int, char *argv[])
     case -1:
       ACE_ERROR ((LM_ERROR, "%p%a", "main", 1));
     case 0: 
-      ACE_OS::sleep (1); 
       client ();
     default:
       server ();

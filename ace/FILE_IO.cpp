@@ -1,10 +1,8 @@
 // FILE_IO.cpp
 // $Id$
 
-
 #define ACE_BUILD_DLL
 #include "ace/FILE_IO.h"
-#include "ace/Log_Msg.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE_IO)
 

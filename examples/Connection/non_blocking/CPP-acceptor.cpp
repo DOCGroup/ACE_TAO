@@ -3,7 +3,7 @@
 
 #define CPP_ACCEPTOR_C
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Service_Config.h"
 #include "CPP-acceptor.h"
 

@@ -1,7 +1,7 @@
 #include "ace/Typed_SV_Message_Queue.h"
 // $Id$
 
-#include "ace/Log_Msg.h"
+
 #include "test.h"
 
 int 

@@ -5,7 +5,6 @@
 #define ACE_LOCAL_TOKENS_T_C
 
 #define ACE_BUILD_DLL
-#include "ace/Log_Msg.h"
 #include "ace/Local_Tokens_T.h"
 
 #if !defined (__ACE_INLINE__)

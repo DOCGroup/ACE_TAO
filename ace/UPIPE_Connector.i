@@ -3,8 +3,6 @@
 
 // UPIPE_Connector.i
 
-#include "ace/Log_Msg.h"
-
 // Creates a Local ACE_UPIPE. 
 
 inline

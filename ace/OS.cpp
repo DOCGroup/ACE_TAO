@@ -4,7 +4,6 @@
 #define ACE_BUILD_DLL
 #include "ace/OS.h"
 
-#include "ace/Log_Msg.h"
 #include "ace/ARGV.h"
 
 // Perhaps we should *always* include ace/OS.i in order to make sure

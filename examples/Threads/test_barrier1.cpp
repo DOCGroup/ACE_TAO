@@ -3,7 +3,7 @@
 
 // mechanisms work.
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"

@@ -4,7 +4,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Token_Collection.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__INLINE__)
 #include "ace/Token_Collection.i"

@@ -3,7 +3,7 @@
 
 
 #include "ace/Mem_Map.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_CODgram.h"
 #include "ace/INET_Addr.h"

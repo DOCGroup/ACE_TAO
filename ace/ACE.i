@@ -2,8 +2,6 @@
 // $Id$
 
 // ACE.i
-#include "ace/Log_Msg.h"
-
 // Miscellaneous static methods used throughout ACE.
 
 inline ssize_t

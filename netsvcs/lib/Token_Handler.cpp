@@ -2,7 +2,7 @@
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
-#include "ace/Log_Msg.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"

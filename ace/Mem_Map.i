@@ -3,8 +3,6 @@
 
 // Mem_Map.i
 
-#include "ace/Log_Msg.h"
-
 ACE_INLINE ACE_HANDLE
 ACE_Mem_Map::handle (void) const
 {

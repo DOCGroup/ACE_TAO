@@ -5,7 +5,7 @@
 #if !defined (_ROUTING_TABLE_C)
 #define _ROUTING_TABLE_C
 
-#include "ace/Log_Msg.h"
+
 #include "Routing_Table.h"
 
 /* Bind the EXT_ID to the INT_ID. */

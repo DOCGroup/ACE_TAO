@@ -7,7 +7,7 @@
 // (under the name 'logger') using the 'putit' command.
 
 #include "ace/Service_Config.h"
-#include "ace/Log_Msg.h"
+
 #include "Notifier_Handler.h"
 #include "Input_Handler.h"
 

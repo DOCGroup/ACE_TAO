@@ -1,15 +1,13 @@
-// This test program verifies the functionality of the ACE_OS
 // $Id$
 
+// This test program verifies the functionality of the ACE_OS
 // implementation of recursive mutexes on Win32 and Posix pthreads.
-
-#include "ace/Log_Msg.h"
-
-#if defined (ACE_HAS_THREADS)
 
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
+
+#if defined (ACE_HAS_THREADS)
 
 // Total number of iterations.
 static size_t n_iterations = 1000;

@@ -3,7 +3,7 @@
 
 // <ecn@clark.net> XtReactor implementation.
 
-#include "ace/Log_Msg.h"
+
 #include "ace/XtReactor.h"
 #include "ace/Message_Block.h"
 

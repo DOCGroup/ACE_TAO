@@ -7,7 +7,6 @@
 #define ACE_BUILD_DLL
 #include "ace/Thread.h"
 #include "ace/Synch.h"
-#include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
 
 #if !defined (__ACE_INLINE__)
@@ -147,6 +146,74 @@ ACE_File_Lock::~ACE_File_Lock (void)
 // ACE_TRACE ("ACE_File_Lock::~ACE_File_Lock");
   if (this->remove () == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_File_Lock::~ACE_File_Lock"));
+}
+
+void
+ACE_Process_Semaphore::dump (void) const
+{
+// ACE_TRACE ("ACE_Process_Semaphore::dump");
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  this->lock_.dump ();
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count, 
+					      LPCTSTR name, 
+					      void *arg,
+					      int max)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
+  : lock_ (count, USYNC_PROCESS, name, arg, max)
+#else
+  : lock_ (name, ACE_SV_Semaphore_Complex::ACE_CREATE, count)
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
+{
+  arg = arg;
+  max = max;
+// ACE_TRACE ("ACE_Process_Semaphore::ACE_Process_Semaphore");
+}
+
+ACE_Process_Semaphore::~ACE_Process_Semaphore (void)
+{
+// ACE_TRACE ("ACE_Process_Semaphore::~ACE_Process_Semaphore");
+}
+
+// Explicitly destroy the semaphore.
+
+int 
+ACE_Process_Semaphore::remove (void)
+{
+// ACE_TRACE ("ACE_Process_Semaphore::remove");
+  return this->lock_.remove ();
+}
+
+// Block the thread until the semaphore count becomes
+// greater than 0, then decrement it.
+
+int 
+ACE_Process_Semaphore::acquire (void)
+{
+// ACE_TRACE ("ACE_Process_Semaphore::acquire");
+  return this->lock_.acquire ();
+}
+
+// Conditionally decrement the semaphore if count is greater 
+// than 0 (i.e., won't block).
+
+int 
+ACE_Process_Semaphore::tryacquire (void)
+{
+// ACE_TRACE ("ACE_Process_Semaphore::tryacquire");
+  return this->lock_.tryacquire ();
+}
+
+// Increment the semaphore, potentially unblocking
+// a waiting thread.
+
+int 
+ACE_Process_Semaphore::release (void)
+{
+// ACE_TRACE ("ACE_Process_Semaphore::release");
+  return this->lock_.release ();
 }
 
 #if defined (ACE_HAS_THREADS)
@@ -300,74 +367,6 @@ ACE_Thread_Semaphore::ACE_Thread_Semaphore (u_int count,
   : ACE_Semaphore (count, USYNC_THREAD, name, arg, max)
 {
 // ACE_TRACE ("ACE_Thread_Semaphore::ACE_Thread_Semaphore");
-}
-
-void
-ACE_Process_Semaphore::dump (void) const
-{
-// ACE_TRACE ("ACE_Process_Semaphore::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  this->lock_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count, 
-					      LPCTSTR name, 
-					      void *arg,
-					      int max)
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
-  : lock_ (count, USYNC_PROCESS, name, arg, max)
-#else
-  : lock_ (name, ACE_SV_Semaphore_Complex::ACE_CREATE, count)
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
-{
-  arg = arg;
-  max = max;
-// ACE_TRACE ("ACE_Process_Semaphore::ACE_Process_Semaphore");
-}
-
-ACE_Process_Semaphore::~ACE_Process_Semaphore (void)
-{
-// ACE_TRACE ("ACE_Process_Semaphore::~ACE_Process_Semaphore");
-}
-
-// Explicitly destroy the semaphore.
-
-int 
-ACE_Process_Semaphore::remove (void)
-{
-// ACE_TRACE ("ACE_Process_Semaphore::remove");
-  return this->lock_.remove ();
-}
-
-// Block the thread until the semaphore count becomes
-// greater than 0, then decrement it.
-
-int 
-ACE_Process_Semaphore::acquire (void)
-{
-// ACE_TRACE ("ACE_Process_Semaphore::acquire");
-  return this->lock_.acquire ();
-}
-
-// Conditionally decrement the semaphore if count is greater 
-// than 0 (i.e., won't block).
-
-int 
-ACE_Process_Semaphore::tryacquire (void)
-{
-// ACE_TRACE ("ACE_Process_Semaphore::tryacquire");
-  return this->lock_.tryacquire ();
-}
-
-// Increment the semaphore, potentially unblocking
-// a waiting thread.
-
-int 
-ACE_Process_Semaphore::release (void)
-{
-// ACE_TRACE ("ACE_Process_Semaphore::release");
-  return this->lock_.release ();
 }
 
 ACE_Semaphore::~ACE_Semaphore (void)

@@ -153,24 +153,6 @@
 #define ACE_SET_BITS(WORD, BITS) (WORD |= (BITS))
 #define ACE_CLR_BITS(WORD, BITS) (WORD &= ~(BITS))
 
-// A useful abstraction for expressions involving operator new since
-// we can change memory allocation error handling policies (e.g.,
-// depending on whether ANSI/ISO exception handling semantics are
-// being used). 
-
-#if 0
-     else if (ACE_LOG_MSG->op_status () == -1) { \
-     errno = ACE_LOG_MSG->errnum (); \
-     delete POINTER; POINTER = 0; return;
-#endif /* 0 */
-
-#define ACE_NEW(POINTER,CONSTRUCTOR) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return; }} while (0)
-#define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; }} while (0)
-
 // These hooks enable ACE to have all dynamic memory management
 // automatically handled on a per-object basis.
 
@@ -906,8 +888,8 @@ typedef void (*ACE_SignalHandlerV)(...);
 typedef void (*ACE_SignalHandler)(int, ...);
 typedef void (*ACE_SignalHandlerV)(int,...);
 #elif defined (ACE_HAS_SUNOS4_SIGNAL_T)
-typedef void (*ACE_SignalHandler)(void);
-typedef void (*ACE_SignalHandlerV)(void);
+typedef void (*ACE_SignalHandler)(...);
+typedef void (*ACE_SignalHandlerV)(...);
 #elif defined (ACE_HAS_SVR4_SIGNAL_T)
 // SVR4 Signals are inconsistent (e.g., see struct sigaction)..
 typedef void (*ACE_SignalHandler)(int);
@@ -2343,6 +2325,44 @@ private:
 };
 
 #include "ace/Trace.h"
+
+// These need to come here to avoid problems with circular dependencies.
+#include "ace/Log_Msg.h"
+
+// A useful abstraction for expressions involving operator new since
+// we can change memory allocation error handling policies (e.g.,
+// depending on whether ANSI/ISO exception handling semantics are
+// being used). 
+
+#define ACE_NEW(POINTER,CONSTRUCTOR) \
+   do { POINTER = new CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; return; } \
+     else if (ACE_LOG_MSG->op_status () == -1) { \
+     int ace_error = ACE_LOG_MSG->errnum (); \
+     delete POINTER; POINTER = 0; \
+     ACE_LOG_MSG->op_status (-1); \
+     errno = ace_error; return; \
+   } } while (0)
+#define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
+   do { POINTER = new CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+     else if (ACE_LOG_MSG->op_status () == -1) { \
+     int ace_error = ACE_LOG_MSG->errnum (); \
+     delete POINTER; POINTER = 0; \
+     ACE_LOG_MSG->op_status (-1); \
+     errno = ace_error; return RET_VAL; \
+   } } while (0)
+
+#if 0
+#define ACE_NEW(POINTER,CONSTRUCTOR) \
+   do { POINTER = new CONSTRUCTOR; \
+     if (POINTER == 0) errno = ENOMEM;  \
+   return; } while (0)
+#define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
+   do { POINTER = new CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+     else return POINTER; } while (0)
+#endif
 
 #if defined (ACE_HAS_INLINED_OSCALLS)
 #if defined (ACE_INLINE)

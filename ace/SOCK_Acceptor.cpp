@@ -3,7 +3,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/SOCK_Acceptor.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SOCK_Acceptor.i"

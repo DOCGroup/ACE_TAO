@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -22,7 +22,7 @@
 // ============================================================================
 
 #include "ace/OS.h"
-#include "ace/Log_Msg.h"
+
 #include "test_config.h"
 #include "ace/Process.h"
 
@@ -50,7 +50,7 @@ main (int, char *argv[])
   ACE_Process server;
 
   if (server.start (s_argv) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p.\n", "Server fork failed"), 0);
+    ACE_ERROR_RETURN ((LM_DEBUG, "%n %p.\n", "Server fork failed"), 0);
   else
     ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", server.getpid ()));
 

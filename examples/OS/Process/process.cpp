@@ -18,7 +18,7 @@
 // ============================================================================
 
 #include "ace/OS.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/Process.h"
 
 #if defined (ACE_WIN32)

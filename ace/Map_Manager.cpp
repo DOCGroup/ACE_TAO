@@ -5,7 +5,6 @@
 #define ACE_MAP_MANAGER_C
 
 #define ACE_BUILD_DLL
-#include "ace/Log_Msg.h"
 #include "ace/Synch.h"
 #include "ace/Malloc.h"
 #include "ace/Service_Config.h"

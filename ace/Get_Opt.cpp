@@ -2,7 +2,6 @@
 // $Id$
 
 #define ACE_BUILD_DLL
-#include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 
 #if !defined (__ACE_INLINE__)

@@ -3,7 +3,7 @@
 
 // Consumer driver for the Orbix Notification example.
 
-#include "ace/Log_Msg.h"
+
 #include "Notification_Receiver_Handler.h"
 #include "Input_Handler.h"
 

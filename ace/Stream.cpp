@@ -126,6 +126,7 @@ ACE_Stream<ACE_SYNCH_2>::pop (u_long flags)
       // Close the top ACE_Module.
 
       top->close (flags);
+      delete top;
 
       this->stream_head_->writer ()->next (new_top->writer ());
       new_top->reader ()->next (this->stream_head_->reader ());
@@ -151,7 +152,9 @@ ACE_Stream<ACE_SYNCH_2>::remove (const char *name, u_long flags)
 	else
 	  prev->link (mod->next ());
 
+	// Close down the module and release the memory.
 	mod->close (flags);
+	delete mod;
 	return 0;
       }
     else
@@ -263,9 +266,8 @@ ACE_Stream<ACE_SYNCH_2>::open (void *a,
       delete h2;
       delete t1;
       delete t2;
-      // Note that we can't call delete on these, we must call close!
-      head->close ();
-      tail->close ();
+      delete head;
+      delete tail;
       errno = ENOMEM;
       return -1;
     }
@@ -300,16 +302,18 @@ ACE_Stream<ACE_SYNCH_2>::close (u_long flags)
       // Remove and cleanup all the intermediate modules.
 
       while (this->stream_head_->next () != this->stream_tail_)
-	{
-	  if (this->pop (flags) == -1)
-	    result = -1;
-	}
+	if (this->pop (flags) == -1)
+	  result = -1;
   
       // Clean up the head and tail of the stream.
       if (this->stream_head_->close (flags) == -1)
 	result = -1;
       if (this->stream_tail_->close (flags) == -1)
 	result = -1;
+
+      // Cleanup the memory.
+      delete this->stream_head_;
+      delete this->stream_tail_;
 
       this->stream_head_ = 0;
       this->stream_tail_ = 0;
@@ -499,6 +503,7 @@ template <ACE_SYNCH_1> ACE_INLINE
 ACE_Stream<ACE_SYNCH_2>::~ACE_Stream (void)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::~ACE_Stream");
+
   if (this->stream_head_ != 0)
     this->close ();
 }
