@@ -1,3 +1,7 @@
+Sat Sep 05 01:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* ace/OS.cpp: Fixed a missing "#else".
+
 Sat Sep  4 23:37:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-win32-common.h: Missing a '&&' that was causing

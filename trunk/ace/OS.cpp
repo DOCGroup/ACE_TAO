@@ -2399,6 +2399,7 @@ ACE_Thread_Adapter::inherit_log_msg (void)
 #define ACE_ENDTHREADEX(STATUS) ::_endthreadex ()
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
        (*THR_ID = ::_beginthreadex ((void(_Optlink*)(void*))ENTRY_POINT, STACK, STACKSIZE, ARGS), *THR_ID)
+#else
 #define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       ::_beginthreadex (STACK, STACKSIZE, (unsigned (__stdcall *) (void *)) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID)
