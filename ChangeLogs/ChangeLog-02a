@@ -1,3 +1,8 @@
+Wed Jan 24 01:44:47 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+        * ace/Configuration.cpp (expand_path): Fixed a bug with assignment to
+          temp in the loop.  Thanks to Jonathan Reis for reporting this!
+
 Tue Jan 23 17:02:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/msvc_auto_compile.pl:
@@ -16,13 +21,13 @@ Tue Jan 23 16:50:35 2001  Darrell Brunsch <brunsch@uci.edu>
         * tests/Dirent_Test.cpp:
 
           Updated wide character compatibility and removed the use
-          of ACE_ROOT (now looks at ../tests", which should give 
+          of ACE_ROOT (now looks at ../tests", which should give
           the same results).
 
         * tests/run_test.lst:
-        
+
           Added the Dirent_Test to the list
-        
+
         * tests/version_tests/Dirent_Test.dsp: (added)
         * tests/version_tests/Refcounted_Auto_Ptr_Test.dsp: (added)
         * tests/version_tests/version_tests.dsw:
@@ -77,32 +82,32 @@ Mon Jan 22 17:01:17 2001  Darrell Brunsch <brunsch@uci.edu>
         * ace/OS_Dirent.cpp:
 
           Rewrote a paragraph to remove the use of "/*" in a larger
-          /*...*/ comment, since gcc complains about it. 
+          /*...*/ comment, since gcc complains about it.
 
         * tests/Message_Queue_Test.cpp:
 
-          Backed out some changes to it on Jan 21, since it had 
+          Backed out some changes to it on Jan 21, since it had
           problems and I couldn't find any ChangeLog entry for the
           changes (mistakenly checked in?).
 
 Mon Jan 22 13:51:11 2001  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* ace/OS_Dirent.cpp (opendir_emulation): Added code to make the
-	  emmulation work properly on Win32.  Thanks to Edwin Wrench
-	  <edwin.wrench@itt.com> for finding this.
+        * ace/OS_Dirent.cpp (opendir_emulation): Added code to make the
+          emmulation work properly on Win32.  Thanks to Edwin Wrench
+          <edwin.wrench@itt.com> for finding this.
 
-	* tests/Dirent_Test.cpp:
-	  tests/Makefile:
-	  tests/run_tests.bat:
-	  tests/run_tests.lst: Added test to verify correctness of above 
-	  fix. This test attempts to scan $ACE_ROOT/tests and will fail if
-	  the number of entries is 0 or 1.
+        * tests/Dirent_Test.cpp:
+          tests/Makefile:
+          tests/run_tests.bat:
+          tests/run_tests.lst: Added test to verify correctness of above
+          fix. This test attempts to scan $ACE_ROOT/tests and will fail if
+          the number of entries is 0 or 1.
 
 Mon Jan 22 10:21:20 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Map_Manager.h: Clarify that find() returns 0, rather than
-	  saying "a non-negative number".  Thanks to Albert Wijna
- 	  <albert.wijnja@meco.nl> for clarifying this.
+        * ace/Map_Manager.h: Clarify that find() returns 0, rather than
+          saying "a non-negative number".  Thanks to Albert Wijna
+          <albert.wijnja@meco.nl> for clarifying this.
 
 Mon Jan 22 15:38:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -116,14 +121,14 @@ Mon Jan 22 15:38:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Sat Jan 20 14:53:07 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Configuration.{h,cpp}: Fixed some problems with const char *
-	  that was busting the compilation.  Thanks to Carlos for pointing
- 	  this out.
+        * ace/Configuration.{h,cpp}: Fixed some problems with const char *
+          that was busting the compilation.  Thanks to Carlos for pointing
+          this out.
 
-	* ace/Configuration.{h,cpp}: Added several fixes for
-	  mistakes with memory management and other minor problems.
-  	  Thanks to Jonathan Reis <reis@stentorsoft.com> for contributing
- 	  these fixes!
+        * ace/Configuration.{h,cpp}: Added several fixes for
+          mistakes with memory management and other minor problems.
+          Thanks to Jonathan Reis <reis@stentorsoft.com> for contributing
+          these fixes!
 
 Sat Jan 20 10:49:05 2001  Carlos O'Ryan  <coryan@uci.edu>
 
