@@ -1,6 +1,16 @@
+Tue Nov 12 14:34:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Fixed unused
+	  variable warnings in builds compiled with ACE_NDEBUG option
+	  turned on. This makes the ACE_ASSERT dissappear.
+
 Tue Nov 12 13:25:00 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/LF_CH_Event.cpp: Fixed compile error in no inline builds. 
+	* tao/LF_CH_Event.cpp: Fixed compile error in no inline builds.
 
 Tue Nov 12 13:13:05 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
