@@ -312,6 +312,7 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Acceptor.cpp
       Active_Map_Manager_T.cpp
       Array_Base.cpp
+      Auto_Functor.cpp
       Atomic_Op_T.cpp
       Node.cpp
       Unbounded_Set.cpp
