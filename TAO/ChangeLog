@@ -118,6 +118,7 @@ Fri Oct 17 17:37:05 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 	  RTSchedulingC(S).cpp in Source_Files section.
 
 Fri Oct 17 21:17:03 UTC 2003 Kevin Bryan <bryank@cs.uri.edu>
+
         * orbsvcs/tests/RTCosScheduling/README
         * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client.dsp
         * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client_Static.dsp
@@ -323,11 +324,13 @@ Wed Oct 15 20:54:42 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* orbsvcs/tests/RTCosScheduling/Makefile: Updated dependencies.
 
 Wed Oct 15 16:30:52 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
         * orbsvcs/orbsvcs/FtRtEvent.mpc:
           Removed using custom types for idl files which caused problem
           in parallel build.
 
 Wed Oct 15 16:20:52 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
         * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
           Fixed incorrect ACE_RCSID format.
 
@@ -340,6 +343,7 @@ Wed Oct 15 14:20:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	  errors in SingleThreaded builds.
 
 Wed Oct 15 13:00:24  2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
         * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
           Fixed incorrect retrival of FTGroupRefVersion from a FTGroupComponent.
 
@@ -472,6 +476,7 @@ Wed Oct 15 13:00:24  2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
           See orbsvcs/FTRT_Event_Service/Readme for detail.
 
 Wed Oct 15 16:15:14 UTC 2003 Kevin Bryan  <bryank@cs.uri.edu>
+
         * orbsvcs/orbsvcs/Makefile.RTCosScheduling:
         * orbsvcs/orbsvcs/orbsvcs.dsw:
         * orbsvcs/orbsvcs/RTCosScheduling.mpc:
@@ -510,7 +515,6 @@ Wed Oct 15 11:15:56 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/RTCosScheduling.dsp: Modified the directory to
 	  tao_idl to bin/Release/tao_idl in release configuration.
-
 
 Wed Oct 15 15:04:12 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
