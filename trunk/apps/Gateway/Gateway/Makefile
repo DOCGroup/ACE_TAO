@@ -26,9 +26,7 @@ FILES	= Concrete_Connection_Handlers \
 	  Connection_Handler_Connector
 
 LSRC	= $(addsuffix .cpp,$(FILES))
-LDLIBS	=
-
-BUILD 	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
+LDLIBS	= -lGateway
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -46,11 +44,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets
 #----------------------------------------------------------------------------
 
-ifeq ($(static_libs_only),1)
-$(VBIN): $(VLIB)
-else
-$(VBIN): $(VSHLIB)
-endif
 
 #----------------------------------------------------------------------------
 #	Dependencies

@@ -7,19 +7,24 @@
 #       Requires GNU make
 #----------------------------------------------------------------------------
 
-ifneq ($(CLEANUP_BIN),)
+CLEANUP_OBJDIRS =
+CLEANUP_DIRS =
+
+ifdef CLEANUP_BIN
   CLEANUP_OBJDIRS = $(VDIR)
 else # ! CLEANUP_BIN
-  ifneq ($(CLEANUP_LIB),)
+  ifdef CLEANUP_LIB
     CLEANUP_OBJDIRS = $(VDIR)
   endif # CLEANUP_LIB
 endif # CLEANUP_BIN
 
-ifneq ($(CLEANUP_SHLIB),)
+ifdef CLEANUP_SHLIB
   CLEANUP_OBJDIRS += $(VSHDIR)
 endif # CLEANUP_VSHLIB
 
-CLEANUP_DIRS += $(TEMPINCDIR)
+ifdef TEMPINCDIR
+  CLEANUP_DIRS += $(TEMPINCDIR)
+endif 
 
 ifdef sun
   CLEANUP_DIRS += SunWS_cache
@@ -28,24 +33,55 @@ endif
 #### TEMPLATE_REPOSITORY can be set in individual platform files
 #### to create template repository directories.  See
 #### platform_sunos5_sunc++.GNU for an example.
+ifdef TEMPLATE_REPOSITORY
 CLEANUP_DIRS += $(TEMPLATE_REPOSITORY)
+endif
 
+makefile_name.local:
+	@echo
+	@echo Makefile: $(shell pwd)/$(MAKEFILE)
+	@echo
 
-
-all.local: $(split_target) build.objdirs build.local install.local
+all.local: makefile_name.local $(split_target) build.objdirs build.local install.local
 
 #----------------------------------------------------------------------------
 #       C/C++ compilation targets
 #----------------------------------------------------------------------------
 
-build.local: $(BUILD)
 
-# Set up the suffixes for C++ and IDL.
+ifndef IDL_SRC
+  IDL_SRC ?=
+endif
+ifndef VLIBS
+  VLIBS ?=
+endif
+ifndef BUILD
+  BUILD ?=
+endif
+ifndef VBIN
+  ifdef BIN
+    VBIN = $(BIN:%=%$(VAR))
+    $(VBIN): $(VLIBS)
+  endif
+endif
+
+# Always build the V* targets in this order.  We control assignment to them
+# elsewhere. We add the existing $(BUILD) targets to the end to allow the
+# caller to set additional ones, e.g., when defining multiple targets in a
+# single makefile--note that we filter out any that are already present.
+VBUILD = $(IDL_SRC) $(VLIBS) $(VBIN) $(filter-out $(IDL_SRC) $(VLIBS) $(VBIN), $(BUILD))
+
+build.local: $(VBUILD)
+
+# By setting SUFFIXES to nothing, we turn off all implicit rules, and force
+# make to only use the explicit ones we define.
 .SUFFIXES:
-.SUFFIXES: .cpp .cc .C .cxx .idl $(SUFFIXES)
 
 # C++ related targets
 
+ifndef OS
+  OS ?=
+endif
 ifeq ($(OS),"Windows_NT")
 $(VDIR)%.obj: %.c
 	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
@@ -146,10 +182,6 @@ $(VSHDIR).creation_stamp:
   endif
 endif
 
-# Rebuild IDL_SRC id the IDL files change.
-$(IDL_SRC): $(addsuffix .idl, $(IDL_FILES))
-
-
 #----------------------------------------------------------------------------
 #       Library generation targets
 #----------------------------------------------------------------------------
@@ -181,7 +213,7 @@ ifneq ($(CLEANUP_INSTALL),)
 	$(RM) $(CLEANUP_INSTALL)
 endif # CLEANUP_INSTALL
 
-ifeq (,$(LN_S))
+ifndef LN_S
   ifndef COMSPEC
     ifdef ComSpec
       #### ACE+TAO use COMSPEC, but ComSpec is defined.
@@ -238,22 +270,22 @@ endif
 #       Cleanup targets
 #----------------------------------------------------------------------------
 
-clean_idl_stubs.local:
-ifneq ($(IDL_FILES),)
+clean_idl_stubs.local: makefile_name.local
+ifdef IDL_FILES
 	-$(RM) $(foreach ext, $(IDL_EXT), $(addsuffix $(ext), $(IDL_FILES)))
 endif
 
-ifneq ($(CLEANUP_BIN),)
+ifdef CLEANUP_BIN
   DO_CLEANUP = 1
   REALCLEAN_FILES = $(CLEANUP_BIN:%=%$(EXEEXT)) $(CLEANUP_BIN:%=%_debug$(EXEEXT)) $(CLEANUP_BIN:%=%_profile$(EXEEXT)) $(CLEANUP_BIN:%=%_optimize$(EXEEXT))
 endif # !CLEANUP_BIN
 
-ifneq ($(CLEANUP_LIB),)
+ifdef CLEANUP_LIB
   DO_CLEANUP = 1
   REALCLEAN_FILES += $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize)
 endif # !CLEANUP_LIB
 
-ifneq ($(CLEANUP_SHLIB),)
+ifdef CLEANUP_SHLIB
   DO_CLEANUP = 1
   REALCLEAN_FILES += $(CLEANUP_VSHLIB:%=%) $(CLEANUP_VSHLIB_NO_VER:%=%) $(CLEANUP_VSHLIB_NO_VER:%=%_debug) $(CLEANUP_VSHLIB_NO_VER:%=%_profile) $(CLEANUP_VSHLIB_NO_VER:%=%_optimize)
 endif # !CLEANUP_SHLIB
@@ -262,7 +294,7 @@ CLEANUP_OBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(
 CLEANUP_OBJS += $(addsuffix .o, $(addprefix $(VDIR),$(CLEANUP_BIN)))
 CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
 
-clean.local:
+clean.local: makefile_name.local
 ifdef DO_CLEANUP
 	-$(RM) -r \
 	*.$(OBJEXT) *~ *.bak *.rpo *.sym lib*.*_pure_* \
@@ -282,11 +314,11 @@ endif # DO_CLEANUP
 #       Dependency generation target
 #----------------------------------------------------------------------------
 
-ifeq ($(MAKEFILE),)
+ifndef MAKEFILE
   MAKEFILE = Makefile
 endif # ! MAKEFILE
 
-ifeq ($(DEPENDENCY_FILE),)
+ifndef DEPENDENCY_FILE
   DEPENDENCY_FILE = $(MAKEFILE)
 endif
 
@@ -328,7 +360,7 @@ depend.local: $(DEPENDENCY_FILE)
 -include $(DEPENDENCY_FILE)
 endif
 
-ifeq ($(DEPGEN),)
+ifndef DEPGEN
   DEPGEN = $(ACE_ROOT)/bin/g++dep
 endif
 
@@ -350,6 +382,12 @@ depend.local: $(MAKEFILE) idl_stubs.local
 #       RCS info target
 #----------------------------------------------------------------------------
 
+ifndef IDL_FILES
+  IDL_FILES ?=
+endif
+ifndef IDL_CLIENT_HDR_EXT
+  IDL_CLIENT_HDR_EXT ?=
+endif
 idl_stubs.local: $(foreach file, $(IDL_FILES), $(file)$(IDL_CLIENT_HDR_EXT))
 
 #----------------------------------------------------------------------------

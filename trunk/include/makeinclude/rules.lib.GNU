@@ -11,25 +11,65 @@
 # The following targets arrange to build both unshared and shared libraries
 #----------------------------------------------------------------------------
 
+ifndef LIB
+  LIB ?=
+endif
+VLIB = $(LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
+
+# Add VLIB to VLIBS if building static_libs.
+ifdef static_libs 
+  VLIBS += $(VLIB)
+endif
+
+ifndef SHLIB
+  SHLIB ?=
+endif
+# Setup shared library variables, including versions.
 VSHLIB_NO_VER = $(SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 CLEANUP_VSHLIB_NO_VER = $(CLEANUP_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 VSHLIB = $(VSHLIB_NO_VER:%=%$(SOVERSION))
 CLEANUP_VSHLIB = $(CLEANUP_VSHLIB_NO_VER:%=%$(SOVERSION))
 
-ifdef SHLIBA
+ifndef SHLIBA
+  SHLIBA ?=
+endif
 VSHLIBA = $(SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
+
+# Add VSHLIB if we're building shared_libs.
+ifdef shared_libs
+  VLIBS += $(VSHLIB) $(VSHLIBA)
+endif
+
+# Warn if no libs found
+ifeq ($(VLIBS),)
+  LIB_WARNING = 0
+  ifndef LIB_UNCHECKED
+    LIB_WARNING = 1
+  endif # !LIB_CHECKED
+  ifndef SHLIB_UNCHECKED
+    LIB_WARNING = 1
+  endif # !SHLIB_UNCHECKED
+  ifeq ($(LIB_WARNING),1)
+    @echo Warning: rules.lib.GNU included, but no library targets detected.
+  endif # LIB_WARNING
+endif # !VLIBS
+
+# Libraries always depend on idl_stubs, if they exist.
+ifdef IDL_SRC
+  $(VLIBS): $(IDL_SRC)
 endif
 
 VLOBJS   += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(LSRC)))))
-LSRC    += $(LSRC2)
-
+ifdef LSRC2
+  LSRC += $(LSRC2)
+endif
 
 VSHOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
 VSHOBJS1 = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
 
 ifdef static_libs
   INSTALL += $(VLIB:%=$(INSLIB)/%)
-  CLEANUP_INSTALL = $(CLEANUP_LIB:%=$(INSLIB)/%)
+  CLEANUP_INSTALL += $(CLEANUP_LIB:%=$(INSLIB)/%)
 endif # static_libs
 
 ifdef shared_libs
@@ -42,9 +82,12 @@ ifdef shared_libs
   endif
 endif # shared_libs
 
-# Uncomment the remaining lines if you want to build both *.a and *.so
-# libraries...
-VLIB    = $(LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
+ifndef ace_lib_prelink
+  ace_lib_prelink = 0
+endif
+ifndef aix_build
+  aix_build = 0
+endif
 
 $(VLIB): $(VLOBJS)
 

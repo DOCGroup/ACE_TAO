@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL_MIF_SCHEDULINGC_H_
 #define _TAO_IDL_MIF_SCHEDULINGC_H_
 
-#include /**/ "ace\pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/ORB.h"
 
@@ -424,7 +424,7 @@ Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>> (TAO_InputCDR &, MIF_Sche
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include /**/ "ace\post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ifndef */
 

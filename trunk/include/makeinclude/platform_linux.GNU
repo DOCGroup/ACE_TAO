@@ -21,7 +21,7 @@ ifeq (,$(optimize))
   optimize = 1
 endif
 
-ifeq (,$(threads))
+ifndef threads
   threads = 1
 endif
 
@@ -52,6 +52,9 @@ PLATFORM_WX_LDFLAGS =
 PLATFORM_AIO_SUPPORT := \
        $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
 
+ifndef ssl
+  ssl = 0
+endif
 
 ifeq ($(ssl),1)
   # Some Linux OpenSSL installations compile in Kerberos support.  Add
@@ -64,7 +67,11 @@ ifeq ($(ssl),1)
   # installations use shared OpenSSL libraries so we should be okay,
   # at least until we migrate to Autoconf.
   PLATFORM_SSL_CPPFLAGS += -I/usr/kerberos/include
-endif # threads
+endif # ssl
+
+ifndef insure
+  insure = 0
+endif
 
 ifeq ($(insure),1)
 CC  = insure
@@ -126,6 +133,9 @@ ifeq ($(threads),1)
     endif # ! PRELIB
 endif
 
+ifndef sctp
+  sctp ?=
+endif
 # support for OpenSS7 SCTP
 ifeq ($(sctp),openss7)
   PLATFORM_SCTP_CPPFLAGS= -DACE_HAS_OPENSS7_SCTP
