@@ -12,6 +12,8 @@ Thu Feb 19 12:49:49 1998  David L. Levine  <levine@cs.wustl.edu>
         * TAO_IDL/Makefile: don't build the IDL compiler for
           Chorus, LynxOS, or VxWorks.
 
+        * tao/orbobj.cpp: enhanced some printouts.
+
 Thu Feb 19 10:15:00 1998  Michael Kircher <mk1@cs.wustl.edu>
 	* orbsvcs/test/Simulator: Set the file permissions right.
 
@@ -20,11 +22,11 @@ Thu Feb 19 10:15:00 1998  Michael Kircher <mk1@cs.wustl.edu>
 	  Intruduced new demo, using the Event Service as transport
 	  media for monitoring events.
 	  See orbsvcs/test/Simulator/README for more information
-	   
+
           in orbsvcs/tests/Simulator:
 	     NavWeap.idl - IDL definition of the Navigation and Weapons struct
 	     ss - restart services script
-	
+
 	  in orbsvcs/tests/Simulator/Event_Supplier:
 	     Event_Sup.cpp - Event Supplier
 	     Event_Sup.h   - Event Supplier class definition
@@ -55,13 +57,13 @@ Wed Feb 18 22:15:06 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 Wed Feb 18 21:40:24 1998    <coryan@MILONGA>
 
-	* docs/orbsvcs.html: 
+	* docs/orbsvcs.html:
 	  Updated the description of orbsvcs directory hierarchy.
 
 Wed Feb 18 19:45:57 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* Added the idl file for the CosPropertyService , i.e.
-	orbsvcs/orbsvcs/Property/CosPropertyService.idl  
+	orbsvcs/orbsvcs/Property/CosPropertyService.idl
 
 Wed Feb 18 17:56:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -90,7 +92,7 @@ Wed Feb 18 16:02:34 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 Wed Feb 18 12:28:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Thruput/TAO/tmplinst.cpp: 
+	* tests/Thruput/TAO/tmplinst.cpp:
 	  The templates should be instantiated over the CORBA:: typedefs,
 	  otherwise they fail in weird platforms.
 
@@ -117,10 +119,10 @@ Tue Feb 17 20:20:35 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Tue Feb 17 21:47:41 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (shutdown): Renamed please_exit 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (shutdown): Renamed please_exit
 	method to shutdown.
 
-	* tests/Cubit/TAO/IDL_Cubit/cubit.idl: Renamed please_exit operation to 
+	* tests/Cubit/TAO/IDL_Cubit/cubit.idl: Renamed please_exit operation to
 	shutdown.
 
 Tue Feb 17 17:22:47 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
@@ -136,7 +138,7 @@ Tue Feb 17 16:50:20 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 Tue Feb 17 16:05:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp: Chris G. updated the file list of
-	  this project.  
+	  this project.
 
 	* orbsvcs/orbsvcs/Time_Utilities.h:
 	* orbsvcs/orbsvcs/Event_Utilities.h: Added MS keayword,
@@ -145,7 +147,7 @@ Tue Feb 17 16:05:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tests/Cubit/TAO/IDL_Cubit/client.dsp:
 	* tests/Cubit/TAO/IDL_Cubit/server.dsp: Updated project setting to
 	  take the advantage of TAO naming service.
-	
+
 	* orbsvcs/tests/Event_Latency/Event_Latency.dsp: Updated project
 	  setting to use DLL version of orbsvcs.
 
@@ -158,7 +160,7 @@ Tue Feb 17 15:39:49 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 	* tests/Cubit/TAO/MT_Cubit/cubit.idl:
 	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
 	* tests/Cubit/TAO/MT_Cubit/cubit_i.h:
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:	
+	* tests/Cubit/TAO/MT_Cubit/server.cpp:
 	* tests/Cubit/TAO/MT_Cubit/server.h: Made a bunch of changes to
  	correctly support the POA.  In addition, MT_Cubit now uses the
  	Name Service to bind the Cubit objects.  In case the Name Service
@@ -188,44 +190,44 @@ Tue Feb 17 11:30:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Feb 17 10:43:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosTimeBase.idl: 
-	* orbsvcs/orbsvcs/Time_Utilities.cpp: 
-	* orbsvcs/orbsvcs/Time_Utilities.h: 
-	* orbsvcs/orbsvcs/Time_Utilities.i: 
+	* orbsvcs/orbsvcs/CosTimeBase.idl:
+	* orbsvcs/orbsvcs/Time_Utilities.cpp:
+	* orbsvcs/orbsvcs/Time_Utilities.h:
+	* orbsvcs/orbsvcs/Time_Utilities.i:
 	  Added the standard CORBA types for time, also added some helper
 	  routines to convert between BasicTime::TimeT and the common
 	  representations of time in ACE (ACE_Time_Value and ACE_hrtime_t)
 
-	* orbsvcs/orbsvcs/RtecEventComm.idl: 
-	* orbsvcs/orbsvcs/RtecScheduler.idl: 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
-	* orbsvcs/Event_Service/ReactorTask.cpp: 
-	* orbsvcs/Event_Service/Task_Manager.cpp: 
-	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp: 
-	* orbsvcs/Scheduling_Service/Config_Scheduler.h: 
-	* orbsvcs/Scheduling_Service/Scheduler.cpp: 
-	* orbsvcs/orbsvcs/Channel_Clients_T.i: 
-	* orbsvcs/orbsvcs/Event_Service_Constants.h: 
-	* orbsvcs/orbsvcs/Event_Utilities.i: 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.h: 
-	* orbsvcs/Event_Service/Dispatching_Modules.cpp: 
-	* orbsvcs/Event_Service/Event_Channel.cpp: 
+	* orbsvcs/orbsvcs/RtecEventComm.idl:
+	* orbsvcs/orbsvcs/RtecScheduler.idl:
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+	* orbsvcs/Event_Service/ReactorTask.cpp:
+	* orbsvcs/Event_Service/Task_Manager.cpp:
+	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp:
+	* orbsvcs/Scheduling_Service/Config_Scheduler.h:
+	* orbsvcs/Scheduling_Service/Scheduler.cpp:
+	* orbsvcs/orbsvcs/Channel_Clients_T.i:
+	* orbsvcs/orbsvcs/Event_Service_Constants.h:
+	* orbsvcs/orbsvcs/Event_Utilities.i:
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+	* orbsvcs/orbsvcs/Runtime_Scheduler.h:
+	* orbsvcs/Event_Service/Dispatching_Modules.cpp:
+	* orbsvcs/Event_Service/Event_Channel.cpp:
 	  Adapted all the code to use the new time structures.
 
-	* orbsvcs/orbsvcs/Makefile: 
-	* orbsvcs/tests/EC_Multiple/Makefile: 
-	* orbsvcs/tests/Event_Latency/Makefile: 
-	* orbsvcs/tests/Logger/Makefile: 
-	* orbsvcs/tests/Simple_Naming/Makefile: 
-	* orbsvcs/Event_Service/Makefile: 
-	* orbsvcs/Naming_Service/Makefile: 
-	* orbsvcs/Scheduling_Service/Makefile: 
-	* orbsvcs/Dump_Schedule/Makefile: 
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/tests/EC_Multiple/Makefile:
+	* orbsvcs/tests/Event_Latency/Makefile:
+	* orbsvcs/tests/Logger/Makefile:
+	* orbsvcs/tests/Simple_Naming/Makefile:
+	* orbsvcs/Event_Service/Makefile:
+	* orbsvcs/Naming_Service/Makefile:
+	* orbsvcs/Scheduling_Service/Makefile:
+	* orbsvcs/Dump_Schedule/Makefile:
 	  Updated dependencies.
 
-	* docs/releasenotes/ec.html: 
+	* docs/releasenotes/ec.html:
 	  Updated documentation for this release.
 
 Tue Feb 17 07:40:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
