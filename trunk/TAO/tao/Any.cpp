@@ -128,7 +128,8 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
       // copies.
       this->cdr_ = ACE_Message_Block::duplicate (src.cdr_);
     }
-  else
+  // If the any was created from just a typecode, we don't want to do this part
+  else if (src.value_ != 0)
     {
       // "src" did not own the data. So we must do the encoding ourselves
       TAO_OutputCDR stream;
@@ -181,7 +182,8 @@ CORBA_Any::operator= (const CORBA_Any &src)
     {
       this->cdr_ = ACE_Message_Block::duplicate (src.cdr_);
     }
-  else
+  // If the source was created from just a typecode, we want to skip this...
+  else if (src.value_ != 0)
     {
       TAO_OutputCDR stream;
 
@@ -189,6 +191,10 @@ CORBA_Any::operator= (const CORBA_Any &src)
       // retrieve the start of the message block chain and duplicate it
       this->cdr_ = stream.begin ()->clone ();
     }
+  // ... and do this.
+  else
+    this->cdr_ = 0;
+
   return *this;
 }
 

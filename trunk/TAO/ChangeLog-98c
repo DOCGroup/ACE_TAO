@@ -1,3 +1,12 @@
+Tue Oct 13 17:04:15 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+  * tao/Any.cpp:
+    Modified copy constructor and assignment operator to avoid
+    encoding the value of the source Any when it is 0 (which it
+    is if the Any was constructed from just a typecode. Perhaps
+    this sequence of calls should never be made, but this guards
+    against it anyway.
+
 Tue Oct 13 10:51:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.cpp: Thread ids in some platforms (ex: HP-UX) are
