@@ -1,3 +1,123 @@
+Sat Oct 19 11:40:22 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: Added a ptrdiff_t typedef for ACE_HAS_WINCE. eVC3,
+          PocketPC2002 don't define this type.
+
+        * ace/OS.i (recursive_mutex_cond_unlock, recursive_mutex_cond_relock):
+          PocketPC 2002 doesn't have the RecursionCount member in the
+          CRITICAL_SECTION.
+
+        * ace/OS.cpp: ACE-ified the ACE_CE_ARGV class.
+
+        * ace/OS_Errno.cpp: Add #include "ace/OS_Memory.h" to get ACE_NEW.
+
+        * ace/ace_os_dll.vcp: Added files Time_Value.{h cpp inl}. Changed
+          preprocessor file locations from $ACE_ROOT to ".." to allow
+          working with more than one ACE version/build.
+
+        * ace/ace_dll.vcp:  Added files DLL_Manager.{h cpp}.
+          Changed preprocessor file locations from $ACE_ROOT to ".." to
+          allow working with more than one ACE version/build.
+
+        * ace/config-win32-common.h: Set ACE_HAS_WIN32_TRYLOCK for WinCE
+          in addition to ACE_HAS_WINNT4. Also ACE_HAS_INTERLOCKED_EXCHANGEADD,
+          but only for PPC.
+
+        * ace/Atomic_Op.h: Only set ACE_HAS_BUILTIN_ATOMIC_OP without
+          ACE_HAS_INTERLOCKED_EXCHANGEADD for MSVC on x86. It's not available
+          for eVC, CE on other than PPC.
+
+        * tests/ARGV_Test_WinCE.vcp
+        * tests/Atomic_Op_Test_WinCE.vcp
+        * tests/Auto_IncDec_Test_WinCE.vcp
+        * tests/Barrier_Test_WinCE.vcp
+        * tests/Basic_Types_Test_WinCE.vcp
+        * tests/Bound_Ptr_Test_WinCE.vcp
+        * tests/Buffer_Stream_Test_WinCE.vcp
+        * tests/Cached_Accept_Conn_Test_WinCE.vcp
+        * tests/Cached_Conn_Test_WinCE.vcp
+        * tests/Cache_Map_Manager_Test_WinCE.vcp
+        * tests/Capabilities_Test_WinCE.vcp
+        * tests/CDR_Array_Test_WinCE.vcp
+        * tests/CDR_File_Test_WinCE.vcp
+        * tests/CDR_Test_WinCE.vcp
+        * tests/Collection_Test_WinCE.vcp
+        * tests/Conn_Test_WinCE.vcp
+        * tests/DLList_Test_WinCE.vcp
+        * tests/DLL_Test_DLL_WinCE.vcp
+        * tests/DLL_Test_WinCE.vcp
+        * tests/Dynamic_Priority_Test_WinCE.vcp
+        * tests/Enum_Interfaces_Test_WinCE.vcp
+        * tests/Future_Set_Test_WinCE.vcp
+        * tests/Future_Test_WinCE.vcp
+        * tests/Handle_Set_Test_WinCE.vcp
+        * tests/Hash_Map_Bucket_Iterator_Test_WinCE.vcp
+        * tests/Hash_Map_Manager_Test_WinCE.vcp
+        * tests/High_Res_Timer_Test_WinCE.vcpL
+        * tests/Lazy_Map_Manager_Test_WinCE.vcp
+        * tests/Logging_Strategy_Test_WinCE.vcp
+        * tests/Log_Msg_Test_WinCE.vcp
+        * tests/Malloc_Test_WinCE.vcp
+        * tests/Map_Manager_Test_WinCE.vcp
+        * tests/Map_Test_WinCE.vcp
+        * tests/Max_Default_Port_Test_WinCE.vcp
+        * tests/Mem_Map_Test_WinCE.vcp
+        * tests/MEM_Stream_Test_WinCE.vcp
+        * tests/Message_Block_Test_WinCE.vcp
+        * tests/Message_Queue_Notifications_Test_WinCE.vcp
+        * tests/Message_Queue_Test_Ex_WinCE.vcp
+        * tests/Message_Queue_Test_WinCE.vcp
+        * tests/MM_Shared_Memory_Test_WinCE.vcp
+        * tests/MT_Reactor_Timer_Test_WinCE.vcp
+        * tests/MT_Reactor_Upcall_Test_WinCE.vcp
+        * tests/MT_SOCK_Test_WinCE.vcp
+        * tests/Naming_Test_WinCE.vcp
+        * tests/New_Fail_Test_WinCE.vcp
+        * tests/Notify_Performance_Test_WinCE.vcp
+        * tests/Object_Manager_Test_WinCE.vcp
+        * tests/OrdMultiSet_Test_WinCE.vcp
+        * tests/OS_Test_WinCE.vcp
+        * tests/Priority_Buffer_Test_WinCE.vcp
+        * tests/Priority_Reactor_Test_WinCE.vcp
+        * tests/Priority_Task_Test_WinCE.vcp
+        * tests/Process_Manager_Test_WinCE.vcp
+        * tests/RB_Tree_Test_WinCE.vcp
+        * tests/Reactors_Test_WinCE.vcp
+        * tests/Reactor_Exceptions_Test_WinCE.vcp
+        * tests/Reactor_Notify_Test_WinCE.vcp
+        * tests/Reactor_Performance_Test_WinCE.vcp
+        * tests/Reactor_Timer_Test_WinCE.vcp
+        * tests/Reader_Writer_Test_WinCE.vcp
+        * tests/Recursive_Mutex_Test_WinCE.vcp
+        * tests/Refcounted_Auto_Ptr_Test_WinCE.vcp
+        * tests/Reverse_Lock_Test_WinCE.vcp
+        * tests/Semaphore_Test_WinCE.vcp
+        * tests/Service_Config_DLL_WinCE.vcp
+        * tests/Service_Config_Test_WinCE.vcp
+        * tests/Sigset_Ops_Test_WinCE.vcp
+        * tests/Simple_Message_Block_Test_WinCE.vcp
+        * tests/SOCK_Connector_Test_WinCE.vcp
+        * tests/SOCK_Send_Recv_Test_WinCE.vcp
+        * tests/SOCK_Test_WinCE.vcp
+        * tests/SPIPE_Test_WinCE.vcp
+        * tests/SString_Test_WinCE.vcpS
+        * tests/Svc_Handler_Test_WinCE.vcp
+        * tests/Task_Test_WinCE.vcp
+        * tests/Thread_Manager_Test_WinCE.vcp
+        * tests/Thread_Mutex_Test_WinCE.vcp
+        * tests/Thread_Pool_Reactor_Resume_Test_WinCE.vcp
+        * tests/Thread_Pool_Reactor_Test_WinCE.vcp
+        * tests/Thread_Pool_Test_WinCE.vcp
+        * tests/Timeprobe_Test_WinCE.vcp
+        * tests/Timer_Queue_Test_WinCE.vcp
+        * tests/Time_Service_Test_WinCE.vcp
+        * tests/Time_Value_Test_WinCE.vcp
+        * tests/Tokens_Test_WinCE.vcp
+        * tests/TSS_Test_WinCE.vcp
+        * tests/Upgradable_RW_Test_WinCE.vcp
+          Changed include file path from $ACE_ROOT to .. to allow building
+          multiple versions. Added aced.lib to CE ARM Debug builds.
+
 Sat Oct 19 16:57:44 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao_*.doxygen:
