@@ -8,6 +8,10 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+
 LDLIBS     =  -lTAO -lm
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
