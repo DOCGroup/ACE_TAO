@@ -188,9 +188,9 @@ CORBA::Environment::print_exception (const char *info,
           ACE_DEBUG ((LM_ERROR,
                       "(%P|%t) minor code = %x, completed = %s\n",
                       x2->minor (),
-                      (x2->completion () == CORBA::COMPLETED_YES) ? "YES" :
-                      (x2->completion () == CORBA::COMPLETED_NO) ? "NO" :
-                      (x2->completion () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
+                      (x2->completed () == CORBA::COMPLETED_YES) ? "YES" :
+                      (x2->completed () == CORBA::COMPLETED_NO) ? "NO" :
+                      (x2->completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
                       "garbage"));
         }
       else

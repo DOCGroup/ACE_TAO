@@ -226,9 +226,9 @@ _dmsg_x (CORBA::Environment &env,
 
       emit_prefix (debug_stream);
       ACE_OS::fprintf (debug_stream,
-                       "minor %#lx, completion %#lx\n",
+                       "minor %#lx, completed %#lx\n",
                        sysex->minor (),
-                       (long) sysex->completion ());
+                       (long) sysex->completed ());
     }
   funlockfile (debug_stream);
 
