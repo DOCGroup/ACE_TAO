@@ -1,3 +1,8 @@
+Tue Dec  8 16:52:57 1998  Ossama Othman  <ossama@debian.org>
+
+	* ace/OS.{h,i}, ace/README: Added a fsync() method.  Define
+	  ACE_LACKS_FSYNC if ::fsync() isn't supported.
+
 Tue Dec 08 15:03:25 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/NT_Service.{h cpp i}: Added a number of methods which can be
