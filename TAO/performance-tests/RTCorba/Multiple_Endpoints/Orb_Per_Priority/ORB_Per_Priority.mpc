@@ -1,10 +1,12 @@
 project(*server): rt_server, strategies, rtcorbacommon {
+  avoids += minimum_corba
   Source_Files {
     server.cpp
   }
 }
 
 project(*client): rt_client, strategies, rtcorbacommon {
+  avoids += minimum_corba
   Source_Files {
     client.cpp
   }
