@@ -14,7 +14,7 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/IIOP_Endpoint.h"
 #include "tao/Transport_Cache_Manager.h"
-
+#include "tao/Resume_Handle.h"
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Connection_Handler.i"
@@ -339,7 +339,7 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
 
 
 int
-TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE h)
+TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE)
 {
     // Increase the reference count on the upcall that have passed us.
   this->pending_upcalls_++;

@@ -71,6 +71,14 @@ public:
   virtual ACE_HANDLE handle (void);
 #endif
 
+
+  /// Overload of the handle_input_i () in the TAO_Transport
+  /// class. This is required to set up the state guard. The
+  /// thread-per-connection and wait on RW strategies call this
+  /// handle_input_i ().
+  virtual int handle_input_i (TAO_Resume_Handle &rh,
+                              ACE_Time_Value *max_wait_time = 0,
+                              int block = 0);
 protected:
   /** @name Overridden Template Methods
    *
@@ -82,9 +90,6 @@ protected:
 
   virtual TAO_Pluggable_Messaging *messaging_object (void);
 
-  virtual int handle_input_i (TAO_Resume_Handle &rh,
-                              ACE_Time_Value *max_wait_time = 0,
-                              int block = 0);
 
   /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send_i (iovec *iov, int iovcnt,
@@ -95,14 +100,6 @@ protected:
   virtual ssize_t recv_i (char *buf,
                           size_t len,
                           const ACE_Time_Value *s = 0);
-
-  /// Overload of the handle_input_i () in the TAO_Transport
-  /// class. This is required to set up the state guard. The
-  /// thread-per-connection and wait on RW strategies call this
-  /// handle_input_i ().
-  virtual int handle_input_i (TAO_Resume_Handle &rh,
-                              ACE_Time_Value *max_time_value = 0,
-                              int block =0);
 
   virtual int register_handler_i (void);
 
