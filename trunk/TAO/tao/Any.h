@@ -27,6 +27,7 @@
 
 #include "tao/Environment.h"
 #include "tao/Object.h"
+#include "tao/Typecode.h"
 
 class TAO_Export CORBA_Any
 {
@@ -380,7 +381,7 @@ protected:
   // Release the <value_>.
 
 private:
-  CORBA::TypeCode_ptr type_;
+  CORBA::TypeCode_var type_;
   // Typecode for the <Any>.
 
   int byte_order_;

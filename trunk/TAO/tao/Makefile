@@ -443,13 +443,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -578,15 +578,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -685,13 +682,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -813,8 +810,7 @@ realclean:
  POAC.i \
  Key_Adapters.i
 
-.obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
+.obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -836,10 +832,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  POA.h \
@@ -855,6 +847,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -980,15 +976,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -1090,8 +1083,7 @@ realclean:
  Acceptor_Registry.i \
  Forwarding_Servant.h
 
-.obj/POAC.o .obj/POAC.so .shobj/POAC.o .shobj/POAC.so: POAC.cpp \
- POAC.h \
+.obj/POAC.o .obj/POAC.so .shobj/POAC.o .shobj/POAC.so: POAC.cpp POAC.h \
  $(ACE_ROOT)/ace/pre.h \
  PolicyC.h \
  CurrentC.h \
@@ -1120,13 +1112,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1207,15 +1199,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  POA.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1339,8 +1328,6 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -1368,8 +1355,7 @@ realclean:
  MProfile.i \
  Stub.i
 
-.obj/POAS.o .obj/POAS.so .shobj/POAS.o .shobj/POAS.so: POAS.cpp \
- POAS.h \
+.obj/POAS.o .obj/POAS.so .shobj/POAS.o .shobj/POAS.so: POAS.cpp POAS.h \
  $(ACE_ROOT)/ace/pre.h \
  POAC.h \
  PolicyC.h \
@@ -1399,13 +1385,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1485,15 +1471,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  Server_Request.h \
  IOPC.h \
@@ -1610,13 +1593,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1696,15 +1679,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  poa_macros.h \
  POAManager.i \
@@ -1795,13 +1775,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1957,13 +1937,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2092,15 +2072,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -2205,10 +2182,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  Servant_Base.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -2217,6 +2190,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2337,6 +2314,8 @@ realclean:
  Interceptor.i \
  ORB.i \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  Server_Request.h \
  Object_KeyC.h \
@@ -2370,13 +2349,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2448,10 +2427,9 @@ realclean:
  CDR.h \
  CDR.i \
  Any.h \
- Any.i \
  Typecode.h \
  Typecode.i \
- ImplRepoC.i \
+ Any.i ImplRepoC.i \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -2544,9 +2522,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -2572,8 +2547,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -2594,8 +2567,7 @@ realclean:
  Invocation.i
 
 .obj/ImplRepoS.o .obj/ImplRepoS.so .shobj/ImplRepoS.o .shobj/ImplRepoS.so: ImplRepoS.cpp ImplRepoS.h \
- $(ACE_ROOT)/ace/pre.h \
- ImplRepoC.h \
+ $(ACE_ROOT)/ace/pre.h ImplRepoC.h \
  Object.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -2621,13 +2593,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2699,10 +2671,9 @@ realclean:
  CDR.h \
  CDR.i \
  Any.h \
- Any.i \
  Typecode.h \
  Typecode.i \
- ImplRepoC.i \
+ Any.i ImplRepoC.i \
  POAC.h \
  PolicyC.h \
  CurrentC.h \
@@ -2772,9 +2743,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -2882,13 +2850,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3053,9 +3021,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -3091,8 +3056,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  Reply_Dispatcher.i \
@@ -3129,13 +3092,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3227,13 +3190,13 @@ realclean:
  ValueFactory.h \
  ValueFactory.i \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Policy_Factory.h \
  Policy_Factory.i \
@@ -3304,8 +3267,6 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- Typecode.h \
- Typecode.i \
  Pluggable.i \
  MProfile.h \
  MProfile.i \
@@ -3356,13 +3317,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3488,15 +3449,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -3569,13 +3527,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3739,9 +3697,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -3784,10 +3739,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -3810,6 +3761,10 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -3941,10 +3896,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -3967,6 +3918,10 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -4157,9 +4112,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -4227,10 +4179,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -4253,6 +4201,10 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -4443,9 +4395,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -4516,13 +4465,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -4733,9 +4682,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -4808,13 +4754,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -5038,9 +4984,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -5090,10 +5033,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -5112,6 +5051,10 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -5337,9 +5280,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -5379,13 +5319,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -5592,9 +5532,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -5651,10 +5588,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
@@ -5672,6 +5605,10 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
@@ -5865,9 +5802,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -5889,8 +5823,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Messaging_Policy_i.i \
  GIOP_Message_Lite.h \
@@ -5937,10 +5869,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -5963,6 +5891,10 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -6154,9 +6086,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -6225,10 +6154,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -6251,6 +6176,10 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -6442,9 +6371,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -6514,13 +6440,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -6734,9 +6660,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -6809,13 +6732,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -7042,9 +6965,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -7094,13 +7014,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -7346,9 +7266,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -7387,13 +7304,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -7601,9 +7518,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -7661,13 +7575,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -7871,9 +7785,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -7897,8 +7808,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Messaging_Policy_i.i \
  GIOP_Message_Acceptors.h \
@@ -7947,13 +7856,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -8167,9 +8076,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -8239,13 +8145,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -8463,9 +8369,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -8537,13 +8440,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -8774,9 +8677,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -8825,13 +8725,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -9081,9 +8981,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -9122,13 +9019,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -9340,9 +9237,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9399,13 +9293,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -9616,9 +9510,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9640,8 +9531,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Messaging_Policy_i.i \
  GIOP_Message_Acceptors.h \
@@ -9663,8 +9552,7 @@ realclean:
  GIOP_Utils.i \
  GIOP_Message_Lite.i
 
-.obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp \
- IORC.h \
+.obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp IORC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -9686,10 +9574,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -9697,6 +9581,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -9862,9 +9750,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9891,8 +9776,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -9912,8 +9795,7 @@ realclean:
  operation_details.i \
  Invocation.i
 
-.obj/IORS.o .obj/IORS.so .shobj/IORS.o .shobj/IORS.so: IORS.cpp \
- IORS.h \
+.obj/IORS.o .obj/IORS.so .shobj/IORS.o .shobj/IORS.so: IORS.cpp IORS.h \
  $(ACE_ROOT)/ace/pre.h \
  IORC.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -9936,10 +9818,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -9947,6 +9825,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -10058,13 +9940,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -10250,10 +10132,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -10264,6 +10142,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -10385,15 +10267,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -10465,13 +10344,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -10599,15 +10478,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -10670,10 +10546,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -10686,6 +10558,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -10837,9 +10713,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -10925,10 +10798,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -10941,6 +10810,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -11083,10 +10956,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -11099,6 +10968,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -11240,13 +11113,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -11404,13 +11277,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -11567,13 +11440,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -11731,13 +11604,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -11883,10 +11756,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
@@ -11895,6 +11764,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -12017,8 +11890,7 @@ realclean:
  Interceptor.i \
  ORB.i
 
-.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp \
- Any.h \
+.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp Any.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
  corbafwd.h \
@@ -12045,13 +11917,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12113,11 +11985,11 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
- Any.i \
  Typecode.h \
  Exception.h \
  Exception.i \
  Typecode.i \
+ Any.i \
  Marshal.h \
  Principal.h \
  Sequence.h \
@@ -12186,9 +12058,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -12253,13 +12122,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12420,10 +12289,7 @@ realclean:
  DynAnyC.h \
  DynAnyC.i \
  DomainC.h \
- DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i
+ DomainC.i
 
 .obj/CurrentS.o .obj/CurrentS.so .shobj/CurrentS.o .shobj/CurrentS.so: CurrentS.cpp \
  CurrentC.h \
@@ -12453,13 +12319,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12563,6 +12429,8 @@ realclean:
  PolicyC.i \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
@@ -12571,11 +12439,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Server_Request.h \
  IOPC.h \
  IOPC.i \
@@ -12610,13 +12473,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12709,10 +12572,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -12720,6 +12579,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12809,13 +12672,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12941,15 +12804,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -13012,13 +12872,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -13148,15 +13008,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -13224,8 +13081,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  ORB_Core.h \
@@ -13287,13 +13142,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -13425,15 +13280,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -13501,8 +13353,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  ORB_Core.h \
@@ -13567,13 +13417,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -13701,8 +13551,7 @@ realclean:
  Any.h \
  Any.i
 
-.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp \
- ORB.h \
+.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp ORB.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -13728,13 +13577,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -13936,9 +13785,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  ORB_Core.h \
  Policy_Manager.h \
  Policy_Manager.i \
@@ -13991,8 +13837,6 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  Object_Loader.h \
@@ -14034,13 +13878,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -14127,13 +13971,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -14294,9 +14138,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Invocation.h \
  ORB_Core.h \
  Policy_Manager.h \
@@ -14326,8 +14167,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -14376,13 +14215,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -14491,6 +14330,8 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
@@ -14499,11 +14340,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -14546,13 +14382,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -14637,13 +14473,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -14733,6 +14569,8 @@ realclean:
  TimeBaseS.h \
  TimeBaseC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  TimeBaseS_T.h \
@@ -14774,13 +14612,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -14858,6 +14696,8 @@ realclean:
  Encodable.h \
  PolicyC.i \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DomainC.i \
  Stub.h \
@@ -14908,8 +14748,6 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- Typecode.h \
- Typecode.i \
  IOPC.h \
  IOPC.i \
  Pluggable.i \
@@ -14946,9 +14784,6 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  DynAnyC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -14975,8 +14810,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -15022,13 +14855,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -15106,6 +14939,8 @@ realclean:
  Encodable.h \
  PolicyC.i \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DomainC.i \
  Operation_Table.h \
@@ -15148,11 +14983,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -15197,13 +15027,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -15265,17 +15095,17 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  TimeBaseS.h \
  TimeBaseS_T.h \
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
- TimeBaseS.i \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i
+ TimeBaseS.i
 
 .obj/TimeBaseS.o .obj/TimeBaseS.so .shobj/TimeBaseS.o .shobj/TimeBaseS.so: TimeBaseS.cpp \
  TimeBaseS.h \
@@ -15307,13 +15137,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -15375,6 +15205,10 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  TimeBaseS_T.h \
@@ -15409,13 +15243,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -15510,13 +15344,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -15607,13 +15441,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -15699,6 +15533,8 @@ realclean:
  POAC.i \
  NVList.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  NVList.i \
  Principal.h \
@@ -15751,11 +15587,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -15820,13 +15651,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -15963,8 +15794,7 @@ realclean:
  Typecode.i \
  Pluggable.i
 
-.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp \
- Stub.h \
+.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp Stub.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable.h \
  corbafwd.h \
@@ -15991,13 +15821,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -16164,9 +15994,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -16191,8 +16018,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -16225,7 +16050,26 @@ realclean:
  Messaging_Policy_i.h \
  Messaging_Policy_i.i \
  Client_Priority_Policy.h \
- Client_Priority_Policy.i
+ Client_Priority_Policy.i \
+ RT_Policy_i.h \
+ RTCORBAS.h \
+ IOPS.h \
+ IOPS_T.h \
+ IOPS_T.i \
+ IOPS_T.cpp \
+ IOPS.i \
+ TimeBaseS.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ RTCORBAC.h \
+ RTCORBAC.i \
+ RTCORBAS_T.h \
+ RTCORBAS_T.i \
+ RTCORBAS_T.cpp \
+ RTCORBAS.i \
+ RT_Policy_i.i
 
 .obj/Typecode.o .obj/Typecode.so .shobj/Typecode.o .shobj/Typecode.so: Typecode.cpp \
  Typecode.h \
@@ -16252,10 +16096,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -16270,6 +16110,10 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  Exception.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -16418,13 +16262,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -16550,15 +16394,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -16623,13 +16464,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -16712,10 +16553,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
@@ -16724,6 +16561,10 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -16871,10 +16712,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  CDR.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -16883,6 +16720,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -17008,15 +16849,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17078,10 +16916,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -17092,6 +16926,10 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -17174,13 +17012,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -17265,13 +17103,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -17369,13 +17207,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -17501,15 +17339,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17559,8 +17394,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -17632,13 +17465,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -17738,13 +17571,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -17846,10 +17679,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  IOPC.h \
  CDR.h \
  corbafwd.h \
@@ -17859,6 +17688,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -17959,13 +17792,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -18054,13 +17887,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -18186,15 +18019,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18244,8 +18074,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -18309,13 +18137,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -18441,15 +18269,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18586,13 +18411,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -18718,15 +18543,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18790,13 +18612,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -18883,13 +18705,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -19018,15 +18840,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -19092,13 +18911,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -19230,15 +19049,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -19301,13 +19117,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -19415,10 +19231,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
@@ -19445,6 +19257,10 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -19587,9 +19403,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -19626,13 +19439,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -19721,13 +19534,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -19900,9 +19713,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -19942,13 +19752,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -20107,10 +19917,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -20125,6 +19931,10 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  Exception.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -20281,10 +20091,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch.h \
@@ -20298,6 +20104,10 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -20385,8 +20195,7 @@ realclean:
  Environment.i \
  debug.h
 
-.obj/TAO.o .obj/TAO.so .shobj/TAO.o .shobj/TAO.so: TAO.cpp \
- TAO.h \
+.obj/TAO.o .obj/TAO.so .shobj/TAO.o .shobj/TAO.so: TAO.cpp TAO.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -20412,13 +20221,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -20568,13 +20377,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -20730,9 +20539,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -20780,13 +20586,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -20913,6 +20719,8 @@ realclean:
  ORB.i \
  NVList.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  NVList.i \
  Context.h \
@@ -20926,8 +20734,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  Reply_Dispatcher.i \
@@ -20954,8 +20760,6 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- Typecode.h \
- Typecode.i \
  Pluggable.i
 
 .obj/Reply_Dispatcher.o .obj/Reply_Dispatcher.so .shobj/Reply_Dispatcher.o .shobj/Reply_Dispatcher.so: Reply_Dispatcher.cpp \
@@ -20983,10 +20787,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -20994,6 +20794,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -21116,6 +20920,8 @@ realclean:
  ORB.i \
  NVList.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  NVList.i \
  Context.h \
@@ -21129,8 +20935,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -21147,11 +20951,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -21190,8 +20989,7 @@ realclean:
  Leader_Follower.i \
  debug.h
 
-.obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp \
- IOPC.h \
+.obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp IOPC.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
  corbafwd.h \
@@ -21218,13 +21016,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -21295,14 +21093,13 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
- Any.i \
  Typecode.h \
  Exception.h \
  Exception.i \
- Typecode.i
+ Typecode.i \
+ Any.i
 
-.obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp \
- IOPS.h \
+.obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp IOPS.h \
  $(ACE_ROOT)/ace/pre.h \
  IOPC.h \
  CDR.h \
@@ -21330,13 +21127,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -21433,13 +21230,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -21501,8 +21298,7 @@ realclean:
  Exception.h \
  Exception.i \
  CDR.h \
- CDR.i \
- PollableC.i \
+ CDR.i PollableC.i \
  POA_CORBA.h \
  CurrentC.h \
  Environment.h \
@@ -21520,6 +21316,8 @@ realclean:
  PolicyC.i \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
@@ -21528,11 +21326,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -21635,8 +21428,6 @@ realclean:
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -21682,13 +21473,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -21750,8 +21541,8 @@ realclean:
  Exception.h \
  Exception.i \
  CDR.h \
- CDR.i \
- PollableC.i PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
+ CDR.i PollableC.i \
+ PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
 
 .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.so .shobj/CONV_FRAMEC.o .shobj/CONV_FRAMEC.so: CONV_FRAMEC.cpp \
  CONV_FRAMEC.h \
@@ -21781,13 +21572,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -21858,11 +21649,11 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
- Any.i \
  Typecode.h \
  Exception.h \
  Exception.i \
- Typecode.i
+ Typecode.i \
+ Any.i
 
 .obj/CONV_FRAMES.o .obj/CONV_FRAMES.so .shobj/CONV_FRAMES.o .shobj/CONV_FRAMES.so: CONV_FRAMES.cpp \
  CONV_FRAMES.h \
@@ -21893,13 +21684,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -21999,13 +21790,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -22102,13 +21893,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -22184,11 +21975,11 @@ realclean:
  Any.h \
  Object.h \
  Object.i \
- Any.i \
  Typecode.h \
  Exception.h \
  Exception.i \
- Typecode.i
+ Typecode.i \
+ Any.i
 
 .obj/BoundsC.o .obj/BoundsC.so .shobj/BoundsC.o .shobj/BoundsC.so: BoundsC.cpp \
  BoundsC.h \
@@ -22217,13 +22008,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -22289,13 +22080,12 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
- Any.i \
- BoundsC.i \
  Typecode.h \
- Typecode.i
+ Typecode.i \
+ Any.i \
+ BoundsC.i
 
-.obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp TAOC.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp TAOC.h $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -22320,13 +22110,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -22405,16 +22195,15 @@ realclean:
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
- TimeBaseC.i \
- TAOC.i \
+ TimeBaseC.i TAOC.i \
  TAOS.h \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
- TAOS.i \
- Typecode.h \
- Typecode.i
+ TAOS.i
 
 .obj/TAOS.o .obj/TAOS.so .shobj/TAOS.o .shobj/TAOS.so: TAOS.cpp TAOS.h \
  corbafwd.h \
@@ -22442,13 +22231,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -22504,8 +22293,8 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
- corbafwd.i \
- TAOS_T.h TAOS_T.i TAOS_T.cpp TAOS.i
+ corbafwd.i TAOS_T.h \
+ TAOS_T.i TAOS_T.cpp TAOS.i
 
 .obj/Object_Loader.o .obj/Object_Loader.so .shobj/Object_Loader.o .shobj/Object_Loader.so: Object_Loader.cpp \
  Object_Loader.h \
@@ -22534,13 +22323,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -22648,13 +22437,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -22808,10 +22597,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -22819,6 +22604,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -22941,6 +22730,8 @@ realclean:
  ORB.i \
  NVList.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  NVList.i \
  Context.h \
@@ -22954,8 +22745,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  Stub.h \
@@ -22981,8 +22770,6 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- Typecode.h \
- Typecode.i \
  Pluggable.i \
  MProfile.h \
  Profile.h \
@@ -23024,13 +22811,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -23101,11 +22888,11 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
- Any.i \
  Typecode.h \
  Exception.h \
  Exception.i \
- Typecode.i
+ Typecode.i \
+ Any.i
 
 .obj/NVList.o .obj/NVList.so .shobj/NVList.o .shobj/NVList.so: NVList.cpp \
  NVList.h \
@@ -23131,10 +22918,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
@@ -23144,6 +22927,10 @@ realclean:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -23204,10 +22991,12 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
- Any.i \
- NVList.i \
+ Typecode.h \
  Exception.h \
  Exception.i \
+ Typecode.i \
+ Any.i \
+ NVList.i \
  ORB.h \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -23268,8 +23057,6 @@ realclean:
  BoundsC.h \
  BoundsC.i \
  debug.h \
- Typecode.h \
- Typecode.i \
  Marshal.h \
  Principal.h \
  Principal.i \
@@ -23301,10 +23088,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  ValueBase.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -23313,6 +23096,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -23378,13 +23165,15 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Any.i \
  TimeBaseC.h \
  TimeBaseC.i \
  PolicyC.h \
  CurrentC.h \
- Exception.h \
- Exception.i \
  CurrentC.i \
  Sequence.h \
  Managed_Types.h \
@@ -23398,10 +23187,7 @@ realclean:
  IOPC.h \
  IOPC.i \
  PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
+ PollableC.i MessagingC.i \
  MessagingS.h \
  TimeBaseS.h \
  TimeBaseS_T.h \
@@ -23465,8 +23251,6 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- Typecode.h \
- Typecode.i \
  Pluggable.i \
  MProfile.h \
  Profile.h \
@@ -23499,9 +23283,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -23559,13 +23340,8 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- MessagingS.h orbconf.h TimeBaseS.h \
- TimeBaseC.h \
+ $(ACE_ROOT)/ace/OS.i MessagingS.h orbconf.h \
+ TimeBaseS.h TimeBaseC.h \
  Any.h \
  CDR.h \
  corbafwd.h \
@@ -23575,6 +23351,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -23635,21 +23415,22 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  TimeBaseS_T.h \
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
- TimeBaseS.i \
- MessagingC.h \
+ TimeBaseS.i MessagingC.h \
  ValueBase.h \
  ValueBase.i \
  ValueFactory.h \
  ValueFactory.i \
  PolicyC.h \
  CurrentC.h \
- Exception.h \
- Exception.i \
  CurrentC.i \
  Sequence.h \
  Managed_Types.h \
@@ -23663,13 +23444,9 @@ realclean:
  IOPC.h \
  IOPC.i \
  PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i POAC.h \
- POAC.i \
- Servant_Base.h \
- POAC.h \
+ PollableC.i MessagingC.i \
+ POAC.h POAC.i \
+ Servant_Base.h POAC.h \
  Servant_Base.i \
  MessagingS_T.h MessagingS_T.i MessagingS_T.cpp MessagingS.i \
  Operation_Table.h \
@@ -23701,8 +23478,7 @@ realclean:
  Server_Request.h \
  Object_KeyC.h \
  Object_KeyC.i \
- Server_Request.i \
- Stub.h \
+ Server_Request.i Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -23725,8 +23501,6 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- Typecode.h \
- Typecode.i \
  Pluggable.i \
  MProfile.h \
  Profile.h \
@@ -23751,17 +23525,13 @@ realclean:
  InterceptorC.i \
  Interceptor.i \
  ORB.i \
- Stub.i \
- ORB_Core.h \
+ Stub.i ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
  DynAnyC.h \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -23821,10 +23591,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  POA_CORBA.h \
  CurrentC.h \
  Object.h \
@@ -23835,6 +23601,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -23910,6 +23680,8 @@ realclean:
  PolicyC.i \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
@@ -23918,11 +23690,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  ORB_Core.h \
  ORB.h \
@@ -24013,8 +23780,6 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Messaging_Policy_i.i \
  Client_Priority_Policy.h \
@@ -24063,10 +23828,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  MessagingC.h \
  ValueBase.h \
  corbafwd.h \
@@ -24076,6 +23837,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -24141,13 +23906,15 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Any.i \
  TimeBaseC.h \
  TimeBaseC.i \
  PolicyC.h \
  CurrentC.h \
- Exception.h \
- Exception.i \
  CurrentC.i \
  Sequence.h \
  Managed_Types.h \
@@ -24162,8 +23929,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Messaging_Policy_i.i \
  debug.h
@@ -24192,10 +23957,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  TAOC.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -24204,6 +23965,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -24281,6 +24046,8 @@ realclean:
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  TAOC.i \
@@ -24310,10 +24077,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  TAOC.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -24322,6 +24085,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -24399,6 +24166,8 @@ realclean:
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  TAOC.i \
@@ -24427,10 +24196,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  Priority_Mapping.h \
  RTCORBAC.h \
  corbafwd.h \
@@ -24440,6 +24205,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -24519,6 +24288,8 @@ realclean:
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  RTCORBAC.i \
@@ -24547,10 +24318,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  Linear_Priority_Mapping.h \
  Priority_Mapping.h \
  RTCORBAC.h \
@@ -24561,6 +24328,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -24640,6 +24411,8 @@ realclean:
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  RTCORBAC.i \
@@ -24672,10 +24445,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  Direct_Priority_Mapping.h \
  Priority_Mapping.h \
  RTCORBAC.h \
@@ -24686,6 +24455,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -24765,6 +24538,8 @@ realclean:
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  RTCORBAC.i \
@@ -24798,10 +24573,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  RTCORBAS.h \
  IOPS.h \
  IOPC.h \
@@ -24813,6 +24584,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -24888,6 +24663,10 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  TimeBaseS_T.h \
@@ -24897,8 +24676,6 @@ realclean:
  RTCORBAC.h \
  PolicyC.h \
  CurrentC.h \
- Exception.h \
- Exception.i \
  CurrentC.i \
  Encodable.h \
  PolicyC.i \
@@ -24956,8 +24733,6 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- Typecode.h \
- Typecode.i \
  Pluggable.i \
  MProfile.h \
  Profile.h \
@@ -24993,9 +24768,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -25034,10 +24806,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  RTCORBAS.h \
  IOPS.h \
  IOPC.h \
@@ -25049,6 +24817,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -25124,6 +24896,10 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  TimeBaseS_T.h \
@@ -25133,8 +24909,6 @@ realclean:
  RTCORBAC.h \
  PolicyC.h \
  CurrentC.h \
- Exception.h \
- Exception.i \
  CurrentC.i \
  Encodable.h \
  PolicyC.i \
@@ -25169,10 +24943,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  RTCORBAS.h \
  IOPS.h \
  IOPC.h \
@@ -25184,6 +24954,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -25259,6 +25033,10 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  TimeBaseS_T.h \
@@ -25268,8 +25046,6 @@ realclean:
  RTCORBAC.h \
  PolicyC.h \
  CurrentC.h \
- Exception.h \
- Exception.i \
  CurrentC.i \
  Encodable.h \
  PolicyC.i \
@@ -25304,10 +25080,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  RTCORBAS.h \
  IOPS.h \
  IOPC.h \
@@ -25319,6 +25091,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -25394,6 +25170,10 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  TimeBaseS_T.h \
@@ -25403,8 +25183,6 @@ realclean:
  RTCORBAC.h \
  PolicyC.h \
  CurrentC.h \
- Exception.h \
- Exception.i \
  CurrentC.i \
  Encodable.h \
  PolicyC.i \
@@ -25446,13 +25224,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -25611,15 +25389,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -25667,18 +25442,17 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- corbafwd.h \
+ $(ACE_ROOT)/ace/OS.i corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -25733,8 +25507,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
- corbafwd.i \
- IOPC.h \
+ corbafwd.i IOPC.h \
  CDR.h \
  corbafwd.h \
  CDR.i \
@@ -25756,19 +25529,17 @@ realclean:
  Environment.i \
  CurrentC.i \
  Encodable.h \
- PolicyC.i \
- TimeBaseC.h \
+ PolicyC.i TimeBaseC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
- TimeBaseC.i \
- RTCORBAC.i \
+ TimeBaseC.i RTCORBAC.i \
  TAOS.h \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
- TAOS.i \
- Typecode.h \
- Typecode.i
+ TAOS.i
 
 .obj/RTCORBAS.o .obj/RTCORBAS.so .shobj/RTCORBAS.o .shobj/RTCORBAS.so: RTCORBAS.cpp \
  orbconf.h \
@@ -25792,13 +25563,8 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- RTCORBAS.h orbconf.h IOPS.h \
- IOPC.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBAS.h orbconf.h \
+ IOPS.h IOPC.h \
  CDR.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -25807,6 +25573,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -25874,30 +25644,30 @@ realclean:
  IOPS_T.h \
  IOPS_T.i \
  IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
+ IOPS.i TimeBaseS.h \
  TimeBaseC.h \
  Any.h \
  Environment.h \
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Any.i \
  TimeBaseC.i \
  TimeBaseS_T.h \
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
- TimeBaseS.i \
- RTCORBAC.h corbafwd.h IOPC.h \
+ TimeBaseS.i RTCORBAC.h \
+ corbafwd.h IOPC.h \
  PolicyC.h \
  CurrentC.h \
- Exception.h \
- Exception.i \
  CurrentC.i \
  Encodable.h \
- PolicyC.i \
- TimeBaseC.h RTCORBAC.i RTCORBAS_T.h RTCORBAS_T.i RTCORBAS_T.cpp \
- RTCORBAS.i
+ PolicyC.i TimeBaseC.h \
+ RTCORBAC.i RTCORBAS_T.h RTCORBAS_T.i RTCORBAS_T.cpp RTCORBAS.i
 
 .obj/DynAnyC.o .obj/DynAnyC.so .shobj/DynAnyC.o .shobj/DynAnyC.so: DynAnyC.cpp \
  DynAnyC.h \
@@ -25923,10 +25693,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -25934,6 +25700,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -25996,6 +25766,10 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Any.i \
  Sequence.h \
  Managed_Types.h \
@@ -26004,8 +25778,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- Exception.h \
- Exception.i \
  DynAnyC.i \
  Stub.h \
  Pluggable.h \
@@ -26055,8 +25827,6 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- Typecode.h \
- Typecode.i \
  IOPC.h \
  IOPC.i \
  Pluggable.i \
@@ -26094,10 +25864,7 @@ realclean:
  Stub.i \
  POA_CORBA.h \
  DomainC.h \
- DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i
+ DomainC.i
 
 .obj/DynAnyS.o .obj/DynAnyS.so .shobj/DynAnyS.o .shobj/DynAnyS.so: DynAnyS.cpp \
  DynAnyC.h \
@@ -26123,10 +25890,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -26134,6 +25897,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -26196,6 +25963,10 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Any.i \
  Sequence.h \
  Managed_Types.h \
@@ -26204,8 +25975,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- Exception.h \
- Exception.i \
  DynAnyC.i \
  POA_CORBA.h \
  CurrentC.h \
@@ -26218,12 +25987,7 @@ realclean:
  Servant_Base.h \
  POAC.h \
  POAC.i \
- Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i
+ Servant_Base.i
 
 .obj/DynAny_i.o .obj/DynAny_i.so .shobj/DynAny_i.o .shobj/DynAny_i.so: DynAny_i.cpp \
  DynAny_i.h \
@@ -26249,10 +26013,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -26260,6 +26020,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -26338,6 +26102,8 @@ realclean:
  PolicyC.i \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
@@ -26346,11 +26112,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  DynStruct_i.h \
  DynSequence_i.h \
  DynEnum_i.h \
@@ -26387,10 +26148,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -26398,6 +26155,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -26476,6 +26237,8 @@ realclean:
  PolicyC.i \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
@@ -26484,11 +26247,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  DynArray_i.h \
  InconsistentTypeCodeC.h \
  Marshal.h \
@@ -26561,10 +26319,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -26572,6 +26326,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -26650,6 +26408,8 @@ realclean:
  PolicyC.i \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
@@ -26658,11 +26418,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  DynEnum_i.h \
  InconsistentTypeCodeC.h
 
@@ -26690,10 +26445,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -26701,6 +26452,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -26779,6 +26534,8 @@ realclean:
  PolicyC.i \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
@@ -26787,11 +26544,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  DynSequence_i.h \
  InconsistentTypeCodeC.h \
  Marshal.h \
@@ -26864,10 +26616,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -26875,6 +26623,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -26953,6 +26705,8 @@ realclean:
  PolicyC.i \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
@@ -26961,11 +26715,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  DynStruct_i.h \
  InconsistentTypeCodeC.h \
  ORB.h \
@@ -27038,10 +26787,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -27049,6 +26794,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -27127,6 +26876,8 @@ realclean:
  PolicyC.i \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
@@ -27135,11 +26886,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  DynUnion_i.h \
  DynUnion_i_T.h \
  DynUnion_i_T.cpp \
@@ -27214,10 +26960,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  Exception.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -27226,6 +26968,10 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -27371,10 +27117,6 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -27389,6 +27131,10 @@ realclean:
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
@@ -27443,6 +27189,10 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Exception.h \
+ Exception.i \
+ Typecode.i \
  Any.i \
  Managed_Types.h \
  Managed_Types.i \
@@ -27451,11 +27201,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- InterfaceC.i \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -27547,7 +27292,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -27574,8 +27318,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -27625,13 +27367,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -27782,13 +27524,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -27888,13 +27630,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -28061,13 +27803,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -28145,6 +27887,8 @@ realclean:
  Environment.i \
  Object.h \
  Object.i \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  debug.h \
  Principal.h \
@@ -28202,13 +27946,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -28347,15 +28091,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -28463,13 +28204,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -28615,6 +28356,8 @@ realclean:
  GIOP_Utils.i \
  NVList.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  NVList.i
 
@@ -28645,13 +28388,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -28784,15 +28527,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -28858,13 +28598,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -28965,13 +28705,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -29069,13 +28809,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -29218,6 +28958,8 @@ realclean:
  GIOP_Server_Request.i \
  NVList.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  NVList.i \
  ORB_Core.h \
@@ -29227,11 +28969,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -29333,13 +29070,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -29473,15 +29210,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -29603,13 +29337,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -29739,15 +29473,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -29812,13 +29543,13 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -29948,15 +29679,12 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  Any.h \
+ Typecode.h \
+ Typecode.i \
  Any.i \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
