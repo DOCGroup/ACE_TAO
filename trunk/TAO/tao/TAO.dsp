@@ -1392,25 +1392,6 @@ SOURCE=.\InterfaceC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterfaceS.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Invocation.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
