@@ -116,7 +116,11 @@ Obj_Module::add_source(const ACE_TCHAR *p, int imports_only)
 
   // Options for the command line shown here are for the GNU nm 2.9.5
 
-  ACE_ASSERT(nm_opts.command_line ("nm -C %s",src_name.c_str()) == 0);
+  int result = nm_opts.command_line ("nm -C %s",src_name.c_str());
+  // Prevent compiler warning about "unused variable" if ACE_ASSERT is
+  // an empty macro.
+  ACE_UNUSED_ARG (result);
+  ACE_ASSERT (result == 0);
 
   nmproc.spawn (nm_opts);
   if (ACE_OS::close(pipe[1]) == -1)

@@ -1,3 +1,11 @@
+Thu Jul 31 07:42:57 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* apps/soreduce/Obj_Module.cpp (add_source): 
+	* apps/soreduce/SO_Group.cpp (add_executable): Fixed bugs where
+	  application code was being called within ACE_ASSERT macros,
+ 	  which were disappearing when ACE_NDEBUG was enabled!  Thanks to
+ 	  Roland Meub <roland.meub@gmx.de> for reporting this fix.
+
 Thu Jul 31 01:29:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/Export/Export.mpc:
