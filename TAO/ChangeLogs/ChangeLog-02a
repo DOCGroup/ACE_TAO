@@ -1,3 +1,49 @@
+Sun Dec 31 13:45:15 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Pluggable_Messaging_Utils.cpp (TAO_Pluggable_Reply_Params):
+
+	  Initialize the "argument_flag_" attribute to zero in the base
+	  member initializer list.  Previously it was not initialized, and
+	  was causing "reading uninitialized memory" errors.  This also
+	  fixes unnecessary byte boundary alignment in GIOP 1.2 messages.
+
+	* tests/Portable_Interceptors/Makefile (DIRS):
+	* tests/Portable_Interceptors/Makefile.bor (DIRS):
+
+	  Added new `ForwardRequest' test directory to the list of
+	  directories to build.
+
+	* tests/Portable_Interceptors/ForwardRequest/Client_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/ForwardRequest/Client_ORBInitializer.h:
+	* tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.cpp:
+	* tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.h:
+	* tests/Portable_Interceptors/ForwardRequest/ForwardRequest.dsw:
+	* tests/Portable_Interceptors/ForwardRequest/Makefile:
+	* tests/Portable_Interceptors/ForwardRequest/Makefile.bor:
+	* tests/Portable_Interceptors/ForwardRequest/README:
+	* tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.h:
+	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp:
+	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
+	* tests/Portable_Interceptors/ForwardRequest/client.bor:
+	* tests/Portable_Interceptors/ForwardRequest/client.cpp:
+	* tests/Portable_Interceptors/ForwardRequest/client.dsp:
+	* tests/Portable_Interceptors/ForwardRequest/run_test.pl:
+	* tests/Portable_Interceptors/ForwardRequest/server.bor:
+	* tests/Portable_Interceptors/ForwardRequest/server.cpp:
+	* tests/Portable_Interceptors/ForwardRequest/server.dsp:
+	* tests/Portable_Interceptors/ForwardRequest/test.idl:
+	* tests/Portable_Interceptors/ForwardRequest/test_i.cpp:
+	* tests/Portable_Interceptors/ForwardRequest/test_i.h:
+
+	  New test that verifies that the
+	  PortableInterceptor::ForwardRequest exception support is working
+	  properly.
+
+	* tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.h:
+
+	  Corrected erroneous class description.
+
 Sat Dec 30 11:31:43 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
@@ -137,7 +183,7 @@ Wed Dec 27 10:29:13 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* tao/Stub.cpp (set_policy_overrides): 
 	  Used parenthesis to clarify a doubt of precedence for Win32
 	  builds.
-	
+
 Tue Dec 26 15:09:38 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/IORInterceptor/client.bor:
@@ -5694,7 +5740,7 @@ Wed Nov 15 01:48:29 2000  Ossama Othman  <ossama@uci.edu>
         * tao/CORBALOC_Parser.cpp (make_stub_from_mprofile):
 
           Cast zero argument to "const char *" since the TAO_Stub
-          constructor now acceptos a "const char *."
+          constructor now accepts a "const char *."
 
         * tao/Object.cpp (operator>>):
 

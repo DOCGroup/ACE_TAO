@@ -6,7 +6,7 @@ DIRS = \
         Benchmark \
         Dynamic \
         Service_Context_Manipulation \
-        IORInterceptor
-
+        IORInterceptor \
+	ForwardRequest
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
