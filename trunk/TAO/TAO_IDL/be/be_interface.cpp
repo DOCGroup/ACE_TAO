@@ -1090,7 +1090,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               *os << "}," << be_nl;
 
-              this->skel_count_++;
+              derived_interface->skel_count_++;
             }
           else if (d->node_type () == AST_Decl::NT_attr)
             {
@@ -1132,7 +1132,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               *os << "}," << be_nl;
 
-              this->skel_count_++;
+              derived_interface->skel_count_++;
 
               if (!attr->readonly ())
                 {
@@ -1167,7 +1167,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
                   *os << "}," << be_nl;
 
-                  this->skel_count_++;
+                  derived_interface->skel_count_++;
                 }
             }
         }
