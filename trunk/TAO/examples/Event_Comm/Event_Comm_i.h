@@ -58,7 +58,7 @@ public:
 
   virtual void push (const Event_Comm::Event & event,
                      CORBA::Environment &TAO_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));  
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Pass the <event> to the <Consumer>.
 
   virtual void disconnect (const char * reason,
@@ -107,14 +107,20 @@ public:
    virtual void subscribe (Event_Comm::Consumer_ptr Consumer,
                            const char * filtering_criteria,
                            CORBA::Environment &TAO_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+     ACE_THROW_SPEC ((
+                      CORBA::SystemException,
+                      Event_Comm::Notifier::CannotSubscribe
+                      ));
   // Subscribe the <Consumer> to receive events that match
   // <filtering_criteria> applied by the <Notifier>.
 
  void unsubscribe (Event_Comm::Consumer *consumer,
                     const char *filtering_criteria,
                     CORBA::Environment &TAO_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+   ACE_THROW_SPEC ((
+                    CORBA::SystemException,
+                    Event_Comm::Notifier::CannotUnsubscribe
+                    ));
   // Unsubscribe the <Consumer>.
 
 private:
