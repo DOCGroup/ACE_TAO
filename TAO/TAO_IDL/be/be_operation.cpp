@@ -345,7 +345,7 @@ be_operation::gen_client_stubs (void)
   cg->pop ();
 
   cs->decr_indent (0);
-  *cs << "}\n\n";
+  *cs << "\n}\n\n";
   return 0;
 }
 

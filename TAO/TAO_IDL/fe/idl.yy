@@ -1,4 +1,5 @@
 
+
 /*
 
 COPYRIGHT
@@ -1436,6 +1437,7 @@ case_branch :
 	  idl_global->err()->syntax_error(idl_global->parse_state());
 	}
 	';'
+
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
 	  yyerrok;
