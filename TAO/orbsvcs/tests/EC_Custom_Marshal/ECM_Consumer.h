@@ -4,14 +4,12 @@
 // ============================================================================
 //
 // = DESCRIPTION
-//   This test to measure how many events per minute can the EC
-//   process, it also serves as an example how how to encode complex
-//   data types in a octet sequence.
+//   An example on custom marshaling in TAO.
 //
 // ============================================================================
 
-#if !defined (ECT_CONSUMER_H)
-#define ECT_CONSUMER_H
+#if !defined (ECM_CONSUMER_H)
+#define ECM_CONSUMER_H
 
 #include "ace/Task.h"
 #include "orbsvcs/Channel_Clients_T.h"
@@ -111,4 +109,4 @@ private:
   // How many events we have received.
 };
 
-#endif /* ECT_CONSUMER_H */
+#endif /* ECM_CONSUMER_H */

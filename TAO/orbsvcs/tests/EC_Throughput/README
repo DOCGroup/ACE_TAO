@@ -1,4 +1,14 @@
 # $Id$
 
-Just run the Naming Service, the Event Service then ECT_Consumer and
-finally ECT_Supplier.
+	This example tries to stress the Event_Service by sending a
+continuos stream of events, the user can control the size of the
+events, the rate and the number of events sent.
+
+To run this test just start the Naming_Service, the Event_Service and then
+start
+
+$ ./ECT_Consumer
+
+and after that
+
+$ ./ECT_Supplier

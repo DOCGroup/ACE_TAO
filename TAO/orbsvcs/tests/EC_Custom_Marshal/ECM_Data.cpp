@@ -1,22 +1,22 @@
 // $Id$
 
-#include "ECT_Data.h"
+#include "ECM_Data.h"
 
-ACE_RCSID(EC_Throughput, ECT_Data, "$Id$")
+ACE_RCSID(EC_Custom_Marshal, ECM_Data, "$Id$")
 
 TAO_OutputCDR&
-operator<< (TAO_OutputCDR& cdr, ECT_Data& x)
+operator<< (TAO_OutputCDR& cdr, ECM_Data& x)
 {
   // We are a little careless about error checking in this routine,
   // because one the CDR gets the error bit on it is never disabled.
   CORBA::ULong count = x.inventory.current_size ();
   cdr << x.description.in ()
       << count;
-  for (ECT_Data::Inventory::ITERATOR i = x.inventory.begin ();
+  for (ECM_Data::Inventory::ITERATOR i = x.inventory.begin ();
        i != x.inventory.end ();
        ++i)
     {
-      const ECT_Data::Inventory::ENTRY& v = *i;
+      const ECM_Data::Inventory::ENTRY& v = *i;
       cdr << v.ext_id_
 	  << v.int_id_;
     }
@@ -24,7 +24,7 @@ operator<< (TAO_OutputCDR& cdr, ECT_Data& x)
 }
 
 TAO_InputCDR&
-operator>> (TAO_InputCDR& cdr, ECT_Data& x)
+operator>> (TAO_InputCDR& cdr, ECM_Data& x)
 {
   // We are a little careless about error checking in this routine,
   // because one the CDR gets the error bit on it is never disabled.

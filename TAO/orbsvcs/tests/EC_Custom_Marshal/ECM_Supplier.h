@@ -4,19 +4,17 @@
 // ============================================================================
 //
 // = DESCRIPTION
-//   This test to measure how many events per minute can the EC
-//   process, it also serves as an example how how to encode complex
-//   data types in a octet sequence.
+//   An example on custom marshaling in TAO.
 //
 // ============================================================================
 
-#if !defined (ECT_SUPPLIER_H)
-#define ECT_SUPPLIER_H
+#if !defined (ECM_SUPPLIER_H)
+#define ECM_SUPPLIER_H
 
 #include "ace/Task.h"
 #include "orbsvcs/Channel_Clients_T.h"
 
-class ECTS_Driver;
+class ECMS_Driver;
 
 class Test_Supplier : public ACE_Task<ACE_SYNCH>
 {
@@ -25,10 +23,10 @@ class Test_Supplier : public ACE_Task<ACE_SYNCH>
   //   Simplifies the supplier task startup.
   //
   // = DESCRIPTION
-  //   Runs the ECTS_Driver::supplier_task() method in another thread.
+  //   Runs the ECMS_Driver::supplier_task() method in another thread.
   //
 public:
-  Test_Supplier (ECTS_Driver *driver);
+  Test_Supplier (ECMS_Driver *driver);
 
   int svc (void);
   // Run the test, just forwards to the driver
@@ -55,7 +53,7 @@ public:
   // are done here...
 
 private:
-  ECTS_Driver *driver_;
+  ECMS_Driver *driver_;
   // Class we forward to.
 
   void *cookie_;
@@ -72,7 +70,7 @@ private:
   // timeout events.
 };
 
-class ECTS_Driver
+class ECMS_Driver
 {
   //
   // = TITLE
@@ -80,7 +78,7 @@ class ECTS_Driver
   // = DESCRIPTION
   //
 public:
-  ECTS_Driver (void);
+  ECMS_Driver (void);
 
   enum {
     MAX_SUPPLIERS = 16
@@ -116,7 +114,7 @@ private:
   // Activate the suppliers, i.e. they start generating events.
 
 private:
-  Test_Supplier* suppliers_[ECTS_Driver::MAX_SUPPLIERS];
+  Test_Supplier* suppliers_[ECMS_Driver::MAX_SUPPLIERS];
   // The suppliers array.
 
   int n_suppliers_;
@@ -129,7 +127,7 @@ private:
   // The time between each event generation, in microseconds.
 
   int event_size_;
-  // The size of the payload on each event.
+  // The event size (number of elements in the payload).
 
   int event_a_;
   int event_b_;
@@ -139,4 +137,4 @@ private:
   // The name of a file where the process stores its pid
 };
 
-#endif /* ECT_SUPPLIER_H */
+#endif /* ECM_SUPPLIER_H */
