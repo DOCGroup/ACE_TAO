@@ -80,20 +80,20 @@ TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: SANDBOX
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl: !MINIMUM
 TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !STATIC Exceptions
-TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.reactive.conf: !ST !NO_MESSAGING !STATIC
-TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.mt.conf: !ST !NOTIFY !NO_MESSAGING
+TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.reactive.conf: !ST !NO_MESSAGING !STATIC !MINIMUM
+TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.mt.conf: !ST !NOTIFY !NO_MESSAGING !MINIMUM
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.rt.conf: !ST !MINIMUM
-TAO/orbsvcs/tests/Notify/Blocking/run_test.pl: !ST !NO_MESSAGING
-TAO/orbsvcs/tests/Notify/Discarding/run_test.pl: !ST !NO_MESSAGING
-TAO/orbsvcs/tests/Notify/MT_Dispatching/run_test.pl: !ST !NO_MESSAGING
-TAO/orbsvcs/tests/Notify/Ordering/run_test.pl: !ST !NO_MESSAGING
+TAO/orbsvcs/tests/Notify/Blocking/run_test.pl: !ST !NO_MESSAGING !MINIMUM
+TAO/orbsvcs/tests/Notify/Discarding/run_test.pl: !ST !NO_MESSAGING !MINIMUM
+TAO/orbsvcs/tests/Notify/MT_Dispatching/run_test.pl: !ST !NO_MESSAGING !MINIMUM
+TAO/orbsvcs/tests/Notify/Ordering/run_test.pl: !ST !NO_MESSAGING !MINIMUM
 TAO/orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM
-TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl: !ST !NO_MESSAGING
-TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl: !ST !NO_MESSAGING
-TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl: !ST !NO_MESSAGING
+TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl: !ST !NO_MESSAGING !MINIMUM
+TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM
+TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM
 TAO/orbsvcs/tests/Notify/Lanes/run_test.pl: !ST !MINIMUM !STATIC
-TAO/orbsvcs/tests/Notify/Structured_Filter/run_test.pl: !ST !NO_MESSAGING
-TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl: !ST !NO_MESSAGING
+TAO/orbsvcs/tests/Notify/Structured_Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM
+TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM
 TAO/orbsvcs/tests/Notify/ThreadPool/run_test.pl: !ST !MINIMUM
 # BREAKS !linux 'TAO/orbsvcs/tests/EC_Mcast/run_test.pl
 # FAILS 'TAO/orbsvcs/tests/EC_Multiple/run_test.pl
