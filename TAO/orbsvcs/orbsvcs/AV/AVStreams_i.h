@@ -994,8 +994,8 @@ public:
 
 protected:
   ACE_Array<char*> token_array_;
-  int count_;
-  int num_tokens_;
+  size_t count_;
+  size_t num_tokens_;
 };
 
 class TAO_ORBSVCS_Export TAO_FlowSpec_Entry
@@ -1003,7 +1003,12 @@ class TAO_ORBSVCS_Export TAO_FlowSpec_Entry
 public:
   // = TITLE
   //     An helper entry class in the flow spec sequence passed to bind_devs.
-  enum Direction {INVALID=-1,IN=0,OUT=1,INOUT=2};
+  enum Direction
+  {
+    INVALID = -1, 
+    DIR_IN = 0, 
+    DIR_OUT = 1, 
+    DIR_INOUT = 2};
 
   TAO_FlowSpec_Entry (void);
   // constructor.
