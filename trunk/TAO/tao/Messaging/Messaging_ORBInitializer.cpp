@@ -2,7 +2,7 @@
 
 #include "Messaging_ORBInitializer.h"
 
-#if TAO_HAS_CORBA_MESSAGING == 1
+
 
 #include "Messaging_Policy_i.h"
 #include "Messaging_PolicyFactory.h"
@@ -117,4 +117,4 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
     }
 }
 
-#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
+

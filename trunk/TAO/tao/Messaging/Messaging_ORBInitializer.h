@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if TAO_HAS_CORBA_MESSAGING == 1
+
 
 #include "messaging_export.h"
 #include "tao/PortableInterceptorC.h"
@@ -89,7 +89,7 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
+
 
 #include "ace/post.h"
 

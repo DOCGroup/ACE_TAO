@@ -10,7 +10,7 @@ ACE_RCSID(tao, Messaging, "$Id$")
 int
 TAO_Messaging_Initializer::init (void)
 {
-#if TAO_HAS_CORBA_MESSAGING == 1
+
   static int called_once = 0;
 
   if (called_once != 0)
@@ -51,7 +51,7 @@ TAO_Messaging_Initializer::init (void)
       return -1;
     }
   ACE_ENDTRY;
-#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
+
 
   return 0;
 }

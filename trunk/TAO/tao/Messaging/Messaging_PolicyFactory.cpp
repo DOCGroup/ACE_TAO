@@ -6,7 +6,7 @@
 
 ACE_RCSID (tao, Messaging_PolicyFactory, "$Id$")
 
-#if TAO_HAS_CORBA_MESSAGING == 1
+
 
 #include "Messaging_Policy_i.h"
 #include "tao/PolicyC.h"
@@ -71,4 +71,4 @@ TAO_Messaging_PolicyFactory::create_policy (
                     CORBA::Policy::_nil ());
 }
 
-#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
+
