@@ -1,5 +1,12 @@
 Tue Jun  8 17:12:24 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
+	Made the ORB_var to be after all other _var member variables.
+
+	* /orbsvcs/Time_Service/Clerk_i.h
+	* /orbsvcs/Time_Service/Server_i.h
+	* /orbsvcs/Time_Service/IR_Helper.h
+	* /orbsvcs/tests/Time/Client_i.h
+
 	* docs/Options.html : Updated the -ORBInitRef to include the
 		fetype IOR.
 

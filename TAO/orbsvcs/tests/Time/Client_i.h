@@ -98,4 +98,5 @@ private:
 
   CORBA::ORB_var orb_;
   // Remember our orb.
+
 };
