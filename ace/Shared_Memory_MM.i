@@ -53,7 +53,7 @@ ACE_INLINE int
 ACE_Shared_Memory_MM::remove (void)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::remove");
-  return shared_memory_.unmap ();
+  return shared_memory_.remove ();
 }
 
 // Closes (unmaps) the shared memory segment.
