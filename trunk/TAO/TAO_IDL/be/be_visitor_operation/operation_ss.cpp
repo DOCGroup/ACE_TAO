@@ -192,8 +192,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
       << "TAO_ServerRequestInterceptor_Adapter _tao_vfr (" 
       << be_idt << be_idt_nl
-      << "_tao_server_request.orb ()->"
-      << "_get_server_interceptor (ACE_TRY_ENV)" << be_uidt_nl
+      << "_tao_server_request.orb_core ()->server_request_interceptors ()"
+      << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_CHECK;" << be_nl;
 
@@ -206,7 +206,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       *os << "POA_" << parent->full_name () << "::";
     }
 
-  *os << "TAO_ServerRequest_Info_" << node->flat_name ();
+  *os << "TAO_ServerRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
