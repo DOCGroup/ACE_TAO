@@ -232,8 +232,8 @@ ACE_Connector<SH, PR_CO_2>::cleanup_AST (ACE_HANDLE handle,
     {
       // Error, entry not found in map.
       errno = ENOENT;
-      ACE_ERROR_RETURN ((LM_ERROR, "%p %d not found in map\n",
-			"find", handle), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p %d not found in map\n"),
+			ASYS_TEXT ("find"), handle), -1);
     }
 
   // Try to remove from ACE_Timer_Queue but if it's not there we
@@ -398,7 +398,7 @@ template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::connect_n (size_t n,
 				       SH *sh[],
 				       PR_AD remote_addrs[],
-                                       char failed_svc_handlers[],
+                                       ASYS_TCHAR *failed_svc_handlers,
 				       const ACE_Synch_Options &synch_options)
 {
   int result = 0;
@@ -586,7 +586,7 @@ ACE_Connector<SH, PR_CO_2>::fini (void)
 // Hook called by the explicit dynamic linking facility.
 
 template <class SH, PR_CO_1> int
-ACE_Connector<SH, PR_CO_2>::init (int, char *[])
+ACE_Connector<SH, PR_CO_2>::init (int, ASYS_TCHAR *[])
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::init");
   return -1;
@@ -607,15 +607,15 @@ ACE_Connector<SH, PR_CO_2>::resume (void)
 }
 
 template <class SH, PR_CO_1> int
-ACE_Connector<SH, PR_CO_2>::info (char **strp, size_t length) const
+ACE_Connector<SH, PR_CO_2>::info (ASYS_TCHAR **strp, size_t length) const
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::info");
-  char buf[BUFSIZ];
+  ASYS_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
-		   "%s\t %s",
-		   "ACE_Connector",
-		   "# connector factory\n");
+		   ASYS_TEXT ("%s\t %s"),
+		   ASYS_TEXT ("ACE_Connector"),
+		   ASYS_TEXT ("# connector factory\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;

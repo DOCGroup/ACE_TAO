@@ -65,7 +65,7 @@ public:
   // it will be closed.
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ASYS_TCHAR *argv[]);
   // Default version does no work and returns -1.  Must be overloaded
   // by application developer to do anything meaningful.
 
@@ -73,7 +73,7 @@ public:
   // Default version does no work and returns -1.  Must be overloaded
   // by application developer to do anything meaningful.
 
-  virtual int info (char **info_string, size_t length) const;
+  virtual int info (ASYS_TCHAR **info_string, size_t length) const;
   // Default version does no work and returns -1.  Must be overloaded
   // by application developer to do anything meaningful.
 

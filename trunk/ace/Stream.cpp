@@ -255,20 +255,20 @@ ACE_Stream<ACE_SYNCH_USE>::open (void *a,
     {
       h1 = new ACE_Stream_Head<ACE_SYNCH_USE>;
       h2 = new ACE_Stream_Head<ACE_SYNCH_USE>;
-      head = new ACE_Module<ACE_SYNCH_USE> ("ACE_Stream_Head", 
-					  h1, h2, 
-					  a,
-					  M_DELETE);
+      head = new ACE_Module<ACE_SYNCH_USE> (ASYS_TEXT ("ACE_Stream_Head"), 
+                                            h1, h2, 
+                                            a,
+                                            M_DELETE);
     }
 
   if (tail == 0)
     {
       t1 = new ACE_Stream_Tail<ACE_SYNCH_USE>;
       t2 = new ACE_Stream_Tail<ACE_SYNCH_USE>;
-      tail = new ACE_Module<ACE_SYNCH_USE> ("ACE_Stream_Tail", 
-					  t1, t2, 
-					  a,
-					  M_DELETE);
+      tail = new ACE_Module<ACE_SYNCH_USE> (ASYS_TEXT ("ACE_Stream_Tail"), 
+                                            t1, t2, 
+                                            a,
+                                            M_DELETE);
     }
 
   // Make sure *all* the allocation succeeded!
@@ -490,27 +490,29 @@ ACE_Stream<ACE_SYNCH_USE>::unlink (void)
 
 template <ACE_SYNCH_DECL>
 ACE_Stream<ACE_SYNCH_USE>::ACE_Stream (void * a, 
-				     ACE_Module<ACE_SYNCH_USE> *head, 
-				     ACE_Module<ACE_SYNCH_USE> *tail)
+                                       ACE_Module<ACE_SYNCH_USE> *head, 
+                                       ACE_Module<ACE_SYNCH_USE> *tail)
   : linked_us_ (0),
     final_close_ (this->lock_)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::ACE_Stream");
   if (this->open (a, head, tail) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_Stream<ACE_SYNCH_USE>::open (%s, %s)\n", 
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("ACE_Stream<ACE_SYNCH_USE>::open (%s, %s)\n"), 
 	       head->name (), tail->name ()));
 }
 
 #if 0
 ACE_Stream<ACE_SYNCH_USE>::ACE_Stream (void *a, 
-				     ACE_Multiplexor &muxer, 
-				     ACE_Module<ACE_SYNCH_USE> *head)
+                                       ACE_Multiplexor &muxer, 
+                                       ACE_Module<ACE_SYNCH_USE> *head)
   : linked_us_ (0),
     final_close_ (this->lock_)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::ACE_Stream");
   if (this->open (a, muxer, head) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_Stream<ACE_SYNCH_USE>::open (%s, %s)\n", 
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("ACE_Stream<ACE_SYNCH_USE>::open (%s, %s)\n"), 
 		head->name ()));
 }
 #endif 

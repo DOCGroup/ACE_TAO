@@ -115,19 +115,19 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::fini (void)
 // Hook called by the explicit dynamic linking facility.
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::init (int, char *[])
+ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::init (int, ASYS_TCHAR *[])
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::init");
   return -1;
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp,
+ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ASYS_TCHAR **strp,
                                                       size_t length) const
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info");
-  char buf[BUFSIZ];
-  char addr_str[BUFSIZ];
+  ASYS_TCHAR buf[BUFSIZ];
+  ASYS_TCHAR addr_str[BUFSIZ];
   ACE_PEER_ACCEPTOR_ADDR addr;
 
   if (this->acceptor ().get_local_addr (addr) == -1)
@@ -135,10 +135,10 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp,
   else if (addr.addr_to_string (addr_str, sizeof addr_str) == -1)
     return -1;
 
-  ACE_OS::sprintf (buf, "%s\t %s %s",
-                   "ACE_Acceptor",
+  ACE_OS::sprintf (buf, ASYS_TEXT ("%s\t %s %s"),
+                   ASYS_TEXT ("ACE_Acceptor"),
                    addr_str,
-                   "# acceptor factory\n");
+                   ASYS_TEXT ("# acceptor factory\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -422,8 +422,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
    ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> *acc_s,
    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
    ACE_Scheduling_Strategy<SVC_HANDLER> *sch_s,
-   const char service_name[],
-   const char service_description[])
+   const ASYS_TCHAR *service_name,
+   const ASYS_TCHAR *service_description)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open");
 
@@ -491,8 +491,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
-  (const char service_name[],
-   const char service_description[])
+  (const ASYS_TCHAR service_name[],
+   const ASYS_TCHAR service_description[])
     : creation_strategy_ (0),
       delete_creation_strategy_ (0),
       accept_strategy_ (0),
@@ -522,8 +522,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
    ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> *acc_s,
    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
    ACE_Scheduling_Strategy<SVC_HANDLER> *sch_s,
-   const char service_name[],
-   const char service_description[])
+   const ASYS_TCHAR service_name[],
+   const ASYS_TCHAR service_description[])
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor");
 
@@ -642,13 +642,13 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_signal (int, sig
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp,
+ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ASYS_TCHAR **strp,
                                                                size_t length) const
 {
   ACE_TRACE ("ACE_Strategy_Acceptor::info");
 
-  char buf[BUFSIZ];
-  char service_addr_str[BUFSIZ];
+  ASYS_TCHAR buf[BUFSIZ];
+  ASYS_TCHAR service_addr_str[BUFSIZ];
   ACE_PEER_ACCEPTOR_ADDR addr;
 
   if (this->acceptor ().get_local_addr (addr) == -1)
@@ -771,7 +771,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE
           (this, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
 
       if (this->peer_acceptor_.close () == -1)
-        ACE_ERROR ((LM_ERROR, "close\n"));
+        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("close\n")));
     }
   return 0;
 }
@@ -960,7 +960,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE
 // Hook called by the explicit dynamic linking facility.
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::init (int, char *[])
+ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::init (int, ASYS_TCHAR *[])
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::init");
   return -1;
@@ -974,12 +974,12 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::fini (void)
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp,
+ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ASYS_TCHAR **strp,
                                                               size_t length) const
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info");
-  char buf[BUFSIZ];
-  char addr_str[BUFSIZ];
+  ASYS_TCHAR buf[BUFSIZ];
+  ASYS_TCHAR addr_str[BUFSIZ];
   ACE_PEER_ACCEPTOR_ADDR addr;
 
   if (this->peer_acceptor_.get_local_addr (addr) == -1)
@@ -987,10 +987,10 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp,
   else if (addr.addr_to_string (addr_str, sizeof addr_str) == -1)
     return -1;
 
-  ACE_OS::sprintf (buf, "%s\t %s %s",
-                   "ACE_Oneshot_Acceptor",
+  ACE_OS::sprintf (buf, ASYS_TEXT ("%s\t %s %s"),
+                   ASYS_TEXT ("ACE_Oneshot_Acceptor"),
                    addr_str,
-                   "#oneshot acceptor factory\n");
+                   ASYS_TEXT ("#oneshot acceptor factory\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;

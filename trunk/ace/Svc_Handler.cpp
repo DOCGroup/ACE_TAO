@@ -88,15 +88,15 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open (void *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open");
 #if defined (DEBUGGING)
-  char buf[BUFSIZ];
+  ASYS_TCHAR buf[BUFSIZ];
   ACE_PEER_STREAM_ADDR client_addr;
 
   if (this->peer_.get_remote_addr (client_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("get_remote_addr")), -1);
     
   if (client_addr.addr_to_string (buf, sizeof buf) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
-                       "can't obtain peer's address"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), 
+                       ASYS_TEXT ("can't obtain peer's address")), -1);
 
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("connected to %s on fd %d\n"), 
               buf, this->peer_.get_handle ()));
@@ -104,8 +104,8 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open (void *)
   if (this->reactor () 
       && this->reactor ()->register_handler 
       (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p", 
-                       "unable to register client handler"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p"), 
+                       ASYS_TEXT ("unable to register client handler")), -1);
   return 0;
 }
 
@@ -209,9 +209,11 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::close (unsigned long)
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> int
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::init (int, char *[])
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::init (int argc, ASYS_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::init");
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
   return -1;
 }
 
@@ -223,7 +225,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::fini (void)
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> int
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::info (char **, size_t) const
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::info (ASYS_TCHAR **, size_t) const
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::info");
   return -1;
