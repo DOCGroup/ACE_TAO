@@ -39,6 +39,9 @@ public:
   TAO_GIOP_Message_Acceptors (TAO_ORB_Core *orb_core);
   // Ctor
 
+  ~TAO_GIOP_Message_Acceptors (void);
+  //Dtor
+
   int process_client_message (TAO_Transport *transport,
                               TAO_ORB_Core *orb_core,
                               TAO_InputCDR &input,
