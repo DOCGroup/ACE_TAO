@@ -1,3 +1,8 @@
+Fri Jan 25 14:31:06 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* XML/common/NamespaceSupport.cpp:
+	* XML/parser/parser/Parser.cpp: Fixed several KCC warnings.
+
 Fri Jan 25 12:01:14 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	  The following changes fixed SunCC5.1 compilation errors.

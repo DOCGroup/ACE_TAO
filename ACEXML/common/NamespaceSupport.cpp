@@ -11,7 +11,8 @@ const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS_PREFIX = ACEXML_XMLNS_PREFIX_n
 
 static const ACEXML_Char ACEXML_DEFAULT_NS_PREFIX[] = {0};
 
-static const ACEXML_Char ACEXML_NS_SEPARATOR[] = {':', 0};
+// Currently unused.
+// static const ACEXML_Char ACEXML_NS_SEPARATOR[] = {':', 0};
 
 static const ACEXML_Char ACEXML_TABOO_NS_PREFIX[] = {'x', 'm', 'l', 0};
 
