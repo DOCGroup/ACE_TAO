@@ -135,6 +135,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Native Exceptions Client"=.\Native_Exceptions\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Native Exceptions Server"=.\Native_Exceptions\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Nested Upcall MT_Client Client"=.\NestedUpcall\MT_Client_Test\client.dsp - Package Owner=<4>
 
 Package=<5>
