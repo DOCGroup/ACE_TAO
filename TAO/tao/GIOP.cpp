@@ -569,68 +569,54 @@ TAO_GIOP::recv_message (TAO_Transport *transport,
 
   char* payload = msg.start_.rd_ptr ();
 
-  if (block)
+  // @@ Handle the non-blocking case !!!. (Alex).
+  len = TAO_GIOP::read_buffer (transport,
+                               payload,
+                               (size_t) transport->message_size () -
+                               transport->message_offset ());
+  
+  if (len != (ssize_t) message_size)
     {
-      len = TAO_GIOP::read_buffer (transport,
-                                   payload,
-                                   (size_t) transport->message_size () -
-                                   transport->message_offset ());
-      
-      // @@ Take care of this when you change the above to non-blocking. 
-      if (len != (ssize_t) message_size)
+      switch (len)
         {
-          switch (len)
-            {
-            case 0:
-              // Update the offset in the Transport object.
-              if (transport->incr_message_offset (len) == -1)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "%N:%l:TAO_GIOP::recv_message: "
-                                   "Failed to update the offset\n"),
-                                  TAO_GIOP::CommunicationError);
-              
-              if (TAO_orbdebug)
-                ACE_DEBUG ((LM_DEBUG,
-                            "(%t) End of connection, transport handle %d\n",
-                            transport->handle ()));
-              
-              return TAO_GIOP::EndOfFile;
-              /* NOTREACHED */
-              
-            case -1:
-              if (TAO_orbdebug)
-                ACE_DEBUG ((LM_ERROR,
-                            "(%P|%t) TAO_GIOP::recv_message - body %p\n",
-                            "read_buffer"));
-              break;
-              /* NOTREACHED */
-              
-            default:
-              if (TAO_orbdebug)
-                ACE_DEBUG ((LM_ERROR,
-                            "TAO: (%P|%t) GIOP::recv_message body read failed, "
-                            "only %d of %d bytes\n",
-                            len,
-                            message_size));
-              break;
-              /* NOTREACHED */
-            }
-          return TAO_GIOP::CommunicationError;
+        case 0:
+          if (TAO_orbdebug)
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) End of connection, transport handle %d\n",
+                        transport->handle ()));
+          
+          return TAO_GIOP::EndOfFile;
+          /* NOTREACHED */
+          
+        case -1:
+          if (TAO_orbdebug)
+            ACE_DEBUG ((LM_ERROR,
+                        "(%P|%t) TAO_GIOP::recv_message - body %p\n",
+                        "read_buffer"));
+          break;
+          /* NOTREACHED */
+          
+        default:
+          // @@ This is ok in the non-blocking read. (Alex).
+          if (TAO_orbdebug)
+            ACE_DEBUG ((LM_ERROR,
+                        "TAO: (%P|%t) GIOP::recv_message body read failed, "
+                        "only %d of %d bytes\n",
+                        len,
+                        message_size));
+          break;
+          /* NOTREACHED */
         }
-    }
-  else
-    {
-      // @@ Make this non-blocking !!! (alex).
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO:%N:%l:(%P | %t):"
-                         "Not implemented\n"),
-                        retval);
+      return TAO_GIOP::CommunicationError;
     }
 
+  
   TAO_GIOP::dump_msg ("recv",
                       ACE_reinterpret_cast (u_char *, header),
                       message_size + header_len);
 
+  transport->incr_message_offset (len);
+  
   return retval;
 }
 
