@@ -1,3 +1,9 @@
+Mon May 29 16:49:25 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE.h,
+  	* ace/ACE.h: Make the documentation consistent for both
+	  sockets and "normal" I/O methods!
+
 Mon May 29 11:36:28 2000  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
 	* ace/OS_Dirent.cpp: Fixed the memory allocation in open_dir,
