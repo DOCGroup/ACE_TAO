@@ -1,3 +1,10 @@
+Tue Jun 10 02:08:25 1997  Nanbor Wang  <nw1@siesta.cs.wustl.edu>
+
+	* examples/Log_Msg/README: Revised.
+
+	* examples/Log_Msg/test_log_msg.cpp: Revised program output so
+ 	  that it's clearer to explain.
+
 Mon Jun 09 15:46:41 1997    <irfan@TWOSTEP>
 
 	* OS.i (mutex_lock): When WaitForSingleObject returns
