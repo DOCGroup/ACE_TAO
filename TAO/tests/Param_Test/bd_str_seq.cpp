@@ -111,7 +111,7 @@ Test_Bounded_String_Sequence::run_sii_test (Param_Test_ptr objref,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1);
+  ACE_NOTREACHED (return -1;)
 }
 
 int
@@ -173,7 +173,7 @@ Test_Bounded_String_Sequence::add_args (CORBA::NVList_ptr param_list,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1);
+  ACE_NOTREACHED (return -1;)
 }
 
 CORBA::Boolean

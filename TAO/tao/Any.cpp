@@ -219,7 +219,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
       return *this;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return *this);
+  ACE_NOTREACHED (return *this;)
 }
 
 // Destructor for an "Any" deep-frees memory if needed.
@@ -584,7 +584,7 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -622,7 +622,7 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -660,7 +660,7 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -698,7 +698,7 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -736,7 +736,7 @@ CORBA_Any::operator>>= (CORBA::LongLong &l) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -774,7 +774,7 @@ CORBA_Any::operator>>= (CORBA::ULongLong &l) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -812,7 +812,7 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -850,7 +850,7 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -894,7 +894,7 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -950,7 +950,7 @@ CORBA_Any::operator>>= (char *&s) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -994,7 +994,7 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 // = extraction into the special types
@@ -1034,7 +1034,7 @@ CORBA_Any::operator>>= (to_boolean b) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -1072,7 +1072,7 @@ CORBA_Any::operator>>= (to_octet o) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -1110,7 +1110,7 @@ CORBA_Any::operator>>= (to_char c) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -1148,7 +1148,7 @@ CORBA_Any::operator>>= (to_wchar wc) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -1204,7 +1204,7 @@ CORBA_Any::operator>>= (to_string s) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
@@ -1261,7 +1261,7 @@ CORBA_Any::operator>>= (to_object obj) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 // this is a copying version for unbounded strings Not inline, to

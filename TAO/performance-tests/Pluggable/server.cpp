@@ -54,5 +54,5 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
   ACE_TIMEPROBE_PRINT;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }

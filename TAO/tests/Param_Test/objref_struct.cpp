@@ -85,7 +85,7 @@ Test_Objref_Struct::init_parameters (Param_Test_ptr objref,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return -1;)
 }
 
 int
@@ -121,7 +121,7 @@ Test_Objref_Struct::run_sii_test (Param_Test_ptr objref,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return -1;)
 }
 
 int
@@ -183,7 +183,7 @@ Test_Objref_Struct::add_args (CORBA::NVList_ptr param_list,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return 0;)
 }
 
 
@@ -195,38 +195,38 @@ Test_Objref_Struct::check_validity (void)
       || this->in_.x != this->ret_->x)
     return 0;
 
- ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
- ACE_TRY
-  {
-    if (CORBA::is_nil (this->in_.y.in ())
-        || CORBA::is_nil (this->out_->y.in ())
-        || CORBA::is_nil (this->ret_->y.in ())
-        || CORBA::is_nil (this->inout_->y.in ()) )
-      {
-        return 0;
-      }
+  ACE_TRY
+    { 
+      if (CORBA::is_nil (this->in_.y.in ())
+          || CORBA::is_nil (this->out_->y.in ())
+          || CORBA::is_nil (this->ret_->y.in ())
+          | CORBA::is_nil (this->inout_->y.in ()) )
+        {
+          return 0;
+        }
  
-  Coffee::Desc_var s_in = this->in_.y->description (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+      Coffee::Desc_var s_in = this->in_.y->description (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  Coffee::Desc_var s_out = this->out_->y->description (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+      Coffee::Desc_var s_out = this->out_->y->description (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  Coffee::Desc_var s_inout = this->inout_->y->description (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+      Coffee::Desc_var s_inout = this->inout_->y->description (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  Coffee::Desc_var s_ret = this->ret_->y->description (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+      Coffee::Desc_var s_ret = this->ret_->y->description (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  if (ACE_OS::strcmp (s_in->name, s_out->name) != 0
-      || ACE_OS::strcmp (s_in->name, s_inout->name) != 0
-      || ACE_OS::strcmp (s_in->name, s_ret->name) != 0 )
-    {
-      return 0;
-    }
+      if (ACE_OS::strcmp (s_in->name, s_out->name) != 0
+          || ACE_OS::strcmp (s_in->name, s_inout->name) != 0
+          || ACE_OS::strcmp (s_in->name, s_ret->name) != 0 )
+        {
+          return 0;
+        }
 
-  return 1;
+      return 1;
     }
   ACE_CATCHANY
     {
@@ -236,7 +236,7 @@ Test_Objref_Struct::check_validity (void)
       return 0;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return 1);
+  ACE_NOTREACHED (return 0;)
 }
 
 CORBA::Boolean
