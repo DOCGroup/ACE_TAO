@@ -1,8 +1,14 @@
+Wed Dec 29 15:38:05 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp (open):
+          commented out unused arg to avoid compiler warning.  The
+          last one :-)
+
 Wed Dec 29 11:23:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Makefile (ORB_CORE_FILES): TAOS and TAOC were accidently
-	  moved to the minimum CORBA section ;-) They belong in the common
-	  section.
+        * tao/Makefile (ORB_CORE_FILES): TAOS and TAOC were accidently
+          moved to the minimum CORBA section ;-) They belong in the common
+          section.
 
 Wed Dec 29 09:22:51 1999  David L. Levine  <levine@cs.wustl.edu>
 

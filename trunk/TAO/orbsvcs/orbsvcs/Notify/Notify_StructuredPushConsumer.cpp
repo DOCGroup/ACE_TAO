@@ -16,7 +16,7 @@ TAO_Notify_StructuredPushConsumer::get_ref (void)
 }
 
 void
-TAO_Notify_StructuredPushConsumer::open (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin, CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_StructuredPushConsumer::open (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin, CORBA::Environment& /* ACE_TRY_ENV */)
 {
   consumer_admin_ =
     CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (consumer_admin);
