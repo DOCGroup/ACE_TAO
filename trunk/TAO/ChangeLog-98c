@@ -1,6 +1,12 @@
+Wed Jan 06 11:55:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Simple/echo/Client_i.cpp (echo_list): Changed <l> to of
+	  type Echo::List_var to free up the return value.  The returned
+	  string from object_to_string must be freed properly.
+
 Wed Jan  6 09:31:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
           The UDP_Receiver::init() method should only create the RT_Info
 	  if it is not there already. Thanks to Dave Meyer
           <dmeyer@std.saic.com> and J. Russell Noseworthy
@@ -8,19 +14,19 @@ Wed Jan  6 09:31:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Wed Jan 06 09:04:46 1999  Carlos O'Ryan  <coryan@JIG>
 
-	* docs/releasenotes/TODO.html: 
+	* docs/releasenotes/TODO.html:
 	  Updated the information about EC related tasks.
 
-	* docs/releasenotes/ec.html: 
+	* docs/releasenotes/ec.html:
 	  Added the new features in the EC; removed the entries about a
 	  missing CosEventChannel, because we have one now!
 
-	* docs/releasenotes/index.html: 
+	* docs/releasenotes/index.html:
 	  Added some comments for Pradeep.
 
 Wed Jan  6 07:44:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/DynStruct_i.cpp: 
+	* tao/DynStruct_i.cpp:
 	  Removed the last use (hopefully) of ACE_Array<>
 
 Wed Jan 06 02:58:28 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
@@ -57,8 +63,8 @@ Wed Jan 06 02:58:28 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	  - Removed access includes files.
 
-        * POA/On_Demand_Loading/Servant_Manager.cpp: Fixed use of ACE_CString.	  	  
-	
+        * POA/On_Demand_Loading/Servant_Manager.cpp: Fixed use of ACE_CString.
+
 Tue Jan  5 22:36:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/default_server.{h,cpp}:
