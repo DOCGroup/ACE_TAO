@@ -15,6 +15,7 @@ Fri May 25 05:42:39 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
  	  <airat@hq.tatenergo.ru> for reporting this.
 
 Thu May 24 22:06:45 2001  Sharath R. Cholleti  <sharth@cs.wustl.edu>
+
 	* tests/CDR_Test.cpp: Changed the initialization of WChar variable, to
 	  remove the warning "integer conversion resulted in a change of sign"
 	  by some compilers.
