@@ -25,14 +25,14 @@ TAO_FixedDef_i::def_kind (CORBA::Environment &)
 }
 
 void 
-TAO_FixedDef_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_FixedDef_i::destroy (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 CORBA::TypeCode_ptr 
-TAO_FixedDef_i::type (CORBA::Environment &ACE_TRY_ENV)
+TAO_FixedDef_i::type (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -40,7 +40,7 @@ TAO_FixedDef_i::type (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::UShort 
-TAO_FixedDef_i::digits (CORBA::Environment &ACE_TRY_ENV)
+TAO_FixedDef_i::digits (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -48,15 +48,15 @@ TAO_FixedDef_i::digits (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void 
-TAO_FixedDef_i::digits (CORBA::UShort digits,
-                        CORBA::Environment &ACE_TRY_ENV)
+TAO_FixedDef_i::digits (CORBA::UShort /* digits */,
+                        CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 CORBA::Short 
-TAO_FixedDef_i::scale (CORBA::Environment &ACE_TRY_ENV)
+TAO_FixedDef_i::scale (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -64,8 +64,8 @@ TAO_FixedDef_i::scale (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void 
-TAO_FixedDef_i::scale (CORBA::Short scale,
-                       CORBA::Environment &ACE_TRY_ENV)
+TAO_FixedDef_i::scale (CORBA::Short /* scale */,
+                       CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
