@@ -39,8 +39,13 @@ typedef String ACE_IOStream_String;
 #endif /* ACE_WIN32 */
 
 #if defined (DIGITAL_UNIX) && defined (DEC_CXX)
-#include /**/ <stl_macros>
+# if __DECCXX_VER < 50700000
+#   include /**/ <stl_macros>
+# else
+#   include /**/ <stdcomp>
+# endif /* __DECCXX_VER < 50700000 */
 #endif /* DIGITAL_UNIX && DEC_CXX */
+
 
 class ACE_Quoted_String : public ACE_IOStream_String
 {
@@ -141,9 +146,9 @@ public:
   ACE_Time_Value *recv_timeout (ACE_Time_Value *tv = NULL);
   // Get the current Time_Value pointer and provide a new one.
 
-  char *reset_put_buffer (char *newBuffer = NULL, 
-			  u_int _streambuf_size = 0, 
-			  u_int _pptr = 0 );
+  char *reset_put_buffer (char *newBuffer = NULL,
+                          u_int _streambuf_size = 0,
+                          u_int _pptr = 0 );
   // Use this to allocate a new/different buffer for put operations.
   // If you do not provide a buffer pointer, one will be allocated.
   // That is the preferred method.  If you do provide a buffer, the
@@ -154,12 +159,12 @@ public:
 
   u_int put_avail (void);
   // Return the number of bytes to be 'put' onto the stream media.
-  //	pbase + put_avail = pptr
+  //    pbase + put_avail = pptr
 
-  char *reset_get_buffer (char *newBuffer = NULL, 
-			  u_int _streambuf_size = 0,
-			  u_int _gptr = 0,
-			  u_int _egptr = 0);
+  char *reset_get_buffer (char *newBuffer = NULL,
+                          u_int _streambuf_size = 0,
+                          u_int _gptr = 0,
+                          u_int _egptr = 0);
   // Use this to allocate a new/different buffer for get operations.
   // If you do not provide a buffer pointer, one will be allocated.
   // That is the preferred method.  If you do provide a buffer, the
@@ -180,8 +185,8 @@ public:
   // Query the streambuf for the size of it's buffers.
 
 protected:
-  ACE_Streambuf (u_int streambuf_size, 
-		 int io_mode);
+  ACE_Streambuf (u_int streambuf_size,
+                 int io_mode);
 
   virtual int sync (void);
   // Sync both input and output. See syncin/syncout below for
@@ -256,18 +261,18 @@ protected:
   // datagram-derived objects.
 
   virtual ssize_t send (char *buf,
-			ssize_t len) = 0;
+                        ssize_t len) = 0;
   virtual ssize_t recv (char *buf,
-			ssize_t len,
-			ACE_Time_Value *tv = NULL) = 0;
-  virtual ssize_t recv (char *buf, 
-			ssize_t len,
-			int flags,
-			ACE_Time_Value *tv = NULL) = 0;
-  virtual ssize_t recv_n (char *buf, 
-			  ssize_t len,
-			  int flags = 0,
-			  ACE_Time_Value *tv = NULL) = 0;
+                        ssize_t len,
+                        ACE_Time_Value *tv = NULL) = 0;
+  virtual ssize_t recv (char *buf,
+                        ssize_t len,
+                        int flags,
+                        ACE_Time_Value *tv = NULL) = 0;
+  virtual ssize_t recv_n (char *buf,
+                          ssize_t len,
+                          int flags = 0,
+                          ACE_Time_Value *tv = NULL) = 0;
   // Stream connections and "unconnected connections" (ie --
   // datagrams) need to work just a little differently.  We derive
   // custom Streambuf objects for them and provide these functions at
@@ -295,33 +300,33 @@ typedef ostream& (*__omanip_)(ostream&);
 // We will use it below to quickly override most (all?)  iostream get
 // operators.  Notice how the ipfx() and isfx() functions are used.
 
-#define GET_SIG(MT,DT)		inline virtual MT& operator>> (DT v)
-#define GET_CODE { 			\
-	if (ipfx (0))					\
-	{						\
-		iostream::operator>> (v);		\
-	}						\
-	isfx ();					\
-	return *this;					\
-	}
-#define GET_PROT(MT,DT,CODE)	GET_SIG(MT,DT)	CODE
-#define GET_FUNC(MT,DT)		GET_PROT(MT,DT,GET_CODE)
+#define GET_SIG(MT,DT)          inline virtual MT& operator>> (DT v)
+#define GET_CODE {                      \
+        if (ipfx (0))                                   \
+        {                                               \
+                iostream::operator>> (v);               \
+        }                                               \
+        isfx ();                                        \
+        return *this;                                   \
+        }
+#define GET_PROT(MT,DT,CODE)    GET_SIG(MT,DT)  CODE
+#define GET_FUNC(MT,DT)         GET_PROT(MT,DT,GET_CODE)
 
 // This macro defines the put operator for class MT into datatype DT.
 // We will use it below to quickly override most (all?)  iostream put
 // operators.  Notice how the opfx() and osfx() functions are used.
 
-#define PUT_SIG(MT,DT)		inline virtual MT& operator<< (DT v)
-#define PUT_CODE {			\
-	if (opfx ())					\
-	{						\
-		iostream::operator<< (v);		\
-	}						\
-	osfx ();					\
-	return *this;					\
-	}
-#define PUT_PROT(MT,DT,CODE)	PUT_SIG(MT,DT)	CODE
-#define PUT_FUNC(MT,DT)		PUT_PROT(MT,DT,PUT_CODE)
+#define PUT_SIG(MT,DT)          inline virtual MT& operator<< (DT v)
+#define PUT_CODE {                      \
+        if (opfx ())                                    \
+        {                                               \
+                iostream::operator<< (v);               \
+        }                                               \
+        osfx ();                                        \
+        return *this;                                   \
+        }
+#define PUT_PROT(MT,DT,CODE)    PUT_SIG(MT,DT)  CODE
+#define PUT_FUNC(MT,DT)         PUT_PROT(MT,DT,PUT_CODE)
 
 
 // These are necessary in case somebody wants to derive from us and
@@ -375,16 +380,16 @@ typedef ostream& (*__omanip_)(ostream&);
           PUT_FUNC_SET0(MT,CODE,CODE2)
 #endif /* ACE_LACKS_SIGNED_CHAR */
 
-#define GET_MANIP_CODE	{ if( ipfx() ) { (*func)(*this); } isfx(); return *this; }
-#define PUT_MANIP_CODE	{ if( opfx() ) { (*func)(*this); } osfx(); return *this; }
+#define GET_MANIP_CODE  { if( ipfx() ) { (*func)(*this); } isfx(); return *this; }
+#define PUT_MANIP_CODE  { if( opfx() ) { (*func)(*this); } osfx(); return *this; }
 
-#define GET_FUNC_SET(MT)	GET_FUNC_SET1(MT,GET_CODE,GET_MANIP_CODE)
-#define PUT_FUNC_SET(MT)	PUT_FUNC_SET1(MT,PUT_CODE,PUT_MANIP_CODE)
-#define	GETPUT_FUNC_SET(MT)	GET_FUNC_SET(MT) PUT_FUNC_SET(MT)
+#define GET_FUNC_SET(MT)        GET_FUNC_SET1(MT,GET_CODE,GET_MANIP_CODE)
+#define PUT_FUNC_SET(MT)        PUT_FUNC_SET1(MT,PUT_CODE,PUT_MANIP_CODE)
+#define GETPUT_FUNC_SET(MT)     GET_FUNC_SET(MT) PUT_FUNC_SET(MT)
 
-#define GET_SIG_SET(MT)		GET_FUNC_SET1(MT,= 0;,= 0;)
-#define PUT_SIG_SET(MT)		PUT_FUNC_SET1(MT,= 0;,= 0;)
-#define	GETPUT_SIG_SET(MT)	GET_SIG_SET(MT) PUT_SIG_SET(MT)
+#define GET_SIG_SET(MT)         GET_FUNC_SET1(MT,= 0;,= 0;)
+#define PUT_SIG_SET(MT)         PUT_FUNC_SET1(MT,= 0;,= 0;)
+#define GETPUT_SIG_SET(MT)      GET_SIG_SET(MT) PUT_SIG_SET(MT)
 
 // Include the templates here.
 #include "ace/IOStream_T.h"
