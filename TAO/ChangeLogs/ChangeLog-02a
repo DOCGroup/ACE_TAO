@@ -1,3 +1,12 @@
+Sun Nov  4 09:43:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Updated dependencies. 
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h:
+	  Added TAO_FT_Export to the class declarations. The export
+	  directives were wrong. This should set the build problems on
+	  Win2K right.
+	
 Fri Nov  2 09:07:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Fault_Tolerance.dsp: Added the new files. 

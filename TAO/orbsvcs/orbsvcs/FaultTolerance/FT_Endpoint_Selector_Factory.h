@@ -38,7 +38,7 @@ class TAO_FT_Invocation_Endpoint_Selector;
  * right factory
  */
 
-class TAO_Export TAO_FT_Endpoint_Selector_Factory
+class TAO_FT_Export TAO_FT_Endpoint_Selector_Factory
   : public TAO_Endpoint_Selector_Factory
 {
 public:
