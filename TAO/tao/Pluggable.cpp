@@ -5,9 +5,9 @@
 #include "tao/Stub.h"
 #include "tao/Environment.h"
 #include "tao/GIOP.h"
-#include "tao/IIOP_Wait_Strategy.h"
-#include "tao/IIOP_RMS.h"
-#include "tao/IIOP_Reply_Dispatcher.h"
+#include "tao/Wait_Strategy.h"
+#include "tao/Request_Mux_Strategy.h"
+#include "tao/Reply_Dispatcher.h"
 
 // @@ Alex: the strategies should be allocated from the ORB_Core,
 //    which in turn may use the Resource_Factory. Just allocate them
@@ -18,8 +18,8 @@
 //    factory.
 
 // Constructor.
-TAO_Transport::TAO_Transport (TAO_IIOP_Request_Multiplexing_Strategy *rms,
-                              TAO_IIOP_Wait_Strategy *ws)
+TAO_Transport::TAO_Transport (TAO_Request_Mux_Strategy *rms,
+                              TAO_Wait_Strategy *ws)
   : message_size_ (0),
     message_offset_ (0),
     rms_ (0),
@@ -27,7 +27,7 @@ TAO_Transport::TAO_Transport (TAO_IIOP_Request_Multiplexing_Strategy *rms,
 {
   // @@ I am hard coding RMS strategy here. (alex)
   ACE_NEW (rms_,
-           TAO_IIOP_Exclusive_RMS);
+           TAO_Exclusive_RMS);
 
   // @@ Hardcoding the WS here. (alex)
   ACE_NEW (ws_,
@@ -123,12 +123,12 @@ TAO_Transport::orb_core (void) const
 
 // Set the RMS object.
 void
-TAO_Transport::rms (TAO_IIOP_Request_Multiplexing_Strategy *rms)
+TAO_Transport::rms (TAO_Request_Mux_Strategy *rms)
 {
   this->rms_ = rms;
 }
 
-TAO_IIOP_Request_Multiplexing_Strategy *
+TAO_Request_Mux_Strategy *
 TAO_Transport::rms (void) const
 {
   return rms_;
@@ -144,7 +144,7 @@ TAO_Transport::request_id (void)
 // Bind the reply dispatcher with the RMS object.
 int
 TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
-                                      TAO_IIOP_Reply_Dispatcher *rd)
+                                      TAO_Reply_Dispatcher *rd)
 {
   return this->rms_->bind_dispatcher (request_id,
                                       rd);
