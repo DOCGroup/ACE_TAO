@@ -1,3 +1,10 @@
+Fri Jun 06 02:16:08 1997    <nw1@COYOTE>
+
+	* Sigset_Ops_Test.cpp: Added to test correct implementation of
+	  sigset manipulating functions. 
+	
+	* run_tests.{sh,bat}, Makefile: Added Sigset_Ops_Test.
+
 Thu Jun 05 20:32:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/Timer_Queue_Test.cpp (randomize_array): removed static
