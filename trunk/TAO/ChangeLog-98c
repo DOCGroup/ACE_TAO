@@ -1,3 +1,9 @@
+Fri Oct  2 23:03:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/releasenotes/ec.html: 
+	  Added an entry to explain the differences between the TAO event
+	  service and the standard CORBA event service.
+
 Fri Oct  2 20:16:35 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tao/DynAnyC.cpp:
