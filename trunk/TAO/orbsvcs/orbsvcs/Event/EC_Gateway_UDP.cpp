@@ -1158,5 +1158,19 @@ TAO_ECG_Mcast_EH::Observer::update_supplier (const
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Hash_Map_Manager<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Entry<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*>;
+template class ACE_Hash_Map_Iterator_Base<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,ACE_SYNCH_MUTEX>;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Hash_Map_Manager<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,ACE_SYNCH_MUTEX>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
