@@ -31,19 +31,20 @@ class TAO_Export TAO_Endpoint
 {
   // = TITLE
   //   Defines the Endpoint interface in the Pluggable Protocol
-  //   framework. 
+  //   framework.
   //
   // = DESCRIPTION
   //   Lightweight encapsulation of addressing information for a
   //   single acceptor endpoint.  In other words, Endpoint represents
   //   a single point of contact for the server, and is the smallest
   //   unit of addressing information necessary for a client to connect
-  //   to a server. 
+  //   to a server.
   //   A Profile contains one or more Endpoints, i.e., knows of
-  //   one or more ways to contact server(s).  
+  //   one or more ways to contact server(s).
   //
 public:
-  TAO_Endpoint (CORBA::ULong tag);
+  TAO_Endpoint (CORBA::ULong tag,
+                CORBA::Short priority = -1);
   // Constructor.
 
   virtual ~TAO_Endpoint (void);
@@ -58,7 +59,11 @@ public:
   CORBA::Short priority (void) const;
   // <priority_> attribute getter.
 
-  // = Abstract methods to be implemented by concrete subclasses.  
+  // = Abstract methods to be implemented by concrete subclasses.
+
+  virtual CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint) = 0;
+  // Return true if this endpoint is equivalent to <other_endpoint>.  Two
+  // endpoints are equivalent iff their port and host are the same.
 
   virtual TAO_Endpoint *next (void) = 0;
   // Endpoints can be stringed in a list.  Return the next endpoint in
@@ -75,6 +80,12 @@ public:
   // This method is used when a connection has been reset, requiring
   // the hint to be cleaned up and reset to NULL.
 
+  virtual TAO_Endpoint *duplicate (void) = 0;
+  // This method returns a copy of the corresponding endpoints by
+  // allocation memory
+
+  virtual CORBA::ULong hash (void) = 0;
+  // Return a hash value for this object.
 private:
 
   // Endpoints should not be copied.

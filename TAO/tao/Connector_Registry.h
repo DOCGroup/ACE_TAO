@@ -97,11 +97,6 @@ public:
   // Obtain the object key delimiter used by the protocol specified in
   // the provided URL style IOR.
 
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-  int purge_connections (void);
-  // Purge "old" connections.
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
-
   // = Iterator.
   TAO_ConnectorSetIterator begin (void);
   TAO_ConnectorSetIterator end (void);
