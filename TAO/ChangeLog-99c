@@ -1,3 +1,13 @@
+Mon May 10 15:02:21 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Exception.h: 
+	* tao/Exception.cpp:
+	* tao/corbafwd.h: Added new exceptions in TAO_SYSTEM_EXCEPTIONS
+	viz.TRANSACTION_REQUIRED, TRANSACTION_ROLLEDBACK &
+	INVALID_TRANSACTION. These are part of the spec, v2.2, section
+	3.5.3, page 3-39. We had not implemented this and it was flagged
+	of by the branding test suite. 
+
 Mon May 10 12:47:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): TAO_IDL will try
