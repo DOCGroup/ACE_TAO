@@ -85,7 +85,9 @@ TAO_NS_SequencePushConsumer::qos_changed (TAO_NS_QoSProperties& qos_properties)
   if (this->cancel_timer (reactor) != 1) // Cancel existing timer.
     return;
 
-  if (this->pacing_interval_.value () != ACE_Time_Value::zero)
+  ///Yamuna: Added the following so the comparison works
+  ACE_Time_Value pacing_interval (this->pacing_interval_.value ());
+  if (pacing_interval != ACE_Time_Value::zero)
     this->schedule_timer (reactor);
 }
 

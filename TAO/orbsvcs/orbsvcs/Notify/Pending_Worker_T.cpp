@@ -36,9 +36,16 @@ TAO_NS_Pending_Worker_T<PEER>::~TAO_NS_Pending_Worker_T ()
 {
 }
 
+template <class PEER> int
+TAO_NS_Pending_Worker_T<PEER>::init (int argc, char **argv)
+{
+  return this->ACE_Task<ACE_SYNCH>::init (argc, argv);
+}
+
 template <class PEER> void
 TAO_NS_Pending_Worker_T<PEER>::init (TAO_NS_Dispatch_Observer_T<PEER>* dispatch_observer, ACE_Time_Value& update_period ACE_ENV_ARG_DECL)
 {
+  
   this->dispatch_observer_ = dispatch_observer;
   this->update_period_ = update_period;
 
