@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:153
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_HTIOP_ENDPOINTSC_H_
 #define _TAO_IDL_HTIOP_ENDPOINTSC_H_
@@ -70,7 +70,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be/be_type.cpp:258
+// be\be_type.cpp:258
 
 struct HTIOP_Endpoint_Info;
 
@@ -88,7 +88,7 @@ typedef
   HTIOP_Endpoint_Info_out;
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/structure_ch.cpp:52
+// be\be_visitor_structure/structure_ch.cpp:52
 
 struct HTIOP_Export HTIOP_Endpoint_Info
 {
@@ -101,12 +101,12 @@ struct HTIOP_Export HTIOP_Endpoint_Info
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_decl.cpp:44
+// be\be_visitor_typecode/typecode_decl.cpp:44
 
-extern HTIOP_Export ::CORBA::TypeCode_ptr  _tc_HTIOP_Endpoint_Info;
+extern HTIOP_Export ::CORBA::TypeCode_ptr const _tc_HTIOP_Endpoint_Info;
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/sequence_ch.cpp:101
+// be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_HTIOPENDPOINTSEQUENCE_CH_)
 #define _HTIOPENDPOINTSEQUENCE_CH_
@@ -154,12 +154,12 @@ public:
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_decl.cpp:44
+// be\be_visitor_typecode/typecode_decl.cpp:44
 
-extern HTIOP_Export ::CORBA::TypeCode_ptr  _tc_HTIOPEndpointSequence;
+extern HTIOP_Export ::CORBA::TypeCode_ptr const _tc_HTIOPEndpointSequence;
 
 // TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:59
+// be\be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -167,7 +167,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:52
 
 HTIOP_Export void operator<<= (CORBA::Any &, const HTIOP_Endpoint_Info &); // copying version
 HTIOP_Export void operator<<= (CORBA::Any &, HTIOP_Endpoint_Info*); // noncopying version
@@ -175,7 +175,7 @@ HTIOP_Export CORBA::Boolean operator>>= (const CORBA::Any &, HTIOP_Endpoint_Info
 HTIOP_Export CORBA::Boolean operator>>= (const CORBA::Any &, const HTIOP_Endpoint_Info *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:52
 
 HTIOP_Export void operator<<= (CORBA::Any &, const HTIOPEndpointSequence &); // copying version
 HTIOP_Export void operator<<= (CORBA::Any &, HTIOPEndpointSequence*); // noncopying version
@@ -183,13 +183,13 @@ HTIOP_Export CORBA::Boolean operator>>= (const CORBA::Any &, HTIOPEndpointSequen
 HTIOP_Export CORBA::Boolean operator>>= (const CORBA::Any &, const HTIOPEndpointSequence *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ch.cpp:54
+// be\be_visitor_structure/cdr_op_ch.cpp:54
 
 HTIOP_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const HTIOP_Endpoint_Info &);
 HTIOP_Export CORBA::Boolean operator>> (TAO_InputCDR &, HTIOP_Endpoint_Info &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ch.cpp:71
+// be\be_visitor_sequence/cdr_op_ch.cpp:71
 
 #if !defined _TAO_CDR_OP_HTIOPEndpointSequence_H_
 #define _TAO_CDR_OP_HTIOPEndpointSequence_H_
@@ -206,7 +206,7 @@ HTIOP_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_HTIOPEndpointSequence_H_ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:958
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "htiop_endpointsC.inl"
