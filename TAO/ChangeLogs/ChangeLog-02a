@@ -1,3 +1,8 @@
+Mon Dec 31 11:48:26 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * TAO_IDL/TAO_IDL_FE.bor:
+          Added new ast_factory file
+
 Mon Dec 31 11:39:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/OBV/Makefile.bor:
@@ -289,14 +294,14 @@ v	* TAO_IDL/be_include/be_visitor_valuetype_fwd/cdr_op_ch.h:
 	    value types. As yet, there is no generation of type codes or Any
 	    insertion/extraction operators for value types.
 
-	  - Support for sequences of value types, by Nanbor Wang 
+	  - Support for sequences of value types, by Nanbor Wang
 	    <nanbor@cs.wustl.edu>.
 
-	  - Re-implementation of #pragma prefix. When the AST is created, the 
-	    'local' prefix, if any, is now cleared upon exit from a scope or 
+	  - Re-implementation of #pragma prefix. When the AST is created, the
+	    'local' prefix, if any, is now cleared upon exit from a scope or
 	    included IDL file. A complete list of active prefixes seen so far
 	    is maintained in a global stack, but not also in each node, as was
-	    done previously. Each AST node now has knowledge only of its own 
+	    done previously. Each AST node now has knowledge only of its own
 	    prefix, if any. This means that a list of prefixes seen so far has
 	    been eliminated as an argument to the constructor of all AST node.
 	    classes.
@@ -312,7 +317,7 @@ v	* TAO_IDL/be_include/be_visitor_valuetype_fwd/cdr_op_ch.h:
 
 Mon Dec 31 07:55:09 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/Notify_Service/Notify_Service.cpp: 
+	* orbsvcs/Notify_Service/Notify_Service.cpp:
 	  orbsvcs/Notify_Service/Notify_Service.h:
 	  orbsvcs/Notify_Service/Notify_Server.cpp:
 	  Fixed compile error in static build.
