@@ -17,27 +17,30 @@
 #include "orbsvcs/CosNamingC.h"
 #include "test_objectS.h"
 
-class test_object_impl : public POA_test_object
+class Test_Object_impl : public POA_Test_Object
 {
 public:
-  test_object_impl () {};
-  ~test_object_impl () {};
+  Test_Object_impl (void) {};
+  ~Test_Object_impl (void) {};
 };
 
 int
 main (int argc, char **argv)
 {
   TAO_ORB_Manager orbmgr;
-  test_object_impl myObject;
+  Test_Object_impl myObject;
 
   TAO_TRY
     {
-      orbmgr.init (argc, argv, TAO_TRY_ENV);
+      if (orbmgr.init (argc, argv, TAO_TRY_ENV) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "failed to init ORB\n"),
+                           -1);
       TAO_CHECK_ENV;
 
       CORBA::ORB_var orb = orbmgr.orb ();
-
-      CORBA::Object_var ns_obj = orb->resolve_initial_references ("NameService");
+      CORBA::Object_var ns_obj =
+        orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (ns_obj))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -50,13 +53,15 @@ main (int argc, char **argv)
       TAO_CHECK_ENV;
 
       // Dummy object instantiation.
-      test_object_var myObject_var = myObject._this (TAO_TRY_ENV);
+      Test_Object_var myObject_var =
+        myObject._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
 #if !defined (HIERARCHICAL_BIND)
       CosNaming::Name test_context (1);
       test_context.length (1);
-      test_context[0].id = CORBA::string_dup ("MyContext");
+      test_context[0].id =
+        CORBA::string_dup ("MyContext");
 
       CORBA::Object_var myobj =
 	ns_ctx->bind_new_context (test_context,
@@ -123,8 +128,8 @@ main (int argc, char **argv)
                                                        TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      test_object_var resultObject = 
-	test_object::_narrow (resolvedobj.in (), 
+      Test_Object_var resultObject = 
+	Test_Object::_narrow (resolvedobj.in (), 
                               TAO_TRY_ENV);
     }
   TAO_CATCHANY
