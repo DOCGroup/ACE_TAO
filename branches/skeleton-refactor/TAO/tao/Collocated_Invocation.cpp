@@ -1,10 +1,15 @@
 #include "Collocated_Invocation.h"
 #include "Collocation_Proxy_Broker.h"
+#include "ORB_Core.h"
+#include "Request_Dispatcher.h"
+#include "TAO_Server_Request.h"
 #include "operation_details.h"
+
 
 ACE_RCSID (tao,
            Collocated_Invocation,
            "$Id$")
+
 
 namespace TAO
 {
@@ -43,14 +48,14 @@ namespace TAO
       {
         if (strat == TAO_CS_THRU_POA_STRATEGY)
           {
-            TAO_ServerRequest request (this->orb_core_,
+            TAO_ServerRequest request (this->orb_core (),
                                        this->details_,
-                                       this->effective_target_);
+                                       this->effective_target ());
 
             TAO_Request_Dispatcher * const dispatcher =
-              this->orb_core_->request_dispatcher ();
+              this->orb_core ()->request_dispatcher ();
 
-            dispatcher->dispatch (this->orb_core_,
+            dispatcher->dispatch (this->orb_core (),
                                   request,
                                   this->forwarded_to_.out ());
                                   ACE_ENV_ARG_PARAMETER);
