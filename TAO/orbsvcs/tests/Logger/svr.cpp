@@ -54,9 +54,13 @@ main (int argc, char ** argv)
 			   " (%P|%t) Unable to resolve the Name Service.\n"),
 			  1);
 
+      ACE_DEBUG ((LM_DEBUG, "Naming Service resolved.\n"));      
+
       CosNaming::NamingContext_var naming_context = 
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      ACE_DEBUG ((LM_DEBUG, "CosNaming::NamingContext::_narrow()  ok.\n"));
 
       // create a factory implementation
       Logger_Factory_i factory_impl;
@@ -77,6 +81,12 @@ main (int argc, char ** argv)
       factory_name[0].id = CORBA::string_dup ("logger_factory");
       naming_context->bind (factory_name, factory.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
+ 
+//      naming_context->bind (factory_name, factory.in (), TAO_TRY_ENV);
+//      if (TAO_TRY_ENV.exception () != 0)
+//	{ TAO_TRY_ENV.print_exception ("bind: name already bound\n");
+//	return -1;
+//	}
 
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -92,7 +102,7 @@ main (int argc, char ** argv)
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("schedule_service");
+      TAO_TRY_ENV.print_exception ("logger_service");
     }
   TAO_ENDTRY;
 
