@@ -1,72 +1,93 @@
+Wed Mar  7 08:39:56 2001  Chad Elliott  <elliott_c@ociweb.com>
+        * tests/AMI/client.cpp:
+        * tests/AMI/server.cpp:
+
+          Fixed build error when building with exceptions disabled.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+
+          Removed a warning when compiling with multicast disabled.
+
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+        * orbsvcs/tests/Notify/Basic/Events_Test.cpp:
+        * orbsvcs/tests/Notify/Basic/Simple.cpp:
+        * orbsvcs/tests/Notify/Basic/Updates.cpp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+        * orbsvcs/tests/Trading/colocated_test.cpp:
+
+          Fixed link errors on VxWorks due to multiply defined templates.
+          The templates in question were already instantiated in the orbsvcs
+          libraries.
+
 Wed Mar  7 06:43:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/examples/CosEC/RtEC_Based/lib: Fixed a typo in exception
-	  macros.  
+        * orbsvcs/examples/CosEC/RtEC_Based/lib: Fixed a typo in exception
+          macros.  
 
 Wed Mar 07 00:07:48 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableInterceptorS.h:
+        * tao/PortableInterceptorS.h:
 
-	  Some IDL files may include the `tao/PortableInterceptor.pidl'
-	  file.  In those cases, the IDL compiler will generate an include
-	  for this header in the skeleton.  This dummy header satisfies
-	  that inclusion.
+          Some IDL files may include the `tao/PortableInterceptor.pidl'
+          file.  In those cases, the IDL compiler will generate an include
+          for this header in the skeleton.  This dummy header satisfies
+          that inclusion.
 
-	* tests/Portable_Interceptors/ForwardRequest/ServerRequestInterceptor.idl:
+        * tests/Portable_Interceptors/ForwardRequest/ServerRequestInterceptor.idl:
 
-	  Removed this IDL files.  Some old C++ compilers couldn't handle the
-	  reopened namespaces found in the stubs/skeletons associated with
-	  this IDL.
+          Removed this IDL files.  Some old C++ compilers couldn't handle the
+          reopened namespaces found in the stubs/skeletons associated with
+          this IDL.
 
-	* tests/Portable_Interceptors/ForwardRequest/test.idl:
+        * tests/Portable_Interceptors/ForwardRequest/test.idl:
 
-	  Moved the "ServerRequestInterceptor" interface to this IDL file
-	  since some old C++ compilers couldn't handle the reopened
-	  namespaces found in the stubs/skeletons associated with this
-	  IDL.
+          Moved the "ServerRequestInterceptor" interface to this IDL file
+          since some old C++ compilers couldn't handle the reopened
+          namespaces found in the stubs/skeletons associated with this
+          IDL.
 
-	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
+        * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
 
-	  Include `testC.h' instead of `ServerRequestInterceptorC.h' since
-	  the server request interceptor IDL was moved to the `test.idl'
-	  file.
+          Include `testC.h' instead of `ServerRequestInterceptorC.h' since
+          the server request interceptor IDL was moved to the `test.idl'
+          file.
 
-	* tests/Portable_Interceptors/ForwardRequest/Makefile:
-	* tests/Portable_Interceptors/ForwardRequest/client.dsp:
-	* tests/Portable_Interceptors/ForwardRequest/client.bor:
-	* tests/Portable_Interceptors/ForwardRequest/server.bor:
-	* tests/Portable_Interceptors/ForwardRequest/server.dsp:
+        * tests/Portable_Interceptors/ForwardRequest/Makefile:
+        * tests/Portable_Interceptors/ForwardRequest/client.dsp:
+        * tests/Portable_Interceptors/ForwardRequest/client.bor:
+        * tests/Portable_Interceptors/ForwardRequest/server.bor:
+        * tests/Portable_Interceptors/ForwardRequest/server.dsp:
 
-	  Removed references to the removed `ServerRequestInterceptor.idl'
-	  file, and updated IDL compiler flags accordingly.
+          Removed references to the removed `ServerRequestInterceptor.idl'
+          file, and updated IDL compiler flags accordingly.
 
 Tue Mar 06 23:43:07 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/CONV_FRAMEC.cpp (operator>>=):
-	* tao/DomainC.cpp (operator>>=):
-	* tao/DynamicC.cpp (operator>>=):
-	* tao/GIOPC.cpp (operator>>=):
-	* tao/IIOPC.cpp (operator>>=):
-	* tao/OctetSeqC.cpp (operator>>=):
-	* tao/StringSeqC.cpp (operator>>=):
-	* tao/TAOC.cpp (operator>>=):
-	* orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test_i.cpp
-	  (authorize_level1):
-	* tests/Portable_Interceptors/Benchmark/client.cpp (run_test):
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
-	  (svr_worker):
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (run):
+        * tao/CONV_FRAMEC.cpp (operator>>=):
+        * tao/DomainC.cpp (operator>>=):
+        * tao/DynamicC.cpp (operator>>=):
+        * tao/GIOPC.cpp (operator>>=):
+        * tao/IIOPC.cpp (operator>>=):
+        * tao/OctetSeqC.cpp (operator>>=):
+        * tao/StringSeqC.cpp (operator>>=):
+        * tao/TAOC.cpp (operator>>=):
+        * orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test_i.cpp
+          (authorize_level1):
+        * tests/Portable_Interceptors/Benchmark/client.cpp (run_test):
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
+          (svr_worker):
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (run):
 
-	  Added missing ACE_CHECK/ACE_TRY_CHECK macros.
+          Added missing ACE_CHECK/ACE_TRY_CHECK macros.
 
-	* orbsvcs/tests/LoadBalancing/server.cpp (main): 
-	* orbsvcs/tests/Security/RejectInsecure/server.cpp (main):
-	* orbsvcs/tests/Security/SecurityLevel1/server.cpp (main): 
-	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp
-	  (authorize_level1):
+        * orbsvcs/tests/LoadBalancing/server.cpp (main): 
+        * orbsvcs/tests/Security/RejectInsecure/server.cpp (main):
+        * orbsvcs/tests/Security/SecurityLevel1/server.cpp (main): 
+        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp
+          (authorize_level1):
 
-	  Added missing ACE_TRY_ENV macros to the
-	  resolve_initial_references() call.
+          Added missing ACE_TRY_ENV macros to the
+          resolve_initial_references() call.
 
 Wed Mar  7 07:46:51 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -78,111 +99,111 @@ Wed Mar  7 07:46:51 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Tue Mar  6 21:22:51 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/ior_corbaloc/status_i.cpp:
-	  The default arguments were also set in the implementation file.
-	  Corrected it.
+        * tests/ior_corbaloc/status_i.cpp:
+          The default arguments were also set in the implementation file.
+          Corrected it.
 
-	  Thanks to Johnny Willemsen <johnny.willemsen@meco.nl>
-	  for reporting this.
+          Thanks to Johnny Willemsen <johnny.willemsen@meco.nl>
+          for reporting this.
 
 Tue Mar  6 21:21:45 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tao/IIOP_Acceptor.h (port_span_): Added data member to track the
- 	span of ports the user wishes a server-side ORB to search for an
- 	open port. [Bug 817]
+          span of ports the user wishes a server-side ORB to search for an
+          open port. [Bug 817]
 
         * tao/IIOP_Acceptor.cpp (parse_options): Added code to parse a new
- 	"portspan" endpoint option to set the port_span_ data member. [Bug
- 	817]
+          "portspan" endpoint option to set the port_span_ data member. [Bug
+          817]
 
         * tao/IIOP_Acceptor.cpp (CTOR): Default the port_span_ to 1. [Bug 817]
 
         * tao/IIOP_Acceptor.cpp (open_i): Added code to search for a port
-	starting at the port specified in the -ORBEndpoint option, over a
-	span of port_span_ ports looking for an available port on which to
-	listen for requests.  Search is in-order linear.  If there are
-	multiple endpoints, then only the first endpoint gets search, and
-	all other endpoints use whatever port was found for that one.
-	This is identical to the behavior used for ephemeral ports. [Bug 817]
+          starting at the port specified in the -ORBEndpoint option, over a
+          span of port_span_ ports looking for an available port on which to
+          listen for requests.  Search is in-order linear.  If there are
+          multiple endpoints, then only the first endpoint gets search, and
+          all other endpoints use whatever port was found for that one.
+          This is identical to the behavior used for ephemeral ports. [Bug 817]
 
 Tue Mar  6 18:32:34 PST 2001 Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
-	* docs/tutorials/Quoter/Makefile (Repository):
-	  Top level Makefiel that recursively makes all tutorials in the subdirectories.
+        * docs/tutorials/Quoter/Makefile (Repository):
+          Top level Makefiel that recursively makes all tutorials in the subdirectories.
 
-	* docs/tutorials/Quoter/RT_Event_Service/Makefile (Repository):
-	  Updated LDLIBS section
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile (Repository):
+          Updated LDLIBS section
 
-	* docs/tutorials/Quoter/On_Demand_Activation/Stock_i.h (Repository):
-	* docs/tutorials/Quoter/On_Demand_Activation/Stock_i.cpp (Repository):
-	  Copied from ../Simple/Server
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_i.h (Repository):
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_i.cpp (Repository):
+          Copied from ../Simple/Server
 
-	* docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.cpp (Repository):
-	  Handled 'dangling else' condition.
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.cpp (Repository):
+          Handled 'dangling else' condition.
 
-	* docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.h (Repository):
-	  Included PortableServer header file
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.h (Repository):
+          Included PortableServer header file
 
-	* docs/tutorials/Quoter/On_Demand_Activation/Makefile (Repository):
-	  Makefile to make the new self-contained Tutorial.
+        * docs/tutorials/Quoter/On_Demand_Activation/Makefile (Repository):
+          Makefile to make the new self-contained Tutorial.
 
-	* docs/tutorials/Quoter/On_Demand_Activation/Handler_i.h (Repository):
-	* docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp (Repository):
-	* docs/tutorials/Quoter/On_Demand_Activation/Quoter.idl (Repository):
-	* docs/tutorials/Quoter/On_Demand_Activation/client.cpp (Repository):
-	  Copied from ../AMI
+        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.h (Repository):
+        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp (Repository):
+        * docs/tutorials/Quoter/On_Demand_Activation/Quoter.idl (Repository):
+        * docs/tutorials/Quoter/On_Demand_Activation/client.cpp (Repository):
+          Copied from ../AMI
 
-	* docs/tutorials/Quoter/Naming_Service/Stock_i.h (Repository):
-	* docs/tutorials/Quoter/Naming_Service/Stock_i.cpp (Repository):
-	* docs/tutorials/Quoter/Naming_Service/Stock_Factory_i.h (Repository):
-	* docs/tutorials/Quoter/Naming_Service/Stock_Factory_i.cpp (Repository):
-	  Copied from ../Server.
-	* docs/tutorials/Quoter/Event_Service/Makefile (Message):
-  	  Makefile to make the self-contained AMI tutorial.
+        * docs/tutorials/Quoter/Naming_Service/Stock_i.h (Repository):
+        * docs/tutorials/Quoter/Naming_Service/Stock_i.cpp (Repository):
+        * docs/tutorials/Quoter/Naming_Service/Stock_Factory_i.h (Repository):
+        * docs/tutorials/Quoter/Naming_Service/Stock_Factory_i.cpp (Repository):
+          Copied from ../Server.
+        * docs/tutorials/Quoter/Event_Service/Makefile (Message):
+            Makefile to make the self-contained AMI tutorial.
 
-	* docs/tutorials/Quoter/Event_Service/ec.conf (Message):
-	  Works better with defaults (no need for an ec.conf file actually).
+        * docs/tutorials/Quoter/Event_Service/ec.conf (Message):
+          Works better with defaults (no need for an ec.conf file actually).
 
-	* docs/tutorials/Quoter/AMI/Makefile (Message):
-	  Makefile to make the self-contained AMI tutorial.
+        * docs/tutorials/Quoter/AMI/Makefile (Message):
+          Makefile to make the self-contained AMI tutorial.
 
-	* docs/tutorials/Quoter/idl/quoter_common_export.h (Repository):
-	  For exporting DLL symbols.
+        * docs/tutorials/Quoter/idl/quoter_common_export.h (Repository):
+          For exporting DLL symbols.
 
-	* docs/tutorials/Quoter/idl/Quoter.idl (Repository):
-	  The mother of all Quoter.idl file.
+        * docs/tutorials/Quoter/idl/Quoter.idl (Repository):
+          The mother of all Quoter.idl file.
 
-	* docs/tutorials/Quoter/idl/Makefile (Repository):
-	  Most of the IDL generated files were common to many tutoroals (especially
-	  in the Simple directory), so the IDL file was moved into a separate directory,
-	  the necessary files generated and stored in a library, Quoter_Common, to be
-	  used by others.
+        * docs/tutorials/Quoter/idl/Makefile (Repository):
+          Most of the IDL generated files were common to many tutoroals (especially
+          in the Simple directory), so the IDL file was moved into a separate directory,
+          the necessary files generated and stored in a library, Quoter_Common, to be
+          used by others.
 
-	* docs/tutorials/Quoter/Simple/Server/Stock_i.h (Repository):
-	  Modified to take into account the new Quoter_Common library.
+        * docs/tutorials/Quoter/Simple/Server/Stock_i.h (Repository):
+          Modified to take into account the new Quoter_Common library.
 
-	* docs/tutorials/Quoter/Simple/Server/Makefile (Repository):
-	  Makefile to make the new self-contained Server tutorial.
+        * docs/tutorials/Quoter/Simple/Server/Makefile (Repository):
+          Makefile to make the new self-contained Server tutorial.
 
-	* docs/tutorials/Quoter/Simple/Persistent (Repository):
-	  Copied Stock_Facory_i* and Stock_i* files from ../Server and client.cpp from
-	  ../Client to make Impl-Repo self-sufficient.
+        * docs/tutorials/Quoter/Simple/Persistent (Repository):
+          Copied Stock_Facory_i* and Stock_i* files from ../Server and client.cpp from
+          ../Client to make Impl-Repo self-sufficient.
 
-	* docs/tutorials/Quoter/Simple/Persistent/Makefile :
-	  Makefile to make the new self-contained Persistent tutorial.
+        * docs/tutorials/Quoter/Simple/Persistent/Makefile :
+          Makefile to make the new self-contained Persistent tutorial.
 
-	* docs/tutorials/Quoter/Simple/Impl-Repo :
-	  Copied Stock_Facory_i* and Stock_i* files from ../Server and client.cpp from
-	  ../Client to make Impl-Repo self-sufficient.
+        * docs/tutorials/Quoter/Simple/Impl-Repo :
+          Copied Stock_Facory_i* and Stock_i* files from ../Server and client.cpp from
+          ../Client to make Impl-Repo self-sufficient.
 
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Makefile :
-	  Makefile to make the new self-contained ImprovedServer directory.
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Makefile :
+          Makefile to make the new self-contained ImprovedServer directory.
 
-	* docs/tutorials/Quoter/Simple/Impl-Repo/index.html :
-	  Corrected path to ImplRepo_Service.
+        * docs/tutorials/Quoter/Simple/Impl-Repo/index.html :
+          Corrected path to ImplRepo_Service.
 
-	* docs/tutorials/Quoter/Simple/Client/Makefile :
-	  Makefile making use of the Common_Quoter library and 'idl' files.
+        * docs/tutorials/Quoter/Simple/Client/Makefile :
+          Makefile making use of the Common_Quoter library and 'idl' files.
 
 Tue Mar  6 17:56:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -438,8 +459,8 @@ Mon Mar  5 18:40:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Mar  5 14:21:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/Strategies/server.cpp :
-	  Added ACE_TRY_ENV parameter to resolve_initial_references call.
+        * tests/Strategies/server.cpp :
+          Added ACE_TRY_ENV parameter to resolve_initial_references call.
 
 Mon Mar 05 20:29:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 

@@ -131,9 +131,7 @@ main (int argc, char** argv)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class auto_ptr<TAO_Trader_Factory::TAO_TRADER>;
-template class ACE_Auto_Basic_Ptr<TAO_Trader_Factory::TAO_TRADER>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_ptr<TAO_Trader_Factory::TAO_TRADER>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Trader_Factory::TAO_TRADER>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
