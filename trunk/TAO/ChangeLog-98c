@@ -7,7 +7,7 @@ Tue Mar 24 14:51:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
  	  return statement.
 
 	* tao/IIOP_Object.cpp: Initialze
- 	  TAO_Synchronous_Cancellation_Required::dont_care.
+ 	  TAO_Synchronous_Cancellation_Required::old_type_.
 	
 Tue Mar 24 14:07:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
