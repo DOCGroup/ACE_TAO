@@ -243,11 +243,26 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler Static
+    Project_Dep_Name DynamicAny_Static
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name CosTrading_Static
+    Project_Dep_Name ETCL_Static
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils_Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DynamicAny_Static"=.\tao\DynamicAny\TAO_DynamicAny_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################

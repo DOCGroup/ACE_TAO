@@ -1,3 +1,11 @@
+Mon Oct  7 17:04:45 2002  Ossama Othman  <ossama@uci.edu>
+
+	* TAOACE.dsw:
+	* TAOACE_Static.dsw:
+
+	  Added missing Telecom Logging Service projects and project
+	  dependencies.
+
 Mon Oct  7 16:49:28 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.DsLogAdmin (ACE_SHLIBS):
