@@ -1,3 +1,11 @@
+Fri Jun 09 02:34:07 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp (ObjectId_to_wstring): The implementation of this
+	  method was quite busted.  The correct implementation now creates
+	  the right size wstring and correctly null terminates it.  Thanks
+	  to emalenfant@interstarinc.com for reporting this bug and
+	  providing a fix.  This fixes bug 588.
+
 Thu Jun  8 20:48:46 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
@@ -30,16 +38,16 @@ Thu Jun  8 19:09:31 2000  Darrell Brunsch <brunsch@uci.edu>
         * orbsvcs/orbsvcs.dsw: (removed)
         * orbsvcs/services.dsw: (added)
 
-          During a conversation on the list with Tom Ziomek 
+          During a conversation on the list with Tom Ziomek
           <tomz@cc.comm.mot.com> he mentioned that he expected that
           this project builds the library and the server executables.
           And I know Irfan has also pointed out that this has been
           broken (so he must have tried it).
 
           I originally intended on removing this file after I got
-          msvc_auto_compile.pl working, but I think it would be 
+          msvc_auto_compile.pl working, but I think it would be
           useful to keep this around as something just to compile
-          the service programs themselves.  And to make the name a bit 
+          the service programs themselves.  And to make the name a bit
           more descriptive, I changed it to services.dsw.
 
 Thu Jun  8 18:07:03 2000  Carlos O'Ryan  <coryan@uci.edu>

@@ -5165,6 +5165,13 @@ public:
 
   // = A set of wrappers for miscellaneous operations.
   static int atoi (const ACE_TCHAR *s);
+
+  static double floor (double x);
+  // This method computes the largest integral value not greater than x.
+
+  static double ceil (double x);
+  // This method computes the smallest integral value not less than x.
+
   static ACE_TCHAR *getenv (const ACE_TCHAR *symbol);
   static int putenv (const ACE_TCHAR *string);
   static ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
