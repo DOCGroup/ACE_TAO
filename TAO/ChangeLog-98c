@@ -2,7 +2,7 @@ Thu Aug  6 17:25:27 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/DynSched.cpp: Fixed a typo where
 	  there was a == when there should have been a =. This was
-	  in schedule_threads ();
+	  in schedule_threads ().
 
 Thu Aug  6 16:37:55 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
