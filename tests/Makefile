@@ -36,6 +36,7 @@ BIN =   Aio_Platform_Test \
         Message_Block_Test \
         Message_Queue_Test \
         Message_Queue_Notifications_Test \
+        New_Fail_Test \
         Notify_Performance_Test \
         Process_Mutex_Test \
         Process_Strategy_Test \
