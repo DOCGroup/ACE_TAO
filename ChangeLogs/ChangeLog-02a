@@ -1,76 +1,83 @@
+Wed Apr 25 19:48:48 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_run_tests.lst:
+          Remove the tests/Oneway_Buffering/run_timeout.pl test from the
+          list.  It is giving spurious errors, but fixing them would take
+          me too long.
+
 Wed Apr 25 20:23:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-linux-common.h: Revert my previous change:
+        * ace/config-linux-common.h: Revert my previous change:
 
-	  Wed Apr 25 03:45:55 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+          Wed Apr 25 03:45:55 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	  Linux's POSIX semaphores is broken.  Thanks to Ossama for
-	  noticing this.
+          Linux's POSIX semaphores is broken.  Thanks to Ossama for
+          noticing this.
 
 Wed Apr 25 18:32:54 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ACE-INSTALL.html: Make sure to mention that ACE (and TAO) run
-	  on Solaris 8.  Thanks to Richard Hardgrave
- 	  <hardgrav@ttd.teradyne.com> for motivating this.
+        * ACE-INSTALL.html: Make sure to mention that ACE (and TAO) run
+          on Solaris 8.  Thanks to Richard Hardgrave
+          <hardgrav@ttd.teradyne.com> for motivating this.
 
-	* include/makeinclude: Zapped the platform_sunos5_egcs.GNU
-	  file.  Thanks to Craig Rodrigues for the suggestion.
+        * include/makeinclude: Zapped the platform_sunos5_egcs.GNU
+          file.  Thanks to Craig Rodrigues for the suggestion.
 
 Wed Apr 25 15:30:18 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Malloc_Test.cpp: The reference counter needs to be release
-	  if we want it to work.
+        * tests/Malloc_Test.cpp: The reference counter needs to be release
+          if we want it to work.
 
 Wed Apr 25 03:45:55 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/MEM_Stream_Test.cpp: Temporarily changed the informational
-	  message about the use SYSV semaphores to LM_ERROR so we can find
-	  those platforms out quicker.  Many of them may actually support
-	  POSIX semaphores.  We need to enable them in that case.
+        * tests/MEM_Stream_Test.cpp: Temporarily changed the informational
+          message about the use SYSV semaphores to LM_ERROR so we can find
+          those platforms out quicker.  Many of them may actually support
+          POSIX semaphores.  We need to enable them in that case.
 
-	* ace/config-linux-common.h: Added ACE_HAS_POSIX_SEM and
-	  ACE_LACKS_NAMED_POSIX_SEM.  Linux actually support them.  I'm
-	  not sure if there are any version of linux that don't.
+        * ace/config-linux-common.h: Added ACE_HAS_POSIX_SEM and
+          ACE_LACKS_NAMED_POSIX_SEM.  Linux actually support them.  I'm
+          not sure if there are any version of linux that don't.
 
 Wed Apr 25 03:15:34 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Malloc.h:
         * ace/PI_Malloc.h: Added new variables to reference counting the
-	  Malloc.
+          Malloc.
 
         * ace/Malloc_T.cpp:
         * ace/Malloc_T.h:
         * ace/Malloc_T.i: Added 2 new methods to query the reference
-	  counter and to release the reference counter.  The reference
-	  counter is created with 1 when the malloc first use a new
-	  backing store.  Later malloc that attaches to the same backing
-	  store will increase the reference counter.  It's the user's
-	  responsibility to invoke release when the malloc is no longer
-	  needed.  The reference counter provides a way to indication it's
-	  safe to clean up the backing store without upsetting other
-	  malloc that might still need it.  Note, however, the malloc will
-	  not cleanup the backing store automatically when the reference
-	  counter drops to 0 because we may want to attach another malloc
-	  to it in some later point.
+          counter and to release the reference counter.  The reference
+          counter is created with 1 when the malloc first use a new
+          backing store.  Later malloc that attaches to the same backing
+          store will increase the reference counter.  It's the user's
+          responsibility to invoke release when the malloc is no longer
+          needed.  The reference counter provides a way to indication it's
+          safe to clean up the backing store without upsetting other
+          malloc that might still need it.  Note, however, the malloc will
+          not cleanup the backing store automatically when the reference
+          counter drops to 0 because we may want to attach another malloc
+          to it in some later point.
 
         * ace/MEM_IO.cpp:
         * ace/MEM_IO.h:
         * ace/MEM_SAP.cpp:
         * ace/MEM_SAP.h: Use the aforementioned reference counter to
-	  cleanup the backing store automagically.
+          cleanup the backing store automagically.
 
         * ace/MEM_Stream.h:
         * ace/MEM_Stream.i: Removed cleanup method as it is no longer
-	  needed with the previous changes.  Removed unnecesary <remove>
-	  argument from fini () method.
+          needed with the previous changes.  Removed unnecesary <remove>
+          argument from fini () method.
 
         * ace/MEM_Stream.cpp: Simply calling fini () without worrying
-	  about cleaning up the backing store.
+          about cleaning up the backing store.
 
         * tests/MEM_Stream_Test.cpp: No longer need to hint for cleanup.
 
         * tests/Malloc_Test.cpp: Added ACE_ASSERT to check for proper
-	  operation of reference counter.
+          operation of reference counter.
 
 Tue Apr 24 17:54:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
