@@ -75,8 +75,8 @@ ACE_SSL_SOCK_Connector::shared_connect_finish(ACE_SSL_SOCK_Stream &new_stream,
 	    error = EWOULDBLOCK;
 	  // Wait synchronously using timeout.
 	  else if (this->complete (new_stream,
-					0,
-					timeout) == -1)
+                                   0,
+                                   timeout) == -1)
 	    error = errno;
 	  else
 	    return 0;
@@ -108,26 +108,27 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::connect");
   if ((new_stream.get_handle () == ACE_INVALID_HANDLE) &&
-      connector_.connect (new_stream.peer (),
-                          remote_sap,
-                          timeout,
-                          local_sap,
-                          reuse_addr,
-                          flags,
-                          perms,
-                          protocol_family,
-                          protocol) == -1) {
+      this->connector_.connect (new_stream.peer (),
+                                remote_sap,
+                                timeout,
+                                local_sap,
+                                reuse_addr,
+                                flags,
+                                perms,
+                                protocol_family,
+                                protocol) == -1) {
     return -1;
   }
 
-  if(new_stream.get_SSL_fd() != new_stream.get_handle()) {
+  if (new_stream.get_SSL_fd () != new_stream.get_handle ())
+    {
+      new_stream.set_SSL_fd ((int)new_stream.get_handle ());
 
-    new_stream.set_SSL_fd((int)new_stream.get_handle());
+    if (timeout)
+      ACE::set_flags (new_stream.get_handle (), ACE_NONBLOCK);
+    }
 
-    if(timeout) ACE::set_flags(new_stream.get_handle(), ACE_NONBLOCK);
-  }
-
-  return((new_stream.connect() == 1) ? 0 : -1);
+  return new_stream.connect ();
 
 }
 
@@ -162,14 +163,15 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
     return -1;
   }
 
-  if(new_stream.get_SSL_fd() != new_stream.get_handle()) {
+  if (new_stream.get_SSL_fd () != new_stream.get_handle ())
+    {
+      new_stream.set_SSL_fd ((int)new_stream.get_handle ());
 
-    new_stream.set_SSL_fd((int)new_stream.get_handle());
+      if (timeout)
+        ACE::set_flags (new_stream.get_handle (), ACE_NONBLOCK);
+    }
 
-    if(timeout) ACE::set_flags(new_stream.get_handle(), ACE_NONBLOCK);
-  }
-
-  return ((new_stream.connect() == 1) ? 0 : 1);
+  return new_stream.connect ();
 }
 
 // Try to complete a non-blocking connection.
@@ -180,20 +182,21 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
                                   ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::complete");
-  if (connector_.complete (new_stream.peer (),
-                           remote_sap,
-                           tv) == -1) {
+  if (this->connector_.complete (new_stream.peer (),
+                                 remote_sap,
+                                 tv) == -1) {
     return -1;
   }
 
-  if(new_stream.get_SSL_fd() != new_stream.get_handle()) {
+  if (new_stream.get_SSL_fd () != new_stream.get_handle ())
+    {
+      new_stream.set_SSL_fd ((int)new_stream.get_handle ());
 
-    new_stream.set_SSL_fd((int)new_stream.get_handle());
+      if (tv)
+        ACE::set_flags (new_stream.get_handle(), ACE_NONBLOCK);
+    }
 
-    if(tv) ACE::set_flags(new_stream.get_handle(), ACE_NONBLOCK);
-  }
-
-  return ((new_stream.connect() == 1) ? 0 : -1);
+  return new_stream.connect ();
 }
 
 
@@ -225,16 +228,27 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
 		ASYS_TEXT (
                   "ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector"
                )));
-  else {
-    if(new_stream.get_SSL_fd() != new_stream.get_handle()) {
+  else
+    {
+      if (new_stream.get_SSL_fd () != new_stream.get_handle ())
+        {
+          new_stream.set_SSL_fd ((int)new_stream.get_handle ());
 
-      new_stream.set_SSL_fd((int)new_stream.get_handle());
+          if (timeout)
+            ACE::set_flags(new_stream.get_handle (), ACE_NONBLOCK);
+        }
 
-      if(timeout) ACE::set_flags(new_stream.get_handle(), ACE_NONBLOCK);
+      if (new_stream.connect () != 0)
+        {
+//           ACE_ERROR ((LM_ERROR,
+//                       ASYS_TEXT ("%p\n"),
+//                       ASYS_TEXT ("ACE_SSL_SOCK_Connector::"
+//                                  "ACE_SSL_SOCK_Connector"
+//                                  )));
+
+          ::ERR_print_errors_fp (stderr);
+        }
     }
-
-    new_stream.connect();
-  }
 }
 
 
@@ -274,17 +288,26 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
 		ASYS_TEXT (
                   "ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector"
               )));
-  else {
+  else
+    {
+      if (new_stream.get_SSL_fd() != new_stream.get_handle())
+        {
+          new_stream.set_SSL_fd((int)new_stream.get_handle());
 
-    if(new_stream.get_SSL_fd() != new_stream.get_handle()) {
+          // if (timeout)
+          //   ACE::set_flags(new_stream.get_handle(), ACE_NONBLOCK);
+        }
+      if (new_stream.connect () != 0)
+        {
+//           ACE_ERROR ((LM_ERROR,
+//                       ASYS_TEXT ("%p\n"),
+//                       ASYS_TEXT ("ACE_SSL_SOCK_Connector::"
+//                                  "ACE_SSL_SOCK_Connector"
+//                                  )));
 
-      new_stream.set_SSL_fd((int)new_stream.get_handle());
-
-      //if(timeout) ACE::set_flags(new_stream.get_handle(), ACE_NONBLOCK);
+          ::ERR_print_errors_fp (stderr);
+        }
     }
-
-    new_stream.connect();
-  }
 }
 
 #endif /* ACE_HAS_SSL */
