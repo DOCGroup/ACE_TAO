@@ -1,3 +1,13 @@
+Fri May 25 08:37:37 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/Message_Block.cpp:
+
+          Fixed an error in ACE_Data_Block::clone, where ACE_NEW_RETURN
+          is used without a constructor as one of the arguments. Besides,
+          it is a mistake to allocate, because the call to clone_nocopy
+          has already done an allocation. All we need to do is check for
+          a 0 return from clone_nocopy.
+
 Fri May 25 05:42:39 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Message_Block.cpp (clone): Make sure to check for memory failure
