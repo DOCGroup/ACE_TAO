@@ -772,11 +772,11 @@ ACE::ldfind (const ACE_TCHAR filename[],
       // OS platform).
       else
         {
-          char *ld_path =
+          ACE_TCHAR *ld_path =
 #if defined ACE_DEFAULT_LD_SEARCH_PATH
             ACE_DEFAULT_LD_SEARCH_PATH;
 #else
-          ACE_OS::getenv (ACE_LD_SEARCH_PATH);
+            ACE_OS::getenv (ACE_LD_SEARCH_PATH);
 #endif /* ACE_DEFAULT_LD_SEARCH_PATH */
 
 #if defined (ACE_WIN32)
@@ -847,7 +847,7 @@ ACE::ldfind (const ACE_TCHAR filename[],
                   // We need to do it here rather than anywhere else so
                   // that the loop condition will still work.
                   else if (path_entry[0] == '\0')
-                    path_entry = ".";
+                    path_entry = ACE_TEXT (".");
 
                   // First, try matching the filename *without* adding a
                   // prefix.

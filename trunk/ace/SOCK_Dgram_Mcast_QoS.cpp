@@ -150,7 +150,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
             if (this->subscribe (mcast_addr,
                                  qos_params,
                                  reuse_addr,
-                                 ACE_TEXT_ALWAYS_CHAR (if_addrs[if_cnt].get_host_addr()),
+                                 if_addrs[if_cnt].get_host_addr(),
                                  protocol_family,
                                  protocol,
                                  protocolinfo) == 0)
@@ -247,9 +247,9 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
       else
       {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Dest Addr in the QoS Session does"
-                             " not match the address passed into"
-                             " subscribe\n"),
+                             ACE_TEXT ("Dest Addr in the QoS Session does")
+                             ACE_TEXT (" not match the address passed into")
+                             ACE_TEXT (" subscribe\n")),
                             -1);
       }
 
