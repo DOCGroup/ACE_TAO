@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Thread_Manager_Test.cpp
 //
@@ -16,7 +16,7 @@
 //
 // = AUTHOR
 //    Prashant Jain and Doug C. Schmidt
-// 
+//
 // ============================================================================
 
 #include "ace/Thread_Manager.h"
@@ -30,42 +30,66 @@
 // Each thread keeps track of whether it has been signaled within a
 // separate TSS entry.
 // See comment below about why it's dynamically allocated.
-static ACE_TSS<Signal_Catcher> *signal_catcher;
+static ACE_TSS<Signal_Catcher> *signal_catcher = 0;
 
 extern "C" void
 handler (int signum)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %d, signaled = %d\n", 
-	      signum, (*signal_catcher)->signaled ()));
-  (*signal_catcher)->signaled (1);
+  if (signal_catcher && *signal_catcher)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%t) received signal %d, signaled = %d\n",
+                  signum, (*signal_catcher)->signaled ()));
+      (*signal_catcher)->signaled (1);
+    }
 }
 
 static void *
 worker (int iterations)
 {
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
+  // Cache a pointer to this thread's Signal_Catcher.  That way, we
+  // try to avoid dereferencing signal_catcher below in a thread that
+  // hasn't terminated when main exits.  That shouldn't happen, but it
+  // seems to on Linux and LynxOS.
+  if (! signal_catcher)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%t) (worker): signal catcher is 0!!!!\n"));
+      return (void *) -1;
+    }
+
+  Signal_Catcher *my_signal_catcher = *signal_catcher;
+
+  if (my_signal_catcher == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%t) (worker): *signal catcher is 0!!!!\n"));
+      return (void *) -1;
+    }
+
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
+#endif /* ! ACE_LACKS_UNIX_SIGNAL */
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) worker starting loop\n"));
 
   for (int i = 0; i < iterations; i++)
     {
       if ((i % 1000) == 0)
-	{
+        {
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
-	  if ((*signal_catcher)->signaled () > 0
-	      // Only test for cancellation after we've been signaled, to
-	      // avoid race conditions for suspend() and resume().
-	      && thr_mgr->testcancel (ACE_Thread::self ()) != 0)
-	    {
-	      ACE_DEBUG ((LM_DEBUG, 
-			  "(%t) has been cancelled before iteration %d!\n", 
-			  i));
-	      break;
-	    }
-#else
-          ACE_UNUSED_ARG (thr_mgr);
-#endif /* ACE_LACKS_UNIX_SIGNALS */
-	  ACE_OS::sleep (1);
-	}
+          if (my_signal_catcher->signaled () > 0  &&
+              // Only test for cancellation after we've been signaled, to
+              // avoid race conditions for suspend() and resume().
+              thr_mgr->testcancel (ACE_Thread::self ()) != 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%t) has been cancelled before iteration %d!\n",
+                          i));
+              break;
+            }
+#endif /* ! ACE_LACKS_UNIX_SIGNAL */
+          ACE_OS::sleep (1);
+        }
     }
+
   // Destructor removes thread from Thread_Manager.
   return 0;
 }
@@ -102,9 +126,9 @@ main (int, char *[])
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
   int grp_id = thr_mgr->spawn_n (n_threads,
-				 ACE_THR_FUNC (worker),
-				 (void *) n_iterations,
-				 THR_BOUND | THR_DETACHED);
+                                 ACE_THR_FUNC (worker),
+                                 (void *) n_iterations,
+                                 THR_BOUND | THR_DETACHED);
 
   // Wait for 1 second and then suspend every thread in the group.
   ACE_OS::sleep (1);
@@ -135,7 +159,10 @@ main (int, char *[])
   // Perform a barrier wait until all the threads have shut down.
   thr_mgr->wait ();
 
+  ACE_DEBUG ((LM_DEBUG, "(%t) main thread finished\n"));
+
   delete signal_catcher;
+  signal_catcher = 0;
 
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
