@@ -1,3 +1,18 @@
+Thu Sep 25 09:24:23 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/DependencyGenerator/DependencyEditor.pm:
+        * bin/DependencyGenerator/DependencyGenerator.pm:
+        * bin/DependencyGenerator/Preprocessor.pm:
+        * bin/depgen.pl:
+
+          Modified the dependency generator to be smarter about processing
+          include files.
+
+        * include/makeinclude/rules.local.GNU:
+
+          By default use g++dep for dependency generation, but allow an
+          alternate by setting the DEPGEN make macro.
+
 Wed Sep 24 12:36:21 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:

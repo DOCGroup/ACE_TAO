@@ -33,28 +33,12 @@ sub process {
   my($self)    = shift;
   my($output)  = shift;
   my($type)    = shift;
-  my($cpp)     = shift;
   my($macros)  = shift;
   my($ipaths)  = shift;
   my($replace) = shift;
   my($files)   = shift;
   my($status)  = 0;
-  my(@exclude) = ();
   my(@options) = ();
-
-  ## Determine which include files to exclude based on the directory
-  if (lc(basename($cpp)) eq 'cl' || lc(basename($cpp)) eq 'cl.exe') {
-    push(@options, '/MD');
-    if (defined $ENV{INCLUDE}) {
-      foreach my $exc (split(';', $ENV{INCLUDE})) {
-        $exc =~ s/\\/\\\\\\\\/g;
-        push(@exclude, $exc);
-      }
-    }
-  }
-  else {
-    @exclude = ('/usr/','/opt/', '/var/');
-  }
 
   ## Back up the original file and receive the contents
   my(@contents) = ();
@@ -69,7 +53,7 @@ sub process {
   my($fh) = new FileHandle();
   if (open($fh, ">$output")) {
     foreach my $line (@contents) {
-      if ($line =~ /DO NOT DELETE THIS LINE/) {
+      if ($line =~ /DO NOT DELETE/) {
         last;
       }
       print $fh $line;
@@ -78,12 +62,13 @@ sub process {
     print $fh "# DO NOT DELETE THIS LINE -- " . basename($0) . " uses it.\n" .
               "# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.\n\n";
 
-    my($dep) = new DependencyGenerator($cpp, $macros, \@options, $ipaths);
+    my($dep) = new DependencyGenerator($macros, \@options,
+                                       $ipaths, $replace, $type);
     my($objgen) = ObjectGeneratorFactory::create($type);
+    ## Sort the files so the dependencies are reproducible
     foreach my $file (sort @$files) {
       my(@objects) = $objgen->process($file);
-      print $fh $dep->process($file, \@objects,
-                              \@exclude, $replace, $type) . "\n";
+      print $fh $dep->process($file, \@objects) . "\n";
     }
 
     print $fh "# IF YOU PUT ANYTHING HERE IT WILL GO AWAY\n";
