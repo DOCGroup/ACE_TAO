@@ -1,3 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
+// $Id$
 /*
 
 COPYRIGHT
@@ -124,7 +126,7 @@ private:
   UTL_ExceptList		*pd_exceptions;		// Exceptions raised
 
   // Scope Management Protocol
-  friend int yyparse();
+  friend int tao_yyparse();
 
   virtual AST_Argument		*fe_add_argument(AST_Argument	*a);
   virtual UTL_StrList		*fe_add_context(UTL_StrList 	*c);	

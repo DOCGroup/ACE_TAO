@@ -1,3 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
+// $Id$
 /*
 
 COPYRIGHT
@@ -97,7 +99,7 @@ public:
 
 private:
   friend void fe_populate(AST_Module *m);
-  friend int yyparse();
+  friend int tao_yyparse();
 
   // Scope Management Protocol
 

@@ -1,3 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
+// $Id$
 /*
 
 COPYRIGHT
@@ -127,7 +129,7 @@ private:
   AST_UnionBranch		*lookup_enum(AST_UnionBranch *b);
 
 private:
-  friend int yyparse();
+  friend int tao_yyparse();
   // Scope Management Protocol
 
   virtual AST_Union		*fe_add_union(AST_Union			*u);
