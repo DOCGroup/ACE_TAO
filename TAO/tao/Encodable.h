@@ -61,5 +61,6 @@ public:
   //  false.
 }; 
 
+#include "ace/post.h"
 
 #endif // defined (TAO_ENCODABLE_H_)
