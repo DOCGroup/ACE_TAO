@@ -1,3 +1,9 @@
+Tue Feb 22 17:42:09 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch.cpp: Reset the ACE_File_Lock::remove_ data member to
+	  0 in the open() method so that it can be reused.  Thanks to 
+	  Sangwoo Jin <swjinjin@sei.co.kr> for reporting this.
+
 Tue Feb 22 13:57:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/ACE.cpp (send_n and recv_n): Reduced the number of calls to
@@ -320,7 +326,8 @@ Thu Feb 17 08:10:08 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Service_Config.cpp (close_singletons): Don't bother calling
           ACE_Proactor::close_singleton() on WinCE, Win95/98, or if
-          these's no support for AIO calls.  Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for reporting this.
+ 	  these's no support for AIO calls.  Thanks to Sangwoo Jin
+ 	  <swjinjin@sei.co.kr> for reporting this.
 
 Wed Feb 16 17:03:31 2000  Steve Huston  <shuston@riverace.com>
 
