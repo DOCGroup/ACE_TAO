@@ -4,7 +4,6 @@
 
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/ORB_Core.h"
-#include "tao/Leader_Follower.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
