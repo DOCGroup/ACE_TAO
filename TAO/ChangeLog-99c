@@ -1,6 +1,11 @@
+Thu Feb 25 10:48:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/Options.html: Added a short note about the change of
+	  -ORBdemuxstrategy.
+
 Thu Feb 25 09:27:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_global.cpp: 
+	* TAO_IDL/util/utl_global.cpp:
 	  Use interpretive marshaling by default, at least until unions
 	  work correctly.
 
@@ -19,11 +24,11 @@ Wed Feb 24 22:54:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  files are parsed before these fake entries.
 
 	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf: -ORBdemuxstrategy
-	  has become -ORBsystemidpolicystrategy now.
+	  has become -ORBsystemidpolicydemuxstrategy now.
 
 	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf.static: Fixed
 	  static service's names.  Changed to use
-	  -ORBsystemidpolicystrategy.
+	  -ORBsystemidpolicydemuxstrategy.
 
 	* tao/orbconf.cpp: Fixed TAO_DEFAULT_*_ARGS.
 
