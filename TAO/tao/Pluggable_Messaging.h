@@ -109,10 +109,6 @@ public:
   /// general.
   virtual int format_message (TAO_OutputCDR &cdr) = 0;
 
-  /// Get the message type that was received.
-  virtual TAO_Pluggable_Message_Type message_type (void) = 0;
-
-
   /// Do any initialisations that may be needed.
   virtual void init (CORBA::Octet major,
                      CORBA::Octet minor) = 0;
@@ -123,9 +119,6 @@ public:
 
   /// @@ Bala: Documentation
   virtual int parse_incoming_messages (ACE_Message_Block &message_block) = 0;
-
-  /// @@Bala: Documentation please...
-  virtual int is_message_complete (ACE_Message_Block &message_block) = 0;
 
   virtual ssize_t missing_data (ACE_Message_Block &incoming) = 0;
 
@@ -140,7 +133,6 @@ public:
   /// Parse the request message, make an upcall and send the reply back
   /// to the "request initiator"
   virtual int process_request_message (TAO_Transport *transport,
-                                       TAO_ORB_Core *orb_core,
                                        TAO_Queued_Data *qd) = 0;
 
 

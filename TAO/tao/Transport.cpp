@@ -1122,9 +1122,8 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
   rh.resume_handle ();
 
   // Get the <message_type> that we have received
-  // @@Wrong.. We need to look at <qd> for this...
   TAO_Pluggable_Message_Type t =
-    this->messaging_object ()->message_type ();
+    qd->msg_type_;
 
 
   int result = 0;
@@ -1146,7 +1145,6 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
     {
       if (this->messaging_object ()->process_request_message (
             this,
-            this->orb_core (),
             qd) == -1)
         {
           // Close the TMS

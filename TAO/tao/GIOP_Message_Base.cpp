@@ -287,9 +287,12 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
 }
 
 TAO_Pluggable_Message_Type
-TAO_GIOP_Message_Base::message_type (void)
+TAO_GIOP_Message_Base::message_type (
+    TAO_GIOP_Message_State &msg_state)
 {
-  switch (this->message_state_.message_type_)
+  // Convert to the right type of Pluggable Messaging message type.
+
+  switch (msg_state.message_type_)
     {
     case TAO_GIOP_REQUEST:
     case TAO_GIOP_LOCATEREQUEST:
@@ -397,7 +400,7 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
   qd->byte_order_ = state.byte_order_;
   qd->major_version_ = state.giop_version_.major;
   qd->minor_version_ = state.giop_version_.minor;
-
+  qd->msg_type_ = this->message_type (state);
   return 1;
 }
 
@@ -464,6 +467,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       qd->byte_order_ = state.byte_order_;
       qd->major_version_ = state.giop_version_.major;
       qd->minor_version_ = state.giop_version_.minor;
+      qd->msg_type_ = this->message_type (state);
     }
   else
     {
@@ -496,29 +500,28 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
 void
 TAO_GIOP_Message_Base::get_message_data (TAO_Queued_Data *qd)
 {
+  // Get the message information
   qd->byte_order_ =
     this->message_state_.byte_order_;
   qd->major_version_ =
     this->message_state_.giop_version_.major;
   qd->minor_version_ =
     this->message_state_.giop_version_.minor;
-}
 
-int
-TAO_GIOP_Message_Base::is_message_complete (ACE_Message_Block & /*incoming*/)
-{
-  // @@Bala: Implement other cases
-  return 0;
+  qd->msg_type_=
+    this->message_type (this->message_state_);
+
+  // Reset the message_state
+  // this->message_state_.reset (0);
 }
 
 int
 TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
-                                                TAO_ORB_Core *orb_core,
                                                 TAO_Queued_Data *qd)
 
 {
   // Set the upcall thread
-  orb_core->lf_strategy ().set_upcall_thread (orb_core->leader_follower ());
+  this->orb_core_->lf_strategy ().set_upcall_thread (this->orb_core_->leader_follower ());
 
   // Set the state internally for parsing and generating messages
   this->set_state (qd->major_version_,
@@ -551,7 +554,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           qd->byte_order_,
                           qd->major_version_,
                           qd->minor_version_,
-                          orb_core);
+                          this->orb_core_);
 
   // Set giop version info for the outstream so that server replies
   // in correct GIOP version
@@ -575,12 +578,10 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
       // could raise an exception or write things in the output CDR
       // stream
       return this->process_request (transport,
-                                    orb_core,
                                     input_cdr);
 
     case TAO_GIOP_LOCATEREQUEST:
       return this->process_locate_request (transport,
-                                           orb_core,
                                            input_cdr);
     default:
       return -1;
@@ -716,7 +717,6 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type t,
 
 int
 TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
-                                        TAO_ORB_Core *orb_core,
                                         TAO_InputCDR &cdr)
 {
   // This will extract the request header, set <response_required>
@@ -725,7 +725,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
                              cdr,
                              *this->output_,
                              transport,
-                             orb_core);
+                             this->orb_core_);
 
   CORBA::ULong request_id = 0;
   CORBA::Boolean response_required = 0;
@@ -749,10 +749,11 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
       CORBA::Object_var forward_to;
 
       // Do this before the reply is sent.
-      orb_core->adapter_registry ()->dispatch (request.object_key (),
-                                               request,
-                                               forward_to,
-                                               ACE_TRY_ENV);
+      this->orb_core_->adapter_registry ()->dispatch (
+          request.object_key (),
+          request,
+          forward_to,
+          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (forward_to.in ()))
@@ -796,7 +797,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
       if (response_required)
         {
           result = this->send_reply_exception (transport,
-                                               orb_core,
+                                               this->orb_core_,
                                                request_id,
                                                &request.reply_service_info (),
                                                &ACE_ANY_EXCEPTION);
@@ -854,7 +855,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
                                     CORBA::COMPLETED_MAYBE);
 
           result = this->send_reply_exception (transport,
-                                               orb_core,
+                                               this->orb_core_,
                                                request_id,
                                                &request.reply_service_info (),
                                                &exception);
@@ -895,13 +896,12 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
 int
 TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
-                                               TAO_ORB_Core* orb_core,
                                                TAO_InputCDR &input)
 {
   // This will extract the request header, set <response_required> as
   // appropriate.
   TAO_GIOP_Locate_Request_Header locate_request (input,
-                                                 orb_core);
+                                                 this->orb_core_);
 
   TAO_GIOP_Locate_Status_Msg status_info;
 
@@ -949,7 +949,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
                                         "_non_existent",
                                         dummy_output,
                                         transport,
-                                        orb_core,
+                                        this->orb_core_,
                                         parse_error);
 
       if (parse_error != 0)
@@ -960,10 +960,11 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
       CORBA::Object_var forward_to;
 
-      orb_core->adapter_registry ()->dispatch (server_request.object_key (),
-                                               server_request,
-                                               forward_to,
-                                               ACE_TRY_ENV);
+      this->orb_core_->adapter_registry ()->dispatch (
+          server_request.object_key (),
+          server_request,
+          forward_to,
+          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (forward_to.in ()))

@@ -94,19 +94,10 @@ public:
   virtual int format_message (TAO_OutputCDR &cdr);
 
 
-  /// Get the message type. The return value would be one of the
-  /// following:
-  /// TAO_PLUGGABLE_MESSAGE_REQUEST,
-  /// TAO_PLUGGABLE_MESSAGE_REPLY,
-  /// TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
-  /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
-  virtual TAO_Pluggable_Message_Type message_type (void);
+
 
   /// @@Bala:Documentation please...
   virtual int parse_incoming_messages (ACE_Message_Block &message_block);
-
-  /// @@Bala:Documentation please..
-  virtual int is_message_complete (ACE_Message_Block &message_block);
 
   /// @@Bala:Documentation please..
   virtual ssize_t missing_data (ACE_Message_Block &message_block);
@@ -122,7 +113,6 @@ public:
   /// Process the request message that we have received on the
   /// connection
   virtual int process_request_message (TAO_Transport *transport,
-                                       TAO_ORB_Core *orb_core,
                                        TAO_Queued_Data *qd);
 
 
@@ -145,12 +135,10 @@ protected:
 
   /// Processes the <GIOP_REQUEST> messages
   int process_request (TAO_Transport *transport,
-                       TAO_ORB_Core *orb_core,
                        TAO_InputCDR &input);
 
   /// Processes the <GIOP_LOCATE_REQUEST> messages
   int process_locate_request (TAO_Transport *transport,
-                              TAO_ORB_Core *orb_core,
                               TAO_InputCDR &input);
 
   /// Set the state
@@ -161,6 +149,14 @@ protected:
   void dump_msg (const char *label,
                  const u_char *ptr,
                  size_t len);
+
+  /// Get the message type. The return value would be one of the
+  /// following:
+  /// TAO_PLUGGABLE_MESSAGE_REQUEST,
+  /// TAO_PLUGGABLE_MESSAGE_REPLY,
+  /// TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
+  /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
+  TAO_Pluggable_Message_Type message_type (TAO_GIOP_Message_State &state);
 
 private:
 
