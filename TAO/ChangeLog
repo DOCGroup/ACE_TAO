@@ -1,3 +1,9 @@
+Fri Dec 27 14:57:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/Makefile:
+	* examples/Makefile.bor: Added ior_corbaloc to the list of
+	  directories. 
+
 Fri Dec 27 14:41:44 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/ior_corbaloc: Moved the test from tests/ior_corbaloc to
