@@ -214,12 +214,30 @@ void POA_ImplementationRepository::Administration_tie<T>::activate_server  (
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
-    , ImplementationRepository::Administration::NotFound
-    , ImplementationRepository::Administration::CannotActivate
+    , ImplementationRepository::NotFound
+    , ImplementationRepository::CannotActivate
   ))
 {
   this->ptr_->activate_server (
 server ACE_ENV_ARG_PARAMETER
+  );
+}
+
+template <class T> ACE_INLINE
+char * POA_ImplementationRepository::Administration_tie<T>::activate_server_with_startup  (
+    const char * server,
+    CORBA::Long check_startup
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , ImplementationRepository::NotFound
+    , ImplementationRepository::CannotActivate
+  ))
+{
+  return this->ptr_->activate_server_with_startup (
+server,
+    check_startup ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -231,7 +249,7 @@ void POA_ImplementationRepository::Administration_tie<T>::register_server  (
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
-    , ImplementationRepository::Administration::AlreadyRegistered
+    , ImplementationRepository::AlreadyRegistered
   ))
 {
   this->ptr_->register_server (
@@ -263,7 +281,7 @@ void POA_ImplementationRepository::Administration_tie<T>::remove_server  (
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
-    , ImplementationRepository::Administration::NotFound
+    , ImplementationRepository::NotFound
   ))
 {
   this->ptr_->remove_server (
@@ -278,7 +296,7 @@ void POA_ImplementationRepository::Administration_tie<T>::shutdown_server  (
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
-    , ImplementationRepository::Administration::NotFound
+    , ImplementationRepository::NotFound
   ))
 {
   this->ptr_->shutdown_server (
@@ -295,7 +313,7 @@ char * POA_ImplementationRepository::Administration_tie<T>::server_is_running  (
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
-    , ImplementationRepository::Administration::NotFound
+    , ImplementationRepository::NotFound
   ))
 {
   return this->ptr_->server_is_running (
@@ -312,7 +330,7 @@ void POA_ImplementationRepository::Administration_tie<T>::server_is_shutting_dow
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
-    , ImplementationRepository::Administration::NotFound
+    , ImplementationRepository::NotFound
   ))
 {
   this->ptr_->server_is_shutting_down (
@@ -328,7 +346,7 @@ void POA_ImplementationRepository::Administration_tie<T>::find  (
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
-    , ImplementationRepository::Administration::NotFound
+    , ImplementationRepository::NotFound
   ))
 {
   this->ptr_->find (

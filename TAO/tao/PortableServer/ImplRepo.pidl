@@ -46,13 +46,27 @@ module ImplementationRepository
     // Try to shutdown the server gracefully.
   };
 
+  // = Exceptions
+  
+  exception AlreadyRegistered {};
+  // Object already bound in the Implementation Repository
+  
+  exception CannotActivate
+  {
+    string reason;
+  };
+  // The server could not be restarted.
+  
+  exception NotFound {};
+  // Object not found in the Implementation Repository
+  
   struct EnvironmentVariable
   // One environment variable/value pair.
   {
     string name;
     string value;
   };
-
+  
   typedef string Address;
   // Specifies the location of the server.
 
@@ -62,42 +76,47 @@ module ImplementationRepository
   enum ActivationMode {NORMAL, MANUAL, PER_CLIENT, AUTO_START};
   // The type of Activation
 
+  /// Options used to start up the server.
   struct StartupOptions
-  // Options used to start up the server.
   {
+    /// Startup command (program name and arguments).
     string command_line;
-    // Startup command (program name and arguments).
-
+    
+    /// Environment Variables.
     EnvironmentList environment;
-    // Environment Variables.
-
+    
+    /// Working directory.
     string working_directory;
-    // Working directory.
-
+    
+    /// Activation Mode
     ActivationMode activation;
-    // Activation Mode
+
+    /// Location of the activator
+    string location;
   };
 
   struct ServerInformation
   // All the information about one server.
   {
+    /// The logical server this server is part of.
     string logical_server;
-    // The logical server this server is part of.
 
+    /// Server name.
     string server;
-    // Server name.
-
+    
+    /// How to start up the server.
     StartupOptions startup;
-    // How to start up the server.
-
+    
+    /// Where the server is located currently.
     Address location;
-    // Where the server is located currently.
+   
   };
 
   typedef sequence <ServerInformation> ServerInformationList;
 
+  /// Forward declaration.
   interface ServerInformationIterator;
-  // Forward declaration.
+
 
   interface Administration
     // = TITLE
@@ -107,20 +126,6 @@ module ImplementationRepository
     //    This interface exports all the administration functionality of
     //    the Implementation Repository.
   {
-    // = Exceptions
-
-    exception AlreadyRegistered {};
-    // Object already bound in the Implementation Repository
-
-    exception CannotActivate
-    {
-      string reason;
-    };
-    // The server could not be restarted.
-
-    exception NotFound {};
-    // Object not found in the Implementation Repository
-
     void activate_server (in string server)
       raises (NotFound,
               CannotActivate);
@@ -130,6 +135,11 @@ module ImplementationRepository
     // in the Implementation Repository.  The <CannotActivate> exception
     // is raised when <server> is found in the Repository but could not be
     // activated.
+
+    string activate_server_with_startup (in string server,
+					 in long check_startup)
+      raises (NotFound,
+              CannotActivate);
 
     void register_server (in string server,
                           in StartupOptions options)
@@ -159,7 +169,7 @@ module ImplementationRepository
     //
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.
-
+    
     Address server_is_running (in string server,
                                in Address addr,
                                in ServerObject server_object)
@@ -169,7 +179,7 @@ module ImplementationRepository
     //
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.
-
+    
     void server_is_shutting_down (in string server)
       raises (NotFound);
     // Used to tell the Implementation Repository that <server> is shutting

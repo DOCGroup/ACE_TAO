@@ -38,6 +38,18 @@ ImplementationRepository::ServerObject::ServerObject (
 #endif /* end #if !defined */
 
 // *************************************************************
+// Inline operations for exception ImplementationRepository::AlreadyRegistered
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception ImplementationRepository::CannotActivate
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception ImplementationRepository::NotFound
+// *************************************************************
+
+// *************************************************************
 // Inline operations for class ImplementationRepository::EnvironmentVariable_var
 // *************************************************************
 
@@ -1404,18 +1416,6 @@ ImplementationRepository::ServerInformationList_out::operator[] (CORBA::ULong in
 
 #endif /* end #if !defined */
 
-// *************************************************************
-// Inline operations for exception ImplementationRepository::Administration::AlreadyRegistered
-// *************************************************************
-
-// *************************************************************
-// Inline operations for exception ImplementationRepository::Administration::CannotActivate
-// *************************************************************
-
-// *************************************************************
-// Inline operations for exception ImplementationRepository::Administration::NotFound
-// *************************************************************
-
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_
@@ -1461,6 +1461,62 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     ImplementationRepository::ServerObject_ptr &
   );
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationRepository::AlreadyRegistered &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._rep_id ())
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,ImplementationRepository::AlreadyRegistered&)
+{
+  return 1;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationRepository::CannotActivate &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._rep_id ())
+  {
+    // now marshal the members (if any)
+    if (
+      (strm << _tao_aggregate.reason.in ())
+    )
+      return 1;
+    else
+      return 0;
+  }
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,ImplementationRepository::CannotActivate &_tao_aggregate)
+{
+  // now marshal the members
+  if (
+    (strm >> _tao_aggregate.reason.out ())
+  )
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationRepository::NotFound &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._rep_id ())
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,ImplementationRepository::NotFound&)
+{
+  return 1;
+}
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationRepository::EnvironmentVariable &_tao_aggregate)
 {
@@ -1526,7 +1582,8 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationR
     (strm << _tao_aggregate.command_line.in ()) &&
     (strm << _tao_aggregate.environment) &&
     (strm << _tao_aggregate.working_directory.in ()) &&
-    (strm << _tao_aggregate.activation)
+    (strm << _tao_aggregate.activation) &&
+    (strm << _tao_aggregate.location.in ())
   )
     return 1;
   else
@@ -1540,7 +1597,8 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, ImplementationReposito
     (strm >> _tao_aggregate.command_line.out ()) &&
     (strm >> _tao_aggregate.environment) &&
     (strm >> _tao_aggregate.working_directory.out ()) &&
-    (strm >> _tao_aggregate.activation)
+    (strm >> _tao_aggregate.activation) &&
+    (strm >> _tao_aggregate.location.out ())
   )
     return 1;
   else
@@ -1610,60 +1668,4 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     ImplementationRepository::Administration_ptr &
   );
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationRepository::Administration::AlreadyRegistered &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,ImplementationRepository::Administration::AlreadyRegistered&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationRepository::Administration::CannotActivate &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-  {
-    // now marshal the members (if any)
-    if (
-      (strm << _tao_aggregate.reason.in ())
-    )
-      return 1;
-    else
-      return 0;
-  }
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,ImplementationRepository::Administration::CannotActivate &_tao_aggregate)
-{
-  // now marshal the members
-  if (
-    (strm >> _tao_aggregate.reason.out ())
-  )
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationRepository::Administration::NotFound &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,ImplementationRepository::Administration::NotFound&)
-{
-  return 1;
-}
 
