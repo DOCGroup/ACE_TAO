@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = Thread_Pool_Test.exe
-OBJFILES = obj\Thread_Pool_Test.obj
+OBJFILES = objs\Thread_Pool_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

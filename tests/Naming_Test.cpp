@@ -179,7 +179,7 @@ main (int argc, char *argv[])
   TCHAR temp_file [BUFSIZ];
   ACE_START_TEST ("Naming_Test");
 
-  ACE_Naming_Context *ns_context = 0;
+  ACE_Naming_Context *ns_context;
   ACE_NEW_RETURN (ns_context, ACE_Naming_Context, -1);
 
   ACE_Name_Options *name_options = ns_context->name_options ();

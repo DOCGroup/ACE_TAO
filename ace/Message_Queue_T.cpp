@@ -758,7 +758,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
 {
   ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i");
 
-  int result = 0;
+  int result;
 
   // get the current time
   ACE_Time_Value current_time = ACE_OS::gettimeofday ();  
@@ -809,7 +809,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&firs
       return -1;
     }
 
-  int result = 0;
+  int result;
 
   // get the current time
   ACE_Time_Value current_time = ACE_OS::gettimeofday ();
@@ -952,8 +952,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::remove_stale_messages (const ACE_Time_
       // management scheme to be configured in either case.
       ACE_Message_Block *temp1 = remove_head;
       ACE_Message_Block *temp2 = remove_head->next ();
-      ACE_Message_Block *size_temp = 0;
-      size_t msg_size = 0;
+      ACE_Message_Block *size_temp;
+      size_t msg_size;
       while (temp1)
       {
         // Make sure to count *all* the bytes in a composite message!!!

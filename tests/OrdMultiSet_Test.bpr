@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = OrdMultiSet_Test.exe
-OBJFILES = obj\OrdMultiSet_Test.obj
+OBJFILES = objs\OrdMultiSet_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

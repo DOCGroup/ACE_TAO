@@ -164,7 +164,7 @@ producer (void *args)
 
 int  run_test (ACE_Message_Queue<ACE_MT_SYNCH>* msg_queue, const char *send_order, const char *receipt_order)
 {
-  u_int i = 0;
+  u_int i;
   u_int array_size = ACE_OS::strlen (send_order);
 
   ACE_ASSERT (msg_queue != 0);
@@ -262,7 +262,7 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Dynamic_Priority_Test"));
 
-  ACE_Message_Queue<ACE_MT_SYNCH> *test_queue = 0;
+  ACE_Message_Queue<ACE_MT_SYNCH> *test_queue;
 
   // test factory, static message queue
   test_queue = ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_static_message_queue (max_queue);

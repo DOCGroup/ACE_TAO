@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = Sigset_Ops_Test.exe
-OBJFILES = obj\Sigset_Ops_Test.obj
+OBJFILES = objs\Sigset_Ops_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

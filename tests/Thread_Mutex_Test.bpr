@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = Thread_Mutex_Test.exe
-OBJFILES = obj\Thread_Mutex_Test.obj
+OBJFILES = objs\Thread_Mutex_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

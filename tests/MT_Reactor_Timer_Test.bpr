@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = MT_Reactor_Timer_Test.exe
-OBJFILES = obj\MT_Reactor_Timer_Test.obj
+OBJFILES = objs\MT_Reactor_Timer_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

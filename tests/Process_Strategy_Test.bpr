@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = Process_Strategy_Test.exe
-OBJFILES = obj\Process_Strategy_Test.obj
+OBJFILES = objs\Process_Strategy_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib
