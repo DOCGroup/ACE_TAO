@@ -169,7 +169,7 @@ my $find = "${gnu}find";
 my $gzip = "${gnu}gzip";
 my $make = "${gnu}make -s";
 my $mv = '/bin/mv';
-my $rm = "/bin/rm -f";
+my $rm = "${gnu}/rm -f";
 chop (my $now = `$date +"%a %b %d %T %Y"`);
 
 unless ("$controlled_files") {
@@ -267,6 +267,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
   }
 
   if ("$ace_tag"  ||  "$tao_tag") {
+    chdir "..";
     &ex ("$rm -r $stage_dir")  &&
       warn "$0: failed to remove $stage_dir\n";
   }
