@@ -55,6 +55,10 @@ Sun Jan 04 19:45:47 1998  David L. Levine  <levine@cs.wustl.edu>
           Thanks to Jack Erickson <JErickson@exchange.ml.com> for
           verifying that it _should_ return (unsigned long) -10.
 
+        * ace/config-linux-common.h: factored out
+          ACE_LACKS_SOME_POSIX_PROTOTYPES from glibc and non-glibc
+          sections to common section.
+
 Sun Jan 04 17:19:31 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.15, released Sun Jan 04 17:19:31 1998.
