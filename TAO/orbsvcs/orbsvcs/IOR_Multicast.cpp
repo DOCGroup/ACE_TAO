@@ -77,8 +77,10 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   CORBA::Short header;
   ACE_UINT16 remote_port;
   
-  char * name;
-  ACE_NEW_RETURN (name, char [BUFSIZ], 0);
+  char *name;
+  ACE_NEW_RETURN (name,
+                  char[BUFSIZ],
+                  0);
   
   CORBA::String_var service_name (name);
   
@@ -94,6 +96,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                        "TAO_IOR_Multicast::handle_input - peek %d\n",
 		       n), 
 		      0);
+
   else if (ACE_NTOHS (header) <= 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Header value < 1\n"),
@@ -114,13 +117,11 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   n = this->mcast_dgram_.recv (iov,
                                iovcnt,
                                remote_addr);
-  
   if (n <= 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO_IOR_Multicast::handle_input recv = %d\n",
 		       n), 
 		      0);
-  
   // Null terminate.
   service_name [ACE_NTOHS (header) - sizeof (ACE_UINT16)] = 0;
   
@@ -131,16 +132,17 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 		"Port received : %u\n",
 		service_name.in (),
 		ACE_NTOHS (remote_port)));
-  
   ACE_CString ior(this->ior_);
   
-  if ((ACE_OS::strcmp (service_name.in (), "NameService") != 0) &&
-      (ACE_OS::strcmp (service_name.in (), "TradingService") != 0))
+  if (ACE_OS::strcmp (service_name.in (),
+                      "NameService") != 0
+      && ACE_OS::strcmp (service_name.in (),
+                         "TradingService") != 0)
     {
-      // The client has requested an IOR other than for the Name/Trading
-      // Service.  Lookup the table for the IOR. The call to find_ior
-      // will fill the ior for us if the service name is found in the
-      // table.
+      // The client has requested an IOR other than for the
+      // Name/Trading Service.  Lookup the table for the IOR. The call
+      // to find_ior will fill the ior for us if the service name is
+      // found in the table.
       
       ACE_CString service (service_name.in ());
       
