@@ -620,7 +620,7 @@ class TAO_Export CORBA_PolicyList : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<Policy,Policy_var>
+  TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
