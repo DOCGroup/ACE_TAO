@@ -1,3 +1,15 @@
+Tue Oct 14 00:54:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+	  Fixed a minor compilation problem.
+	
+	* performance-tests/Benchmark/descriptors/Test-ior.cad:
+	* performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl: 
+	* performance-tests/Benchmark/RoundTripServer/server.cpp: 
+
+	  Changed to output IOR to a fixed file named "rtserver.ior" and
+	  refer to the object as file://rtserver.ior in the cad file
+
 Mon Oct 13 23:41:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/RateGen/controller.cpp: 
