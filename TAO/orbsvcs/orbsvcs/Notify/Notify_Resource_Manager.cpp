@@ -236,11 +236,9 @@ TAO_Notify_Resource_Manager::create_generic_childPOA_i (PortableServer::POA_ptr 
 PortableServer::ObjectId *
 TAO_Notify_Resource_Manager::long_to_ObjectId (const CORBA::Long id)
 {
-  // Size of string
+  // Modified code from string_to_ObjectId ..
   //
-  // We DO NOT include the zero terminator, as this is simply an
-  // artifact of the way strings are stored in C.
-  //
+
   CORBA::ULong buffer_size = 4;
 
   // Create the buffer for the Id
