@@ -6,7 +6,7 @@
 #include "Identification_Service.h"
 #include "FTEC_Become_Primary_Listener.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            GroupInfoPublisher,
            "$Id$")
 

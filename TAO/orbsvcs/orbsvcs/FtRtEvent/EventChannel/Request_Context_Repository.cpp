@@ -4,7 +4,7 @@
 #include "../Utils/resolve_init.h"
 #include "../Utils/UUID.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            Request_Context_Repository,
            "$Id$")
 

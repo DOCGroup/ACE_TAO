@@ -6,7 +6,7 @@
 
 #include "tao/debug.h"
 
-ACE_RCSID (FTRT_ClientORB,
+ACE_RCSID (ClientORB,
            FTRT_ClientORB_Loader,
            "$Id$")
 

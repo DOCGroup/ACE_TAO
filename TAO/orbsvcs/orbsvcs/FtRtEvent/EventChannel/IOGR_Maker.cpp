@@ -12,7 +12,7 @@
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "GroupInfoPublisher.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            IOGR_Maker,
            "$Id$")
 

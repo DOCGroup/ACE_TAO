@@ -11,8 +11,8 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTRTEC_ServiceActivate.h"
 
-ACE_RCSID (FTRT_Event_Service,
-           FT_EventService.cpp,
+ACE_RCSID (Event_Service,
+           FT_EventService,
            "$Id$")
 
 

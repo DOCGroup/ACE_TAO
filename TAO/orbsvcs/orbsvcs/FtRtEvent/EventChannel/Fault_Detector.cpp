@@ -4,7 +4,7 @@
 #include "Fault_Detector.h"
 #include "ace/Select_Reactor.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            Fault_Detector,
            "$Id$")
 

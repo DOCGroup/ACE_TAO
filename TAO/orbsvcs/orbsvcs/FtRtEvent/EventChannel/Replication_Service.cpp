@@ -5,7 +5,7 @@
 #include "Basic_Replication_Strategy.h"
 #include "FTEC_ORBInitializer.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            Replication_Service,
            "$Id$")
 

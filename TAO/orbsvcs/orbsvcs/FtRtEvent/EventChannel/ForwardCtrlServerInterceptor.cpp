@@ -7,7 +7,7 @@
 #include "../Utils/resolve_init.h"
 #include "orbsvcs/FTRTC.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            ForwardCtrlServerInterceptor,
            "$Id$")
 

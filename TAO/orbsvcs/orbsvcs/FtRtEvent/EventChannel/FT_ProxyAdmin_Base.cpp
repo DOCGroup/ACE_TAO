@@ -4,7 +4,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "FT_ProxyAdmin_T.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            FT_ProxyAdmin_Base,
            "$Id$")
 

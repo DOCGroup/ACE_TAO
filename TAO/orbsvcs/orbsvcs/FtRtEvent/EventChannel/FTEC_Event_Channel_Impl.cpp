@@ -12,7 +12,7 @@
 #include "IOGR_Maker.h"
 #include "Replication_Service.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            FTEC_Event_Channel_Impl,
            "$Id$")
 

@@ -6,7 +6,7 @@
 #include "FTEC_ProxyConsumer.h"
 #include "tao/Stub.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            TAO_FTEC_SupplierAdmin,
            "$Id$")
 

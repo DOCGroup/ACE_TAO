@@ -5,8 +5,8 @@
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (FTRTEC_Factory_Service,
-           FTRTEC_Factory_Service.cpp,
+ACE_RCSID (Factory_Service,
+           FTRTEC_Factory_Service,
            "$Id$")
 
 namespace {

@@ -7,7 +7,7 @@
 #include "FTEC_SupplierAdmin.h"
 #include "FTEC_ConsumerAdmin.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            FTEC_Factory,
            "$Id$")
 

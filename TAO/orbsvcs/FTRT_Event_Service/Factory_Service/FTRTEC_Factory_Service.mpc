@@ -1,4 +1,5 @@
 project(FTRTEC_Factory_Service): orbsvcsexe, ftorbutils, notify {
+  after    += FaultTolerance
   exename   = ftrtec_factory_service
   includes += $(TAO_ROOT)/orbsvcs
   libs += TAO_FaultTolerance

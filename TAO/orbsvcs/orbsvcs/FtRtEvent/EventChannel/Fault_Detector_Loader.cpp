@@ -7,7 +7,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ConnectionHandler_T.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            Fault_Detector_Loader,
            "$Id$")
 

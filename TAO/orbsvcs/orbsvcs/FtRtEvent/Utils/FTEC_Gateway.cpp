@@ -4,11 +4,10 @@
 #include "resolve_init.h"
 #include "orbsvcs/FtRtecEventCommS.h"
 
-ACE_RCSID
-  (
-    FtRtEvent, FTEC_Gateway,
-      "$Id$"
-  )
+ACE_RCSID (Utils, 
+           FTEC_Gateway,
+           "$Id$")
+
 namespace TAO_FTRTEC
 {
   class TAO_FtRtEvent_Export

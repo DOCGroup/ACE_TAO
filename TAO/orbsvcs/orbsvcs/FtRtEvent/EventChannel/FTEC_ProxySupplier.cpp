@@ -6,7 +6,7 @@
 #include "Replication_Service.h"
 #include "../Utils/ScopeGuard.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            TAO_FTEC_ProxyPushSupplier,
            "$Id$")
 
