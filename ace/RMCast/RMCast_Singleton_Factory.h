@@ -37,7 +37,8 @@ class ACE_RMCast_Export ACE_RMCast_Singleton_Factory : public ACE_RMCast_Module_
 public:
   /// Constructor
   /**
-   * The create() method will return always \param singleton.
+   * @param singleton This object is returned by any call to
+   * create().
    */
   ACE_RMCast_Singleton_Factory (ACE_RMCast_Module *singleton);
 

@@ -1212,7 +1212,7 @@ public:
   /// to allow the use of ACE_Atomic_Op with ACE_Time_Value).
   ACE_Time_Value operator++ (int);  // Postfix advance
   ACE_Time_Value &operator++ (void);  // Prefix advance
- 
+
   /// Decrement microseconds (the only reason this is here is
   /// to allow the use of ACE_Atomic_Op with ACE_Time_Value).
   ACE_Time_Value operator-- (int);  // Postfix dec
@@ -8046,89 +8046,111 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 // big endian encapsulation byte order has value = 0
 #endif /* ! ACE_LITTLE_ENDIAN */
 
-// Default constants for ACE CDR performance optimizations.
+/**
+ * @name Default values to control CDR classes memory allocation
+ *       strategies
+ */
+//@{
+
+/// Control the initial size of all CDR buffers, application
+/// developers may want to optimize this value to fit their request
+/// size
 #if !defined (ACE_DEFAULT_CDR_BUFSIZE)
 #  define ACE_DEFAULT_CDR_BUFSIZE 512
 #endif /* ACE_DEFAULT_CDR_BUFSIZE */
+
+/// Stop exponential growth of CDR buffers to avoid overallocation
 #if !defined (ACE_DEFAULT_CDR_EXP_GROWTH_MAX)
 #  define ACE_DEFAULT_CDR_EXP_GROWTH_MAX 65536
 #endif /* ACE_DEFAULT_CDR_EXP_GROWTH_MAX */
+
+/// Control CDR buffer growth after maximum exponential growth is
+/// reached
 #if !defined (ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK)
 #  define ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK 65536
 #endif /* ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK */
-// Even though the strategy above minimizes copies in some cases it is
-// more efficient just to copy the octet sequence, for instance, while
-// enconding a "small" octet sequence in a buffer that has enough
-// space. This parameter controls the default value for "small enough",
-// but an ORB may use a different value, set from a command line option.
-#define ACE_DEFAULT_CDR_MEMCPY_TRADEOFF 256
+//@}
 
-// In some environments it is useful to swap the bytes on write, for
-// instance: a fast server can be feeding a lot of slow clients that
-// happen to have the wrong byte order.
-// This macro enables the functionality to support that, but we still
-// need a way to activate it on a per-connection basis.
-//
+/// Control the zero-copy optimizations for octet sequences
+/**
+ * Large octet sequences can be sent without any copies by chaining
+ * them in the list of message blocks that represent a single CDR
+ * stream.  However, if the octet sequence is too small the zero copy
+ * optimizations actually hurt performance.  Octet sequences smaller
+ * than this value will be copied.
+ */
+#if !defined (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF)
+#define ACE_DEFAULT_CDR_MEMCPY_TRADEOFF 256
+#endif /* ACE_DEFAULT_CDR_MEMCPY_TRADEOFF */
+
+/**
+ * In some environments it is useful to swap the bytes on write, for
+ * instance: a fast server can be feeding a lot of slow clients that
+ * happen to have the wrong byte order.
+ * Because this is a rarely used feature we disable it by default to
+ * minimize footprint.
+ * This macro enables the functionality, but we still need a way to
+ * activate it on a per-connection basis.
+ */
 // #define ACE_ENABLE_SWAP_ON_WRITE
 
-// In some environements we never need to swap bytes when reading, for
-// instance embebbed systems (such as avionics) or homogenous
-// networks.
-// Setting this macro disables the capabilities to demarshall streams
-// in the wrong byte order.
-//
+/**
+ * In some environements we never need to swap bytes when reading, for
+ * instance embebbed systems (such as avionics) or homogenous
+ * networks.
+ * Setting this macro disables the capabilities to demarshall streams
+ * in the wrong byte order.
+ */
 // #define ACE_DISABLE_SWAP_ON_READ
 
-// For some applications it is important to optimize octet sequences
-// and minimize the number of copies made of the sequence buffer.
-// TAO supports this optimizations by sharing the CDR stream buffer
-// and the octet sequences buffer via ACE_Message_Block's.
-// This feature can be disabled for: debugging, performance
-// comparisons, complaince checking (the octet sequences add an API to
-// access the underlying message block).
 
+//@{
+/**
+ * @name Efficiently compute aligned pointers to powers of 2 boundaries.
+ */
 
-// Typedefs and macros for efficient ACE CDR memory address
-// boundary alignment
-
-// Efficiently align "value" up to "alignment", knowing that all such
-// boundaries are binary powers and that we're using two's complement
-// arithmetic.
-
-// Since the alignment is a power of two its binary representation is:
-//    alignment      = 0...010...0
-//
-// hence
-//
-//    alignment - 1  = 0...001...1 = T1
-//
-// so the complement is:
-//
-//  ~(alignment - 1) = 1...110...0 = T2
-//
-// Notice that there is a multiple of <alignment> in the range
-// [<value>,<value> + T1], also notice that if
-//
-// X = ( <value> + T1 ) & T2
-//
-// then
-//
-// <value> <= X <= <value> + T1
-//
-// because the & operator only changes the last bits, and since X is a
-// multiple of <alignment> (its last bits are zero) we have found the
-// multiple we wanted.
-//
-
+/**
+ * Efficiently align "value" up to "alignment", knowing that all such
+ * boundaries are binary powers and that we're using two's complement
+ * arithmetic.
+ *
+ * Since the alignment is a power of two its binary representation is:
+ *
+ * alignment      = 0...010...0
+ *
+ * hence
+ *
+ * alignment - 1  = 0...001...1 = T1
+ *
+ * so the complement is:
+ *
+ * ~(alignment - 1) = 1...110...0 = T2
+ *
+ * Notice that there is a multiple of <alignment> in the range
+ * [<value>,<value> + T1], also notice that if
+ *
+ * X = ( <value> + T1 ) & T2
+ *
+ * then
+ *
+ * <value> <= X <= <value> + T1
+ *
+ * because the & operator only changes the last bits, and since X is a
+ * multiple of <alignment> (its last bits are zero) we have found the
+ * multiple we wanted.
+ */
+/// Return the next integer aligned to a required boundary
+/**
+ * @param ptr the base pointer
+ * @param alignment the required alignment
+ */
 #define ACE_align_binary(ptr, alignment) \
     ((ptr + ((ptr_arith_t)((alignment)-1))) & (~((ptr_arith_t)((alignment)-1))))
 
-// Efficiently round "ptr" up to an "alignment" boundary, knowing that
-// all such boundaries are binary powers and that we're using two's
-// complement arithmetic.
-//
+/// Return the next address aligned to a required boundary
 #define ACE_ptr_align_binary(ptr, alignment) \
         ((char *) ACE_align_binary (((ptr_arith_t) (ptr)), (alignment)))
+//@}
 
 // Defining POSIX4 real-time signal range.
 #if defined ACE_HAS_AIO_CALLS
