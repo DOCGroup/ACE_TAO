@@ -3,14 +3,6 @@
 // $Id$
 //
 
-ACE_INLINE void
-TAO_GIOP_Invocation::put_param (CORBA::TypeCode_ptr tc,
-                                void *value,
-                                CORBA::Environment &ACE_TRY_ENV)
-{
-  (void) this->out_stream_.encode (tc, value, 0, ACE_TRY_ENV);
-}
-
 ACE_INLINE IOP::ServiceContextList &
 TAO_GIOP_Invocation::service_info (void)
 {
@@ -45,14 +37,6 @@ ACE_INLINE TAO_InputCDR &
 TAO_GIOP_Twoway_Invocation::inp_stream (void)
 {
   return this->rd_.reply_cdr ();
-}
-
-ACE_INLINE void
-TAO_GIOP_Twoway_Invocation::get_value (CORBA::TypeCode_ptr tc,
-                                       void *value,
-                                       CORBA::Environment &ACE_TRY_ENV)
-{
-  (void) this->inp_stream ().decode (tc, value, 0, ACE_TRY_ENV);
 }
 
 // ****************************************************************

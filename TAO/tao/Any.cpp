@@ -280,7 +280,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 
   if (value)
     {
-      // @@ NW: I think an Any should alway owns the CDR stream, 
+      // @@ NW: I think an Any should alway owns the CDR stream,
       //  so I removed the check here.
       // if the Any owns the data, we encode the "value" into a CDR stream
       // and store it. We also destroy the "value" since we own it.
@@ -1302,8 +1302,8 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
                                &a,
                                0,
                                ACE_TRY_ENV);
-              return (CORBA::Boolean) ((retval == CORBA::TypeCode::TRAVERSE_CONTINUE) 
-                                       ? 1 
+              return (CORBA::Boolean) ((retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                                       ? 1
                                        : 0);
             }
         }
@@ -1466,8 +1466,8 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
                                0,
                                ACE_TRY_ENV);
               ACE_TRY_CHECK;
-              return (CORBA::Boolean) ((retval == CORBA::TypeCode::TRAVERSE_CONTINUE) 
-                                       ? 1 
+              return (CORBA::Boolean) ((retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                                       ? 1
                                        : 0);
             }
         }
@@ -1804,8 +1804,8 @@ CORBA_Any::operator>>= (to_object obj) const
 
               // Because of the CORBA 2.3 change mentioned above, there is no
               // need to assign to this->value_.
-              return (CORBA::Boolean) ((status == CORBA::TypeCode::TRAVERSE_CONTINUE) 
-                                       ? 1 
+              return (CORBA::Boolean) ((status == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                                       ? 1
                                        : 0);
             }
         }
