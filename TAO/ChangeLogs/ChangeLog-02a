@@ -4,7 +4,7 @@ Tue Jan 15 07:35:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
           Removed IORInfo
 
         * tao/PortableServer/Makefile.bor:
-          Added IORInfo
+          Added IORInfo, ObjectReferenceFactory and ObjectReferenceTemplate
 
 Mon Jan 14 22:08:46 2002  Ossama Othman  <ossama@uci.edu>
 
