@@ -8,30 +8,36 @@
 
 interface Supplier
 {
-   // Consumer handle doesnt exist.
-    exception Invalid_Handle {};
+  // = TITLE
+  //   @@ Please fill in here.
 
-   // Register a distributed callback handler that is invoked
-   // when the given stock reaches the desired threshold value.
+  exception Invalid_Handle 
+    {
+      // = TITLE
+      //   Consumer handle doesnt exist.
+    };
 
-   void register_callback (in string stock_name,
-    		           in long threshold_value,
-			   in Callback_Quoter::Consumer consumer_handler)
-      raises (Callback_Quoter::Invalid_Stock);
+  // @@ Make sure to put the comments AFTER the operation/method
+  // names.
 
-   // Remove the handler.
+  // Register a distributed callback handler that is invoked
+  // when the given stock reaches the desired threshold value.
+  void register_callback (in string stock_name,
+                          in long threshold_value,
+                          in Callback_Quoter::Consumer consumer_handler)
+    raises (Callback_Quoter::Invalid_Stock);
 
-   void unregister_callback (in Callback_Quoter::Consumer consumer_handler)
-      raises (Invalid_Handle);
+  // Remove the handler.
+  void unregister_callback (in Callback_Quoter::Consumer consumer_handler)
+    raises (Invalid_Handle);
 
-   // get market status.
+  // get market status.
+  void market_status (in string stock_name,
+                      in long stock_value)
+    raises (Callback_Quoter::Invalid_Stock);
 
-   void market_status (in string stock_name,
-	     	       in long stock_value)
-     raises (Callback_Quoter::Invalid_Stock);
-
-   oneway void shutdown ();
-   // shuts the server down.
+  oneway void shutdown ();
+  // shuts the server down.
 };
 
-#endif // _SUPPLIER_IDL
+#endif /* _SUPPLIER_IDL */
