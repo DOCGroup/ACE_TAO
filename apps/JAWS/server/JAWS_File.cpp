@@ -305,7 +305,7 @@ JAWS_File::JAWS_File (const char * filename)
   ACE_OS::strcpy (this->filename_, filename);
   this->action (JAWS_File::IDLE);
 
-  if (ACE_OS::access (this->filename_, R_OK|W_OK) == -1)
+  if (ACE_OS::access (this->filename_, R_OK) == -1)
     {
       this->error (JAWS_File::ACCESS_FAILED);
       return;
