@@ -2,6 +2,10 @@
 // $Id$
 
 #include "Asynch_Queued_Message.h"
+#include "ace/Message_Block.h"
+#include "ace/OS_Errno.h"
+#include "ace/OS_String.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(tao, Asynch_Queued_Message, "$Id$")
 
@@ -18,9 +22,9 @@ TAO_Asynch_Queued_Message::
        i != 0;
        i = i->cont ())
     {
-      ACE_OS::memcpy (this->buffer_ + copy_offset,
-                      i->rd_ptr (),
-                      i->length ());
+      ACE_OS_String::memcpy (this->buffer_ + copy_offset,
+                             i->rd_ptr (),
+                             i->length ());
       copy_offset += i->length ();
     }
 }

@@ -23,6 +23,7 @@
 
 #ifdef TAO_HAS_VALUETYPE
 
+#include "ace/Synch_T.h"
 
 class TAO_Export CORBA_ValueFactoryBase
 {

@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Transport_Descriptor_Interface.h"
+#include "ace/Global_Macros.h"
 
 class TAO_RTCORBA_Export TAO_Private_Transport_Descriptor:
   public TAO_Transport_Descriptor_Interface

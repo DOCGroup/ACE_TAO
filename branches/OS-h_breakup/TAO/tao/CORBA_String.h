@@ -254,6 +254,7 @@ private:
 };
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#   include "ace/streams.h"
 
 TAO_Export ostream &
 operator<< (ostream &, const CORBA::String_var &);

@@ -28,6 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/OS.h"
+#include "ace/Object_Manager_Base.h"
 
 // Adapter for cleanup, used to register cleanup function with the
 // ACE_Object_Manager.

@@ -1,3 +1,89 @@
+Mon May  6 15:53:39 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tao/RTCORBA/Private_Transport_Descriptor.h:
+
+	  Added include of ace/Global_Macros.h.
+
+	* tao/Thread_Lan_Resources.h:
+
+	  Added include of ace/Synch_T.h.
+
+	* tao/Asynch_Queued_Message.cpp:
+
+	  Added include of ace/Message_Block.h, OS_Errno.h, and OS_String.h
+	  and changed ACE_OS to ACE_OS_String.
+
+	* tao/Synch_Queued_Message.cpp:
+
+	  Added include of ace/Message_Block.h and ace/Log_Msg.h.
+
+	* tao/Queued_Message.h:
+
+	  Added include oface/ace_sys_uio.h.
+
+	* tao/Parser_Registry.h:
+
+	  Added include of Global_Macros.h.
+	
+	* tao/Flushing_Strategy.h:
+	* tao/Wait_Strategy.h:
+
+	  Added forward declaration of ACE_Time_Value.
+
+	* tao/corbafwd.{cpp,i}:
+
+	  cpp: Added include of ace/OS_String.h, and changed ACE_OS
+	  to ACE_OS_String.
+
+	  i: Added include of ace/OS_Errno.h.  Also, the alloc/free functions
+	  are inlined, thus probably have the windows heap problem.
+	
+	* tao/CORBA_String.cpp:
+
+	  Added include of ace/OS.h.
+
+	* tao/Sequence_T.{cpp,i}:
+
+	  cpp: Added include of ace/OS_Errno.h.
+	  i: Added include of ace/Log_Msg.h.
+
+	* tao/Environment.h:
+
+	  Added include of ace_stdio.h to get FILE, but need to remove
+	  FILE parameter from these functions.
+
+	* tao/Sequence.{h,i}:
+
+	  h: Added include of ace/Global_Macros.h.
+	  i: Added include of ace/Message_Block.h and ace/OS_String.h and 
+	     changed ACE_OS to ACE_OS_String as needed.  
+
+	* tao/CORBA_String.h:
+
+	  Added include of ace/streams.h.
+
+	* tao/ValueBase.h:
+
+	  Removed include of ace/OS.h.
+	
+	* tao/EndPoint.h:
+	* tao/Principal.h:
+	* tao/ValueFactory.h:
+	* tao/ValueBase.h:
+
+	  Added include of ace/Synch_T.h. to get *_SYNCH_MUTEX defs.
+
+	* tao/Cleanup_Func_Registry.cpp:
+
+	  Added Log_Msg.h to get ACE_ASSERT.
+
+	* tao/TAO_Singleton_Manager.h:
+	* tao/TAO_Singleton.h:
+	* tao/ORBInitInfo.h:
+	* tao/Cleanup_Func_Registry.h:
+
+	  Added include of ace/Object_Manager_Base.h.
+
 Thu Apr 11 22:07:40 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tao/TAO_IDL/driver/drv_preproc.cpp:  

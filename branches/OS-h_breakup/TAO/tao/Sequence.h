@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Managed_Types.h"
+#include "ace/Global_Macros.h"
 
 class CORBA_Object;
 class CORBA_Environment;

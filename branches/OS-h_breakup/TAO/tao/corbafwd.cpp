@@ -6,6 +6,8 @@
 # include "tao/corbafwd.i"
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/OS_String.h"
+
 char *
 CORBA::string_dup (const char *str)
 {
@@ -15,7 +17,7 @@ CORBA::string_dup (const char *str)
       return 0;
     }
 
-  size_t len = ACE_OS::strlen (str);
+  size_t len = ACE_OS_String::strlen (str);
 
   // This allocates an extra byte for the '\0';
   char * copy = CORBA::string_alloc (len);
@@ -24,7 +26,7 @@ CORBA::string_dup (const char *str)
     return 0;    // The below memcpy() assumes that the destination is
                  // a valid buffer.
 
-  ACE_OS::memcpy (copy, str, len + 1);
+  ACE_OS_String::memcpy (copy, str, len + 1);
   return copy;
 }
 
@@ -41,13 +43,13 @@ CORBA::wstring_dup (const WChar *const str)
       return 0;
     }
 
-  CORBA::WChar* retval = CORBA::wstring_alloc (ACE_OS::wslen (str));
+  CORBA::WChar* retval = CORBA::wstring_alloc (ACE_OS_String::wslen (str));
 
   if (retval == 0)
     return 0;    // The below wscpy() assumes that the destination is
                  // a valid buffer.
 
-  return ACE_OS::wscpy (retval, str);
+  return ACE_OS_String::wscpy (retval, str);
 }
 
 // ****************************************************************

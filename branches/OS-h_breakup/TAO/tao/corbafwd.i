@@ -1,6 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
+#include "ace/OS_Errno.h"
+
 ACE_INLINE char *
 CORBA::string_alloc (CORBA::ULong len)
 {

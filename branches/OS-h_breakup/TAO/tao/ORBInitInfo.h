@@ -24,6 +24,7 @@
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
 #include "StringSeqC.h"
+#include "ace/Object_Manager_Base.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.

@@ -14,6 +14,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Malloc_Base.h"
+#include "ace/OS_Errno.h"
 
 ACE_RCSID(ace, Array_Base, "$Id$")
 

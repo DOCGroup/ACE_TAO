@@ -2,6 +2,8 @@
 // $Id$
 
 #include "Synch_Queued_Message.h"
+#include "ace/Message_Block.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(tao, Synch_Queued_Message, "$Id$")
 
