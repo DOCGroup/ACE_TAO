@@ -86,7 +86,7 @@ endif #templates == implicit
 
 ifeq ($(ami),1)
 TAO_IDLFLAGS += -GC
-IDL_TEST_LIBS += -lTAO_Messaging
+IDL_TEST_LIBS = -lTAO_Messaging $(TAO_SRVR_LIBS)
 endif # ami
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
