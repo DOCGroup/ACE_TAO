@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Reactor.h"
 #include "orbsvcs/Event/ECG_Mcast_EH.h"
 #include "orbsvcs/Event/EC_Gateway_UDP.h"
 #include "orbsvcs/Event_Service_Constants.h"
