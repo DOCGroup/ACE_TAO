@@ -63,6 +63,11 @@ static ACE_thread_key_t key_;
      if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
      } while (0)
 
+// Instance count for Log_Msg - used to know when dynamically
+// allocated storage (program name and host name) can be safely
+// deleted.
+int ACE_Log_Msg::instance_count_ = 0;
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 
 class ACE_Log_Msg_Manager
@@ -86,11 +91,6 @@ private:
   static ACE_Thread_Mutex *lock_;
 
 };
-
-// Instance count for Log_Msg - used to know when dynamically
-// allocated storage (program name and host name) can be safely
-// deleted.
-int ACE_Log_Msg::instance_count_ = 0;
 
 ACE_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
 
@@ -129,18 +129,16 @@ ACE_Log_Msg_Manager::close (WIND_TCB *tcb)
 }
 #else
 
-/*
-** delete_log_msg is registered as the cleanup function for Log_Msg
-** instances.  Will be called by ACE_Object_Manager at shutdown.
-*/
-static void
-delete_log_msg(void *log_msg_instance, void *param)
-{
-  delete (ACE_Log_Msg *)log_msg_instance;
-  ACE_UNUSED_ARG(param);
-  return;
-}
+// delete_log_msg() is registered as the cleanup function for Log_Msg
+// instances.  Will be called by ACE_Object_Manager at shutdown.
 
+static void
+delete_log_msg (void *log_msg_instance,
+		void *param)
+{
+  delete (ACE_Log_Msg *) log_msg_instance;
+  ACE_UNUSED_ARG (param);
+}
 
 void
 ACE_Log_Msg_Manager::close (void)
@@ -325,7 +323,7 @@ int ACE_Log_Msg::msg_off_ = 0;
 void
 ACE_Log_Msg::close (void)
 {
-#if !defined (VXWORKS)
+#if defined (VXWORKS)
   // Please note that this will be called by a statement that is
   // harded coded into the ACE_Object_Manager's shutdown sequence,
   // in its destructor.
