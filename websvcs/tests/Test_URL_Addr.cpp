@@ -10,7 +10,7 @@ void test_ftp_addr (void);
 void test_mailto_addr (void);
 void test_url_addr (void);
 
-int main (int, char*[])
+int ACE_TMAIN (int, ACE_TCHAR*[])
 {
   test_http_addr ();
   test_ftp_addr ();
@@ -62,7 +62,7 @@ void test_http_addr (void)
                       i, addresses[i]));
           continue;
         }
-      
+
       ACE_TCHAR buffer[BUFSIZ];
       if (addr.addr_to_string (buffer, BUFSIZ, i%2) == 0)
         {
@@ -121,7 +121,7 @@ void test_ftp_addr (void)
                       "FTP[%d]\n"
                       "    \"%s\" ERROR\n",
                       i, addresses[i]));
-                      
+
         }
     }
 }
@@ -162,7 +162,7 @@ void test_mailto_addr (void)
                       "Mailto[%d]\n"
                       "    \"%s\" ERROR\n",
                       i, addresses[i]));
-                      
+
         }
     }
 }
@@ -178,7 +178,7 @@ void test_url_addr (void)
   static int naddresses = sizeof(addresses)/sizeof(addresses[0]);
   for (int i = 0; i < naddresses; ++i)
     {
-      ACE_URL_Addr* addr = 
+      ACE_URL_Addr* addr =
         ACE_URL_Addr::create_address (addresses[i]);
       if (addr == 0)
         {
