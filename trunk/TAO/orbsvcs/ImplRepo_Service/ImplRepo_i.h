@@ -66,15 +66,32 @@ public:
   ~ImplRepo_i (void);
 
   // = Interface methods
-  virtual void register_server (const char *server,
+
+  virtual CORBA::Object_ptr activate_object (CORBA::Object_ptr obj,
+                                             CORBA::Environment &env);
+
+  virtual Implementation_Repository::INET_Addr activate_server (const char * server,
+                                                                CORBA::Environment &env);
+
+  virtual void register_server (const char * server,
                                 const Implementation_Repository::Process_Options &options,
                                 CORBA::Environment &env);
 
-  virtual CORBA::String server_is_running (const char *server,
-                                           //const Implementation_Repository::INET_Addr &addr,
-                                           CORBA::Object_ptr ior,
-                                           CORBA::Object_ptr ping,
-                                           CORBA::Environment &_tao_environment);
+  virtual void reregister_server (const char * server,
+                                  const Implementation_Repository::Process_Options &options,
+                                  CORBA::Environment &env);
+
+  virtual void remove_server (const char * server,
+                              CORBA::Environment &env);
+
+  virtual Implementation_Repository::INET_Addr  
+    server_is_running (const char * server,
+                       const Implementation_Repository::INET_Addr &addr,
+                       CORBA::Object_ptr ping,
+                       CORBA::Environment &env);
+
+  virtual void server_is_shutting_down (const char * server,
+                                        CORBA::Environment &env);
 
   // = Other methods
 
@@ -84,11 +101,11 @@ public:
   int run (CORBA::Environment& env);
   // Runs the orb.
 
-  void start (const char *server);
-  // Starts the program registered as <server>.
+  CORBA::ULong get_forward_host (const char *server);
+  // Returns the host of the server that needs to be forwarded to.
 
-  char *get_forward (const char *server);
-  // Returns the ior of the server that needs to be forwarded to.
+  CORBA::UShort get_forward_port (const char *server);
+  // Returns the port of the server that needs to be forwarded to.
 
 private:
   IR_Forwarder *forwarder_impl_;
@@ -142,7 +159,7 @@ public:
                                           CORBA::Environment &env);
 
 private:
-  int forward (char *name, CORBA::Environment &env);
+  int forward (char *name, char *poa, char *obj, CORBA::Environment &env);
 
   class ImplRepo_i *ir_impl_;
 
