@@ -561,6 +561,194 @@ IR_Contained::Description_out::operator-> (void)
 }
 
 
+ACE_INLINE
+IR_IDLType::IR_IDLType (void) // default constructor
+{}
+
+ACE_INLINE
+IR_IDLType::IR_IDLType (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_IDLType::~IR_IDLType (void) // destructor
+{}
+
+
+#if !defined (_IR_IDLTYPE___VAR_CI_)
+#define _IR_IDLTYPE___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_IDLType_var
+// *************************************************************
+
+ACE_INLINE
+IR_IDLType_var::IR_IDLType_var (void) // default constructor
+  : ptr_ (IR_IDLType::_nil ())
+{}
+
+ACE_INLINE
+IR_IDLType_var::IR_IDLType_var (IR_IDLType_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_IDLType_ptr
+IR_IDLType_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_IDLType_var::IR_IDLType_var (const ::IR_IDLType_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (IR_IDLType::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_IDLType_var::~IR_IDLType_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_IDLType_var &
+IR_IDLType_var::operator= (IR_IDLType_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_IDLType_var &
+IR_IDLType_var::operator= (const ::IR_IDLType_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_IDLType::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_IDLType_var::operator const ::IR_IDLType_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_IDLType_var::operator ::IR_IDLType_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr
+IR_IDLType_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr
+IR_IDLType_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr &
+IR_IDLType_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr &
+IR_IDLType_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_IDLType::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr
+IR_IDLType_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_IDLType_ptr val = this->ptr_;
+  this->ptr_ = ::IR_IDLType::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_IDLTYPE___OUT_CI_)
+#define _IR_IDLTYPE___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_IDLType_out
+// *************************************************************
+
+ACE_INLINE
+IR_IDLType_out::IR_IDLType_out (IR_IDLType_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_IDLType::_nil ();
+}
+
+ACE_INLINE
+IR_IDLType_out::IR_IDLType_out (IR_IDLType_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_IDLType::_nil ();
+}
+
+ACE_INLINE
+IR_IDLType_out::IR_IDLType_out (const ::IR_IDLType_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_IDLType_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_IDLType_out &
+IR_IDLType_out::operator= (const ::IR_IDLType_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_IDLType_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_IDLType_out &
+IR_IDLType_out::operator= (const ::IR_IDLType_var &p)
+{
+  this->ptr_ = ::IR_IDLType::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_IDLType_out &
+IR_IDLType_out::operator= (IR_IDLType_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_IDLType_out::operator ::IR_IDLType_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr &
+IR_IDLType_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr
+IR_IDLType_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_INTERFACEDEFSEQ_CI_)
@@ -7322,194 +7510,6 @@ ACE_INLINE IR_Container::Description &
 IR_Container::DescriptionSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-IR_IDLType::IR_IDLType (void) // default constructor
-{}
-
-ACE_INLINE
-IR_IDLType::IR_IDLType (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-IR_IDLType::~IR_IDLType (void) // destructor
-{}
-
-
-#if !defined (_IR_IDLTYPE___VAR_CI_)
-#define _IR_IDLTYPE___VAR_CI_
-
-// *************************************************************
-// Inline operations for class IR_IDLType_var
-// *************************************************************
-
-ACE_INLINE
-IR_IDLType_var::IR_IDLType_var (void) // default constructor
-  : ptr_ (IR_IDLType::_nil ())
-{}
-
-ACE_INLINE
-IR_IDLType_var::IR_IDLType_var (IR_IDLType_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE ::IR_IDLType_ptr
-IR_IDLType_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR_IDLType_var::IR_IDLType_var (const ::IR_IDLType_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (IR_IDLType::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-IR_IDLType_var::~IR_IDLType_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE IR_IDLType_var &
-IR_IDLType_var::operator= (IR_IDLType_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE IR_IDLType_var &
-IR_IDLType_var::operator= (const ::IR_IDLType_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::IR_IDLType::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-IR_IDLType_var::operator const ::IR_IDLType_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-IR_IDLType_var::operator ::IR_IDLType_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::IR_IDLType_ptr
-IR_IDLType_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::IR_IDLType_ptr
-IR_IDLType_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::IR_IDLType_ptr &
-IR_IDLType_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::IR_IDLType_ptr &
-IR_IDLType_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::IR_IDLType::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::IR_IDLType_ptr
-IR_IDLType_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::IR_IDLType_ptr val = this->ptr_;
-  this->ptr_ = ::IR_IDLType::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_IDLTYPE___OUT_CI_)
-#define _IR_IDLTYPE___OUT_CI_
-
-// *************************************************************
-// Inline operations for class IR_IDLType_out
-// *************************************************************
-
-ACE_INLINE
-IR_IDLType_out::IR_IDLType_out (IR_IDLType_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::IR_IDLType::_nil ();
-}
-
-ACE_INLINE
-IR_IDLType_out::IR_IDLType_out (IR_IDLType_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::IR_IDLType::_nil ();
-}
-
-ACE_INLINE
-IR_IDLType_out::IR_IDLType_out (const ::IR_IDLType_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (IR_IDLType_out &, p).ptr_)
-{}
-
-ACE_INLINE ::IR_IDLType_out &
-IR_IDLType_out::operator= (const ::IR_IDLType_out &p)
-{
-  this->ptr_ = ACE_const_cast (IR_IDLType_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE IR_IDLType_out &
-IR_IDLType_out::operator= (const ::IR_IDLType_var &p)
-{
-  this->ptr_ = ::IR_IDLType::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE IR_IDLType_out &
-IR_IDLType_out::operator= (IR_IDLType_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-IR_IDLType_out::operator ::IR_IDLType_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::IR_IDLType_ptr &
-IR_IDLType_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::IR_IDLType_ptr
-IR_IDLType_out::operator-> (void)
-{
-  return this->ptr_;
 }
 
 
