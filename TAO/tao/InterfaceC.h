@@ -7983,13 +7983,13 @@ class TAO_Export CORBA_ValueBoxDef: public virtual CORBA_IDLType
 
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::DefinitionKind);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::DefinitionKind &);
-TAO_Export CORBA::IRObject_ptr (*_TAO_collocation_CORBA_IRObject_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::IRObject_ptr (*_TAO_collocation_CORBA_IRObject_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::IRObject
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::IRObject_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::IRObject *&);
-TAO_Export CORBA::Contained_ptr (*_TAO_collocation_CORBA_Contained_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::Contained_ptr (*_TAO_collocation_CORBA_Contained_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::Contained
@@ -8028,7 +8028,7 @@ TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::UnionMemberSe
 TAO_Export void  operator<<= (CORBA::Any &, const CORBA::EnumMemberSeq &); // copying version
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::EnumMemberSeq*); // noncopying version
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::EnumMemberSeq *&);
-TAO_Export CORBA::Container_ptr (*_TAO_collocation_CORBA_Container_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::Container_ptr (*_TAO_collocation_CORBA_Container_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::Container
@@ -8040,7 +8040,7 @@ TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::Container::De
 TAO_Export void  operator<<= (CORBA::Any &, const CORBA::Container::DescriptionSeq &); // copying version
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::Container::DescriptionSeq*); // noncopying version
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::Container::DescriptionSeq *&);
-TAO_Export CORBA::IDLType_ptr (*_TAO_collocation_CORBA_IDLType_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::IDLType_ptr (*_TAO_collocation_CORBA_IDLType_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::IDLType
@@ -8048,13 +8048,13 @@ TAO_Export void  operator<<= (CORBA::Any &, CORBA::IDLType_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::IDLType *&);
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::PrimitiveKind);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::PrimitiveKind &);
-TAO_Export CORBA::Repository_ptr (*_TAO_collocation_CORBA_Repository_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::Repository_ptr (*_TAO_collocation_CORBA_Repository_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::Repository
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::Repository_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::Repository *&);
-TAO_Export CORBA::ModuleDef_ptr (*_TAO_collocation_CORBA_ModuleDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::ModuleDef_ptr (*_TAO_collocation_CORBA_ModuleDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::ModuleDef
@@ -8063,7 +8063,7 @@ CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::ModuleDef *&);
 TAO_Export void  operator<<= (CORBA::Any &, const CORBA::ModuleDescription &); // copying version
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::ModuleDescription*); // noncopying version
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::ModuleDescription *&);
-TAO_Export CORBA::ConstantDef_ptr (*_TAO_collocation_CORBA_ConstantDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::ConstantDef_ptr (*_TAO_collocation_CORBA_ConstantDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::ConstantDef
@@ -8072,7 +8072,7 @@ TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::ConstantDef *
 TAO_Export void  operator<<= (CORBA::Any &, const CORBA::ConstantDescription &); // copying version
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::ConstantDescription*); // noncopying version
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::ConstantDescription *&);
-TAO_Export CORBA::TypedefDef_ptr (*_TAO_collocation_CORBA_TypedefDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::TypedefDef_ptr (*_TAO_collocation_CORBA_TypedefDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::TypedefDef
@@ -8081,67 +8081,67 @@ TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::TypedefDef *&
 TAO_Export void  operator<<= (CORBA::Any &, const CORBA::TypeDescription &); // copying version
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::TypeDescription*); // noncopying version
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::TypeDescription *&);
-TAO_Export CORBA::StructDef_ptr (*_TAO_collocation_CORBA_StructDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::StructDef_ptr (*_TAO_collocation_CORBA_StructDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::StructDef
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::StructDef_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::StructDef *&);
-TAO_Export CORBA::UnionDef_ptr (*_TAO_collocation_CORBA_UnionDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::UnionDef_ptr (*_TAO_collocation_CORBA_UnionDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::UnionDef
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::UnionDef_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::UnionDef *&);
-TAO_Export CORBA::EnumDef_ptr (*_TAO_collocation_CORBA_EnumDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::EnumDef_ptr (*_TAO_collocation_CORBA_EnumDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::EnumDef
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::EnumDef_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::EnumDef *&);
-TAO_Export CORBA::AliasDef_ptr (*_TAO_collocation_CORBA_AliasDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::AliasDef_ptr (*_TAO_collocation_CORBA_AliasDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::AliasDef
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::AliasDef_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::AliasDef *&);
-TAO_Export CORBA::PrimitiveDef_ptr (*_TAO_collocation_CORBA_PrimitiveDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::PrimitiveDef_ptr (*_TAO_collocation_CORBA_PrimitiveDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::PrimitiveDef
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::PrimitiveDef_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::PrimitiveDef *&);
-TAO_Export CORBA::StringDef_ptr (*_TAO_collocation_CORBA_StringDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::StringDef_ptr (*_TAO_collocation_CORBA_StringDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::StringDef
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::StringDef_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::StringDef *&);
-TAO_Export CORBA::WstringDef_ptr (*_TAO_collocation_CORBA_WstringDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::WstringDef_ptr (*_TAO_collocation_CORBA_WstringDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::WstringDef
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::WstringDef_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::WstringDef *&);
-TAO_Export CORBA::FixedDef_ptr (*_TAO_collocation_CORBA_FixedDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::FixedDef_ptr (*_TAO_collocation_CORBA_FixedDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::FixedDef
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::FixedDef_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::FixedDef *&);
-TAO_Export CORBA::SequenceDef_ptr (*_TAO_collocation_CORBA_SequenceDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::SequenceDef_ptr (*_TAO_collocation_CORBA_SequenceDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::SequenceDef
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::SequenceDef_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::SequenceDef *&);
-TAO_Export CORBA::ArrayDef_ptr (*_TAO_collocation_CORBA_ArrayDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::ArrayDef_ptr (*_TAO_collocation_CORBA_ArrayDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::ArrayDef
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::ArrayDef_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::ArrayDef *&);
-TAO_Export CORBA::ExceptionDef_ptr (*_TAO_collocation_CORBA_ExceptionDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::ExceptionDef_ptr (*_TAO_collocation_CORBA_ExceptionDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::ExceptionDef
@@ -8152,7 +8152,7 @@ TAO_Export void  operator<<= (CORBA::Any &, CORBA::ExceptionDescription*); // no
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::ExceptionDescription *&);
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::AttributeMode);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::AttributeMode &);
-TAO_Export CORBA::AttributeDef_ptr (*_TAO_collocation_CORBA_AttributeDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::AttributeDef_ptr (*_TAO_collocation_CORBA_AttributeDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::AttributeDef
@@ -8180,7 +8180,7 @@ TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::ExceptionDefS
 TAO_Export void  operator<<= (CORBA::Any &, const CORBA::ExcDescriptionSeq &); // copying version
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::ExcDescriptionSeq*); // noncopying version
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::ExcDescriptionSeq *&);
-TAO_Export CORBA::OperationDef_ptr (*_TAO_collocation_CORBA_OperationDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::OperationDef_ptr (*_TAO_collocation_CORBA_OperationDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::OperationDef
@@ -8198,7 +8198,7 @@ TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::OpDescription
 TAO_Export void  operator<<= (CORBA::Any &, const CORBA::AttrDescriptionSeq &); // copying version
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::AttrDescriptionSeq*); // noncopying version
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::AttrDescriptionSeq *&);
-TAO_Export CORBA::InterfaceDef_ptr (*_TAO_collocation_CORBA_InterfaceDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::InterfaceDef_ptr (*_TAO_collocation_CORBA_InterfaceDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::InterfaceDef
@@ -8216,13 +8216,13 @@ TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::ValueMember *
 TAO_Export void  operator<<= (CORBA::Any &, const CORBA::ValueMemberSeq &); // copying version
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::ValueMemberSeq*); // noncopying version
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::ValueMemberSeq *&);
-TAO_Export CORBA::ValueMemberDef_ptr (*_TAO_collocation_CORBA_ValueMemberDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::ValueMemberDef_ptr (*_TAO_collocation_CORBA_ValueMemberDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::ValueMemberDef
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::ValueMemberDef_ptr);
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::ValueMemberDef *&);
-TAO_Export CORBA::ValueDef_ptr (*_TAO_collocation_CORBA_ValueDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::ValueDef_ptr (*_TAO_collocation_CORBA_ValueDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::ValueDef
@@ -8234,7 +8234,7 @@ TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::ValueDef::Ful
 TAO_Export void  operator<<= (CORBA::Any &, const CORBA::ValueDescription &); // copying version
 TAO_Export void  operator<<= (CORBA::Any &, CORBA::ValueDescription*); // noncopying version
 TAO_Export CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA::ValueDescription *&);
-TAO_Export CORBA::ValueBoxDef_ptr (*_TAO_collocation_CORBA_ValueBoxDef_Stub_Factory_function_pointer) (
+extern TAO_Export CORBA::ValueBoxDef_ptr (*_TAO_collocation_CORBA_ValueBoxDef_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA::ValueBoxDef
