@@ -4,7 +4,7 @@
 #ifndef ACE_FUTURE_SET_CPP
 #define ACE_FUTURE_SET_CPP
 
-#include "ace/Future_Set.h"
+#include "ace/Utils/Future_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

@@ -16,8 +16,8 @@
 #include "ace/pre.h"
 
 #include "ace/ACE.h"
-#include "ace/SString.h"
-#include "ace/Containers.h"
+#include "ace/Utils/SString.h"
+#include "ace/Utils/Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -350,7 +350,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Get_Opt.i"
+#include "ace/Utils/Get_Opt.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -1,11 +1,11 @@
 // SOCK_IO.cpp
 // $Id$
 
-#include "ace/SOCK_IO.h"
-#include "ace/Handle_Set.h"
+#include "ace/Sockets/SOCK_IO.h"
+#include "ace/OS/Handle_Set.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_IO.i"
+#include "ace/Sockets/SOCK_IO.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, SOCK_IO, "$Id$")

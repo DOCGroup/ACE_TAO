@@ -13,7 +13,7 @@
 //
 // ============================================================================
 
-#include "ace/Pair.h"
+#include "ace/Utils/Pair.h"
 
 ACE_RCSID(ace, Pair, "$Id$")
 

@@ -45,16 +45,19 @@
 #define ACE_LOCAL_MUTEX_H
 #include "ace/pre.h"
 
-#include "ace/Synch_T.h"
+#include "ace/Threads/Synch_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Containers.h"
-#include "ace/Synch_Options.h"
-#include "ace/Map_Manager.h"
-#include "ace/Log_Msg.h"
+#include "ace/Utils/Containers.h"
+#include "ace/Threads/Synch_Options.h"
+#include "ace/Utils/Templates/Map_Manager.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
@@ -1092,7 +1095,7 @@ protected:
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Local_Tokens.i"
+#include "ace/Token/Local_Tokens.i"
 #endif /* __ACE_INLINE__ */
 #include "ace/post.h"
 #endif /* ACE_LOCAL_MUTEX_H */

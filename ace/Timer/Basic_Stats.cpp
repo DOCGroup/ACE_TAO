@@ -1,10 +1,13 @@
 // $Id$
 
-#include "ace/Basic_Stats.h"
-#include "ace/Log_Msg.h"
+#include "ace/Timer/Basic_Stats.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Basic_Stats.inl"
+#include "ace/Timer/Basic_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Basic_Stats, "$Id$")
@@ -37,6 +40,7 @@ ACE_Basic_Stats::accumulate (const ACE_Basic_Stats &rhs)
   this->sum2_ += rhs.sum2_;
 }
 
+#ifdef ACE_SUBSET_0
 void
 ACE_Basic_Stats::dump_results (const ACE_TCHAR *msg,
                                ACE_UINT32 sf) const
@@ -71,3 +75,4 @@ ACE_Basic_Stats::dump_results (const ACE_TCHAR *msg,
               l_max, this->max_at_,
               l_dev));
 }
+#endif /* ACE_SUBSET_0 */

@@ -1,7 +1,10 @@
 // $Id$
 
-#include "ace/Lib_Find.h"
-#include "ace/Log_Msg.h"
+#include "ace/Utils/Lib_Find.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace, Lib_Find, "$Id$")
 
@@ -83,6 +86,7 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
 
       // Check whether this matches the appropriate platform-specific
       // suffix.
+#ifdef ACE_SUBSET_0
 #if defined (ACE_WIN32)
       // Use <ACE_OS::strcasecmp> on any platform with
       // case-insensitive filenames.
@@ -96,6 +100,15 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
                       ACE_LIB_TEXT ("shared library on this platform: %s\n"),
                       s));
         }
+#else
+#if defined (ACE_WIN32)
+      // Use <ACE_OS::strcasecmp> on any platform with
+      // case-insensitive filenames.
+      ACE_OS::strcasecmp (s, dll_suffix);
+#else
+      ACE_OS::strcmp (s, dll_suffix);
+#endif /* ACE_WIN32 */
+#endif /* ACE_SUBSET_0 */
     }
 
   // Make sure we've got enough space in searchfilename.

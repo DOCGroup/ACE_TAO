@@ -1,11 +1,11 @@
 // $Id$
 
-#include "ace/Thread.h"
-#include "ace/Local_Tokens.h"
-#include "ace/Token_Manager.h"
+#include "ace/Threads/Thread.h"
+#include "ace/Token/Local_Tokens.h"
+#include "ace/Token/Token_Manager.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Local_Tokens.i"
+#include "ace/Token/Local_Tokens.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)

@@ -20,8 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Addr.h"
-#include "ace/IPC_SAP.h"
+#include "ace/IPC/Addr.h"
+#include "ace/Sockets/IPC_SAP.h"
 
 /**
  * @class ACE_SOCK
@@ -113,7 +113,7 @@ protected:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK.i"
+#include "ace/Sockets/SOCK.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"

@@ -14,7 +14,7 @@
 #define ACE_SOCK_IO_H
 #include "ace/pre.h"
 
-#include "ace/SOCK.h"
+#include "ace/Sockets/SOCK.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -136,7 +136,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_IO.i"
+#include "ace/Sockets/SOCK_IO.i"
 #endif
 
 #include "ace/post.h"

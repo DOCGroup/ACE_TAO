@@ -15,7 +15,7 @@
 #define ACE_PAIR_T_H
 #include "ace/pre.h"
 
-#include "ace/Pair.h"
+#include "ace/Utils/Pair.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -96,11 +96,11 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Pair_T.i"
+#include "ace/Utils/Templates/Pair_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Pair_T.cpp"
+#include "ace/Utils/Templates/Pair_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

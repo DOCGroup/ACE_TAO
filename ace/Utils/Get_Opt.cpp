@@ -1,11 +1,14 @@
 // Get_Opt.cpp
 // $Id$
 
-#include "ace/Get_Opt.h"
-#include "ace/Log_Msg.h"
+#include "ace/Utils/Get_Opt.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Get_Opt.i"
+#include "ace/Utils/Get_Opt.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Get_Opt, "$Id$")
@@ -521,6 +524,7 @@ ACE_Get_Opt::long_option (void) const
   return 0;
 }
 
+#ifdef ACE_SUBSET_0
 void
 ACE_Get_Opt::dump (void) const
 {
@@ -530,6 +534,7 @@ ACE_Get_Opt::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 void
 ACE_Get_Opt::permute_args (void)

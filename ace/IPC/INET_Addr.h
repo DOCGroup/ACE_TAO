@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Addr.h"
+#include "ace/IPC/Addr.h"
 
 #if defined(VXWORKS)
 #  include /**/ "inetLib.h"
@@ -323,7 +323,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/INET_Addr.i"
+#include "ace/IPC/INET_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

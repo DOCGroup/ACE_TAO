@@ -1,10 +1,10 @@
 // SOCK_Stream.cpp
 // $Id$
 
-#include "ace/SOCK_Stream.h"
+#include "ace/Sockets/SOCK_Stream.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Stream.i"
+#include "ace/Sockets/SOCK_Stream.i"
 #endif
 
 ACE_RCSID(ace, SOCK_Stream, "$Id$")

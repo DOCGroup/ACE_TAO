@@ -15,7 +15,7 @@
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
-#include "ace/Basic_Types.h"
+#include "ace/OS/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -79,7 +79,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Sample_History.inl"
+#include "ace/Utils/Sample_History.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

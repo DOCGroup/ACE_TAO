@@ -14,13 +14,13 @@
 #define ACE_SOCK_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "ace/SOCK_Stream.h"
+#include "ace/Sockets/SOCK_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Value.h"
+#include "ace/Timer/Time_Value.h"
 
 /**
  * @class ACE_SOCK_Acceptor
@@ -164,7 +164,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Acceptor.i"
+#include "ace/Sockets/SOCK_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"

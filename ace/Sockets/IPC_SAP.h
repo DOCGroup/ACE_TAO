@@ -14,7 +14,7 @@
 #define ACE_IPC_SAP_H
 #include "ace/pre.h"
 
-#include "ace/Flag_Manip.h"
+#include "ace/Utils/Flag_Manip.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -77,7 +77,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/IPC_SAP.i"
+#include "ace/Sockets/IPC_SAP.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"

@@ -1,18 +1,18 @@
 // $Id$
 
-#include "ace/Malloc.h"
+#include "ace/Memory/Malloc.h"
 #if !defined (ACE_HAS_WINCE)
-# include "ace/Service_Config.h"
+# include "ace/Svcconf/Service_Config.h"
 #endif /* !ACE_HAS_WINCE */
-#include "ace/SString.h"
-#include "ace/Auto_Ptr.h"
+#include "ace/Utils/SString.h"
+#include "ace/Utils/Templates/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-# include "ace/streams.h"
+# include "ace/Streams/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SString.i"
+#include "ace/Utils/SString.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SString, "SString.cpp,v 4.61 2001/03/04 00:55:30 brunsch Exp")

@@ -1,7 +1,7 @@
 // Method_Request.cpp
 // $Id$
 
-#include "ace/Method_Request.h"
+#include "ace/Utils/Method_Request.h"
 
 ACE_RCSID(ace, Method_Request, "$Id$")
 
