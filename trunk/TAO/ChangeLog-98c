@@ -1,3 +1,9 @@
+Wed Feb 25 17:13:05 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.h: Added this file which
+	defines a Naming_Service class to simplify the Naming_Service.cpp
+	file.
+
 Wed Feb 25 16:52:13 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/servant_base.cpp: Updated to reflect change of poa_current_
