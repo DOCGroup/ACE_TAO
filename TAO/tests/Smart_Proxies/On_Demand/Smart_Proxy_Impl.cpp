@@ -2,7 +2,7 @@
 #include "Smart_Proxy_Impl.h"
 
 Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)
-  : TAO_Test_Smart_Proxy_Base (proxy)
+  : TAO_Smart_Proxy_Base (proxy)
 {
 }
 
