@@ -1,4 +1,7 @@
-Mon Jan 19 22:16:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Jan 19 22:21:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Env_Value_Test.cpp (main): Added test codes for unsigned
+	  short.
 
 	* ace/Env_Value_T.i (ACE_Convert): Added conversion function for
 	  unsigned short.
