@@ -85,6 +85,11 @@ settings, resources, strategies, and factories can be specified via
 
 <UL>
 
+<!-- Bala, can you please update the discussion below to make it very -->
+<!-- clear what ORDER these three types of options processing -->
+<!-- mechanisms are run?!  This is not really clear from the following -->
+<!-- discussion... -->
+
 <LI> <B>Environment variables</B> are limited to specifying the
 interoperable object reference (IOR) and port number of TAO's Naming
 Service, Trading Service and Implementation Repository. Command-line
@@ -103,18 +108,22 @@ New">svc.conf</font>. <P>
 factory method, <CODE>CORBA::ORB_init()</CODE>, by an application
 using the standard <i>argc, argv</i> tuple passed to the application's
 <CODE>main()</CODE>.  In contrast, the service configuration file is
-opened and its options parsed by TAO's ACE Service Configurator
-framework during the execution of
+opened and its options parsed by the <A
+href="http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf">ACE Service
+Configurator framework</A> 
+<!-- Bala, it's not really clear from this discussion the ORDER in -->
+<!-- which things are parsed.  In particular, should this say "at the -->
+<!-- end of the" rather than "during"? -->
+during the execution of
 <CODE>CORBA::ORB_init()</CODE>method.<P>
-
 </UL>
 
 <P><HR align=left width=25%><P>
 <h3>Choosing the Right Approach</h3>
 
-Command-line options are useful when there is a fixed set of
-configuration options each of which has a predefined list of
-alternative values.  Conversely, the service configurator file is
+TAO's command-line options are useful when there's a fixed set of
+configuration options, each of which has a predefined list of
+alternative values.  Conversely, TAO's service configurator file is
 useful for configuring a broader range of resources, strategies, and
 factories. Generally speaking, the service configurator file allows
 the user to <br>
@@ -128,19 +137,18 @@ the user to <br>
       components and dynamically load them through the service
       configurator mechanism. </li>
 </Ul>
-Additionally, the service configurator mechanism provides a way for
-the application to control the behavior of the ORB using extensible
-configuration information.
+Additionally, the service configurator mechanism allows an
+application to control the behavior of the ORB using extensible
+configuration information.  
 
-Note that the command-line options and the service configurator
-options cannot be used interchangeably.
-
-In summary, the command line configuration options are provided in TAO
+In general, the command-line configuration options are provided in TAO
 in order to leverage preexisting configuration settings that are
-compiled within the TAO ORB. Users are not allowed to change these
-settings. In contrast, those options that require more
-flexible manipulation of resources, strategies, and factories must be
-configured via <A HREF="#SVC">service configuration files</A>. <P>
+compiled within the TAO ORB.  Users are not allowed to change these
+settings. In contrast, those options that require more flexible
+manipulation of resources, strategies, and factories must be
+configured via <A HREF="#SVC">service configuration files</A>.  As a
+result, the command-line options and the service configurator options
+cannot be used interchangeably. <P>
 
 <HR>
 
@@ -235,7 +243,10 @@ We describe each of these five groups of options below.  <P>
 <h4><A name=CSCB>1. Controlling Service Configurator Behavior</A></h4>
 
 The options described below influence the behavior of the ORB's <A
-HREF="#SVC">service configurator</CODE>. <P>
+HREF="#SVC">service configurator</CODE>, 
+<!-- Bala, is the following statement correct? -->
+which is run <EM>after</EM> the command-line options have been
+processed. <P>
 
 <BLOCKQUOTE>
   <P>
@@ -297,10 +308,10 @@ information at several levels of granularity.<P>
 
 <h4><A name=ORP>3. Optimizing Request Processing</A></h4>
 
-It is often possible to <A HREF="performance.html">increase throughput
-and reduce latency</A> by optimizing certain stages of request
-processing in the ORB.	The following options control various
-optimizations during request processing.<P>
+It is often possible to <A HREF="performance.html">increase TAO's
+throughput and reduce latency</A> by optimizing certain stages of
+request processing in the ORB. The following command-line options
+control various optimizations during request processing.<P>
 
 <BLOCKQUOTE>
   <P>
@@ -387,12 +398,12 @@ optimizations during request processing.<P>
 
 <h4><A name=CMPS>4. Connection Management and Protocol Selection</A></h4>
 
-ORBs send and receive requests and replies using various <A
-pluggable_protocols">transport protocols</a>.  Each protocol has
-its own concept of an <A
+TAO can send and receive requests and replies using various <A
+pluggable_protocols">transport protocols</a>.  Each protocol has its
+own concept of an <A
 http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html">endpoint</CODE>.
 The following options manage connections and control protocol
-selection within a CORBA application.<P>
+selection within a TAO application.<P>
 
 <BLOCKQUOTE>
   <P>
@@ -492,8 +503,10 @@ selection within a CORBA application.<P>
 	multicast requests. By default, the <CODE>TAO_DEFAULT_NAME_SERVICE_REQUEST_PORT</CODE>
 	(10013) value is used.</TD></TR>
     <TR>
-      <TD> <A
-http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/docs/ORBEndpoint.html?rev=HEAD"><CODE>-ORBTradingServicePort</CODE> <EM>portspec</EM></TD>
+      <TD> <A HREF=
+<!-- Bala, should there actually be the "*checkout*" here?  That looks -->
+<!-- odd! -->
+"http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/docs/ORBEndpoint.html?rev=HEAD"><CODE>-ORBTradingServicePort</CODE> <EM>portspec</EM></TD>
       <TD> <A
 http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/docs/ORBEndpoint.html?rev=HEAD">Specifies to which port the Trading Service is listening on for
 	multicast requests. By default, the <CODE>TAO_DEFAULT_TRADING_SERVICE_REQUEST_PORT</CODE>
@@ -511,8 +524,8 @@ http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/docs/ORBEndpoint.html?rev=HEAD">Specifi
 <h4><A name=MO>5. Miscellaneous Options</A></h4>
 
 Options in this category don't control the behavior of the ORB in
-terms of resouces or strategies. They are helper options provided for
-specific application requirements.
+terms of resouces or strategies.  Instead, they are helper options
+provided for specific application requirements.
 
 <BLOCKQUOTE>
   <P>
@@ -545,13 +558,13 @@ specific application requirements.
 <H3><A name=SVC>The Service Configurator File</A></H3>
 
 Internally, TAO uses the <A
-href="http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf">ACE service
-configurator framework</A> that allows applications to configure the
-ORB at run-time. Applications provide a file by name
-<CODE>svc.conf</CODE> with options that configure appropriate
-strategies in to the ORB. The options enable developers to control the
-behavior of the factories, strategies and resources that the ORB uses.
-By default, TAO provides the following set of factories: </p>
+href="http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf">ACE Service
+Configurator framework</A> to allow applications to configure the ORB
+at run-time. Applications provide a file named <CODE>svc.conf</CODE>
+with options that configure appropriate strategies in to the ORB. The
+options enable developers to control the behavior of the factories,
+strategies, and resources that the ORB uses.  By default, TAO provides
+the following set of factories: </p>
 
 <OL>
   <LI><A href="#TRF">Default Resource and Advanced Resource Factories :</A>
@@ -575,11 +588,11 @@ By default, TAO provides the following set of factories: </p>
 </OL>
 
 Options specified via a <CODE>svc.conf</CODE> file can represent
-either the components provided by TAO (including the 
+either the components provided by TAO (including the
 <CODE>Resource_Factory</CODE>, and the
 <CODE>Server_Strategy_Factory</CODE> and
-<CODE>Client_Strategy_Factory</CODE>) or 
-customized components developed by the users. The service configurator file
+<CODE>Client_Strategy_Factory</CODE>) or customized components
+developed by the users. The service configurator file
 (<CODE>svc.conf</CODE>) provided by the user identifies the components
 to be loaded with the required strategies for each component.  <p>
 
@@ -595,14 +608,16 @@ default components will be used.</P>
 <hr align=left width=25%>
 <h4><A name=TRF>1. Default and Advanced Resource Factories</A></h4>
 
-Many resources required by TAO's ORB core are fixed, though there is
-some flexibility in the choice of a reactor, the selection of
+Many of TAO's ORB Core resources are fixed, <!-- Bala, can you please
+list some of the ones that are fixed? --> including ...  There is some
+flexibility, however, in the choice of a reactor, the selection of
 transport protocols, choice of data flushing strategy, various forms
 of connection resource management strategies and possibility of using
 different IOR parsers.  The resource factories supported by TAO
-comprise <CODE>Resource_Factory</CODE> and
+include the <CODE>Resource_Factory</CODE> and
 <CODE>Advanced_Resource_Factory</CODE>. TAO provides defaults of these
-factories as well as specialized resource factories described below:
+factories, as well as the specialized resource factories described
+below:
 
 <BLOCKQUOTE>
   <P>
@@ -655,15 +670,16 @@ factories as well as specialized resource factories described below:
 
 <h5><A name=TDRF>(a). Resource_Factory</A></h5>
 
-Typically, the above option are exercised via the service configurator
-(svc.conf) file. The following line in the <CODE>svc.conf</CODE> file
-(all in one line) <P> 
-<CODE>static Resource_Factory "[list of options]"</CODE><P>will load
-the default resource factory with the options listed within the double
-quotes. The following table shows the list of possible options that
-can be specified within the double quotes in the above
-directive. <A href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/tests/LongUpcalls/svc.conf?rev=HEAD">
-This</A> shows an example on how this is used.<P> 
+Typically, the above options are exercised via the service
+configurator (svc.conf) file. The following line in the
+<CODE>svc.conf</CODE> file (all in one line) <P> <CODE>static
+Resource_Factory "[list of options]"</CODE><P>will load the default
+resource factory with the options listed within the double quotes. The
+following table shows the list of possible options that can be
+specified within the double quotes in the above directive. There is an
+    <A
+href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/tests/LongUpcalls/svc.conf?rev=HEAD">
+online</A> example of how this is used in TAO.<P>
 
 <TABLE cellSpacing=2 cellPadding=0 border=2>
   <TBODY>
@@ -694,6 +710,8 @@ This</A> shows an example on how this is used.<P>
       By default the ORB can handle multiple string formats, including
       <CODE>IOR:</CODE>, <CODE>corbaloc:</CODE>, <CODE>corbaname:</CODE>, and
       <CODE>file:</CODE>. The application developer can <A
+<!-- Bala, should there actually be the "*checkout*" here?  That looks -->
+<!-- odd! -->
       href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/docs/ior_parsing.html?rev=HEAD">add
       new IOR formats </A>using this option. </TD></TR>
   <TR>
@@ -786,15 +804,15 @@ This</A> shows an example on how this is used.<P>
 
 This factory is located in the <CODE>TAO_Strategies</CODE> library. It
 accepts the options below as well as those described above in the
-<CODE>Resource_Factory</CODE>. This factory can be loaded
-dynamically using a service configurator directive of the form (all on
-one line): <P>
+<CODE>Resource_Factory</CODE>. This factory can be loaded dynamically
+using a service configurator directive of the form (all on one line):
+<P>
 
 <CODE>dynamic Advanced_Resource_Factory Service_Object
 *</CODE><BR><CODE>TAO_Strategies:_make_TAO_Advanced_Resource_Factory
 () "-ORBReactorType select_st" </CODE><P>
 
-It can also be loaded statically by doing the following:<BR>
+It can also be loaded statically by doing the following:<P>
 
 <UL>
   <LI>Add <CODE>#include "tao/Strategies/advanced_resource.h"</CODE> to the file
@@ -806,11 +824,11 @@ omit the <CODE>#include</CODE> if you always use dynamic libraries.<P>
 
 Loading the <CODE>Advanced_Resource_Factory</CODE> disables the
 <CODE>Resource_Factory</CODE>. Any directives for the
-<CODE>Resource_Factory</CODE> will have no effect (and  
-generate warnings telling you so). The following table lists the
-options that can be provided in double quotes. <A
-href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD">
- This </A> shows how to specify this option in the svc.conf file.<P> 
+<CODE>Resource_Factory</CODE> will have no effect (and generate
+warnings telling you so). The following table lists the options that
+can be provided in double quotes. An example is available <A
+href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD">online
+</A> that shows how to specify this option in the svc.conf file.<P>
 
 <BLOCKQUOTE>
   <P>
@@ -876,25 +894,29 @@ default.</TD></TR></TBODY></TABLE></TD></TR>
 
 <h4><A name=TSSF>3. Server_Strategy_Factory</A></h4>
 
-Certain elements of the ORB relate only to server side behavior. In
-this context, the server is any application that passively accepts
+Certain elements of the ORB relate only to a TAO server. In this
+context, the server is any application that passively accepts
 connection from other processes and receives requests from those other
 connections. The server strategy factory is responsible for supporting
 features of TAO that are specific to servers. In particular, these
-include demultiplexing and concurrency-related strategies. The
-concurrency strategies control the thread creation flags and other
-concurrency related behaviors. The demuliplexing strategies are used
+include the following strategies:
+<UL>
+<LI> The <EM>concurrency strategies</EM> control the thread creation
+    flags and other concurrency related behaviors. <P>
+<LI> The <EM>demuliplexing strategies</EM> are used
 to locate servants inside the POA that are responsible for handling
-requests.  TAO provides a default server strategy factory called
+requests.<P>
+</UL>
+TAO provides a default server strategy factory called
 <CODE>Server_Strategy_Factory</CODE> <p>
 
-Typically, the following options are set via the service
-configurator (svc.conf) file. The following line in the svc.conf file
-(all in one line)<P><CODE>static Server_Strategy_Factory "[list of
-options]"</CODE><P>would load all the options listed within "". This
-<A
-href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD"> file</A> shows how to specify this option in the svc.conf file.
-<p>
+Typically, the following options are set via the service configurator
+(svc.conf) file. The following line in the svc.conf file (all in one
+line)<P><CODE>static Server_Strategy_Factory "[list of
+options]"</CODE><P>would load all the options listed within "".  An
+example is available <A
+href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD">online</A>
+that shows how to specify this option in the <code>svc.conf</code> file.  <p>
 
 <TABLE cellSpacing=2 cellPadding=0 border=2>
   <TBODY>
@@ -997,7 +1019,7 @@ ids</EM></TD>
       names</EM></TD>
     <TD>Specify whether an active hint should be added to POA names. With
       active hints, POA names can be found quickly. However, they lead to larger
-      IORs. The <EM>-ORBActiveHintInPOANames</EM> can be <CODE>0</CODE> or
+      IORs. The <CODE>-ORBActiveHintInPOANames</CODE> can be <CODE>0</CODE> or
       <CODE>1</CODE>. This option defaults to <CODE>1</CODE>. </TD></TR>
   <TR>
     <TD><CODE>-ORBThreadFlags</CODE> <EM>thread flags</EM></TD>
@@ -1014,22 +1036,22 @@ ids</EM></TD>
       access, and <CODE>null</CODE>, which specifies that no locking be
       performed. The default is <CODE>thread</CODE>.</TD></TR></TBODY></TABLE></P>
 
-<h4><A name=TCSF>5. Client_Strategy_Factory</A></h4>
-Similar to the server strategy factory, the client strategy factory
-supports those elements of TAO that are specific to the behavior of
-clients (Any application that actively establishes connections,
-submits requests and perhaps receive responses.). The client strategy
-factory provides control over several resources used by clients.  TAO
-provides a default client strategy factory called
-<CODE>Client_Strategy_Factory</CODE><p> 
+<h4><A name=TCSF>5. Client_Strategy_Factory</A></h4> Similar to the
+server strategy factory, the client strategy factory supports those
+elements of TAO that are specific to the behavior of clients, which
+are any CORBA applications that actively establish connections, submit
+requests, and perhap receive responses. The client strategy factory
+provides control over several resources used by clients.  TAO provides
+a default client strategy factory called
+<CODE>Client_Strategy_Factory</CODE>.<p>
 
 Typically, the following options are set via the service configurator
-(svc.conf) file. The following line in the svc.conf file (all in one
-line)<P><CODE>static Client_Strategy_Factory "[list of
-options]"</CODE><P> would load all the options listed within "". This
-<A
-href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD">
- file</A> shows how to specify this option in the svc.conf file.<P>
+(<code>svc.conf</code>) file. The following line in the
+<code>svc.conf</code> file (all in one line)<P><CODE>static
+Client_Strategy_Factory "[list of options]"</CODE><P> would load all
+the options listed within "". An example is available <A
+href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD">online</A>
+that shows how to specify this option in the <code>svc.conf</code> file.<P>
 
 <TABLE cellSpacing=2 cellPadding=0 border=2>
   <TBODY>
@@ -1040,51 +1062,52 @@ href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_
     <TD><CODE><A name=#-ORBProfileLock>-ORBProfileLock</A></CODE>
       <EM>which</EM></TD>
     <TD>Specify the kind of synchronization primitive for the Profiles.
-      Default is <CODE>thread</CODE>, which means that a regular thread mutex is
-      used. The second option is <CODE>null</CODE>, which means a null lock is
+      Default is <EM>thread</EM>, which means that a regular thread mutex is
+      used. The second option is <EM>null</EM>, which means a null lock is
       used. This makes sense in case of optimizations and is allowed when no
       forwarding is used or only a single threaded client. </TD></TR>
   <TR>
-    <TD><CODE>-ORBClientConnectionHandler</CODE> <EM>MT / ST / RW</EM></TD>
-    <TD><A name=-ORBClientConnectionHandler></A>ST means use the
+    <TD><CODE>-ORBClientConnectionHandler</CODE> <EM>MT | ST | RW</EM></TD>
+    <TD><A name=-ORBClientConnectionHandler></A><EM>ST</EM> means use the
       single-threaded client connection handler, i.e., the leader follower model
-      will not be used. However, ST does support nested upcalls and handling of
+      will not be used. However, <EM>ST</EM> does support nested upcalls and handling of
       new requests while waiting for the reply from a server.
-      <P>MT means use the multi-threaded client connection handler which uses
+      <P><EM>MT</EM> means use the multi-threaded client connection handler which uses
       the leader follower model. This model allows the use of multiple threads
       with a single Reactor.
-      <P>RW selects a strategy that simply blocks in recv() when waiting for a
-      response from the server instead of waiting in the Reactor. The RW
+      <P><EM>RW</EM> selects a strategy that simply blocks in <CODE>recv()</CODE> when waiting for a
+      response from the server instead of waiting in the Reactor. The <EM>RW</EM>
       strategy only works when the application does not have to worry about new
       request showing up when waiting for a response. Further, this strategy
-      cannot be used with AMI calls. Therefore, this strategy is appropriate
+      cannot be used with Asynchronous Method Invocation (AMI)
+      calls. Therefore, this strategy is appropriate
       only for "pure" synchronous clients. Note that applications with nested
       upcalls are not "pure" synchronous clients. Also note that this strategy
       will only effect two way calls, since there is no waiting for one way
       calls. This strategy can also be used in an application that is both a
       client and a server if the server side is handled by a separate thread and
       the client threads are "pure" clients.
-      <P>Default for this option is MT. </P></TD></TR>
+      <P>Default for this option is <EM>MT</EM>. </P></TD></TR>
   <TR>
-    <TD><CODE>-ORBTransportMuxStrategy</CODE> <EM>EXCLUSIVE / MUXED</EM></TD>
-    <TD><A name=-ORBTransportMuxStrategy></A><CODE>EXCLUSIVE</CODE> means that the
+    <TD><CODE>-ORBTransportMuxStrategy</CODE> <EM>EXCLUSIVE | MUXED</EM></TD>
+    <TD><A name=-ORBTransportMuxStrategy></A><EM>EXCLUSIVE</EM> means that the
       Transport does not multiplex requests on a connection. At a time, there
       can be only one request pending on a connection.
-      <P><CODE>MUXED</CODE> means that Transport multiplexes more than one request at the
+      <P><EM>MUXED</EM> means that Transport multiplexes more than one request at the
       same time on a connection. This option is often used in conjunction with
-      Asynchronous Method Invocation (AMI), because multiple requests can be sent 'in
-      bulk'.
-      <P>Default for this option is <CODE>MUXED</CODE>. </P></TD></TR>
+      AMI, because multiple requests can be sent "in
+      bulk."
+      <P>Default for this option is <EM>MUXED</EM>. </P></TD></TR>
   <TR>
     <TD><CODE>-ORBConnectStrategy</CODE> <EM>type</EM></TD>
     <TD><A name=-ORBConnectStrategy></A>TAO provides three strategies to
-      connect to remote servers. The default <CODE>leader_follower</CODE>
+      connect to remote servers. The default <EM>leader_follower</EM>
       strategy uses the Reactor and non-blocking connects to connect and this
       strategy participates in the Leader/Followers protocol to synchronize
-      access to the Reactor. The <CODE>reactive</CODE> strategy uses the Reactor
+      access to the Reactor. The <EM>reactive</EM> strategy uses the Reactor
       for non-blocking connects but does not take part in the Leader/Followers
       protocol, thus it is better used only in single threaded applications.
-      Finally, the <CODE>blocked</CODE> strategy as the name implies, blocks the
-      thread until connection is complete. Some of the protocols in TAO viz.
-      SHMIOP and SSLIOP can only use blocked strategy.
+      Finally, the <EM>blocked</EM> strategy as the name implies, blocks the
+      thread until connection is complete. Some of the protocols in
+        TAO (such as SHMIOP and SSLIOP) can only use the <EM>blocked</EM> strategy.
 </TD></TR></TBODY></TABLE></P></BODY></HTML>
