@@ -22,24 +22,8 @@ endif
 #### Build customization.
 ####
 ifndef TAO_ORBSVCS
-  #### The following default definition of TAO_ORBSVCS builds all of TAO's
-  #### orbsvcs.  If you'd like to not build some components, then define
-  #### your TAO_ORBSVCS appropriately.  You can do that either in:
-  #### 1) your $(ACE_ROOT)/include/makeinclude/platform_macros.GNU file,
-  #### 2) on the make command line, e.g.,
-  ####        make TAO_ORBSVCS=Naming
-  ####    or
-  #### 3) by setting (and exporting) your TAO_ORBSVCS environment variable.
-  ####
-  #### NOTE: We currently don't check for interdependencies between
-  #### services.  For example, if you build the CosEvent service, you
-  #### must also explicitly specify the Sched and Event services, at least.
-  ####
-  #### NOTE: It would be nice to customize tmplinst-orbsvcs based on the
-  #### value of TAO_ORBSVCS.
-  ####
-  #### NOTE: We currently don't check this macro in each of the orbsvcs
-  #### Makefiles, or in their tests.  We'll add those checks soon.
+  #### Please see docs/configurations.html#orbsvcs for documentation of
+  #### TAO_ORBSVCS.
   TAO_ORBSVCS = Naming \
                 Time \
                 Log \
