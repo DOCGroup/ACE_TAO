@@ -40,6 +40,9 @@
 #define TAO_DEFAULT_SERVER_PORT 10014
 #endif /* TAO_DEFAULT_SERVER_PORT */
 
+// This controls the alignment for TAO structs.
+#define TAO_ALIGNMENT_MAGIC_NUMBER 64
+
 // BC++ seems to have a different convention for detecting Win32 than
 // VC++.
 
@@ -86,13 +89,6 @@
 
 // The number of bytes in a bool.  
 #define SIZEOF_BOOL 0
-
-// The number of bytes in a wchar_t.
-#if defined (VXWORKS)
-#define SIZEOF_WCHAR_T 1
-#else
-#define SIZEOF_WCHAR_T 2
-#endif /* VXWORKS */
 
 // Define as the return type of signal handlers (int or void).
 #define RETSIGTYPE void

@@ -388,11 +388,7 @@ public:
   //
   // NOTE:  those are IDL extensions, not yet standard.
 
-#  if	SIZEOF_WCHAR_T < 2
-  typedef short WChar;
-#  else
   typedef wchar_t WChar;
-#  endif /* SIZEOF _WCHAR_T < 2 */
   typedef WChar *WString;
   
   typedef WChar &WChar_out; // out type for WChar

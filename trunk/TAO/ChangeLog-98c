@@ -1,18 +1,20 @@
+Mon Nov 10 22:02:42 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tao/interp.cpp (declare_entry): Moved TAO_ALIGNMENT_MAGIC_NUMBER
+ 	to orbconf.h instead of burying it in interp.cpp.
+
+	* tao/corbacom.h: Rather than trying to guess what the size of
+ 	wchar_t, let's just use what's in ACE.
+
 Mon Nov 10 19:26:03 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* tao/orbconf.h (SIZEOF_INT): FreeBSD and NetBSD have 4 byte
 	ints. Thanks to Nanbor for pointing this out.
 
-Mon Nov 10 18:30:22 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
-
 	* tao/orbobj.cpp: Added template instantiation for ACE_Atomic_Op.
-
-Mon Nov 10 15:56:58 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* tao/orbconf.h: NetBSD has a long double of size 12, as does
 	FreeBSD. Fixed SIZEOF_LONG_DOUBLE to fix this.
-
-Mon Nov 10 12:21:12 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp (main): Removed cerr's
 	and replaced them with ACE_ERROR_RETURN's and the like.

@@ -73,22 +73,25 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
 #endif /* 0 */
 
   // TAO comments: 
-  // For free standing typecodes, we choose to always make a copy of the buffer passed
-  // in. That way, our destructor doesn't have to deal with the case where the
-  // buffer was either allocated in which case it must be freed or the case
-  // where our buffer just points to the buffer passed in.
+
+  // For free standing typecodes, we choose to always make a copy of
+  // the buffer passed in. That way, our destructor doesn't have to
+  // deal with the case where the buffer was either allocated in which
+  // case it must be freed or the case where our buffer just points to
+  // the buffer passed in.
   if (!parent_)
     {
-      // no parent. We are free standing
+      // No parent. We are free standing.
       ptr_arith_t temp;
       
-      // allocate a buffer to hold the encapsulated stream. We allocate extra space
-      // since we need a buffer that is aligned on a 4 byte word boundary. As a
-      // result, it is quite possible that we may start accessing the buffer
-      // from a position shifted to the right in the allocated buffer. As a
-      // result, during destruction, we do not want part of the allocated heap
-      // to remain dangling. Hence we save a handle to the original allocated
-      // buffer
+      // Allocate a buffer to hold the encapsulated stream. We
+      // allocate extra space since we need a buffer that is aligned
+      // on a 4 byte word boundary. As a result, it is quite possible
+      // that we may start accessing the buffer from a position
+      // shifted to the right in the allocated buffer. As a result,
+      // during destruction, we do not want part of the allocated heap
+      // to remain dangling. Hence we save a handle to the original
+      // allocated buffer.
       non_aligned_buffer_ = new CORBA::Octet [length + 4];
       
       temp = (ptr_arith_t) non_aligned_buffer_;
@@ -97,66 +100,77 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       buffer_ = (CORBA::Octet *) temp;
       
       (void) ACE_OS::memcpy (buffer_, buffer, (size_t) length);
-      _orb_owns = CORBA::B_FALSE;  // the ORB does not own this typecode
+
+      // The ORB does not own this typecode.
+      _orb_owns = CORBA::B_FALSE;  
     }
   else
     {
-      // we are a child. We do not allocate a new buffer, but share it with our
-      // parent. We know that our parent's buffer was properly aligned.
+      // We are a child. We do not allocate a new buffer, but share it
+      // with our parent. We know that our parent's buffer was
+      // properly aligned.
       buffer_ = buffer;
     }
 }
 
-// Destructor.  For "indirected" typecodes and children, the typecode reuses the
-// buffer owned by its parent
+// Destructor.  For "indirected" typecodes and children, the typecode
+// reuses the buffer owned by its parent.
 
 void
 CORBA_TypeCode::operator delete (void* p)
 {
-  if (! ((CORBA_TypeCode*)p)->_orb_owns)
+  if (!((CORBA_TypeCode *) p)->_orb_owns)
     ::delete p;
 }
 
 CORBA_TypeCode::~CORBA_TypeCode (void)
 {
   if (_orb_owns)
-    {
-      // we are constants, don't do anything
-      return;
-    }
+    // we are constants, don't do anything
+    return;
   else if (parent_) // check if we have a parent
     {
-      // we have a parent which means that we were not directly created by IDL
-      // compiler generated code, but by the precomputation logic. We should
-      // delete ourselves and the subtree below us only if our parent was in
-      // the process of deleteing itself
-      if (parent_->_delete_flag) // parent is deleteing, so we have to go 
+      // We have a parent which means that we were not directly
+      // created by IDL compiler generated code, but by the
+      // precomputation logic. We should delete ourselves and the
+      // subtree below us only if our parent was in the process of
+      // deleteing itself
+      if (parent_->_delete_flag) 
+        // Parent is deleteing, so we have to go.
 	{
-	  _delete_flag = CORBA::B_TRUE; // set our delete flag to TRUE so that
-				       // our children (if any) will know that
-				       // we have initiated our destruction
-	  delete private_state_; // delete any private state we have and thus
-				 // free up the children
-	  // we share the buffer octets of our parent. Hence we don't
-	  // deallocate it
+          // Set our delete flag to TRUE so that our children (if any)
+          // will know that we have initiated our destruction
+	  _delete_flag = CORBA::B_TRUE; 
+
+          // Delete any private state we have and thus free up the
+          // children.
+	  delete private_state_; 
+
+	  // We share the buffer octets of our parent. Hence we don't
+	  // deallocate it.
 	  buffer_ = 0;
 	}
-      // else, somebody maliciously tried to delete us, but we won't get
-      // deleted
+      // Else, somebody maliciously tried to delete us, but we won't
+      // get deleted.
     }
   else
     {
-      // we are free standing (IDL compiler generated code) and are to be deleted
-      _delete_flag = CORBA::B_TRUE; // we indicate to our children that we are
-				   // getting deleted 
-      delete private_state_; // free up our children
-      delete [] non_aligned_buffer_; // delete the original, possibly
-				     // nonaligned, buffer
+      // We are free standing (IDL compiler generated code) and are to
+      // be deleted.  We indicate to our children that we are getting
+      // deleted.
+      _delete_flag = CORBA::B_TRUE; 
+
+      // Free up our children.
+      delete private_state_; 
+
+      // Delete the original, possibly nonaligned, buffer.
+      delete [] non_aligned_buffer_; 
       buffer_ = 0;
     }
 }
 
 // decreases the refcount and deletes when refcount reaches 0
+
 void CORBA::release (CORBA::TypeCode_ptr tc)
 {
   if (tc)
@@ -208,7 +222,7 @@ CORBA_TypeCode::Release (void)
   if (_orb_owns)
     result = refcount_; // 1
   else if (parent_)
-    //	  return parent_->Release ();
+    // return parent_->Release ();
     result = refcount_; // 1
   else
     {
