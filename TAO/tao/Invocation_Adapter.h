@@ -173,7 +173,8 @@ namespace TAO
     /// Helper method that prepares the necessary stuff for a remote
     /// invocation.
 
-    /* This method does the following necessary activities needed for
+    /*
+     * This method does the following essential activities needed for
      * a remote  invocation.
      *
      * - Extracts the roundtrip timeout policies set in the ORB or
@@ -191,7 +192,13 @@ namespace TAO
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
 
-
+    /// Helper method to make a two way invocation.
+    /**
+     * This method creates a synchronous twoway invocation object to
+     * which the actual task of request handling is delegated. Once
+     * the invocation returns this method checks whether the request
+     * is forwarded to a new location.
+     */
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_ptr &effective_target,
@@ -199,14 +206,21 @@ namespace TAO
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
 
+    /// Helper method to make a one way invocation.
+    /**
+     * This method creates a synchronous oneway invocation object to
+     * which the actual task of request handling is delegated. Once
+     * the invocation returns this method checks whether the request
+     * is forwarded to a new location to take appropriate action.
+     */
     virtual Invocation_Status invoke_oneway (
         TAO_Operation_Details &op,
         CORBA::Object_ptr &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
-
     //@}
+
     /// Helper function that extracts the roundtrip timeout policies
     /// set in the ORB.
     bool get_timeout (TAO_Stub *stub,
