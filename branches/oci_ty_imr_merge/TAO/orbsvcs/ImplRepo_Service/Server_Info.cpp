@@ -1,67 +1,63 @@
+// $Id$
 #include "Server_Info.h"
 
-
-ACE_RCSID (ImplRepo_Service,
-           Server_Info,
-           "$Id$")
-
-
-Server_Info::Server_Info (
-    const ACE_CString POA_name,
-    const ACE_CString logical_server_name,
-    const ACE_CString startup_command,
-    const ImplementationRepository::EnvironmentList environment_vars,
-    const ACE_CString working_dir,
-    const ImplementationRepository::ActivationMode activation)
-  : starting_up_ (false),
-    logical_server_name_ (logical_server_name),
-    POA_name_ (POA_name),
-    startup_command_ (startup_command),
-    environment_vars_ (environment_vars),
-    working_dir_ (working_dir),
-    location_ (""),
-    server_object_ior_ (""),
-    activation_ (activation)
+Server_Info::Server_Info
+(
+ const ACE_CString& server_name,
+ const ACE_CString& aname,
+ const ACE_CString& cmdline,
+ const ImplementationRepository::EnvironmentList& env,
+ const ACE_CString& working_dir,
+ ImplementationRepository::ActivationMode amode,
+ int limit,
+ const ACE_CString& partial_ior,
+ const ACE_CString& server_ior,
+ ImplementationRepository::ServerObject_ptr svrobj
+ )
+ : name(server_name)
+ , activator(aname)
+ , cmdline(cmdline)
+ , env_vars(env)
+ , dir(working_dir)
+ , activation_mode(amode)
+ , start_limit (limit)
+ , partial_ior(partial_ior)
+ , ior(server_ior)
+ , server(ImplementationRepository::ServerObject::_duplicate(svrobj))
+ , start_count(0)
 {
 }
 
-
-Server_Info::~Server_Info (void)
+ImplementationRepository::ServerInformation*
+Server_Info::createImRServerInfo(ACE_ENV_SINGLE_ARG_DECL)
 {
-}
+  ImplementationRepository::ServerInformation* info;
+  ACE_NEW_THROW_EX (info, ImplementationRepository::ServerInformation, CORBA::NO_MEMORY());
 
+  info->server = name.c_str();
+  info->startup.command_line = cmdline.c_str();
+  info->startup.environment = env_vars;
+  info->startup.working_directory = dir.c_str();
+  info->startup.activation = activation_mode;
+  info->startup.activator = activator.c_str();
+  info->startup.start_limit = start_limit;
+  info->partial_ior = partial_ior.c_str();
 
-// Updates information that is relevant only when an instance
-// of the server is running.
-void
-Server_Info::update_running_info (const ACE_CString location,
-                                  const ACE_CString server_object_ior)
-{
-  this->location_ = location;
-  this->server_object_ior_ = server_object_ior;
-  this->starting_up_ = false;
-}
-
-
-void
-Server_Info::get_startup_info (
-    ACE_CString &logical_server_name,
-    ACE_CString &startup_command,
-    ImplementationRepository::EnvironmentList &environment_vars,
-    ACE_CString &working_dir,
-    ImplementationRepository::ActivationMode &activation)
-{
-  logical_server_name = this->logical_server_name_;
-  startup_command = this->startup_command_;
-  environment_vars = this->environment_vars_;
-  working_dir = this->working_dir_;
-  activation = this->activation_;
+  return info;
 }
 
 void
-Server_Info::get_running_info (ACE_CString &location,
-                               ACE_CString &server_object_ior)
+Server_Info::reset(void)
 {
-  location = this->location_;
-  server_object_ior = this->server_object_ior_;
+  ior = "";
+  partial_ior = "";
+  last_ping = ACE_Time_Value::zero;
+  server = ImplementationRepository::ServerObject::_nil();
+  // start_count = 0; Note : We can't do this, because it would be reset during startup.
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
