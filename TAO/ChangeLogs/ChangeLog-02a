@@ -1,3 +1,12 @@
+Tue Feb 27 16:36:06 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * orbsvcs/IFR_Service/tao_ifr.bor: 
+          Added library required for debug build.
+
+        * tests/AMI_Timeouts/client.bor:
+        * tests/AMI_Timeouts/server.bor:
+          Added missing source file timeout_client.cpp.
+
 Tue Feb 27 15:23:37 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 
