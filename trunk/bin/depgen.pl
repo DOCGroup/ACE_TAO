@@ -27,7 +27,7 @@ require DependencyEditor;
 # Data Section
 # ************************************************************
 
-my($version)  = '0.4';
+my($version)  = '0.5';
 my($os)       = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? 'Windows' : 'UNIX');
 my(%types)    = ('gnu'   => 1,
                  'nmake' => 1,
@@ -110,6 +110,8 @@ sub usageAndExit {
         "-R   Replace \$VARNAME paths with \$(VARNAME).\n" .
         "-f   Specifies the output file.  This file will be edited if it " .
         "already\n     exists.\n" .
+        "-n   Do not include inline files (ending in .i or .inl) in the " .
+        "dependencies.\n" .
         "-t   Use specified type (";
   my(@keys) = sort keys %types;
   for(my $i = 0; $i <= $#keys; ++$i) {
@@ -145,13 +147,14 @@ sub setReplace {
 # Main Section
 # ************************************************************
 
-my($base)    = basename($0);
-my($type)    = $defaults{$os}->[0];
-my(@files)   = ();
-my(%macros)  = ();
-my(@ipaths)  = ();
-my(%replace) = ();
-my($output)  = '-';
+my($base)     = basename($0);
+my($type)     = $defaults{$os}->[0];
+my($noinline) = undef;
+my(@files)    = ();
+my(%macros)   = ();
+my(@ipaths)   = ();
+my(%replace)  = ();
+my($output)   = '-';
 
 
 if (defined $ENV{ACE_ROOT} && !defined $ENV{TAO_ROOT}) {
@@ -193,6 +196,9 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
       usageAndExit($base, 'Invalid use of -f');
     }
   }
+  elsif ($arg eq '-n') {
+    $noinline = 1;
+  }
   elsif ($arg eq '-h') {
     usageAndExit($base);
   }
@@ -220,6 +226,6 @@ if (!defined $files[0]) {
 }
 
 my($editor) = new DependencyEditor();
-my($status) = $editor->process($output, $type,
+my($status) = $editor->process($output, $type, $noinline,
                                \%macros, \@ipaths, \%replace, \@files);
 exit($status);
