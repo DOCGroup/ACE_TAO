@@ -130,21 +130,25 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
   // Set up an IIOP Profile to hold the host name.
 
   char temphost[MAXHOSTNAMELEN + 1];
-  if (addr.get_host_name (temphost, sizeof temphost) != 0)
-    return -1;
+  const char *temphost2 = 0;
+  if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
+    {
+      temphost2 = addr.get_host_addr ();      
+      if (temphost2 == 0)
+        return -1;
+    }
   else
     {
-      const char *temphost2 = 0;
-      if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
-        temphost2 = addr.get_host_addr ();
-      else
-        temphost2 = temphost;
-
-      return this->set (temphost2,
-                        addr.get_port_number (),
-                        key,
-                        &addr);
+      if (addr.get_host_name (temphost, sizeof temphost) != 0)
+        return -1;
+      
+      temphost2 = temphost;
     }
+
+  return this->set (temphost2,
+                    addr.get_port_number (),
+                    key,
+                    &addr);
 }
 
 int
@@ -154,19 +158,25 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
   // Set up an IIOP Profile to hold the host name.
 
   char temphost[MAXHOSTNAMELEN + 1];
-  if (addr.get_host_name (temphost, sizeof temphost) != 0)
-    return -1;
+  const char *temphost2 = 0;
+  if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
+    {
+      temphost2 = addr.get_host_addr ();      
+      if (temphost2 == 0)
+        return -1;
+    }
   else
     {
-      const char *host_name = temphost;
-      if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
-        host_name = addr.get_host_addr ();
-
-      return this->set (host_name,
-                        addr.get_port_number (),
-                        key,
-                        &addr);
+      if (addr.get_host_name (temphost, sizeof temphost) != 0)
+        return -1;
+      
+      temphost2 = temphost;
     }
+
+  return this->set (temphost2,
+                    addr.get_port_number (),
+                    key,
+                    &addr);
 }
 
 IIOP::Profile::Profile (const char *h,
@@ -255,6 +265,12 @@ int operator==(const TAO_opaque& rhs,
       return 0;
 
   return 1;
+}
+
+int operator!=(const TAO_opaque& rhs,
+               const TAO_opaque& lhs)
+{
+  return !(rhs == lhs);
 }
 
 // Expensive comparison of objref data, to see if two objrefs

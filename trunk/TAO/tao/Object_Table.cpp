@@ -7,34 +7,9 @@
 
 ACE_RCSID(tao, Object_Table, "$Id$")
 
-TAO_Object_Table_Iterator_Impl::~TAO_Object_Table_Iterator_Impl (void)
-{
-}
-
-TAO_Object_Table_Impl::~TAO_Object_Table_Impl (void)
-{
-}
-
-int
-TAO_Object_Table_Impl::find (const PortableServer::Servant servant)
-{
-  PortableServer::ObjectId* id;
-  PortableServer::ObjectId_out id_out (id);
-  int ret = this->find (servant, id_out);
-  if (ret == -1)
-    return -1;
-  
-  // It was found and returned in <id>, we must release it.
-  delete id;
-  return 0;
-}
-
-int
-TAO_Object_Table_Impl::find (const PortableServer::ObjectId &id)
-{
-  PortableServer::Servant servant;
-  return this->find (id, servant);
-}
+#if !defined (__ACE_INLINE__)
+# include "tao/Object_Table.i"
+#endif /* ! __ACE_INLINE__ */
 
 int
 TAO_Object_Table_Impl::find (const PortableServer::Servant servant,
@@ -46,7 +21,7 @@ TAO_Object_Table_Impl::find (const PortableServer::Servant servant,
        !i->done (end.get ());
        i->advance ())
     {
-      const TAO_Object_Table_Entry& item = i->item ();
+      const TAO_Object_Table_Entry &item = i->item ();
       if (item.int_id_ == servant)
 	{
 	  if (id.ptr () != 0)
@@ -59,178 +34,26 @@ TAO_Object_Table_Impl::find (const PortableServer::Servant servant,
 	  id.ptr () = new PortableServer::ObjectId (item.ext_id_);
 	}
     }
-  return (id.ptr () == 0)?-1:0;
-}
-
-
-
-TAO_Object_Table_Iterator::
-TAO_Object_Table_Iterator (TAO_Object_Table_Iterator_Impl *impl)
-  :  impl_ (impl)
-{
-}
-
-TAO_Object_Table_Iterator::
-TAO_Object_Table_Iterator (const TAO_Object_Table_Iterator &x)
-  :  impl_ (0)
-{
-  if (x.impl_ != 0)
-    {
-      this->impl_ = x.impl_->clone ();
-    }
-}
-
-TAO_Object_Table_Iterator&
-TAO_Object_Table_Iterator::operator= (const TAO_Object_Table_Iterator &x)
-{
-  if (this != &x)
-    {
-      delete this->impl_;
-      if (x.impl_ == 0)
-	{
-	  this->impl_ = 0;
-	}
-      else
-	{
-	  this->impl_ = x.impl_->clone ();
-	}
-    }
-  return *this;
-}
-
-TAO_Object_Table_Iterator::~TAO_Object_Table_Iterator (void)
-{
-  if (this->impl_ != 0)
-    {
-      delete this->impl_;
-      this->impl_ = 0;
-    }
-}
-
-const TAO_Object_Table_Entry&
-TAO_Object_Table_Iterator::operator* (void) const
-{
-  return this->impl_->item ();
-}
-
-TAO_Object_Table_Iterator
-TAO_Object_Table_Iterator::operator++ (void)
-{
-  TAO_Object_Table_Iterator tmp = *this;
-  this->impl_->advance ();
-  return tmp;
-}
-
-TAO_Object_Table_Iterator
-TAO_Object_Table_Iterator::operator++ (int)
-{
-  this->impl_->advance ();
-  return *this;
+  return (id.ptr () == 0) ? -1 : 0;
 }
 
 int
-operator== (const TAO_Object_Table_Iterator &l,
-	    const TAO_Object_Table_Iterator &r)
+TAO_Object_Table_Impl::find (const PortableServer::Servant servant)
 {
-  return l.impl_->done (r.impl_);
-}
-
-int
-operator!= (const TAO_Object_Table_Iterator &l,
-	    const TAO_Object_Table_Iterator &r)
-{
-  return !(l == r);
-}
-
-
-
-TAO_Object_Table::TAO_Object_Table (void)
-{
-  this->impl_ = TAO_ORB_Core_instance ()->server_factory ()->create_object_table ();
-}
+  PortableServer::ObjectId *id;
+  PortableServer::ObjectId_out id_out (id);
+  int ret = this->find (servant, id_out);
+  if (ret == -1)
+    return -1;
   
-TAO_Object_Table::~TAO_Object_Table (void)
-{
-  delete this->impl_;
+  // It was found and returned in <id>, we must release it.
+  delete id;
+  return 0;
 }
-
-int
-TAO_Object_Table::find (const PortableServer::ObjectId &id, 
-			PortableServer::Servant &servant)
-{
-  return this->impl_->find (id, servant);
-}
-
-int
-TAO_Object_Table::bind (const PortableServer::ObjectId &id, 
-			PortableServer::Servant servant)
-{
-  return this->impl_->bind (id, servant);
-}
-
-int
-TAO_Object_Table::unbind (const PortableServer::ObjectId &id,
-			  PortableServer::Servant &servant)
-{
-  return this->impl_->unbind (id, servant);
-}
-
-int
-TAO_Object_Table::find (const PortableServer::Servant servant)
-{
-  return this->impl_->find (servant);
-}
-
-int
-TAO_Object_Table::find (const PortableServer::ObjectId &id)
-{
-  return this->impl_->find (id);
-}
-
-int
-TAO_Object_Table::find (const PortableServer::Servant servant,
-			PortableServer::ObjectId_out id)
-{
-  return this->impl_->find (servant, id);
-}
-
-TAO_Object_Table::iterator
-TAO_Object_Table::begin (void) const
-{
-  return TAO_Object_Table::iterator (this->impl_->begin ());
-}
-
-TAO_Object_Table::iterator
-TAO_Object_Table::end (void) const
-{
-  return TAO_Object_Table::iterator (this->impl_->end ());
-}
-
-
-
-/*
-int
-operator== (const PortableServer::ObjectId &l,
-	    const PortableServer::ObjectId &r)
-{
-  if (l.length () != r.length ())
-    return 0;
-
-  for (CORBA::ULong i = 0;
-       i < l.length ();
-       ++i)
-    {
-      if (l[i] != r[i])
-	return 0;
-    }
-  return 1;
-}
-*/
 
 // Template specialization....
 u_long
-ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX>::
-hash (const PortableServer::ObjectId &ext_id)
+ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX>::hash (const PortableServer::ObjectId &ext_id)
 {
   // Based on hash_pjw function on the ACE library.
   u_long hash = 0;
@@ -254,172 +77,67 @@ hash (const PortableServer::ObjectId &ext_id)
 }
 
 TAO_Dynamic_Hash_ObjTable::TAO_Dynamic_Hash_ObjTable (CORBA::ULong size)
-  :  hash_map_ (size)
+  :  hash_map_ (size == 0 ? TAO_Object_Table_Impl::DEFAULT_TABLE_SIZE : size)
 {
 }
 
-int
-TAO_Dynamic_Hash_ObjTable::find (const PortableServer::Servant servant)
-{
-  return this->TAO_Object_Table_Impl::find (servant);
-}
-
-int
-TAO_Dynamic_Hash_ObjTable::find (const PortableServer::ObjectId &id)
-{
-  return this->TAO_Object_Table_Impl::find (id);
-}
-
-int
-TAO_Dynamic_Hash_ObjTable::find (const PortableServer::Servant servant,
-				 PortableServer::ObjectId_out id)
-{
-  return this->TAO_Object_Table_Impl::find (servant, id);
-}
-
-int
-TAO_Dynamic_Hash_ObjTable::find (const PortableServer::ObjectId &id,
-				 PortableServer::Servant &servant)
-{
-  return this->hash_map_.find (id, servant);
-}
-
-int
-TAO_Dynamic_Hash_ObjTable::bind (const PortableServer::ObjectId &id,
-				 PortableServer::Servant servant)
-{
-  return this->hash_map_.bind (id, servant);
-}
-
-int
-TAO_Dynamic_Hash_ObjTable::unbind (const PortableServer::ObjectId &id,
-				   PortableServer::Servant &servant)
-{
-  return this->hash_map_.unbind (id, servant);
-}
-
-TAO_Object_Table_Iterator_Impl*
-TAO_Dynamic_Hash_ObjTable::begin (void) const
-{
-  TAO_Dynamic_Hash_ObjTable *non_const = 
-    ACE_const_cast(TAO_Dynamic_Hash_ObjTable*, this);
-  return new TAO_Dynamic_Hash_ObjTable_Iterator (Iterator (non_const->hash_map_));
-}
-
-TAO_Object_Table_Iterator_Impl*
-TAO_Dynamic_Hash_ObjTable::end (void) const
-{
-  return 0;
-}
-
-TAO_Dynamic_Hash_ObjTable_Iterator::
-TAO_Dynamic_Hash_ObjTable_Iterator (const Impl& impl)
-  :  impl_ (impl)
-{
-}
-
-TAO_Object_Table_Iterator_Impl*
-TAO_Dynamic_Hash_ObjTable_Iterator::clone (void) const
-{
-  return new TAO_Dynamic_Hash_ObjTable_Iterator (*this);
-}
-
-const TAO_Object_Table_Entry&
-TAO_Dynamic_Hash_ObjTable_Iterator::item (void) const
-{
-  TAO_Object_Table_Entry& entry = 
-    ACE_const_cast(TAO_Object_Table_Entry&, this->entry_);
-  ACE_Hash_Map_Entry<PortableServer::ObjectId,PortableServer::Servant>* tmp;
-  if (ACE_const_cast(TAO_Dynamic_Hash_ObjTable_Iterator*,this)->impl_.next (tmp) == 1)
-    {
-      entry.int_id_ = tmp->int_id_;
-      entry.ext_id_ = tmp->ext_id_;
-    }
-  return entry;
-}
-
-void
-TAO_Dynamic_Hash_ObjTable_Iterator::advance (void)
-{
-  this->impl_.advance ();
-}
-
-int
-TAO_Dynamic_Hash_ObjTable_Iterator::done (const TAO_Object_Table_Iterator_Impl *) const
-{
-  return this->impl_.done ();
-}
-
-
-
-TAO_Array_ObjTable_Iterator::
-TAO_Array_ObjTable_Iterator (TAO_Object_Table_Entry *pos)
-  :  pos_ (pos)
-{
-}
-
-TAO_Object_Table_Iterator_Impl *
-TAO_Array_ObjTable_Iterator::clone (void) const
-{
-  return new TAO_Array_ObjTable_Iterator (*this);
-}
-
-const TAO_Object_Table_Entry&
-TAO_Array_ObjTable_Iterator::item (void) const
-{
-  return *this->pos_;
-}
-
-void
-TAO_Array_ObjTable_Iterator::advance (void)
-{
-  this->pos_++;
-}
-
-int
-TAO_Array_ObjTable_Iterator::done (const TAO_Object_Table_Iterator_Impl *end) const
-{
-  const TAO_Array_ObjTable_Iterator *tmp =
-    ACE_dynamic_cast(const TAO_Array_ObjTable_Iterator*, end);
-  return (this->pos_ == tmp->pos_);
-}
-
-
-
-TAO_Linear_ObjTable::
-TAO_Linear_ObjTable (CORBA::ULong size)
+TAO_Linear_ObjTable::TAO_Linear_ObjTable (CORBA::ULong size)
   :  next_ (0),
-     tablesize_ (size)
+     tablesize_ (size == 0 ? TAO_Object_Table_Impl::DEFAULT_TABLE_SIZE : size)
 {
   ACE_NEW (table_, TAO_Object_Table_Entry[this->tablesize_]);
-}
-
-TAO_Linear_ObjTable::~TAO_Linear_ObjTable (void)
-{
-  if (this->table_ != 0)
+  
+  // Init the table
+  for (CORBA::ULong index = 0;
+       index < this->tablesize_;
+       ++index)
     {
-      delete[] this->table_;
-      this->table_ = 0;
+      this->table_[index].is_free_ = 1;
     }
 }
 
-int
-TAO_Linear_ObjTable::find (const PortableServer::Servant servant)
+// Active Demux search strategy
+// constructor
+TAO_Active_Demux_ObjTable::TAO_Active_Demux_ObjTable (CORBA::ULong size)
+  : TAO_Linear_ObjTable (size)
 {
-  return this->TAO_Object_Table_Impl::find (servant);
 }
 
 int
-TAO_Linear_ObjTable::find (const PortableServer::ObjectId &id)
+TAO_Linear_ObjTable::bind (const PortableServer::ObjectId &id, 
+			   PortableServer::Servant servant)
 {
-  return this->TAO_Object_Table_Impl::find (id);
-}
+  // Check existing entries 
+  for (TAO_Object_Table_Entry *i = this->table_;
+       i != this->table_ + this->next_;
+       ++i)
+    {
+      if ((*i).is_free_)
+	{
+	  (*i).ext_id_ = id;
+	  (*i).int_id_ = servant;
+	  (*i).is_free_ = 0;
+	  return 0;
+	}
+    }
+  
+  // Resize
+  if (this->next_ == this->tablesize_)
+    {
+      int result = this->resize ();
+      if (result != 0)
+        return result;
+    }
+  
+  // Put the entry at the end of the new section
+  this->table_[this->next_].ext_id_ = id;
+  this->table_[this->next_].int_id_ = servant;
+  this->table_[this->next_].is_free_ = 0;
 
-int
-TAO_Linear_ObjTable::find (const PortableServer::Servant servant,
-			   PortableServer::ObjectId_out id)
-{
-  return this->TAO_Object_Table_Impl::find (servant, id);
+  // Increment next
+  this->next_++;
+
+  return 0;
 }
 
 int
@@ -430,71 +148,15 @@ TAO_Linear_ObjTable::find (const PortableServer::ObjectId &id,
        i != this->table_ + this->next_;
        ++i)
     {
-      if ((*i).ext_id_ == id)
+      if ((*i).is_free_)
+        continue;
+      else if ((*i).ext_id_ == id)
 	{
 	  servant = (*i).int_id_;
 	  return 0;
 	}
     }
   return -1;
-}
-
-const int start_tblsiz = 128;
-const int max_exp = 65536; // Grow table exponentially up to 64K
-const int lin_chunk = 32768; // afterwards grow in chunks of 32K
-
-int
-TAO_Linear_ObjTable::bind (const PortableServer::ObjectId &id, 
-			   PortableServer::Servant servant)
-{
-  for (TAO_Object_Table_Entry *i = this->table_;
-       i != this->table_ + this->next_;
-       ++i)
-    {
-      if ((*i).ext_id_ == id || (*i).int_id_ == 0)
-	{
-	  (*i).ext_id_ = id;
-	  (*i).int_id_ = servant;
-	  return 0;
-	}
-    }
-  if (this->next_ == this->tablesize_)
-    {
-      if (this->next_ == 0)
-	{
-	  this->tablesize_ = start_tblsiz;
-	  ACE_NEW_RETURN (this->table_,
-			  TAO_Object_Table_Entry[this->tablesize_],
-			  -1);
-	}
-      else
-	{
-	  if (this->tablesize_ < max_exp)
-	    {
-	      this->tablesize_ *= 2;
-	    }
-	  else
-	    {
-	      this->tablesize_ += lin_chunk;
-	    }
-	  TAO_Object_Table_Entry *tmp;
-	  ACE_NEW_RETURN (tmp,
-			  TAO_Object_Table_Entry[this->tablesize_],
-			  -1);
-	  for (TAO_Object_Table_Entry *i = this->table_, *j = tmp;
-	       i != this->table_ + this->next_;
-	       ++i, ++j)
-	    {
-	      *j = *i;
-	    }
-	  delete[] this->table_;
-	  this->table_ = tmp;
-	}
-    }
-  this->table_[this->next_].ext_id_ = id;
-  this->table_[this->next_].int_id_ = servant;
-  this->next_++;
-  return 0;
 }
 
 int
@@ -505,105 +167,48 @@ TAO_Linear_ObjTable::unbind (const PortableServer::ObjectId &id,
        i != this->table_ + this->next_;
        ++i)
     {
-      if ((*i).ext_id_ == id)
+      if ((*i).is_free_)
+        continue;
+      else if ((*i).ext_id_ == id)
 	{
 	  servant = (*i).int_id_;
-	  (*i).int_id_ = 0;
+	  (*i).is_free_ = 1;
 	  return 0;
 	}
     }
   return -1;
 }
 
-TAO_Object_Table_Iterator_Impl*
-TAO_Linear_ObjTable::begin () const
+int
+TAO_Linear_ObjTable::resize (void)
 {
-  return new TAO_Array_ObjTable_Iterator (this->table_);
-}
+  if (this->tablesize_ < TAO_Linear_ObjTable::MAX_EXPONENTIAL)
+    this->tablesize_ *= 2;
+  else
+    this->tablesize_ += TAO_Linear_ObjTable::LINEAR_INCREASE;
 
-TAO_Object_Table_Iterator_Impl*
-TAO_Linear_ObjTable::end () const
-{
-  return new TAO_Array_ObjTable_Iterator (this->table_ + this->next_);
-}
-
-
-
-// Active Demux search strategy
-// constructor
-TAO_Active_Demux_ObjTable::TAO_Active_Demux_ObjTable (CORBA::ULong size)
-  : tablesize_ (size)
-{
-  ACE_NEW (this->table_, TAO_Object_Table_Entry[size]);
-  // @@ Maybe a proper constructor for TAO_Object_Table_Entry will
-  // solve this more cleanly.
-  for (TAO_Object_Table_Entry *i = this->table_;
-       i != this->table_ + this->tablesize_;
-       ++i)
+  TAO_Object_Table_Entry *tmp;
+  ACE_NEW_RETURN (tmp,
+                  TAO_Object_Table_Entry[this->tablesize_],
+                  -1);
+  
+  // Init new table correctly
+  for (CORBA::ULong index = 0; index < this->tablesize_; ++index)
     {
-      (*i).int_id_ = 0;
+      tmp[index].is_free_ = 1;
     }
-}
-
-// destructor
-TAO_Active_Demux_ObjTable::~TAO_Active_Demux_ObjTable ()
-{
-  delete [] this->table_;
-}
-
-int
-TAO_Active_Demux_ObjTable::index_from_id (const PortableServer::ObjectId & /*id*/) const
-{
-  // @@ TODO parse id an obtain the index, maybe write a "index" to id
-  // function or some method to obtain the next "free" id.
-  return 0;
-}
-
-
-int
-TAO_Active_Demux_ObjTable::next_free (void) const
-{
-  for (TAO_Object_Table_Entry *i = this->table_;
-       i != this->table_ + this->tablesize_;
-       ++i)
+  
+  // Copy old stuff
+  for (TAO_Object_Table_Entry *i = this->table_, *j = tmp;
+       i != this->table_ + this->next_;
+       ++i, ++j)
     {
-      if ((*i).int_id_ == 0)
-	{
-	  return (i - this->table_);
-	}
+      *j = *i;
     }
-  return -1;
-}
+  delete[] this->table_;
 
-int
-TAO_Active_Demux_ObjTable::find (const PortableServer::Servant servant)
-{
-  return this->TAO_Object_Table_Impl::find (servant);
-}
+  this->table_ = tmp;
 
-int
-TAO_Active_Demux_ObjTable::find (const PortableServer::ObjectId &id)
-{
-  return this->TAO_Object_Table_Impl::find (id);
-}
-
-int
-TAO_Active_Demux_ObjTable::find (const PortableServer::Servant servant,
-				 PortableServer::ObjectId_out id)
-{
-  return this->TAO_Object_Table_Impl::find (servant, id);
-}
-
-int
-TAO_Active_Demux_ObjTable::find (const PortableServer::ObjectId &id, 
-				 PortableServer::Servant &servant)
-{
-  int index = this->index_from_id (id);
-  if (index < 0 || index > this->tablesize_)
-    {
-      return -1;
-    }
-  servant = this->table_[index].int_id_;
   return 0;
 }
 
@@ -611,13 +216,37 @@ int
 TAO_Active_Demux_ObjTable::bind (const PortableServer::ObjectId &id, 
 				 PortableServer::Servant servant)
 {
-  int index = this->index_from_id (id);
-  if (index < 0 || index > this->tablesize_)
-    {
-      return -1;
-    }
-  this->table_[index].ext_id_ = id;
+  CORBA::ULong index = 0;
+  CORBA::ULong generation = 0;
+  int result = this->parse_object_id (id, index, generation);
+
+  if (result != 0 ||
+      index < 0 || index > this->tablesize_ ||
+      this->table_[index].ext_id_ != id)
+    return -1;
+
+  ACE_ASSERT (this->table_[index].is_free_ == 0);
   this->table_[index].int_id_ = servant;
+
+  return 0;
+}
+
+int
+TAO_Active_Demux_ObjTable::find (const PortableServer::ObjectId &id, 
+				 PortableServer::Servant &servant)
+{
+  CORBA::ULong index = 0;
+  CORBA::ULong generation = 0;
+  int result = this->parse_object_id (id, index, generation);
+
+  if (result != 0 ||
+      index < 0 || index > this->tablesize_ ||
+      this->table_[index].ext_id_ != id)
+    return -1;
+
+  ACE_ASSERT (this->table_[index].is_free_ == 0);
+  servant = this->table_[index].int_id_;
+
   return 0;
 }
 
@@ -625,26 +254,98 @@ int
 TAO_Active_Demux_ObjTable::unbind (const PortableServer::ObjectId &id,
 				   PortableServer::Servant &servant)
 {
-  int index = this->index_from_id (id);
-  if (index < 0 || index > this->tablesize_)
-    {
-      return -1;
-    }
+  CORBA::ULong index = 0;
+  CORBA::ULong generation = 0;
+  int result = this->parse_object_id (id, index, generation);
+
+  if (result != 0 ||
+      index < 0 || index > this->tablesize_ ||
+      this->table_[index].ext_id_ != id)
+    return -1;
+
   servant = this->table_[index].int_id_;
-  this->table_[index].int_id_ = 0;
+  this->table_[index].is_free_ = 1;
+
   return 0;
 }
 
-TAO_Object_Table_Iterator_Impl*
-TAO_Active_Demux_ObjTable::begin () const
+PortableServer::ObjectId *
+TAO_Active_Demux_ObjTable::create_object_id (PortableServer::Servant servant, 
+                                             CORBA::Environment &env)
 {
-  return new TAO_Array_ObjTable_Iterator (this->table_);
+  // This method assumes that locks are held when it is called
+  char buffer[TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX + 1];
+  CORBA::ULong generation = 0;
+  CORBA::ULong index = this->next_free ();
+
+  // Has this slot been used before
+  if (this->table_[index].ext_id_ != this->empty_id_)
+    {
+      CORBA::ULong new_index = 0;
+
+      // Find the old generation count
+      int result = this->parse_object_id (this->table_[index].ext_id_, 
+                                          new_index, 
+                                          generation);
+      // Error
+      if (result != 0)
+        {
+          CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
+          env.exception (exception);
+          return 0;
+        }
+      
+      // index should not have changed
+      ACE_ASSERT (new_index == index);
+
+      // Increment generation count
+      generation++;
+    }
+
+  ACE_OS::sprintf (buffer,
+                   "%08.8x%08.8x",
+                   index,
+                   generation);
+  
+  // Create the sequence
+  PortableServer::ObjectId &id = *TAO_POA::string_to_ObjectId (buffer);
+  
+  // Set the new values
+  this->table_[index].ext_id_ = id;
+  this->table_[index].int_id_ = servant;
+  this->table_[index].is_free_ = 0;
+
+  return &id;
 }
 
-TAO_Object_Table_Iterator_Impl*
-TAO_Active_Demux_ObjTable::end () const
+CORBA::ULong
+TAO_Active_Demux_ObjTable::next_free (void) 
 {
-  return new TAO_Array_ObjTable_Iterator (this->table_ + this->tablesize_);
+  while (1)
+    {
+      for (TAO_Object_Table_Entry *i = this->table_;
+           i != this->table_ + this->tablesize_;
+           ++i)
+        {
+          if ((*i).is_free_)
+            return (i - this->table_);
+        }
+
+      this->resize ();
+    }
+}
+
+int
+TAO_Active_Demux_ObjTable::parse_object_id (const PortableServer::ObjectId &id,
+                                            CORBA::ULong &index,
+                                            CORBA::ULong &generation)
+{
+  const char *buffer = (const char *) &id[0];
+  ::sscanf (buffer, 
+            "%8x%8x",
+            &index, 
+            &generation);
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

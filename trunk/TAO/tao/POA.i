@@ -108,21 +108,20 @@ TAO_POA_Policies::synchronization (PortableServer::SynchronizationPolicyValue va
 ACE_INLINE int
 TAO_Creation_Time::creation_time_length (void)
 {
-#if defined (POA_NO_TIMESTAMP)
-  return 0;
-#else
-  return TAO_Creation_Time::max_space_required_for_two_ulong_to_hex;
-#endif /* POA_NO_TIMESTAMP */
+  return TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX;
 }
 
 ACE_INLINE
 TAO_Creation_Time::TAO_Creation_Time (const ACE_Time_Value &creation_time)
 {
+  CORBA::ULong sec  = (CORBA::ULong) creation_time.sec ();
+  CORBA::ULong usec = (CORBA::ULong) creation_time.usec ();
+
   // Convert seconds and micro seconds into string
   ACE_OS::sprintf (this->time_stamp_,
                    "%08.8x%08.8x",
-                   creation_time.sec (),
-                   creation_time.usec ());
+                   sec,
+                   usec);
 }
 
 ACE_INLINE
@@ -329,12 +328,17 @@ TAO_POA::destroy (CORBA::Boolean etherealize_objects,
                   CORBA::Boolean wait_for_completion,
                   CORBA::Environment &env)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
+  {
+    // Lock access to the POA for the duration of this transaction
+    TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
+    
+    this->destroy_i (etherealize_objects,
+                     wait_for_completion,
+                     env);
+  }
 
-  this->destroy_i (etherealize_objects,
-                   wait_for_completion,
-                   env);
+  // Commit suicide
+  delete this;
 }
 
 ACE_INLINE TAO_POA_Policies &
@@ -521,9 +525,16 @@ TAO_POA::creation_time (void)
 }
 
 ACE_INLINE CORBA::Boolean
+TAO_POA::system_id (void)
+{
+  return this->system_id_;
+}
+
+
+ACE_INLINE CORBA::Boolean
 TAO_POA::persistent (void)
 {
-  return this->policies ().lifespan () == PortableServer::PERSISTENT;
+  return this->persistent_;
 }
 
 ACE_INLINE CORBA::String
@@ -565,34 +576,79 @@ TAO_POA::id_separator_length (void)
 }
 
 ACE_INLINE char
-TAO_POA::persistent_key_type (void)
+TAO_POA::persistent_key_char (void)
 {
   return 'P';
 }
 
 ACE_INLINE char
-TAO_POA::transient_key_type (void)
+TAO_POA::transient_key_char (void)
 {
   return 'T';
 }
 
 ACE_INLINE char
-TAO_POA::object_key_type (void)
+TAO_POA::persistent_key_type (void)
 {
   if (this->persistent ())
-    return TAO_POA::persistent_key_type ();
+    return TAO_POA::persistent_key_char ();
   else
-    return TAO_POA::transient_key_type ();
+    return TAO_POA::transient_key_char ();
 }
 
 ACE_INLINE CORBA::ULong
-TAO_POA::object_key_type_length (void)
+TAO_POA::persistent_key_type_length (void)
 {
-#if defined (POA_NO_TIMESTAMP)
-  return 0;
-#else
   return sizeof (char);
-#endif /* POA_NO_TIMESTAMP */
+}
+
+ACE_INLINE char
+TAO_POA::system_id_key_char (void)
+{
+  return 'S';
+}
+
+ACE_INLINE char
+TAO_POA::user_id_key_char (void)
+{
+  return 'U';
+}
+
+ACE_INLINE char
+TAO_POA::system_id_key_type (void)
+{
+  if (this->system_id ())
+    return TAO_POA::system_id_key_char ();
+  else
+    return TAO_POA::user_id_key_char ();
+}
+
+ACE_INLINE CORBA::ULong
+TAO_POA::system_id_key_type_length (void)
+{
+  return sizeof (char);
+}
+
+ACE_INLINE int
+TAO_POA::rfind (const TAO_ObjectKey &key,
+                char c,
+                int pos) const
+{
+  if (pos == ACE_CString::npos)
+    pos = key.length ();
+
+  for (int i = pos - 1; i >= 0; i--)
+    if (key[i] == c)
+      return i;
+
+  return TAO_POA::String::npos;
+}
+
+ACE_INLINE PortableServer::ObjectId *
+TAO_POA::create_object_id (PortableServer::Servant servant, 
+                           CORBA::Environment &env)
+{
+  return this->active_object_map ().create_object_id (servant, env);
 }
 
 ACE_INLINE ACE_Lock &

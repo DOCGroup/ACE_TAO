@@ -378,6 +378,12 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
   return 0;
 }
 
+u_long
+TAO_Default_Server_Strategy_Factory::object_table_size (void) const
+{
+  return this->object_table_size_;
+}
+
 TAO_Default_Server_Creation_Strategy::
 TAO_Default_Server_Creation_Strategy (ACE_Thread_Manager *t)
   :  ACE_Creation_Strategy<TAO_Server_Connection_Handler> (t)
@@ -401,7 +407,6 @@ make_svc_handler (TAO_Server_Connection_Handler *&sh)
     }
   return 0;
 }
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Reactive_Strategy<TAO_Server_Connection_Handler>;
