@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Basic_Types.h"
+#include "tao/orb_typesC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,14 +25,8 @@
 
 namespace CORBA
 {
-  typedef Short Visibility;
-  typedef Short_out Visibility_out;
-
   const Visibility PRIVATE_MEMBER = 0;
   const Visibility PUBLIC_MEMBER  = 1;
-
-  typedef Short ValueModifier;
-  typedef Short_out ValueModifier_out;
 
   const ValueModifier VM_NONE        = 0;
   const ValueModifier VM_CUSTOM      = 1;
