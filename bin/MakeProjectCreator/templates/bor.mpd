@@ -55,7 +55,7 @@ RESOURCE =<%foreach(resource_files)%> $(OBJDIR)\<%noextension(resource_file)%>.r
 <%endif%>
 
 !ifdef STATIC
-LIB_FLAGS =<%foreach(libflags)%> -D<%libflag%>=1<%endfor%>
+LIB_FLAGS =<%foreach(libflags)%> -D<%libflag%><%endfor%>
 DLL_FLAGS =
 !else
 LIB_FLAGS =
