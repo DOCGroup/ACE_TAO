@@ -220,13 +220,14 @@ AST_Root::destroy ()
 {
   long i = 0;
   long j = 0;
+  AST_Decl *d = 0;
     
   // Just destroy and delete the non-predefined types in the
   // scope, in case we are processing multiple IDL files.
   // Final cleanup will be done in fini().
   for (i = this->pd_decls_used; i > 0; --i)
     {
-      AST_Decl *d = this->pd_decls[i - 1];
+      d = this->pd_decls[i - 1];
       
       // We want to keep the predefined types we add to global
       // scope around and not add them each time.
@@ -235,7 +236,7 @@ AST_Root::destroy ()
           // This needs to be j = i, but it has been temporarily
           // changed for the CoSMIC release. Need to actually
           // track down the source of the problem with tao_picml.
-          j = i + 1;
+          j = i;
           break;
         }
 
@@ -247,7 +248,7 @@ AST_Root::destroy ()
     
   for (i = this->pd_referenced_used; i > j; --i)
     {
-      AST_Decl *d = this->pd_referenced[i - 1];    
+      d = this->pd_referenced[i - 1];    
       d = 0;
       --this->pd_referenced_used;
     }
