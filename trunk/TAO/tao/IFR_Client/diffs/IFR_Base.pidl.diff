@@ -1,395 +1,402 @@
---- orig/IFR_Base.pidl	Mon Apr 23 20:19:25 2001
-+++ IFR_Base.pidl	Thu Apr 19 00:40:20 2001
-@@ -66,12 +66,14 @@
+--- IFR_Base.pidl.old	Fri Jun  1 22:22:17 2001
++++ IFR_Base.pidl	Fri Jun  1 22:17:44 2001
+@@ -66,14 +66,12 @@
  #ifndef _IFR_BASE_IDL_
  #define _IFR_BASE_IDL_
  
--#include <orb.idl>
--
++#include <orb.idl>
++
  #pragma prefix "omg.org"
  
- module CORBA
+ module CORBA 
  {
-+  typedef string Identifier;
-+  typedef string ScopedName;
-+  typedef string RepositoryId;
-+
+-  typedef string Identifier;
+-  typedef string ScopedName;
+-  typedef string RepositoryId;
+-
    enum DefinitionKind 
    {
      dk_none, 
-@@ -101,34 +103,36 @@
+@@ -103,36 +101,34 @@
      dk_AbstractInterface,
      dk_LocalInterface
    };
--};
++};
  
--  interface CORBA_IRObject 
-+  interface IRObject 
+-  interface IRObject 
++  interface CORBA_IRObject 
    {
      // read interface
--    readonly attribute CORBA::DefinitionKind def_kind;
-+    readonly attribute DefinitionKind def_kind;
+-    readonly attribute DefinitionKind def_kind;
++    readonly attribute CORBA::DefinitionKind def_kind;
      // write interface
      void destroy ();
    };
  
--  interface CORBA_Repository;
--  interface CORBA_Container;
-+  typedef string VersionSpec;
+-  typedef string VersionSpec;
++  interface CORBA_Repository;
++  interface CORBA_Container;
  
--  interface CORBA_Contained : CORBA_IRObject 
-+  interface Contained;
-+  interface Repository;
-+  interface Container;
-+
-+  interface Contained : IRObject 
+-  interface Contained;
+-  interface Repository;
+-  interface Container;
+-
+-  interface Contained : IRObject 
++  interface CORBA_Contained : CORBA_IRObject 
    {
      // read/write interface
--    attribute string id;
--    attribute string name;
--    attribute string version;
-+    attribute RepositoryId id;
-+    attribute Identifier name;
-+    attribute VersionSpec version;
+-    attribute RepositoryId id;
+-    attribute Identifier name;
+-    attribute VersionSpec version;
++    attribute string id;
++    attribute string name;
++    attribute string version;
  
      // read interface
--    readonly attribute CORBA_Container defined_in;
--    readonly attribute string absolute_name;
--    readonly attribute CORBA_Repository containing_repository;
-+    readonly attribute Container defined_in;
-+    readonly attribute ScopedName absolute_name;
-+    readonly attribute Repository containing_repository;
+-    readonly attribute Container defined_in;
+-    readonly attribute ScopedName absolute_name;
+-    readonly attribute Repository containing_repository;
++    readonly attribute CORBA_Container defined_in;
++    readonly attribute string absolute_name;
++    readonly attribute CORBA_Repository containing_repository;
      
      struct Description 
      {
--      CORBA::DefinitionKind kind;
-+      DefinitionKind kind;
+-      DefinitionKind kind;
++      CORBA::DefinitionKind kind;
        any value;
      };
  
-@@ -136,194 +140,195 @@
+@@ -140,196 +136,196 @@
  
      // write interface
      void move (
--        in CORBA_Container new_container,
--        in string new_name,
--        in string new_version
-+        in Container new_container,
-+        in Identifier new_name,
-+        in VersionSpec new_version
+-        in Container new_container,
+-        in Identifier new_name,
+-        in VersionSpec new_version
++        in CORBA_Container new_container,
++        in string new_name,
++        in string new_version
        );
    };
  
--  typedef sequence <CORBA_Contained> CORBA_ContainedSeq;
-+  typedef sequence <Contained> ContainedSeq;
+-  typedef sequence <Contained> ContainedSeq;
++  typedef sequence <CORBA_Contained> CORBA_ContainedSeq;
  
--  interface CORBA_ModuleDef;
--  interface CORBA_ConstantDef;
--  interface CORBA_IDLType;
--  interface CORBA_StructDef;
--  interface CORBA_UnionDef;
--  interface CORBA_EnumDef;
--  interface CORBA_AliasDef;
--  interface CORBA_InterfaceDef;
--  typedef sequence<CORBA_InterfaceDef> CORBA_InterfaceDefSeq;
--  interface CORBA_ExceptionDef;
--  interface CORBA_NativeDef;
--  interface CORBA_ValueDef;
--  typedef sequence<CORBA_ValueDef> CORBA_ValueDefSeq;
--  interface CORBA_ValueBoxDef;
--  interface CORBA_AbstractInterfaceDef;
--  typedef sequence<CORBA_AbstractInterfaceDef> CORBA_AbstractInterfaceDefSeq;
--  interface CORBA_LocalInterfaceDef;
--  typedef sequence<CORBA_LocalInterfaceDef> CORBA_LocalInterfaceDefSeq;
-+  interface ModuleDef;
-+  interface ConstantDef;
-+  interface IDLType;
-+  interface StructDef;
-+  interface UnionDef;
-+  interface EnumDef;
-+  interface AliasDef;
-+  interface InterfaceDef;
-+  typedef sequence<InterfaceDef> InterfaceDefSeq;
-+  interface ExceptionDef;
-+  interface NativeDef;
-+  interface ValueDef;
-+  typedef sequence<ValueDef> ValueDefSeq;
-+  interface ValueBoxDef;
-+  interface AbstractInterfaceDef;
-+  typedef sequence<AbstractInterfaceDef> AbstractInterfaceDefSeq;
-+  interface LocalInterfaceDef;
-+  typedef sequence<LocalInterfaceDef> LocalInterfaceDefSeq;
+-  interface ModuleDef;
+-  interface ConstantDef;
+-  interface IDLType;
+-  interface StructDef;
+-  interface UnionDef;
+-  interface EnumDef;
+-  interface AliasDef;
+-  interface InterfaceDef;
+-  typedef sequence<InterfaceDef> InterfaceDefSeq;
+-  interface ExceptionDef;
+-  interface NativeDef;
+-  interface ValueDef;
+-  typedef sequence<ValueDef> ValueDefSeq;
+-  interface ValueBoxDef;
+-  interface AbstractInterfaceDef;
+-  typedef sequence<AbstractInterfaceDef> AbstractInterfaceDefSeq;
+-  interface LocalInterfaceDef;
+-  typedef sequence<LocalInterfaceDef> LocalInterfaceDefSeq;
++  interface CORBA_ModuleDef;
++  interface CORBA_ConstantDef;
++  interface CORBA_IDLType;
++  interface CORBA_StructDef;
++  interface CORBA_UnionDef;
++  interface CORBA_EnumDef;
++  interface CORBA_AliasDef;
++  interface CORBA_InterfaceDef;
++  typedef sequence<CORBA_InterfaceDef> CORBA_InterfaceDefSeq;
++  interface CORBA_ExceptionDef;
++  interface CORBA_NativeDef;
++  interface CORBA_ValueDef;
++  typedef sequence<CORBA_ValueDef> CORBA_ValueDefSeq;
++  interface CORBA_ValueBoxDef;
++  interface CORBA_AbstractInterfaceDef;
++  typedef sequence<CORBA_AbstractInterfaceDef> CORBA_AbstractInterfaceDefSeq;
++  interface CORBA_LocalInterfaceDef;
++  typedef sequence<CORBA_LocalInterfaceDef> CORBA_LocalInterfaceDefSeq;
  
--  struct CORBA_StructMember 
-+  struct StructMember 
+-  struct StructMember 
++  struct CORBA_StructMember 
    {
--    string name;
--    CORBA::TypeCode type;
--    CORBA_IDLType type_def;
-+    Identifier name;
-+    TypeCode type;
-+    IDLType type_def;
+-    Identifier name;
+-    TypeCode type;
+-    IDLType type_def;
++    string name;
++    CORBA::TypeCode type;
++    CORBA_IDLType type_def;
    };
  
--  typedef sequence <CORBA_StructMember> CORBA_StructMemberSeq;
-+  typedef sequence <StructMember> StructMemberSeq;
+-  typedef sequence <StructMember> StructMemberSeq;
++  typedef sequence <CORBA_StructMember> CORBA_StructMemberSeq;
  
--  struct CORBA_Initializer 
-+  struct Initializer 
+-  struct Initializer 
++  struct CORBA_Initializer 
    {
--    CORBA_StructMemberSeq members;
--    string name;
-+    StructMemberSeq members;
-+    Identifier name;
+-    StructMemberSeq members;
+-    Identifier name;
++    CORBA_StructMemberSeq members;
++    string name;
    };
  
--  typedef sequence <CORBA_Initializer> CORBA_InitializerSeq;
-+  typedef sequence <Initializer> InitializerSeq;
+-  typedef sequence <Initializer> InitializerSeq;
++  typedef sequence <CORBA_Initializer> CORBA_InitializerSeq;
  
--  struct CORBA_UnionMember 
-+  struct UnionMember 
+-  struct UnionMember 
++  struct CORBA_UnionMember 
    {
--    string name;
-+    Identifier name;
+-    Identifier name;
++    string name;
      any label;
--    CORBA::TypeCode type;
--    CORBA_IDLType type_def;
-+    TypeCode type;
-+    IDLType type_def;
+-    TypeCode type;
+-    IDLType type_def;
++    CORBA::TypeCode type;
++    CORBA_IDLType type_def;
    };
  
--  typedef sequence <CORBA_UnionMember> CORBA_UnionMemberSeq;
--  typedef sequence <string> CORBA_EnumMemberSeq;
-+  typedef sequence <UnionMember> UnionMemberSeq;
-+  typedef sequence <Identifier> EnumMemberSeq;
+-  typedef sequence <UnionMember> UnionMemberSeq;
+-  typedef sequence <Identifier> EnumMemberSeq;
++  typedef sequence <CORBA_UnionMember> CORBA_UnionMemberSeq;
++  typedef sequence <string> CORBA_EnumMemberSeq;
  
--  interface CORBA_Container : CORBA_IRObject 
-+  interface Container : IRObject 
+-  interface Container : IRObject 
++  interface CORBA_Container : CORBA_IRObject 
    {
      // read interface
--    CORBA_Contained lookup (
--        in string search_name
-+    Contained lookup (
-+        in ScopedName search_name
+-    Contained lookup (
+-        in ScopedName search_name
++    CORBA_Contained lookup (
++        in string search_name
        );
--    CORBA_ContainedSeq contents (
--        in CORBA::DefinitionKind limit_type,
-+    ContainedSeq contents (
-+        in DefinitionKind limit_type,
+-    ContainedSeq contents (
+-        in DefinitionKind limit_type,
++    CORBA_ContainedSeq contents (
++        in CORBA::DefinitionKind limit_type,
          in boolean exclude_inherited
        );
--    CORBA_ContainedSeq lookup_name (
--        in string search_name,
-+    ContainedSeq lookup_name (
-+        in Identifier search_name,
+-    ContainedSeq lookup_name (
+-        in Identifier search_name,
++    CORBA_ContainedSeq lookup_name (
++        in string search_name,
          in long levels_to_search,
--        in CORBA::DefinitionKind limit_type,
-+        in DefinitionKind limit_type,
+-        in DefinitionKind limit_type,
++        in CORBA::DefinitionKind limit_type,
          in boolean exclude_inherited
        );
      struct Description 
      {
--      CORBA_Contained contained_object;
--      CORBA::DefinitionKind kind;
-+      Contained contained_object;
-+      DefinitionKind kind;
+-      Contained contained_object;
+-      DefinitionKind kind;
++      CORBA_Contained contained_object;
++      CORBA::DefinitionKind kind;
        any value;
      };
  
      typedef sequence<Description> DescriptionSeq;
  
      DescriptionSeq describe_contents (
--        in CORBA::DefinitionKind limit_type,
-+        in DefinitionKind limit_type,
+-        in DefinitionKind limit_type,
++        in CORBA::DefinitionKind limit_type,
          in boolean exclude_inherited,
          in long max_returned_objs
        );
      // write interface
--    CORBA_ModuleDef create_module (
--        in string id,
--        in string name,
--        in string version
+-    ModuleDef create_module (
+-        in RepositoryId id,
+-        in Identifier name,
+-        in VersionSpec version
 -      );
--    CORBA_ConstantDef create_constant (
--        in string id,
--        in string name,
--        in string version,
--        in CORBA_IDLType type,
-+    ModuleDef create_module (
-+        in RepositoryId id,
-+        in Identifier name,
-+        in VersionSpec version
+-    ConstantDef create_constant (
+-        in RepositoryId id,
+-        in Identifier name,
+-        in VersionSpec version,
+-        in IDLType type,
++    CORBA_ModuleDef create_module (
++        in string id,
++        in string name,
++        in string version
 +      );
-+    ConstantDef create_constant (
-+        in RepositoryId id,
-+        in Identifier name,
-+        in VersionSpec version,
-+        in IDLType type,
++    CORBA_ConstantDef create_constant (
++        in string id,
++        in string name,
++        in string version,
++        in CORBA_IDLType type,
          in any value
        );
--    CORBA_StructDef create_struct (
--        in string id,
--        in string name,
--        in string version,
--        in CORBA_StructMemberSeq members
+-    StructDef create_struct (
+-        in RepositoryId id,
+-        in Identifier name,
+-        in VersionSpec version,
+-        in StructMemberSeq members
 -      );
--    CORBA_UnionDef create_union (
--        in string id,
--        in string name,
--        in string version,
--        in CORBA_IDLType discriminator_type,
--        in CORBA_UnionMemberSeq members
+-    UnionDef create_union (
+-        in RepositoryId id,
+-        in Identifier name,
+-        in VersionSpec version,
+-        in IDLType discriminator_type,
+-        in UnionMemberSeq members
 -      );
--    CORBA_EnumDef create_enum (
--        in string id,
--        in string name,
--        in string version,
--        in CORBA_EnumMemberSeq members
+-    EnumDef create_enum (
+-        in RepositoryId id,
+-        in Identifier name,
+-        in VersionSpec version,
+-        in EnumMemberSeq members
 -      );
--    CORBA_AliasDef create_alias (
--        in string id,
--        in string name,
--        in string version,
--        in CORBA_IDLType original_type
+-    AliasDef create_alias (
+-        in RepositoryId id,
+-        in Identifier name,
+-        in VersionSpec version,
+-        in IDLType original_type
 -      );
--    CORBA_InterfaceDef create_interface (
--        in string id,
--        in string name,
--        in string version,
--        in CORBA_InterfaceDefSeq base_interfaces
+-    InterfaceDef create_interface (
+-        in RepositoryId id,
+-        in Identifier name,
+-        in VersionSpec version,
+-        in InterfaceDefSeq base_interfaces
 -      );
--    CORBA_ValueDef create_value(
--        in string id,
--        in string name,
--        in string version,
-+    StructDef create_struct (
-+        in RepositoryId id,
-+        in Identifier name,
-+        in VersionSpec version,
-+        in StructMemberSeq members
+-    ValueDef create_value(
+-        in RepositoryId id,
+-        in Identifier name,
+-        in VersionSpec version,
++    CORBA_StructDef create_struct (
++        in string id,
++        in string name,
++        in string version,
++        in CORBA_StructMemberSeq members
 +      );
-+    UnionDef create_union (
-+        in RepositoryId id,
-+        in Identifier name,
-+        in VersionSpec version,
-+        in IDLType discriminator_type,
-+        in UnionMemberSeq members
++    CORBA_UnionDef create_union (
++        in string id,
++        in string name,
++        in string version,
++        in CORBA_IDLType discriminator_type,
++        in CORBA_UnionMemberSeq members
 +      );
-+    EnumDef create_enum (
-+        in RepositoryId id,
-+        in Identifier name,
-+        in VersionSpec version,
-+        in EnumMemberSeq members
++    CORBA_EnumDef create_enum (
++        in string id,
++        in string name,
++        in string version,
++        in CORBA_EnumMemberSeq members
 +      );
-+    AliasDef create_alias (
-+        in RepositoryId id,
-+        in Identifier name,
-+        in VersionSpec version,
-+        in IDLType original_type
++    CORBA_AliasDef create_alias (
++        in string id,
++        in string name,
++        in string version,
++        in CORBA_IDLType original_type
 +      );
-+    InterfaceDef create_interface (
-+        in RepositoryId id,
-+        in Identifier name,
-+        in VersionSpec version,
-+        in InterfaceDefSeq base_interfaces
++    CORBA_InterfaceDef create_interface (
++        in string id,
++        in string name,
++        in string version,
++        in CORBA_InterfaceDefSeq base_interfaces
 +      );
-+    ValueDef create_value(
-+        in RepositoryId id,
-+        in Identifier name,
-+        in VersionSpec version,
++    CORBA_ValueDef create_value(
++        in string id,
++        in string name,
++        in string version,
          in boolean is_custom,
          in boolean is_abstract,
--        in CORBA_ValueDef base_value,
-+        in ValueDef base_value,
+-        in ValueDef base_value,
++        in CORBA_ValueDef base_value,
          in boolean is_truncatable,
--        in CORBA_ValueDefSeq abstract_base_values,
--        in CORBA_InterfaceDefSeq supported_interfaces,
--        in CORBA_InitializerSeq initializers
-+        in ValueDefSeq abstract_base_values,
-+        in InterfaceDefSeq supported_interfaces,
-+        in InitializerSeq initializers
-       );
--    CORBA_ValueBoxDef create_value_box(
--        in string id,
--        in string name,
--        in string version,
--        in CORBA_IDLType original_type_def
-+    ValueBoxDef create_value_box(
-+        in RepositoryId id,
-+        in Identifier name,
-+        in VersionSpec version,
-+        in IDLType original_type_def
-       );
--    CORBA_ExceptionDef create_exception(
--        in string id,
--        in string name,
--        in string version,
--        in CORBA_StructMemberSeq members
-+    ExceptionDef create_exception(
-+        in RepositoryId id,
-+        in Identifier name,
-+        in VersionSpec version,
-+        in StructMemberSeq members
-       );
--    CORBA_NativeDef create_native(
--        in string id,
--        in string name,
--        in string version
-+    NativeDef create_native(
-+        in RepositoryId id,
-+        in Identifier name,
-+        in VersionSpec version
-       );
--    CORBA_AbstractInterfaceDef create_abstract_interface (
--        in string id,
--        in string name,
--        in string version,
--        in CORBA_AbstractInterfaceDefSeq base_interfaces
-+    AbstractInterfaceDef create_abstract_interface (
-+        in RepositoryId id,
-+        in Identifier name,
-+        in VersionSpec version,
-+        in AbstractInterfaceDefSeq base_interfaces
-       );
--    CORBA_LocalInterfaceDef create_local_interface (
--        in string id,
--        in string name,
--        in string version,
--        in CORBA_InterfaceDefSeq base_interfaces
-+    LocalInterfaceDef create_local_interface (
-+        in RepositoryId id,
-+        in Identifier name,
-+        in VersionSpec version,
-+        in InterfaceDefSeq base_interfaces
+-        in ValueDefSeq abstract_base_values,
+-        in InterfaceDefSeq supported_interfaces,
+-        in InitializerSeq initializers
+-      );
+-    ValueBoxDef create_value_box(
+-        in RepositoryId id,
+-        in Identifier name,
+-        in VersionSpec version,
+-        in IDLType original_type_def
+-      );
+-    ExceptionDef create_exception(
+-        in RepositoryId id,
+-        in Identifier name,
+-        in VersionSpec version,
+-        in StructMemberSeq members
+-      );
+-    NativeDef create_native(
+-        in RepositoryId id,
+-        in Identifier name,
+-        in VersionSpec version
+-      );
+-    AbstractInterfaceDef create_abstract_interface (
+-        in RepositoryId id,
+-        in Identifier name,
+-        in VersionSpec version,
+-        in AbstractInterfaceDefSeq base_interfaces
+-      );
+-    LocalInterfaceDef create_local_interface (
+-        in RepositoryId id,
+-        in Identifier name,
+-        in VersionSpec version,
+-        in InterfaceDefSeq base_interfaces
++        in CORBA_ValueDefSeq abstract_base_values,
++        in CORBA_InterfaceDefSeq supported_interfaces,
++        in CORBA_InitializerSeq initializers
++      );
++    CORBA_ValueBoxDef create_value_box(
++        in string id,
++        in string name,
++        in string version,
++        in CORBA_IDLType original_type_def
++      );
++    CORBA_ExceptionDef create_exception(
++        in string id,
++        in string name,
++        in string version,
++        in CORBA_StructMemberSeq members
++      );
++    CORBA_NativeDef create_native(
++        in string id,
++        in string name,
++        in string version
++      );
++    CORBA_AbstractInterfaceDef create_abstract_interface (
++        in string id,
++        in string name,
++        in string version,
++        in CORBA_AbstractInterfaceDefSeq base_interfaces
++      );
++    CORBA_LocalInterfaceDef create_local_interface (
++        in string id,
++        in string name,
++        in string version,
++        in CORBA_InterfaceDefSeq base_interfaces
        );
    };
  
--  interface CORBA_IDLType : CORBA_IRObject 
-+  interface IDLType : IRObject 
+-  interface IDLType : IRObject 
++  interface CORBA_IDLType : CORBA_IRObject 
    {
--    readonly attribute CORBA::TypeCode type;
-+    readonly attribute TypeCode type;
+-    readonly attribute TypeCode type;
++    readonly attribute CORBA::TypeCode type;
    };
  
--  interface CORBA_TypedefDef : CORBA_Contained, CORBA_IDLType 
-+  interface TypedefDef : Contained, IDLType 
+-  interface TypedefDef : Contained, IDLType 
++  interface CORBA_TypedefDef : CORBA_Contained, CORBA_IDLType 
    {
    };
  
--  struct CORBA_TypeDescription 
-+  struct TypeDescription 
+-  struct TypeDescription 
++  struct CORBA_TypeDescription 
    {
--    string name;
--    string id;
--    string defined_in;
--    string version;
--    CORBA::TypeCode type;
-+    Identifier name;
-+    RepositoryId id;
-+    RepositoryId defined_in;
-+    VersionSpec version;
-+    TypeCode type;
-+  };
+-    Identifier name;
+-    RepositoryId id;
+-    RepositoryId defined_in;
+-    VersionSpec version;
+-    TypeCode type;
++    string name;
++    string id;
++    string defined_in;
++    string version;
++    CORBA::TypeCode type;
    };
+-};
++
  
  #pragma prefix ""
+ 

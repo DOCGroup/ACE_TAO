@@ -36,7 +36,7 @@ TAO_NAMESPACE  POA_IR
 {
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class ComponentRepository_tie : public ComponentRepository
+  class  ComponentRepository_tie : public ComponentRepository
   {
   public:
     ComponentRepository_tie (T &t);
@@ -401,7 +401,7 @@ TAO_NAMESPACE  POA_IR
 
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class ProvidesDef_tie : public ProvidesDef
+  class  ProvidesDef_tie : public ProvidesDef
   {
   public:
     ProvidesDef_tie (T &t);
@@ -562,7 +562,7 @@ TAO_NAMESPACE  POA_IR
 
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class UsesDef_tie : public UsesDef
+  class  UsesDef_tie : public UsesDef
   {
   public:
     UsesDef_tie (T &t);
@@ -731,7 +731,7 @@ TAO_NAMESPACE  POA_IR
 
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class EventDef_tie : public EventDef
+  class  EventDef_tie : public EventDef
   {
   public:
     EventDef_tie (T &t);
@@ -901,7 +901,7 @@ TAO_NAMESPACE  POA_IR
 
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class EmitsDef_tie : public EmitsDef
+  class  EmitsDef_tie : public EmitsDef
   {
   public:
     EmitsDef_tie (T &t);
@@ -1071,7 +1071,7 @@ TAO_NAMESPACE  POA_IR
 
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class PublishesDef_tie : public PublishesDef
+  class  PublishesDef_tie : public PublishesDef
   {
   public:
     PublishesDef_tie (T &t);
@@ -1241,7 +1241,7 @@ TAO_NAMESPACE  POA_IR
 
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class ConsumesDef_tie : public ConsumesDef
+  class  ConsumesDef_tie : public ConsumesDef
   {
   public:
     ConsumesDef_tie (T &t);
@@ -1411,7 +1411,7 @@ TAO_NAMESPACE  POA_IR
 
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class ComponentDef_tie : public ComponentDef
+  class  ComponentDef_tie : public ComponentDef
   {
   public:
     ComponentDef_tie (T &t);
@@ -1973,7 +1973,7 @@ TAO_NAMESPACE  POA_IR
 
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class PrimaryKeyDef_tie : public PrimaryKeyDef
+  class  PrimaryKeyDef_tie : public PrimaryKeyDef
   {
   public:
     PrimaryKeyDef_tie (T &t);
@@ -2143,7 +2143,7 @@ TAO_NAMESPACE  POA_IR
 
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class FactoryDef_tie : public FactoryDef
+  class  FactoryDef_tie : public FactoryDef
   {
   public:
     FactoryDef_tie (T &t);
@@ -2389,7 +2389,7 @@ TAO_NAMESPACE  POA_IR
 
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class FinderDef_tie : public FinderDef
+  class  FinderDef_tie : public FinderDef
   {
   public:
     FinderDef_tie (T &t);
@@ -2635,7 +2635,7 @@ TAO_NAMESPACE  POA_IR
 
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class HomeDef_tie : public HomeDef
+  class  HomeDef_tie : public HomeDef
   {
   public:
     HomeDef_tie (T &t);
