@@ -11,7 +11,8 @@ OBJFILES = \
 	$(OBJDIR)\testC.obj \
 	$(OBJDIR)\test_i.obj \
 	$(OBJDIR)\interceptors.obj \
-	$(OBJDIR)\server.obj
+	$(OBJDIR)\server.obj \
+	$(OBJDIR)\Echo_Server_ORBInitializer.obj
 
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
 
