@@ -1,3 +1,28 @@
+Wed Dec  4 23:40:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Transport.cpp: Old habits die-hard. Made a mistake while
+	  constructing objects, which basically leads to unspecified
+	  behaviours on g++, Sunc++ etc. Fixed object construction by
+	  adding a temporary variable. This should fix most of the
+	  problems that showed up in our builds.
+
+Wed Dec  4 18:34:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Makefile: Added the new test to the list of DIRS.
+
+Wed Dec  4 18:30:55 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Server_Connection_Purging/Test_i.h:
+	* tests/Server_Connection_Purging/Test_i.cpp:
+	* tests/Server_Connection_Purging/Test.idl:
+	* tests/Server_Connection_Purging/client.cpp:
+	* tests/Server_Connection_Purging/server.cpp:
+	* tests/Server_Connection_Purging/Makefile:
+	* tests/Server_Connection_Purging/run_test.pl:
+	* tests/Server_Connection_Purging/svc.conf: Simple test for
+	  checking whether the handles on the server side are being
+	  purged. Borland and Win32 files would follow. 
+
 Wed Dec  4 17:25:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Transport_Cache_Manager.cpp (update_item) : Return -1 in
