@@ -1,3 +1,42 @@
+Fri Aug  2 12:31:34 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/ContentHandler.h:
+        * ACEXML/parser/parser/Entity_Manager.cpp:
+        * ACEXML/common/NamespaceSupport.cpp:
+
+          Fixed minor typos in the comments.
+
+        * ACEXML/common/InputSource.cpp:
+
+          Removed an erroneous delete statement. Not sure if this is a
+          implementation bug or a thinko.
+
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/Mem_Map_Stream.cpp:
+        * ACEXML/common/Mem_Map_Stream.h:
+
+          Use char* when sending data on the network. Technically it
+          should be byte.
+
+        * ACEXML/examples/SAXPrint/Print_Handler.cpp:
+        * ACEXML/examples/SAXPrint/main.cpp:
+
+          Fixed a bug with getopt() when WCHAR is enabled. Since EOF is
+          -1, never use a WCHAR in the while loop.
+
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/parser/parser/Parser.h:
+
+          Improved Namespace support. Modularized functions in the parser.
+
+        * ACEXML/docs/TODO.txt:
+        * ACEXML/docs/bugs.txt:
+        * ACEXML/docs/guidelines.txt:
+        * ACEXML/docs/parser_features.txt:
+
+          Updated to reflect the current status. People were reading these
+          old docs and assuming a lot of the features aren't implemented.
+
 Fri Aug  2 16:06:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-doxygen.h:

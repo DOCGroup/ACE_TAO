@@ -43,7 +43,7 @@ int
 ACEXML_Mem_Map_Stream::rewind (void)
 {
   this->recv_pos_ =
-    ACE_reinterpret_cast (ACEXML_Char *,
+    ACE_reinterpret_cast (char *,
                           this->mem_map_.addr ());
   this->get_pos_ = this->recv_pos_;
   this->end_of_mapping_plus1_ =
@@ -62,20 +62,19 @@ ACEXML_Mem_Map_Stream::peek_char (size_t offset)
   return this->get_pos_[offset];
 }
 
-const ACEXML_Char *
+const char *
 ACEXML_Mem_Map_Stream::recv (void) const
 {
   return this->recv_pos_;
 }
 
-const ACEXML_Char *
+const char *
 ACEXML_Mem_Map_Stream::recv (size_t &len)
 {
   if (this->eof () && this->grow_file_and_remap () == -1)
     return 0;
 
-
-  const ACEXML_Char *s = this->recv_pos_;
+  const char *s = this->recv_pos_;
   this->seek (len, SEEK_CUR);
   len = this->get_pos_ - s;
   return s;
@@ -87,7 +86,7 @@ ACEXML_Mem_Map_Stream::recv_len (void) const
   return this->get_pos_ - this->recv_pos_;
 }
 
-const ACEXML_Char *
+const char *
 ACEXML_Mem_Map_Stream::peek_str (size_t offset,
                                  size_t size)
 {
@@ -106,7 +105,7 @@ ACEXML_Mem_Map_Stream::seek (off_t offset, int whence)
     {
     case SEEK_SET:
       this->get_pos_ =
-        ACE_reinterpret_cast (ACEXML_Char *,
+        ACE_reinterpret_cast (char *,
                               this->mem_map_.addr ())
         + offset;
       break;
@@ -129,7 +128,7 @@ ACEXML_Mem_Map_Stream::seek (off_t offset, int whence)
       this->get_pos_ = this->end_of_mapping_plus1_;
 
   this->recv_pos_ = this->get_pos_;
-  return this->recv_pos_ - ACE_reinterpret_cast (ACEXML_Char *,
+  return this->recv_pos_ - ACE_reinterpret_cast (char *,
                                                  this->mem_map_.addr ());
 }
 
@@ -193,7 +192,7 @@ ACEXML_Mem_Map_Stream::open (Connector *connector,
 int
 ACEXML_Mem_Map_Stream::grow_file_and_remap (void)
 {
-  ACEXML_Char buf[BUFSIZ + 1];
+  char buf[BUFSIZ + 1];
 
   // Copy the next chunk of bytes from the socket into the temporary
   // file.
@@ -225,13 +224,13 @@ ACEXML_Mem_Map_Stream::grow_file_and_remap (void)
   // MAP_FAILED is used as a "first time in" flag.
   if (this->recv_pos_ == MAP_FAILED)
     {
-      this->recv_pos_ = ACE_reinterpret_cast (ACEXML_Char *,
+      this->recv_pos_ = ACE_reinterpret_cast (char *,
                                               this->mem_map_.addr ());
       this->get_pos_ = this->recv_pos_;
     }
 
   this->end_of_mapping_plus1_ =
-    ACE_reinterpret_cast (ACEXML_Char *,
+    ACE_reinterpret_cast (char *,
                           this->mem_map_.addr ())
     + this->mem_map_.size ();
 

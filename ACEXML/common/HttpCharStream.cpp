@@ -78,11 +78,11 @@ ACEXML_HttpCharStream::get_url (size_t& len)
   int header_state = HDST_LINE1_PROTOCOL;
   int status = 0;
   size_t b = 0;
-  ACEXML_Char* buf = 0;
+  char* buf = 0;
   size_t buflen = BUFSIZ;
   for (;;)
     {
-      if ((buf = ACE_const_cast (ACEXML_Char*,
+      if ((buf = ACE_const_cast (char*,
                                  this->stream_->recv (buflen))) == 0)
         if (buflen <= 0)
           break;
@@ -182,12 +182,12 @@ ACEXML_HttpCharStream::get_url (size_t& len)
   ++b;
   // Store the address of the beginning of data. We will use it to seek to
   // beginning of the data in the URL.
-  ACEXML_Char* data_beg = buf + b;
+  char* data_beg = buf + b;
   buflen = BUFSIZ;
 
   // Get all of the data. Since this is backed by file store, we won't lose
   // any of the data.
-  while (( buf = ACE_const_cast (ACEXML_Char*,
+  while (( buf = ACE_const_cast (char*,
                                  this->stream_->recv (buflen))) != 0)
     ;
 
@@ -211,9 +211,9 @@ ACEXML_HttpCharStream::send_request (void)
 {
   int commandsize = ACE_OS::strlen (this->url_addr_->get_path_name ())
     + ACE_OS::strlen (this->url_addr_->get_host_name ())
-    + 20    // Extra
-    + 1     // NUL byte
-    + 16;   // Protocol filler...
+    + 20 * sizeof (ACEXML_Char)    // Extra
+    + 1 * sizeof (ACEXML_Char)     // NUL byte
+    + 16 * sizeof (ACEXML_Char);   // Protocol filler...
 
   ACEXML_Char* command;
   ACE_NEW_RETURN (command, ACEXML_Char[commandsize], -1);
