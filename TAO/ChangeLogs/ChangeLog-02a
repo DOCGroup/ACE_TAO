@@ -1,3 +1,8 @@
+Sat Oct 28 17:55:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ORBInitializer_Registry.cpp:
+          Fixed warnings in builds with native exceptions enabled.
+
 Sat Oct 28 15:38:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/Event.dsw:
