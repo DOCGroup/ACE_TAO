@@ -17,39 +17,39 @@ Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Future.h: Moved the static methods until the bottom
           of the ACE_Future_Rep class (again) to workaround a bug with
- 	  Borland's C++ Builder.  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for reporting this (again).
-  
+          Borland's C++ Builder.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for reporting this (again).
+
 Mon Jul 26 20:59:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* websvcs/README:
-	  Added a brief description of the directory and its current
-	  contents.  Thanks to Will Skunk <willskunk@homemail.com>
-	  for motivating this.
+        * websvcs/README:
+          Added a brief description of the directory and its current
+          contents.  Thanks to Will Skunk <willskunk@homemail.com>
+          for motivating this.
 
 Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Log_Msg.cpp: Added support for the 'W' (UNICODE) option for
-	  Win32.  Thanks to Valery Arkhangorodsky
- 	  <valerya@servicesoft.com> for contributing this.
+        * ace/Log_Msg.cpp: Added support for the 'W' (UNICODE) option for
+          Win32.  Thanks to Valery Arkhangorodsky
+          <valerya@servicesoft.com> for contributing this.
 
 Mon Jul 26 20:58:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/POSIX_Asynch_IO.cpp: 
-	* ace/WIN32_Asynch_IO.cpp: Fixed the double deletion problem of
-	  the result classes. Thanks to David Digby
- 	  <DWD15274@glaxowellcome.co.uk> and Timothy Schimke
- 	  <Schimke.Timothy@LittonDSD.com> for reporting this.
-  
+        * ace/POSIX_Asynch_IO.cpp:
+        * ace/WIN32_Asynch_IO.cpp: Fixed the double deletion problem of
+          the result classes. Thanks to David Digby
+          <DWD15274@glaxowellcome.co.uk> and Timothy Schimke
+          <Schimke.Timothy@LittonDSD.com> for reporting this.
+
 Mon Jul 26 18:09:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/run_tests.sh (Cached_Conn_Test and
-	  Cached_Accept_Conn_Test): These two tests are known to leak
-	  memory when compiled with old gcc (g++).  Therefore, we skip
-	  these tests when using purify and old gcc (g++).  A -p option
-	  was added to the script to indicate that we want to run with
-	  purify.	
-	
+        * tests/run_tests.sh (Cached_Conn_Test and
+          Cached_Accept_Conn_Test): These two tests are known to leak
+          memory when compiled with old gcc (g++).  Therefore, we skip
+          these tests when using purify and old gcc (g++).  A -p option
+          was added to the script to indicate that we want to run with
+          purify.
+
 Mon Jul 26 17:09:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Object_Manager.{h,cpp},Makefile: don't create the
