@@ -1,3 +1,13 @@
+Thu Jan 29 10:32:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU: 
+	  The posix4 library is needed in some TAO examples.
+
+	* ace/Module.h: 
+	* ace/Message_Queue.h: 
+	  Workaround HP/C++ compiler bug, it does not support enums inside
+	  templates so we move them into base classes.
+
 Thu Jan 29 10:14:03 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/FIFO.h: Revised the comment at the beginning of ACE_FIFO to

@@ -25,8 +25,32 @@ class ACE_Notification_Strategy;
 template <ACE_SYNCH_DECL> class ACE_Message_Queue_Iterator;
 template <ACE_SYNCH_DECL> class ACE_Message_Queue_Reverse_Iterator;
 
+struct ACE_Export ACE_Message_Queue_Base
+{
+  // = TITLE
+  //   Workaround HP/C++ compiler bug with enums in templates.
+  //
+  // = DESCRIPTION
+  //   The ever lamest HP/C++ compiler seems to fail if enums are
+  //   defined inside a template, hence we have to move them into a
+  //   base class.
+
+  // = Default high and low water marks.
+  enum
+  {
+    DEFAULT_LWM = 0,
+    // Default low watermark.
+    DEFAULT_HWM = 16 * 1024,
+    // Default high watermark (16 K).
+    WAS_ACTIVE   = 1,
+    // Message queue was active before activate() or deactivate().
+    WAS_INACTIVE = 2
+    // Message queue was inactive before activate() or deactivate().
+  };
+};
+
 template <ACE_SYNCH_DECL>
-class ACE_Message_Queue
+class ACE_Message_Queue : public ACE_Message_Queue_Base
 {
   // = TITLE
   //     A threaded message queueing facility, modeled after the
@@ -44,19 +68,6 @@ public:
   // = Traits
   typedef ACE_Message_Queue_Iterator<ACE_SYNCH_USE> ITERATOR;
   typedef ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE> REVERSE_ITERATOR;
-
-  // = Default high and low water marks.
-  enum
-  {
-    DEFAULT_LWM = 0,
-    // Default low watermark.
-    DEFAULT_HWM = 16 * 1024,
-    // Default high watermark (16 K).
-    WAS_ACTIVE   = 1,
-    // Message queue was active before activate() or deactivate().
-    WAS_INACTIVE = 2
-    // Message queue was inactive before activate() or deactivate().
-  };
 
   // = Initialization and termination methods.
   ACE_Message_Queue (size_t hwm = DEFAULT_HWM,
