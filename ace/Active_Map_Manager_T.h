@@ -127,7 +127,7 @@ public:
 
 protected:
 
-  typedef ACE_Map_Manager<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> BASE;
+  typedef ACE_Map_Manager<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> ACE_AMM_BASE;
   // Private base class
 
   int create_key (ACE_Active_Map_Manager_Key &key);
