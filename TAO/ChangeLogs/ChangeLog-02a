@@ -1,3 +1,24 @@
+Fri May 24 11:46:40 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+
+          If an IDL struct, exception, union, or valuetype 'foo' contains
+          a field using the scoped name for the type, we have been
+          generating the type with the ACE_NESTED_CLASS macro, a
+          workaround for an MSVC problem. However, if foo is defined
+          inside a module (rather than another struct, union, exception,
+          valuetype or interface), not only is the macro not necessary,
+          but it may cause problems of its own for deeply nested
+          modules. So a check for the type of foo's container was added
+          to code generation in field_ch.cpp. Also, a context sub-state
+          called TAO_USE_FULL_NAME had been added as a helper for 
+          valuetype field code generation, and this has been removed
+          since it is no longer needed. Thanks to Keith Thornton 
+          <keith.thornton.kt@germany.agfa.com> for sending in the use
+          case that uncovered the bug.
+
 Fri May 24 13:52:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
