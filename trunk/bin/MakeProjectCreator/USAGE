@@ -12,6 +12,7 @@ projects for each one found.
 Usage: mwc.pl [-global <file>] [-include <directory>]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>]
               [-template <file>] [-dynamic_only] [-static_only]
+              [-relative NAME=VAR] [-noreldefs]
               [-type <bor | em3 | gnu | nma | va4 | vc6 | vc7>]
               [files]
 
@@ -26,6 +27,10 @@ Usage: mwc.pl [-global <file>] [-include <directory>]
        -template     Specifies the template name (with no extension).
        -dynamic_only Specifies that only dynamic projects will be generated.
        -static_only  Specifies that only static projects will be generated.
+       -relative     Any $() variable in an mpc that is matched to NAME
+                     is replaced by VAR only if VAR can be made into a
+                     relative path based on the current working directory.
+       -noreldefs    Do not try to generate default relative definitions.
        -type         Specifies the type of project file to generate.  This
                      option can be used multiple times to generate multiple
                      types.
@@ -73,6 +78,7 @@ project in the directory from which the script was started.
 Usage: mpc.pl [-global <file>] [-include <directory>]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>]
               [-template <file>] [-dynamic_only] [-static_only]
+              [-relative NAME=VAR] [-noreldefs]
               [-type <bor | em3 | ghs | gnu | nma | va4 | vc6 | vc7>]
               [files]
 
@@ -87,6 +93,10 @@ Usage: mpc.pl [-global <file>] [-include <directory>]
        -template     Specifies the template name (with no extension).
        -dynamic_only Specifies that only dynamic projects will be generated.
        -static_only  Specifies that only static projects will be generated.
+       -relative     Any $() variable in an mpc that is matched to NAME
+                     is replaced by VAR only if VAR can be made into a
+                     relative path based on the current working directory.
+       -noreldefs    Do not try to generate default relative definitions.
        -type         Specifies the type of project file to generate.  This
                      option can be used multiple times to generate multiple
                      types.
