@@ -14,12 +14,13 @@ project(RTOLDEvent) : orbsvcslib, core, rtevent, rtsched, naming, svc_utils, por
       Event/Dispatching_Modules.cpp
       Event/Event_Channel.cpp
       Event/Event_Manip.cpp
+      Event/GPlot_File.cpp
       Event/Local_ESTypes.cpp
       Event/Memory_Pools.cpp
-      Event/RT_Task.cpp
-      Event/ReactorTask.cpp
-      Event/Timer_Module.cpp
       Event/Module_Factory.cpp
+      Event/ReactorTask.cpp
+      Event/RT_Task.cpp
+      Event/Timer_Module.cpp
     }
   }
 

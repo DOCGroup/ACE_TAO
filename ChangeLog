@@ -1,3 +1,13 @@
+Thu Jun 26 17:35:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+        * Kokyu/Kokyu.mpc:
+        * bin/create_ace_build.pl:
+        * bin/MakeProjectCreator/config/kokyu.mpb:
+        * bin/MakeProjectCreator/config/rtkokyuevent.mpb:
+
+          Fixes for mpc generated builds.
+          create_ace_build won't link .opt files.
+
 Thu Jun 26 16:31:51 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* ace/QtReactor.h:
