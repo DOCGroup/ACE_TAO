@@ -1,3 +1,12 @@
+Sat Feb  1 09:34:45 2003  Ossama Othman  <ossama@uci.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Disable TAO's IORInterceptor test for the GIOP 1.0 build
+	  configuration.  The test requires IOR tagged components that are
+	  not supported in GIOP 1.0.  Fixes a false positive in our
+	  scoreboard.
+
 Fri Jan 31 12:55:26 2003  Frank Hunleth  <frank@hunleth.com>
 
 	* tests/Reactor_Exceptions_Test.cpp (worker):  Added #if defined
