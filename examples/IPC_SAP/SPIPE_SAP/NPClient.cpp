@@ -22,12 +22,11 @@ main (int argc, char *argv[])
   char *buf;
 
   ACE_NEW_RETURN (buf,
-                  new char[size],
+                  char[size],
                   1);
 
   const char *pipe_name = "acepipe";
-  char *rendezvous;
-  rendezvous = MAKE_PIPE_NAME (pipe_name);
+  const char *rendezvous = MAKE_PIPE_NAME (pipe_name);
 
   ACE_SPIPE_Stream cli_stream;
   ACE_SPIPE_Connector con;

@@ -31,7 +31,7 @@ ACE_STATIC_SVC_REQUIRE (Timer_Service_1)
 int
 main (int, ASYS_TCHAR *argv[])
 {
-  ASYS_TCHAR *l_argv[9];
+  LPCTSTR l_argv[9];
 
   // Manufacture a "fake" svc.conf entry to demonstrate the -S option
   // that allows us to pass these entries via the "command-line"
@@ -47,7 +47,9 @@ main (int, ASYS_TCHAR *argv[])
   l_argv[7] = ASYS_TEXT ("-fsvc.conf");
   l_argv[8] = 0;
 
-  if (ACE_Service_Config::open (8, l_argv, ACE_DEFAULT_LOGGER_KEY, 0) == -1 && errno != ENOENT)
+  if (ACE_Service_Config::open (8,
+                                (ASYS_TCHAR *[]) l_argv,
+                                ACE_DEFAULT_LOGGER_KEY, 0) == -1 && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("open")),

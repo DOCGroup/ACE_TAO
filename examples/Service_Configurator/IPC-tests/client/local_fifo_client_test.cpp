@@ -15,15 +15,16 @@ static char *program_name;
 // debug state on or off
 static int debug = 0;
 
-char *rendezvous_fifo = "/tmp/foo_fifo";
+static const char *rendezvous_fifo = "/tmp/foo_fifo";
 
-/* Name of file to send. */
-static char *file_name = "./local_data";
+// Name of file to send. 
+static const char *file_name = "./local_data";
 
 static void 
 print_usage_and_die (void)
 {
-  ACE_ERROR ((LM_ERROR, "usage: %s [-d] [-f rendezvous_fifo]\n%a", 
+  ACE_ERROR ((LM_ERROR, 
+              "usage: %s [-d] [-f rendezvous_fifo]\n%a", 
 	      program_name, -1));
 }
 
@@ -53,7 +54,8 @@ parse_arguments (int argc, char *argv[])
     ACE_DEBUG ((LM_DEBUG,
 		"rendezvous_fifo = %s\n"
 		"trace = %s\n",
-		rendezvous_fifo, tracing ? "on" : "off"));
+		rendezvous_fifo,
+                tracing ? "on" : "off"));
 }
 
 int
@@ -63,22 +65,32 @@ main(int argc, char *argv[])
 
   ACE_FIFO_Send_Msg fifo;
 
-  if (fifo.open ((const char *) rendezvous_fifo, O_WRONLY, 0666) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open %s for requesting a new communication channel"
-		       "in local_fifo_client_test\n", rendezvous_fifo), -1);
-
-
+  if (fifo.open ((const char *) rendezvous_fifo,
+                 O_WRONLY,
+                 0666) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Cannot open %s for requesting a new communication channel"
+		       "in local_fifo_client_test\n",
+                       rendezvous_fifo),
+                      -1);
   void *cp;
   ACE_Mem_Map mmap (file_name);
 
   if (mmap (cp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "mmap"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "mmap"),
+                      -1);
       
-  /* Next, send the file's contents. */
+  // Next, send the file's contents.
 
-  ACE_Str_Buf msg (cp, int (mmap.size ()));
+  ACE_Str_Buf msg (cp,
+                   int (mmap.size ()));
 
   if (fifo.send (msg) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "send"),
+                      -1);
   return 0;
 }

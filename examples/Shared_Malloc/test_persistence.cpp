@@ -14,7 +14,7 @@ typedef ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_ITERAT
 static MALLOC *shmem_manager = 0;
 
 // Backing store name.
-static char *backing_store = ACE_DEFAULT_BACKING_STORE;
+static const char *backing_store = ACE_DEFAULT_BACKING_STORE;
 
 class Employee
 {
