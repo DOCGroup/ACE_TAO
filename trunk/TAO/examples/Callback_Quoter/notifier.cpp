@@ -5,9 +5,6 @@
 ACE_RCSID(notifier, Callback_Quoter, "$Id$")
 
 // This is the main driver program for the Callback Quoter Notifier.
-// @@ I recommend renaming this stuff to notifier.cpp and calling the Notifier_Servant the
-// Notifier_Servant, etc.  Then, you can rename the Market Feed stuff the "Notifier" since
-// It really is the ultimate Notifier for this application.
 
 int
 main (int argc, char *argv[])

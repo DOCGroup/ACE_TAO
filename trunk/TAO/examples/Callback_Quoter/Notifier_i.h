@@ -96,7 +96,15 @@ public:
           CONSUMER_MAP;
 
   CONSUMER_MAP consumer_map_;
-  // @@ Please add a comment.
+  // This is the hash map with each hash_entry consisting of the stockname
+  // and an unbounded set of consumer object pointer and the desired stockvalue.
+
+  int notifier_exited_;
+  //This marks the exit of the notifier. This should be taken care of
+  // before the consumer tries to unregister after the notifier quits.
+ 
+
+  
 };
 
 #endif /* NOTIFIER_I_H */

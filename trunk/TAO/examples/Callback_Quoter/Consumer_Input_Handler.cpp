@@ -180,27 +180,35 @@ Consumer_Input_Handler::quit_consumer_process ()
   // Only if the consumer is registered and wants to shut
   // down, its necessary to unregister and then shutdown.
 
-  CORBA::Environment TAO_TRY_ENV;
-
   TAO_TRY
     {
       if (consumer_handler_->unregistered_ != 1 && consumer_handler_->registered_ == 1)
 	{
-	  this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in ());
+          // If the notifier has exited and the consumer tries to call
+          // the unregister_callback method tehn an execption will be
+          // raised. Hence check for this case using TAO_TRY_ENV.
+	  this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in (),
+                                                                 TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
 	  ACE_DEBUG ((LM_DEBUG,
 		      " Consumer Unregistered \n "));
-	  TAO_CHECK_ENV;
 	  consumer_handler_->unregistered_ = 0;
           consumer_handler_->registered_ = 0;
 	}
       this->consumer_handler_->consumer_servant_->shutdown (TAO_TRY_ENV);
-
-
+      TAO_CHECK_ENV;
     }
 
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Consumer_Input_Handler::quit_consumer_process()");
+      // There would be an exception only if there is a communication
+      // failure between the notifier and consumer. On catching the
+      // exception proclaim the problem and do a graceful exit.
+      ACE_DEBUG ((LM_DEBUG,
+                  "Communication failed!\n"));
+      this->consumer_handler_->consumer_servant_->shutdown (TAO_TRY_ENV);
+     
       return -1;
     }
   TAO_ENDTRY;

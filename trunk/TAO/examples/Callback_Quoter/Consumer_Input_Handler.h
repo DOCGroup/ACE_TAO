@@ -47,19 +47,19 @@ class Consumer_Input_Handler : public ACE_Event_Handler
   //    and receives the stock status from the Notifier.
 
 public:
-
-   Consumer_Input_Handler (Consumer_Handler *consumer_handler);
+  Consumer_Input_Handler (Consumer_Handler *consumer_handler);
+  // Constructor.
 
   int handle_input (ACE_HANDLE);
   // Handle the user input.
 
-  int register_consumer ();
+  int register_consumer (void);
   // Registration with the notifier.
 
-  int unregister_consumer ();
+  int unregister_consumer (void);
   // Cancelling the registration with the notifier.
 
-  int quit_consumer_process ();
+  int quit_consumer_process (void);
   // Ends the consumer process.
 
   friend class ACE_Shutup_GPlusPlus;
@@ -67,15 +67,29 @@ public:
 
 private:
 
-  ~Consumer_Input_Handler ()
+  // @@ Please don't put implementations in the class headers...
+  ~Consumer_Input_Handler (void)
    {
      // No-op
-    }
+   }
 
   Consumer_Handler *consumer_handler_;
   // The Consumer_Handler object.
 
 };
+
+// @@ Please don't use #defines because they clutter up the global
+// namespace.  Instead, use enums, e.g.,
+// enum 
+// {
+//    REGISTER = 'r',
+//    UNREGISTER = 'u',
+//    EXIT = 'q'
+// };
+//
+// Please put this enum inside of class Consumer_Input_Handler.  Note
+// that you'll need to refer to these enumerals as
+// Consumer_Input_Handler::REGISTER, etc. in order to be portable.
 
 #define REGISTER 'r'
 // The character that the user must type to register the consumer with

@@ -20,17 +20,19 @@
 
 #include <Consumer_Signal_Handler.h>
 
-Consumer_Signal_Handler:: Consumer_Signal_Handler (Consumer_Handler *consumer_handler)
+Consumer_Signal_Handler::Consumer_Signal_Handler (Consumer_Handler *consumer_handler)
+  : consumer_handler_ (consumer_handler)
 {
-  consumer_handler_ = consumer_handler;
 }
 
-Consumer_Signal_Handler:: ~Consumer_Signal_Handler ()
+Consumer_Signal_Handler:: ~Consumer_Signal_Handler (void)
 {
 }
 
 int
-Consumer_Signal_Handler::handle_signal (int signum, siginfo_t*, ucontext_t*)
+Consumer_Signal_Handler::handle_signal (int signum,
+                                        siginfo_t*,
+                                        ucontext_t*)
 {
   switch (signum)
     {
@@ -51,7 +53,8 @@ Consumer_Signal_Handler::handle_signal (int signum, siginfo_t*, ucontext_t*)
 }
 
 int
-Consumer_Signal_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+Consumer_Signal_Handler::handle_close (ACE_HANDLE,
+                                       ACE_Reactor_Mask)
 {
   // End of the signal handler.
   delete this;
@@ -61,25 +64,26 @@ Consumer_Signal_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 
 
 int
-Consumer_Signal_Handler::quit_on_signal ()
+Consumer_Signal_Handler::quit_on_signal (void)
 {
-  // Only if the consumer is registered and wants to shut
-  // down, its necessary to unregister and then shutdown.
+  // Only if the consumer is registered and wants to shut down, its
+  // necessary to unregister and then shutdown.
 
   CORBA::Environment TAO_TRY_ENV;
 
   TAO_TRY
     {
-      if (consumer_handler_->unregistered_ != 1 && consumer_handler_->registered_ == 1)
+      if (consumer_handler_->unregistered_ != 1
+          && consumer_handler_->registered_ == 1)
 	{
-	  this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in ());
+	  this->consumer_handler_->server_->unregister_callback 
+            (this->consumer_handler_->consumer_var_.in ());
 	  ACE_DEBUG ((LM_DEBUG,
 		      " Consumer Unregistered \n "));
-
 	  TAO_CHECK_ENV;
 	}
-      this->consumer_handler_->consumer_servant_->shutdown (TAO_TRY_ENV);
-
+      this->consumer_handler_->consumer_servant_->shutdown 
+        (TAO_TRY_ENV);
     }
 
   TAO_CATCHANY

@@ -22,6 +22,8 @@
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Reactor.h"
+#include "ace/Read_Buffer.h"
+#include "ace/OS.h"
 #include "NotifierC.h"
 #include "Supplier_Timer_Handler.h"
 
@@ -29,8 +31,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This class does the job of feeding the Callback Quoter 
-// notifier with stock information.
 class Supplier_Timer_Handler;
 class Supplier
 {
@@ -38,8 +38,8 @@ class Supplier
   //     Market feed  daemon implementation.
   //
   // = DESCRIPTION
-  //     Class wrapper for a daemon which keeps sending
-  //     current stock values to the Callback Quoter notifier.
+  //    This class feeds stock information to the Callback Quoter 
+  //    notifier. 
 public:
   // = Initialization and termination methods.
   Supplier (void);
@@ -59,8 +59,8 @@ public:
   // Sends the stock name and its value.
 
   Supplier_Timer_Handler *supplier_timer_handler_;
-  // The timer handler used to send the market status to the
-  // notifier periodically.
+  // The timer handler used to send the market status to the notifier
+  // periodically.
 
 private:
   int read_ior (char *filename);
@@ -73,8 +73,11 @@ private:
   // This method initialises the naming service and registers the
   // object with the POA.
   
-  ACE_Reactor *reactor_used (void) const;
+   ACE_Reactor *reactor_used (void) const;
   // returns the TAO instance of the singleton Reactor.
+
+  int read_file (char *filename);
+  // This method used for getting stock information from a file.
 
   int argc_;
   // # of arguments on the command line.
@@ -84,11 +87,8 @@ private:
 
   char *ior_;
   // IOR of the obj ref of the Notifier.
-
-  u_int feed_time;
-  // Time period between two succesive market feeds to the Notifier.
-
-  CORBA::Environment env_;
+  
+    CORBA::Environment env_;
   // Environment variable.
 
   TAO_Naming_Client naming_services_client_;
@@ -98,15 +98,21 @@ private:
   int use_naming_service_;
   // This variable denotes whether the naming service
   // is used or not.
-
+  
   Notifier_var notifier_;
   // Notifier object reference.
 
-  CORBA::ORB_var orb_;
+   CORBA::ORB_var orb_;
   // Remember our orb.
+
+  FILE  *f_ptr_;
+  // The pointer for accessing the input stream.
 
   int loop_count_;
   // Iteration count.
+  
+  long  period_value_;
+  // Time period between two succesive market feeds to the Notifier.
 };
 
 #endif /*SUPPLIER_I_H */
