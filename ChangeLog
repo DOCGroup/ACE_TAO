@@ -24,7 +24,8 @@ Tue Aug 26 18:57:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * ASNMP/asnmp/vb.h:
         * ASNMP/asnmp/wpdu.h:
           Changed ACE_Export to ASNMP_Export in order to correctly create
-          dll's on Windows.
+          dll's on Windows.  Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for pointing this out.
 
         * tests/DLL_Test_Impl.h:
           Added #include OS_Memory.h.
