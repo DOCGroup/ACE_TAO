@@ -1,3 +1,9 @@
+Wed Apr 03 23:38:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Condition.h: Added a comment
+	* tao/Condition.cpp: Added #ifdef's around the whole file. 
+	* tao/Condition.inl: Fixed a compile error on Win32.
+
 Wed Apr  3 22:18:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         Changes to wide variety of stuff from my branch. The checkin

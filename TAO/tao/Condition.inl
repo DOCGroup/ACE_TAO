@@ -27,13 +27,12 @@ TAO_Condition<MUTEX>::wait (const ACE_Time_Value *abstime)
 template<class MUTEX> ACE_INLINE int
 TAO_Condition<MUTEX>::remove (void)
 {
-  this->cond_->remove ();
+  return this->cond_->remove ();
 }
 
 template<class MUTEX> ACE_INLINE MUTEX *
 TAO_Condition<MUTEX>::mutex (void)
 {
-  // ACE_TRACE ("ACE_Condition<MUTEX>::mutex");
   return this->mutex_;
 }
 
