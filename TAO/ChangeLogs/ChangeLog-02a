@@ -1,3 +1,13 @@
+Mon Oct 30 15:21:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Typecode.cpp:
+
+	  Added a check for a null typecode pointer argument
+	  to a function common to equal() and equivalent().
+	  This change will cause all Any extractions to fail
+	  if the application has not initialized an ORB. Thanks
+	  to <albert.wijnja@meco.nl> for reporting this bug.
+
 Mon Oct 30 15:00:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_interface.cpp:
