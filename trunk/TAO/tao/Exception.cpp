@@ -403,7 +403,7 @@ TAO_Exceptions::init (CORBA::Environment &env)
 }
 
 void
-TAO_Exceptions::fini (CORBA::Environment &env)
+TAO_Exceptions::fini (void)
 {
   delete TAO_Exceptions::system_exceptions;
 }

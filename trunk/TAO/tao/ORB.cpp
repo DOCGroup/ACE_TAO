@@ -65,7 +65,7 @@ CORBA_ORB::~CORBA_ORB (void)
 {
   TAO_ORB_Core_instance ()->fini ();
 
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon, *ACE_Static_Object_Lock::instance (), 0));
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon, *ACE_Static_Object_Lock::instance ()));
 
   CORBA_ORB::orb_init_count_--;
 
@@ -603,7 +603,7 @@ CORBA::wstring_free (CORBA::WChar *const str)
 void
 CORBA_ORB::init_orb_globals (void)
 {
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon, *ACE_Static_Object_Lock::instance (), 0));
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon, *ACE_Static_Object_Lock::instance ());
 
   // Put these initializations here so that exceptions are enabled
   // immediately.

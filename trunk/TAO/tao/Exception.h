@@ -273,7 +273,7 @@ public:
   // Runtime initialization of all standard exception typecodes.
   // Called from <CORBA::ORB_init>.
 
-  static void fini (CORBA::Environment &env);
+  static void fini (void);
   // Runtime finalization of all standard exception typecodes.
 
   enum

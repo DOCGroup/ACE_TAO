@@ -25,12 +25,12 @@
 #include "ace/Parse_Node.h"
    
 #if defined (DEBUGGING)
-#if defined (YY_DECL)
-#undef YY_DECL
-#endif /* YY_DECL */
-#define YY_DECL extern "C" char *ace_yylex (void)
+#if defined (ACE_YY_DECL)
+#undef ACE_YY_DECL
+#endif /* ACE_YY_DECL */
+#define ACE_YY_DECL extern "C" char *ace_yylex (void)
 #else
-#define YY_DECL extern "C" int ace_yylex (void)
+#define ACE_YY_DECL extern "C" int ace_yylex (void)
 #endif /* DEBUGGING */
 
 void ace_yyrestart (FILE *);
@@ -39,7 +39,7 @@ void ace_yyrestart (FILE *);
 int ace_yyparse (void);
 // Performs the parsing 
 
-YY_DECL;
+ACE_YY_DECL;
 // Performs the lexical analysis 
 
 extern FILE *ace_yyin;
@@ -76,7 +76,7 @@ typedef union
   ACE_Static_Node *static_node_;
   ACE_Service_Type *svc_record_;
   char *ident_; 
-} YYSTYPE;
-extern YYSTYPE ace_yylval;
+} ACE_YYSTYPE;
+extern ACE_YYSTYPE ace_yylval;
 #endif /* ACE_SVC_CONF_H */
 
