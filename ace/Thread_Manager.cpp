@@ -447,7 +447,7 @@ ACE_Thread_Exit::cleanup (void *instance, void *)
 ACE_Thread_Exit *
 ACE_Thread_Exit::instance (void)
 {
-#if (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) && ! defined (ACE_HAS_PTHREAD_SIGMASK)
+#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)
   ACE_TRACE ("ACE_Thread_Exit::instance");
 
   // Determines if we were dynamically allocated.
@@ -478,7 +478,7 @@ ACE_Thread_Exit::instance (void)
   return ACE_TSS_GET (instance_, ACE_Thread_Exit);
 #else
   return 0;
-#endif /* (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) && ! ACE_HAS_PTHREAD_SIGMASK */
+#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 }
 
 // Grab hold of the Task * so that we can close() it in the
@@ -573,7 +573,7 @@ ace_thread_manager_adapter (void *args)
   // ACE_Thread_Exit::instance ().  With the Xavier Pthreads package,
   // the exit_hook in TSS causes a seg fault.  So, this works around
   // that by creating exit_hook on the stack.
-#if (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) && ! defined (ACE_HAS_PTHREAD_SIGMASK)
+#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)
   // Obtain our thread-specific exit hook and make sure that it knows
   // how to clean us up!  Note that we never use this pointer directly
   // (it's stored in thread-specific storage), so it's ok to
@@ -587,7 +587,7 @@ ace_thread_manager_adapter (void *args)
   // So, threads shouldn't exit that way.  Instead, they should return
   // from <svc>.
   ACE_Thread_Exit exit_hook;
-#endif /* (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) && ! ACE_HAS_PTHREAD_SIGMASK */
+#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 
   // Keep track of the <Thread_Manager> that's associated with this
   // <exit_hook>.
