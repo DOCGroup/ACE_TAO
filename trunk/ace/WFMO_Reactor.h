@@ -124,7 +124,7 @@ public:
 
     /**
      * This is the set of events that the <Event_Handler> is
-     * interested in This entry is only valid if the <io_entry_> flag
+     * interested in. This entry is only valid if the <io_entry_> flag
      * is true.
      */
     long network_events_;
@@ -478,7 +478,7 @@ public:
   /// Constructor
   ACE_WFMO_Reactor_Notify (void);
 
-  /// Initialization.  <timer_queue> is stored to call <gettimeofday>.
+  /// Initialization. <timer_queue> is stored to call <gettimeofday>.
   virtual int open (ACE_Reactor_Impl *wfmo_reactor,
                     ACE_Timer_Queue *timer_queue,
                     int disable_notify = 0);
@@ -515,7 +515,7 @@ public:
   /// because of a thread trying to unblock the <Reactor_Impl>
   virtual int dispatch_notify (ACE_Notification_Buffer &buffer);
 
-  /// Verify whether the buffer has dispatchable info  or not.
+  /// Verify whether the buffer has dispatchable info or not.
   virtual int is_dispatchable (ACE_Notification_Buffer &buffer);
 
   /// Read one of the notify call on the <handle> into the
@@ -574,10 +574,10 @@ private:
   /// thread up (e.g., when the <notify> method is called).
   ACE_Auto_Event wakeup_one_thread_;
 
+  /// Message queue that keeps track of pending <ACE_Event_Handlers>.
+  /// This queue must be thread-safe because it can be called by
+  /// multiple threads of control.
   ACE_Message_Queue<ACE_MT_SYNCH> message_queue_;
-  // Message queue that keeps track of pending <ACE_Event_Handlers>.
-  // This queue must be thread-safe because it can be called by
-  // multiple threads of control.
 
   /**
    * Keeps track of the maximum number of times that the
@@ -674,8 +674,9 @@ public:
   virtual int set_timer_queue (ACE_Timer_Queue *tq);
 
   /// Set a user-specified timer queue.
-  /// Return the current <ACE_Timer_Queue>.
   virtual int timer_queue (ACE_Timer_Queue *tq);
+
+  /// Return the current <ACE_Timer_Queue>.
   virtual ACE_Timer_Queue *timer_queue (void) const;
 
   /// Close down the WFMO_Reactor and release all of its resources.
@@ -926,7 +927,7 @@ public:
    *
    * @param event_handler  event handler to schedule on reactor
    * @param arg   argument passed to the handle_timeout() method of  event_handler
-   * @param delta  time interval after which the timer will expire
+   * @param delay  time interval after which the timer will expire
    * @param interval  time interval after which the timer will be automatically rescheduled
    * @return -1 on failure, a timer_id value on success
    */
@@ -1183,7 +1184,7 @@ protected:
    */
   virtual int dispatch_handles (size_t slot);
 
-  /// Dispatches a single handler.  Returns 0 on success, -1 if the
+  /// Dispatches a single handler. Returns 0 on success, -1 if the
   /// handler was removed.
   virtual int dispatch_handler (size_t slot,
                                 size_t max_handlep1);
@@ -1193,7 +1194,7 @@ protected:
   virtual int simple_dispatch_handler (int slot,
                                        ACE_HANDLE event_handle);
 
-  /// Dispatches a single handler.  Returns 0 on success, -1 if the
+  /// Dispatches a single handler. Returns 0 on success, -1 if the
   /// handler was removed.
   virtual int complex_dispatch_handler (int slot,
                                         ACE_HANDLE event_handle);
