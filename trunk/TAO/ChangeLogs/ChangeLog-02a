@@ -1,183 +1,188 @@
+Wed Sep 13 22:11:11 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * */Makefile:
+          Update dependencies
+
 Wed Sep 13 23:36:58 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/TAO_Static.dsp:
-	
-	  Updated.
+        * tao/TAO_Static.dsp:
 
-	* tao/uiop_endpoints.h
-	* tao/iiop_endpoints.h:
+          Updated.
 
-	  Fixed pragma warnings for egcs.
+        * tao/uiop_endpoints.h
+        * tao/iiop_endpoints.h:
+
+          Fixed pragma warnings for egcs.
 
 Wed Sep 13 21:37:38 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Invocation.cpp
-	* tao/UIOP_Connector.cpp
-	* tao/UIOP_Endpoint.cpp
-	* tao/UIOP_Endpoint.h
-	* tao/UIOP_Endpoint.i
-	* tao/UIOP_Profile.h
-	* tao/UIOP_Profile.i
-	* tao/Makefile:
-	* tao/*/Makefile:
-	* tao/Makefile.bor:
+        * tao/Invocation.cpp
+        * tao/UIOP_Connector.cpp
+        * tao/UIOP_Endpoint.cpp
+        * tao/UIOP_Endpoint.h
+        * tao/UIOP_Endpoint.i
+        * tao/UIOP_Profile.h
+        * tao/UIOP_Profile.i
+        * tao/Makefile:
+        * tao/*/Makefile:
+        * tao/Makefile.bor:
 
-	  Fixed compilation problems introduced by
-	  ChangeLogTag:Wed Sep 13 19:15:01 2000  Marina Spivak  <marina@cs.wustl.edu>
-	  and updated Makefiles.
+          Fixed compilation problems introduced by
+          ChangeLogTag:Wed Sep 13 19:15:01 2000  Marina Spivak  <marina@cs.wustl.edu>
+          and updated Makefiles.
 
 Wed Sep 13 18:15:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.cpp:
-	  Fixed warning about strange */, it was a misplaced comment.
+        * orbsvcs/orbsvcs/Notify/Notify_Worker_Task.cpp:
+          Fixed warning about strange */, it was a misplaced comment.
 
 Wed Sep 13 19:15:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 
         * tao/Endpoint.cpp
-	* tao/Endpoint.h
-	* tao/Endpoint.i
-	* tao/IIOP_Endpoint.cpp
-	* tao/IIOP_Endpoint.h
-	* tao/IIOP_Endpoint.i
-	* tao/SHMIOP_Endpoint.cpp
-	* tao/SHMIOP_Endpoint.h
-	* tao/SHMIOP_Endpoint.i
-	* tao/UIOP_Endpoint.cpp
-	* tao/UIOP_Endpoint.h
-	* tao/UIOP_Endpoint.i:
+        * tao/Endpoint.h
+        * tao/Endpoint.i
+        * tao/IIOP_Endpoint.cpp
+        * tao/IIOP_Endpoint.h
+        * tao/IIOP_Endpoint.i
+        * tao/SHMIOP_Endpoint.cpp
+        * tao/SHMIOP_Endpoint.h
+        * tao/SHMIOP_Endpoint.i
+        * tao/UIOP_Endpoint.cpp
+        * tao/UIOP_Endpoint.h
+        * tao/UIOP_Endpoint.i:
 
-	  Added a new interface, Endpoint, to the pluggable protocols
-	  framework.  Endpoint encapsulates addressing information of a
-	  single acceptor endpoint.  A Profile contains one or more
-	  Endpoints.  In other words, Endpoint represents a single server
-	  contact point for a client.
+          Added a new interface, Endpoint, to the pluggable protocols
+          framework.  Endpoint encapsulates addressing information of a
+          single acceptor endpoint.  A Profile contains one or more
+          Endpoints.  In other words, Endpoint represents a single server
+          contact point for a client.
 
-	  Some of the motivations for this change:
-	  - smaller iors
-	  - preparation for TAG_ALTERNATE_IIOP
-	  support
-	  - preparation for new connection cache scheme
-	  - more organized iors => easier policy-based endpoint selection
+          Some of the motivations for this change:
+          - smaller iors
+          - preparation for TAG_ALTERNATE_IIOP
+          support
+          - preparation for new connection cache scheme
+          - more organized iors => easier policy-based endpoint selection
 
-	* tao/uiop_endpoints.pidl
-	* tao/iiop_endpoints.pidl
-	* tao/uiop_endpoints.h
-	* tao/uiop_endpoints.i
-	* tao/uiop_endpoints.cpp
-	* tao/iiop_endpoints.h
-	* tao/iiop_endpoints.i
-	* tao/iiop_endpoints.cpp:
+        * tao/uiop_endpoints.pidl
+        * tao/iiop_endpoints.pidl
+        * tao/uiop_endpoints.h
+        * tao/uiop_endpoints.i
+        * tao/uiop_endpoints.cpp
+        * tao/iiop_endpoints.h
+        * tao/iiop_endpoints.i
+        * tao/iiop_endpoints.cpp:
 
-	  Pidl files above define data structures for representing a list
-	  of endpoints from a single profile on the wire.  Pidl files are
-	  used to generate .h, .cpp and .i above.
+          Pidl files above define data structures for representing a list
+          of endpoints from a single profile on the wire.  Pidl files are
+          used to generate .h, .cpp and .i above.
 
-	* tao/Invocation.h
-	* tao/Invocation.cpp
-	* tao/Pluggable.h
-	* tao/Profile.h
-	* tao/Profile.cpp
-	* tao/Profile.i
-	* tao/Stub.cpp
-	* tao/Acceptor_Registry.cpp
-	* tao/Acceptor_Registry.h
-	* tao/Connector_Registry.cpp
-	* tao/Connector_Registry.h
-	* tao/IIOP_Acceptor.h
-	* tao/IIOP_Acceptor.cpp
-	* tao/IIOP_Connector.h
-	* tao/IIOP_Connector.cpp
-	* tao/IIOP_Profile.h
-	* tao/IIOP_Profile.cpp
-	* tao/IIOP_Profile.i
-	* tao/UIOP_Acceptor.h
-	* tao/UIOP_Acceptor.cpp
-	* tao/UIOP_Connector.h
-	* tao/UIOP_Connector.cpp
-	* tao/UIOP_Profile.h
-	* tao/UIOP_Profile.cpp
-	* tao/UIOP_Profile.i
-	* tao/SHMIOP_Acceptor.h
-	* tao/SHMIOP_Acceptor.cpp
-	* tao/SHMIOP_Connector.h
-	* tao/SHMIOP_Connector.cpp
-	* tao/SHMIOP_Profile.h
-	* tao/SHMIOP_Profile.cpp
-	* tao/SHMIOP_Profile.i:
+        * tao/Invocation.h
+        * tao/Invocation.cpp
+        * tao/Pluggable.h
+        * tao/Profile.h
+        * tao/Profile.cpp
+        * tao/Profile.i
+        * tao/Stub.cpp
+        * tao/Acceptor_Registry.cpp
+        * tao/Acceptor_Registry.h
+        * tao/Connector_Registry.cpp
+        * tao/Connector_Registry.h
+        * tao/IIOP_Acceptor.h
+        * tao/IIOP_Acceptor.cpp
+        * tao/IIOP_Connector.h
+        * tao/IIOP_Connector.cpp
+        * tao/IIOP_Profile.h
+        * tao/IIOP_Profile.cpp
+        * tao/IIOP_Profile.i
+        * tao/UIOP_Acceptor.h
+        * tao/UIOP_Acceptor.cpp
+        * tao/UIOP_Connector.h
+        * tao/UIOP_Connector.cpp
+        * tao/UIOP_Profile.h
+        * tao/UIOP_Profile.cpp
+        * tao/UIOP_Profile.i
+        * tao/SHMIOP_Acceptor.h
+        * tao/SHMIOP_Acceptor.cpp
+        * tao/SHMIOP_Connector.h
+        * tao/SHMIOP_Connector.cpp
+        * tao/SHMIOP_Profile.h
+        * tao/SHMIOP_Profile.cpp
+        * tao/SHMIOP_Profile.i:
 
           Updated pp framework components to use new Endpoint component
-	  described above.  Main changes include:
-	  - The way mprofiles are created.  If TAO_HAS_RT_CORBA is not
-	  enabled, there are no changes: one profile
-	  is created for each server acceptor endpoint, i.e., an IOR
-	  can contain multiple profiles for the same protocol.  If
-	  TAO_HAS_RT_CORBA _is_ enabled, only one profile per protocol is added
-	  to the IOR.  Multiple acceptor endpoints for a particular
-	  protocol do not result in additional profiles being created, but
-	  rather in Endpoint objects being added to that protocol's
-	  profile.  In other words, there is only one profile for each
-	  protocol in an IOR.  These changes are encapsulated in
-	  <*_Acceptor::create_mprofile > method.
-	  - TAO_Connector::connect now takes Endpoint* rather than Profile* as
-	  one of its arguments
-	  - TAO_Acceptor::is_collocated now takes Endpoint* rather than
-	  Profile* as its argument
-	  - TAO_Acceptor_Registry::is_collocated now searches for a
-	  "collocation match" among all endpoints of all profiles
+          described above.  Main changes include:
+          - The way mprofiles are created.  If TAO_HAS_RT_CORBA is not
+          enabled, there are no changes: one profile
+          is created for each server acceptor endpoint, i.e., an IOR
+          can contain multiple profiles for the same protocol.  If
+          TAO_HAS_RT_CORBA _is_ enabled, only one profile per protocol is added
+          to the IOR.  Multiple acceptor endpoints for a particular
+          protocol do not result in additional profiles being created, but
+          rather in Endpoint objects being added to that protocol's
+          profile.  In other words, there is only one profile for each
+          protocol in an IOR.  These changes are encapsulated in
+          <*_Acceptor::create_mprofile > method.
+          - TAO_Connector::connect now takes Endpoint* rather than Profile* as
+          one of its arguments
+          - TAO_Acceptor::is_collocated now takes Endpoint* rather than
+          Profile* as its argument
+          - TAO_Acceptor_Registry::is_collocated now searches for a
+          "collocation match" among all endpoints of all profiles
 
-	* tao/Tagged_Components.h
-	* tao/Tagged_Components.i
-	* tao/Tagged_Components.cpp:
+        * tao/Tagged_Components.h
+        * tao/Tagged_Components.i
+        * tao/Tagged_Components.cpp:
 
-	  Removed TAO-specific priority tagged component.  It is no longer
-	  necessary since each endpoint stores its priority.
+          Removed TAO-specific priority tagged component.  It is no longer
+          necessary since each endpoint stores its priority.
 
-	* tao/corbafwd.h
+        * tao/corbafwd.h
 
-	  Removed TAO_TAG_PRIORITY.  Added TAO_TAG_ENDPOINTS.
+          Removed TAO_TAG_PRIORITY.  Added TAO_TAG_ENDPOINTS.
 
-	* tao/TAO.dsp
-	* tao/TAO_Static.dsp
-	* tao/Makefile
-	* tao/Makefile.bor:
+        * tao/TAO.dsp
+        * tao/TAO_Static.dsp
+        * tao/Makefile
+        * tao/Makefile.bor:
 
-	  Updated.
+          Updated.
 
 Wed Sep 13 15:54:47 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Acceptor_Impl.h:
+        * tao/Acceptor_Impl.h:
 
-	  Include "tao/corbafwd.h" to pull in declaration of
-	  CORBA::Boolean.  Forward declare TAO_ORB_Core since some class
-	  methods declared in this header take TAO_ORB_Core pointer
-	  arguments.
+          Include "tao/corbafwd.h" to pull in declaration of
+          CORBA::Boolean.  Forward declare TAO_ORB_Core since some class
+          methods declared in this header take TAO_ORB_Core pointer
+          arguments.
 
-	* tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Impl.cpp:
 
-	  Include "tao/ORB_Table.h" to pull in the TAO_ORB_Table
-	  declaration.
+          Include "tao/ORB_Table.h" to pull in the TAO_ORB_Table
+          declaration.
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.i:
-	* tao/ORB_Table.h:
-	* tao/ORB_Table.cpp:
-	* tao/ORB_Table.inl:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.i:
+        * tao/ORB_Table.h:
+        * tao/ORB_Table.cpp:
+        * tao/ORB_Table.inl:
 
-	  Moved TAO_ORB_Table implementation from `ORB_Core.*' to the
-	  newly added `ORB_Table' source files.
+          Moved TAO_ORB_Table implementation from `ORB_Core.*' to the
+          newly added `ORB_Table' source files.
 
-	* tao/Makefile:
-	* tao/Makefile.am:
-	* tao/Makefile.bor:
-	* tao/TAO.dsp:
+        * tao/Makefile:
+        * tao/Makefile.am:
+        * tao/Makefile.bor:
+        * tao/TAO.dsp:
 
-	  Added the new `ORB_Table.*' files to the list of sources.
+          Added the new `ORB_Table.*' files to the list of sources.
 
-	* tests/ORB_init/ORB_init.cpp (main):
+        * tests/ORB_init/ORB_init.cpp (main):
 
-	  Initialize another ORB but don't explicitly destroy it to allow
-	  testing of TAO's internal ORB table resource clean-up.
+          Initialize another ORB but don't explicitly destroy it to allow
+          testing of TAO's internal ORB table resource clean-up.
 
 Wed Sep 13 15:19:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
