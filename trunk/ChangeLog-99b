@@ -1,3 +1,10 @@
+Tue Apr 27 00:47:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/DLL.cpp:
+	* ace/Service_Config.i:
+	* ace/Service_Object.i:
+	* ace/INET_Addr.cpp: Some CE related changes.
+
 Tue Apr 27 00:03:16 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Collection_Test.cpp (main): Added test code for ACE_Array.
