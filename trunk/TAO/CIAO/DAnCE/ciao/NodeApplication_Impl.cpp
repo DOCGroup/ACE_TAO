@@ -244,7 +244,7 @@ install (const ::Deployment::ImplementationInfos & impl_infos
 		   {
 		     if (CIAO::debug_level () > 1)
 		       ACE_DEBUG ((LM_DEBUG, "Failed to write the IOR.\n"));
-		     ACE_THROW (CORBA::INTERNAL ());
+		     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 		   }
 
 	       }
@@ -268,7 +268,7 @@ install (const ::Deployment::ImplementationInfos & impl_infos
 ::Components::CCMHome_ptr
 CIAO::NodeApplication_Impl::
 install_home (const ::Deployment::ImplementationInfo & impl_info
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::UnknownImplId,
                    Deployment::ImplEntryPointNotFound,
@@ -303,7 +303,7 @@ install_home (const ::Deployment::ImplementationInfo & impl_info
 //         the "_WITH_DEFAULTS"
 void
 CIAO::NodeApplication_Impl::
-remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+remove (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
