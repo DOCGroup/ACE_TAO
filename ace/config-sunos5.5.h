@@ -11,10 +11,6 @@
 #define ACE_CONFIG_H
 #include "ace/pre.h"
 
-// Before we do anything, we should include <sys/feature_tests.h> to
-// ensure that things are set up properly.
-#include <sys/feature_tests.h>
-
 // Compiler version-specific settings:
 #if defined (__SUNPRO_CC)
 # if (__SUNPRO_CC < 0x410)
@@ -212,12 +208,6 @@
 
 // Platform supports the /proc file system.
 #define ACE_HAS_PROC_FS
-
-// Platform has posix getpwnam_r
-#if (defined (_POSIX_C_SOURCE) && _POSIX_C_SOURCE - 0 >= 199506L) || \
-    defined(_POSIX_PTHREAD_SEMANTICS)
-# define ACE_HAS_POSIX_GETPWNAM_R
-#endif /* _POSIX_C_SOURCE || _POSIX_PTHREAD_SEMANTICS */
 
 // Platform supports the prusage_t struct.
 #define ACE_HAS_PRUSAGE_T
