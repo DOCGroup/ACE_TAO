@@ -91,7 +91,7 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                        RtecEventComm::PushConsumer_ptr consumer,
                                        RtecEventComm::EventSet& event,
                                        TAO_EC_QOS_Info& qos_info
-                                       ACE_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (this->dispatcher_.get () == 0)
         this->activate();
