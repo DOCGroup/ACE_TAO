@@ -21,6 +21,7 @@
 #ifndef CONSUMER_INPUT_HANDLER_H
 #define CONSUMER_INPUT_HANDLER_H
 
+#include "ace/OS.h"
 #include <signal.h>
 #include <ace/Reactor.h>
 #include <ace/Event_Handler.h>
@@ -65,9 +66,9 @@ public:
   friend class ACE_Shutup_GPlusPlus;
   // Turn off g++ warning
 
-  enum 
+  enum
   {
-    // =  TITLE 
+    // =  TITLE
     //   A set of values for the execution of the consumer.
     //
     // = DESCRIPTION
@@ -91,11 +92,11 @@ public:
 private:
   ~Consumer_Input_Handler (void);
   // the destructor.
-  
+
   Consumer_Handler *consumer_handler_;
   // The Consumer_Handler object.
-  
-  
+
+
 
 };
 
