@@ -47,7 +47,7 @@ namespace TAO
                                      CORBA::WString_out>
   {
   };
-};
+}
 
 #include /**/ "ace/post.h"
 
