@@ -43,11 +43,10 @@ class node_init_impl : public Supports_Test::Node_init
   
  public:
   
-  virtual Supports_Test::Node * create (ACE_ENV_SINGLE_ARG_DECL)
+  virtual Supports_Test::Node * create (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   
-  virtual CORBA::ValueBase * create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ValueBase * create_for_unmarshal (void);
   
 };
 
@@ -83,11 +82,10 @@ class vt_graph_init_impl :
   
  public:
   
-  virtual Supports_Test::vt_graph * create (ACE_ENV_SINGLE_ARG_DECL)
+  virtual Supports_Test::vt_graph * create (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 	
-  virtual CORBA::ValueBase * create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ValueBase * create_for_unmarshal (void);
   
 };
 
