@@ -31,8 +31,11 @@ template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHI
 class ACE_Caching_Strategy
 {
   // = TITLE
+  //     This class is an abstract base class for a caching strategy.
   //
   // = DESCRIPTION
+  //     This class consists of all the interfaces a caching strategy should have and
+  //   is used in association with the ACE_Caching_Strategy_Adaptor.
 
 public:
 
@@ -84,12 +87,20 @@ public:
   // then decides on the one to remove.
 };
 
+//////////////////////////////////////////////////////////////////////////
+
 template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION>
 class ACE_Caching_Strategy_Adapter : public ACE_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>
 {
   // = TITLE
+  //     This class follows the Adaptor pattern and is used to provide
+  //     External Polymorphism by deriving from ACE_Caching_Strategy.
   //
   // = DESCRIPTION
+  //     This class simply delegates all requests to the
+  //     IMPLEMNETATION object within. This class should be passed in
+  //     place of the the abstract base ACE_Caching_Strategy class as
+  //     part of the External Polymorphism pattern.
 
 public:
 
@@ -155,6 +166,8 @@ private:
   int delete_implementation_;
   // Do we need to delete the implementation?
 };
+
+//////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY>
 class ACE_LRU_Caching_Strategy
