@@ -5,6 +5,9 @@ Mon Mar 08 22:23:33 1999  David L. Levine  <levine@cs.wustl.edu>
           only the components necessary to support TAO will be
           built into libACE.
 
+        * netsvcs/clients/Makefile: suppress build if Other
+          ACE_COMPONENT isn't built.
+
 Mon Mar  8 17:35:04 1999  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
         * ace/NT_Service.cpp:
