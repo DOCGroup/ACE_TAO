@@ -282,14 +282,23 @@ typedef ACE_UINT16 ACE_USHORT16;
 
 #endif /* ACE_LACKS_LONGLONG_T */
 
-// Conversion from ACE_UINT64 to ACE_UINT32.
+// Conversions from ACE_UINT64 to ACE_UINT32.  ACE_CU64_TO_CU32 should
+// be used on const ACE_UINT64's.
 #if defined (ACE_LACKS_LONGLONG_T)
-# define ACE_U64_TO_U32(n) ((n).lo ())
-# define ACE_CU64_TO_CU32(n) ((n).lo ())
+#  define ACE_U64_TO_U32(n) ((n).lo ())
+#  define ACE_CU64_TO_CU32(n) ((n).lo ())
 #else  /* ! ACE_LACKS_LONGLONG_T */
-# define ACE_U64_TO_U32(n) (ACE_static_cast (ACE_UINT32, (n)))
-# define ACE_CU64_TO_CU32(n) (ACE_static_cast (ACE_CAST_CONST ACE_UINT32, (n)))
+#  define ACE_U64_TO_U32(n) (ACE_static_cast (ACE_UINT32, (n)))
+#  define ACE_CU64_TO_CU32(n) \
+     (ACE_static_cast (ACE_CAST_CONST ACE_UINT32, (n)))
 #endif /* ! ACE_LACKS_LONGLONG_T */
+
+// 64-bit literals require special marking on some platforms.
+#if defined (ACE_WIN32)
+#  define ACE_UINT64_LITERAL(n) n ## ui64
+#else  /* ! ACE_WIN32 */
+#  define ACE_UINT64_LITERAL(n) n ## ull
+#endif /* ! ACE_WIN32 */
 
 // The number of bytes in a void *.
 #ifndef ACE_SIZEOF_VOID_P
