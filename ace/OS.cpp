@@ -1300,7 +1300,7 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
       if (ts_storage == 0)
         {
           // Allocate an array off the heap for this thread's TSS.
-          ACE_NEW_RETURN (tss_base (), (void *)[ACE_TSS_THREAD_KEYS_MAX], 0);
+          ACE_NEW_RETURN (tss_base (), void *[ACE_TSS_THREAD_KEYS_MAX], 0);
         }
       else
         {
