@@ -57,7 +57,7 @@ Task_State::Task_State (void)
 int
 Task_State::parse_args (int argc,char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "U:mu:n:t:d:rxof:g:1cl");
+  ACE_Get_Opt opts (argc, argv, "mu:n:t:d:rxof:g:1cl");
   int c;
 
   while ((c = opts ()) != -1)
@@ -72,6 +72,9 @@ Task_State::parse_args (int argc,char *argv[])
       break;
     case 'c':
       context_switch_test_ = 1;
+      break;
+    case 'm':
+      use_multiple_priority_ = 1;
       break;
     case '1':
       one_to_n_test_ = 1;
@@ -129,16 +132,21 @@ Task_State::parse_args (int argc,char *argv[])
       continue;
     case '?':
     default:
-      ACE_DEBUG ((LM_DEBUG, "usage:  %s"
-                  "[-d datatype Octet=0, Short=1, Long=2, Struct=3]"
-                  " [-n num_calls]"
-                  " [-t num_threads]"
-                  " [-f ior_file]"
-                  " [-x] // makes a call to servant to shutdown"
-                  " [-o] // makes client use oneway calls instead"
-                  " [-s] // makes client *NOT* use the name service"
-                  " [-g granularity_of_timing]"
-                  "\n", argv [0]));
+      ACE_DEBUG ((LM_DEBUG, "usage:  %s\t"
+                  "[<ORB OPTIONS>]        // ORB options, e.g., \"-ORBobjrefstyle url\"                               \n\t\t"
+                  "[-d <datatype>]        // what datatype to use for calls:  Octet=0, Short=1, Long=2, Struct=3      \n\t\t"
+                  "[-n <num_calls>]       // number of CORBA calls to make.                                           \n\t\t"
+                  "[-t <num_of_clients>]  // number of client threads to create                                       \n\t\t"
+                  "[-f <ior_file>]        // specify the file from which we read the object references (iors), if any.\n\t\t"
+                  "[-r]                   // run thread-per-rate test.                                                \n\t\t"
+                  "[-o]                   // makes client use oneway calls.  By default, twoway calls are used.       \n\t\t"
+                  "[-x]                   // makes a call to servant to shutdown                                      \n\t\t"
+                  "[-u <seconds> ]        // run the client utilization test for a number of <seconds>.               \n\t\t"
+                  "[-1]                   // run the one-to-n test.                                                   \n\t\t"
+                  "[-g <granularity>]     // choose the granularity of the timing of CORBA calls                      \n\t\t"
+                  "[-c]                   // run the number of context switches test.                                 \n\t\t"
+                  "[-m]                   // use multiple priorities for the low priority clients.                    \n"
+		  ,argv [0]));
       return -1;
     }
 

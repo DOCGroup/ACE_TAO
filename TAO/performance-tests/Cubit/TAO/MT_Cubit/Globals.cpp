@@ -21,7 +21,7 @@ Globals::Globals (void)
 int
 Globals::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "sh:p:t:f:rm");
+  ACE_Get_Opt opts (argc, argv, "h:p:t:f:rm");
   int c;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -58,13 +58,14 @@ Globals::parse_args (int argc, char *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " \t[-p <port>]\n"
-                           " \t[-h <my_hostname>]\n"
-                           " \t[-t <num_objects>]\n"
-                           " \t[-f <ior_file>]\n"
-                           " \t[-r Use thread per rate]\n"
-                           "\n", argv [0]),
+                           "usage:  %s \t"
+                           "[-p <port_num>]                // starting port                      \n\t\t"
+                           "[-h <my_hostname>]             // IP address to use                  \n\t\t"
+                           "[-t <number_of_servants>]      // # of servant threads to create     \n\t\t"
+                           "[-f <ior_file> ]               // specify a file to output all ior's \n\t\t"
+                           "[-m ]                          // Use multiple priorities for threads\n\t\t"
+                           "[-r ]                          // Run the thread-per-rate test       \n"
+                           ,argv [0]),
                           -1);
       }
     }
