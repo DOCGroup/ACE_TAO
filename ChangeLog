@@ -1,3 +1,30 @@
+Thu Oct  7 16:45:21 2004  Steve Huston  <shuston@riverace.com>
+
+	* bin/MakeProjectCreator/config/global.features: Added uses_wchar = 0
+	  as a default. Says not to use ACE_USES_WCHAR. No affect on
+	  ACE_HAS_WCHAR (a platform's ability to handle wide-char). This
+	  setting is primarily to avoid those areas of ACE's examples that
+	  aren't coded to work correctly with both narrow and wide chars.
+
+	* apps/drwho/drwho.mpc:
+	* apps/gperf/src/gperf.mpc:
+	* apps/gperf/tests/gperf_test.mpb:
+	* apps/soreduce/soreduce.mpc:
+	* examples/C++NPv1/C++NPv1.mpc:
+	* examples/C++NPv2/C++NPv2.mpc:
+	  Added "avoids += uses_wchar" to projects that don't builds cleanly
+	  with ACE_USES_WCHAR. For drwho/gperf/soreduce, they weren't designed
+	  for wide-char use and the changes to make them so are widespread.
+	  For C++NPv1/2, there's code that would need to change, but is used
+	  in the book prior to where narrow/wide char handling is introduced.
+	  To keep the code in sync with the books, just don't try to build
+	  this on wide-char builds.
+
+	* m4/ace.m4: Added new configure option, --with-uses-wchar. If yes,
+	  then ACE_USES_WCHAR is set. Defaults to no.
+
+	* m4/config_h.m4: Added AH_TEMPLATE for ACE_USES_WCHAR.
+
 Thu Oct  7 11:42:40 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_orb_tests.lst:
