@@ -25,6 +25,7 @@
 #include "../XML_Helpers/Assembly_Spec.h"
 //#include "Deployment_Configuration.h"
 #include "Container_Base.h"
+#include "../XML_Helpers/RTConfigurationC.h"
 
 namespace CIAO
 {
