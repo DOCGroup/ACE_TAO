@@ -30,10 +30,6 @@ Timer_Handler::handle_timeout (const ACE_Time_Value &,
     {
       this->rh_->test_method (this->send_time_);
       ACE_TRY_CHECK;
-
-      // We are done with the RH, so release it.
-      CORBA::release (this->rh_);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
