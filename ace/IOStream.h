@@ -22,6 +22,7 @@
 #define ACE_IOSTREAM_H
 
 #include "ace/OS.h"
+#include <iomanip.h>
 
 #if defined (__GNUC__)
 #include <String.h>
@@ -210,8 +211,8 @@ private:
         ACE_OPERATORG(MT,char *) \
         ACE_OPERATORG(MT,u_char *); \
         ACE_OPERATORG(MT,signed char *); \
-        virtual MT& operator>>(__omanip func) { (*func)(*this); return *this; } \
-        virtual MT& operator>>(__manip func)  { (*func)(*this); return *this; }
+        virtual MT& operator>>(ostream& (*func)(ostream&)) { (*func)(*this); return *this; } \
+        virtual MT& operator>>(ios& (*func)(ios&))  { (*func)(*this); return *this; }
 
 #define ACE_OPERATORP_SET(MT) \
         ACE_OPERATORP(MT,short); \
@@ -229,8 +230,8 @@ private:
         ACE_OPERATORP(MT,const u_char *); \
         ACE_OPERATORP(MT,const signed char *); \
         ACE_OPERATORP(MT,const void *); \
-        virtual MT& operator<<(__omanip func) { (*func)(*this); return *this; } \
-        virtual MT& operator<<(__manip func)  { (*func)(*this); return *this; }
+        virtual MT& operator<<(istream& (*func)(istream&)) { (*func)(*this); return *this; } \
+        virtual MT& operator<<(ios& (*func)(ios&))  { (*func)(*this); return *this; }
 
 template <class STREAM>
 class ACE_IOStream : public iostream, public STREAM
@@ -324,10 +325,17 @@ protected:
   // because streambuf_ will be buffering IO on the STREAM
   // object.  If these functions were used in your program,
   // there is a danger of getting the datastream out of sync.
-  send;
-  recv;
-  send_n;
-  recv_n;
+
+  ssize_t send (const void *buf, size_t n) const;
+  // send upto <n> bytes in <buf>.
+
+  ssize_t recv (void *buf, size_t n) const;
+  // Recv upto <n> bytes in <buf>.
+
+  ssize_t send_n (const void *buf, size_t n) const; 
+  // Send n bytes, keep trying until n are sent. 
+
+  ssize_t recv_n (void *buf, size_t n) const;	      
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
@@ -335,5 +343,3 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ACE_IOSTREAM_H */
-
-
