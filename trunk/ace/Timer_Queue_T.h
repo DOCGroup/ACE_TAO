@@ -269,7 +269,7 @@ protected:
 
 #if defined (ACE_MT_SAFE)
   ACE_Recursive_Thread_Mutex lock_; 
-  // Synchronization variable for the MT_SAFE ACE_Reactor 
+  // Synchronization variable for the MT_SAFE <ACE_Timer_Queue>.
 #endif /* ACE_MT_SAFE */
 
   ACE_Time_Value (*gettimeofday_)(void);
