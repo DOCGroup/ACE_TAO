@@ -116,7 +116,7 @@ void ForwardCtrlServerInterceptor::receive_request (PortableInterceptor::ServerR
     // I am not primary, forword the request to primary
     CORBA::Object_var forward = get_forward(ri
       ACE_ENV_ARG_PARAMETER);
-
+    TAO_FTRTEC::Log(3, "Throwing PortableInterceptor::ForwardRequest\n");
     ACE_THROW( PortableInterceptor::ForwardRequest(forward.in(), 0) );
   }
 }

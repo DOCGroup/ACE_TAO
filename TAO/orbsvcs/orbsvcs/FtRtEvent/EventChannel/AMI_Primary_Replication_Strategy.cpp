@@ -3,14 +3,15 @@
 #include "AMI_Primary_Replication_Strategy.h"
 #include "ace/Synch_T.h"
 #include "GroupInfoPublisher.h"
-#include "../Utils/ScopeGuard.h"
 #include "Request_Context_Repository.h"
-#include "../Utils/resolve_init.h"
 #include "create_persistent_poa.h"
 #include "Update_Manager.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ObjectGroupManagerHandler.h"
 #include "tao/Utils/Implicit_Deactivator.h"
+#include "../Utils/resolve_init.h"
+#include "../Utils/ScopeGuard.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            AMI_Primary_Replication_Strategy,
@@ -122,8 +123,10 @@ AMI_Primary_Replication_Strategy::replicate_request(
 
    size_t num_backups = backups.length();
 
-   if ((size_t)transaction_depth > num_backups)
+   if ((size_t)transaction_depth > num_backups) {
+     TAO_FTRTEC::Log(3, "Throwing FTRT::TransactionDepthTooHigh\n");
      ACE_THROW(FTRT::TransactionDepthTooHigh());
+   }
 
    ACE_NEW_THROW_EX(manager,
                     Update_Manager(event, backups.length(), transaction_depth-1, success),
@@ -170,7 +173,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
        }
        ACE_ENDTRY;
      }
-
+     TAO_FTRTEC::Log(3, "Throwing FTRT::TransactionDepthTooHigh\n");
      ACE_THROW(FTRT::TransactionDepthTooHigh());
    }
 
