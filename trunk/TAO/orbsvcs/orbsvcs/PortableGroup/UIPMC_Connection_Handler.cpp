@@ -191,16 +191,7 @@ TAO_UIPMC_Connection_Handler::close_connection (void)
 int
 TAO_UIPMC_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  int result =
-    this->handle_input_eh (h, this);
-
-  if (result == -1)
-    {
-      this->close_connection ();
-      return 0;
-    }
-
-  return result;
+  return this->handle_input_eh (h, this);
 }
 
 int
