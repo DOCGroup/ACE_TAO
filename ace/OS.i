@@ -72,6 +72,13 @@ typedef char *ACE_MMAP_TYPE;
 # include /**/ <xliuser.h>
 #endif /* ACE_HAS_XLI */
 
+#if defined (_M_UNIX)
+extern "C" int _dlclose (void *);
+extern "C" char *_dlerror (void);
+extern "C" void *_dlopen (const char *, int);
+extern "C" void * _dlsym (void *, const char *);
+#endif /* _M_UNIX */
+
 #if !defined (ACE_HAS_CPLUSPLUS_HEADERS)
 # include /**/ <libc.h>
 # include /**/ <osfcn.h>
@@ -7975,28 +7982,32 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
   if (ptr != 0)
     (*((int (*)(void)) ptr)) (); // Call _fini hook explicitly.
 # endif /* ACE_HAS_AUTOMATIC_INIT_FINI */
-  ACE_OSCALL_RETURN (::dlclose (handle), int, -1);
+#if defined (_M_UNIX)
+  ACE_OSCALL_RETURN (::_dlclose (handle), int, -1);
+#else /* _MUNIX */
+    ACE_OSCALL_RETURN (::dlclose (handle), int, -1);
+#endif /* _M_UNIX */
 #elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary (handle), ace_result_), int, -1);
 #elif defined (__hpux)
-  // HP-UX 10.x and 32-bit 11.00 do not pay attention to the ref count when
-  // unloading a dynamic lib.  So, if the ref count is more than 1, do not
-  // unload the lib.  This will cause a library loaded more than once to
-  // not be unloaded until the process runs down, but that's life.  It's
-  // better than unloading a library that's in use.
-  // So far as I know, there's no way to decrement the refcnt that the kernel
-  // is looking at - the shl_descriptor is a copy of what the kernel has, not
-  // the actual struct.
-  // On 64-bit HP-UX using dlopen, this problem has been fixed.
+  // HP-UX 10.x and 32-bit 11.00 do not pay attention to the ref count
+  // when unloading a dynamic lib.  So, if the ref count is more than
+  // 1, do not unload the lib.  This will cause a library loaded more
+  // than once to not be unloaded until the process runs down, but
+  // that's life.  It's better than unloading a library that's in use.
+  // So far as I know, there's no way to decrement the refcnt that the
+  // kernel is looking at - the shl_descriptor is a copy of what the
+  // kernel has, not the actual struct.  On 64-bit HP-UX using dlopen,
+  // this problem has been fixed.
   struct shl_descriptor  desc;
-  if (shl_gethandle_r(handle, &desc) == -1)
+  if (shl_gethandle_r (handle, &desc) == -1)
     return -1;
   if (desc.ref_count > 1)
     return 0;
 # if defined(__GNUC__) || __cplusplus >= 199707L
-  ACE_OSCALL_RETURN (::shl_unload(handle), int, -1);
+  ACE_OSCALL_RETURN (::shl_unload (handle), int, -1);
 # else
-  ACE_OSCALL_RETURN (::cxxshl_unload(handle), int, -1);
+  ACE_OSCALL_RETURN (::cxxshl_unload (handle), int, -1);
 # endif  /* aC++ vs. Hp C++ */
 #else
   ACE_UNUSED_ARG (handle);
@@ -8009,7 +8020,11 @@ ACE_OS::dlerror (void)
 {
   ACE_TRACE ("ACE_OS::dlerror");
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
+#if defined(_M_UNIX)
+  ACE_OSCALL_RETURN ((char *)::_dlerror (), char *, 0);
+#else /* _M_UNIX */
   ACE_OSCALL_RETURN ((char *)::dlerror (), char *, 0);
+#endif /* _M_UNIX */
 # elif defined (__hpux)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
 # elif defined (ACE_WIN32)
@@ -8054,6 +8069,8 @@ ACE_OS::dlopen (const ASYS_TCHAR *fname,
   void *handle;
 #   if defined (ACE_HAS_SGIDLADD)
   ACE_OSCALL (::sgidladd (filename, mode), void *, 0, handle);
+#   elif defined (_M_UNIX)
+  ACE_OSCALL (::_dlopen (filename, mode), void *, 0, handle);
 #   else
   ACE_OSCALL (::dlopen (filename, mode), void *, 0, handle);
 #   endif /* ACE_HAS_SGIDLADD */
@@ -8111,16 +8128,22 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 #   if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::dlsym (handle, (char*) symbolname), void *, 0);
 #   elif defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
-  int l = strlen(symbolname) + 2;
-  char* asm_symbolname;
-  ACE_NEW_RETURN(asm_symbolname, char[l], 0);
-  ACE_OS::strcpy (asm_symbolname, "_") ;
-  ACE_OS::strcpy (asm_symbolname + 1, symbolname) ;
-  void* ace_result;
+  int l = ACE_OS::strlen (symbolname) + 2;
+  char *asm_symbolname = 0;
+  ACE_NEW_RETURN (asm_symbolname,
+                  char[l],
+                  0);
+  ACE_OS::strcpy (asm_symbolname,
+                  "_") ;
+  ACE_OS::strcpy (asm_symbolname + 1,
+                  symbolname) ;
+  void *ace_result;
   ACE_OSCALL (::dlsym (handle, asm_symbolname), void *, 0,
               ace_result);
-  delete[] asm_symbolname;
+  delete [] asm_symbolname;
   return ace_result;
+#   elif defined (_M_UNIX)
+  ACE_OSCALL_RETURN (::_dlsym (handle, symbolname), void *, 0);
 #   else
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #   endif /* ACE_LACKS_POSIX_PROTOTYPES */
