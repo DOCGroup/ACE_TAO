@@ -1975,6 +1975,32 @@ ACE_Thread_Adapter::invoke (void)
   // ACE_Log_Msg instance in thread-specific storage.
   this->inherit_log_msg ();
 
+#if !defined(ACE_USE_THREAD_MANAGER_ADAPTER)
+  // NOTE: this preprocessor directive should match the one in above
+  // ACE_Thread_Exit::instance ().  With the Xavier Pthreads package,
+  // the exit_hook in TSS causes a seg fault.  So, this works around
+  // that by creating exit_hook on the stack.
+#if (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) && ! defined (ACE_HAS_PTHREAD_SIGMASK)
+  // Obtain our thread-specific exit hook and make sure that it knows
+  // how to clean us up!  Note that we never use this pointer directly
+  // (it's stored in thread-specific storage), so it's ok to
+  // dereference it here and only store it as a reference.
+  ACE_Thread_Exit &exit_hook = *ACE_Thread_Exit::instance ();
+#else
+  // Without TSS, create an <ACE_Thread_Exit> instance.  When this
+  // function returns, its destructor will be called because the
+  // object goes out of scope.  The drawback with this appraoch is
+  // that the destructor _won't_ get called if <thr_exit> is called.
+  // So, threads shouldn't exit that way.  Instead, they should return
+  // from <svc>.
+  ACE_Thread_Exit exit_hook;
+#endif /* (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) && ! ACE_HAS_PTHREAD_SIGMASK */
+
+  // Keep track of the <Thread_Manager> that's associated with this
+  // <exit_hook>.
+  exit_hook.thr_mgr (this->thr_mgr ());
+#endif
+
   // Extract the arguments.
   ACE_THR_FUNC func = this->user_func_;
   void *arg = this->arg_;
@@ -2014,6 +2040,8 @@ ACE_Thread_Adapter::invoke (void)
 
       ACE_SEH_FINALLY
         {
+// If we changed this to 1, change the respective if in Task::svc_run to 0
+#if 0
           // Call the <Task->close> hook.
           if (func == (ACE_THR_FUNC) ACE_Task_Base::svc_run)
             {
@@ -2027,6 +2055,7 @@ ACE_Thread_Adapter::invoke (void)
               // (called later by <ACE_Thread_Manager::exit>.
               thr_mgr_ptr->at_exit (task_ptr, 0, 0);
             }
+#endif
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
