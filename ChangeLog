@@ -1,3 +1,8 @@
+Fri Feb 4 14:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Hashable.inl:
+          Replaced c-style cast with C++ const_cast
+
 Thu Feb  3 09:25:38 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
