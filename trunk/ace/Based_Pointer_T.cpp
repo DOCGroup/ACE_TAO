@@ -79,24 +79,15 @@ ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (CONCRETE *rhs)
     }
 }
 
-template <class CONCRETE> ACE_INLINE
-ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (const ACE_Based_Pointer_Basic<CONCRETE> &rhs)
+template <class CONCRETE>
+ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (const ACE_Based_Pointer_Basic<CONCRETE> &)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
 
   ACE_ASSERT (!"not implemented");
-  void *base_addr = 0;
-
-  // Find the base address associated with the <addr> pointer.  Note
-  // that it's ok for <find> to return 0, which simply indicates that
-  // the address is not in memory-mapped virtual address space.
-  ACE_BASED_POINTER_REPOSITORY::instance ()->find (this,
-                                                   base_addr);
-  this->base_offset_ = (char *) this - (char *) base_addr;
-  this->target_ = ((char *) &rhs - (char *) base_addr);
 }
 
-template <class CONCRETE> ACE_INLINE
+template <class CONCRETE>
 ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (const ACE_Based_Pointer<CONCRETE> &rhs)
   : ACE_Based_Pointer_Basic<CONCRETE> (rhs)
 {
