@@ -26,6 +26,7 @@
 #include "tao/Object.h"
 #include "tao/Typecode.h"
 
+class TAO_Codeset_Translator_Factory;
 
 namespace CORBA
 {
@@ -353,7 +354,9 @@ namespace CORBA
     /// Replace via message block instead of <value_>.
     void _tao_replace (CORBA::TypeCode_ptr,
                        int byte_order,
-                       const ACE_Message_Block *mb);
+                       const ACE_Message_Block *mb,
+                       TAO_Codeset_Translator_Factory *ctrans = 0,
+                       TAO_Codeset_Translator_Factory *wtrans = 0);
 
     /// Replace all the contents of the any, used in the <<= operators.
     void _tao_replace (CORBA::TypeCode_ptr type,
@@ -419,6 +422,11 @@ namespace CORBA
 
     /// If not zero this is the function used to destroy objects.
     CORBA::Any::_tao_destructor destructor_;
+
+    /// Codeset translator factories obtained from the decoding CDR, used to
+    /// translate strings when actually needed.
+    TAO_Codeset_Translator_Factory *char_translator_;
+    TAO_Codeset_Translator_Factory *wchar_translator_;
 
     // 94-9-14 hides unsigned char insert/extract
     void operator<<= (unsigned char);

@@ -236,31 +236,13 @@ TAO_ORB_Core::policy_factory_registry (void)
 }
 
 
+ACE_INLINE TAO_Codeset_Manager *
+TAO_ORB_Core::codeset_manager()
+{
+  return this->codeset_manager_;
+}
+
 #undef TAO_OC_RETRIEVE
-
-ACE_INLINE ACE_Char_Codeset_Translator *
-TAO_ORB_Core::from_iso8859 (void) const
-{
-  return this->from_iso8859_;
-}
-
-ACE_INLINE ACE_Char_Codeset_Translator *
-TAO_ORB_Core::to_iso8859 (void) const
-{
-  return this->to_iso8859_;
-}
-
-ACE_INLINE ACE_WChar_Codeset_Translator *
-TAO_ORB_Core::from_unicode (void) const
-{
-  return this->from_unicode_;
-}
-
-ACE_INLINE ACE_WChar_Codeset_Translator *
-TAO_ORB_Core::to_unicode (void) const
-{
-  return this->to_unicode_;
-}
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 

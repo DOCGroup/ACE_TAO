@@ -52,9 +52,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 
-#if defined(ACE_MVS)
-#include "ace/Codeset_IBM1047.h"
-#endif /* ACE_MVS */
+#include "Codeset_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ORB_Core.i"
@@ -169,10 +167,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     adapter_registry_ (this),
     poa_adapter_ (0),
     tm_ (),
-    from_iso8859_ (0),
-    to_iso8859_ (0),
-    from_unicode_ (0),
-    to_unicode_ (0),
     tss_cleanup_funcs_ (),
     tss_resources_ (),
     orb_resources_ (),
@@ -199,13 +193,9 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     parser_registry_ (),
     bidir_adapter_ (0),
     bidir_giop_policy_ (0),
-    flushing_strategy_ (0)
+    flushing_strategy_ (0),
+    codeset_manager_ (0)
 {
-#if defined(ACE_MVS)
-  ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
-  ACE_NEW (this->to_iso8859_,   ACE_IBM1047_ISO8859);
-#endif /* ACE_MVS */
-
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   ACE_NEW (this->eager_buffering_sync_strategy_,
@@ -244,9 +234,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->flushing_strategy_;
 
   ACE_OS::free (this->orbid_);
-
-  delete this->from_iso8859_;
-  delete this->to_iso8859_;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -871,6 +858,21 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                   ACE_LIB_TEXT ("ORB Core unable to find a ")
                   ACE_LIB_TEXT ("Resource Factory instance")));
       ACE_THROW_RETURN (CORBA::INTERNAL (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_ORB_CORE_INIT_LOCATION_CODE,
+                            0),
+                          CORBA::COMPLETED_NO),
+                        -1);
+    }
+
+
+  this->codeset_manager_ = trf->get_codeset_manager();
+  if (this->codeset_manager_ == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("ORB Core unable to initialize codeset_manager")));
+      ACE_THROW_RETURN (CORBA::INITIALIZE (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_ORB_CORE_INIT_LOCATION_CODE,
                             0),

@@ -22,6 +22,7 @@
 #include "Endpoint_Selector_Factory.h"
 #include "Invocation_Endpoint_Selectors.h"
 #include "TAOC.h"
+#include "Codeset_Manager.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -122,9 +123,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                  orb_core->output_cdr_msgblock_allocator (),
                  orb_core->orb_params ()->cdr_memcpy_tradeoff (),
                  TAO_DEF_GIOP_MAJOR,
-                 TAO_DEF_GIOP_MINOR,
-                 orb_core->to_iso8859 (),
-                 orb_core->to_unicode ()),
+                 TAO_DEF_GIOP_MINOR),
     orb_core_ (orb_core),
     transport_ (0),
     endpoint_selector_ (0),
@@ -309,6 +308,9 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
       // Set the giop version of the out stream
       this->out_stream_.set_version (version.major, version.minor);
 
+      this->orb_core_->codeset_manager()->
+        set_tcs(*this->profile_,*this->transport_);
+
       if (result == -1)
         {
           if (TAO_debug_level > 0)
@@ -398,6 +400,8 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
     {
       ACE_THROW (CORBA::MARSHAL ());
     }
+
+  this->transport_->assign_translators (0, &this->out_stream_);
 }
 
 // Send request.

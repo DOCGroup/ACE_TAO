@@ -198,6 +198,8 @@ ORB_CORE_FILES = \
   DynamicC \
   OctetSeqC \
   StringSeqC \
+  Codeset_Manager \
+  Codeset_Translator_Factory \
   ORB_Core \
   ORB_Core_Auto_Ptr \
   Collocation_Resolver \
@@ -349,6 +351,7 @@ ifndef TAO_COMPONENTS
     Default_Resources \
     Interpretive_Marshaling \
     IDL_Compiler \
+    Codeset_Manager \
     ORB_Core \
     Dynamic_Any \
     Ft_Corba \
@@ -373,6 +376,10 @@ endif # Interpretive_Marshaling
 ifneq (,$(findstring IDL_Compiler,$(TAO_COMPONENTS)))
   FILES += $(IDL_COMPILER_FILES)
 endif # IDL_Compiler
+
+ifneq (,$(findstring Codeset_Manager,$(TAO_COMPONENTS)))
+   FILES += $(Codeset_Manager)
+endif # CODE_SET_MANAGER
 
 ifneq (,$(findstring ORB_Core,$(TAO_COMPONENTS)))
   FILES += $(ORB_CORE_FILES)

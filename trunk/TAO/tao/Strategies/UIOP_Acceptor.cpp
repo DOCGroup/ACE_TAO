@@ -26,6 +26,7 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Codeset_Manager.h"
 
 ACE_RCSID(Strategies, UIOP_Acceptor, "$Id$")
 
@@ -138,12 +139,8 @@ TAO_UIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
     return 0;
 
   pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
-
-  CONV_FRAME::CodeSetComponentInfo code_set_info;
-  code_set_info.ForCharData.native_code_set  = TAO_DEFAULT_CHAR_CODESET_ID;
-  code_set_info.ForWcharData.native_code_set = TAO_DEFAULT_WCHAR_CODESET_ID;
-  pfile->tagged_components ().set_code_sets (code_set_info);
-
+  this->orb_core_->codeset_manager()->
+    set_codeset (pfile->tagged_components());
   return 0;
 }
 
@@ -564,7 +561,7 @@ TAO_UIOP_Acceptor::init_uiop_properties (void)
         tph->call_server_protocols_hook (send_buffer_size,
                                          recv_buffer_size,
                                          no_delay,
-					 enable_network_priority,
+                                         enable_network_priority,
                                          protocol_type);
 
       if(hook_result == -1)

@@ -80,6 +80,9 @@ class TAO_Service_Context;
 class TAO_POA_PortableGroup_Hooks;
 class TAO_Request_Dispatcher;
 
+class TAO_Codeset_Manager;
+
+
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 class TAO_Buffering_Constraint_Policy;
@@ -919,6 +922,9 @@ public:
    */
   TAO_Flushing_Strategy *flushing_strategy (void);
 
+  /// Get Code Set Manager
+  TAO_Codeset_Manager *codeset_manager (void);
+
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex> InitRefMap;
 
   /// Return a pointer to the -ORBInitRef map.
@@ -1154,15 +1160,6 @@ protected:
   /// The data block reference counts are locked using this mutex
   ACE_Lock_Adapter<TAO_SYNCH_MUTEX> data_block_lock_;
 
-
-  /// Codeset translators for simple implementations.
-  //@{
-  ACE_Char_Codeset_Translator *from_iso8859_;
-  ACE_Char_Codeset_Translator *to_iso8859_;
-  ACE_WChar_Codeset_Translator *from_unicode_;
-  ACE_WChar_Codeset_Translator *to_unicode_;
-  //@}
-
   /// TSS Object cleanup functions.  These correspond to the TSS
   /// objects stored in TAO's TSS resources.
   TAO_Cleanup_Func_Registry tss_cleanup_funcs_;
@@ -1241,6 +1238,10 @@ protected:
 
   /// Hold the flushing strategy
   TAO_Flushing_Strategy *flushing_strategy_;
+
+  /// Code Set Manager
+  TAO_Codeset_Manager *codeset_manager_;
+
 };
 
 // ****************************************************************

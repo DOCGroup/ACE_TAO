@@ -81,9 +81,7 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
                               ACE_Allocator* message_block_allocator,
                               size_t memcpy_tradeoff,
                               ACE_CDR::Octet major_version,
-                              ACE_CDR::Octet minor_version,
-                              ACE_Char_Codeset_Translator *char_translator,
-                              ACE_WChar_Codeset_Translator *wchar_translator)
+                              ACE_CDR::Octet minor_version)
   :  ACE_OutputCDR (size,
                     byte_order,
                     buffer_allocator,
@@ -94,8 +92,6 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
                     minor_version)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
-  this->char_translator_ = char_translator;
-  this->wchar_translator_ = wchar_translator;
 }
 
 TAO_OutputCDR::TAO_OutputCDR (char *data,
@@ -106,9 +102,7 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                               ACE_Allocator* message_block_allocator,
                               size_t memcpy_tradeoff,
                               ACE_CDR::Octet major_version,
-                              ACE_CDR::Octet minor_version,
-                              ACE_Char_Codeset_Translator *char_translator,
-                              ACE_WChar_Codeset_Translator *wchar_translator)
+                              ACE_CDR::Octet minor_version)
   :  ACE_OutputCDR (data,
                     size,
                     byte_order,
@@ -120,17 +114,13 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                     minor_version)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR2_ENTER);
-  this->char_translator_ = char_translator;
-  this->wchar_translator_ = wchar_translator;
 }
 
 TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
                               int byte_order,
                               size_t memcpy_tradeoff,
                               ACE_CDR::Octet major_version,
-                              ACE_CDR::Octet minor_version,
-                              ACE_Char_Codeset_Translator *char_translator,
-                              ACE_WChar_Codeset_Translator *wchar_translator)
+                              ACE_CDR::Octet minor_version)
   :  ACE_OutputCDR (data,
                     byte_order,
                     memcpy_tradeoff,
@@ -138,9 +128,56 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
                     minor_version)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
-  this->char_translator_ = char_translator;
-  this->wchar_translator_ = wchar_translator;
 }
+
+
+void
+TAO_OutputCDR::throw_stub_exception (int error_num ACE_ENV_ARG_DECL)
+{
+  switch (error_num)
+    {
+    case 0 :
+      break;
+    case EINVAL : // wchar from a GIOP 1.0
+      ACE_THROW (CORBA::MARSHAL (CORBA::OMGVMCID | 5, CORBA::COMPLETED_NO));
+      ACE_NOTREACHED(break);
+    case ERANGE : // untranslatable character
+      ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO));
+      ACE_NOTREACHED(break);
+    case EACCES : // wchar but no codeset
+      ACE_THROW(CORBA::INV_OBJREF (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO));
+      ACE_NOTREACHED(break);
+    default :
+      ACE_THROW (CORBA::MARSHAL ());
+    }
+}
+
+void
+TAO_OutputCDR::throw_skel_exception (int error_num ACE_ENV_ARG_DECL)
+{
+  switch (error_num)
+    {
+    case 0 :
+      break;
+    case EINVAL : // wchar from a GIOP 1.0
+      ACE_THROW (CORBA::MARSHAL(CORBA::OMGVMCID | 5, CORBA::COMPLETED_YES));
+      ACE_NOTREACHED(break);
+
+    case EACCES : // wchar but no codeset
+      ACE_THROW (CORBA::BAD_PARAM(CORBA::OMGVMCID | 23, CORBA::COMPLETED_YES));
+      ACE_NOTREACHED(break);
+
+    case ERANGE : // untranslatable character
+      ACE_THROW (CORBA::DATA_CONVERSION(CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES));
+      ACE_NOTREACHED(break);
+
+    default :
+      ACE_THROW (CORBA::MARSHAL(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+
+    }
+}
+
+
 
 // ****************************************************************
 
@@ -163,15 +200,51 @@ TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
                      orb_core->output_cdr_msgblock_allocator () : 0)),
   orb_core_ (orb_core)
 {
-  this->init_translators ();
+}
+
+
+void
+TAO_InputCDR::throw_stub_exception (int error_num ACE_ENV_ARG_DECL)
+{
+  switch (error_num)
+    {
+    case 0 :
+      break;
+    case EINVAL : // wchar from a GIOP 1.0
+      ACE_THROW (CORBA::MARSHAL (CORBA::OMGVMCID | 6, CORBA::COMPLETED_YES));
+      ACE_NOTREACHED(break);
+    case ERANGE : // untranslatable character
+      ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES));
+      ACE_NOTREACHED(break);
+    case EACCES : // wchar but no codeset
+      ACE_THROW (CORBA::INV_OBJREF (CORBA::OMGVMCID | 2, CORBA::COMPLETED_YES));
+      ACE_NOTREACHED(break);
+    default :
+      ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+    }
 }
 
 void
-TAO_InputCDR::init_translators (void)
+TAO_InputCDR::throw_skel_exception (int error_num ACE_ENV_ARG_DECL)
 {
-  if (this->orb_core_ != 0)
+  switch (error_num)
     {
-      this->char_translator_ = this->orb_core_->from_iso8859 ();
-      this->wchar_translator_ = this->orb_core_->from_unicode ();
+    case 0 :
+      break;
+    case EINVAL : // wchar from a GIOP 1.0
+      ACE_THROW (CORBA::MARSHAL(CORBA::OMGVMCID | 5, CORBA::COMPLETED_NO));
+      ACE_NOTREACHED(break);
+
+    case EACCES : // wchar but no codeset
+      ACE_THROW (CORBA::BAD_PARAM(CORBA::OMGVMCID | 23, CORBA::COMPLETED_NO));
+      ACE_NOTREACHED(break);
+
+    case ERANGE : // untranslatable character
+      ACE_THROW (CORBA::DATA_CONVERSION(CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO));
+      ACE_NOTREACHED(break);
+
+    default :
+      ACE_THROW (CORBA::MARSHAL());
+
     }
 }

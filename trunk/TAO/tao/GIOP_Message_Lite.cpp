@@ -14,6 +14,7 @@
 #include "tao/Leader_Follower.h"
 #include "tao/LF_Strategy.h"
 #include "tao/Transport.h"
+#include "tao/Codeset_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Lite.i"
@@ -512,9 +513,9 @@ TAO_GIOP_Message_Lite::process_request_message (TAO_Transport *transport,
                         this->orb_core_->output_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                         qd->major_version_,
-                        qd->minor_version_,
-                        this->orb_core_->to_iso8859 (),
-                        this->orb_core_->to_unicode ());
+                        qd->minor_version_);
+
+  transport->assign_translators(0,&output);
 
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block_->rd_ptr () - qd->msg_block_->base ();
@@ -711,6 +712,9 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
     {
       parse_error =
         this->parse_request_header (request);
+
+      request.orb_core()->codeset_manager()->process_service_context(request);
+      transport->assign_translators(&cdr,&output);
 
       // Throw an exception if the
       if (parse_error != 0)
@@ -1397,9 +1401,9 @@ TAO_GIOP_Message_Lite::send_reply_exception (
                         orb_core->output_cdr_msgblock_allocator (),
                         orb_core->orb_params ()->cdr_memcpy_tradeoff (),
                         TAO_DEF_GIOP_MAJOR,
-                        TAO_DEF_GIOP_MINOR,
-                        orb_core->to_iso8859 (),
-                        orb_core->to_unicode ());
+                        TAO_DEF_GIOP_MINOR);
+
+  transport->assign_translators(0,&output);
 
   // Make the GIOP & reply header. They are version specific.
   TAO_Pluggable_Reply_Params reply_params (orb_core);
