@@ -1,3 +1,16 @@
+Tue Sep 12 15:15:54 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/ACE_export.h (ACE_SINGLETON_DECLARATION): Added the new
+	  SINGLETON_DECLARE macros.
+
+	* ace/Timeprobe.h: Used the new macro ACE_SINGLETON_DECLARE
+	  instead of ACE_SINGLETON_DECLARATION.  This helps by not
+	  requiring the comma which makes the precompiler think that the
+	  comma is for an extra argument to the macro.  
+
+	  Thanks to Phil Mesnier <mesnier_p@ociweb.com> for reporting this
+	  problem.
+	
 Tue Sep 12 11:34:03 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/High_Res_Timer.{h i}: Added a new function, gettimeofday_hr()
