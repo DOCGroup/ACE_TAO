@@ -1,44 +1,6 @@
 // $Id$
 #include "Offer_Exporter.h"
 
-template<class T>
-class Simple_DP_Evaluation_Handler
-  : public TAO_DP_Evaluation_Handler
-{
-public:
-  Simple_DP_Evaluation_Handler (T dp);
-  
-  virtual CORBA::Any* evalDP (const CORBA::Any& extra_info,
-			      CORBA::TypeCode_ptr returned_type,
-			      CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
-
-private:
-
-  T dp_;
-};
-
-
-template <class T>
-Simple_DP_Evaluation_Handler<T>::Simple_DP_Evaluation_Handler (T dp)
-  : dp_ (dp)
-{  
-}
-
-template <class T> CORBA::Any*
-Simple_DP_Evaluation_Handler<T>::evalDP (const CORBA::Any& extra_info,
-					 CORBA::TypeCode_ptr returned_type,
-					 CORBA::Environment& _env)
-  TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
-{
-  CORBA::Any* return_value = 0;
-
-  ACE_NEW_RETURN (return_value, CORBA::Any, 0);
-
-  (*return_value) <<= *(new T (this->dp_));
-  return return_value;
-}
-
 TAO_Offer_Exporter::
 TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
 		    CORBA::Environment& _env)
@@ -56,6 +18,12 @@ TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
 
 TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
 {
+  while (! this->clean_up_.is_empty ())
+    {
+      TAO_Dynamic_Property* dp = 0;
+      this->clean_up_.dequeue_head (dp);
+      delete dp;
+    }
 }
 
 void
@@ -94,19 +62,19 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg,
 	{
 	  CosTrading::OfferId_var offer_id = 
 	    reg->export (this->plotter_[i]._this (TAO_TRY_ENV),
-				     TT_Info::INTERFACE_NAMES[1],
-				     this->props_plotters_[i],
-				     TAO_TRY_ENV);
+                         TT_Info::INTERFACE_NAMES[1],
+                         this->props_plotters_[i],
+                         TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	  ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
-
+          
 	  offer_id = reg->export (this->printer_[i]._this (TAO_TRY_ENV),
-                                   TT_Info::INTERFACE_NAMES[2],
-                                   this->props_printers_[i],
-                                   TAO_TRY_ENV);
+                                  TT_Info::INTERFACE_NAMES[2],
+                                  this->props_printers_[i],
+                                  TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	  ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
-
+          
 	  offer_id = reg->export (this->fs_[i]._this (TAO_TRY_ENV),
                                   TT_Info::INTERFACE_NAMES[3],
                                   this->props_fs_[i],
@@ -369,9 +337,9 @@ TAO_Offer_Exporter::create_offers (void)
   TAO_Trader_Test::StringSeq string_seq (QUEUE_SIZE);
   TAO_Trader_Test::ULongSeq ulong_seq (QUEUE_SIZE);
 
-  CosTradingDynamic::DynamicProp* dp_user_queue;
-  CosTradingDynamic::DynamicProp* dp_file_queue;
-  CosTradingDynamic::DynamicProp* dp_space_left;
+  CosTradingDynamic::DynamicProp_var dp_user_queue;
+  CosTradingDynamic::DynamicProp_var dp_file_queue;
+  CosTradingDynamic::DynamicProp_var dp_space_left;
 
   ACE_INET_Addr addr ((u_short) 0);
   const char* hostname = addr.get_host_name ();
@@ -391,29 +359,26 @@ TAO_Offer_Exporter::create_offers (void)
 	  string_seq[j] = TT_Info::USERS [counter];
 	  ulong_seq[j] = counter * 10000;
 	}
+      
+      TAO_Dynamic_Property* user_queue =
+        new TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq> (string_seq);
+      TAO_Dynamic_Property* file_sizes =
+        new TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq> (ulong_seq);
 
-      dp_user_queue = this->dp_plotters_[i].construct_dynamic_prop
+      this->clean_up_.enqueue_head (user_queue);
+      this->clean_up_.enqueue_head (file_sizes);
+
+      dp_user_queue = user_queue->construct_dynamic_prop
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
 	 TAO_Trader_Test::_tc_StringSeq,
 	 extra_info);
 
-      dp_file_queue = this->dp_plotters_[i].construct_dynamic_prop
+      dp_file_queue = file_sizes->construct_dynamic_prop
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
 	 TAO_Trader_Test::_tc_ULongSeq,
 	 extra_info);
       
-      this->dp_plotters_[i].register_handler
-	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
-	 new Simple_DP_Evaluation_Handler<TAO_Trader_Test::StringSeq> (string_seq),
-	 CORBA::B_TRUE);
-
-      this->dp_plotters_[i].register_handler
-	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
-	 new Simple_DP_Evaluation_Handler<TAO_Trader_Test::ULongSeq> (ulong_seq),
-	 CORBA::B_TRUE);
-      
       this->props_plotters_[i].length (11);
-
       this->props_plotters_[i][0].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME];
       this->props_plotters_[i][0].value <<= name;
       this->props_plotters_[i][1].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION];
@@ -433,9 +398,9 @@ TAO_Offer_Exporter::create_offers (void)
       this->props_plotters_[i][8].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_MODEL_NUMBER];
       this->props_plotters_[i][8].value <<= TT_Info::MODEL_NUMBERS[i];
       this->props_plotters_[i][9].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE];
-      this->props_plotters_[i][9].value <<= *dp_user_queue;
+      this->props_plotters_[i][9].value <<= dp_user_queue.in ();
       this->props_plotters_[i][10].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING];
-      this->props_plotters_[i][10].value <<= *dp_file_queue;
+      this->props_plotters_[i][10].value <<= dp_file_queue.in ();
     }
 
   // Initialize printers
@@ -452,25 +417,23 @@ TAO_Offer_Exporter::create_offers (void)
 	  ulong_seq[j] = counter * 10000;
 	}
 
-      dp_user_queue = this->dp_printers_[i].construct_dynamic_prop
-	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE],
+      TAO_Dynamic_Property* user_queue =
+        new TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq> (string_seq);
+      TAO_Dynamic_Property* file_sizes =
+        new TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq> (ulong_seq);
+
+      this->clean_up_.enqueue_head (user_queue);
+      this->clean_up_.enqueue_head (file_sizes);
+
+      dp_user_queue = user_queue->construct_dynamic_prop
+	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
 	 TAO_Trader_Test::_tc_StringSeq,
 	 extra_info);
 
-      dp_file_queue = this->dp_printers_[i].construct_dynamic_prop
-	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING],
+      dp_file_queue = file_sizes->construct_dynamic_prop
+	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
 	 TAO_Trader_Test::_tc_ULongSeq,
 	 extra_info);
-      
-      this->dp_printers_[i].register_handler
-	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE],
-	 new Simple_DP_Evaluation_Handler<TAO_Trader_Test::StringSeq> (string_seq),
-	 CORBA::B_TRUE);
-
-      this->dp_printers_[i].register_handler
-	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING],
-	 new Simple_DP_Evaluation_Handler<TAO_Trader_Test::ULongSeq> (ulong_seq),
-	 CORBA::B_TRUE);
 
       this->props_printers_[i].length (12);
       this->props_printers_[i][0].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME];
@@ -494,9 +457,9 @@ TAO_Offer_Exporter::create_offers (void)
       this->props_printers_[i][9].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_PAGES_PER_SEC];
       this->props_printers_[i][9].value <<= (CORBA::UShort) i;
       this->props_printers_[i][10].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE];
-      this->props_printers_[i][10].value <<= *dp_user_queue;
+      this->props_printers_[i][10].value <<= dp_user_queue.in ();
       this->props_printers_[i][11].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING];
-      this->props_printers_[i][11].value <<= *dp_file_queue;
+      this->props_printers_[i][11].value <<= dp_file_queue.in ();
     }
 
   // Initialize FileSystem
@@ -507,15 +470,15 @@ TAO_Offer_Exporter::create_offers (void)
 		       "%s is a File System. It stores stuff.",
 		       name);
 
-      dp_space_left = this->dp_fs_[i].construct_dynamic_prop
+      TAO_Dynamic_Property* space_left =
+        new TAO_Simple_Dynamic_Property<CORBA::ULong> (i * 4434343);
+
+      this->clean_up_.enqueue_head (space_left);
+
+      dp_space_left = space_left->construct_dynamic_prop
         (TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING],
 	 CORBA::_tc_ulong,
 	 extra_info);
-
-      this->dp_fs_[i].register_handler
-	(TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING],
-	 new Simple_DP_Evaluation_Handler<CORBA::ULong> (i * 4434343),
-	 CORBA::B_TRUE);
 
       this->props_fs_[i].length (8);
       this->props_fs_[i][0].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME];
@@ -533,6 +496,18 @@ TAO_Offer_Exporter::create_offers (void)
       this->props_fs_[i][6].name = TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::PERMISSION_LEVEL];
       this->props_fs_[i][6].value <<= (CORBA::UShort) (i + 1);
       this->props_fs_[i][7].name = TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING];
-      this->props_fs_[i][7].value <<= *dp_space_left;
+      this->props_fs_[i][7].value <<= dp_space_left.in ();
     }
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Unbounded_Queue<CORBA::Object_var>;
+template class TAO_Simple_Dynamic_Property<CosTradingSequences::StringSeq>;
+template class TAO_Simple_Dynamic_Property<CosTradingSequences::ULongSeq>;
+template class TAO_Simple_Dynamic_Property<CosTradingSequences::ULong>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Unbounded_Queue<CORBA::Object_var>
+#pragma instantiate TAO_Simple_Dynamic_Property<CosTradingSequences::StringSeq>
+#pragma instantiate TAO_Simple_Dynamic_Property<CosTradingSequences::ULongSeq>
+#pragma instantiate TAO_Simple_Dynamic_Property<CosTradingSequences::ULong>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

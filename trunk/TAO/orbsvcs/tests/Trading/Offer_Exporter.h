@@ -17,7 +17,7 @@
 #define TAO_OFFER_EXPORTER_H
 
 #include "TT_Info.h"
-#include "orbsvcs/Trader/Dynamic_Property.h"
+#include "Simple_Dynamic.h"
 
 class TAO_Offer_Exporter
 {
@@ -106,6 +106,8 @@ private:
 		     CosTrading::ReadonlyDynamicProperty, 
 		     CosTrading::MissingMandatoryProperty, 
 		     CosTrading::DuplicatePropertyName));
+
+  typedef ACE_Unbounded_Queue<TAO_Dynamic_Property*> DP_Queue;
   
   CosTrading::Register_var register_;
   CosTrading::Admin_var admin_;
@@ -113,14 +115,12 @@ private:
   TT_Info::Printer printer_[NUM_OFFERS];
   TT_Info::Plotter plotter_[NUM_OFFERS];
   TT_Info::File_System fs_[NUM_OFFERS];
-  
-  TAO_DP_Dispatcher dp_plotters_[NUM_OFFERS];
-  TAO_DP_Dispatcher dp_printers_[NUM_OFFERS];
-  TAO_DP_Dispatcher dp_fs_[NUM_OFFERS];
-  
+
   CosTrading::PropertySeq props_plotters_[NUM_OFFERS];
   CosTrading::PropertySeq props_printers_[NUM_OFFERS];
   CosTrading::PropertySeq props_fs_[NUM_OFFERS];
+
+  DP_Queue clean_up_;
 };
 
 #endif /* TAO_OFFER_EXPORTER_H */

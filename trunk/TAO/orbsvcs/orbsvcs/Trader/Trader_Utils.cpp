@@ -443,6 +443,50 @@ TAO_Property_Evaluator_By_Name::get_property (const char* property_name)
 }
 
   // *************************************************************
+  // TAO_Dynamic_Property
+  // *************************************************************
+
+TAO_Dynamic_Property::~TAO_Dynamic_Property (void)
+{
+}
+
+CosTradingDynamic::DynamicProp*
+TAO_Dynamic_Property::
+construct_dynamic_prop (const char* name,
+			CORBA::TypeCode_ptr returned_type,
+			const CORBA::Any& extra_info)
+{
+  CosTradingDynamic::DynamicProp* dp_struct = 0;
+
+  ACE_NEW_RETURN (dp_struct, CosTradingDynamic::DynamicProp, 0);
+
+  TAO_TRY
+    {
+      CosTradingDynamic::DynamicPropEval_var dp_eval =
+        this->_this (TAO_TRY_ENV);
+
+#if defined TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
+      CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
+      dp_struct->eval_if = orb->object_to_string (dp_eval.in (), TAO_TRY_ENV);
+#else
+      dp_struct->eval_if = dp_eval;
+#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
+
+      TAO_CHECK_ENV;
+      
+      dp_struct->returned_type = CORBA::TypeCode::_duplicate (returned_type);
+      dp_struct->extra_info = extra_info;
+    }
+  TAO_CATCHANY
+    {
+      return 0;
+    }
+  TAO_ENDTRY;
+
+  return dp_struct;
+}
+
+  // *************************************************************
   // TAO_Policies
   // *************************************************************
 
