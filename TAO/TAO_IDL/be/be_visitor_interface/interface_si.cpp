@@ -81,9 +81,7 @@ be_visitor_interface_si::visit_interface (be_interface *node)
       return -1;
     }
 
-  if (// be_global->gen_thru_poa_collocation ()
-      // ||
-      be_global->gen_direct_collocation ())
+  if (be_global->gen_direct_collocation ())
     {
       status =
         node->traverse_inheritance_graph (

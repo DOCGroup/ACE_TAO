@@ -49,8 +49,6 @@
 #include "be_visitor_interface/strategized_proxy_broker_ss.h"
 
 // Proxy Impls
-#include "be_visitor_interface/thru_poa_proxy_impl_sh.h"
-#include "be_visitor_interface/thru_poa_proxy_impl_ss.h"
 #include "be_visitor_interface/direct_proxy_impl_sh.h"
 #include "be_visitor_interface/direct_proxy_impl_ss.h"
 

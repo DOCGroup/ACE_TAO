@@ -219,8 +219,6 @@ be_visitor_component_ch::visit_component (be_component *node)
   *os << be_nl << be_nl
       << "friend class " << node->remote_proxy_impl_name () << ";"
       << be_nl
-      << "friend class " << node->thru_poa_proxy_impl_name () << ";"
-      << be_nl
       << "friend class " << node->direct_proxy_impl_name () << ";";
 
   // Protected destructor.

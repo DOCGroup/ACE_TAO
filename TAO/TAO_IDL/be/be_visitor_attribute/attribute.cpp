@@ -116,16 +116,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
       {
         be_visitor_operation_proxy_impl_xh visitor (&ctx);
-        status = get_op.accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
-      {
-        be_visitor_operation_thru_poa_proxy_impl_ss visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
@@ -285,16 +278,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
       {
         be_visitor_operation_proxy_impl_xh visitor (&ctx);
-        status = set_op.accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
-      {
-        be_visitor_operation_thru_poa_proxy_impl_ss visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }

@@ -83,10 +83,6 @@ be_visitor_interface::visit_scope (be_scope *node)
         helper =
           be_visitor_interface_sh::gen_abstract_ops_helper;
         break;
-      case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH:
-        helper =
-          be_visitor_interface_thru_poa_proxy_impl_sh::gen_abstract_ops_helper;
-        break;
       case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
         helper =
           be_visitor_interface_direct_proxy_impl_sh::gen_abstract_ops_helper;
@@ -98,10 +94,6 @@ be_visitor_interface::visit_scope (be_scope *node)
       case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
         helper =
           be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper;
-        break;
-      case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
-        helper =
-          be_visitor_interface_thru_poa_proxy_impl_ss::gen_abstract_ops_helper;
         break;
       default:
         break;
@@ -431,7 +423,6 @@ be_visitor_interface::visit_operation (be_operation *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
       {
         be_visitor_operation_proxy_impl_xh visitor (&ctx);
@@ -447,12 +438,6 @@ be_visitor_interface::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
       {
         be_visitor_amh_rh_operation_ss visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
-      {
-        be_visitor_operation_thru_poa_proxy_impl_ss visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }

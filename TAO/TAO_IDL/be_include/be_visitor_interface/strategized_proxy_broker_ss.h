@@ -42,8 +42,6 @@ public:
   // another set of visitors for this stuff.
 
 private:
-  void gen_thru_poa_operations (be_interface *node,
-                                TAO_OutStream *os);
 
   void gen_direct_operations (be_interface *node,
                               TAO_OutStream *os);

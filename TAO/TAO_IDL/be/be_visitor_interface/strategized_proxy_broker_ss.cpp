@@ -157,55 +157,6 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_component (
   return this->visit_interface (node);
 }
 
-/**
- *
- * The generated code from the following method should be
- * removed. This is not used at all.
- *
- */
-void
-be_visitor_interface_strategized_proxy_broker_ss::gen_thru_poa_operations (
-    be_interface *node,
-    TAO_OutStream *os
-  )
-{
-  int index = 0;
-  AST_Decl *d = 0;
-
-  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
-    {
-      d = si.item ();
-
-      if (d->node_type () != AST_Decl::NT_op)
-        {
-          continue;
-        }
-
-      if (index != 0)
-        {
-          *os << "else ";
-        }
-
-      ++index;
-
-      *os << "if (ACE_OS::strcmp (op, \"" << d->local_name () << "\") == 0)"
-          << be_idt_nl
-          << "{" << be_idt_nl
-          << node->full_thru_poa_proxy_impl_name () << "::"
-          << d->local_name () << " (" << be_idt << be_idt_nl
-          << "obj," << be_nl
-          << "forward_obj," << be_nl
-          << "args," << be_nl
-          << "num_args" << be_nl
-          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-          << ");" << be_uidt_nl
-          << "ACE_TRY_CHECK;" << be_uidt_nl
-          << "}" << be_uidt_nl;
-    }
-}
-
 void
 be_visitor_interface_strategized_proxy_broker_ss::gen_direct_operations (
     be_interface *,

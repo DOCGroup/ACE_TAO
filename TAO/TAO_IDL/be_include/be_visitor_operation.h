@@ -56,7 +56,6 @@
 #include "be_visitor_operation/smart_proxy_cs.h"
 #include "be_visitor_operation/upcall_command_ss.h"
 #include "be_visitor_operation/proxy_impl_xh.h"
-#include "be_visitor_operation/thru_poa_proxy_impl_ss.h"
 #include "be_visitor_operation/direct_proxy_impl_ss.h"
 
 // AMH

@@ -83,18 +83,12 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
   // Forward class declaration.
   *os << "// Forward Classes Declaration" << be_nl;
 
-  if (be_global->gen_thru_poa_collocation ())
-    {
-      *os << "class " << node->thru_poa_proxy_impl_name () << ";" << be_nl;
-    }
-
   if (be_global->gen_direct_collocation ())
     {
       *os << "class " << node->direct_proxy_impl_name () << ";" << be_nl;
     }
 
-  if (be_global->gen_thru_poa_collocation ()
-      || be_global->gen_direct_collocation ())
+  if (be_global->gen_direct_collocation ())
     {
       *os << "class " << node->strategized_proxy_broker_name ()
           << ";" << be_nl;
