@@ -36,6 +36,7 @@ public:
   virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
 
   // Hook method called when server connection is established.
+  using ACE_Service_Handler::open;
   virtual void open (ACE_HANDLE new_handle,
                      ACE_Message_Block &message_block);
 
