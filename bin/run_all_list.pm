@@ -13,7 +13,10 @@ if ($^O eq "MSWin32") {
       'TAO/tests/Param_Test , run_test.pl',
       'TAO/tests/Param_Test , run_test.pl -i dii',
       'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl',
+      'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100'
       'TAO/performance-tests/Latency , run_test.pl',
+      'TAO/performance-tests/POA/Object_Creation_And_Registration , run_test.pl',
+      'TAO/performance-tests/RTCorba/Oneways/Reliable , run_test.pl',
       'TAO/tests/OctetSeq , run_test.pl',
       'TAO/tests/Multiple_Inheritance , run_test.pl',
       'TAO/tests/MT_Client , run_test.pl',
@@ -27,10 +30,12 @@ if ($^O eq "MSWin32") {
       'TAO/tests/POA/Destruction , run_test.pl',
       'TAO/tests/IORManipulation , run_test.pl',
       'TAO/tests/Timeout , run_test.pl',
+      'TAO/tests/Timed_Buffered_Oneways , run_test.pl',
       'TAO/tests/IDL_Test , run_test.pl',
       'TAO/tests/ORB_init , run_test.pl',
       'TAO/tests/DSI_Gateway , run_test.pl',
       'TAO/examples/Buffered_Oneways , run_test.pl',
+      'TAO/examples/Buffered_AMI , run_test.pl',
       'TAO/examples/POA/Adapter_Activator , run_test.pl',
       'TAO/examples/POA/DSI , run_test.pl',
       'TAO/examples/POA/Default_Servant , run_test.pl',
@@ -62,8 +67,6 @@ if ($^O eq "MSWin32") {
       'TAO/examples/Simple/echo , run_test.pl < Echo.idl',
 # INTERACTIVE 'TAO/examples/Simple/chat , run_test.pl',
       'TAO/orbsvcs/tests/Property , run_test.pl',
-   'TAO/performance-tests/POA/Object_Creation_And_Registration , run_test.pl',
-      'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100'
 # FAILS 'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
 # FAILS 'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
     );
@@ -73,7 +76,10 @@ if ($^O eq "MSWin32") {
 # NOT MINIMUM 'TAO/tests/Param_Test , run_test.pl',
 # NOT MINIMUM 'TAO/tests/Param_Test , run_test.pl -i dii',
 # NOT MINIMUM 'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl',
+      'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100'
 # NOT MINIMUM 'TAO/performance-tests/Latency , run_test.pl',
+      'TAO/performance-tests/POA/Object_Creation_And_Registration , run_test.pl',
+# NOT MINIMUM 'TAO/performance-tests/RTCorba/Oneways/Reliable , run_test.pl',
       'TAO/tests/OctetSeq , run_test.pl',
       'TAO/tests/Multiple_Inheritance , run_test.pl',
       'TAO/tests/MT_Client , run_test.pl',
@@ -87,7 +93,10 @@ if ($^O eq "MSWin32") {
       'TAO/tests/POA/Destruction , run_test.pl',
       'TAO/tests/IORManipulation , run_test.pl',
 # NOT MINIMUM 'TAO/tests/Timeout , run_test.pl',
+# NOT MINIMUM 'TAO/tests/Timed_Buffered_Oneways , run_test.pl',
       'TAO/tests/ORB_init , run_test.pl',
+# NOT MINIMUM 'TAO/examples/Buffered_Oneways , run_test.pl',
+# NOT MINIMUM 'TAO/examples/Buffered_AMI , run_test.pl',
 # NOT MINIMUM 'TAO/examples/POA/Adapter_Activator , run_test.pl',
 # NOT MINIMUM 'TAO/examples/POA/DSI , run_test.pl',
 # NOT MINIMUM 'TAO/examples/POA/Default_Servant , run_test.pl',
@@ -118,8 +127,6 @@ if ($^O eq "MSWin32") {
       'TAO/examples/Simple/echo , run_test.pl < Echo.idl',
 # INTERACTIVE 'TAO/examples/Simple/chat , run_test.pl',
       'TAO/orbsvcs/tests/Property , run_test.pl',
-   'TAO/performance-tests/POA/Object_Creation_And_Registration , run_test.pl',
-      'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100'
 # FAILS 'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
 # FAILS 'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
     );
@@ -129,7 +136,10 @@ if ($^O eq "MSWin32") {
       'TAO/tests/Param_Test , run_test.pl',
       'TAO/tests/Param_Test , run_test.pl -i dii',
 # NOT ST 'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl',
+# NOT ST 'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100'
 # NOT ST 'TAO/performance-tests/Latency , run_test.pl',
+      'TAO/performance-tests/POA/Object_Creation_And_Registration , run_test.pl',
+      'TAO/performance-tests/RTCorba/Oneways/Reliable , run_test.pl',
       'TAO/tests/OctetSeq , run_test.pl',
       'TAO/tests/Multiple_Inheritance , run_test.pl',
 # NOT ST 'TAO/tests/MT_Client , run_test.pl',
@@ -143,9 +153,11 @@ if ($^O eq "MSWin32") {
       'TAO/tests/POA/Destruction , run_test.pl',
       'TAO/tests/IORManipulation , run_test.pl',
       'TAO/tests/Timeout , run_test.pl',
+      'TAO/tests/Timed_Buffered_Oneways , run_test.pl',
       'TAO/tests/ORB_init , run_test.pl',
       'TAO/tests/DSI_Gateway , run_test.pl',
       'TAO/examples/Buffered_Oneways , run_test.pl',
+      'TAO/examples/Buffered_AMI , run_test.pl',
       'TAO/examples/POA/Adapter_Activator , run_test.pl',
       'TAO/examples/POA/DSI , run_test.pl',
       'TAO/examples/POA/Default_Servant , run_test.pl',
@@ -176,8 +188,6 @@ if ($^O eq "MSWin32") {
       'TAO/examples/Simple/echo , run_test.pl < Echo.idl',
 # INTERACTIVE 'TAO/examples/Simple/chat , run_test.pl',
       'TAO/orbsvcs/tests/Property , run_test.pl',
-   'TAO/performance-tests/POA/Object_Creation_And_Registration , run_test.pl'
-# NOT ST 'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100'
 # FAILS 'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
 # FAILS 'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
     );
