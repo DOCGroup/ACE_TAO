@@ -1,0 +1,83 @@
+<!--
+  $Id$
+
+  DTD for CIAO ComponentAssembly real-time extension.
+  A component server can be associated to one conforming XML
+  descriptor file of this DTD via the <extension> tag under
+  <hostcollocation>, <processcollocation> as
+
+    <extension class="RT-CAD-EXT"
+               origin="CIAO">full_pathname_to_xml_file.xml</extension>
+
+  The root element is <rtcad-ext>.
+-->
+
+<!ELEMENT rtcad-ext ( rtresources*, rtpolicyset* ) >
+
+<!-- RT Resources grammar definitions -->
+
+<!ELEMENT rtresources (threadpool*, threadpoollanes*, connectionbands*) >
+
+<!ELEMENT threadpool EMPTY>
+<!ATTLIST threadpool
+        id              ID      #REQUIRED
+        stacksize       CDATA   #REQUIRED
+        static_threads  CDATA   #REQUIRED
+        dynamic_threads CDATA   #REQUIRED
+        priority        CDATA   #REQUIRED
+        buffering       CDATA   #REQUIRED
+        max_buffer      CDATA   #REQUIRED
+        buffer_size     CDATA   #REQUIRED >
+
+<!ELEMENT threadpoollanes (lane+) >
+<!ATTLIST threadpoollanes
+          id            ID      #REQUIRED
+          stacksize     CDATA   #REQUIRED
+          borrowing     CDATA   #REQUIRED
+          buffering     CDATA   #REQUIRED
+          max_buffer    CDATA   #REQUIRED
+          buffer_size   CDATA   #REQUIRED >
+
+<!ELEMENT lane EMPTY>
+<!ATTLIST lane
+        priority        CDATA   #REQUIRED
+        static_threads  CDATA   #REQUIRED
+        dynamic_threads CDATA   #REQUIRED >
+
+<!ELEMENT connectionbands (band+) >
+<!ATTLIST connectionbands
+        id              ID      #REQUIRED >
+
+<!ELEMENT band EMPTY>
+<!ATTLIST band
+        low             CDATA   #REQUIRED
+        high            CDATA   #REQUIRED >
+
+<!-- RT Policy_Set grammar definitions -->
+<!-- Each type of policy in rtpoliyset can only appear once -->
+<!ELEMENT rtpolicyset (priority_model_policy,
+                       threadpool_policy,
+                       banded_connection_policy)+ >
+<!ATTLIST rtpolicyset
+        id              ID      #REQUIRED>
+
+<!ELEMENT priority_model_policy EMPTY>
+<!ATTLIST priority_model_policy
+        type            (server_declare | client_propagated) #REQUIRED
+        priority        CDATA   #REQUIRED>
+
+<!ELEMENT threadpool_policy EMPTY>
+<!--
+     "idref" must be previously defined by the id attribute of
+     either <threadpool> or <threadpoollanes> element
+-->
+<!ATTLIST threadpool_policy
+        idref           IDREF   #REQUIRED>
+
+<!ELEMENT banded_connection_policy EMPTY>
+<!--
+     "idref" must be previously defined by the id attribute of
+     <connectionbands> element.
+-->
+<!ATTLIST banded_connection_policy
+        idref           IDREF   #REQUIRED>
