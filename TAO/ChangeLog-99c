@@ -1,3 +1,8 @@
+Tue Aug 31 14:23:55 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tao/UIOP_Connector.cpp:  Also rearranged the code so that it'll 
+	  compile properly.
+
 Tue Aug 31 14:17:44 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/IIOP_Connector.cpp: Rearranged the code so that it'll 
