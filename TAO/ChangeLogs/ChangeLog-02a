@@ -1,3 +1,10 @@
+Fri Jan 18 13:47:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_include/be_visitor_valuetype.h:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+
+          Removed duplicate file inclusions.
+
 Fri Jan 18 13:21:28 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp:
