@@ -50,23 +50,21 @@ be_visitor_interface_fwd_ci::visit_interface_fwd (be_interface_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->indent (); // start from the current indentation level
-
   if (! node->is_local ())
     {
       os->gen_ifdef_macro (node->flat_name (), "");
 
       *os << "ACE_INLINE" << be_nl;
-      *os << node->name () << "::" << node->local_name () <<
-        " (" << be_idt_nl << "TAO_Stub *objref," << be_nl
+      *os << node->name () << "::" << node->local_name () << " (" 
+          << be_idt << be_idt_nl 
+          << "TAO_Stub *objref," << be_nl
           << "CORBA::Boolean _tao_collocated," << be_nl 
-	  << "TAO_Abstract_ServantBase *servant" << be_nl
-	  << ")" // constructor 
-	  << be_nl;
-      *os << "  : CORBA_Object (objref, _tao_collocated, servant)" << be_nl;
+	        << "TAO_Abstract_ServantBase *servant" << be_uidt_nl
+	        << ")" // constructor 
+	        << be_nl;
+      *os << ": CORBA_Object (objref, _tao_collocated, servant)" << be_uidt_nl;
       *os << "{" << be_idt_nl
-	  << be_idt_nl // idt = 1
-	  << "this->setup_collocation (_tao_collocated);" << be_uidt_nl;
+	        << "this->setup_collocation (_tao_collocated);" << be_uidt_nl;
       *os << "}" << be_nl << be_nl;
       
       os->gen_endif ();

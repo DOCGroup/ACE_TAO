@@ -215,8 +215,7 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
 
   if (this->void_return_type (bt))
     {
-      os->indent ();
-      *os << "return;";
+      *os << "return;\n";
     }
 
   *os << "}\n\n";

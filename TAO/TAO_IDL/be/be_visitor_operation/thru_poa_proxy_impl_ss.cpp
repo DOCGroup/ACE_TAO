@@ -27,7 +27,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::~be_visitor_operation_thru_poa_prox
 int
 be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (be_operation *node)
 {
-    TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -197,11 +197,10 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (be_operation *node
 
   if (this->void_return_type (bt))
     {
-      os->indent ();
-      *os << "return;";
+      *os << "return;\n";
     }
-  os->decr_indent (0);
-  *os << "}" << be_nl;
+
+  *os << "}\n\n";
 
   return 0;
 }
@@ -234,7 +233,19 @@ be_visitor_operation_thru_poa_proxy_impl_ss::gen_invoke (
 
   // End the upcall
   *os << be_uidt_nl
-      << ");" << be_nl;
+      << ");";
+
+  // retrieve the operation return type
+  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+
+  if (this->void_return_type (bt))
+    {
+      *os << be_uidt << be_uidt_nl;
+    }
+  else
+    {
+      *os << be_uidt << be_uidt << be_uidt_nl;
+    }
 
   return 0;
 }
