@@ -1,3 +1,27 @@
+Tue May  6 13:19:02 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
+	  (process_criteria):
+
+	  Pass PortableGroup::FactoriesValue parameter by reference
+	  instead of by reference to pointer.  Part of a fix that corrects
+	  some infrastructure controlled membership problems.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
+	  (create_object):
+
+	  Declare the PortableGroup::FactoriesValue variable on the
+	  stack.  Addresses some memory management/ownership issues for
+	  the infrastructure controlled membership case.
+
+	  (process_criteria):
+
+	  Deep copy the FactoryInfos property to the
+	  PortableGroup::FactoriesValue parameter passed by reference
+	  instead of shallow copying it.  Fixes a segmentation fault
+	  caused by attempting to access memory owned by an Any that is
+	  destroyed when leaving the scope of this method.
+
 Tue May  6 13:02:07 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Object.h:

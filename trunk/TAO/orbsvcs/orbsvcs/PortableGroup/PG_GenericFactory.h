@@ -6,7 +6,7 @@
  *
  * $Id$
  *
- * @author Ossama Othman <ossama@uci.edu>
+ * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
@@ -193,7 +193,7 @@ private:
     const char * type_id,
     const PortableGroup::Criteria & criteria,
     PortableGroup::MembershipStyleValue & membership_style,
-    PortableGroup::FactoriesValue *& factory_infos,
+    PortableGroup::FactoriesValue & factory_infos,
     PortableGroup::InitialNumberMembersValue & initial_number_members,
     PortableGroup::MinimumNumberMembersValue & minimum_number_members
     ACE_ENV_ARG_DECL);
