@@ -49,6 +49,7 @@ DIRS  = CDR \
 	Forwarding \
 	Exposed_Policies \
 	Smart_Proxies \
+	Single_Read \
 	QtTests \
 	Multiple
 
