@@ -1,3 +1,9 @@
+Tue Jul 08 15:02:48 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* examples\Reactor\Misc\pingpong.cpp: 
+
+	  Included "ace/Test_and_Set.h" explicitly.
+
 Tue Jul 08 14:49:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* ace\Timer_List_T: 

@@ -40,6 +40,7 @@
 #include "ace/Pipe.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
+#include "ace/Test_and_Set.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>;
@@ -107,11 +108,11 @@ Ping_Pong::handle_input (ACE_HANDLE)
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) reading <%d> (%d) [%d] = %s\n",
-	      this->handle_,
-	      *(int *) this->buf_,
-	      *(int *) (this->buf_ + sizeof (int)),
-	      this->buf_ + (2 * sizeof (int))));
+              "(%P|%t) reading <%d> (%d) [%d] = %s\n",
+              this->handle_,
+              *(int *) this->buf_,
+              *(int *) (this->buf_ + sizeof (int)),
+              this->buf_ + (2 * sizeof (int))));
 #else
   ssize_t n = ACE::recv (this->handle_,
                          this->buf_,
@@ -127,7 +128,7 @@ Ping_Pong::handle_input (ACE_HANDLE)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) reading <%d> = %*s\n",
-	      this->handle_,
+              this->handle_,
               n,
               buf));
 #endif /* ACE_HAS_STREAM_PIPES */
@@ -149,8 +150,8 @@ Ping_Pong::handle_output (ACE_HANDLE)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "(%P|%t) writing <%d> [%d]\n",
-		  this->handle_,
+                  "(%P|%t) writing <%d> [%d]\n",
+                  this->handle_,
                   this->pid_));
       return 0;
     }
@@ -162,7 +163,7 @@ Ping_Pong::handle_output (ACE_HANDLE)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "(%P|%t) writing <%d>\n",
+                  "(%P|%t) writing <%d>\n",
                   this->handle_));
       return 0;
     }
@@ -171,7 +172,7 @@ Ping_Pong::handle_output (ACE_HANDLE)
 
 int
 Ping_Pong::handle_timeout (const ACE_Time_Value &,
-			   const void *)
+                           const void *)
 {
   this->set (1);
   return 0;
@@ -201,8 +202,8 @@ run_svc (ACE_HANDLE handle)
   // timer-based events.
 
   if (reactor.register_handler (&callback,
-				ACE_Event_Handler::READ_MASK
-				| ACE_Event_Handler::WRITE_MASK) == -1
+                                ACE_Event_Handler::READ_MASK
+                                | ACE_Event_Handler::WRITE_MASK) == -1
 #if !defined (CHORUS)
       || reactor.register_handler (SIGINT,
                                    &callback) == -1
@@ -264,11 +265,11 @@ main (int argc, char *argv[])
 
 #if defined (ACE_WIN32) || defined (CHORUS)
   if (ACE_Thread::spawn (ACE_THR_FUNC (worker),
-			 (void *) handles[0],
-			 THR_DETACHED) == -1
+                         (void *) handles[0],
+                         THR_DETACHED) == -1
       || ACE_Thread::spawn (ACE_THR_FUNC (worker),
-			    (void *) handles[1],
-			    THR_DETACHED) == -1)
+                            (void *) handles[1],
+                            THR_DETACHED) == -1)
       ACE_ERROR ((LM_ERROR,
                   "%p\n%a",
                   "spawn",
