@@ -649,6 +649,10 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
 
   ACE_Cleanup_Info info;
 
+  // Close and possibly delete all service instances in the Service
+  // Repository.
+  ACE_Service_Config::fini_svcs ();
+
   // Call all registered cleanup hooks, in reverse order of
   // registration.
   while (registered_objects_ &&
@@ -661,7 +665,8 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
         (*info.cleanup_hook_) (info.object_, info.param_);
     }
 
-  // Close and delete all ACE library services and singletons.
+  // Unlink all services in the Service Repository and close/delete
+  // all ACE library services and singletons.
   ACE_Service_Config::close ();
 
   // Close the main thread's TSS, including its Log_Msg instance.

@@ -128,6 +128,10 @@ public:
   // down.  This method calls <close_svcs> and <close_singletons>.
   // Returns 0.
 
+  static int fini_svcs (void);
+  // Perform user-specified close hooks and possibly delete all of the
+  // configured services in the <Service_Repository>.
+
   static int close_svcs (void);
   // Perform user-specified close hooks on all of the configured
   // services in the <Service_Repository>, then delete the
