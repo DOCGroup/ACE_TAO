@@ -253,7 +253,7 @@ tags for such things as the ORB type and server name.</p>
   exception Cannot_Activate
   {
     string reason_;
-  }
+  };
 
   exception Not_Found {};
   // Object not found in the Implementation Repository  
@@ -264,7 +264,14 @@ tags for such things as the ORB type and server name.</p>
     string value_;
   };
   // One environment variable
-      
+  
+  struct Inet_Addr
+  {
+    unsigned long port_;
+	string address_;
+  };      
+  // The location of a server
+
   typedef sequence&lt;Environment_Variable&gt; Environment;
   // Complete environment
 
@@ -289,6 +296,12 @@ tags for such things as the ORB type and server name.</p>
     // Creation flags
   };
 
+  interface TAO_Ping_Object
+  {
+    void ping ();
+    // Used for checking for liveness of a server.
+  };
+
   interface Implementation_Repository
   {
     Object activate_object (in Object obj)
@@ -302,7 +315,7 @@ tags for such things as the ORB type and server name.</p>
       // is raised when &lt;obj&gt; is found in the Repository but could not be
       // activated.
 
-    InetAddr activate_server (in string server);
+    Inet_Addr activate_server (in string server)
       raises (Not_Found,
               Cannot_Activate);
       // Restart server that is named &lt;server&gt; and return the host/port
@@ -315,8 +328,7 @@ tags for such things as the ORB type and server name.</p>
 
     void register_server (in string server,
                           in Process_Options options)
-      raises (Already_Registered,
-              Object_Not_Persistent);
+      raises (Already_Registered);
       // Restart server process when client is looking for &lt;server&gt;.
       //
       // The &lt;Already_Registered&gt; exception is raised when &lt;server&gt; has
@@ -327,8 +339,7 @@ tags for such things as the ORB type and server name.</p>
 
     void reregister_server (in string server,
                             in Process_Options options)
-      raises (Already_Registered,
-              Object_Not_Persistent);
+      raises (Already_Registered);
       // Restart server process when client is looking for &lt;server&gt;.
       //
       // The &lt;Already_Registered&gt; exception is raised when &lt;server&gt; has
@@ -345,13 +356,10 @@ tags for such things as the ORB type and server name.</p>
       // in the Implementation Repository.
 
     void server_is_running (in string server,
-                            in INET_Addr addr, 
+                            in Inet_Addr addr, 
                             in TAO_Ping_Object ping);
       // Used to notify the Implementation Repository that &lt;server&gt; is alive and
       // well at &lt;addr&gt;.
-      //
-      // The Ping Object is an object that supports just one method,
-      // void ping (void); which is used to test the liveness of the server.
 
     void server_is_leaving (in string server);
       // Used to tell the Implementation Repository that &lt;server&gt; is shutting
