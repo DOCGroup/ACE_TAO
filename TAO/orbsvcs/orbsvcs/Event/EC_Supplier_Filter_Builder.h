@@ -41,8 +41,8 @@ public:
   virtual ~TAO_EC_Supplier_Filter_Builder (void);
 
   /**
-   * Create the filter. The <consumer> is bound to the returned
-   * Supplier_Filter, it must be <unbound> upon destruction and/or
+   * Create the filter. The consumer is bound to the returned
+   * Supplier_Filter, it must be unbound upon destruction and/or
    * disconnection.
    */
   virtual TAO_EC_Supplier_Filter*

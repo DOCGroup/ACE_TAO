@@ -29,7 +29,7 @@
  * (type,source) pair and the (ipaddr,port) pair using a
  * AddrServer.
  * This class implements a very simple server that simply maps the
- * <type> component to the <ipaddr> and uses a fixed <port>,
+ * type component to the ipaddr and uses a fixed port,
  * provided at initialization time.
  */
 class TAO_RTEvent_Export TAO_EC_Simple_AddrServer : public POA_RtecUDPAdmin::AddrServer

@@ -1,3 +1,15 @@
+Mon Jul 28 13:52:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.h:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_UDP_Admin.h:
+          Fixed doxygen warnings
+
 Mon Jul 28 08:45:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/RTScheduling/Scheduling_Interceptor/test_server.cpp:
@@ -47,35 +59,35 @@ Sun Jul 27 19:11:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun Jul 27 19:31:27 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* examples/RTScheduling/DT_Creator.h: 
+	* examples/RTScheduling/DT_Creator.h:
 
 	  Added the missing DT_Creator.h file.
 
-	* examples/RTScheduling/FP_SchedulingC.h:	
-	* examples/RTScheduling/MIF_SchedulingC.h:	
-	  
+	* examples/RTScheduling/FP_SchedulingC.h:
+	* examples/RTScheduling/MIF_SchedulingC.h:
+
 	  Included RTScheduler.h file instaed of RTSchedulerC.h.
 
-	* examples/RTScheduling/Thread_Task.h: 	
+	* examples/RTScheduling/Thread_Task.h:
 	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.h:
-	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.h:	
+	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.h:
 
 	  Removed the inclusion of Task.h file that is no longer used.
 
-	* examples/RTScheduling/MIF_Scheduler/Makefile:		
-	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:	
+	* examples/RTScheduling/MIF_Scheduler/Makefile:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
 
 	  Updated dependencies.
 
 	  Above changes fix compile problems on most builds.
-	
+
 Sun Jul 27 17:30:14 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp: Converted period
 	  argument for scheduler->set from ACE_Time_Value to
 	  RtecScheduler::Period_t to clear warnings in
 	  WinXP_MSVC_Warning_Level_4_Debug build.
-	
+
 	* orbsvcs/examples/RtEC/Kokyu/Service.cpp: Used ORBSVCS_Time
 	  utility function to convert between ACE_Time_Value and
 	  TimeBase::TimeT to clear warnings in
@@ -87,14 +99,14 @@ Sun Jul 27 09:06:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  == 0. This is actually bogus since the get_client_policy () does
 	  all the checks. Moreover, if the policy is set on Current or on
 	  the PolicyManager, we could by mistake a return a null
-	  policy. Thanks to Christoph Liebig <xfrog2000@yahoo.com> 
-	  for reporting this problem. 
+	  policy. Thanks to Christoph Liebig <xfrog2000@yahoo.com>
+	  for reporting this problem.
 
 Sun Jul 27 07:29:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Exception.h:
 	* tao/Exception.cpp: Fixed compiation errors and warnings in
-	  SunC++  builds. These were caused due to the following 
+	  SunC++  builds. These were caused due to the following
 
 	  - string literal being converted to char *
 	  - explicit template instantiations required that the
@@ -159,7 +171,7 @@ Sat Jul 26 13:27:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* orbsvcs/orbsvcs/RTKokyuEvent.dsp:
 
 	  Added Kokyu library to list of link libraries and added Kokyu
-	  path to link path. 
+	  path to link path.
 
 Sat Jul 26 10:02:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -184,11 +196,11 @@ Fri Jul 25 22:17:44 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	  Modifications to reflect changes in Kokyu. The Kokyu dispatcher
 	  is stored in an auto ptr instead of a regular pointer. This is
 	  enforced by the Kokyu interface.
-	
+
 	* orbsvcs/orbsvcs/Event/RTKokyuEvent.dsw:
-	
+
 	  Changed the dependency to Kokyu.dsp instead of Kokyu_DLL.dsp.
-	
+
 Fri Jul 25 17:07:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
