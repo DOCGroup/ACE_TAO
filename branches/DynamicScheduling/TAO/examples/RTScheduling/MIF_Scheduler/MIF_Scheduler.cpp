@@ -318,12 +318,15 @@ MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
 				       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "MIF_Scheduler::end_scheduling_segment\n"));
   int count;
   ACE_OS::memcpy (&count,
 		  guid.get_buffer (),
 		  guid.length ());
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "MIF_Scheduler::end_scheduling_segment %d\n",
+		  count));
+
   /*
   if (wait_que_.message_count () > 0)
     {
@@ -419,8 +422,6 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "MIF_Scheduler::receive_request\n"));
 
   IOP::ServiceContext* serv_cxt =
     request_info->get_request_service_context (Server_Interceptor::SchedulingInfo);
@@ -438,6 +439,11 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
   ACE_OS::memcpy (&gu_id,
 		  guid->get_buffer (),
 		  guid->length ());
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "MIF_Scheduler::receive_request %d\n",
+		   gu_id));
+
 
   CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (long));
   int i = sizeof (long);
@@ -467,6 +473,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
 
   new_dt->msg_priority (importance);
 
+  /*
   lock_.acquire ();
   if (wait_que_.message_count () > 0)
     {
@@ -480,6 +487,30 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
   //resume_main ();
   new_dt->suspend ();
   lock_.release ();
+  */
+
+  lock_.acquire ();
+  if (ready_que_.message_count () > 0)
+    {
+      DT* run_dt;
+      ACE_Message_Block* msg;
+      ready_que_.dequeue_head (msg);
+      run_dt = ACE_dynamic_cast (DT*, msg);
+      if (run_dt->msg_priority () >= new_dt->msg_priority ())
+	{
+	  ready_que_.enqueue_prio (new_dt);
+	  run_dt->resume ();
+	  new_dt->suspend ();
+	}
+      else 
+	{
+	  ready_que_.enqueue_prio (run_dt);
+	  delete new_dt;
+	}
+    }
+  //resume_main ();
+  lock_.release ();
+
 
 }
 
@@ -488,7 +519,7 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
 			   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-	/*
+
   RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -496,8 +527,13 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
   ACE_OS::memcpy (&count,
 		  guid->get_buffer (),
 		  guid->length ());
-		  */
 
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "MIF_Scheduler::send_reply %d\n",
+		   count));
+
+  /*
   if (wait_que_.message_count () > 0)
     {
       DT* run_dt;
@@ -508,8 +544,9 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
       run_dt->resume ();
       lock_.release ();
     }
-  /*
-  else if (ready_que_.message_count () > 0)
+  */
+
+  if (ready_que_.message_count () > 0)
     {
       DT* run_dt;
       ACE_Message_Block* msg;
@@ -519,7 +556,6 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
       run_dt->resume ();
       lock_.release ();
     }
-  */
 }
 
 void

@@ -49,14 +49,14 @@ Job_i::work (CORBA::ULong work,
 	     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
+/*
   int priority;
   ACE_hthread_t current;
   ACE_Thread::self (current);
   if (ACE_Thread::getprio (current, priority) == -1)
     return;
 
-
+*/
   static CORBA::ULong prime_number = 9619;
   //    ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
 
@@ -79,21 +79,9 @@ Job_i::work (CORBA::ULong work,
 		importance));
 
   char msg [BUFSIZ];
-  ACE_OS::sprintf (msg,"Thread Priority is %d, Guid is %d\n",priority, guid_);
+  //ACE_OS::sprintf (msg,"Thread Priority is %d \n",priority);
+  ACE_OS::sprintf (msg,"Guid is %d\n", guid_);
   dt_creator_->log_msg (msg);
-
-  // CORBA::Policy_ptr sched_param;
-  //  CORBA::Policy_var sched_param;
-  //    sched_param = CORBA::Policy::_duplicate (dt_creator_->sched_param (importance));
-  /*
-  const char * name = 0;
-  CORBA::Policy_ptr implicit_sched_param = 0;
-  dt_creator_->current ()->update_scheduling_segment (name,
-						      sched_param,
-						      sched_param
-						      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  */
 
   for (; work != 0; work--)
     {
@@ -113,6 +101,20 @@ Job_i::work (CORBA::ULong work,
 			 prime_number / 2);
 	  count_down.update ();
 	}
+
+      run_time = ACE_OS::gettimeofday () - *(dt_creator_->base_time ());
+      TASK_STATS::instance ()->sample (ACE_UINT64 (run_time.sec ()),
+       				       guid_);
+
+      CORBA::Policy_var sched_param;
+      sched_param = CORBA::Policy::_duplicate (dt_creator_->sched_param (importance));
+      const char * name = 0;
+      dt_creator_->current ()->update_scheduling_segment (name,
+							  sched_param.in (),
+							  sched_param.in ()
+							  ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
 
       // convert to microseconds
       //  #if !defined ACE_LACKS_LONGLONG_T
