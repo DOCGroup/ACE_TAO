@@ -1803,19 +1803,34 @@ be_interface::queryinterface_helper (be_interface *derived,
   // emit the comparison code
   *os << "(type == ACE_reinterpret_cast" << be_idt_nl
       << "(ptr_arith_t," << be_idt_nl;
+
   be_decl *scope =
     be_scope::narrow_from_scope (ancestor->defined_in ())->decl ();
+
+  be_decl *derived_scope =
+    be_scope::narrow_from_scope (derived->defined_in ())->decl ();
+
+  // If the ancestor is in the root scope, we can use the local name.
   if (scope->node_type () == AST_Decl::NT_root)
     {
       *os << "&" << ancestor->local_name () << "::_narrow" << be_uidt 
           << "))" << be_nl;
     }
+  // Or, if it's defined in a scope different than the child's, the
+  // ACE_NESTED_CLASS macro won't work - we use the scoped name.
+  else if (scope != derived_scope)
+    {
+      *os << "&::" << ancestor->name () << "::_narrow" << be_uidt
+          << "))" << be_nl;
+    }
+  // The ACE_NESTED_CLASS macro is necessary in this case.
   else
     {
       *os << "&ACE_NESTED_CLASS (::" << scope->name () << ", " 
           << ancestor->local_name () << ")" << "::_narrow" << be_uidt 
           << "))" << be_nl;
     }
+
   if (derived == ancestor)
     *os << "retv = ACE_reinterpret_cast (void*, this);" << be_uidt_nl;
   else
