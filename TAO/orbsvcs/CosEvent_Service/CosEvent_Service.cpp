@@ -13,9 +13,6 @@ CosEvent_Service::CosEvent_Service (void)
     rt_service_name ("EventService"),
     schedule_name_ ("ScheduleService"),
     scheduler_ (RtecScheduler::Scheduler::_nil ()),
-    ec_impl_ (0,
-              ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-              &module_factory_),
     rtec_ (RtecEventChannelAdmin::EventChannel::_nil ()),
     cos_ec_ (CosEventChannelAdmin::EventChannel::_nil ()),
     global_scheduler_ (0),
@@ -272,7 +269,12 @@ CosEvent_Service::create_local_RtecService (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->rtec_ = this->ec_impl_._this (ACE_TRY_ENV);
+      ACE_NEW_RETURN (this->ec_impl_,
+                      ACE_EventChannel(0,
+                                       ACE_DEFAULT_EVENT_CHANNEL_TYPE,
+                                       &module_factory_), -1);
+
+      this->rtec_ = this->ec_impl_->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::String_var str = this->orb_->object_to_string (this->rtec_.in (),
@@ -283,7 +285,7 @@ CosEvent_Service::create_local_RtecService (void)
                   "CosEvent_Service: The RTEC IOR is <%s>\n",
                   str.in ()));
 
-      this->ec_impl_.activate ();
+      this->ec_impl_->activate ();
 
       return 0;
     }
@@ -537,6 +539,16 @@ CosEvent_Service::startup (int argc, char *argv[])
   if (this->init_NamingService () == -1)
     return -1;
 
+  // start the scheduler
+  if (this->start_Scheduler ())
+    {
+      // scheduler startup failed..cleanup
+      this->shutdown ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) Failed to start the scheduler\n"),
+                        -1);
+    }
+
   // see if the user wants a local Rtec..
   if (this->remote_Rtec_ == 0 && this->create_local_RtecService () == -1)
     {
@@ -557,15 +569,7 @@ CosEvent_Service::startup (int argc, char *argv[])
                             -1);
       }
 
-  // start the scheduler
-  if (this->start_Scheduler ())
-    {
-      // scheduler startup failed..cleanup
-      this->shutdown ();
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t) Failed to start the scheduler\n"),
-                        -1);
-    }
+
   // now try to create the COS EC.
   if (this->create_CosEC () == -1)
     {
@@ -620,7 +624,8 @@ CosEvent_Service::shutdown (void)
           ACE_TRY_CHECK;
         }
 
-      this->ec_impl_.shutdown ();
+      this->ec_impl_->shutdown ();
+      delete ec_impl_;
 
       // shutdown the ORB.
       if (!this->orb_->_nil ())
@@ -662,4 +667,6 @@ main (int argc, char *argv[])
     }
 
   service.shutdown ();
+
+  return 0;
 }
