@@ -342,8 +342,10 @@ ACE_OS::gethostbyname (const char *name)
 #if defined (VXWORKS)
   // not thread safe!
   static hostent ret;
-  static int first_addr = ::hostGetByName ((char *) name);
+  static int first_addr;
   static char *hostaddr[2];
+
+  first_addr = ::hostGetByName ((char *) name);
 
   if (first_addr == -1)
     return 0;
