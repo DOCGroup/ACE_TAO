@@ -25,7 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TypeCode_Base_Attributes.h"
-#include "tao/OBV_Constants.h"
+#include "tao/ValueModifierC.h"
+#include "tao/VisibilityC.h"
 
 
 namespace TAO
