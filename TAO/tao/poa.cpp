@@ -12,6 +12,9 @@
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
+// This is the maximum space require to convert the ulong into a string
+const int TAO_POA::max_space_required_for_ulong = 24;
+
 #if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
 extern "C"
 {
@@ -562,48 +565,52 @@ TAO_Creation_Time::TAO_Creation_Time (const ACE_Time_Value &creation_time)
 {
   // Convert seconds and micro seconds into string
   ACE_OS::sprintf (this->time_stamp_,
-                   "%ld%ld",
+                   "%08.8x%08.8x",
                    creation_time.sec (),
                    creation_time.usec ());
-
-  this->time_stamp_length_ = ACE_OS::strlen (this->time_stamp_);
 }
 
 TAO_Creation_Time::TAO_Creation_Time (void)
 {
-  this->time_stamp_[0] = '\0';
-  this->time_stamp_length_ = ACE_OS::strlen (this->time_stamp_);
+  ACE_OS::memset (this->time_stamp_, 
+                  0, 
+                  this->creation_time_length ());
 }
 
 void
-TAO_Creation_Time::creation_time (const char *creation_time)
+TAO_Creation_Time::creation_time (const void *creation_time)
 {
-  ACE_OS::strcpy (this->time_stamp_, creation_time);
-  this->time_stamp_length_ = ACE_OS::strlen (this->time_stamp_);
+  ACE_OS::memcpy (this->time_stamp_, 
+                  creation_time, 
+                  this->creation_time_length ());
 }
   
-const char *
+const void *
 TAO_Creation_Time::creation_time (void) const
 {
-  return this->time_stamp_;
+  return &this->time_stamp_[0];
 }
   
 int
 TAO_Creation_Time::creation_time_length (void) const
 {
-  return this->time_stamp_length_;
+  return sizeof (this->time_stamp_) - 1;
 }
   
 int 
 TAO_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 {
-  return ACE_OS::strcmp (this->time_stamp_, rhs.time_stamp_) == 0;
+  return ACE_OS::memcmp (this->time_stamp_, 
+                         rhs.time_stamp_, 
+                         this->creation_time_length ()) == 0;
 }
 
 int 
 TAO_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 {
-  return ACE_OS::strcmp (this->time_stamp_, rhs.time_stamp_) != 0;
+  return ACE_OS::memcmp (this->time_stamp_, 
+                         rhs.time_stamp_, 
+                         this->creation_time_length ()) != 0;
 }
 
 TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
@@ -2333,21 +2340,11 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   TAO_POA::String object_key ((const char *) key.buffer (), 
                               key.length ());
 
-  // Try to find the first separator
-  int first_token_position = object_key.find (TAO_POA::name_separator (),
-                                              TAO_POA::object_key_type_length ());
-  // If not found, the name is not correct
-  if (first_token_position == TAO_POA::String::npos)
-    return -1;
-  else
-    first_token_position += TAO_POA::object_key_type_length ();
-
   // Try to find the last separator
   int last_token_position = object_key.rfind (TAO_POA::name_separator ());
 
-  // If not found or the tokens are not distinct, the name is not correct
-  if (last_token_position == TAO_POA::String::npos ||
-      first_token_position == last_token_position)
+  // If not found, the name is not correct
+  if (last_token_position == TAO_POA::String::npos)
     return -1;
 
   // Check the first byte (persistence indicator)
@@ -2360,16 +2357,15 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
     // Incorrect key
     return -1;
 
-  // Take the substring from object_key_type_length to first_token_position for the seconds
+  // Starting at object_key_type_length, take the next
+  // creation_time_length byte for the timestamp
   int starting_at = TAO_POA::object_key_type_length ();
-  int how_many = first_token_position - starting_at;
-  TAO_POA::String creation_time = object_key.substr (starting_at,
-                                                     how_many);
+  poa_creation_time.creation_time (&object_key[starting_at]);
 
-  // Take the substring from (first_token_position + separator_length)
-  // to last_token_position for the POA name
-  starting_at = first_token_position + TAO_POA::name_separator_length ();
-  how_many = last_token_position - starting_at;
+  // Take the substring from creation_time_length +
+  // object_key_type_length to last_token_position for the POA name
+  starting_at = TAO_POA::object_key_type_length () + poa_creation_time.creation_time_length ();
+  int how_many = last_token_position - starting_at;
   poa_name = object_key.substr (starting_at,
                                 how_many);
 
@@ -2379,8 +2375,6 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   how_many = object_key.length () - starting_at;
   id = TAO_POA::string_to_ObjectId (&object_key[starting_at],
                                     how_many);
-
-  poa_creation_time.creation_time (creation_time.c_str ());
 
   // Success
   return 0;
@@ -2400,7 +2394,7 @@ TAO_POA::create_object_id (void)
   // 2. Size of octet == size of string element
 
   // Buffer for counter
-  char counter[TAO_POA_max_space_required_for_ulong];
+  char counter[TAO_POA::max_space_required_for_ulong];
 
   // Convert counter into string
   ACE_OS::sprintf (counter,
@@ -2434,32 +2428,44 @@ TAO_POA::create_object_id (void)
 TAO_ObjectKey *
 TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 {
-  // Calculate the space required for the POA information
-  int poa_info_size =
+  // Calculate the space required for the key
+  int buffer_size =
     this->object_key_type_length () +
     this->creation_time_.creation_time_length () +
-    TAO_POA::name_separator_length () +
     this->complete_name_.length () +
-    TAO_POA::name_separator_length ();
+    TAO_POA::name_separator_length () +
+    id.length ();
   
-  // Total space required 
-  int buffer_size = poa_info_size + id.length ();
-
   // Create the buffer for the key
   CORBA::Octet *buffer = TAO_ObjectKey::allocbuf (buffer_size);
 
-  // Put the POA info into the buffer
-  ACE_OS::sprintf ((CORBA::String) buffer,
-                   "%c%s%c%s%c",
-                   this->object_key_type (),
-                   this->creation_time_.creation_time (),
-                   TAO_POA::name_separator (),
-                   this->complete_name_.c_str (),
-                   TAO_POA::name_separator ());
+  // Keeps track of where the next infomation goes; start at 0 byte
+  int starting_at = 0;
 
-  // Then copy the ID into the key, ingoring the EOS placed by the
-  // sprintf
-  ACE_OS::memcpy (&buffer[poa_info_size], id.buffer (), id.length ());
+  // Copy the persistence bit
+  buffer[starting_at] = (CORBA::Octet) this->object_key_type ();
+
+  // Then copy the timestamp
+  starting_at += this->object_key_type_length ();  
+  ACE_OS::memcpy (&buffer[starting_at], 
+                  this->creation_time_.creation_time (),
+                  this->creation_time_.creation_time_length ());
+
+  // Put the POA name into the buffer
+  starting_at += this->creation_time_.creation_time_length ();
+  ACE_OS::memcpy (&buffer[starting_at],
+                  this->complete_name_.c_str (),
+                  this->complete_name_.length ());
+  
+  // Add the name separator
+  starting_at += this->complete_name_.length ();
+  buffer[starting_at] = (CORBA::Octet) TAO_POA::name_separator ();
+
+  // Then copy the ID into the key
+  starting_at += TAO_POA::name_separator_length ();
+  ACE_OS::memcpy (&buffer[starting_at], 
+                  id.buffer (), 
+                  id.length ());
 
   // Create the key, giving the ownership of the buffer to the
   // sequence.
