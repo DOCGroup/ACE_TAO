@@ -36,9 +36,7 @@
 
 ACE_RCSID(Event_Supplier, Event_Con, "$Id$")
 
-static const int SOURCE_ID = 1001;
-
-static const char usage [] = 
+static const char usage [] =
 "[-? |\n"
 "            [-c <consumers> [4]]\n"
 "            [-d directly connect all consumers/suppliers\n"
@@ -55,7 +53,7 @@ Demo_Consumer::Demo_Consumer (void)
 {
 }
 
-int 
+int
 Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
                               const char *my_name)
 {
@@ -237,11 +235,10 @@ get_options (int argc, char *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, "Oc:djm:s:t:?");
   int opt;
-  int temp;
 
   while ((opt = get_opt ()) != EOF)
   {
-    switch (opt) 
+    switch (opt)
       {
       case '?':
         ACE_DEBUG ((LM_DEBUG,
@@ -294,7 +291,7 @@ main (int argc, char *argv [])
         PortableServer::POA::_narrow (poa_object.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      PortableServer::POAManager_var poa_manager = 
+      PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -345,7 +342,7 @@ main (int argc, char *argv [])
 
       if (demo_consumer->open_consumer (ec.ptr (),
                                         "demo_consumer") == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, 
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "Someone was feeling introverted.\n"),
                           -1);
 
