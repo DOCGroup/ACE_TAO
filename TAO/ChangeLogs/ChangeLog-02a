@@ -1,3 +1,25 @@
+Mon Jan 15 14:04:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/base_proxy_broker_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
+
+          Moved code generation for declaration and initialization of
+          xxx_Proxy_Broker_Factory_function_pointer from the any_op
+          visitor to the corresponding proxy broker visitor. The 
+          original intention was to prevent the declaration of this
+          function pointer for local interfaces, in which case,
+          generation of the Any operatiors would be skipped. However,
+          generation of Any operators can also be skipped by using
+          the command line option to suppress them (-Sa). Using this
+          option would therefore generate uncompileable stub code.
+          The proxy broker visitors above are also skipped if the
+          interface is local, so the condition is still enforced, while
+          no longer making the generation of the function pointer
+          dependent on the generation of the Any operators. Thanks to 
+          Max Khon <fjoe@iclub.nsu.ru> for reporting this bug.
+
 Sun Jan 14 07:05:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Transport.cpp : A stupid typo that was giving errors
