@@ -275,10 +275,10 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
   return number_of_cancellations;
 }
 
-// Reads the first node on the list and returns it. 
+// Reads the first node on the list and returns it.
 
-template <class TYPE, class FUNCTOR, class LOCK> ACE_Timer_Node_T<TYPE> *
-ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::get_first (void)
+template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Timer_Node_T<TYPE> *
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::get_first (void)
 {
   ACE_TRACE ("ACE_Timer_List_T::get_first");
 
