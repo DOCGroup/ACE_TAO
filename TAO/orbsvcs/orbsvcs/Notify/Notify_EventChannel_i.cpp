@@ -1,5 +1,9 @@
 /* -*- C++ -*- $Id$ */
+
+// @@ Not only the #include in the header file was uneeded, you repeat
+// it here!
 #include "ace/Auto_Ptr.h"
+
 #include "orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h"
 #include "orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h"
 #include "orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h"
@@ -14,6 +18,8 @@ TAO_Notify_EventChannel_i::TAO_Notify_EventChannel_i (TAO_Notify_EventChannelFac
    default_id_ (0),
    max_queue_length_ (0),
    max_consumers_ (0),
+
+   // @@ The following comment belongs in the header file!
    max_suppliers_ (0)  // O implies no limit
 {
 }
@@ -21,6 +27,8 @@ TAO_Notify_EventChannel_i::TAO_Notify_EventChannel_i (TAO_Notify_EventChannelFac
 // Implementation skeleton destructor
 TAO_Notify_EventChannel_i::~TAO_Notify_EventChannel_i (void)
 {
+  // @@ Who creates the dispatcher? It is an strategy, what is the
+  // abstract factory for it?
   delete dispatcher_;
 }
 
@@ -37,8 +45,15 @@ TAO_Notify_EventChannel_i::init (const CosNotification::QoSProperties& initial_q
   this->set_admin (initial_admin, ACE_TRY_ENV);
   ACE_CHECK;
 
+  // @@ Pradeep: instead of using a factory method it is much better
+  // to use an abstract factory to control any (and all) the
+  // strategies on each event channel.
+
   dispatcher_ = TAO_Notify_Dispatcher::create (ACE_TRY_ENV);
   ACE_CHECK;
+
+  // @@ Please check with Irfan on how to activate an object in a
+  // thread-safe and exception-safe way!
 
   TAO_Notify_FilterFactory_i* filter_factory_i;
   ACE_NEW_THROW_EX (filter_factory_i,
@@ -60,12 +75,14 @@ TAO_Notify_EventChannel_i::init (const CosNotification::QoSProperties& initial_q
   ACE_CHECK;
 }
 
+// @@ Pradeep: here is an excellent candidate for inlining!
 TAO_Notify_Dispatcher&
 TAO_Notify_EventChannel_i::get_dispatcher (void)
 {
   return *dispatcher_;
 }
 
+// @@ Pradeep, see my comments about get_ref()...
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_Notify_EventChannel_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -81,6 +98,12 @@ CosNotifyChannelAdmin::EventChannelFactory_ptr
 TAO_Notify_EventChannel_i::MyFactory (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // @@ Pradeep: see, even you get confused, here you are using
+  // _this() instead of get_ref().
+  // @@ Pradeep: don't forget this->my_factory_
+  // @@ Pradeep: it seems you only use my_factory_ to return the
+  // object reference, why don't you store the object reference
+  // instead?
   return my_factory_._this (ACE_TRY_ENV);
 }
 
@@ -144,6 +167,7 @@ TAO_Notify_EventChannel_i::new_for_consumers
                     TAO_Notify_ConsumerAdmin_i (*this),
                     CORBA::NO_MEMORY ());
 
+  // @@ Please check my general comments about object activation.
   auto_ptr <TAO_Notify_ConsumerAdmin_i> auto_consumeradmin (consumer_admin);
 
   consumer_admin->init (id, op, ACE_TRY_ENV);
@@ -214,6 +238,7 @@ TAO_Notify_EventChannel_i::get_consumeradmin
     ACE_THROW_RETURN (CosNotifyChannelAdmin::AdminNotFound (),
                       CosNotifyChannelAdmin::ConsumerAdmin::_nil ());
 
+  // @@ get_ref vs. _this?
   return admin->get_ref (ACE_TRY_ENV);
 }
 
@@ -231,6 +256,7 @@ TAO_Notify_EventChannel_i::get_supplieradmin
     ACE_THROW_RETURN (CosNotifyChannelAdmin::AdminNotFound (),
                       CosNotifyChannelAdmin::SupplierAdmin::_nil ());
 
+  // @@ get_ref vs. _this?
   return admin->get_ref (ACE_TRY_ENV);
 }
 
@@ -240,6 +266,7 @@ TAO_Notify_EventChannel_i::get_all_consumeradmins (CORBA::Environment& ACE_TRY_E
                    CORBA::SystemException
                    ))
 {
+  // @@ Use the T_var here...
   CosNotifyChannelAdmin::AdminIDSeq* list;
 
   // Figure out the length of the list.
@@ -252,6 +279,8 @@ TAO_Notify_EventChannel_i::get_all_consumeradmins (CORBA::Environment& ACE_TRY_E
   ACE_CHECK_RETURN (0);
 
   list->length (len);
+
+  // @@ Synchronization problems.
 
   // Create an iterator
   CONSUMERADMIN_MAP::ITERATOR iter (consumer_admin_map_);
@@ -280,6 +309,14 @@ TAO_Notify_EventChannel_i::get_all_supplieradmins (CORBA::Environment& ACE_TRY_E
   // Figure out the length of the list.
   CORBA::ULong len = supplier_admin_map_.current_size ();
 
+  // @@ Use the right T_var
+  // @@ Pradeep: it will make it much easier on you if code like this
+  // (it is essentially the same stuff that you did for consumer
+  // admins) is either:
+  // 1) Identical except for name changes (here your len is obtained
+  // before the <list> argument is declared, previously it was the
+  // opposite.
+  // 2) Use some sort of template.
   CosNotifyChannelAdmin::AdminIDSeq* list;
 
   // Allocate the list of <len> length.
@@ -289,6 +326,8 @@ TAO_Notify_EventChannel_i::get_all_supplieradmins (CORBA::Environment& ACE_TRY_E
   ACE_CHECK_RETURN (0);
 
   list->length (len);
+
+  // @@ Synchronization problems.
 
   // Create an iterator
   SUPPLIERADMIN_MAP::ITERATOR iter (supplier_admin_map_);
@@ -316,6 +355,7 @@ TAO_Notify_EventChannel_i::get_admin (CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA::Long property_count = 3; //The spec has 3 properties, so far.
 
+  // @@ Please use a T_var
   CosNotification::AdminProperties *admin;
 
   ACE_NEW_THROW_EX (admin,
@@ -348,6 +388,9 @@ TAO_Notify_EventChannel_i::set_admin (
                    CosNotification::UnsupportedAdmin
                    ))
 {
+
+  // @@ Pradeep, please use 'else if' in the same line, it makes the
+  // code far more readable.
   for (CORBA::ULong i = 0; i < admin.length (); ++i)
     {
       if (ACE_OS::strcmp (admin[i].name,
@@ -385,6 +428,7 @@ TAO_Notify_EventChannel_i::for_consumers (CORBA::Environment &ACE_TRY_ENV)
                     TAO_Notify_ConsumerAdmin_i (*this),
                     CORBA::NO_MEMORY ());
 
+  // @@ More auto_ptr<> that should be ServantBase_var
   auto_ptr <TAO_Notify_ConsumerAdmin_i> auto_consumeradmin (consumer_admin);
 
   consumer_admin->init (default_id_, default_op_, ACE_TRY_ENV);
@@ -415,6 +459,7 @@ TAO_Notify_EventChannel_i::for_suppliers (
                     TAO_Notify_SupplierAdmin_i (*this),
                     CORBA::NO_MEMORY ());
 
+  // @@ More auto_ptr<> that should be ServantBase_var
   auto_ptr <TAO_Notify_SupplierAdmin_i> auto_supplieradmin (supplier_admin);
 
   supplier_admin->init (default_id_, default_op_, ACE_TRY_ENV);
@@ -437,6 +482,12 @@ void TAO_Notify_EventChannel_i::destroy (
   // TODO:
   // Think of the EC as the root object of a composite pattern -
   // "destroy" all its constituents and then deactivate it from the POA.
+
+  // @@ Pradeep, the right order is to deactivate from the POA, and
+  // then destroy the components.
+  // You may need a "is detroyed" flag, to deal with concurrent
+  // invocations that are still executing, even after you deactivate
+  // the object.
 }
 
 

@@ -9,6 +9,7 @@
 #include "ID_Pool_T.i"
 #endif /* __ACE_INLINE__ */
 
+// @@ Pradeep: please complete the implementation,
 template <class ID_TYPE> void
 ID_Pool<ID_TYPE>::put (ID_TYPE /* id */)
 {
