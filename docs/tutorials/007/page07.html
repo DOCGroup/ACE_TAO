@@ -11,11 +11,7 @@
 <CENTER><B><FONT SIZE=+2>ACE Tutorial 007</FONT></B></CENTER>
 
 <CENTER><B><FONT SIZE=+2>Creating a thread-pool server</FONT></B></CENTER>
-
-
-<P>
-<HR WIDTH="100%">
-
+<HR>
 <P>Two new files this time.&nbsp; The first is <A HREF="thread_pool.h">thread_pool.h</A>
 where we declare our Thread_Pool object.&nbsp; This is responsible for
 abstracting away the thread pool implementation details and allowing us
@@ -24,174 +20,113 @@ to make so few changes to the rest of the code.
 <P>
 <HR WIDTH="100%"><FONT FACE="Arial,Helvetica"></FONT>
 
-<P><FONT FACE="Arial,Helvetica">// $Id: thread_pool.h,v 1.1 1998/08/30
-16:04:12 jcej Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<PRE>
 
-<P><FONT FACE="Arial,Helvetica">#ifndef THREAD_POOL_H</FONT>
-<BR><FONT FACE="Arial,Helvetica">#define THREAD_POOL_H</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>// $Id$</font>
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; In order to implement a thread
-pool, we have to have an object that can create</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; a thread.&nbsp; The ACE_Task&lt;>
-is the basis for doing just such a thing.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">#include "ace/Task.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=blue>#ifndef</font> <font color=purple>THREAD_POOL_H</font>
+<font color=blue>#define</font> <font color=purple>THREAD_POOL_H</font>
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; We need a forward reference
-for ACE_Event_Handler so that our enqueue() method</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; can accept a pointer to one.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">class ACE_Event_Handler;</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   In order to implement a thread pool, we have to have an object that can create
+   a thread.  The ACE_Task&lt;> is the basis for doing just such a thing.
+ */</font>
+<font color=blue>#include</font> "<font color=green>ace/Task.h</font>"
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Although we modified the
-rest of our program to make use of the thread pool</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; implementation, if you look
-closely you'll see that the changes were rather</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; minor.&nbsp; The "ACE way"
-is generally to create a helper object that abstracts</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; away the details not relevant
-to your application.&nbsp; That's what I'm trying</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; to do here by creating the
-Thread_Pool object.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">class Thread_Pool : public ACE_Task&lt;ACE_MT_SYNCH></FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">public:</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+# pragma once
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Provide an enumeration for the default pool size.&nbsp; By doing this,
-other objects</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-can use the value when they want a default.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-enum size_t</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-default_pool_size_ = 5</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-};</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   We need a forward reference for ACE_Event_Handler so that our enqueue() method
+   can accept a pointer to one.
+ */</font>
+class ACE_Event_Handler;
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-// Basic constructor</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Thread_Pool(void);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   Although we modified the rest of our program to make use of the thread pool
+   implementation, if you look closely you'll see that the changes were rather
+   minor.  The "<font color=green>ACE way</font>" is generally to create a helper object that abstracts
+   away the details not relevant to your application.  That's what I'm trying
+   to do here by creating the Thread_Pool object.
+ */</font>
+class Thread_Pool : public ACE_Task&lt;ACE_MT_SYNCH>
+{
+public:
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Opening the thread pool causes one or more threads to be activated.&nbsp;
-When activated,</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-they all execute the svc() method declared below.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-int open( int _pool_size = default_pool_size_ );</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  typedef ACE_Task&lt;ACE_MT_SYNCH> inherited;
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-When you're done wit the thread pool, you have to have some way to shut
-it down.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-This is what close() is for.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-int close(void);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+        <font color=red>/*
+           Provide an enumeration for the default pool size.  By doing this, other objects
+           can use the value when they want a default.
+         */</font>
+        enum size_t
+        {
+          default_pool_size_ = 5
+        };
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-To use the thread pool, you have to put some unit of work into it.&nbsp;
-Since we're</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-dealing with event handlers (or at least their derivatives), I've chosen
-to provide</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-an enqueue() method that takes a pointer to an ACE_Event_Handler.&nbsp;
-The handler's</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-handle_input() method will be called, so your object has to know when it
-is being</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-called by the thread pool.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-int enqueue( ACE_Event_Handler * _handler );</FONT><FONT FACE="Arial,Helvetica"></FONT>
+        <font color=red>// Basic constructor</font>
+        Thread_Pool(void);
 
-<P><FONT FACE="Arial,Helvetica">protected:</FONT><FONT FACE="Arial,Helvetica"></FONT>
+        <font color=red>/*
+           Opening the thread pool causes one or more threads to be activated.  When activated,
+           they all execute the svc() method declared below.
+         */</font>
+        int open( int _pool_size = default_pool_size_ );
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Our svc() method will dequeue the enqueued event handler objects and invoke
-the</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-handle_input() method on each.&nbsp; Since we're likely running in more
-than one thread,</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-idle threads can take work from the queue while other threads are busy
-executing</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-handle_input() on some object.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-int svc(void);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+    <font color=red>/*
+       Some compilers will complain that our open() above attempts to
+       override a virtual function in the baseclass.  We have no
+       intention of overriding that method but in order to keep the
+       compiler quiet we have to add this method as a pass-thru to the
+       baseclass method.
+    */</font>
+        virtual int open(void * _void_data)
+                { return <font color=#008888>inherited::open</font>(_void_data); }
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Another handy ACE template is ACE_Atomic_Op&lt;>.&nbsp; When parameterized,
-this allows</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-is to have a thread-safe counting object.&nbsp; The typical arithmetic
-operators are</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-all internally thread-safe so that you can share it across threads without
-worrying</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-about any contention issues.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-typedef ACE_Atomic_Op&lt;ACE_Mutex,int> counter_t;</FONT><FONT FACE="Arial,Helvetica"></FONT>
+    <font color=red>/*
+    */</font>
+    int close( u_long flags = 0 );
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-We use the atomic op to keep a count of the number of threads in which
-our svc()</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-method is running.&nbsp; This is particularly important when we want to
-close() it down!</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-counter_t active_threads_;</FONT>
-<BR><FONT FACE="Arial,Helvetica">};</FONT><FONT FACE="Arial,Helvetica"></FONT>
+        <font color=red>/*
+           To use the thread pool, you have to put some unit of work into it.  Since we're
+           dealing with event handlers (or at least their derivatives), I've chosen to provide
+           an enqueue() method that takes a pointer to an ACE_Event_Handler.  The handler's
+           handle_input() method will be called, so your object has to know when it is being
+           called by the thread pool.
+         */</font>
+        int enqueue( ACE_Event_Handler * _handler );
 
-<P><FONT FACE="Arial,Helvetica">#endif // THREAD_POOL_H</FONT><FONT FACE="Arial,Helvetica"></FONT>
+        <font color=red>/*
+           Another handy ACE template is ACE_Atomic_Op&lt;>.  When parameterized, this allows
+           is to have a thread-safe counting object.  The typical arithmetic operators are
+           all internally thread-safe so that you can share it across threads without worrying
+           about any contention issues.
+         */</font>
+        typedef ACE_Atomic_Op&lt;ACE_Mutex,int> counter_t;
 
-<P>
+protected:
+
+        <font color=red>/*
+           Our svc() method will dequeue the enqueued event handler objects and invoke the
+           handle_input() method on each.  Since we're likely running in more than one thread,
+           idle threads can take work from the queue while other threads are busy executing
+           handle_input() on some object.
+         */</font>
+        int svc(void);
+
+        <font color=red>/*
+           We use the atomic op to keep a count of the number of threads in which our svc()
+           method is running.  This is particularly important when we want to close() it down!
+         */</font>
+        counter_t active_threads_;
+};
+
+<font color=blue>#endif</font> <font color=red>// THREAD_POOL_H</font>
+</PRE>
 <HR WIDTH="100%">
 
 <P>Well, that doesn't look too complex.&nbsp; What about the implementation?
 
-<P>
-<HR WIDTH="100%">
-<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page08.html">Continue
-This Tutorial</A>]</CENTER>
-
-</BODY>
-</HTML>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page08.html">Continue This Tutorial</A>]</CENTER>
