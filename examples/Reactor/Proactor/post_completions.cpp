@@ -48,7 +48,7 @@
 #define RESULT_CLASS ACE_WIN32_Asynch_Result
 #endif /* ACE_HAS_AIO_CALLS */
 
-class ACE_Export My_Result : public RESULT_CLASS
+class My_Result : public RESULT_CLASS
 {
   // = TITLE
   // 
@@ -105,7 +105,7 @@ private:
   // Sequence number for the result object.
 };
  
-class ACE_Export My_Handler : public  ACE_Handler
+class My_Handler : public  ACE_Handler
 {
   // = TITLE
   //
@@ -125,7 +125,7 @@ public:
   // Count for the completion.
 };
 
-class ACE_Export My_Task: public ACE_Task <ACE_NULL_SYNCH>
+class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
   // = TITLE
   //   
