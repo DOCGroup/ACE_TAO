@@ -32,6 +32,11 @@
 #   define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #   define ACE_USES_OLD_IOSTREAMS 1
 #   define ACE_HAS_THR_C_DEST
+
+#  if !defined (ACE_HAS_EXCEPTIONS)
+     // See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h:
+#    define _RWSTD_NO_EXCEPTIONS 1
+#  endif /* ! ACE_HAS_EXCEPTIONS */
 # endif /* __SUNPRO_CC >= 0x500 */
 # endif /* __SUNPRO_CC >= 0x420 */
 
@@ -55,13 +60,12 @@
   // default.  It can be enabled by adding "exceptions=1" to the "make"
   // invocation.  See include/makeinclude/platform_sunos5_sunc++.GNU
   // for details.
-  // #define ACE_HAS_EXCEPTIONS
 
 #  if defined (ACE_HAS_EXCEPTIONS)
      // If exceptions are enabled and we are using Sun/CC then
      // <operator new> throws an exception instead of returning 0.
 #    define ACE_NEW_THROWS_EXCEPTIONS
-#  endif /* ACE_NEW_THROWS_EXCEPTIONS */
+#  endif /* ACE_HAS_EXCEPTIONS */
 
     /* If you want to disable threading with Sun CC, remove -mt
        from your CFLAGS, e.g., using make threads=0. */
