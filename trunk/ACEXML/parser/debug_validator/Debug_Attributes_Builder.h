@@ -50,26 +50,21 @@ public:
   /**
    * Set the attribute type.
    */
-  virtual int setAttType (const ATT_TYPE type,
-                          ACEXML_Env &xmlenv)
-    // ACE_THORW_SPEC ((ACEXML_SAXException))
-    ;
+  virtual int setAttType (const ATT_TYPE type ACEXML_ENV_ARG_DECL)
+     ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /**
    * Insert an element for NOTATION or ENUMERATION type attribute.
    */
-  virtual int insertList (const ACEXML_Char *Name,
-                          ACEXML_Env &xmlenv)
-    // ACE_THORW_SPEC ((ACEXML_SAXException))
-    ;
+  virtual int insertList (const ACEXML_Char *Name ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /**
    * Set default attribute declaration.
    */
   virtual int setDefault (const DEFAULT_DECL def,
-                          const ACEXML_Char *value,
-                          ACEXML_Env &xmlenv)
-    // ACE_THORW_SPEC ((ACEXML_SAXException))
+                          const ACEXML_Char *value ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
 
   /**
@@ -142,9 +137,8 @@ public:
    */
   virtual int setElement (const ACEXML_Char *namespaceURI,
                           const ACEXML_Char *localName,
-                          const ACEXML_Char *qName,
-                          ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
+                          const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
 
   /**
@@ -155,8 +149,7 @@ public:
   /**
    * Add a definition for one attribute.
    */
-  virtual int insertAttribute (ACEXML_Attribute_Def_Builder *def,
-                               ACEXML_Env &xmlenv);
+  virtual int insertAttribute (ACEXML_Attribute_Def_Builder *def ACEXML_ENV_ARG_DECL);
 
 
   /**

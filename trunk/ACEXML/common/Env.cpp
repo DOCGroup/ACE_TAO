@@ -11,12 +11,24 @@ ACEXML_Env::ACEXML_Env (void)
 {
 }
 
-ACEXML_Env::ACEXML_Env (const ACEXML_Env &ev)
-  : exception_ (ev.exception_->duplicate ())
+ACEXML_Env::ACEXML_Env (const ACEXML_Env &rhs)
+  : exception_ (0)
 {
+  if (rhs.exception())
+    this->exception_ = rhs.exception_->duplicate();
+}
+
+ACEXML_Env&
+ACEXML_Env::operator= (const ACEXML_Env& rhs)
+{
+  ACEXML_Env tmp (rhs);
+  ACEXML_Exception* tmp_ex = this->exception_;
+  this->exception_ = tmp.exception_;
+  tmp.exception_ = tmp_ex;
+  return *this;
 }
 
 ACEXML_Env::~ACEXML_Env (void)
 {
-  delete this->exception_;
+  this->clear();
 }

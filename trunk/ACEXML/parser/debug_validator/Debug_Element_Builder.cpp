@@ -17,18 +17,16 @@ ACEXML_Debug_Element_Builder::~ACEXML_Debug_Element_Builder ()
 int
 ACEXML_Debug_Element_Builder::setElementName (const ACEXML_Char *,
                                               const ACEXML_Char *,
-                                              const ACEXML_Char *qName,
-                                              ACEXML_Env &)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+                                              const ACEXML_Char *qName ACEXML_ENV_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   this->element_.set (qName, 0);
   return 0;
 }
 
 int
-ACEXML_Debug_Element_Builder::setContentType (CONTENT_TYPE type,
-                                              ACEXML_Env &xmlenv)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+ACEXML_Debug_Element_Builder::setContentType (CONTENT_TYPE type ACEXML_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->type_ == UNDEFINED)
     {
@@ -36,16 +34,14 @@ ACEXML_Debug_Element_Builder::setContentType (CONTENT_TYPE type,
       return 0;
     }
 
-  xmlenv.exception (new ACEXML_SAXParseException (ACE_TEXT("Element type redefinition in Debug_Validator.")));
-  return -1;
+  ACEXML_THROW_RETURN (ACEXML_SAXParseException (ACE_TEXT("Element type redefinition in Debug_Validator.")), -1);
 }
 
 int
 ACEXML_Debug_Element_Builder::insertMixedElement (const ACEXML_Char *,
                                                   const ACEXML_Char *,
-                                                  const ACEXML_Char *qName,
-                                                  ACEXML_Env &)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+                                                  const ACEXML_Char *qName ACEXML_ENV_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Element_Tree_Name_Node *node;
 
@@ -88,8 +84,7 @@ ACEXML_Debug_Element_Builder::startChildGroup ()
 }
 
 int
-ACEXML_Debug_Element_Builder::endChildGroup (CARDINALITY ,
-                                             ACEXML_Env &)
+ACEXML_Debug_Element_Builder::endChildGroup (CARDINALITY  ACEXML_ENV_ARG_DECL_NOT_USED)
 {
   this->active_list_.pop ();
   return 0;
@@ -112,9 +107,8 @@ ACEXML_Debug_Element_Builder::setSequence ()
 int
 ACEXML_Debug_Element_Builder::insertElement  (const ACEXML_Char *,
                                               const ACEXML_Char *,
-                                              const ACEXML_Char *qName,
-                                              ACEXML_Env &)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+                                              const ACEXML_Char *qName ACEXML_ENV_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Element_Tree_Name_Node *node;
 

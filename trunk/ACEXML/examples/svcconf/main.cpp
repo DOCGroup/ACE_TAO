@@ -5,6 +5,7 @@
 #include "ACEXML/parser/parser/Parser.h"
 #include "Svcconf_Handler.h"
 #include "ace/Get_Opt.h"
+#include "ace/Auto_Ptr.h"
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -34,7 +35,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "No filename specified\n"), -1);
 
   ACEXML_DefaultHandler *handler = 0;
-  {
+  auto_ptr<ACEXML_DefaultHandler> cleanup_handler (handler);
     ACEXML_CharStream *stm = 0;
     ACEXML_FileCharStream *fstm = 0;
     ACE_NEW_RETURN (fstm,
@@ -60,12 +61,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     parser.setErrorHandler (handler);
     parser.setEntityResolver (handler);
 
-    ACEXML_Env xmlenv;
-
-    parser.parse (&input, xmlenv);
-    if (xmlenv.exception ())
-      xmlenv.exception ()->print ();
+  ACEXML_TRY_NEW_ENV
+    {
+      parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_TRY_CHECK;
+    }
+  ACEXML_CATCH (ACEXML_SAXException, ex)
+    {
+      ex->print ();
+      return -1;
   }
-  delete handler;
+  ACEXML_ENDTRY;
   return 0;
 }

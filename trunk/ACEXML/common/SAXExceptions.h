@@ -38,20 +38,28 @@ public:
   /// Constructor initializing the exception message.
   ACEXML_SAXException (const ACEXML_Char *msg);
 
+  /// Assignment operator
+  ACEXML_SAXException& operator= (const ACEXML_SAXException& src);
+
   /// Copy constructor.
   ACEXML_SAXException (const ACEXML_SAXException &ex);
 
   /// Destructor.
   virtual ~ACEXML_SAXException (void);
 
-  static const ACEXML_Char *name (void);
+  /// Throw the exception.
+  virtual void _raise (void);
 
-  virtual const ACEXML_Char *id (void);
+  /// Static narrow operation.
+  static ACEXML_SAXException* _downcast (ACEXML_Exception* ex);
+
+  /// Return the name of the exception.
+  virtual const ACEXML_Char *id (void) const;
 
   /// Return the extra message accompanying the exception.
   const ACEXML_Char *message (void);
 
-  virtual ACEXML_Exception *duplicate (void);
+  virtual ACEXML_Exception *duplicate (void) const;
 
   virtual int is_a (const ACEXML_Char *name);
 
@@ -79,14 +87,21 @@ public:
   /// Copy constructor.
   ACEXML_SAXNotSupportedException (const ACEXML_SAXNotSupportedException &ex);
 
+  /// Constructor which accepts an informational message
+  ACEXML_SAXNotSupportedException (const ACEXML_Char* msg);
+
   /// Destructor.
   virtual ~ACEXML_SAXNotSupportedException (void);
 
-  static const ACEXML_Char *name (void);
+  /// Throw the exception.
+  virtual void _raise (void);
 
-  virtual const ACEXML_Char *id (void);
+  /// Static narrow operation.
+  static ACEXML_SAXNotSupportedException* _downcast (ACEXML_Exception* ex);
 
-  virtual ACEXML_Exception *duplicate (void);
+  virtual const ACEXML_Char *id (void) const;
+
+  virtual ACEXML_Exception *duplicate (void) const;
 
   virtual int is_a (const ACEXML_Char *name);
 
@@ -113,15 +128,18 @@ public:
 
   /// Copy constructor.
   ACEXML_SAXNotRecognizedException (const ACEXML_SAXNotRecognizedException &ex);
-
   /// Destructor.
   virtual ~ACEXML_SAXNotRecognizedException (void);
 
-  static const ACEXML_Char *name (void);
+  /// Throw the exception.
+  virtual void _raise (void);
 
-  virtual const ACEXML_Char *id (void);
+  /// Static narrow operation.
+  static ACEXML_SAXNotRecognizedException* _downcast (ACEXML_Exception* ex);
 
-  virtual ACEXML_Exception *duplicate (void);
+  virtual const ACEXML_Char *id (void) const;
+
+  virtual ACEXML_Exception *duplicate (void) const;
 
   virtual int is_a (const ACEXML_Char *name);
 
@@ -153,11 +171,15 @@ public:
   /// Destructor.
   virtual ~ACEXML_SAXParseException (void);
 
-  static const ACEXML_Char *name (void);
+  /// Throw the exception.
+  virtual void _raise (void);
 
-  virtual const ACEXML_Char *id (void);
+  /// Static narrow operation.
+  static ACEXML_SAXParseException* _downcast (ACEXML_Exception* ex);
 
-  virtual ACEXML_Exception *duplicate (void);
+  virtual const ACEXML_Char *id (void) const;
+
+  virtual ACEXML_Exception *duplicate (void) const;
 
   virtual int is_a (const ACEXML_Char *name);
 

@@ -28,25 +28,16 @@ ACEXML_Exception::ACEXML_Exception (const ACEXML_Exception &)
 
 ACEXML_Exception::~ACEXML_Exception (void)
 {
+
 }
 
-const ACEXML_Char *
-ACEXML_Exception::id (void)
+ACEXML_Exception&
+ACEXML_Exception::operator= (const ACEXML_Exception& src)
 {
-  return ACEXML_Exception::exception_name_;
+  this->exception_name_ = src.exception_name_;
+  ACE_ASSERT (this->exception_name_ != 0);
+  return *this;
 }
-
-// @@ An example of how duplicate should be implemented.
-
-//  ACEXML_Exception *
-//  ACEXML_Exception::duplicate (void)
-//  {
-//    ACEXML_Exception *tmp;
-//    ACE_NEW_RETURN (tmp,
-//                    ACEXML_Exception (*this),
-//                    // Replace ACEXML_Exception with appropriate type.
-//                    0);
-//  }
 
 int
 ACEXML_Exception::is_a (const ACEXML_Char *name)
@@ -62,8 +53,7 @@ ACEXML_Exception::is_a (const ACEXML_Char *name)
 void
 ACEXML_Exception::print (void)
 {
-  // @@ Nanbor, I don't know how to handle the case
-  //    when we define ACEXML_UTF16 as ACEXML_Char
-  ACE_DEBUG ((LM_DEBUG,
-              "Exception: ACEXML_Exception\n"));
+  ACE_DEBUG ((LM_ERROR,
+              ACE_TEXT ("ACEXML: (%P|%t) EXCEPTION : %s\n"),
+                        this->exception_name_));
 }

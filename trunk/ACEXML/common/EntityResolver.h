@@ -47,10 +47,8 @@ public:
    * Allow the application to resolve external entities.
    */
   virtual ACEXML_InputSource *resolveEntity (const ACEXML_Char *publicId,
-                                             const ACEXML_Char *systemId,
-                                             ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    = 0;
+                                             const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((ACEXML_SAXException)) = 0;
 };
 
 

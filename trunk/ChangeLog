@@ -1,3 +1,87 @@
+Sat Oct 12 22:50:02 2002  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * ACEXML/common/XML_Macros.h:
+
+          New file which contains the macros needed to enable support for
+          Exceptions in ACEXML.
+
+        * ACEXML/apps/svcconf/Makefile:
+        * ACEXML/common/Makefile:
+        * ACEXML/examples/SAXPrint/Makefile:
+        * ACEXML/parser/parser/Makefile:
+        * ACEXML/tests/Makefile:
+
+          Regenerate dependencies.
+
+        * ACEXML/common/Env.cpp:
+        * ACEXML/common/Env.h:
+        * ACEXML/common/Env.i:
+        * ACEXML/common/Exception.cpp:
+        * ACEXML/common/Exception.h:
+        * ACEXML/common/Exception.i:
+
+          Enable support for Native Exceptions.
+
+        * ACEXML/apps/svcconf/Svcconf.cpp:
+        * ACEXML/apps/svcconf/Svcconf.h:
+        * ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+        * ACEXML/apps/svcconf/Svcconf_Handler.h:
+        * ACEXML/common/Attributes_Def_Builder.h:
+        * ACEXML/common/ContentHandler.h:
+        * ACEXML/common/DTDHandler.h:
+        * ACEXML/common/DTD_Manager.h:
+        * ACEXML/common/DefaultHandler.cpp:
+        * ACEXML/common/DefaultHandler.h:
+        * ACEXML/common/Element_Def_Builder.h:
+        * ACEXML/common/EntityResolver.h:
+        * ACEXML/common/ErrorHandler.h:
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/SAXExceptions.cpp:
+        * ACEXML/common/SAXExceptions.h:
+        * ACEXML/common/SAXExceptions.i:
+        * ACEXML/common/Validator.h:
+        * ACEXML/common/XMLFilterImpl.cpp:
+        * ACEXML/common/XMLFilterImpl.h:
+        * ACEXML/common/XMLReader.h:
+        * ACEXML/examples/SAXPrint/Print_Handler.cpp:
+        * ACEXML/examples/SAXPrint/Print_Handler.h:
+        * ACEXML/examples/SAXPrint/SAXPrint_Handler.cpp:
+        * ACEXML/examples/SAXPrint/SAXPrint_Handler.h:
+        * ACEXML/examples/SAXPrint/main.cpp:
+        * ACEXML/examples/SAXPrint/svc.conf.xml:
+        * ACEXML/examples/svcconf/Svcconf_Handler.cpp:
+        * ACEXML/examples/svcconf/Svcconf_Handler.h:
+        * ACEXML/examples/svcconf/main.cpp:
+        * ACEXML/parser/debug_validator/Debug_Attributes_Builder.cpp:
+        * ACEXML/parser/debug_validator/Debug_Attributes_Builder.h:
+        * ACEXML/parser/debug_validator/Debug_DTD_Manager.cpp:
+        * ACEXML/parser/debug_validator/Debug_DTD_Manager.h:
+        * ACEXML/parser/debug_validator/Debug_Element_Builder.cpp:
+        * ACEXML/parser/debug_validator/Debug_Element_Builder.h:
+
+          Switch over the files to support Native Exceptions.
+
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/parser/parser/Parser.h:
+
+          Use the obstack unwind to unwind the stack and reuse memory.
+          Currently not done throughout the parser. That will come later.
+
+        * ace/Makefile.ace:
+
+          Added Codecs to ACE_COMPONENTS when building FOR_TAO. Thanks to
+          Don Hinton for suggesting this.
+
+        * include/makeinclude/rules.local.GNU:
+
+          Clean up the old symlinks under $ACE_ROOT/ace when building a
+          new version of the libraries.
+
+        * tests/Makefile:
+
+          Cleanup the Codecs_Test when $ACE_ROOT/ace has been realcleaned
+          previously.
+
 Fri Oct 11 12:44:58 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* RTJava/*: Removed.  Angelo Corsaro <corsaro@ece.uci.edu>
