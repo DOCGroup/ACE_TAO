@@ -62,16 +62,6 @@
 #define ACE_SIZEOF_DOUBLE 8
 #define ACE_SIZEOF_LONG_DOUBLE 12
 
-/* typedef for ACE_UINT64 */
-/*
-   We only make the typedef if ACE_UINT64_TYPEDEF is defined.  Otherwise,
-   let ace/Basic_Types.h do the work for us.
-*/
-#define ACE_UINT64_TYPEDEF unsigned long long
-#if defined(ACE_UINT64_TYPEDEF)
-   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
-#endif /* ACE_UINT64_TYPEDEF && !ACE_DISABLE_AUTOCONF_UINT64 */
-
 /* Enable ACE inlining */
 #define __ACE_INLINE__ 1
 
