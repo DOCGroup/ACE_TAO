@@ -77,8 +77,14 @@ Events_Test::init (int argc, char* argv [], CORBA::Environment &ACE_TRY_ENV)
   consumer_ = new Event_StructuredPushConsumer (this);
   consumer_->init (root_poa_.in (), ACE_TRY_ENV);
   ACE_CHECK;
-
   consumer_->connect (this->consumer_admin_.in (), ACE_TRY_ENV);
+  ACE_CHECK;
+
+  Event_StructuredPushConsumer* consumer2;
+  consumer2 = new Event_StructuredPushConsumer (this);
+  consumer2->init (root_poa_.in (), ACE_TRY_ENV);
+  ACE_CHECK;
+  consumer2->connect (this->consumer_admin_.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
   supplier_ = new Event_StructuredPushSupplier (this);
@@ -145,6 +151,25 @@ Events_Test::create_EC (CORBA::Environment &ACE_TRY_ENV)
                                          ACE_TRY_ENV);
   ACE_CHECK;
 
+  /****************************************************************/
+
+  CosNotification::AdminProperties admin(2);
+  admin.length (2);
+
+  admin[0].name =
+    CORBA::string_dup(CosNotification::MaxQueueLength);
+
+  admin[0].value <<= (CORBA::Long)5;
+
+  admin[1].name =
+    CORBA::string_dup(CosNotification::MaxConsumers);
+
+  admin[1].value <<= (CORBA::Long)1;
+
+  ec_->set_admin (admin, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  /****************************************************************/
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
 

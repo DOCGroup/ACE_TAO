@@ -113,7 +113,7 @@ ConnectDisconnect::init (int argc, char* argv [], CORBA::Environment &ACE_TRY_EN
 int
 ConnectDisconnect::parse_args(int argc, char *argv[])
 {
-    ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_Arg_Shifter arg_shifter (argc, argv);
 
     char *current_arg = 0;
     while (arg_shifter.is_anything_left ())
@@ -142,8 +142,8 @@ ConnectDisconnect::parse_args(int argc, char *argv[])
         {
           ACE_DEBUG((LM_DEBUG,
                      "usage: %s "
-                     "-count testcount \n",
-                     "-consumers number_of_consumers",
+                     "-count testcount \n"
+                     "-consumers number_of_consumers"
                      "-suppliers number_of_suppliers",
                      argv[0], argv[0]));
 
