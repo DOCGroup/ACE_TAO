@@ -1,12 +1,17 @@
+Tue Feb 15 08:23:35 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/CosEvent/Basic/Shutdown.cpp:
+          Fixed problems for platforms without native C++ exceptions.
+
 Tue Feb 15 08:19:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
-	  Fixed template instantiation, Event2 uses the same templates, so
-	  if it is enabled we should not instantiate the templates.
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+          Fixed template instantiation, Event2 uses the same templates, so
+          if it is enabled we should not instantiate the templates.
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
-	  Cosmetic fixes.
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+          Cosmetic fixes.
 
 Mon Feb 14 18:13:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -43,7 +48,7 @@ Mon Feb 14 08:25:32 2000  Darrell Brunsch <brunsch@uci.edu>
         * examples/Simple/time/Time_Client_i.cpp:
         * examples/Simple/time/Time_i.cpp:
         * examples/Simple/time/Time_i.h:
-          The Time interface had a time method in it (A no-no in IDL).  
+          The Time interface had a time method in it (A no-no in IDL).
           Changed time () to current_time ().
 
 Mon Feb 14 02:47:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
