@@ -31,14 +31,7 @@ ifdef sun
   CLEANUP_DIRS += SunWS_cache
 endif
 
-MKDIR_NTSTYLE = 0
-ifeq ("$(OS)", "Windows_NT")
-ifneq ($(cygwin32), 1)
-ifneq ($(mingw32), 1)
-  MKDIR_NTSTYLE = 1
-endif  
-endif  
-endif
+vxworks_ntbuild ?= 0
 
 #### TEMPLATE_REPOSITORY can be set in individual platform files
 #### to create template repository directories.  See
@@ -166,7 +159,7 @@ $(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT) $(VSHDIR)%.creation_stamp
 	$(SOLINK)
 endif # SOLINK
 
-ifeq ($(MKDIR_NTSTYLE),1)
+ifeq ($(vxworks_ntbuild),1)
 $(VDIR)%.creation_stamp:
 	@if not exist $(dir $@) mkdir $(subst /,,$(dir $@))
 	@echo > $@
@@ -177,7 +170,7 @@ $(VDIR)%.creation_stamp:
 endif
 
 ifneq ($(VDIR),$(VSHDIR))
-  ifeq ($(MKDIR_NTSTYLE),1)
+  ifeq ($(vxworks_ntbuild),1)
 $(VSHDIR)%.creation_stamp:
 	@if not exist $(dir $@) mkdir $(subst /,,$(dir $@))
 	@echo > $@
@@ -258,6 +251,15 @@ $(INSMAN)/man7/% \
 $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
+ifeq ($(vxworks_ntbuild),1)
+	@if exist $@ echo "$(@F) already installed"
+	@if not exist $@ echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) to $(@D)" && \
+		$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
+		$(LN_S) $(shell pwd)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
+		echo "Installing $(@F) to $(@D)" && \
+		$(RM) $@ && \
+		$(LN_S) $(shell pwd)/$(@F) $@
+else
 ifneq ($(mingw32),1)
 	@if test $(shell pwd) != $(@D) -o -n "$(SOVERSION)" ; then \
 		if test -s $@ ; then \
@@ -284,6 +286,7 @@ else
 			$(LN_S) $(call PWD)/$(@F) $@; \
 		fi ; \
 	fi
+endif
 endif
 ifdef MVSLIB
 #special for MVS in order to use the .x files
