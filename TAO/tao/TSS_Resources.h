@@ -27,6 +27,11 @@
 #include "tao/Environment.h"
 #include "tao/TAO_Export.h"
 
+// Forward declarations
+namespace TAO
+{
+  class GUIResource_Factory;
+}
 /**
  * @class TAO_TSS_Resources
  *
@@ -88,7 +93,12 @@ public:
   TAO_Policy_Current_Impl * policy_current_;
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
+  /** A factory for creating GUIReactors.
+   *
+   * GUIResource_Factory has to be stored in TSS, as GUIReactor are operational
+   * only in within the context of GUI event loops.
+   */
+  TAO::GUIResource_Factory *gui_resource_factory_;
 };
 
 /**

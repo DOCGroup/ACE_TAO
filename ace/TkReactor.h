@@ -20,8 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_TK)
-
+#include "ace/ACE_TkReactor_export.h"
 #include "ace/Select_Reactor.h"
 #include /**/ <tk.h>
 
@@ -31,7 +30,7 @@
  * @brief This little class is necessary due to the way that Microsoft
  * implements sockets to be pointers rather than indices.
  */
-class ACE_Export ACE_TkReactorID
+class ACE_TkReactor_Export ACE_TkReactorID
 {
 public:
   /// Underlying handle.
@@ -43,7 +42,7 @@ public:
 
 class ACE_TkReactor;
 
-class ACE_Export ACE_TkReactor_Input_Callback
+class ACE_TkReactor_Export ACE_TkReactor_Input_Callback
 {
 public:
   ACE_TkReactor *reactor_;
@@ -56,7 +55,7 @@ public:
  * @brief An object-oriented event demultiplexor and event handler
  * dispatcher that uses the Tk functions.
  */
-class ACE_Export ACE_TkReactor : public ACE_Select_Reactor
+class ACE_TkReactor_Export ACE_TkReactor : public ACE_Select_Reactor
 {
 public:
   // = Initialization and termination methods.
@@ -128,6 +127,5 @@ private:
   ACE_TkReactor &operator = (const ACE_TkReactor &);
 };
 
-#endif /* ACE_HAS_TK */
 #include /**/ "ace/post.h"
 #endif /* ACE_TK_REACTOR_H */

@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver {
-  requires += xt_reactor
+project(*Server): taoexe, portableserver, tao_xtresource, ace_motif {
   Source_Files {
     test_i.cpp
     Stopwatch_display.cpp
@@ -11,8 +10,7 @@ project(*Server): taoexe, portableserver {
   }
 }
 
-project(*Client): taoexe {
-  requires += xt_reactor
+project(*Client): taoexe, tao_xtresource, ace_motif {
   Source_Files {
     testC.cpp
     Control.cpp

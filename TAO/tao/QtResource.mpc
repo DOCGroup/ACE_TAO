@@ -1,0 +1,19 @@
+project(TAO_QtResource) : acelib, taolib, taoversion, core, tao_output, taodefaults, ace_qtreactor {
+
+  sharedname   = TAO_QtResource
+
+  dynamicflags += TAO_QTRESOURCE_BUILD_DLL
+
+  Header_Files {
+    QtResource_Factory.h
+    QtResource_Loader.h
+    TAO_QtResource_Export.h
+  }
+
+  Source_Files(TAO_COMPONENTS) {
+    Default_Resources {
+      QtResource_Factory.cpp
+      QtResource_Loader.cpp
+    }
+  }
+}

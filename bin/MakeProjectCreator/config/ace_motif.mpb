@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// ace_motif.mpb,v
+
+project: ace_xt {
+  requires += motif
+  lit_libs += Xm
+}

@@ -2,7 +2,6 @@
 
 #include "Control.h"
 
-#if defined (ACE_HAS_XT)
 
 Control::Control (Widget &parent)
 {
@@ -53,4 +52,3 @@ Control::stopwidget (void)
   return this->stopwidget_;
 }
 
-#endif /*ACE_HAS_XT*/

@@ -1,7 +1,6 @@
 //$Id$
 #include "timer.h"
 
-#if defined (ACE_HAS_XT)
 
 Timer_imp::Timer_imp (XtAppContext &app,
                       CORBA::Long interval,
@@ -84,4 +83,3 @@ Timer_imp::report_time (CORBA::Float time)
 }
 
 
-#endif /*ACE_HAS_XT*/

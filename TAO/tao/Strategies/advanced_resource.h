@@ -30,6 +30,7 @@ public:
  * factory can return resource instances which are, e.g., global,
  * stored in thread-specific storage, stored in shared memory,
  * etc.
+ *
  */
 class TAO_Strategies_Export TAO_Advanced_Resource_Factory : public TAO_Default_Resource_Factory
 {
@@ -56,15 +57,13 @@ public:
   enum
   {
     /// Use ACE_Token
-    TAO_REACTOR_SELECT_MT,
+    TAO_REACTOR_SELECT_MT = 1 ,
 
     /// Use ACE_Noop_Token
-    TAO_REACTOR_SELECT_ST,
-    TAO_REACTOR_FL,
-    TAO_REACTOR_TK,
-    TAO_REACTOR_WFMO,
-    TAO_REACTOR_MSGWFMO,
-    TAO_REACTOR_TP
+    TAO_REACTOR_SELECT_ST = 2,
+    TAO_REACTOR_WFMO      = 3,
+    TAO_REACTOR_MSGWFMO   = 4 ,
+    TAO_REACTOR_TP        = 5,
   };
 
   /// Thread queueing Strategy

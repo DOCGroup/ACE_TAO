@@ -1,28 +1,33 @@
 // $Id$
 
 #include "TSS_Resources.h"
+#include "GUIResource_Factory.h"
 
 ACE_RCSID (tao,
            TSS_Resources,
            "$Id$")
 
 TAO_TSS_Resources::TAO_TSS_Resources (void)
-  :  poa_current_impl_ (0),
-     rtscheduler_current_impl_ (0),
-     rtscheduler_previous_current_impl_ (0),
-     default_environment_ (&this->tss_environment_)
+  :  poa_current_impl_ (0)
+     , rtscheduler_current_impl_ (0)
+     , rtscheduler_previous_current_impl_ (0)
+     , default_environment_ (&this->tss_environment_)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   , policy_current_ (&this->initial_policy_current_)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+     , gui_resource_factory_ (0)
 
 {
 }
 
 TAO_TSS_Resources::~TAO_TSS_Resources (void)
 {
+  if (gui_resource_factory_)
+    delete gui_resource_factory_;
+  gui_resource_factory_ = 0;
 }
 
 // ****************************************************************

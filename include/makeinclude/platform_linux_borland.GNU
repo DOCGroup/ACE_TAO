@@ -21,6 +21,14 @@ ifeq (,$(threads))
   threads = 1
 endif
 
+PLATFORM_TCL_CPPFLAGS=-I/usr/include/tcl8.4
+PLATFORM_TCL_LIBS=-ltcl8.4
+PLATFORM_TCL_LDFLAGS=
+
+PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
+PLATFORM_TK_LIBS=$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_LIB_FLAG)
+PLATFORM_TK_LDFLAGS=
+
 PLATFORM_AIO_SUPPORT := \
        $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
 

@@ -6,6 +6,7 @@
 #include "tao/LF_Event_Binder.h"
 #include "tao/debug.h"
 #include "tao/Transport.h"
+#include "tao/GUIResource_Factory.h"
 #include "ace/OS_NS_sys_time.h"
 
 #include "ace/Reactor.h"
@@ -27,7 +28,12 @@ TAO_Leader_Follower::~TAO_Leader_Follower (void)
       delete follower;
     }
   // Hand the reactor back to the resource factory.
-  this->orb_core_->resource_factory ()->reclaim_reactor (this->reactor_);
+  // use GUI reactor factory if available
+  if ( this->orb_core_->gui_resource_factory () )
+    this->orb_core_->gui_resource_factory ()->reclaim_reactor (this->reactor_);
+  else
+    this->orb_core_->resource_factory ()->reclaim_reactor (this->reactor_);
+
   this->reactor_ = 0;
 }
 
@@ -116,8 +122,13 @@ TAO_Leader_Follower::reactor (void)
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock (), 0);
       if (this->reactor_ == 0)
         {
-          this->reactor_ =
-            this->orb_core_->resource_factory ()->get_reactor ();
+          // use GUI reactor factory if available
+          if ( this->orb_core_->gui_resource_factory () )
+            this->reactor_ =
+              this->orb_core_->gui_resource_factory ()->get_reactor ();
+          else
+            this->reactor_ =
+              this->orb_core_->resource_factory ()->get_reactor ();
         }
     }
   return this->reactor_;

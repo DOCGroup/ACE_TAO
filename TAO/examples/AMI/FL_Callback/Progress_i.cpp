@@ -2,8 +2,6 @@
 
 #include "Progress_i.h"
 
-#if defined(ACE_HAS_FL)
-
 #include <FL/Fl_Slider.h>
 #include <FL/Fl_Button.h>
 
@@ -170,6 +168,3 @@ Progress_Window::start ()
       ACE_ENDTRY;
     }
 }
-
-
-#endif /* ACE_HAS_FL */

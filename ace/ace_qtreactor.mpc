@@ -1,0 +1,23 @@
+//  -*- MPC -*- now wouldn't this be cool...
+// ace_qtreactor.mpc,v
+
+project(ACE_QtReactor) : acedefaults, aceversion, core, acelib, ace_qt {
+
+  sharedname   = ACE_QtReactor
+  dynamicflags = ACE_QTREACTOR_BUILD_DLL
+
+  MOC_Files {
+    QtReactor.h
+  }
+
+  Header_Files {
+    ACE_QtReactor_export.h
+  }
+
+  Source_Files(ACE_COMPONENTS) {
+    Demux {
+      QtReactor_moc.cpp
+      QtReactor.cpp
+    }
+  }
+}
