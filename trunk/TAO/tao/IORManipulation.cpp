@@ -19,6 +19,7 @@
 #include "tao/IORManipulation.h"
 #include "tao/MProfile.h"
 #include "tao/Stub.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/Auto_Ptr.h"
 
