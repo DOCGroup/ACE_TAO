@@ -147,6 +147,7 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Ending %s test at %D\n"), program)); \
   ace_file_stream.close ()
 
+#if !defined (ACE_WIN32)
 #define ACE_APPEND_LOG(NAME) \
   const ASYS_TCHAR *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
@@ -154,6 +155,14 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
   if (ace_file_stream.set_output (program, 1) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("set_output failed")), -1); \
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
+#else /* ACE_WIN32 */
+#define ACE_APPEND_LOG(NAME) \
+  const ASYS_TCHAR *program = NAME; \
+  ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
+  if (ace_file_stream.set_output (program, 1) != 0) \
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("set_output failed")), -1); \
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
+#endif /* ACE_WIN32 */
 
 #define ACE_END_LOG \
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Ending %s test at %D\n\n"), program)); \
