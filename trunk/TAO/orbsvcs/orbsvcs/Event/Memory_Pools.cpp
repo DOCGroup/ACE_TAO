@@ -29,7 +29,7 @@ ACE_ES_Memory_Pools::thr_init (void)
 // For ACE_ES_Memory_Pools.
 template class ACE_TSS<ACE_ES_Event_Container_Allocator>;
 template class ACE_TSS<ACE_ES_Dispatch_Request_Allocator>;
-template class ACE_TSS<ACE_Malloc<ACE_Local_Memory_Pool, ACE_Local_Memory_Pool_Options, ACE_MEMORY_POOL_MUTEX> >;
+template class ACE_TSS<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_MEMORY_POOL_MUTEX> >;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_TSS<ACE_ES_Event_Container_Allocator>
 #pragma instantiate ACE_TSS<ACE_ES_Dispatch_Request_Allocator>
