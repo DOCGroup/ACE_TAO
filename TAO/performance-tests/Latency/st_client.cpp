@@ -1,27 +1,33 @@
 // $Id$
 
+#include "testC.h"
 #include "ace/Get_Opt.h"
-#include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
-#include "testC.h"
+#include "ace/Stats.h"
+#include "ace/Sample_History.h"
 
 ACE_RCSID(Latency, st_client, "$Id$")
 
 const char *ior = "file://test.ior";
 int niterations = 100;
 int period = -1;
+int do_dump_history = 0;
 int do_shutdown = 1;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:p:x");
+  ACE_Get_Opt get_opts (argc, argv, "hk:i:p:x");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'h':
+        do_dump_history = 1;
+        break;
+
       case 'k':
         ior = get_opts.optarg;
         break;
@@ -49,41 +55,6 @@ parse_args (int argc, char *argv[])
   // Indicates sucessful parsing of the command line
   return 0;
 }
-
-class Client
-{
-  // = TITLE
-  //   Run the client thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the client threads.
-  //
-public:
-  Client (void);
-  // ctor
-
-  void set (Test_ptr server, int niterations);
-  // Set the test attributes.
-
-  void accumulate_into (ACE_Throughput_Stats &throughput) const;
-  // Accumulate the throughput statistics into <throughput>
-
-  void dump_stats (const char* msg, ACE_UINT32 gsf);
-  // Accumulate the throughput statistics into <throughput>
-
-  int svc (void);
-  // Run the test...
-
-private:
-  Test_var server_;
-  // The server.
-
-  int niterations_;
-  // The number of iterations on each client thread.
-
-  ACE_Throughput_Stats throughput_;
-  // Keep throughput statistics on a per-thread basis
-};
 
 int
 main (int argc, char *argv[])
@@ -133,9 +104,35 @@ main (int argc, char *argv[])
                             1);
         }
 
-      Client client;
-      client.set (server.in (), niterations);
-      client.svc ();
+      // @@ We should use "validate_connection" for this
+      for (int j = 0; j < 100; ++j)
+        {
+          server->_non_existent (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
+      ACE_Sample_History history (niterations);
+
+      ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+      for (int i = 0; i < niterations; ++i)
+        {
+          ACE_hrtime_t latency_base =
+            server->test_method (ACE_OS::gethrtime (), ACE_TRY_ENV);
+          ACE_hrtime_t now = ACE_OS::gethrtime ();
+
+          ACE_TRY_CHECK;
+
+          history.sample (now - latency_base);
+
+          if (TAO_debug_level > 0 && i % 100 == 0)
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
+	  if (period != -1)
+	    {
+	      ACE_Time_Value tv (0, period * 1000);
+	      ACE_OS::sleep (tv);
+	    }
+        }
+      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
@@ -143,7 +140,18 @@ main (int argc, char *argv[])
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
-      client.dump_stats ("Single thread", gsf);
+      if (do_dump_history)
+        {
+          history.dump_samples ("HISTORY", gsf);
+        }
+
+      ACE_Basic_Stats stats;
+      history.collect_basic_stats (stats);
+      stats.dump_results ("Single thread", gsf);
+
+      ACE_Throughput_Stats::dump_throughput ("Single thread", gsf,
+                                             test_end - test_start,
+                                             stats.samples_count ());
 
       if (do_shutdown)
         {
@@ -160,72 +168,4 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
 
   return 0;
-}
-
-// ****************************************************************
-
-Client::Client (void)
-{
-}
-
-void
-Client::set (Test_ptr server, int niterations)
-{
-  this->server_ = Test::_duplicate (server);
-  this->niterations_ = niterations;
-}
-
-int
-Client::svc (void)
-{
-  ACE_TRY_NEW_ENV
-    {
-      // @@ We should use "validate_connection" for this
-      for (int j = 0; j < 100; ++j)
-        {
-          server_->_non_existent (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-
-      ACE_hrtime_t throughput_base = ACE_OS::gethrtime ();
-
-      for (int i = 0; i < this->niterations_; ++i)
-        {
-          ACE_hrtime_t latency_base =
-            server_->test_method (ACE_OS::gethrtime (), ACE_TRY_ENV);
-          ACE_hrtime_t now = ACE_OS::gethrtime ();
-
-          ACE_TRY_CHECK;
-
-          this->throughput_.sample (now - throughput_base,
-                                    now - latency_base);
-
-          if (TAO_debug_level > 0 && i % 100 == 0)
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
-	  if (period != -1)
-	    {
-	      ACE_Time_Value tv (0, period * 1000);
-	      ACE_OS::sleep (tv);
-	    }
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Latency: exception raised");
-    }
-  ACE_ENDTRY;
-  return 0;
-}
-
-void
-Client::accumulate_into (ACE_Throughput_Stats &throughput) const
-{
-  throughput.accumulate (this->throughput_);
-}
-
-void
-Client::dump_stats (const char* msg, ACE_UINT32 gsf)
-{
-  this->throughput_.dump_results (msg, gsf);
 }

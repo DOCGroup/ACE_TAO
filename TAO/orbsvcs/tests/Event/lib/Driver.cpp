@@ -308,7 +308,7 @@ EC_Driver::obtain_remote_ec (CORBA::Environment& ACE_TRY_ENV)
   ACE_CHECK;
 
   this->event_channel_ =
-    RtecEventChannelAdmin::EventChannel::_narrow (tmp, ACE_TRY_ENV);
+    RtecEventChannelAdmin::EventChannel::_narrow (tmp.in (), ACE_TRY_ENV);
   ACE_CHECK;
 }
 

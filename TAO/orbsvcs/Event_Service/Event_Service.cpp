@@ -185,6 +185,30 @@ Event_Service::run (int argc, char* argv[])
       CORBA::String_var str =
         this->orb_->object_to_string (ec.in (), ACE_TRY_ENV);
 
+      if (this->ior_file_name_ != 0)
+        {
+	  FILE *output_file= ACE_OS::fopen (this->ior_file_name_, "w");
+	  if (output_file == 0)
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       "Cannot open output file for writing IOR: %s",
+			       this->ior_file_name_),
+			      1);
+	  ACE_OS::fprintf (output_file, "%s", str.in ());
+	  ACE_OS::fclose (output_file);
+        }
+
+      if (this->pid_file_name_ != 0)
+        {
+          FILE *pidf = fopen (this->pid_file_name_, "w");
+          if (pidf != 0)
+            {
+              ACE_OS::fprintf (pidf,
+                               "%ld\n",
+                               ACE_static_cast (long, ACE_OS::getpid ()));
+              ACE_OS::fclose (pidf);
+            }
+        }
+
       ACE_DEBUG ((LM_DEBUG,
                   "The EC IOR is <%s>\n", str.in ()));
 
@@ -224,7 +248,7 @@ Event_Service::parse_args (int argc, char *argv [])
   // default values...
   this->service_name_ = "EventService";
 
-  ACE_Get_Opt get_opt (argc, argv, "n:s:t:");
+  ACE_Get_Opt get_opt (argc, argv, "n:o:p:s:t:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -233,6 +257,14 @@ Event_Service::parse_args (int argc, char *argv [])
         {
         case 'n':
           this->service_name_ = get_opt.optarg;
+          break;
+
+        case 'o':
+          this->ior_file_name_ = get_opt.optarg;
+          break;
+
+        case 'p':
+          this->pid_file_name_ = get_opt.optarg;
           break;
 
         case 's':
@@ -286,6 +318,8 @@ Event_Service::parse_args (int argc, char *argv [])
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       "-n service_name "
+                      "-o ior_file_name "
+                      "-p pid_file_name "
                       "-s <global|local> "
                       "-t <new|old_reactive|old_mt> "
                       "\n",
