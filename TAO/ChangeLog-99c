@@ -1,3 +1,19 @@
+Wed Sep  8 13:54:15 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_union_branch.cpp:
+	  Fixed label value generation for the case where the the
+	  label is a declared constant value of a typedef'd integer.
+	  We must generate the underlying integer value, not the
+	  constant's name, and make sure that a default case is
+	  included in the CDR operator generation, since more of
+	  these typedef'd constants may be declared in another
+	  IDL file or in non-generated code. Also, if the typedef
+	  is not in global scope, this will enable us to keep the
+	  CDR operator code inlined (the TAO_NAMESPACE_* code 
+	  generation takes place in the *C.cpp file). Thanks to
+	  Lars Immisch <lars@ibp.de> for pointing out this use
+	  case and sending in an example file.
+
 Wed Sep  8 13:49:41 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* orbsvcs/tests/start_services:
