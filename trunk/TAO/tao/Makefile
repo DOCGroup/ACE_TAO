@@ -9500,7 +9500,6 @@ realclean:
  Profile.i ORBInitInfo.h PortableInterceptorC.h LocalObject.h \
  StringSeqC.h ORBInitInfo.inl ORBInitializer_Registry.h \
  TAO_Singleton.h \
- ORBInitializer_Registry.inl \
  CodecFactory_ORBInitializer.h TypeCodeFactory_Adapter.h \
  PICurrent_ORBInitializer.h PICurrent.h ValueFactory_Map.h \
  ValueFactory_Map.i \
@@ -28984,7 +28983,6 @@ realclean:
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- ORBInitializer_Registry.inl \
  ORB.h Services.h \
  Services.i \
  CORBA_String.h \

@@ -1,17 +1,16 @@
-// -*- C++ -*-
-//
-// $Id$
-
 #include "ORBInitializer_Registry.h"
 #include "ORB.h"
 #include "TAO_Singleton_Manager.h"
+#include "TAO_Singleton.h"
 #include "ace/Object_Manager.h"
 
-#if !defined (__ACE_INLINE__)
-# include "tao/ORBInitializer_Registry.inl"
-#endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, ORBInitializer_Registry, "$Id$")
+ACE_RCSID (tao,
+           ORBInitializer_Registry,
+           "$Id$")
+
+
+// ****************************************************************
 
 
 void
@@ -112,6 +111,13 @@ TAO_ORBInitializer_Registry::post_init (
                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
+}
+
+TAO_ORBInitializer_Registry *
+TAO_ORBInitializer_Registry::instance (void)
+{
+  return
+    TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX>::instance ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
