@@ -1,7 +1,6 @@
 // $Id$
 
 
-#include "orbsvcs/CosNamingC.h"
 #include "INSC.h"
 
 int
@@ -74,48 +73,18 @@ main (int argc, char *argv[])
                                    "given name.\n"),
                                   -1);
 
-              if (ACE_OS::strcmp (argv[i], "NameService") == 0)
-                {
-                  CosNaming::NamingContext_var naming_context =
-                    CosNaming::NamingContext::_narrow (objref.in (),
-                                                       ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
-              
-                  ACE_DEBUG ((LM_DEBUG,
-                              "Resolved IOR for %s : %s\n",
-                              argv[i],
-                              orb->object_to_string (naming_context.in ())));
-
-                  // Sanity check to see if the reference to Naming
-                  // Context is alright.
-                  CosNaming::Name my_name;
-                  my_name.length (1);
-                  my_name[0].id = CORBA::string_dup ("ObjName");
-
-                  naming_context->bind (my_name,
-                                        objref.in (),
-                                        ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
-
-                  ACE_DEBUG ((LM_DEBUG,
-                              "\nBind successful on the "
-                              "resolved Naming Context\n")); 
-                }
-              else
-                {
-                  INS_var server = INS::_narrow (objref.in (),
+              INS_var server = INS::_narrow (objref.in (),
                                                  ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
+              ACE_TRY_CHECK;
 
-                  ACE_DEBUG ((LM_DEBUG,
-                              "Resolved IOR for %s : %s\n",
-                              argv[i],
-                              orb->object_to_string (server.in ())));
+              ACE_DEBUG ((LM_DEBUG,
+                          "Resolved IOR for %s : %s\n",
+                          argv[i],
+                          orb->object_to_string (server.in ())));
 
-                  ACE_DEBUG ((LM_DEBUG,
-                              "\nResult of Remote Call : %s\n",
-                              server->test_ins (ACE_TRY_ENV)));
-                }
+              ACE_DEBUG ((LM_DEBUG,
+                          "\nResult of Remote Call : %s\n",
+                          server->test_ins (ACE_TRY_ENV)));
             }
         }
     }
