@@ -1,14 +1,3 @@
-Fri May  9 10:57:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* ciao/Component_Base.idl: Removed references to the Notification
-	  services. They are not needed with 1.1.
-
-Fri May  9 10:54:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* ciao/Container_Impl.cpp: Used .inout () while doing a deep copy
-	  so that the right operator= on  TAO_Unbounded_Sequence is
-	  invoked without any warning in g++. 
-
 Wed May  7 17:24:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/handcrafted/Display/RateGen/RateGen.mpc: Added new

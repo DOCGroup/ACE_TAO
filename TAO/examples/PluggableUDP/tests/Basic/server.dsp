@@ -170,7 +170,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer"
-# ADD LINK32 TAO_ObjRefTemplates.lib TAO_Valuetypes.lib TAO_IORInterceptors.lib TAOs.lib aces.lib TAO_PortableServers.lib TAO_Strategiess.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\Strategies"
+# ADD LINK32 TAOs.lib aces.lib TAO_PortableServers.lib TAO_Strategiess.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\Strategies"
 # SUBTRACT LINK32 /map
 
 !ELSEIF  "$(CFG)" == "UDP Basic Server - Win32 Static Debug"
@@ -200,7 +200,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer"
-# ADD LINK32 TAO_ObjRefTemplatesd.lib TAO_Valuetypesd.lib TAO_IORInterceptorsd.lib TAOsd.lib acesd.lib TAO_PortableServersd.lib TAO_Strategiessd.lib advapi32.lib user32.lib /nologo /subsystem:console /map /debug /machine:I386 /libpath:"..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\Strategies"
+# ADD LINK32 TAOsd.lib acesd.lib TAO_PortableServersd.lib TAO_Strategiessd.lib advapi32.lib user32.lib /nologo /subsystem:console /map /debug /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\Strategies"
 
 !ENDIF 
 
