@@ -1528,7 +1528,12 @@ The implementation released in TAO 1.1.12 consists of the following
 
   <li>
       The EventChannel's default Filter Factory can be used to create filters.
-      For now we support the "TCL" grammer from the Trading Service.
+      We noe support the OMG Extended Trader Constraint Language (ETCL) grammar.
+      This is an extension of the Trader Constraint Language grammar which was
+      created specifically for the Notification Service. The ETCL parser has been
+      implemented in TAO as a separate library in TAO/orbsvcs/orbsvcs. The TAO
+      Notification Service no longer depends on the TAO Trading Service or uses
+      its TCL parser.
   </li>
 
   <li>
