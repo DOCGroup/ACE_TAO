@@ -223,7 +223,8 @@ DII_Cubit_Client::init (int argc, char **argv)
 
       // make_cubit takes a char* arg that it doesn't use, but we must
       // still include it in the request.
-      const CORBA::String dummy = "";
+      CORBA::String dummy = ACE_const_cast (char *,
+                                            "");
 
       mc_req->add_in_arg () <<= dummy;
 
