@@ -1,3 +1,10 @@
+Tue Jul  6 11:01:57 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/UIOP_Connector.cpp (connect):
+
+	  Minor update to size of character array that is only used when
+	  ORB debugging output is enabled.
+
 Tue Jul  6 10:25:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Timeout/Makefile:
