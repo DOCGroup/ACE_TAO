@@ -13,8 +13,6 @@ Fri Oct 17 22:51:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 	  lock(), we know this can cause trouble on HP-UX, but only if the
 	  function is inline; so it was moved to the .cpp file.
 
-Fri Oct 17 21:58:04 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
-
 	* ace/Timer_Queue_Adapters.h: 
 	* ace/Timer_Queue_Adapters.i: 
 	  Changed the method name from lock() to mutex(), this should
