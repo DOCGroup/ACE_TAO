@@ -1,3 +1,52 @@
+Mon Oct 14 18:52:06 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.cpp
+	  (validate_criteria):
+
+	  Reduce the length of the invalid criteria sequence in an effort
+	  to optimize the copying that will occur when the
+	  PortableGroup::InvalidCriteria exception is thrown.  Reducing
+	  the length is fast since no deallocations should occur.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
+	  (populate_object_group):
+
+	  Accept an "initial number of members" value.  It will be used
+	  when creating the initial object group members via the
+	  infrastructure.
+	
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
+	  (create_object, process_criteria):
+
+	  Moved criteria validation code to the process_criteria() method.
+
+	  Verify that the InitialNumberMembers property is larger than the
+	  MinimumNumberMembers property.  It doesn't make sense to create
+	  members numbering less than the minimum.  Throw a
+	  PortableGroup::CannotMeetCriteria exception in that case.
+
+	  Populate the "unmet_criteria" attribute of the
+	  PortableGroup::CannotMeetCriteria exception before throwing that
+	  exception.  Previously, a default constructed exception was
+	  thrown.
+
+	  (populate_object_group):
+
+	  In the infrastructure controlled membership case, initially
+	  create the number of members specified in the
+	  InitialNumberMember property.  Previously, the number of initial
+	  members was the same as the number of FactoryInfos, which is
+	  undesirable since members were always automatically created.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_conf.h
+	  (TAO_PG_MINIMUM_NUMBER_MEMBERS):
+
+	  The default minimum number of members value should always be
+	  equal to (or greater) the default initial number of members
+	  value (TAO_PG_INITIAL_NUMBER_MEMBERS).  This is a precautionary
+	  measure to meant avoid errors introduced by only changing one of
+	  the default values.
+
 Mon Oct 14 19:21:19 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/examples/Log/RTEvent/Makefile: Added a missing library.
