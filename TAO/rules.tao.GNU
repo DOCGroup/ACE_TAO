@@ -192,7 +192,7 @@ IDL_EXT_MINUS=$(IDL_CLIENT_INL_EXT) $(IDL_CLIENT_SRC_EXT) \
 	$(IDL_SERVER_SRC_EXT) $(IDL_SERVER_THDR_EXT) \
 	$(IDL_SERVER_TINL_EXT) $(IDL_SERVER_TSRC_EXT)
 IDL_EXT=$(IDL_CLIENT_HDR_EXT) $(IDL_EXT_MINUS)
-IDL_EXT2_MINUS=Cli.i Cli.cpp Ser.h Ser.i Ser.cpp Ser_T.h Ser_T.i Ser_T.cpp
+IDL_EXT2_MINUS=Cli.inl Cli.cpp Ser.h Ser.inl Ser.cpp Ser_T.h Ser_T.inl Ser_T.cpp
 IDL_EXT2=Cli.h $(IDL_EXT2_MINUS)
 
 # Don't remove the IDL stubs if make is interupted.

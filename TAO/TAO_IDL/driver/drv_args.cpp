@@ -217,7 +217,7 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -ci\t\t\tClient inline file name ending. Default is C.i\n")
+      ACE_TEXT (" -ci\t\t\tClient inline file name ending. Default is C.inl\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -394,7 +394,7 @@ DRV_usage (void)
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -si\t\t\tServer's inline file name ending.")
-      ACE_TEXT (" Default is S.i\n")
+      ACE_TEXT (" Default is S.inl\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -404,7 +404,7 @@ DRV_usage (void)
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -st\t\t\tServer's template inline file name ending.")
-      ACE_TEXT (" Default S_T.i\n")
+      ACE_TEXT (" Default S_T.inl\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -697,7 +697,7 @@ DRV_parse_args (long ac, char **av)
               // <-cs Client stub's file name ending>
               //      Default is "C.cpp".
               // <-ci Client inline file name ending>
-              //      Default is "C.i".
+              //      Default is "C.inl".
 
               if (av[i][2] == 's')
                 {
@@ -733,9 +733,9 @@ DRV_parse_args (long ac, char **av)
               // <-sT Server's template skeleton file name ending>
               //      Default is "S_T.cpp".
               // <-si Server's inline file name ending>
-              //      Default is "S.i".
+              //      Default is "S.inl".
               // <-st Server's template inline file name ending>
-              //      Default is "S_T.i".
+              //      Default is "S_T.inl".
               // <-sI Server's implementation skeleton file name ending>
               //      Default is "I.cpp".
 
