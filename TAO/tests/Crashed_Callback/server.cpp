@@ -121,11 +121,13 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_Time_Value tv (60 , 0);
+      ACE_Time_Value tv (50, 0);
       orb->run (tv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished\n"));
+
+      service_impl->dump_results ();
 
       root_poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;

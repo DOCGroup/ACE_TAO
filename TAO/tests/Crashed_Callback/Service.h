@@ -24,6 +24,12 @@ public:
   /// Constructor
   Service (void);
 
+  /// Dump the results.
+  /**
+   * In case of failure this exposes any incomplete runs.
+   */
+  void dump_results (void);
+
   // = The skeleton methods
   virtual void run_test (Test::Crashed_Callback_ptr callback,
                          CORBA::Environment &ACE_TRY_ENV)
@@ -45,6 +51,10 @@ private:
   int call_test_oneway (Test::Crashed_Callback_ptr callback,
                         CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC (());
+
+private:
+  /// Count the number of tests executed
+  int test_count_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
@@ -52,4 +62,4 @@ private:
 #endif /* _MSC_VER */
 
 #include "ace/post.h"
-#endif /* SERVICE_RECEIVER_H */
+#endif /* CRASHED_CALLBACK_SERVICE_H */

@@ -6,7 +6,18 @@
 ACE_RCSID(Crashed_Callback, Service, "$Id$")
 
 Service::Service (void)
+  : test_count_ (0)
 {
+}
+
+void
+Service::dump_results (void)
+{
+  if (this->test_count_ == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "ERROR: no tests were completed!\n"));
+    }
 }
 
 void
@@ -52,6 +63,9 @@ Service::run_test (Test::Crashed_Callback_ptr callback,
                   "Good!! %d exceptions raised after crash\n",
                   pos_crash_exceptions));
     }
+
+  /// Increment the number of tests completed
+  this->test_count_++;
 }
 
 int
