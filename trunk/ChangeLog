@@ -1,3 +1,11 @@
+Tue Jul 11 16:03:58 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Local_Tokens.cpp (ACE_TPQ_Entry ctor): don't cast result
+          of ACE_Thread::self (), because it might be a structure.
+          Thanks to Ossama for reminding me of that.
+          Changed format specifier to be %u instead of %lu, to avoid
+          mismatch, at least on some platforms.
+
 Tue Jul 11 14:47:48 2000  Chris Kohlhoff <chris@kohlhoff.com>
 
 	* ace/config-win32-common.h:

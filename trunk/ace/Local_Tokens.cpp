@@ -91,10 +91,10 @@ ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
       ACE_OS::hostname (host_name, sizeof host_name);
 
       ACE_OS::sprintf (name,
-                       ACE_TEXT ("/%s/%u/%lu"),
+                       ACE_TEXT ("/%s/%u/%u"),
                        host_name,
                        ACE_static_cast (u_int, ACE_OS::getpid ()),
-                       ACE_static_cast (u_long, ACE_Thread::self ()));
+                       ACE_Thread::self ());
 
       this->client_id (name);
     }
