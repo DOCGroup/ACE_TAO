@@ -1749,7 +1749,7 @@ static ACE_Static_Svc_##X ace_static_svc_##X;
 # define ACE_FACTORY_DECLARE(CLS,X) extern "C" CLS##_Export ACE_Service_Object *_make_##X (ACE_Service_Object_Exterminator *);
 # define ACE_FACTORY_DEFINE(CLS,X) \
 extern "C" void _gobble_##X (void *p) { \
-  X *_p = ACE_dynamic_cast (X *, ACE_reinterpret_cast (ACE_Service_Object *, p)); \
+  ACE_Service_Object *_p = ACE_reinterpret_cast (ACE_Service_Object *, p); \
   ACE_ASSERT (_p != 0); \
   delete _p; } \
 extern "C" ACE_Service_Object *_make_##X (ACE_Service_Object_Exterminator *gobbler) \
