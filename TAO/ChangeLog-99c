@@ -1,3 +1,10 @@
+Tue Nov 16 12:33:48 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_module.cpp:
+	  Added missing semicolon to ACE_ERROR message, and some
+	  ASYS_TEXT macros to be ACE-ified. Thanks to Andy for
+	  pointing this out.
+
 Tue Nov 16 10:29:33 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO/TAO_IDL/be/be_sequence.cpp
