@@ -22,12 +22,11 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+typedef unsigned long DWORD;
+
   /* Wrap a handle. */
 # define PACE_HANDLE int
 # define PACE_INVALID_HANDLE -1
-
-  /* ADD_THESE_AS_NEEDED */
-#if 0
 
 #ifndef PACE_DEV_T
 #define PACE_DEV_T
@@ -36,6 +35,7 @@ extern "C" {
 
 #ifndef PACE_GID_T
 #define PACE_GID_T
+  typedef int gid_t;
   typedef gid_t pace_gid_t;
 #endif /* PACE_GID_T */
 
@@ -46,11 +46,13 @@ extern "C" {
 
 #ifndef PACE_MODE_T
 #define PACE_MODE_T
+  typedef int mode_t;
   typedef mode_t pace_mode_t;
 #endif
 
 #ifndef PACE_NLINK_T
 #define PACE_NLINK_T
+  typedef DWORD nlink_t;
   typedef nlink_t pace_nlink_t;
 #endif
 
@@ -61,6 +63,7 @@ extern "C" {
 
 #ifndef PACE_PID_T
 #define PACE_PID_T
+  typedef long pid_t;
   typedef pid_t pace_pid_t;
 #endif /* PACE_PID_T */
 
@@ -106,20 +109,21 @@ extern "C" {
 
 #ifndef PACE_SIZE_T
 #define PACE_SIZE_T
+  typedef unsigned long size_t;
   typedef size_t pace_size_t;
 #endif /* PACE_SIZE_T */
 
 #ifndef PACE_SSIZE_T
 #define PACE_SSIZE_T
+  typedef long ssize_t;
   typedef ssize_t pace_ssize_t;
 #endif /* PACE_SSIZE_T */
 
 #ifndef PACE_UID_T
 #define PACE_UID_T
+  typedef int uid_t;
   typedef uid_t pace_uid_t;
 #endif /* PACE_UID_T */
-
-#endif /* ADD_AS_NEEDED */
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
