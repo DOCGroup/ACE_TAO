@@ -1,124 +1,130 @@
+Fri Aug 27 09:04:55 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp (compute_scheduling):
+          replaced RtecScheduler::ANOMALY_NONE case in switch with
+          default, so that it will catch generated enum values as well.
+
 Fri Aug 27 08:40:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_type.cpp:
-	  Patch to nested_type_name().
+        * TAO_IDL/be/be_type.cpp:
+          Patch to nested_type_name().
 
-	* TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
-	  Mods to generated code in order to utilize the 
-	  changes made to nested_type_name() above. Most of
-	  this was sent in by dbinder@globalmt.com (real name
-	  not included in the bugzilla entry) as bugzilla
-	  #268, intended to fix a crash by Dec Unix on an
-	  included IDL example. I've tested with MSVC 6.0 and
-	  SunCC 5.0 - we'll wait for the next Dec Unix build
-	  and see what happens.
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+          Mods to generated code in order to utilize the
+          changes made to nested_type_name() above. Most of
+          this was sent in by dbinder@globalmt.com (real name
+          not included in the bugzilla entry) as bugzilla
+          #268, intended to fix a crash by Dec Unix on an
+          included IDL example. I've tested with MSVC 6.0 and
+          SunCC 5.0 - we'll wait for the next Dec Unix build
+          and see what happens.
 
 Thu Aug 26 21:12:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_string.cpp:
-	  Made sure all paths initialize the return value in
-	  compare_quiet(). Pointed out by a Linux warning.
+        * TAO_IDL/util/utl_string.cpp:
+          Made sure all paths initialize the return value in
+          compare_quiet(). Pointed out by a Linux warning.
 
 Thu Aug 26 20:34:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Pluggable.h:
-	* tao/Pluggable.i:
-	* tao/Pluggable.cpp:
-	  Added new <priority> field to the Acceptors, this is used to
-	  setup a TAO-specific tagged component that informs the client
-	  about the priority of the threads handling events on that
-	  endpoint.
-	  Also moved lightweight methods to the .i file, they were not
-	  virtual and used in a couple of places in the critical path.
+        * tao/Pluggable.h:
+        * tao/Pluggable.i:
+        * tao/Pluggable.cpp:
+          Added new <priority> field to the Acceptors, this is used to
+          setup a TAO-specific tagged component that informs the client
+          about the priority of the threads handling events on that
+          endpoint.
+          Also moved lightweight methods to the .i file, they were not
+          virtual and used in a couple of places in the critical path.
 
-	* tao/corbafwd.h:
-	* tao/Tagged_Components.h:
-	* tao/Tagged_Components.i:
-	* tao/Tagged_Components.cpp:
-	  Changed the TAO_TAG_PRIORITY component to have simply a
-	  priority, not a range.
+        * tao/corbafwd.h:
+        * tao/Tagged_Components.h:
+        * tao/Tagged_Components.i:
+        * tao/Tagged_Components.cpp:
+          Changed the TAO_TAG_PRIORITY component to have simply a
+          priority, not a range.
 
-	* tao/IIOP_Acceptor.h:
-	* tao/IIOP_Acceptor.cpp:
-	* tao/UIOP_Acceptor.h:
-	* tao/UIOP_Acceptor.cpp:
-	  Implemented the priority stuff for the concrete protocols.
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/UIOP_Acceptor.h:
+        * tao/UIOP_Acceptor.cpp:
+          Implemented the priority stuff for the concrete protocols.
 
 Thu Aug 26 17:37:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/include/ast_interface.h:
-	* TAO_IDL/ast/ast_interface.cpp:
-	  New method inherited_name_clash() checks for
-	  redefinitions (and case-only differences in spelling)
-	  between members of the interface and its parent(s),
-	  and between members of its parents, if there are
-	  more than one.
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/ast/ast_interface.cpp:
+          New method inherited_name_clash() checks for
+          redefinitions (and case-only differences in spelling)
+          between members of the interface and its parent(s),
+          and between members of its parents, if there are
+          more than one.
 
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.h:
-	* TAO_IDL/fe/y.tab.cpp:
-	  Added call to the above function when the parser
-	  sees closing parenthesis of an interface, a concrete
-	  valuetype or an abstract valuetype.
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+          Added call to the above function when the parser
+          sees closing parenthesis of an interface, a concrete
+          valuetype or an abstract valuetype.
 
-	* TAO_IDL/include/utl_identifier.h:
-	* TAO_IDL/include/utl_string.h:
-	* TAO_IDL/util/utl_identifier.cpp:
-	* TAO_IDL/util/utl_string.cpp:
-	  Added case-compare methods that do not output
-	  any error or warning, so that a more informative 
-	  messsage (more suited to this particular case)
-	  can be output.
+        * TAO_IDL/include/utl_identifier.h:
+        * TAO_IDL/include/utl_string.h:
+        * TAO_IDL/util/utl_identifier.cpp:
+        * TAO_IDL/util/utl_string.cpp:
+          Added case-compare methods that do not output
+          any error or warning, so that a more informative
+          messsage (more suited to this particular case)
+          can be output.
 
-	* TAO_IDL/include/utl_error.h:
-	* TAO_IDL/util/utl_error.cpp:
-	  Added warning0, warning1, warning2, and warning3
-	  utility functions, similar to error0, etc. I only needed
-	  two of them, but the others may come in handy later.
+        * TAO_IDL/include/utl_error.h:
+        * TAO_IDL/util/utl_error.cpp:
+          Added warning0, warning1, warning2, and warning3
+          utility functions, similar to error0, etc. I only needed
+          two of them, but the others may come in handy later.
 
 Thu Aug 26 14:30:38 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tao/IIOP_Connector.{h,cpp}:
-	* tao/UIOP_Connector.{h,cpp}:
+        * tao/IIOP_Connector.{h,cpp}:
+        * tao/UIOP_Connector.{h,cpp}:
 
-	  Added TAO_ to all the typedefed symbols to avoid conflicts. 
-	  Thanks to JM Strauss <jms97@club-internet.fr> for reporting 
-	  such a conflict for ADDR.
-	
+          Added TAO_ to all the typedefed symbols to avoid conflicts.
+          Thanks to JM Strauss <jms97@club-internet.fr> for reporting
+          such a conflict for ADDR.
+
 Thu Aug 26 12:18:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Property/client.cpp:
-	  Removed call to ORB::open() this was a private interface and no
-	  application should be calling it!
+        * orbsvcs/tests/Property/client.cpp:
+          Removed call to ORB::open() this was a private interface and no
+          application should be calling it!
 
 Thu Aug 26 11:10:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
-	  Input CDR operator for union case was using return
-	  value of union's accessor for rhs of stream operator,
-	  leading to marshaling failure. Thanks one more time to
-	  Lothar Werzinger <werzinger.lothar@krones.de> for 
-	  digging up another one.
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+          Input CDR operator for union case was using return
+          value of union's accessor for rhs of stream operator,
+          leading to marshaling failure. Thanks one more time to
+          Lothar Werzinger <werzinger.lothar@krones.de> for
+          digging up another one.
 
 Thu Aug 26 10:29:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/Options.html:
-	* tao/default_server.cpp (TAO_Default_Server_Strategy_Factory):
-	  Added THR_DETACHED into the default thread creation flag for ORB
-	  spawned threads so the resources used by ORB spawned threads can
-	  be released after the threads have exited.  Thanks to
-	  dharani@sutmyn.com (Sreedharani) and Carlos for pointing out the
-	  problem.
+        * docs/Options.html:
+        * tao/default_server.cpp (TAO_Default_Server_Strategy_Factory):
+          Added THR_DETACHED into the default thread creation flag for ORB
+          spawned threads so the resources used by ORB spawned threads can
+          be released after the threads have exited.  Thanks to
+          dharani@sutmyn.com (Sreedharani) and Carlos for pointing out the
+          problem.
 
 Thu Aug 26 09:49:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
-	  Fixed typo. Thanks to Robert Todd Pack <todd@rwii.com>
-	  for pointing it out.
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+          Fixed typo. Thanks to Robert Todd Pack <todd@rwii.com>
+          for pointing it out.
 
 Thu Aug 26 08:43:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
