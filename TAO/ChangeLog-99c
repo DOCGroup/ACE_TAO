@@ -1,5 +1,9 @@
 Wed Apr 28 21:16:55 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* tao/MessagingS.h: Removed inclusion of MessagingS_T.h.  Old g++
+	  cannot handle nested template classes properly.  This is the
+	  same reason we cannot compile examples/POA/TIE with old g++.
+
 	* docs/Options.html: Removed -ORBpoa <global/tss> option since it
 	  does not make sense in the new ORB/POA architecture.
 
