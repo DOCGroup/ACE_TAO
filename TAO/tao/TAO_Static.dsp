@@ -666,10 +666,6 @@ SOURCE=.\UIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Union.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\ValueBase.cpp
 # End Source File
 # Begin Source File
