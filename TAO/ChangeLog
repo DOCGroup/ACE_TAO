@@ -5,10 +5,10 @@ Wed May 26 13:44:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Any_Impl.cpp:
         * tao/Any_Impl.h:
         
-          Added comments to the void* value() method saying that
-          it no longer appears in the CORBA C++ mapping, is
-          deprecated by the OMG, and is no longer used in TAO.
-          
+          Added comments to the void* value() method saying that it no
+ 	  longer appears in the CORBA C++ mapping, is deprecated by the
+ 	  OMG, and is no longer used in TAO.  Thanks to Mike Hepburn
+ 	  <mike@anvil.com> for motivating this change.	  
         * tao/append.cpp (TAO_Marshal_Union::append):
         * tao/skip.cpp (TAO_Marshal_Union::skip):
         
