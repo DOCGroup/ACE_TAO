@@ -208,6 +208,9 @@ public:
   virtual CORBA::Boolean response_expected (void) const = 0;
   // is the response expected
 
+  virtual void _tao_lazy_evaluation (int lazy_evaluation) = 0;
+  // Set the lazy evaluation flag
+
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ServerRequest_ptr _ptr_type;
 #endif /* __GNUC__ */

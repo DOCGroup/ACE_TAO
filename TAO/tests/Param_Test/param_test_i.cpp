@@ -79,6 +79,12 @@ Param_Test_i::test_short (CORBA::Short s1,
 {
   s2 = (CORBA::Short) (s1 * 2);
   s3 = (CORBA::Short) (s1 * 3);
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*SERVER SIDE=*=*=*=*=*=*=\n"));
+      ACE_DEBUG ((LM_DEBUG, " in = %d, inout = %d, out = %d\n",
+                  s1, s2, s3));
+    }
   return (CORBA::Short) (s1 * 4);
 }
 

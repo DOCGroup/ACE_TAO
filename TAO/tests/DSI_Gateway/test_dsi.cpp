@@ -101,6 +101,7 @@ DSI_Simple_Server::test_method_impl (CORBA::ServerRequest_ptr request,
   list->add_value ("the_out_structure", the_out_structure, CORBA::ARG_OUT  );
   list->add_value ("name"             , name             , CORBA::ARG_INOUT);
 
+  request->_tao_lazy_evaluation (1);
   request->arguments (list, ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -122,6 +123,8 @@ DSI_Simple_Server::test_method_impl (CORBA::ServerRequest_ptr request,
                                   0,
                                   ACE_TRY_ENV);
   ACE_CHECK;
+
+  target_request->_tao_lazy_evaluation (1);
 
   target_request->invoke (ACE_TRY_ENV);
   ACE_CHECK;

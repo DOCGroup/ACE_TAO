@@ -532,6 +532,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
                            CORBA::NamedValue_ptr result,
                            CORBA::Flags,
                            CORBA::ExceptionList &exceptions,
+                           int lazy_evaluation,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Synchronous_Cancellation_Required NOT_USED;
@@ -602,58 +603,15 @@ TAO_Stub::do_dynamic_call (const char *opname,
 
       if (result != 0)
         {
-          if (!result->value ()->value_)
-            {
-              // storage was not allocated. In this case, we
-              // simply grab the portion of the CDR stream
-              // that contained this parameter, The
-              // application should use the appropriate >>=
-              // operator to retrieve the value
-
-              TAO_InputCDR temp (call.inp_stream ());
-              CORBA::Any *any = result->value ();
-
-              // @@ Again, this code does not work if the input CDR
-              //    stream is not a single message block.
-              char *begin = call.inp_stream ().rd_ptr ();
-              // skip the parameter to get the ending position
-              CORBA::TypeCode::traverse_status retval =
-                temp.skip (any->type_, ACE_TRY_ENV);
-              ACE_CHECK;
-
-              if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                {
-                  char *end = temp.rd_ptr ();
-                  ACE_NEW (any->cdr_,
-                           ACE_Message_Block (end - begin));
-                  any->cdr_->wr_ptr (end - begin);
-                  TAO_OutputCDR out (any->cdr_);
-                  retval = out.append (any->type_,
-                                       &call.inp_stream (),
-                                       ACE_TRY_ENV);
-                  ACE_CHECK;
-
-                  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      any->value_ = 0;
-                      any->any_owns_data_ = 0;
-                    }
-                }
-            }
-          else
-            {
-              // the application had allocated the top level
-              // storage. We simply retrieve the data
-              (void) call.inp_stream ().decode (result->value ()->type_,
-                                                result->value ()->value_,
-                                                0,
-                                                ACE_TRY_ENV);
-              ACE_CHECK;
-            }
+          result->value ()->_tao_decode (call.inp_stream (),
+                                         ACE_TRY_ENV);
+          ACE_CHECK;
         }
 
       args->_tao_incoming_cdr (call.inp_stream (),
-                               CORBA::ARG_OUT | CORBA::ARG_INOUT);
+                               CORBA::ARG_OUT | CORBA::ARG_INOUT,
+                               lazy_evaluation,
+                               ACE_TRY_ENV);
     }
   else
     {
@@ -693,10 +651,10 @@ TAO_Stub::put_params (TAO_GIOP_Invocation &call,
                       CORBA::NVList_ptr args,
                       CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_OutputCDR &cdr = call.out_stream ();
-
-  // First try to use the optimized marshaling
-  args->_tao_encode (cdr, this->orb_core_, ACE_TRY_ENV);
+  args->_tao_encode (call.out_stream (),
+                     this->orb_core_,
+                     CORBA::ARG_IN | CORBA::ARG_INOUT,
+                     ACE_TRY_ENV);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

@@ -126,6 +126,9 @@ public:
   virtual CORBA::Boolean response_expected (void) const;
   // is the response expected
 
+  virtual void _tao_lazy_evaluation (int lazy_evaluation);
+  // Set the lazy evaluation flag
+
   virtual CORBA::Principal_ptr principal (void) const;
 
   virtual const TAO_ObjectKey &object_key (void) const;
@@ -174,6 +177,9 @@ private:
 
   CORBA::Boolean response_expected_;
   // is it oneway or twoway
+
+  int lazy_evaluation_;
+  // If zero then the NVList is evaluated ASAP.
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 

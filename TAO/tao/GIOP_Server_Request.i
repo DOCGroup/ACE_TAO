@@ -53,6 +53,12 @@ TAO_GIOP_ServerRequest::response_expected (void) const
   return this->response_expected_;
 }
 
+ACE_INLINE void
+TAO_GIOP_ServerRequest::_tao_lazy_evaluation (int lazy_evaluation)
+{
+  this->lazy_evaluation_ = lazy_evaluation;
+}
+
 ACE_INLINE CORBA::Principal_ptr
 TAO_GIOP_ServerRequest::principal (void) const
 {
