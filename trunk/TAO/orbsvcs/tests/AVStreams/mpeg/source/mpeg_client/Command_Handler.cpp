@@ -82,6 +82,15 @@ Command_Handler::init (int argc,
                                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      // Initialize the naming services
+      if (my_name_client_.init (orb_manager_.orb (),
+				argc,
+				argv) != 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize "
+			   "the TAO_Naming_Client. \n"),
+			  -1);
+ 
     }
   TAO_CATCHANY
     {
@@ -216,23 +225,12 @@ Command_Handler::resolve_video_reference (void)
 {
   TAO_TRY
     {
-      CORBA::Object_var naming_obj =
-        this->orb_manager_.orb ()->resolve_initial_references ("NameService");
-      if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to resolve the Name Service.\n"),
-                          -1);
-      CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
       CosNaming::Name video_server_mmdevice_name (1);
 
       video_server_mmdevice_name.length (1);
       video_server_mmdevice_name [0].id = CORBA::string_dup ("Video_Server_MMDevice");
       CORBA::Object_var video_server_mmdevice_obj =
-        naming_context->resolve (video_server_mmdevice_name,
+        my_name_client_->resolve (video_server_mmdevice_name,
                                  TAO_TRY_ENV);
       TAO_CHECK_ENV;
 

@@ -25,6 +25,7 @@
 #include "video.h"
 #include "proto.h"
 #include "util.h"
+#include "ace/OS.h"
 
 ACE_RCSID(mpeg_client, util, "$Id$")
 

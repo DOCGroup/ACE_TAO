@@ -9,6 +9,7 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 
 ACE_RCSID(Sched_Conf, Sched_Conf, "$Id$")
 
@@ -339,19 +340,17 @@ main (int argc, char *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService");
-      if (CORBA::is_nil(naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
-
-      CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (ACE_Scheduler_Factory::use_config (naming_context.in (), service_name) < 0)
+      
+      // Initialize the naming services
+      TAO_Naming_Client my_name_client;
+      if (my_name_client.init (orb.in (), argc, argv) != 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize "
+			   "the TAO_Naming_Client. \n"),
+			  -1);
+      
+      if (ACE_Scheduler_Factory::use_config (my_name_client.get_context (),
+					     service_name) < 0)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                           " (%P|%t) Unable to bind to the scheduling service.\n"),

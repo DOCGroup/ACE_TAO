@@ -30,6 +30,7 @@
 /* Include util.h for bit i/o parsing macros. */
 
 #include "util.h"
+#include "ace/OS.h"
 
 /* Code for unbound values in decoding tables */
 #define ERROR -1

@@ -1,3 +1,35 @@
+Thu Aug 20 16:14:54 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp: Added Naming_Utils code 
+	  to simplify Naming Service operations
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util32.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered2.cpp 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered.cpp 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/motionvector.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/mono.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/mb_ordered.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/jrevdct.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/hybriderr.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/hybrid.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/gray.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs4.h
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs2fast.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs2.h 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/decoders.h
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/2x2.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/24bit.cpp
+	  Added "ace/OS.h" to fix RCSID errors
+	
+	* orbsvcs/tests/AVStreams/mpeg/source/server/server.{h,cpp} 	
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.{h,cpp}
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.{h,cpp}
+  	  Added Naming_Utils code to simplify Naming Service
+	  operations. Also added "ace/OS.h" include to fix RCSID errors	
+
+	
 Thu Aug 20 14:32:12 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tao/Any.{h,i,cpp}:
