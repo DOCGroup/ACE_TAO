@@ -1,3 +1,40 @@
+Sat Nov  9 18:49:11 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/POSIX_Proactor.{h cpp i} (create_asynch_read_stream,
+          create_asynch_write_stream, create_asynch_read_dgram,
+          create_asynch_write_dgram, create_asynch_read_file,
+          create_asynch_write_file, create_asynch_accept,
+          create_asynch_connect, create_asynch_transmit_file):
+          Refactored all the factory creation methods from
+          ACE_POSIX_AIOCB_Proactor to ACE_POSIX_Proactor.
+          Moved the pseudo task from ACE_POSIX_AIOCB_Proactor to
+          ACE_POSIX_Proactor as well.
+
+          (handle_events, cancel_aio):
+          Added these methods to ACE_POSIX_Proactor as pure virtual,
+          forcing their definition in the specific implementations.
+
+          (start_aio): This is now a pure virtual function that all
+          more specific proactors need to implement. The old start_aio()
+          is now start_aio_i(). What used to be ACE_POSIX_AIOCB_Proactor::
+          register_and_start_aio() is now ACE_POSIX_AIOCB_Proactor::start_aio.
+          Which type of I/O to start is now defined by an enum Opcode
+          that's passed to start_aio().
+
+        * ace/POSIX_Asynch_IO.{h cpp} (ACE_POSIX_Asynch_Operation):
+          Replace references to ACE_POSIX_AIOCB_Proactor with
+          ACE_POSIX_Proactor. Refactoring things out of specific proactor
+          types.
+          (ACE_POSIX_Asynch_Read_Stream, ACE_POSIX_Write_Stream,
+          ACE_POSIX_Asynch_Read_File, ACE_POSIX_Asynch_Write_File,
+          ACE_POSIX_Asynch_Accept, ACE_POSIX_Asynch_Connect,
+          ACE_POSIX_Asynch_Transmit_File, ACE_POSIX_Asynch_Transmit_Handler,
+          ACE_POSIX_Asynch_Read_Dgram, ACE_POSIX_Asynch_Write_Dgram):
+          Replace args of type ACE_POSIX_AIOCB_Proactor with
+          ACE_POSIX_Proactor. Matches POSIX_Proactor.* changes above.
+          Removed all the methods that said they were only there to kill
+          dominance warnings. These are not needed.
+
 Sat Nov  9 13:16:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Simon McQueen to the hall of fame.

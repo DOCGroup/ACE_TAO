@@ -20,7 +20,7 @@ ACE_POSIX_Proactor::Proactor_Type ACE_POSIX_SIG_Proactor::get_impl_type (void)
 } 
 
 ACE_INLINE 
-ACE_Asynch_Pseudo_Task& ACE_POSIX_AIOCB_Proactor::get_asynch_pseudo_task (void)
+ACE_Asynch_Pseudo_Task& ACE_POSIX_Proactor::get_asynch_pseudo_task (void)
 {
   return this->pseudo_task_;
 }
