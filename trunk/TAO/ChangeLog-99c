@@ -1,5 +1,8 @@
 Mon Sep  6 08:59:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed a stray ';' at the end of
+	  ACE_TRY_EX().
+
 	* tao/ORB_Core.cpp (init): Removed all the unnecessary uses of
   
 	  if ((offset = foo ()) != -1)
