@@ -1,3 +1,9 @@
+Wed Sep  3 08:05:26 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/Message_Block.h: Corrected comment on release(void) - the
+	  underlying ACE_Data_Block's refcount is decremented; the 
+	  ACE_Message_Block is always deleted.
+
 Tue Sep  2 18:26:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Task: Revised the ACE_Task_Base::svc_run() method to
