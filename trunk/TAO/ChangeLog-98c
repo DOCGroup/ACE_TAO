@@ -1,26 +1,43 @@
+Thu Jul 30 13:46:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Concurrency/Makefile: 
+	  The CC_command.tab.{h,cpp} and lex.CC_command.cpp files are
+	  distributed in the TAO release, there is no need for the users
+	  to generate them. We do include targets to warn of potentially
+	  outdated files, but this is only for our own purposes.
+
+	* orbsvcs/tests/Concurrency/CC_command.y: 
+	* orbsvcs/tests/Concurrency/CC_command.tab.h: 
+	* orbsvcs/tests/Concurrency/CC_command.tab.cpp: 
+	* orbsvcs/tests/Concurrency/CC_command.tab.cpp.diff: 
+	  Generated using a modified version of yacc, that produces more
+	  portable code.
+	
 Thu Jul 30 13:07:00 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* Logging_service/Makefile: New file. Makefile for the Logging
-	service.
+	* orbsvcs/Makefile: 
+	* orbsvcs/Logging_Service/Makefile: New file. Makefile for the
+	Logging service.
 
-	* tests/Logger/Makefile: Eliminated server compilation. Changed
-	client name to Logging_Test
+	* orbsvcs/Logging_Service/Logging_Service_i.{h,cpp}: New files,
+	renamed from tests/Logger/server_i.{h,cpp}. Migrated from a test
+	to a service. Added ability to name the factory from the command
+	line.
 
-	* Logging_Service/Logging_Service_i.{h,cpp}: New files, renamed
-	from tests/Logger/server_i.{h,cpp}. Migrated from a test to a
-	service. Added ability to name the factory from the command line. 
+	* orbsvcs/tests/Logger/Makefile: Eliminated server
+	compilation. Changed client name to Logging_Test
 
-	* tests/Logger/Logging_Test_i.cpp: New file, renamed from
+	* orbsvcs/tests/Logger/Logging_Test_i.cpp: New file, renamed from
 	tests/Logger/client_i.cpp. Altered includes to reflect transition
 	of server from test server to actual service. 
 
-	* tests/Logger/Logging_Test_i.h: New file, renamed from
+	* orbsvcs/tests/Logger/Logging_Test_i.h: New file, renamed from
 	tests/Logger/client_i.h. Added multiple include protection. 
 
-	* tests/Logger/Logging_Test.cpp: New file, renamed from
+	* orbsvcs/tests/Logger/Logging_Test.cpp: New file, renamed from
 	tests/Logger/server.cpp. Removed some debugging code.
 
-	* tests/Logger/Logging_Test.cpp: New file, renamed from
+	* orbsvcs/tests/Logger/Logging_Test.cpp: New file, renamed from
 	tests/Logger/client.cpp. Edited to reflect changed filenames.  
 	
 	

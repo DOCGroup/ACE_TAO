@@ -1,4 +1,4 @@
-/* $id$
+/* $Id$
  * ============================================================================
  *
  * = LIBRARY
@@ -20,8 +20,8 @@
 #include "ace/ACE.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 
-int CC_commanderror(char *s);
-int CC_commandlex(void);
+void yyerror (const char* s);
+int yylex(void);
 
 extern int line_no;
 extern char line_buf[500];
