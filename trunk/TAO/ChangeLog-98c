@@ -1,3 +1,30 @@
+Wed Nov 12 18:59:20 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/iioporb.cpp: Added call to set object address in Profile.
+
+	* tao/iiopobj.cpp: Corrected code in the copy CTOR where the host
+ 	was being copied over the old host.  This could prove bad if the
+ 	amount of space allocated previously was too small for the
+ 	hostname we're copying in.  Ideally we'd use something smarter
+ 	than this, but hopefully (if you read the comment below) this will
+ 	go away soon.
+
+	* tao/iiopobj.*: Added an ACE_INET_Addr to IIOP::Profile so that
+ 	we only need to do a gethostbyname() once.  After that we can used
+ 	the cached information.  I'd really like to remove the host/port
+ 	as explicit public data members, but for now we take one step at a
+ 	time.
+
+	* tao/giop.cpp: Use the IIOP::Profile object address when making a
+ 	connection.
+
+	* tao/decode.cpp: Added code to set the object address in the
+ 	Profile when an object ref is decoded.
+
+	* tao/debug.h: Removed old questions in comments.
+
+	* tao/connect.h: Added some documentation.
+
 Wed Nov 12 17:41:02 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/iiopobj.cpp: I had forgotten to update the return type of

@@ -268,6 +268,7 @@ iiop_string_to_object (CORBA::String string,
     }
 
   data->profile.port = (short) ACE_OS::atoi ((char *)string);
+  data->profile.set_object_addr ();
   string = ++cp;
 
   // Parse the key ... it's ASCII plus hex escapes for everything

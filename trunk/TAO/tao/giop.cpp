@@ -627,7 +627,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
 
   // Determine the object key and the address to which we'll need a
   // connection.
-  ACE_INET_Addr server_addr;
+  ACE_INET_Addr *server_addr_p = 0;
 
   {
     // Begin a new scope so we keep this lock only as long as
@@ -638,22 +638,25 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
     if (data_->fwd_profile_i () != 0)
       {
         key = &data_->fwd_profile_i ()->object_key;
-        server_addr.set (data_->fwd_profile_i ()->port,
-                         data_->fwd_profile_i ()->host);
+        server_addr_p = &data_->fwd_profile_i ()->get_object_addr ();
       }
     else
       {
         key = &data_->profile.object_key;
-        server_addr.set (data_->profile.port,
-                         data_->profile.host);
+        server_addr_p = &data_->profile.get_object_addr ();
       }
   }
+  if (server_addr_p == 0)
+    {
+      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+      return;
+    }
 
   this->handler_ = 0;
-  // @@ Must reset handler, otherwise, ACE_Cached_Connect_Strategy will complain.
+  // Must reset handler, otherwise, ACE_Cached_Connect_Strategy will complain.
 
   // Establish the connection and get back a Client_Connection_Handler
-  if (con->connect (this->handler_, server_addr) == -1)
+  if (con->connect (this->handler_, *server_addr_p) == -1)
     {
       // @@ Need to figure out which exception to set...this one is
       // pretty vague.
