@@ -1,3 +1,12 @@
+Mon Jul 02 11:45:57 2001  Ossama Othman  <ossama@uci.edu>
+
+	* bin/make_release:
+
+	  Disabled bootstrapping of ACE's autoconf support.  It isn't
+	  ready for general use.  Doing so reduces the amount of
+	  confusion.  Thanks to Holger P. Krekel <krekel@merlinux.de> for
+ 	  motivating this change.
+
 Mon Jul  2 13:18:14 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* Moved ACE-configurations.txt into the docs directory.  Also
