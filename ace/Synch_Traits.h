@@ -42,7 +42,8 @@ class ACE_Thread_Semaphore;
  * @class ACE_NULL_SYNCH
  *
  * @brief Implement a do nothing Synchronization wrapper that
- * typedefs the <ACE_Condition> and <ACE_Mutex> to the Null* versions.
+ *        typedefs the @c ACE_Condition> and @c ACE_Mutex> to the
+ *        @c Null* versions.
  */
 class ACE_Export ACE_NULL_SYNCH
 {
@@ -67,10 +68,11 @@ class ACE_Condition_Recursive_Thread_Mutex;
  * @class ACE_MT_SYNCH
  *
  * @brief Implement a default thread safe synchronization wrapper that
- * typedefs the <ACE_Condition> and <ACE_Mutex> to the
- * <ACE_Condition> and <ACE_Mutex> versions.  Note that this
- * should be a template, but SunC++ 4.0.1 complains about
- * this...
+ * typedefs the @c ACE_Condition> and @c ACE_Mutex to the
+ * @c ACE_Condition and @c ACE_Mutex versions.
+ *
+ * @todo This should be a template, but SunC++ 4.0.1 complains about
+ *       this.
  */
 class ACE_Export ACE_MT_SYNCH
 {

@@ -1,18 +1,19 @@
-/* -*- c++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #ifndef JAWS_CONCURRENCY_H
 #define JAWS_CONCURRENCY_H
 
-#include "ace/OS.h"
 #include "ace/Task.h"
 #include "ace/Singleton.h"
+#include "ace/Synch_Traits.h"
 
 #include "jaws3/Export.h"
 #include "jaws3/Protocol_Handler.h"
 
 
-typedef ACE_Task<ACE_MT_SYNCH> JAWS_CONCURRENCY_TASK;
+typedef ACE_Task<ACE_SYNCH> JAWS_CONCURRENCY_TASK;
 
 class JAWS_Export JAWS_Concurrency_Impl : public JAWS_CONCURRENCY_TASK
 {
