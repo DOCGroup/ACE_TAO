@@ -3,7 +3,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    imore.cpp (imore stands for indirect more.)
 //
@@ -19,7 +19,7 @@
 //
 // = AUTHOR
 //    Nanbor Wang <nw1@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
 #include "ace/OS.h"
@@ -66,7 +66,7 @@ parse_args (int argc, char **argv)
 	use_named_pipe = 1;
 #else
 	ACE_ERROR_RETURN ((LM_ERROR, "Named pipes not supported on Win32\n"), -1);
-#endif /* !ACE_WIN32 */	
+#endif /* !ACE_WIN32 */
 	break;
       case 'u':			// Use unnamed pipe.
 	use_named_pipe = 0;
@@ -96,7 +96,7 @@ setup_named_pipes (ACE_Process_Options &opt)
                                       rendezvous_pfx);
 
   // Out of memory?
-  if (rendezvous == NULL)       
+  if (rendezvous == NULL)
     return -1;
 
   // Alright, this is indeed strange.  Named pipes are meant to be
@@ -134,6 +134,7 @@ setup_named_pipes (ACE_Process_Options &opt)
   // when it goes out of scope.
   rfifo.close ();
   wfifo.close ();
+  return 0;
 }
 
 static int
@@ -160,6 +161,7 @@ setup_unnamed_pipe (ACE_Process_Options &opt)
 
   // Don't forget to close the unused fd.
   pipe.close ();
+  return 0;
 }
 
 static int
@@ -167,7 +169,7 @@ print_file (ACE_HANDLE infd)
 {
   char buffer[BUFSIZ];
   ssize_t len;
-  
+
   while ((len = ACE_OS::read (infd, buffer, BUFSIZ)) > 0)
     {
       if ((ACE_OS::write (ACE_STDOUT, buffer, len) != len))
@@ -240,7 +242,9 @@ main (int argc, char *argv[])
 #endif /* ! ACE_WIN32 */
 
   // Wait till we are done.
-  new_process.wait ();
+  int status;
+  new_process.wait (&status);
+  ACE_DEBUG ((LM_DEBUG, "Process exit with status %d\n", status));
 
   ACE_OS::close (infile);
 
