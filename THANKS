@@ -1796,6 +1796,7 @@ Christoph Liebig <xfrog2000@yahoo.com>
 Andre Kostur <Andre@incognito.com>
 Markus Stenberg <markus.stenberg@conformiq.com>
 Jonathan Pollack <pollack_j@ociweb.com>
+Si Mong Park <si.mong.park@lmco.com>
 Hakim Souami <hakim.souami@fr.thalesgroup.com>
 Paul Morrison <epm@prismtechnologies.com>
 John Poplett <John_Poplett@3com.com>
@@ -1818,6 +1819,9 @@ Hans-Peter Bock <Hans-Peter.Bock@isw.uni-stuttgart.de>
 Dmitri Hrapof <yavannadil@yahoo.com>
 Denny Kolb <kolb@g2ss.com>
 Daniel Buchs <acelib@dbux.ch> 
+Matt Murphy <murphym@cs.uri.edu>
+Brian Nelson <pyro@debian.org>
+Avi Ouziel <ouziel_a@hotmail.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

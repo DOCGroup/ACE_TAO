@@ -1173,6 +1173,15 @@ ACE_Thread_Manager::check_state (ACE_UINT32 state,
   return ACE_BIT_DISABLED (thr_state, state);
 }
 
+// Test if a single thread has terminated.
+
+int
+ACE_Thread_Manager::testterminate (ACE_thread_t t_id)
+{
+  ACE_TRACE ("ACE_Thread_Manager::testterminate");
+  return this->check_state (ACE_THR_TERMINATED, t_id);
+}
+
 // Test if a single thread is suspended.
 
 int

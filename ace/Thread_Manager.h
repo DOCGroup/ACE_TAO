@@ -722,6 +722,14 @@ public:
    */
   int testcancel (ACE_thread_t t_id);
 
+  /**
+   * True if <t_id> has terminated (i.e., is no longer running),
+   * but the slot in the thread manager hasn't been reclaimed yet,
+   * else false.  Always return false if <t_id> is not managed by the
+   * Thread_Manager.  
+   */
+  int testterminate (ACE_thread_t t_id);
+
   /// Set group ids for a particular thread id.
   int set_grp (ACE_thread_t,
                int grp_id);
