@@ -209,8 +209,7 @@ void
 TAO_DynEnum_i::from_any (const CORBA_Any& any,
                          CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::TypeCode_var tc = any.type ();
-  CORBA::TCKind kind = TAO_DynAny_i::unalias (tc.in (),
+  CORBA::TCKind kind = TAO_DynAny_i::unalias (any.type (),
                                               ACE_TRY_ENV);
   ACE_CHECK;
 

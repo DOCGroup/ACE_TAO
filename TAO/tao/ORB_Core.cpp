@@ -63,6 +63,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     typecode_factory_ (CORBA::Object::_nil ()),
     orb_ (),
     root_poa_ (0),
+    root_poa_reference_ (),
     orb_params_ (),
     orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
     resource_factory_ (0),
@@ -121,8 +122,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     transport_sync_strategy_ (0),
     svc_config_argc_ (0),
     svc_config_argv_ (0),
-    refcount_ (1),
-    handle_set_ ()
+    refcount_ (1)
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
@@ -223,21 +223,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   // 3.0.0/ppc only.
   delete this->poa_current_;
 #endif /* ! __Lynx__  ||  ! __powerpc__ */
-
-  ACE_TRY_NEW_ENV
-    {
-      CORBA::Boolean wait_for_completion = 1;
-
-      this->destroy_root_poa (wait_for_completion,
-                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      // Ignore exceptions
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_ORB_Core::~TAO_ORB_Core");
-    }
-  ACE_ENDTRY;
 
   delete this->object_adapter_;
 }
@@ -1281,19 +1266,6 @@ TAO_ORB_Core::fini (void)
       delete this->acceptor_registry_;
     }
 
-  // Shutdown all open connections that are registered with the ORB
-  // Core.  Note that the ACE_Event_Handler::DONT_CALL mask is NOT
-  // used here since the reactor should invoke each handle's
-  // corresponding ACE_Event_Handler::handle_close() method to ensure
-  // that the connection is shutdown gracefully.
-
-  // @@ Will the Server_Strategy_Factory still be around by the time
-  //    this method is invoked?  Specifically, is it possible that
-  //    the Server_Strategy_Factory will already have been unloaded?
-  if (this->server_factory ()->activate_server_connections () == 0)
-    (void) this->reactor ()->remove_handler (this->handle_set_,
-                                             ACE_Event_Handler::ALL_EVENTS_MASK);
-
   TAO_Internal::close_services ();
 
   // @@ This is not needed since the default resource factory
@@ -1496,10 +1468,16 @@ TAO_ORB_Core::root_poa_reference (CORBA::Environment &ACE_TRY_ENV,
                                   TAO_POA_Manager *poa_manager,
                                   const TAO_POA_Policies *policies)
 {
-  return PortableServer::POA::_duplicate (this->root_poa (ACE_TRY_ENV,
-                                                          adapter_name,
-                                                          poa_manager,
-                                                          policies));
+  if (CORBA::is_nil (this->root_poa_reference_.in ()))
+    {
+      this->create_and_set_root_poa (adapter_name,
+                                     poa_manager,
+                                     policies,
+                                     ACE_TRY_ENV);
+      ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+    }
+
+  return PortableServer::POA::_duplicate (this->root_poa_reference_.in ());
 }
 
 void
@@ -1554,10 +1532,9 @@ TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
                             CORBA::NO_MEMORY ());
           ACE_CHECK;
 
-          // ORB Core will keep a reference to the Root POA so that on
-          // its destruction, it can check whether the Root POA has
-          // been destroyed yet or not.
-          this->root_poa_->_add_ref ();
+          this->root_poa_reference_ =
+            this->root_poa_->_this (ACE_TRY_ENV);
+          ACE_CHECK;
 
           // Release the auto_ptr since we got here without error.
           poa_manager = safe_poa_manager.release ();
@@ -1796,34 +1773,6 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 }
 
 void
-TAO_ORB_Core::destroy_root_poa (CORBA::Boolean wait_for_completion,
-                                CORBA::Environment &ACE_TRY_ENV)
-{
-  // Shutting down the ORB causes all object adapters to be destroyed,
-  // since they cannot exist in the absence of an ORB. Shut down is
-  // complete when all ORB processing (including request processing
-  // and object deactivation or other operations associated with
-  // object adapters) has completed and the object adapters have been
-  // destroyed. In the case of the POA, this means that all object
-  // etherealizations have finished and root POA has been destroyed
-  // (implying that all descendent POAs have also been destroyed).
-  CORBA::Boolean etherealize_objects = 1;
-  if (this->root_poa_)
-    {
-      if (!this->root_poa_->cleanup_in_progress ())
-        {
-          this->root_poa_->destroy (etherealize_objects,
-                                    wait_for_completion,
-                                    ACE_TRY_ENV);
-          ACE_CHECK;
-        }
-
-      CORBA::release (this->root_poa_);
-      this->root_poa_ = 0;
-    }
-}
-
-void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
                         CORBA::Environment &ACE_TRY_ENV)
 {
@@ -1832,8 +1781,13 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
                                                  ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->destroy_root_poa (wait_for_completion,
-                          ACE_TRY_ENV);
+  // If the ORB::shutdown operation is called, it makes a call on
+  // deactivate with a TRUE etherealize_objects parameter for each POA
+  // manager known in the process; the wait_for_completion parameter
+  // to deactivate will be the same as the similarly named parameter
+  // of ORB::shutdown.
+  this->object_adapter ()->deactivate (wait_for_completion,
+                                       ACE_TRY_ENV);
   ACE_CHECK;
 
   // Set the shutdown flag

@@ -20,7 +20,7 @@
 
 #include "tao/corbafwd.h"
 #include "ace/Map.h"
-#include "tao/PortableServerC.h"
+#include "tao/POAC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

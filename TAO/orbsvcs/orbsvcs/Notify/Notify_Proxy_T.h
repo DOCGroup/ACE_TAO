@@ -30,6 +30,7 @@
 #include "Notify_Listeners.h"
 #include "notify_export.h"
 
+class TAO_Notify_Resource_Manager;
 class TAO_Notify_Event_Manager;
 
 #if defined(_MSC_VER)
@@ -44,7 +45,7 @@ class TAO_Notify_Event_Manager;
 // compilers, but they deserve it! ;-) ;-)
 
 template <class SERVANT_TYPE>
-class TAO_Notify_Export TAO_Notify_Proxy : public SERVANT_TYPE, virtual public TAO_Notify_UpdateListener, public PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_Proxy : public SERVANT_TYPE, public TAO_Notify_UpdateListener
 {
   // = TITLE
   //   TAO_Notify_Proxy
@@ -56,20 +57,14 @@ class TAO_Notify_Export TAO_Notify_Proxy : public SERVANT_TYPE, virtual public T
   //
 
 public:
-  TAO_Notify_Proxy (void);
+  TAO_Notify_Proxy (TAO_Notify_Resource_Manager* resource_manager);
   // Constructor
 
   virtual ~TAO_Notify_Proxy (void);
   // Destructor
 
-  // = TAO_Notify_RefCounted methods
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
-  // Increment and decrement the reference count.
-
-  // = The Servant methods
-  virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV);
-  virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV);
+  void init (CosNotifyChannelAdmin::ProxyID myID, CORBA::Environment &ACE_TRY_ENV);
+  // Init the Proxy.
 
   // = Notify_Update_Listener methods
   virtual void dispatch_update (TAO_Notify_EventType_List& added_list, TAO_Notify_EventType_List& removed_list, CORBA::Environment &ACE_TRY_ENV);
@@ -161,21 +156,25 @@ virtual void remove_all_filters (
  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV) = 0;
  // Derived types should implement this to deliver the update.
 
+// = Helper methods
+ virtual void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+ // Cleanup all resources used by this object.
+
  // = Data members
- ACE_Lock* lock_;
- // The locking strategy.
-
- CORBA::ULong refcount_;
- // The reference count.
-
- CosNotifyChannelAdmin::ProxyType proxy_type_;
+ CosNotifyChannelAdmin::ProxyType mytype_;
  // What type are we?
 
  TAO_Notify_Event_Manager* event_manager_;
  // Our event manager.
 
+ TAO_Notify_Resource_Manager* resource_manager_;
+ // The resource factory.
+
  CORBA::Boolean is_connected_;
  // True if we are connected to a consumer.
+
+ CORBA::Boolean is_destroyed_;
+ // True if we are destroyed.
 
  CORBA::Boolean updates_on_;
  // True by default, for subscription/publication updates.
@@ -186,8 +185,8 @@ virtual void remove_all_filters (
  TAO_Notify_FilterAdmin_i filter_admin_;
  // Handles the Filter admin methods.
 
- CosNotifyChannelAdmin::ProxyID proxy_id_;
- // The ID assigned to this Proxy.
+ CosNotifyChannelAdmin::ProxyID myID_;
+ // The ID assigned to the Proxy.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -5,6 +5,7 @@
 #include "tao/Server_Request.h"
 
 #include "tao/CDR.h"
+#include "tao/POAC.h"
 #include "tao/Environment.h"
 #include "tao/NVList.h"
 #include "tao/Principal.h"

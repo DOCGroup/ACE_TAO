@@ -36,7 +36,7 @@
 
 class TAO_Export TAO_RelativeRoundtripTimeoutPolicy
   : public Messaging::RelativeRoundtripTimeoutPolicy,
-    public TAO_Local_RefCounted_Object
+    public CORBA::LocalObject
 {
   // = TITLE
   //   Messaging::RelativeRoundtripTimeoutPolicy implementation
@@ -52,6 +52,12 @@ public:
   TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs);
   // Copy constructor.
 
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
+
   static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Helper method for the implementation of
@@ -64,14 +70,11 @@ public:
   virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC (());
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   void set_time_value (ACE_Time_Value &time_value);
   // Change the CORBA representation to the ACE representation.
@@ -89,7 +92,8 @@ private:
 
 class TAO_Export TAO_Sync_Scope_Policy
   : public Messaging::SyncScopePolicy,
-    public TAO_Local_RefCounted_Object
+    public CORBA::LocalObject
+
 {
   // = TITLE
   //   Messaging::SyncScopePolicy implementation.
@@ -105,6 +109,12 @@ public:
   TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs);
   // Copy constructor.
 
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
+
   static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Helper method for the implementation of
@@ -116,18 +126,14 @@ public:
   // = The Messaging::SyncScopePolicy methods.
 
   virtual Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+    ACE_THROW_SPEC (());
   void get_synchronization (Messaging::SyncScope &synchronization) const;
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 private:
 

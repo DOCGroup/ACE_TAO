@@ -25,7 +25,6 @@ DIRS  = Simple_Naming \
 	CosEvent \
 	Concurrency \
 	ImplRepo \
-	InterfaceRepo \
 	Trading \
 	AVStreams \
 	Notify

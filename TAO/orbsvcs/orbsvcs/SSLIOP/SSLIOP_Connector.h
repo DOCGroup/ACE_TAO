@@ -23,16 +23,13 @@
 
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
-
-#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
+#include "tao/IIOP_Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SSL/SSL_SOCK_Connector.h"
-#include "tao/IIOP_Connector.h"
 #include "SSLIOP_Connect.h"
 #include "tao/Resource_Factory.h"
 
@@ -200,8 +197,6 @@ private:
   // from the connection cache.
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 };
-
-#endif  /* ACE_HAS_SSL */
 
 #include "ace/post.h"
 

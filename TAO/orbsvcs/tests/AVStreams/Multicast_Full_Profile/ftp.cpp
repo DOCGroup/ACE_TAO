@@ -168,7 +168,7 @@ FTP_Client_Callback::handle_timeout (void *)
   ACE_Message_Block mb (BUFSIZ);
   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::get_frame"));
   char *buf = mb.rd_ptr ();
-  //cerr << "message block size" << mb.size () << endl;
+  cerr << "message block size" << mb.size () << endl;
   int n = ACE_OS::fread(buf,1,mb.size (),CLIENT::instance ()->file ());
   if (n < 0)
     {
@@ -182,26 +182,13 @@ FTP_Client_Callback::handle_timeout (void *)
           this->count_++;
           if (this->count_ == 2)
             {
-              ACE_TRY_NEW_ENV
-                {
-                  ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
-                  AVStreams::flowSpec stop_spec (1);
-                  //ACE_DECLARE_NEW_CORBA_ENV;
-                  CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
-                  CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
-                  //TAO_AV_CORE::instance ()->stop_run ();
-                  TAO_AV_CORE::instance ()->orb_manager ()->fini (ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
-                  return 0;
-                }
-              ACE_CATCHANY
-                {
-                  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"FTP_Client_Callback::handle_timeout\n");
-                  return -1;
-                }
-              ACE_ENDTRY;
+              ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
+              AVStreams::flowSpec stop_spec (1);
+              ACE_DECLARE_NEW_CORBA_ENV;
+              CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
+              ACE_CHECK_RETURN (-1);
+              CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
+              TAO_AV_CORE::instance ()->stop_run ();
             }
           else
             return 0;
@@ -209,7 +196,7 @@ FTP_Client_Callback::handle_timeout (void *)
       else
         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread error\n"),-1);
     }
-  //cerr << "read bytes = " << n << endl;
+  cerr << "read bytes = " << n << endl;
   mb.wr_ptr (n);
   int result = this->protocol_object_->send_frame (&mb);
   if (result < 0)
@@ -325,7 +312,6 @@ Client::Client (void)
    endpoint_strategy_ (orb_manager_),
    client_mmdevice_ (&endpoint_strategy_),
    fdev_ (0),
-   address_ (ACE_OS::strdup ("224.9.9.2:10002")),
    fp_ (0),
    protocol_ (ACE_OS::strdup ("UDP"))
 {
@@ -477,8 +463,6 @@ Client::run (void)
                                      flow_spec,
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (result == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for client_mmdevice failed\n"),-1);
       if (this->bind_to_server ("Server_MMDevice1") == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error binding to the naming service\n"),
@@ -488,8 +472,6 @@ Client::run (void)
                                             the_qos.inout (),
                                             flow_spec,
                                             ACE_TRY_ENV);
-      if (result == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for mmdevice 1 failed\n"),-1);
       ACE_TRY_CHECK;
       if (this->bind_to_server ("Server_MMDevice2") == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -501,22 +483,16 @@ Client::run (void)
                                             flow_spec,
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (result == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for mmdevice 2 failed\n"),-1);
+        ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs failed\n"),-1);
       AVStreams::flowSpec start_spec (1);
       start_spec.length (1);
       start_spec [0] = CORBA::string_dup (this->flowname_);
       this->streamctrl_.start (start_spec,ACE_TRY_ENV);
       ACE_TRY_CHECK;
       // Schedule a timer for the for the flow handler.
-      //TAO_AV_CORE::instance ()->run ();
-
-      ACE_Time_Value tv (10000,0);
-      if (TAO_AV_CORE::instance ()->orb_manager ()->run (tv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
-      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
-      
-      ACE_DEBUG ((LM_DEBUG, "Exited the TAO_AV_Core::run\n"));
+      TAO_AV_CORE::instance ()->run ();
     }
   ACE_CATCHANY
     {

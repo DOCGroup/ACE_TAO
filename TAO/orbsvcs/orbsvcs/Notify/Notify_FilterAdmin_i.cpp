@@ -1,5 +1,5 @@
 /* -*- C++ -*- $Id$ */
-#include "Notify_FilterAdmin_i.h"
+#include "orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.h"
 
 ACE_RCSID(Notify, Notify_FilterAdmin_i, "$Id$")
 

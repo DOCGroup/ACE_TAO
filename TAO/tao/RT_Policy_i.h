@@ -44,7 +44,7 @@ class Policy_Factory;
 
 class TAO_Export TAO_PriorityModelPolicy :
   public RTCORBA::PriorityModelPolicy,
-  public TAO_Local_RefCounted_Object
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::PriorityModelPolicy implementation
@@ -73,25 +73,22 @@ public:
   virtual RTCORBA::PriorityModel priority_model (CORBA::Environment
                                                  &ACE_TRY_ENV =
                                                  TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC (());
 
   virtual RTCORBA::Priority server_priority (CORBA::Environment
                                              &ACE_TRY_ENV =
                                              TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC (());
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-        ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   // This method writes a CDR representation of the object state.
@@ -101,6 +98,12 @@ public:
 
   // = Override CORBA::LocalObject no-op methods to
   // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
 
 protected:
 
@@ -120,7 +123,7 @@ private:
 
 class TAO_Export TAO_ThreadpoolPolicy :
   public RTCORBA::ThreadpoolPolicy,
-  public TAO_Local_RefCounted_Object
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::ThreadpoolPolicy implementation
@@ -145,19 +148,22 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-        ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  
+                                         TAO_default_environment ());
+
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   // = Override CORBA::LocalObject no-op methods to
   // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
 
 private:
 
@@ -169,7 +175,7 @@ private:
 
 class TAO_Export TAO_PrivateConnectionPolicy :
   public RTCORBA::PrivateConnectionPolicy,
-  public TAO_Local_RefCounted_Object
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::PrivateConnectionPolicy implementation
@@ -191,27 +197,29 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   // = Override CORBA::LocalObject no-op methods to
   // provide reference counting.
 
-};
+  virtual void _add_ref (void);
+  // Increment the reference count.
 
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
+
+};
 ////////////////////////////////////////////////////////////////////////////
 
 class TAO_Export TAO_PriorityBandedConnectionPolicy :
   public RTCORBA::PriorityBandedConnectionPolicy,
-  public TAO_Local_RefCounted_Object
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::PriorityBandedConnectionPolicy implementation
@@ -246,16 +254,13 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   // This method writes a CDR representation of the current object.
@@ -265,6 +270,12 @@ public:
 
   // = Override CORBA::LocalObject no-op methods to
   // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
 
 protected:
 
@@ -282,7 +293,7 @@ private:
 
 class TAO_Export TAO_ServerProtocolPolicy :
   public RTCORBA::ServerProtocolPolicy,
-  public TAO_Local_RefCounted_Object
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::ServerProtocolPolicy implementation
@@ -308,19 +319,23 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   // = Override CORBA::LocalObject no-op methods to
   // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
+
 
 private:
 
@@ -332,7 +347,7 @@ private:
 
 class TAO_Export TAO_ClientProtocolPolicy :
   public RTCORBA::ClientProtocolPolicy,
-  public TAO_Local_RefCounted_Object
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::ClientProtocolPolicy implementation
@@ -363,16 +378,13 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   // = CDR Encoder/Decoder.
 
@@ -384,6 +396,12 @@ public:
 
   // = Override CORBA::LocalObject no-op methods to
   // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
 
 protected:
 
@@ -402,7 +420,7 @@ private:
 
 class TAO_Export TAO_TCP_Properties :
   public RTCORBA::TCPProtocolProperties,
-  public TAO_Local_RefCounted_Object
+  public CORBA::LocalObject
 
 {
   // = TITLE
@@ -481,6 +499,12 @@ public:
   // = Override CORBA::LocalObject no-op methods to
   // provide reference counting.
 
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
+
 private:
   // = Attributes.
 
@@ -495,13 +519,19 @@ class  TAO_Protocol_Properties_Factory;
 
 class TAO_Export TAO_GIOP_Properties :
   public RTCORBA::GIOPProtocolProperties,
-  public TAO_Local_RefCounted_Object
+  public CORBA::LocalObject
 {
 public:
   virtual ~TAO_GIOP_Properties ();
 
   // = Override CORBA::LocalObject no-op methods to
   // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
 
 protected:
   friend class TAO_Protocol_Properties_Factory;

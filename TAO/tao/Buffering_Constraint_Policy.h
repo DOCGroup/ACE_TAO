@@ -41,7 +41,7 @@
 
 class TAO_Export TAO_Buffering_Constraint_Policy
   : public TAO::BufferingConstraintPolicy,
-    public TAO_Local_RefCounted_Object
+    public CORBA::LocalObject
 {
   // = TITLE
   //     Implementation class for TAO-specific Buffering Constraint
@@ -58,6 +58,12 @@ public:
   TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs);
   // Copy constructor.
 
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
+
   static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Helper method for the implementation of CORBA::ORB::create_policy.
@@ -71,14 +77,11 @@ public:
     ACE_THROW_SPEC (());
   void get_buffering_constraint (TAO::BufferingConstraint &) const;
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 private:
   TAO::BufferingConstraint buffering_constraint_;

@@ -18,18 +18,19 @@ IFR_ServantLocator::preinvoke (
     PortableServer::ServantLocator::Cookie &cookie
     TAO_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::ForwardRequest))
 {
   TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var s =
+  CORBA::String_var s = 
     PortableServer::ObjectId_to_string (oid);
 
+  ACE_TString full_name (s.in ());
+
   ACE_Configuration_Section_Key servant_key;
+
   int status =
     this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                         s.in (),
+                                         full_name,
                                          servant_key,
                                          0);
 
@@ -59,7 +60,6 @@ IFR_ServantLocator::postinvoke (
     PortableServer::Servant servant
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   delete servant;
 }

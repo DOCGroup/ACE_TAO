@@ -30,7 +30,6 @@ CORBA::Boolean
 Video_Control_i::init_video (const Video_Control::INITvideoPara &para,
                              Video_Control::INITvideoReply_out reply,
                              CORBA::Environment& env)
-                        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Video_Control_i::init_video () called\n"));
@@ -48,7 +47,6 @@ CORBA::Boolean
 Video_Control_i::stat_stream (CORBA::Char_out ch,
                               CORBA::Long_out size,
                               CORBA::Environment& env)
-                        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return 0;
 }
@@ -56,7 +54,6 @@ Video_Control_i::stat_stream (CORBA::Char_out ch,
 
 void
 Video_Control_i::close (CORBA::Environment& env)
-                        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   ACE_DEBUG ((LM_DEBUG, 
               "(%P|%t) Video_Control_i::close:"
@@ -69,7 +66,6 @@ Video_Control_i::close (CORBA::Environment& env)
 
 CORBA::Boolean 
 Video_Control_i::stat_sent (CORBA::Environment& env)
-                        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return 0;
 }
@@ -78,7 +74,6 @@ Video_Control_i::stat_sent (CORBA::Environment& env)
 CORBA::Boolean 
 Video_Control_i::fast_forward (const Video_Control::FFpara &para,
                                CORBA::Environment& env)
-                        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return this->state_->fast_forward (para);
 }
@@ -87,7 +82,6 @@ Video_Control_i::fast_forward (const Video_Control::FFpara &para,
 CORBA::Boolean 
 Video_Control_i::fast_backward (const Video_Control::FFpara &para,
                                 CORBA::Environment& env)
-                        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return this->state_->fast_backward (para);
 }
@@ -96,7 +90,6 @@ Video_Control_i::fast_backward (const Video_Control::FFpara &para,
 CORBA::Boolean 
 Video_Control_i::step (const Video_Control::STEPpara &para,
                        CORBA::Environment& env)
-                        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return this->state_->step (para);
 }
@@ -108,7 +101,6 @@ CORBA::Boolean
 Video_Control_i::play (const Video_Control::PLAYpara &para,
                        CORBA::Long_out vts,
                        CORBA::Environment& env)
-                        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return this->state_->play (para,
                              vts);
@@ -118,7 +110,6 @@ Video_Control_i::play (const Video_Control::PLAYpara &para,
 CORBA::Boolean 
 Video_Control_i::position (const Video_Control::POSITIONpara &para,
                            CORBA::Environment& env)
-                        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return this->state_->position (para);
 }
@@ -127,7 +118,6 @@ Video_Control_i::position (const Video_Control::POSITIONpara &para,
 CORBA::Boolean 
 Video_Control_i::speed (const Video_Control::SPEEDpara &para,
                         CORBA::Environment& env)
-                        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Video_Control_i::speed () called\n"));
@@ -138,7 +128,6 @@ Video_Control_i::speed (const Video_Control::SPEEDpara &para,
 CORBA::Boolean 
 Video_Control_i::stop (CORBA::Long cmdsn,
                        CORBA::Environment& env)
-                        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return this->state_->stop (cmdsn);
 }
@@ -146,7 +135,6 @@ Video_Control_i::stop (CORBA::Long cmdsn,
 CORBA::Boolean
 Video_Control_i::set_peer (char * &peer,
                            CORBA::Environment &ACE_TRY_ENV)
-                        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
 
   

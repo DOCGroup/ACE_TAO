@@ -60,9 +60,6 @@ ACE_INLINE CORBA::PolicyList *
 TAO_Policy_Manager::get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts,
         CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC ((
-                       CORBA::SystemException
-                       ))
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return this->impl_.get_policy_overrides (ts, ACE_TRY_ENV);
@@ -73,10 +70,6 @@ TAO_Policy_Manager::set_policy_overrides (
         const CORBA::PolicyList & policies,
         CORBA::SetOverrideType set_add,
         CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC ((
-                       CORBA::SystemException,
-                       CORBA_InvalidPolicies
-                       ))
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->impl_.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
@@ -266,8 +259,6 @@ ACE_INLINE CORBA::PolicyList *
 TAO_Policy_Current::get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts,
         CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-  
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
@@ -278,8 +269,6 @@ ACE_INLINE void
 TAO_Policy_Current::set_policy_overrides (const CORBA::PolicyList & policies,
                                           CORBA::SetOverrideType set_add,
                                           CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA_InvalidPolicies))
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 

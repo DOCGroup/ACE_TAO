@@ -33,9 +33,6 @@ CPPDIR = .
 
 IDLDIR = .
 
-INCDIR_NAME = orbsvcs
-INCLUDES = *.h *.i *_T.cpp
-
 LIBFILES = $(ACE_LIB) $(TAO_LIB)
 
 all: idl_src_files svc_utils_lib

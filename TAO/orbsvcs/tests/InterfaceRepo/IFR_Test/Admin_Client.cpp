@@ -988,7 +988,7 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
 
   members[1].name = CORBA::string_dup ("array_mem");
   members[1].type_def = this->repo_->create_array (5, 
-                                                   members[0].type_def.in (),
+                                                   members[0].type_def,
                                                    ACE_TRY_ENV);
   ACE_CHECK;
   members[1].type = members[1].type_def->type (ACE_TRY_ENV);
@@ -1242,11 +1242,6 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
                                     tmp,
                                     ACE_OS::strlen (tmp)));
     }
-
-#if defined (ACE_NDEBUG)
-  // ACE_ASSERT macro expands to nothing, so...
-  ACE_UNUSED_ARG (tmp);
-#endif /* ACE_NDEBUG */
 
   e_var->destroy (ACE_TRY_ENV);
   ACE_CHECK;
@@ -1572,7 +1567,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
 
   members[1].name = CORBA::string_dup ("array_mem");
   IR::ArrayDef_ptr a_ptr = this->repo_->create_array (5, 
-                                                      members[0].type_def.in (),
+                                                      members[0].type_def,
                                                       ACE_TRY_ENV);
   ACE_CHECK;
   members[1].type_def = a_ptr;
@@ -1771,7 +1766,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
       if (kind == IR::dk_Exception)
         {
           cont_desc[i].value >>= ed;
-          CORBA::TypeCode_ptr tc = ed->type.in ();
+          CORBA::TypeCode_ptr tc = ed->type;
 
           length = tc->member_count (ACE_TRY_ENV);
           ACE_CHECK;
@@ -1797,7 +1792,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
       else
         {
           cont_desc[i].value >>= td;
-          CORBA::TypeCode_ptr tc = td->type.in ();
+          CORBA::TypeCode_ptr tc = td->type;
 
           length = tc->member_count (ACE_TRY_ENV);
           ACE_CHECK;
@@ -1853,11 +1848,6 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
 
       ACE_ASSERT (!ACE_OS::strncmp (str.in (), tmp, ACE_OS::strlen (tmp)));
     }
-
-#if defined (ACE_NDEBUG)
-  // ACE_ASSERT macro expands to nothing, so...
-  ACE_UNUSED_ARG (tmp);
-#endif /* ACE_NDEBUG */
 
   e_var->destroy (ACE_TRY_ENV);
   ACE_CHECK;
@@ -2824,11 +2814,6 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
                                     ACE_OS::strlen (base)));
     }
 
-#if defined (ACE_NDEBUG)
-  // ACE_ASSERT macro expands to nothing, so...
-  ACE_UNUSED_ARG (base);
-#endif /* ACE_NDEBUG */
-
   IR::StructMemberSeq_var out_s_members = s_tmp->members (ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -3088,7 +3073,7 @@ Admin_Client::module_test (CORBA::Environment &ACE_TRY_ENV)
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("\nInterfaceDef::move (into outer module)\n")));
+                ACE_TEXT ("\nInterfaceDef::move (into outer module\n")));
 
   cseq = this->repo_->lookup_name ("op", 
                                    -1, 

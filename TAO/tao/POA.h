@@ -49,9 +49,6 @@
 // RT CORBA
 #include "tao/RTCORBAC.h"
 
-// Local Object
-#include "tao/LocalObject.h"
-
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
@@ -66,169 +63,169 @@ class TAO_ServerProtocolPolicy;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-class TAO_Export TAO_Thread_Policy :
-  public PortableServer::ThreadPolicy,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_Thread_Policy : public virtual PortableServer::RefCountServantBase,
+                                     public virtual POA_PortableServer::ThreadPolicy
 {
 public:
-  TAO_Thread_Policy (PortableServer::ThreadPolicyValue value);
+  TAO_Thread_Policy (PortableServer::ThreadPolicyValue value,
+                     PortableServer::POA_ptr poa);
 
-  PortableServer::ThreadPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::ThreadPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 protected:
   PortableServer::ThreadPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-class TAO_Export TAO_Lifespan_Policy :
-  public PortableServer::LifespanPolicy,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_Lifespan_Policy : public virtual PortableServer::RefCountServantBase,
+                                       public virtual POA_PortableServer::LifespanPolicy
 {
 public:
-  TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue value);
+  TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue value,
+                       PortableServer::POA_ptr poa);
 
-  PortableServer::LifespanPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::LifespanPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 protected:
   PortableServer::LifespanPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
-class TAO_Export TAO_Id_Uniqueness_Policy :
-  public PortableServer::IdUniquenessPolicy,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_Id_Uniqueness_Policy : public virtual PortableServer::RefCountServantBase,
+                                            public virtual POA_PortableServer::IdUniquenessPolicy
 {
 public:
-  TAO_Id_Uniqueness_Policy (PortableServer::IdUniquenessPolicyValue value);
+  TAO_Id_Uniqueness_Policy (PortableServer::IdUniquenessPolicyValue value,
+                            PortableServer::POA_ptr poa);
 
-  PortableServer::IdUniquenessPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::IdUniquenessPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 protected:
   PortableServer::IdUniquenessPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
-class TAO_Export TAO_Id_Assignment_Policy :
-  public PortableServer::IdAssignmentPolicy,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_Id_Assignment_Policy : public virtual PortableServer::RefCountServantBase,
+                                            public virtual POA_PortableServer::IdAssignmentPolicy
 {
 public:
-  TAO_Id_Assignment_Policy (PortableServer::IdAssignmentPolicyValue value);
+  TAO_Id_Assignment_Policy (PortableServer::IdAssignmentPolicyValue value,
+                            PortableServer::POA_ptr poa);
 
-  PortableServer::IdAssignmentPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::IdAssignmentPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 protected:
   PortableServer::IdAssignmentPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-class TAO_Export TAO_Implicit_Activation_Policy :
-  public PortableServer::ImplicitActivationPolicy,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_Implicit_Activation_Policy : public virtual PortableServer::RefCountServantBase,
+                                                  public virtual POA_PortableServer::ImplicitActivationPolicy
 {
 public:
-  TAO_Implicit_Activation_Policy (PortableServer::ImplicitActivationPolicyValue value);
+  TAO_Implicit_Activation_Policy (PortableServer::ImplicitActivationPolicyValue value,
+                                  PortableServer::POA_ptr poa);
 
-  PortableServer::ImplicitActivationPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::ImplicitActivationPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 protected:
   PortableServer::ImplicitActivationPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
-class TAO_Export TAO_Servant_Retention_Policy :
-  public PortableServer::ServantRetentionPolicy,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_Servant_Retention_Policy : public virtual PortableServer::RefCountServantBase,
+                                                public virtual POA_PortableServer::ServantRetentionPolicy
 {
 public:
-  TAO_Servant_Retention_Policy (PortableServer::ServantRetentionPolicyValue value);
+  TAO_Servant_Retention_Policy (PortableServer::ServantRetentionPolicyValue value,
+                                PortableServer::POA_ptr poa);
 
-  PortableServer::ServantRetentionPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::ServantRetentionPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 protected:
   PortableServer::ServantRetentionPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
-class TAO_Export TAO_Request_Processing_Policy :
-  public PortableServer::RequestProcessingPolicy,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_Request_Processing_Policy : public virtual PortableServer::RefCountServantBase,
+                                                 public virtual POA_PortableServer::RequestProcessingPolicy
 {
 public:
-  TAO_Request_Processing_Policy (PortableServer::RequestProcessingPolicyValue value);
+  TAO_Request_Processing_Policy (PortableServer::RequestProcessingPolicyValue value,
+                                 PortableServer::POA_ptr poa);
 
-  PortableServer::RequestProcessingPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::RequestProcessingPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 protected:
   PortableServer::RequestProcessingPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -391,9 +388,7 @@ protected:
 // Forward Declaration
 class ServerObject_i;
 
-class TAO_Export TAO_POA :
-  public PortableServer::POA,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_POA : public POA_PortableServer::POA
 {
 public:
 
@@ -413,166 +408,103 @@ public:
   PortableServer::POA_ptr create_POA (const char *adapter_name,
                                       PortableServer::POAManager_ptr poa_manager,
                                       const CORBA::PolicyList &policies,
-                                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::AdapterAlreadyExists,
-                     PortableServer::POA::InvalidPolicy));
+                                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   PortableServer::POA_ptr find_POA (const char *adapter_name,
                                     CORBA::Boolean activate_it,
-                                    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::AdapterNonExistent));
+                                    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   void destroy (CORBA::Boolean etherealize_objects,
                 CORBA::Boolean wait_for_completion,
-                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::ThreadPolicy_ptr create_thread_policy (PortableServer::ThreadPolicyValue value,
-                                                         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                                         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::LifespanPolicy_ptr create_lifespan_policy (PortableServer::LifespanPolicyValue value,
-                                                             CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                                             CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   PortableServer::IdUniquenessPolicy_ptr create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value,
-                                                                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                                                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   PortableServer::IdAssignmentPolicy_ptr create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value,
-                                                                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                                                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,
-                                                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   PortableServer::ServantRetentionPolicy_ptr create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value,
-                                                                              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                                                              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   PortableServer::RequestProcessingPolicy_ptr create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,
-                                                                                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                                                                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  char * the_name (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  char * the_name (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  PortableServer::POA_ptr the_parent (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::POA_ptr the_parent (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  PortableServer::POAList *the_children (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  PortableServer::POAManager_ptr the_POAManager (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::POAManager_ptr the_POAManager (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  PortableServer::AdapterActivator_ptr the_activator (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::AdapterActivator_ptr the_activator (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   void the_activator (PortableServer::AdapterActivator_ptr adapter_activator,
-                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  PortableServer::ServantManager_ptr get_servant_manager (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+  PortableServer::ServantManager_ptr get_servant_manager (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   void set_servant_manager (PortableServer::ServantManager_ptr imgr,
-                            CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+                            CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  PortableServer::Servant get_servant (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::NoServant,
-                     PortableServer::POA::WrongPolicy));
+  PortableServer::Servant get_servant (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   void set_servant (PortableServer::Servant servant,
-                    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+                    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant,
-                                             CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ServantAlreadyActive,
-                     PortableServer::POA::WrongPolicy));
+                                             CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   void activate_object_with_id (const PortableServer::ObjectId &id,
                                 PortableServer::Servant p_servant,
-                                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ServantAlreadyActive,
-                     PortableServer::POA::ObjectAlreadyActive,
-                     PortableServer::POA::WrongPolicy));
+                                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   void deactivate_object (const PortableServer::ObjectId &oid,
-                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ObjectNotActive,
-                     PortableServer::POA::WrongPolicy));
+                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   CORBA::Object_ptr create_reference (const char *intf,
-                                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+                                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   CORBA::Object_ptr create_reference_with_id (const PortableServer::ObjectId &oid,
                                               const char *intf,
-                                              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
-
+                                              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   PortableServer::ObjectId *servant_to_id (PortableServer::Servant p_servant,
-                                           CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ServantNotActive,
-                     PortableServer::POA::WrongPolicy));
+                                           CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   CORBA::Object_ptr servant_to_reference (PortableServer::Servant p_servant,
-                                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ServantNotActive,
-                     PortableServer::POA::WrongPolicy));
+                                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   PortableServer::Servant reference_to_servant (CORBA::Object_ptr reference,
-                                                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ObjectNotActive,
-                     PortableServer::POA::WrongPolicy));
+                                                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   PortableServer::ObjectId *reference_to_id (CORBA::Object_ptr reference,
-                                             CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongAdapter,
-                     PortableServer::POA::WrongPolicy));
+                                             CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   PortableServer::Servant id_to_servant (const PortableServer::ObjectId &oid,
-                                         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ObjectNotActive,
-                     PortableServer::POA::WrongPolicy));
+                                         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid,
-                                     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ObjectNotActive,
-                     PortableServer::POA::WrongPolicy));
+                                     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -685,55 +617,32 @@ protected:
   PortableServer::POA_ptr create_POA_i (const char *adapter_name,
                                         PortableServer::POAManager_ptr poa_manager,
                                         const CORBA::PolicyList &policies,
-                                        CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::AdapterAlreadyExists,
-                     PortableServer::POA::InvalidPolicy));
+                                        CORBA_Environment &ACE_TRY_ENV);
 
   TAO_POA *create_POA_i (const String &adapter_name,
                          TAO_POA_Manager &poa_manager,
                          const TAO_POA_Policies &policies,
-                         CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::AdapterAlreadyExists,
-                     PortableServer::POA::InvalidPolicy));
+                         CORBA_Environment &ACE_TRY_ENV);
 
   TAO_POA *find_POA_i (const ACE_CString &child_name,
                        CORBA::Boolean activate_it,
-                       CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::AdapterNonExistent));
+                       CORBA::Environment &ACE_TRY_ENV);
 
   void destroy_i (CORBA::Boolean etherealize_objects,
                   CORBA::Boolean wait_for_completion,
-                  CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void complete_destruction_i (CORBA::Environment &ACE_TRY_ENV);
-
-  PortableServer::POAList *the_children_i (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                  CORBA_Environment &ACE_TRY_ENV);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  PortableServer::ServantManager_ptr get_servant_manager_i (CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+  PortableServer::ServantManager_ptr get_servant_manager_i (CORBA_Environment &ACE_TRY_ENV);
 
   void set_servant_manager_i (PortableServer::ServantManager_ptr imgr,
-                              CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+                              CORBA_Environment &ACE_TRY_ENV);
 
-  PortableServer::Servant get_servant_i (CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::NoServant,
-                     PortableServer::POA::WrongPolicy));
+  PortableServer::Servant get_servant_i (CORBA_Environment &ACE_TRY_ENV);
 
   void set_servant_i (PortableServer::Servant servant,
-                      CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+                      CORBA_Environment &ACE_TRY_ENV);
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
@@ -767,30 +676,19 @@ protected:
 
   PortableServer::ObjectId *activate_object_i (PortableServer::Servant p_servant,
                                                CORBA::Short priority,
-                                               CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ServantAlreadyActive,
-                     PortableServer::POA::WrongPolicy));
+                                               CORBA_Environment &ACE_TRY_ENV);
 
   void activate_object_with_id_i (const PortableServer::ObjectId &id,
                                   PortableServer::Servant p_servant,
                                   CORBA::Short priority,
-                                  CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ServantAlreadyActive,
-                     PortableServer::POA::ObjectAlreadyActive,
-                     PortableServer::POA::WrongPolicy));
+                                  CORBA_Environment &ACE_TRY_ENV);
 
   void deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
-                                 CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+                                 CORBA::Environment &ACE_TRY_ENV);
 
   void deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
                                  CORBA::Boolean wait_for_completion,
-                                 CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+                                 CORBA::Environment &ACE_TRY_ENV);
 
   void wait_for_completions (CORBA::Boolean wait_for_completion,
                              CORBA::Environment &ACE_TRY_ENV);
@@ -798,58 +696,37 @@ protected:
   void check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV);
 
   void deactivate_object_i (const PortableServer::ObjectId &oid,
-                            CORBA_Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongPolicy));
+                            CORBA_Environment &ACE_TRY_ENV);
 
   void cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_entry,
                         CORBA::Environment &ACE_TRY_ENV);
 
   CORBA::Object_ptr create_reference_i (const char *intf,
                                         CORBA::Short priority,
-                                        CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+                                        CORBA_Environment &ACE_TRY_ENV);
 
   CORBA::Object_ptr create_reference_with_id_i (const PortableServer::ObjectId &oid,
                                                 const char *intf,
                                                 CORBA::Short priority,
-                                                CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
+                                                CORBA_Environment &ACE_TRY_ENV);
 
   PortableServer::ObjectId *servant_to_id_i (PortableServer::Servant servant,
-                                             CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ServantNotActive,
-                     PortableServer::POA::WrongPolicy));
+                                             CORBA_Environment &ACE_TRY_ENV);
 
   PortableServer::ObjectId *servant_to_system_id (PortableServer::Servant p_servant,
                                                   CORBA::Short &priority,
-                                                  CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ServantNotActive,
-                     PortableServer::POA::WrongPolicy));
+                                                  CORBA_Environment &ACE_TRY_ENV);
 
   PortableServer::ObjectId *servant_to_system_id_i (PortableServer::Servant p_servant,
                                                     CORBA::Short &priority,
-                                                    CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ServantNotActive,
-                     PortableServer::POA::WrongPolicy));
+                                                    CORBA_Environment &ACE_TRY_ENV);
 
   PortableServer::Servant id_to_servant_i (const PortableServer::ObjectId &oid,
-                                           CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ObjectNotActive,
-                     PortableServer::POA::WrongPolicy));
+                                           CORBA_Environment &ACE_TRY_ENV);
 
   CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid,
-                                       CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ObjectNotActive,
-                     PortableServer::POA::WrongPolicy));
+                                       CORBA_Environment &ACE_TRY_ENV);
+
 //
 // Forwarding related.
 //
@@ -1022,8 +899,7 @@ class TAO_POA_Guard
 {
 public:
   TAO_POA_Guard (TAO_POA &poa,
-                 CORBA::Environment &ACE_TRY_ENV,
-                 int check_for_destruction = 1);
+                 CORBA::Environment &ACE_TRY_ENV);
 
 private:
   ACE_Guard<ACE_Lock> guard_;
@@ -1031,7 +907,7 @@ private:
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-class TAO_Export TAO_Adapter_Activator : public PortableServer::AdapterActivator
+class TAO_Export TAO_Adapter_Activator : public POA_PortableServer::AdapterActivator
 {
 public:
 
@@ -1039,8 +915,7 @@ public:
 
   CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
                                   const char *name,
-                                  CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                  CORBA_Environment &ACE_TRY_ENV);
 
 protected:
 

@@ -19,8 +19,6 @@
 #include "ace/pre.h"
 
 #include "Notify_Proxy_T.h"
-#include "Notify_Collection.h"
-
 class TAO_Notify_ConsumerAdmin_i;
 
 #if defined(_MSC_VER)
@@ -31,7 +29,7 @@ class TAO_Notify_ConsumerAdmin_i;
 #endif /* _MSC_VER */
 
 template <class SERVANT_TYPE>
-class TAO_Notify_Export TAO_Notify_ProxySupplier : public TAO_Notify_Proxy <SERVANT_TYPE>, virtual public TAO_Notify_EventListener
+class TAO_Notify_Export TAO_Notify_ProxySupplier : public TAO_Notify_Proxy <SERVANT_TYPE>, public TAO_Notify_EventListener
 {
   // = TITLE
   //   TAO_Notify_ProxySupplier
@@ -41,21 +39,18 @@ class TAO_Notify_Export TAO_Notify_ProxySupplier : public TAO_Notify_Proxy <SERV
   //
 
 public:
-  TAO_Notify_ProxySupplier (TAO_Notify_ConsumerAdmin_i* consumeradmin);
+  TAO_Notify_ProxySupplier (TAO_Notify_ConsumerAdmin_i* consumeradmin,
+                            TAO_Notify_Resource_Manager* resource_manager);
   // Constructor
 
   virtual ~TAO_Notify_ProxySupplier (void);
   // Destructor
 
-  void init (CosNotifyChannelAdmin::ProxyID myID, CORBA::Environment &ACE_TRY_ENV);
-  // Init the Proxy.
-
   // = Notify_Event_Listener methods
   virtual void dispatch_event (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV);
-  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Boolean eval_parent, CORBA::Environment &ACE_TRY_ENV);
 
   // = Interface methods
-  virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr MyAdmin (
+virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr MyAdmin (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -71,7 +66,7 @@ public:
     CosNotifyChannelAdmin::NotConnected
   ));
 
-  virtual void resume_connection (
+virtual void resume_connection (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -80,14 +75,14 @@ public:
     CosNotifyChannelAdmin::NotConnected
   ));
 
-  virtual CosNotifyFilter::MappingFilter_ptr priority_filter (
+virtual CosNotifyFilter::MappingFilter_ptr priority_filter (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-  virtual void priority_filter (
+virtual void priority_filter (
     CosNotifyFilter::MappingFilter_ptr priority_filter,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -95,14 +90,14 @@ public:
     CORBA::SystemException
   ));
 
-  virtual CosNotifyFilter::MappingFilter_ptr lifetime_filter (
+virtual CosNotifyFilter::MappingFilter_ptr lifetime_filter (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-  virtual void lifetime_filter (
+virtual void lifetime_filter (
     CosNotifyFilter::MappingFilter_ptr lifetime_filter,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -110,7 +105,7 @@ public:
     CORBA::SystemException
   ));
 
-  virtual CosNotification::EventTypeSeq * obtain_offered_types (
+virtual CosNotification::EventTypeSeq * obtain_offered_types (
     CosNotifyChannelAdmin::ObtainInfoMode mode,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -118,7 +113,7 @@ public:
     CORBA::SystemException
   ));
 
-  virtual void subscription_change (
+virtual void subscription_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed,
     CORBA::Environment &ACE_TRY_ENV
@@ -129,22 +124,20 @@ public:
   ));
 
  protected:
-  // = Helper methods
-  virtual void dispatch_event_i (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV) = 0;
-  // Derived classes should implement this.
+// = Helper methods
+ virtual void dispatch_event_i (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV) = 0;
+ virtual void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+ // Cleanup all resources used by this object.
 
-  void on_connected (CORBA::Environment &ACE_TRY_ENV);
-  // Derived classes should call this when their consumers connect.
+ void on_connected (CORBA::Environment &ACE_TRY_ENV);
+ // Derived classes should call this when their consumers connect.
 
-  void on_disconnected (CORBA::Environment &ACE_TRY_ENV);
-  // Derived classes should call this when their consumers disconnect.
+ // = Data members
+ TAO_Notify_ConsumerAdmin_i* myadmin_;
+ // My parent consumer admin.
 
-  // = Data members
-  TAO_Notify_ConsumerAdmin_i* consumer_admin_;
-  // My parent consumer admin.
-
-  TAO_Notify_EventType_List subscription_list_;
-  // A list of event types that we are interested in.
+ TAO_Notify_EventType_List subscription_list_;
+ // A list of event types that we are interested in.
 
   CORBA::Boolean is_suspended_;
   // True if we are connected to a consumer and suspended.

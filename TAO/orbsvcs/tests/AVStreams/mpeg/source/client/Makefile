@@ -30,8 +30,7 @@ endif # AV
 
 
 LDLIBS += -lACE -lTAO_AV -lmpeg_shared -lmpeg_mib -lmpeg_client $(PLATFORM_X11_LDFLAGS) -lXm  -lXext -lXt -lSM -lICE  -lX11  
-CPPFLAGS +=  -DSH_MEM -DNDEBUG $(PLATFORM_X11_CPPFLAGS) 
-
+CPPFLAGS += -i -DSH_MEM -DNDEBUG $(PLATFORM_X11_CPPFLAGS) 
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

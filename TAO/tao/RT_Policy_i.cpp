@@ -22,7 +22,7 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy
 TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (const
                                                   TAO_PriorityModelPolicy &rhs)
   : RTCORBA::PriorityModelPolicy (),
-    TAO_Local_RefCounted_Object (),
+    CORBA::LocalObject (),
     priority_model_ (rhs.priority_model_),
     server_priority_ (rhs.server_priority_)
 {
@@ -34,28 +34,26 @@ TAO_PriorityModelPolicy::~TAO_PriorityModelPolicy (void)
 
 RTCORBA::PriorityModel
 TAO_PriorityModelPolicy::priority_model (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC (())
 {
   return this->priority_model_;
 }
 
 RTCORBA::Priority
 TAO_PriorityModelPolicy::server_priority (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC (())
 {
   return this->server_priority_;
 }
 
 CORBA::PolicyType
 TAO_PriorityModelPolicy::policy_type (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIORITY_MODEL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_PriorityModelPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityModelPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -68,7 +66,6 @@ TAO_PriorityModelPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void TAO_PriorityModelPolicy::destroy (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -105,6 +102,18 @@ TAO_PriorityModelPolicy::_tao_decode (TAO_InputCDR &in_cdr)
   return 0;
 }
 
+void
+TAO_PriorityModelPolicy::_add_ref (void)
+{
+  this->_incr_refcnt ();
+}
+
+void
+TAO_PriorityModelPolicy::_remove_ref (void)
+{
+  this->_decr_refcnt ();
+}
+
 // ****************************************************************
 
 TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
@@ -115,7 +124,7 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
 TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy
                                             &rhs)
   : RTCORBA::ThreadpoolPolicy (),
-    TAO_Local_RefCounted_Object (),
+    CORBA::LocalObject (),
     id_ (rhs.id_)
 {
 }
@@ -133,14 +142,12 @@ TAO_ThreadpoolPolicy::threadpool (CORBA::Environment &)
 
 CORBA::PolicyType
 TAO_ThreadpoolPolicy::policy_type (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::THREADPOOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_ThreadpoolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ThreadpoolPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -153,8 +160,19 @@ TAO_ThreadpoolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void TAO_ThreadpoolPolicy::destroy (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+}
+
+void
+TAO_ThreadpoolPolicy::_add_ref (void)
+{
+  this->_incr_refcnt ();
+}
+
+void
+TAO_ThreadpoolPolicy::_remove_ref (void)
+{
+  this->_decr_refcnt ();
 }
 
 // ****************************************************************
@@ -166,7 +184,7 @@ TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (void)
 TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const
                                                            TAO_PrivateConnectionPolicy &)
   : RTCORBA::PrivateConnectionPolicy (),
-    TAO_Local_RefCounted_Object ()
+    CORBA::LocalObject ()
 {
 }
 
@@ -176,14 +194,12 @@ TAO_PrivateConnectionPolicy::~TAO_PrivateConnectionPolicy (void)
 
 CORBA::PolicyType
 TAO_PrivateConnectionPolicy::policy_type (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIVATE_CONNECTION_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_PrivateConnectionPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PrivateConnectionPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -197,8 +213,19 @@ TAO_PrivateConnectionPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_PrivateConnectionPolicy::destroy (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+}
+
+void
+TAO_PrivateConnectionPolicy::_add_ref (void)
+{
+  this->_incr_refcnt ();
+}
+
+void
+TAO_PrivateConnectionPolicy::_remove_ref (void)
+{
+  this->_decr_refcnt ();
 }
 
 // ****************************************************************
@@ -213,7 +240,7 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy
 TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy
 (const TAO_PriorityBandedConnectionPolicy &rhs)
   : RTCORBA::PriorityBandedConnectionPolicy (),
-    TAO_Local_RefCounted_Object (),
+    CORBA::LocalObject (),
     priority_bands_ (rhs.priority_bands_)
 {
 }
@@ -238,14 +265,12 @@ TAO_PriorityBandedConnectionPolicy::priority_bands (CORBA::Environment &ACE_TRY_
 
 CORBA::PolicyType
 TAO_PriorityBandedConnectionPolicy::policy_type (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_PriorityBandedConnectionPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityBandedConnectionPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -258,8 +283,19 @@ TAO_PriorityBandedConnectionPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void TAO_PriorityBandedConnectionPolicy::destroy (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+}
+
+void
+TAO_PriorityBandedConnectionPolicy::_add_ref (void)
+{
+  this->_incr_refcnt ();
+}
+
+void
+TAO_PriorityBandedConnectionPolicy::_remove_ref (void)
+{
+  this->_decr_refcnt ();
 }
 
 ///////////////////////////////////////////////////////
@@ -381,7 +417,7 @@ TAO_TCP_Properties::no_delay (CORBA::Boolean no_delay,
 CORBA::Boolean
 TAO_TCP_Properties::_tao_encode (TAO_OutputCDR & out_cdr)
 {
-  return ((out_cdr << this->send_buffer_size_)
+  return ((out_cdr << this->send_buffer_size_) 
           &&
           (out_cdr << this->recv_buffer_size_)
           &&
@@ -406,6 +442,18 @@ TAO_TCP_Properties::_tao_decode (TAO_InputCDR &in_cdr)
           (in_cdr.read_boolean (this->no_delay_)));
 }
 
+void
+TAO_TCP_Properties::_add_ref (void)
+{
+  this->_incr_refcnt ();
+}
+
+void
+TAO_TCP_Properties::_remove_ref (void)
+{
+  this->_decr_refcnt ();
+}
+
 // ****************************************************************
 
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
@@ -418,7 +466,7 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
                                                     TAO_ServerProtocolPolicy &rhs)
   : RTCORBA::ServerProtocolPolicy (),
-    TAO_Local_RefCounted_Object (),
+    CORBA::LocalObject (),
     protocols_ (rhs.protocols_)
 {
 }
@@ -443,14 +491,12 @@ TAO_ServerProtocolPolicy::protocols (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::PolicyType
 TAO_ServerProtocolPolicy::policy_type (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::SERVER_PROTOCOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_ServerProtocolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ServerProtocolPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -464,8 +510,19 @@ TAO_ServerProtocolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_ServerProtocolPolicy::destroy (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+}
+
+void
+TAO_ServerProtocolPolicy::_add_ref (void)
+{
+  this->_incr_refcnt ();
+}
+
+void
+TAO_ServerProtocolPolicy::_remove_ref (void)
+{
+  this->_decr_refcnt ();
 }
 
 // ****************************************************************
@@ -480,7 +537,7 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const
 TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const
                                                     TAO_ClientProtocolPolicy &rhs)
   : RTCORBA::ClientProtocolPolicy (),
-    TAO_Local_RefCounted_Object (),
+    CORBA::LocalObject (),
     protocols_ (rhs.protocols_)
 {
 }
@@ -505,14 +562,12 @@ TAO_ClientProtocolPolicy::protocols (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::PolicyType
 TAO_ClientProtocolPolicy::policy_type (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_ClientProtocolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ClientProtocolPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -526,8 +581,19 @@ TAO_ClientProtocolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_ClientProtocolPolicy::destroy (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+}
+
+void
+TAO_ClientProtocolPolicy::_add_ref (void)
+{
+  this->_incr_refcnt ();
+}
+
+void
+TAO_ClientProtocolPolicy::_remove_ref (void)
+{
+  this->_decr_refcnt ();
 }
 
 ///////////////////////////////////////////////////////
@@ -547,7 +613,7 @@ TAO_ClientProtocolPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
        (i < this->protocols_.length ()) && is_write_ok;
        i++)
     {
-      is_write_ok =
+      is_write_ok = 
         (out_cdr << protocols_[i].protocol_type)
         &&
         this->protocols_[i].orb_protocol_properties->_tao_encode (out_cdr)
@@ -603,6 +669,18 @@ TAO_GIOP_Properties::TAO_GIOP_Properties (void)
 
 TAO_GIOP_Properties::~TAO_GIOP_Properties (void)
 {
+}
+
+void
+TAO_GIOP_Properties::_add_ref (void)
+{
+  this->_incr_refcnt ();
+}
+
+void
+TAO_GIOP_Properties::_remove_ref (void)
+{
+  this->_decr_refcnt ();
 }
 
 // ****************************************************************

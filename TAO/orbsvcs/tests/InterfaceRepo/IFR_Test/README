@@ -28,18 +28,23 @@ MSVC users) the line #define TAO_HAS_INTERFACE_REPOSITORY 1
 uncommented in TAO/tao/orbconf.h. In addition, the Interface
 Repository requires the TAO_Svc_Utils library in TAO/orbsvcs/orbsvcs.
 
+At present the test client gets a reference for the Interface 
+Repository by reading the IOR from a file used for this purpose
+by the IFR service. Future additions to this test will include
+an option to get the object reference via multicast, DII requests
+constructed from IFR information on an existing object, and testing
+of a persistent Interface Repository.
+
 To run this test, either use the Perl script run_test.pl, or
-
-
 
 (Windows)
 start the Interface Repository by typing 
 
- ..\..\..\IFR_Service\IFR_Service
+ IFR_Service
 
-in one window, then (in another window)
+in the IFR's home directory (TAO/orbsvcs/IFR_Service), then (in this directory)
 
- IFR_Test
+ IFR_Test -ORBInitRef InterfaceRepository=file://../../../IFR_Service/if_repo.ior
 
 (Unix)
 in this directory, type 
@@ -48,26 +53,10 @@ in this directory, type
 
 then
 
- ./IFR_Test
+ ./IFR_Test -ORBInitRef InterfaceRepository=file://if_repo.ior
 
-
-
-If for some reason IP multicast is not available or enabled on your platform, 
-then add
-
- -ORBInitRef InterfaceRepository=file://if_repo.ior
-
-to the client's command line. If the IFR_Service has been started with the
-command line option -o <filename> (see the README file in the IFR_Service
-directory), then instead add
-
- -ORBInitRef InterfaceRepository=file://<filename>
-
-to the client's command line.
-
-You may add any of the options below to the IFR_Test command line. Both the
-Perl script and the test executable have the same command line options. 
-They are:
+Add any of the options below to the IFR_Test command. Both the Perl script 
+and the test executable have the same command line options. They are:
 
 	-d	Outputs the results of queries along with a string
 		explaining the sequence of calls and/or accesses
@@ -108,10 +97,6 @@ is halted for this or any other reason, it is likely that the
 destroy() call(s) at the end of the function were not exectuted.
 Before running the test again, the Interface Repository process
 should be stopped and restarted to avoid a BAD_PARAM exception.
-
-The IFR server is started in this test with locking enabled. Even
-though the test itself is single-threaded, using this option will
-ensure that future modifications to IFR code don't cause deadlocks.
 
 More information about the Interface Repository can be found in 
 TAO/docs/releasenotes.index.html.

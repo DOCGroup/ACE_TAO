@@ -425,14 +425,14 @@ CORBA_ORB::resolve_root_poa (CORBA::Environment &ACE_TRY_ENV,
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_poa_current (CORBA::Environment &)
+CORBA_ORB::resolve_poa_current (CORBA::Environment &ACE_TRY_ENV)
 {
   // Return the pointer to the POA Current.
-  return CORBA_Object::_duplicate (&this->orb_core_->poa_current ());
+  return this->orb_core_->poa_current ()._this (ACE_TRY_ENV);
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_policy_manager (CORBA::Environment &)
+CORBA_ORB::resolve_policy_manager (CORBA::Environment &ACE_TRY_ENV)
 {
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -442,10 +442,11 @@ CORBA_ORB::resolve_policy_manager (CORBA::Environment &)
   if (policy_manager == 0)
     return CORBA_Object::_nil ();
 
-  return CORBA_Object::_duplicate (policy_manager);
+  return policy_manager->_this (ACE_TRY_ENV);
 
 #else
 
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA_Object::_nil ();
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
@@ -501,16 +502,17 @@ CORBA_ORB::resolve_rt_orb (CORBA::Environment &/*ACE_TRY_ENV*/)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_policy_current (CORBA::Environment &)
+CORBA_ORB::resolve_policy_current (CORBA::Environment &ACE_TRY_ENV)
 {
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   TAO_Policy_Current &policy_current = this->orb_core_->policy_current ();
-  return CORBA_Object::_duplicate (&policy_current);
+  return policy_current._this (ACE_TRY_ENV);
 
 #else
 
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA_Object::_nil ();
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

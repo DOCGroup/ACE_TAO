@@ -20,10 +20,6 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Transport.i"
 #endif /* ! __ACE_INLINE__ */
-
-ACE_RCSID (tao, IIOP_Transport, "$Id$")
-
-
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Transport_Timeprobe_Description[] =

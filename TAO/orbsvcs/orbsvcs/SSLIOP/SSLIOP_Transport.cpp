@@ -1,12 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "ace/config-all.h"
-
-#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
-
-ACE_RCSID (TAO_SSLIOP, SSLIOP_Transport, "$Id$")
-
 #include "SSLIOP_Transport.h"
 #include "SSLIOP_Connect.h"
 #include "SSLIOP_Profile.h"
@@ -526,5 +520,3 @@ TAO_SSLIOP_Transport::send_request_header (TAO_Operation_Details &,
   // We should never be here. So return an error.
   return 0;
 }
-
-#endif  /* ACE_HAS_SSL */

@@ -560,16 +560,12 @@ be_visitor_operation_ss::gen_raise_exception (be_type *,
   os->indent ();
 
   if (idl_global->use_raw_throw ())
-    *os << "throw ";
+    *os << "throw (";
   else
     *os << "ACE_THROW (";
 
-  *os << excep << "(" << completion_status << ")";
-
-  if (idl_global->use_raw_throw ())
-    *os << ";\n";
-  else
-    *os << ");\n";
+  *os << excep << " (" << completion_status << ") "
+      << ");\n";
 
   return 0;
 }

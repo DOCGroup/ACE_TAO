@@ -3,10 +3,6 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
-#include "orbsvcs/Notify/Notify_Default_CO_Factory.h"
-#include "orbsvcs/Notify/Notify_Default_POA_Factory.h"
-#include "orbsvcs/Notify/Notify_Default_Collection_Factory.h"
-#include "orbsvcs/Notify/Notify_Default_EMO_Factory.h"
 #include "Notify_Service.h"
 
 Notify_Service::Notify_Service (void)
@@ -239,6 +235,7 @@ Notify_Service::shutdown (CORBA::Environment &ACE_TRY_ENV)
     this->orb_->shutdown ();
 }
 
+
 int
 Notify_Service::parse_args(int argc, char *argv[])
 {
@@ -320,12 +317,6 @@ Notify_Service::parse_args(int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  // Init Factories
-  TAO_Notify_Default_CO_Factory::init_svc ();
-  TAO_Notify_Default_POA_Factory::init_svc ();
-  TAO_Notify_Default_Collection_Factory::init_svc ();
-  TAO_Notify_Default_EMO_Factory::init_svc ();
-
   Notify_Service service;
 
   ACE_TRY_NEW_ENV

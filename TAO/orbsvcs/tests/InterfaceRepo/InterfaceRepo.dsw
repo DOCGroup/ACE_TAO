@@ -15,18 +15,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Persistence_Test"=.\Persistence_Test\Persistence_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Global:
 
 Package=<5>

@@ -25,8 +25,6 @@ TAO_POA_Manager::~TAO_POA_Manager (void)
 
 void
 TAO_POA_Manager::activate_i (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
 {
   // This operation changes the state of the POA manager to active. If
   // issued while the POA manager is in the inactive state, the
@@ -47,8 +45,6 @@ void
 TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
                                CORBA::Boolean wait_for_completion,
                                CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
@@ -119,8 +115,6 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
 void
 TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion,
                                   CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
@@ -174,8 +168,6 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion,
 void
 TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion,
                                      CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
@@ -239,7 +231,11 @@ TAO_POA_Manager::remove_poa (TAO_POA *poa)
     {
       if (this->poa_collection_.is_empty ())
         {
-          CORBA::release (this);
+          // @@ This may cause segfault if another thread gets a hold
+          // at this POAManager but gets blocked on register POA
+          // waiting for remove_poa to complete.  I think we need to
+          // use the client side mapping to refcount this.
+          delete this;
         }
     }
 

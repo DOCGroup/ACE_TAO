@@ -155,6 +155,10 @@ SOURCE=.\CurrentC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CurrentS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\debug.cpp
 # End Source File
 # Begin Source File
@@ -467,11 +471,15 @@ SOURCE=.\POA.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableServerC.cpp
+SOURCE=.\POAC.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\POAManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\POAS.cpp
 # End Source File
 # Begin Source File
 
@@ -1107,11 +1115,19 @@ SOURCE=.\poa_macros.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableServerC.h
+SOURCE=.\poa_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\poaC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\POAManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\poaS.h
 # End Source File
 # Begin Source File
 
@@ -1595,11 +1611,15 @@ SOURCE=.\params.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableServerC.i
+SOURCE=.\poaC.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\POAManager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\poaS.i
 # End Source File
 # Begin Source File
 

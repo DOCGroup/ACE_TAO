@@ -28,7 +28,7 @@
 #include "tao/Policy_Manager.h"
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
-#include "tao/PortableServerC.h"
+#include "tao/POAC.h"
 
 #include "ace/Map_Manager.h"
 #include "ace/Singleton.h"
@@ -191,7 +191,6 @@ public:
                      const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                      TAO_POA_Manager *poa_manager = 0,
                      const TAO_POA_Policies *policies = 0);
-
   PortableServer::POA_ptr root_poa_reference (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment (),
       const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
@@ -482,16 +481,6 @@ public:
   CORBA::ULong _decr_refcnt (void);
   // Reference counting...
 
-  int register_handle (ACE_HANDLE handle);
-  // Register the handle of an open connection with the ORB Core
-  // handle set.  This handle set will be used to explicitly remove
-  // corresponding event handlers from the reactor.
-
-  int remove_handle (ACE_HANDLE handle);
-  // Remove <handle> from the ORB Core's handle set so that it
-  // isn't included in the set that is passed to the reactor upon ORB
-  // destruction.
-
 protected:
 
   int init (int &argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
@@ -506,10 +495,6 @@ protected:
                                 const TAO_POA_Policies *policies,
                                 CORBA::Environment &ACE_TRY_ENV);
   // Initialize the root POA.
-
-  void destroy_root_poa (CORBA::Boolean wait_for_completion,
-                         CORBA::Environment &ACE_TRY_ENV);
-  // Destroy the RootPOA (if one exists).
 
   TAO_Object_Adapter *object_adapter_i (void);
   // Get <Object Adapter>, assume the lock is held...
@@ -536,7 +521,7 @@ protected:
   // = Data members.
 
   TAO_Connector_Registry *connector_registry_;
-  // The connector registry which all active connectors must register
+  // The connector registry which all active connecters must register
   // themselves with.
 
   TAO_Acceptor_Registry *acceptor_registry_;
@@ -566,6 +551,9 @@ protected:
   // Pointer to the root POA.  It will eventually be the pointer
   // returned by calls to <CORBA::ORB::resolve_initial_references
   // ("RootPOA")>.
+
+  PortableServer::POA_var root_poa_reference_;
+  // Cached POA reference
 
   TAO_ORB_Parameters orb_params_;
   // Parameters used by the ORB.
@@ -710,13 +698,6 @@ protected:
 
   CORBA::ULong refcount_;
   // Number of outstanding references to this object.
-
-  ACE_Handle_Set handle_set_;
-  // Set of file descriptors corresponding to open connections.  This
-  // handle set is used to explicitly deregister the connection event
-  // handlers from the Reactor.  This is particularly important for
-  // dynamically loaded ORBs where an application level reactor, such
-  // as the Singleton reactor, is used instead of an ORB created one.
 };
 
 // ****************************************************************

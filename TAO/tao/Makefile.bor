@@ -22,6 +22,7 @@ OBJFILES = \
 	$(OBJDIR)\CONV_FRAMES.obj \
 	$(OBJDIR)\corbafwd.obj \
 	$(OBJDIR)\CurrentC.obj \
+	$(OBJDIR)\CurrentS.obj \
 	$(OBJDIR)\debug.obj \
 	$(OBJDIR)\default_client.obj \
 	$(OBJDIR)\default_resource.obj \
@@ -95,8 +96,9 @@ OBJFILES = \
 	$(OBJDIR)\Pluggable_Messaging.obj \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \
 	$(OBJDIR)\POA.obj \
-	$(OBJDIR)\PortableServerC.obj \
+	$(OBJDIR)\POAC.obj \
 	$(OBJDIR)\POAManager.obj \
+	$(OBJDIR)\POAS.obj \
         $(OBJDIR)\Policy_Factory.obj \
 	$(OBJDIR)\Policy_Manager.obj \
 	$(OBJDIR)\PolicyC.obj \
@@ -178,9 +180,6 @@ CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) -DTAO_BUILD_DLL
 !endif
 
 CPPDIR = .
-
-INCDIR_NAME = tao
-INCLUDES = *.h *.i *_T.cpp
 
 LIBFILES = $(ACE_LIB)
 

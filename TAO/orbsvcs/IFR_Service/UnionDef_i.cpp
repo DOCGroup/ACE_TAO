@@ -33,35 +33,17 @@ void
 TAO_UnionDef_i::destroy (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD;
-
-  this->destroy_i (ACE_TRY_ENV);
-}
-
-void 
-TAO_UnionDef_i::destroy_i (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
   // Destroy our members.
-  TAO_Container_i::destroy_i (ACE_TRY_ENV);
+  TAO_Container_i::destroy (ACE_TRY_ENV);
   ACE_CHECK;
     
   // Destroy ourself.
-  TAO_Contained_i::destroy_i (ACE_TRY_ENV);
+  TAO_Contained_i::destroy (ACE_TRY_ENV);
   ACE_CHECK;
 }
 
 CORBA::TypeCode_ptr 
 TAO_UnionDef_i::type (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
-
-  return this->type_i (ACE_TRY_ENV);
-}
-
-CORBA::TypeCode_ptr 
-TAO_UnionDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
@@ -74,10 +56,10 @@ TAO_UnionDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
                                             "name",
                                             name);
 
-  CORBA::TypeCode_var tc = this->discriminator_type_i (ACE_TRY_ENV);
+  CORBA::TypeCode_var tc = this->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-  IR::UnionMemberSeq_var members = this->members_i (ACE_TRY_ENV);
+  IR::UnionMemberSeq_var members = this->members (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return this->repo_->tc_factory ()->create_union_tc (id.c_str (),
@@ -89,15 +71,6 @@ TAO_UnionDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::TypeCode_ptr 
 TAO_UnionDef_i::discriminator_type (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
-
-  return this->discriminator_type_i (ACE_TRY_ENV);
-}
-
-CORBA::TypeCode_ptr 
-TAO_UnionDef_i::discriminator_type_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString disc_path;
@@ -117,20 +90,11 @@ TAO_UnionDef_i::discriminator_type_i (CORBA::Environment &ACE_TRY_ENV)
 
   auto_ptr<TAO_IDLType_i> safety (impl);
 
-  return impl->type_i (ACE_TRY_ENV);
+  return impl->type (ACE_TRY_ENV);
 }
 
 IR::IDLType_ptr 
 TAO_UnionDef_i::discriminator_type_def (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_READ_GUARD_RETURN (IR::IDLType::_nil ());
-
-  return this->discriminator_type_def_i (ACE_TRY_ENV);
-}
-
-IR::IDLType_ptr 
-TAO_UnionDef_i::discriminator_type_def_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString disc_path;
@@ -169,19 +133,6 @@ TAO_UnionDef_i::discriminator_type_def (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD;
-
-  this->discriminator_type_def_i (discriminator_type_def,
-                                  ACE_TRY_ENV);
-}
-
-void 
-TAO_UnionDef_i::discriminator_type_def_i (
-    IR::IDLType_ptr discriminator_type_def,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
   PortableServer::ObjectId_var oid = 
     this->repo_->ir_poa ()->reference_to_id (discriminator_type_def,
                                              ACE_TRY_ENV);
@@ -197,15 +148,6 @@ TAO_UnionDef_i::discriminator_type_def_i (
 
 IR::UnionMemberSeq *
 TAO_UnionDef_i::members (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_READ_GUARD_RETURN (0);
-
-  return this->members_i (ACE_TRY_ENV);
-}
-
-IR::UnionMemberSeq *
-TAO_UnionDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
@@ -262,17 +204,12 @@ TAO_UnionDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
 
   IR::UnionMemberSeq_var retval = members;
 
-  ACE_TString name, path;
-  ACE_Configuration_Section_Key next_key, entry_key;
-  u_int kind = 0;
-  IR::DefinitionKind def_kind = IR::dk_none;
-  CORBA::Object_var obj;
-  TAO_IDLType_i *impl = 0;
-
   for (size_t k = 0; k < size; k++)
     {
+      ACE_Configuration_Section_Key next_key;
       key_queue.dequeue_head (next_key);
 
+      ACE_TString name;
       this->repo_->config ()->get_string_value (next_key,
                                                 "name",
                                                 name);
@@ -284,23 +221,26 @@ TAO_UnionDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
                          ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
+      ACE_TString path;
       this->repo_->config ()->get_string_value (next_key,
                                                 "path",
                                                 path);
 
+      ACE_Configuration_Section_Key entry_key;
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            path,
                                            entry_key,
                                            0);
 
+      u_int kind;
       this->repo_->config ()->get_integer_value (entry_key,
                                                  "def_kind",
                                                  kind);
 
-      def_kind =
+      IR::DefinitionKind def_kind =
         ACE_static_cast (IR::DefinitionKind, kind);
 
-      obj = 
+      CORBA::Object_var obj = 
         this->repo_->servant_factory ()->create_objref (def_kind,
                                                         path.c_str (),
                                                         ACE_TRY_ENV);
@@ -309,15 +249,8 @@ TAO_UnionDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
       retval[k].type_def = IR::IDLType::_narrow (obj.in (),
                                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
-
-      impl =
-        this->repo_->servant_factory ()->create_idltype (entry_key,
-                                                         ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      auto_ptr<TAO_IDLType_i> safety (impl);
     
-      retval[k].type = impl->type_i (ACE_TRY_ENV);
+      retval[k].type = retval[k].type_def->type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
 
@@ -329,19 +262,8 @@ TAO_UnionDef_i::members (const IR::UnionMemberSeq &members,
                          CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD;
-
-  this->members_i (members,
-                   ACE_TRY_ENV);
-}
-
-void 
-TAO_UnionDef_i::members_i (const IR::UnionMemberSeq &members,
-                           CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
   // Destroy our old members, both refs and defns.
-  TAO_Container_i::destroy_i (ACE_TRY_ENV);
+  TAO_Container_i::destroy (ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_TString section_name;
@@ -369,9 +291,10 @@ TAO_UnionDef_i::members_i (const IR::UnionMemberSeq &members,
                                             1,
                                             member_key);
 
+      ACE_TString name (members[i].name);
       this->repo_->config ()->set_string_value (member_key,
                                                 "name",
-                                                members[i].name.in ());
+                                                name);
 
       PortableServer::ObjectId_var oid = 
         this->repo_->ir_poa ()->reference_to_id (members[i].type_def,
@@ -414,7 +337,7 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
                                              "label",
                                              value);
 
-  CORBA::TypeCode_var tc = this->discriminator_type_i (ACE_TRY_ENV);
+  CORBA::TypeCode_var tc = this->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);

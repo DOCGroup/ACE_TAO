@@ -41,9 +41,6 @@ class Subscribe
   void run (CORBA::Environment &ACE_TRY_ENV);
   // Run the demo.
 
-  void done (void);
-  // Called when all events we are waiting for have occured.
- 
  protected:
   void init_ORB (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);
   // Initializes the ORB.
@@ -122,7 +119,7 @@ class Subscribe_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPus
 
  public:
   // = Initialization and Termination code
-  Subscribe_StructuredPushConsumer (Subscribe* subscribe);
+  Subscribe_StructuredPushConsumer (void);
   // Constructor.
 
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin, CORBA::Environment &ACE_TRY_ENV);
@@ -142,9 +139,6 @@ protected:
 
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
   // The proxy_supplier id.
-
-  Subscribe* subscribe_;
-  // callback <done> 
 
   // = Methods
   virtual ~Subscribe_StructuredPushConsumer (void);

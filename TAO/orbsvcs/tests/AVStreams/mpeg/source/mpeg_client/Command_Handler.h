@@ -84,8 +84,7 @@ class Receiver_i
                       const char* audio_file,
                       CORBA::Object_ptr video_mmdevice,
                       const char *video_file,
-                      CORBA::Environment&)
-                     ACE_THROW_SPEC (( CORBA::SystemException ));
+                      CORBA::Environment&);
 
  private:
   Command_Handler *command_handler_;

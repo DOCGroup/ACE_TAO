@@ -25,32 +25,6 @@
 
 ACE_RCSID(NewPOA, NewPOA, "$Id$")
 
-void
-print_poa (PortableServer::POA_ptr poa,
-           CORBA::Environment &ACE_TRY_ENV)
-{
-  CORBA::String_var poa_name =
-    poa->the_name (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "%s\n",
-              poa_name.in ()));
-
-  PortableServer::POAList_var children =
-    poa->the_children (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  for (CORBA::ULong index = 0;
-       index != children->length ();
-       ++index)
-    {
-      print_poa (children[index].in (),
-                 ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-}
-
 int
 main (int argc, char **argv)
 {
@@ -141,6 +115,7 @@ main (int argc, char **argv)
         second_poa->the_name (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+
       CORBA::String_var third_poa_name =
         third_poa->the_name (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -152,10 +127,11 @@ main (int argc, char **argv)
                   second_poa_name.in (),
                   third_poa_name.in ()));
 
-      print_poa (root_poa.in (),
-                 ACE_TRY_ENV);
+      // This should destroy all its children
+      root_poa->destroy (1,
+                         1,
+                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
     }
   ACE_CATCHANY
     {

@@ -18,7 +18,8 @@ POA_FILES = \
   Object_Adapter.cpp \
   Key_Adapters.cpp \
   POA.cpp \
-  PortableServerC.cpp \
+  POAC.cpp \
+  POAS.cpp \
   POAManager.cpp \
   Active_Object_Map.cpp \
   Servant_Base.cpp \
@@ -83,6 +84,7 @@ IDL_COMPILER_FILES = \
 ORB_CORE_FILES = \
   Any.cpp \
   CurrentC.cpp \
+  CurrentS.cpp \
   Exception.cpp \
   WrongTransactionC.cpp \
   Environment.cpp \
@@ -322,8 +324,9 @@ HEADER_FILES = \
   Object_KeyC.h \
   Operation_Table.h \
   POA.h \
-  PortableServerC.h \
+  POAC.h \
   POAManager.h \
+  POAS.h \
   POA_CORBA.h \
   Pluggable.h \
   PolicyC.h \
@@ -454,8 +457,9 @@ INLINE_FILES = \
   Object_Adapter.i \
   Object_KeyC.i \
   POA.i \
-  PortableServerC.i \
+  POAC.i \
   POAManager.i \
+  POAS.i \
   Pluggable.i \
   PolicyC.i \
   Policy_Manager.i \

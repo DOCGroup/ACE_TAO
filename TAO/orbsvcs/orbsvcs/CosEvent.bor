@@ -58,9 +58,6 @@ CPPDIR = .;CosEvent
 
 IDLDIR = .
 
-INCDIR_NAME = orbsvcs\CosEvent
-INCLUDES = CosEvent\*.h CosEvent\*.i
-
 LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_SVC_UTILS_LIB) $(TAO_RTSCHED_LIB) \
   $(TAO_RTEVENT_LIB)
 

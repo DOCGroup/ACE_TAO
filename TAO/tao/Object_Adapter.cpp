@@ -954,12 +954,15 @@ TAO_Object_Adapter::Servant_Upcall::servant_locator_cleanup (void)
       ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
         {
+          PortableServer::POA_var poa = this->poa_->_this (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
           this->poa_->servant_locator_->postinvoke (this->current_context_.object_id (),
-                                                    this->poa_,
+                                                    poa.in (),
                                                     this->operation_,
                                                     this->cookie_,
-                                                    this->servant_
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    this->servant_,
+                                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -1066,18 +1069,7 @@ TAO_Object_Adapter::Servant_Upcall::poa_cleanup (void)
         }
       if (this->poa_->waiting_destruction_)
         {
-          ACE_TRY_NEW_ENV
-            {
-              this->poa_->complete_destruction_i (ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
-          ACE_CATCHANY
-            {
-              // Ignore exceptions
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_POA::~complete_destruction_i");
-            }
-          ACE_ENDTRY;
-
+          delete this->poa_;
           this->poa_ = 0;
         }
     }
@@ -1229,17 +1221,16 @@ TAO_POA_Current_Impl::teardown (void)
 }
 
 PortableServer::POA_ptr
-TAO_POA_Current_Impl::get_POA (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::Current::NoContext))
+TAO_POA_Current_Impl::get_POA (CORBA::Environment &ACE_TRY_ENV)
 {
-  return PortableServer::POA::_duplicate (this->poa_);
+  PortableServer::POA_var result = this->poa_->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+
+  return result._retn ();
 }
 
 PortableServer::ObjectId *
 TAO_POA_Current_Impl::get_object_id (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::Current::NoContext))
 {
   PortableServer::ObjectId *objid = 0;
 
@@ -1258,8 +1249,6 @@ TAO_POA_Current_Impl::orb_core (void) const
 
 PortableServer::POA_ptr
 TAO_POA_Current::get_POA (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::Current::NoContext))
 {
   TAO_POA_Current_Impl *impl = this->implementation ();
 
@@ -1271,8 +1260,6 @@ TAO_POA_Current::get_POA (CORBA::Environment &ACE_TRY_ENV)
 
 PortableServer::ObjectId *
 TAO_POA_Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::Current::NoContext))
 {
   TAO_POA_Current_Impl *impl = this->implementation ();
 

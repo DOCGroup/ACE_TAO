@@ -18,9 +18,23 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const Ti
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs)
   : Messaging::RelativeRoundtripTimeoutPolicy (),
-    TAO_Local_RefCounted_Object (),
+    CORBA::LocalObject (),
     relative_expiry_ (rhs.relative_expiry_)
 {
+}
+
+void
+TAO_RelativeRoundtripTimeoutPolicy::_add_ref (void)
+{
+  this->_incr_refcnt ();
+  // This is a TAO specific implementation.
+}
+
+void
+TAO_RelativeRoundtripTimeoutPolicy::_remove_ref (void)
+{
+  this->_decr_refcnt ();
+  // This is a TAO specific implementation.
 }
 
 TimeBase::TimeT
@@ -32,7 +46,6 @@ TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (CORBA::Environment &)
 
 CORBA::PolicyType
 TAO_RelativeRoundtripTimeoutPolicy::policy_type (CORBA_Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Future policy implementors: notice how this minimizes the
   // footprint of the class.
@@ -73,7 +86,6 @@ TAO_RelativeRoundtripTimeoutPolicy::clone (void) const
 
 CORBA::Policy_ptr
 TAO_RelativeRoundtripTimeoutPolicy::copy (CORBA_Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
@@ -89,7 +101,6 @@ TAO_RelativeRoundtripTimeoutPolicy::copy (CORBA_Environment &ACE_TRY_ENV)
 
 void
 TAO_RelativeRoundtripTimeoutPolicy::destroy (CORBA_Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -125,14 +136,27 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronizati
 
 TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
   : Messaging::SyncScopePolicy (),
-    TAO_Local_RefCounted_Object (),
+    CORBA::LocalObject (),
     synchronization_ (rhs.synchronization_)
 {
 }
 
+void
+TAO_Sync_Scope_Policy::_add_ref (void)
+{
+  this->_incr_refcnt ();
+  // This is a TAO specific implementation.
+}
+
+void
+TAO_Sync_Scope_Policy::_remove_ref (void)
+{
+  this->_decr_refcnt ();
+  // This is a TAO specific implementation.
+}
+
 CORBA::PolicyType
 TAO_Sync_Scope_Policy::policy_type (CORBA_Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Messaging::SYNC_SCOPE_POLICY_TYPE;
 }
@@ -167,14 +191,13 @@ TAO_Sync_Scope_Policy::clone (void) const
 
 Messaging::SyncScope
 TAO_Sync_Scope_Policy::synchronization (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC (())
 {
   return this->synchronization_;
 }
 
 CORBA::Policy_ptr
 TAO_Sync_Scope_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Sync_Scope_Policy *servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -187,7 +210,6 @@ TAO_Sync_Scope_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
 
 void
 TAO_Sync_Scope_Policy::destroy (CORBA_Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

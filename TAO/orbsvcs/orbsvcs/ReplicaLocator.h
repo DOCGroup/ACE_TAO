@@ -31,7 +31,7 @@
 class TAO_LB_LoadBalancer;
 
 class TAO_LoadBalancing_Export TAO_LB_ReplicaLocator
-  : public virtual PortableServer::ServantLocator
+  : public virtual POA_PortableServer::ServantLocator
 {
   // = TITLE
   //    Class that provides request forwarding.
@@ -60,8 +60,7 @@ public:
       const char *operation,
       PortableServer::ServantLocator::Cookie the_cookie,
       PortableServer::Servant the_servant
-      TAO_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      TAO_ENV_ARG_DECL);
 
 private:
   TAO_LB_LoadBalancer *load_balancer_;

@@ -20,7 +20,7 @@
 #ifndef IFR_SERVANT_FACTORY_H
 #define IFR_SERVANT_FACTORY_H
 
-#include "tao/PortableServerC.h"
+#include "tao/POAC.h"
 #include "tao/ifrfwd.h"
 #include "ace/Configuration.h"
 
@@ -76,3 +76,4 @@ private:
 };
 
 #endif /* IFR_SERVANT_FACTORY_H */
+

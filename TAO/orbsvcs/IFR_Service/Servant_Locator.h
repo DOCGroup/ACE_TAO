@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class IFR_ServantLocator : public PortableServer::ServantLocator
+class IFR_ServantLocator : public POA_PortableServer::ServantLocator
 {
   // = TITLE
   //    IFR_ServantLocator
@@ -44,9 +44,7 @@ public:
       const char *operation,
       PortableServer::ServantLocator::Cookie &the_cookie
       TAO_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::ForwardRequest));
+    );
   // This method is invoked by the IFR's POA whenever it receives a request
   // for an IR object.
 
@@ -57,8 +55,7 @@ public:
       PortableServer::ServantLocator::Cookie the_cookie,
       PortableServer::Servant the_servant
       TAO_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // This method is invoked whenever an IR object servant completes a
   // request.
 
@@ -69,3 +66,4 @@ private:
 };
 
 #endif /* IFR_SERVANT_LOCATOR_H */
+

@@ -33,15 +33,6 @@ IR::Contained::Description *
 TAO_ConstantDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
-
-  return this->describe_i (ACE_TRY_ENV);
-}
-
-IR::Contained::Description *
-TAO_ConstantDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
   IR::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
                     IR::Contained::Description,
@@ -55,10 +46,10 @@ TAO_ConstantDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
 
   IR::ConstantDescription cd;
 
-  cd.name = this->name_i (ACE_TRY_ENV);
+  cd.name = this->name (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  cd.id = this->id_i (ACE_TRY_ENV);
+  cd.id = this->id (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   ACE_TString container_id;
@@ -69,13 +60,13 @@ TAO_ConstantDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
 
   cd.defined_in = container_id.c_str ();
 
-  cd.version = this->version_i (ACE_TRY_ENV);
+  cd.version = this->version (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  cd.type = this->type_i (ACE_TRY_ENV);
+  cd.type = this->type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::Any_var val = this->value_i (ACE_TRY_ENV);
+  CORBA::Any_var val = this->value (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   cd.value = val.in ();
@@ -87,15 +78,6 @@ TAO_ConstantDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::TypeCode_ptr 
 TAO_ConstantDef_i::type (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
-
-  return this->type_i (ACE_TRY_ENV);
-}
-
-CORBA::TypeCode_ptr 
-TAO_ConstantDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString type_path;
@@ -116,34 +98,28 @@ TAO_ConstantDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
 
   auto_ptr<TAO_IDLType_i> safety (impl);
 
-  return impl->type_i (ACE_TRY_ENV);
+  return impl->type (ACE_TRY_ENV);
 }
 
 IR::IDLType_ptr 
 TAO_ConstantDef_i::type_def (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR::IDLType::_nil ());
-
-  return this->type_def_i (ACE_TRY_ENV);
-}
-
-IR::IDLType_ptr 
-TAO_ConstantDef_i::type_def_i (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
   ACE_TString type_path;
+
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "type_path",
                                             type_path);
 
   ACE_Configuration_Section_Key type_key;
+
   this->repo_->config ()->expand_path (this->repo_->root_key (),
                                        type_path,
                                        type_key,
                                        0);
 
   u_int kind = 0;
+
   this->repo_->config ()->get_integer_value (type_key,
                                              "def_kind",
                                              kind);
@@ -166,17 +142,6 @@ TAO_ConstantDef_i::type_def (IR::IDLType_ptr type_def,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD;
-
-  this->type_def_i (type_def,
-                    ACE_TRY_ENV);
-}
-
-void 
-TAO_ConstantDef_i::type_def_i (IR::IDLType_ptr type_def,
-                               CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
   PortableServer::ObjectId_var oid = 
     this->repo_->ir_poa ()->reference_to_id (type_def,
                                              ACE_TRY_ENV);
@@ -194,16 +159,7 @@ CORBA::Any *
 TAO_ConstantDef_i::value (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
-
-  return this->value_i (ACE_TRY_ENV);
-}
-
-CORBA::Any *
-TAO_ConstantDef_i::value_i (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  CORBA::TypeCode_var tc = this->type_i (ACE_TRY_ENV);
+  CORBA::TypeCode_var tc = this->type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   void *ref = 0;
@@ -242,18 +198,7 @@ TAO_ConstantDef_i::value (const CORBA::Any &value,
                           CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD;
-
-  this->value_i (value,
-                 ACE_TRY_ENV);
-}
-
-void 
-TAO_ConstantDef_i::value_i (const CORBA::Any &value,
-                            CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  CORBA::TypeCode_var my_tc = this->type_i (ACE_TRY_ENV);
+  CORBA::TypeCode_var my_tc = this->type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TypeCode_var val_tc = value.type ();

@@ -28,13 +28,6 @@
   // TAO_Trader
   // *************************************************************
 
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Trader : public TAO_Trader_Base
   //
@@ -262,10 +255,6 @@ public:
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Trader_T.cpp"
 #endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include "ace/post.h"
 #endif /* ACE_TRADER_H */

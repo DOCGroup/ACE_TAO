@@ -23,10 +23,13 @@
 #include "tao/poa_macros.h"
 
 // Stubs
-#include "tao/PortableServerC.h"
+#include "tao/POAC.h"
 
 // Servant
 #include "tao/Servant_Base.h"
+
+// Skeletons
+#include "tao/POAS.h"
 
 // Active Object Table
 #include "tao/Active_Object_Map.h"
@@ -34,19 +37,9 @@
 // RTCORBA
 #include "tao/RTCORBAC.h"
 
-// Local Object
-#include "tao/LocalObject.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -58,24 +51,18 @@ class TAO_POA_Current_Impl;
 class TAO_TSS_Resources;
 class TAO_Transport;
 
-class TAO_Export TAO_POA_Current :
-  public PortableServer::Current,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_POA_Current : public POA_PortableServer::Current
 {
 public:
   TAO_POA_Current (void);
   // Constructor
 
-  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::Current::NoContext));
+  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV);
   // Returns the POA on which the current request is being invoked.
   // Can raise the <CORBA::NoContext> exception if this function is
   // not invoked in the context of an upcall.
 
-  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::Current::NoContext));
+  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV);
   // Returns the object id of the current request being invoked.  Can
   // raise the <CORBA::NoContext> exception if this function is not
   // invoked in the context of an upcall.
@@ -112,15 +99,11 @@ public:
 
   friend class TAO_POA;
 
-  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::Current::NoContext));
+  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV);
   // Return pointer to the invoking POA.  Raises the
   // <CORBA::NoContext> exception.
 
-  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::Current::NoContext));
+  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV);
   // Return pointer to the object id through which this was invoked.
   // This may be necessary in cases where a <Servant> is serving under
   // the guise of multiple object ids.  This has _out semantics Raises
@@ -201,7 +184,7 @@ protected:
   void operator= (const TAO_POA_Current_Impl &);
 };
 
-class TAO_Export TAO_Object_Adapter
+class TAO_Object_Adapter
 {
   // = TITLE
   //     Defines the Object Adapter abstraction.
@@ -320,7 +303,7 @@ protected:
 
 public:
 
-  class TAO_Export Hint_Strategy
+  class Hint_Strategy
   {
     // = TITLE
     //     Base class for POA active hint strategy.
@@ -350,7 +333,7 @@ public:
     TAO_Object_Adapter *object_adapter_;
   };
 
-  class TAO_Export Active_Hint_Strategy : public Hint_Strategy
+  class Active_Hint_Strategy : public Hint_Strategy
   {
     // = TITLE
     //     This class uses active demux hint for POA active hint
@@ -386,7 +369,7 @@ public:
     persistent_poa_system_map persistent_poa_system_map_;
   };
 
-  class TAO_Export No_Hint_Strategy : public Hint_Strategy
+  class No_Hint_Strategy : public Hint_Strategy
   {
     // = TITLE
     //     This class doesn't use any hints for POA active hint
@@ -498,7 +481,7 @@ protected:
 
 public:
 
-  class TAO_Export poa_name_iterator
+  class poa_name_iterator
   {
     // = TITLE
     //     Iterator for a folded poa name.
@@ -527,7 +510,7 @@ public:
     CORBA::ULong last_separator_;
   };
 
-  class TAO_Export iteratable_poa_name
+  class iteratable_poa_name
   {
     // = TITLE
     //     This class allows iteration over a folded poa name.
@@ -545,7 +528,7 @@ public:
     const poa_name &folded_name_;
   };
 
-  class TAO_Export Non_Servant_Upcall
+  class Non_Servant_Upcall
   {
     // = TITLE
     //     This class helps us with a recursive thread lock without
@@ -686,7 +669,7 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  class TAO_Export Priority_Model_Processing
+  class Priority_Model_Processing
   {
     // = TITLE
     //     This class encapsulates processing necessary for

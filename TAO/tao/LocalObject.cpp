@@ -160,17 +160,6 @@ CORBA::LocalObject::_get_implementation (CORBA::Environment &ACE_TRY_ENV)
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 // ****************************************************************
-void
-TAO_Local_RefCounted_Object::_add_ref (void)
-{
-  this->_incr_refcnt ();
-}
-
-void
-TAO_Local_RefCounted_Object::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-}
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -209,7 +198,5 @@ CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out,
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
-
-
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

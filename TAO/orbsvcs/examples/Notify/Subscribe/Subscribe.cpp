@@ -14,10 +14,6 @@ ACE_RCSID(Notify, Subscribe, "$Id$")
 #define TYPE_B "type_b"
 #define TYPE_C "type_c"
 
-#define EVENT_COUNT 4 // number of events we expect the consumer to get from the EC
-  
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> g_result_count = 0; // we wait for 4 events.
-
 Subscribe::Subscribe (void)
 {
   // No-Op.
@@ -26,7 +22,7 @@ Subscribe::Subscribe (void)
 
 Subscribe::~Subscribe ()
 {
-  this->ec_->destroy ();
+  // No-Op.
 }
 
 void
@@ -55,14 +51,6 @@ Subscribe::run (CORBA::Environment &ACE_TRY_ENV)
 {
   this->send_events (ACE_TRY_ENV);
   ACE_CHECK;
-
-  this->orb_->run (ACE_TRY_ENV);
-}
-
-void 
-Subscribe::done (void)
-{
-  this->orb_->shutdown ();
 }
 
 void
@@ -175,12 +163,12 @@ Subscribe:: create_consumeradmin (CORBA::Environment &ACE_TRY_ENV)
 void
 Subscribe::create_consumers (CORBA::Environment &ACE_TRY_ENV)
 {
-  consumer_1_ = new Subscribe_StructuredPushConsumer (this);
+  consumer_1_ = new Subscribe_StructuredPushConsumer ();
   consumer_1_->connect (this->consumer_admin_.in (),
                         ACE_TRY_ENV);
   ACE_CHECK;
 
-  consumer_2_ = new Subscribe_StructuredPushConsumer (this);
+  consumer_2_ = new Subscribe_StructuredPushConsumer ();
   consumer_2_->connect (this->consumer_admin_.in (),
                         ACE_TRY_ENV);
   ACE_CHECK;
@@ -288,8 +276,7 @@ Subscribe::send_events (CORBA::Environment &ACE_TRY_ENV)
 }
 
 /*****************************************************************/
-Subscribe_StructuredPushConsumer::Subscribe_StructuredPushConsumer (Subscribe* subscribe)
-  : subscribe_ (subscribe)
+Subscribe_StructuredPushConsumer::Subscribe_StructuredPushConsumer (void)
 {
 }
 
@@ -357,10 +344,6 @@ Subscribe_StructuredPushConsumer::push_structured_event (const CosNotification::
     notification.header.fixed_header.event_type.type_name;
 
   ACE_DEBUG ((LM_DEBUG, "Structured Subscribe Consumer %d received event, domain = %s, type =  %s\n", this->proxy_supplier_id_, domain_name, type_name));
-
-  if (++g_result_count == EVENT_COUNT)
-    subscribe_->done ();
-
 }
 
 void
@@ -451,13 +434,3 @@ Subscribe_StructuredPushSupplier::disconnect_structured_push_supplier (CORBA::En
 }
 
 /*****************************************************************/
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class  ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -27,7 +27,7 @@
 
 ACE_RCSID(Explicit_Activation, server, "$Id$")
 
-const char *ior_output_file = "ior";
+static char *ior_output_file = 0;
 
 static int
 parse_args (int argc, char **argv)
@@ -46,7 +46,7 @@ parse_args (int argc, char **argv)
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-f ior_file"
+                           "[-f ior_output_file]"
                            "\n",
                            argv [0]),
                           -1);
@@ -61,6 +61,10 @@ write_iors_to_file (const char *first_ior,
                     const char *second_ior,
                     const char *third_ior)
 {
+  if (ior_output_file == 0)
+    // No filename was specified; simply return
+    return 0;
+
   char ior_output_file_1[BUFSIZ];
   char ior_output_file_2[BUFSIZ];
   char ior_output_file_3[BUFSIZ];
@@ -311,6 +315,12 @@ main (int argc, char **argv)
 
       if (orb->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
+
+      // Destroy RootPOA (also destroys all child POAs).
+      root_poa->destroy (1,
+                         1,
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_TIMEPROBE_PRINT;
     }
