@@ -4,6 +4,7 @@
 # Digital UNIX 4.0 (OSF/1 4.0).
 
 debug = 1
+exceptions = 1
 
 CC              = rcc
 CXX             = RCC
