@@ -192,7 +192,14 @@ ImplRepo_i::activate_server (const char *server,
   char *host;
   u_short port;
 
-  this->repository_.get_hostport (server, host, port);
+  if (this->repository_.get_hostport (server, host, port) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ImplRepo_i::activate_server: "
+                         "cannot resolve server <%s>\n",
+                         server),
+                        address);
+    }
 
   address->host_ = CORBA::string_dup (host);
   address->port_ = port;
