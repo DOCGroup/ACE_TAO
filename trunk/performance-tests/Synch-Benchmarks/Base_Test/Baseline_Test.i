@@ -36,13 +36,16 @@ Baseline_Test_Options::current_iteration (void)
   return this->current_iteration_;
 }
 
-ACE_INLINE int
-Baseline_Test_Options::add_time (ACE_Profile_Timer::ACE_Elapsed_Time &et)
+ACE_INLINE void
+Baseline_Test_Options::start_inc_timer (void)
 {
-  this->real_ += et.real_time;
-  this->system_ += et.system_time;
-  this->user_ += et.user_time;
-  return 0;
+  this->timer.start_incr ();
+}
+
+ACE_INLINE void
+Baseline_Test_Options::stop_inc_timer (void)
+{
+  this->timer.stop_incr ();
 }
 
 ACE_INLINE int

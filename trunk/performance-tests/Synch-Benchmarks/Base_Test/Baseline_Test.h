@@ -75,8 +75,9 @@ public:
   int test_try_lock (void);
   // Return test configuration.
 
-  int add_time (ACE_Profile_Timer::ACE_Elapsed_Time &et);
-  // Add the time spent in the current iterations.
+  void start_inc_timer (void);
+  void stop_inc_timer (void);
+  // Start/stop measuring time.
 
   int inc_loop_counter (void);
   // Added multiply_factor_ to total_iteration_.
@@ -111,9 +112,7 @@ private:
   size_t total_iteration_;
   // Total number of target iteration.
 
-  ACE_timer_t real_;
-  ACE_timer_t system_;
-  ACE_timer_t user_;
+  ACE_High_Res_Timer timer;
   // Profile timer result.
 };
 

@@ -37,13 +37,10 @@ Baseline_Lock_Test<LOCK>::release ()
 template<class LOCK> int
 Baseline_Lock_Test<LOCK>::test_acquire_release ()
 {
-  ACE_Profile_Timer ptimer;
-  ACE_Profile_Timer::ACE_Elapsed_Time et;
-
   for (; baseline_options.inc_loop_counter () ; )
     {
       this->yield ();
-      ptimer.start ();
+      baseline_options.start_inc_timer ();
 
       for (size_t i=0; i < baseline_options.current_multiply_factor (); i++)
         {
@@ -51,9 +48,7 @@ Baseline_Lock_Test<LOCK>::test_acquire_release ()
           this->lock_.release ();
         }
 
-      ptimer.stop ();
-      ptimer.elapsed_time (et);
-      baseline_options.add_time (et);
+      baseline_options.stop_inc_timer ();
     }
   return 0;
 }
@@ -61,20 +56,15 @@ Baseline_Lock_Test<LOCK>::test_acquire_release ()
 template<class LOCK> int
 Baseline_Lock_Test<LOCK>::test_try_lock ()
 {
-  ACE_Profile_Timer ptimer;
-  ACE_Profile_Timer::ACE_Elapsed_Time et;
-
   for (; baseline_options.inc_loop_counter () ; )
     {
       this->yield ();
-      ptimer.start ();
+      baseline_options.start_inc_timer ();
 
       for (size_t i=0; i < baseline_options.current_multiply_factor (); i++)
           this->lock_.tryacquire (); // This should always fail.
 
-      ptimer.stop ();
-      ptimer.elapsed_time (et);
-      baseline_options.add_time (et);
+      baseline_options.stop_inc_timer ();
     }
   return 0;
 }
@@ -88,6 +78,11 @@ typedef Baseline_Lock_Test<ACE_Recursive_Thread_Mutex> Baseline_Recursive_Mutex_
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Recursive_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Recursive_Mutex_Test)
+
+typedef Baseline_Lock_Test< ACE_Lock_Adapter<ACE_Thread_Mutex> > Baseline_Adaptive_Mutex_Test;
+
+ACE_SVC_FACTORY_DECLARE (Baseline_Adaptive_Mutex_Test)
+ACE_SVC_FACTORY_DEFINE (Baseline_Adaptive_Mutex_Test)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class Baseline_Lock_Test<ACE_Thread_Mutex>;
