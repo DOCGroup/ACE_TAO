@@ -64,6 +64,7 @@ BIN =   Aio_Platform_Test \
         SPIPE_Test \
         SString_Test \
         SV_Shared_Memory_Test \
+        Svc_Handler_Test \
         Task_Test \
         Thread_Manager_Test \
         Thread_Mutex_Test \

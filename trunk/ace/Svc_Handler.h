@@ -48,18 +48,39 @@ class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_USE>
   //     ACE_Svc_Handler and the peer it is connected with.
 public:
   // = Initialization and termination methods.
-  ACE_Svc_Handler (ACE_Thread_Manager * = 0,
-                   ACE_Message_Queue<ACE_SYNCH_USE> * = 0,
-                   ACE_Reactor * = ACE_Reactor::instance ());
+  ACE_Svc_Handler (ACE_Thread_Manager *thr_mgr = 0,
+                   ACE_Message_Queue<ACE_SYNCH_USE> *mq = 0,
+                   ACE_Reactor *reactor = ACE_Reactor::instance (),
+                   size_t max_buffer_size = 0,
+                   ACE_Time_Value *timeout = 0);
+  // Constructor initializes the <thr_mgr> and <mq> by passing them
+  // down to the <ACE_Task> base class.  The <reactor> is passed to
+  // the <ACE_Event_Handler>.  The <max_buffer_size> and <timeout> are
+  // used to determine at what point to flush the <mq>.  By default,
+  // there's no buffering at all.
 
   virtual ~ACE_Svc_Handler (void);
+  // Destructor.
 
   virtual int open (void * = 0);
-  // Activate the client handler (called by the ACE_Acceptor or
-  // ACE_Connector).
+  // Activate the client handler.  This is typically called by the
+  // <ACE_Acceptor> or <ACE_Connector>.
 
   virtual int close (u_long flags = 0);
-  // Object termination hook.
+  // Object termination hook -- application-specific cleanup code goes
+  // here.
+
+  virtual int put (ACE_Message_Block *message_block,
+                   ACE_Time_Value *timeout = 0);
+  // Insert the <ACE_Message_Block> chain rooted at <message_block>
+  // into the <ACE_Message_Queue> with the designated <timeout>.  The
+  // <flush> method will be called if this <put> causes the number of
+  // bytes to exceed the maximum buffer size or if the timeout period
+  // has elapsed.
+
+  virtual int flush (void);
+  // Flush the <ACE_Message_Queue>, which writes all the queued
+  // <ACE_Message_Block>s to the <PEER_STREAM>.
 
   virtual int idle (u_long flags = 0);
   // Call this method if you want to recycling the <Svc_Handler>
@@ -171,7 +192,18 @@ private:
   // Pointer to the connection recycler.
 
   const void *recycling_act_;
-  // ACT to be used to when talking to the recycler.
+  // Asynchronous Completion Token (ACT) to be used to when talking to
+  // the recycler.
+
+  size_t maximum_buffer_size_;
+  // Maximum size the <Message_Queue> can be before we have to flush
+  // the buffer.
+  
+  ACE_Time_Value timeout_;
+  // Timeout value used to control when the buffer is flushed.
+
+  ACE_Time_Value *timeoutp_;
+  // Timeout pointer.
 };
 
 #if defined (__ACE_INLINE__)
