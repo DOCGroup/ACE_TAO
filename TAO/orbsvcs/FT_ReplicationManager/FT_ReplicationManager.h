@@ -22,16 +22,16 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <orbsvcs/FT_ReplicationManagerS.h>
+#include <orbsvcs/orbsvcs/FT_ReplicationManagerS.h>
 //#include <orbsvcs/PortableGroup/PG_PropertyManager.h>
 //#include <orbsvcs/PortableGroup/PG_GenericFactory.h>
 //#include <orbsvcs/PortableGroup/PG_ObjectGroupManager.h>
 // Note: the new, improved versions...
 //#include <orbsvcs/PortableGroup/PG_Object_Group_Map.h>
-#include <orbsvcs/PortableGroup/PG_Properties_Support.h>
-#include <orbsvcs/PortableGroup/PG_Group_Factory.h>
+#include <orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h>
+#include <orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h>
 
-#include <orbsvcs/PortableGroup/PG_FactoryRegistry.h>
+#include <orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h>
 #include <orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h>
 
 

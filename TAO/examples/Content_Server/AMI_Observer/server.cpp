@@ -3,11 +3,13 @@
 
 // Ossama Othman <ossama@uci.edu>
 
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "Push_Web_ServerS.h"
 #include "Push_Iterator_Factory_i.h"
 
-ACE_RCSID (AMI_Observer, server, "$Id$")
+ACE_RCSID (AMI_Observer, 
+           server, 
+           "$Id$")
 
 int
 main (int argc, char *argv[])

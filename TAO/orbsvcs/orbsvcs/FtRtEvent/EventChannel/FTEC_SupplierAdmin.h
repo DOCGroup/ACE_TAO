@@ -23,8 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/EC_SupplierAdmin.h"
-//#include "event_export.h"
+#include "orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h"
 
 class TAO_FTEC_Event_Channel_Impl;
 

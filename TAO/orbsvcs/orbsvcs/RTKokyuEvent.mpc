@@ -5,7 +5,6 @@ project(RTKokyuEvent) : orbsvcslib, core, rtevent, rtsched, naming, svc_utils, p
   sharedname   = TAO_RTKokyuEvent
   dynamicflags = TAO_RTKOKYUEVENT_BUILD_DLL
   tagchecks   += RTKokyuEvent
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 
   IDL_Files {
   }

@@ -13,8 +13,8 @@
 #define TAO_AV_DEFAULT_RESOURCE_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/Resource_Factory.h"
+#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/orbsvcs/AV/Resource_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

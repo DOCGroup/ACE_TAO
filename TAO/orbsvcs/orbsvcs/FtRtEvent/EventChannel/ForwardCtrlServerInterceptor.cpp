@@ -9,7 +9,7 @@
 #include "tao/Object_KeyC.h"
 #include "tao/ORB_Constants.h"
 
-#include "orbsvcs/FTRTC.h"
+#include "orbsvcs/orbsvcs/FTRTC.h"
 
 ACE_RCSID (EventChannel,
            ForwardCtrlServerInterceptor,

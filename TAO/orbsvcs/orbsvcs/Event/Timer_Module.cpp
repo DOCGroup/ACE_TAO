@@ -2,7 +2,7 @@
 
 #include "ace/Functor.h"
 
-#include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
 #include "ReactorTask.h"
 #include "Timer_Module.h"
 
@@ -10,7 +10,9 @@
 #include "Timer_Module.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, Timer_Module, "$Id$")
+ACE_RCSID (Event, 
+           Timer_Module, 
+           "$Id$")
 
 #include "tao/Timeprobe.h"
 

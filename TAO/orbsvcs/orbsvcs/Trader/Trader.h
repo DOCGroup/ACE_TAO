@@ -25,10 +25,10 @@
 
 #include "ace/Containers.h"
 
-#include "orbsvcs/CosTradingS.h"
-#include "orbsvcs/CosTradingReposS.h"
-#include "orbsvcs/CosTradingDynamicS.h"
-#include "orbsvcs/Trader/trading_export.h"
+#include "orbsvcs/orbsvcs/CosTradingS.h"
+#include "orbsvcs/orbsvcs/CosTradingReposS.h"
+#include "orbsvcs/orbsvcs/CosTradingDynamicS.h"
+#include "orbsvcs/orbsvcs/Trader/trading_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

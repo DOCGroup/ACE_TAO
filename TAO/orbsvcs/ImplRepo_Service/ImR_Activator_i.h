@@ -17,7 +17,7 @@
 
 #include "Server_Repository.h"
 
-#include "orbsvcs/IOR_Multicast.h"
+#include "orbsvcs/orbsvcs/IOR_Multicast.h"
 
 #include "tao/PortableServer/ImplRepoS.h"
 #include "tao/IORTable/IORTable.h"

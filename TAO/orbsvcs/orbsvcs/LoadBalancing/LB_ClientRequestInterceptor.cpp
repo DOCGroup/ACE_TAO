@@ -1,6 +1,6 @@
 #include "LB_ClientRequestInterceptor.h"
 
-#include "orbsvcs/CosLoadBalancingC.h"
+#include "orbsvcs/orbsvcs/CosLoadBalancingC.h"
 
 
 ACE_RCSID (LoadBalancing,

@@ -1,9 +1,9 @@
 // $Id$
 
-#include "orbsvcs/Event/ECG_Mcast_EH.h"
-#include "orbsvcs/Event/ECG_UDP_Receiver.h"
-#include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+#include "orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h"
+#include "orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/OS_NS_string.h"
 

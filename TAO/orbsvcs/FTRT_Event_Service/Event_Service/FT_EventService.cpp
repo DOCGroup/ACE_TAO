@@ -7,15 +7,14 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
-#include "orbsvcs/Sched/Config_Scheduler.h"
-#include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTRTEC_ServiceActivate.h"
+#include "orbsvcs/orbsvcs/Sched/Config_Scheduler.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTRTEC_ServiceActivate.h"
 #include "ace/OS_main.h"
 
 ACE_RCSID (Event_Service,
            FT_EventService,
            "$Id$")
-
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {

@@ -21,9 +21,9 @@
 #ifndef CONNECTION_MANAGER_H
 #define CONNECTION_MANAGER_H
 
-#include "orbsvcs/Naming/Naming_Utils.h"
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
 #include "tao/PortableServer/PortableServer.h"
 
 class Connection_Manager

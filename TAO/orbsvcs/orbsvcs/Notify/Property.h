@@ -23,7 +23,7 @@
 #include "tao/orbconf.h"
 #include "tao/TimeBaseC.h"
 
-#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/orbsvcs/NotifyExtC.h"
 
 template <class LOCK, class TYPE> class ACE_Atomic_Op;
 template <class TYPE> class TAO_Notify_Property_T;

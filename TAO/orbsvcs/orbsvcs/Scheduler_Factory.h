@@ -24,9 +24,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/Sched/sched_export.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/orbsvcs/Sched/sched_export.h"
 
 class TAO_Reconfig_Scheduler_Entry;
 struct TAO_RT_Info_Tuple;

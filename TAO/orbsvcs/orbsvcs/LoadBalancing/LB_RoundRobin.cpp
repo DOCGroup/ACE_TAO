@@ -2,7 +2,7 @@
 
 #include "LB_RoundRobin.h"
 
-#include "orbsvcs/PortableGroup/PG_conf.h"
+#include "orbsvcs/orbsvcs/PortableGroup/PG_conf.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"

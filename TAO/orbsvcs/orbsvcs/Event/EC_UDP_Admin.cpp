@@ -1,8 +1,10 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_UDP_Admin.h"
+#include "orbsvcs/orbsvcs/Event/EC_UDP_Admin.h"
 
-ACE_RCSID(Event, EC_UDP_Admin, "$Id$")
+ACE_RCSID (Event, 
+           EC_UDP_Admin, 
+           "$Id$")
 
 TAO_EC_Simple_AddrServer::TAO_EC_Simple_AddrServer (CORBA::UShort port)
   : port_ (port)

@@ -22,8 +22,8 @@
 #define CONSUMERADMIN_I_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/CosEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminS.h"
 #include "ProxyPushSupplier_i.h"
 
 #if defined(_MSC_VER)

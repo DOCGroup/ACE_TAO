@@ -12,7 +12,9 @@
 #include "ORB_Task.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(TAO_PERF_RTEC, ORB_Task, "$Id$")
+ACE_RCSID (TAO_PERF_RTEC, 
+           ORB_Task, 
+           "$Id$")
 
 ORB_Task::ORB_Task (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

@@ -28,7 +28,7 @@
 #include "tao/Basic_Types.h"
 #include "tao/Objref_VarOut_T.h"
 
-#include "orbsvcs/CosEvent/event_export.h"
+#include "orbsvcs/orbsvcs/CosEvent/event_export.h"
 
 #include "CEC_ProxyPushSupplier.h"
 

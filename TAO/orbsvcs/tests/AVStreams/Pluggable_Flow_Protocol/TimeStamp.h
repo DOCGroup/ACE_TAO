@@ -2,7 +2,7 @@
 #define TIMESTAMP_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
 #include "ace/Dynamic_Service.h"
 #include "export.h"
 

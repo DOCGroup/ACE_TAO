@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosLoadBalancingS.h"
+#include "orbsvcs/orbsvcs/CosLoadBalancingS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -28,11 +28,11 @@
 #include "LB_LoadListMap.h"
 #include "LB_Pull_Handler.h"
 
-#include "orbsvcs/PortableGroupC.h"
+#include "orbsvcs/orbsvcs/PortableGroupC.h"
 
-#include "orbsvcs/PortableGroup/PG_PropertyManager.h"
-#include "orbsvcs/PortableGroup/PG_GenericFactory.h"
-#include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
+#include "orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h"
+#include "orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h"
+#include "orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
 
 
 class TAO_LoadBalancing_Export TAO_LB_LoadManager

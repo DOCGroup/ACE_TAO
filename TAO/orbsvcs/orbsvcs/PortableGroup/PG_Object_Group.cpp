@@ -9,8 +9,8 @@
 #include <ace/Vector_T.h>
 #include <tao/debug.h>
 #include <tao/PortableServer/ORB_Manager.h>
-#include <orbsvcs/PortableGroup/PG_Operators.h> // Borrow operator == on CosNaming::Name
-#include <orbsvcs/PortableGroup/PG_Utils.h>
+#include <orbsvcs/orbsvcs/PortableGroup/PG_Operators.h> // Borrow operator == on CosNaming::Name
+#include <orbsvcs/orbsvcs/PortableGroup/PG_Utils.h>
 
 #define TODO int todo;
 //#define TODO

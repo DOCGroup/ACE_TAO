@@ -4,13 +4,13 @@
 #include "ace/Singleton.h"
 #include "ace/Null_Mutex.h"
 
-#include "orbsvcs/Runtime_Scheduler.h"
-#include "orbsvcs/Sched/Reconfig_Scheduler.h"
-#include "orbsvcs/Sched/Reconfig_Sched_Utils.h"
-#include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/orbsvcs/Runtime_Scheduler.h"
+#include "orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h"
+#include "orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Scheduler_Factory.i"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(orbsvcs,

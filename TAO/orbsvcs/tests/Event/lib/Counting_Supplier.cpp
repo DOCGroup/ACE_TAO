@@ -1,10 +1,12 @@
 // $Id$
 
 #include "Counting_Supplier.h"
-#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/orbsvcs/Event_Utilities.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(EC_Tests, EC_Count_Supplier, "$Id$")
+ACE_RCSID (EC_Tests, 
+           EC_Count_Supplier, 
+           "$Id$")
 
 EC_Counting_Supplier::EC_Counting_Supplier (void)
   :  event_count (0),

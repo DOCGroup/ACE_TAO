@@ -3,7 +3,7 @@
 #include "ace/Get_Opt.h"
 
 #include "FooC.h"
-#include "orbsvcs/SecurityC.h"
+#include "orbsvcs/orbsvcs/SecurityC.h"
 
 ACE_RCSID (Secure_Invocation,
            client,

@@ -2,7 +2,7 @@
 
 #include "ace/Read_Buffer.h"
 
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #include "client.h"
 

@@ -18,9 +18,9 @@
 #define ACE_RUNTIME_SCHEDULER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/RtecSchedulerS.h"
-#include "orbsvcs/Sched/sched_export.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/orbsvcs/RtecSchedulerS.h"
+#include "orbsvcs/orbsvcs/Sched/sched_export.h"
 
 class TAO_RTSched_Export ACE_Runtime_Scheduler : public POA_RtecScheduler::Scheduler
 {

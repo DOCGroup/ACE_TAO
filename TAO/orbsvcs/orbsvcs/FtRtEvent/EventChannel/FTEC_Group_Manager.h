@@ -13,7 +13,7 @@
 #ifndef TAO_FTEC_GROUP_MANAGER_H
 #define TAO_FTEC_GROUP_MANAGER_H
 
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
 #include "FTEC_Fault_Listener.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

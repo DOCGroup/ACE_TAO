@@ -9,13 +9,15 @@
 #include "RTEC_Initializer.h"
 #include "RTCORBA_Setup.h"
 
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
-#include "orbsvcs/Event/EC_RTCORBA_Factory.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.h"
 
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID(TAO_PERF_RTEC, RTEC_Initializer, "$Id$")
+ACE_RCSID (TAO_PERF_RTEC, 
+           RTEC_Initializer, 
+           "$Id$")
 
 TAO_EC_Event_Channel *
 RTEC_Initializer::create (PortableServer::POA_ptr consumer_poa,

@@ -1,8 +1,8 @@
 // $Id$
 
 #include "ProxyConsumerStateWorker.h"
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/orbsvcs/Event/EC_ProxySupplier.h"
 
 ACE_RCSID (EventChannel,
            ProxyConsumerStateWorker,

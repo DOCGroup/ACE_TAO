@@ -50,8 +50,8 @@
 #define TAO_AV_RTP_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/AV_export.h"
-#include "orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/orbsvcs/AV/AV_export.h"
+#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
 
 #define RTP_PT_BVC              22      /* Berkeley video codec */
 

@@ -17,7 +17,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/EC_ConsumerAdmin.h"
+#include "orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h"
 #include "FT_ProxyAdmin_T.h"
 #include "ProxySupplierStateWorker.h"
 

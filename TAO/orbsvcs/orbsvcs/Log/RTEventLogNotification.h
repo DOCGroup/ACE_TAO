@@ -20,18 +20,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_ConsumerAdmin.h"
+#include "orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/RTEventLogAdminS.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
-#include "orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/Event/EC_ProxySupplier.h"
-#include "orbsvcs/Event/EC_ProxyConsumer.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/RTEventLogAdminS.h"
+#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/orbsvcs/Event/EC_ProxySupplier.h"
+#include "orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h"
 
 #include "rteventlog_export.h"
 

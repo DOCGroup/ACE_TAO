@@ -19,7 +19,7 @@
 #include /**/ "ace/pre.h"
 
 #include "EC_Gateway_IIOP.h"
-#include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
 #include "sched_event_export.h"
 
 // ****************************************************************

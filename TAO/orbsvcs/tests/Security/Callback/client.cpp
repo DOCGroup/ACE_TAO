@@ -2,11 +2,9 @@
 #include "serverC.h"
 #include "client_i.h"
 
-
 ACE_RCSID (Callback,
            client,
            "$Id$")
-
 
 int
 main (int argc, char *argv[])

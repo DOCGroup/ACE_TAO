@@ -12,7 +12,7 @@
 #define TAO_ECG_SIMPLE_ADDRESS_SERVER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecUDPAdminS.h"
+#include "orbsvcs/orbsvcs/RtecUDPAdminS.h"
 #include "EC_Lifetime_Utils_T.h"
 #include "ace/INET_Addr.h"
 
