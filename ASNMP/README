@@ -1,6 +1,6 @@
-Wed Aug 20 15:13:07 CDT 1997
+Thu Sep  4 18:58:26 CDT 1997
 ====================================================================
-ASNMP = ACE+SNMP++ Version 1.4
+ASNMP = ACE+SNMP++ Version 1.5
 By Michael R. MacFaden mrm@acm.org, mrm@cisco.com
 ====================================================================
 
@@ -34,6 +34,10 @@ How does ASNMP differ from SNMP?
   Standard ACE Debugging (ACE_TRACE) has been inserted.
   ASNMP has less global namespace pollution by moving all non-class 
   functions into interface classes or made into static locals.
+
+  An agent inteface has been added (asnmp/sagent.h) so both agents
+  and managers can use this class library. A trivial agent 
+  exists in ASNMP/agent/
 
   X11 GUI support removed from this version since this is
   not the place to include GUI support in the new world of
