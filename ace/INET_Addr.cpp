@@ -283,7 +283,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number, host_name) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_INET_Addr::ACE_INET_Addr"));
+    ACE_ERROR ((LM_ERROR, "ACE_INET_Addr::ACE_INET_Addr: %p\n", host_name));
 }
 
 // Creates a ACE_INET_Addr from a sockaddr_in structure.
