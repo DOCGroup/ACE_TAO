@@ -7,7 +7,7 @@
 //   ORBSVCS Real-time Event Channel examples
 //
 // = FILENAME
-//   Consumer
+//   MCast
 //
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
@@ -30,7 +30,13 @@ class Consumer : public POA_RtecEventComm::PushConsumer
   //
   // = DESCRIPTION
   //   This class is a consumer of events.
-  //   It simply registers for one event type.
+  //   It simply registers for two event types event type
+  //   The class is just a helper to simplify common tasks in EC
+  //   tests, such as subscribing for a range of events, disconnecting
+  //   from the EC, informing the driver of shutdown messages, etc.
+  //
+  //   There are several ways to connect and disconnect this class,
+  //   and it is up to the driver program to use the right one.
   //
 public:
   Consumer (void);
@@ -55,6 +61,32 @@ private:
   CORBA::ORB_ptr orb_;
   // The orb, just a pointer because the ORB does not outlive the
   // run() method...
+};
+
+// ****************************************************************
+
+class Supplier : public POA_RtecEventComm::PushSupplier
+{
+  // = TITLE
+  //   Simple supplier object
+  //
+  // = DESCRIPTION
+  //   This class is a supplier of events.
+  //   It simply registers for two event types event type
+  //   The class is just a helper to simplify common tasks in EC
+  //   tests, such as subscribing for a range of events, disconnecting
+  //   from the EC, informing the driver of shutdown messages, etc.
+  //
+public:
+  Supplier (void);
+  // Constructor
+
+  // = The RtecEventComm::PushSupplier methods
+
+  virtual void disconnect_push_supplier (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // The skeleton methods.
+private:
 };
 
 #endif /* CONSUMER_H */

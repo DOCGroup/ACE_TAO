@@ -9,7 +9,8 @@
 #----------------------------------------------------------------------------
 
 DIRS  =	Simple \
-	Schedule
+	Schedule \
+	MCast
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

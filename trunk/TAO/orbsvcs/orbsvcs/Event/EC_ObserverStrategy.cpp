@@ -328,10 +328,9 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
   dep[0].rt_info = 0;
 
   CORBA::ULong count = 1;
-  HeadersIterator i (headers);
-  for (i.first (); !i.is_done (); i.next ())
+  for (HeadersIterator i = headers.begin (); i != headers.end (); ++i)
     {
-      qos.dependencies[count++].event.header = *i.key ();
+      qos.dependencies[count++].event.header = (*i).key ();
     }
 }
 
@@ -350,10 +349,9 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
   qos.publications.length (headers.current_size ());
 
   CORBA::ULong count = 0;
-  HeadersIterator i (headers);
-  for (i.first (); !i.is_done (); i.next ())
+  for (HeadersIterator i = headers.begin (); i != headers.end (); ++i)
     {
-      qos.publications[count++].event.header = *i.key ();
+      qos.publications[count++].event.header = (*i).key ();
     }
 }
 
