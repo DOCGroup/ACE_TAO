@@ -29,7 +29,6 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Functor.h"
 
-
 // Forward declarations.
 class TAO_ORB_Core;
 
@@ -47,7 +46,7 @@ class TAO_ORB_Core;
  */
 class TAO_Export TAO_ORB_Table
 {
-  friend class TAO_Singleton<TAO_ORB_Table, TAO_SYNCH_MUTEX>;
+  friend class TAO_Export TAO_Singleton<TAO_ORB_Table, TAO_SYNCH_MUTEX>;
 
 public:
   /// destructor
@@ -95,34 +94,6 @@ private:
 #if defined (__ACE_INLINE__)
 # include "tao/ORB_Table.inl"
 #endif /* __ACE_INLINE__ */
-
-#if defined (_MSC_VER)
-// Disable "nonstandard extension used : 'extern' before template
-// explicit instantiation" warning.
-#pragma warning(disable:4231)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-# if !defined (TAO_BUILD_DLL)
-// The TAO_SINGLETON_DECLARE macro on its own does not work with
-// Borland C++. Therefore we use the following pragma to force
-// the template specialisation to be exported from the DLL.
-#   pragma option push -Jgx
-# endif
-#endif
-
-TAO_SINGLETON_DECLARE (TAO_Singleton, TAO_ORB_Table, TAO_SYNCH_MUTEX)
-
-#if defined (__BORLANDC__)
-# if !defined(TAO_BUILD_DLL)
-#   pragma option pop
-# endif
-#endif
-
-#if defined (_MSC_VER)
-// Re-enable the warning.
-#pragma warning(default:4231)
-#endif /* _MSC_VER */
 
 #include "ace/post.h"
 
