@@ -36,7 +36,7 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                    TAO_DEF_GIOP_MINOR)
 {
 #if defined (ACE_HAS_PURIFY)
-  ACE_OS::memset(buffer_, 0, sizeof(buffer_));
+  ACE_OS::memset(buffer_, 0, sizeof (buffer_));
 #endif /* ACE_HAS_PURIFY */
 }
 

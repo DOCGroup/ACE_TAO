@@ -28,7 +28,7 @@
 #include /**/ "ace/pre.h"
 #include "Messaging_SyncScope_PolicyC.h"
 
-#ifndef TAO_MESSAGING_SAFE_INCLUDE 
+#ifndef TAO_MESSAGING_SAFE_INCLUDE
 #error "You should not include MessagingC.h directly, use Messaging.h"
 #endif /* !TAO_MESSAGING_SAFE_INCLUDE */
 
@@ -72,37 +72,37 @@
 
 TAO_NAMESPACE  Messaging
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:307
-  
+
   class ExceptionHolder;
   struct tao_ExceptionHolder_life;
-  
+
   typedef
     TAO_Value_Var_T<
         ExceptionHolder
       >
     ExceptionHolder_var;
-  
+
   typedef
     TAO_Value_Out_T<
         ExceptionHolder
       >
     ExceptionHolder_out;
-  
+
   struct TAO_Messaging_Export tao_ExceptionHolder_life
   {
     static void tao_add_ref (ExceptionHolder *);
     static void tao_remove_ref (ExceptionHolder *);
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:56
 
 #if !defined (_MESSAGING_EXCEPTIONHOLDER_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER_CH_
-  
+
   class TAO_Messaging_Export ExceptionHolder
     : public virtual CORBA::ValueBase
   {
@@ -118,41 +118,41 @@ TAO_NAMESPACE  Messaging
       );
     virtual const char* _tao_obv_repository_id (void) const;
     static const char* _tao_obv_static_repository_id (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/field_ch.cpp:412
-    
+
     virtual void is_system_exception (CORBA::Boolean) = 0;
     virtual CORBA::Boolean is_system_exception (void) const = 0;
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/field_ch.cpp:412
-    
+
     virtual void byte_order (CORBA::Boolean) = 0;
     virtual CORBA::Boolean byte_order (void) const = 0;virtual void marshaled_exception (const CORBA::OctetSeq &) = 0;
     virtual const CORBA::OctetSeq &marshaled_exception (void) const = 0;
     virtual CORBA::OctetSeq &marshaled_exception (void) = 0;
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:272
-  
+
   protected:
     ExceptionHolder (void);
     virtual ~ExceptionHolder (void);
-    
+
     virtual void *_tao_obv_narrow (ptrdiff_t);
 #if defined (_MSC_VER)
     virtual void *Messaging_ExceptionHolder_tao_obv_narrow (ptrdiff_t);
 #endif /* _MSC_VER */
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-    
+
   private:
     ExceptionHolder (const ExceptionHolder &);
     void operator= (const ExceptionHolder &);
-    
+
   protected:
     virtual CORBA::Boolean _tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &) = 0;
     virtual CORBA::Boolean _tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &) = 0;
@@ -162,69 +162,69 @@ TAO_NAMESPACE  Messaging
 
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___INIT_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___INIT_CH_
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_init_ch.cpp:71
-  
+
   class TAO_Messaging_Export ExceptionHolder_init : public virtual CORBA::ValueFactoryBase
   {
   public:
     ExceptionHolder_init (void);
     virtual ~ExceptionHolder_init (void);
-    
-    
-    
+
+
+
     static ExceptionHolder_init* _downcast (CORBA::ValueFactoryBase* );
-    
+
     virtual CORBA::ValueBase *create_for_unmarshal (void);
-    
+
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ExceptionHolder;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
 #if !defined (_MESSAGING_REPLYHANDLER__ODDS_N_ENDS_CH_)
 #define _MESSAGING_REPLYHANDLER__ODDS_N_ENDS_CH_
-  
+
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
   struct tao_ReplyHandler_life;
-  
+
   typedef
     TAO_Objref_Var_T<
         ReplyHandler
       >
     ReplyHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ReplyHandler
       >
     ReplyHandler_out;
-  
+
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_MESSAGING_REPLYHANDLER_CH_)
 #define _MESSAGING_REPLYHANDLER_CH_
-  
+
   class _TAO_ReplyHandler_Proxy_Impl;
   class _TAO_ReplyHandler_Remote_Proxy_Impl;
   class _TAO_ReplyHandler_Proxy_Broker;
   class _TAO_ReplyHandler_Remote_Proxy_Broker;
-  
+
   class TAO_Messaging_Export ReplyHandler
     : public virtual CORBA::Object
   {
@@ -232,125 +232,125 @@ TAO_NAMESPACE  Messaging
     typedef ReplyHandler_ptr _ptr_type;
     typedef ReplyHandler_var _var_type;
     static int _tao_class_id;
-    
+
     // The static operations.
     static ReplyHandler_ptr _duplicate (ReplyHandler_ptr obj);
-    
+
     static ReplyHandler_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ReplyHandler_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ReplyHandler_ptr _nil (void)
       {
         return (ReplyHandler_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void *);
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
-    
+
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   private:
     _TAO_ReplyHandler_Proxy_Broker *the_TAO_ReplyHandler_Proxy_Broker_;
-  
+
   protected:
     ReplyHandler (int collocated = 0);
-    
+
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
     virtual void Messaging_ReplyHandler_setup_collocation (int collocated);
-    
+
     ReplyHandler (
-        TAO_Stub *objref, 
+        TAO_Stub *objref,
         CORBA::Boolean _tao_collocated = 0,
         TAO_Abstract_ServantBase *servant = 0
       );
     virtual ~ReplyHandler (void);
-    
+
     friend class _TAO_ReplyHandler_Remote_Proxy_Impl;
     friend class _TAO_ReplyHandler_ThruPOA_Proxy_Impl;
     friend class _TAO_ReplyHandler_Direct_Proxy_Impl;
-  
+
   private:
     ReplyHandler (const ReplyHandler &);
     void operator= (const ReplyHandler &);
   };
-  
+
   // The Proxy Implementations are used by each interface to
   // perform a call. Each different implementation encapsulates
   // an invocation logic.
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                    Base Proxy Impl. Declaration
   //
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/base_proxy_impl_ch.cpp:35
-  
+
   class TAO_Messaging_Export _TAO_ReplyHandler_Proxy_Impl
     : public virtual TAO_Object_Proxy_Impl
   {
   public:
     virtual ~_TAO_ReplyHandler_Proxy_Impl (void) {}
-  
+
   protected:
     _TAO_ReplyHandler_Proxy_Impl (void);
   };
-  
+
   //
   //               End Base Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                Remote Proxy Impl. Declaration
   //
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/remote_proxy_impl_ch.cpp:37
-  
+
   class TAO_Messaging_Export _TAO_ReplyHandler_Remote_Proxy_Impl
     : public virtual _TAO_ReplyHandler_Proxy_Impl,
       public virtual TAO_Remote_Object_Proxy_Impl
   {
   public:
     _TAO_ReplyHandler_Remote_Proxy_Impl (void);
-    
+
     virtual ~_TAO_ReplyHandler_Remote_Proxy_Impl (void) {}
   };
-  
+
   //
   //             End Remote Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
+
   // The Proxy Brokers are used by each interface to get
-  // the right proxy for performing a call. In the new 
+  // the right proxy for performing a call. In the new
   // collocation scheme, the proxy to be used can vary on
   // a call by call basis.
-  
+
   ///////////////////////////////////////////////////////////////////////
-  //                 Base Proxy Broker Declaration 
+  //                 Base Proxy Broker Declaration
   //
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/base_proxy_broker_ch.cpp:35
-  
+
   class TAO_Messaging_Export _TAO_ReplyHandler_Proxy_Broker
   {
   public:
@@ -359,56 +359,56 @@ TAO_NAMESPACE  Messaging
         ReplyHandler *object
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       ) = 0;
-    
+
   protected:
     _TAO_ReplyHandler_Proxy_Broker (void);
-    
+
   };
-  
+
   //
-  //              End Base Proxy Broker Declaration 
+  //              End Base Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-    
+
+
   ///////////////////////////////////////////////////////////////////////
-  //                 Remote Proxy Broker Declaration 
+  //                 Remote Proxy Broker Declaration
   //
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/remote_proxy_broker_ch.cpp:40
-  
+
   class TAO_Messaging_Export _TAO_ReplyHandler_Remote_Proxy_Broker
     : public virtual _TAO_ReplyHandler_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_ReplyHandler_Remote_Proxy_Broker (void);
-    
+
     virtual ~_TAO_ReplyHandler_Remote_Proxy_Broker (void);
-    
+
     virtual _TAO_ReplyHandler_Proxy_Impl &select_proxy (
         ReplyHandler *object
         ACE_ENV_ARG_DECL
       );
-    
+
   private:
     _TAO_ReplyHandler_Remote_Proxy_Impl remote_proxy_impl_;
-  
+
   public:
     // This member function is used to get an handle to the unique instance
     // of the Remote Proxy Broker that is available for a given
     // interface.
     static _TAO_ReplyHandler_Remote_Proxy_Broker *the_TAO_ReplyHandler_Remote_Proxy_Broker (void);
   };
-  
+
   //
-  //              End Remote Proxy Broker Declaration 
+  //              End Remote Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ReplyHandler;
 
 // TAO_IDL - Generated from
@@ -433,13 +433,13 @@ Messaging::_TAO_ReplyHandler_Proxy_Broker *
 
 TAO_NAMESPACE  OBV_Messaging
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_obv_ch.cpp:58
 
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___OBV_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___OBV_CH_
-  
+
   // OBV_ class
   class TAO_Messaging_Export ExceptionHolder
     : public virtual Messaging::ExceptionHolder,
@@ -447,27 +447,27 @@ TAO_NAMESPACE  OBV_Messaging
   {
   public:
     virtual ~ExceptionHolder (void);
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/field_ch.cpp:412
-    
+
     virtual void is_system_exception (CORBA::Boolean);
     virtual CORBA::Boolean is_system_exception (void) const;
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/field_ch.cpp:412
-    
+
     virtual void byte_order (CORBA::Boolean);
     virtual CORBA::Boolean byte_order (void) const;virtual void marshaled_exception (const CORBA::OctetSeq &);
     virtual const CORBA::OctetSeq &marshaled_exception (void) const;
     virtual CORBA::OctetSeq &marshaled_exception (void);
-    
+
   protected:
     virtual CORBA::Boolean _tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &);
     virtual CORBA::Boolean _tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &);
     CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &);
     CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &);
-  
+
   private:
     CORBA::Boolean _pd_is_system_exception;
     CORBA::Boolean _pd_byte_order;
@@ -475,11 +475,23 @@ TAO_NAMESPACE  OBV_Messaging
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/obv_module.cpp:85
 
 }TAO_NAMESPACE_CLOSE
+
+namespace TAO
+{
+  template<>
+  class TAO_Messaging_Export Arg_Traits<Messaging::ExceptionHolder>
+    : public Object_Arg_Traits_T<Messaging::ExceptionHolder *,
+                                 Messaging::ExceptionHolder_var,
+                                 Messaging::ExceptionHolder_out,
+                                 TAO::Value_Traits<Messaging::ExceptionHolder> >
+  {
+  };
+};
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/any_op_ch.cpp:54
@@ -544,4 +556,3 @@ TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Reply
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
-

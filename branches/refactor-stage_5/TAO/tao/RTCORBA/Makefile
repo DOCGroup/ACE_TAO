@@ -960,6 +960,11 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -1001,11 +1006,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -1283,6 +1283,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -2975,6 +2976,21 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/DynamicC.i \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   RT_Transport_Descriptor_Property.inl \
   RT_Transport_Descriptor.inl RT_Transport_Descriptor_Property.h \
   $(TAO_ROOT)/tao/Endpoint.h \
@@ -3259,6 +3275,21 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/DynamicC.i \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   RT_Transport_Descriptor_Property.inl
 
 .obj/RTCORBA.o .obj/RTCORBA.so .shobj/RTCORBA.o .shobj/RTCORBA.so: RTCORBA.cpp RTCORBA.h \
@@ -3929,6 +3960,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -3986,7 +4018,13 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
   $(TAO_ROOT)/tao/Transport.inl \
   $(TAO_ROOT)/tao/Invocation.i \
-  $(TAO_ROOT)/tao/PortableInterceptor.h
+  $(TAO_ROOT)/tao/PortableInterceptor.h \
+  $(TAO_ROOT)/tao/RequestInfo_Util.h \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+  $(TAO_ROOT)/tao/Invocation_Utils.h \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+  $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/RT_Current.o .obj/RT_Current.so .shobj/RT_Current.o .shobj/RT_Current.so: RT_Current.cpp RT_Current.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -4348,6 +4386,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -4421,6 +4460,11 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/corbafwd.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -4462,11 +4506,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -4758,6 +4797,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -5230,6 +5270,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -5650,6 +5691,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -6351,6 +6393,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -6817,6 +6860,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -6898,6 +6942,11 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
@@ -6945,11 +6994,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -7833,6 +7877,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -8271,6 +8316,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -8675,6 +8721,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -8754,6 +8801,11 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Stub_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -8795,11 +8847,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -9081,6 +9128,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -9503,6 +9551,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/ORB_Core.i \
   $(TAO_ROOT)/tao/Acceptor_Registry.h \
   $(TAO_ROOT)/tao/Acceptor_Registry.i \

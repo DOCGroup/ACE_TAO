@@ -348,6 +348,21 @@ realclean: clean
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/DynamicC.i \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
@@ -403,21 +418,6 @@ realclean: clean
   $(TAO_ROOT)/tao/Adapter.h \
   $(TAO_ROOT)/tao/Adapter.i \
   $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/DynamicC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -440,6 +440,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -497,7 +498,13 @@ realclean: clean
   $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
   $(TAO_ROOT)/tao/Transport.inl \
   $(TAO_ROOT)/tao/Invocation.i \
-  $(TAO_ROOT)/tao/PortableInterceptor.h
+  $(TAO_ROOT)/tao/PortableInterceptor.h \
+  $(TAO_ROOT)/tao/RequestInfo_Util.h \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+  $(TAO_ROOT)/tao/Invocation_Utils.h \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+  $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/TypeCodeFactory_i.o .obj/TypeCodeFactory_i.so .shobj/TypeCodeFactory_i.o .shobj/TypeCodeFactory_i.so: TypeCodeFactory_i.cpp TypeCodeFactory_i.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -509,6 +516,16 @@ realclean: clean
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -516,8 +533,6 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -530,9 +545,6 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -577,11 +589,6 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -601,10 +608,14 @@ realclean: clean
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
   $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/TAO_Export.h \
-  $(TAO_ROOT)/tao/Basic_Types.h \
+  $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
+  $(TAO_ROOT)/tao/orbconf.h \
+  $(TAO_ROOT)/tao/TAO_Export.h \
+  $(TAO_ROOT)/tao/Basic_Types.h \
+  $(TAO_ROOT)/tao/OBV_Constants.h \
+  $(TAO_ROOT)/tao/corbafwd.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -662,10 +673,6 @@ realclean: clean
   TypeCodeFactoryC.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
   $(TAO_ROOT)/tao/corba.h \
-  $(TAO_ROOT)/tao/corbafwd.h \
-  $(TAO_ROOT)/tao/orbconf.h \
-  $(TAO_ROOT)/tao/OBV_Constants.h \
-  $(TAO_ROOT)/tao/corbafwd.i \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -821,6 +828,21 @@ realclean: clean
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/DynamicC.i \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
@@ -847,6 +869,16 @@ realclean: clean
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -854,8 +886,6 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -868,9 +898,6 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -915,11 +942,6 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -939,18 +961,18 @@ realclean: clean
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
   $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/TAO_Export.h \
-  $(TAO_ROOT)/tao/Basic_Types.h \
+  $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
+  $(TAO_ROOT)/tao/orbconf.h \
+  $(TAO_ROOT)/tao/TAO_Export.h \
+  $(TAO_ROOT)/tao/Basic_Types.h \
+  $(TAO_ROOT)/tao/OBV_Constants.h \
+  $(TAO_ROOT)/tao/corbafwd.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/OBV_Constants.h \
-  $(TAO_ROOT)/tao/corbafwd.h \
-  $(TAO_ROOT)/tao/orbconf.h \
-  $(TAO_ROOT)/tao/corbafwd.i \
   typecodefactory_export.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1162,6 +1184,21 @@ realclean: clean
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/DynamicC.i \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
@@ -1192,21 +1229,6 @@ realclean: clean
   $(TAO_ROOT)/tao/Adapter.h \
   $(TAO_ROOT)/tao/Adapter.i \
   $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/DynamicC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -1229,6 +1251,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -1260,6 +1283,16 @@ realclean: clean
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -1267,8 +1300,6 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -1281,9 +1312,6 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -1328,11 +1356,6 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -1352,10 +1375,14 @@ realclean: clean
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
   $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/TAO_Export.h \
-  $(TAO_ROOT)/tao/Basic_Types.h \
+  $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
+  $(TAO_ROOT)/tao/orbconf.h \
+  $(TAO_ROOT)/tao/TAO_Export.h \
+  $(TAO_ROOT)/tao/Basic_Types.h \
+  $(TAO_ROOT)/tao/OBV_Constants.h \
+  $(TAO_ROOT)/tao/corbafwd.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -1413,10 +1440,6 @@ realclean: clean
   TypeCodeFactoryC.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
   $(TAO_ROOT)/tao/corba.h \
-  $(TAO_ROOT)/tao/corbafwd.h \
-  $(TAO_ROOT)/tao/orbconf.h \
-  $(TAO_ROOT)/tao/OBV_Constants.h \
-  $(TAO_ROOT)/tao/corbafwd.i \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -1572,6 +1595,21 @@ realclean: clean
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/DynamicC.i \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \

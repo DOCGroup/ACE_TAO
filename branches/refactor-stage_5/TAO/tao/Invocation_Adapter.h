@@ -22,6 +22,7 @@
 
 #include "ace/CORBA_macros.h"
 #include "ace/Global_Macros.h"
+#include "tao/Invocation_Utils.h"
 
 
 struct TAO_Exception_Data;
@@ -41,25 +42,7 @@ namespace TAO
 
   class Collocation_Proxy_Broker;
 
-  /// Enums for invocation types
-  enum Invocation_Type {
-    TAO_ONEWAY_INVOCATION,
-    TAO_TWOWAY_INVOCATION
-    // , TAO_LOCATEREQUEST_INVOCATION
-  };
 
-  /// Enum for invocation modes
-  enum Invocation_Mode {
-    /// Standard synchronous twoway
-    TAO_SYNCHRONOUS_INVOCATION,
-    /// Asynchronous twoway with callback model for collecting the
-    /// replies.
-    TAO_ASYNCHRONOUS_CALLBACK_INVOCATION,
-    /// Asynchronous twoway with poller model for collecting the
-    /// replies.
-    /// @NOTE: This is not supported in TAO now
-    TAO_ASYNCHRONOUS_POLLER_INVOCATION
-  };
 
   /**
    * @class Invocation_Adapter
@@ -72,13 +55,13 @@ namespace TAO
   {
   public:
     Invocation_Adapter (CORBA::Object *target,
-                     Argument **args,
-                     int arg_number,
-                     char *operation,
-                     int op_len,
-                     Collocation_Proxy_Broker *b,
-                     TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
-                     TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
+                        Argument **args,
+                        int arg_number,
+                        char *operation,
+                        int op_len,
+                        Collocation_Proxy_Broker *b,
+                        TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
+                        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
 
 
     void invoke (TAO_Exception_Data *ex,
@@ -87,23 +70,19 @@ namespace TAO
 
   protected:
 
-    void invoke_collocated (TAO_Stub *,
-                            TAO_Operation_Details &op
-                            ACE_ENV_ARG_DECL);
+    virtual void invoke_collocated (TAO_Stub *,
+                                    TAO_Operation_Details &op
+                                    ACE_ENV_ARG_DECL);
 
-    void invoke_remote (TAO_Stub *,
-                        TAO_Operation_Details &op
-                        ACE_ENV_ARG_DECL);
+    virtual void invoke_remote (TAO_Stub *,
+                                TAO_Operation_Details &op
+                                ACE_ENV_ARG_DECL);
 
     bool get_timeout (ACE_Time_Value &val);
 
-  private:
-    /// Dont allow default initializations
-    ACE_UNIMPLEMENTED_FUNC (Invocation_Adapter (void));
+    TAO_Stub *get_stub (ACE_ENV_SINGLE_ARG_DECL) const;
 
-    ACE_UNIMPLEMENTED_FUNC (Invocation_Adapter & operator= (const Invocation_Adapter &));
-
-  private:
+  protected:
 
     CORBA::Object *target_;
 
@@ -120,6 +99,12 @@ namespace TAO
     Invocation_Type type_;
 
     Invocation_Mode mode_;
+
+  private:
+    /// Dont allow default initializations
+    ACE_UNIMPLEMENTED_FUNC (Invocation_Adapter (void));
+
+    ACE_UNIMPLEMENTED_FUNC (Invocation_Adapter & operator= (const Invocation_Adapter &));
   };
 } // End namespace TAO
 

@@ -27,7 +27,6 @@ class TAO_Operation_Details;
 class TAO_Synch_Reply_Dispatcher;
 class TAO_InputCDR;
 class ACE_Time_Value;
-class TAO_Synch_Reply_Dispatcher;
 class TAO_Bind_Dispatcher_Guard;
 
 namespace CORBA

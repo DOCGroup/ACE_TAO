@@ -364,13 +364,25 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/DynamicC.i \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
@@ -380,18 +392,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/DynamicC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   RTSchedulerC.i RTScheduler_Loader.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -713,13 +713,25 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/DynamicC.i \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
@@ -729,18 +741,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/DynamicC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   RTSchedulerC.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -812,6 +812,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -869,7 +870,13 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
   $(TAO_ROOT)/tao/Transport.inl \
   $(TAO_ROOT)/tao/Invocation.i \
-  $(TAO_ROOT)/tao/PortableInterceptor.h
+  $(TAO_ROOT)/tao/PortableInterceptor.h \
+  $(TAO_ROOT)/tao/RequestInfo_Util.h \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+  $(TAO_ROOT)/tao/Invocation_Utils.h \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+  $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/RTScheduler_Loader.o .obj/RTScheduler_Loader.so .shobj/RTScheduler_Loader.o .shobj/RTScheduler_Loader.so: RTScheduler_Loader.cpp RTScheduler_Loader.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -880,6 +887,16 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -887,8 +904,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -901,9 +916,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -948,11 +960,6 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -1239,6 +1246,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -1680,6 +1688,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/ORB_Core.i \
   $(TAO_ROOT)/tao/ORBInitInfo.h \
   $(TAO_ROOT)/tao/ORBInitInfo.inl \
@@ -2005,13 +2014,25 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/DynamicC.i \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
@@ -2021,18 +2042,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/DynamicC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   RTSchedulerC.i RTScheduler_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -2101,6 +2110,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -2403,13 +2413,25 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/DynamicC.i \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
@@ -2419,18 +2441,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/DynamicC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   RTSchedulerC.i \
   $(ACE_ROOT)/ace/Task.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -2538,6 +2548,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/ORB_Core.i \
   Distributable_Thread.h \
   RTScheduler.h \
@@ -2965,6 +2976,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/Distributable_Thread.o .obj/Distributable_Thread.so .shobj/Distributable_Thread.o .shobj/Distributable_Thread.so: Distributable_Thread.cpp Distributable_Thread.h \
@@ -3247,13 +3259,25 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/WrongTransactionC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/DynamicC.i \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
@@ -3263,18 +3287,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/DynamicC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   RTSchedulerC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
