@@ -171,18 +171,18 @@ definition of macros discussed here.
       and throw the specified exception when it fails to acquire the
       lock.<p>
 
-  <li>Be wary of <code>TAO_CATCHANY</code>.  On platforms that use
-      simulated exceptions, it catches any CORBA exceptions passed
-      back by an operation.  However, on platforms that support native
-      c++ exceptions, <code>TAO_CATCHANY</code> translates to
-      <code>catch (...)</code> which catches <em>any</em> c++
-      exception.  Under some circumstances (e.g., the
+  <li>Be <em>VERY</em> wary of <code>TAO_CATCHANY</code>.  On
+      platforms that use simulated exceptions, it catches any CORBA
+      exceptions passed back by an operation.  However, on platforms
+      that support native c++ exceptions, <code>TAO_CATCHANY</code>
+      translates to <code>catch (...)</code> which catches
+      <em>any</em> c++ exception.  Under some circumstances (e.g., the
       <code>CATCHANY</code> block only performs resource clean-up for
       the current activation record,) this may be okay.  But for other
       cases, <code>CATCHANY</code> may accidentally deal with the
       wrong exception.  This is especially true if you are working on
-      the internal of TAO.  A reasonable alternative in this case
-      will be to catch "CORBA_Exception" class.<p>
+      the internal of TAO.  A reasonable alternative in this case will
+      be to catch "CORBA_Exception" class.<p>
 
   <li>Don't catch an exception just to rethrow it.  Exceptions cost
       you performance.<p>
