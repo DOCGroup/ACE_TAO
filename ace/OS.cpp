@@ -34,7 +34,7 @@ OSVERSIONINFO ACE_OS::win32_versioninfo_;
 
 HINSTANCE ACE_OS::win32_resource_module_;
 
-#  if defined (ACE_OS_HAS_DLL) && (ACE_OS_HAS_DLL == 1)
+#  if defined (ACE_OS_HAS_DLL) && (ACE_OS_HAS_DLL == 1) && !defined (ACE_HAS_WINCE)
 // This function is called by the OS when the ACE DLL is loaded. We
 // use it to determine the default module containing ACE's resources.
 BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID)

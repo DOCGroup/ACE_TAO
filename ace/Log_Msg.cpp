@@ -120,7 +120,7 @@ int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
     {
       ACE_NO_HEAP_CHECK;
 
-#if defined (WIN32)
+#if defined (WIN32) && !defined (ACE_HAS_WINCE)
       // Allocate the ACE_Log_Msg_Backend instance.
       if (ACE_BIT_ENABLED (ACE_Log_Msg_Manager::log_backend_flags_, ACE_Log_Msg::SYSLOG))
         ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
@@ -130,12 +130,12 @@ int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
         ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
                         ACE_Log_Msg_IPC,
                         -1);
-#else /* WIN32 */
+#else /* WIN32 && !ACE_HAS_WINCE */
       // Allocate the ACE_Log_Msg IPC instance.
       ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
                       ACE_Log_Msg_IPC,
                       -1);
-#endif /* WIN32 */
+#endif /* WIN32 && !ACE_HAS_WINCE */
     }
 
   return 0;
