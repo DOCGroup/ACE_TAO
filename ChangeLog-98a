@@ -1,20 +1,24 @@
+Thu Apr 23 13:54:33 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Malloc.i (free): added ACE_UNUSED_ARG (ptr) if ACE_NDEBUG.
+
 Thu Apr 23 11:21:46 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Activation_Queue.h: Extended ACE_Activation_Queue so that it
- 	  can be a proper base class by making the destructor virtual and
- 	  putting the methods into the protected section.  Thanks to Garry
- 	  Brother <gmbroth@romulus.ncsc.mil> for this.
+        * ace/Activation_Queue.h: Extended ACE_Activation_Queue so that it
+          can be a proper base class by making the destructor virtual and
+          putting the methods into the protected section.  Thanks to Garry
+          Brother <gmbroth@romulus.ncsc.mil> for this.
 
 Thu Apr 23 06:38:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/XtReactor.cpp: Commented out most of the logic if we're
- 	  running on Win32 because (1) it doesn't work correctly since
- 	  HANDLEs are not ints and (2) there's no X windows on Win32
- 	  anyhow...
+        * ace/XtReactor.cpp: Commented out most of the logic if we're
+          running on Win32 because (1) it doesn't work correctly since
+          HANDLEs are not ints and (2) there's no X windows on Win32
+          anyhow...
 
-	* ace/XtReactor.h: Made ACE_XtReactor be ACE_Export'd.  Thanks to
- 	  Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for reporting
- 	  this.
+        * ace/XtReactor.h: Made ACE_XtReactor be ACE_Export'd.  Thanks to
+          Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for reporting
+          this.
 
 Thu Apr 23 06:11:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
