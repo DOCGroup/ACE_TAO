@@ -83,14 +83,17 @@ print "Creating or updating builds in $starting_dir\n";
 
 #### If the $linked file is newer than the real file then
 #### backup the real file, and replace it with the linked
-#### version. 
+#### version.
 
 sub backup_and_copy_changed {
   my($real, $linked) = @_;
-
   my($status_real) = stat($real);
-  my($status_linked) = stat($linked);
 
+  if (! $status_real) {
+    die "ERROR: cannot access $real.\n";
+  }
+
+  my($status_linked) = stat($linked);
   if ($status_linked->mtime > $status_real->mtime) {
     rename($real, $real . '.bak');
     rename($linked, $real);
@@ -125,7 +128,7 @@ sub cab_link {
     if (! $status) {
       die "ERROR: cab_link() chdir " . $curdir . " failed.\n";
     }
-    
+
     my($base_linked) = basename($linked);
 
     if (! -e $real) {
@@ -150,9 +153,9 @@ sub cab_link {
         ## This should never happen, but there appears to be a bug
         ## with the underlying win32 apis on Windows Server 2003.
         ## Long paths will cause an error which perl will ignore.
-        ## Unicode versions of the apis seem to work fine. 
+        ## Unicode versions of the apis seem to work fine.
         ## To experiment try Win32 _fullpath() and CreateHardLink with
-        ## long paths. 
+        ## long paths.
         print "ERROR : Skipping $real.\n";
         return;
       }
@@ -278,43 +281,44 @@ sub wanted {
     );
 
     $matches = $matches &&
-    ( 
+    (
         ($nlink || (($dev,$ino,$mode,$nlink,$uid,$gid) = lstat($_))) &&
         ! -l $_ &&
         ! /^core\z/s &&
         ! /^.*\.state\z/s &&
-        ! /^.*\.so\z/s &&   
-        ! /^.*\.[oa]\z/s && 
-        ! /^.*\.dll\z/s &&   
-        ! /^.*\.lib\z/s && 
+        ! /^.*\.so\z/s &&
+        ! /^.*\.[oa]\z/s &&
+        ! /^.*\.dll\z/s &&
+        ! /^.*\.lib\z/s &&
         ! /^.*\.obj\z/s &&
         ! /^.*~\z/s &&
-        ! /^\.\z/s && 
+        ! /^\.\z/s &&
         ! /^\.#.*\z/s &&
-        ! /^.*\.log\z/s 
+        ! /^.*\.log\z/s
     );
 
     if ($mpc && $matches) {
-      $matches = 
+      $matches =
         ($File::Find::dir =~ /include\/makeinclude*/) ||
         (
-        ! /^.*\.dsp\z/s && 
-        ! /^.*\.vcproj\z/s && 
-        ! /^.*\.bor\z/s && 
-        ! /^.*\.dsw\z/s && 
-        ! /^.*\.sln\z/s && 
-        ! /^.*\.vcp\z/s && 
-        ! /^.*\.nmake\z/s && 
-        ! /^.*\.am\z/s && 
-        ! /^.*\.vcw\z/s && 
-        ! /^.*\.mak\z/s && 
-        ! /^.*\.bld\z/s && 
-        ! /^.*\.icc\z/s && 
-        ! /^.*\.icp\z/s && 
+        ! /^.*\.dsp\z/s &&
+        ! /^.*\.vcproj\z/s &&
+        ! /^.*\.bor\z/s &&
+        ! /^.*\.dsw\z/s &&
+        ! /^.*\.sln\z/s &&
+        ! /^.*\.vcp\z/s &&
+        ! /^.*\.nmake\z/s &&
+        ! /^.*\.am\z/s &&
+        ! /^.*\.vcw\z/s &&
+        ! /^.*\.mak\z/s &&
+        ! /^.*\.bld\z/s &&
+        ! /^.*\.icc\z/s &&
+        ! /^.*\.icp\z/s &&
         ! /^.*\.ncb\z/s &&
         ! /^.*\.opt\z/s &&
         ! /^.*\.bak\z/s &&
         ! /^.*\.ilk\z/s &&
+        ! /^.*\.exp\z/s &&
         ! /^.*\.pdb\z/s &&
         ! /^\.cvsignore\z/s &&
         ! /^\.disable\z/s &&
@@ -346,7 +350,7 @@ foreach $file (@files) {
       }
     } else {
       unless (($^O ne 'MSWin32') && (-e "$build/$file")) {
-        if (!$absolute) { 
+        if (!$absolute) {
           $up = '..';
           while ($build =~ m%/%g) {
             $up .= '/..';
@@ -382,7 +386,7 @@ foreach $build (@builds) {
           my($line) = $_;
           $line =~ s/\s+$//;
           if (-e "$starting_dir/$line") {
-            ## The links were already added in cab_link when they 
+            ## The links were already added in cab_link when they
             ## were checked for changes.
           } else {
             print "Removing $build/$line \n" if $verbose;
