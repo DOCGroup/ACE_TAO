@@ -124,7 +124,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Retrieve a previously created mutex.
-   virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name,
+  virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name,
                                                 CORBA::Environment &ACE_TRY_ENV =
                                                 TAO_default_environment () )
      ACE_THROW_SPEC ((CORBA::SystemException,
