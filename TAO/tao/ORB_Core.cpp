@@ -249,35 +249,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   CORBA::release (this->orb_);
 }
 
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-CORBA::Policy_ptr
-TAO_ORB_Core::default_buffering_constraint (void) const
-{
-  CORBA::Policy_ptr tmp =
-    CORBA::Policy::_nil ();
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      tmp =
-        this->default_policies_->
-        get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
-  ACE_CHECK (CORBA::Policy::_nil ());
-
-  return tmp;
-}
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-
 int
 TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 {
@@ -2639,7 +2610,9 @@ TAO_ORB_Core::get_policy_including_current (CORBA::PolicyType type
     this->policy_current ();
 
   CORBA::Policy_var result =
-    policy_current.get_policy (type);
+    policy_current.get_policy (type
+                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   if (CORBA::is_nil (result.in ()))
     {

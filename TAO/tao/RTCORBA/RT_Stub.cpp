@@ -197,7 +197,9 @@ TAO_RT_Stub::effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Get effective override.
   CORBA::Policy_var override =
-    this->TAO_Stub::get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
+    this->TAO_Stub::get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   // Get the value from the ior.
   CORBA::Policy_var exposed =
@@ -248,7 +250,9 @@ TAO_RT_Stub::effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Get effective override.
   CORBA::Policy_var override =
-    this->TAO_Stub::get_cached_policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL);
+    this->TAO_Stub::get_cached_policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   // Get the value from the ior.
   CORBA::Policy_var exposed =

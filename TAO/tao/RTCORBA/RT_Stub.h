@@ -62,14 +62,14 @@ public:
    * types.
    */
   CORBA::Policy_ptr get_policy (CORBA::PolicyType type
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                ACE_ENV_ARG_DECL);
 
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                       ACE_ENV_ARG_DECL);
 
   TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
                                   CORBA::SetOverrideType set_add
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                  ACE_ENV_ARG_DECL);
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
@@ -106,8 +106,8 @@ private:
   //   override for a given policy type, and then reconciling it with
   //   the policy value exported in the Object's IOR.
 
-  CORBA::Policy *effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  CORBA::Policy *effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  CORBA::Policy *effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Policy *effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL);
 
   // The following attribute are used to cache
   // the different kind of policies and avoid to

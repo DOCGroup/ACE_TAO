@@ -8,8 +8,8 @@
 
 #include "RT_Stub.h"
 
-ACE_RCSID (RTCORBA, 
-           RT_Endpoint_Utils, 
+ACE_RCSID (RTCORBA,
+           RT_Endpoint_Utils,
            "$Id$")
 
 // ****************************************************************
@@ -26,7 +26,8 @@ TAO_RT_Endpoint_Utils::policy (TAO_Cached_Policy_Type type,
   ACE_TRY
     {
       policy =
-        rt_stub->get_cached_policy (type);
+        rt_stub->get_cached_policy (type
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::INV_POLICY, ex)
@@ -35,7 +36,8 @@ TAO_RT_Endpoint_Utils::policy (TAO_Cached_Policy_Type type,
         {
           CORBA::PolicyList *p = r.inconsistent_policies ();
           p->length (1);
-          (*p)[0u] = rt_stub->TAO_Stub::get_cached_policy (type);
+          (*p)[0u] = rt_stub->TAO_Stub::get_cached_policy (type
+                                                           ACE_ENV_ARG_PARAMETER);
         }
 
       ACE_RE_THROW;
