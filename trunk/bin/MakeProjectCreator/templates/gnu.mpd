@@ -90,13 +90,13 @@ TAO_IDLFLAGS = <%tao_idlflags%>
 <%if(exename)%>
 <%if(install)%>
 INSBIN ?= <%install%>
+<%endif%>
 ifeq ($(INSBIN),.)
   ifeq ($(PWD),)
     PWD=$(shell pwd)
   endif
   INSBIN = $(PWD)
 endif
-<%endif%>
 OUTPUT_DIRECTORY = $(INSBIN)
 <%else%>
 <%if(dllout || libout)%>
