@@ -1,0 +1,17 @@
+// $Id$
+
+/**
+ * @file CIAO_Value.idl
+ *
+ * @brief Some CIAO valuetype extension for internal use.
+ */
+
+#include "CCM_Base.idl"
+
+module CIAO
+{
+  valuetype Cookie : ::Components::Cookie
+  {
+    CORBA::OctetSeq get_cookie ();
+  };
+};

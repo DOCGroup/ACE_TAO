@@ -1,0 +1,10 @@
+# $Id$
+
+#
+# Makefile for building the Cubit performance-tests
+#
+
+DIRS = \
+        TAO
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,83 @@
+<HTML>
+<!-- $Id$ -->
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Ambreen Ilyas">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+   <TITLE>Example 3</TITLE>
+</HEAD>
+<BODY>
+<FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+<BR><FONT COLOR="#CC0000">//// This example is from the ACE&nbsp;Programmers
+Guide.</FONT>
+<BR><FONT COLOR="#CC0000">//// &nbsp;Chapter:&nbsp;"IPC&nbsp;SAP" (Interprocess
+Communication Mechanisms in ACE).</FONT>
+<BR><FONT COLOR="#CC0000">//// For details please see the guide at</FONT>
+<BR><FONT COLOR="#CC0000">//// http://www.cs.wustl.edu/~schmidt/ACE.html</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; AUTHOR:&nbsp;Umar Syyid (usyyid@hns.com)</FONT>
+<BR><FONT COLOR="#CC0000">//// and Ambreen Ilyas (ambreen@bitsmart.com)</FONT>
+<BR><FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT><FONT COLOR="#FF0000"></FONT>
+
+<P><FONT COLOR="#CC0000">// Example 3</FONT><FONT COLOR="#FF0000"></FONT>
+
+<P><FONT COLOR="#FF0000">//Server</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/OS.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/SOCK_Dgram.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/INET_Addr.h"</FONT>
+
+<P><FONT COLOR="#000099">#define </FONT><FONT COLOR="#663366">DATA_BUFFER_SIZE
+1024</FONT>
+<BR><FONT COLOR="#000099">#define</FONT> <FONT COLOR="#663366">SIZE_DATA
+18</FONT>
+
+<P>class Server{
+<BR>public:
+<BR>Server(int local_port)
+<BR>&nbsp;:local_addr_(local_port),local_(local_addr_){
+<BR>&nbsp; data_buf = new char[DATA_BUFFER_SIZE];
+<BR>&nbsp; }
+<BR><FONT COLOR="#FF0000">//Expect data to arrive from the remote machine.
+Accept it and display it.</FONT>
+<BR><FONT COLOR="#FF0000">// After recieveing data immediately send some
+data back to the remote.</FONT>
+<BR>int accept_data(){
+<BR>&nbsp;while(local_.recv(data_buf,DATA_BUFFER_SIZE,remote_addr_)!=-1){
+<BR>&nbsp; ACE_DEBUG((LM_DEBUG, "Data received from remote %s was %s \n"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ,remote_addr_.get_host_name(), data_buf));
+<BR>&nbsp; ACE_OS::sleep(1);
+<BR>&nbsp; if(send_data()==-1) break;
+<BR>&nbsp; }
+<BR>&nbsp;return -1;
+<BR>&nbsp;}
+<BR>&nbsp;
+<BR>&nbsp;
+
+<P><FONT COLOR="#FF0000">//Method used to send data to the remote using
+the datagram component local_</FONT>
+<BR>int send_data(){
+<BR>&nbsp;ACE_DEBUG((LM_DEBUG,"Preparing to send reply to client %s:%d\n",
+<BR>&nbsp; remote_addr_.get_host_name(),remote_addr_.get_port_number()));
+<BR>&nbsp;ACE_OS::strcpy(data_buf,"Server says hello to you too");
+<BR>&nbsp;if(
+<BR>&nbsp;local_.send(data_buf, ACE_OS::strlen(data_buf)+1,remote_addr_)==-1)
+<BR>&nbsp; return -1;
+<BR>&nbsp;else
+<BR>&nbsp; return 0;
+<BR>&nbsp;}
+
+<P>private:
+<BR>&nbsp;char *data_buf;
+<BR>&nbsp;ACE_INET_Addr remote_addr_;
+<BR>&nbsp;ACE_INET_Addr local_addr_;
+<BR>&nbsp;ACE_SOCK_Dgram local_;
+<BR>};
+
+<P>int main(int argc, char *argv[]){
+<BR>&nbsp;Server server(ACE_OS::atoi(argv[1]));
+<BR>&nbsp;server.accept_data();
+<BR>&nbsp;return 0;
+<BR>}
+
+<P>&nbsp;<A HREF="ex04.html">Next Example</A>
+</BODY>
+</HTML>

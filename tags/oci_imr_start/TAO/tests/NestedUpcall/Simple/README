@@ -1,0 +1,17 @@
+This is a test of the nested upcall feature in TAO.  The client will
+start off by calling the server and providing a callback object and a
+time-to-live number.  The server will callback the client (using the
+callback object) and decrement the time-to-live number. The client
+will turn around and call the server again.
+
+The above process of calling each other will continue until the
+time-to-live number reaches zero.
+
+Both client and server can be run in multi-threaded mode.  A
+multi-threaded client can be used to check the client side leader
+follower model, while the multi-threaded server can be used to check
+the integration of the leader follower model of the TP reactor and the
+client side leader follower model in the ORB.
+
+In addition, the server can be used with the thread-per-connection
+model.
