@@ -10375,7 +10375,7 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
 {
   ACE_TRACE ("ACE_OS::llseek");
 
-#if ACE_SIZEOF_LONG == 8 || (defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64)
+#if ACE_SIZEOF_LONG == 8
   /* The native lseek is 64 bit, use it. */
   return ACE_OS::lseek (handle, offset, whence);
 #elif defined (__sgi) || defined (linux)
