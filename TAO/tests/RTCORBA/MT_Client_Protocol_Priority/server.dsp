@@ -7,19 +7,19 @@
 CFG=MT_Client_Protocol_Priority Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "server.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "server.mak" CFG="MT_Client_Protocol_Priority Server - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "MT_Client_Protocol_Priority Server - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "MT_Client_Protocol_Priority Server - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 TAO_PortableServer.lib TAO_Strategies.lib ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\Strategies..\..\..\tao" /libpath:"..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "MT_Client_Protocol_Priority Server - Win32 Debug"
 
@@ -76,9 +76,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 TAO_PortableServerd.lib TAO_Strategiesd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\Strategies..\..\..\tao" /libpath:"..\..\..\..\ace"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -133,7 +133,7 @@ SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "MT_Client_Protocol_Priority Server - Win32 Release"
 
-USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"
+USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\test.idl
 InputName=test
@@ -172,7 +172,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "MT_Client_Protocol_Priority Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"
+USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL on $(InputName)
 InputPath=.\test.idl
 InputName=test
@@ -208,7 +208,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group
