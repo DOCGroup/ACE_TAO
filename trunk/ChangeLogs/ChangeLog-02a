@@ -1,3 +1,8 @@
+Fri May 19 16:19:11 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* bin/run_all_list.pm:
+	  Removed the InterOp-Naming test from the Minimum CORBA builds.
+
 Thu May 18 20:40:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
