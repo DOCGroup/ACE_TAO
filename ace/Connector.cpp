@@ -221,7 +221,9 @@ ACE_Connector<SH, PR_CO_2>::handle_timeout (const ACE_Time_Value &tv,
       SH *sh = ast->svc_handler ();
 
       // Forward to the SVC_HANDLER the <arg> that was passed in as a
-      // magic cookie during ACE_Connector::connect().
+      // magic cookie during ACE_Connector::connect().  This gives the
+      // SVC_HANDLER an opportunity to take corrective action (e.g.,
+      // wait a few milliseconds and try to reconnect again.
       if (sh->handle_timeout (tv, ast->arg ()) == -1)
 	sh->handle_close (sh->get_handle (), ACE_Event_Handler::TIMER_MASK);
 

@@ -150,25 +150,28 @@ ACE_Filecache_Handle::ACE_Filecache_Handle (void)
   this->init ();
 }
 
-ACE_Filecache_Handle::ACE_Filecache_Handle (const char * filename)
+ACE_Filecache_Handle::ACE_Filecache_Handle (const char *filename)
 {
   this->init ();
 
-  // fetch the file from the Virtual_Filesystem
-  // let the Virtual_Filesystem do the work of cache coherency
+  // Fetch the file from the Virtual_Filesystem let the
+  // Virtual_Filesystem do the work of cache coherency.
 
-  // Filecache will also do the acquire, since it holds the lock at that time.
+  // Filecache will also do the acquire, since it holds the lock at
+  // that time.
   this->file_ = ACE_Filecache::instance ()->fetch (filename);
 }
 
-ACE_Filecache_Handle::ACE_Filecache_Handle (const char * filename, int size)
+ACE_Filecache_Handle::ACE_Filecache_Handle (const char *filename,
+					    int size)
 {
   this->init ();
-  // since this is being opened for a write,
-  // simply create a new ACE_Filecache_Object now,
-  // and let the destructor add it into CVF later
+  // Since this is being opened for a write, simply create a new
+  // ACE_Filecache_Object now, and let the destructor add it into CVF
+  // later
 
-  // Filecache will also do the acquire, since it holds the lock at that time.
+  // Filecache will also do the acquire, since it holds the lock at
+  // that time.
   this->file_ = ACE_Filecache::instance ()->create (filename, size);
 }
 
@@ -267,9 +270,9 @@ ACE_Filecache_Hash::shared_find (const char *const &ext_id,
 {
   loc = this->hash (ext_id) % this->total_size_;
 
-  ACE_Filecache_Hash_Entry *temp = this->table_[loc];
+  ACE_Filecache_Hash_Entry *temp;
 
-  for (;
+  for (temp = this->table_[loc];
        temp != this->sentinel_ && this->equal (temp->ext_id_, ext_id) == 0;
        temp = temp->next_)
     prev = temp;
@@ -304,8 +307,10 @@ ACE_Filecache::instance (void)
     {
       ACE_Guard<ACE_SYNCH_RW_MUTEX> m (ACE_Filecache::lock_);
 
+      // @@ James, please check each of the ACE_NEW_RETURN calls to
+      // make sure that it is safe to return if allocation fails.
       if (ACE_Filecache::cvf_ == 0)
-	ACE_Filecache::cvf_ = new ACE_Filecache;
+	ACE_NEW_RETURN (ACE_Filecache::cvf_, ACE_Filecache, 0);
     }
 
   return ACE_Filecache::cvf_;
@@ -328,9 +333,12 @@ ACE_Filecache::insert_i (const char *filename, ACE_SYNCH_RW_MUTEX &filelock)
 
   if (this->hash_.find (filename, handle) == -1)
     {
-      handle = new ACE_Filecache_Object (filename, filelock);
+      ACE_NEW_RETURN (handle,
+		      ACE_Filecache_Object (filename, filelock),
+		      0);
 
       ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: creating %s\n", filename));
+
       if (this->hash_.bind (filename, handle) == -1)
         {
           delete handle;
@@ -375,9 +383,12 @@ ACE_Filecache::update_i (const char *filename, ACE_SYNCH_RW_MUTEX &filelock)
   // Just in case someone removed it
   if (this->hash_.find (filename, handle) == -1)
     {
-      handle = new ACE_Filecache_Object (filename, filelock);
+      ACE_NEW_RETURN (handle,
+		      ACE_Filecache_Object (filename, filelock),
+		      0);
 
       ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: creating %s\n", filename));
+
       if (this->hash_.bind (filename, handle) == -1)
         {
           delete handle;
@@ -390,9 +401,12 @@ ACE_Filecache::update_i (const char *filename, ACE_SYNCH_RW_MUTEX &filelock)
         {
           handle = this->remove_i (filename);
 
-          handle = new ACE_Filecache_Object (filename, filelock);
+          ACE_NEW_RETURN (handle,
+			  ACE_Filecache_Object (filename, filelock),
+			  0);
 
           ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: updating %s\n", filename));
+
           if (this->hash_.bind (filename, handle) == -1)
             {
               delete handle;
@@ -405,14 +419,14 @@ ACE_Filecache::update_i (const char *filename, ACE_SYNCH_RW_MUTEX &filelock)
 }
 
 int
-ACE_Filecache::find (const char * filename)
+ACE_Filecache::find (const char *filename)
 {
   return this->hash_.find (filename);
 }
 
 
 ACE_Filecache_Object *
-ACE_Filecache::fetch (const char * filename)
+ACE_Filecache::fetch (const char *filename)
 {
   ACE_Filecache_Object *handle = 0;
 
@@ -421,6 +435,7 @@ ACE_Filecache::fetch (const char * filename)
   ACE_SYNCH_RW_MUTEX &filelock = ACE_Filecache::file_lock_[loc];
 
   filelock.acquire_read ();
+
   if (this->hash_.find (filename, handle) == -1)
     {
       ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (hashlock);
@@ -436,22 +451,19 @@ ACE_Filecache::fetch (const char * filename)
       if (handle->update ())
         {
           filelock.release ();
+	  {
+	    // Double check locking pattern
+	    ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (hashlock);
 
-            {
-              // Double check locking pattern
-              ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (hashlock);
-
-              // Second check in the method call
-              handle = this->update_i (filename, filelock);
-            }
+	    // Second check in the method call
+	    handle = this->update_i (filename, filelock);
+	  }
 
           if (handle)
             filelock.acquire_read ();
         }
-
       ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: found %s\n", filename)); 
     }
-
 
   return handle;
 }
@@ -464,7 +476,9 @@ ACE_Filecache::create (const char *filename, int size)
   u_long loc = ACE::hash_pjw (filename) % this->size_;
   ACE_SYNCH_RW_MUTEX &filelock = ACE_Filecache::file_lock_[loc];
 
-  handle = new ACE_Filecache_Object (filename, size, filelock);
+  ACE_NEW_RETURN (handle,
+		  ACE_Filecache_Object (filename, size, filelock),
+		  0);
   handle->acquire ();
 
   return handle;
@@ -588,7 +602,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
    this->action_ = ACE_Filecache_Object::READING;
 }
 
-ACE_Filecache_Object::ACE_Filecache_Object (const char * filename,
+ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
                                             int size,
                                             ACE_SYNCH_RW_MUTEX &lock)
   : stale_ (0),
@@ -720,7 +734,7 @@ ACE_Filecache_Object::error (void) const
 }
 
 int
-ACE_Filecache_Object::error_i (int error_value, const char * s)
+ACE_Filecache_Object::error_i (int error_value, const char *s)
 {
   s = s;
   ACE_ERROR ((LM_ERROR, "%p.\n", s));
