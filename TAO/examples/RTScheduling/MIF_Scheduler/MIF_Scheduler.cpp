@@ -519,6 +519,14 @@ MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr
 }
 
 void
+MIF_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr
+			  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   PortableInterceptor::ForwardRequest))
+{
+}
+
+void
 MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr
 			      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))

@@ -1,3 +1,19 @@
+Thurs Sep 18 17:15:51 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+	
+	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h: 
+	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp: 	
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h: 
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp: 
+
+	  Added the missing send_poll method to the MIF_Scheduler and
+	  FP_Scheduler to make it consistent with the following change
+	  made earlier:
+
+	  Mon Sep 15 15:50:35 2003 Yamuna Krishnamurthy <yamuna@oomworks.com>
+	
+	  This should fix the compile errors on linux and
+	  solaris.
+
 Thu Sep 18 13:25:13 2003  George Edwards  <g.edwards@vanderbilt.edu>
 
         * tests/OBV/Supports/Supports_Test_impl.cpp:
@@ -87,6 +103,7 @@ Mon Sep 15 13:22:37 MST 2003 Trevor Fields <fields_t@ociweb.com>
           Fixed passing of ACE_ENV_ARG_PARAMETER to super class.
           It was using the the declaration macro instead of parameter.
 
+
 Mon Sep 15 15:50:35 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
         * tao/RTScheduling/RTScheduler.pidl:
@@ -95,7 +112,9 @@ Mon Sep 15 15:50:35 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
         * tests/RTScheduling/Scheduler.h:
         * tests/RTScheduling/Scheduler.cpp:
 
-          Added send_poll operation to Scheduler interface.
+          The send_poll operation on the Scheduler interface was
+	  missing. This was required to interact with the scheduler when
+	  the send_poll interception occurs. Hence, it was added.
 
 Mon Sep 15 11:58:35 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
