@@ -14,7 +14,7 @@
  *   command used for this is:
  *
  *     tao_idl.exe
- *        -o orig -Sa -Ge 1 -GT
+ *        -o orig -Sa -Ge 1 -GT -GA -Sc
  *          -Wb,export_macro=TAO_Export
  *          -Wb,export_include="tao/TAO_Export.h"
  *          -Wb,pre_include="ace/pre.h"
@@ -23,9 +23,10 @@
  *
  * and then:
  *
- * cp orig/ObjectIdListC.{h,i,cpp} .
+ * cp orig/ObjectIdListC.{h,inl,cpp} .
+ * cp orig/ObjectIdListA.cpp .
  *
- * The code left in ObjectIdListC.{h,i,cpp} is ready for use.
+ * The code is ready for use.
   */
 
 #ifndef TAO_CORBA_ORB_OBJECTIDLIST_PIDL

@@ -138,6 +138,7 @@ ORB_Core = \
   ORB_Table.cpp \
   Object.cpp \
   ObjectIdListC.cpp \
+  ObjectIdListA.cpp \
   ObjectKey_Table.cpp \
   Object_KeyC.cpp \
   Object_Loader.cpp \
@@ -778,7 +779,7 @@ nobase_include_HEADERS += \
   ORB_Core_Auto_Ptr.inl \
   ORB_Table.inl \
   Object.i \
-  ObjectIdListC.i \
+  ObjectIdListC.inl \
   Object_Argument_T.inl \
   Object_KeyC.inl \
   Object_Loader.i \
