@@ -1,3 +1,16 @@
+Tue Sep 21 17:50:27 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Naming/naming.mpc: Correct the exename for Nodelocal.
+	  It was conflicting with that of Netlocal, which, when generated,
+	  confused Visual Age C++ templates and automake.
+
+Tue Sep 21 12:16:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* ACEXML/parser/parser/Parser.cpp: parse_encoding_decl(), don't
+	  crash if the input source doesn't declare an encoding.
+	  reset(), if current_ is already 0 (the case if no parsing ever
+	  really got started) don't dereference it.
+
 Tue Sep 21 18:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.inl (readlink):
