@@ -84,13 +84,15 @@ CosNaming_Client::run (void)
 {
   // @@ TODO, add some interesting test here, maybe creating some
   // nested naming contexts and registering a number of objreferences
-  // in there.
-  // We could even use the iterators.
+  // in there.  We could even use the iterators.
 
-  if(this->resolve_name_)
-    resolve_name(this->context_to_resolve_, this->name_to_resolve_);
-  if(this->list_contents_)
-    list_contents();
+  if (this->resolve_name_)
+    resolve_name (this->context_to_resolve_,
+                  this->name_to_resolve_);
+
+  if (this->list_contents_)
+    list_contents ();
+
   return 0;
 }
 
@@ -99,7 +101,7 @@ CosNaming_Client::~CosNaming_Client (void)
 }
 
 int
-CosNaming_Client::resolve_name(char *c, char *n)
+CosNaming_Client::resolve_name (char *c, char *n)
 {
   TAO_TRY
     {
@@ -124,7 +126,7 @@ CosNaming_Client::resolve_name(char *c, char *n)
 }
 
 void
-CosNaming_Client::list_contents(void)
+CosNaming_Client::list_contents (void)
 {
   CosNaming::BindingIterator_var bi;
   CosNaming::BindingList_var li;
@@ -136,18 +138,24 @@ CosNaming_Client::list_contents(void)
 
   TAO_TRY
     {
-      this->naming_context_->list(how_many, li, bi, TAO_TRY_ENV);
+      this->naming_context_->list (how_many, li, bi, TAO_TRY_ENV);
 
-      while(more = bi->next_one(b, TAO_TRY_ENV))
+      while (more = bi->next_one (b, TAO_TRY_ENV))
         {
           n = b->binding_name;
-          names = n.length();
-          printf("(%i) Name: ", names);
-          for(int i=0; i<names; i++)
-            printf("%s ", n[i].id._retn());
-          printf("type: %s\n",
-                 (b->binding_type==CosNaming::ncontext)?"C":"O");
-        };
+          names = n.length ();
+          ACE_DEBUG ((LM_DEBUG,
+                      " (%i) Name: ",
+                      names));
+
+          for (int i = 0; i < names; i++)
+            ACE_DEBUG ((LM_DEBUG,
+                        "%s ",
+                        n[i].id._retn ()));
+
+          ACE_DEBUG ((LM_DEBUG, "type: %s\n",
+                      b->binding_type == CosNaming::ncontext ? "C" : "O"));
+        }
     }
   TAO_CATCHANY
     {
@@ -169,6 +177,7 @@ CosNaming_Client::init (int argc, char **argv)
 
       CORBA::Object_var naming_obj =
 	orb_->resolve_initial_references ("NameService");
+
       if (CORBA::is_nil (naming_obj.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize the POA.\n"),

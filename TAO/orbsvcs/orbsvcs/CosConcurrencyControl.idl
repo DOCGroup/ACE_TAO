@@ -32,16 +32,21 @@
 #endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
 
 module CosConcurrencyControl 
-// = TITLE
-//     CosConcurrencyControl
-//
-// = DESCRIPTION
-//     This idl file describes the concurrency control service.
-//     The purpose of the concurrency control service is to mediate
-//     concurrent access to an pbject such that the consistency of
-//     the object is not compromised when accessed by concurrently
-//     executing computations.
 {
+  // = TITLE
+  //     CosConcurrencyControl
+  //
+  // = DESCRIPTION
+  //     This idl file describes the concurrency control service.  The
+  //     purpose of the concurrency control service is to mediate
+  //     concurrent access to an pbject such that the consistency of
+  //     the object is not compromised when accessed by concurrently
+  //     executing computations.
+
+  // = These are the different lock types supported by this module. 
+
+  // For a description of the compatability between the different lock
+  // types please consult the service description (OMG).
   enum lock_mode 
   {
     read,
@@ -50,18 +55,15 @@ module CosConcurrencyControl
     intention_read,
     intention_write
   };
-  // This is the different lock types supported by this module. For a
-  // description of the compatability between the different lock types
-  // please consult the service description (OMG).
 
   exception LockNotHeld {};
-  // The LockNotHeld exception is is raised when an operation to unlock
-  // or change the mode of a lock is called and the specified lock is not
-  // held
+  // The LockNotHeld exception is is raised when an operation to
+  // unlock or change the mode of a lock is called and the specified
+  // lock is not held
 
 #if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
-  // @@TAO I'm in doubt here. The lock coordinator is designed for
-  //       transactional lock sets?? - tworm
+  // @@ The lock coordinator is designed for transactional lock sets,
+  // so we don't support it (yet).
   interface LockCoordinator
     {
       // = TITLE
@@ -79,34 +81,37 @@ module CosConcurrencyControl
   interface LockSet
     {
       // = TITLE
-      //     LockSet inteface to the concurrency service in implicit mode
+      //     LockSet inteface to the concurrency service in implicit
+      //     mode. 
+      //
       // = DESCRIPTION
-      //     Clients operating in the implicit mode (i.e. non-transactional
-      //     mode) acquire and release locks in lock sets throug this
-      //     interface. The interface only provides operations to acquire
-      //     and release locks on behalf of the calling thread or transaction.
+      //     Clients operating in the implicit mode
+      //     (i.e. non-transactional mode) acquire and release locks
+      //     in lock sets throug this interface. The interface only
+      //     provides operations to acquire and release locks on
+      //     behalf of the calling thread or transaction.
 
       void lock (in lock_mode mode);
-      // Acquires a lock on the specified lock set in the specified mode.
-      // Blocks until lock is obtained
+      // Acquires a lock on the specified lock set in the specified
+      // mode.  Blocks until lock is obtained.
 
       boolean try_lock (in lock_mode mode);
-      // Tries to acquire a lock on the specified lock set. If it is not
-      // possible to acquire the lock false is returned
+      // Tries to acquire a lock on the specified lock set. If it is
+      // not possible to acquire the lock false is returned.
 
       void unlock (in lock_mode mode)
         raises (LockNotHeld);
-      // Releases a single lock on the specified lock set. A lock can be
-      // held multiple times in the same mode. If the lock is not held the
-      // exception LockNotHeld is raised
+      // Releases a single lock on the specified lock set. A lock can
+      // be held multiple times in the same mode. If the lock is not
+      // held the exception LockNotHeld is raised.
 
       void change_mode (in lock_mode held_mode,
                         in lock_mode new_mode)
         raises (LockNotHeld);
       // Changes the mode of the lock on the specified lock set. If a
-      // conflicting lock is held by another client the call blocks until
-      // the new mode can be granted. If the lock is not held in the
-      // specified mode the exception LockNotHeld is raised.
+      // conflicting lock is held by another client the call blocks
+      // until the new mode can be granted. If the lock is not held in
+      // the specified mode the exception LockNotHeld is raised.
 
 #if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
       LockCoordinator get_coordinator (in CosTransactions::Coordinator which);
@@ -120,15 +125,17 @@ module CosConcurrencyControl
     {
       // = TITLE
       //     TransactionalLockSet interface to the concurrency service
-      //     in transactional mode
+      //     in transactional mode.
+      // 
       // = DESCRIPTION
       //     Clients operating in the transactional mode acquire and
       //     release locks in lock sets through this interface. The
       //     interface provides operations identical to the operations
-      //     described in the LockSet interface section. The difference
-      //     beeing that the coordinator for the transaction is explicitly
-      //     passed as a reference to the operations. Please see the
-      //     description of the LockSet interface for a detailed description.
+      //     described in the LockSet interface section. The
+      //     difference beeing that the coordinator for the
+      //     transaction is explicitly passed as a reference to the
+      //     operations. Please see the description of the LockSet
+      //     interface for a detailed description.
       
       void lock (in CosTransactions::Coordinator current,
                  in lock_mode mode);
@@ -157,10 +164,11 @@ module CosConcurrencyControl
   interface LockSetFactory
     {
       // = TITLE
-      //     Factory interface for the LockSet and TransactionalLockSet
-      //     interfaces
+      //     Factory interface for the LockSet and
+      //     TransactionalLockSet interfaces.
+      //
       // = DESCRIPTION
-      //     Factory for creating the lock sets
+      //     Factory for creating the lock sets.
 
       LockSet create ();
       // Creates a new LockSet and lock coordinator
@@ -176,8 +184,7 @@ module CosConcurrencyControl
       // Creates a new TransactionalLockSet and lock coordinator for
       // transactional mode clients.
 
-      TransactionalLockSet
-	create_transactional_related (in TransactionalLockSet which);
+      TransactionalLockSet create_transactional_related (in TransactionalLockSet which);
       // Creates a new transactional lock set related to the specified lock
       // set. Related lock sets drop locks together.
 #endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */

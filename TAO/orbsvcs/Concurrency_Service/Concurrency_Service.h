@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -8,7 +9,8 @@
 //    Concurrency_Service.h
 //
 // = DESCRIPTION
-//      This class implements the functionality of the Concurrency_Service.
+//      This class implements a subset of the functionality of the
+//      CORBA Concurrency Service. 
 //
 // = AUTHORS
 //    Torben Worm <tworm@cs.wustl.edu>
@@ -18,49 +20,45 @@
 #if !defined (_CONCURRENCY_SERVICE_H)
 #define _CONCURRENCY_SERVICE_H
 
-//#include "ace/streams.h"
-//#include "tao/tao_util.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
 #include "orbsvcs/Concurrency/Concurrency_Utils.h"
-//#include "orbsvcs/Concurrency/CC_LockSetFactory.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
-class Concurrency_Service:public TAO_ORB_Manager
+class Concurrency_Service : public TAO_ORB_Manager
 {
-  // =TITLE
+  // = TITLE
   //   Defines a class that encapsulates the implementation of the
   //   concurrency service.
-  // =DESCRIPTION
-  //   
-  //   
-
+  // = DESCRIPTION
+  //   @@ Please add a brief description here.
 public:
+  // = Initialization and termination methods.
   Concurrency_Service (void);
   // Default Constructor.
 
   Concurrency_Service (int argc,
-		       char** argv,
-                       CORBA::Environment& _env);
+		       char **argv,
+                       CORBA::Environment &env);
   // Constructor taking the command-line arguments.
 
   ~Concurrency_Service (void);
   // Destructor.
 	
   int init (int argc,
-            char** argv,
-            CORBA::Environment& _env);
+            char **argv,
+            CORBA::Environment &env);
   // Initialize the Concurrency Service with the arguments.
 
-  int run (CORBA_Environment& _env);
+  int run (CORBA_Environment &env);
   // Run the Concurrency_Service.
 
 private:
-  int parse_args(void);
+  int parse_args (void);
   // Parses the commandline arguments.
 
-  int init_naming_service (CORBA::Environment& _env);
+  int init_naming_service (CORBA::Environment &env);
   // Initialize the name server and register the concurency server
   // factory with it. Maybe later it will be convinient to register
   // the individual lock sets with the naming service. At present the
@@ -80,22 +78,22 @@ private:
   // objects.
 
   TAO_Concurrency_Server my_concurrency_server_;
-  // An instance of the concurrency server
+  // An instance of the concurrency server.
 
   CosConcurrencyControl::LockSetFactory_var lockset_factory_;
-  // Factory var to register with the naming service
+  // Factory var to register with the naming service.
 
   CosNaming::NamingContext_var concurrency_context_;
-  // Naming context for the concurrency service
+  // Naming context for the concurrency service.
 
   CosNaming::NamingContext_var naming_context_;
-  // Naming context for the naming service
+  // Naming context for the naming service.
 
   int argc_;
-  // Number of commandline arguments
+  // Number of commandline arguments.
 
   char **argv_;
-  // Commandline arguments
+  // Commandline arguments.
 };
 
 #endif /* _CONCURRENCY_SERVICE_H */
