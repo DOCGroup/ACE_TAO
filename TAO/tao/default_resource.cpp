@@ -264,7 +264,8 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                           -1);
           if (this->charcodeset_factories_.insert (item) == -1)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) Unable to add Codeset factories for %s: %p\n"),
+                        ACE_LIB_TEXT ("(%P|%t) Unable to add Codeset ")
+			ACE_LIB_TEXT ("factories for %s: %p\n"),
                         argv[curarg]));
         }
     }
@@ -283,7 +284,8 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                           -1);
             if (this->wcharcodeset_factories_.insert (item) == -1)
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Unable to add Codeset factories for %s: %p\n"),
+                          ACE_LIB_TEXT ("(%P|%t) Unable to add Codeset ")
+			  ACE_LIB_TEXT ("factories for %s: %p\n"),
                           argv[curarg]));
           }
     }
@@ -933,8 +935,8 @@ TAO_Default_Resource_Factory::disable_factory (void)
   if (this->options_processed_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
-                  ACE_TEXT ("Default Resource Factory is disabled\n")));
+                  ACE_LIB_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
+                  ACE_LIB_TEXT ("Default Resource Factory is disabled\n")));
     }
 }
 
@@ -950,14 +952,18 @@ TAO_Default_Resource_Factory::get_codeset_manager()
 	{
           delete csi;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("TAO (%P|%t) default resource factory failed to init char codeset factories\n")),0);
+                             ACE_LIB_TEXT ("TAO (%P|%t) resource factory ")
+			     ACE_LIB_TEXT ("failed to init char codeset ")
+			     ACE_LIB_TEXT ("factories\n")),0);
         }
       // Initialize the wide character codeset factories
       if (init_codeset_factories_i (wcharcodeset_factories_) == -1)
         {
           delete csi;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("TAO (%P|%t) default resource factory failed to init wchar codeset factories\n")),0);
+                             ACE_LIB_TEXT ("TAO (%P|%t) resource factory ")
+			     ACE_LIB_TEXT ("failed to init wchar codeset ")
+			     ACE_LIB_TEXT ("factories\n")),0);
         }
       //need autopointer for csi here...
       this->get_codeset_ids_i (this->ncs_c_,
@@ -986,15 +992,16 @@ TAO_Default_Resource_Factory::init_codeset_factories_i (TAO_CodesetFactorySet& f
       if ((*iter)->factory () == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("TAO (%P|%t) Unable to load ")
-                             ACE_TEXT ("CodeSet <%s>, %p\n"),
+                             ACE_LIB_TEXT ("TAO (%P|%t) Unable to load ")
+                             ACE_LIB_TEXT ("CodeSet <%s>, %p\n"),
                              ACE_TEXT_CHAR_TO_TCHAR(name.c_str ()), ""),
                              -1);
         }
-      if (TAO_debug_level > 0)
+      if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) Loaded CodeSet <%s>, ncs = %08x tcs = %08x\n"),
+                      ACE_LIB_TEXT ("TAO (%P|%t) Loaded CodeSet <%s>, ")
+		      ACE_LIB_TEXT ("ncs = %08x tcs = %08x\n"),
                       ACE_TEXT_CHAR_TO_TCHAR(name.c_str ()),
                       (*iter)->factory()->ncs(),(*iter)->factory()->tcs()));
         }
@@ -1012,10 +1019,11 @@ TAO_Default_Resource_Factory::get_codeset_ids_i (CONV_FRAME::CodeSetId ncs,
 
   cs_comp->native_code_set = ncs;
   cs_comp->conversion_code_sets.length(factset.size());
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"get_codeset_ids_i, ncs = %08x ccs len = %d\n",
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+		ACE_LIB_TEXT ("(%P|%t) default resource factory ")
+		ACE_LIB_TEXT ("get_codeset_ids_i, ncs = %08x ccs len = %d\n"),
                 ncs,factset.size()));
-
 
   CORBA::ULong index;
   for (index=0; iter != end; iter++)
@@ -1024,13 +1032,15 @@ TAO_Default_Resource_Factory::get_codeset_ids_i (CONV_FRAME::CodeSetId ncs,
       if (trans->ncs() == ncs)
         {
           cs_comp->conversion_code_sets[index++] = trans->tcs();
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,"    adding %08x, index = %d\n",
-                        trans->tcs(),index));
+          if (TAO_debug_level > 2)
+            ACE_DEBUG ((LM_DEBUG,
+			ACE_LIB_TEXT ("(%P|%t) adding tcs %08x\n"),
+                        trans->tcs()));
         } else
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,"    skipping trans ncs = %08x, tcs = %08x\n",
-                       trans->ncs(), trans->tcs()));
+          if (TAO_debug_level > 2)
+            ACE_DEBUG ((LM_DEBUG,
+			ACE_LIB_TEXT ("(%P%t) skipping ncs %08x, tcs %08x\n)"),
+			trans->ncs(), trans->tcs()));
 
     }
   cs_comp->conversion_code_sets.length(index);
