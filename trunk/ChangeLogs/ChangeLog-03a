@@ -1,3 +1,9 @@
+Wed Dec 18 05:42:52 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/High_Res_Timer.cpp (global_scale_factor): The INTEL compiler
+	  can also set the global scale factor.  Thanks to Chris Kohlhoff
+ 	  for reporting this.
+
 Tue Dec 17 11:22:31 2002  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Codeset_IBM1047.h:
