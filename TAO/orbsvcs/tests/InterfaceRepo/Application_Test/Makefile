@@ -12,8 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS += -lTAO_IFR_Client
-LDFLAGS += -L$(ACE_ROOT)/bin
+TAO_IFR_CLNT_LIBS = -lTAO_IFR_Client
 
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
@@ -54,10 +53,10 @@ LDFLAGS += -L$(TAO_ROOT)/tao
         testS_T.h testS_T.cpp testS_T.i
 
 client: $(addprefix $(VDIR),$(CLNT_TEST_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_DYNAMIC_LIBS) $(TAO_CLNT_LIBS) $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_IFR_CLNT_LIBS) $(TAO_DYNAMIC_LIBS) $(TAO_CLNT_LIBS) $(POSTLINK)
 
 server: $(addprefix $(VDIR),$(SVR_TEST_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_IFR_CLNT_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
 
