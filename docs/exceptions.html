@@ -299,6 +299,42 @@ macros discussed here.
       </pre>
       </p>
 
+  <li><p>You may want to make a different series of calls after you
+      encounter/catch  an exception. Here is what we recommend.
+
+      <pre>
+      ACE_TRY
+        {
+          // Calls that can raise an exception
+          some_call1 (arg1, arg2, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          .
+          .
+          .
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA_some_exception, ex)
+        {
+          // Caught an exception, so we need to make some other calls
+          // to continue..
+                
+          ACE_TRY_EX (block1) // basically a label
+            {
+              some_other_call1 (arg1,.. , ACE_TRY_ENV);
+              ACE_TRY_CHECK_EX (block1);
+            }
+          ACE_CATCH (CORBA_some_other_exception, ex1)
+            {
+              // Handle the exception here..
+            }
+          ACE_ENDTRY;
+          ACE_CHECK_RETURN (-1); // Needed to catch uncaught exceptions
+        }
+      ACE_ENDTRY;
+      ACE_CHECK_RETURN (-1);
+      </pre>
+      </p>
+
   <li><p>Be <em>VERY</em> wary of <code>ACE_CATCHALL</code>.  It catches
       exceptions of any type.  If your program depends on it, then,
       more often than not, there're something wrong with it.
@@ -306,7 +342,7 @@ macros discussed here.
   </li>
 
   <li><p>Instead of depending on <code>ACE_CATCHALL</code>, use
-      <code>auto_prt</code> style mechanism to prevent memory leaks
+      <code>auto_ptr</code> style mechanism to prevent memory leaks
       from exceptions.
       </p>
   </li>
