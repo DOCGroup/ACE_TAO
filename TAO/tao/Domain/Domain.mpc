@@ -1,3 +1,4 @@
+//$Id$
 project : taolib, core, ifr_client, portableserver {
   sharedname   = TAO_Domain
   dynamicflags = TAO_DOMAIN_BUILD_DLL

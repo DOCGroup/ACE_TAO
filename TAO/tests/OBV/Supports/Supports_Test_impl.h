@@ -4,9 +4,7 @@
 #define TAO_SUPPORTS_TEST_IMPL_H
 
 #include "Supports_TestS.h"
-#include "ace/Synch.h"
 #include "ace/Get_Opt.h"
-#include "ace/streams.h"
 
 /**
  * \class node_impl
