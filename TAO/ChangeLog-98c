@@ -1,3 +1,9 @@
+Tue Sep  8 12:57:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp: 
+	  The table for perfect hashing of operations did not include the
+	  _non_existent skeleton.
+
 Tue Sep 08 10:47:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/Event_Service/Event_Service.dsp:
