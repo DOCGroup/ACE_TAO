@@ -175,7 +175,7 @@ TAO::ObjectKey::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> 
        cp < eos && i < seq.length ();
        ++i)
     {
-      if (*cp == '%')
+      if (*cp == '%' || *cp == '\\')
         {
           // This is an escaped non-printable,
           // so we decode the hex values into
