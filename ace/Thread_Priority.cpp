@@ -24,6 +24,58 @@
 #include "ace/Thread_Priority.i"
 #endif /* __ACE_INLINE__ */
 
+int
+ACE_Thread_Priority::increment ()
+{
+  if (default_thread_priority_ == ACE_PRIORITY_MAX)
+    {
+      if (priority_class_ == ACE_REALTIME_PRIORITY_CLASS)
+        {
+          // Overflow: no more priority levels!
+          return -1;
+        }
+      else
+        {
+          priority_class_ = (Priority_Class) (priority_class_ + 1);
+          default_thread_priority_ = ACE_PRIORITY_MIN;
+          return 1;
+        }
+    }
+  else
+    {
+      // not at maximum Thread_Priority: just increment the thread priority.
+      default_thread_priority_ = (Thread_Priority) (default_thread_priority_ + 1);
+      return 0;
+    }
+}
+
+
+int
+ACE_Thread_Priority::decrement ()
+{
+  if (default_thread_priority_ == ACE_PRIORITY_MIN)
+    {
+      if (priority_class_ == ACE_LOW_PRIORITY_CLASS)
+        {
+          // Underflow: no more priority levels!
+          return -1;
+        }
+      else
+        {
+          priority_class_ = (Priority_Class) (priority_class_ - 1);
+          default_thread_priority_ = ACE_PRIORITY_MAX;
+          return 1;
+        }
+    }
+  else
+    {
+      // not at maximum Thread_Priority: just decrement the thread priority.
+      default_thread_priority_ = (Thread_Priority) (default_thread_priority_ - 1);
+      return 0;
+    }
+}
+
+
 #if defined (ACE_HAS_STHREADS)
 #include <sys/priocntl.h>
 #include <sys/rtpriocntl.h>
@@ -39,7 +91,7 @@
    ACE_REALTIME_PRIORITY_CLASS    0 .. 6            RT            7 .. 13
  */
 
-long
+int
 ACE_Thread_Priority::convert_to_os_priority (void)
 {
   // Get the priority class ID and attributes.
@@ -93,7 +145,7 @@ ACE_Thread_Priority::convert_to_os_priority (void)
    ACE_REALTIME_PRIORITY_CLASS    0 .. 6           REALTIME_...    ""
  */
 
-long
+int
 ACE_Thread_Priority::convert_to_os_priority (void)
 {
   switch (priority_class_)
@@ -162,7 +214,7 @@ ACE_Thread_Priority::convert_to_os_priority (void)
    ACE_REALTIME_PRIORITY_CLASS   0 .. 6             N/A            6 .. 0
  */
 
-long
+int
 ACE_Thread_Priority::convert_to_os_priority (void)
 {
   os_priority_class_ = -1;  /* unused on this platform */
@@ -221,7 +273,7 @@ ACE_Thread_Priority::convert_to_os_priority (void)
 // Man pages don't talk about "real time", but at least, FIFO threads are
 // not preempted (except for threads with higher priority).
 
-long
+int
 ACE_Thread_Priority::convert_to_os_priority (void)
 {
   switch (priority_class_)
@@ -270,7 +322,7 @@ ACE_Thread_Priority::convert_to_os_priority (void)
 
 #else
 
-long
+int
 ACE_Thread_Priority::convert_to_os_priority (void)
 {
   ACE_NOTSUP_RETURN (-1);

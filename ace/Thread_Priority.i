@@ -33,14 +33,14 @@ ACE_Thread_Priority::~ACE_Thread_Priority (void)
 {
 }
 
-ACE_INLINE long
+ACE_INLINE int
 ACE_Thread_Priority::priority_class (const Priority_Class priority_class)
 {
   this->priority_class_ = priority_class;
   return this->convert_to_os_priority ();
 }
 
-ACE_INLINE long ACE_Thread_Priority::default_thread_priority (const Thread_Priority default_thread_priority)
+ACE_INLINE int ACE_Thread_Priority::default_thread_priority (const Thread_Priority default_thread_priority)
 {
   this->default_thread_priority_ = default_thread_priority;
   return this->convert_to_os_priority ();
