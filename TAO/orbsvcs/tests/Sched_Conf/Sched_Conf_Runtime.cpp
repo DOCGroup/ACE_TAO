@@ -60,14 +60,19 @@ main (int argc, char *argv[])
           ACE_ASSERT (infos [i].handle == 
                       runtime_scheduler->create (infos [i].entry_point, 
                                                  ACE_TRY_ENV));
+          ACE_TRY_CHECK;
+
           ACE_ASSERT (infos [i].handle == 
                       runtime_scheduler->lookup (infos [i].entry_point, 
                                                  ACE_TRY_ENV));
+          ACE_TRY_CHECK;
 
           // Make sure the values in the RT_Info returned by get are OK.
           delete rt_info;
           rt_info = runtime_scheduler->get (infos [i].handle, 
                                             ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
           ACE_ASSERT (rt_info != 0);
           ACE_ASSERT (ACE_OS::strcmp (rt_info->entry_point,
                                       infos [i].entry_point) == 0);
@@ -114,6 +119,7 @@ main (int argc, char *argv[])
                                   ACE_static_cast (RtecScheduler::Info_Type_t,
                                                    infos [i].info_type),
                                   ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           // Make sure the correct priority values are returned.
           runtime_scheduler->priority (infos [i].handle,
@@ -121,6 +127,8 @@ main (int argc, char *argv[])
                                        subpriority,
                                        p_priority,
                                        ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
           ACE_ASSERT (priority == infos [i].priority);
           ACE_ASSERT (subpriority == infos [i].static_subpriority);
           ACE_ASSERT (p_priority == infos [i].preemption_priority);
@@ -129,6 +137,8 @@ main (int argc, char *argv[])
                                                    subpriority,
                                                    p_priority,
                                                    ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
           ACE_ASSERT (priority == infos [i].priority);
           ACE_ASSERT (subpriority == infos [i].static_subpriority);
           ACE_ASSERT (p_priority == infos [i].preemption_priority);
@@ -145,6 +155,8 @@ main (int argc, char *argv[])
                                     priority,
                                     dispatching_type,
                                     ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
           ACE_ASSERT (priority == configs [j].thread_priority);
           ACE_ASSERT (dispatching_type == configs [j].dispatching_type);
 

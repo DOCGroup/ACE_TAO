@@ -309,7 +309,8 @@ class TAO_RSE_Priority_Visitor :
 {
 public:
 
-  TAO_RSE_Priority_Visitor ();
+  TAO_RSE_Priority_Visitor (RtecScheduler::handle_t handles,
+                            TAO_Reconfig_Scheduler_Entry ** entry_ptr_array);
   // Constructor.
 
     virtual int visit (TAO_Reconfig_Scheduler_Entry &);
@@ -320,12 +321,17 @@ public:
   // priorities.  Returns -1 on error, 1 if a new priority
   // was assigned, or 0 otherwise. 
 
+  int finish ();
+  // Finishes scheduler entry priority assignment by iterating over the
+  // remaining entries in the last subpriority level, and adjusting
+  // their subpriorities.
+
 private:
 
   TAO_Reconfig_Scheduler_Entry *previous_entry_;
   // Pointer to previous entry most recently seen in the iteration.
 
-  TAO_Reconfig_Scheduler_Entry *first_subpriority_entry_;
+  TAO_Reconfig_Scheduler_Entry **first_subpriority_entry_;
   // Pointer to first subpriority entry in the priority level.
 
   RtecScheduler::Preemption_Priority_t priority_;
@@ -336,6 +342,12 @@ private:
 
   RtecScheduler::OS_Priority os_priority_;
   // Current OS (thread) priority value.
+
+  RtecScheduler::handle_t handles_;
+  // Number of handles in the entry pointer array.
+
+  TAO_Reconfig_Scheduler_Entry ** entry_ptr_array_;
+  // An array of pointers to entries we will be visiting.
 };
 
 template <class RECONFIG_SCHED_STRATEGY>
