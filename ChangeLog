@@ -1,3 +1,9 @@
+Mon Nov 22 19:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          When building with gcc for cygwin the binutils package
+          must also be installed.
+
 Mon Nov 22 12:08:27 2004  Ciju John  <john_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/notify.mpb:
