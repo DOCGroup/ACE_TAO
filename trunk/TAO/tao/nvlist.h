@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -44,8 +45,8 @@ public:
 
   // = Methods required for COM IUnknown support.
 
-  ULONG AddRef (void);
-  ULONG Release (void);
+  CORBA::ULong AddRef (void);
+  CORBA::ULong Release (void);
   TAO_HRESULT QueryInterface (REFIID riid,
                               void **ppv);
 
@@ -133,8 +134,8 @@ public:
 
   // = Methods required for COM IUnknown support
 
-  ULONG AddRef (void);
-  ULONG Release (void);
+  CORBA::ULong AddRef (void);
+  CORBA::ULong Release (void);
   TAO_HRESULT QueryInterface (REFIID riid,
                               void **ppv);
 
