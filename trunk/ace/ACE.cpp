@@ -856,9 +856,9 @@ ACE::open_temp_file (const char *name, int mode, int perm)
 {
 #if defined (ACE_WIN32)
   return ACE_OS::open (name,
-		       mode | FILE_FLAG_DELETE_ON_CLOSE);
+                       mode | FILE_FLAG_DELETE_ON_CLOSE);
 #else
-  // Open it. 
+  // Open it.
   ACE_HANDLE handle = ACE_OS::open (name, mode, perm);
 
   if (handle == ACE_INVALID_HANDLE)
@@ -869,7 +869,7 @@ ACE::open_temp_file (const char *name, int mode, int perm)
   if (ACE_OS::unlink (name) == -1)
     return -1;
   else
-    // Return the handle. 
+    // Return the handle.
     return handle;
 #endif /* ACE_WIN32 */
 }
@@ -1888,7 +1888,8 @@ ACE::set_handle_limit (int new_limit)
       return ACE_OS::setrlimit (RLIMIT_NOFILE, &rl);
 #else
       // We give a chance to platforms without RLIMIT to work.
-      ACE_NOTSUP_RETURN (0);
+      // Instead of ACE_NOTSUP_RETURN (0), just return 0 because
+      // new_limit is <= cur_limit, so it's a no-op.
 #endif /* ACE_LACKS_RLIMIT */
     }
 }
@@ -2934,9 +2935,9 @@ ACE::strnnew (const char *str, size_t n)
 }
 
 const char *
-ACE::strend (const char *s) 
-{ 
-  while (*s++ != '\0') 
+ACE::strend (const char *s)
+{
+  while (*s++ != '\0')
     continue;
 
   return s;
