@@ -1508,9 +1508,6 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (sa);
 
-  // Type includes these options: SEM_Q_PRIORITY, SEM_Q_FIFO,
-  // SEM_DELETE_SAFE, and SEM_INVERSION_SAFE that are currently
-  // outside of the ACE mutex model.
   return (*m = ::semMCreate (type)) == 0 ? -1 : 0;
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
@@ -2289,13 +2286,12 @@ ACE_OS::sema_init (ACE_sema_t *s,
   return result;
 #  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #elif defined (VXWORKS)
-  ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (max);
   ACE_UNUSED_ARG (sa);
   s->name_ = 0;
-  s->sema_ = ::semCCreate (SEM_Q_FIFO, count);
+  s->sema_ = ::semCCreate (type, count);
 
   return s->sema_ ? 0 : -1;
 #endif /* ACE_HAS_STHREADS */
