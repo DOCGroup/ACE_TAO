@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "IRObject_i.h"
@@ -8,11 +7,13 @@
 #include "IFR_Service_Utils.h"
 
 #include "tao/PortableServer/POA.h"
-#include "tao/ORB_Core.h"
+#include "tao/TSS_Resources.h"
 
-ACE_RCSID (IFR_Service, 
-           IRObject_i, 
+
+ACE_RCSID (IFR_Service,
+           IRObject_i,
            "$Id$")
+
 
 TAO_IRObject_i::TAO_IRObject_i (TAO_Repository_i *repo)
   : repo_ (repo),
@@ -60,7 +61,7 @@ TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
                     0,
                     0);
 
-  status = 
+  status =
     this->repo_->config ()->expand_path (this->repo_->root_key (),
                                          path,
                                          this->section_key_,
@@ -72,4 +73,3 @@ TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
     }
 }
-
