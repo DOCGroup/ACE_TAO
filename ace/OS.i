@@ -5755,6 +5755,7 @@ ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 #endif /* ACE_WIN32 */
 }
 
+#if !defined (ACE_HAS_PENTIUM) || !defined (linux)
 ACE_INLINE ACE_hrtime_t 
 ACE_OS::gethrtime (void)
 {
@@ -5768,16 +5769,6 @@ ACE_OS::gethrtime (void)
   ::time_base_to_time(&tb, TIMEBASE_SZ);
 
   return tb.tb_high * 1000000000L + tb.tb_low;
-#elif defined (ACE_HAS_PENTIUM) && defined (linux)
-  // see comments for ACE_HAS_PENTIUM below
-
-  unsigned long least, most;
-
-  asm ("rdtsc");
-  asm ("movl %eax, -4(%ebp)");  // least
-  asm ("movl %edx, -8(%ebp)");  // most
-
-  return (unsigned long long) most << 32  |  least;
 #elif defined (ACE_HAS_PENTIUM)
   // for WIN32 only . . .
   // Issue the RDTSC assembler instruction to get the number of clock
@@ -5806,6 +5797,7 @@ ACE_OS::gethrtime (void)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_HI_RES_TIMER */
 }
+#endif /* ! ACE_HAS_PENTIUM || linux */
 
 ACE_INLINE int 
 ACE_OS::fdetach (const char *file)
