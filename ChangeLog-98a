@@ -22,6 +22,9 @@ Fri Dec 05 13:20:09 1997    David L. Levine  <levine@cs.wustl.edu>
           sigwait declaration, which is a current signal.h deficiency.
           With this change, ACE builds and tests cleanly on DEC UNIX.
 
+        * ace/config-vxworks5.x-g++.h: restored comment that explains
+          ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.
+
 Fri Dec  5 12:15:49 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/Select_Reactor.cpp: Made error messages on open failure more
