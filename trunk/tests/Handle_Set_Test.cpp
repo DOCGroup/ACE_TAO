@@ -130,11 +130,16 @@ test_performance (size_t max_handles,
 
   timer.elapsed_time (et);
 
-  ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
-	    et.real_time, et.user_time, et.system_time));
+  ACE_DEBUG ((LM_DEBUG,
+	      "real time = %f secs, user time = %f secs, system time = %f secs\n",
+	      et.real_time,
+	      et.user_time,
+	      et.system_time));
 
-  ACE_DEBUG ((LM_DEBUG, "time per each of the %d calls = %f usecs\n",
-	      count, (et.real_time / double (count)) * 1000000));
+  ACE_DEBUG ((LM_DEBUG,
+	      "time per each of the %d calls = %f usecs\n",
+	      count,
+	      (et.real_time / double (count)) * 1000000));
 }
 
 int
