@@ -319,7 +319,7 @@ public:
     InvalidName (void);
 
     virtual void _raise (void);
-    InvalidName* _narrow (CORBA_Exception *ex);
+    static InvalidName* _narrow (CORBA_Exception *ex);
     virtual int _is_a (const char* interface_id) const;
   };
 
