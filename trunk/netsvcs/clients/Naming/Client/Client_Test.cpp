@@ -104,7 +104,7 @@ Client_Test::Client_Test (void)
 }
 
 int 
-Client_Test::init (int argc, char *argv[])
+Client_Test::init (int /* argc */, char * /* argv */ [])
 {
   ACE_DEBUG ((LM_DEBUG, "Client_Test::init\n"));
 
@@ -179,17 +179,17 @@ Client_Test::handle_input (ACE_HANDLE)
       ACE_OS::gets (input);
 
       // get the key
-      if (temp_buf = ACE_OS::strtok (input, " "))
+      if ((temp_buf = ACE_OS::strtok (input, " ")))
 	{
 	  ACE_OS::strcpy (buf1, temp_buf);
 
 	  // get the value
-	  if (temp_buf = ACE_OS::strtok (0, " "))
+	  if ((temp_buf = ACE_OS::strtok (0, " ")))
 	    {
 	      ACE_OS::strcpy (buf2, temp_buf);
 
 	      // get the type (if entered)
-	      if (temp_buf = ACE_OS::strtok (0, " "))
+	      if ((temp_buf = ACE_OS::strtok (0, " ")))
 		{
 		  ACE_OS::strcpy (buf3, temp_buf);
 		  result = this->bind (buf1, buf2, buf3);
@@ -213,17 +213,17 @@ Client_Test::handle_input (ACE_HANDLE)
       ACE_OS::gets (input);
 
       // get the key
-      if (temp_buf = ACE_OS::strtok (input, " "))
+      if ((temp_buf = ACE_OS::strtok (input, " ")))
 	{
 	  ACE_OS::strcpy (buf1, temp_buf);
 
 	  // get the value
-	  if (temp_buf = ACE_OS::strtok (0, " "))
+	  if ((temp_buf = ACE_OS::strtok (0, " ")))
 	    {
 	      ACE_OS::strcpy (buf2, temp_buf);
 
 	      // get the type (if entered)
-	      if (temp_buf = ACE_OS::strtok (0, " "))
+	      if ((temp_buf = ACE_OS::strtok (0, " ")))
 		{
 		  ACE_OS::strcpy (buf3, temp_buf);
 		  result = this->rebind (buf1, buf2, buf3);
