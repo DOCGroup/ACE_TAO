@@ -86,6 +86,34 @@ protected:
   // Flags that control serivce behavior (particularly deletion).
 };
 
+class ACE_Export ACE_Service_Object_Ptr
+  // = TITLE 
+  //     This is a smart pointer that holds onto the associated
+  //     <ACE_Service_Object> * until the current scope is left, at
+  //     which point the object's <fini> hook is called.
+  //
+  // = DESCRIPTION
+  //     This class is similar to the Standard C++ Library class
+  //     <auto_ptr>.  It is used in conjunction with statically linked
+  //     <ACE_Service_Objects>, as shown in the
+  //     ./netsvcs/server/main.cpp example.
+{
+public:
+  // = Initialization and termination methods.
+  ACE_Service_Object_Ptr (ACE_Service_Object *so);
+  // Acquire ownership of the <so>.
+
+  ~ACE_Service_Object_Ptr (void);
+  // Release the held <ACE_Service_Object> by calling its <fini> hook.
+
+  ACE_Service_Object *operator-> ();
+  // Smart pointer to access the underlying <ACE_Service_Object>.
+
+private:
+  ACE_Service_Object *service_object_;
+  // Holds the service object until we're done.
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/Service_Object.i"
 #endif /* __ACE_INLINE__ */
