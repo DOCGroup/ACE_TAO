@@ -588,6 +588,7 @@ AV_Server::init (int argc,
 
   result 
     = this->resolve_trader (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
   
   if (result != -1)
     {
