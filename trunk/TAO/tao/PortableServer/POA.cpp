@@ -9,6 +9,7 @@ ACE_RCSID (PortableServer,
 //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 # include "tao/PortableServer/ImplRepo_i.h"
+# include "tao/PortableServer/ImplRepoC.h"
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #include "tao/StringSeqC.h"
