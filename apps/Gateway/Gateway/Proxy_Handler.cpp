@@ -29,6 +29,10 @@ Proxy_Handler::total_bytes (size_t bytes)
   this->total_bytes_ += bytes;
 }
 
+Proxy_Handler::Proxy_Handler (void)
+{
+}
+
 Proxy_Handler::Proxy_Handler (const Proxy_Config_Info &pci)
   : remote_addr_ (pci.remote_port_, pci.host_),
     local_addr_ (pci.local_port_),
