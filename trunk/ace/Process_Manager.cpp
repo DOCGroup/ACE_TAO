@@ -135,6 +135,22 @@ ACE_Process_Manager::instance (ACE_Process_Manager *tm)
   return t;
 }
 
+void
+ACE_Process_Manager::close_singleton( void )
+{
+  ACE_TRACE ("ACE_Process_Manager::close_singleton");
+
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
+                     *ACE_Static_Object_Lock::instance ()));
+
+  if (ACE_Process_Manager::delete_instance_)
+    {
+      delete ACE_Process_Manager::instance_;
+      ACE_Process_Manager::instance_ = 0;
+      ACE_Process_Manager::delete_instance_ = 0;
+    }
+}
+
 int
 ACE_Process_Manager::resize (size_t size)
 {

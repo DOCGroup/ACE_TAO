@@ -60,13 +60,13 @@ class ACE_Export ACE_Process_Manager : protected ACE_Event_Handler
   //    similar to how the <ACE_Thread_Manager> controls groups of
   //    threads.  Naturally, it doesn't work at all on platforms, such
   //    as VxWorks or pSoS, that don't support process.
-  //    
+  //
   //    There are two (main) ways of using <ACE_Process_Manager>,
   //    depending on how involved you wish to be with the termination
   //    of managed <ACE_Process>es.  If you just want <Process>es to
   //    go away when they're finished, simply register the
   //    <Process_Manager> with an <ACE_Reactor>:
-  //    
+  //
   //        ACE_Process_Manager mgr( 100, some_reactor )
   //         -or-
   //        ACE_Process_Manager mgr;
@@ -78,14 +78,14 @@ class ACE_Export ACE_Process_Manager : protected ACE_Event_Handler
   //    wait(2) to collect the exit status -- and avoid zombie
   //    processes; on Win32, it means closing the process and thread
   //    HANDLEs that are created when CreateProcess is called.)
-  //    
+  //
   //    If, on the other hand (and for some inexplicable reason) you
   //    want to explicitly invoke the terminated <Process> cleanup
   //    code, then *don't* register the <Process_Manager> with a
   //    Reactor, and be sure to call one of the
   //    <Process_Manager::wait> functions whenever there might be
   //    managed <Process>es that have exited.
-  //    
+  //
   //    Note that in either case, <Process_Manager> allows you to
   //    register "<Event_Handlers>" to be called when a specific
   //    <Process> exits, or when any <Process> without a specific
@@ -93,12 +93,12 @@ class ACE_Export ACE_Process_Manager : protected ACE_Event_Handler
   //    appropriate <Event_Handler>'s <handle_input> is called; the
   //    <ACE_HANDLE> passed is either the Process' HANDLE (on Win32),
   //    or its pid cast to an <ACE_HANDLE> (on unix).
-  //    
+  //
   //    It is also possible to call the <Process_Manager::wait>
   //    functions even though the <Process_Manager> is registered with
   //    a <Reactor>.  I don't know what happens in this case, but it's
   //    probably not *too* bad.
-  //    
+  //
   //    Note also that the wait functions are "sloppy" on Unix,
   //    because there's no good way to wait for a subset of the
   //    children of a process.  The wait functions may end up
@@ -110,7 +110,7 @@ class ACE_Export ACE_Process_Manager : protected ACE_Event_Handler
   //    situation, but I consider it fairly low priority because I
   //    think the "single <Process_Manager>" pattern will be
   //    sufficient in most cases.)
-  //    
+  //
   //    Incidentally, here's how the auto-reaping works on unix when
   //    you register your <Process_Manager> with a <Reactor>:
   //
@@ -171,6 +171,9 @@ public:
   static ACE_Process_Manager *instance (ACE_Process_Manager *);
   // Set pointer to a process-wide <ACE_Process_Manager> and return
   // existing pointer.
+
+  static void close_singleton (void);
+  // Delete the dynamically allocated singleton.
 
   // = Process creation methods.
 
@@ -242,7 +245,7 @@ public:
   // Register an Event_Handler to be called back when the specified
   // process exits.  If pid == ACE_INVALID_PID this handler is called
   // when any process with no specific handler exits.
-    
+
   int remove (pid_t pid);
   // Remove process <pid> from the table.  This is called
   // automatically by the <reap> method after it successfully reaped a
@@ -313,7 +316,7 @@ protected:
   //
   // On Win32, this routine is called synchronously, and is passed the
   // HANDLE of the Process that exited, so we can do all our work here
-  
+
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
   // we're being removed from Reactor...on unix, close bogus handle.
