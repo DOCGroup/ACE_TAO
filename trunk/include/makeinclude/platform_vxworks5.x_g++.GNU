@@ -255,13 +255,18 @@ endif # SH7700
 #### Set up Win32 vs. Unix host specific macros.
 ifeq ($(WIND_HOST_TYPE),x86-win32)
   CXX      = cc$(TOOLENV)
+  ifeq (,$(pipes))
+    pipes = 1
+  endif # pipes
 else
 ifeq ($(TOOLENV),simso)
   #### vxsim needs to use ccsimso, not g++simso.
   CXX      = cc$(TOOLENV)
 else
   CXX      = g++$(TOOLENV)
-  PIPE_OPT = -pipe
+  ifeq (,$(pipes))
+    pipes = 1
+  endif # pipes
 endif # simso
 endif # x86-win32
 
@@ -325,7 +330,7 @@ ifeq (egcs,$(findstring egcs,$(ACE_CC_VERSION)))
 endif # egcs
 
 CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
-                   -fvolatile $(VXWORKS_STDINC_FLAG) -nostdlib $(PIPE_OPT) -W -Wall
+                   -fvolatile $(VXWORKS_STDINC_FLAG) -nostdlib -W -Wall
 CCFLAGS         += $(CFLAGS)
 ifeq (0,$(rtti))
   #### Don't use RTTI even with egcs, because Tornado 1.0.x libraries
