@@ -127,12 +127,14 @@ int do_calls (Foo_ptr foo_ptr)
                         result));
         }
     }
-  foo_ptr->shutdown (env);
+
+  // In case you want to shutdown your server
+  // foo_ptr->shutdown (env);
   // If exception
-  if (env.exception () != 0)
-  {
-    env.print_exception ("calling shutdown");
-  }
+  // if (env.exception () != 0)
+  // {
+  //   env.print_exception ("calling shutdown");
+  // }
   return 0;
 }
 
