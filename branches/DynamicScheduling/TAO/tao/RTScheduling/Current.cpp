@@ -187,8 +187,25 @@ TAO_RTScheduler_Current::implementation (void)
   TAO_TSS_Resources *tss =
     TAO_TSS_RESOURCES::instance ();
 
-  return ACE_static_cast (TAO_RTScheduler_Current_i *,
-			  tss->rtscheduler_current_impl_);
+  TAO_RTScheduler_Current_i* impl = ACE_static_cast (TAO_RTScheduler_Current_i *,
+						     tss->rtscheduler_current_impl_);
+
+  if (impl == 0)
+    {
+      ACE_NEW_THROW_EX (impl,
+			TAO_RTScheduler_Current_i,
+			CORBA::NO_MEMORY (
+					  CORBA::SystemException::_tao_minor_code (
+					  TAO_DEFAULT_MINOR_CODE,
+					  ENOMEM),
+					  CORBA::COMPLETED_NO));
+      ACE_CHECK;
+
+      tss->rtscheduler_current_impl_ = impl;
+    }
+
+  return impl;
+
 }
 
 TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (void)
