@@ -22,6 +22,7 @@ namespace TAO_Notify
 
   Topology_Object::Topology_Object ()
     : TAO_Notify_Object ()
+      , Topology_Savable ()
       , self_changed_ (false)
       , children_changed_ (false)
       , topology_parent_ (0)
