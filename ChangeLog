@@ -112,11 +112,7 @@ Wed Mar  5 06:32:40 2003  Phil Mesnier  <mesnier_p@ociweb.com>
         * ace/ace_lib.dsp:
 
           Added codeset registry files and fixed spelling error in
-<<<<<<< ChangeLog
-	  Makefile.bor.
-=======
           Makefile.bor.
->>>>>>> 4.4721
 
 Wed Mar  5 06:10:48 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
