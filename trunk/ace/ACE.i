@@ -4,19 +4,19 @@
 // Miscellaneous static methods used throughout ACE.
 
 inline u_int
-ACE::major_version ()
+ACE::major_version (void)
 {
   return ACE_MAJOR_VERSION;
 }
 
 inline u_int
-ACE::minor_version ()
+ACE::minor_version (void)
 {
   return ACE_MINOR_VERSION;
 }
 
 inline u_int
-ACE::beta_version ()
+ACE::beta_version (void)
 {
   return ACE_BETA_VERSION;
 }
@@ -101,4 +101,21 @@ ACE::log2 (u_long num)
     num >>= 1;
 
   return log;
+}
+
+ACE_INLINE char 
+ACE::nibble2hex (u_int n)
+{
+  return ACE::hex_chars_[n & 0x0f];
+}
+
+ACE_INLINE u_char 
+ACE::hex2byte (char c)
+{
+  if (isdigit (c))
+    return (u_char) (c - '0');
+  else if (islower (c))
+    return (u_char) (10 + c - 'a');
+  else
+    return (u_char) (10 + c - 'A');
 }

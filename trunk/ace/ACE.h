@@ -522,6 +522,12 @@ public:
   static u_long log2 (u_long num);
   // Computes the base 2 logarithm of <num>.
 
+  static char nibble2hex (u_int n);
+  // Hex conversion utility.
+
+  static u_char hex2byte (char c);
+  // Convert a hex character to its byte representation.
+
 private:
   static int enter_recv_timedwait (ACE_HANDLE handle,
                                    const ACE_Time_Value *timeout,
@@ -550,8 +556,11 @@ private:
   static size_t pagesize_;
   // Size of a VM page.
 
-  static u_long crctab[];
+  static u_long crc_table_[];
   // CRC table.
+
+  static const char hex_chars_[];
+  // Hex characters.
 };
 
 #include "ace/ACE.i"

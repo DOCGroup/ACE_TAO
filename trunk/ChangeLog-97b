@@ -1,3 +1,12 @@
+Sun Nov  9 14:07:02 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/ACE.cpp: Added hex character routines from TAO since they
+ 	  are generally useful.
+
+        * ace/OS.h: Moved the TAO-specific #defines into TAO, where they
+          belong.  Thanks to David Levine and Chris Cleeland for insisting
+          on this...
+
 Sun Nov  9 13:36:07 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* ace/config-win32-common.h (ACE_LACKS_RLIMIT): Added this flags
@@ -6,22 +15,14 @@ Sun Nov  9 13:36:07 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 	* ace/OS.i (getrlimit,setrlimit): Removed unnecessary conditional
 	  flag ACE_WIN32.
 
+        * ace/Thread_Manager.cpp (wait): Merged the two blocks within this
+          function so that we can avoid relase/acquire lock
+          unnecessarily.  Thanks to Doug for his careful scrutiny.
+
 Sun Nov 09 09:27:24 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Thread_manager.cpp (wait): removed unused local,
           threads_waited_on.
-
-Sun Nov  9 02:07:02 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
-
-        * ace/OS.h: Moved the TAO-specific #defines into TAO, where they
-          belong.  Thanks to David Levine and Chris Cleeland for insisting
-          on this...
-
-Sun Nov  9 03:14:03 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
-
-        * ace/Thread_Manager.cpp (wait): Merged the two blocks within this
-          function so that we can avoid relase/acquire lock
-          unnecessarily.  Thanks to Doug for his careful scrutiny.
 
 Sat Nov 08 23:20:50 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 

@@ -53,7 +53,7 @@ CORBA_Any::value (void) const
 // the null typecode ...
 
 CORBA_Any::CORBA_Any (void) 
-  : type_ (CORBA::_tc_null)
+  : type_ (CORBA::_tc_null),
     value_ (0),
     orb_owns_data_ (CORBA::B_FALSE),
     refcount_ (1)
