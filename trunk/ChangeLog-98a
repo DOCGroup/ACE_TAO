@@ -22,6 +22,15 @@ Sun Feb 08 12:06:30 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-linux-common.h: added ACE_HAS_TERM_IOCTLS.  Thanks
           to James CE Johnson <jcej@lads.com> for this addition.
 
+        * examples/Naming//test_multiple_contexts.cpp,test_non_existent.cpp,
+          test_writers.cpp:
+          replaced uses of cout with ACE_DEBUG.
+
+        * examples/performance-tests/Misc/basic_perf.cpp,
+          context_switch_time.cpp,preempt.cpp:
+          divide ACE_hrtime_t by ACE_UINT32, to prevent ambiguity with
+          ACE_U_LongLong operator / overloading.
+
 Sun Feb  8 01:45:59 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU (versioned_so):  Added
