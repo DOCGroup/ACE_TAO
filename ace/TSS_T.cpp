@@ -33,6 +33,7 @@ ACE_TSS<TYPE>::~ACE_TSS (void)
   if (this->once_ != 0)
   {
     ACE_OS::thr_key_detach (this->key_, this);
+    ACE_OS::thr_keyfree (this->key_);
   }
 #else // defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
   // We own it, we need to delete it.

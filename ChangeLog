@@ -1,3 +1,44 @@
+Wed Feb 16 16:18:45 2005  Dale Wilson  <wilson_d@ociweb.com>
+
+        * ace/OS_NS_Thread.cpp:
+          Rework the ACE_TSS_Cleanup to:
+          - Remove special handling for ACE_TSS<X>. (No automatic key free)
+          - If the application replaces a TSS object, the application assumes
+            responsibility for deleting the old object (as specifed by POSIX)
+            Note that the TSS_Test program depends on this behavior.
+          - If an application frees a TSS key while it is still in use by other
+            threads, the TSS objects are leaked.  Formerly I had added an ASSERT
+            to catch this case, but POSIX says it's legal (but I still think it's
+            wrongheaded!)
+          - Interpret a request to attach a zero pointer to a TSS key for a thread
+            as a detach from the key.  The TSS_Test program does this then frees
+            the key (which is how I found out about the previous point).
+          - Rework the ACE_TSS_Cleanup instance support to make it safe to delete
+            the ACE_TSS_Cleanup object even in not all threads have terminated.
+            Lingering threads may leak, but they shouldn't crash.  Note that on
+            windows it is commmon practice to leave threads running -- expecting them
+            to be terminated by end-of-process (shudder.), and TAO has a habit of not
+            waiting for a thread blocked at a select() to terminate.
+          - Make it safe to call ACE_OS::cleanup_tss more than once for the same
+            thread.  This makes the change to OS_NS_stdio (below) safe.
+
+        * ace/OS_NS_Thread.h:
+          Remove tss_inst from the ACE_TSS_Info structure.
+          It was used by ACE_TSS<X> special handling.
+
+        * ace/TSS_T.cpp:
+          Explicitly call ACE_OS::thr_keyfree from the destructor of an ACE_TSS<X>
+          rather than relying on special handling from ACE_TSS_Cleanup.
+
+        * ace/OS_NS_stdio.cpp:
+          Add a call to ACE_OS::cleanup_tss to the DllMain function on THREAD_DETACH.
+          This will cleanup TSS for non-ACE threads that call ACE functions (like logging)
+          on WIN32 systems.
+
+          This change addresses Bugzilla 1542 and 2044 (although not the way the author of the
+          bugzilla report suggested.)
+
+
 Wed Feb 16 20:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_rel_manpages:
@@ -6,8 +47,8 @@ Wed Feb 16 20:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 Wed Feb 16 11:17:27 2005  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_stdlib.cpp: Don't #include <limits> if the max() method
-	  won't be used; same reasoning as:
-	  Tue Feb 15 18:19:25 2005  Steve Huston  <shuston@riverace.com>
+          won't be used; same reasoning as:
+          Tue Feb 15 18:19:25 2005  Steve Huston  <shuston@riverace.com>
 
 Wed Feb 16 18:15:07 2005  Olli Savia  <ops@iki.fi>
 
