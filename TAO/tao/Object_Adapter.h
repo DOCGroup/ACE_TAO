@@ -264,17 +264,7 @@ public:
 
   static CORBA::ULong transient_poa_name_size (void);
 
-  void deactivate (CORBA::Boolean wait_for_completion,
-                   CORBA::Environment &ACE_TRY_ENV);
-
-  typedef ACE_Unbounded_Set<TAO_POA_Manager *> poa_manager_set;
-
-  poa_manager_set poa_manager_set_;
-
 protected:
-
-  void deactivate_i (CORBA::Boolean wait_for_completion,
-                     CORBA::Environment &ACE_TRY_ENV);
 
   int locate_servant_i (const TAO_ObjectKey &key,
                         CORBA_Environment &ACE_TRY_ENV);

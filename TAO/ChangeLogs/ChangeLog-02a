@@ -1,3 +1,13 @@
+Tue Aug 01 03:11:25 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/ORB_destroy: New test for funky poa and orb destruction.
+
+	* tao/Object_Adapter.cpp (deactivate): Removed function since it
+	  was not necessary anymore.
+
+	* tao/POAManager.cpp (TAO_POA_Manager and ~TAO_POA_Manager):
+	  Removed access to <poa_manager_set>.
+
 Tue Aug  1 01:48:52 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.{h,cpp}:

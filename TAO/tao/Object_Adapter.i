@@ -31,17 +31,6 @@ TAO_Object_Adapter::transient_poa_name_size ()
   return TAO_Object_Adapter::transient_poa_name_size_;
 }
 
-ACE_INLINE void
-TAO_Object_Adapter::deactivate (CORBA::Boolean wait_for_completion,
-                                CORBA::Environment &ACE_TRY_ENV)
-{
-  // Lock access for the duration of this transaction.
-  TAO_OBJECT_ADAPTER_GUARD;
-
-  this->deactivate_i (wait_for_completion,
-                      ACE_TRY_ENV);
-}
-
 ACE_INLINE int
 TAO_Object_Adapter::locate_servant (const TAO_ObjectKey &key,
                                     CORBA::Environment &ACE_TRY_ENV)
