@@ -532,6 +532,18 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
             H::read_array (is, idata, total);
             crono.stop ();
             secs = crono.read_seconds ();
+
+            // Testing for good bit value. Try reading atleast 10
+            // times the size of total. It should fail with good bit
+            // set to 0.
+            H::read_array (is, idata, 10 * total);
+
+            if (is.good_bit () != 0)
+              {
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("Test for good bit failed in %s Array_test \n"),
+                            H::name ()));
+              }
           }
         else
           {

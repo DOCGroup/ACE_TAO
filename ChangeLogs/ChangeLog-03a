@@ -1,3 +1,14 @@
+Fri Dec  6 23:58:47 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/CDR_Stream.cpp:
+	* ace/CDR_Stream.i: Set good_bit_ to zero whenever the sanity
+	  check for remaining length in the stream fails. Thanks to Jerry
+	  D. De Master <jdemaste@rite-solutions.com> for pointing out the
+	  problem. 
+
+	* ace/CDR_Array_Test.cpp: Extended the test to include test for
+	  checking the value of good_bit () by forcing an erroneous read. 
+
 Fri Dec  6 16:26:49 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/FILE_Addr.cpp (set): Windows appends ASCII 'a' - 'z' and
