@@ -8,15 +8,18 @@
 #include "JAWS/Pipeline_Tasks.h"
 #include "JAWS/Policy.h"
 #include "JAWS/Data_Block.h"
+#include "JAWS/Waiter.h"
 
 JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
-  : mb_acquired_ (0),
+  : ACE_Task<ACE_MT_SYNCH> (new ACE_Thread_Manager),
+    mb_acquired_ (0),
     mb_ (0)
 {
 }
 
 JAWS_Concurrency_Base::~JAWS_Concurrency_Base (void)
 {
+  delete this->thr_mgr_;
 }
 
 ACE_Message_Block *
@@ -142,17 +145,21 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
       // the task should set the handler to the appropriate next step
       result = task->put (ts_db);
 
-      if (result == 1)
+      if (result == 1 || result == 2)
         {
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, waiting");
           // need to wait for an asynchronous event
-          // I don't know how to do this yet, so pretend it's
-          // an error
 
-          // handler = wait for completion ();
-          // db->io_handler (handler);
-          // result = 0;
-          result = -1;
+          JAWS_IO_Handler *h;
+          h = JAWS_Waiter_Singleton::instance ()->wait_for_completion ();
+          if (h == 0)
+            result = -1;
+          else
+            {
+              handler = h;
+              db->io_handler (handler);
+              result = 0;
+            }
         }
 
       if (result == -1)
@@ -209,9 +216,34 @@ JAWS_Thread_Pool_Task::open (long flags, int nthreads, int maxthreads)
   this->nthreads_ = nthreads;
   this->maxthreads_ = maxthreads;
 
-  if (this->activate (flags, nthreads) == -1)
+  ACE_hthread_t *thr_handles = new ACE_hthread_t[nthreads];
+  ACE_thread_t *thr_names = new ACE_thread_t[nthreads];
+
+  if (this->activate (flags | THR_SUSPENDED,
+                      nthreads,
+                      0,          // force active
+                      ACE_DEFAULT_THREAD_PRIORITY,
+                      -1,         // group id
+                      0,          // ACE_Task_Base
+                      thr_handles,
+                      0,          // stack
+                      0,          // stack size
+                      thr_names) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
                       -1);
+
+  for (int i = 0; i < nthreads; i++)
+    {
+      ACE_Thread_ID thr_id(thr_handles[i], thr_names[i]);
+      JAWS_IO_Handler *dummy = 0;
+
+      JAWS_Waiter_Singleton::instance ()->insert (thr_id, dummy);
+    }
+
+  delete[] thr_handles;
+  delete[] thr_names;
+
+  this->thr_mgr_->resume_all ();
 
   return 0;
 }
@@ -245,9 +277,28 @@ JAWS_Thread_Per_Task::activate_hook (void)
   const int force_active = 1;
   const int nthreads = 1;
 
-  if (this->activate (this->flags_, nthreads, force_active) == -1)
+  ACE_hthread_t thr_handle;
+  ACE_thread_t thr_name;
+
+  if (this->activate (this->flags_ | THR_SUSPENDED,
+                      nthreads,
+                      force_active,
+                      ACE_DEFAULT_THREAD_PRIORITY,
+                      -1,         // group id
+                      0,          // ACE_Task_Base
+                      &thr_handle,
+                      0,          // stack
+                      0,          // stack size
+                      &thr_name) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
                       -1);
+
+  ACE_Thread_ID thr_id(thr_handle, thr_name);
+  JAWS_IO_Handler *dummy = 0;
+
+  JAWS_Waiter_Singleton::instance ()->insert (thr_id, dummy);
+
+  this->thr_mgr_->resume (thr_name);
 
   return 0;
 }

@@ -7,3 +7,8 @@
                                        __LINE__, \
                                        ASYS_TEXT (__FILE__))
 #endif /* JAWS_NTRACE */
+
+#if !defined (JAWS_JAWS_H)
+#define JAWS_JAWS_H
+
+#endif /* JAWS_JAWS_H */
