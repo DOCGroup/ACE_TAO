@@ -6361,7 +6361,6 @@ class ACE_Export ACE_Object_Manager_Base
   //
   // = DESCRIPTION
   //     Encapsulates the most useful ACE_Object_Manager data structures.
-public:
 # if (defined (ACE_PSOS) && defined (__DIAB))  || \
      (defined (__DECCXX_VER) && __DECCXX_VER < 60000000)
   // The Diab compiler got confused and complained about access rights
@@ -6463,10 +6462,9 @@ public:
       ACE_TSS_BASE_LOCK,
 #   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 # else
-      // There currently are no preallocated arrays in the ACE
-      // library.  If the application doesn't have any, make sure
-      // the the preallocated_array size is at least one by declaring
-      // this dummy . . .
+      // Without ACE_MT_SAFE, There are no preallocated objects.  Make
+      // sure that the preallocated_array size is at least one by
+      // declaring this dummy . . .
       ACE_OS_EMPTY_PREALLOCATED_OBJECT,
 # endif /* ACE_MT_SAFE */
 
