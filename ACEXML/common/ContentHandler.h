@@ -12,13 +12,13 @@
 #ifndef _ACEXML_CONTENTHANDLER_H_
 #define _ACEXML_CONTENTHANDLER_H_
 
-#include "common/Env.h"
-#include "common/SAXExceptions.h"
-#include "common/Locator.h"
-#include "common/Attributes.h"
+#include "ACEXML/common/Env.h"
+#include "ACEXML/common/SAXExceptions.h"
+#include "ACEXML/common/Locator.h"
+#include "ACEXML/common/Attributes.h"
 
 /**
- * @class ACEXML_ContentHandler ContentHandler.h "common/ContentHandler.h"
+ * @class ACEXML_ContentHandler ContentHandler.h "ACEXML/common/ContentHandler.h"
  *
  * @brief ACEXML_ContentHandler
  *

@@ -12,16 +12,16 @@
 #ifndef ACEXML_XMLFILTERIMPL_H
 #define ACEXML_XMLFILTERIMPL_H
 
-#include "common/XMLFilter.h"
-#include "common/XMLReader.h"
-#include "common/Locator.h"
-#include "common/ContentHandler.h"
-#include "common/DTDHandler.h"
-#include "common/EntityResolver.h"
-#include "common/ErrorHandler.h"
+#include "ACEXML/common/XMLFilter.h"
+#include "ACEXML/common/XMLReader.h"
+#include "ACEXML/common/Locator.h"
+#include "ACEXML/common/ContentHandler.h"
+#include "ACEXML/common/DTDHandler.h"
+#include "ACEXML/common/EntityResolver.h"
+#include "ACEXML/common/ErrorHandler.h"
 
 /**
- * @class ACEXML_XMLFilterImpl XMLFilterImpl.h "common/XMLFilterImpl.h"
+ * @class ACEXML_XMLFilterImpl XMLFilterImpl.h "ACEXML/common/XMLFilterImpl.h"
  *
  * @brief ACEXML_XMLFilterImpl
  *
@@ -328,6 +328,6 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "common/XMLFilterImpl.i"
+# include "ACEXML/common/XMLFilterImpl.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* ACEXML_XMLFILTERIMPL_H */

@@ -1,8 +1,8 @@
 // $Id$
 
-#include "parser/parser/Parser.h"
-#include "common/Transcode.h"
-#include "common/AttributesImpl.h"
+#include "ACEXML/parser/parser/Parser.h"
+#include "ACEXML/common/Transcode.h"
+#include "ACEXML/common/AttributesImpl.h"
 
 static const ACEXML_Char default_attribute_type[] = {'C', 'D', 'A', 'T', 'A', 0};
 static const ACEXML_Char empty_string[] = { 0 };
@@ -11,7 +11,7 @@ const ACEXML_Char
 ACEXML_Parser::simple_parsing_name_[] = { 'S', 'i', 'm', 'p', 'l', 'e', 0 };
 
 #if !defined (__ACEXML_INLINE__)
-# include "parser/parser/Parser.i"
+# include "ACEXML/parser/parser/Parser.i"
 #endif /* __ACEXML_INLINE__ */
 
 /***

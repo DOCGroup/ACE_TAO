@@ -1,9 +1,9 @@
 // -*- C++ -*-  $Id$
 
-#include "common/XMLFilterImpl.h"
+#include "ACEXML/common/XMLFilterImpl.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "common/XMLFilterImpl.i"
+# include "ACEXML/common/XMLFilterImpl.i"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl (void)

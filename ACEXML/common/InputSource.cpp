@@ -1,6 +1,6 @@
 // -*- C++ -*- $Id$
 
-#include "common/InputSource.h"
+#include "ACEXML/common/InputSource.h"
 #include "ace/ACE.h"
 
 ACEXML_InputSource::ACEXML_InputSource (void)

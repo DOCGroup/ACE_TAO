@@ -15,10 +15,10 @@
 
 #ifndef _ACEXML_TRANSCODE_H_
 #define _ACEXML_TRANSCODE_H_
-#include "common/XML_Types.h"
+#include "ACEXML/common/XML_Types.h"
 
 /**
- * @class ACEXML_Transcoder Transcode.h "common/Transcode.h"
+ * @class ACEXML_Transcoder Transcode.h "ACEXML/common/Transcode.h"
  *
  * @brief ACEXML_Transcoder
  *
@@ -160,6 +160,6 @@ public:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "common/Transcode.i"
+# include "ACEXML/common/Transcode.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* _ACEXML_TRANSCODE_H_ */

@@ -13,7 +13,7 @@
 #ifndef ACEXML_NAMESPACESUPPORT_H
 #define ACEXML_NAMESPACESUPPORT_H
 
-#include "common/XML_Types.h"
+#include "ACEXML/common/XML_Types.h"
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Containers_T.h"
@@ -42,7 +42,7 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
 typedef ACE_Unbounded_Queue<const ACEXML_Char *> ACEXML_STR_LIST;
 
 /**
- * @class ACEXML_Namespace_Context_Stack NamespaceSupport.h "common/NamespaceSupport.h"
+ * @class ACEXML_Namespace_Context_Stack NamespaceSupport.h "ACEXML/common/NamespaceSupport.h"
  *
  * @brief ACEXML_Namespace_Context_Stack implements a simple stack
  * that ACEXML_NamespaceSupport uses to keep track of namespace scopes.
@@ -76,7 +76,7 @@ private:
 };
 
 /**
- * @class ACEXML_NamespaceSupport NamespaceSupport.h "common/NamespaceSupport.h"
+ * @class ACEXML_NamespaceSupport NamespaceSupport.h "ACEXML/common/NamespaceSupport.h"
  *
  * @brief ACEXML_NamespaceSupport provides namespace management
  * operation for an XML parser.
@@ -223,6 +223,6 @@ private:
 
 
 #if defined (__ACEXML_INLINE__)
-# include "common/NamespaceSupport.i"
+# include "ACEXML/common/NamespaceSupport.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* ACEXML_NAMESPACESUPPORT_H */

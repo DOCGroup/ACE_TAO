@@ -12,8 +12,8 @@
 #ifndef _ACEXML_VALIDATOR_H_
 #define _ACEXML_VALIDATOR_H_
 
-#include "common/Attributes.h"
-#include "common/Env.h"
+#include "ACEXML/common/Attributes.h"
+#include "ACEXML/common/Env.h"
 
 /**
  * @ class ACEXML_Validator Validator.h "common/Validator.h"

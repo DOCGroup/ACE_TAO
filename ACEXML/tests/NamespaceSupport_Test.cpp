@@ -1,6 +1,6 @@
 // $Id$
 
-#include "common/NamespaceSupport.h"
+#include "ACEXML/common/NamespaceSupport.h"
 
 int main (int, ACE_TCHAR *[])
 {

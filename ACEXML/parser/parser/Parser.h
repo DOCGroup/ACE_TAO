@@ -13,20 +13,20 @@
 #ifndef _ACEXML_BASIC_PARSER_H_
 #define _ACEXML_BASIC_PARSER_H_
 
-#include "common/XMLReader.h"
-#include "common/LocatorImpl.h"
-#include "common/NamespaceSupport.h"
-#include "common/CharStream.h"
-#include "parser/parser/Parser_export.h"
+#include "ACEXML/common/XMLReader.h"
+#include "ACEXML/common/LocatorImpl.h"
+#include "ACEXML/common/NamespaceSupport.h"
+#include "ACEXML/common/CharStream.h"
+#include "ACEXML/parser/parser/Parser_export.h"
 #include "ace/Obstack.h"
 #include "ace/Functor.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Containers_T.h"
-#include "parser/parser/Entity_Manager.h"
+#include "ACEXML/parser/parser/Entity_Manager.h"
 
 /**
- * @class ACEXML_Parser Parser.h "parser/parser/Parser.h"
+ * @class ACEXML_Parser Parser.h "ACEXML/parser/parser/Parser.h"
  *
  * @brief A SAX based parser.
  *
@@ -464,6 +464,6 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "parser/parser/Parser.i"
+# include "ACEXML/parser/parser/Parser.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* _ACEXML_BASIC_PARSER_H_ */

@@ -13,10 +13,10 @@
 #ifndef ACEXML_LOCALTORIMPL_H
 #define ACEXML_LOCALTORIMPL_H
 
-#include "common/Locator.h"
+#include "ACEXML/common/Locator.h"
 
 /**
- * @class ACEXML_LocatorImpl LocatorImpl.h "common/LocatorImpl.h"
+ * @class ACEXML_LocatorImpl LocatorImpl.h "ACEXML/common/LocatorImpl.h"
  *
  * @brief ACEXML_LocatorImpl is an implementation of ACEXML_Locator.
  *
@@ -119,6 +119,6 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "common/LocatorImpl.i"
+# include "ACEXML/common/LocatorImpl.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* ACEXML_LOCALTORIMPL_H */

@@ -12,8 +12,8 @@
 #ifndef _ACEXML_ATTRIBUTES_DEF_BUILDER_H_
 #define _ACEXML_ATTRIBUTES_DEF_BUILDER_H_
 
-#include "common/XML_Types.h"
-#include "common/Env.h"
+#include "ACEXML/common/XML_Types.h"
+#include "ACEXML/common/Env.h"
 #include "ace/Auto_Ptr.h"
 
 /**

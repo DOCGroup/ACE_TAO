@@ -12,13 +12,13 @@
 #ifndef ACEXML_DEFAULTHANDLER_H
 #define ACEXML_DEFAULTHANDLER_H
 
-#include "common/ContentHandler.h"
-#include "common/DTDHandler.h"
-#include "common/EntityResolver.h"
-#include "common/ErrorHandler.h"
+#include "ACEXML/common/ContentHandler.h"
+#include "ACEXML/common/DTDHandler.h"
+#include "ACEXML/common/EntityResolver.h"
+#include "ACEXML/common/ErrorHandler.h"
 
 /**
- * @class ACEXML_DefaultHandler DefaultHandler.h "common/DefaultHandler.h"
+ * @class ACEXML_DefaultHandler DefaultHandler.h "ACEXML/common/DefaultHandler.h"
  *
  * @brief ACEXML_DefaultHandler
  *
@@ -212,6 +212,6 @@ public:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "common/DefaultHandler.i"
+# include "ACEXML/common/DefaultHandler.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* ACEXML_DEFAULTHANDLER_H */

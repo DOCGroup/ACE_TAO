@@ -12,8 +12,8 @@
 #ifndef _ACEXML_DEBUG_ATTRIBUTES_BUILDER_H_
 #define _ACEXML_DEBUG_ATTRIBUTES_BUILDER_H_
 
-#include "common/Attributes_Def_Builder.h"
-#include "parser/debug_validator/Debug_DTD_Manager_Export.h"
+#include "ACEXML/common/Attributes_Def_Builder.h"
+#include "ACEXML/parser/debug_validator/Debug_DTD_Manager_Export.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Unbounded_Queue.h"
 

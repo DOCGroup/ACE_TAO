@@ -13,8 +13,8 @@
 #ifndef ACEXML_ENTITY_MANAGER_H
 #define ACEXML_ENTITY_MANAGER_H
 
-#include "common/XML_Types.h"
-#include "parser/parser/Parser_export.h"
+#include "ACEXML/common/XML_Types.h"
+#include "ACEXML/parser/parser/Parser_export.h"
 #include "ace/Hash_Map_Manager.h"
 
 typedef ACE_Hash_Map_Entry<ACEXML_String,
@@ -39,7 +39,7 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
                                          ACE_Null_Mutex> ACEXML_ENTITIES_MANAGER_REVERSE_ITER;
 
 /**
- * @class ACEXML_Entity_Manager Entity_Manager.h "parser/parser/Entity_Manager.h"
+ * @class ACEXML_Entity_Manager Entity_Manager.h "ACEXML/parser/parser/Entity_Manager.h"
  *
  * @brief Class to manage and resolve entity references.
  *
@@ -66,6 +66,6 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "parser/parser/Entity_Manager.i"
+# include "ACEXML/parser/parser/Entity_Manager.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* ACEXML_ENTITY_MANAGER_H */

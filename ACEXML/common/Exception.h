@@ -13,10 +13,10 @@
 #ifndef _ACEXML_EXCEPTION_H_
 #define _ACEXML_EXCEPTION_H_
 
-#include "common/XML_Types.h"
+#include "ACEXML/common/XML_Types.h"
 
 /**
- * @class ACEXML_Exception Exception.h "common/Exception.h"
+ * @class ACEXML_Exception Exception.h "ACEXML/common/Exception.h"
  *
  * @brief ACEXML_Exception
  *
@@ -64,6 +64,6 @@ protected:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "common/Exception.i"
+# include "ACEXML/common/Exception.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* _ACEXML_EXCEPTION_H_ */

@@ -13,10 +13,10 @@
 #ifndef _ACEXML_INPUTSOURCE_H_
 #define _ACEXML_INPUTSOURCE_H_
 
-#include "common/CharStream.h"
+#include "ACEXML/common/CharStream.h"
 
 /**
- * @class ACEXML_InputSource InputSource.h "common/InputSource.h"
+ * @class ACEXML_InputSource InputSource.h "ACEXML/common/InputSource.h"
  *
  * @brief ACEXML_InputSource encapsulates the actual input stream with some
  * added information.

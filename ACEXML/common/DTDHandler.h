@@ -12,11 +12,11 @@
 #ifndef _ACEXML_DTDHANDLER_H_
 #define _ACEXML_DTDHANDLER_H_
 
-#include "common/Env.h"
-#include "common/SAXExceptions.h"
+#include "ACEXML/common/Env.h"
+#include "ACEXML/common/SAXExceptions.h"
 
 /**
- * @class ACEXML_DTDHandler DTDHandler.h "common/DTDHandler.h"
+ * @class ACEXML_DTDHandler DTDHandler.h "ACEXML/common/DTDHandler.h"
  *
  * @brief ACEXML_DTDHandler
  *

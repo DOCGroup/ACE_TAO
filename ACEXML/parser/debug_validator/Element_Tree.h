@@ -12,8 +12,8 @@
 #ifndef _ACEXML_ELEMENT_TREE_H_
 #define _ACEXML_ELEMENT_TREE_H_
 
-#include "common/XML_Types.h"
-#include "parser/debug_validator/Debug_DTD_Manager_Export.h"
+#include "ACEXML/common/XML_Types.h"
+#include "ACEXML/parser/debug_validator/Debug_DTD_Manager_Export.h"
 
 /**
  * @ class ACEXML_Element_Tree_Node Element_Tree.h "parser/debug_validator/Element_Tree.h"
@@ -146,6 +146,6 @@ protected:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "parser/debug_validator/Element_Tree.i"
+# include "ACEXML/parser/debug_validator/Element_Tree.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* _ACEXML_ELEMENT_TREE_H_ */

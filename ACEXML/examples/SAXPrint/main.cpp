@@ -1,7 +1,7 @@
 // $Id$
 
-#include "common/FileCharStream.h"
-#include "parser/parser/Parser.h"
+#include "ACEXML/common/FileCharStream.h"
+#include "ACEXML/parser/parser/Parser.h"
 #include "Print_Handler.h"
 #include "SAXPrint_Handler.h"
 

@@ -13,7 +13,7 @@
 #ifndef ACEXML_PRINT_HANDLER_H
 #define ACEXML_PRINT_HANDLER_H
 
-#include "common/DefaultHandler.h"
+#include "ACEXML/common/DefaultHandler.h"
 
 /**
  * @class ACEXML_Print_Handler

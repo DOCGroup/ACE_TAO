@@ -1,9 +1,9 @@
 // -*- C++ -*-  $Id$
 
-#include "common/AttributesImpl.h"
+#include "ACEXML/common/AttributesImpl.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "common/AttributesImpl.i"
+# include "ACEXML/common/AttributesImpl.i"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_AttributesImpl::ACEXML_AttributesImpl (int size)

@@ -17,7 +17,7 @@
 # define _ACEXML_XML_TYPES_H_
 # include "ace/OS.h"
 # include "ace/SString.h"
-# include "common/ACEXML_Export.h"
+# include "ACEXML/common/ACEXML_Export.h"
 
 # if defined (ACE_HAS_WCHAR) && (ACE_SIZEOF_WCHAR == 2)
 typedef wchar_t ACEXML_UTF16;
