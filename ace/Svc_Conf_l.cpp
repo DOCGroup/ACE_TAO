@@ -1142,9 +1142,10 @@ ACE_LIB_TEXT ("input buffer overflow, can't enlarge buffer because scanner uses 
 					b->ace_yy_buf_size *= 2;
 
 				b->ace_yy_ch_buf = (ACE_TCHAR *)
-					/* Include room in for 2 EOB chars. */
-					ace_yy_flex_realloc( (void *) b->ace_yy_ch_buf,
-							 b->ace_yy_buf_size + 2 );
+                                  /* Include room in for 2 EOB chars. */
+                                  ace_yy_flex_realloc(
+                                    (void *) b->ace_yy_ch_buf,
+                                    (b->ace_yy_buf_size + 2) * sizeof (ACE_TCHAR) );
 				}
 			else
 				/* Can't grow it, we don't own it. */
@@ -1375,7 +1376,7 @@ static int input()
 			}
 		}
 
-	c = *(unsigned char *) ace_yy_c_buf_p;	/* cast for 8-bit char's */
+	c = *(unsigned char *) ace_yy_c_buf_p;  /* cast for 8-bit char's */
 	*ace_yy_c_buf_p = '\0';	/* preserve ace_yytext */
 	ace_yy_hold_char = *++ace_yy_c_buf_p;
 
@@ -1462,7 +1463,7 @@ int size;
 	/* ace_yy_ch_buf has to be 2 characters longer than the size given because
 	 * we need to put in 2 end-of-buffer characters.
 	 */
-	b->ace_yy_ch_buf = (ACE_TCHAR *) ace_yy_flex_alloc( b->ace_yy_buf_size + 2 );
+	b->ace_yy_ch_buf = (ACE_TCHAR *) ace_yy_flex_alloc( (b->ace_yy_buf_size + 2) * sizeof (ACE_TCHAR) );
 	if ( ! b->ace_yy_ch_buf )
 		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("out of dynamic memory in ace_yy_create_buffer()"));
 
@@ -1628,7 +1629,7 @@ int len;
 
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = len + 2;
-	buf = (ACE_TCHAR *) ace_yy_flex_alloc( n );
+	buf = (ACE_TCHAR *) ace_yy_flex_alloc( n * sizeof (ACE_TCHAR) );
 	if ( ! buf )
 		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("out of dynamic memory in ace_yy_scan_bytes()"));
 
@@ -1714,7 +1715,7 @@ static void ace_yy_fatal_error( msg )
 ACE_TCHAR msg[];
 #endif
 	{
-	(void) ACE_OS::fprintf( stderr, "%s\n", msg );
+	(void) ACE_OS::fprintf( stderr, ACE_LIB_TEXT ("%s\n"), msg );
 	exit( ACE_YY_EXIT_FAILURE );
 	}
 
@@ -1789,14 +1790,14 @@ void *ptr;
 ace_yy_size_t size;
 #endif
 	{
-	/* The cast to (ACE_TCHAR *) in the following accommodates both
+	/* The cast to (char *) in the following accommodates both
 	 * implementations that use char* generic pointers, and those
 	 * that use void* generic pointers.  It works with the latter
 	 * because both ANSI C and C++ allow castless assignment from
 	 * any pointer type to void*, and deal with argument conversions
 	 * as though doing an assignment.
 	 */
-	return (void *) realloc( (ACE_TCHAR *) ptr, size );
+	return (void *) realloc( (char *) ptr, size );
 	}
 
 #ifdef ACE_YY_USE_PROTOS
@@ -1836,10 +1837,10 @@ ace_yy_push_buffer (FILE *file)
   if (ace_yy_stack_index >= ACE_SERVICE_DIRECTIVE_STACK_DEPTH)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) Service Configurator directive nesting "
-                  "is too deep.\n"
-                  "(%P|%t) Consider increasing value of "
-                  "ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n"));
+                  ACE_LIB_TEXT ("(%P|%t) Service Configurator directive ")
+                  ACE_LIB_TEXT ("nesting is too deep.\n")
+                  ACE_LIB_TEXT ("(%P|%t) Consider increasing value of ")
+                  ACE_LIB_TEXT ("ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n")));
 
       // Not much we can do, so resort to flushing the current buffer
       // and switch to the supplied stream.
@@ -1860,10 +1861,10 @@ ace_yy_push_buffer (const ACE_TCHAR *directive)
   if (ace_yy_stack_index >= ACE_SERVICE_DIRECTIVE_STACK_DEPTH)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) Service Configurator directive nesting "
-                  "is too deep.\n"
-                  "(%P|%t) Consider increasing value of "
-                  "ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n"));
+                  ACE_LIB_TEXT ("(%P|%t) Service Configurator directive ")
+                  ACE_LIB_TEXT ("nesting is too deep.\n")
+                  ACE_LIB_TEXT ("(%P|%t) Consider increasing value of ")
+                  ACE_LIB_TEXT ("ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n")));
 
       // Not much we can do.
     }
