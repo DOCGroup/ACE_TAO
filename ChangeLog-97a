@@ -1,5 +1,19 @@
 Wed Apr 02 10:09:37 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/config-sunos5.5-sunc++-4.1.h: added template specialization
+	  with Sun C++ 4.2.
+
+	* include/makeinclude/platform_sunos5_sunc++_4.1.GNU: removed +w
+	  and added comments about Sun C++ 4.2 support.
+
+	* include/makeinclude/platform_chorus.GNU, platform_hpux_gcc.GNU,
+	  platform_irix5.{2,3_g++}.GNU, platform_m88k.GNU,
+	  platform_osf1_4.0_g++.GNU, platform_sco-nothread.GNU,
+	  platform_sunos{4,5}_g++.GNU, platform_sunos5_x86_g++.GNU,
+	  platform_unixware_g++.GNU, platform_vxworks5.2_g++.GNU:
+	  added -fno-implicit-templates to CCFLAGS.  See INSTALL file
+	  for discussion of the g++ option.
+
 	* netsvcs/clients/Tokens/manual/manual.cpp: made
 	  STDIN_Token::TID typedef public so that template
 	  specialization (w/ Sun C++ 4.2) can access it.
