@@ -220,6 +220,7 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 int
 TAO_DIOP_Acceptor::close (void)
 {
+  return 0;
 }
 
 int
