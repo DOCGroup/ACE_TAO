@@ -22,6 +22,7 @@
 #include "ace/pre.h"
 
 #include "tao/Pluggable_Messaging_Utils.h"
+#include "tao/Exception.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -124,7 +125,7 @@ public:
   // Write the reply header
   // The reply header is a part of any messaging protocol. The
   // messaging protocol implementation would implement the way the
-  // reply header is written. 
+  // reply header is written.
 
   // @@ Bala: What if the protocol only has message headers and not
   //    'protocol headers'?
@@ -175,7 +176,7 @@ public:
   //  you cannot plug a messaging protocol and use transport classes
   //  created for another protocol (except in the GIOP / GIOPLite
   //  case, which is purely an accident).
-  //    
+  //
   virtual int process_client_message (TAO_Transport *transport,
                                       TAO_ORB_Core *orb_core,
                                       TAO_InputCDR &input,

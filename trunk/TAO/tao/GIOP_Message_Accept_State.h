@@ -19,6 +19,7 @@
 #include "ace/pre.h"
 
 #include "tao/GIOP_Message_Headers.h"
+#include "tao/Exception.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -66,8 +67,8 @@ public:
   virtual int parse_request_header (TAO_GIOP_ServerRequest &) = 0;
   // Parse the Request Header from the incoming stream. This will do a
   // version specific parsing of the incoming Request header
-  
-  virtual CORBA::Boolean 
+
+  virtual CORBA::Boolean
   write_reply_header (TAO_OutputCDR &output,
                       TAO_Pluggable_Reply_Params &reply,
                       CORBA::Environment &ACE_TRY_ENV =
@@ -93,22 +94,22 @@ protected:
   CORBA::Boolean marshal_svc_ctx (TAO_OutputCDR &output,
                                   TAO_Pluggable_Reply_Params &reply);
   // Marshalls the service context
-  
+
   void marshal_reply_status (TAO_OutputCDR &output,
                              TAO_Pluggable_Reply_Params &reply);
   // Marshall the reply status
-  
-  virtual CORBA::Boolean 
+
+  virtual CORBA::Boolean
   unmarshall_object_key (TAO_ObjectKey &object_key,
                          TAO_InputCDR &cdr);
   // Unmarshals the received object key
-  
-  virtual CORBA::Boolean 
+
+  virtual CORBA::Boolean
   unmarshall_iop_profile (TAO_Tagged_Profile &profile,
                           TAO_InputCDR &cdr);
   // Unmarshall the IOP::TaggedProfile
 
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   unmarshall_ref_addr (TAO_Tagged_Profile &profile,
                        TAO_InputCDR &cdr);
   // Unmarshalls the GIOP::IORAddressingInfo
@@ -167,7 +168,7 @@ public:
 };
 
 
-/*****************************************************************/ 
+/*****************************************************************/
 
 class TAO_Export TAO_GIOP_Message_Accept_State_11: public TAO_GIOP_Message_Accept_State_10
 {
@@ -180,50 +181,50 @@ public:
 
 
 
-/********************************************************************/ 
+/********************************************************************/
 class TAO_Export TAO_GIOP_Message_Accept_State_12 : public TAO_GIOP_Message_Accept_State
 {
   // = TITLE
   //   TAO_GIOP_Message_Accept_State_12
   // = DESCRIPTION
-  //   
-  
+  //
+
 public:
   virtual int parse_request_header (TAO_GIOP_ServerRequest &);
   // Parse the Request Header from the incoming stream. This will do a
   // version specific parsing of the incoming Request header
 
 
-  virtual CORBA::Boolean  
+  virtual CORBA::Boolean
   write_reply_header (TAO_OutputCDR &output,
                       TAO_Pluggable_Reply_Params &reply_params,
                       CORBA::Environment &ACE_TRY_ENV =
                       TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Write the version specific reply header in to <output>
-  
+
   virtual int parse_locate_header (TAO_GIOP_Locate_Request_Header &);
   // Parse the Loacte Request Header from the incoming stream. This will do a
   // version specific parsing of the incoming Request header
-  
-  virtual CORBA::Boolean 
+
+  virtual CORBA::Boolean
   write_locate_reply_mesg (TAO_OutputCDR &output,
                            CORBA::ULong request_id,
                            TAO_GIOP_Locate_Status_Msg &status);
   // Writes the locate reply message in to <output>
-  
+
   virtual CORBA::Octet major_version (void);
   virtual CORBA::Octet minor_version (void);
   // Our versions
 
-  
+
 private:
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   unmarshall_iop_profile (TAO_Tagged_Profile &profile,
                           TAO_InputCDR &cdr);
   // Unmarshall the IOP::TaggedProfile
-  
-  virtual CORBA::Boolean 
+
+  virtual CORBA::Boolean
   unmarshall_ref_addr (TAO_Tagged_Profile &profile,
                        TAO_InputCDR &cdr);
   // Unmarshall the IOR Addressing info
@@ -243,7 +244,7 @@ class TAO_Export TAO_GIOP_Message_Accept_Impl
                                  CORBA::Octet incoming_minor);
   // Performs a check of the revision tags
 
-  
+
   TAO_GIOP_Message_Accept_State_10 version_10;
   TAO_GIOP_Message_Accept_State_11 version_11;
   TAO_GIOP_Message_Accept_State_12 version_12;

@@ -1,3 +1,10 @@
+Sun Apr 30 10:48:31 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Pluggable_Messaging.h:
+	* tao/GIOP_Message_Connectors.h:
+	* tao/GIOP_Message_Accept_State.h: Added inclusion of
+	  "Excepption.h" to prevent KCC 3.3e from complaining.
+
 Sat Apr 29 23:41:02 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/diffs/InterceptorC.h.diff:
