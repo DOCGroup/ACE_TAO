@@ -15,6 +15,7 @@ CORBA::Octet
 Cubit_i::cube_octet (CORBA::Octet o,
                      CORBA::Environment &)
 {
+  //ACE_ERROR (( LM_ERROR, "   {%t}\n"));
   return (CORBA::Octet) (o * o * o);
 }
 

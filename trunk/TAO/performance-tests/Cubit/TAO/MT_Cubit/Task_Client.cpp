@@ -17,9 +17,10 @@ Task_State::Task_State (int argc, char **argv)
     oneway_ (0),
     use_name_service_ (1),
     ior_file_ (0),
-    grain_ (1)
+    grain_ (1),
+    use_utilization_test_ (0)
 {
-  ACE_Get_Opt opts (argc, argv, "sn:t:d:rk:xof:g:");
+  ACE_Get_Opt opts (argc, argv, "usn:t:d:rk:xof:g:");
   int c;
   int datatype;
 
@@ -29,6 +30,9 @@ Task_State::Task_State (int argc, char **argv)
       grain_ = ACE_OS::atoi (opts.optarg);
       if (grain_ < 1)
         grain_ = 1;
+      break;
+    case 'u':
+      use_utilization_test_ = 1;
       break;
     case 's':
       use_name_service_ = 0;
@@ -118,17 +122,31 @@ Task_State::Task_State (int argc, char **argv)
   // wanting to begin at the same time the clients begin && the main
   // thread wants to know when clients will start running to get
   // accurate context switch numbers.
-  ACE_NEW (barrier_,
-           ACE_Barrier (thread_count_ + 2));
+
+  if (use_utilization_test_ == 1)
+    // If we are to use the utilization test, include it in the
+    // barrier count.  See description of this variable in header
+    // file.
+    {
+      ACE_NEW (barrier_,
+	       ACE_Barrier (thread_count_ + 2));
+    }
+  else
+    {
+      ACE_NEW (barrier_,
+	       ACE_Barrier (thread_count_ + 1));
+    }
+
   ACE_NEW (latency_,
            double [thread_count_]);
   ACE_NEW (global_jitter_array_,
            double *[thread_count_]);
 }
 
-Client::Client (Task_State *ts)
+Client::Client (Task_State *ts, u_int id)
   : ACE_MT (ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ())),
-    ts_ (ts)
+    ts_ (ts),
+    id_ (id)
 {
 }
 
@@ -138,7 +156,7 @@ Client::put_latency (double *jitter,
                      u_int thread_id)
 {
   ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, ts_->lock_));
-
+	   
   ts_->latency_[thread_id] = latency;
   ts_->global_jitter_array_[thread_id] = jitter;
 
@@ -164,10 +182,10 @@ Client::get_low_priority_latency (void)
 {
   double l = 0;
 
-  for (u_int i = 1; i < ts_->start_count_; i++)
+  for (u_int i = 1; i < ts_->thread_count_; i++)
     l += (double) ts_->latency_[i];
 
-  return ts_->start_count_ > 1? l / (double) (ts_->start_count_ - 1) : 0;
+  return ts_->thread_count_ > 1? l / (double) (ts_->thread_count_ - 1) : 0;
 }
 
 u_int
@@ -210,7 +228,7 @@ Client::get_low_priority_jitter (void)
 
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
-  for (u_int j = 1; j < ts_->start_count_; j ++)
+  for (u_int j = 1; j < ts_->thread_count_; j ++)
     for (u_int i = 0; i < ts_->loop_count_; i ++)
       {
         double difference = ts_->global_jitter_array_[j][i] - average;
@@ -241,7 +259,6 @@ Client::svc (void)
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Thread created\n"));
 
-  u_int thread_id;
   Cubit_ptr cb = 0;
   CORBA::ORB_var orb;
   CORBA::Object_var objref (0);
@@ -299,57 +316,54 @@ Client::svc (void)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ts_->lock_, -1));
 
-    thread_id = ts_->start_count_;
-    ts_->start_count_++;
-
     if (ts_->thread_per_rate_ == 0)
       {
-        if (thread_id == 0)
+        if (this->id_ == 0)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%t) Im the high priority client, my id is %d.\n",
-                        thread_id));
+                        this->id_));
             frequency = CB_HIGH_PRIORITY_RATE;
           }
         else
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%t) Im a low priority client, my id is %d\n",
-                        thread_id));
+                        this->id_));
             frequency = CB_LOW_PRIORITY_RATE;
           }
       }
     else
-      switch (thread_id)
+      switch (this->id_)
         {
         case CB_40HZ_CONSUMER:
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) Im the high priority client, "
-                      "my id is %d.\n", thread_id));
+                      "my id is %d.\n", this->id_));
           frequency = CB_40HZ_CONSUMER_RATE;
           break;
         case CB_20HZ_CONSUMER:
           ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
-                      "my id is %d.\n", thread_id));
+                      "my id is %d.\n", this->id_));
           frequency = CB_20HZ_CONSUMER_RATE;
           break;
         case CB_10HZ_CONSUMER:
           ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
-                      "my id is %d.\n", thread_id));
+                      "my id is %d.\n", this->id_));
           frequency = CB_10HZ_CONSUMER_RATE;
           break;
         case CB_5HZ_CONSUMER:
           ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
-                      "my id is %d.\n", thread_id));
+                      "my id is %d.\n", this->id_));
           frequency = CB_5HZ_CONSUMER_RATE;
           break;
         case CB_1HZ_CONSUMER:
           ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
-                      "my id is %d.\n", thread_id));
+                      "my id is %d.\n", this->id_));
           frequency = CB_1HZ_CONSUMER_RATE;
           break;
         default:
-          ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID.\n", thread_id));
+          ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID.\n", this->id_));
         }
 
     TAO_TRY
@@ -384,7 +398,7 @@ Client::svc (void)
             ACE_OS::sprintf (buffer,
                              "%s%02d",
                              (char *) ts_->key_,
-                             thread_id);
+                             this->id_);
 
             // Construct the key for the name service lookup.
             CosNaming::Name cubit_name (1);
@@ -441,7 +455,7 @@ Client::svc (void)
                         "(%t) >>> Factory binding succeeded\n"));
 
 
-            char * tmp_ior = cb_factory->create_cubit (thread_id,
+            char * tmp_ior = cb_factory->create_cubit (this->id_,
                                                        TAO_TRY_ENV);
             TAO_CHECK_ENV;
 
@@ -460,7 +474,7 @@ Client::svc (void)
           }
         else
           {
-            char *my_ior = ts_->iors_[thread_id];
+            char *my_ior = ts_->iors_[this->id_];
 
             if (my_ior == 0)
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -525,7 +539,7 @@ Client::svc (void)
   // Perform the tests.
   int result = this->run_tests (cb,
                                 ts_->loop_count_,
-                                thread_id,
+                                this->id_,
                                 ts_->datatype_,
                                 frequency);
 
@@ -584,8 +598,8 @@ Client::run_tests (Cubit_ptr cb,
   for (i = 0; i < loop_count; i++)
     {
       ACE_High_Res_Timer timer_;
-      ACE_Time_Value tv (0, (long int) (sleep_time - delta));
-      ACE_OS::sleep (tv);
+      ACE_Time_Value tv (0, (long int) (sleep_time - delta) < 0? 0 : (sleep_time - delta));
+		ACE_OS::sleep (tv);
 
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
@@ -609,7 +623,9 @@ Client::run_tests (Cubit_ptr cb,
                 /* start recording quantify data from here */
                 quantify_start_recording_data ();
 #endif /* USE_QUANTIFY */
+		//ACE_ERROR (( LM_ERROR, "in {%t} i=%d\n", i));
                 ret_octet = cb->cube_octet (arg_octet, env);
+		//ACE_ERROR (( LM_ERROR, "out {%t} i=%d\n", i));
 
 #if defined (USE_QUANTIFY)
                 quantify_stop_recording_data();
@@ -623,6 +639,7 @@ Client::run_tests (Cubit_ptr cb,
                                        env.exception ()),
                                       2);
                   }
+
                 arg_octet = arg_octet * arg_octet * arg_octet;
 
                 if (arg_octet != ret_octet)

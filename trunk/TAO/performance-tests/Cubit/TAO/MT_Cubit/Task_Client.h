@@ -178,6 +178,11 @@ public:
   // this is the granularity of the timing of the CORBA requests. A
   // value of 5 represents that we will take time every 5 requests,
   // instead of the default of every request (1).
+
+  u_int use_utilization_test_;
+  // flag to indicate we are to use the utilization test.  By default
+  // we do not use it, because it can cause starvation with real-time
+  // threads
 };
 
 class Client : public ACE_Task<ACE_SYNCH>
@@ -189,7 +194,7 @@ class Client : public ACE_Task<ACE_SYNCH>
   //     This class implements the Cubit Client, which is an active object.
   //     `n' threads execute svc, and make 2way CORBA calls on the server
 public:
-  Client (Task_State *ts);
+  Client (Task_State *ts, u_int id);
   // constructor, with a pointer to the common task state.
 
   virtual int svc (void);
@@ -220,6 +225,9 @@ private:
 
   Task_State *ts_;
   // Pointer to shared state.
+
+  u_int id_;
+  // unique id of the task
 
   CosNaming::NamingContext_var naming_context_;
   // Object reference to the naming service.

@@ -736,7 +736,7 @@ start_servants (void)
 
   // Create the low priority servants.
 
-  for (i = 0; i < num_of_objs - 1; i++)
+  for (i = num_of_objs - 2; i >= 0; i--)
     {
       char *args;
 
