@@ -97,7 +97,7 @@ TAO_UIOP_Connector::close (void)
 }
 
 int
-TAO_UIOP_Connector::connect (TAO_Base_Connection_Property *prop,
+TAO_UIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
                              TAO_Transport *& transport,
                              ACE_Time_Value *max_wait_time,
                              CORBA::Environment &)
@@ -107,7 +107,7 @@ TAO_UIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for UIOP connection.\n")));
 
-  TAO_Endpoint *endpoint = prop->endpoint ();
+  TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
     return -1;
@@ -134,7 +134,7 @@ TAO_UIOP_Connector::connect (TAO_Base_Connection_Property *prop,
   TAO_Connection_Handler *conn_handler = 0;
 
   // Check the Cache first for connections
-  if (this->orb_core ()->connection_cache ().find_handler (prop,
+  if (this->orb_core ()->connection_cache ().find_handler (desc,
                                                            conn_handler) == 0)
     {
       if (TAO_debug_level > 5)
@@ -201,7 +201,7 @@ TAO_UIOP_Connector::connect (TAO_Base_Connection_Property *prop,
 
       // Add the handler to Cache
       int retval =
-        this->orb_core ()->connection_cache ().cache_handler (prop,
+        this->orb_core ()->connection_cache ().cache_handler (desc,
                                                               svc_handler);
 
       if (retval != 0 && TAO_debug_level > 0)

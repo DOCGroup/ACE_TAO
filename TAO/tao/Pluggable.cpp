@@ -11,7 +11,6 @@
 #include "tao/debug.h"
 
 #include "tao/target_specification.h"
-#include "tao/Base_Connection_Property.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Pluggable.i"

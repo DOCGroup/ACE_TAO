@@ -90,7 +90,7 @@ public:
   // Pluggable.h
   int open (TAO_ORB_Core *orb_core);
   int close (void);
-  int connect (TAO_Base_Connection_Property *prop,
+  int connect (TAO_Connection_Descriptor_Interface *desc,
                TAO_Transport *&transport,
                ACE_Time_Value *max_wait_time,
                CORBA::Environment &ACE_TRY_ENV);
