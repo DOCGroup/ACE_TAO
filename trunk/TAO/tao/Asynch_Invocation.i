@@ -3,6 +3,10 @@
 // $Id$
 //
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+#  if defined (TAO_HAS_AMI_CALLBACK) || (TAO_HAS_AMI_POLLER)
+
 ACE_INLINE
 TAO_GIOP_Twoway_Asynch_Invocation::
 TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *stub,
@@ -24,6 +28,10 @@ TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *stub,
            TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
                                         reply_handler_ptr));
 }
+
+#  endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 //****************************************************************************
 

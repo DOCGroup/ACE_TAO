@@ -117,19 +117,12 @@ public:
   CORBA::Boolean poll_response (CORBA::Environment &ACE_TRY_ENV =
                                   CORBA::Environment::default_environment ());
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
-
-#  if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
-
+  // Callback method for deferred synchronous requests.
   void handle_response (TAO_InputCDR &incoming,
                         CORBA::ULong reply_status,
                         CORBA::Environment &ACE_TRY_ENV =
                           CORBA::Environment::default_environment ());   
                           
-#  endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
-
-#endif /* TAO_HAS_CORBA_MESSAGING  */
-
   // Pseudo object methods
   static CORBA_Request* _duplicate (CORBA_Request*);
   static CORBA_Request* _nil (void);

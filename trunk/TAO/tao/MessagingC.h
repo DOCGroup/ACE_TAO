@@ -2058,8 +2058,6 @@ TAO_NAMESPACE_CLOSE
 
 class TAO_InputCDR;
 
-#if defined (TAO_HAS_AMI_CALLBACK)
-
 // @@ Michael: Addition
 
 enum TAO_AMI_Reply_Status
@@ -2077,6 +2075,8 @@ enum TAO_AMI_Reply_Status
   // An system exception was raised.
 };
 
+
+#if defined (TAO_HAS_AMI_CALLBACK)
 
 typedef void (*TAO_Reply_Handler_Skeleton)(
     TAO_InputCDR &,
