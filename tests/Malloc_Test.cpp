@@ -290,6 +290,7 @@ main (int argc, ACE_TCHAR *[])
 
       // No arguments means we're the parent process.
       ACE_Process_Options options (1);
+
       options.command_line (EXE_LOCATION
                             ACE_TEXT ("Malloc_Test")
                             ACE_PLATFORM_EXE_SUFFIX
