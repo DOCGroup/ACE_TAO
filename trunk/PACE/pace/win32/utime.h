@@ -17,7 +17,11 @@
 #define PACE_UTIME_H_WIN32
 
 #include "pace/sys/types.h"
+#if defined (__BORLANDC__)
+#include <utime.h>
+#else
 #include <sys/utime.h>
+#endif /* __BORLANDC__ */
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {

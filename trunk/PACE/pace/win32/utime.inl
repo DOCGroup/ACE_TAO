@@ -23,7 +23,11 @@ pace_utime (const char * path,
 {
   /* Emulation not yet finished! Not yet working! */
 
+#if defined (__BORLANDC__)
+  return utime (path, (const struct utimbuf*)times);  
+#else /* __BORLANDC__ */
   /* Not quite the perfect answer... win32 doesn't take const args. */
   return _utime ((char*)path, (struct _utimbuf*)times);  
+#endif /* __BORLANDC__ */
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */

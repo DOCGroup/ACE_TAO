@@ -89,7 +89,11 @@ PACE_INLINE
 int
 pace_sem_unlink (const char * name)
 {
+#if defined (__BORLANDC__)
+  return unlink (name);
+#else /* __BORLANDC__ */
   return _unlink (name);
+#endif /* __BORLANDC__ */
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 

@@ -25,6 +25,10 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+#if defined (__BORLANDC__)
+#define _O_TEMPORARY 0x08
+#endif /* __BORLANDC__ */
+
 #define PACE_FD_CLOEXEC FD_CLOEXEC
 #define PACE_F_DUPFD D_DUPFD
 #define PACE_F_GETFD F_GETFD
