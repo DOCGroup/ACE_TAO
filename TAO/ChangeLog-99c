@@ -1,3 +1,8 @@
+Tue Sep 21 20:23:07 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* TAO_IDL/Makefile: 
+	Added the dependencies
+
 Tue Sep 21 19:29:50 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/tests/Trading/Makefile:
