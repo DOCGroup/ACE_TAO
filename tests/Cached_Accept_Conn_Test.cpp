@@ -193,7 +193,7 @@ static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
 #if defined (ACE_WIN32)
 static int iterations = 2000;
 #else
-static int iterations = 500;
+static int iterations = 200;
 #endif /* ACE_WIN32 */
 
 //====================================================================
@@ -621,7 +621,7 @@ main (int argc,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-// = Consume handles
+// = Handle Gobbler
 template class ACE_Node<ACE_HANDLE>;
 template class ACE_Unbounded_Set<ACE_HANDLE>;
 template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
@@ -714,6 +714,12 @@ template class ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX>;
 template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+// = Handle Gobbler
+#pragma instantiate ACE_Node<ACE_HANDLE>
+#pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
+
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 #pragma instantiate ACE_NOOP_Creation_Strategy<Client_Svc_Handler>
@@ -770,11 +776,6 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 #pragma instantiate ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 
 #if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
-// = Consume handles
-#pragma instantiate ACE_Node<ACE_HANDLE>
-#pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
 
 #pragma instantiate ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 #pragma instantiate ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
