@@ -1,3 +1,8 @@
+Wed Jun 10 19:00:21 1998  Carlos O'Ryan  <coryan@JIG>
+
+	* tao/Sequence.cpp: 
+	  Fixed small bug in octet sequence assignment operator.
+
 Wed Jun 10 16:09:49 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/ORB.cpp: fixed template instantiations: ACE_SYNCH_MUTEX
