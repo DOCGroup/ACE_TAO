@@ -25,7 +25,7 @@ ifeq (5.,$(findstring 5.,$(ACE_DU_VERSION)))
     WARNING_FLAGS += -msg_disable 177
   endif # 6.0 or later
 
-  SOFLAGS = -shared -use_ld_input
+  SOFLAGS = -shared -use_ld_input $(ACELIB)
 endif # 5.x
 endif # ! 4.x
 endif # ! 3.x
