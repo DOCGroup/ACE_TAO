@@ -127,14 +127,14 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
                              now - latency_base,
                              2);
 
-              ACE_CHECK;
+              ACE_TRY_CHECK;
               if (TAO_debug_level > 0 && i % 100 == 0)
                 ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
 
             }
           marker.dump_stats ("Authenticate method  ", gsf, 2);
 
-          ACE_CHECK;
+          ACE_TRY_CHECK;
 
         }
   ACE_CATCH (Test_Interceptors::Invalid, userex)
