@@ -6,7 +6,6 @@ Globals::Globals (void)
   : thr_create_flags (0),
     default_priority (0),
     ior_file (0),
-    base_port (0),
     num_of_objs (2),
     thread_per_rate (0),
     use_multiple_priority (0),
@@ -14,16 +13,16 @@ Globals::Globals (void)
     ready_cnd_ (ready_mtx_),
     barrier_ (0)
 {
-  if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "ACE_OS::hostname () returned %s\n",
-                hostname));
+  const char default_endpoint[] = "iiop://";
+  // Default to iiop
+
+  ACE_OS::strcpy (endpoint, default_endpoint);
 }
 
 int
 Globals::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "h:p:t:f:rm");
+  ACE_Get_Opt opts (argc, argv, "e:t:f:rm");
   int c;
 
   while ((c = opts ()) != -1)
@@ -43,12 +42,9 @@ Globals::parse_args (int argc, char *argv[])
         ACE_OS::strcpy (ior_file,
                         opts.optarg);
         break;
-      case 'h':
-        ACE_OS::strcpy (hostname,
+      case 'e':
+        ACE_OS::strcpy (endpoint,
                         opts.optarg);
-        break;
-      case 'p':
-        base_port = ACE_OS::atoi (opts.optarg);
         break;
       case 't':
         num_of_objs = ACE_OS::atoi (opts.optarg);
@@ -57,8 +53,7 @@ Globals::parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s \t"
-                           "[-p <port_num>]                // starting port                      \n\t\t\t"
-                           "[-h <my_hostname>]             // IP address to use                  \n\t\t\t"
+                           "[-e <endpoint>]                // starting endpoint                  \n\t\t\t"
                            "[-t <number_of_servants>]      // # of servant threads to create     \n\t\t\t"
                            "[-f <ior_file> ]               // specify a file to output all ior's \n\t\t\t"
                            "[-m ]                          // Use multiple priorities for threads\n\t\t\t"
