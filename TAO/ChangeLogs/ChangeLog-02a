@@ -1,3 +1,10 @@
+Tue Jul 19 09:34:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.bor:
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.bor:
+	* orbsvcs/tests/AVStreams/Component_Switching/distributer.bor:
+	  Fixed the Borland makefiles files to link in the strategies library.
+
 Tue Jul 19 07:56:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/sender.dsp:
