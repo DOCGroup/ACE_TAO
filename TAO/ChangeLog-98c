@@ -1,3 +1,23 @@
+Fri Sep  4 16:22:17 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp}: Added macro VX_VME_INIT 
+	  for the VME initialization code in VXWORKS. Added a 
+	  MT_priority class that is used by both the client and server
+	  side for determining the thread priorities.
+	
+	* tests/Cubit/TAO/MT_Cubit/server.{h,cpp}: cleaned up the #ifdefs
+	  using the new ACE_DEBUG with %A for ACE_timer_t and other macros.
+	  Thanx to Nanbor for implementing the %A option in ACE_DEBUG.		
+
+	* tests/Cubit/TAO/MT_Cubit/client.{h,cpp}: Modularized the code.
+	  Defining a Client_i helper class. Moved all the static functions to
+	  this class. Clenaed up the #ifdefs using the new ACE_DEBUG support.
+
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp}: cleaned the #ifdefs.
+
+	* tests/Cubit/TAO/MT_Cubit/Timer.{h,cpp}: Changed the double to 
+	  ACE_timer_t.
+	
 Fri Sep  4 14:20:28 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tao/Any.cpp:
