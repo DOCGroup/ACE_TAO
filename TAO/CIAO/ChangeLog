@@ -1,3 +1,14 @@
+Fri Jun 11 00:10:42 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Process_Element.cpp:
+        * DnC/Config_Handlers/Utils.cpp:
+        * DnC/Config_Handlers/Utils.h:
+        * DnC/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DnC/RepositoryManager/Repository_Manager.cpp:
+
+          Fixed segmentation faults, traced during integration
+          teting.
+
 Thu Jun 10 18:24:58 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Process_Element.tpp:
