@@ -1,118 +1,124 @@
+Tue May 25 12:39:27 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Environment.cpp,Exception.{h,cpp},Invocation.cpp,corbafwd.h:
+          added support for passing location and errno through minor status
+          of SystemExceptions.
+
 Tue May 25 12:17:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Event/Performance/Connect.dsp:
-	* orbsvcs/tests/Event/Performance/Throughput.dsp:
-	* orbsvcs/tests/Event/lib/ECTest.dsp:
-	  Fixed configuration for Win32/Release
+        * orbsvcs/tests/Event/Performance/Connect.dsp:
+        * orbsvcs/tests/Event/Performance/Throughput.dsp:
+        * orbsvcs/tests/Event/lib/ECTest.dsp:
+          Fixed configuration for Win32/Release
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	  Added new files to the TAO project
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Added new files to the TAO project
 
 Tue May 25 12:07:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Makefile:
-	  TAO_HAS_CORBA_MESSAGING is defined in the orbconf.h the user
-	  must comment out that definition to eliminate the CORBA
-	  messaging support.
+        * tao/Makefile:
+          TAO_HAS_CORBA_MESSAGING is defined in the orbconf.h the user
+          must comment out that definition to eliminate the CORBA
+          messaging support.
 
-	* tao/Invocation.cpp:
-	  Added some debugging code (currently commented out) to test the
-	  timeout policies.
-	  If the send() call fails we should return an TAO_INVOKE_RESTART, 
-	  this needs more debugging, but the code there was broken
-	  anyway.
+        * tao/Invocation.cpp:
+          Added some debugging code (currently commented out) to test the
+          timeout policies.
+          If the send() call fails we should return an TAO_INVOKE_RESTART,
+          this needs more debugging, but the code there was broken
+          anyway.
 
-	* tao/Messaging_Policy_i.cpp:
-	* tao/Messaging_Policy_i.h:
-	* tao/Messaging_Policy_i.i:
-	  Added new file for the Messaging policy implementations.
+        * tao/Messaging_Policy_i.cpp:
+        * tao/Messaging_Policy_i.h:
+        * tao/Messaging_Policy_i.i:
+          Added new file for the Messaging policy implementations.
 
-	* tao/MessagingS.h:
-	  Removed declaration of skeletons, the skeletons where in fact
-	  removed, but somehow I missed the files.
+        * tao/MessagingS.h:
+          Removed declaration of skeletons, the skeletons where in fact
+          removed, but somehow I missed the files.
 
-	* tao/orbconf.h:
-	* tao/MessagingC.cpp:
-	  Initialize the Policy_Type constants using macros in orbconf.h
-	  that way we can use the same macros to switch() in the code.
-	  
-	* tao/ORB.h:
-	* tao/ORB.cpp:
-	  Added the create_policy() method, it delegates on the right
-	  class to actually create the policy.
-	  In resolve_initial_references() the hard-coded object ids (such
-	  as "RootPOA") are searched before anything else.
+        * tao/orbconf.h:
+        * tao/MessagingC.cpp:
+          Initialize the Policy_Type constants using macros in orbconf.h
+          that way we can use the same macros to switch() in the code.
 
-	* tao/Stub.h:
-	* tao/Stub.cpp:
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
-	  Added new method to query the default timeout policy in an
-	  efficient way.
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+          Added the create_policy() method, it delegates on the right
+          class to actually create the policy.
+          In resolve_initial_references() the hard-coded object ids (such
+          as "RootPOA") are searched before anything else.
 
-	* tao/Policy_Manager.h:
-	* tao/Policy_Manager.i:
-	* tao/Policy_Manager.cpp:
-	  We keep a pointer to the RelativeRoundtripTimeoutPolicy
-	  *implementation* that way the ORB can speed up its lookups,
-	  minimize memory allocations and in general work in a more
-	  deterministic way.
+        * tao/Stub.h:
+        * tao/Stub.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+          Added new method to query the default timeout policy in an
+          efficient way.
 
-	* tao/corbafwd.h:
-	  Added missing forward declaration for PolicyManager_var,
-	  PolicyCurrent_var and their _out classes.
+        * tao/Policy_Manager.h:
+        * tao/Policy_Manager.i:
+        * tao/Policy_Manager.cpp:
+          We keep a pointer to the RelativeRoundtripTimeoutPolicy
+          *implementation* that way the ORB can speed up its lookups,
+          minimize memory allocations and in general work in a more
+          deterministic way.
+
+        * tao/corbafwd.h:
+          Added missing forward declaration for PolicyManager_var,
+          PolicyCurrent_var and their _out classes.
 
 Tue May 25 11:50:01 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.cpp (ORB_init): Removed out-dated comments.  Thanks to
-	  Irfan for pointing this out.
+        * tao/ORB.cpp (ORB_init): Removed out-dated comments.  Thanks to
+          Irfan for pointing this out.
 
 Tue May 25 11:40:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/orbsvcs/orbsvcs/AV/sfp.cpp:
-	  Initialized 'result' in end_stream()to avoid a compiler
-	  warning.
+        * TAO/orbsvcs/orbsvcs/AV/sfp.cpp:
+          Initialized 'result' in end_stream()to avoid a compiler
+          warning.
 
 Tue May 25 11:21:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.{h,cpp}:
-	  Added a couple of ACE_UNUSED_ARG macros to the
-	  yacc file and regenerated y.tab. Thanks to David
-	  Levine for pointing out the egcs warnings.
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.{h,cpp}:
+          Added a couple of ACE_UNUSED_ARG macros to the
+          yacc file and regenerated y.tab. Thanks to David
+          Levine for pointing out the egcs warnings.
 
 Tue May 25 11:03:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	  Fixed errors in fragment size computation, thanks to J. Russell
-	  Noseworthy <rnosewor@objectsciences.com> for catching this up
-	  and providing a fix.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Fixed errors in fragment size computation, thanks to J. Russell
+          Noseworthy <rnosewor@objectsciences.com> for catching this up
+          and providing a fix.
 
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
-	  Fixed several uses of T_var in calls to _duplicate(), old g++
-	  needs you to call the .in() method explicitly. Thanks to Irfan
-	  for catching this one.
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+          Fixed several uses of T_var in calls to _duplicate(), old g++
+          needs you to call the .in() method explicitly. Thanks to Irfan
+          for catching this one.
 
 Tue May 25 10:06:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Request.cpp: Moved the #endif for TAO_HAS_MINIMUM_CORBA
-	  after the template instantiations.  Thanks to Andreas
-	  <andreas.terstegge@nokia.com> for pointing this out.
+        * tao/Request.cpp: Moved the #endif for TAO_HAS_MINIMUM_CORBA
+          after the template instantiations.  Thanks to Andreas
+          <andreas.terstegge@nokia.com> for pointing this out.
 
 Tue May 25 10:23:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/SOCK_Send_Recv_Test.cpp:
-	  Fixed a signed/unsigned mismatch warning and
-	  changed several uses of static_cast to
-	  reinterpret_cast.
+        * tests/SOCK_Send_Recv_Test.cpp:
+          Fixed a signed/unsigned mismatch warning and
+          changed several uses of static_cast to
+          reinterpret_cast.
 
-	* TAO_IDL/be/be_union.cpp:
-	  Fixed a signed/unsigned mismatch and an unused
-	  variable warning.
+        * TAO_IDL/be/be_union.cpp:
+          Fixed a signed/unsigned mismatch and an unused
+          variable warning.
 
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	  Fixed some 'statement not reached' warnings.
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          Fixed some 'statement not reached' warnings.
 
 Tue May 25 08:23:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
