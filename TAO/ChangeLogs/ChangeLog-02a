@@ -1,3 +1,11 @@
+Sun May  6 9:49:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+
+	  Changed the order of connection to senders and receivers so that
+	  when switiching distributers the old distributer is disconnected 
+	  from the sender before the new distributer is connected.
+	
 Sat May  5 20:31:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
         * orbsvcs/tests/AVStreams/Component_Switching/Makefile:
