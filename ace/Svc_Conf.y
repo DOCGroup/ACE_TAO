@@ -345,7 +345,7 @@ ace_create_service_type (const ASYS_TCHAR *name,
                          int type,
                          void *symbol,
                          u_int flags,
-                         ACE_Service_Object_Exterminator gobbler = 0)
+                         ACE_Service_Object_Exterminator gobbler)
 {
   ACE_Service_Type_Impl *stp = 0;
 
