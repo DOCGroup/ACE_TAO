@@ -2,6 +2,7 @@
 
 #include "ace/Proactor.h"
 #if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+
 // This only works on Win32 platforms and on Unix platforms with aio
 // calls.
 
@@ -12,7 +13,11 @@
 #    include "ace/Service_Config.h"
 #  endif /* !ACE_HAS_WINCE && !ACE_LACKS_ACE_SVCCONF */
 
-ACE_RCSID(ace, Proactor, "$Id$")
+
+ACE_RCSID (ace,
+           Proactor,
+           "$Id$")
+
 
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
@@ -51,7 +56,7 @@ int ACE_Proactor::delete_proactor_ = 0;
  * signaled, the thread will refresh the time it is currently
  * waiting on (in case the earliest time has changed).
  */
-class ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
+class ACE_Proactor_Timer_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 
   /// Proactor has special privileges
@@ -233,6 +238,11 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &,
                        ACE_LIB_TEXT ("Failure in dealing with timers: ")
                        ACE_LIB_TEXT ("PostQueuedCompletionStatus failed\n")),
                       -1);
+
+  // The completion has been posted.  The proactor is now responsible
+  // for managing the asynch_timer memory.
+  (void) safe_asynch_timer.release ();
+
   return 0;
 }
 
