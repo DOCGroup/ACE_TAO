@@ -55,7 +55,8 @@ DIRS  = CDR \
 	Single_Read \
 	QtTests \
 	Multiple \
-	LongWrites
+	LongWrites \
+	Crashed_Callback
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
