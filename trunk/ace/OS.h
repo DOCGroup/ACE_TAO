@@ -3439,8 +3439,7 @@ extern "C" {
 #       include /**/ <cxxdl.h>
 #     endif /* (g++ || HP aC++) vs. HP C++ */
   typedef shl_t ACE_SHLIB_HANDLE;
-  // @@ Steve: can you please fill the correct value for an invalid shl_t.
-  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE;
+  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
   const int ACE_DEFAULT_SHLIB_MODE = BIND_DEFERRED;
 #   else
 #     if !defined(RTLD_LAZY)
