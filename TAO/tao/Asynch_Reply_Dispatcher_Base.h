@@ -98,7 +98,7 @@ protected:
   /// The buffer that is used to initialise the data block
   char buf_[ACE_CDR::DEFAULT_BUFSIZE];
 
-  /// datablock that is created on the stack to initialise the CDR
+  /// Datablock that is created on the stack to initialise the CDR
   /// stream underneath.
   ACE_Data_Block db_;
 
@@ -134,10 +134,10 @@ namespace TAO
    * will not work. Hence this functor will be used with Auto_Functor
    * class to handle the memory safely.
    *
-   * @TODO: Ideally, this class can be a generic class. But that
+   * @todo Ideally, this class can be a generic class. But that
    * requires quite a bit of cleanup within TAO to be more useful.
    */
-  class ARDB_Refcount_Functor
+  class TAO_Export ARDB_Refcount_Functor
   {
   public:
     void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb)
