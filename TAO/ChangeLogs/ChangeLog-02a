@@ -1,3 +1,23 @@
+Tue May 29 13:01:54 2001  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* tao/Strategies/SHMIOP_Acceptor.cpp (open_i):
+	* tao/Strategies/UIOP_Acceptor.cpp (open_i):
+	* tao/IIOP_Acceptor.cpp (open_i):
+
+	In order to fix bug 902, I added the enabling of CLOSE_ON_EXEC
+	for the acceptor sockets used by the above protocols. This is
+	part 1 (of 3) of the solution.
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (start_server_i):
+
+	Since win32 does not support CLOSE_ON_EXEC for individual files, a 
+	slightly more heavy handed solution is needed when spawning child
+	processes and guarantee the ImplRepo server can be restarted if 
+	necessary.  This does not address the problem of identifying which 
+	processes are "owned" by a newly restarted impl repo though. This
+	is part 2 (of 3) of the solution. Part 3 is discussed in $ACE_ROOT/
+	ChangeLog.
+
 Tue May 29 11:19:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:

@@ -318,6 +318,11 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
     }
   this->host_ = tmp_host;
 
+  (void) this->base_acceptor_.acceptor().enable (ACE_CLOEXEC);
+  // This avoids having child processes acquire the listen socket thereby
+  // denying the server the opportunity to restart on a well-known endpoint.
+  // This does not affect the aberrent behavior on Win32 platforms. 
+
   if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
