@@ -8,7 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This is a perl script that runs the NamingContextExt test. It starts 
 # the Naming service, server and the client as necessary
 
-unshift @INC, '../../../../../ACE_wrappers/bin';
+unshift @INC, '../../../../bin';
 require Process;
 require ACEutils;
 use Cwd;
