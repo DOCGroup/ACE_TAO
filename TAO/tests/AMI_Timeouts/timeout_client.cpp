@@ -83,6 +83,7 @@ TimeoutClient::svc ()
       return 1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "TimeoutClient::svc: Done\n\n"));
@@ -111,6 +112,7 @@ TimeoutClient::init ()
       return 1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -136,7 +138,10 @@ TimeoutClient::send (bool async,
               remote_sleep));
      
   CORBA::PolicyList policy_list (1);
-  ACE_TRY_NEW_ENV
+
+  CORBA::Environment ACE_TRY_ENV;
+
+  ACE_TRY_EX (normal)
     {
       if (local_timeout != 0)
         {
@@ -150,12 +155,12 @@ TimeoutClient::send (bool async,
             orb_->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                                 any_orb,
                                 ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_TRY_CHECK_EX (normal);
 
           policy_manager_->set_policy_overrides (policy_list,
                                                  CORBA::SET_OVERRIDE,
                                                  ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_TRY_CHECK_EX (normal);
         }
       else
         {
@@ -163,7 +168,7 @@ TimeoutClient::send (bool async,
           policy_manager_->set_policy_overrides (policy_list,
                                                  CORBA::SET_OVERRIDE,
                                                  ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_TRY_CHECK_EX (normal);
         }
 
 
@@ -181,7 +186,7 @@ TimeoutClient::send (bool async,
           timeoutObject_->sendTimeToWait (remote_sleep, 
                                           ACE_TRY_ENV);
         }
-
+      ACE_TRY_CHECK_EX (normal);
     }
   ACE_CATCH (CORBA::TIMEOUT, timeout)
     {
@@ -193,13 +198,15 @@ TimeoutClient::send (bool async,
 
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 
   // get rid of the policy, you created before.
-  ACE_TRY_NEW_ENV
+  ACE_TRY_EX (cleanup)
     {
       if (local_timeout != 0)
         {
           policy_list[0]->destroy (ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (cleanup);
         }
     }
   ACE_CATCHANY
@@ -208,6 +215,7 @@ TimeoutClient::send (bool async,
                   "Unexpected exception\n\n"));
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 
   // wait for responses
   ACE_Time_Value tv (0, (local_timeout + remote_sleep)*2000); 
