@@ -1,3 +1,12 @@
+Fri Mar 19 01:19:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Server_Request.h:
+	  Typo in comments.
+
+	* tao/Server_Request.cpp:
+	  Fixed IIOP_Server_Request::arguments(), which was
+	  totally broken, with a change suggested by Carlos.
+
 1999-03-18  Seth Widoff  <swidoff@cs.cmu.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
