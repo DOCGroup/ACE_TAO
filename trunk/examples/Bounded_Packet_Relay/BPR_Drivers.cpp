@@ -65,22 +65,17 @@ Bounded_Packet_Relay<ACE_SYNCH_USE>::send_input (void)
   // Don't block, return immediately if queue is empty.
   ACE_Message_Block *item;
 
-  // @@ Chris, I think you can just say
-  // if (queue_.dequeue_head (item, &ACE_Time_Value::zero) == -1)
-  //   return 1;
-  // rather than having to get the current time of day...
-  ACE_Time_Value now = ACE_OS::gettimeofday ();
-
-  if (queue_.dequeue_head (item, &now) < 0)
+  if (queue_.dequeue_head (item,
+                           &ACE_Time_Value::zero) < 0)
     return 1;
 
   // If a message block was dequeued, send it to the output device.
 
   if (output_wrapper_->write_output_message ((void *) item) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%t %p\n", 
                        "failed to write to output device object"), 
                       -1);
-
   // If all went OK, increase count of packets sent.
   ++packets_sent_;
   return 0;
