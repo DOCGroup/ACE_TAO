@@ -40,21 +40,26 @@ public:
    * @brief Keeps track of the various user, system, and elapsed (real)
    * times.
    *
-   * If <ACE_HAS_FLOATING_POINT> is enabled these values are in
-   * microseconds, otherwise, they are in seconds.
+   * @note If @c ACE_HAS_FLOATING_POINT is enabled, these values are in
+   * microseconds; otherwise, they are in seconds.
    */
   class ACE_Elapsed_Time
   {
   public:
+    /// Elapsed wall clock time.
     ACE_timer_t real_time;
+
+    /// CPU time spent in user space.
     ACE_timer_t user_time;
+
+    /// CPU time spent in system space.
     ACE_timer_t system_time;
   };
 
   typedef ACE_Rusage Rusage;
 
   // = Initialization and termination methods.
-  /// Default constructor.
+  /// Default constructor. Clears all time values to 0.
   ACE_Profile_Timer (void);
 
   /// Shutdown the timer.
@@ -68,10 +73,11 @@ public:
   int stop (void);
 
   // = Resource utilization methods.
-  /// Compute the time elapsed since <start>.
+  /// Compute the time elapsed between calls to @c start() and @c stop().
   int elapsed_time (ACE_Elapsed_Time &et);
 
-  /// Compute the amount of resource utilization since the start time.
+  /// Compute the amount of resource utilization between calls to @c start()
+  /// and @c stop().
   void elapsed_rusage (ACE_Profile_Timer::Rusage &rusage);
 
   /// Return the resource utilization (don't recompute it).

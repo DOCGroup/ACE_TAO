@@ -1,3 +1,8 @@
+Thu Jan 10 18:35:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Profile_Timer.h: Clarified that elapsed_time() calculates time
+          from start() to stop(). Improved Doxygenation.
+
 Thu Jan 10 16:53:41 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Service_Configurator/IPC-tests/server/server.dsp: The
