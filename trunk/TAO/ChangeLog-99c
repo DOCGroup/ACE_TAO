@@ -1,3 +1,9 @@
+Mon Apr 12 14:24:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.cpp:
+	  The resolve_policy_manager() and resolve_policy_current() only
+	  worked if TAO_HAS_CORBA_MESSAGING was defined.
+
 Mon Apr 12 14:19:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * LifeCycle_Service/Makefile,tests/Property/Makefile,
