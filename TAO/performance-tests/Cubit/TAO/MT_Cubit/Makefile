@@ -1699,7 +1699,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Basic_Stats.h \
   $(ACE_ROOT)/ace/Basic_Stats.inl \
   $(ACE_ROOT)/ace/Stats.i \
-  $(TAO_ROOT)/tao/TAO_Internal.h
+  $(TAO_ROOT)/tao/TAO_Internal.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
