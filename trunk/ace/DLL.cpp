@@ -5,19 +5,38 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
+#include "ace/DLL_Manager.h"
 
 ACE_RCSID(ace, DLL, "$Id$")
 
 // Default constructor. Also, by default, the object will be closed
 // before it is destroyed.
 
-sig_atomic_t ACE_DLL::open_called_ = 0;
-
 ACE_DLL::ACE_DLL (int close_on_destruction)
-  : handle_ (ACE_SHLIB_INVALID_HANDLE),
+  : open_mode_ (0),
+    dll_name_ (0),
     close_on_destruction_ (close_on_destruction),
-    last_error_ (0)
+    dll_handle_ (0),
+    error_ (0)
 {
+  ACE_TRACE ("ACE_DLL::ACE_DLL (int)");
+}
+
+ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
+{
+  ACE_TRACE ("ACE_DLL::ACE_DLL (const ACE_DLL &)");
+
+  // Have to do this since open() calls close()...
+  this->dll_handle_ = 0;
+  this->dll_name_ = 0;
+  this->close_on_destruction_ = 1;
+  this->error_ = 0;
+
+  // This will automatically up the refcount.
+  if (this->open (rhs.dll_name_, rhs.open_mode_, this->close_on_destruction_) != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_LIB_TEXT ("%s\n"),
+                this->error ()));
 }
 
 // If the library name and the opening mode are specified than on
@@ -26,11 +45,15 @@ ACE_DLL::ACE_DLL (int close_on_destruction)
 ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
                   int open_mode,
                   int close_on_destruction)
-  : handle_ (ACE_SHLIB_INVALID_HANDLE),
+  : open_mode_ (open_mode),
+    dll_name_ (0),
     close_on_destruction_ (close_on_destruction),
-    last_error_ (0)
+    dll_handle_ (0),
+    error_ (0)
 {
-  if (this->open (dll_name, open_mode, close_on_destruction) != 0)
+  ACE_TRACE ("ACE_DLL::ACE_DLL");
+
+  if (this->open (dll_name, this->open_mode_, close_on_destruction) != 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%s\n"),
                 this->error ()));
@@ -42,10 +65,9 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
 
 ACE_DLL::~ACE_DLL (void)
 {
-  // CLose the library only if it hasn't been already.
-  this->close ();
+  ACE_TRACE ("ACE_DLL::~ACE_DLL");
 
-  ACE::strdelete (this->last_error_);
+  this->close ();
 }
 
 // This method opens the library based on the mode specified using the
@@ -64,55 +86,47 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
                int open_mode,
                int close_on_destruction)
 {
-  // Recored that open has been called, use by error().
-  this->open_called_ = 1;
+  ACE_TRACE ("ACE_DLL::open");
 
-  // This check is necessary as the library could be opened more than
-  // once without closing it which would cause handle memory leaks.
-  this->close ();
+  return open_i (dll_filename, open_mode, close_on_destruction);
+}
 
-  // Reset the flag
+int
+ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
+                 int open_mode,
+                 int close_on_destruction,
+                 ACE_SHLIB_HANDLE handle)
+{
+  ACE_TRACE ("ACE_DLL::open");
+  
+  this->error_ = 0;
+
+  if (!dll_filename)
+    return -1;
+
+  if (this->dll_handle_)
+    {
+      // If we have a good handle and its the same name, just return.
+      if (ACE_OS_String::strcmp (this->dll_name_, dll_filename) == 0)
+        return 0;
+      else
+        this->close ();
+    }
+  if (!this->dll_name_)
+    {
+      this->dll_name_ = ACE::strnew (dll_filename);
+    }
+  this->open_mode_ = open_mode;
   this->close_on_destruction_ = close_on_destruction;
 
-  // Find out where the library is
-  ACE_TCHAR dll_pathname[MAXPATHLEN + 1];
+  this->dll_handle_ = ACE_DLL_Manager::instance()->open_dll (this->dll_name_, 
+                                                             this->open_mode_,
+                                                             handle);
 
-  // Transform the pathname into the appropriate dynamic link library
-  // by searching the ACE_LD_SEARCH_PATH.
-  ACE_Lib_Find::ldfind (dll_filename,
-                        dll_pathname,
-                        (sizeof dll_pathname / sizeof (ACE_TCHAR)));
+  if (!this->dll_handle_)
+    this->error_ = 1;
 
-  // The ACE_SHLIB_HANDLE object is obtained.
-  this->handle_ = ACE_OS::dlopen (dll_pathname,
-                                  open_mode);
-
-#if defined (AIX)
-  if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
-    {
-      // AIX often puts the shared library file (most often named shr.o)
-      // inside an archive library. If this is an archive library
-      // name, then try appending [shr.o] and retry.
-      if (0 != ACE_OS_String::strstr (dll_pathname, ACE_LIB_TEXT (".a")))
-        {
-          ACE_OS_String::strcat (dll_pathname, ACE_LIB_TEXT ("(shr.o)"));
-          open_mode |= RTLD_MEMBER;
-          this->handle_ = ACE_OS::dlopen (dll_pathname, open_mode);
-        }
-    }        
-#endif /* AIX */
-
-  // Always set last error.
-  this->save_last_error();
-      
-  if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("%s\n"), this->error ()),
-                        -1);
-    }
-
-  return 0;
+  return this->error_ ? -1 : 0;
 }
 
 // The symbol refernce of the name specified is obtained.
@@ -120,10 +134,14 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
 void *
 ACE_DLL::symbol (const ACE_TCHAR *sym_name)
 {
-  void *sym =  ACE_OS::dlsym (this->handle_, sym_name);
+  ACE_TRACE ("ACE_DLL::symbol");
 
-  // Always set last error.
-  this->save_last_error ();
+  this->error_ = 0;
+
+  void *sym = this->dll_handle_->symbol (sym_name);
+
+  if (!sym)
+    this->error_ = 1;
 
   return sym;
 }
@@ -134,35 +152,20 @@ ACE_DLL::symbol (const ACE_TCHAR *sym_name)
 int
 ACE_DLL::close (void)
 {
+  ACE_TRACE ("ACE_DLL::close");
   int retval = 0;
 
-  // The handle is checked to see whether the library is closed
-  // already and the <close_on_destruction_> flag is specified.  If
-  // not, it is closed and the handle is made invalid to indicate that
-  // it's now closed.
-  if (this->close_on_destruction_ != 0 &&
-      this->handle_ != ACE_SHLIB_INVALID_HANDLE)
-    {
-      retval = ACE_OS::dlclose (this->handle_);
+  if (this->close_on_destruction_ && this->dll_name_ &&
+      (retval = ACE_DLL_Manager::instance ()->close_dll (this->dll_name_)) != 0)
+    this->error_ = 1;
 
-      // Always set last error.
-      this->save_last_error ();
-   }
+  // Even if close_dll() failed, go ahead and cleanup.
+  this->dll_handle_ = 0;
+  delete this->dll_name_;
+  this->dll_name_ = 0;
+  this->close_on_destruction_ = 0;
 
-  this->handle_ = ACE_SHLIB_INVALID_HANDLE;
   return retval;
-}
-
-// This method is used to save the last error of a library operation.
-
-void
-ACE_DLL::save_last_error (void)
-{
-  if (this->open_called_)
-    {
-      ACE::strdelete (this->last_error_);
-      this->last_error_ = ACE::strnew (ACE_OS::dlerror ());
-    }
 }
 
 // This method is used return the last error of a library operation.
@@ -170,7 +173,11 @@ ACE_DLL::save_last_error (void)
 ACE_TCHAR *
 ACE_DLL::error (void) const
 {
-  return this->last_error_;
+  ACE_TRACE ("ACE_DLL::error");
+  if (this->error_)
+    return ACE_LIB_TEXT ("Error:  check log for details.");
+
+  return 0; 
 }
 
 // Return the handle to the user either temporarily or forever, thus
@@ -178,16 +185,16 @@ ACE_DLL::error (void) const
 // means the user temporarily wants to take the handle.
 
 ACE_SHLIB_HANDLE
-ACE_DLL::get_handle (int become_owner)
+ACE_DLL::get_handle (int become_owner) const
 {
-  // Since the caller is becoming the owner of the handle we lose
-  // rights to close it on destruction.  The new controller has to do
-  // it explicitly.
-  if (become_owner)
-    this->close_on_destruction_ = 0;
+  ACE_TRACE ("ACE_DLL::get_handle");
 
-  // Return the handle requested by the user.
-  return this->handle_;
+  ACE_SHLIB_HANDLE handle = ACE_SHLIB_INVALID_HANDLE;
+
+  if (this->dll_handle_)
+    handle = this->dll_handle_->get_handle (become_owner);
+
+  return handle;  
 }
 
 // Set the handle for the DLL. By default, the object will be closed
@@ -197,14 +204,13 @@ int
 ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle,
                      int close_on_destruction)
 {
-  // Close the handle in use before accepting the next one.
-  if (this->close () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%s\n"), this->error ()),
-                      -1);
+  ACE_TRACE ("ACE_DLL::set_handle");
 
-  this->handle_ = handle;
-  this->close_on_destruction_ = close_on_destruction;
+  // Create a unique name.  Note that this name is only quaranteed
+  // to be unique for the life of this object.
+  ACE_TCHAR temp[ACE_UNIQUE_NAME_LEN];
+  ACE_OS::unique_name (this, temp, ACE_UNIQUE_NAME_LEN);
 
-  return 0;
+  return this->open_i (temp, 1, close_on_destruction, handle);
 }
+

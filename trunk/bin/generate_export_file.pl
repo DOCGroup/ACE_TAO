@@ -126,6 +126,22 @@ $epilogue = "
 #  define -UC-_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
 #endif /* -UC-_HAS_DLL == 1 */
 
+// Set -UC-_NTRACE = 0 to turn on library specific tracing even if
+// tracing is turned off for ACE.
+#if !defined (-UC-_NTRACE)
+#  if (ACE_NTRACE == 1)
+#    define -UC-_NTRACE 1
+#  else /* (ACE_NTRACE == 1) */
+#    define -UC-_NTRACE 0
+#  endif /* (ACE_NTRACE == 1) */
+#endif /* !-UC-_NTRACE */
+
+#if (-UC-_NTRACE == 1)
+#  define -UC-_TRACE(X)
+#else /* (-UC-_NTRACE == 1) */
+#  define -UC-_TRACE(X) ACE_TRACE_IMPL(X)
+#endif /* (-UC-_NTRACE == 1) */
+
 #endif /* -UC-_EXPORT_H */
 
 // End of auto generated file.

@@ -364,7 +364,7 @@ public:
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
   static ACE_Service_Type *create_service_type  (const ACE_TCHAR *n,
                                                  ACE_Service_Type_Impl *o,
-                                                 const ACE_SHLIB_HANDLE handle,
+                                                 ACE_DLL &dll,
                                                  int active);
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
 

@@ -17,10 +17,11 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "DLL_Test.h"
 #include "ace/DLL.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/ACE.h"
+#include "ace/DLL_Manager.h"
+#include "DLL_Test.h"
 
 ACE_RCSID(tests, DLL_Test, "$Id$")
 
@@ -39,21 +40,27 @@ ACE_RCSID(tests, DLL_Test, "$Id$")
 // Declare the type of the symbol:
 typedef Hello *(*Hello_Factory)(void);
 
-int
-ACE_TMAIN (int, ACE_TCHAR *[])
+int handle_test (ACE_DLL &dll)
 {
-  ACE_START_TEST (ACE_TEXT ("DLL_Test"));
+  // Test the get/set_handle methods.
+  ACE_DLL local_dll;
 
-// Protection against this test being run on platforms not supporting Dlls.
-#if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
-    defined (__hpux)
+  ACE_SHLIB_HANDLE handle = dll.get_handle (1);
+  if (handle != ACE_SHLIB_INVALID_HANDLE)
+    {
+      if (local_dll.set_handle (handle) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Error setting handle.\n")),
+                          -1);
+      return 0;
+    }
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT ("Error getting handle.\n")),
+                    -1);
+}
 
-  ACE_DLL dll;
-
-  // This is just to make sure that it's safe to call error() at any time, i.e.,
-  // it shouldn't seg-fault.
-  ACE_TCHAR *dll_error = dll.error ();
-
+int basic_test (ACE_DLL &dll)
+{
 #if defined (__KCC)
   /* With KCC, turning on close-on-destruction will cause problems
      when libKCC tries to call dtors. */
@@ -70,7 +77,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   if (retval != 0)
     {
-      dll_error = dll.error ();
+      ACE_TCHAR *dll_error = dll.error ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Error in DLL Open: %s\n"), 
                          dll_error ? dll_error : ACE_TEXT ("unknown error")),
@@ -82,9 +89,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // TC f = (Hello_Factory) dll.symbol ("get_hello");
   void *foo;
 
-  ACE_TCHAR *cdecl_str = ACE::ldname (ACE_TEXT ("get_hello"));
-  foo = dll.symbol (cdecl_str);
-  delete[] cdecl_str;
+  foo = dll.symbol (ACE_TEXT ("get_hello"));
 
   // Cast the void* to long first.
   long tmp = ACE_reinterpret_cast (long, foo);
@@ -111,13 +116,36 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Result for malloc_info(): %s\n"), malloc_str));
   ACE_OS_Memory::free (malloc_str);
 
+  return 0;
+}
+
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  ACE_START_TEST (ACE_TEXT ("DLL_Test"));
+
+// Protection against this test being run on platforms not supporting Dlls.
+#if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
+    defined (__hpux)
+
+  ACE_DLL dll;
+
+  int retval = 0;
+
+  retval += basic_test (dll);
+
+  retval += handle_test (dll);
+
+  // Call close here so that any errors make it into the log.
+  dll.close ();
+
 #else
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("Dynamically Linkable Libraries not supported on this platform\n")));
 #endif /* ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux */
 
   ACE_END_TEST;
-  return 0;
+  return retval == 0 ? 0 : 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -1,0 +1,17 @@
+#
+# $Id$
+#
+
+NAME = Framework_Component_DLL
+
+TARGET = $(BINDIR)\$(NAME).dll
+
+OBJFILES = $(OBJDIR)\Framework_Component_DLL.obj
+
+CFLAGS = $(ACE_CFLAGS) -DACE_SVC_HAS_DLL=1 -DACE_BUILD_SVC_DLL=1
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_dll.bor>

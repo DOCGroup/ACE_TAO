@@ -25,3 +25,13 @@ template <class TYPE, class ACE_LOCK> ACE_INLINE
 ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::ACE_Unmanaged_TSS_Singleton (void)
 {
 }
+
+template <class TYPE, class ACE_LOCK> ACE_INLINE
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::ACE_DLL_Singleton_T (void)
+{
+}
+
+template <class TYPE, class ACE_LOCK>
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::~ACE_DLL_Singleton_T (void)
+{
+}

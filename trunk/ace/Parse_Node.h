@@ -201,7 +201,7 @@ public:
   ACE_Location_Node (void);
   virtual void *symbol (ACE_Service_Object_Exterminator * = 0) = 0;
   virtual void set_symbol (void *h);
-  ACE_SHLIB_HANDLE handle (void);
+  const ACE_DLL &dll (void);
   const ACE_TCHAR *pathname (void) const;
   void pathname (const ACE_TCHAR *h);
   int dispose (void) const;
