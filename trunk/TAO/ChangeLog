@@ -1,3 +1,19 @@
+Thu Dec 11 22:22:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/RTScheduling/VoidData/Makefile:
+
+	  Added IDL compiler options. 
+
+	* tests/RTScheduling/VoidData/test.idl: 
+
+	  Cosmetic fix.
+	
+	* examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
+	* examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
+	* examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
+
+	  Added RTScheduler_include.idl instead of the regular file. 
+
 Thu Dec 11 17:04:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Consumer.cpp:
