@@ -1,14 +1,20 @@
+Sat Mar 10 16:35:19 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_run_tests.lst:
+          Add new tests: Muxing, Crashed_Callback, Client_Leaks and
+          Server_Leaks to the nightly runs.
+
 Sat Mar 10 17:55:53 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * include/makeinclude: Zapped the platform_linux_pthread.GNU,
-	  platform_linux_lxpthread.GNU, and platform_linux_lxpthreads.GNU
- 	  files since they are confusing and shouldn't not be used in
- 	  favor of platform_linux.GNU.
-	
-	* ace: Zapped the config-linux.pthread.h and config-linux-lxpthreads.h
-	  file since they are confusing and shouldn't not be used in favor
- 	  of config-linux.h.  Thanks to Craig Rodrigues for this
- 	  suggestion.
+          platform_linux_lxpthread.GNU, and platform_linux_lxpthreads.GNU
+          files since they are confusing and shouldn't not be used in
+          favor of platform_linux.GNU.
+
+        * ace: Zapped the config-linux.pthread.h and config-linux-lxpthreads.h
+          file since they are confusing and shouldn't not be used in favor
+          of config-linux.h.  Thanks to Craig Rodrigues for this
+          suggestion.
 
 Sat Mar 10 12:39:16 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -16,39 +22,39 @@ Sat Mar 10 12:39:16 2001  Craig Rodrigues  <crodrigu@bbn.com>
         * ace/WFMO_Reactor.h:
         * ace/Select_Reactor_T.h:
         * ace/Reactor_Impl.h:
-            Cleaned up comment for schedule_timer() 
+            Cleaned up comment for schedule_timer()
 
 Sat Mar 10 07:05:16 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests: Added Logging_Strategy_Test.cpp.  Thanks to Orlando
- 	  Ribeiro <oribeiro@inescporto.pt> for contributing this.
+        * tests: Added Logging_Strategy_Test.cpp.  Thanks to Orlando
+          Ribeiro <oribeiro@inescporto.pt> for contributing this.
 
-	* tests/Makefile (BIN): Added Logging_Strategy_Test.
+        * tests/Makefile (BIN): Added Logging_Strategy_Test.
 
-	* tests/run_test.lst: Added Log_Msg_Test and
- 	  the new Logging_Strategy_Test.
+        * tests/run_test.lst: Added Log_Msg_Test and
+          the new Logging_Strategy_Test.
 
-	* tests/Log_Msg_Test.cpp: Added ACE_TEXT macros to all the ACE_DEBUG and
-	  ACE_ERROR calls.
+        * tests/Log_Msg_Test.cpp: Added ACE_TEXT macros to all the ACE_DEBUG and
+          ACE_ERROR calls.
 
-	* ace/Service_Manager.{h,cpp}: Refactored the request processing
- 	  code so that it's in a single place.  Also, added support to
- 	  enable remote reconfiguration.  Thanks to Mike Curtis
- 	  <mccurry@my-deja.com> for contributing this.
+        * ace/Service_Manager.{h,cpp}: Refactored the request processing
+          code so that it's in a single place.  Also, added support to
+          enable remote reconfiguration.  Thanks to Mike Curtis
+          <mccurry@my-deja.com> for contributing this.
 
-	* ace/Logging_Strategy.cpp (parse_args): Fixed a mistaken
-	  re-initialization of the thread_priority_mask_ and the
- 	  process_priority_mask_.  Thanks to Martin Krumpolec
- 	  <krumpo@pobox.sk> for reporting this.
+        * ace/Logging_Strategy.cpp (parse_args): Fixed a mistaken
+          re-initialization of the thread_priority_mask_ and the
+          process_priority_mask_.  Thanks to Martin Krumpolec
+          <krumpo@pobox.sk> for reporting this.
 
-	* ace/Local_Name_Space_T.cpp (create_manager_i): Fixed this code so that
-	  it doesn't fail if run on a directory that doesn't support locks
- 	  (like some NFS mounts).  Thanks to scott snyder
- 	  <snyder@fnal.gov> for reporting this.
+        * ace/Local_Name_Space_T.cpp (create_manager_i): Fixed this code so that
+          it doesn't fail if run on a directory that doesn't support locks
+          (like some NFS mounts).  Thanks to scott snyder
+          <snyder@fnal.gov> for reporting this.
 
-	* tests/SOCK_Connector_Test.cpp: Split up a loop so that the test
-	  doesn't hang on RedHat Linux 7.0.  Thanks to Michael Searles
- 	  <msearles@base16.com> for this fix.
+        * tests/SOCK_Connector_Test.cpp: Split up a loop so that the test
+          doesn't hang on RedHat Linux 7.0.  Thanks to Michael Searles
+          <msearles@base16.com> for this fix.
 
 Fri Mar  9 22:39:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -59,12 +65,12 @@ Fri Mar  9 22:39:28 2001  Carlos O'Ryan  <coryan@uci.edu>
           services into the repository, this factors out common code used
           in the ORB and ACE.  In general it fixes the hacks done this
           past Feb 20th
-        
+
 Fri Mar  9 16:47:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * bin/nightlybuilds/builds.lst (LIST):
           Added HPUX to the scoreboard.
-        
+
 Fri Mar  9 14:34:34 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * PACE/Makefile:

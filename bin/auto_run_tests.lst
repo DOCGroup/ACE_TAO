@@ -31,9 +31,13 @@ TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Private_Connection/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !MINIMUM
+TAO/tests/Muxing/run_test.pl: !ST
 TAO/tests/MT_Client/run_test.pl: !ST
 TAO/tests/MT_Server/run_test.pl: !ST
+TAO/tests/Client_Leaks/run_test.pl
+TAO/tests/Server_Leaks/run_test.pl
 TAO/tests/Faults/run_test.pl: !MINIMUM
+TAO/tests/Crashed_Client/run_test.pl: !MINIMUM
 TAO/tests/NestedUpcall/Simple/run_test.pl: !ST
 TAO/tests/NestedUpcall/MT_Client_Test/run_test.pl
 TAO/tests/NestedUpcall/Triangle_Test/run_test.pl
