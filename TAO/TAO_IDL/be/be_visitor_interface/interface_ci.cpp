@@ -68,13 +68,15 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
   // Generate the constructor from stub and servant.
   if (! node->is_local ())
     {
+      os->gen_ifdef_macro (node->flat_name (), "");
       *os << "ACE_INLINE" << be_nl;
       *os << node->name () << "::" << node->local_name () <<
         " (TAO_Stub *objref, TAO_ServantBase *_tao_servant, "
           << "CORBA::Boolean _tao_collocated) // constructor" << be_nl;
       *os << "  : CORBA_Object (objref, _tao_servant, _tao_collocated)"
           << be_nl;
-      *os << "{}" << be_nl << be_nl;
+      *os << "{}" << be_nl;
+      os->gen_endif ();
     }
 
   // generate the ifdefined macro for  the _var type

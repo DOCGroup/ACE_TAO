@@ -748,9 +748,79 @@ AST_Module::add_CORBA_members (void)
 # endif /* IDL_HAS_VALUETYPE */
 }
 
+void
+AST_Module::add_to_previous (AST_Module *m)
+{
+  // Here, we depend on the scope iterator in
+  // be_generator::create_module (which calls this function)
+  // to return items in the order they were declared or included.
+  // That means that the last module returned that matches the name
+  // of this one will have all the decls from all previous
+  // reopenings in its previous_ member.
+  this->previous_ = m->previous_;
+
+  UTL_ScopeActiveIterator *i =
+    new UTL_ScopeActiveIterator (DeclAsScope (m),
+                                 UTL_Scope::IK_decls);
+
+  AST_Decl *d = 0;
+
+  while (!i->is_done ())
+    {
+      d = i->item ();
+
+      // Add all the previous opening's decls (except
+      // for the predefined types) to the 'previous' list
+      // of this one.
+      if (d->node_type () != AST_Decl::NT_pre_defined)
+        {
+          this->previous_.insert (d);
+        }
+
+      i->next ();
+    }
+
+  delete i;
+}
+
+AST_Decl *
+AST_Module::look_in_previous (Identifier *e)
+{
+  AST_Decl *d = 0;
+  ACE_Unbounded_Set_Iterator<AST_Decl *> iter (this->previous_);
+
+  while (!iter.done ())
+    {
+      d = *iter;
+
+      if (e->case_compare (d->local_name ()))
+        {
+          return d;
+        }
+
+      iter++;
+    }
+
+  return 0;
+}
+
 /*
  * Narrowing methods
  */
 IMPL_NARROW_METHODS2(AST_Module, AST_Decl, UTL_Scope)
 IMPL_NARROW_FROM_DECL(AST_Module)
 IMPL_NARROW_FROM_SCOPE(AST_Module)
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Node<AST_Decl *>;
+template class ACE_Unbounded_Set<AST_Decl *>;
+template class ACE_Unbounded_Set_Iterator<AST_Decl *>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Node<AST_Decl *>
+#pragma instantiate ACE_Unbounded_Set<AST_Decl *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<AST_Decl *>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
