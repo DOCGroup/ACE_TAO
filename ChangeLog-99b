@@ -18,7 +18,7 @@ Thu Apr 22 19:30:01 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  class.
 
 	* tests/Env_Value_Test.cpp (main): Fixed UNICODE string
-	  concatination problem.
+	  concatenation problem.
 
 	* tests/version_tests: Added a bunch of missing project files.
 
