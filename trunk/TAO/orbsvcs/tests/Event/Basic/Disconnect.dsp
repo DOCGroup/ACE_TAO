@@ -93,10 +93,6 @@ SOURCE=.\Disconnect.h
 # Begin Group "Source Files"
 
 # PROP Default_Filter ".cpp"
-# Begin Source File
-
-SOURCE=.\Disconnect.cpp
-# End Source File
 # End Group
 # End Target
 # End Project
