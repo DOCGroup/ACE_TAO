@@ -12,6 +12,7 @@ CC {
   cxx       = CC
   pic       = -KPIC
   shflags   = -G
+  linkflags = -library=Cstd -library=Crun
   platforms = solaris
 }
 

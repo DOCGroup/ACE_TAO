@@ -19,6 +19,11 @@ SHLIB         = lib<%sharedname%>.$(SOEXT)
 SOEXT         = <%soext%>
 <%endfor%>
 <%foreach(configurations)%>
+<%if(cppflags)%>
+CPPFLAGS     += <%cppflags%>
+<%endif%>
+<%endfor%>
+<%foreach(configurations)%>
 CPPFLAGS     += <%pic%>
 SHFLAGS       = <%shflags%>
 <%endfor%>
@@ -35,6 +40,11 @@ CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
 <%if(libpaths)%>
 LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
 <%endif%>
+<%foreach(configurations)%>
+<%if(linkflags)%>
+LDFLAGS     += <%linkflags%>
+<%endif%>
+<%endfor%>
 <%foreach(platforms)%>
 LDLIBS       += <%ldlibs%>
 <%endfor%>
