@@ -29,15 +29,12 @@ public class java_server {
                        + orb.object_to_string(test)
                        + ">");
 
-    orb.run ();
-
-    /*
+    try {
       Thread.currentThread().join();
     }
     catch(InterruptedException e) {
       System.out.println(e);
     }
-    */
   }
 
 }
