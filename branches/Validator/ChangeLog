@@ -1,3 +1,12 @@
+Sat Nov 16 21:18:55 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/parser/parser/Parser.h:
+
+          More bugs fixed. Add support for parsing PE references within
+          attribute list declarations and clean up the same. Add support
+          for parsing PE references within element declarations.
+
 Tue Nov 12 19:48:34 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/parser/parser/ParserContext.cpp:
