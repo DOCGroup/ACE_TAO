@@ -16,7 +16,7 @@ BOOST_INCLUDE ?=
 
 UTILITY_ROOT        ?=
 UTILITY_INCLUDE     ?=
-UTILITY_BUILD_RULES ?=
+UTILITY_BUILD_RULES ?=/usr/share/libutility-dev/BuildRules
 
 
 # You normally would not want to edit anything below.
