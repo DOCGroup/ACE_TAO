@@ -25,6 +25,7 @@
 #include "idl_defines.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_sys_stat.h"
 #include "ace/os_include/os_ctype.h"
 
 ACE_RCSID (be,
@@ -117,7 +118,9 @@ be_change_idl_file_extension (UTL_String* idl_file,
   // @@ This shouldn't happen anyway; but a better error handling
   // mechanism is needed.
   if (idl_file == 0 || new_extension == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   static char fname[MAXPATHLEN];
   ACE_OS::memset (fname, 0, MAXPATHLEN);
@@ -135,16 +138,23 @@ be_change_idl_file_extension (UTL_String* idl_file,
     ".IDL",
     ".PIDL"
   };
+  
   static int nextensions = sizeof(extensions)/sizeof(extensions[0]);
 
   for (int k = 0; k < nextensions; ++k)
     {
       base = ACE_OS::strstr (string, extensions[k]);
+      
       if (base != 0)
-        break;
+        {
+          break;
+        }
     }
+    
   if (base == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   if ((!base_name_only) && (be_global->output_dir () != 0))
     {
@@ -157,23 +167,32 @@ be_change_idl_file_extension (UTL_String* idl_file,
       ACE_OS::strncpy (fname + strlen (fname), string, base - string);
     }
   else
-    // Base_name_only or no putput_dir specified by user. JUST put the
-    // base part to fname.
-    ACE_OS::strncpy (fname, string, base - string);
+    {
+      // Base_name_only or no putput_dir specified by user. JUST put the
+      // base part to fname.
+      ACE_OS::strncpy (fname, string, base - string);
+    }
 
   // Turn '\' and '\\' into '/'.
   char* i = fname;
+  
   for (char* j = fname; *j != 0; ++i, ++j)
     {
       if (*j == '\\')
         {
           *i = '/';
+          
           if (*(j+1) == '\\')
-            ++j;
+            {
+              ++j;
+            }
         }
       else
-        *i = *j;
+        {
+          *i = *j;
+        }
     }
+    
   *i = 0;
 
   // Append the newextension.
@@ -1265,6 +1284,20 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == '\0')
           {
             idl_global->append_idl_flag (av[i + 1]);
+            int result = ACE_OS::mkdir (av[i + 1]);
+            
+            if (result != 0 && errno != EEXIST)
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: unable to create directory %s")
+                    ACE_TEXT (" specified by -o option\n"),
+                    av[i + 1]
+                  ));
+
+                ACE_OS::exit (99);
+              }
+
             be_global->output_dir (av [i + 1]);
             i++;
           }

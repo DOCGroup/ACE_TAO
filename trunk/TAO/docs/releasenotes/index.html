@@ -279,11 +279,11 @@ WFMO_Reactor_Test, Timer_Cancellation_Test</ul>
 <h3>
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:j.parsons@vanderbilt.edu">Jeff Parsons</a>
-<p>Current status: (As of August 14, 2004.)
+<p>Current status: (As of October 25, 2004.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
-C++ mapping for CORBA 2.3 (Document ptc/98-09-03).</li>
+C++ mapping for CORBA 3.0 (Document ptc/03-06-03).</li>
 
 <li>
 IDL compiler is now able to generate code that support native C++ exceptions
@@ -635,6 +635,13 @@ in order to add CCM equivalent IDL to the AST. There is a new tool in CIAO
 which converts IDL files by replacing IDL3 constructs with equivalent IDL2
 constructs, and if the IDL compiler is run on these files, we do not want
 the CCM preprocessing to occur.
+</li>
+
+<li>
+Changed the behavior of the -o option to create the specified directory
+if it does not already exist. Only one level of directory can be created
+with this option (any path prefix included must already exist).
+If the specified directory already exists, no action is taken.
 </li>
 </ul>
 
