@@ -1,3 +1,19 @@
+Fri Oct  9 17:13:32 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: Used the host and
+  	  pid to get a unique names for the vdev and streamendpoint objects
+  	  to register with the Naming Service while using the Process
+  	  Endpoint strategy. This will avoid name clashes between the audio and
+  	  video process. 
+  
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp: Used the child's host
+   	  and pid to lookup for Vdev and streamendpoint for the process
+	  endpoint strategy.
+	
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Removed the code that used
+	  _out variable to pacify sun_CC warnings. Sun_CC doesn't complain
+  	  anymore.
+	
 Fri Oct  9 16:44:14 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Receiver.idl: 
