@@ -255,5 +255,8 @@ public:
   // the protocol
 };
 
+typedef ACE_Singleton<JAWS_Asynch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
+        JAWS_Asynch_IO_Handler_Factory_Singleton;
+
 #endif /* ACE_WIN32 */
 #endif /* JAWS_IO_HANDLER_H */

@@ -5,6 +5,7 @@
 #include "JAWS/Server.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/Concurrency.h"
+#include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/IO_Acceptor.h"
 #include "JAWS/Pipeline_Tasks.h"
@@ -42,19 +43,41 @@ JAWS_Server::init (int argc, char *argv[])
   JAWS_Thread_Per_Singleton::instance ()->open (this->flags_,
                                                 this->maxthreads_);
 
+  if (this->concurrency_ == 1)
+    this->policy_.concurrency (JAWS_Thread_Per_Singleton::instance ());
+  else
+    this->policy_.concurrency (JAWS_Thread_Pool_Singleton::instance ());
+
+#if !defined (ACE_WIN32)
+  this->dispatch_ = 0;
+#endif /* !defined (ACE_WIN32) */
+
+  if (this->dispatch_ == 1)
+    {
+#if defined (ACE_WIN32)
+      this->policy_.io (JAWS_Asynch_IO_Singleton::instance ());
+      this->policy_.ioh_factory
+        (JAWS_Asynch_IO_Handler_Factory_Singleton::instance ());
+      this->policy_.acceptor (JAWS_IO_Asynch_Acceptor_Singleton::instance ());
+#endif /* defined (ACE_WIN32) */
+    }
+  else
+    {
+      this->policy_.io (JAWS_Synch_IO_Singleton::instance ());
+      this->policy_.ioh_factory
+        (JAWS_Synch_IO_Handler_Factory_Singleton::instance ());
+      this->policy_.acceptor (JAWS_IO_Synch_Acceptor_Singleton::instance ());
+    }
+
 }
 
 int
-JAWS_Server::open (JAWS_Pipeline_Handler *protocol)
+JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
+                   JAWS_Dispatch_Policy *policy)
 {
-  JAWS_Synch_IO_Handler_Factory synch_factory;
-#if defined (ACE_WIN32)
-  JAWS_Asynch_IO_Handler_Factory asynch_factory;
-#else
-  JAWS_Synch_IO_Handler_Factory &asynch_factory = synch_factory;
-#endif /* defined (ACE_WIN32) */
+  if (policy == 0)
+    policy = &this->policy_;
 
-  JAWS_IO_Handler_Factory *factory;
   JAWS_IO_Handler *handler;
   JAWS_Data_Block *db;
 
@@ -63,11 +86,10 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol)
   JAWS_IO_Asynch_Acceptor_Singleton::instance ()->open (inet_addr);
 
   // initialize an IO_Handler
-  factory = (this->dispatch_ == 0) ? &synch_factory : &asynch_factory;
-  handler = factory->create_io_handler ();
+  handler = policy->ioh_factory ()->create_io_handler ();
   if (handler == 0)
     {
-      factory->destroy_io_handler (handler);
+      policy->ioh_factory ()->destroy_io_handler (handler);
       ACE_DEBUG ((LM_DEBUG, "JAWS_Server::open, can't create handler\n"));
       return -1;
     }
@@ -78,7 +100,7 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol)
   db = new JAWS_Data_Block;
   if (db == 0)
     {
-      factory->destroy_io_handler (handler);
+      policy->ioh_factory ()->destroy_io_handler (handler);
       ACE_DEBUG ((LM_DEBUG, "JAWS_Server::open, can't create data block\n"));
       return -1;
     }
@@ -91,13 +113,7 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol)
 
   ACE_Message_Block mb (db);
 
-  JAWS_Concurrency_Base *concurrency;
-  concurrency = (this->concurrency_ == 0)
-    ? JAWS_Thread_Pool_Singleton::instance ()
-    : JAWS_Thread_Per_Singleton::instance ()
-    ;
-
-  concurrency->put (&mb);
+  policy->concurrency ()->put (&mb);
 
   while (ACE_OS::thr_join (0, NULL) != -1)
     ;

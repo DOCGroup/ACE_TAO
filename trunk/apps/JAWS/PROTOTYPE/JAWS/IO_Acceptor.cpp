@@ -32,7 +32,7 @@ JAWS_IO_Acceptor::accept (size_t)
 int
 JAWS_IO_Synch_Acceptor::open (const ACE_INET_Addr &local_sap)
 {
-  return this->acceptor_->open (local_sap);
+  return this->acceptor_.open (local_sap);
 }
 
 int
@@ -42,8 +42,8 @@ JAWS_IO_Synch_Acceptor::accept (ACE_SOCK_Stream &new_stream,
                                 int restart,
                                 int reset_new_handle) const
 {
-  return this->acceptor_->accept (new_stream, remote_addr, timeout,
-                                  restart, reset_new_handle);
+  return this->acceptor_.accept (new_stream, remote_addr, timeout,
+                                restart, reset_new_handle);
 }
 
 

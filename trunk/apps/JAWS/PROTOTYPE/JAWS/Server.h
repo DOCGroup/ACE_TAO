@@ -5,6 +5,7 @@
 #define JAWS_SERVER_H
 
 #include "JAWS/Data_Block.h"
+#include "JAWS/Policy.h"
 
 class JAWS_IO_Handler_Factory;
 
@@ -15,7 +16,7 @@ public:
   JAWS_Server (int argc, char *argv[]);
 
   void init (int argc, char *argv[]);
-  int open (JAWS_Pipeline_Handler *ph);
+  int open (JAWS_Pipeline_Handler *ph, JAWS_Dispatch_Policy *dp = 0);
 
 private:
   void parse_args (int argc, char *argv[]);
@@ -29,7 +30,7 @@ private:
   int maxthreads_;      // maximum number of threads
   long flags_;          // thread creation flags
 
-  JAWS_IO_Handler_Factory *factory_;
+  JAWS_Default_Dispatch_Policy policy_;
 };
 
 
