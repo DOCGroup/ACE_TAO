@@ -92,6 +92,9 @@ public:
   virtual int make_changes (void);
   // Make changes to the handle set
 
+  int scheduled_for_deletion (int index) const;
+  // Check to see if <index> has been scheduled for deletion
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -400,6 +403,10 @@ public:
   // transfer will not complete until all threads are ready (just like
   // the handle set).
 
+  void wakeup_all_threads (void);
+  // Wake up all threads in WaitForMultipleObjects so that they can
+  // reconsult the handle set
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
@@ -441,16 +448,15 @@ private:
   int change_owner (void);
   // Set owner to new owner
 
-  void wakeup_all_threads (void);
-  // Wake up all threads in WaitForMultipleObjects so that they can
-  // reconsult the handle set
-
   ACE_Timer_Queue *timer_queue_;
   // Defined as a pointer to allow overriding by derived classes...
 
   int delete_timer_queue_;
   // Keeps track of whether we should delete the timer queue (if we
   // didn't create it, then we don't delete it).
+
+  int delete_handler_rep_;
+  // Keeps track of whether we should delete the handler repository
 
   ACE_Process_Mutex lock_;
   // Synchronization for the ACE_Reactor.
@@ -504,7 +510,7 @@ private:
   // This is an array of ACE_HANDLEs which keep track of the <lock_>
   // and <ok_to_wait_> handles
 
-  int closed_for_business_;
+  int open_for_business_;
   // This flag is used to keep track of whether we are already closed.
 };
 
