@@ -24,8 +24,10 @@ Sat Nov  2 17:44:00 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  - else the masks are added to the wait_set and the flag that
 	    indicates state changes within the reactor is set to 1.
 
-	  Thanks to Irfan Pyarali<irfan@oomworks.com> who reported this
-	  problem.
+	  A pure virtual call is_suspended_i () was added to the
+	  ACE_Select_Reactor_Base class to make the check for a suspended
+	  handle possible within the bind () call. Thanks to Irfan
+	  Pyarali<irfan@oomworks.com> who reported this problem. 
 
 Fri Nov  1 07:35:10 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
