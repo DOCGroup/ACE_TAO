@@ -30,8 +30,7 @@ OBJFILES = \
 	$(OBJDIR)\SSLIOP_ORBInitializer.obj \
 	$(OBJDIR)\SSLIOP_Profile.obj \
 	$(OBJDIR)\SSLIOP_Transport.obj \
-        $(OBJDIR)\SSLIOPC.obj \
-	$(OBJDIR)\SSLIOPS.obj
+        $(OBJDIR)\SSLIOPC.obj
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
@@ -69,7 +68,7 @@ all: idl_src_files
 # IDL Build rules
 #
 
-idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+idl_src_files: $(IDLFILES:.idl=C.cpp)
 
-$(IDLDIR)\SSLIOPC.cpp $(IDLDIR)\SSLIOPS.cpp: $(IDLDIR)\SSLIOP.idl
+$(IDLDIR)\SSLIOPC.cpp: $(IDLDIR)\SSLIOP.idl
 	$(TAO_IDL) $**

@@ -35,7 +35,7 @@
  * inheritance so that it is safe to store subclasses in a "void *"
  * and later cast that pointer back to the subclass pointer type.
  */
-class TAO_Security_Current_Impl
+class TAO_Security_Export TAO_Security_Current_Impl
 {
 public:
 
