@@ -1,3 +1,10 @@
+Sun Jun 13 17:14:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+          Added needed includes
+
 Sun Jun 13 17:10:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
