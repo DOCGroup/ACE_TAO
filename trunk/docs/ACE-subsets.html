@@ -1,44 +1,60 @@
-<HTML>
+<!-- $Id$ -->
 
-<HEAD>
-<TITLE>ACE Subsets</TITLE>
+<html>
+  <head>
+    <title>ACE Subsets</title>
+    <link rev=made href="mailto:ace-users@cs.wustl.edu">
+  </head>
 
-<BODY text = "#000000"
-link="#000fff"
-vlink="#ff0f0f"
-bgcolor="#ffffff">
+<body text = "#000000"
+      link="#000fff"
+      vlink="#ff0f0f"
+      bgcolor="#ffffff">
 
-<HR>
-<H3>Proposal for Splitting ACE into Multiple Libraries</H3>
+<hr><p>
+<font size=+2><strong>Contents</strong></font>
+<ol>
+  <li><a href="#Proposal">Proposal for Splitting ACE into Multiple
+    Libraries</a>
+  <li><a href="#Configuration Management">Configuration Management</a>
+  <li><a href="#Classes">Classes in Each ACE Library Subset</a>
+  <li><a href="#ACE Library Size Breakdown">ACE Library Size Breakdown</a>
+  <li><a href="#Building ACE Subsets">Building ACE Subsets</a>
+  <li><a href="#ACE_OS Adaptation Layer">ACE_OS Adaptation Layer</a>
+</ol><p>
 
-The following is a draft of our proposal for spliting ACE into
+
+<hr><p>
+<h3><a name="Proposal">Proposal for Splitting ACE into Multiple
+  Libraries</a></h3>
+
+The following is a draft of our proposal for splitting ACE into
 multiple libraries, each of which will contain a smaller subset of the
 overall ACE functionality.  The primary motivations for subsetting ACE
 are:
 
 <UL>
-<LI> <EM>Principle of parsimony</EM> -- <EM>i.e.</EM>, developers
-    should incur time/space overhead for components they use, rather
-    than for all the components in the ACE framework. <P>
+<LI><EM>Principle of parsimony</EM> -- <EM>i.e.</EM>, developers
+  should incur time/space overhead for components they use, rather
+  than for all the components in the ACE framework. <P>
 
-<LI> <EM>Simplify the learning curve</EM> -- <EM>i.e.</EM>, developers
-    only need to learn how to program components that they actually
-    use. <P>
+<LI><EM>Simplify the learning curve</EM> -- <EM>i.e.</EM>, developers
+  only need to learn how to program components that they actually
+  use. <P>
 </UL>
 
 The main design goals of this proposal are as follows: <P>
 
 <OL>
-<LI> Support the original libACE as before.  Thus, for users who
-want to use the existing ACE library as is, there will be 
+<LI>Support the original libACE as before.  Thus, for users who
+want to use the existing ACE library as is, there will be
 no changes, i.e., just link with <CODE>libACE</CODE> as usual. <P>
 
-<LI> Allow ACE (and TAO) programmers to use smaller subsets of the
+<LI>Allow ACE (and TAO) programmers to use smaller subsets of the
 entire <CODE>libACE</CODE> library.  These subsets will include the
 following libraries: <P>
 
 <DL>
-
 <DT> <img alt="o"
 src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
 <CODE>libACE_OS</CODE> -- This library contains the OS adaptation
@@ -123,24 +139,26 @@ partitioning of files in the final ACE library subsets may differ
 somewhat in order to improve footprint and simplify common
 use-cases. <P>
 
-<HR><P>
-<H3>Configuration Management</H3>
+
+<hr><p>
+<h3><a name="Configuration Management">Configuration Management</a></h3>
 
 Configuration management for the ACE library subsets described above
 will be organized as follows:
 
 <OL>
-<LI> A single source tree with a single "version" for the source
-    tree. <P>
+<LI>A single source tree with a single "version" for the source
+    tree.<P>
 
-<LI> Releases of libACE and its "subsets" will be atomic, <EM>i.e.</EM>,
-     all or nothing. <P>
+<LI>Releases of libACE and its "subsets" will be atomic, <EM>i.e.</EM>,
+    all or nothing.<P>
 </OL>
 
-<HR><P>
-<H3>Classes in Each ACE Library Subset</H3>
 
-Below, we describe the classes in each ACE library subset. 
+<hr><p>
+<h3><a name="Classes">Classes in Each ACE Library Subset</a></h3>
+
+Below, we describe the classes in each ACE library subset.
 
 <H4>libACE_OS</H4>
 
@@ -161,7 +179,7 @@ OS.cpp
 OS.h
 OS.i
 Version.h
-</PRE></CODE>
+</code></pre>
 
 <H4>libACE_Utils</H4>
 
@@ -255,11 +273,11 @@ Timer_Wheel.i
 Timer_Wheel_T.cpp
 Timer_Wheel_T.h
 Timer_Wheel_T.i
-</PRE></CODE>
+</code></pre>
 
 <H4>libACE_Logging</H4>
 
-This library contains the various ACE logging and tracing classes. 
+This library contains the various ACE logging and tracing classes.
 
 <PRE><CODE>
 Dump.cpp
@@ -276,12 +294,12 @@ Log_Record.i
 Trace.cpp
 Trace.h
 Trace.i
-</PRE></CODE>
+</code></pre>
 
 <H4>libACE_Threads</H4>
 
 This library contains the ACE thread/process management and
-synchronization classes. 
+synchronization classes.
 
 <PRE><CODE>
 Activation_Queue.h
@@ -318,24 +336,12 @@ Thread_Manager.i
 Token.cpp
 Token.h
 Token.i
-Token_Collection.cpp
-Token_Collection.h
-Token_Collection.i
-Token_Invariants.cpp
-Token_Invariants.h
-Token_Invariants.i
-Token_Manager.cpp
-Token_Manager.h
-Token_Manager.i
-Token_Request_Reply.cpp
-Token_Request_Reply.h
-Token_Request_Reply.i
-</PRE></CODE>
+</code></pre>
 
 <H4>libACE_Demux</H4>
 
 This library contains the ACE Reactor and its associated classes,
-including the ACE Connection components. 
+including the ACE Connection components.
 
 <PRE><CODE>
 Event_Handler.cpp
@@ -370,7 +376,7 @@ WFMO_Reactor.h
 WFMO_Reactor.i
 XtReactor.cpp
 XtReactor.h
-</PRE></CODE>
+</code></pre>
 
 <H4>libACE_Connection</H4>
 
@@ -402,11 +408,11 @@ Strategies_T.i
 Svc_Handler.cpp
 Svc_Handler.h
 Svc_Handler.i
-</PRE></CODE>
+</code></pre>
 
 <H4>libACE_Sockets</H4>
 
-This library contains the ACE C++ wrappers for sockets.  
+This library contains the ACE C++ wrappers for sockets.
 
 <PRE><CODE>
 IPC_SAP.cpp
@@ -459,8 +465,7 @@ SOCK_IO.i
 SOCK_Stream.cpp
 SOCK_Stream.h
 SOCK_Stream.i
-
-</PRE></CODE>
+</code></pre>
 
 <H4>libACE_IPC</H4>
 
@@ -592,7 +597,7 @@ UPIPE_Connector.i
 UPIPE_Stream.cpp
 UPIPE_Stream.h
 UPIPE_Stream.i
-</PRE></CODE>
+</code></pre>
 
 <H4>libACE_Svcconf</H4>
 
@@ -625,11 +630,11 @@ Svc_Conf.h
 Svc_Conf_l.cpp
 Svc_Conf_y.cpp
 Svc_Conf_Tokens.h
-</PRE></CODE>
+</code></pre>
 
 <H4>libACE_Streams</H4>
 
-This library contains the ACE Streams classes. 
+This library contains the ACE Streams classes.
 
 <PRE><CODE>
 IO_Cntl_Msg.cpp
@@ -662,12 +667,12 @@ Task.i
 Task_T.cpp
 Task_T.h
 Task_T.i
-</PRE></CODE>
+</code></pre>
 
 <H4>libACE_Memory</H4>
 
 This library contains the ACE C++ wrappers for shared memory and
-memory-mapped files. 
+memory-mapped files.
 
 <PRE><CODE>
 Malloc.cpp
@@ -695,11 +700,183 @@ Shared_Memory_MM.i
 Shared_Memory_SV.cpp
 Shared_Memory_SV.h
 Shared_Memory_SV.i
-</PRE></CODE>
+</code></pre>
+
+<H4>libACE_Token</H4>
+
+This componenty contains the ACE C++ wrappers for Token classes.
+
+<pre><code>
+  Local_Tokens
+  Remote_Tokens
+  Token_Collection
+  Token_Invariants
+  Token_Manager
+  Token_Request_Reply
+</code></pre>
+
+<H4>libACE_Other</H4>
+
+This component contains miscellaneous ACE C++ wrappers.
+
+<pre><code>
+  CORBA_Handler
+  CORBA_Ref
+  Local_Name_Space
+  Msg_WFMO_Reactor
+  Name_Proxy
+  Name_Request_Reply
+  Name_Space
+  Naming_Context
+  Registry_Name_Space
+  Remote_Name_Space
+  TP_Reactor
+  XtReactor
+</code></pre>
+
+<hr><p>
+<h3><a name="ACE Library Size Breakdown">ACE Library Size Breakdown</a></h3>
+
+Here is an example size breakdown, by ACE library component.  It
+is for ACE 4.6.25, statically built on Linux/Intel.  To build
+an ACE static library, if shared libraries are the default, use
+<code>make static_libs_only=1</code>.<p>
+
+<center><table cellpadding=4 border=4>
+  <tr>
+    <th>Component
+    <th>Size, bytes
+    <th>Percentage of<br>total size
+  <tr>
+    <td>OS
+    <td>11812
+    <td>2
+  <tr>
+    <td>Utils
+    <td>128252
+    <td>20
+  <tr>
+    <td>Logging
+    <td>15425
+    <td>2
+  <tr>
+    <td>Threads
+    <td>61223
+    <td>10
+  <tr>
+    <td>Demux
+    <td>40984
+    <td>6
+  <tr>
+    <td>Connection
+    <td>2134
+    <td>0
+  <tr>
+    <td>Sockets
+    <td>15333
+    <td>2
+  <tr>
+    <td>IPC
+    <td>43794
+    <td>7
+  <tr>
+    <td>Svcconf
+    <td>99318
+    <td>16
+  <tr>
+    <td>Streams
+    <td>21592
+    <td>3
+  <tr>
+    <td>Memory
+    <td>20679
+    <td>3
+  <tr>
+    <td>Token
+    <td>74804
+    <td>12
+  <tr>
+    <td>Other
+    <td>71928
+    <td>11
+  <tr>
+    <td>TEMPLATE_FILES
+    <td>28008
+    <td>4
+  <tr>
+    <td>Total
+    <td>635286
+    <td>100
+</table></center><p>
+
+NOTE: <code>TEMPLATE_FILES</code> is an artifact of the existing
+ACE library build process.  We don't see a need to compile files
+that only contain template class definitions, but no instantiations.
+We are considering removal of it from the ACE library.<p>
+
+
+<hr><p>
+<h3><a name="Building ACE Subsets">Building ACE Subsets</a></h3>
+
+By default, the ACE library contains all of the components that ACE
+currently supports.  To reduce build time and library size, you can
+exclude unused components.  To do that, define an
+<code>ACE_COMPONENTS</code> variable using one of these approaches:<p>
+
+<ol>
+  <li>In your <code>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</code>
+    file, <em>e.g.</em>, add:
+    <pre><code>ACE_COMPONENTS = OS</code></pre>or<p>
+
+  <li>On the make command line, <em>e.g.</em>,
+    <pre><code>make ACE_COMPONENTS=OS</code></pre>or<p>
+
+  <li>Set (and export) the <code>ACE_COMPONENTS</code> environment variable
+    to contain the components that you want to build.<p>
+</ol><p>
+
+Please see <code><a href="../ace/Makefile">../ace/Makefile</a></code>
+for the default setting of <code>ACE_COMPONENTS</code>.<p>
+
+Please note the current limitations:<p>
+
+<ol>
+  <li>We currently don't check for interdependencies between components.
+    For example, if you build any component beside <code>OS</code>, you
+    must explicitly include <code>OS</code> in your
+    <code>ACE_COMPONENTS</code>.<p>
+
+  <li>We currently don't check this macro in other ACE or TAO Makefiles, or
+    in their tests. We'll add those checks as time allows.</li>
+</ol>
+
+
+<hr><p>
+<h3><a name="ACE_OS Adaptation Layer">ACE_OS Adaptation Layer</a></h3>
+
+The lowest-level component, <code>OS</code>, is also called the
+<em>ACE_OS adaption layer</em>.  It provides the ACE interface to
+the underlying operating system, but little else.  It can be used
+standalone.<p>
+
+To create the ACE_OS adaptation layer, build your <code>libACE</code>
+with <code>ACE_COMPONENTS</code> set to <code>OS</code>.  In addition,
+add <code>#include "ace/config-minimal.h"</code> to your
+<code>ACE_wrappers/ace/config.h</code> file.<p>
+
+When using the ACE_OS adaptation layer, you'll be limited to the
+the <code>ACE_OS</code> member functions, ACE's
+<a href="../ace/Basic_Types.h">Basic_Types</a> and
+<a href="../ace/Sched_Params.h">Sched_Params</a>, and macros defined in
+<a href="../ace/OS.h"><code>ace/OS.h</code></a>.  See ACE's
+<a href="../tests/Basic_Types_Test.cpp">Basic_Types_Test.cpp</a>
+for an example of usage.<p>
+
 
 <HR><P>
-Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A> home page.
+Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>
+home page.
 
 <!--#include virtual="/~schmidt/cgi-sig.html" -->
-</BODY> 
+</BODY>
 </HTML>
