@@ -474,11 +474,13 @@ public:
                           TAO_GIOP_ServiceContextList& reply_ctx,
                           CORBA::ULong& request_id,
                           CORBA::ULong& reply_status);
+
   static int process_server_message (TAO_Transport *transport,
                                      TAO_ORB_Core *orb_core,
                                      TAO_InputCDR &input,
-                                     const TAO_GIOP_Message_State& state);
-
+                                     const CORBA::Octet &message_type,
+                                     const TAO_GIOP_Version &giop_version);
+  
   static int process_server_request (TAO_Transport *transport,
                                      TAO_ORB_Core* orb_core,
                                      TAO_InputCDR &input,

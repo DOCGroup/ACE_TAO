@@ -879,7 +879,8 @@ int
 TAO_GIOP::process_server_message (TAO_Transport *transport,
                                   TAO_ORB_Core *orb_core,
                                   TAO_InputCDR &input,
-                                  const TAO_GIOP_Message_State &state)
+                                  const CORBA::Octet &message_type,
+                                  const TAO_GIOP_Version &giop_version)
 {
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_HAS_PURIFY)
@@ -897,8 +898,8 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
                         orb_core->to_unicode ());
 
   TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END);
-
-  switch (state.message_type)
+  
+  switch (message_type)
     {
     case TAO_GIOP::Request:
       // The following two routines will either raise an exception
@@ -907,14 +908,14 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
                                                orb_core,
                                                input,
                                                output,
-                                               state.giop_version);
+                                               giop_version);
 
     case TAO_GIOP::LocateRequest:
       return TAO_GIOP::process_server_locate (transport,
                                               orb_core,
                                               input,
                                               output,
-                                              state.giop_version);
+                                              giop_version);
 
     case TAO_GIOP::MessageError:
       if (TAO_debug_level > 0)
@@ -932,7 +933,7 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) Illegal message received by server\n"));
-      return TAO_GIOP::send_error (state.giop_version, transport);
+      return TAO_GIOP::send_error (giop_version, transport);
     }
 
   TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END);
