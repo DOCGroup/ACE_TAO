@@ -1,3 +1,13 @@
+Wed Sep 29 09:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Policy_Strategy.h:
+        * tao/PortableServer/Thread_Strategy.h:
+          Moved Policy_Strategy to its own file
+
+        * tao/PortableServer/Lifespan_Strategy.h:
+        * tao/PortableServer/Activation_Strategy.h:
+          Just class definitions for these strategies
+
 Sun Sep 26 14:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*.{h,cpp}:
