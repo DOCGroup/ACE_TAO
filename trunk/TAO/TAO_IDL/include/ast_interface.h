@@ -126,6 +126,9 @@ public:
   // and check if there is such a clash among the parents
   virtual idl_bool redef_clash (void);
 
+  // Look through inherited interfaces.
+  virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
+                                       idl_bool treat_as_ref);
   // Cleanup function.
   virtual void destroy (void);
 

@@ -1,3 +1,28 @@
+Thu Aug 26 15:46:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_home.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_valuetype.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          Made UTL_Scope::look_in_inherited() virtual and a no-op,
+          while adding overrides to the appropriate AST_* classes.
+          Also added a no-op look_in_supported() to UTL_Scope,
+          and overrides where appropriate. Modified code in
+          UTL_Scope::lookup_by_name() to call these new methods,
+          and removed the check for node type, which is no longer
+          needed. Thanks to Boris Kolpackov <boris@dre.vanderbilt.edu>
+          for providing the IDL example that (legally) references
+          by local name things declared in supported interfaces,
+          base valuetypes, base components and base homes. This
+          closes [BUGID:1706].
+
 Thu Aug 26 13:48:31 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_module.cpp:

@@ -1576,79 +1576,20 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
   return 0;
 }
 
-// Look through inherited interfaces.
+// Look through inherited list. Overridden in AST_Interface.
 AST_Decl *
 UTL_Scope::look_in_inherited (UTL_ScopedName *e,
                               idl_bool treat_as_ref)
 {
-  AST_Decl *d = 0;
-  AST_Decl *d_before = 0;
-  AST_Interface *i = AST_Interface::narrow_from_scope (this);
-  AST_Interface **is = 0;
-  long nis = -1;
+  return 0;
+}
 
-  // This scope is not an interface.
-  if (i == 0)
-    {
-      return 0;
-    }
-
-  // Can't look in an interface which was not yet defined.
-  if (!i->is_defined ())
-    {
-      idl_global->err ()->fwd_decl_lookup (i,
-                                           e);
-      return 0;
-    }
-
-  // OK, loop through inherited interfaces.
-
-  // (Don't leave the inheritance hierarchy, no module or global ...)
-  // Find all and report ambiguous results as error.
-
-  for (nis = i->n_inherits (), is = i->inherits (); nis > 0; nis--, is++)
-    {
-      d = (*is)->lookup_by_name (e,
-                                 treat_as_ref,
-                                 0 /* not in parent */);
-      if (d != 0)
-        {
-          if (d_before == 0)
-            {
-              // First result found.
-              d_before = d;
-            }
-          else
-            {
-              // Conflict against further results?
-              if (d != d_before)
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "warning in %s line %d: ",
-                              idl_global->filename ()->get_string (),
-                              idl_global->lineno ()));
-
-                  e->dump (*ACE_DEFAULT_LOG_STREAM);
-
-                  ACE_ERROR ((LM_ERROR,
-                              " is ambiguous in scope.\n"
-                              "Found "));
-
-                  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-
-                  ACE_ERROR ((LM_ERROR,
-                              " and "));
-
-                  d_before->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-
-                  ACE_ERROR ((LM_ERROR,
-                              ".\n"));
-                }
-            }
-        }
-    }
-
-  return d_before;
+// Look through supported interface list. Overridden where necessary.
+AST_Decl *
+UTL_Scope::look_in_supported (UTL_ScopedName *e,
+                              idl_bool treat_as_ref)
+{
+  return 0;
 }
 
 // Look up a String * in local scope only.
@@ -1825,17 +1766,13 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
       if (d == 0)
         {
-
-          // Special case for scope which is an interface or value type.
-          // We have to look in the inherited interfaces as well.
-          // Look before parent scopes.
-          if (pd_scope_node_type == AST_Decl::NT_interface
-              || pd_scope_node_type == AST_Decl::NT_valuetype
-              || pd_scope_node_type == AST_Decl::NT_component
-              || pd_scope_node_type == AST_Decl::NT_eventtype)
+          // A no-op unless d can inherit.
+          d = look_in_inherited (e, treat_as_ref);
+          
+          if (d == 0)
             {
-              d = look_in_inherited (e,
-                                     treat_as_ref);
+              // A no-op unless d can support interfaces.
+              d = look_in_supported (e, treat_as_ref);
             }
 
           if ((d == 0) && in_parent && idl_global->err_count () == 0)
@@ -1906,7 +1843,6 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         }
 
       // For the possible call to look_in_inherited() below.
-      AST_Decl::NodeType nt = d->node_type ();
       t = DeclAsScope (d);
 
       // OK, start of name is defined. Now loop doing local lookups
@@ -1925,10 +1861,9 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       // up was inherited into that interface. The first call to
       // look_in_inherited() is this function only checks base classes
       // of the scope (interface) we started the lookup from.
-      if (d == 0 && nt == AST_Decl::NT_interface)
+      if (d == 0)
         {
-          d = t->look_in_inherited (sn,
-                                    treat_as_ref);
+          d = t->look_in_inherited (sn, treat_as_ref);
         }
 
       // If treat_as_ref is true and d is not 0, add d to
