@@ -1,3 +1,10 @@
+Wed Mar 19 07:33:42 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* include/makeinclude/platform_osf1_4.0{,_g++}.GNU:
+	  added -lrt to support ACE_Sched_Params.  Thanks to
+	  Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+	  suggesting this.  Also, split out CFLAGS and CCFLAGS.
+
 Tue Mar 18 21:53:03 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): Modified the
