@@ -1,3 +1,9 @@
+Tue Jun 27 09:23:01 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * include/makeinclude/platform_sunos5_g++.GNU:
+          Changed optimization flag from -O2 to -O3 to get rid of
+          function declared but not used warnings for PACE.
+
 Tue Jun 27 08:55:21 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * ace/OS_Dirent.cpp: Fixed the algorithm of reading a directory
