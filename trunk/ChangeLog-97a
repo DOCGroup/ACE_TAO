@@ -1,5 +1,9 @@
 Thu Feb 27 17:06:12 1997    <harrison@samba.cs.wustl.edu>
 
+	* ace/High_Res_Timer.*: Changed all calculations to divide by
+	  scale_factor before doing / and %.  This must be done before the
+	  mod for correctness.
+
 	* ace/Profile_Timer.i (start): Changed start and stop methods to
 	  call ACE_High_Res_Timer::gettimeofday.  This should allow
 	  greater timing accurracy.
