@@ -61,7 +61,12 @@ Coordinator::shutdown_all_peers (CORBA::Environment &ACE_TRY_ENV)
           (*i)->shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-      ACE_CATCHANY {} ACE_ENDTRY;
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Coordinator::shutdown, ignored");
+        }
+      ACE_ENDTRY;
     }
 }
 
