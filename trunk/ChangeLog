@@ -1,3 +1,9 @@
+Tue Apr 27 08:31:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/ThreadPools/TP_Reactor.cpp:
+        * examples/APG/Threads/Message_Queue.cpp:
+          Don't use ACE_Reactor deprecreated methods.
+
 Tue Apr 27 08:18:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/MT_Reactor_Timer_Test.cpp:
