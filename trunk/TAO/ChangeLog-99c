@@ -1,3 +1,8 @@
+Sun May 16 18:25:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	  Fixed default concurrency high water mark.
+
 Sun May 16 10:59:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.cpp:
