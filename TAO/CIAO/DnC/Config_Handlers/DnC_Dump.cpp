@@ -175,7 +175,7 @@ namespace Deployment
     Dump_Obj dump_obj("Bridge", bridge);
     dump ("name", bridge.name);
     dump ("label", bridge.label);
-    ACE_DEBUG ((LM_DEBUG, "%sconnectionRef: ???\n", Dump_Obj::indent()));
+    ACE_DEBUG ((LM_DEBUG, "%sconnectRef: ???\n", Dump_Obj::indent()));
     dump_sequence ("resource", bridge.resource);
   }
 
