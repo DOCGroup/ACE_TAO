@@ -1,20 +1,20 @@
 Thu Jun 11 12:40:11 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * tao/Exception.cpp: Method Release created an any, named
-	  free_it_all, which was responsible in old time to
-	  deep free memory. Now that that Any automatically
-	  encodes its content in a CDR stream this is no more
-	  the right thing to do. It actually can create a 
-	  infinite loop, if an exception is thrown within
-	  the encoding code. So it has been replaced by a
-	  delete this command.
+          free_it_all, which was responsible in old time to
+          deep free memory. Now that that Any automatically
+          encodes its content in a CDR stream this is no more
+          the right thing to do. It actually can create a
+          infinite loop, if an exception is thrown within
+          the encoding code. So it has been replaced by a
+          delete this command.
 
 Thu Jun 11 11:25:11 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * orbsvcs/LifeCycle_Service/LifeCycle_Service.dsp: Added
-	  proper multithreaded support.
+          proper multithreaded support.
 
-	* orbsvcs/orbsvcs.dsw: Added the LifeCycle_Service
+        * orbsvcs/orbsvcs.dsw: Added the LifeCycle_Service
 
 Thu Jun 11 09:39:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
