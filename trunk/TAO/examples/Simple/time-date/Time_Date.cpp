@@ -24,7 +24,7 @@ int
 DLL_ORB::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\n\trunning ORB event loop\n\n"));
+              "\n\trunning ORB event loop (%t)\n\n"));
 
   ACE_TRY_NEW_ENV
     {
@@ -62,7 +62,7 @@ DLL_ORB::init (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\n\tInitialize ORB\n\n"));
+                  "\n\tInitialize ORB (%t)\n\n"));
 
       // Initialize the ORB.
       this->orb_manager_.init (argc,
