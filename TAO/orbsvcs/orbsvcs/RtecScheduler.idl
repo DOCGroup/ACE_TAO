@@ -218,7 +218,10 @@ module RtecScheduler
   // Problems while computing off-line scheduling.
 
   exception UNKNOWN_PRIORITY_LEVEL {};
-  // Problems obtaining run-time dispatch queue info
+  // Problems obtaining run-time dispatch queue info.
+
+  exception SYNCHRONIZATION_FAILURE {};
+  // Problems acquiring a synchronization resource.
 
   typedef sequence<RT_Info> RT_Info_Set;
 
