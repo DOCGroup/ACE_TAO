@@ -7,7 +7,6 @@
 
 //#include "ThreadAction.h"
 
-
 ACE_Atomic_Op<ACE_Thread_Mutex, long> guid_counter;
 
 u_long
@@ -17,9 +16,17 @@ TAO_DTId_Hash::operator () (const IdType &id) const
                         id.length ());
 }
 
-TAO_RTScheduler_Current::TAO_RTScheduler_Current (TAO_ORB_Core* orb)
-  : orb_ (orb)
+TAO_RTScheduler_Current::TAO_RTScheduler_Current (void)
 {
+}
+
+
+void
+TAO_RTScheduler_Current::init (TAO_ORB_Core* orb 
+			       ACE_ENV_ARG_DECL)
+{
+  this->orb_ = orb;
+  
   // Create the RT_Current.
   RTCORBA::Current_ptr current;
   ACE_NEW_THROW_EX (current,
@@ -31,7 +38,6 @@ TAO_RTScheduler_Current::TAO_RTScheduler_Current (TAO_ORB_Core* orb)
 				      CORBA::COMPLETED_NO));
   this->rt_current_ = current;
 }
-
 
 void
 TAO_RTScheduler_Current::rt_current (RTCORBA::Current_ptr rt_current)
@@ -130,8 +136,7 @@ TAO_RTScheduler_Current::end_scheduling_segment (const char * name
 }
 
 RTScheduling::DistributableThread_ptr 
-TAO_RTScheduler_Current::lookup(const RTScheduling::Current::IdType & id
-				ACE_ENV_ARG_DECL)
+TAO_RTScheduler_Current::lookup(const RTScheduling::Current::IdType & id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTScheduling::DistributableThread_var DT;
@@ -188,6 +193,7 @@ CORBA::Policy_ptr
 TAO_RTScheduler_Current::scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+
   TAO_RTScheduler_Current_i *impl = this->implementation ();
   
   if (impl == 0)
@@ -532,38 +538,27 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
   RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
   TAO_RTScheduler_Current_i *new_current;
   
-  ACE_NEW_THROW_EX (new_current,
-		    TAO_RTScheduler_Current_i (this->orb_,
-					       this->dt_hash_),
-		    CORBA::NO_MEMORY (
-				      CORBA::SystemException::_tao_minor_code (
-				       TAO_DEFAULT_MINOR_CODE,
-				       ENOMEM),
-				      CORBA::COMPLETED_NO));
+  ACE_NEW_RETURN (new_current,
+		  TAO_RTScheduler_Current_i (this->orb_,
+					     this->dt_hash_),
+		  0);
   ACE_CHECK;
 
   new_current->DT (dt.in ());
 
-  ACE_NEW_THROW_EX (dttask,
-		    DTTask (//thread_manager_,
-			    this->orb_,
-			    this->dt_hash_, 	
-			    new_current,
-			    start,
-			    data,
-			    name,
-			    sched_param,
-			    implicit_sched_param),
-		     CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO)
-		  );
+  ACE_NEW_RETURN (dttask,
+		  DTTask (//thread_manager_,
+			  this->orb_,
+			  this->dt_hash_, 	
+			  new_current,
+			  start,
+			  data,
+			  name,
+			  sched_param,
+			  implicit_sched_param),
+		  0);
   ACE_CHECK;
-      
-  
-
+ 
   if (dttask->activate_task (base_priority,
 			     stack_size) == -1)
     {
@@ -589,13 +584,13 @@ DTTask::activate_task (RTCORBA::Priority base_priority,
     this->orb_->orb_params ()->sched_policy ();
   
   CORBA::Object_var object = this->orb_->object_ref_table ().resolve_initial_references ("PriorityMappingManager"
-							      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
+											 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  
   RTCORBA::PriorityMappingManager_var mapping_manager =
     RTCORBA::PriorityMappingManager::_narrow (object.in ()
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
   
   RTCORBA::PriorityMapping *pm =
     mapping_manager->mapping ();
@@ -688,6 +683,7 @@ RTScheduling::Current::IdType *
 TAO_RTScheduler_Current_i::id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  
   RTScheduling::Current::IdType_var guid = this->guid_;
   return guid._retn ();
 }

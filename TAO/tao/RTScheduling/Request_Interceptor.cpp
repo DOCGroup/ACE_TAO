@@ -182,7 +182,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
 	{
 	  // Perform the necessary cleanup as the
 	  // thread was cancelled.
-	  current->cancel_thread ();
+	  current->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
 	}
       else
 	{
@@ -342,7 +342,7 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
     {
       if (current->DT ()->state () == RTScheduling::DistributableThread::CANCELLED)
 	{
-	  current->cancel_thread (ACE_ENV_ARG_PARAMETER);
+	  current->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
 
