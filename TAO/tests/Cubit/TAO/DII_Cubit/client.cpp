@@ -188,16 +188,16 @@ DII_Cubit_Client::DII_Cubit_Client (void)
     factory_IOR_ (CORBA::string_dup (DEFAULT_FACTORY_IOR))
 {
   // Initialize the array of pointers-to-member-functions.
-  this->op_array_[0] = cube_short_dii;
-  this->op_array_[1] = cube_octet_dii;
-  this->op_array_[2] = cube_long_dii;
-  this->op_array_[3] = cube_struct_dii;
-  this->op_array_[4] = cube_union_dii;
-  this->op_array_[5] = cube_small_long_seq;
-  this->op_array_[6] = cube_large_long_seq;
-  this->op_array_[7] = cube_small_octet_seq;
-  this->op_array_[8] = cube_large_octet_seq;
-  this->op_array_[9] = cube_mixin;
+  this->op_array_[0] = &DII_Cubit_Client::cube_short_dii;
+  this->op_array_[1] = &DII_Cubit_Client::cube_octet_dii;
+  this->op_array_[2] = &DII_Cubit_Client::cube_long_dii;
+  this->op_array_[3] = &DII_Cubit_Client::cube_struct_dii;
+  this->op_array_[4] = &DII_Cubit_Client::cube_union_dii;
+  this->op_array_[5] = &DII_Cubit_Client::cube_small_long_seq;
+  this->op_array_[6] = &DII_Cubit_Client::cube_large_long_seq;
+  this->op_array_[7] = &DII_Cubit_Client::cube_small_octet_seq;
+  this->op_array_[8] = &DII_Cubit_Client::cube_large_octet_seq;
+  this->op_array_[9] = &DII_Cubit_Client::cube_mixin;
 }
 
 // Destructor
