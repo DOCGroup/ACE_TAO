@@ -60,7 +60,11 @@ TAO_LB_Signal_Handler::activate (long flags,
                                  size_t stack_size[],
                                  ACE_thread_t thread_ids[])
 {
-#if defined (ACE_HAS_THREADS)
+  // sigwait() is not implemented on MS Windows.  Handle signals
+  // asynchronously through the ORB's reactor in that case instead.
+  // Otherwise, handle signals synchronously in another thread.
+
+#if defined (ACE_HAS_THREADS) && !defined (ACE_WIN32)
   return this->ACE_Task_Base::activate (flags,
                                         n_threads,
                                         force_active,
