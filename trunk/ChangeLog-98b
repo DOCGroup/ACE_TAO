@@ -1,16 +1,16 @@
 Fri Oct 30 20:31:27 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tests/Semaphore_Test.cpp: Cleaned up the #if's to make it easier
-          to understand, and fixed a related problem.  Thanks to 
+          to understand, and fixed a related problem.  Thanks to
           Ossama for finding this.
 
 Fri Oct 30 15:47:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Select_Reactor_T.cpp (dispatch): Make sure to include a
- 	  count of 1 if the Reactor dispatched a handle_signal() method.
-  	  This ensures we don't return 0 from handle_events() in cases
- 	  where we didn't timeout...  Thanks to Naga for chasing this
- 	  down!
+        * ace/Select_Reactor_T.cpp (dispatch): Make sure to include a
+          count of 1 if the Reactor dispatched a handle_signal() method.
+          This ensures we don't return 0 from handle_events() in cases
+          where we didn't timeout...  Thanks to Naga for chasing this
+          down!
 
 Fri Oct 30 11:53:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
