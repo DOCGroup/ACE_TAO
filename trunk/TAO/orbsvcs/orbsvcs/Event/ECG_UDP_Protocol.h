@@ -67,9 +67,5 @@ public:
   };
 };
 
-#if defined(__ACE_INLINE__)
-#include "ECG_UDP_Protocol.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/post.h"
 #endif /* TAO_ECG_UDP_PROTOCOL_H */
