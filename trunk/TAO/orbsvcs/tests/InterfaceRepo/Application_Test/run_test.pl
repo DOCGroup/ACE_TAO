@@ -10,7 +10,23 @@ use lib "../../../../../bin";
 require ACEutils;
 use Cwd;
 
-$cwd = getcwd();
+BEGIN {
+    ### We need to BEGIN this block so we make sure ACE_ROOT is set before
+    ### we use it in the use lib line
+    $cwd = getcwd();
+
+    $ACE_ROOT = $ENV{ACE_ROOT};
+
+    if (!$ACE_ROOT) {
+        chdir ('../../../../');
+        $ACE_ROOT = getcwd ();
+        chdir ($cwd);
+        print "ACE_ROOT not defined, defaulting to ACE_ROOT=$ACE_ROOT\n";
+    }
+}
+
+use lib "$ACE_ROOT/bin";
+
 ACE::checkForTarget($cwd);
 
 $if_repo_service = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR.
