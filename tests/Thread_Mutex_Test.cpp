@@ -28,23 +28,30 @@ static void *
 test (void *args)
 {
   ACE_Thread_Mutex *mutex = (ACE_Thread_Mutex *) args;
-  ACE_UNUSED_ARG (mutex);       // To suppress ghs warning about unused
-                                // local variable "mutex".
+  ACE_UNUSED_ARG (mutex); // Suppress ghs warning about unused local "mutex".
   ACE_OS::srand (ACE_OS::time (0));
 
   for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) = trying to acquire on iteration %d\n"), i));
-      ACE_ASSERT (mutex->acquire () == 0);
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) = acquired on iteration %d\n"), i));
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("(%P|%t) = trying to acquire on iteration %d\n"),
+                  i));
+      int result = mutex->acquire ();
+      ACE_ASSERT (result == 0);
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("(%P|%t) = acquired on iteration %d\n"),
+                  i));
 
       // Sleep for a random amount of time between 0 and 2 seconds.
       // Note that it's ok to use rand() here because we are running
       // within the critical section defined by the Thread_Mutex.
       ACE_OS::sleep (ACE_OS::rand () % 2);
 
-      ACE_ASSERT (mutex->release () == 0);
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) = released on iteration %d\n"), i));
+      result = mutex->release ();
+      ACE_ASSERT (result == 0);
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("(%P|%t) = released on iteration %d\n"),
+                  i));
     }
 
   return 0;
@@ -61,7 +68,9 @@ spawn (void)
                                                 ACE_THR_FUNC (test),
                                                 (void *) &mutex,
                                                 THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("thread create failed")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n%a"),
+                ASYS_TEXT ("thread create failed")));
 
   // Wait for the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();

@@ -160,7 +160,7 @@ ACE_Token::ACE_Token_Queue::insert_entry (ACE_Token::ACE_Token_Queue_Entry &entr
 }
 
 ACE_Token::ACE_Token (LPCTSTR name, void *any)
-  : lock_ (name, any),
+  : lock_ (name, (ACE_mutexattr_t *) any),
     owner_ (ACE_OS::NULL_thread),
     in_use_ (0),
     waiters_ (0),

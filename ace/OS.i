@@ -1855,61 +1855,85 @@ ACE_INLINE int
 ACE_OS::mutex_init (ACE_mutex_t *m,
                     int type,
                     LPCTSTR name,
-                    void *arg,
+                    ACE_mutexattr_t *attributes,
                     LPSECURITY_ATTRIBUTES sa)
 {
   // ACE_TRACE ("ACE_OS::mutex_init");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (sa);
 
-  pthread_mutexattr_t attributes;
+  pthread_mutexattr_t l_attributes;
+  if (attributes == 0)
+    attributes = &l_attributes;
   int result = -1;
 
+  // Only do these initializations if the <attributes> parameter
+  // wasn't originally set.
+  if (attributes == &l_attributes)
+    {
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
-  if (::pthread_mutexattr_create (&attributes) == 0
-#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
-      && ::pthread_mutexattr_setkind_np (&attributes, type) == 0
-#     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
-      && ::pthread_mutex_init (m, attributes) == 0)
+      if (::pthread_mutexattr_create (attributes) == 0)
 #   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
-    if (ACE_ADAPT_RETVAL(::pthread_mutexattr_init (&attributes), result) == 0
-#     if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)
-        && ACE_ADAPT_RETVAL(::pthread_mutexattr_setpshared(&attributes, type),
-                            result) == 0
-#     endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_MUTEXATTR_PSHARED */
-        && ACE_ADAPT_RETVAL(::pthread_mutex_init (m, &attributes), result)== 0)
+      if (ACE_ADAPT_RETVAL (::pthread_mutexattr_init (attributes), result) == 0)
 #   else // draft 6
-    if (::pthread_mutexattr_init (&attributes) == 0
-#     if !defined (ACE_LACKS_MUTEXATTR_PSHARED)
-      && ::pthread_mutexattr_setpshared (&attributes, type) == 0
-#     endif /* ACE_LACKS_MUTEXATTR_PSHARED */
-#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
-        && ::pthread_mutexattr_setkind_np (&attributes, type) == 0
-#     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
-        && ::pthread_mutex_init (m, &attributes) == 0)
+      if (::pthread_mutexattr_init (attributes) == 0)
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
-      result = 0;
-  else
-    result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
+        result = 0;
+      else
+        result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
+    }
+
+  if (result == 0)
+    {
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
+      if (
+#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
+          ::pthread_mutexattr_setkind_np (attributes, type) == 0 &&
+#     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
+          ::pthread_mutex_init (m, *attributes) == 0)
+#   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
+      if (
+#     if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)
+           ACE_ADAPT_RETVAL (::pthread_mutexattr_setpshared (attributes, type),
+                             result) == 0 &&
+#     endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_MUTEXATTR_PSHARED */
+           ACE_ADAPT_RETVAL (::pthread_mutex_init (m, attributes), result) == 0)
+#   else
+        if (
+#     if !defined (ACE_LACKS_MUTEXATTR_PSHARED)
+            ::pthread_mutexattr_setpshared (attributes, type) == 0 &&
+#     endif /* ACE_LACKS_MUTEXATTR_PSHARED */
+#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP) 
+            ::pthread_mutexattr_setkind_np (attributes, type) == 0 &&
+#     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
+            ::pthread_mutex_init (m, attributes) == 0)
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
+        result = 0;
+      else
+        result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
+    }
 
 #   if (!defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP) && !defined (_POSIX_THREAD_PROCESS_SHARED)  ||  defined (ACE_LACKS_MUTEXATTR_PSHARED))
   ACE_UNUSED_ARG (type);
 #   endif /* ! ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
 
+  // Only do the deletions if the <attributes> parameter wasn't
+  // originally set.
+  if (attributes == &l_attributes)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
-  ::pthread_mutexattr_delete (&attributes);
+    ::pthread_mutexattr_delete (&l_attributes);
 #   else
-  ::pthread_mutexattr_destroy (&attributes);
+    ::pthread_mutexattr_destroy (&l_attributes);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
   return result;
 # elif defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (sa);
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init (m, type, arg),
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init (m, type, attributes),
                                        ace_result_),
                      int, -1);
 # elif defined (ACE_HAS_WTHREADS)
@@ -1929,7 +1953,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
       return ACE_OS::thread_mutex_init (&m->thr_mutex_,
                                         type,
                                         name,
-                                        arg);
+                                        attributes);
     default:
       errno = EINVAL;
       return -1;
@@ -1938,7 +1962,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 
 # elif defined (ACE_PSOS)
   ACE_UNUSED_ARG (type);
-  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (sa);
 #   if defined (ACE_PSOS_HAS_MUTEX)
 
@@ -1981,7 +2005,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 #   endif /* ACE_PSOS_HAS_MUTEX */
 # elif defined (VXWORKS)
   ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (sa);
 
   return (*m = ::semMCreate (type)) == 0 ? -1 : 0;
@@ -1990,7 +2014,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (sa);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
@@ -2307,7 +2331,7 @@ ACE_INLINE int
 ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
                            int type,
                            LPCTSTR name,
-                           void *arg)
+                           ACE_mutexattr_t *arg)
 {
   // ACE_TRACE ("ACE_OS::thread_mutex_init");
 #if defined (ACE_HAS_THREADS)
@@ -2807,7 +2831,7 @@ ACE_OS::thr_self (void)
 ACE_INLINE int
 ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
                               LPCTSTR name,
-                              void *arg,
+                              ACE_mutexattr_t *arg,
                               LPSECURITY_ATTRIBUTES sa)
 {
   ACE_UNUSED_ARG (sa);
@@ -2820,7 +2844,7 @@ ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
   else if (ACE_OS::cond_init (&m->lock_available_,
                               (short) USYNC_THREAD,
                               name,
-                              arg) == -1)
+                              0) == -1)
     return -1;
   else
     {
@@ -4385,7 +4409,7 @@ ACE_OS::event_init (ACE_event_t *event,
     result = ACE_OS::mutex_init (&event->lock_,
                                  type,
                                  name,
-                                 arg);
+                                 (ACE_mutexattr_t *) arg);
   return result;
 #else
   ACE_UNUSED_ARG (event);

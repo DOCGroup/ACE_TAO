@@ -532,7 +532,7 @@ class ACE_Export ACE_Mutex
 public:
   ACE_Mutex (int type = USYNC_THREAD,
              LPCTSTR name = 0,
-             void *arg = 0);
+             ACE_mutexattr_t *arg = 0);
   // Initialize the mutex.
 
   ~ACE_Mutex (void);
@@ -1078,11 +1078,13 @@ class ACE_Export ACE_Thread_Mutex
   //     ACE_Thread_Mutex is recursive on some platforms (like
   //     Win32). However, on most platforms (like Solaris) it is not
   //     recursive.  To be totally safe and portable, developers
-  //     should use ACE_Recursive_Thread_Mutex when they need a
+  //     should use <ACE_Recursive_Thread_Mutex> when they need a
   //     recursive mutex.
   friend class ACE_Condition_Thread_Mutex;
 public:
-  ACE_Thread_Mutex (LPCTSTR name = 0, void *arg = 0);
+  ACE_Thread_Mutex (LPCTSTR name = 0,
+                    ACE_mutexattr_t *attributes = 0);
+  // Constructor.
 
   ~ACE_Thread_Mutex (void);
   // Implicitly destroy the mutex.
@@ -1332,7 +1334,7 @@ class ACE_Export ACE_Recursive_Thread_Mutex
   //     release of a mutex that occurs in the same thread.
 public:
   ACE_Recursive_Thread_Mutex (LPCTSTR name = 0,
-                              void *arg = 0);
+                              ACE_mutexattr_t *arg = 0);
   // Initialize a recursive mutex.
 
   ~ACE_Recursive_Thread_Mutex (void);
