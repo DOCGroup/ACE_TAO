@@ -1,3 +1,27 @@
+Thu Dec 16 10:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ImR_Client/*:
+          New client library for the implementation repository
+
+        * tao/PortableServer/Impl*.*:
+          Moved several files to the ImR_Client library and added new adapter
+          for the ImR_Client
+
+        * tao/ImR_Client.mpc:
+          New mpc file for the new lib
+
+        * tao/PortableServer/LifespanStrategyPersistent.{h,cpp}:
+          Use the ImR Client adapter
+
+        * tao/orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * tao/orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * tao/orbsvcs/ImplRepo_Service/ImR_Activator.idl:
+        * tao/orbsvcs/ImplRepo_Service/Iterator.h:
+        * tao/orbsvcs/ImplRepo_Service/Server_Info.h:
+        * tao/orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * tao/orbsvcs/ImplRepo_Service/utils.h:
+          Updated for the move of the ImplRepo stuff
+
 Wed Dec 15 15:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
