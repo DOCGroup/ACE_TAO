@@ -1410,7 +1410,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_activate_server::e
   for (CORBA::ULong i = 0; i < 2; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_activate_server_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
@@ -1577,7 +1577,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_activate_server_wi
   for (CORBA::ULong i = 0; i < 2; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_activate_server_with_startup_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
@@ -1752,7 +1752,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_register_server::e
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_register_server_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
@@ -2057,7 +2057,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_remove_server::exc
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_remove_server_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
@@ -2213,7 +2213,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_shutdown_server::e
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_shutdown_server_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
@@ -2387,7 +2387,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_server_is_running:
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_server_is_running_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
@@ -2554,7 +2554,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_server_is_shutting
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_server_is_shutting_down_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
@@ -2710,7 +2710,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_find::exceptions (
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_find_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 

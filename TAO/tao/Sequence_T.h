@@ -245,7 +245,7 @@ public:
 
 template<typename T, typename T_var>
   class TAO_Unbounded_Object_Sequence;
-template<class T,class T_var> class TAO_Unbounded_Pseudo_Sequence;
+template<class T> class TAO_Unbounded_Pseudo_Sequence;
 template<typename T, typename T_var, size_t MAX>
   class TAO_Bounded_Object_Sequence;
 template<size_t MAX> class TAO_Bounded_String_Sequence;
@@ -360,10 +360,10 @@ private:
    * @brief Manager for Pseudo Objects.
    *
    */
-template<typename T, typename T_var>
+template<typename T>
 class TAO_Pseudo_Object_Manager
 {
-  friend class TAO_Unbounded_Pseudo_Sequence<T,T_var>;
+  friend class TAO_Unbounded_Pseudo_Sequence<T>;
 public:
   // @@ Use partial template specialization here to give access only
   // to the right kind of sequence.
@@ -377,7 +377,7 @@ public:
    *   release value on the <rhs>.
    *   + In any case a new reference to the same object is created.
    */
-  TAO_Pseudo_Object_Manager (const TAO_Pseudo_Object_Manager<T,T_var> & rhs);
+  TAO_Pseudo_Object_Manager (const TAO_Pseudo_Object_Manager<T> & rhs);
 
   /**
    * Constructor from address of an element, it should be private and
@@ -395,15 +395,18 @@ public:
    * @@ TODO what happens if rhs.release_ is true an this->relase_ is
    * false?
    */
-  TAO_Pseudo_Object_Manager<T,T_var> & operator= (
-      const TAO_Pseudo_Object_Manager<T,T_var> & rhs
+  TAO_Pseudo_Object_Manager<T> & operator= (
+      const TAO_Pseudo_Object_Manager<T> & rhs
     );
 
   /// Assignment from T *.
-  TAO_Pseudo_Object_Manager<T,T_var> & operator= (T *);
+  TAO_Pseudo_Object_Manager<T> & operator= (T *);
+
+  /// Workaround for MSVC 6.
+  typedef typename T::_var_type T_var_type;
 
   /// Assignment from T_var.
-  TAO_Pseudo_Object_Manager<T,T_var> & operator= (const T_var &);
+  TAO_Pseudo_Object_Manager<T> & operator= (const T_var_type &);
 
   /// Return pointer.
   T * operator-> (void) const;
@@ -655,7 +658,7 @@ public:
  * TAO internal details. The complete documentation of each method
  * is provided in TAO_Unbounded_Object_Sequece
  */
-template<typename T, typename T_var>
+template<typename T>
 class TAO_Unbounded_Pseudo_Sequence : public TAO_Unbounded_Base_Sequence
 {
 public:
@@ -675,7 +678,7 @@ public:
 
   /// Copy ctor, deep copies.
   TAO_Unbounded_Pseudo_Sequence (
-      const TAO_Unbounded_Pseudo_Sequence<T,T_var> &
+      const TAO_Unbounded_Pseudo_Sequence<T> &
     );
 
   /// dtor releases all the contained elements.
@@ -686,12 +689,12 @@ public:
    * members and frees all string members, and then performs a
    * deepcopy to create a new structure.
    */
-  TAO_Unbounded_Pseudo_Sequence<T,T_var> & operator= (
-      const TAO_Unbounded_Pseudo_Sequence <T,T_var> &
+  TAO_Unbounded_Pseudo_Sequence<T> & operator= (
+      const TAO_Unbounded_Pseudo_Sequence <T> &
     );
 
   /// read-write accessor
-  TAO_Pseudo_Object_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
+  TAO_Pseudo_Object_Manager<T> operator[] (CORBA::ULong slot) const;
 
   /// The allocbuf function allocates a vector of T elements that can
   /// be passed to the T *data constructor.
@@ -716,7 +719,7 @@ public:
  *
  * Please see the documentation for the unbounded case.
  */
-template<typename T, typename T_var, size_t MAX>
+template<typename T, size_t MAX>
 class TAO_Bounded_Pseudo_Sequence : public TAO_Bounded_Base_Sequence
 {
 public:
@@ -732,7 +735,7 @@ public:
 
   /// Copy constructor.
   TAO_Bounded_Pseudo_Sequence (
-      const TAO_Bounded_Pseudo_Sequence<T,T_var,MAX> &
+      const TAO_Bounded_Pseudo_Sequence<T,MAX> &
     );
 
   /// destructor
@@ -740,11 +743,11 @@ public:
 
   /// Assignment from another Bounded sequence.
   TAO_Bounded_Pseudo_Sequence & operator= (
-      const TAO_Bounded_Pseudo_Sequence<T,T_var,MAX> &
+      const TAO_Bounded_Pseudo_Sequence<T,MAX> &
     );
 
   /// Read-write accessor.
-  TAO_Pseudo_Object_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
+  TAO_Pseudo_Object_Manager<T> operator[] (CORBA::ULong slot) const;
 
   /// Allocate storage for a sequence..
   static T ** allocbuf (CORBA::ULong length);

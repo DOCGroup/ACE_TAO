@@ -1,3 +1,26 @@
+Thu Aug  7 15:41:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+        * tao/DynamicC.cpp:
+        * tao/DynamicC.h:
+        * tao/ORB.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+
+          Removed the T_var template parameter from TAO_Pseudo_Object_Manager,
+          TAO_Unbounded_Pseudo_Sequence, and TAO_Bounded_Pseudo_Sequence,
+          in the template classes themselves, instantiaions in ORB code,
+          and in generated code.
+
 Thu Aug  7 13:35:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -18,7 +41,7 @@ Thu Aug  7 13:35:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           along with the corresponding generated code. There is
           no difference in the way a sequence handles concrete and
           abstract interfaces. Also fixed a bugs in the traits and
-          template instantiaion visitors' handling of recursive
+          template instantiation visitors' handling of recursive
           valuetypes.
 
 Wed Aug  6 21:44:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
