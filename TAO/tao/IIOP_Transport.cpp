@@ -313,6 +313,9 @@ TAO_IIOP_Transport::send_request_header (TAO_Operation_Details &opdetails,
       this->bidirectional_flag_ == 0)
     {
       this->set_bidir_context_info (opdetails);
+
+      // Set the flag to 1
+      this->bidirectional_flag_ = 1;
     }
 
   // We are going to pass on this request to the underlying messaging
@@ -518,6 +521,8 @@ TAO_IIOP_Transport::get_listen_point (
                          ACE_TEXT (" address in set_bidir_context_info () \n")),
                         -1);
     }
+
+  cout << "Amba sambavi " <<endl;
 
   for (size_t index = 0;
        index <= count;
