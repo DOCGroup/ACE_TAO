@@ -77,12 +77,13 @@ private:
 };
 
 class TAO_Export TAO_Marshal
-// = TITLE
-//    Namespace in which to put otherwise "global" methods like
-//    initialize, etc.
 {
+  // = TITLE
+  //    Namespace in which to put otherwise "global" methods like
+  //    initialize, etc.
 public:
-  static void initialize (void);
+  static void init (void);
+  // @@ Please document me...
 
   static TAO_Marshal_Factory* DEFAULT_MARSHAL_FACTORY;
 };
@@ -91,6 +92,7 @@ class TAO_Export TAO_Marshal_Object
 {
   // = TITLE
   //   TAO_Marshal_Object
+  //
   // = DESCRIPTION
   //    The Marshaling object that provides a common interface to the
   //    CDR object for marshaling different IDL data types
