@@ -46,6 +46,9 @@ Thu Sep 11 08:52:36 1997  David L. Levine  <levine@cs.wustl.edu>
 	  to int because it will often be passed an enum.  Pass "id" by
 	  value to get_object (int id), for preallocated objects.
 
+	* ace/Object_Manager.{h,cpp}: added ACE_LOG_MSG_INSTANCE_LOCK,
+	  and ACE_PREALLOCATE_OBJECT macro.
+
 	* include/makeinclude/wrapper_macros.GNU: ignore shared_libs_only
 	  in modules that only build a static lib.  Fixed shared_libs_only
 	  by removing OBJDIRS, unless BIN is undefined, and VDIR.  Removed
