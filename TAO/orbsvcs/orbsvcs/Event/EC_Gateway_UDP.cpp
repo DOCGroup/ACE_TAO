@@ -476,6 +476,8 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec,
 
   this->handle_ = this->ec_->append_observer (obs.in (), _env);
   TAO_CHECK_ENV_RETURN (_env, -1);
+
+  return 0;
 }
 
 int
@@ -492,7 +494,7 @@ TAO_ECG_Mcast_EH::close (CORBA::Environment& _env)
   this->handle_ = 0;
   TAO_CHECK_ENV_RETURN (_env, -1);
 
-  
+  return 0;  
 }
 
 int
