@@ -943,9 +943,8 @@ public:
   typedef ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Null_Mutex>
           CONNECTION_MAP;
 
-  // (Two) Deprecated and redundant typedefs
-  typedef CONNECTION_MAP::ITERATOR CONNECTION_MAP_ITERATOR;
-  typedef CONNECTION_MAP::ENTRY CONNECTION_MAP_ENTRY;
+  typedef ACE_TYPENAME CONNECTION_MAP::ITERATOR CONNECTION_MAP_ITERATOR;
+  typedef ACE_TYPENAME CONNECTION_MAP::ENTRY CONNECTION_MAP_ENTRY;
 
   typedef ACE_Reverse_Lock<MUTEX> REVERSE_MUTEX;
 
@@ -967,7 +966,7 @@ protected:
 
   /// Find an idle handle.
   int find (REFCOUNTED_HASH_RECYCLABLE_ADDRESS &search_addr,
-            CONNECTION_MAP::ENTRY *&entry);
+            CONNECTION_MAP_ENTRY *&entry);
 
   /// Remove from cache (non-locking version).
   virtual int purge_i (const void *recycling_act);
@@ -994,7 +993,7 @@ protected:
                     int reuse_addr,
                     int flags,
                     int perms,
-                    CONNECTION_MAP::ENTRY *&entry,
+                    CONNECTION_MAP_ENTRY *&entry,
                     int &found);
 
   int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
@@ -1004,7 +1003,7 @@ protected:
                                     int reuse_addr,
                                     int flags,
                                     int perms,
-                                    CONNECTION_MAP::ENTRY *&entry,
+                                    CONNECTION_MAP_ENTRY *&entry,
                                     int &found);
 
   virtual int connect_svc_handler_i (

@@ -1,4 +1,21 @@
-Thu Feb 20 09:01:55 2003  Ossama Othman  <ossama@uci.edu>
+Thu Feb 20 10:35:15 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Strategies_T.h:
+	* ace/Strategies_T.cpp:
+
+	  Reverted part of changes that introduced extensive use of
+	  traits since they were forcing the introduction of the
+	  ACE_TYPENAME macro in more places than is desirable at this
+	  point in time.  They may be reintroduced in the future.
+
+Thu Feb 20 09:24:00 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Service_Config.h:
+
+	  Forward declare ACE_Service_Object.  Necessitated by inter-header
+	  dependency reductions.
+
+Thu Feb 20 09:23:51 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Acceptor.h:
 	* ace/Connector.h:
