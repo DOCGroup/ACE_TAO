@@ -1029,7 +1029,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       // If we have popped up to a parent scope, we
       // must check the other children, if we haven't 
       // had any luck so far.
-      if (d == NULL && scope_offset > 0)
+      if (d == NULL && scope_offset > 1)
         {
           UTL_ScopeActiveIterator *iter = 
             new UTL_ScopeActiveIterator (this,
