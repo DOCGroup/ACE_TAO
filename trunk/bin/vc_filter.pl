@@ -1,13 +1,23 @@
 # $Id$
+#
+# A perl script that filers length VC output into a concise html report.
 
-$header = "<html> <head>
+$header = "<html><head>
 <title>Error/Warning Summary of Daily Build</title>
 </head>
 
 <body bgcolor=\"white\">
 <h1>Error/Warning Summary of Daily Build</h1><TT>\n";
+$trailer = "</TT></body></html>";
 
-$trailer = "</TT> </body> </html>";
+$kosher_b = "";
+$kosher_e = "";
+
+$in_sin_b = "<FONT COLOR=\"RED\">";
+$in_sin_e = "</FONE>";
+
+$new_build_b = "<P>";
+$new_build_e = "";
 
 $fname = $ARGV[0];
 
@@ -17,21 +27,21 @@ print $header ;
 
 while ($line = <fp>)
 {
-    print "<p> $line<BR>" if ($line =~/^--------------------Configuration:/);
+    print "$new_build_b $line $new_build_e<BR>" if ($line =~/^--------------------Configuration:/);
 
     if ($line =~/^[A-Z_a-z0-9.]+ - [0-9]+ error\(s\), +[0-9]+ warning\(s\)/)
     {
         if ($line =~/0 error\(s\), 0 warning\(s\)/)
         {
-            print "$line <BR>";
+            print "$kosher_b $line $kosher_e<BR>";
         }
         else
         {
-            print "<FONT COLOR=\"RED\"><B> $line </B></FONT><BR>";
+            print "$sin_begin $line $sin_end<BR>";
         }
     }
 
-    print "<FONT COLOR=\"RED\"><B> $line </B></FONT><BR>"
+    print "$in_sin_b $line $in_sin_e<BR>"
         if ($line =~/^[A-Z_a-z0-9.\/\\:]+\([0-9]+\) : / ||
             $line =~/^[A-Z_a-z0-9.\\:]+\.obj : / ||
             $line =~/^fatal error/ ||
