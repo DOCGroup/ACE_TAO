@@ -13,7 +13,7 @@ DIRS =  QoS \
 !endif
 
 OBJFILES = \
-	$(OBJDIR)\ACE.obj \
+   $(OBJDIR)\ACE.obj \
 	$(OBJDIR)\Init_ACE.obj \
 	$(OBJDIR)\Flag_Manip.obj \
 	$(OBJDIR)\Handle_Ops.obj \
@@ -28,7 +28,7 @@ OBJFILES = \
 	$(OBJDIR)\Argv_Type_Converter.obj \
 	$(OBJDIR)\Asynch_IO.obj \
 	$(OBJDIR)\Asynch_IO_Impl.obj \
-        $(OBJDIR)\Asynch_Pseudo_Task.obj \
+   $(OBJDIR)\Asynch_Pseudo_Task.obj \
 	$(OBJDIR)\ATM_Acceptor.obj \
 	$(OBJDIR)\ATM_Addr.obj \
 	$(OBJDIR)\ATM_Connector.obj \
@@ -42,12 +42,12 @@ OBJFILES = \
 	$(OBJDIR)\Capabilities.obj \
 	$(OBJDIR)\CDR_Base.obj \
 	$(OBJDIR)\CDR_Stream.obj \
-        $(OBJDIR)\Codecs.obj \
-        $(OBJDIR)\Codeset_Registry.obj \
-        $(OBJDIR)\Codeset_Registry_db.obj \
+   $(OBJDIR)\Codecs.obj \
+   $(OBJDIR)\Codeset_Registry.obj \
+   $(OBJDIR)\Codeset_Registry_db.obj \
 	$(OBJDIR)\Configuration.obj \
 	$(OBJDIR)\Configuration_Import_Export.obj \
-        $(OBJDIR)\Connection_Recycling_Strategy.obj \
+   $(OBJDIR)\Connection_Recycling_Strategy.obj \
 	$(OBJDIR)\Containers.obj \
 	$(OBJDIR)\Copy_Disabled.obj \
 	$(OBJDIR)\Date_Time.obj \
@@ -62,7 +62,7 @@ OBJFILES = \
 	$(OBJDIR)\Dump.obj \
 	$(OBJDIR)\Dynamic.obj \
 	$(OBJDIR)\Dynamic_Service.obj \
-        $(OBJDIR)\Dynamic_Service_Base.obj \
+   $(OBJDIR)\Dynamic_Service_Base.obj \
 	$(OBJDIR)\Event_Handler.obj \
 	$(OBJDIR)\FIFO.obj \
 	$(OBJDIR)\FIFO_Recv.obj \
@@ -74,11 +74,11 @@ OBJFILES = \
 	$(OBJDIR)\FILE_Connector.obj \
 	$(OBJDIR)\FILE_IO.obj \
 	$(OBJDIR)\Filecache.obj \
-        $(OBJDIR)\Framework_Component.obj \
+   $(OBJDIR)\Framework_Component.obj \
 	$(OBJDIR)\Functor.obj \
 	$(OBJDIR)\Get_Opt.obj \
 	$(OBJDIR)\Handle_Set.obj \
-        $(OBJDIR)\Hashable.obj \
+   $(OBJDIR)\Hashable.obj \
 	$(OBJDIR)\Hash_Map_Manager.obj \
 	$(OBJDIR)\High_Res_Timer.obj \
 	$(OBJDIR)\INET_Addr.obj \
@@ -123,7 +123,7 @@ OBJFILES = \
 	$(OBJDIR)\Name_Request_Reply.obj \
 	$(OBJDIR)\Name_Space.obj \
 	$(OBJDIR)\Naming_Context.obj \
-        $(OBJDIR)\Notification_Strategy.obj \
+   $(OBJDIR)\Notification_Strategy.obj \
 	$(OBJDIR)\NT_Service.obj \
 	$(OBJDIR)\Object_Manager.obj \
 	$(OBJDIR)\Obchunk.obj \
@@ -152,10 +152,10 @@ OBJFILES = \
 	$(OBJDIR)\Process_Manager.obj \
 	$(OBJDIR)\Profile_Timer.obj \
 	$(OBJDIR)\Reactor.obj \
-        $(OBJDIR)\Reactor_Notification_Strategy.obj \
+   $(OBJDIR)\Reactor_Notification_Strategy.obj \
 	$(OBJDIR)\Read_Buffer.obj \
-        $(OBJDIR)\Recyclable.obj \
-        $(OBJDIR)\Refcountable.obj \
+   $(OBJDIR)\Recyclable.obj \
+   $(OBJDIR)\Refcountable.obj \
 	$(OBJDIR)\Registry.obj \
 	$(OBJDIR)\Registry_Name_Space.obj \
 	$(OBJDIR)\Remote_Name_Space.obj \
@@ -184,7 +184,7 @@ OBJFILES = \
 	$(OBJDIR)\SOCK_IO.obj \
 	$(OBJDIR)\SOCK_Stream.obj \
 	$(OBJDIR)\SOCK_SEQPACK_Acceptor.obj \
-	$(OBJDIR)\SOCK_SEQPACK_Assocication.obj \
+   $(OBJDIR)\SOCK_SEQPACK_Association.obj \
 	$(OBJDIR)\SOCK_SEQPACK_Connector.obj \
 	$(OBJDIR)\SPIPE.obj \
 	$(OBJDIR)\SPIPE_Acceptor.obj \
@@ -259,7 +259,7 @@ INCLUDES = \
 	*.h *.i *.inl *_T.cpp \
 	Acceptor.cpp \
 	Asynch_Acceptor.cpp \
-        Asynch_Connector.cpp \
+   Asynch_Connector.cpp \
 	Array_Base.cpp \
 	Node.cpp \
 	Unbounded_Set.cpp \
@@ -281,9 +281,9 @@ INCLUDES = \
 	Singleton.cpp \
 	Stream.cpp \
 	Stream_Modules.cpp \
-        String_Base.cpp \
+   String_Base.cpp \
 	Svc_Handler.cpp \
-        Swap.cpp \
+   Swap.cpp \
 	Test_and_Set.cpp \
 	Timer_Queue_Adapters.cpp \
 	Typed_SV_Message.cpp \
