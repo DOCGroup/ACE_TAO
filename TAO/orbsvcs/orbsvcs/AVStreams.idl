@@ -116,9 +116,9 @@ module AVStreams
     oneway void push_event (in streamEvent the_event);
     
     void set_FPStatus (in flowSpec the_spec,
-                      in string fp_name,		// Only SFP1.0 currently 
-                      // specified
-                      in any fp_settings)		// Currently SFP accepts 
+                       in string fp_name,		// Only SFP1.0 currently 
+                                                        // specified
+                       in any fp_settings)		// Currently SFP accepts 
       // SFPStatus structure
       raises (noSuchFlow, 
               FPError);
