@@ -3,6 +3,9 @@
 
 // Operations on the unbounded sequence class.
 
+#include "ace/OS_String.h"
+#include "ace/Message_Block.h"
+
 ACE_INLINE
 TAO_Base_Sequence::TAO_Base_Sequence (void)
   : maximum_ (0),
@@ -288,7 +291,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
       //   buffer comes from a CDR stream.
       //
       result = TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (this->length_);
-      ACE_OS::memcpy (result, this->buffer_, this->length_);
+      ACE_OS_String::memcpy (result, this->buffer_, this->length_);
     }
   else if (this->release_ != 0)
     {

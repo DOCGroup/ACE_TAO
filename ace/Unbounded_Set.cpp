@@ -8,6 +8,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_Errno.h"
 #include "ace/Trace.h"
+#include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

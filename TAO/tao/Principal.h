@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "OctetSeqC.h"
+#include "ace/Synch_T.h"
 
 /**
  * @class CORBA_Principal

@@ -1,3 +1,13 @@
+Mon May  6 15:53:39 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/Array_Base.cpp:
+
+	  Added include of OS_Errno.h.
+
+	* ace/Unbounded_Set.cpp:
+
+	  Added include of Global_Macros.h to pick up the ACE_DES* macros.
+
 Mon May  6 09:33:00 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/TLI_Acceptor.cpp:

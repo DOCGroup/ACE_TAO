@@ -5,6 +5,8 @@
 // Operations on the generic unbounded sequence class.
 // ***************************************************
 
+#include "ace/Log_Msg.h"
+
 template <class T> ACE_INLINE T *
 TAO_Unbounded_Sequence<T>::allocbuf (CORBA::ULong size)
 {

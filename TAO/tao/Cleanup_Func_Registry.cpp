@@ -8,6 +8,8 @@
 # include "Cleanup_Func_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Log_Msg.h"
+
 ACE_RCSID (tao, Cleanup_Func_Registry, "$Id$")
 
 TAO_Cleanup_Func_Registry::TAO_Cleanup_Func_Registry (void)

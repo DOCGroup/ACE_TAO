@@ -22,6 +22,7 @@
 
 class TAO_Transport;
 class TAO_Queued_Message;
+class ACE_Time_Value;
 
 /**
  * @class TAO_Flushing_Strategy

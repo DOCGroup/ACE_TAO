@@ -24,7 +24,8 @@
 
 #ifdef TAO_HAS_VALUETYPE
 
-#include "ace/OS.h"           /* for ptr_arith_t */
+//#include "ace/OS.h"           /* for ptr_arith_t */
+#include "ace/Synch_T.h"
 #include "tao/corbafwd.h"
 
 /**

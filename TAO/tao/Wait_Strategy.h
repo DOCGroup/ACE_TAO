@@ -24,6 +24,7 @@
 class TAO_ORB_Core;
 class TAO_Transport;
 class TAO_Synch_Reply_Dispatcher;
+class ACE_Time_Value;
 
 /**
  * @class TAO_Wait_Strategy

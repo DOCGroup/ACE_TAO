@@ -24,6 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Synch_T.h" // for *_SYNCH_MUTEX definitions.
+
 /**
  * @class TAO_Endpoint
  *
