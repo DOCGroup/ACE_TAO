@@ -4,6 +4,8 @@ default:
 	:defines=DEBUG
 any.cpp
 	C++
+arg_shifter.cpp
+	C++
 cdr.cpp
 	C++
 client_factory.cpp
@@ -44,6 +46,8 @@ nvlist.cpp
 	C++
 object.cpp
 	C++
+objkeyC.cpp
+	C++
 objtable.cpp
 	C++
 optable.cpp
@@ -56,9 +60,17 @@ params.cpp
 	C++
 poa.cpp
 	C++
+poaC.cpp
+	C++
+poaS.cpp
+	C++
 principa.cpp
 	C++
 request.cpp
+	C++
+sequence.cpp
+	C++
+servant_base.cpp
 	C++
 server_factory.cpp
 	C++
