@@ -161,15 +161,15 @@ ACE_Active_Map_Manager<T>::unbind (const ACE_Active_Map_Manager_Key &key)
 
 template <class T> ACE_INLINE 
 ACE_Active_Map_Manager<T>::ACE_Active_Map_Manager (ACE_Allocator *alloc)
-  : BASE (alloc)
+  : ACE_AMM_BASE (alloc)
 {
 }
 
 template <class T> ACE_INLINE 
 ACE_Active_Map_Manager<T>::ACE_Active_Map_Manager (size_t size,
                                                    ACE_Allocator *alloc)
-  : BASE (size, 
-          alloc)
+  : ACE_AMM_BASE (size, 
+                  alloc)
 {
 }
 
@@ -182,54 +182,54 @@ template <class T> ACE_INLINE int
 ACE_Active_Map_Manager<T>::open (size_t length,
                                  ACE_Allocator *alloc)
 {
-  return BASE::open (length, alloc);
+  return ACE_AMM_BASE::open (length, alloc);
 }
 
 template <class T> ACE_INLINE int 
 ACE_Active_Map_Manager<T>::close (void)
 {
-  return BASE::close ();
+  return ACE_AMM_BASE::close ();
 }
 
 template <class T> ACE_INLINE size_t 
 ACE_Active_Map_Manager<T>::current_size (void)
 {
-  return BASE::current_size ();
+  return ACE_AMM_BASE::current_size ();
 }
 
 template <class T> ACE_INLINE size_t 
 ACE_Active_Map_Manager<T>::total_size (void)
 {
-  return BASE::total_size ();
+  return ACE_AMM_BASE::total_size ();
 }
 
 template <class T> ACE_INLINE void 
 ACE_Active_Map_Manager<T>::dump (void) const
 {
-  BASE::dump ();
+  ACE_AMM_BASE::dump ();
 }
 
 template <class T> ACE_Map_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> 
 ACE_Active_Map_Manager<T>::begin (void)
 {
-  return BASE::begin ();
+  return ACE_AMM_BASE::begin ();
 }
 
 template <class T> ACE_INLINE ACE_Map_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> 
 ACE_Active_Map_Manager<T>::end (void)
 {
-  return BASE::end ();
+  return ACE_AMM_BASE::end ();
 }
 
 template <class T> ACE_INLINE ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> 
 ACE_Active_Map_Manager<T>::rbegin (void)
 {
-  return BASE::rbegin ();
+  return ACE_AMM_BASE::rbegin ();
 }
 
 template <class T> ACE_INLINE ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> 
 ACE_Active_Map_Manager<T>::rend (void)
 {
-  return BASE::rend ();
+  return ACE_AMM_BASE::rend ();
 }
 
