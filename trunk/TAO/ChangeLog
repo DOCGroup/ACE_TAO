@@ -1,3 +1,8 @@
+Fri Feb 25 10:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.cpp:
+          Fixed problems in minimum corba build
+
 Fri Feb 25 09:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client/ServerObject{C,A,S}.{h,cpp,inl}:
