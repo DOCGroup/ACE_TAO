@@ -1,3 +1,24 @@
+Tue Dec 30 13:20:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile.PortableGroup:
+
+	  Need to link in IOManip library. If not done, dynamic loading
+	  of this library starts failing which is bad. I almost had a
+	  scare now and I thought that our service configurator was
+	  broken. 
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+
+	  Added back changes that were lost during the merge on "Sun Dec
+	  21 19:35:44 2003  Dale Wilson  <wilson_d@ociweb.com>" 
+	
+	* orbsvcs/tests/Miop/McastHello/Makefile:
+
+	  No need to link in the libraries as done here. The test works
+	  with dynamic libraries and should work as such. Linking in
+	  libraries only tries to mask teh errors. 
+
 Tue Dec 30 10:21:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/ImplRepo/locked/run_test.pl:

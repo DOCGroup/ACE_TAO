@@ -87,7 +87,6 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
 
 TAO_UIPMC_Transport::~TAO_UIPMC_Transport (void)
 {
-  ACE_ASSERT(this->connection_handler_ == 0);
   delete this->messaging_object_;
 }
 
