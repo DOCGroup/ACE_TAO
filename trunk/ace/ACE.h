@@ -243,7 +243,7 @@ public:
   // 0 if unsuccessful, else returns pointer to beginning of the
   // "time" portion of <day_and_time>.
 
-  static int daemonize (void);
+  static int daemonize (const char pathname[] = "/");
   // Become a daemon process.
 
   // = Methods for searching and opening shared libraries using relative naming. 

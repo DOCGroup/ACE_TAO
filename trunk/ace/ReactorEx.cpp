@@ -64,7 +64,7 @@ ACE_ReactorEx::register_handler (ACE_Event_Handler *eh,
 
 int 
 ACE_ReactorEx::remove_handler (ACE_Event_Handler *eh,
-				ACE_Reactor_Mask mask)
+			       ACE_Reactor_Mask mask)
 {
   ACE_GUARD_RETURN (ACE_ReactorEx_Token, ace_mon, this->token_, -1);
 
@@ -79,7 +79,7 @@ ACE_ReactorEx::remove_handler (ACE_Event_Handler *eh,
 	{
 	  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
 	    event_handlers_[index]->handle_close (handle,
-					    ACE_Event_Handler::NULL_MASK);
+						  ACE_Event_Handler::NULL_MASK);
 
 	  // If there was only one handle, reset the pointer to 0.
 	  if (this->active_handles_ == 1)

@@ -179,9 +179,6 @@ ACE_Module<ACE_SYNCH_2>::close (int flags /* = M_DELETE_NONE */)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_2>::close");
 
-  ACE_Task<ACE_SYNCH_2> *reader_q = this->reader ();
-  ACE_Task<ACE_SYNCH_2> *writer_q = this->writer ();
-	
   int result = 0;
 
   ACE_SET_BITS (flags_, flags);
