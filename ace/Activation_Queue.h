@@ -34,7 +34,7 @@ class ACE_Export ACE_Activation_Queue
 public:
   // = Initialization and termination methods.
   ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = 0);
-  ~ACE_Activation_Queue (void);
+  virtual ~ACE_Activation_Queue (void);
 
   // = Queue operations.
   ACE_Method_Object *dequeue (ACE_Time_Value *tv = 0);
@@ -50,7 +50,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
+protected:
   ACE_Message_Queue<ACE_SYNCH> *queue_;
   // Stores the <Method_Objects>.
   
