@@ -5,7 +5,6 @@
 #include "ace/OS.h"
 #include "ace/SString.h"
 #include "ace/Sched_Params.h"
-#include "ace/Object_Manager.h"
 
 #if defined (ACE_WIN32)
 #include "ace/ARGV.h"
@@ -975,9 +974,6 @@ class ACE_TSS_Cleanup
 public:
   static ACE_TSS_Cleanup *instance (void);
 
-  static void cleanup (void *instance, void *);
-  // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
-
   void exit (void *status);
   // Cleanup the thread-specific objects.  Does _NOT_ exit the thread.
 
@@ -1049,95 +1045,93 @@ ACE_TSS_Cleanup::exit_cleanup_i (void)
 void 
 ACE_TSS_Cleanup::exit (void * /* status */)
 {
-// ACE_TRACE ("ACE_TSS_Cleanup::exit");
+  // ACE_TRACE ("ACE_TSS_Cleanup::exit");
 
-  {
-    ACE_thread_key_t key_arr[ACE_DEFAULT_THREAD_KEYS];
-    int index = 0;
+  ACE_thread_key_t key_arr[ACE_DEFAULT_THREAD_KEYS];
+  int index = 0;
 
-    ACE_TSS_Info *key_info = 0;
-    ACE_TSS_Info info_arr[ACE_DEFAULT_THREAD_KEYS];
-    int info_ix = 0;
+  ACE_TSS_Info *key_info = 0;
+  ACE_TSS_Info info_arr[ACE_DEFAULT_THREAD_KEYS];
+  int info_ix = 0;
 
   // While holding the lock, we only collect the ACE_TSS_Info objects
   // in an array without invoking the according destructors.
 
+  {
+    ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_TSS_Cleanup_Lock::instance ());
+
+    // Prevent recursive deletions
+
+    if (this->check_cleanup_i () == 0) // Are we already performing cleanup?
+      return;
+
+    // If we can't insert our thread_id into the list, we will not be
+    // able to detect recursive invocations for this thread. Therefore
+    // we better risk memory and key leakages, resulting also in
+    // missing close() calls as to be invoked recursively.
+
+    if (this->mark_cleanup_i () != 0) // Insert our thread_id in list
+      return;
+
+    // Iterate through all the thread-specific items and free them all
+    // up.
+
+    for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
+         iter.next (key_info) != 0;
+         iter.advance ())
+      {
+        void *tss_info = 0;
+
+        key_info->ref_table_.remove (ACE_TSS_Ref (ACE_OS::thr_self ()));
+
+        if (key_info->destructor_
+            && ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0
+            && tss_info)
+          {
+            info_arr[info_ix].key_ = key_info->key_;
+            info_arr[info_ix].destructor_ = key_info->destructor_;
+            info_arr[info_ix++].tss_obj_ = key_info->tss_obj_;
+          }
+          
+        if (key_info->ref_table_.size () == 0 
+            && key_info->tss_obj_ == 0)
+          key_arr[index++] = key_info->key_;
+      }
+  }
+
+  // Now we have given up the ACE_TSS_Cleanup::lock_ and we start
+  // invoking destructors.
+
+  for (int i = 0; i < info_ix; i++)
     {
-      ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_TSS_Cleanup_Lock::instance ());
+      void *tss_info = 0;
 
-      // Prevent recursive deletions
+      ACE_OS::thr_getspecific (info_arr[i].key_, &tss_info);
 
-      if (this->check_cleanup_i () == 0) // Are we already performing cleanup?
-	return;
-
-      // If we can't insert our thread_id into the list, we will not be
-      // able to detect recursive invocations for this thread. Therefore
-      // we better risk memory and key leakages, resulting also in
-      // missing close() calls as to be invoked recursively.
-
-      if (this->mark_cleanup_i () != 0) // Insert our thread_id in list
-	return;
-
-      // Iterate through all the thread-specific items and free them all
-      // up.
-
-      for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
-	   iter.next (key_info) != 0;
-	   iter.advance ())
-	{
-	  void *tss_info = 0;
-
-	  key_info->ref_table_.remove (ACE_TSS_Ref (ACE_OS::thr_self ()));
-
-	  if (key_info->destructor_
-	      && ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0
-	      && tss_info)
-	    {
- 	      info_arr[info_ix].key_ = key_info->key_;
- 	      info_arr[info_ix].destructor_ = key_info->destructor_;
- 	      info_arr[info_ix++].tss_obj_ = key_info->tss_obj_;
-	    }
-	  
-	  if (key_info->ref_table_.size () == 0 
-	      && key_info->tss_obj_ == 0)
-	    key_arr[index++] = key_info->key_;
-	}
+      if (tss_info != 0)
+        {
+          // Only call the destructor if the value is non-zero for this
+          // thread.
+          (*info_arr[i].destructor_)(tss_info);
+        }
     }
 
-    // Now we have given up the ACE_TSS_Cleanup::lock_ and we start
-    // invoking destructors.
+  // Acquiring ACE_TSS_Cleanup::lock_ to free TLS keys and remove
+  // entries from ACE_TSS_Info table.
+  {
+    ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_TSS_Cleanup_Lock::instance ());
 
-    for (int i = 0; i < info_ix; i++)
+    for (int i = 0; i < index; i++)
       {
-	void *tss_info = 0;
-
-	ACE_OS::thr_getspecific (info_arr[i].key_, &tss_info);
-
-        if (tss_info != 0)
-          {
-            // Only call the destructor if the value is non-zero for this
-            // thread.
-            (*info_arr[i].destructor_)(tss_info);
-          }
+#if defined (ACE_WIN32)
+        ::TlsFree (key_arr[i]);
+#else
+        // don't bother to free the key
+#endif /* ACE_WIN32 */
+        this->table_.remove (ACE_TSS_Info (key_arr[i]));
       }
 
-    // Acquiring ACE_TSS_Cleanup::lock_ to free TLS keys and remove
-    // entries from ACE_TSS_Info table.
-    {
-      ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_TSS_Cleanup_Lock::instance ());
-
-      for (int i = 0; i < index; i++)
-	{
-#if defined (ACE_WIN32)
-	  ::TlsFree (key_arr[i]);
-#else
-          // don't bother to free the key
-#endif /* ACE_WIN32 */
-	  this->table_.remove (ACE_TSS_Info (key_arr[i]));
-	}
-
-      this->exit_cleanup_i (); // remove thread id from reference list.
-    }
+    this->exit_cleanup_i (); // remove thread id from reference list.
   }
 }
 
@@ -1161,35 +1155,10 @@ ACE_TSS_Cleanup::instance (void)
       // only create the ACE_TSS_Cleanup instance once.
       if (instance_ == 0)
 	ACE_NEW_RETURN (ACE_TSS_Cleanup::instance_, ACE_TSS_Cleanup, 0);
-
-      // Register for destruction with ACE_Object_Manager.
-#if defined ACE_HAS_SIG_C_FUNC
-      ACE_Object_Manager::at_exit (instance_, ACE_TSS_Cleanup_cleanup, 0);
-#else
-      ACE_Object_Manager::at_exit (instance_, ACE_TSS_Cleanup::cleanup, 0);
-#endif /* ACE_HAS_SIG_C_FUNC */
     }
 
   return ACE_TSS_Cleanup::instance_;
 }
-
-#if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" void
-ACE_TSS_Cleanup_cleanup (void *instance, void *)
-{
-  // ACE_TRACE ("ACE_TSS_Cleanup::cleanup");
-
-  delete (ACE_TSS_Cleanup *) instance;
-}
-#else
-void
-ACE_TSS_Cleanup::cleanup (void *instance, void *)
-{
-  // ACE_TRACE ("ACE_TSS_Cleanup::cleanup");
-
-  delete (ACE_TSS_Cleanup *) instance;
-}
-#endif /* ACE_HAS_SIG_C_FUNC */
 
 int 
 ACE_TSS_Cleanup::insert (ACE_thread_key_t key, 
@@ -1368,6 +1337,12 @@ ACE_OS::cleanup_tss ()
   // Just close the ACE_Log_Msg for the current (which should be main) thread.
   ACE_Log_Msg::close ();
 #endif /* ACE_HAS_TSS_EMULATION */
+
+#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
+  // Finally, free up the ACE_TSS_Cleanup instance.  This method gets
+  // call by the ACE_Object_Manager.
+  delete ACE_TSS_Cleanup::instance ();
+#endif /* WIN32 || ACE_HAS_TSS_EMULATION */
 }
 
 void
