@@ -1,3 +1,10 @@
+Thu Mar  8 09:32:49 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/Borland/ChatClientWnd.cpp:
+        * examples/Callback_Quoter/Consumer_Handler.cpp:
+
+          Fixed some resolve_initial_reference fuzz errors.
+
 Thu Mar  8 11:01:45 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Oneways/Reliable/server.cpp:

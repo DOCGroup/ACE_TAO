@@ -14,47 +14,56 @@ __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
    : TForm (Owner),
      orb_thread_ (0)
 {
-  nickname_ = InputBox ("Enter Nickname",
-                        "Enter the nickname you would like to use:",
-                        "noname");
+  try
+    {
+      nickname_ = InputBox ("Enter Nickname",
+                            "Enter the nickname you would like to use:",
+                            "noname");
 
-  if (!OpenDialog->Execute ())
-    throw Exception ("IOR file not selected - unable to continue");
-  ior_file_name_ = OpenDialog->FileName;
+      if (!OpenDialog->Execute ())
+        throw Exception ("IOR file not selected - unable to continue");
+      ior_file_name_ = OpenDialog->FileName;
 
-  // Retrieve the ORB.
-  orb_ = CORBA::ORB_init (_argc, _argv, 0);
+      // Retrieve the ORB.
+      orb_ = CORBA::ORB_init (_argc, _argv, 0);
 
-  // Get reference to the Root POA
-  CORBA::Object_var obj =
-    orb_->resolve_initial_references ("RootPOA");
-  PortableServer::POA_var poa = PortableServer::POA::_narrow (obj);
+      // Get reference to the Root POA
+      CORBA::Object_var obj =
+        orb_->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj);
 
-  // Activate the POA manager
-  PortableServer::POAManager_var mgr = poa->the_POAManager ();
-  mgr->activate ();
+      // Activate the POA manager
+      PortableServer::POAManager_var mgr = poa->the_POAManager ();
+      mgr->activate ();
 
-  // Run the orb in a separate thread
-  orb_thread_.reset (new TORBThread (orb_));
+      // Run the orb in a separate thread
+      orb_thread_.reset (new TORBThread (orb_));
 
-  // set the orb in the receiver_i_ object.
-  receiver_i_.orb (orb_);
+      // set the orb in the receiver_i_ object.
+      receiver_i_.orb (orb_);
 
-  // read the ior from file
-  ReadIOR (ior_file_name_);
+      // read the ior from file
+      ReadIOR (ior_file_name_);
 
-  CORBA::Object_var server_object =
-    orb_->string_to_object (ior_.c_str ());
+      CORBA::Object_var server_object =
+        orb_->string_to_object (ior_.c_str ());
 
-  if (CORBA::is_nil (server_object.in ()))
-    throw Exception ("Invalid IOR " + ior_);
+      if (CORBA::is_nil (server_object.in ()))
+        throw Exception ("Invalid IOR " + ior_);
 
-  server_ = Broadcaster::_narrow (server_object);
+      server_ = Broadcaster::_narrow (server_object);
 
-  receiver_var_ = receiver_i_._this ();
+      receiver_var_ = receiver_i_._this ();
 
-  // Register ourselves with the server.
-  server_->add (receiver_var_, nickname_.c_str ());
+      // Register ourselves with the server.
+      server_->add (receiver_var_, nickname_.c_str ());
+    }
+  catch (CORBA::Exception &e)
+    {
+      ShowMessage ("CORBA Exception in TChatClientWindow constructor: " 
+                   + String (e._id ()));
+      throw;
+    }
 }
 //---------------------------------------------------------------------------
 void __fastcall TChatClientWindow::ReadIOR (String filename)
