@@ -569,6 +569,12 @@ TAO_Advanced_Resource_Factory::input_cdr_buffer_allocator (void)
   return allocator;
 }
 
+int
+TAO_Advanced_Resource_Factory::input_cdr_allocator_type_locked (void)
+{
+  return this->cdr_allocator_type_ == TAO_ALLOCATOR_NULL_LOCK ? 0 : 1;
+}
+
 TAO_Priority_Mapping *
 TAO_Advanced_Resource_Factory::get_priority_mapping (void)
 {

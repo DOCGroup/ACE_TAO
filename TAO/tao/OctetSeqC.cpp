@@ -32,6 +32,7 @@
 #include "Any.h"
 #include "CDR.h"
 #include "Typecode.h"
+#include "ORB_Core.h"
 
 #if !defined (_CORBA_OCTETSEQ_CS_)
 #define _CORBA_OCTETSEQ_CS_
@@ -235,15 +236,18 @@ CORBA::Boolean operator>> (
     // retrieve all the elements
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-    if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
-    {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
-        ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
-      oseq->replace (_tao_seq_len, strm.start ());
-      oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
-      strm.skip_bytes (_tao_seq_len);
-      return 1;
-    }
+    if (ACE_BIT_DISABLED (strm.start ()->flags (),
+                          ACE_Message_Block::DONT_DELETE)
+        &&
+        strm.orb_core ()->resource_factory ()->input_cdr_allocator_type_locked () == 1)
+      {
+        TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
+          ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
+        oseq->replace (_tao_seq_len, strm.start ());
+        oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
+        strm.skip_bytes (_tao_seq_len);
+        return 1;
+      }
     else
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
 
