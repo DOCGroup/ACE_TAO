@@ -1,3 +1,8 @@
+Thu Jan  9 11:01:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/try_macros.h: Removed the file from the repo. This is no
+	  longer used and seems like a good time to remove it.
+
 Tue Jan  7 09:02:52 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* performance-tests/Memory/IORsize/Foo_i.h: Fixed fuzz errors.
