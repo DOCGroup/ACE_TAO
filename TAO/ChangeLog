@@ -1,3 +1,25 @@
+Fri Feb 14 18:27:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/include/ast_module.h:
+	  
+	  Fixes for an error in IDL_Test, where recent changes to the
+	  IDL compiler induced an error in typeprefix handling, and
+	  a bug reported by Will Christhof <Will.Christhof@krones.de>
+	  in #pragma prefix handling.
+
+	* TAO_IDL/util/utl_scope.cpp:
+
+	  Cosmetic fix.
+
+	* tests/IDL_Test/main.cpp:
+
+	  Changed error reporting and handling to allow multiple 
+	  errors to be reported in one run, and to allow the ORB
+	  and POA to clean up at exit whether there have been errors
+	  or not.
+
 Fri Feb 14 14:37:55 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_predefined_type.cpp (compute_repoID):

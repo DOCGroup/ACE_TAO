@@ -121,6 +121,9 @@ public:
   // in a previous opening of this module.
   AST_Decl *look_in_previous (Identifier *e);
 
+  // Accessor to the member.
+  ACE_Unbounded_Set<AST_Decl *> &previous (void);
+
   // Cleanup function.
   virtual void destroy (void);
 
@@ -167,13 +170,13 @@ private:
 
   virtual AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s);
 
-  virtual AST_Enum *fe_add_enum (AST_Enum  *e);
+  virtual AST_Enum *fe_add_enum (AST_Enum *e);
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
 
   virtual AST_Typedef *fe_add_typedef (AST_Typedef *t);
 
-  virtual AST_Native *fe_add_native (AST_Native  *n);
+  virtual AST_Native *fe_add_native (AST_Native *n);
 
   idl_bool pd_has_nested_valuetype;
 
