@@ -1,3 +1,8 @@
+Thu Dec  3 12:37:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Exception.cpp (make_standard_typecode): Changed the
+	  operation name encoded in typecode to "completed".
+
 Thu Dec 03 12:33:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Makefile: removed DynUnion_i_T from ORBCORE_SRCS, because
