@@ -79,7 +79,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
       int result =
         tph->update_server_protocol_properties (
-          policy,
+          policy.in (),
           req.transport (),
           "iiop");
 

@@ -1,3 +1,9 @@
+Wed Jun 18 19:25:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+
+	  Added .in() to a _var argument in a function call.
+
 Wed Jun 18 19:03:53 2003  Gan Deng <gan.deng@vanderbilt.edu>
 
         * performance-tests/Sequence_Latency/Deffered/*: 
