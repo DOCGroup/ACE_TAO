@@ -8,6 +8,10 @@
 
 #define quote(x) #x
 
+const int max_sequence_length = 10;
+// Limit the sequence length, otherwise the time to run the test
+// increases to fast....
+
 // Constructor.
 Cubit_Client::Cubit_Client (void)
   : cubit_factory_key_ (0),
@@ -412,11 +416,15 @@ Cubit_Client::cube_sequence (int i)
 {
   this->call_count_++;
 
-  Cubit::vector input (i + 1);
-  input.length (i+1);
+  int l = i + 1;
+  if (l > max_sequence_length)
+    l = max_sequence_length;
+
+  Cubit::vector input (l);
+  input.length (l);
 
   // Fill in the input sequence...
-  for (int j = 0; j < i + 1; ++j)
+  for (int j = 0; j < l; ++j)
     input[j] = j;
 
   Cubit::vector_var output;
@@ -441,10 +449,10 @@ Cubit_Client::cube_sequence (int i)
           this->error_count_++;
         }
 
-      u_int l = output->length ();
-      if (input.length () < l)
-        l = input.length ();
-      for (u_int j = 0; j < l; ++j)
+      u_int rl = output->length ();
+      if (input.length () < rl)
+        rl = input.length ();
+      for (u_int j = 0; j < rl; ++j)
         {
           int x = input[j];
           if (x*x*x != output[j])

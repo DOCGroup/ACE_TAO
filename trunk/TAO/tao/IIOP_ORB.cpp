@@ -37,17 +37,15 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       // XXX there should be a simple way to reuse this code in other
       // ORB implementations ...
 
-      char *bytes;
       // @@ Is BUFSIZ the right size here?
       char buf [BUFSIZ];
-      CDR cdr (buf, sizeof buf, TAO_ENCAP_BYTE_ORDER);
+      TAO_OutputCDR cdr (buf, sizeof buf, TAO_ENCAP_BYTE_ORDER);
 
-      bytes = buf;
       // support limited oref ACE_OS::strcmp.
-      (void) ACE_OS::memset (bytes, 0, BUFSIZ);
+      (void) ACE_OS::memset (buf, 0, BUFSIZ);
 
       // Marshal the objref into an encapsulation bytestream.
-      (void) cdr.put_char (TAO_ENCAP_BYTE_ORDER);
+      (void) cdr.write_octet (TAO_ENCAP_BYTE_ORDER);
       if (cdr.encode (CORBA::_tc_Object,
                         &obj, 0,
                         env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -63,7 +61,7 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
 
       ACE_OS::strcpy ((char *) string, ior_prefix);
 
-      bytes = cdr.buffer ();
+      const char* bytes = cdr.buffer ();
 
       for (cp = (CORBA::String) ACE_OS::strchr ((char *) string, ':') + 1;
            len--;
@@ -184,13 +182,12 @@ ior_string_to_object (CORBA::String str,
   // Create deencapsulation stream ... then unmarshal objref from that
   // stream.
 
-  CDR stream;
-  CORBA::Object_ptr objref;
+  TAO_InputCDR stream (buffer + 1, len - 1, buffer[0]);
 
-  stream.setup_encapsulation (buffer, len);
+  CORBA::Object_ptr objref;
   if (stream.decode (CORBA::_tc_Object,
-                    &objref, 0,
-                    env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+		     &objref, 0,
+		     env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     objref = 0;
 
   delete [] buffer;

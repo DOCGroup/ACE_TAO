@@ -21,10 +21,10 @@
 #define TAO_IIOP_INTERPRETER_H
 
 // Useful typedefs.
-typedef size_t TAO_attribute_calculator (CDR *stream,
+typedef size_t TAO_attribute_calculator (TAO_InputCDR *stream,
                                          size_t &alignment,
                                          CORBA::Environment &env);
-typedef CORBA::Boolean TAO_param_skip_rtn (CDR *);
+typedef CORBA::Boolean TAO_param_skip_rtn (TAO_InputCDR *);
 
 class TAO_Export TAO_IIOP_Interpreter
 {
@@ -102,9 +102,14 @@ public:
   // Initialize TAO's TypeCode table.
 
   static size_t calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
-                                                CDR *original_stream,
+                                                TAO_InputCDR *original_stream,
                                                 size_t &alignment,
                                                 CORBA::Environment &env);
+  static size_t calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
+						  TAO_InputCDR *stream,
+						  CORBA::TCKind kind,
+						  size_t &alignment,
+						  CORBA::Environment &env);
   // For a given typecode, figure out its size and alignment needs.
   // This version is used mostly when traversing other typecodes, and
   // follows these rules:
@@ -119,7 +124,10 @@ public:
   // non-null, "tc" is initialized to hold the contents of the TypeCode;
   // it depends on the contents of the original stream to be valid.
   //
-  // XXX explore splitting apart returning the size/alignment data and
+  // The _i routine encapsulates some common code for the case were an
+  // indirected TypeCode is in use.
+  //
+  // @@ explore splitting apart returning the size/alignment data and
   // the TypeCode initialization; union traversal would benefit a bit,
   // but it would need more than that to make it as speedy as struct
   // traversal.
@@ -131,7 +139,7 @@ public:
   // described.  The TCKind value has always been removed from the CDR
   // stream when these calculator routines get called.
 
-  static size_t calc_struct_and_except_attributes (CDR *stream,
+  static size_t calc_struct_and_except_attributes (TAO_InputCDR *stream,
                                                    size_t &alignment,
                                                    CORBA::Boolean is_exception,
                                                    CORBA::Environment &env);
@@ -150,19 +158,19 @@ public:
   // to be taught about compiler-specific representation of that
   // additional "RTTI" data.
 
-  static size_t calc_struct_attributes (CDR *stream,
+  static size_t calc_struct_attributes (TAO_InputCDR *stream,
                                         size_t &alignment,
                                         CORBA::Environment &env);
   // Calculate size and alignment for a structure.
 
 
-  static size_t calc_exception_attributes (CDR *stream,
+  static size_t calc_exception_attributes (TAO_InputCDR *stream,
                                            size_t &alignment,
                                            CORBA::Environment &env);
   // Calculate size and alignment for an exception.
 
 
-  static size_t calc_union_attributes (CDR *stream,
+  static size_t calc_union_attributes (TAO_InputCDR *stream,
                                        size_t &alignment,
                                        CORBA::Environment &env);
   // Calculate size and alignment for a CORBA discriminated union.
@@ -174,12 +182,12 @@ public:
   // any of the members).
 
 
-  static size_t calc_alias_attributes (CDR *stream,
+  static size_t calc_alias_attributes (TAO_InputCDR *stream,
                                        size_t &alignment,
                                        CORBA::Environment &env);
   // Calculate size and alignment for a typedeffed type.
 
-  static size_t calc_array_attributes (CDR *stream,
+  static size_t calc_array_attributes (TAO_InputCDR *stream,
                                        size_t &alignment,
                                        CORBA::Environment &env);
   // Calculate size and alignment of an array.  (All such arrays are
@@ -188,20 +196,20 @@ public:
   // as nested single dimensional arrays.)
 
   static CORBA::Boolean match_value (CORBA::TCKind kind,
-                                     CDR *tc_stream,
+                                     TAO_InputCDR *tc_stream,
                                      const void *value,
                                      CORBA::Environment &env);
   // Cast the discriminant values to the right type and compare them.
 
   static size_t
-  calc_key_union_attributes (CDR *stream,
+  calc_key_union_attributes (TAO_InputCDR *stream,
                              size_t &overall_alignment,
                              size_t &discrim_size_with_pad,
                              CORBA::Environment &env);
 
   // = Utility routines that skip unneeded parameter lists.
-  static CORBA::Boolean skip_encapsulation (CDR *stream);
-  static CORBA::Boolean skip_long (CDR *stream);
+  static CORBA::Boolean skip_encapsulation (TAO_InputCDR *stream);
+  static CORBA::Boolean skip_long (TAO_InputCDR *stream);
 
   struct Table_Element
   {

@@ -7,7 +7,7 @@
 //    TAO
 //
 // = FILENAME
-//    cdr.h
+//    CDR.h
 //
 // = DESCRIPTION
 //     Common Data Representation (CDR) marshaling streams.
@@ -47,21 +47,9 @@
 class TAO_Export CDR
 {
   // = TITLE
-  //   The core marshaling primitive: a memory buffer, into which all
-  //   the basic OMG-IDL datatypes can be placed ... or from which
-  //   they can be retreived.
+  //   Keep constants and some routines common to both Output and
+  //   Input CDR streams.
   //
-  // = DESCRIPTION
-  //   A particularly useful static member function for this buffer is
-  //   an interpretive encoding routine, usable as a typecode
-  //   interpreter callback.  Ditto for decoding.  These are used to
-  //   support all OMG-IDL datatypes, even those not supported
-  //   directly by put/get primitives.
-  //
-  //   Struct members are intentionally exposed; the functionality of
-  //   this class, and hence the appropriate abstactions for them,
-  //   hasn't quite settled down enough to settle on fast abstractions
-  //   that let data be hidden without pointlessly sacrificing speed.
 public:
   // = Constants defined by the CDR protocol.
 
@@ -74,28 +62,29 @@ public:
     // binary format: unsigned is the same size as its signed cousin,
     // float is CDR_LONG_SIZE, and double is CDR_LONGLONG_SIZE.
 
+    OCTET_SIZE = 1,
     SHORT_SIZE = 2,
     LONG_SIZE = 4,
     LONGLONG_SIZE = 8,
     LONGDOUBLE_SIZE = 16,
 
-    MAX_ALIGNMENT = 16,
+    OCTET_ALIGN = 1,
+    SHORT_ALIGN = 2,
+    LONG_ALIGN = 4,
+    LONGLONG_ALIGN = 8,
+    LONGDOUBLE_ALIGN = 8,
+    // Note how the CORBA::LongDouble alignment requirements do not
+    // match its size...
+
+    MAX_ALIGNMENT = 8,
     // Maximal CDR 1.1 alignment: "quad precision" FP (i.e. "long
     // double", size as above).
 
-    DEFAULT_BUFSIZE = 1430,
-    // Ethernet MTU, less headers.  Default buffer size for
-    // request/response messages.  These are normally stack-allocated,
-    // and tuning may cause you to want to change this value.  The
-    // best value depends on your particular application mix; you can
-    // also change how buffers grow().  Most remote invocations
-    // (statistically) are "small", and the default used here is
-    // perhaps larger than most such messages.
-    //
-    // If this size is "too small" you need to heap-allocate buffers too
-    // often.  "Too large" is mostly a waste of stackspace, but stack
-    // frames as large as the system page size (often 4Kb) can easily
-    // overrun the "redzone" at the bottom of most VM-based stacks.
+    DEFAULT_BUFSIZE = 248,
+    // The default buffer size.
+    // @@ TODO We want to add options to the ORB to control this
+    // default value, so this constant should be read as the, default
+    // default value ;-)
 
     EXP_GROWTH_MAX = 4096,
     // The buffer size grows exponentially until it reaches this size;
@@ -106,278 +95,422 @@ public:
     // in chunks of this size, note that this constants have the same
     // value right now, but it does not need to be so.
   };
-  // = ENCODING SUPPORT
 
-  // = Adjust pointers as needed, then store in the native byte order.
-  //
+  static void swap_2 (const char *orig, char *target);
+  static void swap_4 (const char *orig, char *target);
+  static void swap_8 (const char *orig, char *target);
+  static void swap_16 (const char *orig, char *target);
+  // Do byte swapping for each basic IDL type size.
   // There exist only routines to put byte, halfword (2 bytes), word
-  // (4 bytes), doubleword (8 bytes) and quadword (16 byte) entities,
-  // plus the interpretive encoder.
+  // (4 bytes), doubleword (8 bytes) and quadword (16 byte); because
+  // those are the IDL basic type sizes.
 
-  CORBA::Boolean put_byte (char c);
-  // encode a byte in the CDR stream
+  static void mb_align (ACE_Message_Block* mb);
 
-  CORBA::Boolean put_short (CORBA::Short s);
-  // encode a short in the CDR stream
+  static int grow (ACE_Message_Block*& mb, size_t minsize);
+  // Increase the capacity of mb to contain at least <minsize> bytes. 
+  // If <minsze> is zero the size is increased by an amount at least
+  // large enough to contain any of the basic IDL types.
+  // Return -1 on failure, 0 on success.
+};
 
-  CORBA::Boolean put_long (CORBA::Long l);
-  // encode a long into the CDR stream
+class TAO_Export TAO_OutputCDR
+{
+  //
+  // = TITLE
+  //   A CDR stream for writing, i.e. for marshalling.
+  //
+  // = DESCRIPTION
+  //   This class is based on the the CORBA spec for Java (98-02-29),
+  //   java class omg.org.CORBA.portable.OutputStream.
+  //   It diverts in a few ways:
+  //     + Operations taking arrays don't have offsets, because in C++
+  //     it is easier to describe an array starting from x+offset.
+  //     + Operations return an error status, because exceptions are
+  //     not widely available in C++ (yet).
+  //
+  //   A particularly useful static member function for this buffer is
+  //   an interpretive encoding routine, usable as a typecode
+  //   interpreter callback.  Ditto for decoding.  These are used to
+  //   support all OMG-IDL datatypes, even those not supported
+  //   directly by put/get primitives.
+  //
+public:
+  friend class TAO_InputCDR;
+  // For reading from a output CDR stream.
 
-  CORBA::Boolean put_longlong (const CORBA::LongLong &ll);
-  // encode a longlong into the CDR stream
+  TAO_OutputCDR (size_t size = 0,
+		 int byte_order = TAO_ENCAP_BYTE_ORDER,
+		 TAO_Marshal_Factory *f =
+		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+  // Default constructor, allocates <size> bytes in the internal
+  // buffer, if <size> == 0 it allocates the default size.
 
-  CORBA::Boolean put_char (CORBA::Char c);
-  // encode a char into the CDR stream
+  TAO_OutputCDR (char *data, size_t size,
+		 int byte_order = TAO_ENCAP_BYTE_ORDER,
+		 TAO_Marshal_Factory *f =
+		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+  // Build a CDR stream with an initial buffer, it will *not* remove
+  // <data>, since it did not allocated it.
 
-  CORBA::Boolean put_wchar (CORBA::WChar wc);
-  // encode a wide char into the CDR stream
+  ~TAO_OutputCDR (void);
+  // destructor
 
-  CORBA::Boolean put_boolean (CORBA::Boolean b);
-  // encode a boolean into the CDR stream
+  // = We have one method per basic IDL type....
+  CORBA_Boolean write_boolean (CORBA::Boolean x);
+  CORBA_Boolean write_char (CORBA::Char x);
+  CORBA_Boolean write_wchar (CORBA::WChar x);
+  CORBA_Boolean write_octet (CORBA::Octet x);
+  CORBA_Boolean write_short (CORBA::Short x);
+  CORBA_Boolean write_ushort (CORBA::UShort x);
+  CORBA_Boolean write_long (CORBA::Long x);
+  CORBA_Boolean write_ulong (CORBA::ULong x);
+  CORBA_Boolean write_longlong (const CORBA::LongLong &x);
+  CORBA_Boolean write_ulonglong (const CORBA::ULongLong &x);
+  CORBA_Boolean write_float (CORBA::Float x);
+  CORBA_Boolean write_double (const CORBA::Double &x);
+  CORBA_Boolean write_longdouble (const CORBA::LongDouble &x);
+  CORBA_Boolean write_string (const CORBA::Char *x);
+  CORBA_Boolean write_wstring (const CORBA::WChar *x);
 
-  CORBA::Boolean put_octet (CORBA::Octet o);
-  // encode a octet into the CDR stream
+  // = We add one method to write arrays of basic IDL types.
+  // Note: the portion written starts at <x> and ends at <x + length>.
+  // The length is *NOT* stored into the CDR stream.
+  CORBA_Boolean write_boolean_array (const CORBA::Boolean* x,
+				     CORBA::ULong length);
+  CORBA_Boolean write_char_array (const CORBA::Char* x,
+				  CORBA::ULong length);
+  CORBA_Boolean write_wchar_array (const CORBA::WChar* x,
+				   CORBA::ULong length);
+  CORBA_Boolean write_octet_array (const CORBA::Octet* x,
+				   CORBA::ULong length);
+  CORBA_Boolean write_short_array (const CORBA::Short* x,
+				   CORBA::ULong length);
+  CORBA_Boolean write_ushort_array (const CORBA::UShort* x,
+				    CORBA::ULong length);
+  CORBA_Boolean write_long_array (const CORBA::Long* x,
+				  CORBA::ULong length);
+  CORBA_Boolean write_ulong_array (const CORBA::ULong* x,
+				   CORBA::ULong length);
+  CORBA_Boolean write_longlong_array (const CORBA::LongLong* x,
+				      CORBA::ULong length);
+  CORBA_Boolean write_ulonglong_array (const CORBA::ULongLong* x,
+				       CORBA::ULong length);
+  CORBA_Boolean write_float_array (const CORBA::Float* x,
+				   CORBA::ULong length);
+  CORBA_Boolean write_double_array (const CORBA::Double* x,
+				    CORBA::ULong length);
+  CORBA_Boolean write_longdouble_array (const CORBA::LongDouble* x,
+					CORBA::ULong length);
 
-  CORBA::Boolean put_ushort (CORBA::UShort s);
-  // encode an unsigned short  into the CDR stream
+  // @@ TODO: do we want a special method to write an array of
+  // strings and wstrings?
 
-  CORBA::Boolean put_ulong (CORBA::ULong l);
-  // encode an unsigned long into the CDR stream
+  // = TAO specific methods.
 
-  CORBA::Boolean put_ulonglong (const CORBA::ULongLong &ll);
-  // encode an unsigned longlong into the CDR stream
+  void reset (void);
+  // Reuse the CDR stream to write on the old buffer.
 
-  CORBA::Boolean put_float (CORBA::Float f);
-  // encode a float into the CDR stream
+  int good_bit (void) const;
+  // Returns 0 if an error has ocurred, the only expected error is to
+  // run out of memory.
 
-  CORBA::Boolean put_double (const CORBA::Double &d);
-  // encode a double into the CDR stream
+  const ACE_Message_Block* start (void) const;
+  // Return the start of the message block chain for this CDR stream.
+  // NOTE: In the current implementation the chain has length 1, but
+  // we are planning to change that.
 
-  CORBA::Boolean put_longdouble (CORBA::LongDouble &ld);
-  // encode a longdouble into the CDR stream
-
-  CORBA::Boolean put_string (const char *str, CORBA::ULong len);
-  // encode a string of length len
+  const char* buffer (void) const;
+  size_t length (void) const;
+  // Return the start and size of the internal buffer.
+  // NOTE: In future implementations these methods may be removed.
 
   CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                            const void *data,
                                            const void *,
                                            CORBA::Environment &env);
-  // Marshaling. ... <context> really points to a <CDR>.
-
-  // = DECODING SUPPORT
-
-  // Same assumptions are made as above, but a flag is tested to
-  // determine whether decode should byteswap or not.  It's cheaper to
-  // do it that way than to use virtual functions.
-
-  CORBA::Boolean get_byte (char &c);
-  // decode a byte from the CDR stream
-
-  CORBA::Boolean get_short (CORBA::Short &s);
-  // decode a short from the CDR stream
-
-  CORBA::Boolean get_long (CORBA::Long &l);
-  // decode a long from the CDR stream
-
-  CORBA::Boolean get_longlong (CORBA::LongLong &ll);
-  // decode a longlong from the CDR stream
-
-  CORBA::Boolean get_char (CORBA::Char &o);
-  // decode a char from the CDR stream
-
-  CORBA::Boolean get_wchar (CORBA::WChar &wc);
-  // decode a wide char from the CDR stream
-
-  CORBA::Boolean get_boolean (CORBA::Boolean &b);
-  // decode a boolean from the CDR stream
-
-  CORBA::Boolean get_octet (CORBA::Octet &o);
-  // decode an octet from the CDR stream
-
-  CORBA::Boolean get_ushort (CORBA::UShort &s);
-  // decode an unsigned short from the CDR stream
-
-  CORBA::Boolean get_ulong (CORBA::ULong &l);
-  // decode an unsigned long from the CDR stream
-
-  CORBA::Boolean get_ulonglong (CORBA::ULongLong &ull);
-  // decode an unsigned longlong from the CDR stream
-
-  CORBA::Boolean get_float (CORBA::Float &f);
-  // decode a float from the CDR stream
-
-  CORBA::Boolean get_double (CORBA::Double &d);
-  // decode a double from the CDR stream
-
-  CORBA::Boolean get_longdouble (CORBA::LongDouble &ld);
-  // decode a longdouble from the CDR stream
-
-  CORBA::Boolean get_string (char *&str, CORBA::ULong len);
-  // decode a string. Length includes the terminating 0
-
-  CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                           const void *data,
-                                           const void *,
-                                           CORBA::Environment &env);
-  // Unmarshaling interpreter ... <context> really points to a <CDR>.
-
-  CDR (char *buf = 0,
-       size_t len = 0,
-       int byte_order = TAO_ENCAP_BYTE_ORDER,
-       int consume_buf = 0,
-       TAO_Marshal_Factory *f = TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
-  // constructor
-
-  CDR (const CDR& rhs);
-  // Copy constructor, build a new stream that points to the same data
-  // as <rhs>.
-  // Using this new stream for writing results in undefined behavior.
-
-  ~CDR (void);
-  // destructor
-
-  // = Used mostly when interpreting typecodes.
-
-  // These may change the state of a CDR buffer even when errors are
-  // reported.
-
-  CORBA::Boolean skip_string (void);
-  // skip a string field in a typecode
-
-  // TODO: This methods should be private and the classes that need it
-  // (TypeCode, Exception, etc.) would be declared friend.
-
-  CORBA::Boolean get_encapsulation (char*& buf, CORBA::ULong& len);
-  // Returns an encapsulated buffer (such as a string) stored inside
-  // the CDR.
-  // TODO: This method should be private and the classes that need it
-  // (TypeCode, Exception, etc.) would be declared friend.
-
-  CORBA::Boolean get_string (char*& buf);
-  // Returns an encapsulated string stored inside the CDR; but without
-  // any copying.
-
-  CORBA::Boolean rd_ptr (size_t n);
-  // Move the read pointer <n> bytes ahead, it is used to skip
-  // portions of the stream, specially in typecodes.
-
-  CORBA::Boolean wr_ptr (size_t n);
-  // Move the write pointer <n> bytes ahead, it is used to when the
-  // CDR is read from a socket to set the end of the message.
-
-  void setup_encapsulation (char *buf, u_int len);
-  // Also used when interpreting typecodes, but more generally when
-  // getting ready to read from encapsulations.  In such cases the
-  // buffer alignment guarantees must be provided by the caller, this
-  // code doesn't verify them.  These streams are "read only".
-
-  void setup_indirection (CDR& cdr, CORBA::Long offset);
-  // Set the CDR to point to the stream in <cdr>.
-  // The stream is read-only from then on.
-
-  CORBA::Boolean grow (size_t newlength);
-  // Grow the buffer to the identified size ... if it's zero, just
-  // grow it by a standard quantum (e.g. when encoding we can't know
-  // in advance how big it will need to become).
-
-  size_t bytes_remaining (void);
-  // Some code needs to know how much is left on encode or decode.
-
-  int good_bit (void) const;
-  // If zero then some error has ocurred.
-
-  char *buffer (void) const;
-  // Return the internal buffer.
-
-  size_t length (void) const;
-  // Return the internal buffer length (how many bytes in the buffer
-  // contain useful data).
-
-  size_t size (void) const;
-  // Return the internal buffer capacity.
-
-  void reset (void);
-  // Reset the read and write pointers to the start of the buffer.
-
-  int do_byteswap;
-  // for decoding only.
-  // TODO: It could be used for encoding also, for instance, if all
-  // the machines in a network but one are little endian it makes
-  // sense to make that machine swap the bytes on write.  At least
-  // some people would like such a feature.
+  // Marshalls the contents of <data> as described by the TypeCode in
+  // <tc>. Any errors are reported though the <env> parameter.
 
 private:
-  static void swap_long (char *orig, CORBA::Long &target);
-  // do byte swapping for longs
+  TAO_OutputCDR (const TAO_OutputCDR& rhs);
+  TAO_OutputCDR& operator= (const TAO_OutputCDR& rhs);
+  // disallow copying...
 
-  static void swap_ulonglong (char *orig, CORBA::ULongLong &target);
-  // do byte swapping for longlongs
+  char* wr_ptr (void) const;
+  char* end (void) const;
+  // The write pointer and end of the current message block.
 
-  static void swap_longdouble (char *orig, CORBA::LongDouble &target);
-  // do byte swapping for longdoubles
-
-  static void mb_align (ACE_Message_Block* mb);
-
-  CORBA::Boolean adjust_to_put (size_t size,
-                                char*& buf);
+  int adjust (size_t size, char*& buf);
   // Returns (in <buf>) the next position in the buffer aligned to
   // <size>, it advances the Message_Block wr_ptr past the data
   // (i.e. <buf> + <size>). If necessary it grows the Message_Block
-  // buffer.  Returns B_FALSE on failure.
+  // buffer.
+  // Sets the good_bit to 0 and returns a -1 on failure.
 
-  CORBA::Boolean adjust_to_get (size_t size,
-                                char*& buf);
-  // Returns (in <buf>) the next position in the buffer aligned to
-  // <size>, it sets the Message_Block rd_ptr past the data
-  // (i.e. <buf> + <size>).  Returns B_FALSE on failure.
+  int adjust (size_t size, size_t align, char*& buf);
+  // As above, but now the size and alignment requirements may be
+  // different.
+
+  CORBA_Boolean write_1 (const CORBA::Octet* x);
+  CORBA_Boolean write_2 (const CORBA::UShort* x);
+  CORBA_Boolean write_4 (const CORBA::ULong* x);
+  CORBA_Boolean write_8 (const CORBA::ULongLong* x);
+  CORBA_Boolean write_16 (const CORBA::LongDouble* x);
+  // Several types can be written using the same routines, since TAO
+  // tries to use native types with known size for each CORBA type.
+  // We could use void* or char* to make the interface more
+  // consistent, but using native types let us exploit the strict
+  // alignment requirements of CDR streams and implement the
+  // operations using asignment.
+
+  CORBA_Boolean write_array (const void* x, size_t size, size_t align,
+			     CORBA::ULong length);
+  // write an array of <length> elements, each of <size> bytes and
+  // the start aligned at a multiple of <align>. The elements are
+  // assumed to be packed with the right alignment restrictions.
+  // It is mostly designed for buffers of the basic types.
+  //
+  // This operation uses memcpy(); as explained above it is expected
+  // that using assignment is faster that memcpy() for one element,
+  // but for several elements memcpy() should be more efficient, it
+  // could be interesting to find the break even point and optimize
+  // for that case, but that would be too platform dependent.
 
 private:
-  ACE_Message_Block *mb_;
-  // The buffer is stored in a Message_Block, future implementations
-  // will take advantage of the chaining features of it to provide
-  // minimal copying encapsulation.
+  ACE_Message_Block* start_;
+  // The start of the chain of message blocks, even though in the
+  // current version the chain always has length 1.
 
   TAO_Marshal_Factory *factory_;
-  // Maintain a factory that can make specialized marshaling objects.
+  // maintain a factory that can make specialized marshaling objects
 
-  TAO_Marshal_Object *mobj_;
-  // Maintain an instance of a marshaling object. The CDR stream
-  // delegates the marshaling activity to mobj_.
+  int do_byte_swap_;
+  // If not zero swap bytes at writing so the created CDR stream byte
+  // order does *not* match the machine byte order.
+  // The motivation for such a beast is that in some setting a few
+  // (fast) machines can be serving hundreds of slow machines with the
+  // opposite byte order, so it makes sense (as a load balancing
+  // device) to put the responsability in the writers.
+  // THIS IS NOT A STANDARD IN CORBA, USE AT YOUR OWN RISK (btw, isn't
+  // that true for everything in ACE/TAO and your OS vendor?)
 
   int good_bit_;
   // Set to 0 when an error ocurrs.
 };
 
-#if defined (__ACE_INLINE__)
-# include "tao/CDR.i"
-#endif /* __ACE_INLINE__ */
+class TAO_Export TAO_InputCDR
+{
+  //
+  // = TITLE
+  //   A CDR stream for reading, i.e. for demarshalling.
+  //
+  // = DESCRIPTION
+  //   This class is based on the the CORBA spec for Java (98-02-29),
+  //   java class omg.org.CORBA.portable.InputStream.
+  //   It diverts in a few ways:
+  //     + Operations to retrieve basic types take parameters by
+  //     reference.
+  //     + Operations taking arrays don't have offsets, because in C++
+  //     it is easier to describe an array starting from x+offset.
+  //     + Operations return an error status, because exceptions are
+  //     not widely available in C++ (yet).
+  //
+  //   A particularly useful static member function for this buffer is
+  //   an interpretive encoding routine, usable as a typecode
+  //   interpreter callback.  Ditto for decoding.  These are used to
+  //   support all OMG-IDL datatypes, even those not supported
+  //   directly by put/get primitives.
+public:
+  friend class TAO_GIOP;
+  // This class is able to "read" an InputCDR from a socket.
 
-#if !defined(__ACE_INLINE__)
-extern CDR &operator<< (CDR &cdr, CORBA::Boolean x);
-extern CDR &operator<< (CDR &cdr, CORBA::Octet x);
-extern CDR &operator<< (CDR &cdr, CORBA::Short x);
-extern CDR &operator<< (CDR &cdr, CORBA::UShort x);
-extern CDR &operator<< (CDR &cdr, CORBA::Long x);
-extern CDR &operator<< (CDR &cdr, CORBA::ULong x);
-extern CDR &operator<< (CDR &cdr, CORBA::LongLong x);
-extern CDR &operator<< (CDR &cdr, CORBA::ULongLong x);
-extern CDR &operator<< (CDR &cdr, CORBA::Float x);
-extern CDR &operator<< (CDR &cdr, CORBA::Double x);
-extern CDR &operator<< (CDR &cdr, CORBA::Char x);
-extern CDR &operator<< (CDR &cdr, CORBA::WChar x);
-extern CDR &operator>> (CDR &cdr, CORBA::Boolean &x);
-extern CDR &operator>> (CDR &cdr, CORBA::Octet &x);
-extern CDR &operator>> (CDR &cdr, CORBA::Short &x);
-extern CDR &operator>> (CDR &cdr, CORBA::UShort &x);
-extern CDR &operator>> (CDR &cdr, CORBA::Long &x);
-extern CDR &operator>> (CDR &cdr, CORBA::ULong &x);
-extern CDR &operator>> (CDR &cdr, CORBA::LongLong &x);
-extern CDR &operator>> (CDR &cdr, CORBA::ULongLong &x);
-extern CDR &operator>> (CDR &cdr, CORBA::Float &x);
-extern CDR &operator>> (CDR &cdr, CORBA::Double &x);
-extern CDR &operator>> (CDR &cdr, CORBA::Char &x);
-extern CDR &operator>> (CDR &cdr, CORBA::WChar &x);
+  TAO_InputCDR (const char* buf, size_t bufsiz,
+		int byte_order = TAO_ENCAP_BYTE_ORDER,
+		TAO_Marshal_Factory *f =
+		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+  // Create an input stream from an arbitrary buffer, care must be
+  // exercised wrt alignment, because this contructor will *not* work
+  // if the buffer is unproperly aligned.
+
+  TAO_InputCDR (const TAO_InputCDR& rhs);
+  TAO_InputCDR& operator= (const TAO_InputCDR& rhs);
+  // Make a copy of the current stream state, but does not copy the
+  // internal buffer; so the same stream can be read multiple times
+  // efficiently.
+
+  TAO_InputCDR (const TAO_InputCDR& rhs,
+		size_t size,
+		CORBA::Long offset = 0);
+  // When interpreting nested or indirected TypeCodes it is useful to
+  // make a "copy" of the stream starting in the new position.
+
+  TAO_InputCDR (const TAO_OutputCDR& rhs);
+  // Create an input CDR from an output CDR.
+
+  ~TAO_InputCDR (void);
+  // destructor
+
+  // = We have one method per basic IDL type....
+  // They return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
+  CORBA_Boolean read_boolean (CORBA::Boolean& x);
+  CORBA_Boolean read_char (CORBA::Char& x);
+  CORBA_Boolean read_wchar (CORBA::WChar& x);
+  CORBA_Boolean read_octet (CORBA::Octet& x);
+  CORBA_Boolean read_short (CORBA::Short& x);
+  CORBA_Boolean read_ushort (CORBA::UShort& x);
+  CORBA_Boolean read_long (CORBA::Long& x);
+  CORBA_Boolean read_ulong (CORBA::ULong& x);
+  CORBA_Boolean read_longlong (CORBA::LongLong& x);
+  CORBA_Boolean read_ulonglong (CORBA::ULongLong& x);
+  CORBA_Boolean read_float (CORBA::Float& x);
+  CORBA_Boolean read_double (CORBA::Double& x);
+  CORBA_Boolean read_longdouble (CORBA::LongDouble& x);
+  CORBA_Boolean read_string (CORBA::Char*& x);
+  CORBA_Boolean read_wstring (CORBA::WChar*& x);
+
+  // = One method for each basic IDL type...
+  // The buffer <x> must be large enough to contain <length>
+  // elements.
+  // They return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
+  CORBA_Boolean read_boolean_array (CORBA::Boolean* x,
+				    CORBA::ULong length);
+  CORBA_Boolean read_char_array (CORBA::Char* x,
+				 CORBA::ULong length);
+  CORBA_Boolean read_wchar_array (CORBA::WChar* x,
+				  CORBA::ULong length);
+  CORBA_Boolean read_octet_array (CORBA::Octet* x,
+				  CORBA::ULong length);
+  CORBA_Boolean read_short_array (CORBA::Short* x,
+				  CORBA::ULong length);
+  CORBA_Boolean read_ushort_array (CORBA::UShort* x,
+				   CORBA::ULong length);
+  CORBA_Boolean read_long_array (CORBA::Long* x,
+				 CORBA::ULong length);
+  CORBA_Boolean read_ulong_array (CORBA::ULong* x,
+				  CORBA::ULong length);
+  CORBA_Boolean read_longlong_array (CORBA::LongLong* x,
+				     CORBA::ULong length);
+  CORBA_Boolean read_ulonglong_array (CORBA::ULongLong* x,
+				      CORBA::ULong length);
+  CORBA_Boolean read_float_array (CORBA::Float* x,
+				  CORBA::ULong length);
+  CORBA_Boolean read_double_array (CORBA::Double* x,
+				   CORBA::ULong length);
+  CORBA_Boolean read_longdouble_array (CORBA::LongDouble* x,
+				       CORBA::ULong length);
+
+  // = TAO specific methods.
+  
+  CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
+                                           const void *data,
+                                           const void *,
+                                           CORBA::Environment &env);
+  // Demarshall the contents of the CDR stream into <data> as
+  // described by <tc>; returning any errors in <env>.
+
+  CORBA_Boolean skip_string (void);
+  // The next field must be a string, this method skips it. It is
+  // useful in parsing a TypeCode.
+  // Return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
+
+  CORBA_Boolean skip_bytes (size_t n);
+  // Skip <n> bytes in the CDR stream.
+  // Return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
+
+  int good_bit (void) const;
+  // returns zero if a problem has been detected.
+
+  char* rd_ptr (void);
+  // Returns the current position for the rd_ptr....
+
+  size_t length (void) const;
+  // Return how many bytes are left in the stream.
+
+private:
+  void rd_ptr (size_t offset);
+  char* end (void);
+  // short cuts for the underlying message block.
+  
+  int adjust (size_t size, char*& buf);
+  // Returns (in <buf>) the next position in the buffer aligned to
+  // <size>, it advances the Message_Block rd_ptr past the data
+  // (i.e. <buf> + <size>).
+  // Sets the good_bit to 0 and returns a -1 on failure.
+
+  int adjust (size_t size, size_t align, char*& buf);
+  // As above, but now the size and alignment requirements may be
+  // different.
+
+  CORBA_Boolean read_1 (CORBA::Octet* x);
+  CORBA_Boolean read_2 (CORBA::UShort* x);
+  CORBA_Boolean read_4 (CORBA::ULong* x);
+  CORBA_Boolean read_8 (CORBA::ULongLong* x);
+  CORBA_Boolean read_16 (CORBA::LongDouble* x);
+  // Several types can be read using the same routines, since TAO
+  // tries to use native types with known size for each CORBA type.
+  // We could use void* or char* to make the interface more
+  // consistent, but using native types let us exploit the strict
+  // alignment requirements of CDR streams and implement the
+  // operations using asignment.
+
+  CORBA_Boolean read_array (void* x, size_t size, size_t align,
+			    CORBA::ULong length);
+  // read an array of <length> elements, each of <size> bytes and
+  // the start aligned at a multiple of <align>. The elements are
+  // assumed to be packed with the right alignment restrictions.
+  // It is mostly designed for buffers of the basic types.
+  //
+  // This operation uses memcpy(); as explained above it is expected
+  // that using assignment is faster that memcpy() for one element,
+  // but for several elements memcpy() should be more efficient, it
+  // could be interesting to find the break even point and optimize
+  // for that case, but that would be too platform dependent.
+
+private:
+  ACE_Message_Block* start_;
+  // The start of the chain of message blocks, even though in the
+  // current version the chain always has length 1.
+
+  TAO_Marshal_Factory *factory_;
+  // Maintain a factory that can make specialized marshaling objects.
+
+  int do_byte_swap_;
+  // The CDR stream byte order does not match the one on the machine,
+  // swapping is needed while reading.
+
+  int good_bit_;
+  // set to 0 when an error occurs.
+};
+
+#if defined(__ACE_INLINE__)
+# include "tao/CDR.i"
+#else
+extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Boolean x);
+extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Octet x);
+extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Short x);
+extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::UShort x);
+extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Long x);
+extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::ULong x);
+extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::LongLong x);
+extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::ULongLong x);
+extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Float x);
+extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Double x);
+extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Char x);
+extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::WChar x);
+
+extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Boolean &x);
+extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Octet &x);
+extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Short &x);
+extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::UShort &x);
+extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Long &x);
+extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::ULong &x);
+extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::LongLong &x);
+extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::ULongLong &x);
+extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Float &x);
+extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Double &x);
+extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Char &x);
+extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::WChar &x);
 #endif /* __ACE_INLINE */
 
 #endif /* TAO_CDR_H */

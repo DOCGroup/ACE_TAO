@@ -196,7 +196,7 @@ public:
   TAO_GIOP_RequestHeader (void);
   // Constructor.
 
-  CORBA::Boolean init (CDR &msg,
+  CORBA::Boolean init (TAO_InputCDR &msg,
                        CORBA::Environment& env);
   // Initialize the header from the values found in <msg>.
 
@@ -267,7 +267,7 @@ public:
   TAO_GIOP_LocateRequestHeader (void);
   // Constructor
 
-  CORBA::Boolean init (CDR &msg,
+  CORBA::Boolean init (TAO_InputCDR &msg,
                        CORBA::Environment& env);
   // Initialize the header from the values found in <msg>.
 
@@ -344,9 +344,13 @@ private:
   // Request ID of this operation.
 
   char buffer [CDR::DEFAULT_BUFSIZE];
-  // Buffer used for CDR stream.
+  // Buffer used for both the output and input CDR streams, this is
+  // "safe" because we only one of the streams at a time.
 
-  CDR stream_;
+  TAO_OutputCDR out_stream_;
+  // Stream into which the response is placed.
+
+  TAO_InputCDR inp_stream_;
   // Stream into which the request is placed.
 
   TAO_Client_Connection_Handler *handler_;
@@ -385,19 +389,19 @@ public:
   // Close a connection, first sending GIOP::CloseConnection.
 
   static CORBA::Boolean start_message (TAO_GIOP::Message_Type t,
-                                       CDR &msg);
+                                       TAO_OutputCDR &msg);
   // Build the header for a message of type <t> into stream <msg>.
 
   static CORBA::Boolean send_request (TAO_SVC_HANDLER *handler,
-                                      CDR &stream);
+                                      TAO_OutputCDR &stream);
   // Send message, returns TRUE if success, else FALSE.
 
   static TAO_GIOP::Message_Type recv_request (TAO_SVC_HANDLER *&handler,
-                                        CDR &msg,
-                                        CORBA::Environment &env);
+					      TAO_InputCDR &msg,
+					      CORBA::Environment &env);
   // Reads message, returns message type from header.
 
-  static void make_error (CDR &msg, ...);
+  static void make_error (TAO_OutputCDR &msg, ...);
   // Construct a message containing an error so that it can be sent as
   // a response to a request.
 

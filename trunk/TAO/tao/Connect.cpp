@@ -111,7 +111,7 @@ TAO_Server_Connection_Handler::svc (void)
 // <env> set if problems.
 
 TAO_Server_Connection_Handler::RequestStatus
-TAO_Server_Connection_Handler::recv_request (CDR &msg,
+TAO_Server_Connection_Handler::recv_request (TAO_InputCDR &msg,
                                              CORBA::Environment &env)
 {
   RequestStatus which = Error;
@@ -166,9 +166,9 @@ TAO_Server_Connection_Handler::recv_request (CDR &msg,
 // additional information carried in <env>.
 
 int
-TAO_Server_Connection_Handler::handle_message (CDR &msg,
+TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &msg,
                                                int &response_required,
-                                               CDR &response,
+                                               TAO_OutputCDR &response,
                                                CORBA::Environment &env)
 {
   // This will extract the request header, set <response_required> as
@@ -206,9 +206,9 @@ TAO_Server_Connection_Handler::handle_message (CDR &msg,
 }
 
 int
-TAO_Server_Connection_Handler::handle_locate (CDR &msg,
+TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &msg,
                                               int &response_required,
-                                              CDR &response,
+                                              TAO_OutputCDR &response,
                                               CORBA::Environment &env)
 {
   // This will extract the request header, set <response_required> as
@@ -245,8 +245,8 @@ TAO_Server_Connection_Handler::handle_locate (CDR &msg,
 
   // Create the response.
   TAO_GIOP::start_message (TAO_GIOP::LocateReply, response);
-  response.put_ulong (req.request_id);
-  response.put_ulong (status);
+  response.write_ulong (req.request_id);
+  response.write_ulong (status);
 
   // Need to check for any errors present in <env> and set the return
   // code appropriately.
@@ -255,8 +255,8 @@ TAO_Server_Connection_Handler::handle_locate (CDR &msg,
 
 void
 TAO_Server_Connection_Handler::handle_request (const TAO_GIOP_RequestHeader &hdr,
-                                               CDR &request_body,
-                                               CDR &response,
+                                               TAO_InputCDR &request_body,
+                                               TAO_OutputCDR &response,
                                                TAO_Dispatch_Context *some_info,
                                                CORBA::Environment &env)
 {
@@ -304,7 +304,7 @@ TAO_Server_Connection_Handler::handle_request (const TAO_GIOP_RequestHeader &hdr
                    &resp_ctx,
                    0,
                    env);
-  response.put_ulong (hdr.request_id);
+  response.write_ulong (hdr.request_id);
 
   CORBA::TypeCode_ptr tc;
   const void *value;
@@ -322,7 +322,7 @@ TAO_Server_Connection_Handler::handle_request (const TAO_GIOP_RequestHeader &hdr
       CORBA::Exception *x = env.exception ();
       CORBA::TypeCode_ptr except_tc = x->type ();
 
-      response.put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
+      response.write_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
       (void) response.encode (except_tc, x, 0, env2);
     }
 
@@ -339,9 +339,9 @@ TAO_Server_Connection_Handler::handle_request (const TAO_GIOP_RequestHeader &hdr
       //
       // XXX x->type () someday ...
       if (svr_req.ex_type_ == CORBA::SYSTEM_EXCEPTION)
-        response.put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
+        response.write_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
       else
-        response.put_ulong (TAO_GIOP_USER_EXCEPTION);
+        response.write_ulong (TAO_GIOP_USER_EXCEPTION);
 
       (void) response.encode (except_tc, x, 0, env);
     }
@@ -350,7 +350,7 @@ TAO_Server_Connection_Handler::handle_request (const TAO_GIOP_RequestHeader &hdr
   else
     {
       // First finish the GIOP header ...
-      response.put_ulong (TAO_GIOP_NO_EXCEPTION);
+      response.write_ulong (TAO_GIOP_NO_EXCEPTION);
 
       // ... then send any return value ...
       if (svr_req.retval_)
@@ -381,7 +381,7 @@ TAO_Server_Connection_Handler::handle_request (const TAO_GIOP_RequestHeader &hdr
 }
 
 void
-TAO_Server_Connection_Handler::send_response (CDR &msg)
+TAO_Server_Connection_Handler::send_response (TAO_OutputCDR &msg)
 {
   TAO_SVC_HANDLER *this_ptr = this;
 
@@ -402,13 +402,13 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   ACE_TIMEPROBE ("  -> Connection_Handler::handle_input");
 
   char reqbuf[CDR::DEFAULT_BUFSIZE];
-  CDR msg (reqbuf, sizeof(reqbuf));
+  TAO_InputCDR msg (reqbuf, sizeof(reqbuf));
 
   char repbuf[CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_PURIFY)
   (void) ACE_OS::memset (repbuf, '\0', sizeof (repbuf));
 #endif /* ACE_PURIFY */
-  CDR reply (repbuf, sizeof(repbuf));
+  TAO_OutputCDR reply (repbuf, sizeof(repbuf));
 
   int result = 0;
   int error_encountered = 0;
@@ -522,7 +522,8 @@ TAO_Client_Connection_Handler::close (u_long flags)
 }
 
 int
-TAO_Client_Connection_Handler::send_request (CDR &stream, int is_twoway)
+TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
+					     int is_twoway)
 {
   ACE_TIMEPROBE ("  -> Client_Connection_Handler::send_request - start");
 

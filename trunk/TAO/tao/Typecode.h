@@ -21,7 +21,7 @@
 #  define TAO_TYPECODE_H
 
 // Forward decl.
-class CDR;
+class TAO_InputCDR;
 
 // Two "user exceptions" are defined for manipulating TypeCodes. These
 // two classes are really to be defined inside the TypeCode class.
@@ -147,7 +147,7 @@ public:
 
   CORBA_TypeCode (CORBA::TCKind kind,
                   size_t length,
-                  char *buffer,
+                  const char *buffer,
                   CORBA::Boolean orb_owns_tc,
                   CORBA::TypeCode_ptr parent = 0);
   // This constructor is used both for typecode constants and for
@@ -213,8 +213,11 @@ public:
   size_t length_;
   // length of the encapsulated stream
 
-  char* buffer_;
+  const char* buffer_;
   // the encapsulated stream
+
+  CORBA::Long byte_order_;
+  // The byte order in the encapsulated stream.
 
   CORBA::TCKind kind_;
   // the TypeCode kind
@@ -224,7 +227,7 @@ public:
   // reference to that parent to ensure its memory is not freed
   // inappropriately.
 
-  static CORBA::Boolean skip_typecode (CDR &stream);
+  static CORBA::Boolean skip_typecode (TAO_InputCDR &stream);
   // skip a typecode encoding in a given CDR stream.  This is just a
   // helper function.
 

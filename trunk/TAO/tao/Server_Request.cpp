@@ -34,8 +34,8 @@ CORBA_ServerRequest::_nil (void)
 }
 
 IIOP_ServerRequest::IIOP_ServerRequest (const TAO_GIOP_RequestHeader &hdr,
-                                        CDR *req,
-                                        CDR *resp,
+					TAO_InputCDR *req,
+                                        TAO_OutputCDR *resp,
                                         CORBA::ORB_ptr the_orb,
                                         TAO_POA *the_poa)
   : opname_ (CORBA::string_dup (hdr.operation)),
@@ -163,8 +163,9 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
 
   // If any data is left over, it'd be context values ... else error.
   // We don't support context values, so it's always an error.
+
   // @@ (TAO) support for Contexts??
-  if (incoming_->bytes_remaining () != 0)
+  if (incoming_->length () != 0)
     {
       dmsg1 ("params (), %d bytes remaining (error)",
              incoming_->bytes_remaining ());
@@ -353,7 +354,7 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
                            &resp_ctx,
                            0,
                            env);
-  this->outgoing_->put_ulong (this->reqid_);
+  this->outgoing_->write_ulong (this->reqid_);
 
   // Standard exceptions only.
   if (env.exception () != 0)
@@ -362,7 +363,7 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
       CORBA::Exception *x = env.exception ();
       CORBA::TypeCode_ptr except_tc = x->_type ();
 
-      this->outgoing_->put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
+      this->outgoing_->write_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
       (void) this->outgoing_->encode (except_tc, x, 0, env2);
     }
 
@@ -379,12 +380,12 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
       // XXX x->type () someday ...
 
       if (CORBA::UserException::_narrow (x))
-        this->outgoing_->put_ulong (TAO_GIOP_USER_EXCEPTION);
+        this->outgoing_->write_ulong (TAO_GIOP_USER_EXCEPTION);
       else
-        this->outgoing_->put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
+        this->outgoing_->write_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
       (void) this->outgoing_->encode (except_tc, x, 0, env);
     }
   else // Normal reply
     // First finish the GIOP header ...
-    this->outgoing_->put_ulong (TAO_GIOP_NO_EXCEPTION);
+    this->outgoing_->write_ulong (TAO_GIOP_NO_EXCEPTION);
 }

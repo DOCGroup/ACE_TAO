@@ -49,6 +49,7 @@ CORBA_BadKind::CORBA_BadKind (void)
 CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
   : length_ (0),
     buffer_ (0),
+    byte_order_ (0),
     kind_ (kind),
     parent_ (0),
     refcount_ (1),
@@ -64,11 +65,10 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
 
 CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
                                 size_t length,
-                                char *buffer,
+                                const char *buffer,
                                 CORBA::Boolean orb_owns_tc,
                                 CORBA::TypeCode_ptr parent)
-  : length_ (length),
-    //    buffer_ (buffer),
+  : length_ (length - 4),
     kind_ (kind),
     parent_ (parent),
     refcount_ (1),
@@ -109,25 +109,33 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       // to remain dangling. Hence we save a handle to the original
       // allocated buffer.
 
+      // @@ The typecode buffer contain the encapsulation byte order
+      // in the first four bytes...
+      CORBA::Long* ptr = ACE_reinterpret_cast(CORBA::Long*,buffer);
+      this->byte_order_ = *ptr;
+
       ACE_NEW (this->non_aligned_buffer_,
-               char [length + 4]);
+	       char [this->length_ + CDR::MAX_ALIGNMENT]);
 
-      // No parent. We are free standing.
-      ptr_arith_t temp = (ptr_arith_t) non_aligned_buffer_;
-      temp += 3;
-      temp &= ~0x03;
-      this->buffer_ = ACE_reinterpret_cast(char*,temp);
+      char* start = ptr_align_binary (this->non_aligned_buffer_,
+				      CDR::MAX_ALIGNMENT);
 
-      (void) ACE_OS::memcpy (this->buffer_, buffer, (size_t) length);
+      (void) ACE_OS::memcpy (start, buffer + 4, this->length_);
 
+      this->buffer_ = start;
       // The ORB does not own this typecode.
       this->orb_owns_ = CORBA::B_FALSE;
     }
   else
-    // We are a child. We do not allocate a new buffer, but share it
-    // with our parent. We know that our parent's buffer was
-    // properly aligned.
-    this->buffer_ = buffer;
+    {
+      // We are a child. We do not allocate a new buffer, but share it
+      // with our parent. We know that our parent's buffer was
+      // properly aligned.
+      CORBA::Long* ptr = ACE_reinterpret_cast(CORBA::Long*,buffer);
+      this->byte_order_ = *ptr;
+
+      this->buffer_ = buffer + 4;
+    }
 }
 
 // Destructor.  For "indirected" typecodes and children, the typecode
@@ -163,7 +171,11 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
 
           // Delete any private state we have and thus free up the
           // children.
-          delete this->private_state_;
+	  if (this->private_state_)
+	    {
+	      delete this->private_state_;
+	      this->private_state_ = 0;
+	    }
 
           // We share the buffer octets of our parent. Hence we don't
           // deallocate it.
@@ -366,12 +378,12 @@ CORBA_TypeCode::TAO_discrim_pad_size (CORBA::Environment &env)
 // skip a typecode encoding in a given CDR stream
 // This is just a helper function
 CORBA::Boolean
-CORBA_TypeCode::skip_typecode (CDR &stream)
+CORBA_TypeCode::skip_typecode (TAO_InputCDR &stream)
 {
   CORBA::ULong kind;
   CORBA::ULong temp;
 
-  if (stream.get_ulong (kind)
+  if (stream.read_ulong (kind)
       && (kind < CORBA::TC_KIND_COUNT || kind == ~CORBA::ULong(0)))
     {
 
@@ -386,7 +398,7 @@ CORBA_TypeCode::skip_typecode (CDR &stream)
         case CORBA::tk_string:
         case CORBA::tk_wstring:
         case ~0:
-          return stream.get_ulong (temp);
+          return stream.read_ulong (temp);
 
           // The rest have "complex" parameter lists that are
           // encoded as bulk octets ... just skip them.
@@ -398,8 +410,8 @@ CORBA_TypeCode::skip_typecode (CDR &stream)
         case CORBA::tk_array:
         case CORBA::tk_alias:
         case CORBA::tk_except:
-          return (stream.get_ulong (temp) != CORBA::B_FALSE
-                  && stream.rd_ptr (temp) != CORBA::B_FALSE);
+          return (stream.read_ulong (temp) != CORBA::B_FALSE
+                  && stream.skip_bytes (temp) != CORBA::B_FALSE);
         }
 
       return CORBA::B_TRUE;
@@ -1181,9 +1193,8 @@ CORBA_TypeCode::private_name (CORBA::Environment &env) const
     case CORBA::tk_alias:
     case CORBA::tk_except:
       {
-        CDR stream;
-
-        stream.setup_encapsulation (this->buffer_, (size_t) length_);
+        TAO_InputCDR stream (this->buffer_, this->length_,
+			     this->byte_order_);
 
         // skip the typecode ID
         if (stream.skip_string ())  // ID
@@ -1191,7 +1202,7 @@ CORBA_TypeCode::private_name (CORBA::Environment &env) const
             this->private_state_->tc_name_known_ = CORBA::B_TRUE;
 
             // "Read" the string without copying.
-            stream.get_string (this->private_state_->tc_name_);
+            stream.read_string (this->private_state_->tc_name_);
 
             return this->private_state_->tc_name_;
           }
@@ -1228,15 +1239,14 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
     case CORBA::tk_struct:
       {
         CORBA::ULong members;
-        CDR stream;
-
-        stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
+        TAO_InputCDR stream (this->buffer_, this->length_,
+			     this->byte_order_);
 
         // skip rest of header (type ID and name) and collect the
         // number of struct members
         if (!stream.skip_string ()          // ID
             || !stream.skip_string ()       // struct name
-            || !stream.get_ulong (members))
+            || !stream.read_ulong (members))
           {
             env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
             return 0;
@@ -1249,17 +1259,16 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
     case CORBA::tk_union:
       {
         CORBA::ULong members;
-        CDR stream;
-
-        stream.setup_encapsulation (this->buffer_, (size_t) length_);
+        TAO_InputCDR stream (this->buffer_, this->length_,
+			     this->byte_order_);
 
         // skip rest of header (type ID, name, etc...) and collect the
         // number of struct members
         if (!stream.skip_string ()              // ID
             || !stream.skip_string ()           // struct name
             || !skip_typecode (stream)          // discriminant TC
-            || !stream.get_ulong (members)      // default used
-            || !stream.get_ulong (members))     // real member count
+            || !stream.read_ulong (members)      // default used
+            || !stream.read_ulong (members))     // real member count
           {
             // this is a system exception indicating something is wrong with
             // the typecode itself.
@@ -1294,10 +1303,9 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
   // Build the de-encapsulating CDR stream, bypassing the stringent
   // alignment tests (we're a bit looser in what we need here, and we
   // _know_ we're OK).  Then skip the byte order code.
-  CDR stream;
+  TAO_InputCDR stream (this->buffer_, this->length_,
+		       this->byte_order_);
   CORBA::TypeCode_ptr tc = 0;
-
-  stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
 
   switch (kind_)
     {
@@ -1316,7 +1324,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
               // skip the id, name, and member_count part
               if (!stream.skip_string ()        // type ID, hidden
                   || !stream.skip_string ()     // typedef name
-                  || !stream.get_ulong (temp))  // member count
+                  || !stream.read_ulong (temp))  // member count
                 {
                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
                   return (CORBA::TypeCode_ptr)0;
@@ -1388,8 +1396,8 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
                   return (CORBA::TypeCode_ptr)0;
                 }
-              else if (!stream.get_ulong (temp)     // default used
-                       || !stream.get_ulong (temp)) // member count
+              else if (!stream.read_ulong (temp)     // default used
+                       || !stream.read_ulong (temp)) // member count
                 {
                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
                   return 0;
@@ -1462,10 +1470,9 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
   // Build the de-encapsulating CDR stream, bypassing the stringent
   // alignment tests (we're a bit looser in what we need here, and we
   // _know_ we're OK).  Then skip the byte order code.
-  CDR stream;
+  TAO_InputCDR stream (this->buffer_, this->length_,
+		       this->byte_order_);
   CORBA::TypeCode_ptr tc = 0;
-
-  stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
 
   switch (kind_)
     {
@@ -1480,9 +1487,9 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
           if (this->private_state_->tc_member_name_list_)
             {
               // skip the id, name, and member_count part
-              if (!stream.skip_string ()        // type ID, hidden
+              if (!stream.skip_string ()     // type ID, hidden
                   || !stream.skip_string ()     // enum name
-                  || !stream.get_ulong (temp))  // member count
+                  || !stream.read_ulong (temp)) // member count
                 {
                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
                   return (char *)0;
@@ -1494,7 +1501,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                   for (CORBA::ULong i = 0; i < mcount; i++)
                     {
                       // now skip this name
-                      if (!stream.get_string (this->private_state_->tc_member_name_list_ [i]))
+                      if (!stream.read_string (this->private_state_->tc_member_name_list_ [i]))
                         {
                           env.exception (new CORBA::BAD_TYPECODE
                                          (CORBA::COMPLETED_NO));
@@ -1537,9 +1544,9 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
           if (this->private_state_->tc_member_name_list_)
             {
               // skip the id, name, and member_count part
-              if (!stream.skip_string ()        // type ID, hidden
+              if (!stream.skip_string ()     // type ID, hidden
                   || !stream.skip_string ()     // struct/except name
-                  || !stream.get_ulong (temp))  // member count
+                  || !stream.read_ulong (temp)) // member count
                 {
                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
                   return (char *)0;
@@ -1549,7 +1556,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                   // compute the typecodes for all the members and
                   // return the required one.
                   for (CORBA::ULong i = 0; i < mcount; i++)
-                    if (!stream.get_string (this->private_state_->tc_member_name_list_ [i])
+                    if (!stream.read_string (this->private_state_->tc_member_name_list_ [i])
                         || !skip_typecode (stream))
                       {
                         env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -1597,8 +1604,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
                   return (char *)0;
                 }
-              else if (!stream.get_ulong (temp)     // default used
-                       || !stream.get_ulong (temp)) // member count
+              else if (!stream.read_ulong (temp)     // default used
+                       || !stream.read_ulong (temp)) // member count
                 {
                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
                   return 0;
@@ -1625,7 +1632,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                           return 0;
                         }
                       // skip typecode for member
-                      if (!stream.get_string (this->private_state_->tc_member_name_list_ [i])
+                      if (!stream.read_string (this->private_state_->tc_member_name_list_ [i])
                           || (!skip_typecode (stream))) // skip typecode
                         {
                           env.exception (new CORBA::BAD_TYPECODE
@@ -1674,9 +1681,8 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
   // this function is only applicable to the CORBA::tk_union TC
   if (this->kind_ == CORBA::tk_union)
     {
-      CDR stream;
-
-      stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
+      TAO_InputCDR stream (this->buffer_, this->length_,
+			   this->byte_order_);
 
       // skip ID and name, and then get the discriminant TC
       CORBA::TypeCode_ptr    tc = 0;
@@ -1692,8 +1698,8 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
       // skip default used, and get member count
       CORBA::ULong member_count;
 
-      if (!stream.get_ulong (member_count)      // default used
-          || !stream.get_ulong (member_count))  // member count
+      if (!stream.read_ulong (member_count)      // default used
+          || !stream.read_ulong (member_count))  // member count
         {
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           dmsg ("TypeCode::private_member_label -- error reading from stream");
@@ -1757,14 +1763,13 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
 CORBA::TypeCode_ptr
 CORBA_TypeCode::private_discriminator_type (CORBA::Environment &env) const
 {
-  CDR stream;
-
-  stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
+  TAO_InputCDR stream (this->buffer_, this->length_,
+		       this->byte_order_);
 
   // skip ID and name, and then get the discriminant TC
 
-  if (!stream.skip_string ()            // type ID, hidden
-      || !stream.skip_string ()         // typedef name
+  if (!stream.skip_string () // type ID, hidden
+      || !stream.skip_string () // typedef name
       || stream.decode (CORBA::_tc_TypeCode,
                         &this->private_state_->tc_discriminator_type_, this,
                         env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -1782,16 +1787,15 @@ CORBA_TypeCode::private_discriminator_type (CORBA::Environment &env) const
 CORBA::Long
 CORBA_TypeCode::private_default_index (CORBA::Environment &env) const
 {
-  CDR stream;
-
-  stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
+  TAO_InputCDR stream (this->buffer_, this->length_,
+		       this->byte_order_);
 
   // skip ID and name, and then get the discriminant TC
 
   if (!stream.skip_string ()            // type ID, hidden
       || !stream.skip_string ()         // typedef name
       || !skip_typecode (stream)        // skip discriminant
-      || !stream.get_long (this->private_state_->tc_default_index_used_))
+      || !stream.read_long (this->private_state_->tc_default_index_used_))
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
@@ -1806,8 +1810,8 @@ CORBA_TypeCode::private_default_index (CORBA::Environment &env) const
 CORBA::Long
 CORBA_TypeCode::private_length (CORBA::Environment &env) const
 {
-  CDR stream;
-  stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
+  TAO_InputCDR stream (this->buffer_, this->length_,
+		       this->byte_order_);
   switch (this->kind_)
     {
     case CORBA::tk_sequence:
@@ -1815,7 +1819,7 @@ CORBA_TypeCode::private_length (CORBA::Environment &env) const
       {
         // skip the typecode of the element and get the bounds
         if (!skip_typecode (stream) // skip typecode
-            || !stream.get_ulong (this->private_state_->tc_length_))
+            || !stream.read_ulong (this->private_state_->tc_length_))
           {
             env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
             return 0;
@@ -1828,7 +1832,7 @@ CORBA_TypeCode::private_length (CORBA::Environment &env) const
       case CORBA::tk_string:
       case CORBA::tk_wstring:
         {
-          if (stream.get_ulong (this->private_state_->tc_length_))
+          if (stream.read_ulong (this->private_state_->tc_length_))
             {
               this->private_state_->tc_length_known_ = CORBA::B_TRUE;
               return this->private_state_->tc_length_;
@@ -1849,9 +1853,9 @@ CORBA_TypeCode::private_length (CORBA::Environment &env) const
 CORBA::TypeCode_ptr
 CORBA_TypeCode::private_content_type (CORBA::Environment &env) const
 {
-  CDR stream;
+  TAO_InputCDR stream (this->buffer_, this->length_,
+		       this->byte_order_);
 
-  stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
   switch (kind_)
     {
     case CORBA::tk_sequence:
@@ -1898,11 +1902,11 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &env) const
 CORBA::ULong
 CORBA_TypeCode::private_discrim_pad_size (CORBA::Environment &env)
 {
-  CDR stream;
-  size_t discrim_size,
-    overall_align;
+  TAO_InputCDR stream (this->buffer_, this->length_,
+		       this->byte_order_);
 
-  stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
+  size_t discrim_size;
+  size_t overall_align;
 
  (void) TAO_IIOP_Interpreter::calc_key_union_attributes (&stream,
                                                          overall_align,
@@ -1953,15 +1957,14 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
     case CORBA::tk_struct:
       {
         CORBA::ULong members;
-        CDR stream;
-
-        stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
+        TAO_InputCDR stream (this->buffer_, this->length_,
+			     this->byte_order_);
 
         // skip rest of header (type ID and name) and collect the
         // number of struct members
         if (!stream.skip_string ()                  // ID
             || !stream.skip_string ()       // struct name
-            || !stream.get_ulong (members))
+            || !stream.read_ulong (members))
           {
             env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
             return 0;
@@ -1972,15 +1975,14 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
     case CORBA::tk_enum:
       {
         CORBA::ULong members;
-        CDR stream;
-
-        stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
+        TAO_InputCDR stream (this->buffer_, this->length_,
+			     this->byte_order_);
 
         // skip rest of header (type ID and name) and collect the
         // number of struct members
         if (!stream.skip_string ()                      // ID
             || !stream.skip_string ()           // typedef name
-            || !stream.get_ulong (members))
+            || !stream.read_ulong (members))
           {
             env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
             return 0;
@@ -1991,17 +1993,16 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
     case CORBA::tk_union:
       {
         CORBA::ULong members;
-        CDR stream;
-
-        stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
+        TAO_InputCDR stream (this->buffer_, this->length_,
+			     this->byte_order_);
 
         // skip rest of header (type ID, name, etc...) and collect the
         // number of struct members
         if (!stream.skip_string ()                      // ID
             || !stream.skip_string ()           // struct name
             || !skip_typecode (stream)          // discriminant TC
-            || !stream.get_ulong (members)      // default used
-            || !stream.get_ulong (members))     // real member count
+            || !stream.read_ulong (members)      // default used
+            || !stream.read_ulong (members))     // real member count
           {
             env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
             return 0;
@@ -2049,9 +2050,9 @@ CORBA_TypeCode::ulong_param (CORBA::ULong n,
 
         // Build CDR stream for encapsulated params, and skip the
         // typecode up front.
-        CDR stream;
+        TAO_InputCDR stream (this->buffer_, this->length_,
+			     this->byte_order_);
 
-        stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
         if (!skip_typecode (stream))
           {
             env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
@@ -2059,7 +2060,7 @@ CORBA_TypeCode::ulong_param (CORBA::ULong n,
           }
 
         // Then comes the "bounds" parameter.
-        if (!stream.get_ulong (temp))
+        if (!stream.read_ulong (temp))
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
         return temp;
       }
@@ -2104,11 +2105,9 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
   // alignment tests (we're a bit looser in what we need here, and we
   // _know_ we're OK).  Then skip the byte order code.
 
-  CDR stream;
+  TAO_InputCDR stream (this->buffer_, this->length_,
+			     this->byte_order_);
   CORBA::TypeCode_ptr tc = 0;
-
-  stream.setup_encapsulation (this->buffer_,
-                              (size_t) this->length_);
 
   switch (this->kind_)
     {
@@ -2152,7 +2151,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 
       if (!stream.skip_string ()                // type ID, hidden
           || !stream.skip_string ()     // typedef name
-          || !stream.get_ulong (temp))
+          || !stream.read_ulong (temp))
         {       // member count
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
@@ -2199,8 +2198,8 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
         }
-      else if (!stream.get_ulong (temp) // default used
-                 || !stream.get_ulong (temp))   // member count
+      else if (!stream.read_ulong (temp) // default used
+                 || !stream.read_ulong (temp))   // member count
         {
           tc->Release ();
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -2275,9 +2274,8 @@ CORBA::TypeCode::private_size (CORBA::Environment &env)
     }
 
   size_t alignment;
-  CDR stream;
-
-  stream.setup_encapsulation (buffer_, (size_t) length_);
+  TAO_InputCDR stream (this->buffer_, this->length_,
+		       this->byte_order_);
 
   private_state_->tc_size_known_ = CORBA::B_TRUE;
   private_state_->tc_size_ =
@@ -2308,10 +2306,8 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &env)
     }
 
   size_t alignment;
-  CDR stream;
-
-  stream.setup_encapsulation (buffer_,
-                              (size_t) length_);
+  TAO_InputCDR stream (this->buffer_, this->length_,
+		       this->byte_order_);
 
   (void) TAO_IIOP_Interpreter::table_[kind_].calc_ (&stream,
                                                     alignment,

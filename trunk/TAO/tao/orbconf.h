@@ -93,7 +93,7 @@
                                      the value = 1 */
 #else  /* ! ACE_LITTLE_ENDIAN */
 #  define TAO_ENCAP_BYTE_ORDER 0  /* big endian encapsulation byte order has
-                                     the value = 1 */
+                                     the value = 0 */
 #endif /* ! ACE_LITTLE_ENDIAN */
 
 // Define as the return type of signal handlers (int or void).

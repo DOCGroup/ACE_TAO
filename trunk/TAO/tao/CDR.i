@@ -1,394 +1,660 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+// ****************************************************************
+
+ACE_INLINE void
+CDR::mb_align (ACE_Message_Block* mb)
+{
+  char* start = ptr_align_binary (mb->base (), CDR::MAX_ALIGNMENT);
+  mb->rd_ptr (start);
+  mb->wr_ptr (start);
+
+#if defined(ACE_PURIFY)
+  // This is a good place to zero the buffer; this is not needed
+  // by IIOP, but makes Purify happy.
+  if (mb->base () != 0)
+    {
+      (void) ACE_OS::memset (mb->base(), 0, mb->size());
+    }
+#endif
+}
+
+// ****************************************************************
+
 // Decode the CDR stream.
 
-ACE_INLINE CORBA::TypeCode::traverse_status
-CDR::decode (CORBA::TypeCode_ptr tc,
-             const void *data,
-             const void *data2,
-             CORBA::Environment &env)
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_char (CORBA::Char x)
 {
-  this->mobj_ = this->factory_->make_marshal_object (tc, env);
-
-  if (this->mobj_)
-    return this->mobj_->decode (tc, data, data2, this, env);
-  else
-    return CORBA::TypeCode::TRAVERSE_STOP;
+  return this->write_1 (ACE_reinterpret_cast(const CORBA::Octet*,&x));
 }
 
-// Encode data into CDR stream.
-
-ACE_INLINE CORBA::Boolean
-CDR::skip_string (void)
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_wchar (CORBA::WChar x)
 {
-  char *dummy0;
-  CORBA::ULong dummy1;
-  return this->get_encapsulation (dummy0, dummy1);
+  return this->write_2 (ACE_reinterpret_cast(const CORBA::UShort*,&x));
 }
 
-ACE_INLINE CORBA::TypeCode::traverse_status
-CDR::encode (CORBA::TypeCode_ptr tc,
-             const void *data,
-             const void *data2,
-             CORBA::Environment &env)
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_octet (CORBA::Octet x)
 {
-  this->mobj_ = this->factory_->make_marshal_object (tc, env);
-
-  if (this->mobj_)
-    return this->mobj_->encode (tc, data, data2, this, env);
-  else
-    return CORBA::TypeCode::TRAVERSE_STOP;
+  return this->write_1 (ACE_reinterpret_cast(const CORBA::Octet*,&x));
 }
 
-ACE_INLINE size_t
-CDR::bytes_remaining (void)
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_boolean (CORBA::Boolean x)
 {
-  return this->mb_->length();
+  return this->write_octet (x?1:0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_short (CORBA::Short x)
+{
+  return this->write_2 (ACE_reinterpret_cast(const CORBA::UShort*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_ushort (CORBA::UShort x)
+{
+  return this->write_2 (ACE_reinterpret_cast(const CORBA::UShort*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_long (CORBA::Long x)
+{
+  return this->write_4 (ACE_reinterpret_cast(const CORBA::ULong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_ulong (CORBA::ULong x)
+{
+  return this->write_4 (ACE_reinterpret_cast(const CORBA::ULong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_longlong (const CORBA::LongLong &x)
+{
+  return this->write_8 (ACE_reinterpret_cast(const CORBA::ULongLong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_ulonglong (const CORBA::ULongLong &x)
+{
+  return this->write_8 (ACE_reinterpret_cast(const CORBA::ULongLong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_float (CORBA::Float x)
+{
+  return this->write_4 (ACE_reinterpret_cast(const CORBA::ULong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_double (const CORBA::Double &x)
+{
+  return this->write_8 (ACE_reinterpret_cast(const CORBA::ULongLong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_longdouble (const CORBA::LongDouble &x)
+{
+  return this->write_16 (ACE_reinterpret_cast(const CORBA::LongDouble*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_char_array (const CORBA::Char* x,
+				 CORBA::ULong length)
+{
+  return this->write_array (x,
+			    CDR::OCTET_SIZE,
+			    CDR::OCTET_ALIGN,
+			    length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_wchar_array (const CORBA::WChar* x,
+				  CORBA::ULong length)
+{
+  return this->write_array (x,
+			    CDR::SHORT_SIZE,
+			    CDR::SHORT_ALIGN,
+			    length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_octet_array (const CORBA::Octet* x,
+				  CORBA::ULong length)
+{
+  return this->write_array (x,
+			    CDR::OCTET_SIZE,
+			    CDR::OCTET_ALIGN,
+			    length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_short_array (const CORBA::Short* x,
+				  CORBA::ULong length)
+{
+  return this->write_array (x,
+			    CDR::SHORT_SIZE,
+			    CDR::SHORT_ALIGN,
+			    length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_ushort_array (const CORBA::UShort* x,
+				   CORBA::ULong length)
+{
+  return this->write_array (x,
+			    CDR::SHORT_SIZE,
+			    CDR::SHORT_ALIGN,
+			    length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_long_array (const CORBA::Long* x,
+				 CORBA::ULong length)
+{
+  return this->write_array (x,
+			    CDR::LONG_SIZE,
+			    CDR::LONG_ALIGN,
+			    length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_ulong_array (const CORBA::ULong* x,
+				  CORBA::ULong length)
+{
+  return this->write_array (x,
+			    CDR::LONG_SIZE,
+			    CDR::LONG_ALIGN,
+			    length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_longlong_array (const CORBA::LongLong* x,
+				     CORBA::ULong length)
+{
+  return this->write_array (x,
+			    CDR::LONGLONG_SIZE,
+			    CDR::LONGLONG_ALIGN,
+			    length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_ulonglong_array (const CORBA::ULongLong* x,
+				      CORBA::ULong length)
+{
+  return this->write_array (x,
+			    CDR::LONGLONG_SIZE,
+			    CDR::LONGLONG_ALIGN,
+			    length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_float_array (const CORBA::Float* x,
+				  CORBA::ULong length)
+{
+  return this->write_array (x,
+			    CDR::LONG_SIZE,
+			    CDR::LONG_ALIGN,
+			    length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_double_array (const CORBA::Double* x,
+				   CORBA::ULong length)
+{
+  return this->write_array (x,
+			    CDR::LONGLONG_SIZE,
+			    CDR::LONGLONG_ALIGN,
+			    length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_longdouble_array (const CORBA::LongDouble* x,
+				       CORBA::ULong length)
+{
+  return this->write_array (x,
+			    CDR::LONGDOUBLE_SIZE,
+			    CDR::LONGDOUBLE_ALIGN,
+			    length);
 }
 
 ACE_INLINE int
-CDR::good_bit (void) const
+TAO_OutputCDR::good_bit (void) const
 {
   return this->good_bit_;
 }
 
+ACE_INLINE const ACE_Message_Block*
+TAO_OutputCDR::start (void) const
+{
+  return this->start_;
+}
+
+ACE_INLINE const char*
+TAO_OutputCDR::buffer (void) const
+{
+  return this->start_->rd_ptr ();
+}
+
+ACE_INLINE size_t
+TAO_OutputCDR::length (void) const
+{
+  return this->start_->length ();
+}
+
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_OutputCDR::encode (CORBA::TypeCode_ptr tc,
+		       const void *data,
+		       const void *data2,
+		       CORBA::Environment &env)
+{
+  TAO_Marshal_Object *mobj =
+    this->factory_->make_marshal_object (tc, env);
+
+  if (env.exception() == 0 && mobj != 0)
+    return mobj->encode (tc, data, data2, this, env);
+  return CORBA::TypeCode::TRAVERSE_STOP;
+}
+
+// ****************************************************************
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_char (CORBA::Char& x)
+{
+  return this->read_1 (ACE_reinterpret_cast(CORBA::Octet*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_wchar (CORBA::WChar& x)
+{
+  return this->read_2 (ACE_reinterpret_cast(CORBA::UShort*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_octet (CORBA::Octet& x)
+{
+  return this->read_1 (&x);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_boolean (CORBA::Boolean& x)
+{
+  CORBA::Octet tmp;
+  this->read_octet (tmp);
+  x =  tmp ? CORBA::B_TRUE : CORBA::B_FALSE;
+  return this->good_bit_;
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_short (CORBA::Short& x)
+{
+  return this->read_2 (ACE_reinterpret_cast(CORBA::UShort*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_ushort (CORBA::UShort& x)
+{
+  return this->read_2 (ACE_reinterpret_cast(CORBA::UShort*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_long (CORBA::Long& x)
+{
+  return this->read_4 (ACE_reinterpret_cast(CORBA::ULong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_ulong (CORBA::ULong& x)
+{
+  return this->read_4 (ACE_reinterpret_cast(CORBA::ULong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_longlong (CORBA::LongLong& x)
+{
+  return this->read_8 (ACE_reinterpret_cast(CORBA::ULongLong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_ulonglong (CORBA::ULongLong& x)
+{
+  return this->read_8 (ACE_reinterpret_cast(CORBA::ULongLong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_float (CORBA::Float& x)
+{
+  return this->read_4 (ACE_reinterpret_cast(CORBA::ULong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_double (CORBA::Double& x)
+{
+  return this->read_8 (ACE_reinterpret_cast(CORBA::ULongLong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_longdouble (CORBA::LongDouble& x)
+{
+  return this->read_16 (ACE_reinterpret_cast(CORBA::LongDouble*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_char_array (CORBA::Char* x,
+			       CORBA::ULong length)
+{
+  return this->read_array (x,
+			   CDR::OCTET_SIZE,
+			   CDR::OCTET_ALIGN,
+			   length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_wchar_array (CORBA::WChar* x,
+				CORBA::ULong length)
+{
+  return this->read_array (x,
+			   CDR::SHORT_SIZE,
+			   CDR::SHORT_ALIGN,
+			   length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_octet_array (CORBA::Octet* x,
+				CORBA::ULong length)
+{
+  return this->read_array (x,
+			   CDR::OCTET_SIZE,
+			   CDR::OCTET_ALIGN,
+			   length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_short_array (CORBA::Short* x,
+				CORBA::ULong length)
+{
+  return this->read_array (x,
+			   CDR::SHORT_SIZE,
+			   CDR::SHORT_ALIGN,
+			   length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_ushort_array (CORBA::UShort* x,
+				 CORBA::ULong length)
+{
+  return this->read_array (x,
+			   CDR::SHORT_SIZE,
+			   CDR::SHORT_ALIGN,
+			   length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_long_array (CORBA::Long* x,
+			       CORBA::ULong length)
+{
+  return this->read_array (x,
+			   CDR::LONG_SIZE,
+			   CDR::LONG_ALIGN,
+			   length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_ulong_array (CORBA::ULong* x,
+				CORBA::ULong length)
+{
+  return this->read_array (x,
+			   CDR::LONG_SIZE,
+			   CDR::LONG_ALIGN,
+			   length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_longlong_array (CORBA::LongLong* x,
+				   CORBA::ULong length)
+{
+  return this->read_array (x,
+			   CDR::LONGLONG_SIZE,
+			   CDR::LONGLONG_ALIGN,
+			   length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_ulonglong_array (CORBA::ULongLong* x,
+				    CORBA::ULong length)
+{
+  return this->read_array (x,
+			   CDR::LONGLONG_SIZE,
+			   CDR::LONGLONG_ALIGN,
+			   length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_float_array (CORBA::Float* x,
+				CORBA::ULong length)
+{
+  return this->read_array (x,
+			   CDR::LONG_SIZE,
+			   CDR::LONG_ALIGN,
+			   length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_double_array (CORBA::Double* x,
+				 CORBA::ULong length)
+{
+  return this->read_array (x,
+			   CDR::LONGLONG_SIZE,
+			   CDR::LONGLONG_ALIGN,
+			   length);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::read_longdouble_array (CORBA::LongDouble* x,
+				     CORBA::ULong length)
+{
+  return this->read_array (x,
+			   CDR::LONGDOUBLE_SIZE,
+			   CDR::LONGDOUBLE_ALIGN,
+			   length);
+}
+
+ACE_INLINE int
+TAO_InputCDR::good_bit (void) const
+{
+  return this->good_bit_;
+}
+
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_InputCDR::decode (CORBA::TypeCode_ptr tc,
+		       const void *data,
+		       const void *data2,
+		       CORBA::Environment &env)
+{
+  TAO_Marshal_Object *mobj =
+    this->factory_->make_marshal_object (tc, env);
+
+  if (env.exception() == 0 && mobj != 0)
+    return mobj->decode (tc, data, data2, this, env);
+  return CORBA::TypeCode::TRAVERSE_STOP;
+}
+
+ACE_INLINE size_t
+TAO_InputCDR::length (void) const
+{
+  return this->start_->length ();
+}
+
 ACE_INLINE char*
-CDR::buffer (void) const
+TAO_InputCDR::rd_ptr (void)
 {
-  return this->mb_->rd_ptr();
-}
-
-ACE_INLINE size_t
-CDR::length (void) const
-{
-  return this->mb_->length ();
-}
-
-ACE_INLINE size_t
-CDR::size (void) const
-{
-  return this->mb_->size ();
-}
-
-// ****************************************************************
-// put_ routines
-
-ACE_INLINE CORBA::Boolean
-CDR::put_byte (char c)
-{
-  if (this->mb_->wr_ptr () + 1 <= this->mb_->end ()
-      || grow (0) == CORBA::B_TRUE)
-    {
-      this->mb_->copy (&c, 1);
-      return CORBA::B_TRUE;
-    }
-  this->good_bit_ = 0;
-  return CORBA::B_FALSE;
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::put_char (CORBA::Char c)
-{
-  return put_byte ((char) c);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::put_wchar (CORBA::WChar wc)
-{
-  // "wchar_t" isn't always 2 bytes, such systems might need further
-  // conversion (e.g. hosts with multibyte characters native, rather
-  // than UNICODE)
-
-  return put_short ((short) wc);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::put_boolean (CORBA::Boolean b)
-{
-  return put_byte ((char) (b != CORBA::B_FALSE));
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::put_octet (CORBA::Octet o)
-{
-  return put_byte ((char) o);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::put_ushort (CORBA::UShort s)
-{
-  return put_short ((CORBA::Short) s);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::put_ulong (CORBA::ULong l)
-{
-  return put_long ((CORBA::Long) l);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::put_longlong (const CORBA::LongLong &ll)
-{
-  return put_ulonglong ((CORBA::ULongLong &) ll);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::put_float (CORBA::Float f)
-{
-  return put_long (*(CORBA::Long *) &f);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::put_double (const CORBA::Double &d)
-{
-  return put_ulonglong (*(CORBA::ULongLong *) &d);
-}
-
-// ****************************************************************
-// DECODING routines ... adjust pointer, then byteswap as needed.
-
-ACE_INLINE CORBA::Boolean
-CDR::get_byte (char &c)
-{
-  if (this->mb_->rd_ptr () + 1 <= this->mb_->end ())
-    {
-      c = (char) *this->mb_->rd_ptr ();
-      this->mb_->rd_ptr (1);
-      return CORBA::B_TRUE;
-    }
-  this->good_bit_ = 0;
-  return CORBA::B_FALSE;
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::get_char (CORBA::Char &o)
-{
-  return this->get_byte ((char &) o);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::get_wchar (CORBA::WChar &wc)
-{
-  short s;
-
-  // wchar_t isn't always "short"
-
-  CORBA::Boolean retval = this->get_short (s);
-  wc = s;
-  return retval;
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::get_boolean (CORBA::Boolean &b)
-{
-  CORBA::Char c;
-
-  // CORBA::Boolean is rarely 'char'
-  CORBA::Boolean retval = this->get_char (c);
-  b = (c == 1);
-  return retval;
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::get_octet (CORBA::Octet &o)
-{
-  return this->get_byte ((char &) o);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::get_ushort (CORBA::UShort &s)
-{
-  return this->get_short ((short&) s);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::get_ulong (CORBA::ULong &l)
-{
-  return this->get_long ((CORBA::Long &) l);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::get_longlong (CORBA::LongLong &ll)
-{
-  return this->get_ulonglong ((CORBA::ULongLong &) ll);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::get_float (float &f)
-{
-  return this->get_long ((CORBA::Long &) f);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::get_double (double &d)
-{
-  return this->get_ulonglong ((CORBA::ULongLong &) d);
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::rd_ptr (size_t n)
-{
-  if (this->mb_->rd_ptr () + n <= this->mb_->end ())
-    {
-      this->mb_->rd_ptr (n);
-      return CORBA::B_TRUE;
-    }
-  this->good_bit_ = 0;
-  return CORBA::B_FALSE;
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::wr_ptr (size_t n)
-{
-  if (this->mb_->wr_ptr () + n <= this->mb_->end ())
-    {
-      this->mb_->wr_ptr (n);
-      return CORBA::B_TRUE;
-    }
-  this->good_bit_ = 0;
-  return CORBA::B_FALSE;
+  return this->start_->rd_ptr ();
 }
 
 // ****************************************************************
 // TODO: Use the CORBA_* types when they become available.
 
-ACE_INLINE CDR &
-operator<< (CDR &cdr, CORBA::Octet x)
+#if 0
+#if defined (ACE_HAS_BOOL)
+ACE_INLINE TAO_OutputCDR&
+operator<< (TAO_OutputCDR& cdr, CORBA::Boolean x)
 {
-  cdr.put_octet (x);
+  cdr.write_boolean (x);
+  return cdr;
+}
+#endif /* ACE_HAS_BOOL */
+
+ACE_INLINE TAO_OutputCDR&
+operator<< (TAO_OutputCDR& cdr, CORBA::Octet x)
+{
+  cdr.write_octet (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator<< (CDR &cdr, CORBA::Short x)
+ACE_INLINE TAO_OutputCDR&
+operator<< (TAO_OutputCDR& cdr, CORBA::Short x)
 {
-  cdr.put_short (x);
+  cdr.write_short (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator<< (CDR &cdr, CORBA::UShort x)
+ACE_INLINE TAO_OutputCDR&
+operator<< (TAO_OutputCDR& cdr, CORBA::UShort x)
 {
-  cdr.put_short (x);
+  cdr.write_short (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator<< (CDR &cdr, CORBA::Long x)
+ACE_INLINE TAO_OutputCDR&
+operator<< (TAO_OutputCDR& cdr, CORBA::Long x)
 {
-  cdr.put_long (x);
+  cdr.write_long (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator<< (CDR &cdr, CORBA::ULong x)
+ACE_INLINE TAO_OutputCDR&
+operator<< (TAO_OutputCDR& cdr, CORBA::ULong x)
 {
-  cdr.put_long (x);
+  cdr.write_long (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator<< (CDR &cdr, CORBA::LongLong x)
+ACE_INLINE TAO_OutputCDR&
+operator<< (TAO_OutputCDR& cdr, CORBA::LongLong x)
 {
-  cdr.put_longlong (x);
+  cdr.write_longlong (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator<< (CDR &cdr, CORBA::ULongLong x)
+ACE_INLINE TAO_OutputCDR&
+operator<< (TAO_OutputCDR& cdr, CORBA::ULongLong x)
 {
-  cdr.put_ulonglong (x);
+  cdr.write_ulonglong (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator<< (CDR &cdr, CORBA::Float x)
+ACE_INLINE TAO_OutputCDR&
+operator<< (TAO_OutputCDR& cdr, CORBA::Float x)
 {
-  cdr.put_float (x);
+  cdr.write_float (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator<< (CDR &cdr, CORBA::Double x)
+ACE_INLINE TAO_OutputCDR&
+operator<< (TAO_OutputCDR& cdr, CORBA::Double x)
 {
-  cdr.put_double (x);
+  cdr.write_double (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator<< (CDR &cdr, CORBA::Char x)
+ACE_INLINE TAO_OutputCDR&
+operator<< (TAO_OutputCDR& cdr, CORBA::Char x)
 {
-  cdr.put_char (x);
+  cdr.write_char (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator>> (CDR &cdr, CORBA::Octet &x)
+#if defined (ACE_HAS_BOOL)
+ACE_INLINE TAO_InputCDR&
+operator>> (TAO_InputCDR& cdr, CORBA::Boolean &x)
 {
-  cdr.get_octet (x);
+  cdr.read_boolean (x);
+  return cdr;
+}
+#endif /* ACE_HAS_BOOL */
+
+ACE_INLINE TAO_InputCDR&
+operator>> (TAO_InputCDR& cdr, CORBA::Octet &x)
+{
+  cdr.read_octet (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator>> (CDR &cdr, CORBA::Short &x)
+ACE_INLINE TAO_InputCDR&
+operator>> (TAO_InputCDR& cdr, CORBA::Short &x)
 {
-  cdr.get_short (x);
+  cdr.read_short (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator>> (CDR &cdr, CORBA::UShort &x)
+ACE_INLINE TAO_InputCDR&
+operator>> (TAO_InputCDR& cdr, CORBA::UShort &x)
 {
-  cdr.get_ushort (x);
+  cdr.read_ushort (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator>> (CDR &cdr, CORBA::Long &x)
+ACE_INLINE TAO_InputCDR&
+operator>> (TAO_InputCDR& cdr, CORBA::Long &x)
 {
-  cdr.get_long (x);
+  cdr.read_long (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator>> (CDR &cdr, CORBA::ULong &x)
+ACE_INLINE TAO_InputCDR&
+operator>> (TAO_InputCDR& cdr, CORBA::ULong &x)
 {
-  cdr.get_ulong (x);
+  cdr.read_ulong (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator>> (CDR &cdr, CORBA::LongLong &x)
+ACE_INLINE TAO_InputCDR&
+operator>> (TAO_InputCDR& cdr, CORBA::LongLong &x)
 {
-  cdr.get_longlong (x);
+  cdr.read_longlong (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator>> (CDR &cdr, CORBA::ULongLong &x)
+ACE_INLINE TAO_InputCDR&
+operator>> (TAO_InputCDR& cdr, CORBA::ULongLong &x)
 {
-  cdr.get_ulonglong (x);
+  cdr.read_ulonglong (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator>> (CDR &cdr, CORBA::Float &x)
+ACE_INLINE TAO_InputCDR&
+operator>> (TAO_InputCDR& cdr, CORBA::Float &x)
 {
-  cdr.get_float (x);
+  cdr.read_float (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator>> (CDR &cdr, CORBA::Double &x)
+ACE_INLINE TAO_InputCDR&
+operator>> (TAO_InputCDR& cdr, CORBA::Double &x)
 {
-  cdr.get_double (x);
+  cdr.read_double (x);
   return cdr;
 }
 
-ACE_INLINE CDR &
-operator>> (CDR &cdr, CORBA::Char &x)
+ACE_INLINE TAO_InputCDR&
+operator>> (TAO_InputCDR& cdr, CORBA::Char &x)
 {
-  cdr.get_char (x);
+  cdr.read_char (x);
   return cdr;
 }
+#endif /* 0 */
+

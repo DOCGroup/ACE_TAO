@@ -7,13 +7,13 @@ CORBA::release (CORBA_ServerRequest *req)
      req->Release ();
 }
 
-ACE_INLINE CDR &
+ACE_INLINE TAO_InputCDR &
 IIOP_ServerRequest::incoming (void)
 {
   return *this->incoming_;
 }
 
-ACE_INLINE CDR &
+ACE_INLINE TAO_OutputCDR &
 IIOP_ServerRequest::outgoing (void)
 {
   return *this->outgoing_;

@@ -55,6 +55,7 @@ To run the client, type
        short                for shorts
        ubstring             for unbounded string
        fixed_struct         for fixed sized structs
+       strseq         	    for sequences of strings
        var_struct           for variable structs
        nested_struct        for nested structs
        struct_seq           for sequences of structs
