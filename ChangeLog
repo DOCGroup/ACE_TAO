@@ -1,3 +1,9 @@
+Mon Dec  9 07:41:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/OS_Test.cpp:
+	* ace/OS_String.cpp (strsncpy): Fixed a cut and paste error. 
+	
+
 Mon Dec  9 00:09:55 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/INET_Addr.cpp (get_host_addr): Changed the usage of strncpy
