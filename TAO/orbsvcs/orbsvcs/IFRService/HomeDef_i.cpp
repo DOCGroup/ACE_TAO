@@ -718,6 +718,10 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
                                             "excepts",
                                             1,
                                             excepts_key);
+
+      this->repo_->config ()->set_integer_value (excepts_key,
+                                                 "count",
+                                                 length);
       char *type_path = 0;
 
       for (i = 0; i < length; ++i)
@@ -974,10 +978,9 @@ TAO_HomeDef_i::fill_exc_desc (ACE_Configuration_Section_Key &key,
                                               ACE_ENV_ARG_PARAMETER
                                             );
 
-  TAO_IDLType_i *impl = 
-    TAO_IFR_Service_Utils::path_to_idltype (path,
-                                            this->repo_);
-  ed.type = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO_ExceptionDef_i impl (this->repo_);
+  impl.section_key (except_def_key);
+  ed.type = impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void 

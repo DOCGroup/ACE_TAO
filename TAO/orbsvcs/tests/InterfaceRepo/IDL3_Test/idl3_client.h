@@ -102,6 +102,15 @@ private:
       ACE_ENV_ARG_DECL
     );
 
+  int home_inheritance_test (CORBA::ComponentIR::HomeDef_var &
+                             ACE_ENV_ARG_DECL);
+
+  int home_factory_test (CORBA::ComponentIR::HomeDescription *
+                         ACE_ENV_ARG_DECL);
+
+  int home_finder_test (CORBA::ComponentIR::HomeDescription *
+                        ACE_ENV_ARG_DECL);
+
 private:
   CORBA::Boolean debug_;
   // Flag to output detailed error messages.
