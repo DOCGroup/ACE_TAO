@@ -48,7 +48,7 @@ public:
   ACE_Proactor (ACE_Proactor_Impl *implementation = 0,
                 int delete_implementation = 0);
   // A do nothing constructor.
-  
+
   virtual ~ACE_Proactor (void);
   // Virtual destruction.
 
@@ -143,16 +143,6 @@ public:
   // Return 0 on success, non-zero (-1) on timeouts/errors and errno
   // is set accordingly.
 
-#if 0
-  virtual int post_completion (ACE_Asynch_Result *result);
-  // Post a result to the completion port of the Proactor.  If errors
-  // occur, the result will be deleted by this method.  If successful,
-  // the result will be deleted by the Proactor when the result is
-  // removed from the completion port.  Therefore, the result should
-  // have been dynamically allocated and should be orphaned by the
-  // user once this method is called.
-#endif /* 0 */
-
   int wake_up_dispatch_threads (void);
   // Add wakeup dispatch threads (reinit).
 
@@ -161,12 +151,12 @@ public:
 
   size_t number_of_threads (void) const;
   void number_of_threads (size_t threads);
-  // Number of thread used as a parameter to CreatIoCompletionPort. 
-  
+  // Number of thread used as a parameter to CreatIoCompletionPort.
+
   virtual ACE_HANDLE get_handle (void) const;
-  // Get the event handle. 
+  // Get the event handle.
   // It is a no-op in POSIX platforms and it returns
-  // ACE_INVALID_HANDLE. 
+  // ACE_INVALID_HANDLE.
 
   virtual ACE_Proactor_Impl *implementation (void) const;
   // Get the implementation class.
@@ -176,31 +166,31 @@ public:
   //
   // Note that the user does not have to use or know about these
   // methods.
-  
+
   virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
-  // Create the correct implementation class for doing Asynch_Read_Stream. 
-  
+  // Create the correct implementation class for doing Asynch_Read_Stream.
+
   virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void);
-  // Create the correct implementation class for doing Asynch_Write_Stream. 
+  // Create the correct implementation class for doing Asynch_Write_Stream.
 
   virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file (void);
-  // Create the correct implementation class for doing Asynch_Read_File. 
-  
+  // Create the correct implementation class for doing Asynch_Read_File.
+
   virtual ACE_Asynch_Write_File_Impl *create_asynch_write_file (void);
-  // Create the correct implementation class for doing Asynch_Write_File. 
-  
+  // Create the correct implementation class for doing Asynch_Write_File.
+
   virtual ACE_Asynch_Accept_Impl *create_asynch_accept (void);
-  // Create the correct implementation class for doing Asynch_Accept. 
-  
+  // Create the correct implementation class for doing Asynch_Accept.
+
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
   // Create the correct implementation class for doing Asynch_Transmit_File.
-  
+
   //
   // = Factory methods for the results
   //
   // Note that the user does not have to use or know about these
   // methods unless they want to "fake" results.
-  
+
   virtual ACE_Asynch_Read_Stream_Result_Impl *create_asynch_read_stream_result (ACE_Handler &handler,
                                                                                 ACE_HANDLE handle,
                                                                                 ACE_Message_Block &message_block,
@@ -208,8 +198,8 @@ public:
                                                                                 const void* act,
                                                                                 ACE_HANDLE event,
                                                                                 int priority);
-  // Create the correct implementation class for ACE_Asynch_Read_Stream::Result class. 
-  
+  // Create the correct implementation class for ACE_Asynch_Read_Stream::Result class.
+
   virtual ACE_Asynch_Write_Stream_Result_Impl *create_asynch_write_stream_result (ACE_Handler &handler,
                                                                                   ACE_HANDLE handle,
                                                                                   ACE_Message_Block &message_block,
@@ -218,7 +208,7 @@ public:
                                                                                   ACE_HANDLE event,
                                                                                   int priority);
   // Create the correct implementation class for ACE_Asynch_Write_Stream::Result.
-  
+
   virtual ACE_Asynch_Read_File_Result_Impl *create_asynch_read_file_result (ACE_Handler &handler,
                                                                             ACE_HANDLE handle,
                                                                             ACE_Message_Block &message_block,
@@ -229,7 +219,7 @@ public:
                                                                             ACE_HANDLE event,
                                                                             int priority);
   // Create the correct implementation class for ACE_Asynch_Read_File::Result.
-  
+
   virtual ACE_Asynch_Write_File_Result_Impl *create_asynch_write_file_result (ACE_Handler &handler,
                                                                               ACE_HANDLE handle,
                                                                               ACE_Message_Block &message_block,
@@ -240,7 +230,7 @@ public:
                                                                               ACE_HANDLE event,
                                                                               int priority);
   // Create the correct implementation class for ACE_Asynch_Write_File::Result.
-  
+
   virtual ACE_Asynch_Accept_Result_Impl *create_asynch_accept_result (ACE_Handler &handler,
                                                                       ACE_HANDLE listen_handle,
                                                                       ACE_HANDLE accept_handle,
@@ -250,7 +240,7 @@ public:
                                                                       ACE_HANDLE event,
                                                                       int priority);
   // Create the correct implementation class for ACE_Asynch_Accept::Result.
-  
+
   virtual ACE_Asynch_Transmit_File_Result_Impl *create_asynch_transmit_file_result (ACE_Handler &handler,
                                                                                     ACE_HANDLE socket,
                                                                                     ACE_HANDLE file,
@@ -264,28 +254,28 @@ public:
                                                                                     ACE_HANDLE event,
                                                                                     int priority);
   // Create the correct implementation class for ACE_Asynch_Transmit_File::Result.
-  
+
 protected:
   virtual void implementation (ACE_Proactor_Impl *implementation);
   // Set the implementation class.
-  
+
   ACE_Proactor_Impl *implementation_;
   // Delegation/implementation class that all methods will be
   // forwarded to.
 
   int delete_implementation_;
-  // Flag used to indicate whether we are responsible for cleaning up 
+  // Flag used to indicate whether we are responsible for cleaning up
   // the implementation instance.
 
   static ACE_Proactor *proactor_;
   // Pointer to a process-wide <ACE_Proactor>.
-  
+
   static int delete_proactor_;
   // Must delete the <proactor_> if non-0.
 
   static sig_atomic_t end_event_loop_;
   // Terminate the proactor event loop.
-  
+
 private:
   ACE_Proactor (const ACE_Proactor &);
   ACE_Proactor &operator= (const ACE_Proactor &);

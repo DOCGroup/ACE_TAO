@@ -89,13 +89,16 @@ public:
 
   u_long offset (void) const;
   // This really make sense only when doing file I/O.
-  
+
   u_long offset_high (void) const;
-  // Offset_high associated with the OVERLAPPED structure. 
-  
+  // Offset_high associated with the OVERLAPPED structure.
+
   int priority (void) const;
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
+
+  int post_completion (ACE_Proactor_Impl *proactor);
+  // Post <this> to the Proactor's completion port.
 
   virtual ~ACE_WIN32_Asynch_Result (void);
   // Destructor.
@@ -111,7 +114,7 @@ protected:
 
   ACE_Handler &handler_;
   // Handler that will be called back.
-  
+
   const void *act_;
   // ACT for this operation.
 
@@ -120,7 +123,7 @@ protected:
 
   int success_;
   // Success indicator.
-  
+
   const void *completion_key_;
   // ACT associated with handle.
 
@@ -131,12 +134,12 @@ protected:
 class ACE_Export ACE_WIN32_Asynch_Operation : public virtual ACE_Asynch_Operation_Impl
 {
   // = TITLE
-  // 
+  //
   //     This class abstracts out the common things needed for
   //     implementing Asynch_Operation for WIN32 platform.
-  // 
+  //
   // = DESCRIPTION
-  // 
+  //
 public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -160,7 +163,7 @@ public:
 protected:
   ACE_WIN32_Asynch_Operation (ACE_WIN32_Proactor *win32_proactor);
   // Constructor.
-  
+
   virtual ~ACE_WIN32_Asynch_Operation (void);
   // Destructor.
 
@@ -193,7 +196,7 @@ class ACE_Export ACE_WIN32_Asynch_Read_Stream_Result : public virtual ACE_Asynch
 
   friend class ACE_WIN32_Proactor;
   // Proactor class has special permission.
- 
+
 public:
   u_long bytes_to_read (void) const;
   // The number of bytes which were requested at the start of the
@@ -205,7 +208,7 @@ public:
   ACE_HANDLE handle (void) const;
   // I/O handle used for reading.
 
-  // Base class operations. These operations are here to kill some 
+  // Base class operations. These operations are here to kill some
   // warnings. These methods call the base class methods.
 
   u_long bytes_transferred (void) const;
@@ -230,13 +233,16 @@ public:
 
   u_long offset (void) const;
   // This really make sense only when doing file I/O.
-  
+
   u_long offset_high (void) const;
-  // Offset_high associated with the OVERLAPPED structure. 
-  
+  // Offset_high associated with the OVERLAPPED structure.
+
   int priority (void) const;
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
+
+  int post_completion (ACE_Proactor_Impl *proactor);
+  // Post <this> to the Proactor's completion port.
 
 protected:
   ACE_WIN32_Asynch_Read_Stream_Result (ACE_Handler &handler,
@@ -270,14 +276,14 @@ protected:
 
 class ACE_Export ACE_WIN32_Asynch_Read_Stream : public virtual ACE_Asynch_Read_Stream_Impl,
                                                 public ACE_WIN32_Asynch_Operation
-{ 
+{
   // = TITLE
-  // 
+  //
   //     This class is a factory for starting off asynchronous reads
   //     on a stream.
   //
   // = DESCRIPTION
-  // 
+  //
   //     Once <open> is called, multiple asynchronous <read>s can
   //     started using this class.  An ACE_Asynch_Read_Stream::Result
   //     will be passed back to the <handler> when the asynchronous
@@ -287,7 +293,7 @@ class ACE_Export ACE_WIN32_Asynch_Read_Stream : public virtual ACE_Asynch_Read_S
 public:
   ACE_WIN32_Asynch_Read_Stream (ACE_WIN32_Proactor *win32_proactor);
   // Constructor.
-  
+
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             const void *act,
@@ -298,10 +304,10 @@ public:
   virtual ~ACE_WIN32_Asynch_Read_Stream (void);
   // Destructor.
 
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
   // methods are defined here to avoid VC++ warnings. They route the
   // call to the ACE_WIN32_Asynch_Operation base class.
-  
+
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
@@ -334,7 +340,7 @@ class ACE_Export ACE_WIN32_Asynch_Write_Stream_Result : public virtual ACE_Async
   //     ACE_Asynch_Write_Stream::Result class.
   //
   // = DESCRIPTION
-  //  
+  //
 
   friend class ACE_WIN32_Asynch_Write_Stream;
   // Factory class willl have special permissions.
@@ -353,7 +359,7 @@ public:
   ACE_HANDLE handle (void) const;
   // I/O handle used for writing.
 
-  // Base class operations. These operations are here to kill some 
+  // Base class operations. These operations are here to kill some
   // warnings. These methods call the base class methods.
 
   u_long bytes_transferred (void) const;
@@ -378,13 +384,16 @@ public:
 
   u_long offset (void) const;
   // This really make sense only when doing file I/O.
-  
+
   u_long offset_high (void) const;
-  // Offset_high associated with the OVERLAPPED structure. 
-  
+  // Offset_high associated with the OVERLAPPED structure.
+
   int priority (void) const;
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
+
+  int post_completion (ACE_Proactor_Impl *proactor);
+  // Post <this> to the Proactor's completion port.
 
 protected:
   ACE_WIN32_Asynch_Write_Stream_Result (ACE_Handler &handler,
@@ -421,12 +430,12 @@ class ACE_Export ACE_WIN32_Asynch_Write_Stream : public virtual ACE_Asynch_Write
                                                  public ACE_WIN32_Asynch_Operation
 {
   // = TITLE
-  // 
+  //
   //     This class is a factory for starting off asynchronous writes
   //     on a stream.
   //
   // = DESCRIPTION
-  // 
+  //
   //     Once <open> is called, multiple asynchronous <writes>s can
   //     started using this class.  A ACE_Asynch_Write_Stream::Result
   //     will be passed back to the <handler> when the asynchronous
@@ -443,14 +452,14 @@ public:
              int priority);
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be written from the <message_block>.
-  
+
   virtual ~ACE_WIN32_Asynch_Write_Stream (void);
   // Destructor.
-  
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+
+  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
   // methods are defined here to avoid VC++ warnings. They route the
   // call to the ACE_WIN32_Asynch_Operation base class.
-  
+
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
@@ -494,7 +503,7 @@ class ACE_Export ACE_WIN32_Asynch_Read_File_Result : public virtual ACE_Asynch_R
 public:
   // These methods belong to ACE_WIN32_Asynch_Result class base class.
   // These operations are here to kill some warnings. These methods
-  // call the base class methods. 
+  // call the base class methods.
 
   u_long bytes_transferred (void) const;
   // Number of bytes transferred by the operation.
@@ -518,18 +527,18 @@ public:
 
   u_long offset (void) const;
   // This really make sense only when doing file I/O.
-  
+
   u_long offset_high (void) const;
-  // Offset_high associated with the OVERLAPPED structure. 
-  
+  // Offset_high associated with the OVERLAPPED structure.
+
   int priority (void) const;
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
-  
+
   // The following methods belong to
   // ACE_WIN32_Asynch_Read_Stream_Result. They are here to avoid VC++
   // warnings. These methods route their call to the
-  // ACE_WIN32_Asynch_Read_Stream_Result base class. 
+  // ACE_WIN32_Asynch_Read_Stream_Result base class.
 
   u_long bytes_to_read (void) const;
   // The number of bytes which were requested at the start of the
@@ -540,6 +549,9 @@ public:
 
   ACE_HANDLE handle (void) const;
   // I/O handle used for reading.
+
+  int post_completion (ACE_Proactor_Impl *proactor);
+  // Post <this> to the Proactor's completion port.
 
 protected:
   ACE_WIN32_Asynch_Read_File_Result (ACE_Handler &handler,
@@ -559,7 +571,7 @@ protected:
                          const void *completion_key,
                          u_long error);
   // ACE_Proactor will call this method when the read completes.
-  
+
   virtual ~ACE_WIN32_Asynch_Read_File_Result (void);
   // Destructor.
 };
@@ -568,12 +580,12 @@ class ACE_Export ACE_WIN32_Asynch_Read_File : public virtual ACE_Asynch_Read_Fil
                                               public ACE_WIN32_Asynch_Read_Stream
 {
   // = TITLE
-  // 
+  //
   //     This class is a factory for starting off asynchronous reads
   //     on a file.
   //
   // = DESCRIPTION
-  // 
+  //
   //     Once <open> is called, multiple asynchronous <read>s can
   //     started using this class.  A ACE_Asynch_Read_File::Result
   //     will be passed back to the <handler> when the asynchronous
@@ -582,7 +594,7 @@ class ACE_Export ACE_WIN32_Asynch_Read_File : public virtual ACE_Asynch_Read_Fil
   //
   //     This class differs slightly from ACE_Asynch_Read_Stream as it
   //     allows the user to specify an offset for the read.
-  
+
 public:
   ACE_WIN32_Asynch_Read_File (ACE_WIN32_Proactor *win32_proactor);
   // Constructor.
@@ -600,10 +612,10 @@ public:
   virtual ~ACE_WIN32_Asynch_Read_File (void);
   // Destructor.
 
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
   // methods are defined here to avoid VC++ warnings. They route the
   // call to the ACE_WIN32_Asynch_Operation base class.
-  
+
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
@@ -637,10 +649,10 @@ class ACE_Export ACE_WIN32_Asynch_Write_File_Result : public virtual ACE_Asynch_
   // = TITLE
   //
   //     This class provides implementation for
-  //      ACE_Asynch_Write_File_Result for WIN32 platforms. 
+  //      ACE_Asynch_Write_File_Result for WIN32 platforms.
   //
   // = DESCRIPTION
-  // 
+  //
   //     This class has all the information necessary for the
   //     <handler> to uniquiely identify the completion of the
   //     asynchronous write.
@@ -659,9 +671,9 @@ class ACE_Export ACE_WIN32_Asynch_Write_File_Result : public virtual ACE_Asynch_
   // Proactor class has special permission.
 
 public:
-  // Base class operations. These operations are here to kill some 
+  // Base class operations. These operations are here to kill some
   // warnings. These methods call the base class methods.
-  
+
   u_long bytes_transferred (void) const;
   // Number of bytes transferred by the operation.
 
@@ -684,10 +696,10 @@ public:
 
   u_long offset (void) const;
   // This really make sense only when doing file I/O.
-  
+
   u_long offset_high (void) const;
-  // Offset_high associated with the OVERLAPPED structure. 
-  
+  // Offset_high associated with the OVERLAPPED structure.
+
   int priority (void) const;
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
@@ -695,17 +707,20 @@ public:
   // The following methods belong to
   // ACE_WIN32_Asynch_Read_Stream_Result. They are here to avoid VC++
   // warnings. These methods route their call to the
-  // ACE_WIN32_Asynch_Read_Stream_Result base class. 
+  // ACE_WIN32_Asynch_Read_Stream_Result base class.
 
   u_long bytes_to_write (void) const;
   // The number of bytes which were requested at the start of the
   // asynchronous write.
-  
+
   ACE_Message_Block &message_block (void) const;
   // Message block that contains the data to be written.
 
   ACE_HANDLE handle (void) const;
   // I/O handle used for writing.
+
+  int post_completion (ACE_Proactor_Impl *proactor);
+  // Post <this> to the Proactor's completion port.
 
 protected:
   ACE_WIN32_Asynch_Write_File_Result (ACE_Handler &handler,
@@ -725,7 +740,7 @@ protected:
                          const void *completion_key,
                          u_long error);
   // ACE_Proactor will call this method when the write completes.
-  
+
   virtual ~ACE_WIN32_Asynch_Write_File_Result (void);
   // Destructor.
 };
@@ -739,7 +754,7 @@ class ACE_Export ACE_WIN32_Asynch_Write_File : public virtual ACE_Asynch_Write_F
   //     on a file.
   //
   // = DESCRIPTION
-  // 
+  //
   //     Once <open> is called, multiple asynchronous <write>s can be
   //     started using this class.  A ACE_Asynch_Write_File::Result
   //     will be passed back to the <handler> when the asynchronous
@@ -759,14 +774,14 @@ public:
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be write and stored in the <message_block>.  The write will
   // start at <offset> from the beginning of the file.
-  
+
   virtual ~ACE_WIN32_Asynch_Write_File (void);
   // Destrcutor.
-  
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+
+  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
   // methods are defined here to avoid VC++ warnings. They route the
   // call to the ACE_WIN32_Asynch_Operation base class.
-  
+
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
@@ -800,10 +815,10 @@ class ACE_Export ACE_WIN32_Asynch_Accept_Result : public virtual ACE_Asynch_Acce
   // = TITLE
   //
   //     This class implements ACE_Asynch_Accept::Result for WIN32
-  //     platform. 
-  // 
+  //     platform.
+  //
   // = DESCRIPTION
-  // 
+  //
   //     This class has all the information necessary for the
   //     <handler> to uniquiely identify the completion of the
   //     asynchronous accept.
@@ -827,8 +842,8 @@ public:
 
   ACE_HANDLE accept_handle (void) const;
   // I/O handle for the new connection.
-  
-  // Base class operations. These operations are here to kill some 
+
+  // Base class operations. These operations are here to kill some
   // warnings. These methods call the base class methods.
 
   u_long bytes_transferred (void) const;
@@ -853,13 +868,16 @@ public:
 
   u_long offset (void) const;
   // This really make sense only when doing file I/O.
-  
+
   u_long offset_high (void) const;
-  // Offset_high associated with the OVERLAPPED structure. 
-  
+  // Offset_high associated with the OVERLAPPED structure.
+
   int priority (void) const;
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
+
+  int post_completion (ACE_Proactor_Impl *proactor);
+  // Post <this> to the Proactor's completion port.
 
 protected:
   ACE_WIN32_Asynch_Accept_Result (ACE_Handler &handler,
@@ -872,7 +890,7 @@ protected:
                                   int priority);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Accept factory.
-  
+
   virtual void complete (u_long bytes_transferred,
                          int success,
                          const void *completion_key,
@@ -899,12 +917,12 @@ class ACE_Export ACE_WIN32_Asynch_Accept : public virtual ACE_Asynch_Accept_Impl
                                            public ACE_WIN32_Asynch_Operation
 {
   // = TITLE
-  // 
+  //
   //     This class is a factory for starting off asynchronous accepts
   //     on a listen handle.
   //
   // = DESCRIPTION
-  // 
+  //
   //     Once <open> is called, multiple asynchronous <accept>s can
   //     started using this class.  A ACE_Asynch_Accept::Result will
   //     be passed back to the <handler> when the asynchronous accept
@@ -932,11 +950,11 @@ public:
 
   ~ACE_WIN32_Asynch_Accept (void);
   // Destructor.
-  
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+
+  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
   // methods are defined here to avoid VC++ warnings. They route the
   // call to the ACE_WIN32_Asynch_Operation base class.
-  
+
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
@@ -978,17 +996,17 @@ class ACE_Export ACE_WIN32_Asynch_Transmit_File_Result : public virtual ACE_Asyn
 public:
   ACE_HANDLE socket (void) const;
   // Socket used for transmitting the file.
-  
+
   ACE_HANDLE file (void) const;
   // File from which the data is read.
-  
+
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer (void) const;
   // Header and trailer data associated with this transmit file.
-  
+
   u_long bytes_to_write (void) const;
   // The number of bytes which were requested at the start of the
   // asynchronous transmit file.
-  
+
   u_long bytes_per_send (void) const;
   // Number of bytes per send requested at the start of the transmit
   // file.
@@ -996,7 +1014,7 @@ public:
   u_long flags (void) const;
   // Flags which were passed into transmit file.
 
-  // Base class operations. These operations are here to kill some 
+  // Base class operations. These operations are here to kill some
   // warnings. These methods call the base class methods.
 
   u_long bytes_transferred (void) const;
@@ -1021,13 +1039,16 @@ public:
 
   u_long offset (void) const;
   // This really make sense only when doing file I/O.
-  
+
   u_long offset_high (void) const;
-  // Offset_high associated with the OVERLAPPED structure. 
-  
+  // Offset_high associated with the OVERLAPPED structure.
+
   int priority (void) const;
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
+
+  int post_completion (ACE_Proactor_Impl *proactor);
+  // Post <this> to the Proactor's completion port.
 
 protected:
   ACE_WIN32_Asynch_Transmit_File_Result (ACE_Handler &handler,
@@ -1044,13 +1065,13 @@ protected:
 					 int priority);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Transmit_File factory.
-  
+
   virtual void complete (u_long bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
   // Proactor will call this method when the write completes.
-  
+
   virtual ~ACE_WIN32_Asynch_Transmit_File_Result (void);
   // Destructor.
 
@@ -1079,12 +1100,12 @@ class ACE_Export ACE_WIN32_Asynch_Transmit_File : public virtual ACE_Asynch_Tran
                                                   public ACE_WIN32_Asynch_Operation
 {
   // = TITLE
-  // 
+  //
   //     This class is a factory for starting off asynchronous
   //     transmit files on a stream.
   //
   // = DESCRIPTION
-  //  
+  //
   //     Once <open> is called, multiple asynchronous <transmit_file>s
   //     can started using this class.  A
   //     ACE_Asynch_Transmit_File::Result will be passed back to the
@@ -1101,7 +1122,7 @@ class ACE_Export ACE_WIN32_Asynch_Transmit_File : public virtual ACE_Asynch_Tran
 public:
   ACE_WIN32_Asynch_Transmit_File (ACE_WIN32_Proactor *win32_proactor);
   // Constructor.
-  
+
   int transmit_file (ACE_HANDLE file,
                      ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
                      u_long bytes_to_write,
@@ -1120,14 +1141,14 @@ public:
   // let <bytes_to_write> = 0.  <bytes_per_send> is the size of each
   // block of data sent per send operation.  Please read the Win32
   // documentation on what the flags should be.
-  
+
   ~ACE_WIN32_Asynch_Transmit_File (void);
   // Destructor.
-  
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+
+  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
   // methods are defined here to avoid VC++ warnings. They route the
   // call to the ACE_WIN32_Asynch_Operation base class.
-  
+
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
             const void *completion_key,
