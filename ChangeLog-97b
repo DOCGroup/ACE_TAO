@@ -1,14 +1,20 @@
+Wed Nov  5 21:32:36 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Service_Repository.cpp (close): Looking in the
+ 	  Service_Repository while shutting it down does really bad
+ 	  things.  Some careful changes to the loop in
+ 	  Service_Repository::close() fixed this.  Thanks to Eric
+ 	  C. Newton <ecn@smart.net> for reporting this.
+
+	* Added new support for SCO UNIX with no threads.  Thanks to
+ 	  Arturo Montes <mitosys@colomsat.net.co> for reporting this.
+
 Wed Nov 05 20:31:36 1997    <irfan@TWOSTEP>
 
 	* ace/Connector.cpp (close): Added an explicit close() method for
  	  the Strategy_Connector.  This closes down all Strategy_Connector
  	  specific things and then calls close() on the base class.  Also
  	  modified the destructor to call this routine.
-
-Wed Nov  5 15:42:28 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
-
-	* Added new support for SCO UNIX with no threads.  Thanks to
- 	  Arturo Montes <mitosys@colomsat.net.co> for reporting this.
 
 Wed Nov  5 17:09:05 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 

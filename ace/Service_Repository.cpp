@@ -123,6 +123,14 @@ ACE_Service_Repository::close (void)
     {
       // Make sure to remove the services in the reverse order in
       // which they were added.
+      while (this->current_size_ > 0)
+        {
+          int i = --this->current_size_;
+          ACE_DEBUG ((LM_DEBUG, "shutting down %s",
+                      this->service_vector_[i]->name ()));
+          delete (ACE_Service_Type *)this->service_vector_[i];
+        }
+
       for (int i = this->current_size_ - 1; i >= 0; i--)
 	{
 	  ACE_DEBUG ((LM_DEBUG, "shutting down %s\n", 
