@@ -1,3 +1,17 @@
+Wed Feb 14 05:28:59 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Thread_Manager.{h,i}: Added const to state(), grp_id(),
+	  task(), get_next(), and self().  Thanks to Johnny Willemsen
+ 	  <jwillemsen@remedy.nl> for reporting this.
+
+Tue Feb 13 17:51:47 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/Makefile.bor (TESTS): Added Dirent_Test to list of TESTS.
+	  Thanks to Mike Curtis for reporting this.  
+
+	* tests/run_tests.bat: Fixed a typo so that Dirent_Test will run.
+	  Thanks to Mike Curtis for reporting this.
+
 Wed Feb 14 12:08:10 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* ace/Read_Buffer.cpp: Fixed boundary condition in rec_read.
