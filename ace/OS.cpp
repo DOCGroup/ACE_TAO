@@ -627,12 +627,12 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 {
 // ACE_TRACE ("ACE_OS::mutex_lock_cleanup");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
   ACE_mutex_t *p_lock = (ACE_mutex_t *) mutex;
   ACE_OS::mutex_unlock (p_lock);
 # else
   ACE_UNUSED_ARG (mutex);
-# endif /* ACE_HAS_DCETHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (mutex);
 #endif /* ACE_HAS_THREADS */
@@ -1040,7 +1040,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                      int, -1);
 #elif defined (ACE_HAS_STHREADS)
   return ACE_OS::set_scheduling_params (sched_params, id);
-#elif defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
+#elif defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED)
   ACE_UNUSED_ARG (id);
   if (sched_params.quantum () != ACE_Time_Value::zero)
     {
@@ -1076,7 +1076,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     {
       ACE_thread_t thr_id = ACE_OS::thr_self ();
 
-# if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+# if defined (ACE_HAS_PTHREADS_DRAFT4)
       return (::pthread_setscheduler(thr_id,
                                      sched_params.policy (),
                                      sched_params.priority()) == -1 ? -1 : 0);
@@ -1088,7 +1088,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                                              &param),
                                            result),
                          int, -1);
-# endif  /* ACE_HAS_DCE_DRAFT4_THREADS */
+# endif  /* ACE_HAS_PTHREADS_DRAFT4 */
 
     }
   else // sched_params.scope () == ACE_SCOPE_LWP, which isn't POSIX
@@ -2244,20 +2244,16 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (thr_handle == 0)
     thr_handle = &tmp_handle;
 
-# if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
 
   int result;
   pthread_attr_t attr;
-#   if defined (ACE_HAS_DCETHREADS)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
   if (::pthread_attr_create (&attr) != 0)
-#   else /* ACE_HAS_DCETHREADS */
+#   else /* ACE_HAS_PTHREADS_DRAFT4 */
   if (::pthread_attr_init (&attr) != 0)
-#   endif /* ACE_HAS_DCETHREADS */
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
       return -1;
-#   if !defined (ACE_LACKS_SETSCHED)
-  // The PRIORITY stuff used to be here...-cjc
-#   endif /* ACE_LACKS_SETSCHED */
-
 
   // *** Set Stack Size
 #   if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
@@ -2285,13 +2281,17 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #   endif /* PTHREAD_STACK_MIN */
 
 #   if !defined (ACE_LACKS_THREAD_STACK_SIZE)      // JCEJ 12/17/96
+#     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
       if (::pthread_attr_setstacksize (&attr, size) != 0)
+#     else
+      if (ACE_ADAPT_RETVAL(pthread_attr_setstacksize (&attr, size), result) == -1)
+#     endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
         {
-#     if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
           ::pthread_attr_delete (&attr);
-#     else /* ACE_HAS_DCETHREADS */
+#     else /* ACE_HAS_PTHREADS_DRAFT4 */
           ::pthread_attr_destroy (&attr);
-#     endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
           return -1;
         }
 #   else
@@ -2305,11 +2305,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     {
       if (::pthread_attr_setstackaddr (&attr, stack) != 0)
         {
-#     if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
           ::pthread_attr_delete (&attr);
-#     else /* ACE_HAS_DCETHREADS */
+#     else /* ACE_HAS_PTHREADS_DRAFT4 */
           ::pthread_attr_destroy (&attr);
-#     endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
           return -1;
         }
     }
@@ -2330,23 +2330,24 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           if (ACE_BIT_ENABLED (flags, THR_DETACHED))
             dstate = PTHREAD_CREATE_DETACHED;
 
-#     if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
           if (::pthread_attr_setdetach_np (&attr, dstate) != 0)
-#     else /* ACE_HAS_DCETHREADS */
-#       if defined (ACE_HAS_PTHREAD_DSTATE_PTR)
+#     else /* ACE_HAS_PTHREADS_DRAFT4 */
+#       if defined (ACE_HAS_PTHREADS_DRAFT6)
           if (::pthread_attr_setdetachstate (&attr, &dstate) != 0)
 #       else
-          if (::pthread_attr_setdetachstate (&attr, dstate) != 0)
-#       endif /* ACE_HAS_PTHREAD_DSTATE_PTR */
-#     endif /* ACE_HAS_DCETHREADS */
-                {
-#     if defined (ACE_HAS_DCETHREADS)
-            ::pthread_attr_delete (&attr);
-#     else /* ACE_HAS_DCETHREADS */
-            ::pthread_attr_destroy (&attr);
-#     endif /* ACE_HAS_DCETHREADS */
-            return -1;
-          }
+          if (ACE_ADAPT_RETVAL(::pthread_attr_setdetachstate (&attr, dstate),
+			       result) != 0)
+#       endif /* ACE_HAS_PTHREADS_DRAFT6 */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
+	    {
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
+              ::pthread_attr_delete (&attr);
+#     else /* ACE_HAS_PTHREADS_DRAFT4 */
+              ::pthread_attr_destroy (&attr);
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
+              return -1;
+	    }
         }
 
       // Note: if ACE_LACKS_SETDETACH and THR_DETACHED is enabled, we
@@ -2356,7 +2357,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #   endif /* ACE_LACKS_SETDETACH */
 
       // *** Set Policy
-#   if !defined (ACE_LACKS_SETSCHED) || defined (ACE_HAS_DCETHREADS)
+#   if !defined (ACE_LACKS_SETSCHED)
       // If we wish to set the priority explicitly, we have to enable
       // explicit scheduling, and a policy, too.
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
@@ -2398,26 +2399,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #       endif /* SCHED_IO */
           else
             spolicy = SCHED_RR;
-#     endif /* ACE_HAS_ONLY_SCHED_OTHER */
 
-#     if !defined (ACE_HAS_FSU_PTHREADS)
-#       if defined (ACE_HAS_DCETHREADS)
-          result = ::pthread_attr_setsched (&attr, spolicy);
-#       else /* ACE_HAS_DCETHREADS */
-          result = ::pthread_attr_setschedpolicy (&attr, spolicy);
-#       endif /* ACE_HAS_DCETHREADS */
-          if (result != 0)
-              {
-                // Preserve the errno value.
-                errno = result;
-#       if defined (ACE_HAS_DCETHREADS)
-                ::pthread_attr_delete (&attr);
-#       else /* ACE_HAS_DCETHREADS */
-                ::pthread_attr_destroy (&attr);
-#       endif /* ACE_HAS_DCETHREADS */
-                return -1;
-              }
-#     else
+#       if defined (ACE_HAS_FSU_PTHREADS)
           int ret;
           switch (spolicy)
             {
@@ -2431,18 +2414,34 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             }
           if (ret != 0)
             {
-#       if defined (ACE_HAS_DCETHREADS)
-              ::pthread_attr_delete (&attr);
-#       else /* ACE_HAS_DCETHREADS */
               ::pthread_attr_destroy (&attr);
-#       endif /* ACE_HAS_DCETHREADS */
               return -1;
             }
-#     endif    /*  ACE_HAS_FSU_PTHREADS */
+#       endif    /*  ACE_HAS_FSU_PTHREADS */
+
+#     endif /* ACE_HAS_ONLY_SCHED_OTHER */
+
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
+          result = ::pthread_attr_setsched (&attr, spolicy);
+#     elif defined (ACE_HAS_PTHREADS_DRAFT6)
+          result = ::pthread_attr_setschedpolicy (&attr, spolicy);
+#     else  /* draft 7 or std */
+	  ACE_ADAPT_RETVAL(::pthread_attr_setschedpolicy (&attr, spolicy),
+			   result);
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
+          if (result != 0)
+              {
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
+                ::pthread_attr_delete (&attr);
+#     else /* ACE_HAS_PTHREADS_DRAFT4 */
+                ::pthread_attr_destroy (&attr);
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
+                return -1;
+              }
         }
 
       // *** Set Priority (use reasonable default priorities)
-#     if defined(ACE_HAS_PTHREADS_1003_DOT_1C)
+#     if defined(ACE_HAS_PTHREADS_STD)
       // If we wish to explicitly set a scheduling policy, we also
       // have to specify a priority.  We choose a "middle" priority as
       // default.  Maybe this is also necessary on other POSIX'ish
@@ -2459,20 +2458,18 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           else // THR_SCHED_DEFAULT
             priority = ACE_THR_PRI_OTHER_DEF;
         }
-#     endif /* ACE_HAS_PTHREADS_1003_DOT_1C */
+#     endif /* ACE_HAS_PTHREADS_STD */
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
         {
           struct sched_param sparam;
           ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
 
-#     if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_DCE_DRAFT4_THREADS)
-          sparam.sched_priority = ACE_MIN (priority, PRIORITY_MAX);
-#     elif defined(ACE_HAS_IRIX62_THREADS)
+#     if defined(ACE_HAS_IRIX62_THREADS)
           sparam.sched_priority = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);
-#     elif defined (PTHREAD_MAX_PRIORITY) && !defined(ACE_HAS_PTHREADS_1003_DOT_1C)
+#     elif defined (PTHREAD_MAX_PRIORITY) && !defined(ACE_HAS_PTHREADS_STD)
           /* For MIT pthreads... */
           sparam.prio = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);
-#     elif defined(ACE_HAS_PTHREADS_1003_DOT_1C)
+#     elif defined(ACE_HAS_PTHREADS_STD) && !defined (ACE_HAS_STHREADS)
           // The following code forces priority into range.
           if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
             sparam.sched_priority =
@@ -2483,6 +2480,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           else // Default policy, whether set or not
             sparam.sched_priority =
               ACE_MIN (ACE_THR_PRI_OTHER_MAX, ACE_MAX (ACE_THR_PRI_OTHER_MIN, priority));
+#     elif defined (PRIORITY_MAX)
+          sparam.sched_priority = ACE_MIN (priority, PRIORITY_MAX);
 #     else
           sparam.sched_priority = priority;
 #     endif
@@ -2506,20 +2505,20 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
            if (priority > 0)
 #       endif /* STHREADS */
              {
-#       if defined (ACE_HAS_DCETHREADS)
+#       if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
                result = ::pthread_attr_setprio (&attr,
                                                 sparam.sched_priority);
-#       else /* ACE_HAS_DCETHREADS */
-               result = ::pthread_attr_setschedparam (&attr, &sparam);
-#       endif /* ACE_HAS_DCETHREADS */
+#       else /* this is draft 7 or std */
+               ACE_ADAPT_RETVAL(::pthread_attr_setschedparam (&attr, &sparam),
+				result);
+#       endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
                if (result != 0)
                  {
-#       if defined (ACE_HAS_DCETHREADS)
+#       if defined (ACE_HAS_PTHREADS_DRAFT4)
                    ::pthread_attr_delete (&attr);
-#       else /* ACE_HAS_DCETHREADS */
+#       else /* ACE_HAS_PTHREADS_DRAFT4 */
                    ::pthread_attr_destroy (&attr);
-#       endif /* ACE_HAS_DCETHREADS */
-                   errno = result;
+#       endif /* ACE_HAS_PTHREADS_DRAFT4 */
                    return -1;
                  }
              }
@@ -2531,26 +2530,26 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED)
           || ACE_BIT_ENABLED (flags, THR_EXPLICIT_SCHED))
         {
-#     if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
           int sched = PTHREAD_DEFAULT_SCHED;
-#     else /* ACE_HAS_DCETHREADS */
+#     else /* ACE_HAS_PTHREADS_DRAFT4 */
           int sched = PTHREAD_EXPLICIT_SCHED;
-#     endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
           if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED))
             sched = PTHREAD_INHERIT_SCHED;
           if (::pthread_attr_setinheritsched (&attr, sched) != 0)
             {
-#     if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
               ::pthread_attr_delete (&attr);
-#     else /* ACE_HAS_DCETHREADS */
+#     else /* ACE_HAS_PTHREADS_DRAFT4 */
               ::pthread_attr_destroy (&attr);
-#     endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
               return -1;
             }
         }
-#   else /* ACE_LACKS_SETSCHED || ACE_HAS_DCETHREADS */
+#   else /* ACE_LACKS_SETSCHED */
       ACE_UNUSED_ARG (priority);
-#   endif /* ACE_LACKS_SETSCHED || ACE_HAS_DCETHREADS */
+#   endif /* ACE_LACKS_SETSCHED */
 
 
       // *** Set Scope
@@ -2564,11 +2563,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
           if (::pthread_attr_setscope (&attr, scope) != 0)
             {
-#     if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
               ::pthread_attr_delete (&attr);
-#     else /* ACE_HAS_DCETHREADS */
+#     else /* ACE_HAS_PTHREADS_DRAFT4 */
               ::pthread_attr_destroy (&attr);
-#     endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
               return -1;
             }
         }
@@ -2611,27 +2610,39 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         }
     }
 
-#   if defined (ACE_HAS_DCETHREADS)
-#     if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
   ACE_OSCALL (::pthread_create (thr_id, attr,
                                 thread_args->entry_point (),
                                 thread_args),
               int, -1, result);
 
-#       if defined (ACE_LACKS_SETDETACH)
+#     if defined (ACE_LACKS_SETDETACH)
   if (ACE_BIT_ENABLED (flags, THR_DETACHED))
-    ::pthread_detach (thr_id);
-#       endif /* ACE_LACKS_SETDETACH */
+    {
+#       if defined (HPUX_10)
+    // HP-UX DCE threads' pthread_detach will smash thr_id if it's just given
+    // as an argument.  This will cause ACE_Thread_Manager (if it's doing this
+    // create) to lose track of the new thread since the ID will be passed back
+    // equal to 0.  So give pthread_detach a junker to scribble on.
+      ACE_thread_t  junker;
+      cma_handle_assign(thr_id, &junker);
+      ::pthread_detach (&junker);
+#       else
+      ::pthread_detach (thr_id);
+#       endif /* HPUX_10 */
+#     endif /* ACE_LACKS_SETDETACH */
+    }
 
-#     else
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, attr,
-                                                  thread_args->entry_point (),
-                                                  thread_args),
-                                result),
-              int, -1, result);
-#     endif /* ACE_HAS_DCE_DRAFT4_THREADS */
   ::pthread_attr_delete (&attr);
-#   else /* !ACE_HAS_DCETHREADS */
+
+#   elif defined (ACE_HAS_PTHREADS_DRAFT6)
+  ACE_OSCALL (::pthread_create (thr_id, &attr,
+                                thread_args->entry_point (),
+                                thread_args),
+              int, -1, result);
+  ::pthread_attr_destroy (&attr);
+
+#   else /* this is draft 7 or std */
   ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id,
                                                   &attr,
                                                   thread_args->entry_point (),
@@ -2639,9 +2650,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                 result),
               int, -1, result);
   ::pthread_attr_destroy (&attr);
-#   endif /* ACE_HAS_DCETHREADS */
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
-  // This is a Solaris, POSIX, or DCE implementation of pthreads,
+  // This is a Solaris or POSIX implementation of pthreads,
   // where we assume that ACE_thread_t and ACE_hthread_t are the same.
   // If this *isn't* correct on some platform, please let us know.
   if (result != -1)
@@ -2947,7 +2958,7 @@ ACE_OS::thr_exit (void *status)
 {
 // ACE_TRACE ("ACE_OS::thr_exit");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
     ::pthread_exit (status);
 # elif defined (ACE_HAS_STHREADS)
     ::thr_exit (status);
@@ -3089,7 +3100,7 @@ ACE_OS::thr_setspecific (ACE_OS_thread_key_t key, void *data)
 {
 // ACE_TRACE ("ACE_OS::thr_setspecific");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
 #   if defined (ACE_HAS_FSU_PTHREADS)
       // Call pthread_init() here to initialize threads package.  FSU
       // threads need an initialization before the first thread constructor.
@@ -3136,7 +3147,7 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 
         return 0;
       }
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
 #   if defined (ACE_HAS_FSU_PTHREADS)
       // Call pthread_init() here to initialize threads package.  FSU
       // threads need an initialization before the first thread constructor.
@@ -3147,7 +3158,15 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
       // affect existing threads.
       pthread_init ();
 #   endif /*  ACE_HAS_FSU_PTHREADS */
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data), ace_result_), int, -1);
+
+#   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+    ACE_OSCALL_RETURN (::pthread_setspecific (key, data), int, -1);
+#   else
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data),
+					 ace_result_),
+		       int, -1);
+#   endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
+
 # elif defined (ACE_HAS_STHREADS)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), ace_result_), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
@@ -3169,14 +3188,11 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_TSS_EMULATION)
     return ACE_TSS_Cleanup::instance ()->remove (key);
-# elif defined (ACE_LACKS_KEYDELETE)
+# elif defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_UNUSED_ARG (key);
     ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_HAS_PTHREADS) && !defined (ACE_HAS_FSU_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
     return ::pthread_key_delete (key);
-# elif defined (ACE_HAS_DCETHREADS)
-    ACE_UNUSED_ARG (key);
-    ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_THR_KEYDELETE)
     return ::thr_keydelete (key);
 # elif defined (ACE_HAS_STHREADS)
@@ -3206,18 +3222,20 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
 {
 // ACE_TRACE ("ACE_OS::thr_keycreate");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS)
+# if defined (ACE_HAS_PTHREADS)
     ACE_UNUSED_ARG (inst);
+
+
 #   if defined (ACE_HAS_STDARG_THR_DEST)
-      ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
+    ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
+#   elif defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+    ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
 #   else
-      ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
-#   endif /* ACE_HAS_STDARG_THR_DEST */
-# elif defined (ACE_HAS_PTHREADS)
-    ACE_UNUSED_ARG (inst);
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
-                                         ace_result_),
-                       int, -1);
+					 ace_result_),
+		       int, -1);
+#   endif /* ACE_HAS_STDARG_THR_DEST */
+
 # elif defined (ACE_HAS_STHREADS)
     ACE_UNUSED_ARG (inst);
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
@@ -3270,18 +3288,19 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
         errno = EAGAIN;
         return -1;
       }
-# elif defined (ACE_HAS_DCETHREADS)
-    ACE_UNUSED_ARG (inst);
-#   if defined (ACE_HAS_STDARG_THR_DEST)
-      ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
-#   else
-      ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
-#   endif /* ACE_HAS_STDARG_THR_DEST */
 # elif defined (ACE_HAS_PTHREADS)
     ACE_UNUSED_ARG (inst);
+
+#   if defined (ACE_HAS_STDARG_THR_DEST)
+    ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
+#   elif defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+    ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
+#   else
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
-                                         ace_result_),
-                       int, -1);
+                                         ace_result_), 
+		       int, -1);
+#   endif /* ACE_HAS_STDARG_THR_DEST */
+
 # elif defined (ACE_HAS_STHREADS)
     ACE_UNUSED_ARG (inst);
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
