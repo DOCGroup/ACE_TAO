@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Reactor.h"
 #include "CEC_Reactive_Pulling_Strategy.h"
 #include "CEC_ProxyPullConsumer.h"
 #include "CEC_EventChannel.h"
