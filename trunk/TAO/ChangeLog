@@ -1,3 +1,8 @@
+Tue Jul 30 08:56:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/PSS/PSDL_Typecode_Defn.h:
+          Added missing include of äce/post.h to fix fuzz error.
+
 Mon Jul 29 17:34:40 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadManager.cpp (ACE_TMAIN):
@@ -16,7 +21,7 @@ Mon Jul 29 17:29:37 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Stand-alone LoadManager service.  This is basically a thin
 	  wrapper around the CosLoadBalancing library.
-	
+
 	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
 
 	  Stand-alone LoadMonitor utility.  It provides a simple way for
@@ -40,19 +45,19 @@ Mon Jul 29 11:08:58 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* docs/releasenotes/amh.html:
 	  Updated to add the recent changes including:
-	
+
 	  - Various fixes to the IDL_Compiler to generate the
-	    correct code for AMH-Exceptions	
-	
+	    correct code for AMH-Exceptions
+
 	  - Sending appropriate error-codes to clients in case of
 	    an exception in the AMH server.
 
-	  - Implementing AMH Exceptions.	
-	
+	  - Implementing AMH Exceptions.
+
 	  - A single button test for AMH Exceptions.
 
 	  - Example use case and implementation of an AMH server.
-	
+
 
 Mon Jul 29 19:46:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl
 
