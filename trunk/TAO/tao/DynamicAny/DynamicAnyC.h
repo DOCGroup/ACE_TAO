@@ -57,6 +57,8 @@
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
 
+#include "tao/Typecode_typesC.h"
+
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
@@ -133,6 +135,8 @@ namespace DynamicAny
     
     // The static operations.
     static DynAny_ptr _duplicate (DynAny_ptr obj);
+    
+    static void _tao_release (DynAny_ptr obj);
     
     static DynAny_ptr _narrow (
         CORBA::Object_ptr obj
@@ -862,7 +866,7 @@ namespace DynamicAny
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -926,6 +930,8 @@ namespace DynamicAny
     // The static operations.
     static DynFixed_ptr _duplicate (DynFixed_ptr obj);
     
+    static void _tao_release (DynFixed_ptr obj);
+    
     static DynFixed_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -967,7 +973,7 @@ namespace DynamicAny
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1031,6 +1037,8 @@ namespace DynamicAny
     // The static operations.
     static DynEnum_ptr _duplicate (DynEnum_ptr obj);
     
+    static void _tao_release (DynEnum_ptr obj);
+    
     static DynEnum_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1093,7 +1101,7 @@ namespace DynamicAny
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1316,6 +1324,8 @@ namespace DynamicAny
     // The static operations.
     static DynStruct_ptr _duplicate (DynStruct_ptr obj);
     
+    static void _tao_release (DynStruct_ptr obj);
+    
     static DynStruct_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1404,7 +1414,7 @@ namespace DynamicAny
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1467,6 +1477,8 @@ namespace DynamicAny
     
     // The static operations.
     static DynUnion_ptr _duplicate (DynUnion_ptr obj);
+    
+    static void _tao_release (DynUnion_ptr obj);
     
     static DynUnion_ptr _narrow (
         CORBA::Object_ptr obj
@@ -1583,7 +1595,7 @@ namespace DynamicAny
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1746,6 +1758,8 @@ namespace DynamicAny
     // The static operations.
     static DynSequence_ptr _duplicate (DynSequence_ptr obj);
     
+    static void _tao_release (DynSequence_ptr obj);
+    
     static DynSequence_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1832,7 +1846,7 @@ namespace DynamicAny
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1895,6 +1909,8 @@ namespace DynamicAny
     
     // The static operations.
     static DynArray_ptr _duplicate (DynArray_ptr obj);
+    
+    static void _tao_release (DynArray_ptr obj);
     
     static DynArray_ptr _narrow (
         CORBA::Object_ptr obj
@@ -1960,7 +1976,7 @@ namespace DynamicAny
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -2023,6 +2039,8 @@ namespace DynamicAny
     
     // The static operations.
     static DynValue_ptr _duplicate (DynValue_ptr obj);
+    
+    static void _tao_release (DynValue_ptr obj);
     
     static DynValue_ptr _narrow (
         CORBA::Object_ptr obj
@@ -2112,7 +2130,7 @@ namespace DynamicAny
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -2175,6 +2193,8 @@ namespace DynamicAny
     
     // The static operations.
     static DynAnyFactory_ptr _duplicate (DynAnyFactory_ptr obj);
+    
+    static void _tao_release (DynAnyFactory_ptr obj);
     
     static DynAnyFactory_ptr _narrow (
         CORBA::Object_ptr obj
@@ -2259,7 +2279,7 @@ namespace DynamicAny
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -2299,7 +2319,7 @@ namespace TAO
 #if !defined (_DYNAMICANY_DYNANY__TRAITS_CH_)
 #define _DYNAMICANY_DYNANY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynAny>
   {
     static ::DynamicAny::DynAny_ptr duplicate (
@@ -2320,7 +2340,7 @@ namespace TAO
 #if !defined (_DYNAMICANY_DYNFIXED__TRAITS_CH_)
 #define _DYNAMICANY_DYNFIXED__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynFixed>
   {
     static ::DynamicAny::DynFixed_ptr duplicate (
@@ -2341,7 +2361,7 @@ namespace TAO
 #if !defined (_DYNAMICANY_DYNENUM__TRAITS_CH_)
 #define _DYNAMICANY_DYNENUM__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynEnum>
   {
     static ::DynamicAny::DynEnum_ptr duplicate (
@@ -2362,7 +2382,7 @@ namespace TAO
 #if !defined (_DYNAMICANY_DYNSTRUCT__TRAITS_CH_)
 #define _DYNAMICANY_DYNSTRUCT__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynStruct>
   {
     static ::DynamicAny::DynStruct_ptr duplicate (
@@ -2383,7 +2403,7 @@ namespace TAO
 #if !defined (_DYNAMICANY_DYNUNION__TRAITS_CH_)
 #define _DYNAMICANY_DYNUNION__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynUnion>
   {
     static ::DynamicAny::DynUnion_ptr duplicate (
@@ -2404,7 +2424,7 @@ namespace TAO
 #if !defined (_DYNAMICANY_DYNSEQUENCE__TRAITS_CH_)
 #define _DYNAMICANY_DYNSEQUENCE__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynSequence>
   {
     static ::DynamicAny::DynSequence_ptr duplicate (
@@ -2425,7 +2445,7 @@ namespace TAO
 #if !defined (_DYNAMICANY_DYNARRAY__TRAITS_CH_)
 #define _DYNAMICANY_DYNARRAY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynArray>
   {
     static ::DynamicAny::DynArray_ptr duplicate (
@@ -2446,7 +2466,7 @@ namespace TAO
 #if !defined (_DYNAMICANY_DYNVALUE__TRAITS_CH_)
 #define _DYNAMICANY_DYNVALUE__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynValue>
   {
     static ::DynamicAny::DynValue_ptr duplicate (
@@ -2467,7 +2487,7 @@ namespace TAO
 #if !defined (_DYNAMICANY_DYNANYFACTORY__TRAITS_CH_)
 #define _DYNAMICANY_DYNANYFACTORY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynAnyFactory>
   {
     static ::DynamicAny::DynAnyFactory_ptr duplicate (
