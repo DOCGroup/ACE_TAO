@@ -136,7 +136,7 @@ test_i::create_POA (ACE_ENV_SINGLE_ARG_DECL)
     }
   else
     {
-      this->child_poa_->activate_object_with_id (this->oid_,
+      this->child_poa_->activate_object_with_id (this->oid_.in (),
                                                  servant
                                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (test::_nil ());
@@ -158,7 +158,7 @@ test_i::destroy_POA (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 }
 
-const char *ior_output_file = "ior";
+const char *ior_file = "ior";
 
 static int
 parse_args (int argc, char **argv)
@@ -170,7 +170,7 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'f':
-        ior_output_file = get_opts.opt_arg ();
+        ior_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -187,15 +187,14 @@ parse_args (int argc, char **argv)
 }
 
 static int
-write_ior_to_file (const char *ior,
-                   const char *ior_file)
+write_ior_to_file (const char *ior)
 {
   FILE *output_file =
-    ACE_OS::fopen (ior_output_file, "w");
+    ACE_OS::fopen (ior_file, "w");
 
   if (output_file == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IOR: %s\n",
-                       ior_output_file),
+                       ior_file),
                       -1);
 
   u_int result = 0;
@@ -207,7 +206,7 @@ write_ior_to_file (const char *ior,
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %s to %s\n",
                        ior,
-                       ior_output_file),
+                       ior_file),
                       -1);
 
   ACE_OS::fclose (output_file);
@@ -259,8 +258,7 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       int write_result =
-        write_ior_to_file (ior.in (),
-                           ior_output_file);
+        write_ior_to_file (ior.in ());
       if (write_result != 0)
         return write_result;
 
