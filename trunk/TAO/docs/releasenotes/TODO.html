@@ -43,6 +43,56 @@
 	</P>
       </LI>
 
+      <LI><P>Support the thread pool reactor in the ORB.
+	  <BR>[STATUS] Nanbor is working on this.
+	</P>
+      </LI>
+
+      <LI><P><B>EC:</B>
+	  If a Supplier disconnects while it has consumers
+	  registered for it's Supplier_ID, the consumers are not
+	  connected again even if the supplier reconnects.
+	  <BR>[STATUS] Carlos in working on this.
+	</P>
+      </LI>
+
+      <LI><P><B>EC:</B>The <CODE>TAO_EC_Gateway_IIOP</CODE> class
+	  receives events from a "remote" EC and pushes them on the
+	  local EC.
+	  The subscription and publication list for the Gateway are
+	  the disjunction of the local EC consumer subscriptions.
+	  Unfortunately this can result in multiple supplier_IDs for
+	  the Gateway, the current implementation is not prepared to
+	  handle this.
+	  The Gateway must keep a list of suppliers, each one with a
+	  different supplier id,
+	  when it receives a remote event it should push the event
+	  only to the right supplier.
+	  It must also keep another supplier used for the events that
+	  are of interest by their event type, regardless of their
+	  supplier ID.
+	</P>
+      </LI>
+
+      <LI><P><B>EC:</B>The Event Channel must be able to accept more
+	  than one supplier with a given supplier ID, or at least we
+	  should be able to configure the EC to work in such a mode.
+	  This is required for some applications that treat the
+	  supplier ID as a "supplier type".
+	</P>
+      </LI>
+
+      <LI><P><B>EC:</B>The <CODE>TAO_EC_Gateway_IIOP</CODE> can be
+	  required to subscribe for events by source, but the source
+	  can be local instead of remote.
+	  This is not a problem if the Event Channel supports multiple
+	  supplier IDs,
+	  but if it that's not the case,
+	  we must check the local publications and remove those events
+	  from the Gateway publication and subscription list.
+	</P>
+      </LI>
+
     </OL>
 
     <HR>
@@ -254,18 +304,22 @@ class Foo {
 	  <P></LI>
 
 	</OL>
-	<BR>[STATUS] Carlos is working on this.
 	<BR>[STATUS] The main task ahead is to generate the conforming
 	mapping for the server side, i.e. remove the
 	<CODE>CORBA::Environment</CODE> argument and generate the
 	throw specs.
-	</P>
+	We need to wait for the compiled marshaling support to
+	implement this feature, otherwise the number of conflicts,
+	visitors and factories will grow without limit.
+      </P>
       </LI>
 
       <LI><P><B>EC:</B> Automate EC multicast group usage. This probably
 	  requires some kind of server that mantains the relation
 	  between event type/source and the mcast groups.
-	  <BR>[STATUS] Carlos is working on this.
+	  <BR>[STATUS] The multicast map server was defined, an
+	  example implementation that hardcodes the port, and casts
+	  the event type into the mcast address was implemented.
 	  <BR>[STATUS] An advanced example that uses multiple mcast
 	  groups per process was developed; this example would be used
 	  to test the required features for general mcast support.
@@ -592,13 +646,6 @@ class Foo {
 	</P>
       </LI>
 
-      <LI><P><B>EC:</B>
-	  If a Supplier disconnects while it has consumers
-	  registered for it's Supplier_ID, the consumers are not
-	  connected again even if the supplier reconnects.
-	</P>
-      </LI>
-
       <LI><P>The <CODE>_duplicate()</CODE> and <CODE>_narrow()</CODE>
 	  functions can throw exceptions, yet our mapping does not
 	  contain an <CODE>CORBA::Environment</CODE> argument.
@@ -613,24 +660,6 @@ class Foo {
 	  it will add the current thread to the follower list every
 	  time it returns from waiting in the condition variable,
 	  assuming that it was signaled and removed every time.
-	</P>
-      </LI>
-
-      <LI><P><B>EC:</B>The <CODE>TAO_EC_Gateway_IIOP</CODE> class
-	  receives events from a "remote" EC and pushes them on the
-	  local EC.
-	  The subscription and publication list for the Gateway are
-	  the disjunction of the local EC consumer subscriptions.
-	  Unfortunately this can result in multiple supplier_IDs for
-	  the Gateway, the current implementation is not prepared to
-	  handle this.
-	  The Gateway must keep a list of suppliers, each one with a
-	  different supplier id,
-	  when it receives a remote event it should push the event
-	  only to the right supplier.
-	  It must also keep another supplier used for the events that
-	  are of interest by their event type, regardless of their
-	  supplier ID.
 	</P>
       </LI>
 
@@ -790,8 +819,7 @@ class Foo {
 	  result in a significant slow down.
 	  It seems like the right way to
 	  strategize this by changing the Client_Connection_Handlers.
-	  <BR>[STATUS] Irfan and Carlos are working on this.
-	  <BR>[DONE]
+	  <BR>[DONE] Irfan and Carlos are finished this task.
 	</P>
       </LI>
 
