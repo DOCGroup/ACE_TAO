@@ -245,4 +245,6 @@
 #define ACE_HAS_STL_QUEUE_CONFLICT
 #define ACE_HAS_IDTYPE_T
 
+#define ACE_HAS_GPERF
+
 #endif /* ACE_CONFIG_H */
