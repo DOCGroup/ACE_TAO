@@ -1,3 +1,26 @@
+Sun Apr 13 11:40:26 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler.cpp: Replaced the use of
+ 	  ACE_TLI* with LOGGING_PEER*.  Thanks to Tom Wright
+ 	  <twright@gem-net.demon.co.uk> for reporting this.
+
+	* ace/Connector.cpp: Made sure to initialize all of the instance
+ 	  variables for the ACE_Strategy_Connector and ACE_Connector.
+  	  Thanks to David Levine for pointing this out.
+
+	* ace/Synch.h: Changed protected: to private: so that we can
+ 	  ensure that we never copy classes like ACE_File_Lock, etc.
+  	  Thanks to Berni Merkle <merkle@io.freinet.de> for reporting
+ 	  this.
+
+	* examples/Shared_Malloc/test_malloc.cpp (malloc_recurse): Added
+ 	  the print_stats() call back into the test since Sandro's fixes
+ 	  should now support this.
+
+	* ace/Malloc[_T]: Added patches to enable ACE_Allocator's to print
+ 	  malloc statistics.  Thanks to Sandro Doro
+ 	  <alex@aureus.sublink.org> for these fixes.
+
 Sat Apr 12 20:42:11 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/Priority_Task_Test.cpp (open): only use THR_SCHED_FIFO
