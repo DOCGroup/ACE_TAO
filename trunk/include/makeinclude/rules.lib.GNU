@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	@(#)rules.lib.GNU	1.1	10/18/96
+#	$Id$
 #
 #	Build libraries (i.e., contain no binary executables)
 #	GNU version
