@@ -1,0 +1,1150 @@
+<!-- $Id$ -->
+<HTML><HEAD><TITLE>Options for TAO Components</TITLE>
+</HEAD>
+<BODY text=#000000 vLink=#ff0f0f link=#000fff bgColor=#ffffff>
+<HR>
+
+<P>
+<H1 align=center>Options for TAO Components</H1>
+
+<H2>Table of Contents</H2>
+<UL>
+  <LI><A
+  href="#MOT">Introduction </A>
+  <LI><A href="#EXP">TAO's ORB Configuration Options</A>
+  <UL>
+    <LI><A href="#EV">Environment Variables</A>
+    <LI><A href="#CLO">Command-line Options</A>
+    <UL>
+      <LI><A
+      href="#CSCB">Controling Service Configurator Behavior </A>
+      <LI><A
+      href="#CDI">Controlling Debugging Information </A>
+      <LI><A
+      href="#ORP">Optimizing Request Processing </A>
+      <LI><A
+      href="#CMPS">Connection Management and Protocol Selection </A>
+      <LI><A
+      href="#MO">Miscellaneous Options </A></LI></UL>
+    <LI><A href="#SVC">Service Configuration File </A>
+    <UL>
+      <LI><A href="#TRF">TAO Resource Factory </A>
+      <UL>
+	<LI><A
+	href="#TDRF">TAO_Default_Resource_Factory
+	</A>
+	<LI><A
+	href="#TARF">TAO_Advanced_Resource_Factory
+	</A></LI></UL>
+      <LI><A
+      href="#TDSSF">TAO_Default_Server_Strategy_Factory
+      </A>
+      <LI><A
+      href="#TDCSF">TAO_Default_Client_Strategy_Factory
+      </A></LI></UL></LI></UL></LI></UL>
+<HR>
+
+<H2><B><A name=MOT>Introduction</A></B></H2>
+
+TAO is a highly flexible ORB that contains a wide range of ORB configuration
+options. One or more of these options are combined to meet various application
+requirements, such as low-latency, predictable real-time behavior,
+or small memory footprint.    TAO's ORB configuration options are managed by
+an object-oriented framework within the ORB core that contains the
+following types of entities:
+
+<UL>
+
+<LI><B>Settings</B>, which are options that can be assigned values
+that differ from their default settings.  Examples include setting the
+size of a Portable Object Adapter (POA)'s active object map or configuring the
+ORB to print debugging information as it processes requests. A few of these are
+run time options while a majority of them are compile time options. <P>
+
+<LI><B>Resources</B>, which are objects used internally by TAO, such
+as a <EM>reactor</EM> framework that demultiplexes new connection and data
+requests from a client, or <EM>synchronization mechanisms</EM> used to regulate
+access to certain parts of the ORB.<P>
+
+<LI><B>Strategies</B>, which are objects that use the Resource
+	entities to perform various ORB tasks, such as connection
+	management, concurrency, and demultiplexing. <P>
+
+<LI><B>Factories</B>, which TAO uses to create and consolidate its
+many resources and strategies into a manageable number of factories
+that can be (re)configured into the ORB conveniently and
+consistently by the ORB and application developers. <P>
+
+</UL>
+
+The set of TAO ORB configuration options that are represented by the
+settings, resources, strategies, and factories can be specified via
+<B>environment variables</B>, <B>command-line arguments</B>, and
+<B>service configuration files</B>.
+<p>Environment variables are limited to specifying the interoperable
+object reference (IOR) and port number of TAO's Naming Service,
+Trading Service and Implementation Repository.	Command-line options
+and service configurator files are more powerful since they can specify and
+modify the values of the various TAO resources, strategies, and factories. </p>
+<P>
+
+Command-line options are passed to the	ORB initialization factory method,
+<CODE>CORBA::ORB_init()</CODE>, by the application using the standard
+<i>argc, argv</i> tuple passed to the application's <font face="Courier New">
+main () </font><font face="Times New Roman">function</font>. On the other hand,
+the service configuration file is opened and its options parsed by TAO's ACE
+Service Configurator framework during the execution of <font face="Courier New">
+CORBA::ORB_init () </font><font face="Times New Roman">method</font>.<P>
+
+<!--Tao added-->
+The  Service Configurator is a framework that supports the creation of
+dynamically configured applications. Applications may comprise different
+sets of components. The metadata comprising the names of these
+components and their corresponding options are specified in a service
+configurator file (default file name is
+<font face="Courier New">svc.conf</font>).
+
+
+<h3>Choosing the right approach</h3>
+<p>
+
+<!--Tao question: what about using "component" instead of "plug-in"?
+I was confused by the word component. So I elaborated it - Andy -->
+
+Command-line options are useful when there is a fixed set of
+configuration options each of which has a predefined list of
+alternative values. Whereas the service configurator file is useful
+for configuring a broader range of resources, strategies
+and factories. Generally speaking, the service configurator file allows
+the user to <br>
+<ol>
+  <li>configure the existing plug-ins (i.e., resources, strategies and
+      factories) based on the predefined list of alternatives that TAO
+      provides or
+  </li>
+  <li>extend the existing factories by providing user defined plug-ins
+      and dynamically load them through the service configurator
+      mechanism. </li>
+</ol>
+Additionally, the service configurator mechanism provides a way for
+the application to control the behavior of the ORB using extensible
+metadata information. Applications can choose to use a subset of
+preexisting  metadata to control their applications or extend the
+metadata set by writing their own.
+<!-- Doug, we are not able to arrive at a consensus on whether to use
+the word metadata here. The metadata as used here indicates all the
+stuff we can say inside a svc.conf file. One argument in favor of it
+is that this is metadata for something that gets configured inside an
+ORB. - Andy -->
+<P>
+
+Note that the command line options and the service configurator
+options cannot be used interchangeably.<P>
+
+<!-- Tao, Is this needed? -->
+<!--Tao added, i think sentences below is a source of confusion-->
+<!--webbot bot="PurpleText" PREVIEW="right. this line seems to be a
+      repition to me. Let us zap it - Andy" -->
+The values of TAO's command-line options must be selected from
+preexisting settings compiled into the ORB.  Options that require
+more flexible manipulation of resources, strategies, and factories
+must be configured via <A HREF="#SVC">service configuration
+files</A>. <P>
+
+<HR>
+
+<H2><B><A name=EXP>TAO's ORB Configuration Options</A></B></H2>
+
+This section provides a detailed overview of how to configure TAO's
+options using environment variables, command-line options, and service
+configuration files.<P>
+
+<HR align=left width=25%>
+<h3><A name=EV>Environment Variables</A></h3>
+
+As mentioned earlier, environment variables have a limited use in TAO ORB
+configuration.
+
+The currently supported environment variables are listed below. They
+are used to specify the IOR and port numbers for three of TAO's ORB services.
+
+<BLOCKQUOTE>
+  <P>
+  <TABLE cellSpacing=2 cellPadding=0 border=2>
+    <TBODY>
+    <TR>
+      <TH>Environment Variable</TH>
+      <TH>Description</TH></TR>
+    <TR>
+      <TD><CODE>NameServiceIOR</CODE> <EM>which</EM></TD>
+      <TD>Specifies the IOR for the Naming Service that can be used to
+	  bootstrap the Naming Service object reference within an
+	  application. </TD></TR>
+    <TR>
+      <TD><CODE>NameServicePort</CODE> <EM>which</EM></TD>
+      <TD>Specifies which port the Naming Service is listening on for
+	multicast requests. </TD></TR>
+    <TR>
+      <TD><CODE>TradingServiceIOR</CODE> <EM>which</EM></TD>
+      <TD>Specifies the IOR for the Trading Service. </TD></TR>
+    <TR>
+      <TD><CODE>TradingServicePort</CODE> <EM>which</EM></TD>
+      <TD>Specifies which port the Trading Service is listening on for
+	multicast requests. </TD></TR>
+    <TR>
+      <TD><CODE>ImplRepoServiceIOR</CODE> <EM>which</EM></TD>
+      <TD>Specifies the IOR for the Implementation Repository. </TD></TR>
+    <TR>
+      <TD><CODE>ImplRepoServicePort</CODE> <EM>which</EM></TD>
+      <TD>Specifies which port the Implementation Repository is listening on
+	for multicast requests. </TD></TR></TBODY></TABLE></P></BLOCKQUOTE>
+
+In general, setting environment variables is not particularly portable
+or convenient, which is why users can also set these options via
+command-line options. The example shown below demonstrates a
+deployment scenario where the client and Naming Service run on the
+same host: <P>
+<code>
+% NameService.exe -ORBEndpoint iiop://localhost:12345
+</CODE><P>
+<CODE>
+% client.exe -ORBInitRef NameService=iiop://localhost:12345"
+</code><P>
+
+An explanation of these command-line options appears below. <P>
+
+<HR align=left width=25%>
+<H3><A name=CLO>Command-line Options</A></h3>
+
+TAO's run-time behavior can also be controlled by passing options
+via the CORBA initialization method <CODE>CORBA::ORB_init()</CODE>.
+ORB initialization options are commonly passed into the program from
+the command-line, using the <CODE>argc</CODE> and <CODE>argv</CODE>
+parameters available to the <CODE>main()</CODE> function. <P>
+
+Command-line options can be classified into the following groups
+according to their purposes:</P>
+
+<OL>
+  <LI><A
+  href="#CSCB">Controlling
+  Service Configurator Behavior</A>
+  <LI><A href="#CDI">Controlling
+  Debugging Information</A>
+  <LI><A href="#ORP">Optimizing
+  Request Processing</A>
+  <LI><A href="#CMPS">Connection
+  Management and Protocol Selection</A>
+  <LI><A
+  href="#MO">Miscellaneous
+  Options</A>
+</OL>
+
+We describe each of these five groups of options below.  <P>
+
+<h4><A name=CSCB>1. Controlling Service Configurator Behavior</A></h4>
+
+The options described below influence the behavior of the ORB's <A
+HREF="#SVC">service configurator</CODE>. <P>
+
+<BLOCKQUOTE>
+  <P>
+  <TABLE cellSpacing=2 cellPadding=0 border=2>
+    <TBODY>
+    <TR>
+      <TH>Option</TH>
+      <TH>Description</TH></TR>
+    <TR>
+      <TD><CODE>-ORBSvcConf</CODE> <EM>config filename</EM></TD>
+      <TD>Specifies the name of the file used to read
+	service configuration directives via the Service
+	Configurator framework. By
+	default, a service configurator-based application will look for a file
+	named <CODE>"svc.conf"</CODE> in the current directory. </TD></TR>
+    <TR>
+      <TD><CODE>-ORBSvcConfDirective</CODE> <EM>directivestring</EM></TD>
+      <TD>Specifies a service configuration directive, which is passed to
+	the Service Configurator. You can pass multiple of these options on
+	the same command-line. </TD></TR>
+    <TR>
+      <TD><CODE>-ORBSkipServiceConfigOpen</CODE></TD>
+      <TD><A name=-ORBSkipServiceConfigOpen></A>Which instructs the
+      ORB not to call the <CODE>ACE_Service_Config::open()</CODE>
+      method when initializing the ORB.  This option is generally only
+      useful when dynamically loading the ORB.	<P><FONT
+      color=red>This option is <STRONG>deprecated</STRONG>. It is no
+      longer needed since the Service Configurator is now reentrant and
+      thread-safe.</FONT> </P></TD></TR></TBODY></TABLE></P></BLOCKQUOTE>
+
+<h4><A name=CDI>2. Controlling Debugging Information</A></h4>
+
+During application development and testing, it is often necessary to
+control the amount and type of debugging information output by the
+ORB.  The following options enable TAO to provide debugging
+information at several levels of granularity.<P>
+
+<BLOCKQUOTE>
+  <P>
+  <TABLE cellSpacing=2 cellPadding=0 border=2>
+    <TBODY>
+    <TR>
+      <TH>Option</TH>
+      <TH>Description</TH></TR>
+    <TR>
+      <TD><CODE>-ORBDebug</CODE></TD>
+      <TD>Instructs the ORB to print debugging messages from the
+	  service configurator framework. This option does not have a
+	  value but is used as a toggle to enable or disable debugging
+	  messages.</TD></TR>
+    <TR>
+      <TD><CODE>-ORBDebugLevel </CODE><EM>level</EM></TD>
+      <TD>Control the level of debugging in the ORB.
+      Higher numbers generate more output (try 10). The default value
+      of this option is 0.</TD></TR>
+    <TR>
+      <TD><CODE>-ORBLogFile</CODE> <EM>Logfilename</EM></TD>
+      <TD>Causes all <CODE>ACE_DEBUG</CODE> and <CODE>ACE_ERROR</CODE>
+      output to be redirected to the designated
+      <CODE>Logfilename</CODE>. </TD></TR>
+    <TR>
+      <TD><CODE>-ORBObjRefStyle</CODE> <EM>IOR/URL</EM></TD>
+      <TD>Specifies the user-visible style of object references.
+	The <CODE>IOR</CODE> style (default) is the conventional CORBA object
+	reference, whereas the <CODE>URL</CODE> style looks more like a URL.
+</TD></TR></TBODY></TABLE></P></BLOCKQUOTE>
+
+<h4><A name=ORP>3. Optimizing Request Processing</A></h4>
+
+It is often possible to <A HREF="/redirect?performance.html">increase throughput
+and reduce latency</A> by optimizing certain stages of request
+processing in the ORB.	The following options control various
+optimizations during request processing.<P>
+
+<BLOCKQUOTE>
+  <P>
+  <TABLE cellSpacing=2 cellPadding=0 border=2>
+    <TBODY>
+    <TR>
+      <TH>Option</TH>
+      <TH>Description</TH></TR>
+    <TR>
+      <TD><CODE>-ORBCDRTradeoff</CODE> <EM>maxsize</EM></TD>
+      <TD><A name=-ORBCDRTradeoff></A>Control the strategy to tradeoff between
+	copy vs. no copy marshaling of octet sequences. If an octet sequence is
+	smaller than <CODE>maxsize</CODE> (which defaults to
+	<CODE>ACE_DEFAULT_CDR_MEMORY_TRADEOFF</CODE>) -- and the
+		current message block contains
+	enough space for it -- the octet sequence is copied instead of
+		appended to the CDR stream.
+    </TD></TR>
+    <TR>
+      <TD><CODE>-ORBCollocation</CODE> <EM>global/per-orb/no</EM></TD>
+      <TD><A name=-ORBCollocation></A>Specifies the use of collocation object
+	optimization. If <CODE>global</CODE> is specified (default),
+		objects in the same process will be treated as
+		collocated. If <CODE>per-orb</CODE> is specified,
+	only objects in the same ORB are treated as collocated. When
+		<EM>no</EM>
+	is specified, no objects are treated as collocated. </TD></TR>
+    <TR>
+      <TD><CODE>-ORBCollocationStrategy</CODE> <EM>thru_poa/direct</EM> </TD>
+      <TD>Specifies what type of collocated object to use. If the
+	<CODE>thru_poa</CODE> (default) strategy is used, TAO uses the
+		collocation object implementation that respects POA's
+		current state and policies. When using the
+		<CODE>direct</CODE> strategy, method invocations on
+		collocated
+	objects become direct calls to servant without checking POA's status,
+	which can increase performance.  If you use the
+	<CODE>direct</CODE> strategy,  your interfaces must be
+	compiled with the
+	<CODE><A
+	href="/redirect?http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/compiler.html#collocation-stubs">-Gd</A></CODE> IDL <A HREF="/redirect?compiler.html">compiler option</a>. </TD></TR>
+    <TR>
+      <TD><CODE>-ORBNodelay</CODE> <EM>boolean (0|1)</EM></TD>
+      <TD><A name=-ORBNodelay></A>Enable or disable the <CODE>TCP_NODELAY</CODE>
+      option (Nagle's algorithm). By
+	default, <CODE>TCP_NODELAY</CODE> is enabled.</TD></TR>
+    <TR>
+      <TD><CODE>-ORBRcvSock</CODE> <EM>receive buffer size</EM></TD>
+      <TD><A name=-ORBRcvSock></A>Specify the size of the socket receive
+	buffer as a positive, non-zero integer. If not specified, the
+	<CODE>ACE_DEFAULT_MAX_SOCKET_BUFSIZ</CODE> default is used.</TD></TR>
+    <TR>
+      <TD><CODE>-ORBSndSock</CODE> <EM>send buffer size</EM></TD>
+      <TD><A name=-ORBSndSock></A>Specify the size of the socket send buffer
+	as a positive, non-zero integer. If not specified, the
+	<CODE>ACE_DEFAULT_MAX_SOCKET_BUFSIZ</CODE> default is used.</TD></TR>
+    <TR>
+      <TD><CODE>-ORBStdProfileComponents</CODE> <EM>boolean (0|1)</EM></TD>
+      <TD><A name=-ORBStdProfileComponents></A>If <EM>0</EM> then the ORB does
+	not generate the OMG standardized profile components, such as the ORB
+	type and code sets. Notice that the presence of this components is
+	optional in GIOP 1.1 The default value is controlled by a compile-time
+	flag (check orbconf.h).</TD></TR>
+    <TR>
+      <TD><CODE>-ORBSingleReadOptimization</CODE> <EM>boolean (0|1)</EM></TD>
+      <TD><A name=-ORBSingleReadOptimization></A>This option controls
+      whether TAO's ``single read optimization'' is used when receiving
+      requests. If this option is disabled (<code>0</code>), the ORB
+	will do two reads to read a request: one reads the request header and
+	the other reads the request payload. If this option is enabled
+	(<CODE>1</CODE>), the ORB will do a read of size
+	<CODE>TAO_MAXBUFSIZE</CODE>, hoping to read the
+	entire request.  If more than one request is read they will be
+	queued up for processing later. <P>
+	This option defaults to <CODE>1</CODE> because it can provide better
+	performance. However, in the case of RT-CORBA, this option should be set to <code>0</code>. Consider the
+	following scenario: (1) two requests are read from one socket,
+	(2) the additional request is queued, and (3) the ORB uses its
+	Reactor's notification mechanism to wake up the follower threads. If at
+	the same time, however, new requests arrive on others sockets of higher
+	priority the lower priority queued message will be processed before the
+	newly arrived higher priority request since Reactor notifications are
+	given preferences over normal I/O, thereby causing priority inversion.</P></TD></TR></TBODY></TABLE></P></BLOCKQUOTE>
+
+<h4><A name=CMPS>4. Connection Management and Protocol Selection</A></h4>
+
+ORBs send and receive requests and replies using various <A
+/redirect?pluggable_protocols">transport protocols</a>.  Each protocol has
+its own concept of an <A
+/redirect?http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html">endpoint</CODE>.
+The following options manage connections and control protocol
+selection within a CORBA application.<P>
+
+<!--- TAO, please add the options in italics -->
+<BLOCKQUOTE>
+  <P>
+  <TABLE cellSpacing=2 cellPadding=0 border=2>
+    <TBODY>
+    <TR>
+      <TH>Option</TH>
+      <TH>Description</TH></TR>
+    <TR>
+      <TD><CODE>-ORBDefaultInitRef</CODE> <EM>IOR prefix</EM></TD>
+      <TD><A name=-ORBDefaultInitRef></A>This argument allows resolution of
+	initial references not explicitly specified with -ORBInitRef. It
+	requires a URL prefix that, after appending a slash '/' ('|'
+	for the UIOP pluggable protocol) and a simple object key, forms a new URL to identify
+	an initial object reference. The URL prefix format currently supported
+	is based on the standard <CODE>corbaloc</CODE> mechanism in
+	the CORBA <A HREF="/redirect?INS.html">Interoperable Naming Service</CODE>. </TD></TR>
+    <TR>
+      <TD><CODE>-ORBDottedDecimalAddresses</CODE> <EM>boolean (0|1)</EM></TD>
+      <TD><A name=-ORBDottedDecimalAddresses></A>Use the dotted decimal
+	notation for addresses. This option can be used to workaround broken DNS
+	implementations and may also reduce the time spent resolving IP
+	addresses.  By default, this option is disabled
+	(<CODE>0</CODE>) since domain names are the standard address
+	notation for IORs.</TD></TR>
+    <TR>
+      <TD><CODE>-ORBEndpoint</CODE>
+	<EM>endpoint</EM></TD>
+      <TD><A name=-ORBEndpoint></A>This option is similar to the
+	<CODE>-ORBListenEndPoints</CODE> option described below.
+	<FONT color=red>This option will be deprecated in later
+	versions on TAO since the CORBA specification now defines the
+	<CODE>-ORBListenEndpoints</CODE> option instead. </FONT>
+	</TD></TR>
+    <TR>
+      <TD><CODE>-ORBListenEndpoints</CODE> <EM>endpoint</EM></TD>
+      <TD><A name=-ORBListenEndpoints></A> This option was introduced with
+	the CORBA <A href="http://cgi.omg.org/docs/orbos/01-01-04.pdf">
+	ORT </a> (Object Reference Template) specification.  It
+	instructs a server ORB	to listen for requests on the
+	interface specified by	<code>endpoint</code>.
+	TAO <A
+  href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html">
+	endpoints</A>  are specified using a URL style format. An
+	endpoint has the form:
+	<BLOCKQUOTE><CODE>protocol://V.v@addr1,...,W.w@addrN
+	</CODE></BLOCKQUOTE>where <CODE>V.v</CODE> and <CODE>W.w</CODE> are
+	optional protocol versions for each address. An example of an IIOP
+	endpoint is:
+	<BLOCKQUOTE><CODE>iiop://<I><EM>hostname</EM></I>:<I><EM>port</EM></I>
+	  </CODE></BLOCKQUOTE>Sets of endpoints may be specified using multiple
+	<CODE>-ORBEndpoint</CODE> options or by delimiting endpoints with a
+	semi-colon (;). For example,
+	<BLOCKQUOTE><CODE>-ORBEndpoint iiop://localhost:9999 -ORBEndpoint
+	  uiop:///tmp/mylocalsock -ORBEndpoint shmiop://10002
+	</CODE></BLOCKQUOTE>is equivalent to:
+	<BLOCKQUOTE><CODE>-ORBEndpoint
+	  'iiop://localhost:9999;uiop:///tmp/mylocalsock;shmiop://10002'
+	</CODE></BLOCKQUOTE>Notice the single quotes (') in the latter option
+	specification. Single quotes are needed to prevent the shell from
+	interpreting text after the semi-colon as another command to run.
+	<P>If an endpoint is specified without an <CODE>addr</CODE> such as the
+	following:
+	<BLOCKQUOTE><CODE>-ORBEndpoint uiop:// -ORBEndpoint shmiop://
+	</CODE></BLOCKQUOTE>then a default endpoint will be created for the
+	specified protocol. <P></TD></TR>
+    <TR>
+      <TD><CODE>-ORBImplRepoServicePort</CODE> <EM>portspec</EM></TD>
+      <TD>Specifies which port the Implementation Repository is listening
+	on for multicast requests. By default, the
+	<CODE>TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT</CODE> (10018) is used.</TD></TR>
+    <TR>
+      <TD><CODE>-ORBInitRef</CODE> <EM>ObjectId=IOR</EM></TD>
+      <TD><A name=-ORBInitRef></A>Allows specification of an arbitrary object
+	reference for an initial service. The IOR could be in any one of the
+	following formats: OMG <CODE>IOR</CODE>, <CODE>URL</CODE>,
+	<CODE>corbaloc</CODE> (including <CODE>uioploc</CODE>) or <CODE>file</CODE>.
+	<CODE>corbaloc</CODE> is a multiple end-point IOR understood
+	by <CODE>ORB::string_to_object()</CODE> and used as a
+	boot-strapping mechanism by the
+	<CODE>ORB::resolve_initial_references()</CODE>. The mappings specified through
+	this argument override the ORB install-time defaults. The
+	<CODE>file://pathname</CODE> interprets the contents of the <CODE>pathname</CODE>
+	file as an object reference in any of the above formats. </TD></TR>
+    <TR>
+      <TD><CODE>-ORBMulticastDiscoveryEndpoint</CODE> <EM>endpoint</EM></TD>
+      <TD>Specifies the <CODE>endpoint</CODE> that should be used for locating the Naming
+	Service through multicast. <EM>endpoint</EM> is of the form
+	<CODE>ip-number:port-number</CODE> (<EM>e.g.</EM>,
+	<CODE>"tango.cs.wustl.edu:1234"</CODE> or
+	<CODE>"128.252.166.57:1234"</CODE>). If there is no
+	<CODE>':'</CODE> in the end_point it is assumed to be a port
+	number, with the IP address being <CODE>INADDR_ANY</CODE>. </TD>
+    <TR>
+      <TD><CODE>-ORBNameServicePort</CODE> <EM>portspec</EM></TD>
+      <TD>Specifies which port the Naming Service is listening on for
+	multicast requests. By default, the <CODE>TAO_DEFAULT_NAME_SERVICE_REQUEST_PORT</CODE>
+	(10013) value is used.</TD></TR>
+    <TR>
+      <TD><CODE>-ORBPreconnect</CODE> <EM>endpoint</EM></TD>
+      <TD><A name=-ORBPreconnect></A>This client option pre-establishes
+      a blocking connection to
+	each listed <code>endpoint</code>. If a connection cannot be established the
+	failed preconnection will be ignored and the next preconnection in the
+	list will be processed. Successful and unsuccessful preconnections will
+	be displayed if a debugging level greater than or equal to one is
+	specified by using the <CODE>-ORBDebugLevel</CODE> option. Listing the
+	same combination multiple times will properly establish multiple
+	connections to that endpoint. The <CODE>-ORBPreconnect</CODE> option
+	uses the same endpoint format as the <CODE>-ORBEndpoint</CODE> option.
+	<P><FONT color=red>-ORBPreconnect is <STRONG>deprecated</STRONG>. This
+	option will be removed in the near future. The Real-Time CORBA standard
+	<CODE>_validate_connection()</CODE> method should be used instead.
+	</FONT></P></TD></TR>
+    <TR>
+      <TD> <A
+/redirect?http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html"><CODE>-ORBTradingServicePort</CODE> <EM>portspec</EM></TD>
+      <TD> <A
+/redirect?http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html">Specifies to which port the Trading Service is listening on for
+	multicast requests. By default, the <CODE>TAO_DEFAULT_TRADING_SERVICE_REQUEST_PORT</CODE>
+	(10016) value is used.</TD></TR>
+    <TR>
+      <TD> <A
+/redirect?http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html"><CODE>-ORBUseIMR</CODE> <EM>boolean (0|1)</EM></TD>
+      <TD>Specifies whether to use the implementation repository or
+	  not. Default is 0.
+    </TD></TR>
+    <TR>
+      <T><A name=-ORBUseIMR></A>This argument specifies that for POAs with
+	the <CODE>PERSISTENT</CODE> policy, that the TAO <A
+	HREF="/redirect?implrepo/">Implementation Repository</A> should be used
+	for notification of startup and shutdown and object references should be
+	changed to use the Implementation Repository also.
+  </TD></TR></TBODY></TABLE></P></BLOCKQUOTE>
+
+<h4><A name=MO>5. Miscellaneous Options</A></h4>
+
+Options in this category don't control the behavior of the ORB in
+terms of resouces or strategies. They are helper options provided for
+specific application requirements.
+
+<BLOCKQUOTE>
+  <P>
+  <TABLE cellSpacing=2 cellPadding=0 border=2>
+    <TBODY>
+    <TR>
+      <TH>Option</TH>
+      <TH>Description</TH></TR>
+    <TR>
+      <TD><CODE>-ORBId</CODE> <EM>orb_name</EM></TD>
+      <TD><A name=-ORBId></A>This option allows the name of an ORB to
+	be set to <CODE>orb_name</CODE>. The ORBId will be passed to
+	the ORB_init() method to differentiate coexisting ORBs (when
+	there are more than one ORBs).</TD></TR>
+    <TR>
+      <TD><CODE>-ORBServerId</CODE> <EM>server_id</EM></TD>
+      <TD><A name=-ORBId></A>This option allows setting a name/id to a
+  server
+  <!-- Tao, could you please provide the actual link? -->
+	to uniquely identify a server to TAO's <A HREF="/redirect?implrepo">Implementation Repository</A>. </TD></TR>
+    <TR>
+      <TD><CODE>-ORBResources</CODE> <EM>tss/global</EM></TD>
+      <TD><A name=-ORBResources><FONT color=red>This option is
+	<STRONG>deprecated</STRONG>, since this option has almost negligible
+	effect on the ORB</FONT>. The right type of resources are selected by
+	the ORB during runtime. For example the memory for the output datapath
+	always defaults to TSS. The inour data path always defaults to stack for
+	small messages and global pool for larger messages. There was no effect
+	with the use of this option. The default value of this option
+	is <em>global</em></A></TD></TR>
+    <TR>
+      <TD><CODE>-ORBDaemon</CODE></TD>
+      <TD>Specifies that the ORB should <EM>daemonize</EM> itself,
+      <em>i.e.</EM>, run as a background process.  This option is only
+      meaningful on OS platforms that support daemonization.</TD></TR>
+</TBODY></TABLE></P></BLOCKQUOTE>
+<P></P>
+
+<HR align=left width=25%>
+
+<H3><A name=SVC>The Service Configurator File</A></H3>
+
+Internally, TAO uses the
+<A href="http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf">ACE service
+configurator framework</A> that allows applications to configure the
+ORB at run-time. Applications provide a file by name
+<CODE>svc.conf</CODE> with options that configure appropriate strategies in to
+the ORB. The options enable developers to control the behavior of the factories,
+strategies and resources that the ORB uses.
+
+<p>By default, TAO provides the following set of factories: </p>
+
+<OL>
+  <LI><A href="#TRF">TAO Resource Factory :</A> This factory controls
+  the creation of configurable resources used by TAO's ORB core. The
+  resource factory is responsible for constructing and providing
+  access to various resources used by the ORB irrespective of whether
+  they perform client or server roles. ORB resources include reactors,
+  protocol factories, message flushing strategies, connection purging
+  strategies and different IOR parsers.
+  <LI> <A href="#TSSF">TAO Server Strategy Factory:</A> This factory
+  creates various strategies of special utility to the ORB that is useful for
+  controlling the behavior of servers. This factory is responsible
+  for creating strategies useful for server objects like the
+  concurrency strategy	and the request demultiplexing strategies used by the
+  POA.
+  <LI> <A href="#TCSF">TAO Client Strategy Factory:</A> This factory
+  creates various strategies of special utility to the ORB, useful for
+  controlling the behavior of clients. This factory is responsible
+  for creating strategies useful for clients such as request
+  multiplexing strategies, wait strategies, connect strategies etc.<P>
+</OL>
+
+<!-- Guys, the following sentence makes no sense to me.  Can you
+please revise it to make it more clear? -->
+<!--- TAO/Andy, This is still confusing. Could you please reword it?
+DONE - andy-->
+Options specified via a <CODE>svc.conf</CODE> file can represent either
+the components provided by TAO (including Resource factory and server/client
+strategy factory) or customized components developed by the
+users. The service configurator file (svc.conf) provided by the
+user identifies the components to be loaded with the required strategies
+for that component.  <p>
+
+A <CODE>svc.conf</CODE> file is <EM><B>not</B></EM> required to run
+TAO applications since TAO provides a set of default values for strategies
+useful for the most common use cases, <EM>i.e.</EM> the default
+values are set for all options.  When a TAO application calls
+<CODE>CORBA::ORB_init()</CODE> it will try to find the
+<CODE>svc.conf</CODE> file.  If found, TAO will parse and process the
+directives in the file; if not found, the default value for the
+default components will be used.</P>
+
+<hr align=left width=25%>
+<h4><A name=TRF>1. TAO Resource Factory</A></h4>
+
+Many resources required by TAO's ORB core are fixed, though there is
+some flexibility in the choice of a reactor, the selection of
+transport protocols, choice of data flushing strategy, various forms
+of connection resource management strategies and possibility of using
+different IOR parsers.
+
+The resource factories provided with TAO include the following:
+
+<BLOCKQUOTE>
+  <P>
+  <TABLE cellSpacing=2 cellPadding=0 border=2>
+    <TBODY>
+    <TR>
+      <TH>Resource Factory</TH>
+      <TH>Description</TH></TR>
+    <TR>
+      <TD><CODE><A
+	href="#TDRF">TAO Default
+	Resource Factory</A></CODE></TD>
+      <TD>Unless configured otherwise, this is the resource factory used.
+	<BR><BR>The resource factory is responsible for constructing and
+	providing access to various resources used by ORBs within both clients
+	and servers. The resources managed by this factory include
+	creation of acceptor and connector registries, choice of data
+	flushing strategy, limits for connection resource management,
+	types of CDR buffers used for marshalling  and demarshalling
+	data, and different IOR parsers. </TD></TR>
+    <TR>
+      <TD><CODE><A
+	href="#TARF">TAO
+	Advanced Resource Factory</A></CODE></TD>
+      <TD>This factory provides more advanced configuration options in the
+	addition to all the features of the default resource factory.<BR><BR>The
+	advanced resource factory gives more control than the default resource
+	factory over the type of resources used and how those resources are
+	accessed. In addition to the options provided by the default resource
+	factory, the advanced resource factory provides options that allow
+	selecting different reactors, choosing different transport
+	mechanisms and selecting the right connection purging strategy
+	to maintain limits on resources used. The advanced resource
+	factory was created to allow more advanced options while
+	keeping the footprint of the default resource factory
+	small.<BR><BR>The advanced resource factory inherits from the
+	default resource factory and  accepts all of its options in
+	addition to its own. </TD></TR>
+
+    <TR>
+      <TD><CODE>Qt Resource Factory</CODE></TD>
+      <TD>This is a specialized resource factory providing the means for
+	integrating with the Qt GUI toolkit from Trolltech. </TD></TR>
+    <TR>
+      <TD><CODE>Xt Resource Factory</CODE></TD>
+      <TD>This is a specialized resource factory providing the means for
+	integrating with the X Window System's Xt Intrinsics toolkit.
+    </TD></TR></TBODY></TABLE></P></BLOCKQUOTE>
+<P></P>
+
+<h4><A name=TDRF>2. TAO_Default_Resource_Factory</A></h4>
+
+Typically, the following options are set via the service configurator
+(svc.conf) file. The following line in the <CODE>svc.conf</CODE> file
+(all in one line) <BR> <CODE>static Resource_Factory "[list of
+options]"</CODE><BR>would load all the options listed within the
+double quotes.<P>
+
+<TABLE cellSpacing=2 cellPadding=0 border=2>
+  <TBODY>
+  <TR>
+    <TH>Option</TH>
+    <TH>Description</TH></TR>
+  <TR>
+    <TD><CODE>-ORBResources</CODE> <EM>which</EM></TD>
+    <TD><A name=-ORBResources><FONT color=red>This option is
+      <STRONG>deprecated</STRONG>, since this option has almost negligible
+      effect on the ORB</FONT>. The right type of resources are selected by the
+      ORB during runtime. For example the memory for the output datapath always
+      defaults to TSS. The input data path always defaults to stack for small
+      messages and global pool for larger messages. There was no effect with the
+      use of this option. </A></TD>
+  <TR>
+    <TD><CODE>-ORBReactorMaskSignals</CODE> <EM>0/1</EM></TD>
+    <TD>ACE select reactors mask signals during upcalls to the event handlers.
+      This is only useful if the application is going to trap those signals and
+      handle them in any special way. Disabling the mask can improve performance by
+      reducing the number of kernel level locks. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBProtocolFactory</CODE> <EM>factory</EM></TD>
+    <TD><A name=-ORBProtocolFactory></A>Specify which pluggable protocol
+      factory to load. By default, only the factory for the IIOP protocol
+      (<CODE>IIOP_Factory</CODE> is loaded.
+      <P>For example, if some protocol called <EM><CODE>Foo</CODE></EM> whose
+      factory was called <EM><CODE>Foo_Factory</CODE></EM> was available, then
+      it could be loaded into TAO by specifying <CODE>-ORBProtocolFactory
+      Foo_Factory</CODE> in the service configurator file. The
+      <EM><CODE>Foo</CODE></EM> pluggable protocol would then be available for
+      use. </P></TD></TR>
+  <TR>
+    <TD><CODE>-ORBIORParser</CODE> <EM>parser</EM></TD>
+    <TD><A name=-ORBIORParser></A>Name an IOR Parser to load. IOR Parsers are
+      used to interpret strings passed to <CODE>ORB::string_to_object()</CODE>.
+      By default the ORB can handle multiple string formats, including
+      <CODE>IOR:</CODE>, <CODE>corbaloc:</CODE>, <CODE>corbaname:</CODE>, and
+      <CODE>file:</CODE>. The application developer can <A
+      href="/redirect?http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ior_parsing.html">add
+      new IOR formats </A>using this option. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBConnectionCachingStrategy</CODE> <EM>type</EM></TD>
+    <TD><A name=-ORBConnectionCachingStrategy></A><FONT color=red>This option
+      is <STRONG>deprecated</STRONG>. Use -ORBConnectionPurgingStrategy
+      instead.</FONT> </TD></TR>
+  <TR>
+    <TD><CODE>-ORBConnectionPurgingStrategy</CODE> <EM>type</EM></TD>
+    <TD><A name=-ORBConnectionPurgingStrategy></A>Opened connections are added
+      to the transport cache so they can be reused. However, if a process
+      continues to run and these connections are not reused, the cache will
+      continue to grow. Therefore, before each new connection, the cache is
+      checked and purged if it has reached the limit specified by the
+      -ORBConnectionCacheMax option or the system default if that option was not
+      used. The possible values for type are lru, lfu, fifo and null. The
+      default is LRU (Least Recently Used). The others LFU (Least Frequently
+      Used), FIFO (First In First Out), and null (No connections are purged) are
+      contained within the TAO Strategies library. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBConnectionCacheMax</CODE> <EM>limit</EM></TD>
+    <TD><A name=-ORBConnectionCacheMax></A>The transport cache will grow to a
+      maximum of the specified limit. The default is system dependent, but can
+      be overridden at compile time by defining the preprocessor macro
+      TAO_CONNECTION_CACHE_MAXIMUM. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBMuxedConnectionMax</CODE> <EM>number</EM></TD>
+    <TD><A name=-ORBMuxedConnectionMax></A>The transport cache allows only
+      specified number of connections-per-QoS property to be added to connection
+      cache. Threads not getting the connections will wait for the connections
+      to be released. This option is more useful for transports using a muxed
+      connection strategy and want control over the number of connections that are
+      created by the active threads. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBConnectionCachePurgePercentage</CODE> <EM>percent</EM></TD>
+    <TD><A name=-ORBConnectionCachePurgePercentage></A>If the transport cache
+      is purged, the specified percentage (20 by default) of the total number of
+      connections cached will be closed. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBPurgePercentage</CODE> <EM>percent</EM></TD>
+    <TD><A name=-ORBPurgePercentage></A><font color="#FF0000">This option is <b>deprecated</b> and will
+      automatically forward to -ORBConnectionCachePurgePercentage. </font> </TD></TR>
+  <TR>
+    <TD><CODE>-ORBConnectionCacheLock</CODE> <EM>locktype</EM></TD>
+    <TD><A name=-ORBConnectionCacheLock></A>Specify the type of lock to be
+      used by the Connection Cache. Possible values for lock type are
+      <CODE>thread</CODE>, which specifies that an inter-thread mutex is used to
+      guarantee exclusive access, and <CODE>null</CODE>, which specifies that no
+      locking be performed. The default is thread. </TD></TR>
+<TR>
+  <TD><CODE>-ORBCorbaObjectLock</CODE> <EM>locktype</EM></TD>
+  <TD><a name="-ORBCorbaObjectLock"></a>
+      Specify the type of lock to be used by CORBA::Object. The lock
+      is needed within the CORBA object to synchronize the state
+      when the same object is shared by multiple threads.  Possible
+      values for lock type are <code>thread</code>, which specifies
+      that an inter-thread mutex is used to guarantee exclusive
+      access, and <code>null</code>, which specifies that no locking
+      be performed. The default is thread.
+
+      The <code>null</code> lock option is useful when there is only
+      one thread in the system. This option can be used to minimize
+      the amount of memory consumed by the locks in applications where
+      locks are not needed. The memory growth problem gets
+      particularly exacerbated for applications dealing with hundreds
+      and thousands of objects.
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>-ORBObjectKeyTableLock</CODE> <EM>locktype</EM></TD>
+  <TD><a name="-ORBObjectKeyTableLock"></a>
+      Specify the type of lock to be used by the ObjectKey
+      table. ObjectKey table keeps track of the ObjectKeys that are
+      generated and made available through IORs. The table manages the
+      life time of the object keys within the ORB through a reference
+      counting mechanism. Possible values for lock type are
+     <code>thread</code>, which specifies   that an inter-thread mutex
+     is used to guarantee exclusive access, and <code>null</code>,
+     which specifies that no locking be performed. The default is
+     thread.
+  </TD>
+</TR>
+
+  <TR>
+    <TD><CODE>-ORBFlushingStrategy</CODE> <EM>type</EM></TD>
+    <TD><A name=-ORBFlushingStrategy></A>By default TAO provides three
+      strategies to flush queued messages. The <CODE>leader_follower</CODE>
+      strategy uses the Reactor and non-blocking I/O to send the outgoing
+      messages, this strategy participates in the Leader/Followers protocol to
+      synchronize access to the Reactor. The <CODE>reactive</CODE> strategy uses
+      the Reactor but does not take part in the Leader/Followers protocol, thus
+      it is better used only in single threaded applications. Finally, the
+      <CODE>blocking</CODE> strategy flushes the queue as soon as it becomes
+      "full", and blocks the thread until all the data is sent.
+</TD></TR></TBODY></TABLE></P>
+<BLOCKQUOTE></BLOCKQUOTE>
+
+<h4><A name=TARF>3. TAO_Advanced_Resource_Factory</A></h4>
+
+This factory is located in the TAO_Strategies library. It accepts the options
+below as well as those described above in the TAO_Default_Resource_Factory. This
+factory can be loaded dynamically using a service configurator directive of the
+form (all on one line): </P><CODE>dynamic Advanced_Resource_Factory
+Service_Object
+*</CODE><BR><CODE>TAO_Strategies:_make_TAO_Advanced_Resource_Factory ()
+"-ORBReactorType select_st" </CODE><BR>It can also be loaded statically by doing
+the following:<BR>
+<UL>
+  <LI>Add <CODE>#include "tao/Strategies/advanced_resource.h"</CODE> to the file
+  containing <CODE>main()</CODE>.
+  <LI>Link the TAO_Strategies library into the executable.
+  <LI>Specify a service configurator directive of the form: <CODE>static
+  Advanced_Resource_Factory "-ORBReactorType select_st"</CODE> </LI></UL>You can
+omit the <CODE>#include</CODE> if you always use dynamic libraries.<BR>Once you
+have loaded the Advanced_Resource_Factory, then directives for the
+Resource_Factory have no effect (and generate warnings telling you
+so).<BR><BR><EM>Note:</EM>-ORBReactorLock flag has been superseded by <A
+href="#-ORBReactorType">-ORBReactorType.
+<BR>
+<BLOCKQUOTE>
+  <P>
+  <TABLE cellSpacing=2 cellPadding=0 border=2>
+    <TBODY>
+    <TR>
+      <TH>Option</TH>
+      <TH>Description</TH></TR>
+    <TR>
+      <TD><CODE>-ORBReactorType</CODE> <EM>which</EM></TD>
+      <TD><A name=-ORBReactorType></A>Specify what kind of reactor the ORB
+	uses. The default reactor is the ACE_TP_Reactor.
+	<TABLE cellSpacing=2 cellPadding=0 border=1>
+	  <TBODY>
+	  <TR>
+	    <TH><EM>which</EM></TH>
+	    <TH>Reactor</TH></TR>
+	  <TR>
+	    <TD><CODE>select_mt</CODE></TD>
+	    <TD>Use the multi-thread select-based reactor.</TD></TR>
+	  <TR>
+	    <TD><CODE>select_st</CODE></TD>
+	    <TD>Use the single-thread select-based reactor.</TD></TR>
+	  <TR>
+	    <TD><CODE>fl</CODE></TD>
+	    <TD>Use the FLReactor (FLTK-based).</TD></TR>
+	  <TR>
+	    <TD><CODE>wfmo</CODE></TD>
+	    <TD>Use the WFMO reactor (Win32 only).</TD></TR>
+	  <TR>
+	    <TD><CODE>msg_wfmo</CODE></TD>
+	    <TD>Use the MsgWFMO reactor (Win32 only).</TD></TR>
+	  <TR>
+	    <TD><CODE>tp</CODE></TD>
+	    <TD>Use the <CODE>ACE_TP_Reactor</CODE>, a select based
+	      thread-pool reactor which is the
+default.</TD></TR></TBODY></TABLE></TD></TR>
+    <TR>
+      <TD><CODE>-ORBReactorThreadQueue</CODE> <EM>which</EM></TD>
+      <TD><A name=-ORBReactorThreadQueue></A>Applies only to the
+	ACE_TP_Reactor, i.e., when <CODE>-ORBReactorType</CODE> =
+	<CODE>tp</CODE>, and specifies the order, last-in-first-out
+	(<EM>which</EM> = <CODE>LIFO</CODE>), the default, or first-in-first-out
+	(<EM>which</EM> = <CODE>FIFO</CODE>), in which waiting threads are
+	selected to run by the ACE_Select_Reactor_Token. </TD></TR>
+    <TR>
+      <TD><CODE>-ORBInputCDRAllocator</CODE> <EM>which</EM></TD>
+      <TD><A name=-ORBInputCDRAllocator></A>Specify whether the ORB uses
+	locked (<EM>which</EM> = <CODE>thread</CODE>) or lock-free
+	(<EM>which</EM> = <CODE>null</CODE>) allocators for the incoming CDR
+	buffers. Though <CODE>null</CODE> should give the optimal performance;
+	we made the default <CODE>thread</CODE>. TAO optimizations for octet
+	sequences will not work in all cases when the allocator does not have
+	locks (for example if the octet sequences are part of a return value).
+	Using locked allocators also allows the users to take advantage of the
+	TAO octet sequence extensions to preserve the buffer after the upcall.
+      </TD></TR>
+    <TR>
+      <TD><CODE>-ORBReactorRegistry</CODE> <EM>registry_type</EM></TD>
+      <TD><A name=-ORBReactorRegistry></A>This option is no longer supported.
+      The Advanced Resource Factory will emit an error if you attempt its use.
+      </TD></TR></TBODY></TABLE></P></BLOCKQUOTE>
+
+<h4><A name=TDSSF>4. TAO_Default_Server_Strategy_Factory</A></h4>
+
+Certain elements of the ORB relate only to server side behavior. In
+this context, the server is any application that passively accepts
+connection from other processes and receives requests from those other
+connections. The server strategy factory is responsible for supporting
+features of TAO that are specific to servers. In particular, these
+include demultiplexing and concurrency-related strategies. The
+concurrency strategies control the thread creation flags and other
+concurrency related behaviors. The demuliplexing strategies are used
+to locate servants inside the POA that are responsible for handling
+requests.
+<p>Typically, the following options are set via the service
+configurator (svc.conf) file. The following line in the svc.conf file
+(all in one line)<BR><CODE>static Server_Strategy_Factory "[list of
+options]"</CODE><BR>would load all the options listed within ""<BR>
+
+</p>
+
+<P><EM>Note:</EM><CODE> -ORBDemuxStrategy </CODE>flag has been changed
+to<BR><CODE>-ORBSystemidPolicyDemuxStrategy </CODE>and
+<CODE>-ORBUseridPolicyDemuxStrategy</CODE>.</P><EM>Note:</EM><CODE>
+-ORBTableSize</CODE>flag has been changed
+to <CODE>-ORBActiveObjectMapSize</CODE>.<P>
+
+<TABLE cellSpacing=2 cellPadding=0 border=2>
+  <TBODY>
+  <TR>
+    <TH>Option</TH>
+    <TH>Description</TH></TR>
+  <TR>
+    <TD><A name=orb_concurrency><CODE>-ORBConcurrency</CODE></A>
+    <EM>which</EM></TD>
+    <TD>Specify which concurrency strategy to use. Range of values is
+      <CODE>reactive</CODE> for a purely Reactor-driven concurrency strategy or
+      <CODE>thread-per-connection</CODE> for creating a new thread to service
+      each connection. The default is reactive. </TD></TR>
+  <TR>
+    <TD><A name=server_timeout><CODE>-ORBThreadPerConnectionTimeout</CODE></A>
+      <EM>milliseconds</EM></TD>
+    <TD>In many platforms it is impossible to interrupt the server threads
+      created by the <CODE>thread-per-connection</CODE> model. This is because
+      these threads are blocked in <CODE>read()</CODE> operations (and not in
+      <CODE>select()</CODE>). As a workaround, the server threads periodically
+      poll the ORB to find out if they should shutdown. This option controls the
+      period of the polling, expressed in milliseconds. Applications that do not
+      shutdown, or that can otherwise ensure that no server threads will be
+      running at shutdown (for example if all the clients terminate before the
+      server) can disable the polling using the magic value
+      <CODE>INFINITE</CODE>.
+      <P>If the option is not provided then the ORB uses the compile time flag
+      <CODE>TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT</CODE>, this flag also
+      expresses the time in milliseconds (as a string constant) and the magic
+      value <CODE>"INFINITE"</CODE> can be used to disable polling entirely.
+      This yields a slight performance improvement (around 1%). </P></TD></TR>
+  <TR>
+    <TD><CODE>-ORBActiveObjectMapSize</CODE> <EM>active object map
+size</EM></TD>
+    <TD>Specify the size of the active object map. If not specified, the
+      default value is 64.</TD></TR>
+  <TR>
+    <TD><CODE>-ORBUseridPolicyDemuxStrategy</CODE> <EM>user id policy based
+      demultiplexing strategy</EM></TD>
+    <TD>Specify the demultiplexing lookup strategy to be used with the user id
+      policy. The <EM>demultiplexing strategy</EM> can be one of
+      <CODE>dynamic</CODE> or <CODE>linear</CODE>. This option defaults to using
+      the <CODE>dynamic</CODE> strategy. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBSystemidPolicyDemuxStrategy</CODE> <EM>system id policy
+      based demultiplexing strategy</EM></TD>
+    <TD>Specify the demultiplexing lookup strategy to be used with the system
+      id policy. The <EM>demultiplexing strategy</EM> can be one of
+      <CODE>dynamic</CODE>, <CODE>linear</CODE>, or <CODE>active</CODE>. This
+      option defaults to use the <CODE>dynamic</CODE> strategy when
+      <CODE>-ORBAllowReactivationOfSystemids</CODE> is true, and to
+      <CODE>active</CODE> strategy when
+      <CODE>-ORBAllowReactivationOfSystemids</CODE> is false. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBUniqueidPolicyReverseDemuxStrategy</CODE> <EM>unique id
+      policy based reverse demultiplexing strategy</EM></TD>
+    <TD>Specify the reverse demultiplexing lookup strategy to be used with the
+      unique id policy. The <EM>reverse demultiplexing strategy</EM> can be one
+      of <CODE>dynamic</CODE> or <CODE>linear</CODE>. This option defaults to
+      using the <CODE>dynamic</CODE> strategy. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBAllowReactivationOfSystemids</CODE> <EM>allows reactivation
+      of system ids</EM></TD>
+    <TD>Specify whether system ids can be reactivated, i.e., once an id that
+      was generated by the system has been deactivated, will the user reactivate a
+      new servant using the old id. If the user is not going to use this
+      feature, the IORs can be shortened, an extra comparison in the critical
+      upcall path removed, and some memory on the server side can be saved. The
+      <CODE>ORBAllowReactivationOfSystemids</CODE> can be <CODE>0</CODE> or
+      <CODE>1</CODE>. This option defaults to <CODE>1</CODE>. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBActiveHintInIds</CODE> <EM>adds an active hint in
+ids</EM></TD>
+    <TD>Specify whether an active hint should be added to ids. With active
+      hints, ids can be found quickly. However, they lead to larger IORs. Note
+      that this option is disregarded
+      <CODE>if -ORBAllowReactivationOfSystemids</CODE> is set to <CODE>0</CODE>.
+      The <EM>-ORBActiveHintInIds</EM> can be <CODE>0</CODE> or <CODE>1</CODE>.
+      This option defaults to <CODE>1</CODE>. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBPoaMapSize</CODE> <EM>poa map size</EM></TD>
+    <TD>Specify the size of the POA map. If not specified, the default value
+      is 24.</TD></TR>
+  <TR>
+    <TD><CODE>-ORBPersistentidPolicyDemuxStrategy</CODE> <EM>persistent id
+      policy based demultiplexing strategy</EM></TD>
+    <TD>Specify the demultiplexing lookup strategy to be used with the
+      persistent id policy. The <EM>demultiplexing strategy</EM> can be one of
+      <CODE>dynamic</CODE> or <CODE>linear</CODE>. This option defaults to using
+      the <CODE>dynamic</CODE> strategy. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBTransientidPolicyDemuxStrategy</CODE> <EM>transient id
+      policy based demultiplexing strategy</EM></TD>
+    <TD>Specify the demultiplexing lookup strategy to be used with the
+      transient id policy. The <EM>demultiplexing strategy</EM> can be one of
+      <CODE>dynamic</CODE>, <CODE>linear</CODE>, or <CODE>active</CODE>. This
+      option defaults to using the <CODE>active</CODE> strategy. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBActiveHintInPOANames</CODE> <EM>adds an active hint in poa
+      names</EM></TD>
+    <TD>Specify whether an active hint should be added to POA names. With
+      active hints, POA names can be found quickly. However, they lead to larger
+      IORs. The <EM>-ORBActiveHintInPOANames</EM> can be <CODE>0</CODE> or
+      <CODE>1</CODE>. This option defaults to <CODE>1</CODE>. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBThreadFlags</CODE> <EM>thread flags</EM></TD>
+    <TD>Specify the flags used for thread creation. Flags can be any
+      logical-OR combination of <CODE>THR_DETACHED</CODE>,
+      <CODE>THR_BOUND</CODE>, <CODE>THR_NEW_LWP</CODE>,
+      <CODE>THE_SUSPENDED</CODE>. The default is <CODE>THR_BOUND |
+      THR_DETACHED</CODE> . </TD></TR>
+  <TR>
+    <TD><CODE>-ORBPOALock</CODE> <EM>lock type</EM></TD>
+    <TD><A name=-ORBPOALock></A>Specify the type of lock to be used for POA
+      accesses. Possible values for <EM>lock type</EM> are <CODE>thread</CODE>,
+      which specifies that an inter-thread mutex is used to guarantee exclusive
+      access, and <CODE>null</CODE>, which specifies that no locking be
+      performed. The default is <CODE>thread</CODE>.</TD></TR></TBODY></TABLE></P>
+
+<h4><A name=TDCSF>5. TAO_Default_Client_Strategy_Factory</A></h4>
+
+Similar to the server strategy factory, the client strategy factory
+supports those elements of TAO that are specific to the behavior of
+clients (Any application that actively establishes connections, submits
+requests and perhaps receive responses.). The client strategy factory
+provides control over several resources used by
+clients.
+<p>Typically, the following options are set via the service
+configurator (svc.conf) file. The following line in the svc.conf file
+(all in one line)<BR><CODE>static Client_Strategy_Factory "[list of
+options]"</CODE> would load all the options listed within
+""<BR><BR>List the detail description of the client strategy factory
+here. </p>
+<P>
+
+<TABLE cellSpacing=2 cellPadding=0 border=2>
+  <TBODY>
+  <TR>
+    <TH>Option</TH>
+    <TH>Description</TH></TR>
+  <TR>
+    <TD><CODE><A name=#-ORBProfileLock>-ORBProfileLock</A></CODE>
+      <EM>which</EM></TD>
+    <TD>Specify the kind of synchronization primitive for the Profiles.
+      Default is <CODE>thread</CODE>, which means that a regular thread mutex is
+      used. The second option is <CODE>null</CODE>, which means a null lock is
+      used. This makes sense in case of optimizations and is allowed when no
+      forwarding is used or only a single threaded client. </TD></TR>
+  <TR>
+    <TD><CODE>-ORBClientConnectionHandler</CODE> <EM>MT / ST / RW</EM></TD>
+    <TD><A name=-ORBClientConnectionHandler></A>ST means use the
+      single-threaded client connection handler, i.e., the leader follower model
+      will not be used. However, ST does support nested upcalls and handling of
+      new requests while waiting for the reply from a server.
+      <P>MT means use the multi-threaded client connection handler which uses
+      the leader follower model. This model allows the use of multiple threads
+      with a single Reactor.
+      <P>RW selects a strategy that simply blocks in recv() when waiting for a
+      response from the server instead of waiting in the Reactor. The RW
+      strategy only works when the application does not have to worry about new
+      request showing up when waiting for a response. Further, this strategy
+      cannot be used with AMI calls. Therefore, this strategy is appropriate
+      only for "pure" synchronous clients. Note that applications with nested
+      upcalls are not "pure" synchronous clients. Also note that this strategy
+      will only effect two way calls, since there is no waiting for one way
+      calls. This strategy can also be used in an application that is both a
+      client and a server if the server side is handled by a separate thread and
+      the client threads are "pure" clients.
+      <P>Default for this option is MT. </P></TD></TR>
+  <TR>
+    <TD><CODE>-ORBTransportMuxStrategy</CODE> <EM>EXCLUSIVE / MUXED</EM></TD>
+    <TD><A name=-ORBTransportMuxStrategy></A>EXCLUSIVE means that the
+      Transport does not multiplex requests on a connection. At a time, there
+      can be only one request pending on a connection.
+      <P>MUXED means that Transport multiplexes more than one request at the
+      same time on a connection. This option is often used in conjunction with
+      Asynchronous Method Invocation (AMI), because multiple requests can be sent 'in
+      bulk'.
+      <P>Default for this option is MUXED. </P></TD></TR>
+  <TR>
+    <TD><CODE>-ORBConnectStrategy</CODE> <EM>type</EM></TD>
+    <TD><A name=-ORBConnectStrategy></A>TAO provides three strategies to
+      connect to remote servers. The default <CODE>leader_follower</CODE>
+      strategy uses the Reactor and non-blocking connects to connect and this
+      strategy participates in the Leader/Followers protocol to synchronize
+      access to the Reactor. The <CODE>reactive</CODE> strategy uses the Reactor
+      for non-blocking connects but does not take part in the Leader/Followers
+      protocol, thus it is better used only in single threaded applications.
+      Finally, the <CODE>blocked</CODE> strategy as the name implies, blocks the
+      thread until connection is complete. Some of the protocols in TAO viz.
+      SHMIOP and SSLIOP can only use blocked strategy.
+</TD></TR></TBODY></TABLE></P></BODY></HTML>
