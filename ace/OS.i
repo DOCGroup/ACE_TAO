@@ -27,7 +27,9 @@ extern char *sys_errlist[];
 //extern char **_sys_siglist;
 #endif /* ACE_HAS_SYS_SIGLIST */
 
-#if defined (ACE_HAS_SIZET_SOCKET_LEN)
+#if defined (ACE_HAS_SOCKLEN_T)
+typedef socklen_t ACE_SOCKET_LEN;
+#elif defined (ACE_HAS_SIZET_SOCKET_LEN)
 typedef size_t ACE_SOCKET_LEN;
 #else
 typedef int ACE_SOCKET_LEN;

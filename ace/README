@@ -151,6 +151,7 @@ ACE_HAS_SIN_LEN				Platform supports new BSD inet_addr len field.
 ACE_HAS_SIZET_SOCKET_LEN		OS/compiler uses size_t * rather than int * for socket lengths
 ACE_HAS_SOCKADDR_MSG_NAME		Platform requires (struct sockaddr *) for msg_name field of struct msghdr.
 ACE_HAS_SOCKIO_H                	Compiler/platform provides the sockio.h file
+ACE_HAS_SOCKLEN_T                       Platform provides socklen_t type, such as Linux with glibc2.
 ACE_HAS_SPARCWORKS_401_SIGNALS 		Compiler has brain-damaged SPARCwork SunOS 4.x signal prototype...
 ACE_HAS_SSIZE_T				Compiler supports the ssize_t typedef
 ACE_HAS_STHREADS			Platform supports Solaris threads
