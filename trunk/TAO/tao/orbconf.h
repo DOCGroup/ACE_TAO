@@ -25,6 +25,22 @@
 
 #include "ace/OS.h"
 
+// Users should override this stuff if they don't want to use the
+// default ACE Socket wrappers.  This makes it possible to change
+// TAO's transport mechanism wholesale by making a few minor changes
+// to the ACE config.h file.
+#if !defined (TAO_SOCK_STREAM)
+#define TAO_SOCK_STREAM ACE_SOCK_STREAM
+#endif /* TAO_SOCK_STREAM */
+
+#if !defined (TAO_SOCK_ACCEPTOR)
+#define TAO_SOCK_ACCEPTOR ACE_SOCK_ACCEPTOR
+#endif /* TAO_SOCK_ACCEPTOR */
+
+#if !defined (TAO_SOCK_CONNECTOR)
+#define TAO_SOCK_CONNECTOR ACE_SOCK_CONNECTOR
+#endif /* TAO_SOCK_CONNECTOR */
+
 // The default arguments of the resource factory for the fake service 
 // configurator
 #if !defined (TAO_DEFAULT_RESOURCE_FACTORY_ARGS)

@@ -427,7 +427,7 @@ public:
   static void send_error (TAO_Client_Connection_Handler *&handler);
   // Send an error message back to a caller.
 
-  static ssize_t read_buffer (ACE_SOCK_Stream &peer,
+  static ssize_t read_buffer (TAO_SOCK_Stream &peer,
                               char *buf,
                               size_t len);
   // Loop on data read ... this is required since <recv> won't block

@@ -114,7 +114,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
                       ACE_reinterpret_cast (u_char *, buf),
                       buflen);
 
-  ACE_SOCK_Stream &peer = handler->peer ();
+  TAO_SOCK_Stream &peer = handler->peer ();
 
   while (buflen > 0)
     {
@@ -262,7 +262,7 @@ TAO_GIOP::send_error (TAO_Client_Connection_Handler *&handler)
 }
 
 ssize_t
-TAO_GIOP::read_buffer (ACE_SOCK_Stream &peer,
+TAO_GIOP::read_buffer (TAO_SOCK_Stream &peer,
                        char *buf,
                        size_t len)
 {
@@ -308,7 +308,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   ACE_TIMEPROBE ("  -> GIOP::recv_request - start");
   TAO_GIOP::Message_Type      retval;
   CORBA::ULong message_size;
-  ACE_SOCK_Stream &connection = handler->peer ();
+  TAO_SOCK_Stream &connection = handler->peer ();
 
   // Read the message header off the wire.
   //
@@ -608,7 +608,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
       return;
     }
 
-  // Use the ACE_SOCK_Stream from the Client_Connection_Handler for
+  // Use the TAO_SOCK_Stream from the Client_Connection_Handler for
   // communication inplace of the endpoint used below.
 
   // POLICY DECISION: If the client expects most agents to forward,

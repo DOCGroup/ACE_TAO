@@ -19,11 +19,11 @@
 
 #  include "tao/corba.h"
 
-typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
+typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
         TAO_CONNECTOR;
 
 typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler,
-                                    ACE_SOCK_CONNECTOR,
+                                    TAO_SOCK_CONNECTOR,
                                     ACE_SYNCH_RW_MUTEX>
         TAO_CACHED_CONNECT_STRATEGY;
 
