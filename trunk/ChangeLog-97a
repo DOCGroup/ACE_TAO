@@ -1,3 +1,15 @@
+Thu Jun 12 15:48:16 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/ACE.cpp (get_ip_interfaces): Corrected code in the BSDish
+ 	  section so that it at least compiles on Linux.  I haven't tested
+ 	  this AT ALL.
+
+	* ace/Timer_Queue_T.cpp (calculate_timeout): When this was called
+ 	  with the default argument from handle_events(), max_timeout was
+ 	  passed as zero, which would cause a SEGV when attempts were made
+ 	  to deref it.  Added protection to simply return a zero ptr in that
+ 	  case.
+
 Thu Jun 12 13:18:03 1997  Steve Huston <shuston@riverace.com>
 
 	* ace/OS.{h,i,cpp}: Changes for HP-UX 10 primarily.  Threads
