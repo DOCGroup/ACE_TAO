@@ -54,8 +54,11 @@
 #define ACE_HAS_AIO_CALLS
 // ... but seems to require this in order to keep from hanging.  Needs some
 // investigation, maybe with HP.  John Mulhern determined this value
-// empirically.  YMMV.
-#define ACE_INFINITE 10000000
+// empirically.  YMMV.  If it does vary, set it up in your own config.h which
+// then includes the ACE-supplied config.
+#if !defined (ACE_INFINITE)
+#  define ACE_INFINITE 10000000
+#endif
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
