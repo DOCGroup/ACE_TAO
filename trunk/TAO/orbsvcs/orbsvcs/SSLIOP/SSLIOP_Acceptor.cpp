@@ -446,8 +446,14 @@ TAO_SSLIOP_Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
                   TAO_SSLIOP_ACCEPT_STRATEGY (this->orb_core_),
                   -1);
 
+  ACE_Reactor *r = this->orb_core_->reactor (this);
+
+  // Set the reactor in the underlying ACE_SSL_SOCK_Acceptor to force
+  // it to use the one the ORB was configured to use.
+  this->accept_strategy_->acceptor ().reactor (r);
+    
   if (this->ssl_acceptor_.open (addr,
-                                this->orb_core_->reactor (this),
+                                r,
                                 this->creation_strategy_,
                                 this->accept_strategy_,
                                 this->concurrency_strategy_) == -1)
