@@ -101,9 +101,9 @@ private:
 };
 
 Method_Object_work::Method_Object_work (Scheduler* new_Scheduler,
-				        u_long new_param,
-				        int new_count,
-					ACE_Future<u_long> &new_result)
+                                        u_long new_param,
+                                        int new_count,
+                                        ACE_Future<u_long> &new_result)
   : scheduler_ (new_Scheduler),
     param_ (new_param),
     count_ (new_count),
@@ -137,18 +137,18 @@ private:
 
 
 Method_Object_name::Method_Object_name (Scheduler *new_scheduler,
-					ACE_Future<char*> &new_result)
+                                        ACE_Future<char*> &new_result)
   : scheduler_ (new_scheduler),
     future_result_ (new_result)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      " (%t) Method_Object_name created\n"));
-};
+              " (%t) Method_Object_name created\n"));
+}
 
 Method_Object_name::~Method_Object_name (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      " (%t) Method_Object_name will be deleted.\n"));
+              " (%t) Method_Object_name will be deleted.\n"));
 }
 
 int
@@ -214,7 +214,7 @@ Scheduler::svc (void)
       ACE_DEBUG ((LM_DEBUG, " (%t) calling method object\n"));
       // Call it.
       if (mo->call () == -1)
-	break;
+        break;
       // Smart pointer destructor automatically deletes mo.
     }
 
@@ -231,7 +231,7 @@ Scheduler::end (void)
 // Here's where the Work takes place.
 u_long
 Scheduler::work_i (u_long param,
-		   int count)
+                   int count)
 {
   ACE_UNUSED_ARG (count);
 
@@ -260,19 +260,19 @@ Scheduler::name (void)
       ACE_Future<char*> new_future;
 
       if (this->thr_count () == 0)
-	{
-	  // This scheduler is inactive... so we execute the user
-	  // request right away...
+        {
+          // This scheduler is inactive... so we execute the user
+          // request right away...
 
-	  auto_ptr<ACE_Method_Object> mo (new Method_Object_name (this, new_future));
+          auto_ptr<ACE_Method_Object> mo (new Method_Object_name (this, new_future));
 
-	  mo->call ();
-	  // Smart pointer destructor automatically deletes mo.
-	}
+          mo->call ();
+          // Smart pointer destructor automatically deletes mo.
+        }
       else
-	// @@ What happens if new fails here?
-	this->activation_queue_.enqueue
-	  (new Method_Object_name (this, new_future));
+        // @@ What happens if new fails here?
+        this->activation_queue_.enqueue
+          (new Method_Object_name (this, new_future));
 
       return new_future;
     }
@@ -288,15 +288,15 @@ Scheduler::work (u_long newparam, int newcount)
       ACE_Future<u_long> new_future;
 
       if (this->thr_count () == 0)
-	{
-	  auto_ptr<ACE_Method_Object> mo
-	    (new Method_Object_work (this, newparam, newcount, new_future));
-	  mo->call ();
-	  // Smart pointer destructor automatically deletes it.
-	}
+        {
+          auto_ptr<ACE_Method_Object> mo
+            (new Method_Object_work (this, newparam, newcount, new_future));
+          mo->call ();
+          // Smart pointer destructor automatically deletes it.
+        }
       else
-	this->activation_queue_.enqueue
-	  (new Method_Object_work (this, newparam, newcount, new_future));
+        this->activation_queue_.enqueue
+          (new Method_Object_work (this, newparam, newcount, new_future));
 
       return new_future;
     }
@@ -330,7 +330,7 @@ determine_iterations (void)
     }
 
   ACE_DEBUG ((LM_DEBUG," (%t) n_iterations %d\n",
-	      (int) n_iterations));
+              (int) n_iterations));
 
   worker_a->end ();
   // @@ Can we safely delete worker_a here?
@@ -366,25 +366,25 @@ test_active_object (int n_iterations)
   for (int i = 0; i < 2; i++)
     {
       if (i == 1)
-	{
-	  worker_a->open ();
-	  worker_b->open ();
-	  worker_c->open ();
-	}
+        {
+          worker_a->open ();
+          worker_b->open ();
+          worker_c->open ();
+        }
 
       ACE_Future<u_long> fresulta = worker_a->work (9013);
       ACE_Future<u_long> fresultb = worker_b->work (9013);
       ACE_Future<u_long> fresultc = worker_c->work (9013);
 
       if (i == 0)
-	{
-	  if (!fresulta.ready ())
-	    ACE_DEBUG ((LM_DEBUG," (%t) ERROR: worker A is should be ready!!!\n"));
-	  if (!fresultb.ready ())
-	    ACE_DEBUG ((LM_DEBUG," (%t) ERROR: worker B is should be ready!!!\n"));
-	  if (!fresultc.ready ())
-	    ACE_DEBUG ((LM_DEBUG," (%t) ERROR: worker C is should be ready!!!\n"));
-	}
+        {
+          if (!fresulta.ready ())
+            ACE_DEBUG ((LM_DEBUG," (%t) ERROR: worker A is should be ready!!!\n"));
+          if (!fresultb.ready ())
+            ACE_DEBUG ((LM_DEBUG," (%t) ERROR: worker B is should be ready!!!\n"));
+          if (!fresultc.ready ())
+            ACE_DEBUG ((LM_DEBUG," (%t) ERROR: worker C is should be ready!!!\n"));
+        }
 
       // When the workers are active we will block here until the
       // results are available.
@@ -402,27 +402,27 @@ test_active_object (int n_iterations)
       char *namec = fnamec;
 
       ACE_DEBUG ((LM_DEBUG, " (%t) result from %s %u\n",
-		  namea, (u_int) resulta));
+                  namea, (u_int) resulta));
       ACE_DEBUG ((LM_DEBUG, " (%t) result from %s %u\n",
-		  nameb, (u_int) resultb));
+                  nameb, (u_int) resultb));
       ACE_DEBUG ((LM_DEBUG, " (%t) result from %s %u\n",
-		  namec, (u_int) resultc));
+                  namec, (u_int) resultc));
     }
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d before end ()\n",
-	      (int) scheduler_open_count));
+              (int) scheduler_open_count));
 
   worker_a->end ();
   worker_b->end ();
   worker_c->end ();
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d immediately after end ()\n",
-	      (int) scheduler_open_count));
+              (int) scheduler_open_count));
 
   ACE_OS::sleep (2);
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d after waiting\n",
-	      (int) scheduler_open_count));
+              (int) scheduler_open_count));
   // @@ Can we safely delete worker_a, worker_b, and worker_c?
 }
 

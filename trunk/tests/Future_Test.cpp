@@ -134,7 +134,7 @@ Method_Object_name::Method_Object_name (Scheduler *new_scheduler,
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "(%t) Method_Object_name created\n"));
-};
+}
 
 Method_Object_name::~Method_Object_name (void)
 {

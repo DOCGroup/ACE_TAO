@@ -88,16 +88,16 @@ private:
 };
 
 Method_Object_work::Method_Object_work (Scheduler* new_Scheduler,
-				        u_long new_param,
-				        int new_count,
-					ACE_Future<u_long> &new_result)
+                                        u_long new_param,
+                                        int new_count,
+                                        ACE_Future<u_long> &new_result)
   :   scheduler_ (new_Scheduler),
       param_ (new_param),
       count_ (new_count),
       future_result_ (new_result)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) Method_Object_work created\n"));
+              "(%t) Method_Object_work created\n"));
 }
 
 Method_Object_work::~Method_Object_work (void)
@@ -127,18 +127,18 @@ private:
 };
 
 Method_Object_name::Method_Object_name (Scheduler *new_scheduler,
-					ACE_Future<const char *> &new_result)
+                                        ACE_Future<const char *> &new_result)
   : scheduler_ (new_scheduler),
     future_result_ (new_result)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) Method_Object_name created\n"));
-};
+              "(%t) Method_Object_name created\n"));
+}
 
 Method_Object_name::~Method_Object_name (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) Method_Object_name will be deleted.\n"));
+              "(%t) Method_Object_name will be deleted.\n"));
 }
 
 int
@@ -162,7 +162,7 @@ private:
 
 // Constructor.
 Scheduler::Scheduler (const char *newname,
-		      Scheduler *new_scheduler)
+                      Scheduler *new_scheduler)
 {
   ACE_NEW (this->name_, char[ACE_OS::strlen (newname) + 1]);
   ACE_OS::strcpy (this->name_, newname);
@@ -208,7 +208,7 @@ Scheduler::svc (void)
       ACE_DEBUG ((LM_DEBUG, "(%t) calling method object\n"));
       // Call it.
       if (mo->call () == -1)
-	break;
+        break;
       // Destructor automatically deletes it.
     }
 
@@ -226,7 +226,7 @@ Scheduler::end (void)
 // Here's where the Work takes place.
 u_long
 Scheduler::work_i (u_long param,
-		   int count)
+                   int count)
 {
   ACE_UNUSED_ARG (count);
 
@@ -256,7 +256,7 @@ Scheduler::name (void)
 
       // @@ What happens if new fails here?
       this->activation_queue_.enqueue
-	(new Method_Object_name (this, new_future));
+        (new Method_Object_name (this, new_future));
 
       return new_future;
     }
@@ -264,7 +264,7 @@ Scheduler::name (void)
 
 ACE_Future<u_long>
 Scheduler::work (u_long newparam,
-		 int newcount)
+                 int newcount)
 {
   if (this->scheduler_) {
     return this->scheduler_->work (newparam, newcount);
@@ -305,65 +305,65 @@ main (int, char *[])
   for (size_t i = 0; i < n_loops; i++)
     {
       {
-	ACE_Future<u_long> fresulta, fresultb, fresultc, fresultd, fresulte;
-	ACE_Future<const char *> fname;
+        ACE_Future<u_long> fresulta, fresultb, fresultc, fresultd, fresulte;
+        ACE_Future<const char *> fname;
 
-	ACE_DEBUG ((LM_DEBUG, "(%t) going to do a non-blocking call\n"));
+        ACE_DEBUG ((LM_DEBUG, "(%t) going to do a non-blocking call\n"));
 
-	fresulta = andres->work (9013);
-	fresultb = peter->work (9013);
-	fresultc = helmut->work (9013);
-	fresultd = matias->work (9013);
-	fname = andres->name ();
+        fresulta = andres->work (9013);
+        fresultb = peter->work (9013);
+        fresultc = helmut->work (9013);
+        fresultd = matias->work (9013);
+        fname = andres->name ();
 
-	// see if the result is available...
-	if (fresulta.ready ())
-	  ACE_DEBUG ((LM_DEBUG, "(%t) wow.. work is ready.....\n"));
+        // see if the result is available...
+        if (fresulta.ready ())
+          ACE_DEBUG ((LM_DEBUG, "(%t) wow.. work is ready.....\n"));
 
-	ACE_DEBUG ((LM_DEBUG, "(%t) non-blocking call done... now blocking...\n"));
+        ACE_DEBUG ((LM_DEBUG, "(%t) non-blocking call done... now blocking...\n"));
 
-	// Save the result of fresulta.
+        // Save the result of fresulta.
 
-	fresulte = fresulta;
+        fresulte = fresulta;
 
-	if (i % 3 == 0)
-	  {
-	    // Every 3rd time... disconnect the futures...
-	    // but "fresulte" should still contain the result...
-	    fresulta.cancel (10);
-	    fresultb.cancel (20);
-	    fresultc.cancel (30);
-	    fresultd.cancel (40);
-	  }
+        if (i % 3 == 0)
+          {
+            // Every 3rd time... disconnect the futures...
+            // but "fresulte" should still contain the result...
+            fresulta.cancel (10);
+            fresultb.cancel (20);
+            fresultc.cancel (30);
+            fresultd.cancel (40);
+          }
 
-	u_long resulta = 0, resultb = 0, resultc = 0, resultd = 0, resulte = 0;
+        u_long resulta = 0, resultb = 0, resultc = 0, resultd = 0, resulte = 0;
 
-	fresulta.get (resulta);
-	fresultb.get (resultb);
-	fresultc.get (resultc);
-	fresultd.get (resultd);
-	fresulte.get (resulte);
+        fresulta.get (resulta);
+        fresultb.get (resultb);
+        fresultc.get (resultc);
+        fresultd.get (resultd);
+        fresulte.get (resulte);
 
-	ACE_DEBUG ((LM_DEBUG, "(%t) result a %u\n", (u_int) resulte));
-	ACE_DEBUG ((LM_DEBUG, "(%t) result b %u\n", (u_int) resulta));
-	ACE_DEBUG ((LM_DEBUG, "(%t) result c %u\n", (u_int) resultb));
-	ACE_DEBUG ((LM_DEBUG, "(%t) result d %u\n", (u_int) resultc));
-	ACE_DEBUG ((LM_DEBUG, "(%t) result e %u\n", (u_int) resultd));
+        ACE_DEBUG ((LM_DEBUG, "(%t) result a %u\n", (u_int) resulte));
+        ACE_DEBUG ((LM_DEBUG, "(%t) result b %u\n", (u_int) resulta));
+        ACE_DEBUG ((LM_DEBUG, "(%t) result c %u\n", (u_int) resultb));
+        ACE_DEBUG ((LM_DEBUG, "(%t) result d %u\n", (u_int) resultc));
+        ACE_DEBUG ((LM_DEBUG, "(%t) result e %u\n", (u_int) resultd));
 
-	const char *name;
+        const char *name;
 
-	fname.get (name);
+        fname.get (name);
 
-	ACE_DEBUG ((LM_DEBUG, "(%t) name %s\n", name));
-	delete [] (char *) name;
+        ACE_DEBUG ((LM_DEBUG, "(%t) name %s\n", name));
+        delete [] (char *) name;
       }
 
       ACE_DEBUG ((LM_DEBUG,
-		  "(%t) task_count %d future_count %d capsule_count %d methodobject_count %d\n",
-		  (int) task_count,
-		  (int) future_count,
-		  (int) capsule_count,
-		  (int) methodobject_count));
+                  "(%t) task_count %d future_count %d capsule_count %d methodobject_count %d\n",
+                  (int) task_count,
+                  (int) future_count,
+                  (int) capsule_count,
+                  (int) methodobject_count));
     }
 
   // Close things down.
@@ -375,11 +375,11 @@ main (int, char *[])
   ACE_OS::sleep (2);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) task_count %d future_count %d capsule_count %d methodobject_count %d\n",
-	      (int) task_count,
-	      (int) future_count,
-	      (int) capsule_count,
-	      (int) methodobject_count));
+              "(%t) task_count %d future_count %d capsule_count %d methodobject_count %d\n",
+              (int) task_count,
+              (int) future_count,
+              (int) capsule_count,
+              (int) methodobject_count));
 
   ACE_DEBUG ((LM_DEBUG,"(%t) th' that's all folks!\n"));
 
