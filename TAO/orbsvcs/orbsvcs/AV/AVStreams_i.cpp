@@ -1816,7 +1816,11 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
           ACE_DEBUG ((LM_DEBUG,
                       "NEGOTIATOR AVIALABLE\n"));
 
-          CORBA::Any_var negotiator_any = responder->get_property_value ("Negotiator");
+          CORBA::Any_var negotiator_any = 
+            responder->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                           "Negotiator")
+                                           ACE_ENV_ARG_PARAMETER);           
+          ACE_TRY_CHECK_EX (negotiate);
 
           AVStreams::Negotiator_ptr peer_negotiator;
           negotiator_any.in () >>= peer_negotiator;
@@ -1846,7 +1850,9 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
         {
           // choose protocols based on what the remote endpoint can support.
           CORBA::Any_var protocols_any =
-            responder->get_property_value ("AvailableProtocols" ACE_ENV_ARG_PARAMETER);
+            responder->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                           "AvailableProtocols")
+                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (available_protocols);
           AVStreams::protocolSpec peer_protocols;
           AVStreams::protocolSpec *temp_protocols;
@@ -2635,7 +2641,8 @@ TAO_StreamEndPoint::remove_fep (const char *flow_name
       CORBA::Any flows;
       flows <<= new_flows;
       this->flows_ = new_flows;
-      this->define_property ("Flows",
+      this->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "Flows"),
                              flows
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -5139,7 +5146,8 @@ TAO_FlowProducer::set_key (const AVStreams::key & the_key
     {
       CORBA::Any anyval;
       anyval <<= the_key;
-      this->define_property ("PublicKey",
+      this->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "PublicKey"),
                              anyval
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
