@@ -38,12 +38,37 @@ be_visitor_operation_upcall_command_ss
 int
 be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
 {
-  TAO_OutStream & os = *this->ctx_->stream ();
-
   be_visitor_context ctx (*this->ctx_);
 
   // save the node.
   this->ctx_->node (node);
+
+  be_interface * const intf = this->ctx_->attribute ()
+    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
+    : be_interface::narrow_from_scope (node->defined_in ());
+
+  if (!intf)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_upcall_command_ss::"
+                         "visit_operation - "
+                         "bad interface scope\n"),
+                        -1);
+    }
+
+  return this->visit (node, intf->full_skel_name ());
+}
+
+int
+be_visitor_operation_upcall_command_ss::visit (be_operation * node,
+                                               char const * full_skel_name)
+{
+  be_visitor_context ctx (*this->ctx_);
+
+  // save the node.
+  this->ctx_->node (node);
+
+  TAO_OutStream & os = *this->ctx_->stream ();
 
   os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
@@ -58,7 +83,7 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_upcall_command_ss::"
-                         "visit_operation - "
+                         "visit - "
                          "bad interface scope\n"),
                         -1);
     }
@@ -74,7 +99,7 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
 
   // Generate constructor
   os << "inline Upcall_Command (" << be_idt_nl
-     << intf->full_skel_name () << " * servant";
+     << full_skel_name << " * servant";
 
   // No need to accept an argument array parameter if the operation
   // has no arguments.
@@ -176,7 +201,7 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
 
   // Generate class attributes.
   os << "private:" << be_idt_nl << be_nl
-     << intf->full_skel_name () << " * const servant_;";
+     << full_skel_name << " * const servant_;";
 
   // Don't bother generating an argument array attribute if the
   // operation has no arguments.

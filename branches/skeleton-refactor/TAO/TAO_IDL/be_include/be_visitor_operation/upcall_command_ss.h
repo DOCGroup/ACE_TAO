@@ -36,6 +36,9 @@ public:
   /// visit the operation
   virtual int visit_operation (be_operation * node);
 
+  /// Same as visit_operation() but override full_skel_name.
+  int visit (be_operation * node, char const * full_skel_name);
+
 private:
 
   /// Generate the upcall.

@@ -154,7 +154,7 @@ void
 be_visitor_amh_interface_ss::generate_send_reply (TAO_OutStream * os)
 {
   *os << be_nl << be_nl
-      << "_tao_server_request.tao_send_reply ();";
+      << "server_request.tao_send_reply ();";
 }
 
 

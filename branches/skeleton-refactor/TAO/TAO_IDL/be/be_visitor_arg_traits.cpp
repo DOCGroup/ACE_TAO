@@ -213,8 +213,16 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
          << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
          << node->name () << " *," << be_nl
          << node->name () << "_var," << be_nl
-         << node->name () << "_out," << be_nl
-         << "TAO::Value_Traits<" << node->name () << ">" << be_uidt_nl
+         << node->name () << "_out";
+
+      // The SArgument classes don't need the traits parameter (yet?)
+      if (ACE_OS::strlen (this->S_) == 0)
+        {
+          os << "," << be_nl
+             << "TAO::Value_Traits<" << node->name () << ">";
+        }
+
+      os << be_uidt_nl
          << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
          << "{" << be_nl
          << "};";
