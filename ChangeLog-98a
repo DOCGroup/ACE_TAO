@@ -1,11 +1,22 @@
+Mon May 04 08:49:09 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (ACE_Thread_Adapter::invoke): with ACE_NEEDS_LWP_PRIO_SET,
+          added the call to ACE_OS::thr_setprio () so that the LWP priority
+          will be set if running in the RT class.  Applications no longer
+          have to be concerned with this.
+
+        * performance-tests/Misc/preempt.cpp (svc): removed
+          ACE_OS::thr_setprio () calls to set LWP priority, now that ACE
+          handles that internally.
+
 Sun May 03 22:37:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Parse_Node.cpp (open_handle): WinCE doesn't support
- 	  ExpandEnvironmentStringA.
+        * ace/Parse_Node.cpp (open_handle): WinCE doesn't support
+          ExpandEnvironmentStringA.
 
-	* ace/config-win32-common.h: Only define ACE_HAS_GETRUSAGE when
-	  ACE_HAS_WINNT4 != 0.  Thanks to Paul Motuzenko
-	  <p_motuzenko@hotmail.com> for reporting this.
+        * ace/config-win32-common.h: Only define ACE_HAS_GETRUSAGE when
+          ACE_HAS_WINNT4 != 0.  Thanks to Paul Motuzenko
+          <p_motuzenko@hotmail.com> for reporting this.
 
 Sun May 03 01:58:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -13,81 +24,81 @@ Sun May 03 01:58:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat May  2 14:35:04 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tests/Reactor_Notify_Test.cpp: Factored out some common code to
- 	  make the test more concise.
+        * tests/Reactor_Notify_Test.cpp: Factored out some common code to
+          make the test more concise.
 
-	* tests/Reactor_Notify_Test.cpp: Modified the test to check
- 	  whether our new mechanism for disabling the notify pipe works
- 	  correctly.
+        * tests/Reactor_Notify_Test.cpp: Modified the test to check
+          whether our new mechanism for disabling the notify pipe works
+          correctly.
 
-	* ace/{WFMO,Select}_Reactor[_Impl]: Added the
- 	  "disable_notify_pipe" flag in the constructor in order to
- 	  disable this feature and save on descriptors if they aren't
- 	  required.  Thanks to Tom Venturella <tventurell@mdc.com> for
- 	  motivating this.
+        * ace/{WFMO,Select}_Reactor[_Impl]: Added the
+          "disable_notify_pipe" flag in the constructor in order to
+          disable this feature and save on descriptors if they aren't
+          required.  Thanks to Tom Venturella <tventurell@mdc.com> for
+          motivating this.
 
 Sat May 02  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* tests/Aio_Platform_Test.cpp: Included this test program for
-	testing a platform for Asynchronous I/O options.
-	* tests/Makefile (BIN): Added Aio_Platform_Test.
+        * tests/Aio_Platform_Test.cpp: Included this test program for
+        testing a platform for Asynchronous I/O options.
+        * tests/Makefile (BIN): Added Aio_Platform_Test.
 
 Fri May 01 17:52:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Arg_Shifter.{h,cpp}: Added macros ACE_Export and
- 	  ACE_BUILD_DLL respectively.
+        * ace/Arg_Shifter.{h,cpp}: Added macros ACE_Export and
+          ACE_BUILD_DLL respectively.
 
-	* ace/ACE_Library.mak:
-	* ace/ace_{dll,lib}.dsp: Added Arg_Shifter.cpp into project.
+        * ace/ACE_Library.mak:
+        * ace/ace_{dll,lib}.dsp: Added Arg_Shifter.cpp into project.
 
 Fri May  1 13:52:32 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Addr: Made the destructor for ACE_Addr virtual so that
- 	  subclasses can be deleted correctly.  Thanks to Wei Chiang
- 	  <chiang@horizon.ntc.nokia.com> for reporting this.
+        * ace/Addr: Made the destructor for ACE_Addr virtual so that
+          subclasses can be deleted correctly.  Thanks to Wei Chiang
+          <chiang@horizon.ntc.nokia.com> for reporting this.
 
-	* ace: Added Arg_Shifter from TAO and renamed it to
- 	  ACE_Arg_Shifter.
+        * ace: Added Arg_Shifter from TAO and renamed it to
+          ACE_Arg_Shifter.
 
-	* ace/IOStream_T.i (recv_n): ACE_IOStream<STREAM>::eof (void) had
- 	  a subtle bug if it is called when a get operation (>>) has not
- 	  failed.  Thanks to James CE Johnson <ace-users@lads.com> for
-	  reporting this bug.
+        * ace/IOStream_T.i (recv_n): ACE_IOStream<STREAM>::eof (void) had
+          a subtle bug if it is called when a get operation (>>) has not
+          failed.  Thanks to James CE Johnson <ace-users@lads.com> for
+          reporting this bug.
 
-	* examples/Connection/misc/Connection_Handler.cpp: Make sure to
- 	  activate() each active object using THR_DETACHED so we don't run
- 	  out of threading resources.  Thanks to Brad Walton
- 	  <brad.walton@transnexus.com> for reporting this.
+        * examples/Connection/misc/Connection_Handler.cpp: Make sure to
+          activate() each active object using THR_DETACHED so we don't run
+          out of threading resources.  Thanks to Brad Walton
+          <brad.walton@transnexus.com> for reporting this.
 
-	* ace/Timer_Queue_Adapters.cpp: Rather than returning the result
- 	  of schedule_ualarm(), the
- 	  ACE_Async_Timer_Queue_Adapter<TQ>::schedule() method should
- 	  return the timer id.  Thanks to James Garrison
- 	  <jhg@austx.tandem.com> for reporting this.
+        * ace/Timer_Queue_Adapters.cpp: Rather than returning the result
+          of schedule_ualarm(), the
+          ACE_Async_Timer_Queue_Adapter<TQ>::schedule() method should
+          return the timer id.  Thanks to James Garrison
+          <jhg@austx.tandem.com> for reporting this.
 
-	* examples/System_V_IPC/SV_Message_Queues: Renamed the so-called
- 	  "ACE_Message_Block" to "Message_Block" so it wouldn't be as
- 	  confusing.  Thanks to Ganapathi <guns@fs.IConNet.NET> for this
- 	  suggestion.
+        * examples/System_V_IPC/SV_Message_Queues: Renamed the so-called
+          "ACE_Message_Block" to "Message_Block" so it wouldn't be as
+          confusing.  Thanks to Ganapathi <guns@fs.IConNet.NET> for this
+          suggestion.
 
 Fri May 01 17:52:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ACE_Library.mak:
-	* ace/ace_{dll,lib}.dsp: Added Arg_Shifter.cpp into project.
+        * ace/ACE_Library.mak:
+        * ace/ace_{dll,lib}.dsp: Added Arg_Shifter.cpp into project.
 
 Fri May 01 14:09:21 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.h: Changed ACE_hrtime_t from signed to unsigned on Win32
-	  to insure correct results from ACE_High_Res_Timer::elapsed_time
-	  calculations.  Fixes bug P87.
+        * ace/OS.h: Changed ACE_hrtime_t from signed to unsigned on Win32
+          to insure correct results from ACE_High_Res_Timer::elapsed_time
+          calculations.  Fixes bug P87.
 
 Fri May 01 11:52:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Forgot to redefine ASYS_INLINE after #undef it.
+        * ace/OS.h: Forgot to redefine ASYS_INLINE after #undef it.
 
-	* ace/OS.i (last_error): On Win32, this should also update errno
- 	  after calling SetLastError ().  Thanks to Steve for pointing
- 	  this out.  Fixes bug P88.
+        * ace/OS.i (last_error): On Win32, this should also update errno
+          after calling SetLastError ().  Thanks to Steve for pointing
+          this out.  Fixes bug P88.
 
 Fri May 01 10:01:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -2387,11 +2398,11 @@ Sun Mar 01 08:38:00 1998  David L. Levine  <levine@cs.wustl.edu>
 Sat Feb 28 12:20:57 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
         * ace/Message_Queue.cpp: Fixed the implementation of
- 	  wait_not_{full,empty}_cond() so that they utilize the
- 	  ACE_Time_Value it's passed.  In addition, revised the
- 	  implementation of peek_dequeue_head() so that it uses the new
- 	  wait_not_empty_cond() implementation.  Thanks to Tom Venturella
- 	  <tventurell@mdc.com> for reporting this.
+          wait_not_{full,empty}_cond() so that they utilize the
+          ACE_Time_Value it's passed.  In addition, revised the
+          implementation of peek_dequeue_head() so that it uses the new
+          wait_not_empty_cond() implementation.  Thanks to Tom Venturella
+          <tventurell@mdc.com> for reporting this.
 
 Fri Feb 27 15:47:15 1998  David L. Levine  <levine@cs.wustl.edu>
 
