@@ -1,3 +1,10 @@
+Tue Jul 20 15:12:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_sunsoft.cpp:
+	  Changed format of double literal output to use scientific notation
+	  if necesssary. Thanks to Dwayne Burns <dburns@isrglobal.com> for
+	  sending in the IDL file that called for this.
+
 Tue Jul 20 14:08:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
