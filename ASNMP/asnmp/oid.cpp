@@ -433,7 +433,7 @@ Oid& Oid::operator+=( const unsigned long i)
     if (ACE_OS::strlen(ptr))
        ACE_OS::strcat(ptr,".");
 
-    if (ACE_OS::sprintf( buffer,"%u",i) != -1) {
+    if (ACE_OS::sprintf( buffer,"%lu",i) != -1) {
        ACE_OS::strcat(ptr, buffer);
        if ( smival.value.oid.ptr ) {
          set_invalid();
@@ -744,7 +744,7 @@ int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
   for (index=0; index < srcOid->len; index++) {
 
     // convert data element to a string
-    if (ACE_OS::sprintf( szNumber,"%u", srcOid->ptr[index]) == -1)
+    if (ACE_OS::sprintf( szNumber,"%lu", srcOid->ptr[index]) == -1)
       return -1;
 
     // verify len is not over
