@@ -90,7 +90,7 @@ TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec
               {
                 char *flowname = TAO_AV_Core::get_flowname (flow_spec[i]);
                 ACE_CString flow_name_key (flowname);
-		AVStreams::FlowConnection_var flow_connection_entry;
+                AVStreams::FlowConnection_var flow_connection_entry;
                 if (this->flow_connection_map_.find (flow_name_key,
                                                      flow_connection_entry) == 0)
                   {
@@ -102,7 +102,7 @@ TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec
             {
               // call stop on all the flows.
               FlowConnection_Map_Iterator iterator (this->flow_connection_map_);
-	      FlowConnection_Map_Entry *entry;
+              FlowConnection_Map_Entry *entry;
               for (;iterator.next (entry) !=  0;iterator.advance ())
                 {
                   entry->int_id_->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -923,14 +923,14 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
           // of connect() on the the streamctrl
           if( a_party->is_property_defined("Flows") &&
               b_party->is_property_defined("Flows") )
-	  {
+          {
               if (TAO_debug_level > 0) {
-		ACE_DEBUG ((LM_DEBUG, "(%N,%l) Full profile, invoking bind()\n"));
-	      }
+                ACE_DEBUG ((LM_DEBUG, "(%N,%l) Full profile, invoking bind()\n"));
+              }
 
               // It is full profile
               // we have feps in the sep then dont call connect
-	      // instead call bind on the streamctrl.
+              // instead call bind on the streamctrl.
               this->bind (this->sep_a_.in (),
                           this->sep_b_.in (),
                           the_qos,
@@ -940,13 +940,13 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
 
 
-	  }
-	  // This is the light profile, call connect()
-	  else  if (!CORBA::is_nil (this->vdev_a_.in ()) && !CORBA::is_nil (this->vdev_b_.in ()))
+          }
+          // This is the light profile, call connect()
+          else  if (!CORBA::is_nil (this->vdev_a_.in ()) && !CORBA::is_nil (this->vdev_b_.in ()))
           {
               if (TAO_debug_level > 0) {
-		ACE_DEBUG ((LM_DEBUG, "(%N,%l) Light profile, invoking connect()\n"));
-	      }
+                ACE_DEBUG ((LM_DEBUG, "(%N,%l) Light profile, invoking connect()\n"));
+              }
 
               // Tell the 2 VDev's about one another
               this->vdev_a_->set_peer (this->streamctrl_.in (),
@@ -974,7 +974,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               ACE_TRY_CHECK;
               if (result == 0)
                 ACE_ERROR_RETURN ((LM_ERROR, "sep_a->connect (sep_b) failed\n"), 0);
-	  }
+          }
         }
     }
   ACE_CATCHANY
@@ -2146,7 +2146,7 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec
 
   vdev_any.in() >>= vdev;
   CORBA::Any_var mc_any = vdev->get_property_value ("Related_MediaCtrl"
-						    ACE_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
 
   // The Related_MediaCtrl property was inserted as a CORBA::Object, so we
   // must extract it as the same type.
@@ -2154,7 +2154,7 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec
   mc_any.in() >>= CORBA::Any::to_object( obj.out() );
 
   AVStreams::MediaControl_var media_ctrl =
-	  AVStreams::MediaControl::_narrow( obj.in() );
+          AVStreams::MediaControl::_narrow( obj.in() );
 
   // deactivate the associated vdev and media ctrl
 
@@ -2787,8 +2787,8 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                     if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "QoS not found for %s\n", forward_entry->flowname ()));
                   // Narrow it to FlowProducer.
                   AVStreams::FlowProducer_var producer;
-		  producer = AVStreams::FlowProducer::_narrow (flow_endpoint.in() ACE_ENV_ARG_PARAMETER);
-		  //
+                  producer = AVStreams::FlowProducer::_narrow (flow_endpoint.in() ACE_ENV_ARG_PARAMETER);
+                  //
                   ACE_TRY_CHECK_EX (narrow);
                   // Else narrow succeeeded.
                   if (!CORBA::is_nil (producer.in ()))
@@ -3483,7 +3483,7 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                   CORBA::Object_var flowconnection_obj =
                     streamctrl->get_flow_connection (forward_entry.flowname () ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK_EX (flowconnection);
-			printf("successfully called get_flow_connection\n");
+                        printf("successfully called get_flow_connection\n");
                   if (!CORBA::is_nil (flowconnection_obj.in ()))
                     {
                       flowconnection = AVStreams::FlowConnection::_narrow (flowconnection_obj.in ()
@@ -3491,8 +3491,8 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                       ACE_TRY_CHECK_EX (flowconnection);
                     }
                 }
-	      ACE_CATCH(AVStreams::noSuchFlow, nsf)
-	        {
+              ACE_CATCH(AVStreams::noSuchFlow, nsf)
+                {
                           TAO_FlowConnection *flowConnection;
                           ACE_NEW_RETURN (flowConnection,
                                           TAO_FlowConnection,
@@ -3503,7 +3503,7 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                                                      flowconnection.in ()
                                                      ACE_ENV_ARG_PARAMETER);
                           ACE_TRY_CHECK;
-	        }
+                }
               ACE_CATCHANY
                 {
                   //if (TAO_debug_level >= 0)

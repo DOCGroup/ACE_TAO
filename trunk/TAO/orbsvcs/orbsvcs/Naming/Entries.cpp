@@ -61,7 +61,7 @@ TAO_ExtId::TAO_ExtId (void)
 }
 
 TAO_ExtId::TAO_ExtId (const char *id,
-		    const char *kind)
+                    const char *kind)
   : kind_ (kind),
     id_ (id)
 {
