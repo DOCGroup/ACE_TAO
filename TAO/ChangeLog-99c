@@ -1,3 +1,15 @@
+Mon Apr 12 13:41:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Timeprobe.h:
+	* tao/Connect.cpp:
+	* tao/Invocation.cpp:
+	  Added four new timeprobes to measure client outgoing
+	  process time and server process time. Whereas the 
+	  pluggable protocols timeprobes were a subset of the
+	  regular timeprobes, these are a disjoint set. If both
+	  the pluggable and minimal timeprobes macros are 
+	  uncommented in Timeprobe.h, pluggable will override.
+
 Mon Apr 12 12:37:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Stub.cpp: 
