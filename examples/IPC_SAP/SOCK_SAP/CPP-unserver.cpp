@@ -7,6 +7,7 @@
 #include "ace/LSOCK_Acceptor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/OS_main.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(SOCK_SAP, CPP_unserver, "$Id$")
 

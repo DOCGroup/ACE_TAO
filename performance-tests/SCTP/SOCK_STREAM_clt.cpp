@@ -6,6 +6,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/CDR_Stream.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/OS_Memory.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
