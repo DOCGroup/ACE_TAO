@@ -102,9 +102,15 @@ ACE_Process::spawn (ACE_Process_Options &options)
            h != ACE_INVALID_HANDLE && curr_len + 20 < max_len;
            h = h_iter ())
         {
+#if defined (ACE_WIN64)
+          curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
+                                       ACE_LIB_TEXT (" +H %I64d"),
+                                       h);
+#else
           curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
                                        ACE_LIB_TEXT (" +H %d"),
                                        h);
+#endif /* ACE_WIN64 */
         }
     }
 

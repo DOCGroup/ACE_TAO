@@ -28,10 +28,10 @@ ACE_OS::writev (ACE_HANDLE handle,
 #if defined (ACE_LACKS_WRITEV)
   ACE_OSCALL_RETURN (ACE_OS::writev_emulation (handle,
                                                (ACE_WRITEV_TYPE *) iov,
-                                               iovcnt), int, -1);
+                                               iovcnt), ssize_t, -1);
 #else /* ACE_LACKS_WRITEV */
   ACE_OSCALL_RETURN (::writev (handle,
                                (ACE_WRITEV_TYPE *) iov,
-                               iovcnt), int, -1);
+                               iovcnt), ssize_t, -1);
 #endif /* ACE_LACKS_WRITEV */
 }

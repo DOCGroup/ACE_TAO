@@ -146,6 +146,7 @@ ACE_OS::putmsg (ACE_HANDLE handle, const struct strbuf *ctl,
                                flags), int, -1);
 #else
   ACE_UNUSED_ARG (flags);
+  ssize_t result;
   if (ctl == 0 && data == 0)
     {
       errno = EINVAL;
@@ -153,9 +154,15 @@ ACE_OS::putmsg (ACE_HANDLE handle, const struct strbuf *ctl,
     }
   // Handle the two easy cases.
   else if (ctl != 0)
-    return ACE_OS::write (handle, ctl->buf, ctl->len);
+    {
+      result =  ACE_OS::write (handle, ctl->buf, ctl->len);
+      return ACE_static_cast (int, result);
+    }
   else if (data != 0)
-    return ACE_OS::write (handle, data->buf, data->len);
+    {
+      result = ACE_OS::write (handle, data->buf, data->len);
+      return ACE_static_cast (int, result);
+    }
   else
     {
       // This is the hard case.
@@ -163,9 +170,9 @@ ACE_OS::putmsg (ACE_HANDLE handle, const struct strbuf *ctl,
       ACE_NEW_RETURN (buf, char [ctl->len + data->len], -1);
       ACE_OS::memcpy (buf, ctl->buf, ctl->len);
       ACE_OS::memcpy (buf + ctl->len, data->buf, data->len);
-      int result = ACE_OS::write (handle, buf, ctl->len + data->len);
+      result = ACE_OS::write (handle, buf, ctl->len + data->len);
       delete [] buf;
-      return result;
+      return ACE_static_cast (int, result);
     }
 #endif /* ACE_HAS_STREAM_PIPES */
 }

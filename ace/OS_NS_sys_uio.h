@@ -56,9 +56,9 @@ namespace ACE_OS {
   //  or inl.
 #if defined (ACE_LACKS_WRITEV)
   extern ACE_Export
-  int writev_emulation (ACE_HANDLE handle,
-                        ACE_WRITEV_TYPE *iov,
-                        int iovcnt);
+  ssize_t writev_emulation (ACE_HANDLE handle,
+                            ACE_WRITEV_TYPE *iov,
+                            int iovcnt);
 #endif /* ACE_LACKS_WRITEV */
 
 } /* namespace ACE_OS */
