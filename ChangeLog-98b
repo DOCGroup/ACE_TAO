@@ -1,3 +1,7 @@
+Sun Sep 06 12:28:40 1998 Fred Kuhns <fredk@arl.wustl.edu>
+	* Added a simple reactor/acceptor figure to the first tutorial
+	  docs/tutorial/001/simple.*
+
 Sun Sep 06 08:34:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-g++-common.h,ace/README,tests/Conn_Test.cpp:
