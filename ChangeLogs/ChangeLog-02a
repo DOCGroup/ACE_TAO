@@ -1,3 +1,9 @@
+Wed Mar 27 20:00:31 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* include/makeinclude/platform_linux.GNU: Fixed a typo where
+	  PLATFORM_XT_LDFLAGS was spelled incorrectly.  Thanks to 
+	  Eric Eide for reporting this.
+
 Wed Mar 27 18:36:14 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_linux.GNU (CXX_VERSION):
@@ -54,6 +60,7 @@ Wed Mar 27 15:10:27 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/icc.bat: Removed duplicates.
 
+>>>>>>> 4.3319
 Wed Mar 27 10:25:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/High_Res_Timer.{h,cpp}:

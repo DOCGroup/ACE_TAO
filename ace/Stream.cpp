@@ -426,7 +426,7 @@ ACE_Stream<ACE_SYNCH_USE>::close (int flags)
 
 template <ACE_SYNCH_DECL> int
 ACE_Stream<ACE_SYNCH_USE>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
-                                  void *a)
+                                    void *a)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::control");
   ACE_IO_Cntl_Msg ioc (cmd);

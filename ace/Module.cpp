@@ -178,10 +178,10 @@ ACE_Module<ACE_SYNCH_USE>::~ACE_Module (void)
 
 template <ACE_SYNCH_DECL>
 ACE_Module<ACE_SYNCH_USE>::ACE_Module (const ACE_TCHAR *mod_name,
-                                     ACE_Task<ACE_SYNCH_USE> *writer_q,
-                                     ACE_Task<ACE_SYNCH_USE> *reader_q,
-                                     void *args,
-                                     int flags /* = M_DELETE */)
+                                       ACE_Task<ACE_SYNCH_USE> *writer_q,
+                                       ACE_Task<ACE_SYNCH_USE> *reader_q,
+                                       void *args,
+                                       int flags /* = M_DELETE */)
   : flags_ (0)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::ACE_Module");
@@ -215,7 +215,7 @@ ACE_Module<ACE_SYNCH_USE>::close (int flags /* = M_DELETE_NONE */)
 
 template <ACE_SYNCH_DECL> int
 ACE_Module<ACE_SYNCH_USE>::close_i (int which,
-                                  int flags)
+                                    int flags)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::close_i");
 
