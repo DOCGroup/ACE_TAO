@@ -3247,7 +3247,7 @@ public:
 
   static int mutex_lock (ACE_mutex_t *m);
   // Win32 note: Abandoned mutexes are not treated differently. 0 is
-  // returned.
+  // returned since the calling thread does get the ownership.
 
   static int mutex_lock (ACE_mutex_t *m,
 			 int &abandoned);
@@ -3255,6 +3255,14 @@ public:
   // mutexes, <abandoned> is set to 1 and 0 is returned.
 
   static int mutex_trylock (ACE_mutex_t *m);
+  // Win32 note: Abandoned mutexes are not treated differently. 0 is
+  // returned since the calling thread does get the ownership.
+
+  static int mutex_trylock (ACE_mutex_t *m,
+			    int &abandoned);
+  // This method is only implemented for Win32.  For abandoned
+  // mutexes, <abandoned> is set to 1 and 0 is returned.
+
   static int mutex_unlock (ACE_mutex_t *m);
 
   // = A set of wrappers for mutex locks that only work within a

@@ -1346,7 +1346,8 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
 	{
 	case WAIT_OBJECT_0:
 	case WAIT_ABANDONED:
-	  // We will ignore abandonments in this method 
+	  // We will ignore abandonments in this method
+	  // Note that we still hold the lock
 	  return 0;  
 	default:
 	  // This is a hack, we need to find an appropriate mapping...
@@ -1432,8 +1433,9 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
 	  case WAIT_OBJECT_0:
 	    return 0;
 	  case WAIT_ABANDONED:
-	    errno = WAIT_ABANDONED;
-	    return -1;  
+	    // We will ignore abandonments in this method
+	    // Note that we still hold the lock
+	    return 0;  
 	  case WAIT_TIMEOUT:
 	    errno = ETIME;
 	    return -1;
@@ -1465,6 +1467,45 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
+}
+
+ACE_INLINE int 
+ACE_OS::mutex_trylock (ACE_mutex_t *m, int &abandoned)
+{
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_WTHREADS)
+  abandoned = 0;	  
+  switch (m->type_)
+    {
+    case USYNC_PROCESS: 
+      {
+	// Try for 0 milliseconds - i.e. nonblocking.
+	switch (::WaitForSingleObject (m->proc_mutex_, 0))
+	  {
+	  case WAIT_OBJECT_0:
+	    return 0;
+	  case WAIT_ABANDONED:
+	    abandoned = 1;	  
+	    return 0;  // something goofed, but we hold the lock ... 
+	  case WAIT_TIMEOUT:
+	    errno = ETIME;
+	    return -1;
+	  default:
+	    errno = ::GetLastError ();
+	    return -1;
+	  }
+      }
+    case USYNC_THREAD:
+      return ACE_OS::thread_mutex_trylock (&m->thr_mutex_);
+    default:
+      errno = EINVAL;
+      return -1;
+    }
+  /* NOTREACHED */
+#else
+  ACE_UNUSED_ARG (m);
+  ACE_UNUSED_ARG (abandoned);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS and ACE_HAS_WTHREADS */ 
 }
 
 ACE_INLINE int 
@@ -2106,9 +2147,6 @@ ACE_OS::sema_wait (ACE_sema_t *s)
     {
     case WAIT_OBJECT_0:
       return 0;
-    case WAIT_ABANDONED:
-      errno = WAIT_ABANDONED;
-      return -1;
     default:
       // This is a hack, we need to find an appropriate mapping...
       errno = ::GetLastError ();
@@ -2178,9 +2216,6 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     {
     case WAIT_OBJECT_0:
       return 0;
-    case WAIT_ABANDONED:
-      errno = WAIT_ABANDONED;
-      return -1;
     case WAIT_TIMEOUT:
       errno = ETIME;
       return -1;
@@ -2474,9 +2509,6 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     {
       switch (result)
 	{
-	case WAIT_ABANDONED:
-	  error = WAIT_ABANDONED;
-	  break;
 	case WAIT_TIMEOUT:
 	  error = ETIME;
 	  break;
@@ -2591,9 +2623,6 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     {
       switch (result)
 	{
-	case WAIT_ABANDONED:
-	  error = WAIT_ABANDONED;
-	  break;
 	case WAIT_TIMEOUT:
 	  error = ETIME;
 	  break;
@@ -2654,9 +2683,6 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
     {
       switch (result)
 	{
-	case WAIT_ABANDONED:
-	  error = WAIT_ABANDONED;
-	  break;
 	case WAIT_TIMEOUT:
 	  error = ETIME;
 	  break;
@@ -2992,9 +3018,6 @@ ACE_OS::event_wait (ACE_event_t *event)
     {
     case WAIT_OBJECT_0:
       return 0;
-    case WAIT_ABANDONED:
-      errno = WAIT_ABANDONED;
-      return -1;
     default:
       errno = ::GetLastError ();
       return -1;
@@ -3070,9 +3093,6 @@ ACE_OS::event_timedwait (ACE_event_t *event,
     {
     case WAIT_OBJECT_0:
       return 0;
-    case WAIT_ABANDONED:
-      errno = WAIT_ABANDONED;
-      return -1;
     default:
       // This is a hack, we need to find an appropriate mapping...
       errno = ::GetLastError ();
