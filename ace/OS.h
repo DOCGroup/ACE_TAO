@@ -1750,17 +1750,14 @@ struct stat {
 #     define ACE_SCHED_FIFO SCHED_FIFO
 #     define ACE_SCHED_RR SCHED_RR
 
-// Definitions for mapping POSIX pthreads onto Solaris threads.
+// Definitions for mapping POSIX pthreads draft 6 into 1003.1c names
 
 #     if defined (ACE_HAS_PTHREADS_DRAFT6)
-#       define PTHREAD_DETACHED        0x1
-#       define PTHREAD_SCOPE_SYSTEM    0x2
-#       define PTHREAD_INHERIT_SCHED   0x4
-#       define PTHREAD_NOFLOAT         0x8
+#       define PTHREAD_SCOPE_PROCESS           PTHREAD_SCOPE_LOCAL
+#       define PTHREAD_SCOPE_SYSTEM            PTHREAD_SCOPE_GLOBAL
 #       define PTHREAD_CREATE_UNDETACHED       0
-#       define PTHREAD_CREATE_DETACHED         PTHREAD_DETACHED
+#       define PTHREAD_CREATE_DETACHED         1
 #       define PTHREAD_CREATE_JOINABLE         0
-#       define PTHREAD_SCOPE_PROCESS           0
 #       define PTHREAD_EXPLICIT_SCHED          0
 #       define PTHREAD_MIN_PRIORITY            0
 #       define PTHREAD_MAX_PRIORITY            126
