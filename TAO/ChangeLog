@@ -1,13 +1,14 @@
 Thu Jul 31 22:39:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+	* orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
 
 	  More debugging of IFR IDL3 support.
 
-        * orbsvcs/tests/InterfaceRepo/IDL3_Test/client.cpp
-        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp
-        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h
-        * orbsvcs/tests/InterfaceRepo/IDL3_Test/test.idl
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/test.idl:
 
 	  Extended test so that it now covers component attributes,
 	  inheritance, supported interfaces, facets, receptacles,
