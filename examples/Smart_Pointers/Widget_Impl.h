@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Widget_Impl.h
@@ -12,10 +13,13 @@
 #ifndef WIDGET_IMPL_H
 #define WIDGET_IMPL_H
 
-#include "ace/Unbounded_Queue.h"
-#include "ace/Refcounted_Auto_Ptr.h"
 #include "Widget.h"
 #include "Widget_Part.h"
+
+#include "ace/Unbounded_Queue.h"
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 
 /**
  * @class Widget_Impl

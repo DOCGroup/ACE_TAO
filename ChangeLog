@@ -1,3 +1,11 @@
+Fri Apr 23 11:14:51 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/Smart_Pointers/Widget_Impl.h:
+
+	  Include "ace/Synch_Traits.h" and "ace/Thread_Mutex.h".
+	  Necessitated by header inclusion reductions in
+	  "ace/Refcounted_Auto_Ptr.*".
+
 Fri Apr 23 15:01:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Thread_Manager_Test.cpp:
