@@ -1,3 +1,10 @@
+Tue Apr 06 19:36:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Active_Map_Manager.h (ACE_Active_Map_Manager_Key): Added a
+	  separate structure that holds the fields of the key.  This
+	  separate structure makes it easier to manage copying the index
+	  and the generation to and from the user buffer.
+
 Tue Apr  6 16:07:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Synch.cpp (get_thread_id): If we have recursive mutexes then
@@ -6,7 +13,7 @@ Tue Apr  6 16:07:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Tue Apr  6 15:50:14 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/exceptions.html: 
+	* docs/exceptions.html:
 	Updated the documentation.
 
 Tue Apr  6 15:25:56 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
