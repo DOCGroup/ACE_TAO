@@ -66,8 +66,8 @@ public RTScheduling::Current,
     spawn (RTScheduling::ThreadAction_ptr start,
 	   CORBA::VoidData data,
 	   const char* name,
-	   CORBA::Policy sched_param,
-	   CORBA::Policy implicit_sched_param,
+	   CORBA::Policy_ptr sched_param,
+	   CORBA::Policy_ptr implicit_sched_param,
 	   CORBA::ULong stack_size,
 	   RTCORBA::Priority base_priority
 	   ACE_ENV_ARG_DECL)
@@ -119,8 +119,8 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
     spawn (RTScheduling::ThreadAction_ptr start,
 	   CORBA::VoidData data,
 	   const char* name,
-	   CORBA::Policy sched_param,
-	   CORBA::Policy implicit_sched_param,
+	   CORBA::Policy_ptr sched_param,
+	   CORBA::Policy_ptr implicit_sched_param,
 	   CORBA::ULong stack_size,
 	   RTCORBA::Priority base_priority
 	   ACE_ENV_ARG_DECL)
@@ -182,6 +182,10 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
   void delete_all_currents (void);
 
   const char* name (void);
+
+  TAO_ORB_Core* orb (void);
+
+  RTScheduling::Scheduler_ptr scheduler (void);
 
  private:
   RTScheduling::Scheduler_var scheduler_;
