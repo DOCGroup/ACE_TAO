@@ -9,6 +9,7 @@
 
 #include "ace/Malloc.h"
 #include "ace/SV_Semaphore_Complex.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(SV_Semaphores, Semaphores_2, "$Id$")
 
