@@ -1,3 +1,8 @@
+Sat Jan  5 08:59:41 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Future.cpp (get): Added an ACE_const_cast() to silence certain
+	  C++ compilers.  Thanks to Venkita for reporting this.
+
 Fri Jan  5 15:17:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/OS.{h,cpp}:
