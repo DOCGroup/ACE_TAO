@@ -1,37 +1,43 @@
+Tue Apr 06 13:56:18 1999  Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov>
+
+        * include/makeinclude/rules.local.GNU: added -f to ln -s commands,
+          to force overwrite of old symlink.  This eases moving of
+          installed ACE code trees.
+
 Tue Apr  6 00:17:59 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/DLL {.h, .cpp} (set_handle): Added the set_handle () method
-	  which allows the user to set the ACE_SHLIB_HANDLE for the DLL.
-	  Thanks to Bob McWhirter for bringing up this point.
+        * ace/DLL {.h, .cpp} (set_handle): Added the set_handle () method
+          which allows the user to set the ACE_SHLIB_HANDLE for the DLL.
+          Thanks to Bob McWhirter for bringing up this point.
 
 Mon Apr  5 22:27:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-irix6.x-sgic++-nothreads.h: Added 
-	
-	  #if !defined (ACE_HAS_NETDB_REENTRANT_FUNCTIONS)
-	  #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
-	  #endif /* ACE_HAS_NETDB_REENTRANT_FUNCTIONS */
-	
-	  to fix a problem with SGI 6.5.  Thanks to Bob Laferrie
- 	  <laferrie@execpc.com> for reporting this.
+        * ace/config-irix6.x-sgic++-nothreads.h: Added
+
+          #if !defined (ACE_HAS_NETDB_REENTRANT_FUNCTIONS)
+          #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
+          #endif /* ACE_HAS_NETDB_REENTRANT_FUNCTIONS */
+
+          to fix a problem with SGI 6.5.  Thanks to Bob Laferrie
+          <laferrie@execpc.com> for reporting this.
 
 Mon Apr  5 19:42:11 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
-	* m4/acinclude.m4:
+        * configure.in:
+        * m4/acinclude.m4:
 
-	  Created the macro ACE_CHECK_FOR_CVS_DIR to prevent the configure
-	  script from continuing the configuration if the current
-	  configuration directory is in a CVS controlled directory.  The
-	  idea is to prevent automatically generated files from being
-	  checked into the repository.  This will prevent accidental
-	  overwrites of ACE's current Makefiles by the automatically
-	  generated ones, for example.
+          Created the macro ACE_CHECK_FOR_CVS_DIR to prevent the configure
+          script from continuing the configuration if the current
+          configuration directory is in a CVS controlled directory.  The
+          idea is to prevent automatically generated files from being
+          checked into the repository.  This will prevent accidental
+          overwrites of ACE's current Makefiles by the automatically
+          generated ones, for example.
 
-	  In addition, this should ease the transition from the current
-	  Makefile scheme to the new Auto{conf,make}/libtool scheme since
-	  the current Makefiles can remain under CVS control without
-	  the generate Makefiles interfering with them.
+          In addition, this should ease the transition from the current
+          Makefile scheme to the new Auto{conf,make}/libtool scheme since
+          the current Makefiles can remain under CVS control without
+          the generate Makefiles interfering with them.
 
 Mon Apr 05 17:02:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
