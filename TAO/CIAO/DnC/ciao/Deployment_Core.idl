@@ -94,32 +94,47 @@ module Deployment
 
   typedef sequence < Component_Info > ComponentInfos;
 
+  // @@ (OO) Tao, you're altering an OMG defined interface below.  In
+  //         order to avoid confusion, it is probably better to create
+  //         another NodeApplication interface in the CIAO namespace
+  //         that inherits from Deployment::NodeApplication.  You'd
+  //         then use the CIAO::NodeApplication in your
+  //         implementation.
+  //
+  //         Alternatively, you should at least place a CIAO-specific
+  //         typeprefix within your altered NodeApplication interface
+  //         to prevent interoperability issues.
+
   // This NodeApplication contains the semantic from both Container and
   // the new DnC NodeApplication  --Tao
   interface NodeApplication : Application
   {
     readonly attribute ::Deployment::Properties properties;
 
-    /*@@ This operation is added for the NodeApplicationManager to initialize
-     *   the NodeApplication after creating it.
-     *   The properties are those for the Container and they will be implemented
-     *   upon request from our users.   --Tao
+    /*@@ This operation is added for the NodeApplicationManager to
+     *   initialize the NodeApplication after creating it.  The
+     *   properties are those for the Container and they will be
+     *   implemented upon request from our users.   --Tao
      *
-     *   Seems Kitty is opposing the idea of sending anys around. But what really
-     *   stroke me down was that OMG is working out another property&configuration
-     *   specification so all the properties we set/used might have to be thrown
-     *   away in the future.....I am totally speachless and confused...and frustrated.
+     *   Seems Kitty is opposing the idea of sending anys around. But
+     *   what really stroke me down was that OMG is working out
+     *   another property&configuration specification so all the
+     *   properties we set/used might have to be thrown away in the
+     *   future.....I am totally speachless and confused...and
+     *   frustrated.
      *
-     *   But any way seems I can forget about the configuration now. --Tao
+     *   But any way seems I can forget about the configuration
+     *   now. --Tao
      */
 
-    // @@ Initialize the nodeapplication, so it will know what components it will create
-    // and home many of them are there. However the real create action will take place
-    // when start launch is called on NodeApplicationManager.
+    // @@ Initialize the nodeapplication, so it will know what
+    //    components it will create and home many of them are
+    //    there. However the real create action will take place when
+    //    start launch is called on NodeApplicationManager.
     long init ();
 
-    // @@ This operation will be called by NodeApplicationManager client to really
-    // start to create homes and components.
+    // @@ This operation will be called by NodeApplicationManager
+    //    client to really start to create homes and components.
     ComponentInfos install (in ImplementationInfos impl_infos)
       raises (UnknownImplId,
 	      ImplEntryPointNotFound,

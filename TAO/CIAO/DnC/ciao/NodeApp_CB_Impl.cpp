@@ -3,17 +3,17 @@
 
 CIAO::NodeApplication_Callback_Impl::
 NodeApplication_Callback_Impl  (CORBA::ORB_ptr o,
-				                        PortableServer::POA_ptr p,
-				                        Deployment::NodeApplicationManager_ptr s,
-				                        const Deployment::Properties &properties
-                                ACE_ENV_ARG_DECL_NOT_USED)
+                                PortableServer::POA_ptr p,
+                                Deployment::NodeApplicationManager_ptr s,
+                                const Deployment::Properties &properties
+                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (o)),
     poa_ (PortableServer::POA::_duplicate (p)),
     nam_ (Deployment::NodeApplicationManager::_duplicate (s))
 {
-  ACE_TRY 
-  { 
+  ACE_TRY
+  {
     //@@ Note: this properties is useless unless
     //   we have some specific properties for the callback obj.
     Deployment::Properties * tmp = 0;
@@ -21,7 +21,7 @@ NodeApplication_Callback_Impl  (CORBA::ORB_ptr o,
                     Deployment::Properties (properties),
                     CORBA::NO_MEMORY ());
     ACE_TRY_CHECK;
-    this->properties_ = tmp; 
+    this->properties_ = tmp;
   }
   ACE_CATCHANY
   {
@@ -33,23 +33,21 @@ NodeApplication_Callback_Impl  (CORBA::ORB_ptr o,
   ACE_CHECK;
 }
 
-CIAO::NodeApplication_Callback_Impl::
-~NodeApplication_Callback_Impl ()
+CIAO::NodeApplication_Callback_Impl::~NodeApplication_Callback_Impl ()
 {
 }
 
 PortableServer::POA_ptr
-CIAO::NodeApplication_Callback_Impl::
-_default_POA (void)
+CIAO::NodeApplication_Callback_Impl::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 Deployment::NodeApplicationManager_ptr
-CIAO::NodeApplication_Callback_Impl::
-register_node_application (Deployment::NodeApplication_ptr na,
-			   Deployment::Properties_out properties
-			   ACE_ENV_ARG_DECL_NOT_USED)
+CIAO::NodeApplication_Callback_Impl::register_node_application (
+    Deployment::NodeApplication_ptr na,
+    Deployment::Properties_out properties
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   properties = this->properties_._retn ();
@@ -59,9 +57,13 @@ register_node_application (Deployment::NodeApplication_ptr na,
 }
 
 Deployment::NodeApplication_ptr
-CIAO::NodeApplication_Callback_Impl::
-get_nodeapp_ref (void)
+CIAO::NodeApplication_Callback_Impl::get_nodeapp_ref (void)
 {
+  // @@ (OO) How are you relinquishing ownership here?  Since you're
+  //         duplicating the reference you actually maintain
+  //         ownership.  Is the below comment wrong, or is the code
+  //         wrong?
+
   // Relinquish the ownership of the nodeapplication reference.
   //This method should only be called from the NodeApplicationManager.
   return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());

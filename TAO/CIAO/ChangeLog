@@ -1,9 +1,40 @@
+Wed Jun 23 03:14:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.inl:
+	* DnC/ExecutionManager/ExecutionManager_Impl.cpp:
+	* DnC/ExecutionManager/ExecutionManager_Impl.h:
+	* DnC/NodeApplicationManager/ImplementationInfo.cpp:
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.h:
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.inl:
+	* DnC/NodeManager/NodeDaemon_Impl.cpp:
+	* DnC/NodeManager/NodeDaemon_Impl.h:
+	* DnC/RepositoryManager/RepositoryManager_Impl.cpp:
+	* DnC/RepositoryManager/RepositoryManager_Impl.h:
+	* DnC/RepositoryManager/Repository_Manager.cpp:
+	* DnC/RepositoryManager/Update_Plan.cpp:
+	* DnC/ciao/Container_Base.cpp:
+	* DnC/ciao/Container_Base.h:
+	* DnC/ciao/Cookies.cpp:
+	* DnC/ciao/Deployment_Core.idl:
+	* DnC/ciao/NodeApp_CB_Impl.cpp:
+	* DnC/ciao/NodeApp_CB_Impl.h:
+	* DnC/ciao/NodeApplication_Impl.cpp:
+	* DnC/ciao/NodeApplication_Impl.h:
+	* DnC/ciao/NodeApplication_Impl.inl:
+	* DnC/ciao/Servant_Impl_Base.cpp:
+	* DnC/ciao/Servant_Impl_T.cpp:
+
+	  Performed a code review and left comments for DnC developers.
+
 Tue Jun 22 18:05:19 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Documentation/Build.html:
 
 	  Added comment about the requirement of boost 1.30.2 in order
-	  to build CCF/CIDLC on Windows. 
+	  to build CCF/CIDLC on Windows.
 	  Thanks to Valery <acapstan@bigpond.net.au> for catching this.
 
 Tue Jun 22 10:38:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -11,7 +42,6 @@ Tue Jun 22 10:38:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
  	* CIDLC/ServantSourceGenerator.cpp:
 
 	  Added a missing _duplicate () in the connect_emittype () calls.
-
 
 Mon Jun 21 17:46:32 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -67,7 +97,6 @@ Fri Jun 18 13:34:16 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
           Fixed linking problems in Windows. Added debug/test
           capabilities by remotely shutdown ExecutionManager.
-
 
 Fri Jun 18 11:59:56 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
