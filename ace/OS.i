@@ -3374,15 +3374,15 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 
   if (result != -1 || errno == EBUSY)
     ACE_OS::mutex_unlock (&rw->lock_);
-#else
-  ACE_UNUSED_ARG (rw);
-  errno = EBUSY;
-  return -1;
-#endif /* 0 */
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
 #endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
   return 0;
+#else  /* ! 0 */
+  ACE_UNUSED_ARG (rw);
+  errno = EBUSY;
+  return -1;
+#endif /* ! 0 */
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (rw);
