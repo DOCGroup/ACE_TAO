@@ -131,16 +131,22 @@ TAO_CEC_Propagate_Typed_Event::work (TAO_CEC_ProxyPushSupplier *supplier
 
 // ****************************************************************
 
+// Note the following are explicitly instantiated in CEC_ConsumerAdmin
+// instantiating them here results in duplicate symbols from Solaris build:
+// CC: Forte Developer 7 C++ 5.4 2002/03/09
+// template class TAO_ESF_Shutdown_Proxy<TAO_CEC_ProxyPushSupplier>;
+// template class TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier>;
+// #pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_CEC_ProxyPushSupplier>
+// #pragma instantiate TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier>
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,TAO_CEC_ProxyPushSupplier,CosEventChannelAdmin::ProxyPushSupplier>;
-template class TAO_ESF_Shutdown_Proxy<TAO_CEC_ProxyPushSupplier>;
-template class TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier>;
+template class TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,TAO_CEC_ProxyPullSupplier,CosEventChannelAdmin::ProxyPullSupplier>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,TAO_CEC_ProxyPushSupplier,CosEventChannelAdmin::ProxyPushSupplier>
-#pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_CEC_ProxyPushSupplier>
-#pragma instantiate TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier>
+#pragma instantiate TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,TAO_CEC_ProxyPullSupplier,CosEventChannelAdmin::ProxyPullSupplier>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

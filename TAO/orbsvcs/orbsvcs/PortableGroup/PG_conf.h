@@ -24,14 +24,14 @@
 
 #include "orbsvcs/PortableGroupC.h"
 
-#ifndef TAO_PG_MAX_OBJECT_GROUPS
+#ifndef TAO_PG_MAX_OBJECT_GROUPS  // @@ why create arbitrary limits?
 /// The maximum number of object groups to be managed by the
 /// ObjectGroupManager.  This number is also equal to the number of
 /// factory sets managed by the GenericFactory.
 const size_t TAO_PG_MAX_OBJECT_GROUPS = 1024;
 #endif  /* TAO_PG_MAX_NUMBER_OF_OBJECT_GROUPS */
 
-#ifndef TAO_PG_MAX_LOCATIONS
+#ifndef TAO_PG_MAX_LOCATIONS      // @@ why create arbitrary limits?
 /// The maximum number of locations to be managed by the
 /// ObjectGroupManager.
 const size_t TAO_PG_MAX_LOCATIONS = 1024;
@@ -46,7 +46,7 @@ const PortableGroup::MembershipStyleValue TAO_PG_MEMBERSHIP_STYLE =
 #ifndef TAO_PG_INITIAL_NUMBER_MEMBERS
 /// The default initial number of object group members.
 const PortableGroup::InitialNumberMembersValue TAO_PG_INITIAL_NUMBER_MEMBERS =
-  0;
+  2;
 #endif  /* TAO_PG_INITIAL_NUMBER_MEMBERS */
 
 #ifndef TAO_PG_MINIMUM_NUMBER_MEMBERS

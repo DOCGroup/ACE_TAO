@@ -1,23 +1,228 @@
+Sun Dec 21 19:35:44 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * ChangeLogs/ChangeLog-oci_haft:
+          This file contains the change log entries made during the HAFT project.
+          The files below were added or changed during the project and are being
+          merged into the main trunk with this ChangeLog entry.
+
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.h:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h:
+        * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultAnalyzer.h:
+        * orbsvcs/FT_ReplicationManager/FT_FaultAnalyzer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h:
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h:
+        * orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_Property_Validator.h:
+        * orbsvcs/FT_ReplicationManager/FT_Property_Validator.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerLib_export.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Main.cpp:
+        * orbsvcs/FT_ReplicationManager/README:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.h:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+        * orbsvcs/Fault_Notifier/.cvsignore:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
+        * orbsvcs/Fault_Notifier/Fault_Notifier_Main.cpp:
+        * orbsvcs/LoadBalancer/LoadBalancer.mpc:
+        * orbsvcs/examples/FaultTolerance/Makefile:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/CrashPoint.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/CrashPoint.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/Log.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/LogACE_RB_Tree.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/LogStdMap.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/Makefile:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/README:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.idl:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/StateUpdate.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FT_CORBA.idl:
+        * orbsvcs/orbsvcs/FT_CORBA_ORB.idl:
+        * orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl:
+        * orbsvcs/orbsvcs/FT_Notifier.idl:
+        * orbsvcs/orbsvcs/FT_Replica.idl:
+        * orbsvcs/orbsvcs/FT_ReplicationManager.idl:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.i:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.i:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.inl:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.i:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.cpp:
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Factory_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Factory_Map.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Factory_Set.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Location_Equal_To.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Location_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Null_Property_Validator.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Operators.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set_Find.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Utils.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Utils.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_conf.h:
+        * orbsvcs/orbsvcs/PortableGroup/POA_Hooks.h:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.h:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.h:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h:
+        * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/miopconf.h:
+        * orbsvcs/tests/FT_App/.cvsignore:
+        * orbsvcs/tests/FT_App/FTAPP_Analyzer_Main.cpp:
+        * orbsvcs/tests/FT_App/FTAPP_FactoryRegistry_Main.cpp:
+        * orbsvcs/tests/FT_App/FTAPP_FaultConsumer_Main.cpp:
+        * orbsvcs/tests/FT_App/FTAPP_Notifier_Main.cpp:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+        * orbsvcs/tests/FT_App/FT_Creator.h:
+        * orbsvcs/tests/FT_App/FT_Creator.cpp:
+        * orbsvcs/tests/FT_App/FT_Replica.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicationManagerController.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica.idl:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * orbsvcs/tests/FT_App/README:
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.h:
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.cpp:
+        * orbsvcs/tests/FT_App/StubBatchConsumer.h:
+        * orbsvcs/tests/FT_App/StubBatchConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.h:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.h:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.h:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.h:
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+        * orbsvcs/tests/FT_App/replica.cmd:
+        * orbsvcs/tests/FT_App/run_test_basic.pl:
+        * orbsvcs/tests/FT_App/run_test_demo.pl:
+        * orbsvcs/tests/FT_App/run_test_detector.pl:
+        * orbsvcs/tests/FT_App/run_test_fault_consumer.pl:
+        * orbsvcs/tests/FT_App/run_test_notifier.pl:
+        * orbsvcs/tests/FT_App/run_test_registry.pl:
+        * orbsvcs/tests/FT_App/run_test_rmnotifier.pl:
+        * orbsvcs/tests/FT_App/run_test_rmregistry.pl:
+        * orbsvcs/tests/FT_App/testscript:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/GroupRef_Manipulation.mpc:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGR/FaultTolerance_IOGR.mpc:
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/FaultTolerance_IOGRManipulation.mpc:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
+        * tao/IORManipulation/IORManipulation.h:
+        * tao/IORManipulation/IORManipulation.cpp:
+        * tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptorC.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/ServerInterceptorAdapter.h:
+        * tao/PortableServer/ServerInterceptorAdapter.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.i:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Utils/Server_Main.h:
+        * tao/Utils/Server_Main.cpp:
+        * tao/Utils/Utils.mpc:
+        * utils/catior/catior.cpp:
+
 Sun Dec 21 09:43:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO_IDL/be/be_global.cpp:
-	  Removed not needed ; to fix Tru64 compiler warning
+        * TAO_IDL/be/be_global.cpp:
+          Removed not needed ; to fix Tru64 compiler warning
 
 Sat Dec 20 23:08:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/Crash_Test/server.ior:
+        * orbsvcs/tests/Security/Crash_Test/server.ior:
 
-	  Removed this file from the repo.
+          Removed this file from the repo.
 
 Sat Dec 20 22:59:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
 
-	  For some reason we were generating
-	  ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION  for CORBA::is_nil ()
-	  and CORBA::release () for abstract interfaces. Thanks to  David
-	  Smith <dts@prismtechnologies.com> for reporting that the above
-	  shows up as problem on HPUX builds.
+          For some reason we were generating
+          ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION  for CORBA::is_nil ()
+          and CORBA::release () for abstract interfaces. Thanks to  David
+          Smith <dts@prismtechnologies.com> for reporting that the above
+          shows up as problem on HPUX builds.
 
 Sat Dec 20 15:04:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -28,38 +233,38 @@ Sat Dec 20 15:04:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Dec 20 14:06:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/*.bor:
-	  Added missing Id tag to several Borland makefiles to fix fuzz errors
+        * examples/*.bor:
+          Added missing Id tag to several Borland makefiles to fix fuzz errors
 
 Sat Dec 20 13:32:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/*.bor:
-	  Added missing Id tag to several Borland makefiles to fix fuzz errors
+        * tests/*.bor:
+          Added missing Id tag to several Borland makefiles to fix fuzz errors
 
 Fri Dec 19 23:05:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
 
-	  Cosmetic change - removed an extra newline.
+          Cosmetic change - removed an extra newline.
 
-	* TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
 
           Removed generation of semicolon at the closing brace of the TAO
-	  namespace that encloses the traits specialization
-	  declarations. Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
-	  for pointing out that this trailing semicolon causes problems
-	  with TRU64, CC compiler.
+          namespace that encloses the traits specialization
+          declarations. Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
+          for pointing out that this trailing semicolon causes problems
+          with TRU64, CC compiler.
 
 Fri Dec 19 10:27:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/Concurrency_Service/Makefile:
-	* orbsvcs/Notify_Service/Makefile:
-	* orbsvcs/Scheduling_Service/Makefile:
-	* orbsvcs/Naming_Service/Makefile:
+        * orbsvcs/Concurrency_Service/Makefile:
+        * orbsvcs/Notify_Service/Makefile:
+        * orbsvcs/Scheduling_Service/Makefile:
+        * orbsvcs/Naming_Service/Makefile:
 
-	  Moved the checks for the status of the conditional variables in
-	  rules.tao.GNU, after the inclusion of rules.tao.GNU. Thanks to
-	  Thomas Lockhart for reporting this problem.
+          Moved the checks for the status of the conditional variables in
+          rules.tao.GNU, after the inclusion of rules.tao.GNU. Thanks to
+          Thomas Lockhart for reporting this problem.
 
 Fri Dec 19 11:25:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -92,78 +297,78 @@ Thu Dec 18 09:54:36 2003  Balachandran  <bala@dre.vanderbilt.edu>
 
 Wed Dec 17 12:13:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
 
-	  More fixes for the generated code.
+          More fixes for the generated code.
 
 Wed Dec 17 11:17:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Domain/DomainS.cpp:
-	* tao/Messaging/MessagingS.cpp:
-	* tao/PortableServer/ImR_LocatorS.cpp:
-	* tao/PortableServer/ImplRepoS.cpp:
-	* tao/PortableServer/PolicyS.cpp:
+        * tao/Domain/DomainS.cpp:
+        * tao/Messaging/MessagingS.cpp:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/PolicyS.cpp:
 
-	  Fixed the generated code to fix the typo problem that was fixed.
+          Fixed the generated code to fix the typo problem that was fixed.
 
 
 Wed Dec 17 11:08:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
 
-	  Fixed a typo while generating repository id's for _is_a ()
-	  calls. Thanks to Terry Ware <terry.ware@dc.alphatech.com> for
-	  reporting the problem.
+          Fixed a typo while generating repository id's for _is_a ()
+          calls. Thanks to Terry Ware <terry.ware@dc.alphatech.com> for
+          reporting the problem.
 
 Wed Dec 17 09:26:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
 
-	  Fixed a typo that prevented the library from building.
+          Fixed a typo that prevented the library from building.
 
 Tue Dec 16 07:52:43 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tao/default_resource.cpp (get_reactor): Changed
+        * tao/default_resource.cpp (get_reactor): Changed
 
-	  if (ACE_LOG_MSG->errnum ())
+          if (ACE_LOG_MSG->errnum ())
 
-	  to
+          to
 
-	  if (!reactor->initialized ())
+          if (!reactor->initialized ())
 
-	  since the latter is more robust.  Thanks to John Fletcher
- 	  <john.fletcher@rd.bbc.co.uk> and Johnny Willemsen for motivating
- 	  this.
+          since the latter is more robust.  Thanks to John Fletcher
+          <john.fletcher@rd.bbc.co.uk> and Johnny Willemsen for motivating
+          this.
 
 Tue Dec 16 12:08:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Portable_Interceptors/Collocated/Dynamic/Portable_Interceptors_Dynamic.mpc:
+        * tests/Portable_Interceptors/Collocated/Dynamic/Portable_Interceptors_Dynamic.mpc:
           Corrected exe name to match run_test.pl and removed not needed libpaths
 
 Mon Dec 15 19:46:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.inl:
 
-	  #include Consumer.h to get arounda compile error in aCC. Thanks
- 	  to Pierre Pacchioni <pierre.pacchioni@avisto.com> for suggesting
- 	  the fix.
+          #include Consumer.h to get arounda compile error in aCC. Thanks
+          to Pierre Pacchioni <pierre.pacchioni@avisto.com> for suggesting
+          the fix.
 
 Mon Dec 15 13:34:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/default_resource.cpp:
+        * tao/default_resource.cpp:
 
-	  Use errno, instead of using ACE_Log_Msg->errnum (). Thanks to
-	  John Fletcher <john.fletcher@rd.bbc.co.uk> for reporting a
-	  problem related to this.
+          Use errno, instead of using ACE_Log_Msg->errnum (). Thanks to
+          John Fletcher <john.fletcher@rd.bbc.co.uk> for reporting a
+          problem related to this.
 
 Mon Dec 15 09:30:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc:
-	* performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
-	* tests/RTCORBA/Priority_Inversion_With_Bands/Priority_Inversion_With_Bands.mpc:
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc:
+        * performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/Priority_Inversion_With_Bands.mpc:
           Do not build these tests when minimum_corba is enabled.
 
 Mon Dec 15 09:24:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -174,116 +379,116 @@ Mon Dec 15 09:24:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec 14 10:09:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
 
-	  Another reversion from PMB changes.
+          Another reversion from PMB changes.
 
 Sun Dec 14 09:56:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Base.h:
-	* tao/GIOP_Message_Base.i:
-	* tao/GIOP_Message_Generator_Parser_Impl.inl:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Message_Lite.h:
-	* tao/GIOP_Message_State.cpp:
-	* tao/GIOP_Message_State.h:
-	* tao/GIOP_Message_State.inl:
-	* tao/IIOP_Transport.cpp:
-	* tao/Incoming_Message_Queue.cpp:
-	* tao/Incoming_Message_Queue.h:
-	* tao/Incoming_Message_Queue.inl:
-	* tao/Pluggable_Messaging.h:
-	* tao/Transport.cpp:
-	* tao/Transport.h:
-	* tao/Strategies/DIOP_Transport.cpp:
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* tao/Strategies/SHMIOP_Transport.h:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.i:
+        * tao/GIOP_Message_Generator_Parser_Impl.inl:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_State.cpp:
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.inl:
+        * tao/IIOP_Transport.cpp:
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Incoming_Message_Queue.h:
+        * tao/Incoming_Message_Queue.inl:
+        * tao/Pluggable_Messaging.h:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.h:
 
-	  Reverting the change "Wed Dec 10 13:58:41 2003  Chris Cleeland
-	  <cleeland_c@ociweb.com>" for PMB fixes. The fixes were right,
-	  but it slowed down the ORB considerably due to the two
-	  allocations along the critical path. We will try to get these
-	  fixes in later once we have a way to get around the
-	  allocations.
+          Reverting the change "Wed Dec 10 13:58:41 2003  Chris Cleeland
+          <cleeland_c@ociweb.com>" for PMB fixes. The fixes were right,
+          but it slowed down the ORB considerably due to the two
+          allocations along the critical path. We will try to get these
+          fixes in later once we have a way to get around the
+          allocations.
 
 Sun Dec 14 08:47:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1639_Regression/test.mpc:
+        * tests/Bug_1639_Regression/test.mpc:
 
-	  This test should not be compiled if minimum_corba=1
+          This test should not be compiled if minimum_corba=1
 
 Sun Dec 14 08:43:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/POA/MT_Servant_Locator/MT_Servant_Locator.mpc:
-	* tests/RTCORBA/Diffserv/RTCORBA_Diffserv.mpc:
-	* performance-tests//RTCorba/Oneways/Reliable/Reliable.mpc:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
-	  These tests should not be compiled with minimum_corba.
+        * tests/POA/MT_Servant_Locator/MT_Servant_Locator.mpc:
+        * tests/RTCORBA/Diffserv/RTCORBA_Diffserv.mpc:
+        * performance-tests//RTCorba/Oneways/Reliable/Reliable.mpc:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+          These tests should not be compiled with minimum_corba.
 
 Sun Dec 14 08:35:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/OBV/Supports/Supports_Test.mpc:
+        * tests/OBV/Supports/Supports_Test.mpc:
 
-	  Prevent this test from compiling since the support for
-	  "supports" is broken.
+          Prevent this test from compiling since the support for
+          "supports" is broken.
 
 Sat Dec 13 09:05:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.mpc:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.mpc:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.mpc:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.mpc:
 
-	  Do not build when minimum_corba is enabled since they use some
-	  of the full POA features.
+          Do not build when minimum_corba is enabled since they use some
+          of the full POA features.
 
 Sat Dec 13 08:50:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/RTScheduling/VoidData/Makefile:
+        * tests/RTScheduling/VoidData/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Sat Dec 13 08:36:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Portable_Interceptors/Bug_1559/Makefile:
+        * tests/Portable_Interceptors/Bug_1559/Makefile:
 
-	  Updated Makefile dependencies.
+          Updated Makefile dependencies.
 
 Sat Dec 13 08:29:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
 
-	  Reverted a change that was made accidentally with no ChangeLog
-	  entry. This should fix VC6.0 problems in the daily builds.
+          Reverted a change that was made accidentally with no ChangeLog
+          entry. This should fix VC6.0 problems in the daily builds.
 
 Sat Dec 13 08:05:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/OBV/Collocated/Makefile:
+        * tests/OBV/Collocated/Makefile:
 
-	  Forgor to check this in yesterday :(!
+          Forgor to check this in yesterday :(!
 
 Fri Dec 12 19:27:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/OBV/Makefile:
-	* tests/Portable_Interceptors/Makefile:
-	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Makefile:
+        * tests/OBV/Makefile:
+        * tests/Portable_Interceptors/Makefile:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Makefile:
 
-	  Added missing directories to the build.
+          Added missing directories to the build.
 
-	* tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl:
+        * tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl:
 
-	  Changed the executable name for the test.
+          Changed the executable name for the test.
 
 Fri Dec 12 19:10:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/OBV/Collocated/Forward/Makefile:
+        * tests/OBV/Collocated/Forward/Makefile:
 
-	  Added a makefile for this test.
+          Added a makefile for this test.
 
 Fri Dec 12 14:15:04 2003  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Synch_Invocation.cpp:
+        * tao/Synch_Invocation.cpp:
 
-	  Some more cosmetic fixes.
+          Some more cosmetic fixes.
 
 Fri Dec 12 11:35:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -305,9 +510,9 @@ Fri Dec 12 11:35:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Dec 12 08:38:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h:
 
-	  Used a simple cast during initializing a float from a double.
+          Used a simple cast during initializing a float from a double.
 
 Fri Dec 12 08:37:04 2003  Chad Elliott  <elliott_c@ociweb.com>
 

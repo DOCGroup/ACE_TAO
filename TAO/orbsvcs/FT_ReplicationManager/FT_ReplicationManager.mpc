@@ -1,0 +1,25 @@
+project(*Lib): orbsvcslib, core, notification, fault_tolerance, ftorb, portablegroup {
+  sharedname   = TAO_ReplicationManagerLib
+  dynamicflags = TAO_REPLICATIONMANAGERLIB_BUILD_DLL
+  avoids      += minimum_corba
+
+  Source_Files {
+    FT_FaultAnalyzer.cpp
+    FT_DefaultFaultAnalyzer.cpp
+    FT_FaultEventDescriptor.cpp
+    FT_FaultConsumer.cpp
+  }
+}
+
+project : taoserver, orbsvcsexe, fault_tolerance, iormanip, ftorb {
+  exename  = FT_ReplicationManager
+  libs    += TAO_ReplicationManagerLib
+  after   += FT_ReplicationManager_Lib
+  Source_Files {
+    FT_ReplicationManager.cpp
+    FT_ReplicationManager_Main.cpp
+    FT_Property_Validator.cpp
+    FT_ReplicationManagerFaultAnalyzer.cpp
+  }
+}
+
