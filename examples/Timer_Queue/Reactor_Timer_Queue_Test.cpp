@@ -36,7 +36,7 @@ static void usage_prompt (void)
 class Timer_Handler : public ACE_Event_Handler
 {
 public:
-  virtual int handle_timeout (const ACE_Time_Value &tv,
+  virtual int handle_timeout (const ACE_Time_Value &,
                               const void *)
   {
     ACE_Time_Value txv = ACE_OS::gettimeofday ();
