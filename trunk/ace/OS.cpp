@@ -756,10 +756,11 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
 // This is necessary to deal with POSIX pthreads insanity.  This
 // guarantees that we've got a "zero'd" thread id even when
 // ACE_thread_t, ACE_hthread_t, and ACE_thread_key_t are implemented
-// as structures...
+// as structures...  Under no circumstances should these be given
+// initial values.
 ACE_thread_t ACE_OS::NULL_thread;
 ACE_hthread_t ACE_OS::NULL_hthread;
-ACE_thread_key_t ACE_OS::NULL_key = (ACE_thread_key_t) -1;
+ACE_thread_key_t ACE_OS::NULL_key;
 
 ACE_OS::ACE_OS (void)
 {

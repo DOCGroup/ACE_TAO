@@ -1,5 +1,9 @@
 Thu Oct 30 07:02:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.cpp: It's not valid to set the NULL_key to anything other
+ 	  than implicit initialization.  In particular, if we set it to -1
+ 	  it breaks on pthreads systems...
+
 	* ace/config-irix5.3*++.h: Added ACE_NEEDS_SYSTIME_H.  Thanks to
  	  Laura Paterno <lpaterno@d0chb.fnal.gov> for reporting the
  	  problem.
