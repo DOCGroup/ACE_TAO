@@ -292,161 +292,6 @@ class TAO_Export Cookie : public virtual ACE_CORBA_1 (Object)
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Cookies;
 
 
-#if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO___PTR_CH_)
-#define _PORTABLEINTERCEPTOR_REQUESTINFO___PTR_CH_
-
-  class RequestInfo;
-  typedef RequestInfo *RequestInfo_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO___VAR_CH_)
-#define _PORTABLEINTERCEPTOR_REQUESTINFO___VAR_CH_
-
-  class TAO_Export RequestInfo_var
-  {
-  public:
-    RequestInfo_var (void); // default constructor
-    RequestInfo_var (RequestInfo_ptr);
-    RequestInfo_var (const RequestInfo_var &); // copy constructor
-    ~RequestInfo_var (void); // destructor
-
-    RequestInfo_var &operator= (RequestInfo_ptr);
-    RequestInfo_var &operator= (const RequestInfo_var &);
-    RequestInfo_ptr operator-> (void) const;
-
-    operator const RequestInfo_ptr &() const;
-    operator RequestInfo_ptr &();
-    // in, inout, out, _retn
-    RequestInfo_ptr in (void) const;
-    RequestInfo_ptr &inout (void);
-    RequestInfo_ptr &out (void);
-    RequestInfo_ptr _retn (void);
-    RequestInfo_ptr ptr (void) const;
-
-  private:
-    RequestInfo_ptr ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO___OUT_CH_)
-#define _PORTABLEINTERCEPTOR_REQUESTINFO___OUT_CH_
-
-  class TAO_Export RequestInfo_out
-  {
-  public:
-    RequestInfo_out (RequestInfo_ptr &);
-    RequestInfo_out (RequestInfo_var &);
-    RequestInfo_out (const RequestInfo_out &);
-    RequestInfo_out &operator= (const RequestInfo_out &);
-    RequestInfo_out &operator= (const RequestInfo_var &);
-    RequestInfo_out &operator= (RequestInfo_ptr);
-    operator RequestInfo_ptr &();
-    RequestInfo_ptr &ptr (void);
-    RequestInfo_ptr operator-> (void);
-
-  private:
-    RequestInfo_ptr &ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO_CH_)
-#define _PORTABLEINTERCEPTOR_REQUESTINFO_CH_
-
-class TAO_Export RequestInfo : public virtual ACE_CORBA_1 (Object)
-  {
-  public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef RequestInfo_ptr _ptr_type;
-    typedef RequestInfo_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    // the static operations
-    static RequestInfo_ptr _duplicate (RequestInfo_ptr obj);
-    static RequestInfo_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-    static RequestInfo_ptr _nil (void)
-      {
-        return (PortableInterceptor::RequestInfo_ptr)0;
-      }
-
-    virtual CORBA::ULong get_request_id (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual CORBA::Boolean response_expected (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual IOP::ServiceContextList * get_service_contexts (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual CORBA::Boolean set_service_contexts (
-        const IOP::ServiceContextList & sc,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual CORBA::Object_ptr get_object (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual char * get_operation (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual CORBA::NVList_ptr get_arguments (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual CORBA::Boolean set_arguments (
-        CORBA::NVList_ptr args,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
-    virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id,
-        CORBA::Environment &env =
-          TAO_default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
-
-  protected:
-    RequestInfo (void);
-    RequestInfo (TAO_Stub *objref,
-        TAO_ServantBase *_tao_servant = 0,
-        CORBA::Boolean _tao_collocated = 0
-      );
-    virtual ~RequestInfo (void);
-  private:
-    RequestInfo (const RequestInfo &);
-    void operator= (const RequestInfo &);
-  };
-
-
-#endif /* end #if !defined */
-
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RequestInfo;
-
-
 #if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR___PTR_CH_)
 #define _PORTABLEINTERCEPTOR_INTERCEPTOR___PTR_CH_
 
@@ -654,21 +499,34 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
       }
 
     virtual void preinvoke (
-        RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
         Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       ) = 0;
 
     virtual void postinvoke (
-        RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
         Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       ) = 0;
 
     virtual void exception_occurred (
-        RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
+        CORBA::Exception_ptr & exc,
         Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -788,21 +646,34 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
       }
 
     virtual void preinvoke (
-        RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
         Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       ) = 0;
 
     virtual void postinvoke (
-        RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
         Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       ) = 0;
 
     virtual void exception_occurred (
-        RequestInfo_ptr & ri,
+        CORBA::ULong request_id,
+        CORBA::Boolean response_expected,
+        CORBA::Object_ptr objref,
+        const char * operation_name,
+        IOP::ServiceContextList & sc,
+        CORBA::Exception_ptr & exc,
         Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -842,9 +713,6 @@ CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableInterceptor::
 void TAO_Export operator<<= (CORBA::Any &, const PortableInterceptor::Cookies &); // copying version
 void TAO_Export operator<<= (CORBA::Any &, PortableInterceptor::Cookies*); // noncopying version
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableInterceptor::Cookies *&);
-// Any operators for interface PortableInterceptor::RequestInfo
-void TAO_Export operator<<= (CORBA::Any &, PortableInterceptor::RequestInfo_ptr);
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableInterceptor::RequestInfo *&);
 // Any operators for interface PortableInterceptor::Interceptor
 void TAO_Export operator<<= (CORBA::Any &, PortableInterceptor::Interceptor_ptr);
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableInterceptor::Interceptor *&);
@@ -854,6 +722,12 @@ CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableInterceptor::
 // Any operators for interface PortableInterceptor::ClientRequestInterceptor
 void TAO_Export operator<<= (CORBA::Any &, PortableInterceptor::ClientRequestInterceptor_ptr);
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableInterceptor::ClientRequestInterceptor *&);
+
+#ifndef __ACE_INLINE__
+
+
+#endif /* __ACE_INLINE__ */
+
 
 #if defined (__ACE_INLINE__)
 #include "tao/InterceptorC.i"

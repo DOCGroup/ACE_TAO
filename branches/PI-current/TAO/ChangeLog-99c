@@ -1,4 +1,13 @@
-Thu Aug 26 01:49:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu Aug 26 20:26:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp: Supressed
+	  generation of cdr operation when generating locality constraint
+	  object.
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp (gen_throw_spec):
+	  Don't generate THROW_SPEC for LC objects for now.
 
 	* tao/Invocation.h:
 	* tao/Invocation.i:
@@ -14,7 +23,8 @@ Thu Aug 26 01:49:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/InterceptorC.cpp: Added include "Any.h".
 
-	* tao/InterceptorC.h: Removed include "corba.h" and added include "IOPC.h".
+	* tao/InterceptorC.h: Removed include "corba.h" and added include
+	  "IOPC.h".
 
 	* tao/InterceptorS.h: Added include "Servant_Base.h".
 
@@ -36,7 +46,7 @@ Wed Aug 25 23:38:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* Using the -Gl flag of tao_idl:  For protable interceptor, I use
 	  the following lines to process the Interceptor.pidl file:
 
-	      tao_idl -Gl -Wb,export_macro=TAO_Export Interceptor.pidl
+	      tao_idl -Gl -Ge 1 -Wb,export_macro=TAO_Export Interceptor.pidl
 
 	  The following manually tweakings on the generated files are
 	  necessary:
@@ -72,7 +82,7 @@ Wed Aug 25 23:38:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tao/InterceptorC.{h,i,cpp}:
 	* tao/InterceptorS.{h,cpp}: Added new interceptor IDL generated files.
 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 Wed Aug 25 10:16:11 1999  David L. Levine  <levine@cs.wustl.edu>
 

@@ -84,10 +84,13 @@ be_visitor_operation::has_param_type (be_operation *node,
 }
 
 //Method to generate the throw specs for exceptions that are thrown by the
-//operation 
+//operation
 int
 be_visitor_operation::gen_throw_spec (be_operation *node)
 {
+  // Don't generate throw spec for LC objref for now.
+  if (idl_global->gen_locality_constraint ())
+    return 0;
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
@@ -95,7 +98,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
       << be_idt_nl << "CORBA::SystemException";
    if (node->exceptions ())
      {
-     
+
       // initialize an iterator to iterate thru the exception list
       UTL_ExceptlistActiveIterator *ei;
       ACE_NEW_RETURN (ei,
@@ -115,7 +118,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
                                  "bad exception node\n"), -1);
 
             }
-   
+
           *os << "," << be_nl;
           // allocator method
           *os << excp->name ();
@@ -146,4 +149,3 @@ be_visitor_operation::gen_environment_var ()
       return null_env_decl;
     }
 }
-

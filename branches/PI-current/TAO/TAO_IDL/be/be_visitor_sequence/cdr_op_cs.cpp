@@ -45,6 +45,9 @@ be_visitor_sequence_cdr_op_cs::~be_visitor_sequence_cdr_op_cs (void)
 int
 be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 {
+  if (idl_global->gen_locality_constraint ())
+    return 0;
+
   if (this->ctx_->alias ())
     {
       // we are here because the base type of the sequence node is

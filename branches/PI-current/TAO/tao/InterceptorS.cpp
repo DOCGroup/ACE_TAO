@@ -104,174 +104,6 @@ char * POA_PortableInterceptor::_tao_direct_collocated_Cookie::myname  (
 
 
 // skeleton constructor
-POA_PortableInterceptor::RequestInfo::RequestInfo (void)
-{
-
-}
-
-// skeleton destructor
-POA_PortableInterceptor::RequestInfo::~RequestInfo (void)
-{
-}
-
-CORBA::Boolean POA_PortableInterceptor::RequestInfo::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:TAO/PortableInterceptor/RequestInfo:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
-}
-
-void* POA_PortableInterceptor::RequestInfo::_downcast (
-    const char* logical_type_id
-  )
-{
-if (ACE_OS::strcmp (logical_type_id, "IDL:TAO/PortableInterceptor/RequestInfo:1.0") == 0)
-    return ACE_static_cast (POA_PortableInterceptor::RequestInfo_ptr, this);
-    if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
-    return ACE_static_cast(PortableServer::Servant, this);
-  return 0;
-}
-
-const char* POA_PortableInterceptor::RequestInfo::_interface_repository_id (void) const
-{
-  return "IDL:TAO/PortableInterceptor/RequestInfo:1.0";
-}
-
-PortableInterceptor::RequestInfo*
-POA_PortableInterceptor::RequestInfo::_this (CORBA_Environment &ACE_TRY_ENV)
-{
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  return new POA_PortableInterceptor::_tao_direct_collocated_RequestInfo (this, stub);
-}
-
-POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::_tao_direct_collocated_RequestInfo (
-    POA_PortableInterceptor::RequestInfo_ptr  servant,
-    TAO_Stub *stub
-  )
-  : ACE_NESTED_CLASS (PortableInterceptor,RequestInfo) (),
-    CORBA_Object (stub, servant, 1),
-    servant_ (servant)
-{
-}
-
-CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::_is_a(
-    const CORBA::Char *logical_type_id,
-    CORBA_Environment &ACE_TRY_ENV
-  )
-
-{
-  return this->servant_->_is_a (logical_type_id, ACE_TRY_ENV);
-}
-
-
-POA_PortableInterceptor::RequestInfo_ptr POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::_get_servant (void) const
-{
-  return this->servant_;
-}
-
-CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::_non_existent(
-    CORBA_Environment &ACE_TRY_ENV
-  )
-
-{
-  return this->servant_->_non_existent (ACE_TRY_ENV);
-}
-
-
-CORBA::ULong POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::get_request_id  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return this->servant_->get_request_id (
-      ACE_TRY_ENV
-    );
-
-}
-
-CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::response_expected  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return this->servant_->response_expected (
-      ACE_TRY_ENV
-    );
-
-}
-
-IOP::ServiceContextList * POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::get_service_contexts  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return this->servant_->get_service_contexts (
-      ACE_TRY_ENV
-    );
-
-}
-
-CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::set_service_contexts  (
-    const IOP::ServiceContextList & sc,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return this->servant_->set_service_contexts (
-      sc,
-      ACE_TRY_ENV
-    );
-
-}
-
-CORBA::Object_ptr POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::get_object  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return this->servant_->get_object (
-      ACE_TRY_ENV
-    );
-
-}
-
-char * POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::get_operation  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return this->servant_->get_operation (
-      ACE_TRY_ENV
-    );
-
-}
-
-CORBA::NVList_ptr POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::get_arguments  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return this->servant_->get_arguments (
-      ACE_TRY_ENV
-    );
-
-}
-
-CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_RequestInfo::set_arguments  (
-    CORBA::NVList_ptr args,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return this->servant_->set_arguments (
-      args,
-      ACE_TRY_ENV
-    );
-
-}
-
-
-
-// skeleton constructor
 POA_PortableInterceptor::Interceptor::Interceptor (void)
 {
 
@@ -452,13 +284,21 @@ CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInte
 
 
 void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::preinvoke  (
-    PortableInterceptor::RequestInfo_ptr & ri,
+    CORBA::ULong request_id,
+    CORBA::Boolean response_expected,
+    CORBA::Object_ptr objref,
+    const char * operation_name,
+    IOP::ServiceContextList & sc,
     PortableInterceptor::Cookies & ck,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   this->servant_->preinvoke (
-      ri,
+      request_id,
+      response_expected,
+      objref,
+      operation_name,
+      sc,
       ck,
       ACE_TRY_ENV
     );
@@ -466,13 +306,21 @@ void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::p
 }
 
 void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::postinvoke  (
-    PortableInterceptor::RequestInfo_ptr & ri,
+    CORBA::ULong request_id,
+    CORBA::Boolean response_expected,
+    CORBA::Object_ptr objref,
+    const char * operation_name,
+    IOP::ServiceContextList & sc,
     PortableInterceptor::Cookies & ck,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   this->servant_->postinvoke (
-      ri,
+      request_id,
+      response_expected,
+      objref,
+      operation_name,
+      sc,
       ck,
       ACE_TRY_ENV
     );
@@ -480,13 +328,23 @@ void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::p
 }
 
 void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::exception_occurred  (
-    PortableInterceptor::RequestInfo_ptr & ri,
+    CORBA::ULong request_id,
+    CORBA::Boolean response_expected,
+    CORBA::Object_ptr objref,
+    const char * operation_name,
+    IOP::ServiceContextList & sc,
+    CORBA::Exception_ptr & exc,
     PortableInterceptor::Cookies & ck,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   this->servant_->exception_occurred (
-      ri,
+      request_id,
+      response_expected,
+      objref,
+      operation_name,
+      sc,
+      exc,
       ck,
       ACE_TRY_ENV
     );
@@ -582,13 +440,21 @@ CORBA::Boolean POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInte
 
 
 void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::preinvoke  (
-    PortableInterceptor::RequestInfo_ptr & ri,
+    CORBA::ULong request_id,
+    CORBA::Boolean response_expected,
+    CORBA::Object_ptr objref,
+    const char * operation_name,
+    IOP::ServiceContextList & sc,
     PortableInterceptor::Cookies & ck,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   this->servant_->preinvoke (
-      ri,
+      request_id,
+      response_expected,
+      objref,
+      operation_name,
+      sc,
       ck,
       ACE_TRY_ENV
     );
@@ -596,13 +462,21 @@ void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::p
 }
 
 void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::postinvoke  (
-    PortableInterceptor::RequestInfo_ptr & ri,
+    CORBA::ULong request_id,
+    CORBA::Boolean response_expected,
+    CORBA::Object_ptr objref,
+    const char * operation_name,
+    IOP::ServiceContextList & sc,
     PortableInterceptor::Cookies & ck,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   this->servant_->postinvoke (
-      ri,
+      request_id,
+      response_expected,
+      objref,
+      operation_name,
+      sc,
       ck,
       ACE_TRY_ENV
     );
@@ -610,13 +484,23 @@ void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::p
 }
 
 void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::exception_occurred  (
-    PortableInterceptor::RequestInfo_ptr & ri,
+    CORBA::ULong request_id,
+    CORBA::Boolean response_expected,
+    CORBA::Object_ptr objref,
+    const char * operation_name,
+    IOP::ServiceContextList & sc,
+    CORBA::Exception_ptr & exc,
     PortableInterceptor::Cookies & ck,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   this->servant_->exception_occurred (
-      ri,
+      request_id,
+      response_expected,
+      objref,
+      operation_name,
+      sc,
+      exc,
       ck,
       ACE_TRY_ENV
     );
