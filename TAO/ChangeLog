@@ -1,3 +1,11 @@
+Thu Nov 27 20:51:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.cpp:
+
+	  Fixed a problem with this checkin "Thu Nov 27 18:07:15 2003
+	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>". The above
+	  checkin was deadlocking the ORB.
+
 Thu Nov 27 18:33:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/Container_T.cpp:
