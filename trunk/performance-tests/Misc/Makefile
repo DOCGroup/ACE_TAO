@@ -8,7 +8,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN     = context_switch_time \
+BIN     = childbirth_time \
+	  context_switch_time \
 	  test_mutex \
 	  test_singleton \
 	  test_naming
@@ -40,6 +41,27 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
+.obj/childbirth_time.o .shobj/childbirth_time.so: childbirth_time.cpp \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.i \
+ $(WRAPPER_ROOT)/ace/Process.h \
+ $(WRAPPER_ROOT)/ace/Process.i \
+ $(WRAPPER_ROOT)/ace/Profile_Timer.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/High_Res_Timer.h \
+ $(WRAPPER_ROOT)/ace/High_Res_Timer.i \
+ $(WRAPPER_ROOT)/ace/Profile_Timer.i
 .obj/context_switch_time.o .shobj/context_switch_time.so: context_switch_time.cpp \
  $(WRAPPER_ROOT)/ace/Sched_Params.h \
  $(WRAPPER_ROOT)/ace/OS.h \
@@ -49,9 +71,9 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/Sched_Params.i \
  $(WRAPPER_ROOT)/ace/Task.h \
@@ -101,6 +123,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -141,7 +165,6 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 .obj/test_mutex.o .shobj/test_mutex.so: test_mutex.cpp \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
@@ -149,6 +172,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/Profile_Timer.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
@@ -173,7 +197,6 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/High_Res_Timer.i \
  $(WRAPPER_ROOT)/ace/Profile_Timer.i \
  $(WRAPPER_ROOT)/ace/Singleton.h \
- $(WRAPPER_ROOT)/ace/Singleton.i \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -185,7 +208,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Event_Handler.i \
  $(WRAPPER_ROOT)/ace/Synch_T.i \
  $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Thread.i
+ $(WRAPPER_ROOT)/ace/Thread.i \
+ $(WRAPPER_ROOT)/ace/Singleton.i
 .obj/test_naming.o .shobj/test_naming.so: test_naming.cpp \
  $(WRAPPER_ROOT)/ace/SString.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
@@ -246,6 +270,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Handle_Set.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
