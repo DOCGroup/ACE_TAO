@@ -1,5 +1,9 @@
 Sun Oct 31 15:29:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Capabilities.cpp: Cleaned up some of the explicit template
+	  instantiations so they will work on all platforms.  Thanks to
+ 	  Bala for pointing this out.
+
 	* ace/Makefile,
 	* tests/run_tests.lst,
 	  tests/Makefile (BIN): Added an entry for the new ACE_Capabilities
