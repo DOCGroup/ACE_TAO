@@ -1,3 +1,10 @@
+Fri Dec 22 16:45:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
+
+          Fixed the Static Release configurations.
+
 Fri Dec 22 15:11:00 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ORB_Core.cpp: 
