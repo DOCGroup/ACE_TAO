@@ -347,10 +347,12 @@ TAO_OutputCDR::encode (CORBA::TypeCode_ptr tc,
 {
   TAO_Marshal_Object *mobj =
     this->factory_->make_marshal_object (tc, env);
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
-  if (env.exception() == 0 && mobj != 0)
-    return mobj->encode (tc, data, data2, this, env);
-  return CORBA::TypeCode::TRAVERSE_STOP;
+  if (!mobj)
+    return CORBA::TypeCode::TRAVERSE_STOP;
+
+  return mobj->encode (tc, data, data2, this, env);
 }
 
 ACE_INLINE int
@@ -669,9 +671,12 @@ TAO_InputCDR::decode (CORBA::TypeCode_ptr tc,
   TAO_Marshal_Object *mobj =
     this->factory_->make_marshal_object (tc, env);
 
-  if (env.exception() == 0 && mobj != 0)
-    return mobj->decode (tc, data, data2, this, env);
-  return CORBA::TypeCode::TRAVERSE_STOP;
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
+
+  if (!mobj)
+    return CORBA::TypeCode::TRAVERSE_STOP;
+
+  return mobj->decode (tc, data, data2, this, env);
 }
 
 ACE_INLINE CORBA::TypeCode::traverse_status
@@ -682,7 +687,7 @@ TAO_InputCDR::skip (CORBA::TypeCode_ptr tc,
     this->factory_->make_marshal_object (tc, env);
 
   TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
-  
+
   if (mobj == 0)
     return CORBA::TypeCode::TRAVERSE_STOP;
 
@@ -786,7 +791,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Any &x)
         return 1;
       // else return 0 at the end of the function
     }
-  TAO_CATCHANY
+  TAO_CATCH (CORBA_Exception, ex)
     {
       return 0;
     }
@@ -807,7 +812,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object *x)
         return 1;
       // else return 0 at the end of the function
     }
-  TAO_CATCHANY
+  TAO_CATCH (CORBA_Exception, ex)
     {
       return 0;
     }
@@ -828,7 +833,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
         return 1;
       // else return 0 at the end of the function
     }
-  TAO_CATCHANY
+  TAO_CATCH (CORBA_Exception, ex)
     {
       return 0;
     }
@@ -947,34 +952,64 @@ operator>> (TAO_InputCDR& cdr, CORBA::Double &x)
 ACE_INLINE CORBA_Boolean
 operator>> (TAO_InputCDR& cdr, CORBA::Any &x)
 {
-  CORBA::Environment env;
-  if (TAO_MARSHAL_ANY::instance ()->decode (0, &x, 0, &cdr, env)
-      == CORBA::TypeCode::TRAVERSE_CONTINUE)
-    return 1;
-  else
-    return 0;
+  TAO_TRY
+    {
+      CORBA::TypeCode::traverse_status status =
+        TAO_MARSHAL_ANY::instance ()->decode (0, &x, 0, &cdr, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+        return 0;
+    }
+  TAO_CATCH (CORBA_Exception, ex)
+    {
+      return 0;
+    }
+  TAO_ENDTRY;
+
+  return 1;
 }
 
 ACE_INLINE CORBA_Boolean
 operator>> (TAO_InputCDR& cdr, CORBA::Object *&x)
 {
-  CORBA::Environment env;
-  if (TAO_MARSHAL_OBJREF::instance ()->decode (0, &x, 0, &cdr, env)
-      == CORBA::TypeCode::TRAVERSE_CONTINUE)
-    return 1;
-  else
-    return 0;
+  TAO_TRY
+    {
+      CORBA::TypeCode::traverse_status status =
+        TAO_MARSHAL_OBJREF::instance ()->decode (0, &x, 0, &cdr, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+        return 0;
+    }
+  TAO_CATCH (CORBA_Exception, ex)
+    {
+      return 0;
+    }
+  TAO_ENDTRY;
+
+  return 1;
 }
 
 ACE_INLINE CORBA_Boolean
 operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
 {
-  CORBA::Environment env;
-  if (TAO_MARSHAL_TYPECODE::instance ()->decode (0, &x, 0, &cdr, env)
-      == CORBA::TypeCode::TRAVERSE_CONTINUE)
-    return 1;
-  else
-    return 0;
+  TAO_TRY
+    {
+      CORBA::TypeCode::traverse_status status =
+        TAO_MARSHAL_TYPECODE::instance ()->decode (0, &x, 0, &cdr, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+        return 0;
+    }
+  TAO_CATCH (CORBA_Exception, ex)
+    {
+      return 0;
+    }
+  TAO_ENDTRY;
+
+  return 1;
 }
 
 // The following use the helper classes
@@ -1145,7 +1180,7 @@ TAO_OutputCDR::append (CORBA::TypeCode_ptr tc,
     this->factory_->make_marshal_object (tc, env);
 
   TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
-  
+
   if (mobj == 0)
     return CORBA::TypeCode::TRAVERSE_STOP;
 
