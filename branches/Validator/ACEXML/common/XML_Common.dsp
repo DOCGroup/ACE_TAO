@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "XML_COMMON_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../.." /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D ACEXML_HAS_DLL=1 /D "ACEXML_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../.." /I "C:\Libs\zlib" /I "C:\Libs\zziplib" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D ACEXML_HAS_DLL=1 /D "ACEXML_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib /nologo /dll /debug /machine:I386 /out:"../../bin/ACEXMLD.dll" /pdbtype:sept /libpath:"..\..\ace"
+# ADD LINK32 aced.lib zzipd.lib zlib.lib /nologo /dll /debug /machine:I386 /out:"../../bin/ACEXMLD.dll" /pdbtype:sept /libpath:"..\..\ace" /libpath:"C:\Libs\zlib" /libpath:"C:\Libs\zziplib"
 
 !ENDIF 
 
@@ -183,6 +183,10 @@ SOURCE=.\XML_Codecs.cpp
 # Begin Source File
 
 SOURCE=.\XMLFilterImpl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ZipCharStream.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -323,6 +327,10 @@ SOURCE=.\XMLFilterImpl.h
 # Begin Source File
 
 SOURCE=.\XMLReader.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ZipCharStream.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
