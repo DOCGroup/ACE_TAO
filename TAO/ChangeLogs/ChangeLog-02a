@@ -1,3 +1,8 @@
+Thu Apr 26 07:26:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed a compiler
+	  error. 
+
 Wed Apr 25 16:15:49 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/CORBANAME_Parser.cpp:
