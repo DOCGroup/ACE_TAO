@@ -1,3 +1,9 @@
+Fri Oct 17 18:11:20 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+	* orbsvcs/tests/Makefile: Changed criteria for building
+	  EC_Multiple test - build it only when RTOLDEvent library is
+	  built.
+
 Fri Oct 17 17:37:05 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.RTCosScheduling: 
