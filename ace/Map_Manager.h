@@ -393,10 +393,10 @@ protected:
 
   enum
   {
-    // Grow map exponentially up to 64K
+    /// Grow map exponentially up to 64K
     MAX_EXPONENTIAL = 64 * 1024,
 
-    // Afterwards grow in chunks of 32K
+    /// Afterwards grow in chunks of 32K
     LINEAR_INCREASE = 32 * 1024
   };
 
