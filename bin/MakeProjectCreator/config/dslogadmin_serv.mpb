@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcslib, dslogadmin_skel, dynamicany, etcl {
+project : orbsvcslib, dslogadmin_skel, dynamicany, etcl, svc_utils {
   after      += DsLogAdmin_Serv
   libs       += TAO_DsLogAdmin_Serv
 }
