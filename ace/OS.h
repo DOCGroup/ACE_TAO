@@ -35,6 +35,16 @@
 #define ACE_NESTED_CLASS(TYPE, NAME) TYPE::##NAME
 #endif /* ACE_WIN32 */
 
+// Easy way to designate that a class is used as a pseudo-namespace.
+// Insures that g++ "friendship" anamolies are properly handled.
+#define ACE_CLASS_IS_NAMESPACE(CLASSNAME) \
+private:\
+CLASSNAME (void);\
+CLASSNAME (const CLASSNAME&);\
+~CLASSNAME (void);\
+class dewarn_gplusplus;\
+friend dewarn_gplusplus
+
 // Define some helpful macros.
 #define ACE_ONE_SECOND_IN_MSECS 1000L
 #define ACE_ONE_SECOND_IN_USECS 1000000L
@@ -3225,6 +3235,8 @@ class ACE_Export ACE_OS
   //     interrupts occur during system calls (assuming that the
   //     <ACE_Log_Msg::restart> flag is enabled).
 {
+  ACE_CLASS_IS_NAMESPACE (ACE_OS);
+  
 public:
   struct ace_flock_t
     // = TITLE
@@ -4202,9 +4214,6 @@ public:
   // For private use of ACE_Object_Manager and ACE_Thread_Adapter only.
 
 private:
-  ACE_OS (void);
-  // Ensure we can't define an instance of this class.
-
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   static int netdb_acquire (void);
   static int netdb_release (void);
