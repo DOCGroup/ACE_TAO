@@ -14,6 +14,6 @@ template class TAO_Object_Manager<Coffee>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_Unbounded_Sequence<Param_Test::Var_Struct>
 #pragma instantiate TAO_Unbounded_Object_Sequence<Coffee>
-#pragma instantiate TAO_Object_Manager<Coffee>;
+#pragma instantiate TAO_Object_Manager<Coffee>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
