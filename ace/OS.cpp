@@ -1278,17 +1278,17 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  if (ACE_BIT_ENABLED(flags, THR_SCHED_FIFO))
 	    {
 	      sparam.sched_priority = 
-		ACE_MIN(PRI_FIFO_MIN, ACE_MAX(PRI_FIFO_MAX, priority));
+		ACE_MIN(PRI_FIFO_MAX, ACE_MAX(PRI_FIFO_MIN, priority));
 	    }
 	  else if (ACE_BIT_ENABLED(flags, THR_SCHED_RR))
 	    {
 	      sparam.sched_priority =
-		ACE_MIN(PRI_RR_MIN, ACE_MAX(PRI_RR_MAX, priority));
+		ACE_MIN(PRI_RR_MAX, ACE_MAX(PRI_RR_MIN, priority));
 	    }
 	  else // Default policy, whether set or not
 	    {
 	      sparam.sched_priority =
-		ACE_MIN(PRI_OTHER_MIN, ACE_MAX(PRI_OTHER_MAX, priority));
+		ACE_MIN(PRI_OTHER_MAX, ACE_MAX(PRI_OTHER_MIN, priority));
 	    }
 #  else
 	  sparam.sched_priority = priority;
