@@ -1,30 +1,38 @@
+Mon Feb 19 12:18:06 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/IFR_Service/Makefile.BE:
+        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+          Fixed the warnings under True64/CXX, they were actually
+          important and could have manifested themselves as errors in
+          other platforms.
+
 Mon Feb 19 12:11:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Handler.cpp (is_message_ready): 
-	* tao/GIOP_Message_Handler.h : A hack to get SHMIOP working. In
-	  the method is_message_ready (), before the control is returned
-	  to the reactor, a check is made to see whether the protocol in
-	  use, uses the reactor for signalling. If that is the case, we
-	  read the rest of the data immediately. This is based on an
-	  assumption that SHMIOP (for which this hack is implemented),
-	  ensures that data gets sent in one big chunk unlike TCP. 
+        * tao/GIOP_Message_Handler.cpp (is_message_ready):
+        * tao/GIOP_Message_Handler.h : A hack to get SHMIOP working. In
+          the method is_message_ready (), before the control is returned
+          to the reactor, a check is made to see whether the protocol in
+          use, uses the reactor for signalling. If that is the case, we
+          read the rest of the data immediately. This is based on an
+          assumption that SHMIOP (for which this hack is implemented),
+          ensures that data gets sent in one big chunk unlike TCP.
 
-	* tao/GIOP_Message_Base.cpp: Made a change to confirm to the
-	  signature of the is_message_ready () method in
-	  GIOP_Message_Handler. 
+        * tao/GIOP_Message_Base.cpp: Made a change to confirm to the
+          signature of the is_message_ready () method in
+          GIOP_Message_Handler.
 
-	* tao/Transport.h:
-	* tao/Transport.cpp: Added a virtual method reactor_signalling
-	  (). This method returns a value of 1 if the protocol happens to
-	  use the reactor for signalling and 0 otherwise. The default
-	  implementation returns a value of 0.
+        * tao/Transport.h:
+        * tao/Transport.cpp: Added a virtual method reactor_signalling
+          (). This method returns a value of 1 if the protocol happens to
+          use the reactor for signalling and 0 otherwise. The default
+          implementation returns a value of 0.
 
-	* tao/Strategies/SHMIOP_Transport.h:
-	* tao/Strategies/SHMIOP_Transport.cpp: Implemenetd reactor_signalling
-	  () to return 1.
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.cpp: Implemenetd reactor_signalling
+          () to return 1.
 
-	* tao/orbconf.h: Enabled SHMIOP.
-	
+        * tao/orbconf.h: Enabled SHMIOP.
+
 Mon Feb 19 11:26:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Sequence_T.i:
@@ -38,13 +46,13 @@ Mon Feb 19 11:26:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Feb 19 09:59:01 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* examples/Quoter/Makefile:
-	  TAO_IDLFLAGS was redefined, loosing all the global settings.
+        * examples/Quoter/Makefile:
+          TAO_IDLFLAGS was redefined, loosing all the global settings.
 
-	* tao/Object_Loader.h:
-	  Must include "tao/Exception.h" to satisfy more strict ANSI-C++
-	  compilers: the new throw spec uses CORBA::SystemException, so a
-	  forward declaration is not enough.
+        * tao/Object_Loader.h:
+          Must include "tao/Exception.h" to satisfy more strict ANSI-C++
+          compilers: the new throw spec uses CORBA::SystemException, so a
+          forward declaration is not enough.
 
 Sun Feb 18 15:01:09 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -63,7 +71,7 @@ Sun Feb 18 16:56:33 2001  Krishnakumar B  <kitty@cs.wustl.edu>
         * orbsvcs/IFR_Service/Makefile.BE:
         * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
           Added -I(TAO_ROOT)/tao to LDFLAGS to remove warnings under cxx
-	  on Tru64. 
+          on Tru64.
 
 Sun Feb 18 16:28:45 2001  Chris Gill  <cdgill@cs.wustl.edu>
 
