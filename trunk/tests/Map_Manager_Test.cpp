@@ -68,12 +68,12 @@ test_hash_map_manager (size_t table_size, size_t iterations)
     i = 0;
 
     for (HASH_ITERATOR iter = map.begin ();
-	 iter != map.end ();
-	 iter++, i++)
+         iter != map.end ();
+         iter++, i++)
       {
-	HASH_ENTRY &item = *iter;
+        HASH_ENTRY &item = *iter;
         ACE_UNUSED_ARG (item);
-	ACE_DEBUG ((LM_DEBUG, "%d ", i));
+        ACE_DEBUG ((LM_DEBUG, "%d ", i));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -83,8 +83,8 @@ test_hash_map_manager (size_t table_size, size_t iterations)
 
     HASH_ENTRY *entry = 0;
     for (entry = 0, i = 0;
-	 iterator.next (entry) != 0;
-	 iterator.advance (), i++)
+         iterator.next (entry) != 0;
+         iterator.advance (), i++)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -95,12 +95,12 @@ test_hash_map_manager (size_t table_size, size_t iterations)
     i = iterations - 1;
 
     for (HASH_REVERSE_ITERATOR iter = map.rbegin ();
-	 iter != map.rend ();
-	 iter++, i--)
+         iter != map.rend ();
+         iter++, i--)
       {
-	HASH_ENTRY &item = *iter;
+        HASH_ENTRY &item = *iter;
         ACE_UNUSED_ARG (item);
-	ACE_DEBUG ((LM_DEBUG, "%d ", i));
+        ACE_DEBUG ((LM_DEBUG, "%d ", i));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -110,8 +110,8 @@ test_hash_map_manager (size_t table_size, size_t iterations)
 
     HASH_ENTRY *entry = 0;
     for (entry = 0, i = iterations - 1;
-	 iterator.next (entry) != 0;
-	 iterator.advance (), i--)
+         iterator.next (entry) != 0;
+         iterator.advance (), i--)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -122,12 +122,12 @@ test_hash_map_manager (size_t table_size, size_t iterations)
     i = 0;
 
     for (HASH_MAP_MANAGER::iterator iter = map.begin ();
-	 iter != map.end ();
-	 iter++, i++)
+         iter != map.end ();
+         iter++, i++)
       {
-	HASH_MAP_MANAGER::ENTRY &item = *iter;
+        HASH_MAP_MANAGER::ENTRY &item = *iter;
         ACE_UNUSED_ARG (item);
-	ACE_DEBUG ((LM_DEBUG, "%d ", i));
+        ACE_DEBUG ((LM_DEBUG, "%d ", i));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -137,8 +137,8 @@ test_hash_map_manager (size_t table_size, size_t iterations)
 
     HASH_MAP_MANAGER::ENTRY *entry = 0;
     for (entry = 0, i = 0;
-	 iterator.next (entry) != 0;
-	 iterator.advance (), i++)
+         iterator.next (entry) != 0;
+         iterator.advance (), i++)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -149,12 +149,12 @@ test_hash_map_manager (size_t table_size, size_t iterations)
     i = iterations - 1;
 
     for (HASH_MAP_MANAGER::reverse_iterator iter = map.rbegin ();
-	 iter != map.rend ();
-	 iter++, i--)
+         iter != map.rend ();
+         iter++, i--)
       {
-	HASH_MAP_MANAGER::ENTRY &item = *iter;
+        HASH_MAP_MANAGER::ENTRY &item = *iter;
         ACE_UNUSED_ARG (item);
-	ACE_DEBUG ((LM_DEBUG, "%d ", i));
+        ACE_DEBUG ((LM_DEBUG, "%d ", i));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -164,8 +164,8 @@ test_hash_map_manager (size_t table_size, size_t iterations)
 
     HASH_MAP_MANAGER::ENTRY *entry = 0;
     for (entry = 0, i = iterations - 1;
-	 iterator.next (entry) != 0;
-	 iterator.advance (), i--)
+         iterator.next (entry) != 0;
+         iterator.advance (), i--)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -196,12 +196,12 @@ test_map_manager (size_t table_size, size_t iterations)
 #if 1
   {
     ENTRY item;
-	i = 0;
+    i = 0;
     for (ITERATOR iter = map.begin ();
          iter != map.end (); i++, iter ++)
       {
         item = *iter;
-        ACE_DEBUG ((LM_DEBUG, "%d ", i));
+        ACE_DEBUG ((LM_DEBUG, "%u ", item.int_id_));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -210,8 +210,8 @@ test_map_manager (size_t table_size, size_t iterations)
     ITERATOR iterator (map);
     ENTRY *entry = 0;
     for (entry = 0, i = 0;
- 	 iterator.next (entry) != 0;
- 	 iterator.advance (), i++)
+         iterator.next (entry) != 0;
+         iterator.advance (), i++)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -220,12 +220,12 @@ test_map_manager (size_t table_size, size_t iterations)
 #if 1
   {
     ENTRY item;
-	i = iterations - 1;
+    i = iterations - 1;
     for (REVERSE_ITERATOR iter = map.rbegin ();
          iter != map.rend (); i--, iter ++)
       {
         item = *iter;
-        ACE_DEBUG ((LM_DEBUG, "%d ", i));
+        ACE_DEBUG ((LM_DEBUG, "%u ", item.int_id_));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -235,8 +235,8 @@ test_map_manager (size_t table_size, size_t iterations)
 
     ENTRY *entry = 0;
     for (entry = 0, i = iterations - 1;
-	 iterator.next (entry) != 0;
-	 iterator.advance (), i--)
+         iterator.next (entry) != 0;
+         iterator.advance (), i--)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -245,12 +245,12 @@ test_map_manager (size_t table_size, size_t iterations)
 #if 1
   {
     MAP_MANAGER::ENTRY item;
-	i = 0;
+    i = 0;
     for (MAP_MANAGER::iterator iter = map.begin ();
          iter != map.end (); i++, iter ++)
       {
         item = *iter;
-        ACE_DEBUG ((LM_DEBUG, "%d ", i));
+        ACE_DEBUG ((LM_DEBUG, "%u ", item.int_id_));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -260,8 +260,8 @@ test_map_manager (size_t table_size, size_t iterations)
 
     MAP_MANAGER::ENTRY *entry = 0;
     for (entry = 0, i = 0;
-	 iterator.next (entry) != 0;
-	 iterator.advance (), i++)
+         iterator.next (entry) != 0;
+         iterator.advance (), i++)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -270,12 +270,12 @@ test_map_manager (size_t table_size, size_t iterations)
 #if 1
   {
     ENTRY item;
-	i = iterations - 1;
+    i = iterations - 1;
     for (MAP_MANAGER::reverse_iterator iter = map.rbegin ();
          iter != map.rend (); i--, iter ++)
       {
         item = *iter;
-        ACE_DEBUG ((LM_DEBUG, "%d ", i));
+        ACE_DEBUG ((LM_DEBUG, "%u ", item.int_id_));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -285,8 +285,8 @@ test_map_manager (size_t table_size, size_t iterations)
 
     MAP_MANAGER::ENTRY *entry = 0;
     for (entry = 0, i = iterations - 1;
-	 iterator.next (entry) != 0;
-	 iterator.advance (), i--)
+         iterator.next (entry) != 0;
+         iterator.advance (), i--)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
@@ -306,9 +306,9 @@ test_map_manager (size_t table_size, size_t iterations)
 
 static void
 run_test (void (*ptf) (size_t, size_t),
-	  size_t table_size,
-	  size_t iterations,
-	  const char *test_name)
+          size_t table_size,
+          size_t iterations,
+          const char *test_name)
 {
   ACE_Profile_Timer timer;
   timer.start ();
@@ -323,11 +323,11 @@ run_test (void (*ptf) (size_t, size_t),
 
   ACE_DEBUG ((LM_DEBUG, "time to test a %d item map for %d iterations using %s\
 n",
-	      table_size, iterations, test_name));
+              table_size, iterations, test_name));
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
-	    et.real_time, et.user_time, et.system_time));
+            et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-	      (et.real_time / double (iterations)) * 1000000));
+              (et.real_time / double (iterations)) * 1000000));
 }
 
 int
