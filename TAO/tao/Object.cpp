@@ -30,6 +30,39 @@ CORBA_Object::~CORBA_Object (void)
   this->parent_->Release ();
 }
 
+CORBA_Object_var::~CORBA_Object_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+CORBA_Object_var::CORBA_Object_var (void) // default constructor
+        : ptr_ (CORBA_Object::_nil ())
+{
+}
+
+CORBA_Object::CORBA_Object (STUB_Object *protocol_proxy,
+                            TAO_ServantBase *servant,
+                            CORBA_Boolean collocated)
+  : servant_ (servant),
+    is_collocated_ (collocated),
+    parent_ (0),
+    refcount_ (1)
+{
+  // Notice that the refcount_ above is initialized to 1 because
+  // the semantics of CORBA Objects are such that obtaining one
+  // implicitly takes a reference.
+  this->_set_parent (protocol_proxy);
+}
+
+// CORBA dup/release build on top of COM's (why not).
+
+void
+CORBA::release (CORBA_Object_ptr obj)
+{
+  if (obj)
+    obj->Release ();
+}
+
 CORBA::InterfaceDef_ptr
 CORBA_Object::_get_interface (CORBA::Environment &env)
 {
