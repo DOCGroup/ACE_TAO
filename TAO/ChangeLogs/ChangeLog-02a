@@ -1,3 +1,10 @@
+Mon Jan 28 12:15:43 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/OBV/Forward/server.dsp:
+
+	  Corrected TAO_IDL compiler path "Debug" configuration
+	  depencencies.
+
 Mon Jan 28 11:50:27 2002  Ossama Othman  <ossama@uci.edu>
 
 	* performance-tests/Latency/AMH/Single_Threaded/run_test.pl:
