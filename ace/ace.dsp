@@ -39,23 +39,24 @@ RSC=rc.exe
 # PROP BASE Output_Dir ".\Release"
 # PROP BASE Intermediate_Dir ".\Release"
 # PROP BASE Target_Dir ""
-# PROP Use_MFC 2
+# PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\Release"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
+# ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 wsock32.lib /nologo /subsystem:windows /dll /machine:I386 /out:".\ace-r.dll"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386 /out:".\ace-r.dll"
 
 !ELSEIF  "$(CFG)" == "ACE - Win32 Debug"
 
@@ -64,24 +65,24 @@ LINK32=link.exe
 # PROP BASE Output_Dir ".\Debug"
 # PROP BASE Intermediate_Dir ".\Debug"
 # PROP BASE Target_Dir ""
-# PROP Use_MFC 2
+# PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
 # ADD BASE MTL /nologo /D "_DEBUG" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
+# ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 wsock32.lib /nologo /subsystem:windows /dll /debug /machine:I386
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
 
 !ELSEIF  "$(CFG)" == "ACE - Win32 Unicode Debug"
 
@@ -90,23 +91,24 @@ LINK32=link.exe
 # PROP BASE Output_Dir ".\ace___Wi"
 # PROP BASE Intermediate_Dir ".\ace___Wi"
 # PROP BASE Target_Dir ""
-# PROP Use_MFC 2
+# PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\Unicode_Debug"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /YX /c
-# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "UNICODE" /YX /FD /c
+# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "UNICODE" /YX /FD /c
 # ADD BASE MTL /nologo /D "_DEBUG" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
+# ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 wsock32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 wsock32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:".\aceu.dll"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:".\aceu.dll"
 
 !ELSEIF  "$(CFG)" == "ACE - Win32 Unicode Release"
 
@@ -115,24 +117,24 @@ LINK32=link.exe
 # PROP BASE Output_Dir ".\ace___W0"
 # PROP BASE Intermediate_Dir ".\ace___W0"
 # PROP BASE Target_Dir ""
-# PROP Use_MFC 2
+# PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\Unicode_Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /YX /c
-# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "UNICODE" /YX /FD /c
+# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "UNICODE" /YX /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
+# ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 wsock32.lib /nologo /subsystem:windows /dll /machine:I386 /out:"ace-r.dll"
-# ADD LINK32 wsock32.lib /nologo /subsystem:windows /dll /machine:I386 /out:".\aceu-r.dll"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386 /out:".\aceu-r.dll"
 
 !ENDIF 
 
@@ -179,19 +181,7 @@ SOURCE=.\Asynch_IO.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Auto_Ptr.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\Connector.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Containers.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
@@ -224,12 +214,6 @@ SOURCE=.\DEV_IO.cpp
 # Begin Source File
 
 SOURCE=.\Dump.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Dump_T.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
@@ -289,12 +273,6 @@ SOURCE=.\Filecache.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Free_List.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\Future.cpp
 # End Source File
 # Begin Source File
@@ -304,12 +282,6 @@ SOURCE=.\Get_Opt.cpp
 # Begin Source File
 
 SOURCE=.\Handle_Set.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Hash_Map_Manager.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
@@ -333,23 +305,11 @@ SOURCE=.\IOStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IOStream_T.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\IPC_SAP.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Local_Name_Space.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Local_Name_Space_T.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
@@ -393,18 +353,6 @@ SOURCE=.\Malloc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Malloc_T.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\Map_Manager.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\Mem_Map.cpp
 # End Source File
 # Begin Source File
@@ -417,19 +365,7 @@ SOURCE=.\Message_Block.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Message_Queue.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\Method_Object.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Module.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
@@ -561,12 +497,6 @@ SOURCE=.\Signal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Singleton.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\SOCK.cpp
 # End Source File
 # Begin Source File
@@ -631,18 +561,6 @@ SOURCE=.\Strategies.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Stream.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\Stream_Modules.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\SV_Message.cpp
 # End Source File
 # Begin Source File
@@ -683,23 +601,11 @@ SOURCE=.\Synch_Options.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Synch_T.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\System_Time.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Task.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Task_T.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
@@ -719,19 +625,7 @@ SOURCE=.\Timer_Hash.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Timer_Hash_T.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\Timer_Heap.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Timer_Heap_T.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
@@ -739,29 +633,11 @@ SOURCE=.\Timer_List.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Timer_List_T.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\Timer_Queue.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Timer_Queue_T.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\Timer_Wheel.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Timer_Wheel_T.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
@@ -836,6 +712,142 @@ SOURCE=.\UPIPE_Stream.cpp
 SOURCE=.\XtReactor.cpp
 # End Source File
 # End Group
+# Begin Group "Template Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Auto_Ptr.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Containers.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dump_T.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Free_List.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Map_Manager.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOStream_T.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Local_Name_Space_T.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Malloc_T.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Map_Manager.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Queue.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Module.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Singleton.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Strategies_T.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Stream.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Stream_Modules.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Synch_T.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Task_T.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Timer_Hash_T.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Timer_Heap_T.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Timer_List_T.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Timer_Queue_T.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Timer_Wheel_T.cpp
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
@@ -857,6 +869,14 @@ SOURCE=.\ARGV.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Array.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Acceptor.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_IO.h
 # End Source File
 # Begin Source File
@@ -869,11 +889,19 @@ SOURCE=".\config-win32-common.h"
 # End Source File
 # Begin Source File
 
+SOURCE=.\config.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Containers.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\CORBA_Handler.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CORBA_Ref.h
 # End Source File
 # Begin Source File
 
@@ -909,7 +937,15 @@ SOURCE=.\Dynamic.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Dynamic_Service.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event_Handler.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event_Handler_T.h
 # End Source File
 # Begin Source File
 
@@ -957,6 +993,10 @@ SOURCE=.\Free_List.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Future.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Get_Opt.h
 # End Source File
 # Begin Source File
@@ -982,6 +1022,10 @@ SOURCE=.\IO_Cntl_Msg.h
 # Begin Source File
 
 SOURCE=.\IO_SAP.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOStream.h
 # End Source File
 # Begin Source File
 
@@ -1038,6 +1082,10 @@ SOURCE=.\LSOCK_Dgram.h
 # Begin Source File
 
 SOURCE=.\LSOCK_Stream.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Malloc.h
 # End Source File
 # Begin Source File
 
@@ -1117,6 +1165,10 @@ SOURCE=.\Proactor.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Process.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Process_Manager.h
 # End Source File
 # Begin Source File
@@ -1190,6 +1242,10 @@ SOURCE=.\Shared_Memory_SV.h
 # Begin Source File
 
 SOURCE=.\Shared_Object.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Signal.h
 # End Source File
 # Begin Source File
 
@@ -1305,6 +1361,10 @@ SOURCE=.\Svc_Conf_Tokens.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Svc_Handler.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Synch.h
 # End Source File
 # Begin Source File
@@ -1342,6 +1402,10 @@ SOURCE=.\Time_Request_Reply.h
 # Begin Source File
 
 SOURCE=.\Time_Value.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Timer_Hash.h
 # End Source File
 # Begin Source File
 
@@ -1425,6 +1489,10 @@ SOURCE=.\TTY_IO.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Typed_SV_Message.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\UNIX_Addr.h
 # End Source File
 # Begin Source File
@@ -1443,14 +1511,22 @@ SOURCE=.\UPIPE_Connector.h
 
 SOURCE=.\UPIPE_Stream.h
 # End Source File
-# End Group
-# Begin Group "Resource Files"
+# Begin Source File
 
-# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
+SOURCE=.\ws2tcpip.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\XtReactor.h
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Acceptor.i
+# End Source File
 # Begin Source File
 
 SOURCE=.\ACE.i
@@ -1465,11 +1541,27 @@ SOURCE=.\ARGV.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Array.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Acceptor.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_IO.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Atomic_Op.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Auto_Ptr.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connector.i
 # End Source File
 # Begin Source File
 
@@ -1478,6 +1570,10 @@ SOURCE=.\Containers.i
 # Begin Source File
 
 SOURCE=.\CORBA_Handler.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CORBA_Ref.i
 # End Source File
 # Begin Source File
 
@@ -1569,6 +1665,10 @@ SOURCE=.\IO_SAP.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOStream_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\IPC_SAP.i
 # End Source File
 # Begin Source File
@@ -1638,6 +1738,10 @@ SOURCE=.\Module.i
 # Begin Source File
 
 SOURCE=.\Multiplexor.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Manager.i
 # End Source File
 # Begin Source File
 
@@ -1785,12 +1889,6 @@ SOURCE=.\SString.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Strategies_T.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\Stream.i
 # End Source File
 # Begin Source File
@@ -1816,6 +1914,10 @@ SOURCE=.\SV_Semaphore_Simple.i
 # Begin Source File
 
 SOURCE=.\SV_Shared_Memory.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Svc_Handler.i
 # End Source File
 # Begin Source File
 
@@ -1887,6 +1989,14 @@ SOURCE=.\Trace.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Typed_SV_Message.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Typed_SV_Message_Queue.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\UNIX_Addr.i
 # End Source File
 # Begin Source File
@@ -1900,6 +2010,18 @@ SOURCE=.\UPIPE_Connector.i
 # Begin Source File
 
 SOURCE=.\UPIPE_Stream.i
+# End Source File
+# End Group
+# Begin Group "Documentation"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\README
+# End Source File
+# Begin Source File
+
+SOURCE=..\VERSION
 # End Source File
 # End Group
 # End Target
