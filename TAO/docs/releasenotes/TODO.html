@@ -28,34 +28,15 @@
       <H4>Pending Tasks</H4>
     </CENTER>
 
-    <UL>
-      <LI>Normalize the compiled marshalling interface: the IDL
-	compiler is going to generate a different interface than the
-	code I showed in the EC_Custom_Marshal example; we need to
-	make all the code consistent so users have easy access to it.
-      </LI>
-
-      <LI>Add compiled marshalling
-	<BR>[STATUS] Andy is working on this.
-      </LI>
-
-      <LI>Add the _raise() method to the exceptions...
-      </LI>
-
+    <OL>
       <LI>Support native C++ exceptions.
 	This entails several subtasks:
 	<UL>
-	  <LI>Support the alternative mapping with an environment
-	    variable, but with a default value (that <B>must</B> be
-	    obtained from TSS).
-	  </LI>
-	  <LI>Support the standard mapping, without the environment
-	    variable.
-	  </LI>
 	  <LI>On the server side: catch any exceptions thrown by the
 	    user or the system, and then transform that into the
 	    proper <CODE>Reply</CODE> to the client side
 	  </LI>
+
 	  <LI>On the client side: when receiving an exception from the
 	    server we need to create the object with the right dynamic
 	    type. It is doable because the IDL compiler can give us a
@@ -65,6 +46,19 @@
 	    the list we just throw a CORBA::UNKNOWN_EXCEPTION
 	    exception.
 	  </LI>
+
+	  <LI>Add the _raise() method to the exceptions...
+	  </LI>
+
+	  <LI>Support the alternative mapping with an environment
+	    variable, but with a default value (that <B>must</B> be
+	    obtained from TSS).
+	  </LI>
+
+	  <LI>Support the standard mapping, without the environment
+	    variable.
+	  </LI>
+
 	  <LI><P>I haven't looked into how would we support exceptions
 	      with DII/DSI, the <CODE>ExceptionList</CODE> that is
 	      received passed in the <CODE>Request</CODE> only contains
@@ -77,6 +71,10 @@
 	      use of statics that cause us so much pain</P>
 	  </LI>
 	</UL>
+      </LI>
+
+      <LI>Add compiled marshalling
+	<BR>[STATUS] Andy is working on this.
       </LI>
 
       <LI>Add support for multiple Profiles in the ORB (completing the
@@ -424,13 +422,20 @@
       <LI>The IDL compiler could generate a static method to access
 	the interface repository ID of a class.
       </LI>
-    </UL>
+    </OL>
 
     <CENTER>
       <H4>Completed Tasks</H4>
     </CENTER>
 
     <UL>
+      <LI>Normalize the compiled marshalling interface: the IDL
+	compiler is going to generate a different interface than the
+	code I showed in the EC_Custom_Marshal example; we need to
+	make all the code consistent so users have easy access to it.
+	<BR>[DONE]
+      </LI>
+
       <LI>Object references inside structures or sequences are not
 	decoded properly, the problem starts because the interpreter
 	expects a CORBA::Object_ptr, but the real type is a T_var;
