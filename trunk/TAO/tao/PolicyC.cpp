@@ -194,7 +194,7 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
 
 CORBA_Policy_ptr CORBA_Policy::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
@@ -208,6 +208,7 @@ CORBA_Policy_ptr CORBA_Policy::_unchecked_narrow (
 #if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::Policy::_nil ());
 #else
+    ACE_UNUSED_ARG (ACE_TRY_ENV);
     return new CORBA_Policy(stub);
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   return new POA_CORBA::_tao_collocated_Policy(

@@ -1,165 +1,174 @@
+Thu Jul 22 07:12:07 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/PolicyC.cpp (_unchecked_narrow): added ACE_TRY_ENV
+          argument declaration, because it's used with
+          TAO_HAS_LOCALITY_CONSTRAINT_POLICIES.  Added
+          ACE_UNUSED_ARG (ACE_TRY_ENV) without those policies.
+          Thanks to Erik Johannes <ejohannes@oresis.com> for reporting
+          that compilation failed with TAO_HAS_LOCALITY_CONSTRAINT_POLICIES.
+
 Thu Jul 22 02:14:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Connection_Purging: This program tests automatic purging
-	  in TAO.
+        * tests/Connection_Purging: This program tests automatic purging
+          in TAO.
 
-	* tests/POA/Destruction/Destruction.dsp (BuildCmds):
-	* tests/POA/Deactivation/Deactivation.dsp (BuildCmds):
+        * tests/POA/Destruction/Destruction.dsp (BuildCmds):
+        * tests/POA/Deactivation/Deactivation.dsp (BuildCmds):
 
-	  Added C.h to list of IDL compiler output files.
+          Added C.h to list of IDL compiler output files.
 
-	* tao/default_resource.cpp (TAO_Default_Resource_Factory):
-	  Initialized <connection_caching_type_> and <purge_percentage_>.
+        * tao/default_resource.cpp (TAO_Default_Resource_Factory):
+          Initialized <connection_caching_type_> and <purge_percentage_>.
 
-	* tests/POA/Deactivation/Deactivation.cpp (main): Made sure to
-	  destroy the Root POA to avoid memory leaks.
+        * tests/POA/Deactivation/Deactivation.cpp (main): Made sure to
+          destroy the Root POA to avoid memory leaks.
 
-	* tao/ORB_Core.cpp (init): Checking for environment variable
-	  TAO_ORB_DEBUG should happen before checking the ORBDebugLevel
-	  command line option.
+        * tao/ORB_Core.cpp (init): Checking for environment variable
+          TAO_ORB_DEBUG should happen before checking the ORBDebugLevel
+          command line option.
 
 Wed Jul 21 23:38:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
-	  (visit_interface): The generated _this method was producing
-	  collocated object references even when the collocation
-	  optimization in servant orb was disabled.  It should return
-	  regular (remote) stubs in this case.  Thanks to Irfan for
-	  pointing this out.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+          (visit_interface): The generated _this method was producing
+          collocated object references even when the collocation
+          optimization in servant orb was disabled.  It should return
+          regular (remote) stubs in this case.  Thanks to Irfan for
+          pointing this out.
 
 Wed Jul 21 03:20:16 1999 Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* Connection Caching Feature
-	  --------------------------
+        * Connection Caching Feature
+          --------------------------
 
-	  Motivation:
+          Motivation:
 
-  	  In TAO, open connections are stored in a connection cache and
-	  reused for the subsequent requests between the same client and
-	  server.  This is done to avoid the cost of establishing new
-	  connections. Every connection needs a OS handle which has to
-	  obtained from the OS. The OS can allot only a fixed number of
-	  handles to a process.  This can become a issue in case of
-	  clients and servers with multiple handles open who may not be
-	  allowed to establish a new connection as the process has run out
-	  of handles.
+          In TAO, open connections are stored in a connection cache and
+          reused for the subsequent requests between the same client and
+          server.  This is done to avoid the cost of establishing new
+          connections. Every connection needs a OS handle which has to
+          obtained from the OS. The OS can allot only a fixed number of
+          handles to a process.  This can become a issue in case of
+          clients and servers with multiple handles open who may not be
+          allowed to establish a new connection as the process has run out
+          of handles.
 
-	  Aim:
+          Aim:
 
-  	  Clients and servers should be able to to continue making new
-	  connections by tearing down "old" connections.
+          Clients and servers should be able to to continue making new
+          connections by tearing down "old" connections.
 
-	  Solution: Auto-purging
+          Solution: Auto-purging
 
-	  The connections are stored in a cache. When ever the connect
-	  call fails due to the process running out of handles,
-	  auto-purging will kick in and some "old" connections will be
-	  removed from the connection cache.  The decision about which
-	  connections are "old" is made by the caching strategies. The
-	  percentage of existing connections to be purged is controlled by
-	  a purge percent.
+          The connections are stored in a cache. When ever the connect
+          call fails due to the process running out of handles,
+          auto-purging will kick in and some "old" connections will be
+          removed from the connection cache.  The decision about which
+          connections are "old" is made by the caching strategies. The
+          percentage of existing connections to be purged is controlled by
+          a purge percent.
 
-	  ACE classes: Caching_Utility, Cleanup_Stratgies, and
-	  Caching_Strategies have been used.  Simple examples are
-	  available in $ACE_ROOT/tests/Cached_Accept_Conn_Test.cpp and
-	  $ACE_ROOT/tests/Cached_Conn_Test.cpp.
+          ACE classes: Caching_Utility, Cleanup_Stratgies, and
+          Caching_Strategies have been used.  Simple examples are
+          available in $ACE_ROOT/tests/Cached_Accept_Conn_Test.cpp and
+          $ACE_ROOT/tests/Cached_Conn_Test.cpp.
 
-	  Note that the users can also purge handles used by the ORB
-	  explicitly through TAO_Connector_Registry::purge_connections().
-	  This can enable them to open new handles for their application.
+          Note that the users can also purge handles used by the ORB
+          explicitly through TAO_Connector_Registry::purge_connections().
+          This can enable them to open new handles for their application.
 
-	  Todo: Implement purging for new handles created by the Acceptor.
-	  This will increase the scalability.
+          Todo: Implement purging for new handles created by the Acceptor.
+          This will increase the scalability.
 
-	  Usage: Through options to the Resource_Factory :-
+          Usage: Through options to the Resource_Factory :-
 
-	  -ORBConnectionCachingStrategy <lru/lfu/fifo/null>
-	  -ORBPurgePercent <percentage>
+          -ORBConnectionCachingStrategy <lru/lfu/fifo/null>
+          -ORBPurgePercent <percentage>
 
-	  Now for the changes made:
+          Now for the changes made:
 
-	* tao/Connector_Registry.{h,cpp}:
-	  Added a purge_connections () method which purges entries from
-	  the connection cache of the different connectors registered with
-	  the registry.
+        * tao/Connector_Registry.{h,cpp}:
+          Added a purge_connections () method which purges entries from
+          the connection cache of the different connectors registered with
+          the registry.
 
-	* tao/IIOP_Connector.{h,cpp}:
-	* tao/UIOP_Connector.{h,cpp}:
-	  Changed Cached_Connect_Strategy to Cached_Connect_Strategy_Ex as
-	  the connection strategy.  It contains the caching strategy which
-	  decides the entries to remove on demand. A
-	  Hash_Cache_Map_Manager is used to store connections and appends
-	  each entry with special attributes used for purging
-	  purposes.
+        * tao/IIOP_Connector.{h,cpp}:
+        * tao/UIOP_Connector.{h,cpp}:
+          Changed Cached_Connect_Strategy to Cached_Connect_Strategy_Ex as
+          the connection strategy.  It contains the caching strategy which
+          decides the entries to remove on demand. A
+          Hash_Cache_Map_Manager is used to store connections and appends
+          each entry with special attributes used for purging
+          purposes.
 
-	* tao/orbconf.h:
-	  Added:
-	  TAO_CONNECTION_CACHING_STRATEGY (default) is LRU
-	  TAO_PURGE_PERCENT (default) is 20%
+        * tao/orbconf.h:
+          Added:
+          TAO_CONNECTION_CACHING_STRATEGY (default) is LRU
+          TAO_PURGE_PERCENT (default) is 20%
 
-	* tao/Resource_Factory.{h,cpp}:
-	  Added hooks for connection_caching_strategy_type and
-	  purge_percent. Also an enum is added which is used for deciding
-	  the different caching strategies.
+        * tao/Resource_Factory.{h,cpp}:
+          Added hooks for connection_caching_strategy_type and
+          purge_percent. Also an enum is added which is used for deciding
+          the different caching strategies.
 
-	* tao/default_resource.{h,cpp}:
-	  Input from the user is parsed and the caching_stratgey_type and
-	  purge_percent is decided.
+        * tao/default_resource.{h,cpp}:
+          Input from the user is parsed and the caching_stratgey_type and
+          purge_percent is decided.
 
-	  Thanks to Irfan from the DOC group for being a great help and
-	  guiding me on this project.
+          Thanks to Irfan from the DOC group for being a great help and
+          guiding me on this project.
 
 Wed Jul 21 16:59:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_decl.cpp:
-	  Added initialization of be_decl::has_constructor_ in the constructor.
-	  Must have neglected to check this file in with my original fix,
-	  and it broke IDL_Cubit. Thanks to David Levine for reporting the
-	  error so I could catch my oversight.
+        * TAO_IDL/be/be_decl.cpp:
+          Added initialization of be_decl::has_constructor_ in the constructor.
+          Must have neglected to check this file in with my original fix,
+          and it broke IDL_Cubit. Thanks to David Levine for reporting the
+          error so I could catch my oversight.
 
 Wed Jul 21 16:06:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
-	  Modified _var and _forany copy constructor, deep copy assignment
-	  operator, [] const operator, and .in() method code
-	  generation to work with arrays of 3 or more dimensions.
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+          Modified _var and _forany copy constructor, deep copy assignment
+          operator, [] const operator, and .in() method code
+          generation to work with arrays of 3 or more dimensions.
 
-	* TAO/tests/IDL_Test/array.idl:
-	* TAO/tests/IDL_Test/typedef.idl:
-	  Uncommented examples with 3-dimensional arrays.
+        * TAO/tests/IDL_Test/array.idl:
+        * TAO/tests/IDL_Test/typedef.idl:
+          Uncommented examples with 3-dimensional arrays.
 
 Wed Jul 21 12:31:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/Repository.cpp:
-	  Added template instantiation for SunCC 5.0, the template is
-	  already instantiated in libTAO.so, but the compiler is broken
-	  and doesn't seem to find it.
+        * orbsvcs/ImplRepo_Service/Repository.cpp:
+          Added template instantiation for SunCC 5.0, the template is
+          already instantiated in libTAO.so, but the compiler is broken
+          and doesn't seem to find it.
 
 Wed Jul 21 12:05:15 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_visitor_union_branch.h:
-	* TAO_IDL/be/be_visitor_union_branch.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
-	  Added gen_default_label_value() to be_visitor_union_branch.* and
-	  added a call to this instead of gen_label_value() in code
-	  generation of mutator method for a union branch if it is an
-	  explicit default case. This particular bit of default case
-	  functionality had not yet been implemented.
+        * TAO_IDL/be_include/be_visitor_union_branch.h:
+        * TAO_IDL/be/be_visitor_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+          Added gen_default_label_value() to be_visitor_union_branch.* and
+          added a call to this instead of gen_label_value() in code
+          generation of mutator method for a union branch if it is an
+          explicit default case. This particular bit of default case
+          functionality had not yet been implemented.
 
 Wed Jul 21 10:46:50 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
 
-	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
-	* orbsvcs/tests/CosEC_Multiple/CosEC_Multiple.cpp:
-	* orbsvcs/tests/CosEC_Multiple/CosECConsumer.cpp:
-	* examples/Event_Comm/Notifier_Handler.cpp:
-	* examples/Event_Comm/Consumer_Handler.cpp:
-	  fixed Green Hills compiler warnings for return values from methods.
-	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
-	  fixed Green Hills compiler warnings for return values from methods.
-	  modified the <create> method to pass the POAManager to the
-	  <create_POA> method.This fixes the problem of the factory not
-	  working properly. Thanks to Alex Hornby <alex@anvil.co.uk> for
-	  reporting this.
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+        * orbsvcs/tests/CosEC_Multiple/CosEC_Multiple.cpp:
+        * orbsvcs/tests/CosEC_Multiple/CosECConsumer.cpp:
+        * examples/Event_Comm/Notifier_Handler.cpp:
+        * examples/Event_Comm/Consumer_Handler.cpp:
+          fixed Green Hills compiler warnings for return values from methods.
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+          fixed Green Hills compiler warnings for return values from methods.
+          modified the <create> method to pass the POAManager to the
+          <create_POA> method.This fixes the problem of the factory not
+          working properly. Thanks to Alex Hornby <alex@anvil.co.uk> for
+          reporting this.
 
 Wed Jul 21 08:55:12 1999  Steve Huston  <shuston@riverace.com>
 
@@ -173,136 +182,136 @@ Wed Jul 21 08:55:12 1999  Steve Huston  <shuston@riverace.com>
 
 Wed Jul 21 05:04:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.cpp (shutdown): Instead of wapup_all_thread, we need to
-	  use end_reactor_event_loop () to notify the reactor it has been
-	  deactivated.  This will ensure all ORB threads stop handling
-	  events immediately.
+        * tao/ORB.cpp (shutdown): Instead of wapup_all_thread, we need to
+          use end_reactor_event_loop () to notify the reactor it has been
+          deactivated.  This will ensure all ORB threads stop handling
+          events immediately.
 
 Wed Jul 21 02:36:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.dsp:
-	* orbsvcs/Naming_Service/Makefile: Changed the executable name
-	  back to Naming_Service.
+        * orbsvcs/Naming_Service/Naming_Service.dsp:
+        * orbsvcs/Naming_Service/Makefile: Changed the executable name
+          back to Naming_Service.
 
-	* examples/Callback_Quoter/run_test.pl:
-	* examples/Quoter/run_test.pl:
-	* orbsvcs/Naming_Service/Makefile:
-	* orbsvcs/tests/AVStreams/benchmark/run_test.pl:
-	* orbsvcs/tests/CosEC_Multiple/run_test.pl:
-	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
-	* orbsvcs/tests/EC_Multiple/run_test.pl:
-	* orbsvcs/tests/EC_Throughput/run_test.pl:
-	* orbsvcs/tests/Event_Latency/run_test.pl:
-	* orbsvcs/tests/Property/run_test.pl:
-	* orbsvcs/tests/Simple_Naming/run_test.pl: Changed the name of
-	  Naming Service program from Naming_Server back to
-	  Naming_Service.
+        * examples/Callback_Quoter/run_test.pl:
+        * examples/Quoter/run_test.pl:
+        * orbsvcs/Naming_Service/Makefile:
+        * orbsvcs/tests/AVStreams/benchmark/run_test.pl:
+        * orbsvcs/tests/CosEC_Multiple/run_test.pl:
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * orbsvcs/tests/EC_Multiple/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+        * orbsvcs/tests/Event_Latency/run_test.pl:
+        * orbsvcs/tests/Property/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl: Changed the name of
+          Naming Service program from Naming_Server back to
+          Naming_Service.
 
 Tue Jul 20 22:37:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.h:
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.i:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	  Use the ACE_Throughput_Stats class to keep track of latency and
-	  throughput.  This should eliminate the problems with VxWorks
-	  which does not support 64-bit longs.
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.i:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+          Use the ACE_Throughput_Stats class to keep track of latency and
+          throughput.  This should eliminate the problems with VxWorks
+          which does not support 64-bit longs.
 
-	* tao/ObjectIDList.h:
-	* tao/ObjectIDList.i:
-	* tao/ObjectIDList.cpp:
-	  Moved CDR operators to the .cpp file, they are not
-	  time-critical, all CDR operators for sequences are defined in
-	  the .cpp file and they were generating duplicate symbols.
+        * tao/ObjectIDList.h:
+        * tao/ObjectIDList.i:
+        * tao/ObjectIDList.cpp:
+          Moved CDR operators to the .cpp file, they are not
+          time-critical, all CDR operators for sequences are defined in
+          the .cpp file and they were generating duplicate symbols.
 
-	* tests/InterOp-Naming/Makefile:
-	  Updated dependencies and fixed SRC list
+        * tests/InterOp-Naming/Makefile:
+          Updated dependencies and fixed SRC list
 
-	* tests/Param_Test/run_test.pl:
-	  Increate the startup time for the server, it was timing out on
-	  loaded systems
+        * tests/Param_Test/run_test.pl:
+          Increate the startup time for the server, it was timing out on
+          loaded systems
 
 Tue Jul 20 20:51:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
-	  Added default case to switch statements generating cases for
-	  CDR operators. If discriminant is an enum, some compilers
-	  complain if all the enum values are not used and there
-	  is not a default case in the switch, which is the case
-	  when we have an implicit default case.
+        * TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+          Added default case to switch statements generating cases for
+          CDR operators. If discriminant is an enum, some compilers
+          complain if all the enum values are not used and there
+          is not a default case in the switch, which is the case
+          when we have an implicit default case.
 
 Tue Jul 20 19:32:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	  Fixed memory leaks in output_cdr_dblock_allocator method.
+        * tao/ORB_Core.cpp:
+          Fixed memory leaks in output_cdr_dblock_allocator method.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.zero_lock.conf:
-	  Fixed configuration for IDL cubit, we must use locks in the POA
-	  to avoid dead-locks on shutdown.  Added a new file with the old
-	  configuration so experiments can still be executed using a well
-	  known configuration.
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.zero_lock.conf:
+          Fixed configuration for IDL cubit, we must use locks in the POA
+          to avoid dead-locks on shutdown.  Added a new file with the old
+          configuration so experiments can still be executed using a well
+          known configuration.
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
-	  The low priority thread was trying to use priorities in the RT
-	  class, event though we were not allowed to do that.
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
+          The low priority thread was trying to use priorities in the RT
+          class, event though we were not allowed to do that.
 
 Tue Jul 20 19:16:00 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/ObjectIDList.{h,i}:
+        * tao/ObjectIDList.{h,i}:
 
-	  Added missing TAO_Export macros in class declarations and global
-	  function definitions.
+          Added missing TAO_Export macros in class declarations and global
+          function definitions.
 
 Tue Jul 20 19:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_array.cpp:
-	  Reverted addition of has_constructor() call - arrays
-	  are always included in unions as pointers to the slice
-	  anyway.
+        * TAO_IDL/be/be_array.cpp:
+          Reverted addition of has_constructor() call - arrays
+          are always included in unions as pointers to the slice
+          anyway.
 
-	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
-	  Changed reference to be_type::SIZE_TYPE to
-	  be_decl::SIZE_TYPE (where it actually resides).
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+          Changed reference to be_type::SIZE_TYPE to
+          be_decl::SIZE_TYPE (where it actually resides).
 
-	* TAO_IDL/be/be_field.cpp:
-	* TAO_IDL/be/be_typedef.cpp:
-	  Added calls to has_constructor() in comput_size_type().
-	  They don't seem to be needed on NT, but Solaris egcs
-	  seems to need them.
+        * TAO_IDL/be/be_field.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+          Added calls to has_constructor() in comput_size_type().
+          They don't seem to be needed on NT, but Solaris egcs
+          seems to need them.
 
 Tue Jul 20 19:03:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/IIOP_Connector.cpp:
-	* tao/UIOP_Connector.cpp:
-	* tao/ORB.cpp:
-	* tao/Resource_Factory.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/UIOP_Connector.cpp:
+        * tao/ORB.cpp:
+        * tao/Resource_Factory.cpp:
 
-	  Moved template instantiations for TAO_Cached_Connector_Lock to
-	  Resource_Factory.cpp since that file is a more appropriate
-	  location to put them.
+          Moved template instantiations for TAO_Cached_Connector_Lock to
+          Resource_Factory.cpp since that file is a more appropriate
+          location to put them.
 
 Tue Jul 20 15:12:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_sunsoft.cpp:
-	  Changed format of double literal output to use scientific notation
-	  if necesssary. Thanks to Dwayne Burns <dburns@isrglobal.com> for
-	  sending in the IDL file that called for this.
+        * TAO_IDL/be/be_sunsoft.cpp:
+          Changed format of double literal output to use scientific notation
+          if necesssary. Thanks to Dwayne Burns <dburns@isrglobal.com> for
+          sending in the IDL file that called for this.
 
-	* TAO/tests/IDL_Test/constants.idl:
-	  Added Dwayne's constants to the test file.
+        * TAO/tests/IDL_Test/constants.idl:
+          Added Dwayne's constants to the test file.
 
 Tue Jul 20 14:08:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
-	  Removed some ACE_NOTREACHED macros and helped out a bamboozled
-	  vxworks compiler.
+        * TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
+          Removed some ACE_NOTREACHED macros and helped out a bamboozled
+          vxworks compiler.
 
 Tue Jul 20 13:30:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
