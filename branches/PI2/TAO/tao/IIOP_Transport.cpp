@@ -210,6 +210,10 @@ TAO_IIOP_Client_Transport::send_request (TAO_Stub *stub,
 // Return 0, when the reply is not read fully, 1 if it is read fully.
 // @@ This code should go in the TAO_Transport class is repeated for
 //    each transport!!
+// @@ Carlos says: no, the code should be factored out in GIOP helper
+//    classes, but not in Transport.  Transport must deal with
+//    non-GIOP protocols, that may have completely different behavior.
+//
 int
 TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
                                                 ACE_Time_Value *max_wait_time)
@@ -229,6 +233,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) IIOP_Transport::handle_client_input -")
                     ACE_TEXT (" nil message state\n")));
+      this->tms_->connection_closed ();
       return -1;
     }
 
@@ -243,6 +248,8 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - %p\n"),
                     ACE_TEXT ("IIOP_Transport::handle_client_input, handle_input")));
+
+      this->tms_->connection_closed ();
       return -1;
     }
   if (result == 0)
@@ -259,6 +266,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
                     ACE_TEXT ("TAO (%P|%t) - %p\n"),
                     ACE_TEXT ("IIOP_Transport::handle_client_input, parse reply")));
       message_state->reset ();
+      this->tms_->connection_closed ();
       return -1;
     }
 
@@ -277,6 +285,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
                     ACE_TEXT ("handle_client_input - ")
                     ACE_TEXT ("dispatch reply failed\n")));
       message_state->reset ();
+      this->tms_->connection_closed ();
       return -1;
     }
 
@@ -405,13 +414,15 @@ TAO_IIOP_Transport::send (TAO_Stub *stub,
 
 ssize_t
 TAO_IIOP_Transport::send (const ACE_Message_Block *message_block,
-                          const ACE_Time_Value *max_wait_time)
+                          const ACE_Time_Value *max_wait_time,
+			  size_t *bytes_transferred)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
 
   return ACE::send_n (this->handle (),
                       message_block,
-                      max_wait_time);
+                      max_wait_time,
+		      bytes_transferred);
 }
 
 ssize_t

@@ -16,6 +16,7 @@
 #include "tao/Marshal.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Utils.h"
+#include "tao/POA.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Server_Request.i"
@@ -135,12 +136,6 @@ CORBA::ORB_ptr
 TAO_GIOP_ServerRequest::orb (void)
 {
   return this->orb_core_->orb ();
-}
-
-TAO_POA *
-TAO_GIOP_ServerRequest::oa (void)
-{
-  return this->orb_core_->root_poa ();
 }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -308,7 +303,9 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
     reply_params.params_ = this->params_;
 #endif /*TAO_HAS_MINIMUM_CORBA */
 
-  // Pass in the service context
+  // Pass in the service context list.  We are sending back what we
+  // received in the Request.  (RTCORBA relies on it.  Check before
+  // modifying...) marina
   reply_params.service_context_notowned (&this->service_info_);
 
   // Forward exception only.
@@ -390,10 +387,14 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
   reply_params.params_ = 0;
 #endif /*TAO_HAS_MINIMUM_CORBA*/
 
+  // Change this to pass back the same thing we received, as well as
+  // leave a comment why this is important!
   reply_params.svc_ctx_.length (0);
 
-  // Pass in the service context
-  reply_params.service_context_notowned (& reply_params.svc_ctx_);
+  // Pass in the service context list.  We are sending back what we
+  // received in the Request.  (RTCORBA relies on it.  Check before
+  // modifying...) marina
+  reply_params.service_context_notowned (&this->service_info_);
 
   reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;
 
@@ -416,4 +417,12 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
                       ACE_TEXT ("TAO_GIOP_ServerRequest::send_no_exception_reply")));
         }
     }
+}
+
+CORBA::Object_ptr
+TAO_GIOP_ServerRequest::objref (CORBA_Environment &ACE_TRY_ENV)
+{
+  TAO_POA_Current_Impl *pci = TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
+
+  return pci->poa ()->id_to_reference (pci->object_id (), ACE_TRY_ENV);
 }

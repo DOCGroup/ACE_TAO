@@ -6,6 +6,7 @@
 #include "tao/debug.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Server_Request.h"
+#include "tao/Leader_Follower.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Acceptors.i"
@@ -20,6 +21,8 @@ TAO_GIOP_Message_Acceptors::
                           TAO_InputCDR &input,
                           CORBA::Octet message_type)
 {
+  orb_core->leader_follower ().set_upcall_thread ();
+
   this->output_->reset ();
   switch (message_type)
     {
@@ -180,7 +183,9 @@ TAO_GIOP_Message_Acceptors::
       reply_params.request_id_ = request_id;
       reply_params.reply_status_ = TAO_GIOP_LOCATION_FORWARD;
       reply_params.svc_ctx_.length (0);
-      reply_params.service_context_notowned (&reply_params.svc_ctx_);
+      // Sending back the same service context list we received in the
+      // Request.  (Important for RT CORBA).
+      reply_params.service_context_notowned (&request.service_info ());
       reply_params.params_ = 0;
 
       // Make the GIOP header and Reply header
@@ -207,6 +212,7 @@ TAO_GIOP_Message_Acceptors::
           result = this->send_reply_exception (transport,
                                                orb_core,
                                                request_id,
+                                               &request.service_info (),
                                                &ACE_ANY_EXCEPTION);
           if (result == -1)
             {
@@ -257,6 +263,7 @@ TAO_GIOP_Message_Acceptors::
           result = this->send_reply_exception (transport,
                                                orb_core,
                                                request_id,
+                                               &request.service_info (),
                                                &exception);
           if (result == -1)
             {
@@ -496,6 +503,7 @@ TAO_GIOP_Message_Acceptors::
   send_reply_exception (TAO_Transport *transport,
                         TAO_ORB_Core* orb_core,
                         CORBA::ULong request_id,
+                        IOP::ServiceContextList *svc_info,
                         CORBA::Exception *x)
 {
   // Create a new output CDR stream
@@ -517,7 +525,10 @@ TAO_GIOP_Message_Acceptors::
   TAO_Pluggable_Reply_Params reply_params;
   reply_params.request_id_ = request_id;
   reply_params.svc_ctx_.length (0);
-  reply_params.service_context_notowned (&reply_params.svc_ctx_);
+
+  // Send back the service context we received.  (RTCORBA relies on
+  // this).
+  reply_params.service_context_notowned (svc_info);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   reply_params.params_ = 0;

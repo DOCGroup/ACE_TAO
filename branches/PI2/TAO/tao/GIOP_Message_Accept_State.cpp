@@ -419,6 +419,9 @@ TAO_GIOP_Message_Accept_State_12::
   // value is SYNC_WITH_SERVER. 
   request.sync_with_server ((response_flags == 2));
 
+  // Reserved field
+  input.skip_bytes (3);
+
   // Read the discriminant of the union.
   CORBA::Short disc = 0;
   hdr_status = hdr_status && input.read_short (disc);

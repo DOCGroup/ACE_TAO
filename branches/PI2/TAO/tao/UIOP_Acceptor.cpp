@@ -185,8 +185,16 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
 int
 TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
+                                 int major,
+                                 int minor,
                                  const char *options)
 {
+  if (major >=0 && minor >= 0)
+    this->version_.set_version (ACE_static_cast (CORBA::Octet,
+                                                 major),
+                                ACE_static_cast (CORBA::Octet,
+                                                 minor));
+
   // Parse options
   if (this->parse_options (options) == -1)
     return -1;
@@ -303,11 +311,11 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 {
   // Create the decoding stream from the encapsulation in the buffer,
   TAO_InputCDR cdr (profile.profile_data.mb ());
-  
+
     CORBA::Octet major, minor;
-  
+
   // Read the version. We just read it here. We don't*do any*
-  // processing. 
+  // processing.
   if (!(cdr.read_octet (major)
         && cdr.read_octet (minor)))
   {
@@ -320,7 +328,7 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       }
     return -1;
   }
-  
+
   char *rendezvous = 0;
 
   // Get rendezvous_point
@@ -329,14 +337,14 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       ACE_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
       return -1;
     }
-  
+
   // delete the rendezvous point. We don't do any processing.
   delete [] rendezvous;
-  
+
   // ... and object key.
   if ((cdr >> object_key) == 0)
     return -1;
-  
+
   return 1;
 }
 

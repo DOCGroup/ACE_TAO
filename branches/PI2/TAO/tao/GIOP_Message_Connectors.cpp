@@ -423,6 +423,11 @@ TAO_GIOP_Message_Connector_12::
     // Until more flags are defined by the OMG.
     return 0;
 
+  // The reserved field
+  CORBA::Octet reserved[3] = {0, 0, 0};
+
+  msg.write_octet_array (reserved, 3);
+
   if (this->marshall_target_spec (spec,
                                   msg) == 0)
     return 0;

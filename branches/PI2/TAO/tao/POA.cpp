@@ -12,13 +12,14 @@
 #include "tao/Stub.h"
 #include "tao/debug.h"
 
+#include "tao/RT_Policy_i.h"
+
 //
 // ImplRepo related.
 //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 # include "tao/ImplRepoC.h"
 # include "tao/ImplRepoS.h"
-# include "tao/Acceptor_Registry.h"
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 
@@ -37,8 +38,8 @@
 #endif /* _MSC_VER */
 
 class ServerObject_i
-: public POA_ImplementationRepository::ServerObject,
-  public PortableServer::RefCountServantBase
+  : public POA_ImplementationRepository::ServerObject,
+    public PortableServer::RefCountServantBase
 {
   // = TITLE
   //    IMR Server Object Implementation
@@ -81,9 +82,9 @@ private:
 ACE_RCSID(tao, POA, "$Id$")
 
 #if (TAO_NO_IOR_TABLE == 0)
-// This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
-// It's an array of octets representing ^t^a^o/0 in octal.
-CORBA::Octet
+  // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
+  // It's an array of octets representing ^t^a^o/0 in octal.
+  CORBA::Octet
 TAO_POA::objectkey_prefix [TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE] = {
   024, // octal for ^t
   001, // octal for ^a
@@ -115,9 +116,9 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-//
-// ImplRepo related.
-//
+    //
+    // ImplRepo related.
+    //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
     server_object_ (0),
@@ -169,9 +170,9 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     }
 
   // Add self to Object Adapter class.
-  result = this->orb_core_.object_adapter ()->bind_poa (this->folded_name_,
-                                                        this,
-                                                        this->system_name_.out ());
+  result = this->object_adapter ().bind_poa (this->folded_name_,
+                                             this,
+                                             this->system_name_.out ());
   if (result != 0)
     {
       // Remove from POA Manager in case of errors. No checks of
@@ -213,9 +214,9 @@ TAO_POA::~TAO_POA (void)
   this->poa_manager_.remove_poa (this);
 
   // Remove POA from the Object Adapter.
-  this->orb_core_.object_adapter ()->unbind_poa (this,
-                                                 this->folded_name_,
-                                                 this->system_name_.in ());
+  this->object_adapter ().unbind_poa (this,
+                                      this->folded_name_,
+                                      this->system_name_.in ());
 }
 
 PortableServer::POA_ptr
@@ -230,7 +231,10 @@ TAO_POA::create_POA_i (const char *adapter_name,
   // administrative action that has not been performed, an
   // InvalidPolicy exception is raised containing the index in the
   // policies parameter value of the first offending policy object.
-  TAO_POA_Policies tao_policies;
+  TAO_POA_Policies tao_policies (this->orb_core_,
+                                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+
   tao_policies.parse_policies (policies,
                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
@@ -245,7 +249,7 @@ TAO_POA::create_POA_i (const char *adapter_name,
   if (CORBA::is_nil (poa_manager))
     {
       ACE_NEW_THROW_EX (poa_manager_impl,
-                        TAO_POA_Manager (*this->orb_core_.object_adapter ()),
+                        TAO_POA_Manager (this->object_adapter ()),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
@@ -322,8 +326,8 @@ TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
                              poa_manager,
                              policies,
                              this,
-                             this->orb_core_.object_adapter ()->lock (),
-                             this->orb_core_.object_adapter ()->thread_lock (),
+                             this->object_adapter ().lock (),
+                             this->object_adapter ().thread_lock (),
                              this->orb_core_,
                              ACE_TRY_ENV),
                     CORBA::NO_MEMORY ());
@@ -367,17 +371,16 @@ TAO_POA::find_POA (const char *adapter_name,
                    CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
+  TAO_POA_GUARD_RETURN (0);
 
-  // A recursive thread lock without using a recursive thread
-  // lock.  Non_Servant_Upcall has a magic constructor and
-  // destructor.  We unlock the Object_Adapter lock for the
-  // duration of the servant activator upcalls; reacquiring
-  // once the upcalls complete.  Even though we are releasing
-  // the lock, other threads will not be able to make progress
-  // since <Object_Adapter::non_servant_upcall_in_progress_>
-  // has been set.
-  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this->orb_core_.object_adapter ());
+  // A recursive thread lock without using a recursive thread lock.
+  // Non_Servant_Upcall has a magic constructor and destructor.  We
+  // unlock the Object_Adapter lock for the duration of the servant
+  // activator upcalls; reacquiring once the upcalls complete.  Even
+  // though we are releasing the lock, other threads will not be able
+  // to make progress since
+  // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
   ACE_UNUSED_ARG (non_servant_upcall);
 
   TAO_POA *child = this->find_POA_i (adapter_name,
@@ -505,27 +508,27 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
     }
 
 
-//
-// ImplRepo related.
-//
+  //
+  // ImplRepo related.
+  //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   if (this->policies_.lifespan () == PortableServer::PERSISTENT)
-  {
-    this->imr_notify_shutdown ();
+    {
+      this->imr_notify_shutdown ();
       // Delete the servant, if there is one.
 
-    if (this->server_object_)
-      {
-        PortableServer::ObjectId_var id =
-          this->servant_to_id_i (this->server_object_, ACE_TRY_ENV);
-        ACE_CHECK;
+      if (this->server_object_)
+        {
+          PortableServer::ObjectId_var id =
+            this->servant_to_id_i (this->server_object_, ACE_TRY_ENV);
+          ACE_CHECK;
 
-        this->deactivate_object_i (id.in (), ACE_TRY_ENV);
-        ACE_CHECK;
+          this->deactivate_object_i (id.in (), ACE_TRY_ENV);
+          ACE_CHECK;
 
-        this->server_object_->_remove_ref ();
-      }
-  }
+          this->server_object_->_remove_ref ();
+        }
+    }
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   // When a POA is destroyed, any requests that have started execution
@@ -652,6 +655,17 @@ TAO_POA::get_servant_i (CORBA::Environment &ACE_TRY_ENV)
   PortableServer::Servant result = this->default_servant_.in ();
   if (result != 0)
     {
+      // A recursive thread lock without using a recursive thread
+      // lock.  Non_Servant_Upcall has a magic constructor and
+      // destructor.  We unlock the Object_Adapter lock for the
+      // duration of the servant activator upcalls; reacquiring once
+      // the upcalls complete.  Even though we are releasing the lock,
+      // other threads will not be able to make progress since
+      // <Object_Adapter::non_servant_upcall_in_progress_> has been
+      // set.
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+      ACE_UNUSED_ARG (non_servant_upcall);
+
       // The POA invokes _add_ref once on the Servant before returning
       // it. If the application uses reference counting, the caller of
       // get_servant is responsible for invoking _remove_ref once on
@@ -695,6 +709,17 @@ TAO_POA::set_servant_i (PortableServer::Servant servant,
   // same number of times.
   if (servant != 0)
     {
+      // A recursive thread lock without using a recursive thread
+      // lock.  Non_Servant_Upcall has a magic constructor and
+      // destructor.  We unlock the Object_Adapter lock for the
+      // duration of the servant activator upcalls; reacquiring once
+      // the upcalls complete.  Even though we are releasing the lock,
+      // other threads will not be able to make progress since
+      // <Object_Adapter::non_servant_upcall_in_progress_> has been
+      // set.
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+      ACE_UNUSED_ARG (non_servant_upcall);
+
       servant->_add_ref (ACE_TRY_ENV);
       ACE_CHECK;
 
@@ -730,7 +755,7 @@ TAO_POA::is_servant_in_map (PortableServer::Servant servant)
 
               ++this->waiting_servant_deactivation_;
 
-              if (this->orb_core_.object_adapter ()->enable_locking_)
+              if (this->object_adapter ().enable_locking_)
                 this->servant_deactivation_condition_.wait ();
 
               --this->waiting_servant_deactivation_;
@@ -771,7 +796,7 @@ TAO_POA::is_user_id_in_map (const PortableServer::ObjectId &id,
 
               ++this->waiting_servant_deactivation_;
 
-              if (this->orb_core_.object_adapter ()->enable_locking_)
+              if (this->object_adapter ().enable_locking_)
                 this->servant_deactivation_condition_.wait ();
 
               --this->waiting_servant_deactivation_;
@@ -823,6 +848,16 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   //
   // Everything is finally ok
   //
+
+  // A recursive thread lock without using a recursive thread lock.
+  // Non_Servant_Upcall has a magic constructor and destructor.  We
+  // unlock the Object_Adapter lock for the duration of the servant
+  // activator upcalls; reacquiring once the upcalls complete.  Even
+  // though we are releasing the lock, other threads will not be able
+  // to make progress since
+  // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+  ACE_UNUSED_ARG (non_servant_upcall);
 
   // The implementation of activate_object will invoke _add_ref at
   // least once on the Servant argument before returning. When the POA
@@ -912,6 +947,16 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // Everything is finally ok
   //
 
+  // A recursive thread lock without using a recursive thread lock.
+  // Non_Servant_Upcall has a magic constructor and destructor.  We
+  // unlock the Object_Adapter lock for the duration of the servant
+  // activator upcalls; reacquiring once the upcalls complete.  Even
+  // though we are releasing the lock, other threads will not be able
+  // to make progress since
+  // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+  ACE_UNUSED_ARG (non_servant_upcall);
+
   // The implementation of activate_object_with_id will invoke
   // _add_ref at least once on the Servant argument before
   // returning. When the POA no longer needs the Servant, it will
@@ -942,7 +987,7 @@ void
 TAO_POA::wait_for_completions (CORBA::Boolean wait_for_completion,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  while (this->orb_core_.object_adapter ()->enable_locking_ &&
+  while (this->object_adapter ().enable_locking_ &&
          wait_for_completion &&
          this->outstanding_requests_ > 0)
     {
@@ -1132,7 +1177,7 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
           // the lock, other threads will not be able to make progress
           // since <Object_Adapter::non_servant_upcall_in_progress_>
           // has been set.
-          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this->orb_core_.object_adapter ());
+          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
           ACE_UNUSED_ARG (non_servant_upcall);
 
           // If the cleanup_in_progress parameter is TRUE, the reason
@@ -1154,6 +1199,17 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
         {
+          // A recursive thread lock without using a recursive thread
+          // lock.  Non_Servant_Upcall has a magic constructor and
+          // destructor.  We unlock the Object_Adapter lock for the
+          // duration of the servant activator upcalls; reacquiring
+          // once the upcalls complete.  Even though we are releasing
+          // the lock, other threads will not be able to make progress
+          // since <Object_Adapter::non_servant_upcall_in_progress_>
+          // has been set.
+          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+          ACE_UNUSED_ARG (non_servant_upcall);
+
           active_object_map_entry->servant_->_remove_ref (ACE_TRY_ENV);
           ACE_CHECK;
         }
@@ -1192,11 +1248,12 @@ TAO_POA::check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV)
       // indicate that the request should be re-issued. (Of course, an
       // ORB may always reject a request for other reasons and raise
       // some other system exception.)
-      ACE_THROW (CORBA::TRANSIENT (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_POA_DISCARDING,
-          0),
-        CORBA::COMPLETED_NO));
+      ACE_THROW (
+        CORBA::TRANSIENT (
+          CORBA_SystemException::_tao_minor_code (
+            TAO_POA_DISCARDING,
+            0),
+          CORBA::COMPLETED_NO));
     }
 
   if (state == PortableServer::POAManager::HOLDING)
@@ -1293,6 +1350,7 @@ TAO_POA::create_reference_i (const char *intf,
                               intf,
                               0,
                               1,
+                              priority,
                               ACE_TRY_ENV);
 }
 
@@ -1368,6 +1426,7 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                               intf,
                               servant,
                               1,
+                              priority,
                               ACE_TRY_ENV);
 }
 
@@ -1411,7 +1470,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
       // object map.
       PortableServer::ObjectId_var user_id;
       if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
-                                                                             -1,
+                                                                             TAO_INVALID_PRIORITY,
                                                                              user_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -1421,6 +1480,17 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
       //
       // Everything is finally ok
       //
+
+      // A recursive thread lock without using a recursive thread
+      // lock.  Non_Servant_Upcall has a magic constructor and
+      // destructor.  We unlock the Object_Adapter lock for the
+      // duration of the servant activator upcalls; reacquiring once
+      // the upcalls complete.  Even though we are releasing the lock,
+      // other threads will not be able to make progress since
+      // <Object_Adapter::non_servant_upcall_in_progress_> has been
+      // set.
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+      ACE_UNUSED_ARG (non_servant_upcall);
 
       // If this operation causes the object to be activated, _add_ref
       // is invoked at least once on the Servant argument before
@@ -1474,6 +1544,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
 
 PortableServer::ObjectId *
 TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
+                                 CORBA::Short &priority,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the RETAIN and either the UNIQUE_ID or
@@ -1494,7 +1565,8 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
   PortableServer::ObjectId_var system_id;
   if (this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID &&
       this->active_object_map ().find_system_id_using_servant (servant,
-                                                               system_id.out ()) != -1)
+                                                               system_id.out (),
+                                                               priority) != -1)
     {
       return system_id._retn ();
     }
@@ -1511,7 +1583,7 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
       // object map.
       PortableServer::ObjectId_var system_id;
       if (this->active_object_map ().bind_using_system_id_returning_system_id (servant,
-                                                                               -1,
+                                                                               priority,
                                                                                system_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -1521,6 +1593,17 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
       //
       // Everything is finally ok
       //
+
+      // A recursive thread lock without using a recursive thread
+      // lock.  Non_Servant_Upcall has a magic constructor and
+      // destructor.  We unlock the Object_Adapter lock for the
+      // duration of the servant activator upcalls; reacquiring once
+      // the upcalls complete.  Even though we are releasing the lock,
+      // other threads will not be able to make progress since
+      // <Object_Adapter::non_servant_upcall_in_progress_> has been
+      // set.
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+      ACE_UNUSED_ARG (non_servant_upcall);
 
       // If this operation causes the object to be activated, _add_ref
       // is invoked at least once on the Servant argument before
@@ -1551,7 +1634,9 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant,
   // reference. The real requirement here is that a reference is
   // produced that will behave appropriately (that is, yield a
   // consistent Object Id value when asked politely).
+  CORBA::Short priority = TAO_INVALID_PRIORITY;
   PortableServer::ObjectId_var id = this->servant_to_system_id (servant,
+                                                                priority,
                                                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -1563,6 +1648,7 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant,
                               servant->_interface_repository_id (),
                               servant,
                               1,
+                              priority,
                               ACE_TRY_ENV);
 }
 
@@ -1618,7 +1704,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
         }
 
       // Lock access for the duration of this transaction.
-      TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
+      TAO_POA_GUARD_RETURN (0);
 
       // Find user id from system id.
       PortableServer::ObjectId user_id;
@@ -1641,6 +1727,17 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
                                                                                servant,
                                                                                entry) != -1)
         {
+          // A recursive thread lock without using a recursive thread
+          // lock.  Non_Servant_Upcall has a magic constructor and
+          // destructor.  We unlock the Object_Adapter lock for the
+          // duration of the servant activator upcalls; reacquiring
+          // once the upcalls complete.  Even though we are releasing
+          // the lock, other threads will not be able to make progress
+          // since <Object_Adapter::non_servant_upcall_in_progress_>
+          // has been set.
+          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+          ACE_UNUSED_ARG (non_servant_upcall);
+
           // The POA invokes _add_ref once on the Servant before
           // returning it. If the application uses reference counting,
           // the caller of reference_to_servant is responsible for
@@ -1670,11 +1767,22 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
   if (this->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT)
     {
       // Lock access for the duration of this transaction.
-      TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
+      TAO_POA_GUARD_RETURN (0);
 
       PortableServer::Servant result = this->default_servant_.in ();
       if (result != 0)
         {
+          // A recursive thread lock without using a recursive thread
+          // lock.  Non_Servant_Upcall has a magic constructor and
+          // destructor.  We unlock the Object_Adapter lock for the
+          // duration of the servant activator upcalls; reacquiring
+          // once the upcalls complete.  Even though we are releasing
+          // the lock, other threads will not be able to make progress
+          // since <Object_Adapter::non_servant_upcall_in_progress_>
+          // has been set.
+          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+          ACE_UNUSED_ARG (non_servant_upcall);
+
           // The POA invokes _add_ref once on the Servant before
           // returning it. If the application uses reference counting,
           // the caller of reference_to_servant is responsible for
@@ -1749,7 +1857,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   if (this->policies ().servant_retention () == PortableServer::RETAIN)
     {
       // Lock access for the duration of this transaction.
-      TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
+      TAO_POA_GUARD_RETURN (0);
 
       // The object denoted by the reference does not have to be
       // active for this operation to succeed.
@@ -1791,6 +1899,17 @@ TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id,
   if (this->active_object_map ().find_servant_using_user_id (id,
                                                              servant) != -1)
     {
+      // A recursive thread lock without using a recursive thread
+      // lock.  Non_Servant_Upcall has a magic constructor and
+      // destructor.  We unlock the Object_Adapter lock for the
+      // duration of the servant activator upcalls; reacquiring once
+      // the upcalls complete.  Even though we are releasing the lock,
+      // other threads will not be able to make progress since
+      // <Object_Adapter::non_servant_upcall_in_progress_> has been
+      // set.
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+      ACE_UNUSED_ARG (non_servant_upcall);
+
       // The POA invokes _add_ref once on the Servant before returning
       // it. If the application uses reference counting, the caller of
       // id_to_servant is responsible for invoking _remove_ref once on
@@ -1828,9 +1947,11 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
   // activate the object is returned.
   PortableServer::ObjectId_var system_id;
   PortableServer::Servant servant;
+  CORBA::Short priority;
   if (this->active_object_map ().find_servant_and_system_id_using_user_id (id,
                                                                            servant,
-                                                                           system_id.out ()) == 0)
+                                                                           system_id.out (),
+                                                                           priority) == 0)
     {
       // Create object key.
       TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
@@ -1840,6 +1961,7 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
                                   servant->_interface_repository_id (),
                                   servant,
                                   1,
+                                  priority,
                                   ACE_TRY_ENV);
     }
   else
@@ -1863,23 +1985,6 @@ void
 TAO_POA::validate_priority_and_policies (RTCORBA::Priority priority,
                                          CORBA::Environment &ACE_TRY_ENV)
 {
-  // If the priority parameter of any of the above operations is not a
-  // valid CORBA priority or if it fails to match the priority
-  // configuration for resources assigned to the POA, then the ORB
-  // shall raise a BAD_PARAM system exception.
-  if (!this->valid_priority (priority))
-    {
-      ACE_THROW (PortableServer::POA::ObjectNotActive ());
-    }
-
-  // For each of the above operations, if the POA does not support the
-  // SERVER_DECLARED option for the PriorityModelPolicy then the ORB
-  // shall raise a WrongPolicy user exception.
-  if (0 /*this->policies ().priority_model () != RTCORBA::SERVER_DECLARED */)
-    {
-      ACE_THROW (PortableServer::POA::WrongPolicy ());
-    }
-
   // For each of the above operations, if the POA supports the
   // IMPLICIT_ACTIVATION option for the ImplicitActivationPolicy then
   // the ORB shall raise a WrongPolicy user exception. This relieves
@@ -1889,6 +1994,23 @@ TAO_POA::validate_priority_and_policies (RTCORBA::Priority priority,
   if (this->policies ().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)
     {
       ACE_THROW (PortableServer::POA::WrongPolicy ());
+    }
+
+  // For each of the above operations, if the POA does not support the
+  // SERVER_DECLARED option for the PriorityModelPolicy then the ORB
+  // shall raise a WrongPolicy user exception.
+  if (this->policies ().priority_model () != TAO_POA_Policies::SERVER_DECLARED)
+    {
+      ACE_THROW (PortableServer::POA::WrongPolicy ());
+    }
+
+  // If the priority parameter of any of the above operations is not a
+  // valid CORBA priority or if it fails to match the priority
+  // configuration for resources assigned to the POA, then the ORB
+  // shall raise a BAD_PARAM system exception.
+  if (!this->valid_priority (priority))
+    {
+      ACE_THROW (PortableServer::POA::ObjectNotActive ());
     }
 
   // In all other respects the semantics of the corresponding
@@ -1928,7 +2050,7 @@ TAO_POA::forward_object_i (const PortableServer::ObjectId &oid,
   // Register the forwarding servant with the same object Id.
   this->activate_object_with_id_i (oid,
                                    forwarding_servant,
-                                   -1,
+                                   TAO_INVALID_PRIORITY,
                                    ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -2155,7 +2277,7 @@ TAO_POA::locate_servant_i (const char *operation,
             // threads will not be able to make progress since
             // <Object_Adapter::non_servant_upcall_in_progress_> has
             // been set.
-            TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this->orb_core_.object_adapter ());
+            TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
             ACE_UNUSED_ARG (non_servant_upcall);
 
             // @@
@@ -2205,6 +2327,18 @@ TAO_POA::locate_servant_i (const char *operation,
               // Increment the reference count.
               ++servant_upcall.active_object_map_entry ()->reference_count_;
 
+              // A recursive thread lock without using a recursive
+              // thread lock.  Non_Servant_Upcall has a magic
+              // constructor and destructor.  We unlock the
+              // Object_Adapter lock for the duration of the servant
+              // activator upcalls; reacquiring once the upcalls
+              // complete.  Even though we are releasing the lock,
+              // other threads will not be able to make progress since
+              // <Object_Adapter::non_servant_upcall_in_progress_> has
+              // been set.
+              TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+              ACE_UNUSED_ARG (non_servant_upcall);
+
               // If this operation causes the object to be activated,
               // _add_ref is invoked at least once on the Servant
               // argument before returning. Otherwise, the POA does
@@ -2234,7 +2368,7 @@ TAO_POA::locate_servant_i (const char *operation,
           // the lock, other threads will not be able to make progress
           // since <Object_Adapter::non_servant_upcall_in_progress_>
           // has been set.
-          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this->orb_core_.object_adapter ());
+          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
           ACE_UNUSED_ARG (non_servant_upcall);
 
           // No serialization of invocations of preinvoke or
@@ -2709,17 +2843,34 @@ TAO_POA::ObjectId_to_string (const PortableServer::ObjectId &id)
 CORBA::WChar *
 TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
 {
-  // Create space
-  CORBA::WChar* string = CORBA::wstring_alloc (id.length ());
+  // Compute resulting wide string's length.
+  CORBA::ULong string_length =
+    id.length () / sizeof (CORBA::WChar) + 1;
+
+  // Allocate an extra slot if the id's length is not "aligned" on a
+  // CORBA::WChar.
+  if (id.length () % sizeof (CORBA::WChar))
+    string_length++;
+
+  // Create space.
+  CORBA::WChar* string = CORBA::wstring_alloc (string_length);
 
   // Copy the data
-  ACE_OS::memcpy (string, id.get_buffer (), id.length () * sizeof (CORBA::WChar));
+  ACE_OS::memcpy (string,
+                  id.get_buffer (),
+                  id.length ());
 
   // Null terminate the string
-  string[id.length ()] = '\0';
+  string[string_length] = '\0';
 
-  // Return string
+  // Return string.
   return string;
+}
+
+TAO_Object_Adapter &
+TAO_POA::object_adapter (void)
+{
+  return *this->orb_core_.object_adapter ();
 }
 
 void
@@ -3496,15 +3647,86 @@ TAO_Request_Processing_Policy::_default_POA (CORBA::Environment & /* ACE_TRY_ENV
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-TAO_POA_Policies::TAO_POA_Policies (void)
+TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
+                                    CORBA::Environment &ACE_TRY_ENV)
   :  thread_ (PortableServer::ORB_CTRL_MODEL),
      lifespan_ (PortableServer::TRANSIENT),
      id_uniqueness_ (PortableServer::UNIQUE_ID),
      id_assignment_ (PortableServer::SYSTEM_ID),
      implicit_activation_ (PortableServer::NO_IMPLICIT_ACTIVATION),
      servant_retention_ (PortableServer::RETAIN),
-     request_processing_ (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
+     request_processing_ (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY),
+     priority_model_ (TAO_POA_Policies::CLIENT_PROPAGATED),
+     server_priority_ (TAO_INVALID_PRIORITY),
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+     server_protocol_ (0),
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+     client_exposed_fixed_policies_ ()
 {
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_PriorityModelPolicy *priority_model =
+    orb_core.priority_model ();
+
+  if (priority_model != 0)
+    {
+      RTCORBA::PriorityModel rt_priority_model =
+        priority_model->priority_model (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      this->priority_model_ =
+        TAO_POA_Policies::PriorityModel (rt_priority_model);
+
+      this->server_priority_ =
+        priority_model->server_priority (ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  TAO_ServerProtocolPolicy *server_protocol =
+    orb_core.server_protocol ();
+
+  if (server_protocol != 0)
+    this->server_protocol (server_protocol);
+
+#else
+
+  ACE_UNUSED_ARG (orb_core);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+}
+
+TAO_POA_Policies::~TAO_POA_Policies (void)
+{
+  for (CORBA::ULong i = 0;
+       i < this->client_exposed_fixed_policies_.length ();
+       ++i)
+    {
+      ACE_TRY_NEW_ENV
+        {
+          this->client_exposed_fixed_policies_[i]->destroy (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // Ignore exceptions
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_POA_Policies::~TAO_POA_Policies");
+        }
+      ACE_ENDTRY;
+    }
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  this->server_protocol (0);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 }
 
 void
@@ -3552,8 +3774,46 @@ TAO_POA_Policies::validity_check (void)
         this->id_assignment_ != PortableServer::SYSTEM_ID)
       return -1;
 
+  int result = 0;
+
+  result = this->validate_priority_model ();
+  if (result != 0)
+    return result;
+
+  result = this->validate_server_protocol ();
+  if (result != 0)
+    return result;
+
   return 0;
 }
+
+int
+TAO_POA_Policies::validate_priority_model (void)
+{
+  return 0;
+}
+
+int
+TAO_POA_Policies::validate_server_protocol (void)
+{
+  return 0;
+}
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+int
+TAO_POA_Policies::validate_client_protocol (RTCORBA::ClientProtocolPolicy_ptr)
+{
+  return 0;
+}
+
+int
+TAO_POA_Policies::validate_priority_bands (RTCORBA::PriorityBandedConnectionPolicy_ptr)
+{
+  return 0;
+}
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 void
 TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
@@ -3659,8 +3919,127 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+  RTCORBA::PriorityModelPolicy_var priority_model
+    = RTCORBA::PriorityModelPolicy::_narrow (policy,
+                                             ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (priority_model.in ()))
+    {
+      RTCORBA::PriorityModel rt_priority_model =
+        priority_model->priority_model (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      this->priority_model_ =
+        TAO_POA_Policies::PriorityModel (rt_priority_model);
+
+      this->server_priority_ =
+        priority_model->server_priority (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      return;
+    }
+
+  RTCORBA::ClientProtocolPolicy_var client_protocol
+    = RTCORBA::ClientProtocolPolicy::_narrow (policy,
+                                              ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (client_protocol.in ()))
+    {
+      int result =
+        this->validate_client_protocol (client_protocol.in ());
+
+      if (result != 0)
+        ACE_THROW (PortableServer::POA::InvalidPolicy ());
+
+      CORBA::ULong current_length =
+        this->client_exposed_fixed_policies_.length ();
+
+      this->client_exposed_fixed_policies_.length (current_length + 1);
+
+      this->client_exposed_fixed_policies_[current_length] =
+        client_protocol->copy (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      return;
+    }
+
+  RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
+    = RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (priority_bands.in ()))
+    {
+      int result =
+        this->validate_priority_bands (priority_bands.in ());
+
+      if (result != 0)
+        ACE_THROW (PortableServer::POA::InvalidPolicy ());
+
+      CORBA::ULong current_length =
+        this->client_exposed_fixed_policies_.length ();
+
+      this->client_exposed_fixed_policies_.length (current_length + 1);
+
+      this->client_exposed_fixed_policies_[current_length] =
+        priority_bands->copy (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      return;
+    }
+
+  RTCORBA::ServerProtocolPolicy_var server_protocol
+    = RTCORBA::ServerProtocolPolicy::_narrow (policy,
+                                              ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (server_protocol.in ()))
+    {
+      TAO_ServerProtocolPolicy *server_protocol_i =
+        ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
+                          server_protocol.in ());
+
+      this->server_protocol (server_protocol_i);
+
+      return;
+    }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   ACE_THROW (PortableServer::POA::InvalidPolicy ());
 }
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+void
+TAO_POA_Policies::server_protocol (TAO_ServerProtocolPolicy *policy)
+{
+  if (this->server_protocol_)
+    {
+      this->server_protocol_->destroy ();
+      delete this->server_protocol_;
+      this->server_protocol_ = 0;
+    }
+
+  if (policy)
+    {
+      CORBA::Policy_ptr base_copy = policy->copy ();
+
+      RTCORBA::ServerProtocolPolicy_var copy
+        = RTCORBA::ServerProtocolPolicy::_narrow (base_copy);
+
+      this->server_protocol_ =
+        ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
+                          copy.in ());
+    }
+
+}
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -3714,54 +4093,58 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
                         const char *type_id,
                         TAO_ServantBase *servant,
                         CORBA::Boolean collocated,
+                        CORBA::Short priority,
                         CORBA_Environment &ACE_TRY_ENV)
 {
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
-//
-// ImplRepo related.
-//
+  //
+  // ImplRepo related.
+  //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
   if (this->use_imr_
       && this->policies_.lifespan () == PortableServer::PERSISTENT)
     {
       // Check to see if we alter the IOR.
-      CORBA::Object_var imr = this->orb_core ().implrepo_service ();
+      CORBA::Object_var imr =
+        this->orb_core ().implrepo_service ();
 
       if (CORBA::is_nil (imr.in ())
           || !imr->_stubobj ()
           || !imr->_stubobj ()->profile_in_use ())
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "Invalid Implementation Repository IOR, skipping IMRification\n"));
-
+            ACE_DEBUG ((LM_DEBUG,
+                        "Invalid Implementation Repository IOR, skipping IMRification\n"));
           goto orbkey;
         }
 
-      CORBA::String_var imr_str = imr->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
+      CORBA::String_var imr_str =
+        imr->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
       ACE_CHECK_RETURN (obj);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "IMR IOR = \n%s\n", imr_str.in ()));
-
-      char *pos = ACE_OS::strstr (imr_str.inout (), "://");
-
-      pos = ACE_OS::strchr (pos + 3, imr->_stubobj ()->profile_in_use ()->object_key_delimiter ());
-
+        ACE_DEBUG ((LM_DEBUG,
+                    "IMR IOR = \n%s\n",
+                    imr_str.in ()));
+      char *pos = ACE_OS::strstr (imr_str.inout (),
+                                  "://");
+      pos = ACE_OS::strchr (pos + 3,
+                            imr->_stubobj ()->profile_in_use ()->object_key_delimiter ());
       if (pos)
-        *(pos + 1) = 0;  // Crop the string
+        pos[1] = 0;  // Crop the string.
       else
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR, "Could not parse IMR IOR, skipping IMRification\n"));
-
+            ACE_ERROR ((LM_ERROR,
+                        "Could not parse IMR IOR, skipping IMRification\n"));
           goto orbkey;
         }
 
       ACE_CString ior (imr_str.in ());
 
-      // Add the key
+      // Add the key.
 
       CORBA::String_var key_str;
       TAO_POA::encode_sequence_to_string (key_str.inout (), key);
@@ -3769,26 +4152,97 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
       ior += key_str.in ();
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "IMR-ified IOR = \n%s\n", ior.c_str ()));
+        ACE_DEBUG ((LM_DEBUG,
+                    "IMR-ified IOR = \n%s\n",
+                    ior.c_str ()));
 
-      obj = this->orb_core_.orb ()->string_to_object (ior.c_str (), ACE_TRY_ENV);
+      obj =
+        this->orb_core_.orb ()->string_to_object (ior.c_str (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (obj);
 
       return obj;
     }
 
 orbkey:
-
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  obj = this->orb_core_.orb()->key_to_object (key,
-                                              type_id,
-                                              servant,
-                                              collocated,
-                                              ACE_TRY_ENV);
+  CORBA::PolicyList_var client_exposed_policies =
+    this->client_exposed_policies (priority,
+                                   ACE_TRY_ENV);
+  ACE_CHECK_RETURN (obj);
+
+  obj = this->orb_core_.orb ()->key_to_object (key,
+                                               type_id,
+                                               client_exposed_policies._retn (),
+                                               servant,
+                                               collocated,
+                                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (obj);
 
   return obj;
+}
+
+CORBA::PolicyList *
+TAO_POA::client_exposed_policies (CORBA::Short object_priority,
+                                  CORBA_Environment &ACE_TRY_ENV)
+{
+  const CORBA::PolicyList &client_exposed_fixed_policies =
+    this->policies ().client_exposed_fixed_policies ();
+
+  CORBA::PolicyList *client_exposed_policies = 0;
+  ACE_NEW_THROW_EX (client_exposed_policies,
+                    CORBA::PolicyList (client_exposed_fixed_policies.length ()),
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
+
+  for (CORBA::ULong i = 0;
+       i < client_exposed_fixed_policies.length ();
+       ++i)
+    (*client_exposed_policies)[i] =
+      client_exposed_fixed_policies[i]->copy ();
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  CORBA::Short poa_priority =
+    this->policies ().server_priority ();
+
+  if (poa_priority != TAO_INVALID_PRIORITY)
+    {
+      TAO_POA_Policies::PriorityModel priority_model =
+        this->policies ().priority_model ();
+
+      CORBA::Short priority;
+      if (priority_model == TAO_POA_Policies::CLIENT_PROPAGATED)
+        priority = poa_priority;
+      else
+        {
+          if (object_priority != TAO_INVALID_PRIORITY)
+            priority = poa_priority;
+          else
+            priority = object_priority;
+        }
+
+      TAO_PriorityModelPolicy *priority_model_policy;
+      ACE_NEW_THROW_EX (priority_model_policy,
+                        TAO_PriorityModelPolicy (RTCORBA::PriorityModel (priority_model),
+                                                 priority),
+                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (0);
+
+      CORBA::ULong current_length = client_exposed_policies->length ();
+      client_exposed_policies->length (current_length + 1);
+      (*client_exposed_policies)[current_length] = priority_model_policy;
+    }
+
+#else /* TAO_HAS_RT_CORBA == 1 */
+
+  ACE_UNUSED_ARG (object_priority);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+  return client_exposed_policies;
 }
 
 //
@@ -3820,7 +4274,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
 
   this->activate_object_with_id_i (id.in (),
                                    this->server_object_,
-                                   -1,
+                                   TAO_INVALID_PRIORITY,
                                    ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -3853,7 +4307,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
   else
     {
       ACE_ERROR ((LM_ERROR,
-                 "Could not parse ServerObject IOR, bailing out.\n"));
+                  "Could not parse ServerObject IOR, bailing out.\n"));
       return;
     }
 
@@ -3869,9 +4323,9 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
     ACE_DEBUG ((LM_DEBUG, "Informing IMR that we are running at: %s\n", curr_addr.in ()));
 
   imr_admin->server_is_running (this->name ().c_str (),
-                               curr_addr.in (),
-                               svr,
-                               ACE_TRY_ENV);
+                                curr_addr.in (),
+                                svr,
+                                ACE_TRY_ENV);
   ACE_CHECK;
 
   if (TAO_debug_level > 0)

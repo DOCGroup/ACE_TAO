@@ -491,7 +491,8 @@ TAO_Unique_Id_Strategy::find_user_id_using_servant (PortableServer::Servant serv
 
 int
 TAO_Unique_Id_Strategy::find_system_id_using_servant (PortableServer::Servant servant,
-                                                      PortableServer::ObjectId_out system_id)
+                                                      PortableServer::ObjectId_out system_id,
+                                                      CORBA::Short &priority)
 {
   TAO_Active_Object_Map::Map_Entry *entry = 0;
   int result = this->active_object_map_->servant_map_->find (servant,
@@ -501,8 +502,12 @@ TAO_Unique_Id_Strategy::find_system_id_using_servant (PortableServer::Servant se
       if (entry->deactivated_)
         result = -1;
       else
-        result = this->active_object_map_->id_hint_strategy_->system_id (system_id,
-                                                                         *entry);
+        {
+          result = this->active_object_map_->id_hint_strategy_->system_id (system_id,
+                                                                           *entry);
+          if (result == 0)
+            priority = entry->priority_;
+        }
     }
 
   return result;
@@ -596,12 +601,10 @@ TAO_Multiple_Id_Strategy::find_user_id_using_servant (PortableServer::Servant se
 }
 
 int
-TAO_Multiple_Id_Strategy::find_system_id_using_servant (PortableServer::Servant servant,
-                                                        PortableServer::ObjectId_out system_id)
+TAO_Multiple_Id_Strategy::find_system_id_using_servant (PortableServer::Servant,
+                                                        PortableServer::ObjectId_out,
+                                                        CORBA::Short &)
 {
-  ACE_UNUSED_ARG (servant);
-  ACE_UNUSED_ARG (system_id);
-
   return -1;
 }
 

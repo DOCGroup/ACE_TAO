@@ -45,9 +45,9 @@ TAO_Delayed_Buffering_Sync_Strategy::send (TAO_Transport &transport,
   // Check if there are messages already in the queue.
   if (!buffering_queue.is_empty ())
     return TAO_Eager_Buffering_Sync_Strategy::send (transport,
-                                                  stub,
-                                                  message_block,
-                                                  max_wait_time);
+                                                    stub,
+                                                    message_block,
+                                                    max_wait_time);
 
   //
   // Otherwise there were no queued messages.  We first try to send
@@ -55,42 +55,35 @@ TAO_Delayed_Buffering_Sync_Strategy::send (TAO_Transport &transport,
   //
 
   // Actual network send.
+  size_t bytes_transferred = 0;
   result = transport.send (message_block,
-                           max_wait_time);
+                           max_wait_time,
+                           &bytes_transferred);
 
-  // Cannot send.
-  if (result == -1 ||
-      result == 0)
+  // Cannot send completely: timed out.
+  if (result == -1 &&
+      errno == ETIME)
     {
-      // Timeout.
-      if (errno == ETIME)
+      if (bytes_transferred > 0)
         {
-          // Queue message.
-          return TAO_Eager_Buffering_Sync_Strategy::send (transport,
-                                                        stub,
-                                                        message_block,
-                                                        max_wait_time);
+          // If successful in sending some of the data, reset the
+          // message block appropriately.
+          transport.reset_sent_message (message_block,
+                                        bytes_transferred);
         }
 
-      // Non-timeout error.
-      return -1;
-    }
-
-  // If successful in sending some or all of the data, reset the
-  // message block appropriately.
-  transport.reset_sent_message (message_block,
-                                result);
-
-  // If there is still data left over, i.e., incomplete send, queue
-  // the rest.
-  if (message_block->total_length () != 0)
-    {
-      return result +
+      // Queue the rest.
+      return bytes_transferred +
         TAO_Eager_Buffering_Sync_Strategy::send (transport,
-                                               stub,
-                                               message_block,
-                                               max_wait_time);
+                                                 stub,
+                                                 message_block,
+                                                 max_wait_time);
     }
+
+  // EOF or other errors.
+  if (result == -1 ||
+      result == 0)
+    return -1;
 
   // Everything was successfully delivered.
   return result;
@@ -98,9 +91,9 @@ TAO_Delayed_Buffering_Sync_Strategy::send (TAO_Transport &transport,
 
 ssize_t
 TAO_Eager_Buffering_Sync_Strategy::send (TAO_Transport &transport,
-                                       TAO_Stub &stub,
-                                       const ACE_Message_Block *message_block,
-                                       const ACE_Time_Value *max_wait_time)
+                                         TAO_Stub &stub,
+                                         const ACE_Message_Block *message_block,
+                                         const ACE_Time_Value *max_wait_time)
 {
   ssize_t result = 0;
 
@@ -114,7 +107,7 @@ TAO_Eager_Buffering_Sync_Strategy::send (TAO_Transport &transport,
   // Enqueue current message.
   result = buffering_queue.enqueue_tail (copy);
 
-  // EnBuffering error.
+  // Enqueuing error.
   if (result == -1)
     {
       // Eliminate the copy.
@@ -139,8 +132,8 @@ TAO_Eager_Buffering_Sync_Strategy::send (TAO_Transport &transport,
 
 int
 TAO_Eager_Buffering_Sync_Strategy::buffering_constraints_reached (TAO_Transport &transport,
-                                                                TAO_Stub &stub,
-                                                                TAO_Transport_Buffering_Queue &buffering_queue)
+                                                                  TAO_Stub &stub,
+                                                                  TAO_Transport_Buffering_Queue &buffering_queue)
 {
   TAO_Buffering_Constraint_Policy *buffering_constraint_policy =
     stub.buffering_constraint ();
@@ -175,7 +168,7 @@ TAO_Eager_Buffering_Sync_Strategy::buffering_constraints_reached (TAO_Transport 
 
 void
 TAO_Eager_Buffering_Sync_Strategy::timer_check (TAO_Transport &transport,
-                                              const TAO::BufferingConstraint &buffering_constraint)
+                                                const TAO::BufferingConstraint &buffering_constraint)
 {
   if (transport.buffering_timer_id () != 0)
     {

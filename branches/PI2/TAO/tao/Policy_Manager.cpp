@@ -10,6 +10,7 @@
 #include "tao/Buffering_Constraint_Policy.h"
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
+#include "tao/RT_Policy_i.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Policy_Manager.i"
@@ -49,6 +50,11 @@ TAO_Policy_Manager_Impl::copy_from (TAO_Policy_Manager_Impl *source,
       this->relative_roundtrip_timeout_ =
         source->relative_roundtrip_timeout_->clone ();
 
+      // Check that cloning succeeded.
+      if (this->relative_roundtrip_timeout_ == 0)
+        ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                     CORBA::COMPLETED_NO));
+
       this->count_++;
     }
 
@@ -60,6 +66,11 @@ TAO_Policy_Manager_Impl::copy_from (TAO_Policy_Manager_Impl *source,
     {
       this->client_priority_ =
         source->client_priority_->clone ();
+
+      // Check that cloning succeeded.
+      if (this->client_priority_ == 0)
+        ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                     CORBA::COMPLETED_NO));
 
       this->count_++;
     }
@@ -73,6 +84,11 @@ TAO_Policy_Manager_Impl::copy_from (TAO_Policy_Manager_Impl *source,
       this->sync_scope_ =
         source->sync_scope_->clone ();
 
+      // Check that cloning succeeded.
+      if (this->sync_scope_ == 0)
+        ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                     CORBA::COMPLETED_NO));
+
       this->count_++;
     }
 
@@ -85,10 +101,87 @@ TAO_Policy_Manager_Impl::copy_from (TAO_Policy_Manager_Impl *source,
       this->buffering_constraint_ =
         source->buffering_constraint_->clone ();
 
+      // Check that cloning succeeded.
+      if (this->buffering_constraint_ == 0)
+        ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                     CORBA::COMPLETED_NO));
+
       this->count_++;
     }
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  if (source->priority_model_ != 0)
+    {
+      ACE_NEW_THROW_EX (this->priority_model_,
+                        TAO_PriorityModelPolicy (*source->priority_model_),
+                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_NO));
+      ACE_CHECK;
+
+      this->count_++;
+    }
+
+  if (source->threadpool_ != 0)
+    {
+      ACE_NEW_THROW_EX (this->threadpool_,
+                        TAO_ThreadpoolPolicy (*source->threadpool_),
+                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_NO));
+      ACE_CHECK;
+
+      this->count_++;
+    }
+
+  if (source->private_connection_ != 0)
+    {
+      ACE_NEW_THROW_EX (this->private_connection_,
+                        TAO_PrivateConnectionPolicy (*source->private_connection_),
+                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_NO));
+      ACE_CHECK;
+
+      this->count_++;
+    }
+
+  if (source->priority_banded_connection_ != 0)
+    {
+      ACE_NEW_THROW_EX (this->priority_banded_connection_,
+                        TAO_PriorityBandedConnectionPolicy
+                        (*source->priority_banded_connection_),
+                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_NO));
+      ACE_CHECK;
+
+      this->count_++;
+    }
+
+  if (source->server_protocol_ != 0)
+    {
+      ACE_NEW_THROW_EX (this->server_protocol_,
+                        TAO_ServerProtocolPolicy (*source->server_protocol_),
+                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_NO));
+      ACE_CHECK;
+
+      this->count_++;
+    }
+
+  if (source->client_protocol_ != 0)
+    {
+      ACE_NEW_THROW_EX (this->client_protocol_,
+                        TAO_ClientProtocolPolicy
+                        (*source->client_protocol_),
+                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_NO));
+      ACE_CHECK;
+
+      this->count_++;
+    }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   for (CORBA::ULong i = 0;
        i < source->other_policies_.length ();
@@ -148,6 +241,24 @@ TAO_Policy_Manager_Impl::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
   this->buffering_constraint_ = 0;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  CORBA::release (this->priority_model_);
+  CORBA::release (this->threadpool_);
+  CORBA::release (this->private_connection_);
+  CORBA::release (this->priority_banded_connection_);
+  CORBA::release (this->server_protocol_);
+  CORBA::release (this->client_protocol_);
+
+  this->priority_model_ = 0;
+  this->threadpool_ = 0;
+  this->private_connection_ = 0;
+  this->priority_banded_connection_ = 0;
+  this->server_protocol_ = 0;
+  this->client_protocol_ = 0;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   this->count_ = 0;
 }
@@ -281,6 +392,136 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+        case TAO_RT_PRIORITY_MODEL_POLICY_TYPE:
+          {
+            RTCORBA::PriorityModelPolicy_var p =
+              RTCORBA::PriorityModelPolicy::_narrow (policy);
+
+            if (CORBA::is_nil (p.in ()))
+              ACE_THROW (CORBA::INTERNAL
+                         (CORBA_SystemException::_tao_minor_code
+                          (TAO_POLICY_NARROW_CODE,
+                           0),
+                          CORBA::COMPLETED_NO));
+
+            CORBA::release (this->priority_model_);
+            this->priority_model_ =
+              ACE_dynamic_cast (TAO_PriorityModelPolicy *,
+                                p._retn ());
+
+            this->count_++;
+          }
+          break;
+
+        case TAO_RT_THREADPOOL_POLICY_TYPE:
+          {
+            RTCORBA::ThreadpoolPolicy_var p =
+              RTCORBA::ThreadpoolPolicy::_narrow (policy);
+
+            if (CORBA::is_nil (p.in ()))
+              ACE_THROW (CORBA::INTERNAL
+                         (CORBA_SystemException::_tao_minor_code
+                          (TAO_POLICY_NARROW_CODE,
+                           0),
+                          CORBA::COMPLETED_NO));
+
+            CORBA::release (this->threadpool_);
+            this->threadpool_ =
+              ACE_dynamic_cast (TAO_ThreadpoolPolicy *,
+                                p._retn ());
+
+            this->count_++;
+          }
+          break;
+
+        case TAO_RT_PRIVATE_CONNECTION_POLICY_TYPE:
+          {
+            RTCORBA::PrivateConnectionPolicy_var p =
+              RTCORBA::PrivateConnectionPolicy::_narrow (policy);
+
+            if (CORBA::is_nil (p.in ()))
+              ACE_THROW (CORBA::INTERNAL
+                         (CORBA_SystemException::_tao_minor_code
+                          (TAO_POLICY_NARROW_CODE,
+                           0),
+                          CORBA::COMPLETED_NO));
+
+            CORBA::release (this->private_connection_);
+            this->private_connection_ =
+              ACE_dynamic_cast (TAO_PrivateConnectionPolicy *,
+                                p._retn ());
+
+            this->count_++;
+          }
+          break;
+
+        case TAO_RT_PRIORITY_BANDED_CONNECTION_POLICY_TYPE:
+          {
+            RTCORBA::PriorityBandedConnectionPolicy_var p =
+              RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy);
+
+            if (CORBA::is_nil (p.in ()))
+              ACE_THROW (CORBA::INTERNAL
+                         (CORBA_SystemException::_tao_minor_code
+                          (TAO_POLICY_NARROW_CODE,
+                           0),
+                          CORBA::COMPLETED_NO));
+
+            CORBA::release (this->priority_banded_connection_);
+            this->priority_banded_connection_ =
+              ACE_dynamic_cast (TAO_PriorityBandedConnectionPolicy *,
+                                p._retn ());
+
+            this->count_++;
+          }
+          break;
+
+        case TAO_RT_SERVER_PROTOCOL_POLICY_TYPE:
+          {
+            RTCORBA::ServerProtocolPolicy_var p =
+              RTCORBA::ServerProtocolPolicy::_narrow (policy);
+
+            if (CORBA::is_nil (p.in ()))
+              ACE_THROW (CORBA::INTERNAL
+                         (CORBA_SystemException::_tao_minor_code
+                          (TAO_POLICY_NARROW_CODE,
+                           0),
+                          CORBA::COMPLETED_NO));
+
+            CORBA::release (this->server_protocol_);
+            this->server_protocol_ =
+              ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
+                                p._retn ());
+
+            this->count_++;
+          }
+          break;
+
+        case TAO_RT_CLIENT_PROTOCOL_POLICY_TYPE:
+          {
+            RTCORBA::ClientProtocolPolicy_var p =
+              RTCORBA::ClientProtocolPolicy::_narrow (policy);
+
+            if (CORBA::is_nil (p.in ()))
+              ACE_THROW (CORBA::INTERNAL
+                         (CORBA_SystemException::_tao_minor_code
+                          (TAO_POLICY_NARROW_CODE,
+                           0),
+                          CORBA::COMPLETED_NO));
+
+            CORBA::release (this->client_protocol_);
+            this->client_protocol_ =
+              ACE_dynamic_cast (TAO_ClientProtocolPolicy *,
+                                p._retn ());
+
+            this->count_++;
+          }
+          break;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
         case TAO_MESSAGING_REBIND_POLICY_TYPE:
         case TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE:
         case TAO_MESSAGING_REPLY_PRIORITY_POLICY_TYPE:
@@ -397,6 +638,52 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+      if (this->priority_model_ != 0)
+        {
+          policy_list[n++] =
+            CORBA::Policy::_duplicate (this->priority_model_);
+          ACE_CHECK_RETURN (0);
+        }
+
+      if (this->threadpool_ != 0)
+        {
+          policy_list[n++] =
+            CORBA::Policy::_duplicate (this->threadpool_);
+          ACE_CHECK_RETURN (0);
+        }
+
+      if (this->private_connection_ != 0)
+        {
+          policy_list[n++] =
+            CORBA::Policy::_duplicate (this->private_connection_);
+          ACE_CHECK_RETURN (0);
+        }
+
+      if (this->priority_banded_connection_ != 0)
+        {
+          policy_list[n++] =
+            CORBA::Policy::_duplicate (this->priority_banded_connection_);
+          ACE_CHECK_RETURN (0);
+        }
+
+      if (this->server_protocol_ != 0)
+        {
+          policy_list[n++] =
+            CORBA::Policy::_duplicate (this->server_protocol_);
+          ACE_CHECK_RETURN (0);
+        }
+
+      if (this->client_protocol_ != 0)
+        {
+          policy_list[n++] =
+            CORBA::Policy::_duplicate (this->client_protocol_);
+          ACE_CHECK_RETURN (0);
+        }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
       CORBA::ULong length = this->other_policies_.length ();
       for (CORBA::ULong i = 0; i != length; ++i)
         {
@@ -466,6 +753,64 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
               break;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+            case TAO_RT_PRIORITY_MODEL_POLICY_TYPE:
+              if (this->priority_model_ != 0)
+                {
+                  policy_list[n++] =
+                    CORBA::Policy::_duplicate (this->priority_model_);
+                  ACE_CHECK_RETURN (0);
+                }
+              break;
+
+            case TAO_RT_THREADPOOL_POLICY_TYPE:
+              if (this->threadpool_ != 0)
+                {
+                  policy_list[n++] =
+                    CORBA::Policy::_duplicate (this->threadpool_);
+                  ACE_CHECK_RETURN (0);
+                }
+              break;
+
+            case TAO_RT_PRIVATE_CONNECTION_POLICY_TYPE:
+              if (this->private_connection_ != 0)
+                {
+                  policy_list[n++] =
+                    CORBA::Policy::_duplicate (this->private_connection_);
+                  ACE_CHECK_RETURN (0);
+                }
+              break;
+
+            case TAO_RT_PRIORITY_BANDED_CONNECTION_POLICY_TYPE:
+              if (this->priority_banded_connection_ != 0)
+                {
+                  policy_list[n++] =
+                    CORBA::Policy::_duplicate (this->priority_banded_connection_);
+                  ACE_CHECK_RETURN (0);
+                }
+              break;
+
+            case TAO_RT_SERVER_PROTOCOL_POLICY_TYPE:
+              if (this->server_protocol_ != 0)
+                {
+                  policy_list[n++] =
+                    CORBA::Policy::_duplicate (this->server_protocol_);
+                  ACE_CHECK_RETURN (0);
+                }
+              break;
+
+            case TAO_RT_CLIENT_PROTOCOL_POLICY_TYPE:
+              if (this->client_protocol_ != 0)
+                {
+                  policy_list[n++] =
+                    CORBA::Policy::_duplicate (this->client_protocol_);
+                  ACE_CHECK_RETURN (0);
+                }
+              break;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
             case TAO_MESSAGING_REBIND_POLICY_TYPE:
             case TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE:
@@ -555,6 +900,52 @@ TAO_Policy_Manager_Impl::get_policy (CORBA::PolicyType type,
       return CORBA::Policy::_nil ();
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+    case TAO_RT_PRIORITY_MODEL_POLICY_TYPE:
+      if (this->priority_model_ != 0)
+        {
+          return CORBA::Policy::_duplicate (this->priority_model_);
+        }
+      return CORBA::Policy::_nil ();
+
+    case TAO_RT_THREADPOOL_POLICY_TYPE:
+      if (this->threadpool_ != 0)
+        {
+          return CORBA::Policy::_duplicate (this->threadpool_);
+        }
+      return CORBA::Policy::_nil ();
+
+    case TAO_RT_PRIVATE_CONNECTION_POLICY_TYPE:
+      if (this->private_connection_ != 0)
+        {
+          return CORBA::Policy::_duplicate (this->private_connection_);
+        }
+      return CORBA::Policy::_nil ();
+
+    case TAO_RT_PRIORITY_BANDED_CONNECTION_POLICY_TYPE:
+      if (this->priority_banded_connection_ != 0)
+        {
+          return CORBA::Policy::_duplicate (this->priority_banded_connection_);
+        }
+      return CORBA::Policy::_nil ();
+
+    case TAO_RT_SERVER_PROTOCOL_POLICY_TYPE:
+      if (this->server_protocol_ != 0)
+        {
+          return CORBA::Policy::_duplicate (this->server_protocol_);
+        }
+      return CORBA::Policy::_nil ();
+
+    case TAO_RT_CLIENT_PROTOCOL_POLICY_TYPE:
+      if (this->client_protocol_ != 0)
+        {
+          return CORBA::Policy::_duplicate (this->client_protocol_);
+        }
+      return CORBA::Policy::_nil ();
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
     case TAO_MESSAGING_REBIND_POLICY_TYPE:
     case TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE:
@@ -648,6 +1039,76 @@ TAO_Policy_Manager_Impl::buffering_constraint (void) const
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+TAO_ThreadpoolPolicy *
+TAO_Policy_Manager_Impl::threadpool (void) const
+{
+ TAO_ThreadpoolPolicy *result =
+   this->threadpool_;
+
+ if (result != 0)
+   result->_add_ref ();
+  return result;
+}
+
+TAO_PriorityModelPolicy *
+TAO_Policy_Manager_Impl::priority_model (void) const
+{
+ TAO_PriorityModelPolicy *result =
+   this->priority_model_;
+
+ if (result != 0)
+   result->_add_ref ();
+  return result;
+}
+
+TAO_PrivateConnectionPolicy *
+TAO_Policy_Manager_Impl::private_connection (void) const
+{
+ TAO_PrivateConnectionPolicy *result =
+   this->private_connection_;
+
+ if (result != 0)
+   result->_add_ref ();
+  return result;
+}
+
+TAO_PriorityBandedConnectionPolicy *
+TAO_Policy_Manager_Impl::priority_banded_connection (void) const
+{
+ TAO_PriorityBandedConnectionPolicy *result =
+   this->priority_banded_connection_;
+
+ if (result != 0)
+   result->_add_ref ();
+  return result;
+}
+
+TAO_ServerProtocolPolicy *
+TAO_Policy_Manager_Impl::server_protocol (void) const
+{
+ TAO_ServerProtocolPolicy *result =
+   this->server_protocol_;
+
+ if (result != 0)
+   result->_add_ref ();
+  return result;
+}
+
+TAO_ClientProtocolPolicy *
+TAO_Policy_Manager_Impl::client_protocol (void) const
+{
+ TAO_ClientProtocolPolicy *result =
+   this->client_protocol_;
+
+ if (result != 0)
+   result->_add_ref ();
+  return result;
+}
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 // ****************************************************************
 
 TAO_Policy_Current_Impl &
@@ -665,6 +1126,62 @@ TAO_Policy_Current_Impl &
 TAO_Policy_Current::implementation (void) const
 {
   return *TAO_TSS_RESOURCES::instance ()->policy_current_;
+}
+
+
+void
+TAO_Policy_Current_Impl::set_policy_overrides (
+        const CORBA::PolicyList & policies,
+        CORBA::SetOverrideType set_add,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+  #if (TAO_HAS_RT_CORBA == 1)
+
+  // Validity check.  Make sure requested policies are allowed to be
+  // set at this scope.
+  for (CORBA::ULong i = 0; i < policies.length ();  ++i)
+    {
+      CORBA::Policy_ptr policy = policies[i];
+      if (CORBA::is_nil (policy))
+        continue;
+
+      CORBA::ULong slot = policy->policy_type (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      if (slot == RTCORBA::THREADPOOL_POLICY_TYPE
+          || slot == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
+          || slot == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
+        ACE_THROW (CORBA::NO_PERMISSION ());
+    }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+  this->manager_impl_.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
+}
+
+CORBA::PolicyList *
+TAO_Policy_Current_Impl::get_policy_overrides (
+        const CORBA::PolicyTypeSeq & ts,
+        CORBA::Environment &ACE_TRY_ENV)
+{
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // Validity check.  Make sure policies of interest are allowed
+  // at this scope.
+  for (CORBA::ULong i = 0; i < ts.length ();  ++i)
+    {
+      CORBA::ULong type = ts[i];
+
+      if (type == RTCORBA::THREADPOOL_POLICY_TYPE
+          || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
+          || type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
+        ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
+                          0);
+    }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+  return this->manager_impl_.get_policy_overrides (ts, ACE_TRY_ENV);
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

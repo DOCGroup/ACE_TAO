@@ -22,6 +22,20 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TA
 {
 }
 
+void
+TAO_RelativeRoundtripTimeoutPolicy::_add_ref (void)
+{
+  this->_incr_refcnt ();
+  // This is a TAO specific implementation.
+}
+
+void
+TAO_RelativeRoundtripTimeoutPolicy::_remove_ref (void)
+{
+  this->_decr_refcnt ();
+  // This is a TAO specific implementation.
+}
+
 TimeBase::TimeT
 TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (CORBA::Environment &)
   ACE_THROW_SPEC (())
@@ -123,6 +137,20 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
   : Messaging::SyncScopePolicy (),
     synchronization_ (rhs.synchronization_)
 {
+}
+
+void
+TAO_Sync_Scope_Policy::_add_ref (void)
+{
+  this->_incr_refcnt ();
+  // This is a TAO specific implementation.
+}
+
+void
+TAO_Sync_Scope_Policy::_remove_ref (void)
+{
+  this->_decr_refcnt ();
+  // This is a TAO specific implementation.
 }
 
 CORBA::PolicyType
