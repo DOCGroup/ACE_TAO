@@ -39,6 +39,12 @@
 #include "tao/orbconf.h"
 #include "ace/CORBA_macros.h"
 
+// Remove the following line when we're not using TAO try macros any
+// more.
+#define TAO_USES_DEPRECATED_TAO_TRY_MACROS
+
+#if defined (TAO_USES_DEPRECATED_TAO_TRY_MACROS)
+
 // Define a local enviroment variable...
 #define TAO_IN_ENV  ACE_TRY_ENV
 #define TAO_TRY_ENV _tao_try_environment
@@ -338,5 +344,5 @@ return
   ACE_Write_Guard<MUTEX> OBJ (LOCK); \
   if (OBJ.locked () == 0) \
       TAO_THROW_ENV_RETURN (EXCEPTION,ENV,RETURN)
-
+#endif /* TAO_USES_DEPRECATED_TAO_TRY_MACROS */
 #endif /* TAO_TRY_MACROS_H */
