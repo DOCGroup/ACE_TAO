@@ -1,3 +1,8 @@
+Wed Dec 10 12:50:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IPC_SAP/SSL_SAP/SSL-client.hexamples/IPC_SAP/SSL_SAP/SSL-client.h:
+          Fixed casing of include
+
 Wed Dec 10 10:20:48 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/NT_Service.cpp (wait_for_service_state):
