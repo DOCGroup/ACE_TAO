@@ -654,7 +654,7 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
 
   // Reassign number_dispatched to -1 if things have gone seriously
   // wrong.
-  if (n <= 0 && errno != EWOULDBLOCK)
+  if (n <= 0 && (errno != EWOULDBLOCK && errno != EAGAIN))
     number_dispatched = -1;
 
   // Enqueue ourselves into the list of waiting threads.  When we
