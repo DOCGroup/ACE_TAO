@@ -1,3 +1,10 @@
+Wed Jun  4 10:30:35 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          If generating projects on windows, check for case insensitive
+          relative paths.
+
 Wed Jun 04 14:11:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_Dirent.cpp:
@@ -43,99 +50,99 @@ Tue Jun 03 07:51:20 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Mon Jun  2 11:38:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/bootstrap (Usage): Commented out paths on Sun boxes for
-	  aclocal.
+        * bin/bootstrap (Usage): Commented out paths on Sun boxes for
+          aclocal.
 
 Mon Jun  2 11:24:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/generate_rel_manpages: Added some debugging
-	  statements. Looks like this script has a quite a bit of code
-	  duplicated from make_release scripts. We will fix this for the
-	  next beta.
+        * bin/generate_rel_manpages: Added some debugging
+          statements. Looks like this script has a quite a bit of code
+          duplicated from make_release scripts. We will fix this for the
+          next beta.
 
 Mon Jun  2 00:10:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release:Fixed some apparent bugs. Left some debugging
-	  statements for future refernces.
+        * bin/make_release:Fixed some apparent bugs. Left some debugging
+          statements for future refernces.
 
-	* Makefile: Removed acconfig.h since it is not required. Thanks to
-	  Ossama for proving the information.
+        * Makefile: Removed acconfig.h since it is not required. Thanks to
+          Ossama for proving the information.
 
 Sun Jun 01 20:02:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release: Fixed a typo and added comments.
+        * bin/make_release: Fixed a typo and added comments.
 
 Sun Jun  1 19:05:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release: The following changes were made to the release
-	  scripts.
+        * bin/make_release: The following changes were made to the release
+          scripts.
 
-	  - CIAO distribution has been integrated
-	  - Generation of doxygen documentation has been moved out.
-	  - Added checks to see whether the user of the script has got
-	    write permissions in the output directory
-	  - Removed the option to create releases with no zipped
-	    libraries.
-	  - Introduced the need for another environment variable MAILID to
-	    provide the mail id of the person cutting the beta.
+          - CIAO distribution has been integrated
+          - Generation of doxygen documentation has been moved out.
+          - Added checks to see whether the user of the script has got
+            write permissions in the output directory
+          - Removed the option to create releases with no zipped
+            libraries.
+          - Introduced the need for another environment variable MAILID to
+            provide the mail id of the person cutting the beta.
 
 Sun Jun 01 18:02:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/generate_rel_manpages: A new script for man page
-	  generation. This is being moved out of the release scripts for a
-	  number of reasons. A couple of them are
+        * bin/generate_rel_manpages: A new script for man page
+          generation. This is being moved out of the release scripts for a
+          number of reasons. A couple of them are
 
-	  - They take a long time and beta/release process has to wait for
-	    completion of documentation generation.
+          - They take a long time and beta/release process has to wait for
+            completion of documentation generation.
 
-	  - Any problems during documentation generation like machine
-	    reboot or machine hang or whatever you can think off adversely
-	    affects the beta process. The build-czar has to cleanup
-	    numerous files  and start the process all over again.
+          - Any problems during documentation generation like machine
+            reboot or machine hang or whatever you can think off adversely
+            affects the beta process. The build-czar has to cleanup
+            numerous files  and start the process all over again.
 
-	  This will help to decouple the beta cutting process and the
-	  documentation generation process.
+          This will help to decouple the beta cutting process and the
+          documentation generation process.
 
-	* Makefile: A new target that can be used to kick of the
-	  documentation generation.
+        * Makefile: A new target that can be used to kick of the
+          documentation generation.
 
 Fri May 30 17:15:57 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/NT_Service.cpp (insert): Fixed a compilation eror.
+        * ace/NT_Service.cpp (insert): Fixed a compilation eror.
 
 Fri May 30 15:54:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ciaoversion.mpb: New file having
-	  the version information.
+        * bin/MakeProjectCreator/config/ciaoversion.mpb: New file having
+          the version information.
 
 Fri May 30 15:29:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile (APPLY_NEW_TAG): New tags for CIAO.
+        * Makefile (APPLY_NEW_TAG): New tags for CIAO.
 
 Fri May 30 14:46:00 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* examples/Threads/auto_event.cpp (writer): Replaced "wait" with "signal"
-	  in a comment (this was a copy and past error!).  Thanks to Kobi for
-	  reporting this.
+        * examples/Threads/auto_event.cpp (writer): Replaced "wait" with "signal"
+          in a comment (this was a copy and past error!).  Thanks to Kobi for
+          reporting this.
 
-	* ace/Containers_T.h (class ACE_Ordered_MultiSet):
-	* ace/String_Base.h (ACE_String_Base):
-	* ace/Array_Base.h: Changed all uses of "ACE_Allocator *allocator" to
-	  "ACE_Allocator *the_allocator" to prevent problems when ACE is
- 	  used with some versions of STL.  Thanks to Kobi Arazi
- 	  <kcarazi@finjan.com> for reporting this.
+        * ace/Containers_T.h (class ACE_Ordered_MultiSet):
+        * ace/String_Base.h (ACE_String_Base):
+        * ace/Array_Base.h: Changed all uses of "ACE_Allocator *allocator" to
+          "ACE_Allocator *the_allocator" to prevent problems when ACE is
+          used with some versions of STL.  Thanks to Kobi Arazi
+          <kcarazi@finjan.com> for reporting this.
 
-	* ace/NT_Service.cpp: Fixed some problems so that the
-	  ACE_NT_Service::insert() methods will self-register correctly if
- 	  the service executable is located on a path with spaces.  Thanks
- 	  to Theo Landman <tlandman@justcroft.com> for reporting this.
+        * ace/NT_Service.cpp: Fixed some problems so that the
+          ACE_NT_Service::insert() methods will self-register correctly if
+          the service executable is located on a path with spaces.  Thanks
+          to Theo Landman <tlandman@justcroft.com> for reporting this.
 
 Fri May 30 13:52:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile: Added a new target 'releaseciao' to include CIAO in
-	  our distribution. Since CIAO needs seperate versioning this new
-	  target is needed. Further the 'releaseall' will now call
-	  releaseall on the Makefile in the TAO directory.
+        * Makefile: Added a new target 'releaseciao' to include CIAO in
+          our distribution. Since CIAO needs seperate versioning this new
+          target is needed. Further the 'releaseall' will now call
+          releaseall on the Makefile in the TAO directory.
 
 Thu May 29 22:18:00 2003  Krishnakumar B  <kitty@spam.invalid.domain>
 
@@ -237,39 +244,39 @@ Wed May 28 11:07:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon May 26 21:14:54 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/PerlACE/Process.pm: Added a new "static" function
-	  "Normalize_Executable_Name" so that we can figure out the
-	  correct location of a "release" build executables.
+        * bin/PerlACE/Process.pm: Added a new "static" function
+          "Normalize_Executable_Name" so that we can figure out the
+          correct location of a "release" build executables.
 
 Mon May 26 18:23:41 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/MEM_Acceptor.cpp (accept): Replace a C-style cast with
-	  ACE_reinterpret_cast to silence a warning from HP aC++.
+        * ace/MEM_Acceptor.cpp (accept): Replace a C-style cast with
+          ACE_reinterpret_cast to silence a warning from HP aC++.
 
-	* ace/config-hpux-11.00.h: Removed define for
-	  ACE_HAS_TIUSER_H_BROKEN_EXTERN_C - it's not broken anymore in
-	  11.00 relatively recent updates.
+        * ace/config-hpux-11.00.h: Removed define for
+          ACE_HAS_TIUSER_H_BROKEN_EXTERN_C - it's not broken anymore in
+          11.00 relatively recent updates.
 
-	* ace/OS.h: Changed some u_int and u_long to unsigned int and
-	  unsigned long, respectively to compile correctly even if
-	  system includes are done out of order.
+        * ace/OS.h: Changed some u_int and u_long to unsigned int and
+          unsigned long, respectively to compile correctly even if
+          system includes are done out of order.
 
-	* ace/OS_TLI.h: Fixed comment on #else of #if !defined (ACE_HAS_TLI).
+        * ace/OS_TLI.h: Fixed comment on #else of #if !defined (ACE_HAS_TLI).
 
-	* include/makeinclude/platform_hpux_aCC.GNU: Add -D_HPUX_SOURCE to
-	  CCFLAGS. ACE uses things that are set up by using this macro, but
-	  if system includes are done before ace/config.h, it isn't picked
-	  up in time. Fixes compile errors in performance-tests/SCTP which
-	  were triggered by including system headers before ACE headers.
-	  Although the general rule is to not do that, it's overly
-	  restrictive in practice and we should try to remove that
-	  restriction when it comes up.
-	  (g++ sets this macro by default)
+        * include/makeinclude/platform_hpux_aCC.GNU: Add -D_HPUX_SOURCE to
+          CCFLAGS. ACE uses things that are set up by using this macro, but
+          if system includes are done before ace/config.h, it isn't picked
+          up in time. Fixes compile errors in performance-tests/SCTP which
+          were triggered by including system headers before ACE headers.
+          Although the general rule is to not do that, it's overly
+          restrictive in practice and we should try to remove that
+          restriction when it comes up.
+          (g++ sets this macro by default)
 
 Mon May 26 12:03:33 2003  Steve Huston  <shuston@riverace.com>
 
-	* tests/tests.mpc: Added ACE_Init_Test. The WinXP-IA64 test was
-	  picking up an old one since it was never regenerated.
+        * tests/tests.mpc: Added ACE_Init_Test. The WinXP-IA64 test was
+          picking up an old one since it was never regenerated.
 
 Mon May 26 10:43:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -288,9 +295,9 @@ Sun May 25 14:53:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun May 25 09:27:43 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Malloc_T.i (free): Added a check for a NULL ptr to prevent
-	  system crashes.  Thanks to Leonid Kvetnyi <leonidk@nice.com> for
- 	  reporting this.
+        * ace/Malloc_T.i (free): Added a check for a NULL ptr to prevent
+          system crashes.  Thanks to Leonid Kvetnyi <leonidk@nice.com> for
+          reporting this.
 
 Sun May 25 10:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -342,40 +349,40 @@ Sat May 24 14:10:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri May 23 22:20:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Kokyu/Kokyu.cpp: Fixed fuzz errors.
+        * Kokyu/Kokyu.cpp: Fixed fuzz errors.
 
 Fri May 23 09:13:38 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS_Dirent.cpp (opendir_emulation): Added a check to see
-	  if the file is infact a directory.  Thanks to Udo Berninger
- 	  <udo.berninger@siemens.com> for reporting this fix.
+        * ace/OS_Dirent.cpp (opendir_emulation): Added a check to see
+          if the file is infact a directory.  Thanks to Udo Berninger
+          <udo.berninger@siemens.com> for reporting this fix.
 
 Fri May 23 10:46:50 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From Carsten Madsen <com@navicon.dk>
-	* ace/TTY_IO.h (Serial_Params):
+        From Carsten Madsen <com@navicon.dk>
+        * ace/TTY_IO.h (Serial_Params):
 
-	  Added new "readmincharacters" member that denotes the minimum
-	  number of characters for a non-canonical read.
+          Added new "readmincharacters" member that denotes the minimum
+          number of characters for a non-canonical read.
 
-	* ace/TTY_IO.cpp (control):
+        * ace/TTY_IO.cpp (control):
 
-	  Take into account the new Serial_Params::readmincharacters value
-	  so that serial line timeout configuration is no longer as
-	  limited as it was prior to this change.  [Bug 1388]
+          Take into account the new Serial_Params::readmincharacters value
+          so that serial line timeout configuration is no longer as
+          limited as it was prior to this change.  [Bug 1388]
 
 Fri May 23 12:20:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* THANKS: Added Vincent Korkos to the hall of fame.
+        * THANKS: Added Vincent Korkos to the hall of fame.
 
 Fri May 23 11:43:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/tao_orb_tests.lst: Added the OBV tests to our daily
-	  builds. This is going to be one of the *most* important features
-	  for CIAO and it is really sad that it is not being tested at
-	  all! Ran into this when I was running some smoke tests and found
-	  a surprise. No prizes  for getting it right! One of the tests
-	  failed :(!
+        * bin/tao_orb_tests.lst: Added the OBV tests to our daily
+          builds. This is going to be one of the *most* important features
+          for CIAO and it is really sad that it is not being tested at
+          all! Ran into this when I was running some smoke tests and found
+          a surprise. No prizes  for getting it right! One of the tests
+          failed :(!
 
 Fri May 23 10:38:13 2003  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -258,10 +258,12 @@ sub relative {
             substr($val, 0, 1) = uc(substr($val, 0, 1));
           }
 
-          if (index($cwd, $val) == 0) {
+          my($icwd) = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? lc($cwd) : $cwd);
+          my($ival) = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? lc($val) : $val);
+          if (index($icwd, $ival) == 0) {
             my($count)   = 0;
-            my($current) = $cwd;
-            substr($current, 0, length($val)) = '';
+            my($current) = $icwd;
+            substr($current, 0, length($ival)) = '';
             while($current =~ /^\\/) {
               $current =~ s/^\///;
             }
@@ -271,13 +273,13 @@ sub relative {
                 ++$count;
               }
             }
-            $val = '../' x $count;
-            $val =~ s/\/$//;
+            $ival = '../' x $count;
+            $ival =~ s/\/$//;
             if ($self->{'prjc'}->convert_slashes()) {
-              $val = $self->slash_to_backslash($val);
+              $ival = $self->slash_to_backslash($ival);
             }
-            substr($value, $start) =~ s/\$\([^)]+\)/$val/;
-            $whole = $val;
+            substr($value, $start) =~ s/\$\([^)]+\)/$ival/;
+            $whole = $ival;
           }
         }
         $start += length($whole);
