@@ -48,7 +48,7 @@ namespace TAO
      */
     class TAO_SSLIOP_Export ClientCredentials
       : public virtual SecurityLevel3::ClientCredentials,
-        public virtual Credentials
+        public virtual SSLIOP_Credentials
     {
     public:
 

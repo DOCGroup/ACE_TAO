@@ -51,7 +51,7 @@ namespace TAO
      */
     class TAO_SSLIOP_Export OwnCredentials
       : public virtual SecurityLevel3::OwnCredentials,
-        public virtual Credentials
+        public virtual SSLIOP_Credentials
     {
     public:
 

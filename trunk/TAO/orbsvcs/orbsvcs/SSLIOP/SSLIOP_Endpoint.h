@@ -133,7 +133,7 @@ namespace TAO
        *       that no additional locks occur when checking the
        *       transport cache.
        */
-      TAO::SSLIOP::Credentials * credentials (void) const;
+      TAO::SSLIOP_Credentials * credentials (void) const;
       //@}
 
     private:
