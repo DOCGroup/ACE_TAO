@@ -29,7 +29,7 @@ Mon Aug 23 21:40:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  BiDirPolicy was set and a corbaloc URL was used. The problem
 	  stemmed from the following
 
-	  - The reply dispatcher was bounded to the table with some
+	  - The reply dispatcher was bound to the table with some
 	    request ID.
 
 	  - When the request header was generated, the request ID was
