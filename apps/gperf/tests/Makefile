@@ -1,4 +1,4 @@
-# $Id: Makefile	1.1	10/18/96
+# $Id$
 # Copyright (C) 1989, 1992, 1993 Free Software Foundation, Inc.
 # written by Douglas C. Schmidt (schmidt@ics.uci.edu)
 # 
@@ -22,38 +22,39 @@
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
-include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 srcdir = .
 GPERF = ../src/gperf
 
-check:
+all:
 	@echo "performing some tests of the perfect hash generator"   
-	$(CXX) -c $(CFLAGS) $(srcdir)/test.cpp
+	$(COMPILE.cc) $(srcdir)/test.cpp
 	$(GPERF) -a -p -c -l -S1 -o $(srcdir)/c.gperf > cinset.cpp
 	$(CXX) $(CFLAGS) -o cout cinset.cpp test.o
-	@echo "testing ANSI C reserved words, all items should be found in the set"
 	./cout -v < $(srcdir)/c.gperf > c.out
 	-diff -b $(srcdir)/c.exp c.out
 	$(GPERF) -a -k1,4,'$$' $(srcdir)/ada.gperf > adainset.cpp
 # double '$$' is only there since make gets confused; programn wants only 1 '$'
 	$(CXX) $(CFLAGS) -o aout adainset.cpp test.o
-	@echo "testing Ada reserved words, all items should be found in the set"
 	./aout -v < $(srcdir)/ada.gperf > ada-res.out
 	-diff -b $(srcdir)/ada-res.exp ada-res.out
 	$(GPERF) -a -p -D -k1,'$$' -s 2 -o $(srcdir)/adadefs.gperf > preinset.cpp
 	$(CXX) $(CFLAGS) -o preout preinset.cpp test.o
-	@echo "testing Ada predefined words, all items should be found in the set"
 	./preout -v < $(srcdir)/adadefs.gperf > ada-pred.out
 	-diff -b $(srcdir)/ada-pred.exp ada-pred.out
 	$(GPERF) -a -k1,2,'$$' -o $(srcdir)/modula3.gperf > m3inset.cpp
 	$(CXX) $(CFLAGS) -o m3out m3inset.cpp test.o
-	@echo "testing Modula3 reserved words, all items should be found in the set"
 	./m3out -v < $(srcdir)/modula3.gperf > modula.out
 	-diff -b $(srcdir)/modula.exp modula.out
 	$(GPERF) -a -o -S2 -p < $(srcdir)/pascal.gperf > pinset.cpp
 	$(CXX) $(CFLAGS) -o pout pinset.cpp test.o
-	@echo "testing Pascal reserved words, all items should be found in the set"
 	./pout -v < $(srcdir)/pascal.gperf > pascal.out
 	-diff -b $(srcdir)/pascal.exp pascal.out
 # these next 5 are demos that show off the generated code
@@ -70,13 +71,6 @@ check:
 # prints out the help message
 	-$(GPERF) -a -h > test-6.out 2>&1 || [ a = a ]
 	-diff -b $(srcdir)/test-6.exp test-6.out
-	@echo "only if, do, for, case, goto, else, while, and return should be found "
 	./aout -v < $(srcdir)/c.gperf > test-7.out
 	-diff -b $(srcdir)/test-7.exp test-7.out
 
-include		$(ACE_ROOT)/include/makeinclude/macros.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
