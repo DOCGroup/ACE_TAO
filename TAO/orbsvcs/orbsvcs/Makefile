@@ -249,11 +249,11 @@ thelist = $(sort $(MKLIST))
 #       Local rules
 #----------------------------------------------------------------------------
 
-standard_targets = all debug profile install deinstall clean clobber depend rcs_info idl_stubs realclean
+standard_targets = all debug profile install deinstall clean clobber depend rcs_info idl_stubs realclean ORBSVCS_COMPONENTS
 
 $(standard_targets): %: $(addsuffix -%, $(thelist))
 
-Makefile.%:
+Makefile.%: 
 	@echo $(MAKE) -f $(word 1,$(subst -, ,$@)) $(word 2,$(subst -, ,$@))
 	@$(MAKE) -f $(word 1,$(subst -, ,$@)) $(word 2,$(subst -, ,$@))
 
