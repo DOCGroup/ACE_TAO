@@ -23,6 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/RtecSchedulerS.h"
+
 class EC_Schedule : public EC_Driver
 {
   //
@@ -58,6 +60,7 @@ public:
   // use.
 
   void initialize_ec_impl (CORBA::Environment &ACE_TRY_ENV);
+  void cleanup_ec (void);
   virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
   // Set the scheduling service attribute
 
@@ -80,6 +83,11 @@ public:
   // This time really connect to the scheduler
 
 private:
+  POA_RtecScheduler::Scheduler *scheduler_impl_;
+  // The scheduler implementation
+
+  RtecScheduler::Scheduler_var scheduler_;
+  // The scheduler object reference
 };
 
 #endif /* EC_SCHEDULE_H */

@@ -28,7 +28,6 @@
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/RtecEventCommC.h"
-#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

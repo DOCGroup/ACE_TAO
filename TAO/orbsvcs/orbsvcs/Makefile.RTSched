@@ -73,6 +73,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
 # Extra dependencies not caught by make depend.
 #
 $(foreach ext, $(IDL_EXT), RtecScheduler$(ext)): TimeBase.idl
+$(foreach ext, $(IDL_EXT), RtecScheduler$(ext)): RtecBase.idl
 
 .PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
 
@@ -388,6 +389,8 @@ realclean: clean
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
  RtecSchedulerC.i \
  Scheduler_Factory.i \
  RtecSchedulerS.h \
@@ -396,6 +399,11 @@ realclean: clean
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
  TimeBaseS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
  RtecSchedulerS_T.h \
  RtecSchedulerS_T.i \
  RtecSchedulerS_T.cpp \
@@ -705,6 +713,8 @@ realclean: clean
  CosNamingC.i \
  RtecSchedulerC.h \
  Sched/sched_export.h \
+ RtecBaseC.h \
+ RtecBaseC.i \
  RtecSchedulerC.i \
  Scheduler_Factory.i \
  RtecSchedulerS.h \
@@ -713,6 +723,11 @@ realclean: clean
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
  TimeBaseS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
  RtecSchedulerS_T.h \
  RtecSchedulerS_T.i \
  RtecSchedulerS_T.cpp \
@@ -1016,6 +1031,8 @@ realclean: clean
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
  RtecSchedulerC.i \
  Scheduler_Utilities.i
 
@@ -1321,6 +1338,8 @@ realclean: clean
  CosNamingC.i \
  RtecSchedulerC.h \
  Sched/sched_export.h \
+ RtecBaseC.h \
+ RtecBaseC.i \
  RtecSchedulerC.i \
  Scheduler_Factory.i \
  Sched/Config_Scheduler.h \
@@ -1330,6 +1349,11 @@ realclean: clean
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
  TimeBaseS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
  RtecSchedulerS_T.h \
  RtecSchedulerS_T.i \
  RtecSchedulerS_T.cpp \
@@ -1639,6 +1663,8 @@ realclean: clean
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
  RtecSchedulerC.i \
  Event_Service_Constants.h \
  Time_Utilities.h \
@@ -1952,6 +1978,8 @@ realclean: clean
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
  RtecSchedulerC.i \
  Scheduler_Factory.i \
  RtecSchedulerS.h \
@@ -1960,6 +1988,11 @@ realclean: clean
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
  TimeBaseS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
  RtecSchedulerS_T.h \
  RtecSchedulerS_T.i \
  RtecSchedulerS_T.cpp \
@@ -2279,6 +2312,8 @@ realclean: clean
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
  RtecSchedulerC.i \
  Scheduler_Factory.i \
  RtecSchedulerS.h \
@@ -2287,6 +2322,11 @@ realclean: clean
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
  TimeBaseS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
  RtecSchedulerS_T.h \
  RtecSchedulerS_T.i \
  RtecSchedulerS_T.cpp \
@@ -2594,6 +2634,8 @@ realclean: clean
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
  RtecSchedulerC.i \
  Event_Service_Constants.h \
  Time_Utilities.h \
@@ -2901,6 +2943,8 @@ realclean: clean
  Sched/Scheduler.h \
  RtecSchedulerC.h \
  Sched/sched_export.h \
+ RtecBaseC.h \
+ RtecBaseC.i \
  RtecSchedulerC.i \
  Event_Service_Constants.h \
  Sched/sched_export.h Sched/Scheduler.i
@@ -3204,6 +3248,8 @@ realclean: clean
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
  RtecSchedulerC.i \
  Event_Service_Constants.h \
  Time_Utilities.h \
@@ -3509,6 +3555,8 @@ realclean: clean
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
  RtecSchedulerC.i \
  Event_Service_Constants.h \
  Time_Utilities.h \
@@ -3812,9 +3860,11 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
  svc_utils_export.h TimeBaseC.i TimeBaseS_T.h TimeBaseS_T.i \
- TimeBaseS_T.cpp TimeBaseS.i RtecSchedulerC.h Sched/sched_export.h \
- RtecSchedulerC.i RtecSchedulerS_T.h RtecSchedulerS_T.i \
- RtecSchedulerS_T.cpp RtecSchedulerS.i
+ TimeBaseS_T.cpp TimeBaseS.i RtecBaseS.h RtecBaseC.h RtecBaseC.i \
+ RtecBaseS_T.h RtecBaseS_T.i RtecBaseS_T.cpp RtecBaseS.i \
+ RtecSchedulerC.h Sched/sched_export.h RtecSchedulerC.i \
+ RtecSchedulerS_T.h RtecSchedulerS_T.i RtecSchedulerS_T.cpp \
+ RtecSchedulerS.i
 
 .obj/RtecSchedulerC.o .obj/RtecSchedulerC.so .shobj/RtecSchedulerC.o .shobj/RtecSchedulerC.so: RtecSchedulerC.cpp RtecSchedulerC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -4108,6 +4158,6 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
  Sched/sched_export.h TimeBaseC.h svc_utils_export.h TimeBaseC.i \
- RtecSchedulerC.i
+ RtecBaseC.h RtecBaseC.i RtecSchedulerC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -28,7 +28,7 @@
 #define TAO_MODULE_FACTORY_H
 #include "ace/pre.h"
 
-#include "orbsvcs/Event/event_export.h"
+#include "old_event_export.h"
 
 class ACE_EventChannel;
 
@@ -40,7 +40,7 @@ class ACE_ES_Supplier_Module;
 class ACE_ES_Priority_Timer;
 class TAO_EC_Timer_Module;
 
-class TAO_RTEvent_Export TAO_Module_Factory
+class TAO_RTOLDEvent_Export TAO_Module_Factory
 {
   // = TITLE
   //   Factory class for the Event Channel "modules".
@@ -83,7 +83,7 @@ public:
 
 // ****************************************************************
 
-class TAO_RTEvent_Export TAO_Default_Module_Factory : public TAO_Module_Factory
+class TAO_RTOLDEvent_Export TAO_Default_Module_Factory : public TAO_Module_Factory
 {
   // = TITLE
   //   Default factory class for the Event Channel.
@@ -127,7 +127,7 @@ public:
 
 // ****************************************************************
 
-class TAO_RTEvent_Export TAO_Reactive_Module_Factory : public TAO_Module_Factory
+class TAO_RTOLDEvent_Export TAO_Reactive_Module_Factory : public TAO_Module_Factory
 {
   // = TITLE
   //   Factory class for the Event Channel "modules".

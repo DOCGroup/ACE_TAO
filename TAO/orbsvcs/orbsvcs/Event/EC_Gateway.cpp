@@ -70,14 +70,18 @@ TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP (void)
 void
 TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
                            RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-                           RtecScheduler::Scheduler_ptr rmt_sched,
-                           RtecScheduler::Scheduler_ptr lcl_sched,
-                           const char* lcl_name,
-                           const char* rmt_name,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
 
+  this->init_i (rmt_ec, lcl_ec, ACE_TRY_ENV);
+}
+
+void
+TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
+                             RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
+                             CORBA::Environment &)
+{
   if (!CORBA::is_nil (this->rmt_ec_.in ()))
     return;
 
@@ -85,52 +89,6 @@ TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
     RtecEventChannelAdmin::EventChannel::_duplicate (rmt_ec);
   this->lcl_ec_ =
     RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
-
-  if (!CORBA::is_nil (rmt_sched))
-    {
-      this->rmt_info_ =
-        rmt_sched->create (rmt_name, ACE_TRY_ENV);
-      ACE_CHECK;
-
-      // @@ TODO Many things are hard-coded in the RT_Info here.
-
-      // The worst case execution time is far less than 500 usecs, but
-      // that is a safe estimate....
-      ACE_Time_Value tv (0, 500);
-      TimeBase::TimeT time;
-      ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-      rmt_sched->set (this->rmt_info_,
-                      RtecScheduler::VERY_HIGH_CRITICALITY,
-                      time, time, time,
-                      25000 * 10,
-                      RtecScheduler::VERY_LOW_IMPORTANCE,
-                      time,
-                      0,
-                      RtecScheduler::OPERATION,
-                      ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  if (!CORBA::is_nil (lcl_sched))
-    {
-      this->lcl_info_ =
-        lcl_sched->create (lcl_name, ACE_TRY_ENV);
-      ACE_CHECK;
-
-      ACE_Time_Value tv (0, 500);
-      TimeBase::TimeT time;
-      ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-      lcl_sched->set (this->lcl_info_,
-                      RtecScheduler::VERY_HIGH_CRITICALITY,
-                      time, time, time,
-                      25000 * 10,
-                      RtecScheduler::VERY_LOW_IMPORTANCE,
-                      time,
-                      1,
-                      RtecScheduler::REMOTE_DEPENDANT,
-                      ACE_TRY_ENV);
-      ACE_CHECK;
-    }
 }
 
 void
@@ -289,7 +247,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
           pub.publications[0].event.header.type =
             ACE_ES_DISJUNCTION_DESIGNATOR;
           pub.publications[0].dependency_info.dependency_type =
-            RtecScheduler::TWO_WAY_CALL;
+            RtecBase::TWO_WAY_CALL;
           pub.publications[0].dependency_info.number_of_calls = 1;
           pub.publications[0].dependency_info.rt_info = this->lcl_info_;
           int c = 1;
@@ -305,7 +263,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
                 continue;
               pub.publications[c].event.header = h;
               pub.publications[c].dependency_info.dependency_type =
-                RtecScheduler::TWO_WAY_CALL;
+                RtecBase::TWO_WAY_CALL;
               pub.publications[c].dependency_info.number_of_calls = 1;
               pub.publications[c].dependency_info.rt_info = this->lcl_info_;
               c++;
@@ -346,7 +304,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
       pub.publications[c].event.header = h;
       pub.publications[c].event.header.creation_time = ORBSVCS_Time::zero ();
       pub.publications[c].dependency_info.dependency_type =
-        RtecScheduler::TWO_WAY_CALL;
+        RtecBase::TWO_WAY_CALL;
       pub.publications[c].dependency_info.number_of_calls = 1;
       pub.publications[c].dependency_info.rt_info = this->lcl_info_;
       c++;

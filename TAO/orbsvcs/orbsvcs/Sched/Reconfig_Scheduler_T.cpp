@@ -1062,7 +1062,7 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
   {
     // In a two-way call, the calling operation depends on the
     // called operation.
-    case RtecScheduler::TWO_WAY_CALL:
+    case RtecBase::TWO_WAY_CALL:
 
       // Add the calling dependency map entry
       map_dependency_i (handle,                        // calling handle
@@ -1086,7 +1086,7 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
 
     // In a one-way call, the called operation depends on the
     // calling operation.
-    case RtecScheduler::ONE_WAY_CALL:
+    case RtecBase::ONE_WAY_CALL:
 
       // Add the calling dependency map entry
       map_dependency_i (dependency,                    // calling handle

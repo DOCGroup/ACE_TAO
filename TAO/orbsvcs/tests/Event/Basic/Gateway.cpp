@@ -89,9 +89,6 @@ main (int argc, char* argv[])
       TAO_EC_Gateway_IIOP gateway;
       gateway.init (event_channel_1.in (),
                     event_channel_2.in (),
-                    RtecScheduler::Scheduler::_nil (),
-                    RtecScheduler::Scheduler::_nil (),
-                    0, 0,
                     ACE_TRY_ENV);
 
       RtecEventChannelAdmin::Observer_var obs =

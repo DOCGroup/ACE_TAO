@@ -23,6 +23,7 @@ main (int argc, char *argv [])
 // ****************************************************************
 
 EC_Schedule::EC_Schedule (void)
+  :  scheduler_impl_ (0)
 {
 }
 
@@ -61,6 +62,13 @@ void
 EC_Schedule::modify_attributes (TAO_EC_Event_Channel_Attributes& attr)
 {
   attr.scheduler = this->scheduler_.in (); // no need to dup
+}
+
+void
+EC_Schedule::cleanup_ec (void)
+{
+  this->EC_Driver::cleanup_ec ();
+  delete this->scheduler_impl_;
 }
 
 void

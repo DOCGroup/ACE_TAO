@@ -127,7 +127,7 @@ public:
   virtual void
       destroy_supplier_control (TAO_EC_SupplierControl*);
 
-private:
+protected:
   int dispatching_;
   int filtering_;
   int supplier_filtering_;

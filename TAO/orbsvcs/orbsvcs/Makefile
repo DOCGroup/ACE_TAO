@@ -27,16 +27,12 @@ ifndef TAO_ORBSVCS
   TAO_ORBSVCS = Naming \
                 Time \
                 Property \
-                Sched \
-                Event \
+		RTEvent \
                 CosEvent \
+                Sched \
+                RTOLDEvent \
+		RTSchedEvent \
                 Concurrency
-
-  # Old versions of gcc cannot compile these services
-  ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-    TAO_ORBSVCS += Event2 \
-          NativeCosEvent
-  endif # ACE_HAS_GNUG_PRE_2_8
 
   ifeq ($(minimum_corba),0)
 
@@ -73,16 +69,37 @@ endif
 ifneq (,$(findstring  LifeCycle, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosLifeCycle
 endif
-ifneq (,$(findstring  Sched, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.RTSched
+ifneq (,$(findstring  RTEvent, $(TAO_ORBSVCS)))
+  ifeq (,$(findstring Makefile.RTEvent, $(MKLIST)))
+    MKLIST += Makefile.RTEvent
+  endif
 endif
-ifneq (,$(findstring  Event, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.RTEvent
-endif
+# Backwards compatibility, going away soon.
 ifneq (,$(findstring  Event2, $(TAO_ORBSVCS)))
   ifeq (,$(findstring Makefile.RTEvent, $(MKLIST)))
     MKLIST += Makefile.RTEvent
   endif
+endif
+ifneq (,$(findstring  Sched, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.RTSched
+endif
+ifneq (,$(findstring  Event, $(TAO_ORBSVCS)))
+  ifeq (,$(findstring Makefile.RTOLDEvent, $(MKLIST)))
+    MKLIST += Makefile.RTOLDEvent
+  endif
+endif
+ifneq (,$(findstring  Event, $(TAO_ORBSVCS)))
+  ifeq (,$(findstring Makefile.RTOLDEvent, $(MKLIST)))
+    MKLIST += Makefile.RTOLDEvent
+  endif
+endif
+ifneq (,$(findstring  RTOLDEvent, $(TAO_ORBSVCS)))
+  ifeq (,$(findstring Makefile.RTOLDEvent, $(MKLIST)))
+    MKLIST += Makefile.RTOLDEvent
+  endif
+endif
+ifneq (,$(findstring  RTSchedEvent, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.RTSchedEvent
 endif
 ifneq (,$(findstring  CosEvent, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosEvent

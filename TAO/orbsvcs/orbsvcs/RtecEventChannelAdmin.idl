@@ -4,7 +4,7 @@
 #define TAO_RTEC_EVENTCHANNELADMIN_IDL
 
 #include "RtecEventComm.idl"
-#include "RtecScheduler.idl"
+#include "RtecBase.idl"
 
 module RtecEventChannelAdmin
 {
@@ -14,7 +14,7 @@ module RtecEventChannelAdmin
   struct Dependency
   {
     RtecEventComm::Event event;
-    RtecScheduler::handle_t rt_info;
+    RtecBase::handle_t rt_info;
   };
   typedef sequence<Dependency> DependencySet;
 
@@ -27,7 +27,7 @@ module RtecEventChannelAdmin
   struct Publication
   {
     RtecEventComm::Event event;
-    RtecScheduler::Dependency_Info dependency_info;
+    RtecBase::Dependency_Info dependency_info;
   };
   typedef sequence<Publication> PublicationSet;
 

@@ -100,7 +100,6 @@ ACE_ConsumerQOS_Factory::start_bitmask (CORBA::ULong source_mask,
 int
 ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscribe)
 {
-  RtecScheduler::RT_Info dummy;
   // Make sure that a designator is first.
   if (designator_set_ == 0)
     {
@@ -160,7 +159,7 @@ ACE_SupplierQOS_Factory::
 int
 ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
                                  RtecEventComm::EventType type,
-                                 RtecScheduler::handle_t rt_info,
+                                 RtecBase::handle_t rt_info,
                                  u_int ncalls)
 {
   int l = qos_.publications.length ();

@@ -391,7 +391,7 @@ main (int argc, char *argv[])
                 add_dependency (config_infos[i].handle,
                                 config_infos[i - (operation_count / 2)].handle,
                                 2,                             // number of calls
-                                RtecScheduler::ONE_WAY_CALL,   // type of dependency
+                                RtecBase::ONE_WAY_CALL,   // type of dependency
                                 ACE_TRY_ENV);
               ACE_TRY_CHECK;
             }
