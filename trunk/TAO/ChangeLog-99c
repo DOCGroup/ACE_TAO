@@ -1,4 +1,10 @@
-Mon Jun 14 11:51:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Jun 14 12:29:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Context.cpp:
+	* tao/Environment.cpp:
+	* tao/Principal.cpp: Made sure the <refcount_> is initialized
+	  properly.  Thanks to <Rebecca.A.Sanford@gd-is.com> for pointing
+	  this out.
 
 	* tao/Object_KeyC.h: TAO_ObjectKey_var needs to be exported on
 	  Win32.
