@@ -203,28 +203,6 @@ CORBA::Environment::print_exception (const char *info,
                 ACE_TEXT ("TAO: (%P|%t) no exception, %s\n"), info));
 }
 
-CORBA::Environment_var &
-CORBA::Environment_var::operator= (CORBA::Environment_ptr p)
-{
-  CORBA::Environment_var tmp (p);
-  // @@ We need as ACE_Swap<> template!!
-  CORBA::Environment *tmp_ptr = this->ptr_;
-  this->ptr_ = tmp.ptr_;
-  tmp.ptr_ = tmp_ptr;
-  return *this;
-}
-
-CORBA::Environment_var &
-CORBA::Environment_var::operator= (const CORBA::Environment_var &r)
-{
-  CORBA::Environment_var tmp (r);
-  // @@ We need as ACE_Swap<> template!!
-  CORBA::Environment *tmp_ptr = this->ptr_;
-  this->ptr_ = tmp.ptr_;
-  tmp.ptr_ = tmp_ptr;
-  return *this;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class TAO_Pseudo_Var_T<CORBA::Environment>;
