@@ -20,8 +20,8 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-#if !defined (_OCTETSEQ_CI_)
-#define _OCTETSEQ_CI_
+#if !defined (TAO_OCTETSEQ_CI)
+#define TAO_OCTETSEQ_CI
 
 // *************************************************************
 // Inline operations for class CORBA_OctetSeq_var
@@ -249,8 +249,8 @@ CORBA_OctetSeq_out::operator[] (CORBA::ULong index)
 #endif /* end #if !defined */
 
 
-#if !defined _TAO_CDR_OP_CORBA_OctetSeq_I_
-#define _TAO_CDR_OP_CORBA_OctetSeq_I_
+#if !defined TAO_TAO_CDR_OP_CORBA_OctetSeq_I
+#define TAO_TAO_CDR_OP_CORBA_OctetSeq_I
 
 CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
@@ -261,5 +261,5 @@ CORBA::Boolean TAO_Export operator>> (
     CORBA_OctetSeq &
   );
 
-#endif /* _TAO_CDR_OP_CORBA_OctetSeq_I_ */
+#endif /* TAO_TAO_CDR_OP_CORBA_OctetSeq_I */
 
