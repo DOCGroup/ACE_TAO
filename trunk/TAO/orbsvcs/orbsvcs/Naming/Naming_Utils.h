@@ -48,6 +48,7 @@ public:
 
   TAO_Naming_Server (CORBA::ORB_ptr orb,
                      PortableServer::POA_ptr poa,
+                     size_t context_size = ACE_DEFAULT_MAP_SIZE,
                      ACE_Time_Value *timeout = 0,
                      int resolve_for_existing_naming_service = 1);
   // Either find an existing Naming Service or creates one.  Takes the
@@ -56,6 +57,7 @@ public:
 
   int init (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa,
+            size_t context_size = ACE_DEFAULT_MAP_SIZE,
             ACE_Time_Value *timeout = 0,
             int resolve_for_existing_naming_service = 1);
   // Either find an existing Naming Service or creates one.  Takes the
@@ -78,9 +80,10 @@ public:
 protected:
 
   int init_new_naming (CORBA::ORB_ptr orb,
-		       PortableServer::POA_ptr root_poa);
+                       PortableServer::POA_ptr root_poa,
+                       size_t context_size);
   // Initialize a new name server under the given ORB and POA.
- 
+
   TAO_NamingContext *naming_context_impl_;
   // Naming context implementation for "NameService".
 
@@ -125,7 +128,7 @@ public:
 
   CosNaming::NamingContext_ptr get_context (void) const;
   // Returns the NamingContext
-  
+
 protected:
   CosNaming::NamingContext_var naming_context_;
   // NamingContext ptr.
