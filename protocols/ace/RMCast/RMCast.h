@@ -29,14 +29,6 @@
 class ACE_Message_Block;
 class ACE_RMCast_Proxy;
 
-// LynxOS 3.X defines the following macro
-#if defined (__Lynx__)
-#  include <bsd/mbuf.h>
-#  if defined(MT_DATA)
-#    undef MT_DATA
-#  endif /* MT_DATA */
-#endif /* __Lynx__ */
-
 //! The RMCast namespace
 /*!
   Several simple data structures and enums are shared by all the
@@ -56,15 +48,15 @@ public:
   enum Message_Type
   {
     // Sender initiated
-    MT_POLL,
-    MT_ACK_JOIN,
-    MT_ACK_LEAVE,
-    MT_DATA,
+    RMCAST_MT_POLL,
+    RMCAST_MT_ACK_JOIN,
+    RMCAST_MT_ACK_LEAVE,
+    RMCAST_MT_DATA,
     // Receiver initiated
-    MT_JOIN,
-    MT_LEAVE,
-    MT_ACK,
-    MT_LAST
+    RMCAST_MT_JOIN,
+    RMCAST_MT_LEAVE,
+    RMCAST_MT_ACK,
+    RMCAST_MT_LAST
   };
 
   //! Simle enum used to describe the state transitions for senders
@@ -150,7 +142,7 @@ public:
   /*!
     <CODE>
     +---------+----------------------+<BR>
-    | 8 bits  | MT_POLL              |<BR>
+    | 8 bits  | RMCAST_MT_POLL              |<BR>
     +---------+----------------------+<BR>
     </CODE>
   */
@@ -164,7 +156,7 @@ public:
   /*!
     <CODE>
     +---------+----------------------+<BR>
-    | 8 bits  | MT_ACK_JOIN          |<BR>
+    | 8 bits  | RMCAST_MT_ACK_JOIN          |<BR>
     +---------+----------------------+<BR>
     | 32 bits | next_sequence_number |<BR>
     +---------+----------------------+<BR>
@@ -208,7 +200,7 @@ public:
    *
    * <CODE>
    * +---------+----------------------+<BR>
-   * | 8 bits  | MT_ACK               |<BR>
+   * | 8 bits  | RMCAST_MT_ACK               |<BR>
    * +---------+----------------------+<BR>
    * | 32 bits | next_expected        |<BR>
    * +---------+----------------------+<BR>
@@ -232,7 +224,7 @@ public:
   /*
   <CODE>
     +---------+----------------------+<BR>
-    | 8 bits  | MT_JOIN              |<BR>
+    | 8 bits  | RMCAST_MT_JOIN              |<BR>
     +---------+----------------------+<BR>
   </CODE>
   */
@@ -246,7 +238,7 @@ public:
   /*!
   <CODE>
     +---------+----------------------+<BR>
-    | 8 bits  | MT_LEAVE             |<BR>
+    | 8 bits  | RMCAST_MT_LEAVE             |<BR>
     +---------+----------------------+<BR>
   </CODE>
   */

@@ -33,17 +33,17 @@ ACE_RMCast_UDP_Proxy::receive_message (char *buffer, size_t size)
 
   // @@ What should we do with invalid messages like this?
   //
-  if (type < 0 || type >= ACE_RMCast::MT_LAST)
+  if (type < 0 || type >= ACE_RMCast::RMCAST_MT_LAST)
     return 0;
 
-  if (type == ACE_RMCast::MT_POLL)
+  if (type == ACE_RMCast::RMCAST_MT_POLL)
     {
       ACE_RMCast::Poll poll;
       poll.source = this;
       return this->poll (poll);
     }
 
-  else if (type == ACE_RMCast::MT_ACK_JOIN)
+  else if (type == ACE_RMCast::RMCAST_MT_ACK_JOIN)
     {
       ACE_RMCast::Ack_Join ack_join;
       ack_join.source = this;
@@ -63,14 +63,14 @@ ACE_RMCast_UDP_Proxy::receive_message (char *buffer, size_t size)
       return this->ack_join (ack_join);
     }
 
-  else if (type == ACE_RMCast::MT_ACK_LEAVE)
+  else if (type == ACE_RMCast::RMCAST_MT_ACK_LEAVE)
     {
       ACE_RMCast::Ack_Leave ack_leave;
       ack_leave.source = this;
       return this->ack_leave (ack_leave);
     }
 
-  else if (type == ACE_RMCast::MT_DATA)
+  else if (type == ACE_RMCast::RMCAST_MT_DATA)
     {
       ACE_RMCast::Data data;
       data.source = this;
@@ -105,21 +105,21 @@ ACE_RMCast_UDP_Proxy::receive_message (char *buffer, size_t size)
       return this->data (data);
     }
 
-  else if (type == ACE_RMCast::MT_JOIN)
+  else if (type == ACE_RMCast::RMCAST_MT_JOIN)
     {
       ACE_RMCast::Join join;
       join.source = this;
       return this->join (join);
     }
 
-  else if (type == ACE_RMCast::MT_LEAVE)
+  else if (type == ACE_RMCast::RMCAST_MT_LEAVE)
     {
       ACE_RMCast::Leave leave;
       leave.source = this;
       return this->leave (leave);
     }
 
-  else if (type == ACE_RMCast::MT_ACK)
+  else if (type == ACE_RMCast::RMCAST_MT_ACK)
     {
       ACE_RMCast::Ack ack;
       ack.source = this;
