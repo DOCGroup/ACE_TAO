@@ -1,5 +1,4 @@
 /* $Id$  */
-
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -194,7 +193,11 @@ Video_Control_Handler::get_handle (void) const
 int
 Video_Control_Handler::handle_input (ACE_HANDLE handle)
 {
-  return this->state_->handle_input (handle);
+  if (this->state_->handle_input (handle) != 0)
+    return TAO_ORB_Core_instance ()->reactor ()-> remove_handler (this,
+                                                                  ACE_Event_Handler::READ_MASK);
+  else
+    return 0;
   // state pattern
 }
 
@@ -203,6 +206,105 @@ Video_Control_State *
 Video_Control_Handler::get_state (void)
 {
   return this->state_;
+}
+
+CORBA::Boolean 
+Video_Control_Handler::init_video (const Video_Control::INITvideoPara &para,
+                             CORBA::Environment&)
+{
+  //this->state_->init_video (para);
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Handler::stat_stream (CORBA::Char_out ch,
+                              CORBA::Long_out size,
+                              CORBA::Environment&)
+{
+  //this->state_->stat_stream (ch,size);
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Handler::close (CORBA::Environment&)
+{
+  //this->state_->close ();
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Handler::stat_sent (CORBA::Environment&)
+{
+  //this->state_->stat_sent ();
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Handler::fast_forward (const Video_Control::FFpara &para,
+                               CORBA::Environment&)
+{
+  //this->state_->fast_forward (para);
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Handler::fast_backward (const Video_Control::FFpara &para,
+                                CORBA::Environment&)
+{
+  //this->state_->fast_backward (para);
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Handler::step (const Video_Control::STEPpara &para,
+                       CORBA::Environment&)
+{
+  //this->state_->step (para);
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Handler::play (const Video_Control::PLAYpara &para,
+                       CORBA::Long_out vts,
+                       CORBA::Environment&)
+{
+  //this->state_->play (para,vts);
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Handler::position (const Video_Control::POSITIONpara &para,
+                           CORBA::Environment&)
+{
+  //this->state_->position (para);
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Handler::speed (const Video_Control::SPEEDpara &para,
+                        CORBA::Environment&)
+{
+  //this->state_->speed (para);
+  return 0;
+}
+
+// ~~ Why do you need the Environment
+
+CORBA::Boolean 
+Video_Control_Handler::stop (CORBA::Long cmdsn,
+                       CORBA::Environment&)
+{
+  //this->state_->stop (cmdsn);
+  return 0;
 }
 
 // Changes the state of the video control handler from the current
@@ -215,6 +317,8 @@ Video_Control_Handler::change_state (Video_Control_State *state)
               state->get_state ()));
   this->state_ = state;
 }
+
+
 
 // ----------------------------------------------------------------------
 // Video_Control_Handler_Instance methods.

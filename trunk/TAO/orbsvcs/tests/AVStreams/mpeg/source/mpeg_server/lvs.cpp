@@ -39,8 +39,8 @@
 #include <X11/Xutil.h>
 #include <X11/Intrinsic.h>
 
-#include "common.h"
-#include "routine.h"
+#include "include/common.h" 
+#include "mpeg_shared/routine.h"
 #include "server_proto.h"
 
 #ifdef LIVE_VIDEO

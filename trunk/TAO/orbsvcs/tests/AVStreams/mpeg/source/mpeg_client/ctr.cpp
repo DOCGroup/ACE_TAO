@@ -42,14 +42,14 @@
 #include <X11/Xutil.h>
 #include <X11/Intrinsic.h>
 
-#include "common.h"
+#include "include/common.h"
 #include "newproto.h"
 #include "global.h"
-#include "routine.h"
-#include "sendpt.h"
-#include "filters.h"
-#include "fileio.h"
-#include "com.h"
+#include "mpeg_shared/routine.h"
+#include "mpeg_shared/sendpt.h"
+#include "mpeg_shared/filters.h"
+#include "mpeg_shared/fileio.h"
+#include "mpeg_shared/com.h"
 #include "Command_Handler.h"
 
 #define SPEEDHIST_SIZE 20
@@ -2915,7 +2915,8 @@ int CTRmain(void)
     if (SetRTpriority("CTR", 4)) realTimeFlag = 0;
   }
 
-  atexit(on_exit_routine);
+
+  //  atexit(on_exit_routine);
 
 
   // instantiate our command handler

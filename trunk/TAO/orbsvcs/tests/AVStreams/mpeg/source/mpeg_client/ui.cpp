@@ -23,7 +23,7 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
 #include <unistd.h>
 #include <X11/IntrinsicP.h>
 #include <Xm/DialogS.h>
-#include "../mpeg_mib/mibload.h"
+#include "mpeg_mib/mibload.h"
 #include "interface/fb.xbm"
 #include "interface/play.xbm"
 #include "interface/step.xbm"
@@ -34,7 +34,7 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
 #include "interface/Info.mib"
 #include "video.h"
 
-#include "../include/common.h"
+#include "include/common.h"
 #include "newproto.h"
 #include "global.h"
 

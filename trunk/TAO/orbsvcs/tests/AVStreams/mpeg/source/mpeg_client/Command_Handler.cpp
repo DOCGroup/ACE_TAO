@@ -269,9 +269,19 @@ Client_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       default_usr2_handler (signum);
       break;
     case SIGCHLD:
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
       pid = ACE_OS::wait (&status);
       if (pid == UIpid)
-        ACE_Reactor::instance ()->end_event_loop ();
+        {
+          cerr << "ui exited, im ending the event loop!" << endl;
+          ACE_Reactor::instance ()->end_event_loop ();
+        }
+      return 0;
+    case SIGINT:
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
+      ACE_Reactor::instance ()->end_event_loop ();
+      ::on_exit_routine ();
+      return 0;
     default: 
       ACE_DEBUG ((LM_DEBUG, 
                   "(%t) %S: not handled, returning to program\n", 

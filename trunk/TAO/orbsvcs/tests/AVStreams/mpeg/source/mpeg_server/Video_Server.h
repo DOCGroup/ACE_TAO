@@ -33,15 +33,15 @@
 #include "ace/Event_Handler.h"
 
 #include "tao/TAO.h"
-
-#include "Globals.h"
-#include "fileio.h"
-#include "com.h"
-#include "common.h"
-#include "routine.h"
-#include "sendpt.h"
-#include "server_proto.h"
-#include "Video_Control_State.h"
+#include "include/common.h"
+#include "mpeg_shared/fileio.h"
+#include "mpeg_shared/com.h"   
+#include "mpeg_shared/routine.h"
+#include "mpeg_shared/sendpt.h"
+#include "mpeg_shared/Video_ControlS.h"
+#include "mpeg_server/server_proto.h"
+#include "mpeg_server/Video_Control_State.h"
+#include "mpeg_server/Globals.h"
 
 class Video_Control_Handler : public virtual ACE_Event_Handler
 {
@@ -68,6 +68,40 @@ public:
 
   void change_state (Video_Control_State *state);
   // Used to change the state
+
+  virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para,
+                                     CORBA::Environment &_tao_environment);
+  
+  virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
+                                      CORBA::Long_out size,
+                                      CORBA::Environment &_tao_environment);
+
+  virtual CORBA::Boolean close (CORBA::Environment &_tao_environment);
+  
+  virtual CORBA::Boolean stat_sent (CORBA::Environment &_tao_environment);
+
+  virtual CORBA::Boolean fast_forward (const Video_Control::FFpara &para,
+                                       CORBA::Environment &_tao_environment
+                                       );
+
+  virtual CORBA::Boolean fast_backward (const Video_Control::FFpara &para,
+                                        CORBA::Environment &_tao_environment);
+
+  virtual CORBA::Boolean step (const Video_Control::STEPpara &para,
+                               CORBA::Environment &_tao_environment);
+  
+  virtual CORBA::Boolean play (const Video_Control::PLAYpara &para,
+                               CORBA::Long_out vts,
+                               CORBA::Environment &_tao_environment);
+
+  virtual CORBA::Boolean position (const Video_Control::POSITIONpara &para,
+                                   CORBA::Environment &_tao_environment);
+
+  virtual CORBA::Boolean speed (const Video_Control::SPEEDpara &para,
+                                CORBA::Environment &_tao_environment);
+
+  virtual CORBA::Boolean stop (CORBA::Long cmdsn,
+                               CORBA::Environment &_tao_environment);
 
 private:
   Video_Control_State *state_;

@@ -64,15 +64,17 @@
 #include <sys/shm.h>
 #include <sys/sem.h>
 
+#include "include/common.h"
+
 #include "video.h"
 #include "proto.h"
-#include "common.h"
-#include "routine.h"
 #include "newproto.h"
 #include "global.h"
 
 #include "util.h"
 #include "dither.h"
+
+#include "mpeg_shared/routine.h"
 
 static int mainPid;
 
@@ -135,7 +137,7 @@ void set_exit_routine_tag(int tag)
 {
   on_exit_tag = tag;
 }
-static void on_exit_routine(void)
+void on_exit_routine(void)
 {
   if (!on_exit_tag)
     return;
@@ -406,16 +408,16 @@ int main(int argc, char ** argv)
     fprintf(stderr, "Sorry, mbordered dithertype no longer supported.\n");
     exit(1);
   }
-  setsignal(SIGCHLD, clear_child);
-  setsignal(SIGINT, int_handler);
-  setsignal(SIGHUP, int_handler);
+  //  setsignal(SIGCHLD, clear_child);
+  //  setsignal(SIGINT, int_handler);
+  //  setsignal(SIGHUP, int_handler);
   /*
   setsignal(SIGKILL, int_handler);
   setsignal(SIGSEGV, int_handler);
   */
-  setsignal(SIGQUIT, int_handler);
-  setsignal(SIGTERM, int_handler);
-  setsignal(SIGALRM, SIG_IGN);
+  //  setsignal(SIGQUIT, int_handler);
+  //  setsignal(SIGTERM, int_handler);
+  //  setsignal(SIGALRM, SIG_IGN);
   setsignal(SIGPIPE, SIG_IGN);
 
 

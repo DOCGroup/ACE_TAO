@@ -19,7 +19,7 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 
 LIBS 	+= -lTAO -lACE
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
-CPPFLAGS += -I$(MPEG_ROOT)/include -I$(MPEG_ROOT)/mpeg_shared -I$(MPEG_ROOT)/mpeg_server -I$(MPEG_ROOT)/mpeg_client
+CPPFLAGS += -I$(MPEG_ROOT)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

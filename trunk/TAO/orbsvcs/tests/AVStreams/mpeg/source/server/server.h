@@ -28,7 +28,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_CODgram.h"
 #include "ace/Select_Reactor.h"
-// @@ Make sure you use the -I option in the makefile to avoid having to use the ../... pathname stuff..
+
 #include "common.h"
 #include "server_proto.h"
 #include "fileio.h"
@@ -164,10 +164,11 @@ public:
   // constructor
 
   int init (int argc,
-            char **argv);
+            char **argv,
+            CORBA::Environment& env);
   // Initialize the AV_Server
 
-  int run ();
+  int run (CORBA::Environment& env);
   // Run the AV_Server
 
   static void on_exit_routine (void);
@@ -177,10 +178,10 @@ public:
   // Destructor
 private:
 
-  TAO_ORB_Manager orb_manager_;
+  TAO_ORB_Manager *orb_manager_;
   // the TAO ORB manager.
 
-  Video_Control_i video_control_;
+  Video_Control_i *video_control_;
   // The Video_Control implementation object.
 
   AV_Acceptor acceptor_;

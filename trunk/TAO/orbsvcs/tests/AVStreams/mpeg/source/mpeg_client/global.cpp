@@ -29,7 +29,7 @@
 #include <X11/Xutil.h>
 #include <X11/Intrinsic.h>
 
-#include "common.h"
+#include "include/common.h"
 
 /* Declaration of global variable to hold dither info. */
 
