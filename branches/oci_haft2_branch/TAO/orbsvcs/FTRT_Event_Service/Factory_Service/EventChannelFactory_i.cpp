@@ -64,16 +64,16 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
       }
     }
 
-    ACE_THROW_RETURN(PortableGroup\::ObjectNotCreated(), CORBA::Object::_nil());
+    ACE_THROW_RETURN(PortableGroup::ObjectNotCreated(), CORBA::Object::_nil());
 }
 
 void EventChannelFactory_i::delete_object (
-  const PortableGroup\::GenericFactory::FactoryCreationId & factory_creation_id
+  const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
   ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
-  , PortableGroup\::ObjectNotFound
+  , PortableGroup::ObjectNotFound
   ))
 {
   ACE_TRACE("EventChannelFactory_i::delete_object");
@@ -88,8 +88,8 @@ void EventChannelFactory_i::delete_object (
 
 CORBA::Object_ptr EventChannelFactory_i::create_process (
   char * process_str,
-  const PortableGroup\::Criteria & the_criteria,
-  PortableGroup\::GenericFactory::FactoryCreationId_out factory_creation_id)
+  const PortableGroup::Criteria & the_criteria,
+  PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
   ACE_TRACE("EventChannelFactory_i::create_process");
 
@@ -98,7 +98,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   // fill the factory_creation_id
 
   ACE_NEW_RETURN(factory_creation_id,
-    PortableGroup\::GenericFactory::FactoryCreationId,
+    PortableGroup::GenericFactory::FactoryCreationId,
     CORBA::Object::_nil());
   *factory_creation_id <<= (CORBA::ULong) ++id;
 
