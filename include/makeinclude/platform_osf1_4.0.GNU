@@ -18,17 +18,18 @@ CFLAGS          += -pthread
 #### CXX_VER to CXX_5 either on the make command line, or by
 #### or by setting the CXX_VER environment variable to CXX_5.
 # WARNING_FLAGS +=
-#   9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
-# 174: expr_has_no_effect
-# 193: zero used for undefined preprocessing identifier
-# 236: controlling expression is constant
-# 401: base_class_with_nonvirtual_dtor
-# 610: nonoverriding_function_decl
-# 835: unreferenced_function_param
-# 839: no_corresponding_delete (until this is fixed in libTAO)
+#    9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
+#  174: expr_has_no_effect
+#  193: zero used for undefined preprocessing identifier
+#  236: controlling expression is constant
+#  401: base_class_with_nonvirtual_dtor
+#  610: nonoverriding_function_decl
+#  835: unreferenced_function_param
+#  839: no_corresponding_delete (until this is fixed in libTAO)
+# 1136: conversion to integral type of smaller size could lose data
 ifneq ($(CXX_VER),CXX_5)
   WARNING_FLAGS += -w0 -msg_display_number \
-                   -msg_disable 9,174,193,236,401,610,835,839
+                   -msg_disable 9,174,193,236,401,610,835,839,1136
 endif
 
 CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
