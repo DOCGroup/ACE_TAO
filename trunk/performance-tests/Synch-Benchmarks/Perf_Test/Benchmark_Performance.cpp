@@ -53,7 +53,7 @@ Benchmark_Performance::fini (void)
 void *
 Benchmark_Performance::svc_run (Benchmark_Performance *bp)
 {
-  return (void *) (bp->svc () == -1 ? -1 : 0);
+  return (void *) (bp->svc () == -1 ? (long)-1 : (long)0);
 }
 
 #endif /* ACE_HAS_THREADS */
