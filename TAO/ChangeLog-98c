@@ -1,3 +1,17 @@
+Sat Apr 12 23:10:08 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tcpoa.{hh,cpp}: TCP_OA::handle_message() now returns a value
+ 	indicating how a message was handled.
+
+	* roa.cpp: ROA_Handler::handle_input() now returns a meaningful
+ 	value based on what TCP_OA::handle_message() returns.
+
+	* giop.{hh,cpp}: Added end-of-file detection on socket
+ 	connections, and that is now propagated all the way back up
+ 	through GIOP::incoming_message().  I don't know if I violated
+ 	something in the spec by doing this, but it was necessary.  I'll
+ 	look into it later.
+
 Thu Apr 10 11:49:44 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* giop.{hh,cpp}: Overloaded all methods dealing with connections
