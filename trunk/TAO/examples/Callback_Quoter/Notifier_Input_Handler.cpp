@@ -22,6 +22,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/os_include/os_ctype.h"
 
 // Constructor.
 
