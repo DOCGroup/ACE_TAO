@@ -126,8 +126,8 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
                       -1);
 
       result =
-        tpch->activate_threads (f->server_connection_thread_flags (),
-                                f->server_connection_thread_count ());
+        tpch->activate (f->server_connection_thread_flags (),
+                        f->server_connection_thread_count ());
     }
   else
     {
