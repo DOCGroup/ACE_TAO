@@ -139,7 +139,7 @@ main (int argc, char *argv[])
 
   ACE_Thread_Manager *thr_mgr = ACE_Service_Config::thr_mgr ();
 
-  for (size_t cntr = 0; cntr < 2; cntr++)
+  for (;;)
     work (thr_mgr, n_tasks, stack_size);
   ACE_NOTREACHED (return 0);
 }
