@@ -1,3 +1,8 @@
+Wed May 14 16:32:57 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* Makefile: use cpio instead of tar to allow easy filtering
+	  of CVS files from the release.
+
 Wed May 14 15:45:30 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Local_Name_Space_T.h,
