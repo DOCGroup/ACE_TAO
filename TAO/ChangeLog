@@ -1,3 +1,8 @@
+Thu Oct 09 23:15:52 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FTORB.mpc
+          Fixed the sharename in FT_ServerORB project
+
 Thu Oct 09 20:33:24 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile
