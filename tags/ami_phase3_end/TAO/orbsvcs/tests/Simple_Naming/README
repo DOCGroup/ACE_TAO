@@ -1,0 +1,169 @@
+// $Id$
+
+This application tests different features of TAO's Naming Service.
+
+To run all tests automatically -
+	execute Perl script run_test.pl
+
+To run tests manually -
+	start Naming Service ($TAO_ROOT/orbsvcs/Naming_Service/Naming_Service),
+	 then run ./client with one of the following options below.
+
+The following options exist:
+
+-s	Run the Simple test of the Naming Service.
+
+-t  	Run the Tree test of the Naming Service.
+
+-e	Run the Exceptions test of the Naming Service
+
+-i 	Run the Iterator test of the Naming Service.
+
+-y      Run the Destroy test of the Naming Service.
+
+-m      Run the MT test of the Naming Service.  Requires integer
+        argument specifying number of thread to spawn.  (If running
+        this test manually, its output should be redirected to some
+        file, say, "foo".  Then, process-m-output.pl script can be
+        used to analyze the test output and print out a diagnostic
+        message.  Invoke the script with
+        "process-m-output.pl foo number_of_threads", where
+        <number_of_threads> is the argument that was supplied with "-m"
+        option to the client.)
+
+If no option is specified, Simple test is run.  If more than one
+option is specified, only one test runs.
+
+NOTE: if running tests manually, Naming Service has to be restarted
+before each test (this is due to some tests not 'cleaning up' bindings
+after themselves).
+
+NOTE: destroy test will not produce desired output if POA 'recreates
+servants on request'.
+
+DESCRIPTION AND EXPECTED OUTPUT FOR EACH TEST
+*******************************************
+
+Simple Test.
+
+Performs bind (), resolve (), and unbind () of an object reference in
+the root context.
+
+Expected Output:
+
+Bound name OK
+Resolved name OK
+Unbound name OK
+
+********************************************
+
+MT Test.
+
+Spawns a specified number of threads.  Threads concurrently attempt to
+bind (), resolve (), and unbind () the object reference.
+
+Expected Output (produced by the output processing script):
+
+Multithreaded output is ok
+*******************************************
+
+Tree Test.
+
+Checks all Naming Service functions with a tree of Naming Contexts.
+
+root->bind_new_context (level1)
+
+new = root->new_context (), new->bind (foo, obj), and
+  root->bind_context (level1/level2, new)
+
+We now have root->level1->level2->foo
+
+root->resolve (level1/level2/foo).
+root->unbind (level1/level2/foo).
+root->bind (level1/level2/foo, obj).
+
+new = root->new_context()
+root->rebind_context(level1/level2, new)
+
+root->bind (level1/level2/foo obj)
+root->resolve (level1/level2/foo)
+root->rebind (level1/level2/foo, obj2) to have a different object under the name bar.
+root->resolve (level1/level2/foo) to make sure correct reference is returned.
+
+
+Expected Output:
+
+All funtions work properly
+********************************************
+
+Exceptions Test.
+
+Makes sure that Naming Service throws exceptions as expected, and data
+inside exceptions is set correctly.
+
+Create a tree of Naming Contexts: root context -> level1 -> level2.
+
+Bind an object with the name foo into each of the Naming Contexts.
+
+root->resolve () (with a Name of length 0) - should get InvalidName exception.
+root->bind (foo, obj) - should get AlreadyBound exception.
+root->bind (level1/foo, obj) - should get AlreadyBound exception.
+root->unbind (level1/level2/bar) - should get NotFound exception
+  with why = not_object, rest_of_name = bar.
+root->unbind (level1/level3/foo) - should get NotFound exception
+  with why = missing_node, rest_of_name = level3/foo.
+root->unbind (level1/foo/foo) -should get NotFound exception
+  with why = not_context, rest_of_name = foo/foo.
+
+
+Expected Output:
+
+AlreadyBound exception (case 1) works properly
+AlreadyBound  exception (case 2) works properly
+NotFound  exception (case 1) works properly
+NotFound  exception (case 2) works properly
+NotFound  exception (case 3) works properly
+
+*********************************************
+
+Iterator Test.
+
+Checks iterator functions.
+
+Bind () objects with the following names foo1, foo2, foo3, and foo4
+into the root Naming Context.
+
+root->lists (1, bl, iter)
+iter->next_one ()
+iter->next_n (2, bl)
+iter->next_one () - should return false
+iter->destroy ()
+
+
+Expected Output:
+
+First binding: foo1
+Second binding: foo2
+Third binding: foo3
+Fourth binding: foo4
+
+*********************************************
+
+Destroy Test.
+
+Makes sure destroy method is working properly.
+
+Create a context and bind an object under it.
+Attempt to destroy the context - NotEmpty exception should be raised.
+
+Unbind the object and call destroy on the context.
+Attempt to call destroy on the object again - OBJECT_NOT_EXIST
+exception should be raised.
+
+
+Expected Output:
+
+NotEmpty exception works properly
+Destroy works properly
+
+********************************************

@@ -1,0 +1,27 @@
+This directory contains a number of example applications that
+illustrate how to program with standard CORBA using TAO.  The
+individual directories contain READMEs on how to run the following
+examples:
+
+        . POA
+
+          Contains various small examples of POA features based on
+          the OMG POA specification.
+
+        . Callback_Quoter
+
+          Illustrates how to implement distributed callbacks using
+          TAO.
+
+        . Quoter
+        
+          Illustrates how to use the Global POA options with multiple
+          threads.  This example also shows how to use the Lifecycle
+          service. 
+                      
+        . Simple
+          
+          Contains a number of very simple examples, which also
+          illustrate how to write canonical Orbix/VisiBroker/OmniORB
+          examples in TAO using standard CORBA features rather than
+          proprietary ORB features.

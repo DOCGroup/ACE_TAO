@@ -1,0 +1,202 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = Aio_Platform_Test Atomic_Op_Test Barrier_Test Basic_Types_Test \
+  Buffer_Stream_Test Conn_Test Dynamic_Priority_Test Enum_Interfaces_Test Env_Value_Test Future_Test \
+  Handle_Set_Test Hash_Map_Manager_Test Map_Manager_Test MM_Shared_Memory_Test \
+  MT_Reactor_Timer_Test MT_SOCK_Test Mem_Map_Test Message_Block_Test \
+  Message_Queue_Notifications_Test.cpp Message_Queue_Test Naming_Test \
+  Notify_Performance_Test OrdMultiSet_Test Pipe_Test Priority_Buffer_Test \
+  Priority_Reactor_Test Priority_Task_Test Process_Mutex_Test \
+  Process_Strategy_Test Reactor_Exceptions_Test Reactor_Notify_Test \
+  Reactor_Performance_Test Reactor_Timer_Test Reactors_Test Reader_Writer_Test \
+  Recursive_Mutex_Test SOCK_Connector_Test SOCK_Test SPIPE_Test SString_Test \
+  SV_Shared_Memory_Test Semaphore_Test Service_Config_Test Sigset_Ops_Test \
+  Simple_Message_Block_Test TSS_Test Task_Test Thread_Manager_Test \
+  Thread_Mutex_Test Thread_Pool_Test Timeprobe_Test Time_Service_Test Time_Value_Test \
+  Timer_Queue_Test Tokens_Test Upgradable_RW_Test UPIPE_SAP_Test XtReactor_Test
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+Aio_Platform_Test: Aio_Platform_Test.bpr
+  $(MAKE)
+
+Atomic_Op_Test: Atomic_Op_Test.bpr
+  $(MAKE)
+
+Barrier_Test: Barrier_Test.bpr
+  $(MAKE)
+
+Basic_Types_Test: Basic_Types_Test.bpr
+  $(MAKE)
+
+Buffer_Stream_Test: Buffer_Stream_Test.bpr
+  $(MAKE)
+
+Conn_Test: Conn_Test.bpr
+  $(MAKE)
+
+Dynamic_Priority_Test: Dynamic_Priority_Test.bpr
+  $(MAKE)
+
+Enum_Interfaces_Test: Enum_Interfaces_Test.bpr
+  $(MAKE)
+
+Env_Value_Test: Env_Value_Test.bpr
+  $(MAKE)
+
+Future_Test: Future_Test.bpr
+  $(MAKE)
+
+Handle_Set_Test: Handle_Set_Test.bpr
+  $(MAKE)
+
+Hash_Map_Manager_Test: Hash_Map_Manager_Test.bpr
+  $(MAKE)
+
+Map_Manager_Test: Map_Manager_Test.bpr
+  $(MAKE)
+
+MM_Shared_Memory_Test: MM_Shared_Memory_Test.bpr
+  $(MAKE)
+
+MT_Reactor_Timer_Test: MT_Reactor_Timer_Test.bpr
+  $(MAKE)
+
+MT_SOCK_Test: MT_SOCK_Test.bpr
+  $(MAKE)
+
+Mem_Map_Test: Mem_Map_Test.bpr
+  $(MAKE)
+
+Message_Block_Test: Message_Block_Test.bpr
+  $(MAKE)
+
+Message_Queue_Notifications_Test.cpp: Message_Queue_Notifications_Test.cpp.bpr
+  $(MAKE)
+
+Message_Queue_Test: Message_Queue_Test.bpr
+  $(MAKE)
+
+Naming_Test: Naming_Test.bpr
+  $(MAKE)
+
+Notify_Performance_Test: Notify_Performance_Test.bpr
+  $(MAKE)
+
+OrdMultiSet_Test: OrdMultiSet_Test.bpr
+  $(MAKE)
+
+Pipe_Test: Pipe_Test.bpr
+  $(MAKE)
+
+Priority_Buffer_Test: Priority_Buffer_Test.bpr
+  $(MAKE)
+
+Priority_Reactor_Test: Priority_Reactor_Test.bpr
+  $(MAKE)
+
+Priority_Task_Test: Priority_Task_Test.bpr
+  $(MAKE)
+
+Process_Mutex_Test: Process_Mutex_Test.bpr
+  $(MAKE)
+
+Process_Strategy_Test: Process_Strategy_Test.bpr
+  $(MAKE)
+
+Reactor_Exceptions_Test: Reactor_Exceptions_Test.bpr
+  $(MAKE)
+
+Reactor_Notify_Test: Reactor_Notify_Test.bpr
+  $(MAKE)
+
+Reactor_Performance_Test: Reactor_Performance_Test.bpr
+  $(MAKE)
+
+Reactor_Timer_Test: Reactor_Timer_Test.bpr
+  $(MAKE)
+
+Reactors_Test: Reactors_Test.bpr
+  $(MAKE)
+
+Reader_Writer_Test: Reader_Writer_Test.bpr
+  $(MAKE)
+
+Recursive_Mutex_Test: Recursive_Mutex_Test.bpr
+  $(MAKE)
+
+SOCK_Connector_Test: SOCK_Connector_Test.bpr
+  $(MAKE)
+
+SOCK_Test: SOCK_Test.bpr
+  $(MAKE)
+
+SPIPE_Test: SPIPE_Test.bpr
+  $(MAKE)
+
+SString_Test: SString_Test.bpr
+  $(MAKE)
+
+SV_Shared_Memory_Test: SV_Shared_Memory_Test.bpr
+  $(MAKE)
+
+Semaphore_Test: Semaphore_Test.bpr
+  $(MAKE)
+
+Service_Config_Test: Service_Config_Test.bpr
+  $(MAKE)
+
+Sigset_Ops_Test: Sigset_Ops_Test.bpr
+  $(MAKE)
+
+Simple_Message_Block_Test: Simple_Message_Block_Test.bpr
+  $(MAKE)
+
+TSS_Test: TSS_Test.bpr
+  $(MAKE)
+
+Task_Test: Task_Test.bpr
+  $(MAKE)
+
+Thread_Manager_Test: Thread_Manager_Test.bpr
+  $(MAKE)
+
+Thread_Mutex_Test: Thread_Mutex_Test.bpr
+  $(MAKE)
+
+Thread_Pool_Test: Thread_Pool_Test.bpr
+  $(MAKE)
+
+Timeprobe_Test: Timeprobe_Test.bpr
+  $(MAKE)
+
+Time_Service_Test: Time_Service_Test.bpr
+  $(MAKE)
+
+Time_Value_Test: Time_Value_Test.bpr
+  $(MAKE)
+
+Timer_Queue_Test: Timer_Queue_Test.bpr
+  $(MAKE)
+
+Tokens_Test: Tokens_Test.bpr
+  $(MAKE)
+
+Upgradable_RW_Test: Upgradable_RW_Test.bpr
+  $(MAKE)
+
+UPIPE_SAP_Test: UPIPE_SAP_Test.bpr
+  $(MAKE)
+
+XtReactor_Test: XtReactor_Test.bpr
+  $(MAKE)

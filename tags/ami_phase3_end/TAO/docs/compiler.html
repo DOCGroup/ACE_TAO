@@ -1,0 +1,415 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+   <title>TAO IDL compiler User's Guide</title>
+<!-- $Id$ -->
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#CC0000">
+
+<hr>
+<h3>
+TAO IDL compiler User's Guide</h3>
+
+<h2> Scope</h2> This document describes the options and features of
+TAO IDL compiler.  It is not a reference manual or tutorial on OMG
+IDL.  For more information on OMG IDL see the <A
+HREF="http://www.omg.org/library/c2indx.html">online CORBA
+specification</A> and the <A
+HREF="http://www.triodia.com/staff/michi-henning.html">Advanced CORBA
+Programming with C++</A> book. <P>
+
+<HR><P>
+<h3>Generated Files</h3>
+
+The IDL compiler generates 9 files from each <tt>.idl</tt> file.  The
+file names are obtained by taking the IDL <EM>basename</EM> and
+appending the following suffixes (see the list of TAO's IDL compiler
+<A HREF="#options">options</A> on how to get different suffixes for
+these files:) <P>
+
+<UL>
+<LI> <EM>Client stubs</EM> -- <tt>*C.h</tt>, <tt>*C.i</tt>, and <tt>*C.cpp</tt>
+<LI> <EM>Server skeletons</EM> -- <tt>*S.h</tt>, <tt>*S.i</tt>, and
+<tt>*S.cpp</tt>
+<LI> <EM>Server skeleton templates </EM> -- <tt>*S_T.h</tt>, <tt>S_T.i</tt>,
+and <tt>*S_T.cpp</tt>
+</UL>
+
+TAO's IDL compiler creates separate <TT>*.i</TT> and <TT>*S_T.*</TT>
+files to improve the performance of the generated code.  Fortunately,
+you only need to <CODE>#include</CODE> the client stubs declared in
+the <tt>*C.h</tt> file and the skeletons in the <tt>*S.h</tt> file in
+your code. <P>
+
+<HR><P>
+<h3>
+Operation Demuxing Strategies</h3>
+
+The server skeleton can use different demuxing strategies to match the
+incoming operation with the correct operation at the servant.  TAO's
+IDL compiler supports perfect hashing, binary search, and dynamic
+hashing demuxing strategies.  By default, TAO's IDL compiler tries to
+generate perfect hash functions, which is generally the most <A
+HREF="http://www.cs.wustl.edu/~schmidt/COOTS-99.ps.gz">efficient and
+predictable operation demuxing technique</A>.  To generate perfect
+hash functions, TAO's IDL compiler uses <a
+href="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">gperf </a>, which
+is a general-purpose perfect hash function generator. <P>
+
+To configure TAO's IDL compiler to support perfect hashing please do
+the following:
+
+<ul>
+<LI> Enable <CODE>ACE_HAS_GPERF</CODE> when building ACE and TAO.
+This macro has been defined for the platforms where <CODE>gperf</CODE>
+has been tested, which includes most <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE-versions-i.html">platforms</A>
+that ACE runs on. <P>
+
+<li> Build the <CODE>gperf</CODE> in $ACE_ROOT/apps/gperf.  This build
+also leaves a copy/link of the gperf program at the $ACE_ROOT/bin
+directory.<P>
+
+<li> Set the environment variable $ACE_ROOT appropriately or add
+$ACE_ROOT/bin to your search path. <P>
+
+<li> Use the <CODE>-g</CODE> option for the TAO IDL compiler or set
+your search path accordingly to install <CODE>gperf</CODE> in a
+directory other than $ACE_ROOT/bin.
+</ul>
+
+Note that if you can't use perfect hashing for some reason the next
+best operation demuxing strategy is binary search, which can be
+configured using TAO's IDL compiler <A HREF="#options">options</A>.<P>
+
+<HR><P>
+<h3><A NAME="options">TAO's IDL Compiler Options</A></h3>
+
+TAO's IDL compiler invokes your <tt>C</tt> (or <tt>C++</tt>)
+preprocessor to resolve included IDL files.  It receives the common
+options for preprocessors (such as <tt>-D</tt> or <tt>-I</tt>).  It
+also receives other options that are specific to it. <P>
+
+<table BORDER=2 CELLSPACING=2 CELLPADDING=0 >
+<tr>
+<th>Option</th>
+
+<th>Description</th>
+</tr>
+<tr NAME="u">
+<td><tt>-u</tt></td>
+
+<td>The compiler prints out the options that are given below and exits
+clean </td>
+</tr>
+
+<tr NAME="V">
+<td><tt>-V</tt></td>
+
+<td>The compiler printouts its version and exits</td>
+</tr>
+
+<tr NAME="Wb">
+<td><tt>-Wb,</tt><i>option_list</i></EM</TD></td>
+
+<td>Pass options to the backend.</td>
+</tr>
+
+<tr NAME="export_macro">
+<td></td>
+
+<td><tt>export_macro=</tt><i>macro_name</i></td>
+
+<td>The compiler will emit <i>macro_name</i> right after each <tt>class</tt>
+or <tt>extern</tt> keyword, this is needed for Windows/NT that requires
+special directives to export symbols from DLLs, usually the definition
+is just a space on unix platforms.&nbsp;</td>
+</tr>
+
+<tr NAME="export_include">
+<td></td>
+
+<td><tt>export_include=</tt><i>include_path</i></td>
+
+<td>The compiler will generate code to include <i>include_path</i> at the
+top of the client header, this is usually a good place to define the export
+macro.&nbsp;</td>
+</tr>
+
+<tr NAME="E">
+<td><tt>-E</tt></td>
+
+<td>Only invoke the preprocessor</td>
+</tr>
+
+<tr NAME="Wp">
+<td><tt>-Wp,</tt><i>option_list</i></EM</TD></td>
+
+<td>Pass options to the preprocessor.</td>
+</tr>
+
+<tr NAME="D">
+<td><tt>-D</tt><i>macro_definition</i></td>
+
+<td>It is passed to the preprocessor</td>
+</tr>
+
+<tr NAME="U">
+<td><tt>-U</tt><i>macro_name</i></td>
+
+<td>It is passed to the preprocessor</td>
+</tr>
+
+<tr NAME="I">
+<td><tt>-I</tt><i>include_path</i></td>
+
+<td>It is passed to the preprocessor</td>
+</tr>
+
+<tr NAME="A">
+<td><tt>-A</tt><i>assertion</i></td>
+
+<td>It is passed to the preprocessor</td>
+</tr>
+
+<tr NAME="Y">
+<td><tt>-Y</tt></td>
+
+<td>It is passed to the preprocessor</td>
+</tr>
+
+<tr NAME="H perfect_hash">
+<td><tt>-H perfect_hash</tt></td>
+
+<td>To specify the IDL compiler to generate skelton code that uses perfect
+hashed operation demuxing strategy, which is the default strategy. Perfect
+hashing uses <a href="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">gperf
+</a>program,
+to generate demuxing methods.&nbsp;</td>
+</tr>
+
+<tr NAME="H dynamic_hash">
+<td><tt>-H dynamic_hash</tt></td>
+
+<td>To specify the IDL compiler to generate skelton code that uses dynamic
+hashed operation demuxing strategy.&nbsp;</td>
+</tr>
+
+<tr NAME="H binary_search">
+<td><tt>-H binary_search</tt></td>
+
+<td>To specify the IDL compiler to generate skelton code that uses binary
+search based operation demuxing strategy.&nbsp;</td>
+</tr>
+
+<tr NAME="H linear_search">
+<td><tt>-H linear_search</tt></td>
+
+<td>To specify the IDL compiler to generate skelton code that uses linear
+search based operation demuxing strategy.  Note that this option is for testing purposes only and should not be used for production code since it's inefficient.</td>
+</tr>
+
+
+<tr NAME="in">
+<TD><TT>-in</TT></TD>
+<TD> To generate #include statements with <>'s for the standard
+    include files (e.g. tao/corba.h) indicating them as non-changing
+    files</TD> 
+</TR>
+
+
+<TR NAME="ic">
+<TD><TT>-ic</TT></TD>
+<TD> To generate #include statements with ""s for changing
+    standard include files (e.g. tao/corba.h). </TD>
+</TR>
+
+<tr NAME="g">
+<td><tt>-g</tt></td>
+
+<td>To specify the path for the perfect hasing program (GPERF). Default
+is $ACE_ROOT/bin/gperf.&nbsp;</td>
+</tr>
+
+<tr NAME="o">
+<td><tt>-o</tt></td>
+
+<td>To specify the output directory to IDL compiler as to where all the
+IDL-compiler-generated files are to be put. By default, all the files are
+put in the current directory from where&nbsp;<tao_idl>is called.&nbsp;</td>
+</tr>
+
+<tr NAME="hc">
+<td><tt>-hc</tt></td>
+
+<td>Client's header file name ending. Default is "C.h".</td>
+</tr>
+
+<tr NAME="hs">
+<td><tt>-hs</tt></td>
+
+<td>Server's header file name ending. Default is "S.h".</td>
+</tr>
+
+<tr NAME="hT">
+<td><tt>-hT</tt></td>
+
+<td>Server's template header file name ending. Default is "S_T.h".</td>
+</tr>
+
+<tr NAME="cs">
+<td><tt>-cs</tt></td>
+
+<td>Client stub's file name ending. Default is "C.cpp".</td>
+</tr>
+
+<tr NAME="ci">
+<td><tt>-ci</tt></td>
+
+<td>Client inline file name ending. Default is "C.i".</td>
+</tr>
+
+<tr NAME="ss">
+<td><tt>-ss</tt></td>
+
+<td>Server skeleton file name ending. Default is "S.cpp".</td>
+</tr>
+
+<tr NAME="sT">
+<td><tt>-sT</tt></td>
+
+<td>Server template skeleton file name ending. Default is "S_T.cpp".</td>
+</tr>
+
+<tr NAME="si">
+<td><tt>-si</tt></td>
+
+<td>Server inline skeleton file name ending. Default is "S.i".</td>
+</tr>
+
+<tr NAME="st">
+<td><tt>-st</tt></td>
+
+<td>Server's template inline file name ending. Default is "S_T.i".</td>
+</tr>
+
+<tr NAME="t">
+<td><tt>-t</tt></td>
+
+<td>Temporary directory to be used by the IDL compiler. Default :
+    Resolve ACE_DEFAULT_TEMP_DIR_ENV. If it is not defined, choose
+    /tmp/.
+</td>
+</tr>
+
+<tr NAME="Cw">
+<td><tt>-Cw</tt></td>
+
+<td>Output a warning if two identifiers in the same scope differ in
+spelling only by case (default for now).</td>
+</tr>
+
+<tr NAME="Ce">
+<td><tt>-Ce</tt></td>
+
+<td>Output an error if two indentifiers in the same scope differ in 
+spelling only by case. Default output is warning (for now).</td>
+
+<td>Since there is at least one OMG IDL file (sfp.idl, part of the
+AVStreams specification) that is inconsistent with its own spelling
+rule, we have made a warning the default output until the issue 
+is resolved.</td>
+</tr>
+
+<tr NAME="Gc">
+<td><tt>-Gc</tt></td>
+
+<td>Generate stubs and skeletons using compiled marshaling&nbsp;</td>
+</tr>
+
+<tr NAME="Gi">
+<td><tt>-Gi</tt></td>
+
+<td>Generate stubs and skeletons using interpretive marshaling (default
+for now)&nbsp;</td>
+</tr>
+
+<tr NAME="Ge flag">
+<td><tt>-Ge </tt><i>flag</i></td>
+
+<td>If the value of the flag is 0, tao_idl will generate code that
+    will use native C++ exceptions. If the value of the flag is 1,
+    tao_idl will generate code that will use environment variable for
+    passing exceptions </td>
+</tr>
+
+<tr NAME="Gt">
+<td><tt>-Gt</tt></td>
+
+<td>Generate optimized TypeCodes (unimplemented as yet)</td>
+</tr>
+
+<tr NAME="Gv">
+<td><tt>-Gv</tt></td>
+
+<td>Generate code that suppports Object-By-Value</td>
+</tr>
+
+<tr>
+<td>-<tt>GI</tt></td>
+
+<td>Generate templates files for the servant implementation </td>
+</tr>
+
+<tr>
+<td><tt>-GIh </tt><i>arg</i></td>
+
+<td>Servant implemenation header file name ending</td>
+</tr>
+
+<tr>
+<td><tt>-GIs </tt><i>arg</i></td>
+
+<td>Servant implemenation skeleton file name ending</td>
+</tr>
+
+<tr>
+<td><tt>-GIb </tt><i>arg</i></td>
+
+<td>Prefix to the implementation class names</td>
+</tr>
+
+<tr>
+<td><tt>-GIe </tt><i>arg</i></td>
+
+<td>Suffix to the implementation class names</td>
+</tr>
+
+<tr>
+<td><tt>-GIc </tt><i>arg</i></td>
+
+<td>Generate copy constructors in the servant implementation template files</td>
+</tr>
+
+<tr NAME="Sa">
+<td><tt>-Sa</tt></td>
+
+<td>Suppress generation of the Any operators</td>
+</tr>
+
+<tr NAME="St">
+<td><tt>-St</tt></td>
+
+<td>Suppress generation of the TypeCodes</td>
+</tr>
+</table> <P>
+
+<P><HR><P>
+Back to the TAO <A HREF="index.html">documentation</A>.
+
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
+
+</body>
+</html>
