@@ -38,12 +38,7 @@ $MODULE='ACE_wrappers';
 @BUILD_LIST=
     ('ace',
      'tests',
-     'TAO/tao',
-     'TAO/TAO_IDL',
-     'TAO/tests/POA',
-     'TAO/tests/Param_Test',
-     'TAO/tests/Cubit/TAO',
-     'TAO/orbsvcs');
+     'TAO');
 
 # This are the pairs "sub-directory,script" we run.
 
