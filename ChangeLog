@@ -1,3 +1,16 @@
+Thu Mar 11 17:00:14 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/WIN32_Asynch_IO.cpp (handle_output): Be sure to unregister this
+	  handler from the asynch task before posting the completion. The
+	  completion handler may do anything, including delete the handler,
+	  before this method has a chance to remove it from the asynch task.
+
+Thu Mar 11 14:35:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_IO.cpp (~ACE_Asynch_Connect): Delete the implementation_
+	  giving it a chance to unregister from the reactor and clean up
+	  anything else needed, as well a plug a memory leak.
+
 Thu Mar 11 13:59:00 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/bmake.mpd:
