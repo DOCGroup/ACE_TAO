@@ -1,3 +1,11 @@
+Wed Feb 14 14:58:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+
+          Removed use of a typedef for _tao_seq_Octet that is guarded 
+          from g++ versions earlier than 2.8. Also replace use of 'new'
+          with 'ACE_NEW'.
+
 Wed Feb 14 11:49:17 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/CORBALOC_Parser.cpp (make_stub_from_mprofile):
