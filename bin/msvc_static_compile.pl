@@ -89,12 +89,12 @@ sub Find_Dsw (@)
     @array = ();
 
     sub wanted_dsw {
-        $array[++$#array] = 
+        $array[++$#array] =
             $File::Find::name if ($File::Find::name =~ /\.dsw$/i);
     }
-    
+
     find (\&wanted_dsw, @dir);
-    
+
     print "List of dsw's \n" if ($verbose == 1);
     return @array;
 }
@@ -105,12 +105,12 @@ sub Find_Sln (@)
     @array = ();
 
     sub wanted_sln {
-        $array[++$#array] = 
+        $array[++$#array] =
             $File::Find::name if ($File::Find::name =~ /\.sln$/i);
     }
-    
+
     find (\&wanted_sln, @dir);
-    
+
     print "List of sln's \n" if ($verbose == 1);
     return @array;
 }
@@ -149,7 +149,7 @@ sub Build_Core ()
             push (@core_list, $test . $proj_ext);
           }
         }
-      } 
+      }
 
 
       if ( $vc7 ) {
@@ -239,7 +239,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     }
     elsif ($ARGV[0] =~ '-vc8') {    # Use VC8 project and solution files.
         print "Using VC8 files\n" if ( $verbose );
-        $vc7 = 1; // VC8 is like VC7
+        $vc7 = 1; # VC8 is like VC7
         $proj_ext = '.vcproj';
     }
     elsif ($ARGV[0] =~ '-v') {          # verbose mode
@@ -270,7 +270,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     elsif ($ARGV[0] =~ '-TAO') {       # Build TAO and its programs
         print "Building TAO\n" if ( $verbose );
         $use_custom_dir = 1;
-	# Other tests depend on the lib in this dir so we need to force it 
+	# Other tests depend on the lib in this dir so we need to force it
 	# to the front of the build list. This is pretty ugly.
 	push @directories, ("$ACE_ROOT\\TAO\\orbsvcs\\tests\\Notify\\lib");
 	push @directories, ("$ACE_ROOT\\TAO");
