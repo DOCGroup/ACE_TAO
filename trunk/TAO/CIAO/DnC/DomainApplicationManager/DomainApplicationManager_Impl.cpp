@@ -2,7 +2,6 @@
 
 #include "DomainApplicationManager_Impl.h"
 
-#include "Deployment_Configuration.h"
 
 //===============================================================
 //============   DomainApplicationManager_Impl  =================
@@ -13,12 +12,13 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
   	                           PortableServer::POA_ptr poa,
                                Deployment::TargetManager_ptr manager,
                                Deployment::DeploymentPlan & plan,
-                               ACE_CString & deployment_file)
+                               const char * deployment_file)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     target_manager_ (manager),
     plan_ (plan),
-    deployment_file_ (deployment_file)
+    deployment_file_ (deployment_file),
+    deployment_config_ (orb)
 {
   // @@ 
 }
@@ -29,28 +29,33 @@ CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 }
 
 
-int
+void
 CIAO::DomainApplicationManager_Impl::
-init (int num_child_plans, const ACE_CString * node_manager_names)
+init (void)
+  ACE_THROW_SPEC ((Deployment::ResourceNotAvailable,
+                   Deployment::StartError,
+                   Deployment::PlanError))
 {
-  this->num_child_plans_ = num_child_plans;
-  //@@TODO: const pointer initialized at constructor.
-  //this->node_manager_names_ = node_manager_names;
+  //@@ Not implemented yet.
 
-  return 1;
+  return;
 }
 
 
-bool check_validity ()
+bool check_validity (void)
 {
-  //@@ Not implemented yet.
+  // (1) Read the deployment information data file through the
+  //     Deployment_Configuration helper class, and build the hash
+  //     table.
+  // (1) For each NodeManager name, check whether the name is contained
+  //     in the hash table, if not, then return <false>.
   return true;
 }
 
 
 int 
 CIAO::DomainApplicationManager_Impl::
-split_plan ()
+split_plan (void)
 {
   // Initialize the total number of node-level deployment plans specified 
   // by the global plan.
@@ -153,19 +158,15 @@ split_plan ()
 }
 
 
-
-
-
-::Deployment::Application_ptr 
+void
 CIAO::DomainApplicationManager_Impl::
-startLaunch (const Deployment::Properties & configProperty,
-             Deployment::Connections_out providedReference,
-             CORBA::Boolean start
+startLaunch (const ::Deployment::Properties & configProperty,
+             ::CORBA::Boolean start
              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::ResourceNotAvailable,
-                   Deployment::StartError,
-                   Deployment::InvalidProperty))
+                   ::Deployment::ResourceNotAvailable,
+                   ::Deployment::StartError,
+                   ::Deployment::InvalidProperty))
 {
   /**
    *  1. First Map properties to TAO/CIAO specific property/configurations
@@ -185,16 +186,35 @@ startLaunch (const Deployment::Properties & configProperty,
 
   ACE_CHECK_RETURN (0);
 
-  return 0;
+  return;
 }
 
 
 void
 CIAO::DomainApplicationManager_Impl::
-destroyApplication (Deployment::Application_ptr app
-		                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+finishLaunch (::CORBA::Boolean start
+              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Deployment::StartError))
+{
+  //@@
+}
+
+
+void
+CIAO::DomainApplicationManager_Impl::
+start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Deployment::StartError))
+{
+  // @@
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+destroyApplication (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException, 
-                   Deployment::StopError))
+                   ::Deployment::StopError))
 {
   //ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -211,16 +231,6 @@ destroyApplication (Deployment::Application_ptr app
   return;
 }
 
-
-
-::Deployment::Applications *
-CIAO::DomainApplicationManager_Impl::
-getApplications (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  //@@ Not implemented yet.
-  return 0;
-}
 
 /// Returns the DeploymentPlan associated with this ApplicationManager.
 ::Deployment::DeploymentPlan *
