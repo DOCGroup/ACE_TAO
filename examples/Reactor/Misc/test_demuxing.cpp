@@ -118,12 +118,6 @@ Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  // @@ Note that this code is not portable to all OS platforms since
-  // it uses print statements within signal handler context.
-  ACE_DEBUG ((LM_DEBUG,
-              "(%t) received signal %S\n",
-              signum));
-
   switch (signum)
     {
     case SIGALRM:
@@ -140,16 +134,12 @@ Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
          ACE_Event_Handler::READ_MASK,
          ACE_Reactor::ADD_MASK);
     case SIGQUIT:
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) %S: shutting down signal tester\n",
-                  signum));
-      ACE_Reactor::end_event_loop();
+      ACE_Reactor::end_event_loop ();
       break;
     default: 
-      ACE_DEBUG ((LM_DEBUG, 
-		  "(%t) %S: not handled, returning to program\n",
-                  signum));
+      ACE_ASSERT (!"invalid signal");
       break;
+      /* NOTREACHED */
     }
   return 0;
 }
