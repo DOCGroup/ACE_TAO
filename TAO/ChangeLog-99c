@@ -1,3 +1,9 @@
+Sat Oct 09 14:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+	
+	* tao/MessagingC.h: Added the collocation function and
+	  removed the unnecessary implementation of constructor
+	  and destructor of the the ExceptionHolder in the header file.
+
 Fri Oct  8 23:00:49 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/Log_i.h:

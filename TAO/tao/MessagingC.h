@@ -1670,6 +1670,9 @@ TAO_NAMESPACE  Messaging
     // *************************************************************
     // _tao_seq_Octet
     // *************************************************************
+    class _tao_seq_Octet;
+    class _tao_seq_Octet_var;
+    typedef _tao_seq_Octet* _tao_seq_Octet_ptr;    
 
     class TAO_Export _tao_seq_Octet : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -1690,6 +1693,11 @@ TAO_NAMESPACE  Messaging
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
       ~_tao_seq_Octet (void); // dtor
 
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+    typedef _tao_seq_Octet_ptr _ptr_type;
+    typedef _tao_seq_Octet_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
+
 #if defined(TAO_NO_COPY_OCTET_SEQUENCES)
       _tao_seq_Octet (
           CORBA::ULong length,
@@ -1699,7 +1707,6 @@ TAO_NAMESPACE  Messaging
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE */
 
     };
-    typedef _tao_seq_Octet *_tao_seq_Octet_ptr;
 
 #endif /* end #if !defined */
 
@@ -1774,8 +1781,8 @@ TAO_NAMESPACE  Messaging
 
 
   protected:
-    ExceptionHolder (void) { };           // default constructor
-    virtual ~ExceptionHolder (void) { };
+    ExceptionHolder (void);           // default constructor
+    virtual ~ExceptionHolder (void);
 
     // TAO internals
     virtual void *_tao_obv_narrow (ptr_arith_t);
@@ -2014,7 +2021,7 @@ TAO_NAMESPACE  OBV_Messaging
 #define _MESSAGING_EXCEPTIONHOLDER___OBV_CH_
 
   // OBV_ class
-  class ExceptionHolder : public virtual Messaging::ExceptionHolder
+  class TAO_Export ExceptionHolder : public virtual Messaging::ExceptionHolder
   {
   public:
     virtual void is_system_exception (CORBA::Boolean);    // set
@@ -2058,8 +2065,6 @@ TAO_NAMESPACE_CLOSE
 
 class TAO_InputCDR;
 
-// @@ Michael: Addition
-
 enum TAO_AMI_Reply_Status
 {
   TAO_AMI_REPLY_OK,
@@ -2101,6 +2106,9 @@ void TAO_Export operator<<= (CORBA::Any &, Messaging::PolicyValueSeq*); // nonco
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::PolicyValueSeq *&);
 
 #if defined (TAO_HAS_AMI_CALLBACK)
+extern  Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer) (
+                                     CORBA::Object_ptr obj);
+
 // Any operators for interface Messaging::ReplyHandler
 void TAO_Export operator<<= (CORBA::Any &, Messaging::ReplyHandler_ptr);
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::ReplyHandler *&);
