@@ -1,3 +1,9 @@
+Sat Oct 07 10:39:27 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/PortableServer/Makefile.bor
+
+	  Added missing ".obj" extension to fix compilation error.
+
 Fri Oct 06 12:14:35 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/DynamicAny/DynArray_i.cpp:
