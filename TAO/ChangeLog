@@ -1,3 +1,13 @@
+Mon May  5 08:52:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h: #included
+	  IORInterceptorC.h.
+	
+	* orbsvcs/examples/ORT/ObjectReferenceFactory.idl: Fixed a path to
+	  included idl file.
+
+	* orbsvcs/*/Makefile*: Updated dependencies.
+	
 Mon May  5 08:37:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbvcs/orbsvcs/*Makefile.*: Updated dependencies.
