@@ -17,8 +17,6 @@
 
 . Test case for forwarded objects in collocated mode being remote
 
-. Messaging is broken
-
 . Remove tao_queryinterface
 
 . Recursive location forwards is broken still.
