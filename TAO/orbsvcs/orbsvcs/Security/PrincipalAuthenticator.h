@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SecurityLevel2C.h"
+#include "orbsvcs/SecurityReplaceableC.h"
 
 #include "ace/Array_Base.h"
 
@@ -97,9 +97,13 @@ public:
   //@}
 
   /// Register a security mechanism-specific (e.g. SSLIOP, Kerberos,
-  /// etc.) principal authenticator implementation with the main
+  /// etc.) SecurityReplaceable::Vault implementation with the
   /// PrincipalAuthenticator object (i.e. this object).
-  void register_principal_authenticator (TAO_PrincipalAuthenticator_Impl *);
+  /**
+   * @note This is a TAO-specific extension.
+   */
+  void register_vault (SecurityReplaceable::Vault_ptr vault
+                       TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * @name Downcast Related Methods
@@ -114,26 +118,26 @@ public:
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   static int _tao_class_id;
-  
+
   // The static operations.
   static TAO_PrincipalAuthenticator_ptr _duplicate (TAO_PrincipalAuthenticator_ptr obj);
-  
+
   static TAO_PrincipalAuthenticator_ptr _narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_WITH_DEFAULTS
     );
-  
+
   static TAO_PrincipalAuthenticator_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_WITH_DEFAULTS
     );
-  
+
   static TAO_PrincipalAuthenticator_ptr _nil (void)
     {
       return (TAO_PrincipalAuthenticator_ptr)0;
     }
 
-  virtual void *_tao_QueryInterface (ptr_arith_t type);  
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
   virtual const char* _interface_repository_id (void) const;
   //@}
 
@@ -149,9 +153,8 @@ protected:
 
 private:
 
-  /// Array of registered security mechanism-specific principal
-  /// authenticators.
-  ACE_Array_Base<TAO_PrincipalAuthenticator_Impl *> authenticators_;
+  /// Array of registered security mechanism-specific Vaults.
+  ACE_Array_Base<void *> vaults_;
 
 };
 
@@ -160,23 +163,23 @@ class TAO_Security_Export TAO_PrincipalAuthenticator_var : public TAO_Base_var
 {
 public:
   TAO_PrincipalAuthenticator_var (void); // default constructor
-  TAO_PrincipalAuthenticator_var (TAO_PrincipalAuthenticator_ptr p) : ptr_ (p) {} 
+  TAO_PrincipalAuthenticator_var (TAO_PrincipalAuthenticator_ptr p) : ptr_ (p) {}
   TAO_PrincipalAuthenticator_var (const TAO_PrincipalAuthenticator_var &); // copy constructor
   ~TAO_PrincipalAuthenticator_var (void); // destructor
-  
+
   TAO_PrincipalAuthenticator_var &operator= (TAO_PrincipalAuthenticator_ptr);
   TAO_PrincipalAuthenticator_var &operator= (const TAO_PrincipalAuthenticator_var &);
   TAO_PrincipalAuthenticator_ptr operator-> (void) const;
-  
+
   operator const TAO_PrincipalAuthenticator_ptr &() const;
   operator TAO_PrincipalAuthenticator_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   TAO_PrincipalAuthenticator_ptr in (void) const;
   TAO_PrincipalAuthenticator_ptr &inout (void);
   TAO_PrincipalAuthenticator_ptr &out (void);
   TAO_PrincipalAuthenticator_ptr _retn (void);
   TAO_PrincipalAuthenticator_ptr ptr (void) const;
-  
+
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
   static TAO_PrincipalAuthenticator_ptr tao_duplicate (TAO_PrincipalAuthenticator_ptr);
