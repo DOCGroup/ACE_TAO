@@ -73,11 +73,11 @@ ACE_High_Res_Timer::global_scale_factor ()
                 (ACE_static_cast (unsigned int, 
                                   freq.QuadPart / ACE_ONE_SECOND_IN_USECS));
             else
-              {
-                // High-Res timers not supported
-                ACE_High_Res_Timer::global_scale_factor_status_ = -1;  
-                return ACE_High_Res_Timer::global_scale_factor_;
-              }
+              // High-Res timers not supported
+              ACE_High_Res_Timer::global_scale_factor_status_ = -1;  
+
+            return ACE_High_Res_Timer::global_scale_factor_;
+
 #         elif defined (linux) && (__alpha__)
             // Get the BogoMIPS from /proc.  It works fine on Alpha,
             // only.  For other CPUs, it will be necessary to
