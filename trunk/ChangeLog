@@ -40,6 +40,14 @@ Mon Nov  3 04:43:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           assign something other than "make" to the make_program
           variable.
 
+Mon Nov  3 04:12:12 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* include/makeinclude/platform_freebsd.GNU:  
+	  Overhaul the OS version tests so that they actually work.
+	  The "-pthread" gcc flag was recently deprecated in FreeBSD's gcc, so
+	  use the correct pthread flags for gcc, based on the OS version.
+	  Inspired by similar tests in /usr/ports/Mk/bsd.port.mk
+
 Mon Nov  3 03:04:48 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Barrier.h:
