@@ -11,7 +11,8 @@
 //    This example tests the timer queue mechanism of ACE_Reactor.
 //
 // = AUTHOR
-//    Nanbor Wang <nw1@cs.wustl.edu>
+//    Nanbor Wang <nw1@cs.wustl.edu> and
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 // 
 // ============================================================================
 
@@ -26,17 +27,19 @@
 static const int NO_OF_IO_HANDLERS = 5;
 #define  REACTOR  ACE_Reactor::instance ()
 
-Timer_Handler::Timer_Handler (void)
+// constructor
+
+Reactor_Timer_Handler::Reactor_Timer_Handler (void)
 {}
 
 void 
-Timer_Handler::set_timer_id (long tid)
+Reactor_Timer_Handler::set_timer_id (long tid)
 {
   this->tid_ = tid;
 }
 
 int 
-Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
+Reactor_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
 			       const void *)
 {
   ACE_Time_Value txv = ACE_OS::gettimeofday ();
@@ -64,10 +67,10 @@ int
 Input_Handler::schedule_timer (void *argument)
 {
   int delay = *(int *) argument;
-  Timer_Handler *th;
+  Reactor_Timer_Handler *th;
   long tid;
 
-  th = new Timer_Handler;
+  th = new Reactor_Timer_Handler;
   if (th != 0)
     {
       tid = this->reactor ()->schedule_timer (th, 
@@ -130,9 +133,9 @@ Input_Handler::handle_input (ACE_HANDLE)
 }
 
 Reactor_Timer_Queue_Test_Driver::Reactor_Timer_Queue_Test_Driver (void)
-    : thandler (&timer_queue_, *this)
-    {
-    }
+  : thandler (&timer_queue_, *this)
+{
+}
 
 int 
 Reactor_Timer_Queue_Test_Driver::display_menu (void)
@@ -153,7 +156,7 @@ Reactor_Timer_Queue_Test_Driver::display_menu (void)
 int 
 Reactor_Timer_Queue_Test_Driver::init (void)
 {
-  // initialize commands with their corresponding input_task methods.
+  // initialize <Command>s with their corresponding <Input_Handler>  methods.
   ACE_NEW_RETURN (schedule_cmd_, 
 		  Command<Input_Handler> (thandler,
 					  thandler.schedule_timer),
@@ -181,6 +184,8 @@ Reactor_Timer_Queue_Test_Driver::init (void)
 
   this->display_menu ();
 }
+
+// run test was overrun due to the reactive way of handling input.
 
 int 
 Reactor_Timer_Queue_Test_Driver::run_test (void) 

@@ -11,7 +11,8 @@
 //    Thread_Timer_Queue_Test.h
 //
 // = DESCRIPTION
-//   // @@ Please comment me
+//    This code exercises the <ACE_Thread_Timer_Queue_Adapter> using 
+//    an <ACE_Timer_Heap_T>
 //
 // = AUTHORS
 //    Carlos O'Ryan <coryan@cs.wustl.edu> and 
@@ -42,6 +43,7 @@ typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
 typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
         Thread_Timer_Queue;
 
+// Forward declaration
 class Thread_Timer_Queue_Test_Driver;
 
 class Input_Task : public ACE_Task<ACE_SYNCH>
@@ -84,18 +86,20 @@ private:
   // How many micro seconds are in a second.
 
   Timer_Queue_Test_Driver<Thread_Timer_Queue, Input_Task> &driver_;
+  // The thread timer queue test driver 
 };
 
 class Thread_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Thread_Timer_Queue, Input_Task>
 // = TITLE
-//
+//    Thread_Timer_Queue_Test_Driver
 // = DESCRIPTION
+//    This class implements a simple test driver for the <Thread_Timer_Queue>.
+//   The <display_menu> hook method is called from the base class to print
+//   a menu specific to the thread implementation of the timer queue.
+//
 {
 public:
-  // @@ Please don't put the definitions of methods in their declarations.
-  Thread_Timer_Queue_Test_Driver (void)
-    : input_task (&timer_queue_, *this)
-    {}
+  Thread_Timer_Queue_Test_Driver (void);
 
   virtual int display_menu (void);
   virtual int init (void);

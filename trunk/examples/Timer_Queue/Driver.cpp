@@ -18,22 +18,45 @@
 #include "ace/Auto_Ptr.h"
 #include "Driver.h"
 
+// constructor
+
+template <class Receiver>
+Command<Receiver>::Command (Receiver &recvr, 
+		  Action action) 
+  : receiver_(recvr), 
+    action_(action)
+{}
+
+// invokes an operation.
+
+template <class Receiver> int
+Command<Receiver>::execute (void *arg)
+{
+  return (receiver_.*action_) (arg);
+}
+
+
+// gets the next request from the user input.
+
 template <class TQ, class Receiver> int
 Timer_Queue_Test_Driver<TQ, Receiver>::get_next_request (void)
 {
-  this->display_menu ();
-
   char buf[BUFSIZ];
+
+  this->display_menu ();
 
   ACE_OS::printf ("please enter your choice: ");
   ACE_OS::fflush (stdout);
 
+  // reads input from the user
   if (this->read_input (buf, sizeof buf) <= 0)
     return -1;
 
-  // Run the command.
+  // Parse and run the command.
   return this->parse_commands (buf);
 }
+
+// Runs the test.
 
 template <class TQ, class Receiver> int 
 Timer_Queue_Test_Driver<TQ, Receiver>::run_test (void) 
@@ -47,6 +70,8 @@ Timer_Queue_Test_Driver<TQ, Receiver>::run_test (void)
   return 0;
 }
 
+// Reads input from the user from ACE_STDIN into the buffer specified.
+
 template <class TQ, class Receiver> ssize_t
 Timer_Queue_Test_Driver<TQ, Receiver>::read_input (char *buf, size_t bufsiz)
 {
@@ -56,6 +81,8 @@ Timer_Queue_Test_Driver<TQ, Receiver>::read_input (char *buf, size_t bufsiz)
   // restarted when SIGINT or SIGALRM signals occur.
   return ACE_OS::read (ACE_STDIN, buf, bufsiz);
 }
+
+// Parse the input and executes the corresponding operation
 
 template <class TQ, class Receiver> int 
 Timer_Queue_Test_Driver<TQ, Receiver>::parse_commands (const char *buf)
