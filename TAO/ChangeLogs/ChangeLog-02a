@@ -1,3 +1,23 @@
+Wed Feb 27 03:59:35 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAOACE.dsw:
+	* TAOACE_Static.dsw:
+	* tao/TAO.dsw:
+	* tao/Messaging/TAO_Messaging.dsp:
+	* tao/Messaging/TAO_Messaging_Static.dsp:
+	  Add new project files for the TAO_Messaging library.
+	  Add the projects to the workspaces and fixed dependencies.
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+	  Remove files that are now on the TAO_Messaging library, add new
+	  files.
+
+	* tao/Messaging/Messaging.h:
+	  Fixed TAO_Export macros.
+
 Wed Feb 27 10:39:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Asynch_Timeout_Handler.h:

@@ -208,10 +208,6 @@ SOURCE=.\Key_Adapters.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\MessagingS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Object_Adapter.cpp
 # End Source File
 # Begin Source File
@@ -352,14 +348,6 @@ SOURCE=.\Key_Adapters.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\MessagingS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Object_Adapter.h
 # End Source File
 # Begin Source File
@@ -480,14 +468,6 @@ SOURCE=.\Key_Adapters.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\MessagingS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS_T.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Object_Adapter.i
 # End Source File
 # Begin Source File
@@ -533,11 +513,6 @@ SOURCE=.\ServerRequestInfo.inl
 # Begin Source File
 
 SOURCE=.\ImplRepoS_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # End Group

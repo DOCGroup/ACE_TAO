@@ -624,6 +624,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Messaging"=.\tao\Messaging\TAO_Messaging.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "NT_Naming_Service"=.\orbsvcs\Naming_Service\NT_Naming_Service.dsp - Package Owner=<4>
 
 Package=<5>

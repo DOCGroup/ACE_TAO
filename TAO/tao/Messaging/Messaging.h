@@ -82,13 +82,14 @@ namespace TAO_Messaging_Helper
 {
   /// Implement the code shared by all the ExceptionHolder::raise_*()
   /// operations
-  void TAO_Export exception_holder_raise (TAO_Exception_Data *exception_data,
-                                          CORBA::ULong exception_count,
-                                          CORBA::Octet *marshaled_data,
-                                          CORBA::ULong marshaled_data_length,
-                                          CORBA::Boolean byte_order,
-                                          CORBA::Boolean is_system_exception
-                                          ACE_ENV_ARG_DECL);
+  void TAO_Messaging_Export exception_holder_raise (
+           TAO_Exception_Data *exception_data,
+           CORBA::ULong exception_count,
+           CORBA::Octet *marshaled_data,
+           CORBA::ULong marshaled_data_length,
+           CORBA::Boolean byte_order,
+           CORBA::Boolean is_system_exception
+           ACE_ENV_ARG_DECL);
 }
 
 #endif /* TAO_HAS_AMI_CALLBACK */
