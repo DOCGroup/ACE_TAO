@@ -1,8 +1,13 @@
+Sun Jun 18 11:39:48 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_lynxos.GNU: rework environment
+          variables to better support LynxOS 3.1.0.
+
 Sun Jun 18 10:54:59 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/INET_Addr: Added operator < to ACE_INET_Addr so that it
-	  can be used in an STL map.  Thanks to Tomer Amiaz
- 	  <Tomer@bandwiz.com> for this suggestion.	  
+        * ace/INET_Addr: Added operator < to ACE_INET_Addr so that it
+          can be used in an STL map.  Thanks to Tomer Amiaz
+          <Tomer@bandwiz.com> for this suggestion.
 
 Sun Jun 18 03:18:21 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -45,25 +50,25 @@ Sun Jun 18 03:18:21 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Sat Jun 17 18:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Makefile.DLL:
-	* tests/Makefile.DLL_Test:
-	  Renamed Makefile.DLL since on NT it appeared as if there was a
-	  dll version of the Makefile. Also did a make depend. Thanks to
-	  James Megquier  <jmegq@bbn.com> for reporting this and to
-	  Darrell brunsch <brunsch@cs.wustl.edu> for suggesting that the
-  	  name be changed.
-	* tests/Makefile: Updated the Makefile to now have
-	  Makefile.DLL_Test.
+        * tests/Makefile.DLL:
+        * tests/Makefile.DLL_Test:
+          Renamed Makefile.DLL since on NT it appeared as if there was a
+          dll version of the Makefile. Also did a make depend. Thanks to
+          James Megquier  <jmegq@bbn.com> for reporting this and to
+          Darrell brunsch <brunsch@cs.wustl.edu> for suggesting that the
+          name be changed.
+        * tests/Makefile: Updated the Makefile to now have
+          Makefile.DLL_Test.
 
 Sat Jun 17 08:03:53 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs/tutorials/Chap_5/ex02.html: Fixed a typo where
-	  peer() should have been peer_i().  Thanks to Keo Kelly
- 	  <kkelly@fallschurch.esys.com> for reporting this.
+        * docs/tutorials/Chap_5/ex02.html: Fixed a typo where
+          peer() should have been peer_i().  Thanks to Keo Kelly
+          <kkelly@fallschurch.esys.com> for reporting this.
 
 Sat Jun 17 07:46:44 2000  Chris Kohlhoff <chris@kohlhoff.com>
 
-	* include/makeinclude/ace_flags.bor:
+        * include/makeinclude/ace_flags.bor:
 
           Added support for new LoadBalancing orbsvcs library.
 
