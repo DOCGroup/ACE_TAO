@@ -138,7 +138,11 @@ Baseline_Test_Options::reset_params (size_t multiply,
 void
 Baseline_Test_Options::print_result (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "Baseline_Test_Options::print_result (void)\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "Real Time: %f\n System Time: %f\nUser Time: %f\n",
+              this->real_,
+              this->system_,
+              this->user_));
 }
 
 Baseline_Test::Baseline_Test (void)
@@ -173,8 +177,6 @@ Baseline_Test::pre_run_test (Benchmark_Base *bb)
       this->get_lock_.wait ();
       // Wait until the lock is held by the spawning thread.
     }
-
-  ACE_DEBUG ((LM_DEBUG, "Pre_run_test\n"));
 
   return 0;
 }
