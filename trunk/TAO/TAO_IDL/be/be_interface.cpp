@@ -1310,11 +1310,11 @@ be_interface::gen_perfect_hash_class_definition (void)
       << be_nl
       << "private:"
       << be_nl
-      << "  unsigned int hash (const char *str, int len);"
+      << "  unsigned int hash (const char *str, unsigned int len);"
       << be_nl
       << "public:"
       << be_nl
-      << " const TAO_operation_db_entry * lookup (const char *str, int len);"
+      << " const TAO_operation_db_entry * lookup (const char *str, unsigned int len);"
       << be_nl
       << "};"
       << "\n";
