@@ -447,12 +447,12 @@ be_array::gen_forany_defn (void)
   TAO_OutStream *ch; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
-  char namebuf [TAO_CodeGen::MAXNAMELEN];  // to hold the _out name
+  char namebuf [NAMEBUFSIZE];  // to hold the _out name
 
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (i);
 
-  ACE_OS::memset (namebuf, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (namebuf, "%s_forany", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -529,16 +529,16 @@ be_array::gen_forany_impl (void)
   TAO_OutStream *ci; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
-  char fname [TAO_CodeGen::MAXNAMELEN];  // to hold the full and
-  char lname [TAO_CodeGen::MAXNAMELEN];  // local _var names
+  char fname [NAMEBUFSIZE];  // to hold the full and
+  char lname [NAMEBUFSIZE];  // local _var names
 
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (i);
 
-  ACE_OS::memset (fname, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (fname, "%s_forany", this->fullname ());
 
-  ACE_OS::memset (lname, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_forany", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator

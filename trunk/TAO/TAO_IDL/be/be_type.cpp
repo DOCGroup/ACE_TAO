@@ -92,34 +92,34 @@ be_type::nested_type_name (be_decl *d)
   // was defined in the same enclosing scope in which it was defined. For such,
   // we emit a macro defined in the ACE library.
   //
-  // However, this is not straightforward. A type may have been defined in one
-  // of our ancestor scopes  in which case even that type will not have a fully
-  // scoped name
 
-  static char macro [TAO_CodeGen::MAXNAMELEN];
-  be_decl *bd = 0;  // enclosing scope
+  static char macro [NAMEBUFSIZE];
+  be_decl *t = 0;  // our enclosing scope
 
   // d : This is the node in whose scope we are generating a declaration
-  // bd: This is the node in whose scope we i.e., the type were defined
+  // t : This is our enclosing scope (if one exists)
   //
-  // verify if
+
   if (this->is_nested ()) // if we are nested
     {
-      bd = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
+      t = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
 
-      ACE_OS::memset (macro, '\0', TAO_CodeGen::MAXNAMELEN);
-      ACE_OS::sprintf (macro, "ACE_NESTED_CLASS (");
-      ACE_OS::strcat (macro, bd->fullname ());
-      ACE_OS::strcat (macro, ",");
-      ACE_OS::strcat (macro, this->local_name ()->get_string ());
-      return macro;
+      // now we need to make sure that "t" is not the same as "d" i.e., the
+      // scope in which we are using ourselves.
+      if (!ACE_OS::strcmp (t->fullname (), d->fullname ()))
+        {
+          // we are the same, generate the ACE_NESTED_CLASS macro
+          ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
+          ACE_OS::sprintf (macro, "ACE_NESTED_CLASS (");
+          ACE_OS::strcat (macro, t->fullname ());
+          ACE_OS::strcat (macro, ",");
+          ACE_OS::strcat (macro, this->local_name ()->get_string ());
+          ACE_OS::strcat (macro, ")");
+          return macro;
+        }
     }
-  else
-    {
-      // not nested, return whatever
-      return this->fullname ();
-    }
-
+  // not nested OR not defined in the same scope as "d"
+  return (char *) this->fullname ();
 }
 
 // Narrowing

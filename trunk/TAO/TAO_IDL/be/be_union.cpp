@@ -149,12 +149,14 @@ be_union::gen_client_header (void)
   be_type *bt;       // type node
   be_state *s;       // code generation state
 
+
   if (!this->cli_hdr_gen_)
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
       ch = cg->client_header ();
+      cg->node (this); // pass ourselves
 
       ch->indent (); // start with the current indentation level
       *ch << "class " << local_name () << nl;
@@ -203,7 +205,8 @@ be_union::gen_client_header (void)
       ch->decr_indent ();
       *ch << "private:\n";
       ch->incr_indent ();
-      *ch << bt->type_name () << " disc_;" << nl;
+      *ch << bt->nested_type_name (this) << " disc_;" << nl; // emit the
+                                           // ACE_NESTED_CLASS macro
 
       // the members are inside of a union
       *ch << "union" << nl;
