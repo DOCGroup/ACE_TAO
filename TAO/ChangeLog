@@ -1,3 +1,11 @@
+Thu Jan 29 09:36:11 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/orb.idl:
+        
+          Added 'tao/' prefix to each included .pidl file, since some builds
+          (even some versions of a build on certain platforms) have only
+          TAO_ROOT in the path and not also TAO_ROOT/tao.
+
 Thu Jan 29 09:14:59 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/Trading_Service/Trading_Service.mpc:
