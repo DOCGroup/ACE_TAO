@@ -150,7 +150,9 @@
 
 // By default connection purging and recycling are done to provide robust
 // connection management in TAO.
-#define TAO_USES_ROBUST_CONNECTION_MGMT
+#if !defined (ACE_MVS)
+# define TAO_USES_ROBUST_CONNECTION_MGMT
+#endif /* ! ACE_MVS */
 
 // This deals with the strategies for connection caching. By default
 // it is the Null Strategy. Although it shall be Least Recently Used
