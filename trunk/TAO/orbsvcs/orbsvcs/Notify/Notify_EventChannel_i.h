@@ -58,7 +58,9 @@ public virtual TAO_Notify_QoSAdmin_i
   virtual ~TAO_Notify_EventChannel_i (void);
   // Destructor
 
-  void init (CORBA::Environment &ACE_TRY_ENV);
+  void init (const CosNotification::QoSProperties& initial_qos,
+             const CosNotification::AdminProperties& initial_admin,
+             CORBA::Environment &ACE_TRY_ENV);
   //
 
   TAO_Notify_Dispatcher& get_dispatcher (void);
@@ -196,25 +198,57 @@ virtual void set_admin (
   IDGEN supplier_admin_ids;
   // Id generator for supplier admins.
 
+  typedef
   ACE_Hash_Map_Manager <CosNotifyChannelAdmin::AdminID,
                                                TAO_Notify_ConsumerAdmin_i*,
                                                ACE_SYNCH_MUTEX>
-  consumer_admin_map_;
+  CONSUMERADMIN_MAP;
+
+  CONSUMERADMIN_MAP consumer_admin_map_;
   //
 
+  typedef
   ACE_Hash_Map_Manager <CosNotifyChannelAdmin::AdminID,
                                                TAO_Notify_SupplierAdmin_i*,
                                                ACE_SYNCH_MUTEX>
-  supplier_admin_map_;
+  SUPPLIERADMIN_MAP;
+
+  SUPPLIERADMIN_MAP supplier_admin_map_;
   //
 
-  // ???? Pradeep: auto_ptr can't be used this way.
-  // auto_ptr<TAO_Notify_Dispatcher> dispatcher_;
   TAO_Notify_Dispatcher *dispatcher_;
   //
 
   CosNotifyFilter::FilterFactory_var filter_factory_;
   // The default filter factory
+
+  CosNotifyChannelAdmin::ConsumerAdmin_var default_consumeradmin_;
+  // The default Consumer Admin
+
+  CosNotifyChannelAdmin::SupplierAdmin_var default_supplieradmin_;
+  // The default Supplier Admin
+
+  const CosNotifyChannelAdmin::InterFilterGroupOperator default_op_;
+  // Default InterFilterGroupOperator operator used when creating
+  // the default ConsumerAdmin and SupplierAdmin.
+
+  const CosNotifyChannelAdmin::AdminID default_id_;
+  // Default id's to CosEventChannelAdmin::ConsumerAdmin, SupplierAdmin.
+
+  // = Admin. properties
+  CORBA::Long max_queue_length_;
+  // The maximum number of events that will be queued by the channel before
+  // the channel begins discarding events or rejecting new events upon
+  // receipt of each new event.
+
+  CORBA::Long max_consumers_;
+  // The maximum number of consumers that can be connected to the channel at
+  // any given time.
+
+  CORBA::Long max_suppliers_;
+  // The maximum number of suppliers that can be connected to the channel at
+  // any given time.
+
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

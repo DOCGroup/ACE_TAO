@@ -59,7 +59,9 @@ public:
   // Destructor
 
 
-  void init (CORBA::Environment &ACE_TRY_ENV);
+  void init (CosNotifyChannelAdmin::AdminID myID,
+             CosNotifyChannelAdmin::InterFilterGroupOperator myOperator,
+             CORBA::Environment &ACE_TRY_ENV);
   //
 
   TAO_Notify_Dispatcher& get_dispatcher (void);
@@ -166,13 +168,15 @@ protected:
   ID_Pool<CosNotifyChannelAdmin::ProxyID> proxy_consumer_ids;
   // Id generator for proxy suppliers.
 
+  typedef
   ACE_Hash_Map_Manager <CosNotifyChannelAdmin::ProxyID,
                                                TAO_Notify_ProxyConsumer_i*,
                                                ACE_SYNCH_MUTEX>
-  proxyconsumer_map_;
+  PROXYCONSUMER_MAP;
 
-  // ???? Pradeep: auto_ptr can't be used this way.
-  // auto_ptr<TAO_Notify_Dispatcher> dispatcher_;
+  PROXYCONSUMER_MAP proxyconsumer_map_;
+  // Store mappings between proxyid and proxy consumers.
+
   TAO_Notify_Dispatcher *dispatcher_;
   //
 };

@@ -52,13 +52,14 @@ public virtual TAO_Notify_FilterAdmin_i
 
 public:
   TAO_Notify_ConsumerAdmin_i (TAO_Notify_EventChannel_i& myChannel);
-                              //                              CosNotifyChannelAdmin::AdminID myID)
   // Constructor
 
   virtual ~TAO_Notify_ConsumerAdmin_i (void);
   // Destructor
 
-  void init (CORBA::Environment &ACE_TRY_ENV);
+  void init (CosNotifyChannelAdmin::AdminID myID,
+             CosNotifyChannelAdmin::InterFilterGroupOperator myOperator,
+             CORBA::Environment &ACE_TRY_ENV);
   //
 
   TAO_Notify_Dispatcher& get_dispatcher (void);
@@ -196,13 +197,14 @@ protected:
   ID_Pool<CosNotifyChannelAdmin::ProxyID> proxy_supplier_ids;
   // Id generator for proxy suppliers.
 
+  typedef
   ACE_Hash_Map_Manager <CosNotifyChannelAdmin::ProxyID,
                                                TAO_Notify_ProxySupplier_i*,
                                                ACE_SYNCH_MUTEX>
-  proxysupplier_map_;
+  PROXYSUPPLIER_MAP;
 
-  // ???? Pradeep: auto_ptr can't be used this way.
-  // auto_ptr<TAO_Notify_Dispatcher> dispatcher_;
+  PROXYSUPPLIER_MAP proxysupplier_map_;
+
   TAO_Notify_Dispatcher *dispatcher_;
   //
 };
