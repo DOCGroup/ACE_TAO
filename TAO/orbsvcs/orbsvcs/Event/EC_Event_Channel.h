@@ -44,9 +44,9 @@ class TAO_EC_Event_Channel : public POA_RtecEventChannelAdmin::EventChannel
   //   This class is the Mediator between all the classes in the EC
   //   implementation, its main task is to redirect the messages to
   //   the right components, to hold and manage the lifetime of the
-  //   long lived objects (Timer_Module, SupplierAdmin and
-  //   ConsumerAdmin) and to provide a simpler interface to the
-  //   EC_Factory.
+  //   long lived objects (Timer_Module, SupplierAdmin,
+  //   ConsumerAdmin and Dispatching) and to provide a simpler
+  //   interface to the EC_Factory.
   //
 public:
   TAO_EC_Event_Channel (TAO_EC_Factory* factory);

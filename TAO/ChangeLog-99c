@@ -1,3 +1,54 @@
+Wed Feb  3 12:17:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h: 
+	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.i: 
+	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp: 
+	  Wait for all the children to accept their events, then it does.
+
+	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.h: 
+	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.i: 
+	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp: 
+	  Accepts an event if any of its children does.
+
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.h: 
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.i: 
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp: 
+	  A filter based on source and/or type.
+
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h: 
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.i: 
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp: 
+	  This Filter_Builder can use the new filters to support basic
+	  filtering and correlation.
+
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h: 
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.i: 
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp: 
+	  A sample configuration based on the filtering above.
+
+	* orbsvcs/orbsvcs/Event/EC_Filter.h: 
+	* orbsvcs/orbsvcs/Event/EC_Filter.i: 
+	* orbsvcs/orbsvcs/Event/EC_Filter.cpp: 
+	  Use a RB_Tree to represent the set of event types required by a
+	  set of filters; this will let us implement the matching of
+	  consumers and suppliers more effificiently [O(nlog(n))]
+
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp: 
+	  Call unbind() on the SupplierFiltering strategy, so it can
+	  release our resources.
+
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h: 
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp: 
+	  Added an unbind() method to support automatic destruction.
+
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h: 
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/EC_Factory.h: 
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: 
+	  Updated comments.
+
 Wed Feb 03 07:07:07 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/IIOP_Transport.h (send_request): commented out argument

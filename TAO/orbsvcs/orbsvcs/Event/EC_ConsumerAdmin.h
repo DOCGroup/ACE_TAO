@@ -52,17 +52,13 @@ class TAO_EC_ConsumerAdmin : public POA_RtecEventChannelAdmin::ConsumerAdmin
   //   ProxyPushSupplier objects.
   //
   // = MEMORY MANAGMENT
-  //   It does not assume ownership of the TAO_EC_Dispatching object
-  //   or the EC_Filter_Builder object.
+  //   It does not assume ownership of the TAO_EC_Event_Channel object 
   //
   // = LOCKING
   //   No provisions for locking, access must be serialized
   //   externally.
   //
   // = TODO
-  //   We don't need to provide a trivial filter, the object itself
-  //   could short-circuit the filter() ---> push() cycle when the EC
-  //   is properly configured, we need to explore this...
   //
 public:
   TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel* event_channel);
