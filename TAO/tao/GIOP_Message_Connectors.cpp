@@ -225,29 +225,8 @@ TAO_GIOP_Message_Connector_10::
    // @@ (JP) Temporary hack until all of GIOP 1.2 is implemented.
   if (response_flags == 131)
     msg << CORBA::Any::from_octet (1);
-
-  // Second the response flags
-  // Sync scope - ignored by server if request is not oneway.
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
-           response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
-           response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
-           response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
-    // No response required.
+  else 
     msg << CORBA::Any::from_octet (0);
-
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_SERVER))
-    // Return before dispatching servant.  We're also setting the high
-    // bit here. This is a temporary fix until the rest of GIOP 1.2 is
-    // implemented in TAO.
-    msg << CORBA::Any::from_octet (129);
-
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TARGET))
-    // Return after dispatching servant.
-    msg << CORBA::Any::from_octet (3);
-
-  else
-    // Until more flags are defined by the OMG.
-    return 0;
 
   // In this case we cannot recognise anything other than the Object
   // key as the address disposition variable. But we do a sanity check
@@ -411,8 +390,9 @@ TAO_GIOP_Message_Connector_12::
   const CORBA::Octet response_flags = opdetails.response_flags ();
   
   // Here are the Octet values for different policies
-  // '00000000' for SYNC_WITH_TRANSPORT & SYNC_NONE
-  // '00000001' for SYNC_WITH_SERVER
+  // '00000000' for SYNC_NONE
+  // '00000001' for SYNC_WITH_TRANSPORT
+  // '00000010' for SYNC_WITH_SERVER
   // '00000011' for SYNC_WITH_TARGET
   // '00000011' for regular two ways, but if they are invoked via a
   // DII with INV_NO_RESPONSE flag set then we need to send '00000001'
@@ -422,21 +402,23 @@ TAO_GIOP_Message_Connector_12::
     msg << CORBA::Any::from_octet (3);
   // Second the response flags
   // Sync scope - ignored by server if request is not oneway.
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
-           response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
+  else if (response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
            response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
            response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
     // No response required.
     msg << CORBA::Any::from_octet (0);
 
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_SERVER))
-    // Return before dispatching servant.
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT))
+    // Return after receiving message.
     msg << CORBA::Any::from_octet (1);
+
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_SERVER))
+    // Return before dispatching to the servant
+    msg << CORBA::Any::from_octet (2);
 
   else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TARGET))
     // Return after dispatching servant.
     msg << CORBA::Any::from_octet (3);
-
   else
     // Until more flags are defined by the OMG.
     return 0;
