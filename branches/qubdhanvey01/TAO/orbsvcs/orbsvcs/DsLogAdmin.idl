@@ -33,15 +33,13 @@ module DsLogAdmin
   exception InvalidGrammar{};
   exception InvalidConstraint{};
   exception LogFull {short n_records_written;};
+  exception LogOffDuty {};
   exception LogLocked {};
+  exception LogDisabled {};
   exception InvalidRecordId {};
   exception InvalidAttribute {string attr_name; any value;};
+  exception InvalidLogFullAction {};
 
-  exception NoResources {};
-  // @@ This is buggy. In the body of the spec BasicLogFactory::create
-  // ()'s signature does not match the signature in the IDL. It is
-  // also declared raising NoResources. I'm putting this here for
-  // now...
 
   typedef unsigned long LogId;
   // LogIds are unique within the scope of the log factory.
@@ -111,7 +109,10 @@ module DsLogAdmin
     boolean log_full;
   };
 
-  enum LogFullAction { wrap, halt };
+  typedef unsigned short LogFullActionType;
+
+  const LogFullActionType wrap = 0;
+  const LogFullActionType halt = 1;
 
   struct Time24
   {
@@ -175,8 +176,8 @@ module DsLogAdmin
       LogId id();
       // Return the id of the log
 
-      QoSList get_qos();
-      void set_qos(in QoSList qos) raises(UnsupportedQoS);
+      QoSList get_log_qos();
+      void set_log_qos(in QoSList qos) raises(UnsupportedQoS);
       // Get or set the list of the QoS properties supported by the log
 
       unsigned long get_max_record_life();
@@ -193,8 +194,9 @@ module DsLogAdmin
       unsigned long long get_n_records();
       // Return the number of records in the log
 
-      LogFullAction get_log_full_action();
-      void set_log_full_action(in LogFullAction action);
+      LogFullActionType get_log_full_action();
+      void set_log_full_action(in LogFullActionType action)
+        raises(InvalidLogFullAction);
       // Get and set the action to be taken when the log reaches its
       // maximum size
 
@@ -257,10 +259,12 @@ module DsLogAdmin
       // Delete records matching constraint <c> or with ids in
       // <ids>. Both operations return the number of records deleted
 
-      void write_records(in Anys records) raises(LogFull, LogLocked);
+      void write_records(in Anys records) 
+        raises(LogFull, LogOffDuty, LogLocked, LogDisabled);
       // Write records to the log storage
 
-      void write_recordlist(in RecordList list) raises(LogFull, LogLocked);
+      void write_recordlist(in RecordList list) 
+        raises(LogFull, LogOffDuty, LogLocked, LogDisabled);
       // Write a list of record ids to storage
 
       void set_record_attribute(in RecordId id,
@@ -317,16 +321,16 @@ module DsLogAdmin
 
     interface BasicLogFactory : LogMgr
     {
-      BasicLog create (in LogFullAction full_action,
+      BasicLog create (in LogFullActionType full_action,
                        in unsigned long long max_size,
                        out LogId id)
-        raises (NoResources);
+        raises (InvalidLogFullAction);
       // Allows clients to create new BasicLog objects.
 
       BasicLog create_with_id (in LogId id,
-                               in LogFullAction full_action,
+                               in LogFullActionType full_action,
                                in unsigned long long max_size)
-        raises (NoResources, LogIdAlreadyExists);
+        raises (LogIdAlreadyExists, InvalidLogFullAction);
       // Same as create (), but allows clients to specify the id
     };
 };
