@@ -159,6 +159,11 @@
 #     if defined (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR)
 #       undef ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 #     endif /* defined (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR) */
+ 
+      /* previously defined for MSVC */
+#     if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
+#       undef ACE_HAS_BROKEN_IMPLICIT_CONST_CAST
+#     endif /* defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST) */
 
       /* include only forward declaration of iostreams */
 #     if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
