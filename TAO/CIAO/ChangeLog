@@ -1,3 +1,20 @@
+Thu Jan  8 13:49:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/OEP/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/OEP/BasicSP/EC/EC.mpc:
+        * examples/OEP/Display/GPS/GPS.mpc:
+        * examples/OEP/Display/NavDisplay/NavDisplay.mpc:
+        * examples/OEP/Display/RateGen/RateGen.mpc:
+        
+          Reverted the changes in
+          
+          Wed Jan  7 11:20:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+	      since these command line options (include paths) are now part of
+	      the default command line.
+
 Thu Jan  8 12:00:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:

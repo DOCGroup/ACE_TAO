@@ -25,8 +25,6 @@ project(RateGen_svnt) : ciao_servant {
   dynamicflags = RATEGEN_SVNT_BUILD_DLL
 
   CIDL_Files {
-	commandflags += -I../../../../ciao -I../../../../../tao -I../../../../.. -I../../../../../orbsvcs/orbsvcs 
-  
     RateGen.cidl
   }
 
