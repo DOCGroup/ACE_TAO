@@ -1,3 +1,23 @@
+Wed Apr 09 14:54:03 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Destroy/main.cpp:
+	  Invokes the NotifyExt::EventChannelFactory::destroy method.
+	
+	* orbsvcs/tests/Notify/Destroy/Destroy.mpc:
+	* orbsvcs/tests/Notify/Destroy/Makefile:
+	* orbsvcs/tests/Notify/Destroy/Notify_Test_Destroy.dsp:
+	  Makefiles.
+	
+	* orbsvcs/tests/Notify/Makefile:
+	* orbsvcs/tests/Notify/Notify_Tests.dsw:
+	  Added the <Destroy> test.
+
+	* orbsvcs/tests/Notify/lib/Makefile.bor:
+	  Move the Activation_ManagerC to the top of the Makefile to fix
+	  compile errors. Thanks to Johnny Willemsen
+	  <jwillemsen@remedy.nl> for this suggestion.
+	 
+	
 Wed Apr  9 13:47:26 2003  Stuart Jones  <jones_s@ociweb.com>
 
 	* tao/Messaging/Messaging.cpp
