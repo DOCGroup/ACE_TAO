@@ -11,6 +11,8 @@ Tue Dec 15 19:04:37 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/sfp/client.cpp:
 	* orbsvcs/tests/AVStreams/sfp/server.cpp:	
 		client and server test files for sfp.	
+
+	* orbsvcs/orbsvcs/Makefile: Added sfp to the list of IDL_SRCS.
 	
 Tue Dec 15 14:45:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
