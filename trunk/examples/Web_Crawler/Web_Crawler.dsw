@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Web_Crawler files"=".\Web_Crawler files.dsp" - Package Owner=<4>
+Project: "Web_Crawler"=.\Web_Crawler.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
