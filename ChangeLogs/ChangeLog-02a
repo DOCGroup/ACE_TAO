@@ -1,3 +1,16 @@
+Tue Mar 12 18:37:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Configuration_Import_Export.{h cpp} (ACE_Ini_ImpExp):
+          Changed behavior of ACE_Ini_ImpExp::import_config() to take
+          the entire string, with or without whitespace, without requiring
+          quotes around the string. This puts functionality on par with
+          regular Windows INI files.
+
+          Also, on ACE_Ini_ImpExp::export_config(), don't add quotes to
+          string values that are exported. import_config() will still read
+          files exported previously (which have quotes around strings)
+          but when re-exported, the quotes will not be added.
+
 Tue Mar 12 17:43:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/CDR_Base.cpp (consolidate): If the incoming message block

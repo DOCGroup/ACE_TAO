@@ -348,17 +348,17 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
   ACE_Configuration_Section_Key section;
   while (ACE_OS::fgets (buffer, sizeof buffer, in))
     {
+      ACE_TCHAR *line = this->squish (buffer);
       // Check for a comment and blank line
-      if (buffer[0] == ACE_LIB_TEXT (';')  ||
-          buffer[0] == ACE_LIB_TEXT ('#')  ||
-          buffer[0] == ACE_LIB_TEXT ('\r') ||
-          buffer[0] == ACE_LIB_TEXT ('\n'))
+      if (line[0] == ACE_LIB_TEXT (';')  || 
+          line[0] == ACE_LIB_TEXT ('#')  || 
+          line[0] == '\0')
         continue;
 
-      if (buffer[0] == ACE_LIB_TEXT ('['))
+      if (line[0] == ACE_LIB_TEXT ('['))
         {
           // We have a new section here, strip out the section name
-          ACE_TCHAR* end = ACE_OS::strrchr (buffer, ACE_LIB_TEXT (']'));
+          ACE_TCHAR* end = ACE_OS::strrchr (line, ACE_LIB_TEXT (']'));
           if (!end)
             {
               ACE_OS::fclose (in);
@@ -366,7 +366,10 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
             }
           *end = 0;
 
-          if (config_.expand_path (config_.root_section (), buffer + 1, section, 1))
+          if (config_.expand_path (config_.root_section (),
+                                   line + 1,
+                                   section,
+                                   1))
             {
               ACE_OS::fclose (in);
               return -3;
@@ -375,49 +378,45 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
           continue;
         }
 
-      // we have a line
-      const ACE_TCHAR *name = this->skip_whitespace (buffer);
-      if (*name != '\0')
+      // We have a line; name ends at equal sign.
+      ACE_TCHAR *end = ACE_OS::strchr (line, ACE_LIB_TEXT ('='));
+      if (end == 0)                            // No '='
         {
-          ACE_TCHAR *end = (ACE_TCHAR *) ACE_OS::strpbrk (name, ACE_LIB_TEXT ("= \t\n\r"));
+          ACE_OS::fclose (in);
+          return -3;
+        }
+      *end++ = '\0';
+      ACE_TCHAR *name = this->squish (line);
+      if (ACE_OS::strlen (name) == 0)          // No name; just an '='
+        {
+          ACE_OS::fclose (in);
+          return -3;
+        }
 
-          // locate equal sign after name and retrieve value
-          //
-          // This used to be strrchr. I don't know if there was a reason that a
-          // reverse search was done but it was not acting as expected. If there
-          // was an equals sign in the value it would cut off the first part of
-          // the value. This happened even if the value was quoted.
-          // -Glen Coakley
-          //
-          const ACE_TCHAR *value = ACE_OS::strchr (name, ACE_LIB_TEXT ('='));
-          if (value)
+      // Now find the start of the value
+      ACE_TCHAR *value = this->squish (end);
+      size_t value_len = ACE_OS::strlen (value);
+      if (value_len > 0)
+        {
+          // ACE 5.2 (and maybe earlier) exported strings may be enclosed
+          // in quotes. If string is quote-delimited, strip the quotes.
+          // Newer exported files don't have quote delimiters.
+          if (value[0] == ACE_LIB_TEXT ('"') &&
+              value[value_len - 1] == ACE_LIB_TEXT ('"'))
             {
-              value++;  // jump over equal sign
-              value = this->skip_whitespace (value);
-              ACE_TCHAR *value_end;
-              if (value[0] != ACE_LIB_TEXT ('"'))
-                value_end = (ACE_TCHAR *) ACE_OS::strpbrk (value, ACE_LIB_TEXT (" \t\n\r"));
-              else
-                {
-                  // double quote delimited allows spaces and tabs in string
-                  value++;
-                  value_end = (ACE_TCHAR *) ACE_OS::strpbrk (value, ACE_LIB_TEXT ("\"\n\r"));
-                }
-              if (value_end)
-                *value_end = '\0'; // terminate value
+              // Strip quotes off both ends.
+              value[value_len - 1] = '\0';
+              value++;
             }
-          else
-            value = ACE_LIB_TEXT ("");
+        }
+      else
+        value = ACE_LIB_TEXT ("");
 
-          if (end)
-            *end = '\0';     // terminate name now
-
-          if (config_.set_string_value (section, name, value))
-            {
-              ACE_OS::fclose (in);
-              return -4;
-            }
-        }         // end if (name)
+      if (config_.set_string_value (section, name, value))
+        {
+          ACE_OS::fclose (in);
+          return -4;
+        }
     }             // end while fgets
 
   if (ferror (in))
@@ -463,8 +462,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
       // Write out the section header
       ACE_TString header = ACE_LIB_TEXT ("[");
       header += path;
-      header += ACE_LIB_TEXT ("]");
-      header += ACE_LIB_TEXT (" \n");
+      header += ACE_LIB_TEXT ("]\n");
       if (ACE_OS::fputs (header.fast_rep (), out) < 0)
         return -1;
       // Write out each value
@@ -497,15 +495,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
                                               name.fast_rep (),
                                               string_value))
                   return -2;
-                if (string_has_white_space (string_value.c_str ()))
-                  {
-                    line += ACE_LIB_TEXT ("\"");
-                    line += string_value + ACE_LIB_TEXT ("\"");
-                  }
-                else
-                  {
-                    line += string_value;
-                  }
+                line += string_value;
                 break;
               }
 #ifdef _WIN32
@@ -571,40 +561,30 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
 
 }
 
-// Method to skip whitespaces in a string.  Whitespace is defined as:
-// spaces (' ') and tabs ('\t').  Returns a pointer to the first
-// non-whitespace character in the buffer provided.  It does return
-// null ('\0') if it is reached
+// Method to squish leading and trailing whitespaces from a string.
+// Whitespace is defined as: spaces (' '), tabs ('\t') or end-of-line (cr/lf).
+// The terminating nul is moved up to expunge trailing whitespace and the
+// returned pointer points at the first non-whitespace character in the
+// string, which may be the nul terminator if the string is all whitespace.
 
-const ACE_TCHAR *
-ACE_Ini_ImpExp::skip_whitespace (const ACE_TCHAR *src)
+ACE_TCHAR *
+ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
 {
-  const ACE_TCHAR *cp;
+  ACE_TCHAR *cp;
 
+  // Start at the end and work backwards over all whitespace.
+  for (cp = src + ACE_OS::strlen (src) - 1;
+       cp != src;
+       --cp)
+    if (*cp != ' ' && *cp != '\t' && *cp != '\n' && *cp != '\r')
+      break;
+  *(cp + 1) = '\0';          // Chop trailing whitespace
+
+  // Now start at the beginning and move over all whitespace.
   for (cp = src;
        (*cp != '\0') && ((*cp == ' ') || (*cp == '\t'));
        cp++)
     continue;
 
   return cp;
-}
-
-// Looks in provided string for whitespace.  Whitespace is defined as
-// spaces (' ') and tabs ('\t').  Returns true if found and false if
-// not found
-
-int
-ACE_Ini_ImpExp::string_has_white_space (const ACE_TCHAR *string_value)
-{
-  int rc = 0;
-
-  while ((!rc) && (*string_value != '\0'))
-    {
-      if ((*string_value == ' ') || (*string_value == '\t'))
-        rc = 1;
-
-      string_value++;
-    }
-
-  return rc;
 }
