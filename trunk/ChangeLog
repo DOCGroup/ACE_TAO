@@ -1,3 +1,9 @@
+Thu Feb 20 18:31:10 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Strategies_T.cpp:
+
+	  Fixed "lose of const in cast" errors.
+
 Thu Feb 20 18:20:19 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Acceptor.h (ACE_SSL_SOCK_Acceptor):
