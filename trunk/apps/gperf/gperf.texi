@@ -95,7 +95,7 @@ bugs.
 @end ifinfo
 @menu
 * Copying::			GNU @code{gperf} General Public License says
-                    how you can copy and share @code{gperf}.
+                                how you can copy and share @code{gperf}.
 * Contributors::		People who have contributed to @code{gperf}.
 * Motivation::			Static search structures and GNU GPERF.
 * Search Structures::		Static search structures and GNU @code{gperf}
