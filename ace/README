@@ -215,6 +215,10 @@ ACE_HAS_BROKEN_SENDMSG                  OS/compiler omits the const
 ACE_HAS_BROKEN_SETRLIMIT                OS/compiler omits the const
                                         from the rlimit parameter in
                                         the setrlimit() prototype.
+ACE_HAS_BROKEN_T_ERROR                  Compiler/platform has the wrong
+                                        prototype for t_error(), i.e.,
+                                        t_error(char *) rather than 
+                                        t_error(const char *).
 ACE_HAS_BROKEN_TIMESPEC_MEMBERS         platform define struct
                                         timespec members as ts_sec and
                                         ts_nsec instead of tv_sec and
