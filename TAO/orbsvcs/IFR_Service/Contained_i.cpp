@@ -618,10 +618,10 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
         }
         case IR::dk_Native:
         {
-          container_impl->create_native (id.in (),
-                                         new_name,
-                                         new_version,
-                                         ACE_TRY_ENV);
+          container_impl->create_native_i (id.in (),
+                                           new_name,
+                                           new_version,
+                                           ACE_TRY_ENV);
           ACE_TRY_CHECK;
           break;
         }
@@ -679,7 +679,7 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
                                this->section_key_);
 
           IR::IDLType_var disc_type =
-            impl.discriminator_type_def (ACE_TRY_ENV);
+            impl.discriminator_type_def_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           IR::UnionMemberSeq_var members = impl.members_i (ACE_TRY_ENV);

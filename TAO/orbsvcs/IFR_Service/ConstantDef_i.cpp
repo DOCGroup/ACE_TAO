@@ -72,7 +72,7 @@ TAO_ConstantDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
   cd.version = this->version_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  cd.type = this->type (ACE_TRY_ENV);
+  cd.type = this->type_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   CORBA::Any_var val = this->value_i (ACE_TRY_ENV);
@@ -133,20 +133,17 @@ TAO_ConstantDef_i::type_def_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString type_path;
-
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "type_path",
                                             type_path);
 
   ACE_Configuration_Section_Key type_key;
-
   this->repo_->config ()->expand_path (this->repo_->root_key (),
                                        type_path,
                                        type_key,
                                        0);
 
   u_int kind = 0;
-
   this->repo_->config ()->get_integer_value (type_key,
                                              "def_kind",
                                              kind);
