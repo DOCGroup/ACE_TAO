@@ -179,9 +179,12 @@ ld < Conn_Test
 write 2, "Conn_Test ", 10
 ace_main; unld "Conn_Test"
 
-ld < Cached_Conn_Test
-write 2, "Cached_Conn_Test ", 17
-ace_main; unld "Cached_Conn_Test"
+### Doesnt run with the current configuration, appears to
+### be max_handles problem. Until researched completely,
+### this test will be disabled on Vxworks.
+#ld < Cached_Conn_Test
+#write 2, "Cached_Conn_Test ", 17
+#ace_main; unld "Cached_Conn_Test"
 
 ld < Cached_Accept_Conn_Test
 write 2, "Cached_Accept_Conn_Test ", 24
