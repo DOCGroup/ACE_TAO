@@ -17,6 +17,7 @@
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
+#include "ace/Trace.h"
 
 #if defined (_MSC_VER)
 // Suppress warning e.g. "return type for
@@ -79,7 +80,7 @@ public:
    *    address 0.
    *
    * 3. If <initial> is 0 then set the value of <target_> to -1, which
-   *    indicates a "NULL" pointer. 
+   *    indicates a "NULL" pointer.
    */
   ACE_Based_Pointer_Basic (CONCRETE *initial);
 

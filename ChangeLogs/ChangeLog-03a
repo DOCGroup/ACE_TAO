@@ -1,3 +1,9 @@
+Fri Apr 12 10:02:58 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/Based_Pointer_T.h: 
+	  Included ace/Trace.h to fix the compilation errors about
+	  undeclared ACE_TRACE.
+
 Fri Apr 12 08:56:46 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/DLL_Test_Impl.cpp: 
