@@ -1,3 +1,8 @@
+Tue Jul  6 10:25:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Timeout/Makefile:
+	  Added -Ge 1 flag to the IDL compiler invocation
+
 Tue Jul  6 09:42:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Invocation.cpp:
