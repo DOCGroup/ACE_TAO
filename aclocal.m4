@@ -137,9 +137,13 @@ AC_DEFUN(ACE_USE_TEMP_FILE, dnl
 [
  if test -f ${srcdir}/$1; then
    mv ${srcdir}/$1 ${srcdir}/$1.conf
+   touch ${srcdir}/$1
  fi
 
- touch ${srcdir}/$1
+ if test -f ./$1; then
+   mv ./$1 ./$1.conf
+   touch ./$1
+ fi
 
  $2
 
@@ -147,6 +151,12 @@ AC_DEFUN(ACE_USE_TEMP_FILE, dnl
    mv ${srcdir}/$1.conf ${srcdir}/$1
  else
    rm ${srcdir}/$1
+ fi
+
+ if test -f ./$1.conf; then
+   mv ./$1.conf ./$1
+ else
+   rm ./$1
  fi
 ])
 
@@ -421,6 +431,92 @@ EOF
 ])
 
 
+dnl Check if getrlimit() takes an enum as 1st argument
+dnl Usage: ACE_CHECK_SETRLIMIT_ENUM
+AC_DEFUN(ACE_CHECK_SETRLIMIT_ENUM, dnl
+[
+if test "$ac_cv_func_setrlimit" = yes; then
+  AC_MSG_CHECKING([if setrlimit() takes an enum as 1st argument])
+  AC_EGREP_HEADER([setrlimit.*\(.*[^,]*enum], sys/resource.h,
+    [
+     cat > conftest.$ac_ext <<EOF
+#include "confdefs.h"
+#include <sys/resource.h>
+EOF
+
+changequote(, )dnl
+dnl Here we attempt to determine the type of the first argument of
+dnl getrusage from its prototype.  It should either be an int or an
+dnl enum.  If it is an enum, determine the enum type.
+     ace_setrlimit_enum=`eval "$ac_cpp conftest.$ac_ext" | \
+       egrep 'setrlimit.*\(.*[^,]*enum' | \
+       sed -e 's/^.*setrlimit.*(.*enum//' -e 's/[^ ]*,.*$//'`
+changequote([, ])dnl
+
+     ace_setrlimit_enum="enum $ace_setrlimit_enum" 
+
+     AC_MSG_RESULT([$ace_setrlimit_enum])
+
+if test -n "$ace_setrlimit_enum"; then
+     AC_DEFINE_UNQUOTED(ACE_HAS_RLIMIT_RESOURCE_ENUM, $ace_setrlimit_enum)
+fi
+
+     rm -rf conftest*
+
+dnl Do not remove this parenthesis --> )
+dnl It's only purpose to keep Emacs from getting confused about mismatched
+dnl parentheses.
+    ],
+    [
+     AC_MSG_RESULT([no])
+    ])
+
+fi  dnl test "$ac_cv_func_setrlimit" = yes
+])
+
+dnl Check if getrusage() takes an enum as 1st argument
+dnl Usage: ACE_CHECK_GETRUSAGE_ENUM
+AC_DEFUN(ACE_CHECK_GETRUSAGE_ENUM, dnl
+[
+if test "$ac_cv_func_getrusage" = yes; then
+  AC_MSG_CHECKING([if getrusage() takes an enum as 1st argument])
+  AC_EGREP_HEADER([getrusage.*\(.*[^,]*enum], sys/resource.h,
+    [
+     cat > conftest.$ac_ext <<EOF
+#include "confdefs.h"
+#include <sys/resource.h>
+EOF
+
+changequote(, )dnl
+dnl Here we attempt to determine the type of the first argument of
+dnl getrusage from its prototype.  It should either be an int or an
+dnl enum.  If it is an enum, determine the enum type.
+     ace_rusage_who=`eval "$ac_cpp conftest.$ac_ext" | \
+       egrep 'getrusage.*\(.*[^,]*enum' | \
+       sed -e 's/^.*getrusage.*(.*enum//' -e 's/[^ ]*,.*$//'`
+changequote([, ])dnl
+
+     ace_rusage_who="enum $ace_rusage_who" 
+
+     AC_MSG_RESULT([$ace_rusage_who])
+
+if test -n "$ace_rusage_who"; then
+     AC_DEFINE_UNQUOTED(ACE_HAS_RUSAGE_WHO_ENUM, $ace_rusage_who)
+fi
+
+     rm -rf conftest*
+
+dnl Do not remove this parenthesis --> )
+dnl It's only purpose to keep Emacs from getting confused about mismatched
+dnl parentheses.
+    ],
+    [
+     AC_MSG_RESULT([no])
+    ])
+
+fi  dnl test "$ac_cv_func_getrusage" = yes
+])
+
 dnl   checks for structures
 
 dnl   checks for system services
@@ -556,6 +652,45 @@ $1();
 #endif
 ],[$2],[$3])
 ])
+
+AC_DEFUN(ACE_SYS_RESTARTABLE_SYSCALLS,
+[AC_REQUIRE([AC_HEADER_SYS_WAIT])
+AC_CHECK_HEADERS(unistd.h)
+AC_CACHE_CHECK(for restartable system calls, ac_cv_sys_restartable_syscalls,
+[AC_TRY_RUN(
+[/* Exit 0 (true) if wait returns something other than -1,
+   i.e. the pid of the child, which means that wait was restarted
+   after getting the signal.  */
+#include <sys/types.h>
+#include <signal.h>
+#if HAVE_UNISTD_H
+# include <unistd.h>
+#endif
+#if HAVE_SYS_WAIT_H
+# include <sys/wait.h>
+#endif
+
+/* Some platforms explicitly require an extern "C" signal handler
+   when using C++. */
+#ifdef __cplusplus
+extern "C"
+#endif
+void ucatch (int) { }
+
+main () {
+  int i = fork (), status;
+  if (i == 0) { sleep (3); kill (getppid (), SIGINT); sleep (3); exit (0); }
+  signal (SIGINT, ucatch);
+  status = wait(&i);
+  if (status == -1) wait(&i);
+  exit (status == -1);
+}
+], ac_cv_sys_restartable_syscalls=yes, ac_cv_sys_restartable_syscalls=no)])
+if test $ac_cv_sys_restartable_syscalls = yes; then
+  AC_DEFINE(HAVE_RESTARTABLE_SYSCALLS)
+fi
+])
+
 
 # Do all the work for Automake.  This macro actually does too much --
 # some checks are only needed if your package does certain things.
@@ -714,7 +849,7 @@ dnl Assume all subsets will be built, including the full ACE library.
 dnl If any of the components is explicitly enabled or disabled by the user
 dnl then do NOT build the full ACE library.
 AC_ARG_ENABLE(lib-all,
-              [  --enable-lib-all        build all ACE components        [default=yes]],
+              [  --enable-lib-all        build all ACE components        [default=no]],
               [
                case "${enableval}" in
                 yes)
@@ -729,7 +864,7 @@ AC_ARG_ENABLE(lib-all,
                esac
               ],
               [
-               ace_user_enable_lib_all=yes
+               ace_user_enable_lib_all=no
               ])
 
 AC_ARG_ENABLE(lib-full,

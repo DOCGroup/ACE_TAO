@@ -12,9 +12,12 @@
 ## needed to process this file.
 AUTOMAKE_OPTIONS = 1.4
 
+## The HTML man page listing (html_DATA) is inserted by the
+## `bootstrap' script.  Don't bother editing this list since it is
+## automatically generated.
+
 htmldir = $(pkgdatadir)/html
-html_DATA := \
-  $(shell echo $(top_builddir)/man/man3/*.3 | xargs -n 1 basename | sed -e 's/\.3/\.html/')
+html_DATA =
 
 MAINTAINERCLEANFILES = $(html_DATA)
 
@@ -22,7 +25,7 @@ MAINTAINERCLEANFILES = $(html_DATA)
 ## man2html create all of the html man pages in one shot.
 $(html_DATA):
 	@ACE_ROOT=$(top_srcdir) $(top_srcdir)/bin/man2html \
-	  $(top_builddir)/man/man3/`echo $@ | sed -e 's/\.html$$/\.3/'` \
+	  $(top_srcdir)/man/man3/`echo $@ | sed -e 's/\.html$$/\.3/'` \
 	  > /dev/null
 
 ## For some reason Automake couldn't automatically copy the HTML man

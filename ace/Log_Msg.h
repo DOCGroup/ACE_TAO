@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -363,31 +363,31 @@ public:
   ssize_t log (ACE_Log_Priority priority, const ASYS_TCHAR *format, ...);
   // Format a message to the thread-safe ACE logging mechanism.  Valid
   // options (prefixed by '%', as in printf format strings) include:
-//   'A': print an ACE_timer_t value (which could be either double or ACE_UINT32.)
-  // 'a': exit the program at this point (var-argument is the exit status!)
-  // 'c': print a character
-  // 'i', 'd': print a decimal number
-  // 'I', indent according to nesting depth
-  // 'e', 'E', 'f', 'F', 'g', 'G': print a double
-  // 'l', print line number where an error occurred.
-  // 'm': Return the message corresponding to errno value, e.g., as done by <strerror>
-  // 'N': print file name where the error occurred.
-  // 'n': print the name of the program (or "<unknown>" if not set)
-  // 'o': print as an octal number
-  // 'P': print out the current process id
-  // 'p': print out the appropriate errno message from sys_errlist, e.g., as done by <perror>
-  // 'Q': print out the uint64 number
-  // 'r': call the function pointed to by the corresponding argument
-  // 'R': print return status
-  // 'S': print out the appropriate _sys_siglist entry corresponding to var-argument.
-  // 's': print out a character string
-  // 'T': print timestamp in hour:minute:sec:usec format.
-  // 'D': print timestamp in month/day/year hour:minute:sec:usec format.
-  // 't': print thread id (1 if single-threaded)
-  // 'u': print as unsigned int
-  // 'W': print out a wide (Unicode) character string (currently Win32 only).
-  // 'X', 'x': print as a hex number
-  // '%': print out a single percent sign, '%'
+  //  'A': print an ACE_timer_t value (which could be either double or ACE_UINT32.)
+  //  'a': exit the program at this point (var-argument is the exit status!)
+  //  'c': print a character
+  //  'i', 'd': print a decimal number
+  //  'I', indent according to nesting depth
+  //  'e', 'E', 'f', 'F', 'g', 'G': print a double
+  //  'l', print line number where an error occurred.
+  //  'm': Return the message corresponding to errno value, e.g., as done by strerror()
+  //  'N': print file name where the error occurred.
+  //  'n': print the name of the program (or "<unknown>" if not set)
+  //  'o': print as an octal number
+  //  'P': print out the current process id
+  //  'p': print out the appropriate errno message from sys_errlist, e.g., as done by perror()
+  //  'Q': print out the uint64 number
+  //  'r': call the function pointed to by the corresponding argument
+  //  'R': print return status
+  //  'S': print out the appropriate _sys_siglist entry corresponding to var-argument.
+  //  's': print out a character string
+  //  'T': print timestamp in hour:minute:sec:usec format.
+  //  'D': print timestamp in month/day/year hour:minute:sec:usec format.
+  //  't': print thread id (1 if single-threaded)
+  //  'u': print as unsigned int
+  //  'W': print out a wide (Unicode) character string (currently Win32 only).
+  //  'X', 'x': print as a hex number
+  //  '%': print out a single percent sign, '%'
 
   ssize_t log (const ASYS_TCHAR *format,
                ACE_Log_Priority priority,
