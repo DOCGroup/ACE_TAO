@@ -74,12 +74,15 @@ sub new
     $self->{VALGRIND_OPT} = $ENV{"ACE_RUN_VALGRIND_OPT"};
 
     if (!defined $PerlACE::Process::WAIT_DELAY_FACTOR) {
-#         if (defined $self->{PURIFY_CMD}) {
-#             $self->{WAIT_DELAY_FACTOR} = 10;
-#         }
-#         else {
-            $PerlACE::Process::WAIT_DELAY_FACTOR = 1;
-#        }
+         if (defined $self->{PURIFY_CMD}) {
+           $PerlACE::Process::WAIT_DELAY_FACTOR = 10;
+         }
+         elsif (defined $self->{VALGRIND_CMD}) {
+           $PerlACE::Process::WAIT_DELAY_FACTOR = 5;
+         }
+         else {
+           $PerlACE::Process::WAIT_DELAY_FACTOR = 1;
+        }
     }
 
     bless ($self, $class);
