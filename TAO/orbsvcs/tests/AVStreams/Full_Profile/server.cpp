@@ -26,7 +26,7 @@ FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)
 }
 
 int
-FTP_Server_FlowEndPoint::get_callback (const char *flowname,
+FTP_Server_FlowEndPoint::get_callback (const char *,
                                        TAO_AV_Callback *&callback)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::get_sfp_callback\n"));
