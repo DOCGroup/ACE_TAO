@@ -41,9 +41,13 @@ LIBFILES = \
 <%endfor%>
 	$(DUMMY_VALUE_NOT_ENDING_IN_BACKSLASH)
 <%endif%>
+<%if(rcdir)%>
+
+RESDIR = <%rcdir%>
+<%endif%>
 <%if(resource_files)%>
 
-RESOURCE =<%foreach(resource_files)%> $(OBJDIR)\<%noextension(resource_file)%>.res<%endfor%>
+RESOURCE =<%foreach(resource_files)%> $(OBJDIR)\<%basenoextension(resource_file)%>.res<%endfor%>
 <%endif%>
 
 !ifdef STATIC
@@ -87,6 +91,7 @@ CFLAGS = \
 
 CPPDIR = <%cppdir%>
 CDIR   = <%cppdir%>
+
 <%if(header_files || template_files || inline_files || idl_files)%>
 
 INCDIR_NAME = <%relwd%>
