@@ -1,3 +1,10 @@
+Sun May 31 18:31:24 1998  James C Hu  <jxh@cs.wustl.edu>
+
+	* ace/RB_Tree.i:
+	* ace/RB_Tree.cpp: Changes suggested by Sergio to make it work
+	  with older version of GCC.  Referred to RB_Tree_Node_Color
+	  through the parent class RB_Tree_Node_Base.
+
 Sat May 30 13:14:18 1998  James C Hu  <jxh@cs.wustl.edu>
 
 	* ace/RB_Tree.h: Try to put enum into a class again.  This time,
