@@ -30,6 +30,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class T>
+class ACE_Noop_Key_Generator
+{
+  // = TITLE
+  //     Defines a noop key generator.
+public:
+
+  int operator() (T &);
+  // Functor method: generates a new key.
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+template <class T>
 class ACE_Incremental_Key_Generator
 {
   // = TITLE
