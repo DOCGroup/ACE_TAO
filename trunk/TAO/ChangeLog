@@ -1,3 +1,9 @@
+Thu Mar 13 19:20:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
+
+          Commented out unused args.
+
 Thu Mar 13 17:12:21 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h (TAO_SSLIOP_Profile):
