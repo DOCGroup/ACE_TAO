@@ -4,6 +4,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
+#include "ace/Object_Manager.h"
 #include "tao/default_server.h"
 #include "tao/default_client.h"
 

@@ -320,9 +320,16 @@ public:
   virtual CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid,
                                              CORBA::Environment &env);
 
-  static char *ObjectId_to_string (const PortableServer::ObjectId &id);
 
-  static CORBA::WChar *ObjectId_to_wstring (const PortableServer::ObjectId &id);
+  // Utility functions for the other 
+  static void encode_sequence_to_string (CORBA::String &str,
+                                         const TAO_Unbounded_Sequence<CORBA::Octet> &seq);
+  static void decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
+                                         CORBA::String str);
+
+  static CORBA::String ObjectId_to_string (const PortableServer::ObjectId &id);
+
+  static CORBA::WString ObjectId_to_wstring (const PortableServer::ObjectId &id);
 
   static PortableServer::ObjectId *string_to_ObjectId (const char *id);
 
