@@ -24,7 +24,11 @@
 #include "ace/INET_Addr.h"
 #include "ace/Handle_Set.h"
 
-#include "ace/stdcpp.h"
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+# include /**/ <iostream.h>
+#else
+# include "ace/stdcpp.h"
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 #if defined (ACE_HAS_STRING_CLASS)
 #if defined (ACE_WIN32)
