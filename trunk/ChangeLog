@@ -1,3 +1,14 @@
+Wed Aug 25 16:00:11 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* ace/Auto_Ptr.h:
+	* ace/Auto_Ptr.inl:
+
+        Added new ACE_Auto_Ptr which can be used more portably than
+        auto_ptr even with the ACE auto_ptr workarounds. Specifically, this
+        obviates the need for the ACE_AUTO_PTR_RESET macro, and will have
+        better performance than the pre-standard auto_ptr that comes with
+        VC6.
+
 Wed Aug 25 14:58:51 2004  Rich Seibel <seibel_r@ociweb.com>
 
       * include/makeincludes/platform_linux.GNU:
