@@ -1,3 +1,9 @@
+Fri Apr 27 10:32:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/IDL_Test/Makefile:
+
+          Updated dependencies.
+
 Fri Apr 27 07:29:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Request_Muxing/Client_Task.h: Included
