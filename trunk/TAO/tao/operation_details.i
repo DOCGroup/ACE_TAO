@@ -1,12 +1,13 @@
-//$Id$
 // -*- C++ -*-
+//$Id$
 ACE_INLINE
 TAO_Operation_Details::TAO_Operation_Details (const char *name,
                                               CORBA::ULong len)
   :opname_ (name),
    opname_len_ (len),
    request_id_ (0),
-   response_flags_ (0)
+   response_flags_ (0),
+   addressing_mode_ (TAO_Target_Specification::Key_Addr)
 {
   //no-op
 }
@@ -70,3 +71,28 @@ TAO_Operation_Details::response_flags (void) const
 {
   return this->response_flags_;
 }
+
+ACE_INLINE TAO_Target_Specification::TAO_Target_Address 
+TAO_Operation_Details::addressing_mode (void)
+{
+  return this->addressing_mode_;
+}
+
+ACE_INLINE TAO_Target_Specification::TAO_Target_Address 
+TAO_Operation_Details::addressing_mode (void) const
+{
+  return this->addressing_mode_;
+}
+
+ACE_INLINE void 
+TAO_Operation_Details::
+  addressing_mode (CORBA::Short mode) 
+{
+  if (mode == 0)
+      this->addressing_mode_ = TAO_Target_Specification::Key_Addr;
+  else if (mode == 1)
+    this->addressing_mode_ = TAO_Target_Specification::Profile_Addr;
+  else if (mode == 2)
+      this->addressing_mode_ = TAO_Target_Specification::Reference_Addr;
+}
+  

@@ -107,7 +107,8 @@ GIOP_Message_Headers \
 target_specification \
 GIOP_Server_Request \
 GIOP_Message_Lite \
-GIOP_Message_State
+GIOP_Message_State \
+Tagged_Profile
 
 DEFAULT_RESOURCES_FILES = \
   default_client \

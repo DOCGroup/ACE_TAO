@@ -18,6 +18,7 @@
 
 #include "tao/corbafwd.h"
 #include "tao/IOPC.h"
+#include "tao/target_specification.h"
 
 // @@ Bala: Why is this not part of the RequestHeader?!
 class TAO_Operation_Details
@@ -56,7 +57,16 @@ public:
 
   CORBA::ULong request_id (void);
   CORBA::ULong request_id (void) const;
-  // Get and set for request id
+  // Get for request id
+  
+  TAO_Target_Specification::TAO_Target_Address addressing_mode (void);
+  TAO_Target_Specification::TAO_Target_Address 
+  addressing_mode (void)  const;
+  // Get method for the addressing mode
+
+  void 
+  addressing_mode (CORBA::Short addr);
+  // Set method for the addressing mode
   
 private:
   const char *opname_;
@@ -80,6 +90,9 @@ private:
   // transaction service APIs.  Other kinds of context are as yet
   // undefined.
   //
+
+  TAO_Target_Specification::TAO_Target_Address addressing_mode_;
+  // Addressing mode for this request. 
 };
 
 #if defined (__ACE_INLINE__)

@@ -32,7 +32,8 @@
 #include "tao/ORB.h"
 #include "tao/Principal.h"
 #include "tao/GIOP_Message_Base.h"
-#include "tao/GIOPC.h"
+#include "tao/Tagged_Profile.h"
+
 
 class TAO_Export TAO_GIOP_ServerRequest : public CORBA_ServerRequest
 {
@@ -176,12 +177,9 @@ public:
 
   void requesting_principal (CORBA_Principal_ptr principal);
   // set the requesting principal
-  
-  IOP::TaggedProfile &tagged_profile (void);
-  // get the tagged_profile
 
-  GIOP::IORAddressingInfo &addressing_info (void);
-  // get the addressing info
+  TAO_Tagged_Profile &profile (void);
+  // Return the reference to the tagged profile
 
 private:
   TAO_Pluggable_Messaging *mesg_base_;
@@ -229,7 +227,7 @@ private:
   // A pointer to the ORB Core for the context where the request was
   // created.
 
-  TAO_GIOP_Version version_;
+  //TAO_GIOP_Version version_;
   // The version for the GIOP request, the reply must have the same
   // one.
 
@@ -238,19 +236,9 @@ private:
 
   CORBA::ULong request_id_;
   // Unique identifier for a request
-  
-  TAO_ObjectKey object_key_;
-  // The object key of the destination object.
-  
-  IOP::TaggedProfile profile_;
-  // The Tagged profile. This class would have the Tagged Profile 
-  
-  GIOP::IORAddressingInfo addr_info_;
-  // The addressing info
-  
-  // The above two declarations are not used in TAO as on date. It is
-  // here so that we can use this anyday. The object_key extracted
-  // from these would still be available in <object_key_>. 
+
+  TAO_Tagged_Profile profile_;
+  // The tagged profile that has the addressing information 
 
   CORBA::Principal_var requesting_principal_;
   // Identifies the requester

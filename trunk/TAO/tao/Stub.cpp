@@ -47,13 +47,13 @@ TAO_Stub::TAO_Stub (char *repository_id,
     first_locate_request_ (0),
     orb_core_ (orb_core),
     orb_ (),
-    servant_orb_ ()
-
+    servant_orb_ (),
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-
-    , policies_ (0)
+    
+  policies_ (0),
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+  addressing_mode_ (0)
 
 {
   if (this->orb_core_ == 0)

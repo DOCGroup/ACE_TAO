@@ -49,7 +49,7 @@ TAO_GIOP_ServerRequest::
                             TAO_InputCDR &input,
                             TAO_OutputCDR &output,
                             TAO_ORB_Core *orb_core,
-                            const TAO_GIOP_Version &version)
+                            const TAO_GIOP_Version & /*version*/)
       :mesg_base_ (mesg_base),
        incoming_ (&input),
        outgoing_ (&output),
@@ -67,10 +67,10 @@ TAO_GIOP_ServerRequest::
        exception_ (0),
        exception_type_ (TAO_GIOP_NO_EXCEPTION),
        orb_core_ (orb_core),
-       version_ (version),
+       //       version_ (version),
        service_info_ (),
        request_id_ (0),
-       object_key_ (),
+       profile_ (orb_core),
        requesting_principal_ (0)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
@@ -87,7 +87,7 @@ TAO_GIOP_ServerRequest::
                             const ACE_CString &operation,
                             TAO_OutputCDR &output,
                             TAO_ORB_Core *orb_core,
-                            const TAO_GIOP_Version &version,
+                            const TAO_GIOP_Version & /*version*/,
                             int &parse_error)
       : mesg_base_ (mesg_base),
         operation_ (operation),
@@ -107,12 +107,13 @@ TAO_GIOP_ServerRequest::
         exception_ (0),
         exception_type_ (TAO_GIOP_NO_EXCEPTION),
         orb_core_ (orb_core),
-        version_ (version),
+        //version_ (version),
         service_info_ (),
         request_id_ (request_id),
-        object_key_ (object_key),
+        profile_ (orb_core),
         requesting_principal_ (0)
 {
+  profile_.object_key (object_key);
   parse_error = 0;
 }
 

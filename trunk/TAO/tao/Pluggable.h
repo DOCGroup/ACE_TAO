@@ -297,6 +297,14 @@ public:
   // is used for determining how many profiles will be generated
   // for this acceptor.
 
+  virtual int object_key (IOP::TaggedProfile &profile,
+                          TAO_ObjectKey &key) = 0;
+  // This method fetches the <key> from the <profile>. Protocols that
+  // are pluggable can send data that are specific in the
+  // <profile_data> field encapsulated as a octet stream. This method
+  // allows those  protocols to get the object key from the
+  // encapsulation.
+
 protected:
   CORBA::Short priority_;
   // The priority for this endpoint

@@ -84,10 +84,10 @@ public:
   // Set the target specification by giving the object key.
 
 
-  void target_specifier (IOP::TaggedProfile *profile);
+  void target_specifier (IOP::TaggedProfile &profile);
   // Set the target specification by passing in an IOP::TaggedProfile.
 
-  void target_specifier (IOP::IOR *ior,
+  void target_specifier (IOP::IOR &ior,
                          CORBA::ULong prof_index);
   // Specify the target by passing in the IOP::IOR with a profile
   // index. Please see the header file IOPC.h on why a profile index

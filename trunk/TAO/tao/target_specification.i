@@ -28,25 +28,24 @@ TAO_Target_Specification::target_specifier (const TAO_ObjectKey &key)
 }
 
 ACE_INLINE void
-TAO_Target_Specification::target_specifier (IOP::TaggedProfile *profile)
+TAO_Target_Specification::target_specifier (IOP::TaggedProfile &profile)
 
 {
-  if (profile)
-    {
-      this->specifier_ = TAO_Target_Specification::Profile_Addr;
-      this->u_.profile_ = profile;
-    }
+  this->specifier_ = TAO_Target_Specification::Profile_Addr;
+  this->u_.profile_ = ACE_const_cast (IOP::TaggedProfile *,
+                                      &profile);
+  
 }
 
 ACE_INLINE void
-TAO_Target_Specification::target_specifier (IOP::IOR *ior,
+TAO_Target_Specification::target_specifier (IOP::IOR &ior,
                                             CORBA::ULong prof_index)
-{ if (ior)
-    {
-      this->specifier_ = TAO_Target_Specification::Reference_Addr;
-      this->u_.ior_ = ior;
-      this->profile_index_ = prof_index;
-    }
+{ 
+  this->specifier_ = TAO_Target_Specification::Reference_Addr;
+  this->u_.ior_ = ACE_const_cast (IOP::IOR *,
+                                  &ior);
+  this->profile_index_ = prof_index;
+      
 }
 
 ACE_INLINE const TAO_ObjectKey*

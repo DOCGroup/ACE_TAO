@@ -275,17 +275,17 @@ public:
   // Just forward profiles.
   void use_locate_requests (CORBA::Boolean use_it);
   // set the flags to use locate_requests.
-
+  
   void set_valid_profile (void);
-   // NON-THREAD-SAFE.  Will set profile_success_ to 0.
+  // NON-THREAD-SAFE.  Will set profile_success_ to 0.
 
-   CORBA::Boolean valid_profile (void);
-   // returns TRUE if a connection was successful with at least
-   // one profile.
-
-   TAO_Profile *base_profiles (const TAO_MProfile& mprofiles);
-   // Initialize the base_profiles_ and set profile_in_use_ to
-   // reference the first profile.
+  CORBA::Boolean valid_profile (void);
+  // returns TRUE if a connection was successful with at least
+  // one profile.
+  
+  TAO_Profile *base_profiles (const TAO_MProfile& mprofiles);
+  // Initialize the base_profiles_ and set profile_in_use_ to
+  // reference the first profile.
 
   void add_forward_profiles (const TAO_MProfile &mprofiles);
   // THREAD SAFE.
@@ -311,6 +311,12 @@ public:
   // assumes the ownership of the passed in ORB and the accesor does not
   // return a copy of the orb since the accessing of the ORB is considered
   // temporary.
+
+  void addressing_mode (CORBA::Short addr_mode);
+  // Set the addressing mode
+  
+  CORBA::Short addressing_mode (void);
+  // Return the Addressing mode
 
 protected:
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -401,6 +407,9 @@ private:
   // policies.
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+  CORBA::Short addressing_mode_;
+  // The addressing mode
 
   // = Disallow copy constructor and assignment operator
   ACE_UNIMPLEMENTED_FUNC (TAO_Stub (const TAO_Stub &))

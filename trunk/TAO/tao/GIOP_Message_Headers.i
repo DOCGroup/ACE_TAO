@@ -2,11 +2,10 @@
 //$Id$
 
 ACE_INLINE
-TAO_GIOP_Locate_Request_Header::TAO_GIOP_Locate_Request_Header (TAO_InputCDR &msg)
+TAO_GIOP_Locate_Request_Header::TAO_GIOP_Locate_Request_Header (TAO_InputCDR &msg,
+                                                                TAO_ORB_Core *orb)
   : request_id_ (0),
-    object_key_ (),
-    profile_ (),
-    addr_info_ (),
+    profile_ (orb),
     incoming_ (&msg)
 {
 }
@@ -26,28 +25,20 @@ TAO_GIOP_Locate_Request_Header::request_id (void)
 ACE_INLINE const TAO_ObjectKey &
 TAO_GIOP_Locate_Request_Header::object_key (void) const
 {
-  return object_key_;
+  return this->profile_.object_key ();
 }
 
 ACE_INLINE TAO_ObjectKey &
 TAO_GIOP_Locate_Request_Header::object_key (void)
 {
-  return this->object_key_;
+  return this->profile_.object_key ();
 }
 
-ACE_INLINE IOP::TaggedProfile&
-TAO_GIOP_Locate_Request_Header::tagged_profile (void)
+ACE_INLINE TAO_Tagged_Profile &
+TAO_GIOP_Locate_Request_Header::profile (void)
 {
   return this->profile_;
 }
-
-
-ACE_INLINE GIOP::IORAddressingInfo &
-TAO_GIOP_Locate_Request_Header::addressing_info (void)
-{
-  return this->addr_info_;
-}
-
 
 ACE_INLINE TAO_InputCDR &
 TAO_GIOP_Locate_Request_Header::incoming_stream (void)
