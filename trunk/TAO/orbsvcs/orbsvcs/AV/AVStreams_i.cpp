@@ -450,6 +450,8 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                qos_spec, 
                                the_spec,  
                                env);
+  
+  TAO_CHECK_ENV_RETURN (env,CORBA::B_FALSE);
 
   // Make the upcall to the app
   return this->handle_postconnect (the_spec);
@@ -515,6 +517,7 @@ TAO_Server_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr ini
                                           the_spec,  
                                           env);
 
+  TAO_CHECK_ENV_RETURN (env,CORBA::B_FALSE);
   // Make the upcall to the app
   return this->handle_connection_requested (the_spec,
                                             env);
