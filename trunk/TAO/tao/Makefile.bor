@@ -138,7 +138,7 @@ OBJFILES = \
 	$(OBJDIR)\ORB_Core_Auto_Ptr.obj \
 	$(OBJDIR)\ORB_Table.obj \
 	$(OBJDIR)\Object.obj \
-	$(OBJDIR)\ObjectIDList.obj \
+	$(OBJDIR)\ObjectIdListC.obj \
 	$(OBJDIR)\Object_KeyC.obj \
 	$(OBJDIR)\Object_Loader.obj \
 	$(OBJDIR)\Object_Proxy_Broker.obj \
