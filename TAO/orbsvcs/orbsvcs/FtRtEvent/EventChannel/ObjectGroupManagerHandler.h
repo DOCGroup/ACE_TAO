@@ -20,28 +20,33 @@ class ObjectGroupManagerHandler : public POA_FTRT::AMI_ObjectGroupManagerHandler
 public:
   ObjectGroupManagerHandler(ACE_Auto_Event& evt, int num_backups);
   virtual void start (CORBA::Boolean ami_return_val,
-                      const FTRT::Location & the_location)
+                      const FTRT::Location & the_location
+                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void start_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * excep_holder)
+  virtual void start_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * excep_holder
+                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void create_group ()
+  virtual void create_group (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void create_group_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * excep_holder)
+  virtual void create_group_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * excep_holder
+                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void add_member ()
+  virtual void add_member (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void add_member_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * excep_holder)
+  virtual void add_member_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * excep_holder
+                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void set_state ()
+  virtual void set_state (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void set_state_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * excep_holder)
+  virtual void set_state_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * excep_holder
+                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 private:
   ACE_Auto_Event& evt_;

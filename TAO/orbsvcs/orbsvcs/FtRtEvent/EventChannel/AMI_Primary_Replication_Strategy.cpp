@@ -51,8 +51,7 @@ int AMI_Primary_Replication_Strategy::svc()
     orb_ = CORBA::ORB_init (argc, argv);
     ACE_TRY_CHECK;
 
-    PortableServer::POA_var
-      root_poa_ =  resolve_init<PortableServer::POA>(orb_.in(), "RootPOA"
+    root_poa_ =  resolve_init<PortableServer::POA>(orb_.in(), "RootPOA"
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 

@@ -1,8 +1,22 @@
+Thu Feb 19 13:06:45 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.h:
+        Fixed compilation problem in emulated exception mode.
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
+        Fixed variable hiding warning in Sun Forte8 build.
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
+        Fixed variable might be used uninitialized warning in cygwin build.
+
 Thu Feb 19 11:42:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
         * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
-        
+
           Fixed mistakes in code generation for attributes.
           Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for
           reporting the problem.

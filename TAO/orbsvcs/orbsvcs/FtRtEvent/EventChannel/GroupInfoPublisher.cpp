@@ -60,8 +60,8 @@ GroupInfoPublisherBase::backups() const
 
 GroupInfoPublisherBase::Info_ptr
 GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
-                           int my_position
-                           ACE_ENV_ARG_DECL)
+                                   int my_position
+                                   ACE_ENV_ARG_DECL)
 {
   Info_ptr result(new Info);
 
@@ -80,12 +80,13 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
 
   CORBA::Object_var obj =
     IOGR_Maker::instance()->make_iogr(iors ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN(0);
 
   result->iogr =
     ::FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
-                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
+
 
   /// check if sucessor changed
   size_t successors_length = info_list.length() - my_position -1;
@@ -98,13 +99,13 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
     }
 
     obj =  IOGR_Maker::instance()->merge_iors(iors
-                                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN(0);
 
     result->successor =
       FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
-                                                                ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN(0);
   }
   else {
     result->successor = info_->successor;
@@ -116,20 +117,19 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
     result->successor->_validate_connection (pols.out ());
   }
 
-    // update backups
+  // update backups
   result->backups.length(successors_length);
-    for (i = 0; i < successors_length; ++i)  {
+  for (i = 0; i < successors_length; ++i)  {
     result->backups[i] =
-        FtRtecEventChannelAdmin::EventChannel::_narrow(
-                      info_list[i+ my_position+1].ior.in()
-                      ACE_ENV_ARG_PARAMETER);
+      FtRtecEventChannelAdmin::EventChannel::_narrow(
+      info_list[i+ my_position+1].ior.in()
+      ACE_ENV_ARG_PARAMETER);
     CORBA::PolicyList_var pols;
     result->backups[i]->_validate_connection (pols.out ());
-      ACE_CHECK;
-    }
-
-  return result;
+    ACE_CHECK_RETURN(0);
   }
+  return result;
+}
 
 void
 GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr info)
