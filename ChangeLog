@@ -1,3 +1,11 @@
+Mon Nov  8 12:05:03 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/rules.lib.GNU:
+
+          Removed the unnecessary semi-colon from the end of the ar command
+          line and collapsed the special rule for vxworks_ntbuild as it was
+          no longer needed.
+
 Mon Nov  8 11:34:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/DependencyEditor.pm:
