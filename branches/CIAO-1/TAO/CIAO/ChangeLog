@@ -1,3 +1,14 @@
+Sun Mar 16 11:43:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/ConfigValues.html:
+	* docs/index.html: Updated the main document entry page.  It is
+	  grossly outdated.
+
+	* tools/ComponentServer/ComponentServer.mpc:
+	* tools/Daemon/Daemon.mpc:
+	* tools/ServerActivator/ServerActivator.mpc:
+	* tools/XML_Helpers/XMLHelpers.mpc: Added more mpc files.
+
 Sat Mar 15 11:43:34 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/Makefile:
@@ -16,7 +27,7 @@ Sat Mar 15 11:43:34 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* ciao/Object_Set_T.cpp:
 	* ciao/ServerActivator_Impl.h: Fixed Linux build errors.  Some
 	  warnings are not fixed due to incomplete implementations and I
-	  want to make sure they got addressed in some future point. 
+	  want to make sure they got addressed in some future point.
 
 Fri Mar 14 23:19:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
