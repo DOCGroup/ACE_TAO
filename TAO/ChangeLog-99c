@@ -1,3 +1,18 @@
+Sun Jun  6 15:41:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.h:
+	  Added comment for Any_var operator= (CORBA::Any_var).
+
+	* tao/Any.cpp:
+	  Added checks for failure of memory allocation at several
+	  places in the insertion and extraction operators.
+
+	* tao/Context.h:
+	  Added comment to some member functions.
+
+	* tao/Stub.h:
+	  Cosmetic changes.
+
 Sun Jun  6 14:07:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/DynAny_Test/data.h:
