@@ -1,3 +1,12 @@
+Mon Jun 19 05:03:53 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/posix/ctype.h
+	* pace/posix/ctype.inl
+	* pace/posix/math.h
+	* pace/posix/math.inl
+
+	  Correct functions added and implemented. _POSIX_C_LANG_SUPPORT.
+
 Mon Jun 19 04:34:34 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/sys/mman.h:
