@@ -1,0 +1,12 @@
+project(ectest_app): orbsvcsexe, rtevent, rtsched, kokyu, acexml {
+  exename = ectest
+  after += test_driver_lib
+  libs += wrappers Test_Driver
+  libpaths += . $TAO_ROOT/orbsvcs/examples/RtEC/test_driver
+
+  Source_Files {
+    ec_test.cpp
+    ec_consumer.cpp
+    ec_supplier.cpp
+  }
+}
