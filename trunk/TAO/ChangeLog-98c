@@ -1,3 +1,9 @@
+Thu Oct 08 16:14:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB_Core.{h,cpp} (~App_Allocated): Added a destructor for
+	  this class.  Some of its members are now allocated from the heap
+	  and they need to be deleted.
+	  
 Thu Oct  8 12:15:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h: 
