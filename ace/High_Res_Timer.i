@@ -135,7 +135,7 @@ ACE_High_Res_Timer::elapsed_microseconds (ACE_hrtime_t &usecs) const
   // the straggling usecs from the modulus.
   usecs *= 1000u;
   usecs +=
-   (ACE_hrtime_t) ((this->end_ - this->start_) % (global_scale_factor () * 1000u));
+   (ACE_hrtime_t) (((this->end_ - this->start_) % global_scale_factor ()) * 1000u);
 #endif
 }
 
