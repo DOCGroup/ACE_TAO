@@ -17,7 +17,8 @@ group OS_FILES =
   "OS_Thread_Adapter.cpp",
   "OS_Log_Msg_Attributes.cpp",
   "Thread_Hook.cpp",
-  "Sched_Params.cpp"
+  "Sched_Params.cpp",
+  "Handle_Set.cpp"
 
 group OS_INCLUDES =
   "Basic_Types.h",
@@ -31,7 +32,8 @@ group OS_INCLUDES =
   "OS_Thread_Adapter.h",
   "OS_Log_Msg_Attributes.h",
   "Thread_Hook.h",
-  "Sched_Params.h"
+  "Sched_Params.h",
+  "Handle_Set.h"
 
 group UTILS_FILES =
   "ACE.cpp",
@@ -173,7 +175,6 @@ group THREADS_INCLUDES =
 group DEMUX_FILES =
   "Event_Handler.cpp",
   "FlReactor.cpp",
-  "Handle_Set.cpp",
   "Msg_WFMO_Reactor.cpp",
   "POSIX_Proactor.cpp",
   "Priority_Reactor.cpp",
@@ -191,7 +192,6 @@ group DEMUX_FILES =
 group DEMUX_INCLUDES =
   "Event_Handler.h",
   "FlReactor.h",
-  "Handle_Set.h",
   "Msg_WFMO_Reactor.h",
   "POSIX_Proactor.h",
   "Priority_Reactor.h",

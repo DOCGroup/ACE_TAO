@@ -34,6 +34,9 @@ ACE_Process::~ACE_Process (void)
   ACE_OS::close (this->process_info_.hThread);
   ACE_OS::close (this->process_info_.hProcess);
 #endif /* ACE_WIN32 */
+  // If any handles were duplicated for the child process and
+  // still not closed, get them now.
+  this->close_dup_handles ();
 }
 
 int
@@ -45,10 +48,49 @@ ACE_Process::prepare (ACE_Process_Options &)
 pid_t
 ACE_Process::spawn (ACE_Process_Options &options)
 {
-#if defined (ACE_WIN32)
   if (prepare (options) < 0)
     return ACE_INVALID_PID;
 
+  // Stash the passed/duped handle sets away in this object for later
+  // closing if needed or requested. At the same time, figure out which
+  // ones to include in command line options if that's needed below.
+  ACE_Handle_Set *set_p = 0;
+  if (options.dup_handles (this->dup_handles_))
+    set_p = &this->dup_handles_;
+  else if (options.passed_handles (this->handles_passed_))
+    set_p = &this->handles_passed_;
+
+  // If we are going to end up running a new program (i.e. Win32, or
+  // NO_EXEC option is set) then get any handles passed in the options,
+  // and tack them onto the command line with +H <handle> options,
+  // unless the command line runs out of space.
+  // Note that we're using the knowledge that all the options, argvs, etc.
+  // passed to the options are all sitting in the command_line_buf. Any
+  // call to get the argv then splits them out. So, regardless of the
+  // platform, tack them all onto the command line buf and take it
+  // from there.
+  if (set_p && !ACE_BIT_ENABLED (options.creation_flags (),
+                                 ACE_Process_Options::NO_EXEC))
+    {
+      int maxlen = 0;
+      ACE_TCHAR *cmd_line_buf = options.command_line_buf (&maxlen);
+      size_t max_len = ACE_static_cast (size_t, maxlen);
+      size_t curr_len = ACE_OS::strlen (cmd_line_buf);
+      ACE_Handle_Set_Iterator h_iter (*set_p);
+      // Because the length of the to-be-formatted +H option is not
+      // known, and we don't have a snprintf, guess at the space
+      // needed (20 chars), and use that as a limit.
+      for (ACE_HANDLE h = h_iter ();
+           h != ACE_INVALID_HANDLE && curr_len + 20 < max_len;
+           h = h_iter ())
+        {
+          curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
+                                       ACE_LIB_TEXT (" +H %d"),
+                                       h);
+        }
+    }
+
+#if defined (ACE_WIN32)
   BOOL fork_result =
     ACE_TEXT_CreateProcess (0,
                             options.command_line_buf (),
@@ -61,11 +103,13 @@ ACE_Process::spawn (ACE_Process_Options &options)
                             options.startup_info (),
                             &this->process_info_);
 
-  if (fork_result) {
-    parent (this->getpid ());
-    return this->getpid ();
-  } else
-    return ACE_INVALID_PID;
+  if (fork_result)
+    {
+      parent (this->getpid ());
+      return this->getpid ();
+    }
+  return ACE_INVALID_PID;
+
 #elif defined (CHORUS)
   // This only works if we exec.  Chorus does not really support
   // forking.
@@ -105,9 +149,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
   return this->child_id_;
 #else /* ACE_WIN32 */
-  if (prepare (options) < 0)
-    return ACE_INVALID_PID;
-
   // Fork the new process.
   this->child_id_ = ACE::fork (options.process_name (),
                                options.avoid_zombies ());
@@ -332,6 +373,37 @@ ACE_Process::wait (const ACE_Time_Value &tv,
     }
 #endif /* ACE_WIN32 */
 }
+
+void
+ACE_Process::close_dup_handles (void)
+{
+  if (this->dup_handles_.num_set () > 0)
+    {
+      ACE_Handle_Set_Iterator h_iter (this->dup_handles_);
+      for (ACE_HANDLE h = h_iter ();
+           h != ACE_INVALID_HANDLE;
+           h = h_iter ())
+        ACE_OS::closesocket (h);
+      this->dup_handles_.reset ();
+    }
+  return;
+}
+
+void
+ACE_Process::close_passed_handles (void)
+{
+  if (this->handles_passed_.num_set () > 0)
+    {
+      ACE_Handle_Set_Iterator h_iter (this->handles_passed_);
+      for (ACE_HANDLE h = h_iter ();
+           h != ACE_INVALID_HANDLE;
+           h = h_iter ())
+        ACE_OS::closesocket (h);
+      this->handles_passed_.reset ();
+    }
+  return;
+}
+
 
 ACE_Process_Options::ACE_Process_Options (int ie,
                                           int cobl,
@@ -743,3 +815,67 @@ ACE_Process_Options::command_line_argv (void)
 
   return command_line_argv_;
 }
+
+
+// Cause the specified handle to be passed to a child process
+// when it's spawned.
+int
+ACE_Process_Options::pass_handle (ACE_HANDLE h)
+{
+# if defined (ACE_WIN32)
+  // This is oriented towards socket handles... may need some adjustment
+  // for non-sockets.
+  // This is all based on an MSDN article:
+  // http://support.microsoft.com/support/kb/articles/Q150/5/23.asp
+  // If on Win95/98, the handle needs to be duplicated for the to-be-spawned
+  // process. On WinNT, they get inherited by the child process automatically.
+  // If the handle is duplicated, remember the duplicate so it can be
+  // closed later. Can't be closed now, or the child won't get it.
+  OSVERSIONINFO osvi;
+  ZeroMemory (&osvi, sizeof (osvi));
+  osvi.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
+  // If this is Win95/98 or we can't tell, duplicate the handle.
+  if (!GetVersionEx (&osvi) || osvi.dwPlatformId != VER_PLATFORM_WIN32_NT)
+    {
+      HANDLE dup_handle;
+      if (!DuplicateHandle (GetCurrentProcess (),
+                            ACE_static_cast (HANDLE, h),
+                            GetCurrentProcess (),
+                            &dup_handle,
+                            0,
+                            TRUE,   // Inheritable
+                            DUPLICATE_SAME_ACCESS))
+        return -1;
+      dup_handles_.set_bit (ACE_static_cast (ACE_HANDLE, dup_handle));
+    }
+#endif /* ACE_WIN32 */
+
+  this->handles_passed_.set_bit (h);
+
+  return 0;
+}
+
+// Get a copy of the handles the ACE_Process_Options duplicated
+// for the spawned process.
+int
+ACE_Process_Options::dup_handles (ACE_Handle_Set &set) const
+{
+  if (this->dup_handles_.num_set () == 0)
+    return 0;
+  set.reset ();
+  set = this->dup_handles_;
+  return 1;
+}
+
+// Get a copy of the handles passed to the spawned process. This
+// will be the set of handles previously passed to @arg pass_handle().
+int
+ACE_Process_Options::passed_handles (ACE_Handle_Set &set) const
+{
+  if (this->handles_passed_.num_set () == 0)
+    return 0;
+  set.reset ();
+  set = this->handles_passed_;
+  return 1;
+}
+
