@@ -7207,6 +7207,51 @@ NODEP_CPP_COSNAMI=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\Property\CosPropertyService_i.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosPropertyServiceC.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosPropertyServiceS.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\CosTimeBaseC.cpp
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
@@ -9523,8 +9568,6 @@ DEP_CPP_DISPA=\
 	".\Event\ReactorTask.h"\
 	".\Event\RT_Task.h"\
 	".\Event\RT_Task.i"\
-	".\Event\Task_Manager.h"\
-	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
 	".\Scheduler_Factory.h"\
@@ -9544,6 +9587,8 @@ NODEP_CPP_DISPA=\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
 	".\Event\ace\ReactorEx.h"\
+	".\Event\Task_Manager.h"\
+	".\Event\Task_Manager.i"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -9841,8 +9886,6 @@ DEP_CPP_DISPA=\
 	".\Event\ReactorTask.h"\
 	".\Event\RT_Task.h"\
 	".\Event\RT_Task.i"\
-	".\Event\Task_Manager.h"\
-	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
 	".\Scheduler_Factory.h"\
@@ -9853,6 +9896,8 @@ DEP_CPP_DISPA=\
 NODEP_CPP_DISPA=\
 	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
+	".\Event\Task_Manager.h"\
+	".\Event\Task_Manager.i"\
 	
 
 !ENDIF 
@@ -11758,8 +11803,6 @@ DEP_CPP_EVENT=\
 	".\Event\ReactorTask.h"\
 	".\Event\RT_Task.h"\
 	".\Event\RT_Task.i"\
-	".\Event\Task_Manager.h"\
-	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\Event_Utilities.h"\
 	".\Event_Utilities.i"\
@@ -11781,6 +11824,8 @@ NODEP_CPP_EVENT=\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
 	".\Event\ace\ReactorEx.h"\
+	".\Event\Task_Manager.h"\
+	".\Event\Task_Manager.i"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -12081,8 +12126,6 @@ DEP_CPP_EVENT=\
 	".\Event\ReactorTask.h"\
 	".\Event\RT_Task.h"\
 	".\Event\RT_Task.i"\
-	".\Event\Task_Manager.h"\
-	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\Event_Utilities.h"\
 	".\Event_Utilities.i"\
@@ -12095,6 +12138,8 @@ DEP_CPP_EVENT=\
 NODEP_CPP_EVENT=\
 	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
+	".\Event\Task_Manager.h"\
+	".\Event\Task_Manager.i"\
 	
 
 !ENDIF 
@@ -16157,8 +16202,6 @@ DEP_CPP_MEMOR=\
 	".\Event\ReactorTask.h"\
 	".\Event\RT_Task.h"\
 	".\Event\RT_Task.i"\
-	".\Event\Task_Manager.h"\
-	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
 	".\Time_Utilities.h"\
@@ -16176,6 +16219,8 @@ NODEP_CPP_MEMOR=\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
 	".\Event\ace\ReactorEx.h"\
+	".\Event\Task_Manager.h"\
+	".\Event\Task_Manager.i"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -16471,8 +16516,6 @@ DEP_CPP_MEMOR=\
 	".\Event\ReactorTask.h"\
 	".\Event\RT_Task.h"\
 	".\Event\RT_Task.i"\
-	".\Event\Task_Manager.h"\
-	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
 	".\Time_Utilities.h"\
@@ -16481,6 +16524,8 @@ DEP_CPP_MEMOR=\
 NODEP_CPP_MEMOR=\
 	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
+	".\Event\Task_Manager.h"\
+	".\Event\Task_Manager.i"\
 	
 
 !ENDIF 
@@ -16765,8 +16810,6 @@ DEP_CPP_MODUL=\
 	".\Event\ReactorTask.h"\
 	".\Event\RT_Task.h"\
 	".\Event\RT_Task.i"\
-	".\Event\Task_Manager.h"\
-	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
 	".\Time_Utilities.h"\
@@ -16784,6 +16827,8 @@ NODEP_CPP_MODUL=\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
 	".\Event\ace\ReactorEx.h"\
+	".\Event\Task_Manager.h"\
+	".\Event\Task_Manager.i"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -17078,8 +17123,6 @@ DEP_CPP_MODUL=\
 	".\Event\ReactorTask.h"\
 	".\Event\RT_Task.h"\
 	".\Event\RT_Task.i"\
-	".\Event\Task_Manager.h"\
-	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
 	".\Time_Utilities.h"\
@@ -17088,6 +17131,8 @@ DEP_CPP_MODUL=\
 NODEP_CPP_MODUL=\
 	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
+	".\Event\Task_Manager.h"\
+	".\Event\Task_Manager.i"\
 	
 
 !ENDIF 
@@ -18842,8 +18887,6 @@ DEP_CPP_RT_TA=\
 	".\Event\ReactorTask.h"\
 	".\Event\RT_Task.h"\
 	".\Event\RT_Task.i"\
-	".\Event\Task_Manager.h"\
-	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
 	".\Scheduler_Factory.h"\
@@ -18863,6 +18906,8 @@ NODEP_CPP_RT_TA=\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
 	".\Event\ace\ReactorEx.h"\
+	".\Event\Task_Manager.h"\
+	".\Event\Task_Manager.i"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -19161,8 +19206,6 @@ DEP_CPP_RT_TA=\
 	".\Event\ReactorTask.h"\
 	".\Event\RT_Task.h"\
 	".\Event\RT_Task.i"\
-	".\Event\Task_Manager.h"\
-	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
 	".\Scheduler_Factory.h"\
@@ -19173,6 +19216,8 @@ DEP_CPP_RT_TA=\
 NODEP_CPP_RT_TA=\
 	"..\..\..\ace\sys_conf.h"\
 	".\Event\ace\ReactorEx.h"\
+	".\Event\Task_Manager.h"\
+	".\Event\Task_Manager.i"\
 	
 
 !ENDIF 
@@ -26269,6 +26314,18 @@ SOURCE=.\CosNamingS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Property\CosPropertyService_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosPropertyServiceC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosPropertyServiceS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CosTimeBaseC.h
 # End Source File
 # Begin Source File
@@ -26559,7 +26616,7 @@ SOURCE=.\CosConcurrencyControl.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSCONC="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build -
 InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
@@ -26713,7 +26770,7 @@ SOURCE=.\CosLifeCycle.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSLIFE="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build -
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
@@ -26867,7 +26924,7 @@ SOURCE=.\CosNaming.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSNAMIN="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build -
 InputPath=.\CosNaming.idl
 InputName=CosNaming
 
@@ -27015,13 +27072,104 @@ BuildCmds= \
 # End Source File
 # Begin Source File
 
+SOURCE=.\CosPropertyService.idl
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build -
+InputPath=.\CosPropertyService.idl
+InputName=CosPropertyService
+
+BuildCmds= \
+	tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - nvoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\CosPropertyService.idl
+InputName=CosPropertyService
+
+BuildCmds= \
+	tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+# PROP Ignore_Default_Tool 1
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+# PROP Ignore_Default_Tool 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\CosTimeBase.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSTIME="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build -
 InputPath=.\CosTimeBase.idl
 InputName=CosTimeBase
 
@@ -27175,7 +27323,7 @@ SOURCE=.\CosTrading.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSTRAD="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build -
 InputPath=.\CosTrading.idl
 InputName=CosTrading
 
@@ -27338,7 +27486,7 @@ SOURCE=.\LifeCycleService.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__LIFECYC="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build -
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
@@ -27492,7 +27640,7 @@ SOURCE=.\Logger.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__LOGGER_="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build -
 InputPath=.\Logger.idl
 InputName=Logger
 
@@ -27646,7 +27794,7 @@ SOURCE=.\RtecEventChannelAdmin.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENT="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build -
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
@@ -27800,7 +27948,7 @@ SOURCE=.\RtecEventComm.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENTC="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build -
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
@@ -27954,7 +28102,7 @@ SOURCE=.\RtecScheduler.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECSCH="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build -
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
@@ -28108,7 +28256,7 @@ SOURCE=.\RtecUDPAdmin.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECU="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+# Begin Custom Build -
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
@@ -28193,6 +28341,21 @@ BuildCmds= \
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\CosPropertyServiceS_T.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
 # Begin Source File
 
 SOURCE=.\CosTradingS_T.cpp
