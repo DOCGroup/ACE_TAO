@@ -128,15 +128,20 @@ ACE_High_Res_Timer::stop_incr (const ACE_OS::ACE_HRTimer_Op op)
 ACE_INLINE void
 ACE_High_Res_Timer::elapsed_microseconds (ACE_hrtime_t &usecs) const
 {
+#if defined (ACE_WIN32)
+  // Win32 scale factor is in msec
+  // This could give overflow when measuring a long time with a
+  // big global_scale_factor() (> 48 days with a 4Ghz tick freq.)
+  // To be looked after in the future.
+  usecs = (ACE_hrtime_t) (((this->end_ - this->start_) * 1000) /
+                          global_scale_factor ());
+#else
   usecs =
     (ACE_hrtime_t) ((this->end_ - this->start_) / global_scale_factor ());
-#if defined (ACE_WIN32)
-  // Win32 scale factor is in msec, so multiply up to usecs and pick up
-  // the straggling usecs from the modulus.
-  usecs *= 1000u;
-  usecs +=
-   (ACE_hrtime_t) (((this->end_ - this->start_) % global_scale_factor ()) * 1000u);
 #endif
+
+
+
 }
 
 ACE_INLINE void
