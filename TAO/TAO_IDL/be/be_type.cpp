@@ -261,8 +261,8 @@ int be_type::write_as_return (TAO_OutStream *, be_type *)
 		     " method shouldn't be invoked\n"), -1);
 }
 
-// Visiting methods
-int be_type::accept (be_visitor *visitor)
+int
+be_type::accept (be_visitor *visitor)
 {
   return visitor->visit_type (this);
 }

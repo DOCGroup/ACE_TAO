@@ -73,10 +73,8 @@ be_expression::be_expression (double d)
 {
 }
 
-
-
-// Visiting methods
-int be_expression::accept (be_visitor *visitor)
+int
+be_expression::accept (be_visitor *visitor)
 {
   return visitor->visit_expression (this);
 }

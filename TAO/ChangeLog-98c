@@ -1,3 +1,25 @@
+Fri Jan  9 17:58:43 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_array.cpp: 
+	* TAO_IDL/be/be_decl.cpp: 
+	* TAO_IDL/be/be_enum.cpp: 
+	* TAO_IDL/be/be_enum_val.cpp: 
+	* TAO_IDL/be/be_exception.cpp: 
+	* TAO_IDL/be/be_expression.cpp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_interface_fwd.cpp: 
+	* TAO_IDL/be/be_module.cpp: 
+	* TAO_IDL/be/be_predefined_type.cpp: 
+	* TAO_IDL/be/be_root.cpp: 
+	* TAO_IDL/be/be_scope.cpp: 
+	* TAO_IDL/be/be_sequence.cpp: 
+	* TAO_IDL/be/be_string.cpp: 
+	* TAO_IDL/be/be_structure.cpp: 
+	* TAO_IDL/be/be_type.cpp: 
+	* TAO_IDL/be/be_typedef.cpp: 
+	  Minor cosmetic changes to make the main trunk changes identic to
+	  the ones on this branch.
+
 Thu Jan  8 15:50:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_state_operation.cpp: 

@@ -300,8 +300,8 @@ be_root::fe_add_array (AST_Array *t)
   return t;
 }
 
-// Visiting methods
-int be_root::accept (be_visitor *visitor)
+int
+be_root::accept (be_visitor *visitor)
 {
   return visitor->visit_root (this);
 }

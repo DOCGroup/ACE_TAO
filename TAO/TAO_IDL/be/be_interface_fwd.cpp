@@ -630,8 +630,8 @@ int be_interface_fwd::write_as_return (TAO_OutStream *stream,
   return 0;
 }
 
-// Visiting methods
-int be_interface_fwd::accept (be_visitor *visitor)
+int
+be_interface_fwd::accept (be_visitor *visitor)
 {
   return visitor->visit_interface_fwd (this);
 }
