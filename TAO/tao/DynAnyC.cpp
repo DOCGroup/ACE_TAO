@@ -106,12 +106,12 @@ CORBA_DynAny::Invalid::operator= (const CORBA_DynAny::Invalid &_tao_excp)
 }
 
 // narrow
-CORBA_DynAny::Invalid_ptr
+CORBA_DynAny::Invalid *
 CORBA_DynAny::Invalid::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:/CORBA_DynAny/Invalid:1.0",
                        exc->_id ())) // same type
-    return ACE_dynamic_cast (CORBA_DynAny::Invalid_ptr,
+    return ACE_dynamic_cast (CORBA_DynAny::Invalid *,
                              exc);
   else
     return 0;
@@ -205,12 +205,12 @@ CORBA_DynAny::InvalidValue::operator= (
 }
 
 // narrow
-CORBA_DynAny::InvalidValue_ptr
+CORBA_DynAny::InvalidValue *
 CORBA_DynAny::InvalidValue::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:/CORBA_DynAny/InvalidValue:1.0",
                        exc->_id ())) // same type
-    return ACE_dynamic_cast (CORBA_DynAny::InvalidValue_ptr,
+    return ACE_dynamic_cast (CORBA_DynAny::InvalidValue *,
                              exc);
   else
     return 0;
@@ -308,12 +308,12 @@ CORBA_DynAny::TypeMismatch::operator= (
 }
 
 // narrow
-CORBA_DynAny::TypeMismatch_ptr
+CORBA_DynAny::TypeMismatch *
 CORBA_DynAny::TypeMismatch::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:/CORBA_DynAny/TypeMismatch:1.0",
                        exc->_id ())) // same type
-    return ACE_dynamic_cast (CORBA_DynAny::TypeMismatch_ptr,
+    return ACE_dynamic_cast (CORBA_DynAny::TypeMismatch *,
                              exc);
   else
     return 0;
@@ -410,12 +410,12 @@ CORBA_DynAny::InvalidSeq::operator= (
 }
 
 // narrow
-CORBA_DynAny::InvalidSeq_ptr
+CORBA_DynAny::InvalidSeq *
 CORBA_DynAny::InvalidSeq::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:/CORBA_DynAny/InvalidSeq:1.0",
                        exc->_id ())) // same type
-    return ACE_dynamic_cast (CORBA_DynAny::InvalidSeq_ptr,
+    return ACE_dynamic_cast (CORBA_DynAny::InvalidSeq *,
                              exc);
   else
     return 0;
