@@ -149,7 +149,7 @@ TAO_ECG_Complex_Address_Server::get_addr (
 void
 TAO_ECG_Complex_Address_Server::dump_content (void)
 {
-  ACE_DEBUG (("Default address: %s:%d\n",
+  ACE_DEBUG ((LM_DEBUG, "Default address: %s:%d\n",
               this->default_addr_.get_host_addr (),
               this->default_addr_.get_port_number ()));
 
@@ -158,10 +158,10 @@ TAO_ECG_Complex_Address_Server::dump_content (void)
        iter++)
     {
       MAP::ENTRY & entry = *iter;
-  	  ACE_DEBUG (("%d --> %s:%d\n",
-				 entry.ext_id_,
-  	             this->default_addr_.get_host_addr (),
-  	             this->default_addr_.get_port_number ()));
+      ACE_DEBUG ((LM_DEBUG, "%d --> %s:%d\n",
+                  entry.ext_id_,
+                  this->default_addr_.get_host_addr (),
+                  this->default_addr_.get_port_number ()));
     }
 }
 
