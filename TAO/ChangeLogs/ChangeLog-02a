@@ -5,6 +5,7 @@ Tue Oct 16 11:19:17 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 	* orbsvcs/orbsvcs/AV/default_factory.cpp: 		
 	* orbsvcs/orbsvcs/AV/AV_Core.h: 		
 	* orbsvcs/orbsvcs/AV/AV_Core.cpp: 			
+	* orbsvcs/orbsvcs/AV/Makefile.av:
 
 	  Initially the AV Streams framework was pluggable for default transport and flow protocols. Made it truly pluggable for new transport and flow protocols too. The Resource_Factory abstract class and the default_resource factory provide the means to load pluggable transport and flow protocols through the -AVTransportFactory and -AVFlowProtocolFactory options respectively.
 	
