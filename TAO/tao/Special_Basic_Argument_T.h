@@ -34,7 +34,7 @@ namespace TAO
   class TAO_Export In_Special_Basic_Argument_T : public Argument
   {
   public:
-    In_Special_Basic_Argument_T (S const & x);
+    In_Special_Basic_Argument_T (S const &);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
 

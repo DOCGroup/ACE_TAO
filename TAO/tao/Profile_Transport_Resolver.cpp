@@ -124,7 +124,7 @@ namespace TAO
 
     // Get the max_wait_time
     ACE_Time_Value *max_wait_time = 0;
-    ACE_Time_Value connection_timeout;
+//    ACE_Time_Value connection_timeout;
     int is_conn_timeout = 0;
 #if 0
   // Check for the connection timout policy in the ORB

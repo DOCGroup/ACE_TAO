@@ -68,7 +68,7 @@ namespace TAO
 
   template<>
   class TAO_Export Arg_Traits<CORBA::ULong>
-    : public Basic_Arg_Traits_T<CORBA::Short>
+    : public Basic_Arg_Traits_T<CORBA::ULong>
   {
   };
 

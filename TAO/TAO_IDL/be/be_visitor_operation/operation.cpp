@@ -1467,20 +1467,47 @@ be_visitor_operation::gen_arg_template_param_name (AST_Type *bt,
 
   if (nt == AST_Decl::NT_typedef)
     {
-      AST_Typedef *td = AST_Typedef::narrow_from_decl (bt);
-      AST_Type *pbt = td->primitive_base_type ();
-      nt = pbt->node_type ();
+      be_typedef *td = be_typedef::narrow_from_decl (bt);
+      this->ctx_->alias (td);
+      this->gen_arg_template_param_name (td->primitive_base_type (),
+                                         os);
+      this->ctx_->alias (0);
+      return;
+    }
 
-      if (nt == AST_Decl::NT_string)
+  if (nt == AST_Decl::NT_string)
+    {
+      AST_String *s = AST_String::narrow_from_decl (bt);
+      unsigned long bound = s->max_size ()->ev ()->u.ulval;
+      AST_Typedef *alias = this->ctx_->alias ();
+
+      if (bound > 0)
         {
-          AST_String *s = AST_String::narrow_from_decl (pbt);
-          unsigned long bound = s->max_size ()->ev ()->u.ulval;
+          *os << "TAO::" << alias->local_name () << "_" << bound;
+          return;
+        }
+    }
 
-          if (bound > 0)
-            {
-              *os << "TAO::" << td->local_name () << "_" << bound;
-              return;
-            }
+  if (nt == AST_Decl::NT_pre_defined)
+    {
+      AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (bt);
+
+      switch (pdt->pt ())
+        {
+          case AST_PredefinedType::PT_boolean:
+            *os << "ACE_InputCDR::to_boolean";
+            return;
+          case AST_PredefinedType::PT_octet:
+            *os << "ACE_InputCDR::to_octet";
+            return;
+          case AST_PredefinedType::PT_char:
+            *os << "ACE_InputCDR::to_char";
+            return;
+          case AST_PredefinedType::PT_wchar:
+            *os << "ACE_InputCDR::to_wchar";
+            return;
+          default:
+            break;
         }
     }
 

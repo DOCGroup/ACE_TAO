@@ -58,7 +58,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
-
+/*
   *os << be_nl << be_nl
       << "// Traits specializations for " << node->name () << ".";
 
@@ -100,7 +100,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "return p->marshal (cdr);" << be_uidt_nl
       << "}";
-
+*/
   // Initialize the static narrrowing helper variable.
   *os << be_nl << be_nl
       << "int " << node->full_name () << "::_tao_class_id = 0;";

@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_BASIC_ARGUMENT_T_C
-#define TAO_BASIC_ARGUMENT_T_C
+#ifndef TAO_SPECIAL_BASIC_ARGUMENT_T_C
+#define TAO_SPECIAL_BASIC_ARGUMENT_T_C
 
 #include "tao/Special_Basic_Argument_T.h"
 
@@ -11,7 +11,7 @@ ACE_RCSID (tao,
 
 template<typename S, typename to_S, typename from_S>
 TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::In_Special_Basic_Argument_T (
-    const S & x
+     S const & x
   )
   : x_ (x)
 {}
@@ -37,7 +37,7 @@ template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
 TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_replace (CORBA::Any & any)
 {
-  return any >>= to_S (this->x_);
+  return any >>= to_S (ACE_const_cast (S &, this->x_));
 }
 
 // ===========================================================
@@ -299,5 +299,5 @@ TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::arg (void)
   return this->x_;
 }
 
-#endif /* TAO_BASIC_ARGUMENT_T_C */
+#endif /* TAO_SPECIAL_BASIC_ARGUMENT_T_C */
 
