@@ -6,7 +6,9 @@
 #	Requires GNU make
 #----------------------------------------------------------------------------
 
+ifndef  OBJDIRS
 OBJDIRS = .obj .shobj # .obj_debug .obj_profile .obj_optimize
+endif # OBJDIRS
 
 all.local: build.objdirs build.local install.local
 
@@ -58,17 +60,17 @@ ifndef SOLINK
 # that the service configurator needs to be able to function).
 # 970104 Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
 ifdef (ESOBUILD)
-$(VSHDIR)%.so: %.cpp
+$(VSHDIR)%.$(SOEXT): %.cpp
 	$(ESOBUILD)
 else
-$(VSHDIR)%.so: %.cpp
+$(VSHDIR)%.$(SOEXT): %.cpp
 	$(SOBUILD)
 endif
 $(VSHDIR)%.o:	%.cpp
 	$(COMPILE.cc) $(PIC) -o $@ $<
 $(VSHDIR)%.o:	%.cc
 	$(COMPILE.cc) $(PIC) -o $@ $<
-$(VSHDIR)%.so:	$(VSHDIR)%.o
+$(VSHDIR)%.$(SOEXT):	$(VSHDIR)%.o
 	$(SOLINK)
 endif
 
@@ -85,7 +87,7 @@ endif
 install.local: 	$(INSTALL)
 
 deinstall.local:
-	$(RM) $(INSTALL) $(LIB:%.a=$(INSLIB)/%*.a) $(SHLIB:%.so=$(INSLIB)/%*.so)
+	$(RM) $(INSTALL) $(LIB:%.a=$(INSLIB)/%*.a) $(SHLIB:%.$(SOEXT)=$(INSLIB)/%*.$(SOEXT))
 
 
 #### To disable installs, just remove write permission from $ACE_ROOT/ace.
@@ -94,7 +96,7 @@ deinstall.local:
 $(INSBIN)/%$(VAR) \
 $(INSINC)/ace% \
 $(INSLIB)/%$(VAR).a \
-$(INSLIB)/%$(VAR).so \
+$(INSLIB)/%$(VAR).$(SOEXT) \
 $(INSMAN)/man1/% \
 $(INSMAN)/man2/% \
 $(INSMAN)/man3/% \
@@ -116,11 +118,11 @@ $(INSMAN)/mann/% :
 ifdef MVSLIB
 #special for MVS in order to use the .x files
 	@if test -w $(@D) ; then \
-		if test -s $(@:.so=.x) ; then \
-			echo "$(@F:.so=.x) already installed" ; \
+		if test -s $(@:.$(SOEXT)=.x) ; then \
+			echo "$(@F:.$(SOEXT)=.x) already installed" ; \
 		else \
-			echo "Installing $(@F:.so=.x) -> $(@D)" ; \
-			ln -s $(shell pwd)/$(@F:.so=.x) $(@:.so=.x) ; \
+			echo "Installing $(@F:.$(SOEXT)=.x) -> $(@D)" ; \
+			ln -s $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
 			fi \
 	fi
 endif
@@ -152,7 +154,7 @@ depend.local: $(MAKEFILE)
 		sed -e "s;$(ACE_ROOT);\$$(ACE_ROOT);g" \
 		    -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
 		    -e "/:$$/d" \
-		    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o .shobj/\1.so:;" \
+		    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o $(VSHDIR)\1.$(SOEXT):;" \
 	> $(MAKEFILE).new
 	@mv $(MAKEFILE).new $(MAKEFILE) 
 	@if	cmp -s $(MAKEFILE) $(MAKEFILE).old ;\
