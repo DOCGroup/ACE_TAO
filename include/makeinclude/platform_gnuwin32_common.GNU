@@ -98,7 +98,7 @@ LIBS    += -lwsock32
 endif
 
 OCFLAGS += -O3
-PIC        = -DACE_OS_HAS_DLL=1
+PIC        =
 AR         = ar
 ARFLAGS    = rsuv
 RANLIB     = ranlib
