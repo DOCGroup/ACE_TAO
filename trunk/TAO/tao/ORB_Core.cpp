@@ -1457,6 +1457,66 @@ TAO_Resource_Factory::input_cdr_buffer_allocator (void)
 }
 
 
+ACE_Data_Block*
+TAO_Resource_Factory::create_input_cdr_data_block (size_t size)
+{
+  switch (this->cdr_allocator_source_)
+    {
+    case TAO_GLOBAL:
+      {
+        ACE_Allocator* buffer_alloc = 
+          this->input_cdr_buffer_allocator ();
+        ACE_Allocator* dblock_alloc = 
+          this->input_cdr_dblock_allocator ();
+
+        typedef
+          ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
+          Global_Data_Block;
+        Global_Data_Block *nb;
+
+        ACE_NEW_MALLOC_RETURN (
+            nb,
+            ACE_static_cast(Global_Data_Block*,
+                            dblock_alloc->malloc (sizeof (Global_Data_Block))),
+            Global_Data_Block (size,
+                               ACE_Message_Block::MB_DATA,
+                               0,
+                               buffer_alloc,
+                               0,
+                               dblock_alloc),
+            0);
+        return nb;
+      }
+      break;
+
+    case TAO_TSS:
+      {
+        ACE_Allocator* buffer_alloc = 
+          this->input_cdr_buffer_allocator ();
+        ACE_Allocator* dblock_alloc = 
+          this->input_cdr_dblock_allocator ();
+
+        ACE_Data_Block *nb;
+
+        ACE_NEW_MALLOC_RETURN (
+            nb,
+            ACE_static_cast(ACE_Data_Block*,
+                            dblock_alloc->malloc (sizeof (ACE_Data_Block))),
+            ACE_Data_Block (size,
+                            ACE_Message_Block::MB_DATA,
+                            0,
+                            buffer_alloc,
+                            0,
+                            0,
+                            dblock_alloc),
+            0);
+        return nb;
+      }
+      break;
+    }
+  return 0;
+}
+
 TAO_GLOBAL_Collocation_Table *
 TAO_Resource_Factory::get_global_collocation_table (void)
 {
@@ -1527,6 +1587,8 @@ TAO_ORB_Core_instance (void)
 
 template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >;
+template class ACE_Locked_Data_Block<ACE_Allocator_Adapter<ACE_SYNCH_MUTEX> >;
+
 template class ACE_Env_Value<int>;
 template class ACE_Env_Value<u_int>;
 template class ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
@@ -1579,6 +1641,8 @@ template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> 
 
 #pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >
+#pragma instantiate ACE_Locked_Data_Block<ACE_Allocator_Adapter<ACE_SYNCH_MUTEX> >
+
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>
 #pragma instantiate ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>

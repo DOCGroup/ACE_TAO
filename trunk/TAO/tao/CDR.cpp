@@ -580,18 +580,8 @@ TAO_OutputCDR::write_boolean_array (const CORBA::Boolean* x,
 
 TAO_InputCDR::TAO_InputCDR (const char *buf, size_t bufsiz,
                             int byte_order,
-                            TAO_Marshal_Factory *factory,
-                            ACE_Allocator* buffer_allocator,
-                            ACE_Allocator* data_block_allocator)
-  : start_ (bufsiz,
-            ACE_Message_Block::MB_DATA,
-            0,
-            buf,
-            buffer_allocator,
-            0, 0,
-            ACE_Time_Value::zero,
-            ACE_Time_Value::max_time,
-            data_block_allocator),
+                            TAO_Marshal_Factory *factory)
+  : start_ (buf, bufsiz),
     factory_ (factory),
     do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
     good_bit_ (1)
@@ -601,19 +591,8 @@ TAO_InputCDR::TAO_InputCDR (const char *buf, size_t bufsiz,
 
 TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
                             int byte_order,
-                            TAO_Marshal_Factory *factory,
-                            ACE_Allocator* buffer_allocator,
-                            ACE_Allocator* data_block_allocator)
-  : start_ (bufsiz,
-            ACE_Message_Block::MB_DATA,
-            0,
-            0,
-            buffer_allocator,
-            0,
-            0,
-            ACE_Time_Value::zero,
-            ACE_Time_Value::max_time,
-            data_block_allocator),
+                            TAO_Marshal_Factory *factory)
+  : start_ (bufsiz),
     factory_ (factory),
     do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
     good_bit_ (1)
@@ -630,6 +609,16 @@ TAO_InputCDR::TAO_InputCDR (ACE_Message_Block *data,
 {
   this->start_.rd_ptr (data->rd_ptr ());
   this->start_.wr_ptr (data->wr_ptr ());
+}
+
+TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
+                            int byte_order,
+                            TAO_Marshal_Factory *factory)
+  :  start_ (data),
+     factory_ (factory),
+     do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
+     good_bit_ (1)
+{
 }
 
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
