@@ -6957,9 +6957,9 @@ ACE_OS::strptime (char *buf,
                   struct tm *tm)
 {
 #if defined (ACE_LACKS_NATIVE_STRPTIME)
-  int bi = 0, fi = 0, percent = 0;
-  int wday = 0, yday = 0;
-  struct tm tmp;
+  int bi = 0;
+  int fi = 0;
+  int percent = 0;
 
   if (!buf || !format)
     return 0;
@@ -6971,7 +6971,7 @@ ACE_OS::strptime (char *buf,
           percent = 0;
           switch (format[fi])
             {
-            case '%':                        /* an escaped % */
+            case '%':                        // an escaped %
               if (buf[bi] == '%')
                 {
                   fi++; bi++;
@@ -7059,7 +7059,6 @@ ACE_OS::strptime (char *buf,
                 return buf + bi;
 
               tm->tm_yday--;
-              yday = 1;
               break;
 
             case 'm':                        /* an escaped % */
@@ -7127,7 +7126,6 @@ ACE_OS::strptime (char *buf,
               if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_wday, &bi, &fi, 0, 6))
                 return buf + bi;
 
-              wday = 1;
               break;
 
               /* not supported yet: date, based on locale
@@ -7179,18 +7177,6 @@ ACE_OS::strptime (char *buf,
             }
         } /* if (percent) */
     } /* while (format[fi] */
-
-  if (!wday || !yday)
-    {
-      ACE_OS::memcpy (&tmp, tm, sizeof (struct tm));
-      if (mktime (&tmp) != (time_t) (-1))
-        {
-          if (!wday)
-            tm->tm_wday = tmp.tm_wday;
-          if (!yday)
-            tm->tm_yday = tmp.tm_yday;
-        }
-    }
 
   return buf + bi;
 #else  /* ! ACE_LACKS_NATIVE_STRPTIME */
