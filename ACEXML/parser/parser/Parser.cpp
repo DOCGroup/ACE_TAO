@@ -745,7 +745,7 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
           else
             {
               this->xml_namespace_.processName(startname, ns_uri, ns_lname, 0);
-              ACEXML_Char* temp (ACE::strnew (startname));
+              ACEXML_Char* temp = ACE::strnew (startname);
               ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_temp (temp);
               ACE_Tokenizer ns_att (temp);
               ns_att.delimiter_replace (':', 0);
@@ -784,7 +784,7 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
         case '>':
           {
             this->xml_namespace_.processName (startname, ns_uri, ns_lname, 0);
-            ACEXML_Char* temp (ACE::strnew (startname));
+            ACEXML_Char* temp = ACE::strnew (startname);
             ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_temp (temp);
             ACE_Tokenizer ns_att (temp);
             ns_att.delimiter_replace (':', 0);
@@ -1019,7 +1019,7 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
                                                     endname,
                                                     xmlenv);
                 ACEXML_CHECK;
-                ACEXML_Char* temp (ACE::strnew (startname));
+                ACEXML_Char* temp = ACE::strnew (startname);
                 ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_temp (temp);
                 ACE_Tokenizer ns_att (temp);
                 ns_att.delimiter_replace (':', 0);
