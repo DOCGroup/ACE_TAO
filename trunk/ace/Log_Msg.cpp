@@ -871,15 +871,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
                     type = SKIP_SPRINTF;
                     errno = ACE::map_errno (this->errnum ());
-#if !defined (ACE_HAS_WINCE)
-                    // @@ WINCE There is no strerror available on CE.
-                    //    Have to double check if this change is valid.
                     if (errno >= 0 && errno < sys_nerr)
                       ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%s: %s"),
                                        va_arg (argp, ACE_TCHAR *),
-                                       strerror (errno));
+                                       ACE_OS_String::strerror (errno));
                     else
-#endif /* ACE_HAS_WINCE */
                       {
 #if defined (ACE_WIN32)
                         ACE_TCHAR *lpMsgBuf = 0;
@@ -935,15 +931,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
                     type = SKIP_SPRINTF;
                     errno = ACE::map_errno (this->errnum ());
-#if !defined (ACE_HAS_WINCE)
-                    // @@ There is no strerror available on CE.
-                    //    Have to double check if this change is valid.
                     if (errno >= 0 && errno < sys_nerr)
                       ACE_OS::sprintf (bp,
                                        ACE_LIB_TEXT ("%s"),
-                                       strerror (errno));
+                                       ACE_OS_String::strerror (errno));
                     else
-#endif /* ACE_HAS_WINCE */
                       {
 #if defined (ACE_WIN32)
                         ACE_TCHAR *lpMsgBuf = 0;

@@ -670,7 +670,12 @@ ACE_OS::uname (struct utsname *name)
       ACE_OS::strcpy (name->machine, ACE_LIB_TEXT ("???"));
     }
 
+# if defined (ACE_LACKS_HOSTNAME)
+  return 0;
+# else /* ACE_LACKS_HOSTNAME */
   return ACE_OS::hostname (name->nodename, maxnamelen);
+# endif /* ACE_LACKS_HOSTNAME */
+
 # elif defined (VXWORKS)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname, "VxWorks");
@@ -4115,12 +4120,14 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
     {
       ACE_TCHAR *temp = 0;
 
+#if !defined (ACE_LACKS_ENV)
       // Account for environment variables.
       if (substitute_env_args
           && (argv[i][0] == '$'
               && (temp = ACE_OS::getenv (&argv[i][1])) != 0))
         buf_len += ACE_OS::strlen (temp);
       else
+#endif /* ACE_LACKS_ENV */
         buf_len += ACE_OS::strlen (argv[i]);
 
       // Add one for the extra space between each string.
@@ -4143,12 +4150,14 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
     {
       ACE_TCHAR *temp = 0;
 
+# if !defined (ACE_LACKS_ENV)
       // Account for environment variables.
       if (substitute_env_args
       && (argv[j][0] == '$'
               && (temp = ACE_OS::getenv (&argv[j][1])) != 0))
         end = ACE_OS::strecpy (end, temp);
       else
+#endif /* ACE_LACKS_ENV */
         end = ACE_OS::strecpy (end, argv[j]);
 
       // Replace the null char that strecpy put there with white
@@ -4279,12 +4288,14 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
           *cp = '\0';
         }
 
+#if !defined (ACE_LACKS_ENV)
       // Check for environment variable substitution here.
       if (substitute_env_args)
         ACE_ALLOCATOR_RETURN (argv[i],
                               ACE_OS::strenvdup (arg),
                               -1);
       else
+#endif /* ACE_LACKS_ENV */
         ACE_ALLOCATOR_RETURN (argv[i],
                               ACE_OS::strdup (arg),
                               -1);
@@ -4436,8 +4447,8 @@ ACE_OS::write_n (ACE_HANDLE handle,
 // "Fake" writev for operating systems without it.  Note that this is
 // thread-safe.
 
-extern "C" int
-writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
+int 
+ACE_OS::writev_emulation (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 {
   ACE_OS_TRACE ("::writev");
 
@@ -4482,10 +4493,10 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 // "Fake" readv for operating systems without it.  Note that this is
 // thread-safe.
 
-extern "C" int
-readv (ACE_HANDLE handle,
-       ACE_READV_TYPE *iov,
-       int n)
+int
+ACE_OS::readv_emulation (ACE_HANDLE handle,
+                         ACE_READV_TYPE *iov,
+                         int n)
 {
   ACE_OS_TRACE ("readv");
 
@@ -5233,12 +5244,21 @@ ACE_OS::open (const char *filename,
     shared_mode |= FILE_SHARE_DELETE;
 #endif /* ACE_HAS_WINCE */
 
+#if defined (ACE_HAS_WINCE)
+  ACE_HANDLE h = ::CreateFileW (ACE_Ascii_To_Wide (filename).wchar_rep (), access,
+                                shared_mode,
+                                ACE_OS::default_win32_security_attributes (sa),
+                                creation,
+                                flags,
+                                0);
+#else /* ACE_HAS_WINCE */
   ACE_HANDLE h = ::CreateFileA (filename, access,
                                 shared_mode,
                                 ACE_OS::default_win32_security_attributes (sa),
                                 creation,
                                 flags,
                                 0);
+#endif /* ACE_HAS_WINCE */
 
   if (ACE_BIT_ENABLED (mode, _O_APPEND))
     {
@@ -6938,7 +6958,7 @@ ACE_OS_Object_Manager::shutting_down (void)
 }
 
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
-class ACE_Export ACE_OS_Object_Manager_Manager
+class ACE_OS_Object_Manager_Manager
   // = TITLE
   //    Ensure that the <ACE_OS_Object_Manager> gets initialized at
   //    program startup, and destroyed at program termination.
@@ -6984,26 +7004,6 @@ static ACE_OS_Object_Manager_Manager ACE_OS_Object_Manager_Manager_instance;
 #endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
 # if defined (ACE_HAS_WINCE)
-#   if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-ACE_CE_Errno *ACE_CE_Errno::instance_ = 0;
-DWORD ACE_CE_Errno::errno_key_ = 0xffffffff;
-
-void
-ACE_CE_Errno::init ()
-{
-  ACE_CE_Errno::instance_ = new ACE_CE_Errno ();
-  ACE_CE_Errno::errno_key_ = TlsAlloc ();
-}
-
-void
-ACE_CE_Errno::fini ()
-{
-  TlsFree (ACE_CE_Errno::errno_key_);
-  delete ACE_CE_Errno::instance_;
-  ACE_CE_Errno::instance_ = 0;
-}
-#   endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
-
 ACE_CE_Bridge *ACE_CE_Bridge::default_text_bridge_ = 0;
 
 ACE_CE_Bridge::ACE_CE_Bridge (void)
@@ -7120,6 +7120,7 @@ exit (int status)
 #undef GetEnvironmentStrings
 #endif /* ACE_WIN32 && UNICODE !ACE_USES_TCHAR */
 
+#if !defined (ACE_LACKS_ENV)
 ACE_TCHAR *
 ACE_OS::getenvstrings (void)
 {
@@ -7133,6 +7134,7 @@ ACE_OS::getenvstrings (void)
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_WIN32 */
 }
+#endif /* ACE_LACKS_ENV */
 
 #if defined (ACE_HAS_STRPTIME)
 char *

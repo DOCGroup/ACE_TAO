@@ -22,19 +22,19 @@
 #  endif /* PACE_HAS_ALL_POSIX_FUNCS */
 # endif /* ACE_HAS_PACE */
 
-#if defined (ACE_HAS_WINCE) || defined (UNDER_CE)
+#if defined (_WIN32_WCE)
 # include "ace/config-WinCE.h"
-#endif /* ACE_HAS_WINCE */
+#endif /* _WIN32_WCE */
 
-#if defined (_MSC_VER)
-# include "ace/config-win32-msvc.h"
-#elif defined (__BORLANDC__)
-# include "ace/config-win32-borland.h"
-#elif defined (__IBMCPP__)
-# include "ace/config-win32-visualage.h"
-#else
-# error "Compiler does not seem to be supported"
-#endif /* _MSC_VER */
+# if defined (_MSC_VER)
+#   include "ace/config-win32-msvc.h"
+# elif defined (__BORLANDC__)
+#   include "ace/config-win32-borland.h"
+# elif defined (__IBMCPP__)
+#   include "ace/config-win32-visualage.h"
+# else
+#   error "Compiler does not seem to be supported"
+# endif /* _MSC_VER */
 
 #if !defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 #  define ACE_ENDTHREADEX(STATUS) ::_endthread ()

@@ -4,6 +4,10 @@
 #define ACE_CONFIG_WINCE_H
 #include "ace/pre.h"
 
+#if !defined (UNDER_CE)
+#error Define UNDER_CE to version (i.e. 300 = 3.0)
+#endif /* UNDER_CE */
+
 #if !defined (ACE_HAS_WINCE)
 #define ACE_HAS_WINCE 1
 #endif
@@ -19,6 +23,9 @@
 // the information using getenv.
 #define ACE_DEFAULT_LD_SEARCH_PATH ACE_LIB_TEXT (".\\;\\windows")
 
+#define ACE_LACKS_SYS_TYPES_H
+
+
 // CE is not NT.
 #if defined (ACE_HAS_WINNT4)
 # undef ACE_HAS_WINNT4
@@ -28,12 +35,6 @@
 #define ACE_LACKS_ACE_TOKEN
 #define ACE_LACKS_ACE_OTHER
 #define ACE_LACKS_MSG_WFMO
-
-// You must use MFC with ACE on CE.
-//#if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-//# undef ACE_HAS_MFC
-//#endif /* ACE_HAS_MFC */
-//#define ACE_HAS_MFC 1
 
 #define ACE_HAS_WCHAR
 
@@ -154,6 +155,22 @@ typedef void FILE;
 #define ACE_LACKS_BSEARCH
 #define ACE_LACKS_SOCKET_BUFSIZ
 #define ACE_LACKS_ISATTY
+#define ACE_LACKS_STRERROR
+
+#define ERRMAX 256 /* Needed for following define */
+#define ACE_LACKS_SYS_NERR /* Needed for sys_nerr in Log_Msg.cpp */
+
+
+#define ACE_LACKS_CUSERID
+#define ACE_LACKS_CHDIR
+#define ACE_LACKS_ENV
+#define ACE_LACKS_HOSTNAME
+
+#if defined (_WIN32_WCE_EMULATION)
+// @@ For some reason, qsort isn't defined correctly (_stdcall vs _cdecl) 
+// under emulation.  So for right now, exclude it.
+#define ACE_LACKS_QSORT
+#endif /* _WIN32_WCE_EMULATION && UNDER_CE == 300 */
 
 // @@ Followings are used to keep existing programs happy.
 
@@ -162,7 +179,7 @@ typedef void FILE;
 #  define BUFSIZ   1024
 #endif /* BUFSIZ */
 
-typedef void (*__sighandler_t)(int); // keep Signal compilation happy
+typedef void (__cdecl * __sighandler_t)(int); // keep Signal compilation happy
 typedef long off_t;
 
 #if defined (UNDER_CE) && (UNDER_CE > 200)
@@ -182,12 +199,24 @@ typedef long off_t;
 #define ACE_LACKS_MALLOC_H      // We do have malloc.h, but don't use it.
 #endif /* UNDER_CE && UNDER_CE > 201 */
 
+#if (UNDER_CE < 300)
+#define ACE_LACKS_STRPBRK
+#define ACE_LACKS_STRSPN
+#define ACE_LACKS_STRTOD
+#define ACE_LACKS_STRTOL
+#define ACE_LACKS_STRTOUL
+#endif /* UNDER_CE < 300 */
+
 #if defined (UNDER_CE) && (UNDER_CE >= 211)
 #define ACE_HAS_WINCE_BROKEN_ERRNO
 #define _MAX_FNAME 255
 #endif /* UNDER_CE && UNDER_CE >= 211 */
 
 #define ACE_HAS_STRDUP_EMULATION
+#define ACE_HAS_WINSOCK2 0
+
+// CE doesn't have <sys/types.h> instead <types.h>
+#define ACE_HAS_FLAT_TYPES_H
 
 // @@ This needs to be defined and initialized as a static. (Singleton?)
 #define ACE_DEFAULT_LOG_STREAM 0
