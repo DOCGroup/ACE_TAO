@@ -11,4 +11,8 @@ project: ace_qt, zzip {
     unicode_flags += -DACE_USES_WCHAR
     macros += ACE_LD_DECORATOR_STR=ACE_LIB_TEXT(\\"$(LIBMODIFIER)\\")
   }
+
+  specific(automake) {
+    includes += $(ACE_BUILDDIR)
+  }
 }

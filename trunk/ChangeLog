@@ -1,3 +1,24 @@
+Fri Aug 20 15:10:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/core.mpb:
+
+	  Changed to define INSTALL_THIS_TARGET for automake builds.
+
+	* bin/MakeProjectCreator/config/taodefaults.mpb:
+
+	  Changed to add $(TAO_BUILDDIR) to includes for automake builds.
+
+	* bin/MakeProjectCreator/config/acedefaults.mpb:
+
+	  Changed to add $(ACE_BUILDDIR) to includes for automake builds.
+
+Fri Aug 20 12:17:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* m4/config_h.m4:
+
+	  Added check for ACE_SIZEOF_WCHAR.
+
 Fri Aug 20 16:13:29 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/OS_NS_Thread.h:
@@ -38,15 +59,15 @@ Fri Aug 20 15:20:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           rebounded) handles.
 
           Additional cosmetic changes.
- 
+
         * ace/Priority_Reactor.cpp:
         * ace/Priority_Reactor.h:
         * ace/TP_Reactor.cpp:
         * ace/TP_Reactor.h:
         * ace/TP_Reactor.inl:
- 
+
           Replicate changes to the above reactors.
- 
+
         * ace/Signal.h:
         * ace/Signal.inl:
 
