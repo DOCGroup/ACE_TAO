@@ -163,7 +163,7 @@ run_final_test (void)
 }
 
 int
-main (int argc, char* argv[])
+main (int /* argc */, char* /* argv */ [])
 {
   ACE_Thread_Manager mgr;
 
@@ -187,7 +187,7 @@ main (int argc, char* argv[])
 
   run_final_test ();
 
-  return 42;
+  return 0;
 }
 
 #else
