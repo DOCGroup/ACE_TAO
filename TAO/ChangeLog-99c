@@ -1,3 +1,13 @@
+Thu Jun  3 13:17:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/varout.h:
+	* tao/Sequence_T.h:
+	  Work around egcs problems with default parameters in templates
+	  and namespaces. Who would ever use that ;-)
+
+	* tao/Exception.cpp:
+	  Fixed problem with VMCID identification in debugging code.
+
 Tue Jun 01 23:48:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/corbafwd.h (CORBA): Changed CORBA from a class to a
