@@ -1599,7 +1599,7 @@ ACE_OS::strncasecmp (const char *s,
                      size_t len)
 {
 #if !defined (ACE_WIN32) || defined (ACE_HAS_WINCE)
-  ACE_TRACE ("ACE_OS::strcasecmp");
+  ACE_TRACE ("ACE_OS::strncasecmp");
 # if defined (ACE_LACKS_STRCASECMP)
   const char *scan1 = s;
   const char *scan2 = t;
