@@ -12,7 +12,7 @@ package SLEWorkspaceCreator;
 
 use strict;
 
-use SleProjectCreator;
+use SLEProjectCreator;
 use WorkspaceCreator;
 
 use vars qw(@ISA);

@@ -1,3 +1,9 @@
+Thu Apr  1 10:21:31 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/SLEWorkspaceCreator.pm:
+
+          Fixed a case error for the SlickEdit workspace creator.
+
 Thu Apr  1 08:34:55 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
