@@ -47,7 +47,7 @@ Left_i::color (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ))
 {
   return CORBA::string_dup ("black");
-};
+}
 
 Right_i::Right_i ()
 {
