@@ -1,0 +1,41 @@
+$Id$
+
+This is a simple CORBA example that has a module Bank with two
+interfaces Account and AccountManager. The Account interface has a
+method to return the balance in that account. The AccountManager
+interface has a method to create a new Account and return the IORof
+this to the client. The two interfaces also have methods to shutdown
+the server.
+
+server:
+-------
+
+server [-d]
+
+Options:
+-------
+-d    Debug flag (It is additive more -d flags will give debugging).
+
+When the server is started, you should see as the first line of output
+something that looks like
+	iiop:1.0//danzon.cs.wustl.edu:10015/P35ad159600081a38/child_poa/server
+	(-ORBobjrefstyle url)
+or
+	IOR:000000000000001649444c3a43756269745...
+	(-ORBobjrefstyle ior)
+
+Using -d turns on debugging messages.  This option is additive, i.e.,
+the more -d options provided, the more debugging you can get.  At the
+moment, only 2 levels of debugging are implemented, and more than 2 -d
+options are ignored.
+
+client:
+-------
+
+client [-d] [-x] [-n iterations]
+
+Options:
+-------
+-d    Debug flag
+-x    Tells the server to shutdown at the end of the test.
+-n    no. of iterations
