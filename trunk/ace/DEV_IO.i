@@ -26,11 +26,21 @@ ACE_DEV_IO::recv_n (void *buf, size_t n,
                     size_t *bt) const
 {
   ACE_TRACE ("ACE_DEV_IO::recv_n");
+#if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (timeout);
+
+  return ACE::read_n (this->get_handle (),
+                      buf,
+                      n,
+                      bt);
+#else
+
   return ACE::recv_n (this->get_handle (),
                       buf,
                       n,
                       timeout,
                       bt);
+#endif /*ACE_WIN32*/
 }
 
 ASYS_INLINE ssize_t
