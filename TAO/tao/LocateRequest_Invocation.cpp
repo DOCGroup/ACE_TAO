@@ -9,6 +9,8 @@
 #include "Profile.h"
 #include "ORB_Constants.h"
 
+#include "ace/Countdown_Time.h"
+
 ACE_RCSID (tao,
            LocateRequest_Invocation,
            "$Id$")

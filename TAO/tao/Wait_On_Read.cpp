@@ -5,6 +5,8 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Synch_Reply_Dispatcher.h"
 
+#include "ace/Countdown_Time.h"
+
 ACE_RCSID (tao,
            Wait_On_Read,
            "$Id$")

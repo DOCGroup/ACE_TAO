@@ -17,6 +17,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Countdown_Time.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Synch_Invocation.inl"

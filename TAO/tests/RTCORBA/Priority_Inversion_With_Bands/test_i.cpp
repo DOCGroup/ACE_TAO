@@ -3,6 +3,7 @@
 #include "test_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/Thread_Pool.h"
+#include "ace/Countdown_Time.h"
 
 ACE_RCSID(Priority_Inversion_With_Bands, test_i, "$Id$")
 
