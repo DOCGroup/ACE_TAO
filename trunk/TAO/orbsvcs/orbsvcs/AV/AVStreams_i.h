@@ -350,7 +350,7 @@ class TAO_ORBSVCS_Export TAO_VDev
 //    and represents device-specific parameters
 {
  public:
-  TAO_VDev (void);
+  TAO_VDev (CORBA::ORB_ptr orb);
   // Constructor
 
   virtual CORBA::Boolean set_peer (AVStreams::StreamCtrl_ptr the_ctrl, 
@@ -395,6 +395,8 @@ class TAO_ORBSVCS_Export TAO_VDev
    
   AVStreams::VDev_var peer_;
   // My peer
+ private:
+  CORBA::ORB_ptr orb_;
 };
 
 class TAO_ORBSVCS_Export TAO_MMDevice 
