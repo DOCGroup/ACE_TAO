@@ -201,14 +201,22 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
   if (cf.file ()->get_handle () != ACE_INVALID_HANDLE)
     {
 #if defined (ACE_JAWS_BASELINE) || defined (ACE_WIN32)
-      ACE_SOCK_Stream stream;
-      stream.set_handle (ioh->handle ());
+      ACE_FILE_Info info;
+      cf.file ()->get_info (info);
 
-      if ((stream.send_n (header, header_size) == header_size)
-          && ((u_long) stream.send_n (handle.address (), handle.size ())
-              == handle.size ())
-          && (stream.send_n (trailer, trailer_size) == trailer_size))
-        this->handler_->transmit_file_complete ();
+      if (cf.file ()->get_info (info) == 0 && info.size_ > 0)
+        {
+          ACE_SOCK_Stream stream;
+          stream.set_handle (ioh->handle ());
+          if (((u_long) stream.send_n (header, header_size) == header_size)
+              && (stream.send_n (cf.mmap ()->addr (), info.size_)
+                  == info.size_)
+              && ((u_long) stream.send_n (trailer, trailer_size)
+                  == trailer_size))
+            this->handler_->transmit_file_complete ();
+          else
+            result = -1;
+        }
       else
         result = -1;
 #else
@@ -224,7 +232,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
         }
 
       ACE_FILE_Info info;
-      cf.file ()->get_info (info);
+
       if (cf.file ()->get_info (info) == 0 && info.size_ > 0)
         {
           iov[iovcnt].iov_base = (char *) cf.mmap ()->addr ();

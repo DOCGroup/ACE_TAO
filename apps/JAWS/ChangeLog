@@ -1,3 +1,10 @@
+Thu Jul 29 16:05:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* PROTOTYPE/JAWS/IO.cpp (transmit_file): Added some fixes so this
+	  code will compile on NT.  Thanks to Brian Jones
+ 	  <bjones@edgemail.com> for reporting this problem and to James Hu
+ 	  for fixing it.
+
 Tue Jun 22 13:42:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * remora/app/Makefile: replaced rm -f with $(RM).
