@@ -1,18 +1,29 @@
+Thu Aug 19 10:04:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU: added
+          trap to cause builds to fail if the exceptions flag is
+          enabled.  The VxWorks libraries don't support exceptions.
+          And, exceptions give the (Tornado II) compiler fits, e.g.,
+          with ACE_wrappers/TAO/tao/IORManipulation.cpp.  Thanks to
+          Erik Johannes <ejohannes@oresis.com> for this nifty preemptive
+          solution, and to Nick Sawadsky <Nick_Sawadsky@BrooksSoftware.com>
+          for motivating its implementation.
+
 Thu Aug 19 09:34:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Service_Config: Updated the failure result comment for
-	  open() and cleaned up the return value and errno propagation for
- 	  open_i() when process_commandline_directives() fails.  Thanks to
- 	  Jerry D. De Master <jdemaste@ipdinc.com> for reporting the bug
- 	  and suggesting a fix.
+        * ace/Service_Config: Updated the failure result comment for
+          open() and cleaned up the return value and errno propagation for
+          open_i() when process_commandline_directives() fails.  Thanks to
+          Jerry D. De Master <jdemaste@ipdinc.com> for reporting the bug
+          and suggesting a fix.
 
-	* ace/Service_Config.h: Moved the process_directives() method
-	  used to parse the svc.conf files out of the protected part of
- 	  the class to the public part so that application programmers can
- 	  call this directly to reconfigure services from the svc.conf
- 	  files.  Thanks to John Mink <John.Mink@nl.origin-it.com> for
-	  suggesting this.
-	
+        * ace/Service_Config.h: Moved the process_directives() method
+          used to parse the svc.conf files out of the protected part of
+          the class to the public part so that application programmers can
+          call this directly to reconfigure services from the svc.conf
+          files.  Thanks to John Mink <John.Mink@nl.origin-it.com> for
+          suggesting this.
+
 Wed Aug 18 22:45:24 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
         * ace/WFMO_Reactor.h,
@@ -37,13 +48,13 @@ Wed Aug 18 22:45:24 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
         * ace/Timer_Heap_T.cpp:
         * ace/Timer_List_T.cpp:
         * ace/Timer_Wheel_T.cpp:
-	  Changed all uses of const long to long...
+          Changed all uses of const long to long...
 
 Wed Aug 18 22:15:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/run_tests.sh:
-	  It was running the DISABLED tests, thanks to David for pointing
-	  this out.
+        * tests/run_tests.sh:
+          It was running the DISABLED tests, thanks to David for pointing
+          this out.
 
 Wed Aug 18 21:48:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
