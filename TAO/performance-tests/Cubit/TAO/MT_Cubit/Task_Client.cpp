@@ -954,7 +954,7 @@ Client::run_tests (Cubit_ptr cb,
       if (ts_->use_utilization_test_ == 1)
 	{
 	  countdown.update ();
-	  if (max_wait_time == 0)
+	  if (max_wait_time == ACE_Time_Value::zero)
 	    break;
 	}
 

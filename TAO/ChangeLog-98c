@@ -1,3 +1,14 @@
+Thu Jun 18 10:21:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Comparing an _var to a 0 is non-portable (and non-complaint),
+	  the right thing to do is CORBA::is_nil.
+
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: 
+	  Comparing a Time_Value to 0 is a bad idea (we can convert the 0
+	  to a Time_Value or the Time_Value to an int), we compare to
+	  ACE_Time_Value::zero.
+
 Thu Jun 18 09:34:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/util/utl_scope.cpp (UTL_Scope ctor): removed
@@ -278,6 +289,46 @@ Wed Jun 17 22:03:42 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 Wed Jun 17 23:29:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Fixed many bugs in the disconnection code. The main ones were
+	  related to memory managment (missing _duplicate() calls for
+	  ES_Consumer_Rep objects) and to agressive memory release
+	  (disconnecting a consumer could result in removing a critical
+	  entry for the map of type consumers in a supplier, rendering the
+	  supplier unusable).
+	  The code more transparent for CORBA exceptions (it just passes
+	  them back); but some places still catch them or create new
+	  CORBA::Environment and/or signal errors using return values.
+	  Looked more carefully at memory managment, but we still need
+	  clean startup and shutdown to really track any problems in this
+	  area.
+	  Some stylistic changes here and there.
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	  Added an option to connect and disconnect the consumers and/or
+	  suppliers before doing anything else. This was useful to debug
+	  the EC.
+
+	* orbsvcs/tests/EC_Multiple/Makefile: 
+	  Updated dependencies.
+
+	* orbsvcs/tests/EC_Multiple/svc.conf: 
+	  Added more options to control the kind of lock used in the POA
+	  and similar things.
+
+	* orbsvcs/orbsvcs/Event/RT_Task.cpp: 
+	  Failing to run in the real-time class is only a warning, added
+	  an explanation to the user in that sense.
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
+	  Added debug messages (now commented out).
+
+	* orbsvcs/orbsvcs/Event/CORBA_Utils_T.i: 
+	  Fixed off-by-one bug in Simple_Array_Iterator.
+
         * orbsvcs/orbsvcs/Event/Event_Channel.h:
         * orbsvcs/orbsvcs/Event/Event_Channel.i:
         * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
@@ -311,6 +362,9 @@ Wed Jun 17 23:29:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/orbsvcs/Event/RT_Task.cpp:
           Failing to run in the real-time class is only a warning, added
           an explanation to the user in that sense.
+
+	* orbsvcs/orbsvcs/Event_Utilities.cpp: 
+	  Initialize the rt_info field to 0.
 
         * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
           Added debug messages (now commented out).
