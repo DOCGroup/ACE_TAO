@@ -8,8 +8,9 @@ namespace CCF
   {
     namespace SyntaxTree
     {
-      struct Declaration
+      class Declaration
       {
+      protected:
         Declaration ();
       };
       

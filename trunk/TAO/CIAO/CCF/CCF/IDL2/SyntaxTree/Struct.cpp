@@ -29,12 +29,12 @@ namespace CCF
 
           return true;
         }
-        catch (DeclarationTable::DeclarationNotFound const& e)
+        catch (DeclarationTable::DeclarationNotFound const&)
         {
           //@@ ICE
           abort ();
         }
-        catch (DeclarationTable::TypeMismatch const& e)
+        catch (DeclarationTable::TypeMismatch const&)
         {
           return false;
         }

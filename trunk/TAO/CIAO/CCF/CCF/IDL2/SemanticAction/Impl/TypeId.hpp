@@ -130,11 +130,12 @@ namespace CCF
                 virtual bool
                 test (DeclarationPtr const& d) const throw ()
                 {
+                  //@@ MSVC bug - requires fully qualified name in parameter.
                   return
-                       d->is_a<SyntaxTree::Module> ()
-                    || d->is_a<SyntaxTree::FileScope> ()
-                    || d->is_a<SyntaxTree::InterfaceDecl> ()
-                    || d->is_a<SyntaxTree::ValueTypeDecl> ();
+                       d->is_a<CCF::IDL2::SyntaxTree::Module> ()
+                    || d->is_a<CCF::IDL2::SyntaxTree::FileScope> ()
+                    || d->is_a<CCF::IDL2::SyntaxTree::InterfaceDecl> ()
+                    || d->is_a<CCF::IDL2::SyntaxTree::ValueTypeDecl> ();
                 }
               } p;
 

@@ -153,7 +153,16 @@
 					RelativePath=".\SyntaxTree\Elements.cpp">
 				</File>
 				<File
+					RelativePath=".\SyntaxTree\ElementsCtor.cpp">
+				</File>
+				<File
 					RelativePath=".\SyntaxTree\Interface.cpp">
+				</File>
+				<File
+					RelativePath=".\SyntaxTree\InterfaceCtor.cpp">
+				</File>
+				<File
+					RelativePath=".\SyntaxTree\Member.cpp">
 				</File>
 				<File
 					RelativePath=".\SyntaxTree\Module.cpp">
@@ -162,10 +171,40 @@
 					RelativePath=".\SyntaxTree\Operation.cpp">
 				</File>
 				<File
+					RelativePath=".\SyntaxTree\Sequence.cpp">
+				</File>
+				<File
+					RelativePath=".\SyntaxTree\Struct.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\SyntaxTree\Translation.cpp">
 				</File>
 				<File
+					RelativePath=".\SyntaxTree\TranslationCtor.cpp">
+				</File>
+				<File
+					RelativePath=".\SyntaxTree\Typedef.cpp">
+				</File>
+				<File
+					RelativePath=".\SyntaxTree\TypeId.cpp">
+				</File>
+				<File
 					RelativePath=".\SyntaxTree\ValueType.cpp">
+				</File>
+				<File
+					RelativePath=".\SyntaxTree\ValueTypeCtor.cpp">
 				</File>
 			</Filter>
 			<Filter
@@ -181,13 +220,28 @@
 					RelativePath=".\SyntaxTree\Interface.hpp">
 				</File>
 				<File
+					RelativePath=".\SyntaxTree\Member.hpp">
+				</File>
+				<File
 					RelativePath=".\SyntaxTree\Module.hpp">
 				</File>
 				<File
 					RelativePath=".\SyntaxTree\Operation.hpp">
 				</File>
 				<File
+					RelativePath=".\SyntaxTree\Sequence.hpp">
+				</File>
+				<File
+					RelativePath=".\SyntaxTree\Struct.hpp">
+				</File>
+				<File
 					RelativePath=".\SyntaxTree\Translation.hpp">
+				</File>
+				<File
+					RelativePath=".\SyntaxTree\Typedef.hpp">
+				</File>
+				<File
+					RelativePath=".\SyntaxTree\TypeId.hpp">
 				</File>
 				<File
 					RelativePath=".\SyntaxTree\ValueType.hpp">
@@ -267,6 +321,21 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\Traversal\Member.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\Traversal\Module.cpp">
 					<FileConfiguration
 						Name="Debug|Win32">
@@ -297,6 +366,36 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\Traversal\Sequence.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Traversal\Struct.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\Traversal\Translation.cpp">
 					<FileConfiguration
 						Name="Debug|Win32">
@@ -309,6 +408,36 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Traversal\Typedef.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Traversal\TypeId.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)2.obj"/>
 					</FileConfiguration>
 				</File>
 			</Filter>
@@ -325,13 +454,28 @@
 					RelativePath=".\Traversal\Interface.hpp">
 				</File>
 				<File
+					RelativePath=".\Traversal\Member.hpp">
+				</File>
+				<File
 					RelativePath=".\Traversal\Module.hpp">
 				</File>
 				<File
 					RelativePath=".\Traversal\Operation.hpp">
 				</File>
 				<File
+					RelativePath=".\Traversal\Sequence.hpp">
+				</File>
+				<File
+					RelativePath=".\Traversal\Struct.hpp">
+				</File>
+				<File
 					RelativePath=".\Traversal\Translation.hpp">
+				</File>
+				<File
+					RelativePath=".\Traversal\Typedef.hpp">
+				</File>
+				<File
+					RelativePath=".\Traversal\TypeId.hpp">
 				</File>
 			</Filter>
 		</Filter>
@@ -376,10 +520,22 @@
 					RelativePath=".\SemanticAction\Interface.hpp">
 				</File>
 				<File
+					RelativePath=".\SemanticAction\Member.hpp">
+				</File>
+				<File
 					RelativePath=".\SemanticAction\Module.hpp">
 				</File>
 				<File
 					RelativePath=".\SemanticAction\Operation.hpp">
+				</File>
+				<File
+					RelativePath=".\SemanticAction\Struct.hpp">
+				</File>
+				<File
+					RelativePath=".\SemanticAction\Typedef.hpp">
+				</File>
+				<File
+					RelativePath=".\SemanticAction\TypeId.hpp">
 				</File>
 			</Filter>
 			<Filter
@@ -468,6 +624,21 @@
 						</FileConfiguration>
 					</File>
 					<File
+						RelativePath=".\SemanticAction\Impl\Member.cpp">
+						<FileConfiguration
+							Name="Debug|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+						</FileConfiguration>
+					</File>
+					<File
 						RelativePath=".\SemanticAction\Impl\Module.cpp">
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -501,6 +672,46 @@
 								ObjectFile="$(IntDir)/$(InputName)3.obj"/>
 						</FileConfiguration>
 					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\Struct.cpp">
+						<FileConfiguration
+							Name="Debug|Win32"
+							ExcludedFromBuild="TRUE">
+							<Tool
+								Name="VCCLCompilerTool"/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\Typedef.cpp">
+						<FileConfiguration
+							Name="Debug|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\TypeId.cpp">
+						<FileConfiguration
+							Name="Debug|Win32"
+							ExcludedFromBuild="TRUE">
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+						</FileConfiguration>
+					</File>
 				</Filter>
 				<Filter
 					Name="Header Files"
@@ -521,10 +732,22 @@
 						RelativePath=".\SemanticAction\Impl\Interface.hpp">
 					</File>
 					<File
+						RelativePath=".\SemanticAction\Impl\Member.hpp">
+					</File>
+					<File
 						RelativePath=".\SemanticAction\Impl\Module.hpp">
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Operation.hpp">
+					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\Struct.hpp">
+					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\Typedef.hpp">
+					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\TypeId.hpp">
 					</File>
 				</Filter>
 			</Filter>

@@ -8,6 +8,8 @@
 #include "CCF/IDL2/SyntaxTree/Member.hpp"
 #include "CCF/IDL2/SemanticAction/Member.hpp"
 
+using namespace std;
+
 namespace CCF
 {
   namespace IDL2

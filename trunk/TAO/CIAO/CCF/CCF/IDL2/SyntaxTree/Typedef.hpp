@@ -51,6 +51,13 @@ namespace CCF
         }
 
       public:
+        ScopedName 
+        type_name () const
+        {
+          return type_;
+        }
+
+      public:
         virtual std::string
         declaration_class ()
         {
