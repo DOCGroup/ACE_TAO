@@ -4,8 +4,8 @@
 #include <ace/Reactor.h>
 #include <ace/SOCK_Dgram.h>
 #include <ace/INET_Addr.h>
-#include "agent_impl.h"
 
+#include "agent_impl.h"
 
 agent_impl::agent_impl(unsigned short port, const char *rd, const char *wr) :
 sagent(port)

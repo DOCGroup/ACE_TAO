@@ -8,9 +8,9 @@
 //    sagent.cpp
 //
 // = DESCRIPTION
-//   SNMP agent class defintion. The sagent class provides an object oriented
-//   approach for creating SNMP Agents. The sagent class is an encapsulation of SNMP
-//   sessions, gets, sets, etc. 
+//   SNMP agent class definition. The sagent class provides an object oriented
+//   approach for creating SNMP Agents. The sagent class is an encapsulation 
+//   of SNMP sessions, gets, sets, etc. 
 //
 // = AUTHOR
 //    Michael R. MacFaden 
@@ -86,6 +86,7 @@ ACE_HANDLE sagent::get_handle() const
 
 int sagent::respond(Pdu& pdu,UdpTarget& tgt)
 {
+  pdu.set_type(sNMP_PDU_RESPONSE);
   transaction tr(pdu, tgt, iv_snmp_session_);
   tr.send();
   return 0;

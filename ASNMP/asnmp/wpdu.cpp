@@ -73,6 +73,8 @@ wpdu::wpdu(const Pdu& pdu, const UdpTarget& target):
        if (set_trap_info(raw_pdu, pdu)) // will free raw_pdu
           return;
        break;
+     case sNMP_PDU_RESPONSE:
+       break;
 
    default:
      ACE_ASSERT(0);

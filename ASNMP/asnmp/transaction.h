@@ -34,9 +34,8 @@ class ACE_Export transaction : public ACE_Event_Handler
 
  public:
   transaction(const Pdu& pdu, const UdpTarget& target, ACE_SOCK_Dgram& io);
-  transaction(ACE_SOCK_Dgram& io):result_(0), session_(io) { }
+  transaction(ACE_SOCK_Dgram& io);
   // constructor
-
   ~transaction();
   // destructor
 
@@ -44,7 +43,7 @@ class ACE_Export transaction : public ACE_Event_Handler
    int run(transaction_result *r); // Async interface, with callback object
    // begin polling for values
 
-   int result(Pdu& pdu, char *comm_str = 0, ACE_INET_Addr *from_addr = 0) const;
+   int result(Pdu& pdu, char *comm_str = 0, ACE_INET_Addr *from_addr = 0); 
    // return pdu with result from agent after run() is completed rc = 0
    // optionally get community str
 
