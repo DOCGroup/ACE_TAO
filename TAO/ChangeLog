@@ -1,3 +1,9 @@
+Mon Nov 25 11:38:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile: The Makefile was
+	  by default generating a static library even in dynamic
+	  builds. Fixed the Makefile to work fine. 
+
 Sun Nov 24 12:27:27 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
