@@ -2,35 +2,39 @@
 
 #include "Task_Client.h"
 
-int stats(int data[], int n)
+// @@ Shouldn't this be a member function?
+static int 
+stats (int data[], int n)
 {
     int i, j, key, sum, mean;
 
-    if( n < 2 )
+    if (n < 2)
         return 0;
 
-    /* sort the samples */
-    for(j=1; j<n; j++) {
+    // Sort the samples.
+    for (j = 1; j < n; j++) 
+      {
         key = data[j];
         i = j - 1;
-        while( i >= 0 && data[i] > key ) {
-            data[i+1] = data[i];
+        while( i >= 0 && data[i] > key ) 
+          {
+            data[i + 1] = data[i];
             i--;
-        }
-        data[i+1] = key;
-    }
+          }
+
+        data[i + 1] = key;
+      }
 
     sum = 0;
-    for(i=0; i<n; i++) {
+    for(i = 0; i < n; i++) 
         sum += data[i];
-    }
 
-    if( (n%2) == 0 )
-        mean = (data[n/2-1] + data[n/2]) / 2;
+    if (ACE_EVEN (n))
+        mean = (data[n / 2 - 1] + data[n / 2]) / 2;
     else
-        mean = data[n/2];
+        mean = data[n / 2];
 
-    return sum/n;
+    return sum / n;
 }
 
 Task_State::Task_State (int argc, char **argv)
@@ -50,6 +54,7 @@ Task_State::Task_State (int argc, char **argv)
     ior_file_ (0)
 {
   server_host_ = ACE_OS::strdup ("localhost");
+
   ACE_Get_Opt opts (argc, argv, "sh:n:t:p:d:rk:xof:1:2:3:");
   int c;
   int datatype;
@@ -138,54 +143,50 @@ Task_State::Task_State (int argc, char **argv)
     {
       FILE *iorFile = ACE_OS::fopen (ior_file_, "r");
       char buf[BUFSIZ];
-      int i = 0, j=0;
+      int i = 0;
+      int j = 0;
+
       while (ACE_OS::fgets (buf, BUFSIZ, iorFile) != 0)
 	{ 
-	  j=ACE_OS::strlen(buf); 
-	  buf[j-1]=0;iors_[i] = ACE_OS::strdup (buf); 
+	  j = ACE_OS::strlen (buf); 
+	  buf[j - 1] = 0;
+          iors_[i] = ACE_OS::strdup (buf); 
 	  i++;  
 	}
-      fclose (iorFile);
+
+      ACE_OS::fclose (iorFile);
     }
 
   // thread_count_ + 1 because there is one utilization thread also
   // wanting to begin at the same time the clients begin..
-  ACE_NEW (barrier_, ACE_Barrier (thread_count_));// + 1));
-  ACE_NEW (latency_, double [thread_count_]);
-  ACE_NEW (global_jitter_array_, double *[thread_count_]);
-  ACE_NEW (ave_latency_, int [thread_count_]);
+  ACE_NEW (barrier_,
+           ACE_Barrier (thread_count_));
+  ACE_NEW (latency_,
+           double [thread_count_]);
+  ACE_NEW (global_jitter_array_, 
+           double *[thread_count_]);
+  ACE_NEW (ave_latency_,
+           int [thread_count_]);
 }
 
 Client::Client (Task_State *ts)
-  :
-#if defined (ACE_HAS_THREADS)
-  ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
-#endif /* ACE_HAS_THREADS */
-  ts_ (ts)
+  : ACE_MT (ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ())),
+    ts_ (ts)
 {
-
 }
 
 void
 Client::put_ave_latency (int ave_latency, u_int thread_id)
 {
-#if defined (ACE_HAS_THREADS)
-  ts_->lock_.acquire ();
-#endif /* ACE_HAS_THREADS */
+  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, *ts_));
 
   ts_->ave_latency_[thread_id] = ave_latency;
-
-#if defined (ACE_HAS_THREADS)
-  ts_->lock_.release ();
-#endif /* ACE_HAS_THREADS */
 }
 
 void
 Client::put_latency (double *jitter, double latency, u_int thread_id)
 {
-#if defined (ACE_HAS_THREADS)
-  ts_->lock_.acquire ();
-#endif /* ACE_HAS_THREADS */
+  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, *ts_));
 
   ts_->latency_[thread_id] = latency;
 #if defined (ACE_LACKS_FLOATING_POINT)
@@ -193,11 +194,7 @@ Client::put_latency (double *jitter, double latency, u_int thread_id)
 #else
   ACE_DEBUG ((LM_DEBUG, "(%t) My latency was %f\n", latency));
 #endif /* ! ACE_LACKS_FLOATING_POINT */
-  ts_->global_jitter_array_ [thread_id] = jitter;
-
-#if defined (ACE_HAS_THREADS)
-  ts_->lock_.release ();
-#endif /* ACE_HAS_THREADS */
+  ts_->global_jitter_array_[thread_id] = jitter;
 }
 
 double
@@ -213,6 +210,7 @@ Client::get_low_priority_latency (void)
 
   for (u_int i = 1; i < ts_->start_count_; i++)
     l += (double) ts_->latency_[i];
+
   return ts_->start_count_ > 1? l / (double) (ts_->start_count_ - 1) : 0;
 }
 
@@ -223,15 +221,19 @@ Client::get_latency (u_int thread_id)
 }
 
 double
-Client::get_high_priority_jitter () {
+Client::get_high_priority_jitter (void) 
+{
   double jitter = 0;
   double average = get_high_priority_latency ();
+
   for (u_int i = 0; i < ts_->loop_count_; i ++)
     {
       double difference = ts_->global_jitter_array_ [0][i] - average;
       jitter += difference * difference;
     }
-// @@ This is a *hack*, we need to implement sqrt without double's.
+
+  // @@ This is a *hack*, we need to implement sqrt without double's.
+  // @@ David, can we please ask James for help with this?
 #if defined (ACE_LACKS_FLOATING_POINT)
   return 1;
 #else  /* ! ACE_LACKS_FLOATING_POINT */
@@ -240,15 +242,18 @@ Client::get_high_priority_jitter () {
 }
 
 double
-Client::get_low_priority_jitter () {
+Client::get_low_priority_jitter (void) 
+{
   double jitter = 0;
   double average = get_low_priority_latency ();
+
   for (u_int j = 1; j < ts_->start_count_; j ++)
-      for (u_int i = 0; i < ts_->loop_count_; i ++)
-        {
-          double difference = ts_->global_jitter_array_ [j][i] - average;
-          jitter += difference * difference;
-        }
+    for (u_int i = 0; i < ts_->loop_count_; i ++)
+      {
+        double difference = ts_->global_jitter_array_[j][i] - average;
+        jitter += difference * difference;
+      }
+
   return (double) (jitter / ((ts_->loop_count_* (ts_->start_count_ - 1)) - 1));
 }
 
@@ -256,33 +261,44 @@ int
 Client::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread created\n"));
+
   u_int thread_id;
   Cubit_ptr cb = 0;
   CORBA::ORB_var orb;
   CORBA::Object_var objref (0);
   CORBA::Object_var naming_obj (0);
   CORBA::Environment env;
+
+  // @@ Please don't use magic #'s here...
   char ior [1024];
   double frequency = 0.0;
 
-  /// Add "-ORBobjrefstyle url" argument to the argv vector for the orb to
-  ///   use a URL style to represent the ior.
+  /// Add "-ORBobjrefstyle url" argument to the argv vector for the
+  //orb to / use a URL style to represent the ior.
 
-  // convert the argv vector into a string.
+  // Convert the argv vector into a string.
   ACE_ARGV tmp_args (ts_->argv_);
   char tmp_buf[BUFSIZ];
-  strcpy (tmp_buf, tmp_args.buf ());
+
+  ACE_OS::strcpy (tmp_buf,
+                  tmp_args.buf ());
+
   // Add the argument
-  strcat (tmp_buf, " -ORBobjrefstyle url ");
-  // convert back to argv vector style.
+  ACE_OS::strcat (tmp_buf,
+                  " -ORBobjrefstyle url ");
+
+  // Convert back to argv vector style.
   ACE_ARGV tmp_args2(tmp_buf);
   int argc = tmp_args2.argc ();
-  char* const *argv = tmp_args2.argv ();
+
+  char *const *argv = tmp_args2.argv ();
 
   u_int naming_success = CORBA::B_FALSE;
 
-  orb = CORBA::ORB_init (argc, argv,
-                         "internet", env);
+  orb = CORBA::ORB_init (argc,
+                         argv,
+                         "internet",
+                         env);
 
   if (env.exception () != 0)
     {
@@ -299,16 +315,12 @@ Client::svc (void)
         ACE_ERROR ((LM_ERROR,
                     " (%P|%t) Unable to resolve the Name Service.\n"));
       else
-        {
-          this->naming_context_ =
-            CosNaming::NamingContext::_narrow (naming_obj.in (), env);
-        }
+        this->naming_context_ =
+          CosNaming::NamingContext::_narrow (naming_obj.in (), env);
     }
 
   {
-#if defined (ACE_HAS_THREADS)
-    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ts_->lock_, -1);
-#endif /* ACE_HAS_THREADS */
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ts_->lock_, -1));
 
     thread_id = ts_->start_count_;
     ts_->start_count_++;
@@ -370,7 +382,8 @@ Client::svc (void)
         // if the naming service was resolved successsfully ...
         if (!CORBA::is_nil (this->naming_context_.in ()))
           {
-            ACE_DEBUG ((LM_DEBUG, " (%t) ----- Using the NameService resolve() method to get cubit objects -----\n"));
+            ACE_DEBUG ((LM_DEBUG,
+                        " (%t) ----- Using the NameService resolve() method to get cubit objects -----\n"));
 
             // Construct the key for the name service lookup.
             CosNaming::Name mt_cubit_context_name (1);
@@ -383,15 +396,18 @@ Client::svc (void)
             TAO_CHECK_ENV;
 
             this->mt_cubit_context_ =
-              CosNaming::NamingContext::_narrow (objref.in (), TAO_TRY_ENV);
+              CosNaming::NamingContext::_narrow (objref.in (), 
+                                                 TAO_TRY_ENV);
             TAO_CHECK_ENV;
 
-            char* buffer;
+            char *buffer;
             int l = ACE_OS::strlen (key) + 3;
             ACE_NEW_RETURN (buffer, char[l], -1);
 
-            ACE_OS::sprintf (buffer, "%s%02d",
-                             (char *) key, thread_id);
+            ACE_OS::sprintf (buffer,
+                             "%s%02d",
+                             (char *) key,
+                             thread_id);
 
             // Construct the key for the name service lookup.
             CosNaming::Name cubit_name (1);
@@ -400,21 +416,26 @@ Client::svc (void)
 
             objref = this->mt_cubit_context_->resolve (cubit_name, TAO_TRY_ENV);
 
-            if ( (TAO_TRY_ENV.exception () != 0) || CORBA::is_nil (objref.in ()) )
+            if ( (TAO_TRY_ENV.exception () != 0) 
+                 || CORBA::is_nil (objref.in ()) )
               {
-                ACE_DEBUG ((LM_DEBUG, " (%t) resolve() returned nil\n"));
+                ACE_DEBUG ((LM_DEBUG,
+                            " (%t) resolve() returned nil\n"));
                 TAO_TRY_ENV.print_exception ("Attempt to resolve() a cubit object using the name service Failed!\n");
               }
             else
               {
                 naming_success = CORBA::B_TRUE;
-                ACE_DEBUG ((LM_DEBUG, " (%t) Cubit object resolved to the name \"%s\".\n", buffer));
+                ACE_DEBUG ((LM_DEBUG,
+                            " (%t) Cubit object resolved to the name \"%s\".\n",
+                            buffer));
               }
           }
 
         if ( (naming_success == CORBA::B_FALSE) && (ts_->factory_ior_ != 0) )
           {
-            ACE_DEBUG ((LM_DEBUG, " (%t) ----- Using the factory IOR method to get cubit objects -----\n"));
+            ACE_DEBUG ((LM_DEBUG,
+                        " (%t) ----- Using the factory IOR method to get cubit objects -----\n"));
 
             objref =
               orb->string_to_object (ts_->factory_ior_, TAO_TRY_ENV);
@@ -426,18 +447,21 @@ Client::svc (void)
                                  ts_->argv_ [0]),
                                 1);
 
-            // Narrow the CORBA::Object reference to the stub object, checking
-            // the type along the way using _is_a.
-            Cubit_Factory_var cb_factory = Cubit_Factory::_narrow (objref.in (), TAO_TRY_ENV);
+            // Narrow the CORBA::Object reference to the stub object,
+            // checking the type along the way using _is_a.
+            Cubit_Factory_var cb_factory =
+              Cubit_Factory::_narrow (objref.in (), TAO_TRY_ENV);
             TAO_CHECK_ENV;
 
             if (CORBA::is_nil (cb_factory.in ()))
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Create cubit factory failed\n"), 1);
 
-            ACE_DEBUG ((LM_DEBUG, "(%t) >>> Factory binding succeeded\n"));
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) >>> Factory binding succeeded\n"));
 
-            char * my_ior = ACE_OS::strdup (cb_factory->create_cubit (thread_id, TAO_TRY_ENV));
+            char *my_ior = ACE_OS::strdup (cb_factory->create_cubit (thread_id,
+                                                                     TAO_TRY_ENV));
             TAO_CHECK_ENV;
 
             objref = orb->string_to_object (my_ior,
@@ -447,9 +471,12 @@ Client::svc (void)
         else
           {
             char * my_ior = ts_->iors_[thread_id];
+
             if (my_ior == 0)
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Must specify valid factory ior key with -k option, naming service, or ior filename\n"), -1);
+                                 "Must specify valid factory ior key with -k option,"
+                                 " naming service, or ior filename\n"),
+                                -1);
 
             objref = orb->string_to_object (my_ior,
                                             TAO_TRY_ENV);
@@ -461,8 +488,8 @@ Client::svc (void)
                              " (%t) string_to_object or NameService->resolve() Failed!\n"),
                             -1);
 
-        // Narrow the CORBA::Object reference to the stub object, checking
-        // the type along the way using _is_a.
+        // Narrow the CORBA::Object reference to the stub object,
+        // checking the type along the way using _is_a.
         cb = Cubit::_narrow (objref.in (), TAO_TRY_ENV);
         TAO_CHECK_ENV;
 
@@ -470,15 +497,18 @@ Client::svc (void)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Create cubit failed\n"), 1);
 
-        ACE_DEBUG ((LM_DEBUG, "(%t) Binding succeeded\n"));
-
-        CORBA::String_var str = orb->object_to_string (cb, TAO_TRY_ENV);
+        ACE_DEBUG ((LM_DEBUG, 
+                    "(%t) Binding succeeded\n"));
+        
+        CORBA::String_var str =
+          orb->object_to_string (cb, TAO_TRY_ENV);
         TAO_CHECK_ENV;
 
         ACE_DEBUG ((LM_DEBUG,
                     "(%t) CUBIT OBJECT connected <%s>\n", str.in ()));
 
-        ACE_DEBUG ((LM_DEBUG, "(%t) Waiting for other threads to "
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%t) Waiting for other threads to "
                     "finish binding..\n"));
       }
     TAO_CATCHANY
@@ -489,18 +519,23 @@ Client::svc (void)
     TAO_ENDTRY;
   }
 
+  // Wait for all the client threads to be initialized before going
+  // any further.
   ts_->barrier_->wait ();
-  ACE_DEBUG ((LM_DEBUG, "(%t) Everyone's done, here I go!!\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) Everyone's done, here I go!!\n"));
 
   if (ts_->oneway_ == 1)
-    ACE_DEBUG ((LM_DEBUG, "(%t) **** USING ONEWAY CALLS ****\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "(%t) **** USING ONEWAY CALLS ****\n"));
 
   this->run_tests (cb, ts_->loop_count_, thread_id,
                    ts_->datatype_, frequency);
 
   if (ts_->shutdown_)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) CALLING SHUTDOWN() ON THE SERVANT\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) CALLING SHUTDOWN() ON THE SERVANT\n"));
       cb->shutdown (env);
       if (env.exception () != 0)
         {
@@ -508,7 +543,6 @@ Client::svc (void)
           env.print_exception ("shutdown() call failed.\n");
         }
     }
-
   return 0;
 }
 
@@ -521,18 +555,22 @@ Client::run_tests (Cubit_ptr cb,
 {
   CORBA::Environment env;
   u_int i = 0;
-  u_int call_count = 0, error_count = 0;
+  u_int call_count = 0;
+  u_int error_count = 0;
   double *my_jitter_array;
-  ACE_NEW_RETURN (my_jitter_array, double [ts_->loop_count_], 1);
+
+  ACE_NEW_RETURN (my_jitter_array,
+                  double [ts_->loop_count_],
+                  1);   // @@ shouldn't failure return -1?
 
   double latency = 0;
-  double sleep_time = (1/frequency) * (1000 * 1000);
+  double sleep_time = (1 / frequency) * (1000 * 1000);
   double delta = 0;
 
 #if defined (USE_QUANTIFY)
   quantify_stop_recording_data();
   quantify_clear_data ();
-#endif
+#endif /* USE_QUANTIFY */
 
   // Make the calls in a loop.
 
@@ -543,9 +581,11 @@ Client::run_tests (Cubit_ptr cb,
       ACE_Time_Value tv (0, (long int) (sleep_time - delta));
       ACE_OS::sleep (tv);
 
-      ACE_Time_Value delta_t; /* elapsed time will be in microseconds */
+      // Elapsed time will be in microseconds.
+      ACE_Time_Value delta_t; 
 
-      timer_.start (); //ACE_OS::ACE_HRTIMER_START); not using sysBench when CHORUS defined
+      timer_.start (); 
+      // ACE_OS::ACE_HRTIMER_START; not using sysBench when CHORUS defined
 
       if (ts_->oneway_ == 0)
         {
@@ -557,31 +597,37 @@ Client::run_tests (Cubit_ptr cb,
                 CORBA::Octet arg_octet = func (i), ret_octet = 0;
 
 #if defined (USE_QUANTIFY)
-            /* start recording quantify data from here */
-            quantify_start_recording_data ();
-#endif
+                /* start recording quantify data from here */
+                quantify_start_recording_data ();
+#endif /* USE_QUANTIFY */
                 ret_octet = cb->cube_octet (arg_octet, env);
 
 #if defined (USE_QUANTIFY)
-            quantify_stop_recording_data();
-#endif
+                quantify_stop_recording_data();
+#endif /* USE_QUANTIFY */
 
                 if (env.exception () != 0)
                   {
                     env.print_exception ("call to cube_octet()\n");
-                    ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "%s:Call failed\n",
+                                       env.exception ()),
+                                      2);
                   }
 
                 arg_octet = arg_octet * arg_octet * arg_octet;
 
                 if (arg_octet != ret_octet)
                   {
-                    ACE_DEBUG ((LM_DEBUG, "** cube_octet(%d)  (--> %d)\n", arg_octet , ret_octet));
+                    ACE_DEBUG ((LM_DEBUG,
+                                "** cube_octet(%d)  (--> %d)\n",
+                                arg_octet,
+                                ret_octet));
                     error_count++;
                   }
                 call_count++;
               }
-              break;
+            break;
 
             case CB_SHORT:
               // Cube a short.
@@ -591,15 +637,15 @@ Client::run_tests (Cubit_ptr cb,
                 CORBA::Short arg_short = func (i), ret_short;
 
 #if defined (USE_QUANTIFY)
-            /* start recording quantify data from here */
-            quantify_start_recording_data ();
-#endif
+                // start recording quantify data from here.
+                quantify_start_recording_data ();
+#endif /* USE_QUANTIFY */
 
                 ret_short = cb->cube_short (arg_short, env);
 
 #if defined (USE_QUANTIFY)
-            quantify_stop_recording_data();
-#endif
+                quantify_stop_recording_data();
+#endif /* USE_QUANTIFY */
 
                 if (env.exception () != 0)
                   {
@@ -614,41 +660,51 @@ Client::run_tests (Cubit_ptr cb,
 
                 if (arg_short != ret_short)
                   {
-                    ACE_DEBUG ((LM_DEBUG, "** cube_short(%d)  (--> %d)\n", arg_short , ret_short));
+                    ACE_DEBUG ((LM_DEBUG,
+                                "** cube_short(%d)  (--> %d)\n",
+                                arg_short ,
+                                ret_short));
                     error_count++;
                   }
                 break;
               }
-              // Cube a long.
+            // Cube a long.
 
             case CB_LONG:
               {
                 call_count++;
 
-                CORBA::Long arg_long = func (i), ret_long;
+                CORBA::Long arg_long = func (i);
+                CORBA::Long ret_long;
 
 #if defined (USE_QUANTIFY)
-            /* start recording quantify data from here */
-            quantify_start_recording_data ();
-#endif
+                /* start recording quantify data from here */
+                quantify_start_recording_data ();
+#endif /* USE_QUANTIFY */
 
                 ret_long = cb->cube_long (arg_long, env);
 
 #if defined (USE_QUANTIFY)
-            quantify_stop_recording_data();
-#endif
+                quantify_stop_recording_data();
+#endif /* USE_QUANTIFY */
 
                 if (env.exception () != 0)
                   {
                     env.print_exception ("call to cube_long()\n");
-                    ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "%s:Call failed\n",
+                                       env.exception ()),
+                                      2);
                   }
 
                 arg_long = arg_long * arg_long * arg_long;
 
                 if (arg_long != ret_long)
                   {
-                    ACE_DEBUG ((LM_DEBUG, "** cube_long(%d)  (--> %d)\n", arg_long , ret_long));
+                    ACE_DEBUG ((LM_DEBUG,
+                                "** cube_long(%d)  (--> %d)\n",
+                                arg_long,
+                                ret_long));
                     error_count++;
                   }
                 break;
@@ -666,15 +722,15 @@ Client::run_tests (Cubit_ptr cb,
                 arg_struct.o = func (i);
 
 #if defined (USE_QUANTIFY)
-            /* start recording quantify data from here */
-            quantify_start_recording_data ();
-#endif
+                // start recording quantify data from here.
+                quantify_start_recording_data ();
+#endif /* USE_QUANTIFY */
 
                 ret_struct = cb->cube_struct (arg_struct, env);
 
 #if defined (USE_QUANTIFY)
-            quantify_stop_recording_data();
-#endif
+                quantify_stop_recording_data();
+#endif /* USE_QUANTIFY */
 
                 if (env.exception () != 0)
                   {
@@ -702,26 +758,28 @@ Client::run_tests (Cubit_ptr cb,
         {
           call_count++;
 #if defined (USE_QUANTIFY)
-            /* start recording quantify data from here */
-            quantify_start_recording_data ();
-#endif
+          // start recording quantify data from here.
+          quantify_start_recording_data ();
+#endif /* USE_QUANTIFY */
           cb->noop (env);
 #if defined (USE_QUANTIFY)
-            quantify_stop_recording_data();
-#endif
+          quantify_stop_recording_data();
+#endif /* USE_QUANTIFY */
           if (env.exception () != 0)
             {
               env.print_exception ("oneway call noop()\n");
-              ACE_ERROR_RETURN ((LM_ERROR,"(%t) noop() call failed\n"), 2);
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%t) noop() call failed\n"),
+                                2);
             }
         }
 
-      timer_.stop (); //ACE_OS::ACE_HRTIMER_STOP); not using sysBench when CHORUS defined
+      timer_.stop (); 
+      // ACE_OS::ACE_HRTIMER_STOP; not using sysBench when CHORUS defined
       timer_.elapsed_time (delta_t);
 
       ACE_Profile_Timer::ACE_Elapsed_Time et;
 
-      //      ACE_DEBUG ((LM_DEBUG, "   (%t) elapsed time= %u, latency=%u\n",et.real_time,latency));
 #if !defined (ACE_HAS_PRUSAGE_T) && !defined (ACE_HAS_GETRUSAGE) && defined (ACE_LACKS_FLOATING_POINT)
       // Store the time in usecs.
       et.real_time = delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
@@ -737,7 +795,7 @@ Client::run_tests (Cubit_ptr cb,
       delta = ((40 * fabs (et.real_time * (1000 * 1000)) / 100) + (60 * delta / 100)); // pow(10,6)
       latency += et.real_time;
       my_jitter_array [i] = et.real_time * 1000;
-#endif
+#endif /* !defined (ACE_HAS_PRUSAGE_T) && !defined (ACE_HAS_GETRUSAGE) && defined (ACE_LACKS_FLOATING_POINT) */
     }
 
   if (call_count > 0)
@@ -755,22 +813,29 @@ Client::run_tests (Cubit_ptr cb,
           if (latency > 0)
             {
 #if defined (ACE_LACKS_FLOATING_POINT)
-              ACE_DEBUG ((LM_DEBUG, "(%P|%t) cube average call ACE_OS::time\t= %u usec, \t"
-                              "%u calls/second\n",
-                              latency,
-                              calls_per_second));
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) cube average call ACE_OS::time\t= %u usec, \t"
+                          "%u calls/second\n",
+                          latency,
+                          calls_per_second));
 
               this->put_latency (my_jitter_array, latency, thread_id);
 #else
-              ACE_DEBUG ((LM_DEBUG, "(%P|%t) cube average call ACE_OS::time\t= %f msec, \t"
-                              "%f calls/second\n",
-                              latency * 1000,
-                              1 / latency));
-              this->put_latency (my_jitter_array, latency * 1000, thread_id);
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) cube average call ACE_OS::time\t= %f msec, \t"
+                          "%f calls/second\n",
+                          latency * 1000,
+                          1 / latency));
+              this->put_latency (my_jitter_array,
+                                 latency * 1000,
+                                 thread_id);
 #endif /* ! ACE_LACKS_FLOATING_POINT */
             }
         }
-      ACE_DEBUG ((LM_DEBUG, "%d calls, %d errors\n", call_count, error_count));
+      ACE_DEBUG ((LM_DEBUG, 
+                  "%d calls, %d errors\n",
+                  call_count,
+                  error_count));
     }
 
   // cb->please_exit (env);
