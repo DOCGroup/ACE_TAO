@@ -208,7 +208,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   timer.start ();
 
   // Run event loop
-  ACE_Reactor::instance()->run_event_loop ();
+  ACE_Reactor::instance()->run_reactor_event_loop ();
 
   timer.stop ();
 
