@@ -1,3 +1,7 @@
+Fri Jul 03 13:58:08 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 0.1.37 released.
+
 Fri Jul  3 13:05:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Throughput/ECT_Data.cpp: 
