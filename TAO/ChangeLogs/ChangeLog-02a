@@ -11,6 +11,21 @@ Fri Mar 01 09:10:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/AMI_Buffering/server.bor:
         * tests/AMI_Timeouts/client.bor:
         * tests/AMI_Timeouts/server.bor:
+        * tests/Big_Request_Muxing/client.bor:
+        * tests/Big_Request_Muxing/server.bor:
+        * tests/Blocking_Sync_None/client.bor:
+        * tests/Blocking_Sync_None/server.bor:
+        * tests/Crashed_Callback/client.bor:
+        * tests/Crashed_Callback/server.bor:
+        * tests/LongUpcalls/ami_client.bor:
+        * tests/LongUpcalls/ami_server.bor:
+        * tests/LongUpcalls/blocking_client.bor:
+        * tests/LongUpcalls/blocking_server.bor:
+        * tests/MT_Timeout/client.bor:
+        * tests/MT_Timeout/server.bor:
+        * tests/Oneway_Buffering/admin.bor:
+        * tests/Oneway_Buffering/client.bor:
+        * tests/Oneway_Buffering/server.bor:
           Added TAO_Messaging library
 
 Thu Feb 28 20:25:00 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
@@ -1228,7 +1243,7 @@ Mon Feb 11 16:32:00 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PICurrent.h:
 
-	  Disable the "C4251" warning in MSVC++ builds.  MSVC++ is being 
+	  Disable the "C4251" warning in MSVC++ builds.  MSVC++ is being
 	  too paranoid about a class it thinks should be exported.
 
 	  (Table):
@@ -1308,7 +1323,7 @@ Mon Feb 11 18:20:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/examples/ORT/Server_IORInterceptor.h:
 	* tao/PortableServer/Object_Adapter.h:
 	* tao/PortableServer/ObjectReferenceFactory.h:
-	* tao/PortableServer/ObjectReferenceTemplate.h: More fuzz errors. 
+	* tao/PortableServer/ObjectReferenceTemplate.h: More fuzz errors.
 
 Mon Feb 11 18:02:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
