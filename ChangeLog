@@ -1,3 +1,9 @@
+Tue Mar  9 17:00:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* netsvcs/clients/Logger/direct_logging.cpp:
+	* netsvcs/clients/Logger/indirect_logging.cpp:
+	  Fixed compile problems in wchar builds
+
 Tue Mar  9 18:03:42 2004  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h
