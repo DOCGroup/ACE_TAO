@@ -52,26 +52,27 @@ TAO::SSLIOP::OpenSSL_st_var<T>::OpenSSL_st_var (T * st)
 template <typename T> ACE_INLINE
 TAO::SSLIOP::OpenSSL_st_var<T>::OpenSSL_st_var (
   TAO::SSLIOP::OpenSSL_st_var<T> const & st)
-  : st_ (TAO::SSLIOP::_duplicate (st.ptr ()))
+  : st_ (TAO::SSLIOP::OpenSSL_traits<T>::_duplicate (st.ptr ()))
 {
 }
 
 template <typename T> ACE_INLINE
 TAO::SSLIOP::OpenSSL_st_var<T>::OpenSSL_st_var (T const & st)
-  : st_ (TAO::SSLIOP::copy (st))
+  : st_ (TAO::SSLIOP::OpenSSL_traits<T>::copy (st))
 {
 }
 
 template <typename T> ACE_INLINE
 TAO::SSLIOP::OpenSSL_st_var<T>::~OpenSSL_st_var (void)
 {
-  TAO::SSLIOP::release (this->st_);
+  TAO::SSLIOP::OpenSSL_traits<T>::release (this->st_);
+  //  TAO::SSLIOP::release (this->st_);
 }
 
 template <typename T> ACE_INLINE TAO::SSLIOP::OpenSSL_st_var<T> &
 TAO::SSLIOP::OpenSSL_st_var<T>::operator= (T * st)
 {
-  TAO::SSLIOP::release (this->st_);
+  TAO::SSLIOP::OpenSSL_traits<T>::::release (this->st_);
   this->st_ = st;
   return *this;
 }
@@ -82,8 +83,8 @@ TAO::SSLIOP::OpenSSL_st_var<T>::operator= (
 {
   if (this != &st)
     {
-      TAO::SSLIOP::release (this->st_);
-      this->st_ = TAO::SSLIOP::_duplicate (st.ptr ());
+      TAO::SSLIOP::OpenSSL_traits<T>::release (this->st_);
+      this->st_ = TAO::SSLIOP::OpenSSL_traits<T>::_duplicate (st.ptr ());
     }
 
   return *this;
@@ -94,8 +95,8 @@ TAO::SSLIOP::OpenSSL_st_var<T>::operator= (T const & st)
 {
   if (this->st_ != &st)
     {
-      TAO::SSLIOP::release (this->st_);
-      this->st_ = TAO::SSLIOP::copy (st);
+      TAO::SSLIOP::OpenSSL_traits<T>::release (this->st_);
+      this->st_ = TAO::SSLIOP::OpenSSL_traits<T>::copy (st);
     }
 
   return *this;
@@ -140,7 +141,7 @@ TAO::SSLIOP::OpenSSL_st_var<T>::inout (void)
 template <typename T> ACE_INLINE T *&
 TAO::SSLIOP::OpenSSL_st_var<T>::out (void)
 {
-  TAO::SSLIOP::release (this->st_);
+  TAO::SSLIOP::OpenSSL_traits<T>::release (this->st_);
   this->st_ = 0;
   return this->st_;
 }
