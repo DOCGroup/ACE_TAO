@@ -948,17 +948,15 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   ACE_TRACE ("ACE_Log_Msg::log");
   // External decls.
 
+// sys_nerr is deprecated on some platforms, and is declared by 
+// system header files on others. 
 #if ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) \
-    && !defined(__MINGW32__)
-#if defined (__FreeBSD__) || defined(__QNX__) || defined(__APPLE__)
-   extern const int sys_nerr;
-#else
-   // sys_nerr is deprecated on some platforms.
-#  if !defined (__GLIBC__)
+    && !defined(__MINGW32__) && !defined(__GLIBC__)  \
+    && !defined(__FreeBSD__) && !defined(__NetBSD__) && !defined(__OpenBSD__) \
+    && !defined(__APPLE__) \
+    && !defined(__QNX__)
    extern int sys_nerr;
-#  endif  /* !__GLIBC__ */
-#endif /* !__FreeBSD__ && !__QNX__ && !__APPLE__ */
-#endif /* ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
+#endif /* ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) && ... */
   typedef void (*PTF)(...);
 
   // Check if there were any conditional values set.

@@ -26,6 +26,7 @@
 
 #include "ace/os_include/sys/os_time.h"
 #include "ace/os_include/os_signal.h"
+#include "ace/os_include/os_unistd.h"
 
 #if !defined (ACE_LACKS_SYS_SELECT_H)
 #  include /**/ <sys/select.h>
