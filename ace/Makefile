@@ -24,6 +24,7 @@ FILES    = Log_Msg \
            DEV_Connector \
            DEV_IO \
 	   Dirent \
+	   DLL \
            Dump \
            Dynamic \
            Event_Handler \
