@@ -336,7 +336,14 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
 
   *os << "// TAO internals" << be_nl
-      << "virtual void *_tao_obv_narrow (ptr_arith_t);" << be_nl;
+      << "virtual void *_tao_obv_narrow (ptr_arith_t);";
+
+  // An alternat narrow method for MSVC because it
+  // can't invoke fully qualified member methods (except in initializer)
+  *os << "\n#ifdef _MSC_VER" << be_nl;
+  *os << "virtual void *" << node->flat_name () 
+      << "_tao_obv_narrow (ptr_arith_t);"
+      << "\n#endif" << be_nl;
 
   // Support for marshalling.
   if (!node->is_abstract () && !is_an_amh_exception_holder)
@@ -346,6 +353,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << "virtual CORBA::Boolean "
           << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
     }
+
   if (is_an_amh_exception_holder)
     {
       *os << "// *** Terrible Hack ? ***" << be_nl;
