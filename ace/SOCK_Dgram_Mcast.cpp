@@ -183,7 +183,7 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 
 ACE_HANDLE
 ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
-                                 const ACE_Connect_QoS_Params &qos_params,
+                                 const ACE_QoS_Params &qos_params,
                                  int reuse_addr,
                                  const ASYS_TCHAR *net_if,
                                  int protocol_family,
@@ -209,7 +209,7 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
   // <mcast_request_if_> IP interface.
   else
     return ACE_OS::join_leaf (this->get_handle (),
-#if defined(_UNICOS)
+#if defined (_UNICOS)
                               ACE_reinterpret_cast (const sockaddr *,
                                                     &this->mcast_request_if_.imr_multiaddr),
                               sizeof this->mcast_request_if_.imr_multiaddr,

@@ -4810,8 +4810,23 @@ class ACE_Export ACE_Flow_Spec
 {
   // = TITLE
   //   Wrapper class that defines the flow spec QoS information, which
-  //   is used by RSVP.
+  //   is used by IntServ (RSVP) and DiffServ.
 public:
+  // = Initialization methods.
+  ACE_Flow_Spec (void);
+  // Default constructor.
+
+  ACE_Flow_Spec (u_long token_rate,
+                 u_long token_bucket_size,
+                 u_long peak_bandwidth,
+                 u_long latency,
+                 u_long delay_variation,
+                 ACE_SERVICE_TYPE service_type,
+                 u_long max_sdu_size,
+                 u_long minimum_policed_size,
+                 int ttl);
+  // Constructor that initializes all the fields.
+
   // = Get/set the token rate in bytes/sec.
   u_long token_rate (void);
   void token_rate (u_long tr);
@@ -4843,6 +4858,10 @@ public:
   // = Get/set the minimum policed size in bytes.
   u_long minimum_policed_size (void);
   void minimum_policed_size (u_long mps);
+
+  // = Get/set the time-to-live.
+  int ttl (void);
+  void ttl (int t);
 };
 
 class ACE_Export ACE_QoS
@@ -4852,7 +4871,7 @@ class ACE_Export ACE_QoS
 {
   // = TITLE
   //   Wrapper class that holds the sender and receiver flow spec
-  //   information, which is used by RSVP.
+  //   information, which is used by IntServ (RSVP) and DiffServ.
 public:
   // = Get/set the flow spec for data sending.
   ACE_Flow_Spec sending_flowspec (void);
@@ -4867,13 +4886,13 @@ public:
   void provider_specific (const iovec &ps);
 };
 
-class ACE_Export ACE_Connect_QoS_Params
+class ACE_Export ACE_QoS_Params
 {
   // = TITLE
   //   Wrapper class that simplifies the information passed to the QoS
   //   enabled <ACE_OS::connect> and <ACE_OS::join_leaf> methods.
 public:
-  ACE_Connect_QoS_Params (iovec *caller_data = 0,
+  ACE_QoS_Params (iovec *caller_data = 0,
                           iovec *callee_data = 0,
                           ACE_QoS *socket_qos = 0,
                           ACE_QoS *group_socket_qos = 0,
@@ -5756,7 +5775,7 @@ public:
   static int connect (ACE_HANDLE handle,
                       const sockaddr *addr,
                       int addrlen,
-                      const ACE_Connect_QoS_Params &qos_params);
+                      const ACE_QoS_Params &qos_params);
   // QoS-enabled <connect>, which passes <qos_params> to <connect>.
   // If the OS platform doesn't support QoS-enabled <connect> then the
   // <qos_params> are ignored and the BSD-style <connect> is called.
@@ -5816,7 +5835,7 @@ public:
   static ACE_HANDLE join_leaf (ACE_HANDLE socket,
                                const sockaddr *name,
                                int namelen,
-                               const ACE_Connect_QoS_Params &qos_params);
+                               const ACE_QoS_Params &qos_params);
   // Joins a leaf node into a QoS-enabled multi-point session.
   static int listen (ACE_HANDLE handle,
                      int backlog);
@@ -5830,6 +5849,15 @@ public:
                        int flags,
                        struct sockaddr *addr,
                        int *addrlen);
+  static int recvfrom (ACE_HANDLE handle,
+                       iovec *buffers,
+                       int buffer_count,
+                       int *number_of_bytes_recvd,
+                       int flags,
+                       struct sockaddr *addr,
+                       int *addrlen,
+                       ACE_OVERLAPPED *overlapped,
+                       ACE_OVERLAPPED_COMPLETION_FUNC func);
   static int send (ACE_HANDLE handle,
                    const char *buf,
                    int len, int
@@ -5843,6 +5871,15 @@ public:
                      int flags,
                      const struct sockaddr *addr,
                      int addrlen);
+  static int sendto (ACE_HANDLE handle,
+                     const iovec *buffers,
+                     int buffer_count,
+                     int *number_of_bytes_sent,
+                     int flags,
+                     const struct sockaddr *addr,
+                     int addrlen,
+                     ACE_OVERLAPPED *overlapped,
+                     ACE_OVERLAPPED_COMPLETION_FUNC func);
   static int setsockopt (ACE_HANDLE handle,
                          int level,
                          int optname,
@@ -5851,11 +5888,11 @@ public:
   // QoS-enabled <ioctl> wrapper.
   static int shutdown (ACE_HANDLE handle,
                        int how);
-  static ACE_HANDLE socket (int domain,
+  static ACE_HANDLE socket (int protocol_family,
                             int type,
                             int proto);
   // Create a BSD-style socket (no QoS).
-  static ACE_HANDLE socket (int domain,
+  static ACE_HANDLE socket (int protocol_family,
                             int type,
                             int proto,
                             ACE_Protocol_Info *protocolinfo,
