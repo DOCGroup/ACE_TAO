@@ -1,7 +1,13 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
+
 #include        "be_sunsoft.h"
+
+// destructor
+TAO_Visitor_Factory::~TAO_Visitor_Factory (void)
+{
+}
 
 // constructor
 TAO_OutStream_Factory::TAO_OutStream_Factory (void)
@@ -17,7 +23,7 @@ TAO_OutStream_Factory::~TAO_OutStream_Factory (void)
 // set the type of specialized o/p stream we want
 int
 TAO_OutStream_Factory::set_stream_type
-(TAO_OutStream_Factory::TAO_OutStream_Type t) 
+(TAO_OutStream_Factory::TAO_OutStream_Type t)
 {
   this->strm_type_ = t;
   return 0;

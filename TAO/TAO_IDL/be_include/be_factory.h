@@ -1,9 +1,11 @@
+// $Id$
+
 /* -*- c++ -*- */
 // ============================================================================
 //
 // = LIBRARY
 //    TAO IDL Backend
-// 
+//
 // = FILENAME
 //    be_factory.h
 //
@@ -13,11 +15,27 @@
 //
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_BE_FACTORY_H)
 #define TAO_BE_FACTORY_H
+
+class TAO_Visitor_Factory
+{
+  // =TITLE
+  //   TAO_Visitor_Factory
+  //
+  // =DESCRIPTION
+  //   Abstract factory that creates visitors
+public:
+  virtual ~TAO_Visitor_Factory (void);
+  // destructor
+
+  virtual be_visitor *make_visitor (TAO_CodeGen::CG_STATE) = 0;
+  // create the right visitor
+
+};
 
 class TAO_OutStream_Factory
 {
@@ -31,7 +49,7 @@ public:
     TAO_SUNSOFT,
     TAO_FLICK
   };
-  
+
   TAO_OutStream_Factory (void);
   // constructor
 
@@ -52,4 +70,3 @@ typedef ACE_Singleton<TAO_OutStream_Factory, ACE_SYNCH_RECURSIVE_MUTEX> TAO_OUTS
 // Singleton instance of the OutStream factory
 
 #endif // if !defined
-

@@ -1,3 +1,46 @@
+Mon Jan 12 17:29:44 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp: Added initialization for an abstract
+	visitor factory in the constructor and deletion in the
+	destructor.
+
+	Added code for the "make_visitor" factory method.
+
+	* TAO_IDL/be/be_factory.cpp: Added destructor and constructor for
+	abstract factory (*note* it is not pure abstract).
+
+	* TAO_IDL/be/be_produce.cpp: We use the different visitors for the
+	root to start code generation. At this time, we instantiate the
+	visitor factory with the concrete factory of visitors which will
+	generate stubs/skeletons  using TAO's interpretive marshaling
+	engine.
+
+	* TAO_IDL/be_be_sequence.cpp: Commented out a large part of code
+	to enable visitors for sequences to take over code generation.
+
+	* TAO_IDL/be/be_visitor.cpp: Abstract factory of visitors.
+
+	* TAO_IDL/be/{be_visitor_root, be_visitor_sequence}.cpp: visitors
+	for Root and Sequences respectively. be_visitor_sequence.cpp is a
+	new file.
+
+	* TAO_IDL/be_include/{be_codegen, be_visitor, be_visitor_root,
+	be_visitor_sequence, be_factory, be_sequence}.h: Files affected
+	due to introduction of visitors and visitor factory. Added a
+	boolean "unbounded ()" method on sequences.
+
+	* TAO/tao/{decode, encode}.cpp: Uses TAO_Base_Sequence instead of
+	the hack of using CORBA_SEQUENCE<Octet>.
+
+	* TAO/tao/{sequence, sequence_T}.{h,i,cpp}: Added large amount of
+	code for bounded and unbounded sequences as well as the special
+	cases for sequences of object references and strings, along with
+	their managed types.
+
+	* TAO/tests/Param_Test: Added tests for object references and
+	sequence of variable structs. There are some problems with the
+	generated code.
+
 Sun Jan 11 11:15:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/sequence.i (TAO_Base_Sequence): reordered initializers to match
