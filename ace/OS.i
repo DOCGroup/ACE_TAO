@@ -835,7 +835,7 @@ ACE_INLINE int
 ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 {
   // ACE_TRACE ("ACE_OS::fstat");
-# if defined (ACE_HAS_WINCE)
+# if 1
   BY_HANDLE_FILE_INFORMATION fdata;
 
   if (::GetFileInformationByHandle (handle, &fdata) == FALSE)
@@ -851,11 +851,19 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
   else
     {
       stp->st_size = fdata.nFileSizeLow;
-      stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime);
-      stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
+      stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
+      stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
+#if !defined (ACE_HAS_WINCE)
+      stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
+      stp->st_nlink = ACE_static_cast (short, fdata.nNumberOfLinks);
+      stp->st_dev = stp->st_rdev = 0; // No equivalent conversion.
+      stp->st_mode = S_IXOTH | S_IROTH |
+        (fdata.dwFileAttributes & FILE_ATTRIBUTE_READONLY ? 0 : S_IWOTH);
+#endif /* !ACE_HAS_WINCE */
     }
   return 0;
-# else
+# else /* 1 */
+  // This implementation close the handle.
   int retval = -1;
   int fd = ::_open_osfhandle ((long) handle, 0);
   if (fd != -1)
@@ -864,7 +872,7 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
   ::_close (fd);
   // Remember to close the file handle.
   return retval;
-# endif /* ACE_HAS_WINCE */
+# endif /* 1 */
 }
 
 #endif /* WIN32 */
