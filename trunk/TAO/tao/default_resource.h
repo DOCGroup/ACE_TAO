@@ -24,7 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/POA.h"
 #include "ace/Singleton.h"
 #include "ace/Service_Config.h"
 
@@ -116,11 +115,6 @@ public:
   virtual int resource_source (void);
   // Get the resource source specifier.
 
-  virtual void poa_source (int which_source);
-  // Set the POA source specifier.
-  virtual int poa_source (void);
-  // Get the POA source specifier.
-
   int cdr_allocator_source (void);
   // Modify and get the source for the CDR allocators
 
@@ -146,11 +140,6 @@ protected:
   int resource_source_;
   // Flag indicating whether resources should be global or
   // thread-specific.
-
-  int poa_source_;
-  // Flag indicating whether the POA should be global or
-  // thread-specific.  If not set specifically, this takes on the
-  // value of <resource_source_>.
 
   int reactor_type_;
   // Flag indicating which kind of reactor we should use.

@@ -13,7 +13,6 @@ TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : activate_server_connections_ (0),
     thread_flags_ (THR_BOUND),
     poa_lock_type_ (TAO_THREAD_LOCK),
-    poa_mgr_lock_type_ (TAO_THREAD_LOCK),
     event_loop_lock_type_ (TAO_NULL_LOCK),
     cached_connector_lock_type_ (TAO_THREAD_LOCK)
 {
@@ -177,7 +176,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBTableSize") == 0 
+                                 "-ORBTableSize") == 0
              || ACE_OS::strcasecmp (argv[curarg],
                                     "-ORBActiveObjectMapSize") == 0)
       {
@@ -359,7 +358,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBEventLock") == 0)
+                                 "-ORBEventLoopLock") == 0)
       {
         curarg++;
         if (curarg < argc)
@@ -368,10 +367,10 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 
             if (ACE_OS::strcasecmp (name,
                                     "thread") == 0)
-              this->poa_mgr_lock_type_ = TAO_THREAD_LOCK;
+              this->event_loop_lock_type_ = TAO_THREAD_LOCK;
             else if (ACE_OS::strcasecmp (name,
                                          "null") == 0)
-              this->poa_mgr_lock_type_ = TAO_NULL_LOCK;
+              this->event_loop_lock_type_ = TAO_NULL_LOCK;
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
