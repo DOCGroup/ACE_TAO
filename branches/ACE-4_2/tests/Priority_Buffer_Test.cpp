@@ -94,14 +94,14 @@ producer (void *args)
 
   ACE_Message_Block *mb = 0;
 
-  for (char c = 'a'; c <= 'z'; c++)
+  for (char *c = ACE_ALPHABET; *c != '\0'; c++)
     {
       count++;
 
       // Allocate a new message
       
       ACE_NEW_RETURN (mb, ACE_Message_Block (1), 0);
-      *mb->rd_ptr () = c;
+      *mb->rd_ptr () = *c;
 
       // Set the priority.
       mb->msg_priority (count);

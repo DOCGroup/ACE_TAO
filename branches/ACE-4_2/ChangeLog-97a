@@ -1,3 +1,277 @@
+Tue May 27 18:26:51 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/config-hpux-10.x-decthreads.h: Added support for HP/UX 10.10
+ 	  with DCE threads.  Thanks to Shankar Krishnamoorthy
+ 	  <kshankar@lucent.com> for these fixes.
+
+	* ace/Local_Tokens_T.h: #if def'd out all of this file since it
+ 	  doesn't seem to be used anymore.  Thanks to Shankar
+ 	  Krishnamoorthy <kshankar@lucent.com> for reporting this.
+
+	* ace/Makefile (TEMPLATE_FILES): Removed Local_Tokens_T since it
+ 	  doesn't appear to be used anywhere.
+
+Tue May 27 18:47:34 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* tests/*.cpp: Various changes for EBCIDIC compatibility.
+	  Thanks to Chuck Gehr for pointing out the need for this!
+
+	* tests/test_config.h: Added ACE_ALPHABET to aid a-z sending and
+	  comparing.
+
+Tue May 27 15:03:25 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* tests/Future_Test.cpp: added ACE_Future{_Rep}<int> template
+	  specializations.
+
+Tue May 27 07:49:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Future.cpp: Made a few minor reformatting changes to Per's
+ 	  new Future enhancements.
+
+Tue May 27 14:19:14 1997  Per Andersson <Per.Andersson@hfera.ericsson.se>
+
+	* ace/Future: Fixed self assignment bug in ACE_Future<>::operator=().
+	  Fixed bug in ACE_Future<>::set(). It is now possible to do a 
+	  ACE_Future<>::set() followed by a ACE_Future<>::get() without
+	  hanging forever.
+
+	  Moved all handling of the ACE_Future_Rep<> reference count
+	  into three new static ACE_Future_Rep<> member functions,
+	  create, attach, assign and detach.
+
+	  Removed one mutex from ACE_Future_Rep<> by changing the
+	  reference count from an ACE_Atomic_Op<int> into a plain
+	  int. The ACE_Future_Rep<>::value_ready_mutex_ mutex is
+	  instead used for serializing changes to the reference count. 
+	  (ACE_Future_Rep<>::attach, ACE_Future_Rep<>::detach())
+
+	  Removed mutex from ACE_Future<> the serialization is
+	  performed by the ACE_Future_Rep<>::attach,
+	  ACE_Future_Rep<>::detach() and ACE_Future_Rep<>::assign()
+	  functions.
+
+	  Changed the ACE_Future<> default constructor to always
+	  create a  ACE_Future_Rep<>
+
+	* tests/Future_Test.cpp: Added test case for
+	  ACE_Future<>::set() followed by ACE_Future<>::get().  Added
+	  test for working  ACE_Future::operator=(). The test is not
+	  fool proof but it crashes or hangs the test process with the
+	  old ACE_Future<> implementation.
+
+Mon May 26 14:19:14 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* ace/OS.{h,i}: Fixed difftime implementation for cases where
+	  systems implement it as a macro.  Fixed tempnam by adding
+	  ACE_LACKS_TEMPNAM.
+
+Sun May 25 11:36:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Reactor/Misc: Removed test_handle_set.cpp since it 
+	  is now completed subsumed by tests/Handle_Set_Test.cpp.
+
+	* tests/Handle_Set_Test.cpp: Updated the test of
+ 	  the ACE_Handle_Set so that it shows how fast the iterator works.
+
+	* ace/Reactor.cpp: Updated the Reactor to use the new
+ 	  ACE_Handle_Set_Iterator (whic no longer requires calling
+ 	  operator++ to advance the iterator).
+
+	* ace/Handle_Set: Rewrote the ACE_Handle_Set_Iterator to speed it up. 
+	  The result seems to be about 15% faster than the original.
+
+	* ace/OS.h: Changed the MSB_MASK static constant into a macro and
+ 	  moved it from Handle_Set.cpp into OS.h, changing its name to
+ 	  ACE_MSB_MASK.
+
+	* ace/Sched_Params.cpp (priority_max): Added another #ifdef for
+ 	  Chorus.  Thanks to Wei Chiang for reporting this.
+
+	* include/makeinclude/platform_sunos5_sunc++_orbix.GNU: added -l
+ 	  in front of orbixmt.  Thanks to Wei Chiang for pointing this
+ 	  out.
+
+	* ace/ACE.cpp: Changed the default port for NT so that it starts
+ 	  at 65279 rather than 65535.  Hopefully, this will fix that
+ 	  annoying bug that has been plaguing us on NT 4.0 for months.
+  	  Thanks to Goran Lowkrantz <Goran.Lowkrantz@Infologigruppen.se>
+ 	  for reporting this.
+
+Sat May 24 23:42:32 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* performance-tests/Misc/test_naming.cpp (do_testing): replaced
+	  strlen () calls in character array size with constant expression.
+
+Sat May 24 12:07:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* Released version 4.2.1 for testing.
+
+	* ace/Reactor.cpp (bind): Fixed a stupid typo where I was using
+ 	  the ACE_REACTOR_EVENT_HANDLER macro instead of the
+ 	  ACE_REACTOR_HANDLE macro.  Thanks to Detlef for reporting this.
+
+	* ace/OS.i: Added a new macro called ACE_HAS_THR_MINSTACK to deal
+ 	  with weirdo mangling of names by Tandem.  Thanks to Jan Perman
+ 	  <uabjjpp@osd.ericsson.se> for reporting this.
+
+	* ace/OS.h: Added a new macro ACE_LACKS_PRI_T for those platforms
+	  using STHREADS (e.g., Tandem NonStop OS) that don't have pri_t
+	  defined.  Thanks to Jan Perman <uabjjpp@osd.ericsson.se> for
+	  reporting this.
+
+	* ace/Connector.cpp (connect): Make sure to save/restore errno
+ 	  since svc_handler->close() may change it.  Thanks to Michael
+ 	  Hartman <c62nt57@ibx.com> for reporting this.
+
+	* include/makeinclude/platform_chorus.GNU: Added a new platform
+ 	  macros file for Chorus.  Thanks to Wei Chang for this.
+
+	* ace/OS.cpp (sched_params): Reordered the #ifdefs so that Chorus
+ 	  comes first.
+
+	* ace/OS.i (sleep): If the platform defines ACE_HAS_CLOCK_GETTIME
+ 	  then we'll use the nanosleep() method rather than sleep().
+
+	* ace/OS.h: disabled THR_NEW_LWP for Chorus.  Thanks to Wei Chang
+ 	  for reporting this.
+
+	* ace/Sched_Params.cpp: ACE_SCHED_OTHER and ACE_SCHED_RR have the
+ 	  same value on Chorus.  Thanks to Wei Chang for reporting this.
+
+Sat May 24 09:21:08 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler.cpp: protected second
+	  ACE_Svc_Handler specialization for case that ACE_HAS_THREADS,
+	  when ACE_HAS_TLI.  It had gotten lost in the last pass of
+	  that module.  Thanks to Sandro Doro <doros@aureus.sublink.org>
+	  for reporting this problem.
+
+Sat May 24 03:19:38 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
+
+	* ace/OS.i (sigaddset, sigdelset, sigemptyset, sigfillset,
+	  sigismember): Modified the implementation of these function so
+ 	  as to conform with POSIX standard.  Basically all functions do
+	  the same things they did but more conservative protections are
+	  added.  The modified semantic becomes,
+	  
+	  sigemptyset, sigfillset, sigaddset, sigdelset:  return 0 if
+	    succeed, -1 otherwise. 
+	  sigismember: returns 0 if signum is not in the set, 1 if signum
+	    is in the set, and -1 if error occurs.
+
+	  If error occured, errno will be set to one of the following
+	  value: 
+	    EFAULT:  sigset is not a valid address.
+	    EINVAL:  signum is not a valid signal number.
+
+	  Notice that, so far, this is for NT only.
+
+Sat May 24 01:53:22 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* performance-tests/Misc/test_naming.cpp (do_testing): Thanks to
+	  Sandro Doro, squashed a bug where we were trying to concatenate
+	  onto a string constant.
+
+Fri May 23 01:01:01 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-hpux-9.x.h: Added
+
+	  #define ACE_HAS_BROKEN_ENUMS
+	  #define ACE_HAS_IP_MULTICAST
+	  #define ACE_LACKS_GETPGID
+
+	  Thanks to Neil Cohen for reporting these.
+
+	* ace/Thread_Manager.h: Made the private methods and data members
+ 	  protected so that subclasses can extend it.  Thanks to Hamutal
+ 	  Yanay for this suggestion.
+
+Fri May 23 21:27:05 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Process.{h,cpp} (env_argv): added "const" to char * type in
+	  return type, for argument compatibility in call to ACE_OS::execve ().
+
+	* ace/Process.cpp (spawn): removed unreachable return statement at
+	  end of function.
+
+	Thanks to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for
+	reporting the above two problems.
+
+	* ace/{IOStream*,Makefile}: Split out templates into
+	  ace/IOStream_T.{h,cpp} files.  This way, automatic template
+	  instantiation systems that require templates to be in separate
+	  files, such as on Irix 6.2, will be able to build IOStream_Test
+	  and the ACE_IOStream examples without warnings.  (The
+	  ACE_IOSTREAM_BUILDING_TEMPLATE macro that did this only worked
+	  if ACE_TEMPLATES_REQUIRE_SOURCE was defined.  It's no longer
+	  needed with the separate template files.)
+
+	* tests/IOStream_Test.cpp,
+	  examples/IOStream/client/iostream_client.cpp,
+	  examples/IOStream/server/iostream_server.cpp:
+	  swapped ACE_Streambuf and ACE_Streambuf_T class names so that
+	  the template class has the "_T".  And renamed ACE_IOStream_T
+	  for consistency.
+
+	* ace/{IOStream.*,README},
+	  tests/IOStream_Test.cpp,
+	  examples/IOStream/client/iostream_client.cpp,
+	  examples/IOStream/server/iostream_server.cpp,
+	  config-hpux-9.x*.h:
+	  Added ACE_LACKS_ACE_IOSTREAM protection
+	  so that these can easily be built on platforms that have
+	  trouble with ACE_IOStream.
+
+	* Priority_Task_Test.cpp: removed close () because it didn't really
+	  close the Task, and added printout to main () after all tasks have
+	  been spawned to help debug non-termination.
+
+	* ace/OS.cpp: (thr_create, with STHREADS only): *thr_handle was
+	  used but *thr_id had been set by ::thr_create, so threads never
+	  got activated.  Fixed by using *thr_id instead of *thr_handle
+	  in the calls to ACE_OS::thr_setprio and ACE_OS::continue.
+	  Thanks to Jan Perman <uabjjpp@osd.ericsson.se> for reporting
+	  this problem.
+
+Fri May 23 20:12:33 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* tests/SV_Shared_Memory_Test.cpp: Thanks to Chuck Gehr, fixed
+	  ASCII dependent code in the parent and child routines.
+
+Fri May 23 02:58:28 1997  Nanbor Wang  <nw1@siesta.cs.wustl.edu>
+
+	* ace/OS.i (dlsym): Added ACE_USES_ASM_SYMBOL_IN_DLSYM, support
+	  for platforms (FreeBSD) which use assembly symbols instead of C
+	  symbols in dlsym ().
+
+	* ace/config-freebsd[-pthread].h: Added flag ACE_HAS_CHARPTR_DL
+ 	  and ACE_USES_ASM_SYMBOL_IN_DLSYM.
+
+Thu May 22 08:14:21 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* tests/Tokens_Test.cpp: added deletes to avoid memory leaks.
+
+Wed May 21 16:15:48 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/{config-irix6.2*.h,README}: removed ACE_LACKS_IOSTREAM_SETGET
+	  because tests won't build with it.  Also, added
+	  ACE_LACKS_SIGNED_CHAR.
+
+	* ace/IOStream.h: removed "const" from PUT_PROT of
+	  u_char * and void *.  This should allow the IOStream test
+	  and examples to build and run on Irix platforms.  Thanks
+	  to Torbjorn Lindgren <tl@funcom.com> and Amos Shapira
+	  <amos@dsi.co.il> for reporting this, and to James Hu for
+	  helping fix it.
+
+	* ace/{OS.cpp,Sched_Params.cp} (Solaris only): use 0 min priority
+	  again, with workaround in ACE_OS::thr_create to not use
+	  ::pthread_attr_setschedparam () if the priority is 0.  Instead,
+	  the priority of the newly created thread is set to 0 (if it
+	  wasn't created with 0) after the thread is created, with
+	  ::pthread_setschedparam ().
+
 Wed May 21 15:23:37 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/Strategies_T.* (ACE_Hash_Addr): Eliminated the ADDR_T

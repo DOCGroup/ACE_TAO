@@ -17,7 +17,7 @@
 // Include XtReactor into the library.
 #define ACE_HAS_XT
 
-#define ACE_LACKS_IOSTREAM_SETGET
+#define ACE_LACKS_SIGNED_CHAR
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE
 

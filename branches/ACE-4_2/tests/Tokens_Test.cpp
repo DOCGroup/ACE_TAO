@@ -214,6 +214,11 @@ main (int, char *[])
 	      server_host, server_port));
   ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port, server_host));
 
+  delete A;
+  delete B;
+  delete R;
+  delete W;
+
   ACE_NEW_RETURN (A, ACE_Remote_Mutex ("R Mutex A", 0, 1), -1);
   ACE_NEW_RETURN (B, ACE_Remote_Mutex ("R Mutex B", 0, 1), -1);
   ACE_NEW_RETURN (R, ACE_Remote_RLock ("R Reader Lock", 0, 1), -1);
@@ -227,6 +232,11 @@ main (int, char *[])
   // Kill the token server.
   if (new_process.kill () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "Kill failed.\n"), -1);
+
+  delete A;
+  delete B;
+  delete R;
+  delete W;
 
   ACE_DEBUG ((LM_DEBUG, "(%t) main thread exiting.\n"));
 #else

@@ -70,9 +70,7 @@ TAO_Linear_OpTable::find (const CORBA_String &opname,
 {
   ACE_ASSERT (this->next_ <= this->tablesize_);
 
-  for (CORBA_ULong i;
-       i < this->next_;
-       i++)
+  for (CORBA_ULong i = 0; i < this->next_; i++)
     if (!ACE_OS::strncmp (opname, this->tbl_[i].opname, ACE_OS::strlen (opname)))
       {
         skel_ptr = this->tbl_[i].skel_ptr;

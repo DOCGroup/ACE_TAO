@@ -63,17 +63,11 @@ ACE_Sched_Params::priority_min (const Policy policy,
       // pcinfo.pc_clinfo)->ts_maxupri.  The minimum priority is just
       // the negative of that.
 
-      int priority = -((tsinfo_t *) pcinfo.pc_clinfo)->ts_maxupri;
-
-      // Don't return priority of 0, because that can't be used with
-      // ::pthread_attr_setschedparam on Solaris 2.5.1.
-      return priority == 0 ? 1 : 0;
+      return -((tsinfo_t *) pcinfo.pc_clinfo)->ts_maxupri;
     }
   else
     {
-      // Don't return priority of 0, because that can't be used with
-      // ::pthread_attr_setschedparam on Solaris 2.5.1.
-      return 1;
+      return 0;
     }
 #elif defined (ACE_HAS_DCETHREADS) || defined(ACE_HAS_PTHREADS) && !defined(ACE_LACKS_SETSCHED)
 
@@ -86,7 +80,9 @@ ACE_Sched_Params::priority_min (const Policy policy,
             return ACE_THR_PRI_FIFO_MIN;
           case ACE_SCHED_RR:
             return ACE_THR_PRI_RR_MIN;
-          case ACE_SCHED_OTHER:
+#if !defined (CHORUS)   // SCHED_OTHRE and SCHED_RR have same value
+           case ACE_SCHED_OTHER:
+#endif /* CHORUS */
           default:
             return ACE_THR_PRI_OTHER_MIN;
         }
@@ -99,7 +95,9 @@ ACE_Sched_Params::priority_min (const Policy policy,
             return ACE_PROC_PRI_FIFO_MIN;
           case ACE_SCHED_RR:
             return ACE_PROC_PRI_RR_MIN;
-          case ACE_SCHED_OTHER:
+#if !defined (CHORUS)   // SCHED_OTHRE and SCHED_RR have same value
+           case ACE_SCHED_OTHER:
+#endif /* CHORUS */
           default:
             return ACE_PROC_PRI_OTHER_MIN;
         }
@@ -164,7 +162,9 @@ ACE_Sched_Params::priority_max (const Policy policy,
             return ACE_THR_PRI_FIFO_MAX;
           case ACE_SCHED_RR:
             return ACE_THR_PRI_RR_MAX;
-          case ACE_SCHED_OTHER:
+#if !defined (CHORUS)   // SCHED_OTHRE and SCHED_RR have same value
+           case ACE_SCHED_OTHER:
+#endif /* CHORUS */
           default:
             return ACE_THR_PRI_OTHER_MAX;
         }
@@ -177,7 +177,9 @@ ACE_Sched_Params::priority_max (const Policy policy,
             return ACE_PROC_PRI_FIFO_MAX;
           case ACE_SCHED_RR:
             return ACE_PROC_PRI_RR_MAX;
-          case ACE_SCHED_OTHER:
+#if !defined (CHORUS)   // SCHED_OTHRE and SCHED_RR have same value
+           case ACE_SCHED_OTHER:
+#endif /* CHORUS */
           default:
             return ACE_PROC_PRI_OTHER_MAX;
         }

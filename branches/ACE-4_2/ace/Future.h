@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -11,8 +10,9 @@
 //    Future.h
 //
 // = AUTHOR
-//    Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu> 
+//    Andres Kruse <Andres.Kruse@cern.ch>, Douglas C. Schmidt
+//    <schmidt@cs.wustl.edu>, and Per Andersson
+//    <Per.Andersson@hfera.ericsson.se>. 
 // 
 // ============================================================================
 
@@ -27,24 +27,48 @@
 template <class T> class ACE_Future;
 
 template <class T> class ACE_Future_Rep
-// = TITLE
-//     
-//     ACE_Future_Rep<T>
-//
-// = DESCRIPTION
-//     An ACE_Future_Rep<T> object encapsules a pointer to an 
-//     object of class T which is the result of an asynchronous
-//     method invocation. It is pointed to by ACE_Future<T> object[s]
-//     and only accessible through them.
+  // = TITLE
+  //     ACE_Future_Rep<T>
+  //
+  // = DESCRIPTION
+  //     An ACE_Future_Rep<T> object encapsules a pointer to an 
+  //     object of class T which is the result of an asynchronous
+  //     method invocation. It is pointed to by ACE_Future<T> object[s]
+  //     and only accessible through them.
 {
   friend class ACE_Future<T>;
 
 private:
-
+  
+  // Create, attach, detach and assign encapsulates the reference 
+  // count handling and the object lifetime of ACE_Future_Rep<T>
+  // instances.
+  
+  static ACE_Future_Rep<T> *create (void);
+  // Create a ACE_Future_Rep<T> and initialize the reference count
+  
+  static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *&rep);
+  // Precondition(rep != 0)
+  // Increase the reference count and return argument. Uses
+  // the attribute "value_ready_mutex_" to synchronize reference
+  // count updating
+  
+  static void detach (ACE_Future_Rep<T> *&rep);
+  // Precondition(rep != 0)
+  // Decreases the reference count and and deletes rep if
+  // there are no more references to rep.
+  
+  static void assign (ACE_Future_Rep<T> *&rep,
+		      ACE_Future_Rep<T> *new_rep);
+  // Precondition(rep != 0 && new_rep != 0)
+  // Decreases the rep's reference count and and deletes rep if there
+  // are no more references to rep. Then assigns new_rep to rep
+  
   int set (const T &r);
   // Set the result value.
 
-  int get (T &value, ACE_Time_Value *tv);
+  int get (T &value,
+	   ACE_Time_Value *tv);
   // Wait up to <tv> time to get the <value>.
 
   operator T ();
@@ -62,7 +86,7 @@ private:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  // = constructor and destructor private
+  // = Constructor and destructor private
   ACE_Future_Rep (void);
   ~ACE_Future_Rep (void);
 
@@ -72,7 +96,7 @@ private:
   T *value_;
   // Pointer to the result.
 
-  ACE_Atomic_Op<ACE_Thread_Mutex, int> ref_count_;
+  int ref_count_;
   // Reference count.
 
   // = Condition variable and mutex that protect the <value_>.
@@ -82,10 +106,12 @@ private:
 
 template <class T> class ACE_Future 
   // = TITLE
-  //     This class implements a ``single write, multiple read'' pattern
-  //     that can be used to return results from asynchronous method
-  //     invocations.
+  //     This class implements a ``single write, multiple read''
+  //     pattern that can be used to return results from asynchronous
+  //     method invocations.
+  //
   // = DESCRIPTION
+  //    @@ Please update me...
 {
 public:
   // = Initialization and termination methods.
@@ -110,6 +136,12 @@ public:
   int cancel (const T &r);
   // Cancel an <ACE_Future> and assign the value <r>.  It is used if a
   // client does not want to wait for <T> to be produced.
+  
+  int cancel (void);
+  // Cancel an <ACE_Future>.  Put the future into its initial
+  // state. Returns 0 on succes and -1 on failure. It is now possible
+  // to reuse the ACE_Future<T>. But remember, the ACE_Future<T>
+  // is now bound to a new ACE_Future_Rep<T>.
 
   int operator == (const ACE_Future<T> &r) const;
   // Equality operator that returns 1 if both ACE_Future<T> objects
@@ -124,7 +156,8 @@ public:
   // Make the result available. Is used by the server thread to give
   // the result to all waiting clients.
 
-  int get (T &value, ACE_Time_Value *tv = 0);
+  int get (T &value,
+	   ACE_Time_Value *tv = 0);
   // Wait up to <tv> time to get the <value>.
 
   operator T ();
@@ -146,24 +179,19 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Future_Rep<T> *create_rep_i (void) const;
-  // Create the <ACE_Future_Rep> object.
-
-  void* operator new (size_t nbytes);
+  void *operator new (size_t nbytes);
   // Do not allow new operator.
 
-  void operator delete(void *);
+  void operator delete (void *);
   // Do not allow delete operator
 
   void operator &();
   // Do not allow address-of operator.
 
-  ACE_Future_Rep<T> *future_rep_;
   // the ACE_Future_Rep
-
-  ACE_Thread_Mutex mutex_;
+  typedef ACE_Future_Rep<T> FUTURE_REP;
+  FUTURE_REP *future_rep_;
   // Protect operations on the <Future>.
-
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
@@ -173,5 +201,7 @@ private:
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Future.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_FUTURE_H */
+

@@ -144,9 +144,6 @@ class HelpPanel extends Panel
     this.add (this.aboutButton_);
     this.add (this.helpButton_);
 
-    // Disable the Help button for now
-    this.helpButton_.disable ();
-
     this.resize (100, 100);
   }
 

@@ -90,6 +90,8 @@
 // Platform has the XLI version of ACE_TLI.
 // #define ACE_HAS_XLI
 
+#define ACE_LACKS_ACE_IOSTREAM
+
 #define ACE_NEEDS_DEV_IO_CONVERSION
 
 // Turns off the tracing feature.

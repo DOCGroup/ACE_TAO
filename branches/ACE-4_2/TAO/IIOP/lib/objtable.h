@@ -26,7 +26,8 @@
 #  include "orb.h"
 
 // Dynamic Hashing scheme.
-typedef ACE_Hash_Map_Manager<ACE_CString, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX> OBJ_MAP_MANAGER;
+//typedef ACE_Hash_Map_Manager<ACE_CString, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX> OBJ_MAP_MANAGER;
+typedef ACE_Hash_Map_Manager<const char*, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX> OBJ_MAP_MANAGER;
 
 class TAO_Object_Table
   // = TITLE

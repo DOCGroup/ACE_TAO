@@ -71,8 +71,8 @@ client (void *arg)
 
   // Send data to server (correctly handles "incomplete writes").
   
-  for (char c = 'a'; c <= 'z'; c++)
-    if (cli_stream.send_n (&c, 1) == -1) 
+  for (char *c = ACE_ALPHABET; *c != '\0'; c++)
+    if (cli_stream.send_n (c, 1) == -1) 
       ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "send_n"));
 
   // Explicitly close the writer-side of the connection.
@@ -119,7 +119,7 @@ server (void *arg)
   for (;;) 
     {
       char buf[BUFSIZ];                                     
-      char t = 'a';
+      char *t = ACE_ALPHABET;
       
       handle_set.reset ();
       handle_set.set_bit (peer_acceptor->get_handle ());
@@ -163,7 +163,7 @@ server (void *arg)
 	      
 	      while ((r_bytes = new_stream.recv (buf, 1)) > 0)
 		{
-		  ACE_ASSERT (t == buf[0]);
+		  ACE_ASSERT (*t == buf[0]);
 		  t++;
 		}
 	      

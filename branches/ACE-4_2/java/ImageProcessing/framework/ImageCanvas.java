@@ -143,10 +143,13 @@ class ImageCanvas extends Canvas
   // Check if  mouse is within the bounds of the image
   private boolean inBounds (int x, int y)
   {
-    return (x >= this.x_) &&
-           (y >= this.y_) &&
-           (x <= (this.x_ + this.zoom_ * this.image_.getWidth (this))) &&
-           (y <= (this.y_ + this.zoom_ * this.image_.getHeight (this)));
+    if (this.image_ == null)
+      return false;
+    else
+      return (x >= this.x_) &&
+	     (y >= this.y_) &&
+             (x <= (this.x_ + this.zoom_ * this.image_.getWidth (this))) &&
+             (y <= (this.y_ + this.zoom_ * this.image_.getHeight (this)));
   }
 
   private MediaTracker tracker_ = new MediaTracker(this);

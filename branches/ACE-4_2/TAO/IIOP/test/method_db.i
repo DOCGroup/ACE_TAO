@@ -58,7 +58,7 @@ static const method_db cubit_operations[] = {
 };
    
 
-void initialize_method_db (TAO_Dynamic_Hash_OpTable *the_optable)
+void initialize_method_db (TAO_Operation_Table *the_optable)
 {
    for (int ndx = 0; ndx < 7; ndx++)
       the_optable->bind(cubit_operations[ndx].opname, 

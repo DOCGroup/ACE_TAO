@@ -16,7 +16,9 @@
 #define ACE_HAS_BROKEN_HPUX_TEMPLATES
 #endif /* __cplusplus < 199707L */
 
-#define ACE_HAS_BROKEN_ENUM
+#define ACE_HAS_BROKEN_ENUMS
+#define ACE_HAS_IP_MULTICAST
+#define ACE_LACKS_GETPGID
 #define ACE_HAS_BROKEN_CONVERSIONS
 
 // They forgot a const in the prototype of const_timewait...
@@ -86,6 +88,8 @@
 //#define ACE_HAS_TLI_PROTOTYPES
 // Platform has the XLI version of ACE_TLI.
 // #define ACE_HAS_XLI
+
+#define ACE_LACKS_ACE_IOSTREAM
 
 #define ACE_NEEDS_DEV_IO_CONVERSION
 

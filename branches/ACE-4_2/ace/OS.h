@@ -190,7 +190,6 @@ private:
 #define ACE_MAX(x,y) (((x)>(y))?(x):(y))
 #define ACE_MIN(x,y) (((x)<(y))?(x):(y))
 
-
 // keep the compiler from complaining of
 // parameters which are not used.
 #if defined (ghs)
@@ -1073,7 +1072,11 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #    endif /* ACE_HAS_DCETHREADS */
 
 #    define THR_BOUND               0x00000001
+#  if defined (CHORUS)
+#    define THR_NEW_LWP             0x00000000
+#  else
 #    define THR_NEW_LWP             0x00000002
+#  endif /* CHORUS */
 #    define THR_DETACHED            0x00000040
 #    define THR_SUSPENDED           0x00000080
 #    define THR_DAEMON              0x00000100
@@ -1517,6 +1520,9 @@ struct utsname
 #define ACE_DEFAULT_GLOBALNAME_A "\\globalnames"
 #define ACE_DEFAULT_GLOBALNAME_W L"\\globalnames"
 
+// Need to work around odd glitches with NT.
+#define ACE_MAX_DEFAULT_PORT 65279
+
 // We're on WinNT or Win95
 #define ACE_PLATFORM_A "Win32"
 #define ACE_PLATFORM_EXE_SUFFIX_A ".exe"
@@ -1734,6 +1740,9 @@ typedef char TCHAR;
 #if defined (m88k)
 #define RUSAGE_SELF 1
 #endif  /*  m88k */
+
+// Default port is MAX_SHORT.
+#define ACE_MAX_DEFAULT_PORT 65535
 
 // Default semaphore key
 #define ACE_DEFAULT_SEM_KEY 1234
@@ -2076,6 +2085,9 @@ extern "C"
 
 #if defined (ACE_HAS_STHREADS)
 #include /**/ <sys/priocntl.h>
+#if defined (ACE_LACKS_PRI_T)
+typedef int pri_t;
+#endif /* ACE_LACKS_PRI_T */
 typedef id_t ACE_id_t;
 typedef pri_t ACE_pri_t;
 #else
@@ -2560,6 +2572,13 @@ struct ACE_Export ACE_Str_Buf : public strbuf
   // Constructor.
 };
 
+#if defined (ACE_HAS_BROKEN_BITSHIFT)
+#define ACE_MSB_MASK (~(ACE_UINT32 (1) << ACE_UINT32 (NFDBITS - 1)))
+#else
+// This needs to go here to avoid overflow problems on some compilers.
+#define ACE_MSB_MASK (~(1 << (NFDBITS - 1)))
+#endif /* ACE_HAS_BROKEN_BITSHIFT */
+
 class ACE_Export ACE_OS
   // = TITLE
   //     This class defines an operating system independent
@@ -2714,9 +2733,14 @@ public:
 #undef getpwnam_r
 #endif /* ACE_HAS_BROKEN_R_ROUTINES */
 
+#if defined (difftime)
+#define ACE_DIFFTIME(t1, t0) difftime(t1,t0)
+#undef difftime
+#endif /* difftime */
+
   // = A set of wrappers for operations on time.
-  static time_t time (time_t *tloc);
   static double difftime (time_t t1, time_t t0);
+  static time_t time (time_t *tloc);
   static time_t mktime (struct tm *timeptr);
   static struct tm *localtime (const time_t *clock);
   static struct tm *localtime_r (const time_t *clock, struct tm *res);
