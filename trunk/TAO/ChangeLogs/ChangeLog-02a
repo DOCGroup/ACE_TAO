@@ -1,3 +1,11 @@
+Wed Aug 09 02:09:21 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Singleton_Manager.cpp:
+
+	  Explicitly include "ace/Object_Manager.h" since some compilers
+	  get confused about the existence of the
+	  ACE_Object_Manager::at_exit() method.
+
 Tue Aug  8 17:03:12 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
