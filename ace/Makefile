@@ -360,6 +360,10 @@ LSRC  = $(addsuffix .cpp,$(FILES))
 
 BUILD += ACE_COMPONENTS
 
+#### Setting ACELIB to null allows it to be used for building shared
+#### libraries, including libACE.$(SOEXT,) on certain platforms.
+ACELIB =
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
@@ -381,10 +385,6 @@ ACE_COMPONENTS:
 
 realclean:
 	@sh $(ACE_ROOT)/bin/ace_components --ace --remove
-
-#### Setting ACELIB to null allows it to be used for building shared libraries,
-#### including libACE.$(SOEXT,) on certain platforms.
-ACELIB =
 
 # AIX template compilation speedup hack
 
