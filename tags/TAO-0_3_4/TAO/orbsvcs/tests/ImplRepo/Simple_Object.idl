@@ -1,0 +1,16 @@
+// $Id$
+
+interface simple_object
+  // = TITLE
+  //    Defines an interface that encapsulates operations that cube
+  //    numbers.
+  //
+  // = DESCRIPTION
+  //    This interface encapsulates an operation that cubes a long.
+{
+  long simple_method (in long l);
+  // cube a long
+
+  void shutdown ();
+  // shutdown the application.
+};
