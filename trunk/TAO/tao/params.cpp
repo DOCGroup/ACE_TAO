@@ -13,9 +13,6 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
     preconnect_insertion_strategy_ (this->preconnects_list_),
     endpoints_list_ (),
     endpoint_insertion_strategy_ (this->endpoints_list_),
-    name_service_port_ (0),
-    trading_service_port_ (0),
-    implrepo_service_port_ (0),
     init_ref_ (),
     ior_lookup_table_ (),
     default_init_ref_ (),
@@ -27,6 +24,8 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
     use_dotted_decimal_addresses_ (0),
     std_profile_components_ (1)
 {
+  for (int i=0; i<= NO_OF_MCAST_SERVICES; i++)
+    this->service_port_[i] = 0;
 }
 
 TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
