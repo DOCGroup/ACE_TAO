@@ -1,3 +1,16 @@
+Fri May 12 09:17:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/complex_any.cpp:
+          More changes to make this test silent when things are going OK.
+
+        * orbsvcs/orbsvcs/Makefile:
+          RTOLDEvent depends on both RTEvent and RTSched, fixed the
+          interdependencies.
+
+        * */Makefile:
+          Updated all the dependencies, once again.
+
 Thu May 11 18:49:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:

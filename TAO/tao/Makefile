@@ -578,6 +578,8 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
+ rtcorbafwd.h \
+ rtcorbafwd.i \
  POA.i \
  ORB.h \
  IOR_LookupTable.h \
@@ -953,6 +955,8 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
+ rtcorbafwd.h \
+ rtcorbafwd.i \
  POA.i \
  ORB_Core.h \
  ORB.h \
@@ -1195,6 +1199,8 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
+ rtcorbafwd.h \
+ rtcorbafwd.i \
  POA.i \
  Invocation.h \
  ORB_Core.h \
@@ -1659,6 +1665,8 @@ realclean:
  Object_Adapter.i \
  Object_KeyC.h \
  Object_KeyC.i \
+ rtcorbafwd.h \
+ rtcorbafwd.i \
  POA.i
 
 .obj/Active_Object_Map.o .obj/Active_Object_Map.so .shobj/Active_Object_Map.o .shobj/Active_Object_Map.so: Active_Object_Map.cpp \
@@ -2035,6 +2043,8 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
+ rtcorbafwd.h \
+ rtcorbafwd.i \
  POA.i \
  Stub.h \
  MProfile.h \
@@ -4404,6 +4414,8 @@ realclean:
  Object_Adapter.i \
  POAManager.h \
  POAManager.i \
+ rtcorbafwd.h \
+ rtcorbafwd.i \
  POA.i \
  debug.h
 
@@ -6324,6 +6336,8 @@ realclean:
  Object_Adapter.i \
  POAManager.h \
  POAManager.i \
+ rtcorbafwd.h \
+ rtcorbafwd.i \
  POA.i \
  debug.h
 
@@ -7983,6 +7997,8 @@ realclean:
  Object_Adapter.i \
  POAManager.h \
  POAManager.i \
+ rtcorbafwd.h \
+ rtcorbafwd.i \
  POA.i \
  debug.h
 
@@ -13143,6 +13159,8 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
+ rtcorbafwd.h \
+ rtcorbafwd.i \
  POA.i \
  Request.h \
  Context.h \
@@ -17193,10 +17211,10 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
- POA.i \
- Priority_Mapping.h \
  rtcorbafwd.h \
  rtcorbafwd.i \
+ POA.i \
+ Priority_Mapping.h \
  Priority_Mapping.i \
  Sync_Strategies.h \
  TAOC.h \
@@ -25762,6 +25780,8 @@ realclean:
  Object_Adapter.i \
  POAManager.h \
  POAManager.i \
+ rtcorbafwd.h \
+ rtcorbafwd.i \
  POA.i \
  debug.h \
  GIOP_Utils.h \
@@ -26796,6 +26816,8 @@ realclean:
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
+ rtcorbafwd.h \
+ rtcorbafwd.i \
  POA.i \
  operation_details.h \
  target_specification.h \
