@@ -1,3 +1,19 @@
+Fri Feb 25 17:29:12 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-hpux-11.00.h: Always set ACE_HAS_SVR4_DYNAMIC_LINKING.
+	  This is now available always.
+
+	* include/makeinclude/platform_hpux_gcc.GNU: Add -Wl,-E to
+	  SOFLAGS for linking shared libraries. Per info in
+	  Bugzilla #2057, this is needed to have dynamic_cast work across
+	  shared libraries. It still doesn't work, and not sure why...
+
+	* tests/DLL_Test.cpp: Use the correct ACE_DEBUG specifier for
+	  pointers (%@, not %x).
+
+	* tests/DLL_Test_Impl.cpp: Added an ACE_DEBUG in dynamic_cast_test()
+	  to see what's being tested, not only the results.
+
 Fri Feb 25 13:49:27 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/POSIX_Asynch_IO.{h cpp}: Added 'const' to all the handler_proxy

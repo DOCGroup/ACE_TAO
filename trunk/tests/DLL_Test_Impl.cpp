@@ -113,6 +113,10 @@ static Static_Constructor_Test the_instance;
 extern "C" ACE_Svc_Export int
 dynamic_cast_test (Parent *target)
 {
-   return target == dynamic_cast<Child*>( target )? 0 : -1;
+  Child *c = 0;
+  c = dynamic_cast<Child*> (target);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("dynamic_cast_test: parent %@; child %@\n"),
+              target, c));
+  return target == c ? 0 : -1;
 }  
 #endif /* !ACE_LACKS_RTTI */
