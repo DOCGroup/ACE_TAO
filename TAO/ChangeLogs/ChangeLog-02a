@@ -1,3 +1,13 @@
+Mon Sep 25 13:51:43 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SECIOP.idl:
+	* orbsvcs/orbsvcs/Security.idl:
+	* orbsvcs/orbsvcs/SecurityLevel1.idl:
+	* orbsvcs/orbsvcs/SecurityLevel2.idl:
+	* orbsvcs/orbsvcs/SecurityReplaceable.idl:
+
+	  Security Service 1.8 updates.
+
 Mon Sep 25 11:09:20 2000  Ossama Othman  <ossama@uci.edu>
 	
 	* TAO_IDL/be/be_helper.cpp (copyright):
