@@ -1,5 +1,9 @@
 Mon Jul  2 05:40:54 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/Logging_Strategy.cpp: Enhanced the code so that it works with
+	  ACE_LACKS_IOSTREAM_TOTALLY.  Thanks to Nir Drang <nir@bandwiz.com>
+	  and Edan Ayal <edana@bandwiz.com> for reporting this.
+  
 	* ace/SPIPE_Addr.cpp (set): Added a "+ 1" to the computation of
 	  the size of the SPIPE_Addr to account for the trailing NUL.
   	  Thanks to Oren Zeev-Ben-Mordehai <oren@phonedo.com> for
