@@ -384,7 +384,7 @@ Server_i::init (int argc,
       this->create_server ();
 
       // Initialize the IR.
-      this->init_IR ();
+      // this->init_IR ();
 
       // Register the server object with the Naming Service.
       // ??this->register_server ();

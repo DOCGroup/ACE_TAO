@@ -66,7 +66,7 @@ public:
   // Check if this is the first server binding to the Naming
   // Service.
 
-  int init_IR (void);
+  // int init_IR (void);
   // Initialize the Implementation Repository and register the
   // server with it.
 
