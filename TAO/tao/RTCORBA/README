@@ -1,0 +1,112 @@
+RTCORBA Subsetting Plan
+
+In this file, we're keeping track of the status of the subsetting
+of RTCORBA and its effect on TAO files.
+
+*******YOU ARE HEREBY WARNED******
+
+The steps of the subsetting process are the following:
+
+1.  Separate out all TAO_HAS_RT_CORBA blocks from non RTCORBA code
+    within tao and tao/PortableServer.  As a style, we'll be adding
+    RT_ in front of the files that we create in tao that will be
+    eventually moved to tao/RTCORBA.
+
+2.  Once everything is cleanly separated, we'll move all of the 
+    RT_ files at once to tao/RTCORBA and make a separate DLL for it.
+
+The reasoning for this two step process is:
+
+1.  To enable the subsetting while bugs are fixed for TAO 1.2 and
+    minimize the number of merges.
+
+2.  To enable RTCORBA subsetting changes to be made available
+    sooner for more testing.
+
+
+
+Status of files affected
+------------------------
+
+ORB Core
+--------
+tao/ORB:
+tao/ORB_Core:
+tao/Default_Protocols_Hooks:
+tao/Protocols_Hooks:
+tao/RT_Protocols_Hooks
+tao/orbconf:
+tao/Stub:  Angelo 
+tao/default_resource
+tao/Strategies/advanced_resource
+
+Policy
+------
+tao/Policy_Manager: Angelo 
+tao/RT_PolicyFactory: Angelo 
+tao/RT_Policy_i: Angelo 
+
+
+RTCORBA
+-------
+tao/Direct_Priority_Mapping
+tao/Linear_Priority_Mapping
+tao/Priority_Mapping
+tao/Priority_Mapping_Manager
+tao/RTCORBAC
+tao/rtcorbafwd
+tao/RTCORBAS
+tao/RTCORBAS_T
+tao/RT_ORBInitializer
+tao/RT_ORB_Loader
+tao/Strategies/Direct_Priority_Mapping:
+tao/Strategies/Linear_Priority_Mapping:
+
+Cleaned:  
+  tao/RT_Mutex: 
+  tao/RT_Current:
+  tao/RT_ORB: 
+
+
+Acceptor/Connector
+------------------
+tao/IIOP_Acceptor:
+tao/IIOP_Connector:
+tao/IIOP_Profile:
+tao/Strategies/*_Acceptor
+tao/Strategies/*_Connector
+tao/Strategies/*_Profile
+orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor
+orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile
+examples/PluggableUDP/DIOP/DIOP_Acceptor
+examples/PluggableUDP/DIOP/DIOP_Connector
+examples/PluggableUDP/DIOP/DIOP_Profile
+
+GIOP
+----
+tao/Invocation:
+tao/Invocation:
+tao/Invocation:
+tao/Invocation_Endpoint_Selectors:
+tao/RT_Invocation_Endpoint_Selectors
+tao/Private_Transport_Descriptor
+
+Other
+-----
+tao/Pool_Per_Endpoint:
+
+
+POA
+-----
+tao/PortableServer/Object_Adapter:
+tao/PortableServer/POA:
+tao/PortableServer/RTPortableServer.pidl:
+tao/PortableServer/RTPortableServerC:
+tao/PortableServer/RTPortableServerC:
+tao/PortableServer/RT_Acceptor_Filters:
+
+Tests
+-----
+tests/Exposed_policies/*
+tests/RTCORBA/*
+
