@@ -45,8 +45,7 @@ ACE_RCSID(Sched, Reconfig_Sched_Utils_T, "$Id$")
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Dependency_Visitor
-    (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-     ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+    (DEPENDENCY_SET_MAP & dependency_map, RT_INFO_MAP & rt_info_map)
   : dependency_map_ (dependency_map),
     rt_info_map_ (rt_info_map)
 {
