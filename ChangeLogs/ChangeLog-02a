@@ -1,3 +1,11 @@
+Tue Apr 23 11:31:43 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Dev_Poll_Reactor.inl (ACE_Dev_Poll_Handler_Guard):
+	  (~ACE_Dev_Poll_Handler_Guard):
+
+	  Added "todo" comments about suspending and resuming the event
+	  handler before and after the upcall, respectively.
+
 Tue Apr 23 11:38:40 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/Makefile: Rearranged to build all the examples.
