@@ -448,7 +448,6 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::reschedule (ACE_Timer_Node_T<TYPE> *expir
 {
   ACE_TRACE ("ACE_Timer_Heap::reschedule");
 
-  // From James Crawford <jamesc@in.ot.com.au>
   // If we are rescheduling then we have freed our timer id so we need
   // to reacquire it.
   // NOTE: we rely on the fact that we will get the same timer id we just
