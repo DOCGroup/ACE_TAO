@@ -10,7 +10,7 @@
 //
 // ============================================================================
 
-#include "test_config.h"
+#include "../test_config.h"
 #include "ace/RMCast/RMCast_IO_UDP.h"
 #include "ace/RMCast/RMCast_Fragment.h"
 
@@ -131,7 +131,7 @@ main (int, ACE_TCHAR *[])
 
   Receiver receiver (mcast_group);
   if (receiver.open () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Error in Receiver::open\n")), 1);   
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Error in Receiver::open\n")), 1);
 
   Sender sender (mcast_group);
   if (sender.activate () != 0)
@@ -153,8 +153,8 @@ main (int, ACE_TCHAR *[])
     }
 
   if (ACE_Thread_Manager::instance ()->wait () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_TEXT ("Error in Thread_Manager::wait\n")), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Error in Thread_Manager::wait\n")),
                        1);
 
   receiver.dump ();
@@ -183,8 +183,8 @@ int
 Receiver::open (void)
 {
   if (this->io_udp_.subscribe (this->mcast_group_) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_TEXT ("Error in IO_UDP::subscribe\n")), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Error in IO_UDP::subscribe\n")),
                       -1);
   return 0;
 }
