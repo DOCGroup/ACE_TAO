@@ -1,3 +1,11 @@
+Tue Apr 18 15:37:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	  Removed generation of ACE_ERROR message in the
+	  _dispatch() method. There is already code in place
+	  to throw an exception if the operation lookup fails.
+	  Thanks to Carlos for suggesting this fix.
+
 Tue Apr 18 13:34:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/Basic/Random.cpp:
