@@ -7,7 +7,7 @@ endif
 LSRC = Event_Service.cpp
 ES_OBJS=$(LSRC:.cpp=.o)
 
-LDLIBS = -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO
+LDLIBS = -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
 
 BIN2 = Event_Service
 

@@ -1,3 +1,25 @@
+Sat Mar 25 15:24:06 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Callback_Quoter/Makefile:
+        * examples/Event_Comm/Makefile:
+        * examples/Logging/Makefile:
+        * examples/Simple/bank/Makefile:
+        * examples/Simple/echo/Makefile:
+        * examples/Simple/grid/Makefile:
+        * examples/Simple/time/Makefile:
+        * examples/Simple/time-date/Makefile:
+        * orbsvcs/Event_Service/Makefile:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile:
+        * orbsvcs/tests/EC_Multiple/Makefile:
+        * orbsvcs/tests/EC_Throughput/Makefile:
+        * orbsvcs/tests/Event_Latency/Makefile:
+        * orbsvcs/tests/Property/Makefile:
+        * orbsvcs/tests/Simple_Naming/Makefile:
+        * orbsvcs/tests/Time/Makefile:
+        * tests/InterOp-Naming/Makefile:
+          Fixed a number of problems with the new orbsvcs libraries.
+          Mostly missing libraries in the link line.
+
 Fri Mar 24 23:07:51 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/mfc/StdAfx.h:
@@ -7,47 +29,47 @@ Fri Mar 24 23:07:51 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Mar 24 22:24:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile.CosConcurrency:
-	* orbsvcs/orbsvcs/Makefile.CosLifeCycle:
-	* orbsvcs/orbsvcs/Makefile.CosNaming:
-	* orbsvcs/orbsvcs/Makefile.CosNotification:
-	* orbsvcs/orbsvcs/Makefile.CosProperty:
-	* orbsvcs/orbsvcs/Makefile.CosTime:
-	* orbsvcs/orbsvcs/Makefile.CosTrading:
-	* orbsvcs/orbsvcs/Makefile.DsLogAdmin:
-	* orbsvcs/orbsvcs/Makefile.RTSched:
-	* orbsvcs/orbsvcs/Makefile.Svc_Utils:
-	  Set the MAKEFILE macro properly.
+        * orbsvcs/orbsvcs/Makefile.CosConcurrency:
+        * orbsvcs/orbsvcs/Makefile.CosLifeCycle:
+        * orbsvcs/orbsvcs/Makefile.CosNaming:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/Makefile.CosProperty:
+        * orbsvcs/orbsvcs/Makefile.CosTime:
+        * orbsvcs/orbsvcs/Makefile.CosTrading:
+        * orbsvcs/orbsvcs/Makefile.DsLogAdmin:
+        * orbsvcs/orbsvcs/Makefile.RTSched:
+        * orbsvcs/orbsvcs/Makefile.Svc_Utils:
+          Set the MAKEFILE macro properly.
 
-	* orbsvcs/orbsvcs/Makefile.CosEvent:
-	* orbsvcs/orbsvcs/Makefile.RTEvent:
-	  Disabled the new EC on old versions of g++.
+        * orbsvcs/orbsvcs/Makefile.CosEvent:
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+          Disabled the new EC on old versions of g++.
 
 Fri Mar 24 22:18:14 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/Naming_Service/Makefile:
-	  Added missing library.
+        * orbsvcs/Naming_Service/Makefile:
+          Added missing library.
 
 Fri Mar 24 21:32:30 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* docs/releasenotes/index.html:
-	  Updated the section on the Notification Service.
-	  Thanks to Roger Tragin <rtragin@wpine.com> for reminding to update.
+        * docs/releasenotes/index.html:
+          Updated the section on the Notification Service.
+          Thanks to Roger Tragin <rtragin@wpine.com> for reminding to update.
 
 Fri Mar 24 17:15:07 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IIOP_Acceptor.cpp (is_collocated):
-	* tao/SHMIOP_Acceptor.cpp (is_collocated):
-	* tao/UIOP_Acceptor.cpp (is_collocated):
+        * tao/IIOP_Acceptor.cpp (is_collocated):
+        * tao/SHMIOP_Acceptor.cpp (is_collocated):
+        * tao/UIOP_Acceptor.cpp (is_collocated):
 
-	  Check that dynamically cast pointer is actually valid
-	  (i.e. non-zero) prior to using it.
+          Check that dynamically cast pointer is actually valid
+          (i.e. non-zero) prior to using it.
 
 Fri Mar 24 18:38:20 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp: Fixed a typo where
-	  ACE_Null_Mutex was being passed as ACE_null_mutex.  Thanks to
-	  Thomas Groth <groth.th@stn-atlas.de> for reporting this.
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp: Fixed a typo where
+          ACE_Null_Mutex was being passed as ACE_null_mutex.  Thanks to
+          Thomas Groth <groth.th@stn-atlas.de> for reporting this.
 
 Fri Mar 24 15:40:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -71,9 +93,9 @@ Fri Mar 24 15:40:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Mar 24 10:21:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_expression.cpp:
-	  Initialized some variables to avoid cxx warnings,
-	  and made some cosmetic changes.
+        * TAO_IDL/ast/ast_expression.cpp:
+          Initialized some variables to avoid cxx warnings,
+          and made some cosmetic changes.
 
 Thu Mar 23 21:49:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
