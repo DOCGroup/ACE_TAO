@@ -1,3 +1,11 @@
+Thu Oct 30 08:10:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocated_Invocation.h:
+          Removed ; after ACE_UNIMPLEMENTED_FUNC
+
+        * tao/Makefile.bor:
+          Updated this makefile with all the recent changes
+
 Thu Oct 30 07:22:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ClientInterceptorAdapter.h:

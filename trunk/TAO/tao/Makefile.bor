@@ -80,6 +80,7 @@ OBJFILES = \
 	$(OBJDIR)\DomainC.obj \
 	$(OBJDIR)\DynamicC.obj \
 	$(OBJDIR)\Dynamic_Adapter.obj \
+   $(OBJDIR)\Dynamic_ParameterC.obj \
 	$(OBJDIR)\Encodable.obj \
 	$(OBJDIR)\Endpoint.obj \
 	$(OBJDIR)\Endpoint_Selector_Factory.obj \
@@ -144,8 +145,8 @@ OBJFILES = \
 	$(OBJDIR)\Managed_Types.obj \
 	$(OBJDIR)\Marshal.obj \
 	$(OBJDIR)\MCAST_Parser.obj \
-  $(OBJDIR)\Messaging_PolicyValueC.obj \
-  $(OBJDIR)\Messaging_SyncScopeC.obj \
+   $(OBJDIR)\Messaging_PolicyValueC.obj \
+   $(OBJDIR)\Messaging_SyncScopeC.obj \
 	$(OBJDIR)\Muxed_TMS.obj \
 	$(OBJDIR)\NVList.obj \
 	$(OBJDIR)\ORB.obj \
@@ -163,6 +164,7 @@ OBJFILES = \
 	$(OBJDIR)\Object_Proxy_Impl.obj \
 	$(OBJDIR)\Object_Ref_Table.obj \
 	$(OBJDIR)\OctetSeqC.obj \
+   $(OBJDIR)\ParameterMode.obj \
 	$(OBJDIR)\Parser_Registry.obj \
 	$(OBJDIR)\PICurrent.obj \
 	$(OBJDIR)\PICurrent_ORBInitializer.obj \
