@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Upcall_Wrapper.h"
-
 #include "Upcall_Command.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -30,7 +29,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 
 #if TAO_HAS_INTERCEPTORS == 1
                              , void * servant_upcall
-                             , CORBA::TypeCode_ptr const exceptions[]
+                             , CORBA::TypeCode_ptr const * exceptions
                              , size_t nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 

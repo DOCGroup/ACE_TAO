@@ -74,7 +74,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
     }
   else
     {
-      *os << "static CORBA::TypeCode_ptr const exceptions[] = {};"
+      *os << "static CORBA::TypeCode_ptr const * const exceptions = 0;"
           << be_nl
           << "static size_t const nexceptions = 0;";
     }
