@@ -1,3 +1,132 @@
+Sat Jul  1 11:33:45 2000  Alex Libman <alibman@baltimore.com>
+
+        * ace/SUN_Proactor: Added new files that specialize the
+	  POSIX_Proactor to use the Sun-specific versions of aioread() and
+ 	  aiowrite(), which are much faster than the POSIX versions.	  
+    
+	* ace/POSIX_Proactor: Added public virtual method ProactorType get_impl_type ()
+	  where enum ProactorType {	
+	    PROACTOR_POSIX,  // base class type
+	    PROACTOR_AIOCB,
+	    PROACTOR_SIG  ,
+	    PROACTOR_SUN 
+	  };
+
+          This has been done with purpose not to develop additional
+ 	  classes ACE_SUN_Asynch_Read/Write_Stream/File and to take into
+ 	  account differencies in ACE_POSIX_Asynch_Operation::cancel ()
+ 	  method.
+
+	* ace/POSIX_AIOCB_Proactor: The public constructor now defines max
+	  number asynchronous operations which can be started at the same time:
+
+	  ACE_POSIX_AIOCB_Proactor ( size_t nMaxOp = 256 );
+
+	  ACE_RTSIG_MAX ( usually 8 ) is too small for real job.
+
+	  Also added proctected constructor 
+  
+          ACE_POSIX_AIOCB_Proactor ( size_t nMaxOp , int Flg);
+
+	  This constructor is used by ACE_SUN_Proactor.  The difference
+ 	  between constructors: public constructor calls
+ 	  create_notify_manager (see 3.)  and protected does not. The
+ 	  reason: it is necessary to create ACE_AIOCB_Notify_Pipe_Manager
+ 	  instance when the virtual table for derived class is biult.
+
+	  Added protected method:
+  
+          void   create_notify_manager () ;
+
+	  The method is called from public ACE_POSIX_AIOCB_Proactor
+	  constructor and ACE_SUN_Proactor constructor 
+	  ACE_AIOCB_Notify_Pipe_Manager should be created after
+	  building the virtual table for the final subclass.
+
+	  Added protected method:
+  
+	  void   delete_notify_manager () ;
+
+	  The method is called from ACE_POSIX_AIOCB_Proactor and
+ 	  ACE_SUN_Proactor destructors. It is possible to call it twice,
+ 	  as it deletes ACE_AIOCB_Notify_Pipe_Manager and sets pointer to
+ 	  zero.
+
+	  Replaced the protected method 
+  
+          int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result)
+  
+          with two protected following methods:
+
+	  virtual int register_and_start_aio( ACE_POSIX_Asynch_Result *result,
+                                              int Op ); 
+          virtual int  start_aio (ACE_POSIX_Asynch_Result *result, int Op ); 
+
+	  where  Op means : 0-read, 1- write 
+
+	  These methods are made both as virtual to overwrite in
+ 	  ACE_SUN_Proactor.  register_and_start_aio shoud be called
+ 	  instead of old register_aio_with_proactor and it locks access to
+ 	  aiocb lists.  start_aio is called only from register_and_start_aio.
+
+	  Added protected method to find and extract the results of the
+	  completed  aio operation:
+  
+          ACE_POSIX_Asynch_Result * find_completed_aio (int & error_status,
+                                                        int & return_status );
+  
+          This method is called from int handle_events (unsigned long milli_seconds)
+	  and locks access to aiocb lists.
+
+	  Replace the following members :
+  
+          aiocb *aiocb_list_ [ACE_RTSIG_MAX];
+	  ACE_POSIX_Asynch_Result *result_list_ [ACE_RTSIG_MAX];
+
+	  with
+  
+          aiocb **  m_pAIOCB_list_ ;
+	  ACE_POSIX_Asynch_Result ** m_pResult_list_ ;
+
+	  The listsd are be allocated dynamically.
+
+	  Added thread mutex to protect the work with lists.
+	  ACE_Thread_Mutex m_MtxAIOCB ;
+
+        * ace/POSIX_AIOCB_Asynch_Operation: The method 
+  
+          int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result);
+  
+          is replaced by
+
+          int register_and_start_aio (ACE_POSIX_Asynch_Result *result,int Op);
+  
+          where Op means operation : 0 - read , 1 - write 
+
+	  The method 
+  
+          int cancel (void);
+  
+          is modified according to the type of Proactor's implementation.
+
+	  The following methods  are changed as shown below:
+
+	  int ACE_POSIX_AIOCB_Asynch_Read_Stream::shared_read
+             (ACE_POSIX_Asynch_Read_Stream_Result *result)
+	  {
+	    result->aio_sigevent.sigev_notify = SIGEV_NONE;
+	    return  register_and_start_aio ( result , 0 ) ; // read 
+	  }
+  
+          and
+
+	  int ACE_POSIX_AIOCB_Asynch_Read_Stream::shared_write 
+             (ACE_POSIX_Asynch_Read_Stream_Result *result)
+	  {
+	    result->aio_sigevent.sigev_notify = SIGEV_NONE;
+	    return  register_and_start_aio ( result , 1 ) ; //write 
+	  }
+
 Sat Jul 01 11:46:23 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-cxx-common.h: moved ACE_HAS_STANDARD_CPP_LIBRARY
