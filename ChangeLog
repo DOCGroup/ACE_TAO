@@ -9,6 +9,22 @@ Thu Aug 29 22:01:27 2002  Steve Huston  <shuston@riverace.com>
           Ville Lehtiniemi <guderian@ees2.oulu.fi> for reporting these
           issues and sending fixes.
 
+Thu Aug 29 15:18:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Get_Opt.{h i cpp} (long_option): Only print error messages for
+          long message addition problems if opterr is set. Also added
+          ACE_LIB_TEXT to naked strings for ACE_ERROR.
+
+          Added opt_opt() method to return the most recently matched
+          short option character. Thanks to Rich (Mr. POSIX) Seibel
+          for the idea and POSIX spec info for this new method.
+
+        * ace/Object_Manager.cpp (init): When finishing up initialization of
+          the object manager, call ACE_Trace::start_tracing() to reenable
+          trace in cases where a user does init/fini/init.
+
+        * tests/Get_Opt_Test.cpp: Added usage of ACE_Get_Opt::opt_opt().
+
 Thu Aug 29 15:03:23 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/README:
