@@ -24,6 +24,7 @@ namespace CCF
       struct Typedef;
       struct TypeId;
       struct TypePrefix;
+      struct Union;
       struct ValueType;
 
       //
@@ -72,6 +73,9 @@ namespace CCF
 
         virtual TypePrefix&
         type_prefix () = 0;
+
+        virtual Union&
+        union_ () = 0;
 
         virtual ValueType&
         value_type () = 0;

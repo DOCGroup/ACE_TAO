@@ -307,8 +307,10 @@ namespace CCF
       KeywordParser ABSTRACT;
       KeywordParser ATTRIBUTE;
       KeywordParser BINCLUDE;
+      KeywordParser CASE;
       KeywordParser CONST;
       KeywordParser CUSTOM;
+      KeywordParser DEFAULT;
       KeywordParser ENUM;
       KeywordParser EXCEPTION;
       KeywordParser FACTORY;
@@ -328,10 +330,12 @@ namespace CCF
       KeywordParser SEQUENCE;
       KeywordParser STRUCT;
       KeywordParser SUPPORTS;
+      KeywordParser SWITCH;
       KeywordParser TRUNCATABLE;
       KeywordParser TYPEDEF;
       KeywordParser TYPEID;
       KeywordParser TYPEPREFIX;
+      KeywordParser UNION;
       KeywordParser VALUETYPE;
 
       // Punctuation parsers (alphabetic group order).
@@ -443,6 +447,11 @@ namespace CCF
 
       Rule type_id_decl;
       Rule type_prefix_decl;
+
+      Rule union_decl;
+      Rule union_def_trailer;
+      Rule union_body;
+      Rule union_case_label;
 
       Rule abstract_value_type_decl;
       Rule concrete_value_type_decl;
@@ -693,6 +702,30 @@ namespace CCF
 
       NoArgAction<SemanticAction::TypePrefix>
       act_type_prefix_end;
+
+      // Union
+      //
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Union>
+      act_union_begin_def, act_union_begin_fwd;
+
+      OneArgAction<IdentifierPtr, SemanticAction::Union>
+      act_union_type;
+
+      ScopeAction
+      act_union_open_scope;
+
+      OneArgAction<IdentifierPtr, SemanticAction::Union>
+      act_union_member_type;
+
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Union>
+      act_union_member_name;
+
+      ScopeAction
+      act_union_close_scope;
+
+      NoArgAction<SemanticAction::Union>
+      act_union_end;
 
 
       // ValueType

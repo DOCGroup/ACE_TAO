@@ -6,7 +6,6 @@
 #define CCF_IDL2_TRAVERSAL_STRUCT_HPP
 
 #include "CCF/IDL2/Traversal/Elements.hpp"
-
 #include "CCF/IDL2/SemanticGraph/Struct.hpp"
 
 namespace CCF

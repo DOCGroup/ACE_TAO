@@ -7,6 +7,8 @@
 
 #include "CCF/IDL2/SemanticAction/Elements.hpp"
 
+#include "CCF/IDL2/SemanticAction/Factory.hpp"
+
 #include "CCF/IDL2/SemanticAction/Attribute.hpp"
 #include "CCF/IDL2/SemanticAction/Enum.hpp"
 #include "CCF/IDL2/SemanticAction/Exception.hpp"
@@ -19,7 +21,7 @@
 #include "CCF/IDL2/SemanticAction/Struct.hpp"
 #include "CCF/IDL2/SemanticAction/Typedef.hpp"
 #include "CCF/IDL2/SemanticAction/TypeId.hpp"
-#include "CCF/IDL2/SemanticAction/Factory.hpp"
+#include "CCF/IDL2/SemanticAction/Union.hpp"
 #include "CCF/IDL2/SemanticAction/ValueType.hpp"
 
 #endif  // CCF_IDL2_SEMANTIC_ACTION_HPP
