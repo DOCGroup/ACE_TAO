@@ -72,6 +72,7 @@ endif # CPU
 
 CC       = cxvx$(CPU)
 CXX      = $(CC)
+CFLAGS   += -DVXWORKS
 CCFLAGS  += $(CFLAGS) --no_rtti -tnone
 DCFLAGS  += -g
 DLD      = $(CXX)
