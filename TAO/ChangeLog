@@ -1,3 +1,11 @@
+Thu Mar  3 07:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+          Added include of OS_NS_unistd.h to get ACE_OS::getpid
+
+        * examples/POA/DSI/Database.idl:
+          Made the shutdown method a oneway
+
 Wed Mar  2 20:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CORBALOC_Parser.h:
