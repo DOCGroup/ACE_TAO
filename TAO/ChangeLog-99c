@@ -1,3 +1,10 @@
+Wed Apr 21 11:06:57 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp},
+          server.cpp,client.cpp:  factored out thread creation flags to
+          Globals::thr_create_flags.  Only set THR_SCHED_FIFO flag if
+          sched_fifo_init operation to set process FIFO scheduling succeeded.
+
 Wed Apr 21 09:37:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/summarize:
