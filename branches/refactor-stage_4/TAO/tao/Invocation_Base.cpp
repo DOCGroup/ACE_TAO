@@ -124,7 +124,7 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
                  EINVAL),
                CORBA::COMPLETED_NO));
           }
-        /*}*
+        /*}*/
   }
 
 
