@@ -636,7 +636,7 @@ ACE_Service_Config::handle_signal (int sig,
                                    ucontext_t *)
 {
 #if defined (ACE_NDEBUG)
-  ACE_UNUSED_ARG (sig)
+  ACE_UNUSED_ARG (sig);
 #else  /* ! ACE_NDEBUG */
   ACE_ASSERT (ACE_Service_Config::signum_ == sig);
 #endif /* ! ACE_NDEBUG */
