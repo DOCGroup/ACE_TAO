@@ -6,6 +6,8 @@
 #include <orbsvcs/CosNamingC.h>
 #include <iostream>
 
+using namespace std;
+
 int main (int argc, char* argv[])
 {
   try {
@@ -49,7 +51,7 @@ int main (int argc, char* argv[])
     orb->destroy ();
   }
   catch (CORBA::Exception &) {
-    std::cerr << "CORBA exception raised!" << std::endl;
+    cerr << "CORBA exception raised!" << endl;
   }
   return 0;
 }

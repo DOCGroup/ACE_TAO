@@ -5,6 +5,8 @@
 #include "Handler_i.h"
 #include <iostream>
 
+using namespace std;
+
 Single_Query_Stock_Handler_i::
     Single_Query_Stock_Handler_i (int *response_count)
     : response_count_ (response_count)
@@ -17,9 +19,9 @@ Single_Query_Stock_Handler_i::get_price_and_names (CORBA::Double ami_return_val,
                                                   const char *full_name)
   throw (CORBA::SystemException)
 {
-  std::cout << "The price of one stock in \""
-            << full_name << "\" (" << symbol << ") is "
-            << ami_return_val << std::endl;
+  cout << "The price of one stock in \""
+       << full_name << "\" (" << symbol << ") is "
+       << ami_return_val << endl;
   (*this->response_count_)++;
 }
 
@@ -30,7 +32,7 @@ Single_Query_Stock_Handler_i::
 {
   // We ignore the exception, but this counts as a reponse, otherwise
   // the application would not finish.
-  std::cerr << "Exception raised while querying stock price"
-            << std::endl;
+  cerr << "Exception raised while querying stock price"
+       << endl;
   (*this->response_count_)++;
 }

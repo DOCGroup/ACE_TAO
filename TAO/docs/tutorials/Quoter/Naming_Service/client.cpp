@@ -6,6 +6,8 @@
 #include <orbsvcs/CosNamingC.h>
 #include <iostream>
 
+using namespace std;
+
 int main (int argc, char* argv[])
 {
   try {
@@ -18,8 +20,8 @@ int main (int argc, char* argv[])
     // name, the rest are the names of the stock symbols we want to
     // get quotes for.
     if (argc < 2) {
-      std::cerr << "Usage: " << argv[0]
-                << "symbol symbol..." << std::endl;
+      cerr << "Usage: " << argv[0]
+                << "symbol symbol..." << endl;
       return 1;
     }
 
@@ -53,13 +55,13 @@ int main (int argc, char* argv[])
         // Now get the price
         CORBA::Double price = stock->price ();
 
-        std::cout << "The price of a stock in \""
-                  << full_name.in () << "\" is $"
-                  << price << std::endl;
+        cout << "The price of a stock in \""
+             << full_name.in () << "\" is $"
+             << price << endl;
       }
       catch (Quoter::Invalid_Stock_Symbol &) {
-        std::cerr << "Invalid stock symbol <"
-                  << argv[i] << ">" << std::endl;
+        cerr << "Invalid stock symbol <"
+             << argv[i] << ">" << endl;
       }
     }
 
@@ -67,7 +69,7 @@ int main (int argc, char* argv[])
     orb->destroy ();
   }
   catch (CORBA::Exception &) {
-    std::cerr << "CORBA exception raised!" << std::endl;
+    cerr << "CORBA exception raised!" << endl;
   }
   return 0;
 }
