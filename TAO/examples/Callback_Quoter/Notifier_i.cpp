@@ -18,6 +18,10 @@
 // ===========================================================
 
 #include "Notifier_i.h"
+#include "ace/OS.h"
+#include "tao/Exception.h"
+#include "tao/try_macros.h"
+
 
 Notifier_i::Notifier_i (void)
   : notifier_exited_(0)
@@ -37,7 +41,7 @@ void
 Notifier_i::register_callback (const char *stock_name,
                                CORBA::Long threshold_value,
                                Callback_Quoter::Consumer_ptr consumer_handler,
-                               CORBA::Environment &TAO_TRY_ENV)
+                               CORBA::Environment &_env)
 {
   // Store the client information.
   Consumer_Data consumer_data;
@@ -61,8 +65,8 @@ Notifier_i::register_callback (const char *stock_name,
   if (this->consumer_map_.find (stock_name, consumers) == 0)
     {
      if ( consumers->insert (consumer_data) == -1)
-       ACE_ERROR ((LM_ERROR,
-		   "register_callback: Insert failed!/n"));
+       _env.exception (new Callback_Quoter::Invalid_Stock
+                              ("Insertion failed! Invalid Stock!\n"));
      else
       ACE_DEBUG ((LM_DEBUG,
 		  "Inserted map entry: stockname %s threshold %d",
@@ -71,14 +75,23 @@ Notifier_i::register_callback (const char *stock_name,
     }
   else
     {
-      // @@ Make sure to use the ACE_NEW_THROW macro, which works with
+      ///*done*/ @@ Make sure to use the ACE_NEW_THROW macro, which works with
       // CORBA exceptions...
-      consumers = new CONSUMERS;
+      
+      
+      // the unbounded set entry is created.
+      // NOTE:: its pathetic, but to make this macro call its necessary to name 
+      // your environment variable _env
+      ACE_NEW_THROW (consumers, CONSUMERS, CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
+      // When a new entry is tried to be inserted into the unbounded set and it 
+      // fails an exception is raised.
       if (consumers->insert (consumer_data) == -1)
-	ACE_ERROR ((LM_ERROR,
-		   "register_callback: Insert failed!/n"));
+        _env.exception (new Callback_Quoter::Invalid_Stock 
+                       ("Insertion failed! Invalid Stock!\n"));
 
+      // The bond between the stockname <hash_key> and the consumers <hash_value>
+      // is fused.
       if (this->consumer_map_.bind (stock_name, consumers) == -1)
          ACE_ERROR ((LM_ERROR,
 		   "register_callback: Bind failed!/n"));
@@ -87,6 +100,7 @@ Notifier_i::register_callback (const char *stock_name,
                     "new map entry: stockname %s threshold %d",
                     stock_name,
                     threshold_value));
+      
     }
 }
 
@@ -102,7 +116,7 @@ Notifier_i::orb (CORBA::ORB_ptr orb)
 
 void
 Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
-				       CORBA::Environment &TAO_TRY_ENV)
+                                 CORBA::Environment &env)
 {
   // The consumer_map consists of a map of stocknames with consumers
   // and their threshold values attached to it. To unregister a
@@ -130,11 +144,13 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
        // int_id is a member of the ACE_Hash_Map_Entry.  The remove
        // method will do a find internally using operator == which
        // will check only the consumer pointers.  If match found it
-       // will be removed from the set.
+       // will be removed from the set. If the consumer cannot be 
+       // removed an exception is raised.
 
        if ((*iter).int_id_->remove (consumer_to_remove) == -1)
-	 ACE_ERROR ((LM_ERROR,
-		     "unregister_callback: Remove failed!/n"));
+	 env.exception (new Callback_Quoter::Invalid_Handle 
+                        ("Unregistration failed! Invalid Consumer Handle!\n"));
+                                
        else
         ACE_DEBUG ((LM_DEBUG,
 		    "unregister_callback:consumer removed\n"));
@@ -147,7 +163,7 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
 void
 Notifier_i::market_status (const char *stock_name,
                            CORBA::Long stock_value,
-                           CORBA::Environment &TAO_TRY_ENV)
+                           CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "Notifier_i:: The stockname is %s with price %d\n",
@@ -186,51 +202,18 @@ Notifier_i::market_status (const char *stock_name,
         }
     }
   else
-    // @@ Please add a user defined exception called something like
+    // /*done*/@@ Please add a user defined exception called something like
     // NOT_FOUND.
-    ACE_DEBUG ((LM_DEBUG,
-		"Consumer not found having stockname \"%s\" with threshold value %d!\n",
-		stock_name,
-		stock_value));
+  
+      // Exception is raised when the stock doesnt exist in the Hash_map.
+      env.exception (new Callback_Quoter::Invalid_Stock (" Nonexistent Stock"));
+  //  stock_name,
+  //                                                     stock_value);
 }
 
 void
 Notifier_i::shutdown (CORBA::Environment &env)
 {
-
-  // @@ I think you can delete this stuff, as long as it works and
-  // purify is happy.
- 
-  /* CONSUMERS *consumers;
-  for (CONSUMER_MAP::ITERATOR iter = this->consumer_map_.begin ();
-       iter!= this->consumer_map_.end ();
-       iter ++)
-    {
-      consumers =  (*iter).int_id_;
-
-      for (CONSUMERS::ITERATOR inner_iter= consumers->begin ();
-           inner_iter != consumers->end();
-           inner_iter ++ )
-	 {
-	   ACE_DEBUG ((LM_DEBUG,
-		       " Removing consumer: Stockname %s Threshold %d\n",
-		       (*iter).ext_id_,
-		       (*inner_iter).desired_value_));
-
-	  if ( consumers->remove(*inner_iter) == -1)
-	    ACE_ERROR ((LM_ERROR,
-		    "shutdown: remove failed!/n"));;
-
-	 }
-      if ( this->consumer_map_.unbind ((*iter).ext_id_,
-				       (*iter).int_id_) == -1)
-	ACE_ERROR ((LM_ERROR,
-		    "shutdown: unbind failed!/n"));
-    }
-
-  ACE_DEBUG ((LM_DEBUG,
-  " All consumers  removed!\n"));*/
-
   if ( this->consumer_map_.close () > 0)
     ACE_ERROR ((LM_ERROR,
 		"Consumer_map_close error!\n"));
