@@ -22,7 +22,10 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
     iiop_endpoint_ (iiop_endp),
     destroy_iiop_endpoint_ (0),
     qop_ (Security::SecQOPIntegrityAndConfidentiality),
+#if !defined (VXWORKS) && !defined (__QNX__)
+    // Some compilers don't like the initialization
     trust_ (),
+#endif /* !VXWORKS && !__QNX__ */
     credentials_ ()
 {
   if (ssl_component != 0)
