@@ -448,7 +448,7 @@ ACE_Reactor::implementation (ACE_Reactor_Impl *impl)
 }
 
 ACE_INLINE int
-ACE_Reactor::reset_new_handle (void)
+ACE_Reactor::uses_event_associations (void)
 {
-  return this->implementation ()->reset_new_handle ();
+  return this->implementation ()->uses_event_associations ();
 }

@@ -402,8 +402,9 @@ public:
   virtual ACE_Reactor_Impl *implementation (void);
   // Get the implementation class
 
-  virtual int reset_new_handle (void);
-  // Return 1 if we need to reset the handle after accept/connect, 0 otherwise.
+  virtual int uses_event_associations (void);
+  // Return 1 if we any event associations were made by the reactor
+  // for the handles that it waits on, 0 otherwise.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.

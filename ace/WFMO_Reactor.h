@@ -643,8 +643,11 @@ public:
   virtual int resume_handlers (void);
   // Resume all <handles>. 
 
-  virtual int reset_new_handle (void);
-  // If we need to reset handles returned from accept/connect.
+  virtual int uses_event_associations (void);
+  // Return 1 if we any event associations were made by the reactor
+  // for the handles that it waits on, 0 otherwise. Since the
+  // WFMO_Reactor does use event associations, this function always
+  // return 1.
 
   // Timer management.
 
