@@ -40,8 +40,8 @@ struct ACE_Scheduler_Factory_Data
   // Channel.
 
   ACE_Scheduler_Factory_Data (void)
-    : scheduler_ (TAO_SF_config_count, TAO_SF_config_info, 
-	              TAO_SF_entry_count, TAO_SF_rt_info),
+    : scheduler_ (TAO_SF_config_count, TAO_SF_config_info,
+                      TAO_SF_entry_count, TAO_SF_rt_info),
       preemption_priority_ ()
     {
     }
@@ -51,7 +51,7 @@ static ACE_Scheduler_Factory_Data *ace_scheduler_factory_data = 0;
 
 int ACE_Scheduler_Factory::use_runtime (int cc,
                                         POD_Config_Info cfgi[],
-										int ec,
+                                                                                int ec,
                                         POD_RT_Info rti[])
 {
   if (server_ != 0 || TAO_SF_entry_count != -1)
@@ -257,13 +257,13 @@ int ACE_Scheduler_Factory::dump_schedule
                        rt_info_format,
                        (const char*) info.entry_point,
                        info.handle,
-                       info.worst_case_execution_time,
-                       info.typical_execution_time,
-                       info.cached_execution_time,
+                       ACE_U64_TO_U32 (info.worst_case_execution_time),
+                       ACE_U64_TO_U32 (info.typical_execution_time),
+                       ACE_U64_TO_U32 (info.cached_execution_time),
                        info.period,
                        info.criticality,
                        info.importance,
-                       info.quantum,
+                       ACE_U64_TO_U32 (info.quantum),
                        info.threads,
                        info.priority,
                        info.preemption_subpriority,
@@ -361,5 +361,3 @@ template class ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority>;
 #pragma instantiate ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority> >
 #pragma instantiate ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
