@@ -1,3 +1,10 @@
+Thu May 13 12:50:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Crash_On_Write/client.cpp:
+          Output some more iteration message so that we can better see
+          in the daily builds what happens during the crash of this
+          test on Windows
+
 Thu May 13 11:26:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Reply/client.cpp:
