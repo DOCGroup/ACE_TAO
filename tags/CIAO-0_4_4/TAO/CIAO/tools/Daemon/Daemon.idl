@@ -1,0 +1,28 @@
+// $Id$
+
+/**
+ * @file Daemon.idl
+ *
+ * @brief Controling interface for managing and controling CIAO daemon.
+ */
+
+module CIAO
+{
+  exception NotFound {};
+
+  /**
+   * @brief CIAO daemon process control program.
+   */
+  interface Daemon
+  {
+    // Canonical name of this daemon
+    readonly attribute string name;
+
+    // Acquire a specific service
+    Object get_service (in string svc_name)
+      raises (NotFound);
+
+    // Shutdown the daemon process.
+    oneway void shutdown ();
+  };
+};
