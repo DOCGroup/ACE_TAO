@@ -194,7 +194,7 @@ release-old: ACE-INSTALL
          mv ACE.tar.gz ACE-lib.tar.gz ./ACE_wrappers/)
 
 releaseall-old: release-old
-	@cd TAO; make releaseall
+	@cd TAO; make release
 	@(cd ..; \
          find $(ALL_RELEASE_FILES) $(FILTER) | \
            cpio -o -H tar | gzip -9 > ACE+TAO.tar.gz; \
