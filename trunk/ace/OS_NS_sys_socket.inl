@@ -564,11 +564,11 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
                                flags), int, -1);
 #else
   int ace_result_;
-#  if defined (VXWORKS) || defined (HPUX) || defined (ACE_PSOS)
-  ace_result_ = ::send ((ACE_SOCKET) handle, (char *) buf, len, flags);
+#  if defined (ACE_PSOS)
+  ace_result_ = ::send ((ACE_SOCKET) handle, const_cast <char *> (buf), len, flags);
 #  else
   ace_result_ = ::send ((ACE_SOCKET) handle, buf, len, flags);
-#  endif /* VXWORKS */
+#  endif /* ACE_PSOS */
 
 # if !(defined (EAGAIN) && defined (EWOULDBLOCK) && EAGAIN == EWOULDBLOCK)
   // Optimize this code out if we can detect that EAGAIN ==
