@@ -1,6 +1,6 @@
 Sat Jan 17 00:12:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/run_tests.lst:
+	* tests/run_test.lst:
 	* tests/tests.mpc:
 
 	  Added missing tests.
