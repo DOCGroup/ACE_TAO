@@ -169,7 +169,10 @@ public:
 
   /**
    * Instruct the Reactor to terminate its event loop and notifies the
-   * Reactor so that it can wake up and close down gracefully.
+   * Reactor so that it can wake up and deactivate
+   * itself. Deactivating the Reactor would allow the Reactor to be
+   * shutdown gracefully. Internally the Reactor calls deactivate ()
+   * on the underlying implementation.
    */
   virtual int end_reactor_event_loop (void);
 
