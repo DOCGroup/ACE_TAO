@@ -44,7 +44,7 @@ my $release_host = substr ($which_host, 0, 5);
 ## We are not going to use any Sun boxes for the release anymore..
 
 if (! ($release_host eq 'linux')){
-    die "$0: You are on the wrong OS, please move to linux box\n";
+   die "$0: You are on the wrong OS, please move to linux box\n";
 }
 
 my  $perl_path = '/usr/bin/perl';
@@ -281,17 +281,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
       die "$0: failed cvs export of $ciao_tag in $stage_dir\n";
   }
 
-  $status = &generate_makefiles ();
 
-  if ($status != 0) {
-    die "$0: failed to generate makefiles\n";
-  }
-
-  $status = &bootstrap_autotools ();
-
-  if ($status != 0) {
-    die "$0: failed to bootstrap autotools\n";
-  }
 
   $status = &create_kit ();
 
@@ -824,8 +814,110 @@ sub create_kit () {
   my $build_command;
   my $archives;
 
+  my $base_release_files = $release_files;
+
+  if ($kit eq 'ace+tao+ciao') {
+      # Create a list of files that needs to be packed with CIAO
+      # including ACE+TAO.  
+      my $tmp_rel_file = '';
+      chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/Makefile show_release_files`);
+      $release_files .= ' ';
+      $release_files .= $tmp_rel_file;
+      $tmp_rel_file = '';
+      $release_files .= ' ';
+      chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/CIAO/Makefile show_release_files`);
+      $release_files .= $tmp_rel_file;
+
+      print "RELEASE FILES from CIAO are $release_files \n";
+      
+      $build_command =
+          "$rm ACE+TAO+CIAO.zip; " .
+          "$find $release_files $release_filter | $egrep $bin_files | " .
+          "zip ACE+TAO+CIAO.zip -q9@ &&" .
+          "$find $release_files $release_filter | $egrep -v $bin_files | " .
+          "zip ACE+TAO+CIAO.zip -qlg9@ &&" .
+          "$find $release_files $release_filter | $cpio -o -H ustar | " .
+          "$gzip -9 > ACE+TAO+CIAO.tar.gz && " .
+        "$find $release_files $release_filter | $cpio -o -H ustar | " .
+          "$bzip2 > ACE+TAO+CIAO.tar.bz2 && " .
+        "$chmod 664 ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 && " .
+        "$chgrp doc ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 && " .
+        "$dispose ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 $dest &&" .
+        "$cp $dest/ACE+TAO+CIAO.zip $old_versions_dir/$local_ace_tag+$local_tao_tag+$local_ciao_tag.zip &&".
+        "$cp $dest/ACE+TAO+CIAO.tar.gz $old_versions_dir/$local_ace_tag+$local_tao_tag+$local_ciao_tag.tar.gz &&".
+        "$cp $dest/ACE+TAO+CIAO.tar.bz2 $old_versions_dir/$local_ace_tag+$local_tao_tag+$local_ciao_tag.tar.bz2; ";
+    $archives = " ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 ";
+  }
+
+  # First dispose of ACE+TAO+CIAO.
+  my $checksum_command =
+    "$shell_cd $dest; " .
+      "for p in $archives; do " .
+      "$rm \${p}.${cksum_ext}; " .
+      "$checksum \$p $redirect \${p}.${cksum_ext}; " .
+      "done";
+
+  &ex ($build_command);
+  &ex ($checksum_command);
+
+  if ($kit eq 'ace+tao' || $kit eq 'ace+tao+ciao') {
+      # Set the relese files once again
+    my $tmp_rel_file = '';
+    chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/Makefile show_release_files`);
+    $release_files = $base_release_files;
+    $release_files .= ' ';
+    $release_files .= $tmp_rel_file;
+
+    print "RELEASE FILES for TAO are $release_files \n";
+
+    $build_command =
+        "$rm ACE+TAO.zip; " .
+        "$find $release_files $release_filter | $egrep $bin_files | " .
+          "zip ACE+TAO.zip -q9@ &&" .
+        "$find $release_files $release_filter | $egrep -v $bin_files | " .
+          "zip ACE+TAO.zip -qlg9@ &&" .
+        "$find $release_files $release_filter | $cpio -o -H ustar | " .
+          "$gzip -9 > ACE+TAO.tar.gz && " .
+        "$find $release_files $release_filter | $cpio -o -H ustar | " .
+          "$bzip2 > ACE+TAO.tar.bz2 && " .
+        "$chmod 664 ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 && " .
+        "$chgrp doc ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 && " .
+        "$dispose ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 $dest &&" .
+        "$cp $dest/ACE+TAO.zip $old_versions_dir/$local_ace_tag+$local_tao_tag.zip &&".
+        "$cp $dest/ACE+TAO.tar.gz $old_versions_dir/$local_ace_tag+$local_tao_tag.tar.gz &&".
+        "$cp $dest/ACE+TAO.tar.bz2 $old_versions_dir/$local_ace_tag+$local_tao_tag.tar.bz2; ";
+    $archives = " ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 ";
+  }
+
+  # Dispose of ACE+TAO now
+  my $checksum_command =
+    "$shell_cd $dest; " .
+      "for p in $archives; do " .
+      "$rm \${p}.${cksum_ext}; " .
+      "$checksum \$p $redirect \${p}.${cksum_ext}; " .
+      "done";
+
+  &ex ($build_command);
+  &ex ($checksum_command);
+
   if ($kit eq 'ace'  ||  $kit eq 'ace+tao' || $kit eq 'ace+tao+ciao') {
 
+      $status = &generate_makefiles ();
+      
+      if ($status != 0) {
+          die "$0: failed to generate makefiles\n";
+      }
+      
+      $status = &bootstrap_autotools ();
+      
+      if ($status != 0) {
+          die "$0: failed to bootstrap autotools\n";
+      }
+
+      # Reset it again with autoconf files
+      $release_files = 
+          chomp ($release_files = `$make show_autoconf_release_files`);
+      
       $build_command =
         "$rm ACE.zip ACE-lib.zip; " .
         "$find $release_files $release_filter | $egrep $bin_files | " .
@@ -859,64 +951,8 @@ sub create_kit () {
       $archives = " ACE.tar.gz ACE-lib.tar.gz ".
 	          "ACE.zip ACE-lib.zip ACE.tar.bz2 ACE-lib.tar.bz2 ";
   }
-
-  if ($kit eq 'ace+tao' || $kit eq 'ace+tao+ciao') {
-    my $tmp_rel_file = '';
-    chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/Makefile show_release_files`);
-    $release_files .= ' ';
-    $release_files .= $tmp_rel_file;
-
-    print "RELEASE FILES are $release_files \n";
-
-    $build_command .=
-        "$rm ACE+TAO.zip; " .
-        "$find $release_files $release_filter | $egrep $bin_files | " .
-          "zip ACE+TAO.zip -q9@ &&" .
-        "$find $release_files $release_filter | $egrep -v $bin_files | " .
-          "zip ACE+TAO.zip -qlg9@ &&" .
-        "$find $release_files $release_filter | $cpio -o -H ustar | " .
-          "$gzip -9 > ACE+TAO.tar.gz && " .
-        "$find $release_files $release_filter | $cpio -o -H ustar | " .
-          "$bzip2 > ACE+TAO.tar.bz2 && " .
-        "$chmod 664 ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 && " .
-        "$chgrp doc ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 && " .
-        "$dispose ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 $dest &&" .
-        "$cp $dest/ACE+TAO.zip $old_versions_dir/$local_ace_tag+$local_tao_tag.zip &&".
-        "$cp $dest/ACE+TAO.tar.gz $old_versions_dir/$local_ace_tag+$local_tao_tag.tar.gz &&".
-        "$cp $dest/ACE+TAO.tar.bz2 $old_versions_dir/$local_ace_tag+$local_tao_tag.tar.bz2; ";
-    $archives .= " ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 ";
-  }
-
-  if ($kit eq 'ace+tao+ciao') {
-    my $tmp_rel_file = '';
-    chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/CIAO/Makefile show_release_files`);
-    $release_files .= ' ';
-    $release_files .= $tmp_rel_file;
-
-    print "RELEASE FILES from CIAO are $release_files \n";
-
-    $build_command .=
-        "$rm ACE+TAO+CIAO.zip; " .
-        "$find $release_files $release_filter | $egrep $bin_files | " .
-          "zip ACE+TAO+CIAO.zip -q9@ &&" .
-        "$find $release_files $release_filter | $egrep -v $bin_files | " .
-          "zip ACE+TAO+CIAO.zip -qlg9@ &&" .
-        "$find $release_files $release_filter | $cpio -o -H ustar | " .
-          "$gzip -9 > ACE+TAO+CIAO.tar.gz && " .
-        "$find $release_files $release_filter | $cpio -o -H ustar | " .
-          "$bzip2 > ACE+TAO+CIAO.tar.bz2 && " .
-        "$chmod 664 ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 && " .
-        "$chgrp doc ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 && " .
-        "$dispose ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 $dest &&" .
-        "$cp $dest/ACE+TAO+CIAO.zip $old_versions_dir/$local_ace_tag+$local_tao_tag+$local_ciao_tag.zip &&".
-        "$cp $dest/ACE+TAO+CIAO.tar.gz $old_versions_dir/$local_ace_tag+$local_tao_tag+$local_ciao_tag.tar.gz &&".
-        "$cp $dest/ACE+TAO+CIAO.tar.bz2 $old_versions_dir/$local_ace_tag+$local_tao_tag+$local_ciao_tag.tar.bz2; ";
-    $archives .= " ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 ";
-  }
-
-  # The "$dest/\$p" is going to look a bit funny if the release isn't
-  # being installed in the FTP directory since it will expand to
-  # `created/ACE.tar.gz', for example.  No big deal, I guess.
+  
+  # Now dispose of ACE in all its glory
   my $checksum_command =
     "$shell_cd $dest; " .
       "for p in $archives; do " .
