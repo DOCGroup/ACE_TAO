@@ -652,7 +652,8 @@ protected:
   int consolidate_extra_messages (ACE_Message_Block &incoming,
                                   TAO_Resume_Handle &rh);
 
-  /// @@ Bala: Documentation
+  /// Process the message by sending it to the higher layers of the
+  /// ORB.
   int process_parsed_messages (TAO_Queued_Data *qd);
 
 public:
@@ -859,7 +860,7 @@ protected:
   TAO_Queued_Message *head_;
   TAO_Queued_Message *tail_;
 
-  /// @@Bala: Docu??
+  /// Queue of the incoming messages..
   TAO_Incoming_Message_Queue incoming_message_queue_;
 
   /// The queue will start draining no later than <queing_deadline_>

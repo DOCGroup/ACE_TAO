@@ -113,20 +113,24 @@ public:
   virtual void init (CORBA::Octet major,
                      CORBA::Octet minor) = 0;
 
-  /// Reset teh messaging object
-  virtual void reset (int reset_flag = 1) = 0;
-  // Reset the messaging object
-
-  /// @@ Bala: Documentation
+  /// Parse the incoming messages..
   virtual int parse_incoming_messages (ACE_Message_Block &message_block) = 0;
 
+  /// Calculate the amount of data that is missing in the <incoming>
+  /// message block.
   virtual ssize_t missing_data (ACE_Message_Block &incoming) = 0;
 
+  /// Get the details of the message parsed through the <qd>.
   virtual void get_message_data (TAO_Queued_Data *qd) = 0;
 
+  /* Extract the details of the next message from the <incoming>
+   * through <qd>. Returns 1 if there are more messages and returns a
+   * 0 if there are no more messages in <incoming>.
+  */
   virtual int extract_next_message (ACE_Message_Block &incoming,
                                     TAO_Queued_Data *&qd) = 0;
 
+  /// Check whether the node <qd> needs consolidation from <incoming>
   virtual int consolidate_node (TAO_Queued_Data *qd,
                                 ACE_Message_Block &incoming) = 0;
 
@@ -153,8 +157,8 @@ public:
   /// request/response?
   virtual int is_ready_for_bidirectional (void) = 0;
 
-  /// Are there any more messages that needs processing?
-  virtual int more_messages (void);
+  /// Reset the messaging the object
+  virtual void reset (void);
 };
 
 #if defined (__ACE_INLINE__)

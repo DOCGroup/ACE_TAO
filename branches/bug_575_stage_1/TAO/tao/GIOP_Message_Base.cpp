@@ -46,10 +46,9 @@ TAO_GIOP_Message_Base::init (CORBA::Octet major,
 
 
 void
-TAO_GIOP_Message_Base::reset (int /*reset_flag*/)
+TAO_GIOP_Message_Base::reset (void)
 {
-  // Reset the message state
-  //  this->message_handler_.reset (reset_flag);
+  // no-op
 }
 
 int
@@ -172,42 +171,7 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport * /*transport*/,
                                      int /*block */,
                                      ACE_Time_Value * /*max_wait_time*/)
 {
-#if 0
-  // Call the handler to read and do a simple parse of the header of
-  // the message.
-  int retval =
-    this->message_handler_.read_messages (transport);
-
-  if (retval < 1)
-    return retval;
-
-  retval = this->message_handler_.parse_message_header ();
-
-
-  // Error in the message that was received
-  if (retval == -1)
-    return -1;
-  // If -2, we want the reactor to call us back, so return 1
-  else if (retval == -2)
-    return 1;
-
-  if (retval != 0)
-    {
-      // Get the message state
-      TAO_GIOP_Message_State &state =
-        this->message_handler_.message_state ();
-
-      // Set the state internally for parsing and generating messages
-      this->set_state (state.giop_version.major,
-                       state.giop_version.minor);
-    }
-
-#endif /* if 0*/
-  // We return 2, it is ugly. But the reactor semantics has made us to
-  // limp :(
-  return 2;
-
-
+  return 0;
 }
 
 int
@@ -310,14 +274,13 @@ TAO_GIOP_Message_Base::parse_incoming_messages (ACE_Message_Block &incoming)
       return -1;
     }
 
-
   return 0;
 }
 
 ssize_t
 TAO_GIOP_Message_Base::missing_data (ACE_Message_Block &incoming)
 {
-  //Actual message size including the header..
+  // Actual message size including the header..
   CORBA::ULong msg_size =
     this->message_state_.message_size ();
 
@@ -338,9 +301,6 @@ int
 TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
                                              TAO_Queued_Data *&qd)
 {
-  //ACE_DEBUG ((LM_DEBUG,
-  //          "TAO (%P|%t) Extracting extra messages... \n"));
-
   TAO_GIOP_Message_State state (this->orb_core_,
                                 this);
 
@@ -366,9 +326,6 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
     }
 
   size_t copying_len = state.message_size ();
-
-  //  ACE_DEBUG ((LM_DEBUG,
-  //          "TAO (%P|%t) ... queueing messages.. \n"));
 
   qd = this->make_queued_data (copying_len);
 
@@ -505,7 +462,7 @@ TAO_GIOP_Message_Base::get_message_data (TAO_Queued_Data *qd)
     this->message_type (this->message_state_);
 
   // Reset the message_state
-  // this->message_state_.reset (0);
+  this->message_state_.reset ();
 }
 
 int

@@ -19,7 +19,12 @@ TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)
 
 TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
 {
-  // @@Bala:Need to delete all the unused data-blocks
+  // Delete the QD
+  if (this->size_)
+    {
+      TAO_Queued_Data *qd = this->dequeue_head ();
+      TAO_Queued_Data::release (qd);
+    }
 }
 
 size_t
