@@ -25,7 +25,7 @@
 ACE_RCSID(tests, Time_Value_Test, "$Id$")
 
 // Force test of ACE_U_LongLong class on Solaris, et al.
-#if defined (ACE_HAS_STHREADS)
+#if defined (sun)
 # include <limits.h>
 # undef ULLONG_MAX
 
@@ -39,11 +39,13 @@ ACE_RCSID(tests, Time_Value_Test, "$Id$")
 
   // Force inlining, in case ACE_U_LongLong member function
   // definitions are not in libACE.
-# define __ACE_INLINE__
+# if !defined (__ACE_INLINE__)
+#   define __ACE_INLINE__
+# endif /* ! __ACE_INLINE__ */
 # if defined (ACE_NO_INLINE)
 #   undef ACE_NO_INLINE
 # endif /* ACE_NO_INLINE */
-#endif /* ACE_HAS_STHREADS */
+#endif /* sun */
 
 #include "test_config.h"
 #include "ace/ACE.h"
