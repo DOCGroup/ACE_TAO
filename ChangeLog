@@ -1,3 +1,19 @@
+Thu May 20 10:21:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Reactor/Client.cpp: In handle_input(), use "%.*C",
+	  not "%*C" to limit output to string length. In handle_timeout (),
+	  referring to a buffer in ACE_Message_Block's ctor doesn't copy the
+	  data; it simply refers to it. This would produce garbage output.
+	  Thanks to Dale Hawkins <dhawkins@cdrgts.com> for these fixes.
+
+	* examples/APG/Containers/Queues.cpp (runStackUnboundedQueue): The
+	  DataElement arrays inserted into the queue should be defined outside
+	  their 'for' loops to avoid repeated, unnecessary constructor and
+	  destruction. Thanks to Bill Hopkins <bill.hopkins@level3.com> for
+	  this suggestion.
+
+	* THANKS: Added Dale Hawkins and Bill Hopkins.
+
 Wed May 19 12:46:33 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/SSL/SSL_SOCK.i: Added missing #include "ace/OS_NS_sys_socket.h"

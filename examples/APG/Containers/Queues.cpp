@@ -52,19 +52,19 @@ int QueueExample::runStackUnboundedQueue (void)
   ACE_TRACE (ACE_TEXT ("QueueExample::runStackUnboundedQueue"));
 
   ACE_Unbounded_Queue<DataElement> queue;
+  DataElement elem1[10];
   int i;
   for (i = 0; i < 10; i++)
     {
-      DataElement elem[10];
-      elem[i].setData (9-i);
-      queue.enqueue_head (elem[i]);
+      elem1[i].setData (9-i);
+      queue.enqueue_head (elem1[i]);
     }
 
-  for (i = 0; i< 10; i++)
+  DataElement elem2[10];
+  for (i = 0; i < 10; i++)
     {
-      DataElement elem[10];
-      elem[i].setData (i+10);
-      queue.enqueue_tail (elem[i]);
+      elem2[i].setData (i+10);
+      queue.enqueue_tail (elem2[i]);
     }
 
   for (ACE_Unbounded_Queue_Iterator<DataElement> iter (queue);
