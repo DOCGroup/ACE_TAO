@@ -1,3 +1,9 @@
+Thu Nov 14 09:43:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/AMI/server.dsp:
+
+	  Corrected library path for the TAO_Messaging library.
+
 Wed Nov 13 17:18:35 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Connection_Handler.cpp: Release the OS resources only when
