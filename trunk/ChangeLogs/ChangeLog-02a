@@ -1,3 +1,15 @@
+Fri Dec 14 21:36:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace.icc: Adjusted file list as a result of split-apart
+          Strategies.* files (Mon Dec 10 15:39:22 2001  Balachandran Natarajan)
+
+        * ace/Connection_Recycling_Strategy.cpp:
+        * ace/Hashable.cpp:
+        * ace/Recyclable.cpp:
+        * ace/Refcountable.cpp: Changed the ACE_RCSID to reflect the correct
+          module name (they all still were named Strategies, from whence
+          they came.
+
 Fri Dec 14 14:05:09 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/svc_export.h:
