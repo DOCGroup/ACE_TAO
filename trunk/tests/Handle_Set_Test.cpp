@@ -81,7 +81,7 @@ static void
 test_boundaries (void)
 {
   ACE_Handle_Set handle_set;
-  ACE_Unbounded_Queue<int> queue;
+  ACE_Unbounded_Queue<ACE_HANDLE> queue;
   ACE_HANDLE handle;
 
   // First test an empty set.
