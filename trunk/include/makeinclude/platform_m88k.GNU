@@ -1,8 +1,8 @@
 # SunOS 5.x (Solaris 2.x) with SunC++ 4.x
 # *not* using Orbix
 CC		= gcc -w
-#CXX		= g++ -w -frepo -I. -fno-strict-prototypes -D__INLINE__
-CXX             = g++ -w -I. -fno-strict-prototypes -D__INLINE__
+#CXX		= g++ -w -frepo -I. -fno-strict-prototypes
+CXX             = g++ -w -I. -fno-strict-prototypes
 CXX		+= -D__m88k__
 DLD		= $(CXX) 
 LD		= $(CXX) 
