@@ -1,3 +1,13 @@
+Fri May  7 08:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer.mpc:
+          Removed explicit listing of files
+
+        * tao/PortableServer/ThruPOA_Object_Proxy_Impl.{cpp,h}:
+        * tao/PortableServer/Direct_Object_Proxy_Impl.{cpp,h}:
+          Removed these files from the repo. Old and not used for a long
+          time.
+
 Thu May  6 22:14:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* rules.tao.GNU:
