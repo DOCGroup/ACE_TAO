@@ -1,3 +1,8 @@
+Wed Aug 25 12:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/POA.cpp (object_reference_template_adapter):
+          Fixed for emulated exception case
+
 Wed Aug 25 10:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/POA.i:

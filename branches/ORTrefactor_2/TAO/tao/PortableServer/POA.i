@@ -470,6 +470,8 @@ TAO_POA::get_adapter_template ()
     {
       return this->ort_adapter_->get_adapter_template();
     }
+
+  return 0;
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceFactory *
@@ -479,6 +481,8 @@ TAO_POA::get_obj_ref_factory ()
     {
       return this->ort_adapter_->get_obj_ref_factory();
     }
+
+  return 0;
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)

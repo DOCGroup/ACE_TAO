@@ -4098,19 +4098,19 @@ TAO_POA::object_reference_template_adapter (void)
     return this->ort_adapter_;
 
   {
-    // Lock access for the duration of this transaction, this method is also
-    // called in the cleanup process, so don't let the guard check for closure
-    TAO_POA_Guard poa_guard (*this ACE_ENV_ARG_PARAMETER, 0);
-    ACE_CHECK;
-    ACE_UNUSED_ARG (poa_guard);
-
-    // DCL ..
-    if (this->ort_adapter_ != 0)
-      return this->ort_adapter_;
-
     ACE_DECLARE_NEW_CORBA_ENV;
     ACE_TRY
       {
+        // Lock access for the duration of this transaction, this method is also
+        // called in the cleanup process, so don't let the guard check for closure
+        TAO_POA_Guard poa_guard (*this ACE_ENV_ARG_PARAMETER, 0);
+        ACE_TRY_CHECK;
+        ACE_UNUSED_ARG (poa_guard);
+
+        // DCL ..
+        if (this->ort_adapter_ != 0)
+          return this->ort_adapter_;
+
         TAO::ORT_Adapter_Factory * ort_ap_factory =
           this->object_reference_template_adapter_factory();
 
