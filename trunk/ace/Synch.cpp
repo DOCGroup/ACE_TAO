@@ -50,79 +50,92 @@ ACE_Process_Mutex::dump (void) const
 {
 // ACE_TRACE ("ACE_Process_Mutex::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  this->lock_.dump ();
+  this->lock_->dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 ACE_Process_Mutex::ACE_Process_Mutex (LPCTSTR name, void *arg)
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
-  : lock_ (USYNC_PROCESS, name, arg)
-#else
-  : lock_ (name)
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
 {
-  name = name;
-  arg = arg;
-// ACE_TRACE ("ACE_Process_Mutex::ACE_Process_Mutex");
+#if !defined (ACE_WIN32)
+  // For all platforms other than Win32, we are going to create a
+  // machine wide unquie name if one is not provided by the user.  On
+  // Win32, unnamed synchronization objects are acceptable.
+  TCHAR ace_name[BUFSIZ];
+  if (name == 0)
+    {
+      // The process ID will provide uniqueness between processes on
+      // the same machine. The "this" pointer will provide uniqueness
+      // between other mutex objects in the same process.
+      ACE_OS::sprintf (ace_name, "%d %d", ACE_OS::getpid (), this);
+      name = ace_name;
+    }
+#endif
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
+  ACE_NEW (this->lock_, ACE_Mutex (USYNC_PROCESS, name, arg));
+#else
+  ACE_UNUSED_ARG (arg);
+  ACE_NEW (this->lock_, ACE_SV_Semaphore_Complex (name));
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
 }
 
 ACE_Process_Mutex::~ACE_Process_Mutex (void)
 {
+  delete this->lock_;
 }
 
 // Explicitly destroy the mutex.
 int 
 ACE_Process_Mutex::remove (void)
 {
-  return this->lock_.remove ();
+  return this->lock_->remove ();
 }
 
 // Acquire lock ownership (wait on priority queue if necessary).
 int 
 ACE_Process_Mutex::acquire (void)
 {
-  return this->lock_.acquire ();
+  return this->lock_->acquire ();
 }
 
 // Conditionally acquire lock (i.e., don't wait on queue).
 int 
 ACE_Process_Mutex::tryacquire (void)
 {
-  return this->lock_.tryacquire ();
+  return this->lock_->tryacquire ();
 }
 
 // Release lock and unblock a thread at head of priority queue.
 int 
 ACE_Process_Mutex::release (void)
 {
-  return this->lock_.release ();
+  return this->lock_->release ();
 }
 
 // Acquire lock ownership (wait on priority queue if necessary).
 int 
 ACE_Process_Mutex::acquire_read (void)
 {
-  return this->lock_.acquire_read ();
+  return this->lock_->acquire_read ();
 }
 
 // Acquire lock ownership (wait on priority queue if necessary).
 int ACE_Process_Mutex::acquire_write (void)
 {
-  return this->lock_.acquire_write ();
+  return this->lock_->acquire_write ();
 }
 
 // Conditionally acquire a lock (i.e., won't block).
 int 
 ACE_Process_Mutex::tryacquire_read (void)
 {
-  return this->lock_.tryacquire_read ();
+  return this->lock_->tryacquire_read ();
 }
 
 // Conditionally acquire a lock (i.e., won't block).
 int 
 ACE_Process_Mutex::tryacquire_write (void)
 {
-  return this->lock_.tryacquire_write ();
+  return this->lock_->tryacquire_write ();
 }
 
 ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (LPCTSTR name, 

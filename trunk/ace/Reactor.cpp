@@ -475,16 +475,18 @@ ACE_Reactor::initialized (void)
   return this->initialized_;
 }
 
-void
+int
 ACE_Reactor::owner (ACE_thread_t tid, ACE_thread_t *o_id)
 {
   ACE_TRACE ("ACE_Reactor::owner");
-  ACE_MT (ACE_GUARD (ACE_REACTOR_MUTEX, ace_mon, this->token_));
+  ACE_MT (ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1));
 
   if (o_id)
     *o_id = this->owner_;
 
   this->owner_ = tid;
+  
+  return 0;
 }
 
 int

@@ -116,6 +116,20 @@ ACE_Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
   return -1;
 }
 
+int
+ACE_Event_Handler::handle_qos (ACE_HANDLE)
+{
+  ACE_TRACE ("ACE_Event_Handler::handle_qos");
+  return -1;
+}
+
+int
+ACE_Event_Handler::handle_group_qos (ACE_HANDLE)
+{
+  ACE_TRACE ("ACE_Event_Handler::handle_group_qos");
+  return -1;
+}
+
 void 
 ACE_Event_Handler::reactor (ACE_Reactor *reactor)
 {

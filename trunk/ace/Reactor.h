@@ -563,7 +563,7 @@ public:
 
   // = Only the owner thread that can perform a <handle_events>.
 
-  void owner (ACE_thread_t n_id, ACE_thread_t *o_id = 0);
+  int owner (ACE_thread_t n_id, ACE_thread_t *o_id = 0);
   // Set the new owner of the thread and return the old owner.
 
   int owner (ACE_thread_t *);
