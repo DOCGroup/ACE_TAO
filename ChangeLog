@@ -1,4 +1,10 @@
+Mon Aug  9 15:05:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_gcc.GNU:
+          When buildbits is set to 64, add -m64 to the CPPFLAGS
+
 Mon Aug  9 09:25:12 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
         * tests/Dynamic_Priority_Test.cpp:
           Fixed buffer overrun problem when ACE_HAS_TIMED_MESSAGE_BLOCKS
           macro is defined.
