@@ -1,9 +1,29 @@
+Mon May  3 13:13:00 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/mfc.mpb:
+
+          Removed this file.
+
+        * bin/MakeProjectCreator/config/ace_mfc.mpb:
+
+          The majority of the mfc has been moved out into the MPC config
+          directory.  The ace_mfc base project now inherits from mfc and
+          adds ACE_HAS_MFC=1 to the macros.
+
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.mpc:
+
+          Inherit from ace_mfc instead of mfc.
+
+        * bin/cle.pl:
+
+          Enhanced the domain name detection on Windows.
+
 Mon May  3 09:58:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* include/makeinclude/rules.local.GNU:
-	* include/makeinclude/rules.nested.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/rules.nested.GNU:
 
-	  Changed references to "Makefile" to "GNUmakefile".
+          Changed references to "Makefile" to "GNUmakefile".
 
 Sun May  2 13:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -13,26 +33,26 @@ Sun May  2 13:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat May  1 22:23:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Makefile:
-	* bin/Makefile:
-	* GNUmakefile:
-	* bin/GNUmakefile:
+        * Makefile:
+        * bin/Makefile:
+        * GNUmakefile:
+        * bin/GNUmakefile:
 
-	  Renamed "Makefile"s to "GNUmakefile"s to make it obvious to
-	  users that GNU Make is required to parse the files.
+          Renamed "Makefile"s to "GNUmakefile"s to make it obvious to
+          users that GNU Make is required to parse the files.
 
-	* bin/ace-install:
-	* bin/ace_components:
-	* bin/count_lines:
-	* bin/create_ace_build.pl:
-	* bin/fuzz.pl:
-	* bin/g++dep:
-	* bin/make_release:
-	* bin/perltest2cpp.pl:
-	* bin/update-ace+tao.sh:
+        * bin/ace-install:
+        * bin/ace_components:
+        * bin/count_lines:
+        * bin/create_ace_build.pl:
+        * bin/fuzz.pl:
+        * bin/g++dep:
+        * bin/make_release:
+        * bin/perltest2cpp.pl:
+        * bin/update-ace+tao.sh:
 
-	  Updated to references to "Makefile" to use the new name
-	  "GNUmakefile".
+          Updated to references to "Makefile" to use the new name
+          "GNUmakefile".
 
 Sat May 01 17:12:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -77,170 +97,170 @@ Sat May 01 09:44:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Apr 30 18:11:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* PACE:
+        * PACE:
 
-	  Removed PACE from the ACE CVS module.  It is no longer
-	  maintained.
+          Removed PACE from the ACE CVS module.  It is no longer
+          maintained.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Do not define ACE_HAS_ANSI_CASTS if the compiler supports ANSI
-	  C++ casts.  ACE now requires that support.  If the compiler does
-	  not support ANSI C++ casts, issue an error message accordingly.
+          Do not define ACE_HAS_ANSI_CASTS if the compiler supports ANSI
+          C++ casts.  ACE now requires that support.  If the compiler does
+          not support ANSI C++ casts, issue an error message accordingly.
 
-	* m4/config_h.m4 (ACE_PREP_CONFIG_HEADER):
+        * m4/config_h.m4 (ACE_PREP_CONFIG_HEADER):
 
-	  Removed template for ACE_HAS_ANSI_CASTS macro.  It is no longer
-	  used.
+          Removed template for ACE_HAS_ANSI_CASTS macro.  It is no longer
+          used.
 
-	* ace/README:
+        * ace/README:
 
-	  Removed description for ACE_HAS_ANSI_CASTS macro.  It is no
-	  longer used since compilers that do not support ANSI C++ casts
-	  are no longer supported.
+          Removed description for ACE_HAS_ANSI_CASTS macro.  It is no
+          longer used since compilers that do not support ANSI C++ casts
+          are no longer supported.
 
-	* ace/config-lite.h:
+        * ace/config-lite.h:
 
-	  Removed ACE cast macros that wrap C style casts, i.e those used
-	  when ACE_HAS_ANSI_CASTS is not defined.  ACE now requires
-	  compilers that support ANSI C++ casts (e.g. static_cast<>,
-	  etc).
+          Removed ACE cast macros that wrap C style casts, i.e those used
+          when ACE_HAS_ANSI_CASTS is not defined.  ACE now requires
+          compilers that support ANSI C++ casts (e.g. static_cast<>,
+          etc).
 
-	  Documented ACE cast macros as deprecated.
+          Documented ACE cast macros as deprecated.
 
-	* ace/config-win32-msvc.h:
+        * ace/config-win32-msvc.h:
 
-	  Do not support the MSVC++ 5 configuration header.  MSVC++ 5 is
-	  no longer supported.
+          Do not support the MSVC++ 5 configuration header.  MSVC++ 5 is
+          no longer supported.
 
-	* ace/config-win32-msvc-5.h:
+        * ace/config-win32-msvc-5.h:
 
-	  Removed this configuration header.  MSVC++ 5 has not been
-	  supported for quite some time.
+          Removed this configuration header.  MSVC++ 5 has not been
+          supported for quite some time.
 
-	* ace/config-borland-common.h:
-	* ace/config-chorus.h:
-	* ace/config-cray.h:
-	* ace/config-cxx-common.h:
-	* ace/config-g++-common.h:
-	* ace/config-hpux-10.x-hpc++.h:
-	* ace/config-hpux-11.00.h:
-	* ace/config-icc-common.h:
-	* ace/config-integritySCA.h:
-	* ace/config-macosx-panther.h:
-	* ace/config-macosx.h:
-	* ace/config-openvms.h:
-	* ace/config-osf1-4.0.h:
-	* ace/config-qnx-rtp-62x.h:
-	* ace/config-sunos5.5.h:
-	* ace/config-sunos5.6.h:
-	* ace/config-tandem-nsk-mips-v2.h:
-	* ace/config-unixware-7.1.0.udk.h:
-	* ace/config-win32-ghs.h:
-	* ace/config-win32-msvc-6.h:
-	* ace/config-win32-msvc-7.h:
-	* ace/config-win32-visualage.h:
+        * ace/config-borland-common.h:
+        * ace/config-chorus.h:
+        * ace/config-cray.h:
+        * ace/config-cxx-common.h:
+        * ace/config-g++-common.h:
+        * ace/config-hpux-10.x-hpc++.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-icc-common.h:
+        * ace/config-integritySCA.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx.h:
+        * ace/config-openvms.h:
+        * ace/config-osf1-4.0.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-sunos5.6.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-msvc-6.h:
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-visualage.h:
 
-	  Removed all references to the deprecated ACE_HAS_ANSI_CASTS
-	  macro.
+          Removed all references to the deprecated ACE_HAS_ANSI_CASTS
+          macro.
 
 Fri Apr 30 14:20:41 2004  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_aix_g++.GNU: For AIX 5.x, changed the
-	  SOFLAGS link option -Wl,-bexpall to -Wl,-bexpfull. This allows the
-	  gcc 3.x type information to be exported to the library and useable
-	  by applications. Thanks very much to Randy Hammon
-	  <randy@trancekat.com> for this fix!
-	  Also, if rtti=0, add -DACE_LACKS_RTTI to CFLAGS in addition to adding
-	  -fno-rtti. Also changed the rtti default from 0 to 1.
+        * include/makeinclude/platform_aix_g++.GNU: For AIX 5.x, changed the
+          SOFLAGS link option -Wl,-bexpall to -Wl,-bexpfull. This allows the
+          gcc 3.x type information to be exported to the library and useable
+          by applications. Thanks very much to Randy Hammon
+          <randy@trancekat.com> for this fix!
+          Also, if rtti=0, add -DACE_LACKS_RTTI to CFLAGS in addition to adding
+          -fno-rtti. Also changed the rtti default from 0 to 1.
 
-	* THANKS: Added Randy Hammon to the Hall of Fame.
+        * THANKS: Added Randy Hammon to the Hall of Fame.
 
 Fri Apr 30 10:19:28 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_sys_socket.inl (read): Fix typo, missing _.
+        * ace/OS_NS_sys_socket.inl (read): Fix typo, missing _.
 
 Thu Apr 29 14:17:46 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/config-doxygen.h (OPENSSL_VERSION_NUMBER):
+        * ace/config-doxygen.h (OPENSSL_VERSION_NUMBER):
 
-	  Define this macro to be greater than a certain value so that the
-	  ACE_SSL asynchronous IO class documentation can be generated by
-	  Doxygen.  [Bug 1748]
+          Define this macro to be greater than a certain value so that the
+          ACE_SSL asynchronous IO class documentation can be generated by
+          Doxygen.  [Bug 1748]
 
 Thu Apr 29 13:48:30 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_sys_socket.inl (sendv):
+        * ace/OS_NS_sys_socket.inl (sendv):
 
-	  Corrected problem for the Winsock 1 case where the amount of
-	  previously sent data would not be reported if an error occurred
-	  when attempting to send data in a subsequent loop iteration.
+          Corrected problem for the Winsock 1 case where the amount of
+          previously sent data would not be reported if an error occurred
+          when attempting to send data in a subsequent loop iteration.
 
-	  (accept, recv, send):
-	* ace/OS_NS_unistd.inl (read):
+          (accept, recv, send):
+        * ace/OS_NS_unistd.inl (read):
 
-	  Do not set errno to EWOULDBLOCK when errno is set to EAGAIN and
-	  EGAIN equals EWOULDBLOCK.  This saves us two (equality check and
-	  assignment) TSS accesses for the _REENTRANT case on platforms
-	  where EGAIN and EWOULDBLOCK are the same (e.g. Linux).
-	  Performance improvements should be evident those platforms.
+          Do not set errno to EWOULDBLOCK when errno is set to EAGAIN and
+          EGAIN equals EWOULDBLOCK.  This saves us two (equality check and
+          assignment) TSS accesses for the _REENTRANT case on platforms
+          where EGAIN and EWOULDBLOCK are the same (e.g. Linux).
+          Performance improvements should be evident those platforms.
 
-	* ace/OS_NS_sys_uio.cpp (writev_emulation):
+        * ace/OS_NS_sys_uio.cpp (writev_emulation):
 
-	  Replaced the old implementation with a new faster one based on
-	  the one in ace/SSL/SSL_SOCK_Stream.cpp that incurs no
-	  allocations nor copies.  The new implementation can also handle
-	  partial writes.  Performance improvements should be visible on
-	  platforms that do not support writev() (i.e. define
-	  ACE_LACKS_WRITEV), such as MS Windows.
+          Replaced the old implementation with a new faster one based on
+          the one in ace/SSL/SSL_SOCK_Stream.cpp that incurs no
+          allocations nor copies.  The new implementation can also handle
+          partial writes.  Performance improvements should be visible on
+          platforms that do not support writev() (i.e. define
+          ACE_LACKS_WRITEV), such as MS Windows.
 
 Thu Apr 29 14:35:49 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/SOCK_SEQPACK_Connector.cpp (shared_connect_start): Corrected
-	  sizeof() usage; error introduced at:
-	  Thu Apr 29 11:25:49 2004  Steve Huston  <shuston@riverace.com>
+        * ace/SOCK_SEQPACK_Connector.cpp (shared_connect_start): Corrected
+          sizeof() usage; error introduced at:
+          Thu Apr 29 11:25:49 2004  Steve Huston  <shuston@riverace.com>
 
 Thu Apr 29 11:37:12 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/SSL/SSL_Context.cpp: Add #include "ace/Guard_T.h" so AIX Visual
-	  Age C++ can see ACE_Guard.
+        * ace/SSL/SSL_Context.cpp: Add #include "ace/Guard_T.h" so AIX Visual
+          Age C++ can see ACE_Guard.
 
-	* tests/Refcounted_Auto_Ptr_Test.cpp: Add #include "ace/Null_Mutex.h"
-	  so AIX Visual Age C++ can see ACE_Null_Mutex when instantiating
-	  templates.
+        * tests/Refcounted_Auto_Ptr_Test.cpp: Add #include "ace/Null_Mutex.h"
+          so AIX Visual Age C++ can see ACE_Null_Mutex when instantiating
+          templates.
 
 Thu Apr 29 11:25:49 2004  Steve Huston  <shuston@riverace.com>
 
-	These are all to quiet the 64-bit compiler on Win64.
+        These are all to quiet the 64-bit compiler on Win64.
 
-	* ace/CDR_Stream.i (write_wstring): cast size_t return from
-	  ACE_OS::strlen() to ACE_CDR::ULong to correct types.
+        * ace/CDR_Stream.i (write_wstring): cast size_t return from
+          ACE_OS::strlen() to ACE_CDR::ULong to correct types.
 
-	* ace/OS_NS_stropts.inl (putmsg): ACE_OS::write() returns ssize_t;
-	  cast it back to int for return to caller.
+        * ace/OS_NS_stropts.inl (putmsg): ACE_OS::write() returns ssize_t;
+          cast it back to int for return to caller.
 
-	* ace/OS_NS_sys_uio.{h, inl, .cpp}: writev() returns ssize_t. Thus,
-	  the writev_emulation() method also must return ssize_t. Also
-	  corrected the ACE_OSCALL_RETURN 'type' argument from int to ssize_t.
+        * ace/OS_NS_sys_uio.{h, inl, .cpp}: writev() returns ssize_t. Thus,
+          the writev_emulation() method also must return ssize_t. Also
+          corrected the ACE_OSCALL_RETURN 'type' argument from int to ssize_t.
 
-	* ace/Process.cpp (spawn): When forming the +H command line options,
-	  use %I64d, not %d, on Win64.
+        * ace/Process.cpp (spawn): When forming the +H command line options,
+          use %I64d, not %d, on Win64.
 
-	* ace/SOCK_SEQPACK_Acceptor.cpp (shared_open): Cast the 'namelen'
-	  argument to ACE_OS::bind() to int to match the signature.
+        * ace/SOCK_SEQPACK_Acceptor.cpp (shared_open): Cast the 'namelen'
+          argument to ACE_OS::bind() to int to match the signature.
 
-	* ace/SOCK_SEQPACK_Association.{h i} (recvv_n, sendv_n): The iovec
-	  count was changed from size_t to int to be consistent with the
-	  other analogous methods in ACE.
+        * ace/SOCK_SEQPACK_Association.{h i} (recvv_n, sendv_n): The iovec
+          count was changed from size_t to int to be consistent with the
+          other analogous methods in ACE.
 
-	* ace/SOCK_SEQPACK_Association.cpp (get_local_addrs, get_remote_addrs):
-	  Correct usage of int/size_t types.
+        * ace/SOCK_SEQPACK_Association.cpp (get_local_addrs, get_remote_addrs):
+          Correct usage of int/size_t types.
 
-	* ace/SOCK_SEQPACK_Connector.cpp (shared_connect_start): Use 'int',
-	  not 'size_t' as address length argument to ACE_OS::bind().
+        * ace/SOCK_SEQPACK_Connector.cpp (shared_connect_start): Use 'int',
+          not 'size_t' as address length argument to ACE_OS::bind().
 
-	* ace/UUID.cpp (to_string): Change UUID_STRING_LENGTH from int to
-	  size_t to match string handling length types.
+        * ace/UUID.cpp (to_string): Change UUID_STRING_LENGTH from int to
+          size_t to match string handling length types.
 
 Thu Apr 29 06:13:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -249,18 +269,18 @@ Thu Apr 29 06:13:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 28 22:06:08 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Basic_Stats.cpp:
-	* ace/Parse_Node.cpp:
-	* ace/Sample_History.cpp:
-	* ace/Stats.cpp:
+        * ace/Basic_Stats.cpp:
+        * ace/Parse_Node.cpp:
+        * ace/Sample_History.cpp:
+        * ace/Stats.cpp:
 
-	  Fixed unused parameter and variable warnings in the ACE_NLOGGING
-	  case.
+          Fixed unused parameter and variable warnings in the ACE_NLOGGING
+          case.
 
-	* netsvcs/lib/Token_Handler.cpp:
+        * netsvcs/lib/Token_Handler.cpp:
 
-	  Include "ace/Signal.h" to pull in ACE_Sig_Action class
-	  declaration.
+          Include "ace/Signal.h" to pull in ACE_Sig_Action class
+          declaration.
 
 Wed Apr 28 14:25:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -345,14 +365,14 @@ Wed Apr 28 06:13:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Apr 27 18:15:40 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_Thread.inl (rw_trywrlock_upgrade): If on a platform
-	  with ACE_HAS_PTHREADS_UNIX98_EXT, try the call. It'll probably fail,
-	  but the error is more accurate than ENOTSUP.
+        * ace/OS_NS_Thread.inl (rw_trywrlock_upgrade): If on a platform
+          with ACE_HAS_PTHREADS_UNIX98_EXT, try the call. It'll probably fail,
+          but the error is more accurate than ENOTSUP.
 
-	* tests/Reader_Writer_Test.cpp: Realign the diagnostics on write lock
-	  upgrade failure to match the #if/#else logic in
-	  ACE_OS::rw_trywrlock_upgrade(). Add some %p to the output to help
-	  more in failure conditions.
+        * tests/Reader_Writer_Test.cpp: Realign the diagnostics on write lock
+          upgrade failure to match the #if/#else logic in
+          ACE_OS::rw_trywrlock_upgrade(). Add some %p to the output to help
+          more in failure conditions.
 
 Tue Apr 27 08:31:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -372,59 +392,59 @@ Tue Apr 27 08:18:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 26 17:21:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: Change the tests for sem_init() and sem_destroy() to
-	  use AC_SEARCH_LIBS instead of AC_CHECK_FUNC. The entrypoints are in
-	  librt, so weren't being located. This allows ACE_HAS_POSIX_SEM to
-	  be detected correctly.
+        * configure.ac: Change the tests for sem_init() and sem_destroy() to
+          use AC_SEARCH_LIBS instead of AC_CHECK_FUNC. The entrypoints are in
+          librt, so weren't being located. This allows ACE_HAS_POSIX_SEM to
+          be detected correctly.
 
 Mon Apr 26 17:31:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Acceptor.cpp:
-	  Use ACE_Reactor::instance()->end_reactor_event_loop () to end the
-	  event loop instead of the deprecated ACE::Reactor::end_event_loop()
+        * ace/Acceptor.cpp:
+          Use ACE_Reactor::instance()->end_reactor_event_loop () to end the
+          event loop instead of the deprecated ACE::Reactor::end_event_loop()
 
 Mon Apr 26 02:09:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/CDR_Base.h (ACE_CDR::Boolean):
+        * ace/CDR_Base.h (ACE_CDR::Boolean):
 
-	  This type is now a true C++ "bool".  On a related note, the
-	  OMG IDL-to-C++ mapping allows this type to be "bool" for ANSI
-	  compliant compilers.  All compilers currently supported by ACE
-	  support the C++ "bool" type, so we're in luck.
+          This type is now a true C++ "bool".  On a related note, the
+          OMG IDL-to-C++ mapping allows this type to be "bool" for ANSI
+          compliant compilers.  All compilers currently supported by ACE
+          support the C++ "bool" type, so we're in luck.
 
-	* ace/CDR_Stream.h:
+        * ace/CDR_Stream.h:
 
-	  Made all single argument "{from,to}_*" constructors explicit (if
-	  supported by the compiler), as required by the OMG IDL-to-C++
-	  mapping.  Addresses potential implicit conversion issues.
+          Made all single argument "{from,to}_*" constructors explicit (if
+          supported by the compiler), as required by the OMG IDL-to-C++
+          mapping.  Addresses potential implicit conversion issues.
 
-	  Fixed some broken Doxygen documentation.
+          Fixed some broken Doxygen documentation.
 
-  	  (good_bit_, do_byte_swap_, current_is_writable_):
+          (good_bit_, do_byte_swap_, current_is_writable_):
 
-	  Converted these flags and their corresponding accessors from
-	  "int" to "bool", and changed the declaration order to optimize
-	  size of ACE_{Output,Input}CDR classes by avoiding unnecessary
-	  static alignment padding.  Both classes are now 8
-	  bytes smaller, at least on platforms with 4 byte alignment.
+          Converted these flags and their corresponding accessors from
+          "int" to "bool", and changed the declaration order to optimize
+          size of ACE_{Output,Input}CDR classes by avoiding unnecessary
+          static alignment padding.  Both classes are now 8
+          bytes smaller, at least on platforms with 4 byte alignment.
 
-	* ace/CDR_Stream.i:
+        * ace/CDR_Stream.i:
 
-	  Updated good_bit_, do_byte_swap_ and current_is_writable_
-	  assignments to use C++ "bool" values.
+          Updated good_bit_, do_byte_swap_ and current_is_writable_
+          assignments to use C++ "bool" values.
 
-	* ace/CDR_Stream.cpp:
+        * ace/CDR_Stream.cpp:
 
-	  Updated base member initializer lists to match new member
-	  declaration order.
+          Updated base member initializer lists to match new member
+          declaration order.
 
-	  Updated good_bit_, do_byte_swap_ and current_is_writable_
-	  assignments to use C++ "bool" values.
+          Updated good_bit_, do_byte_swap_ and current_is_writable_
+          assignments to use C++ "bool" values.
 
-	  Use "const" where applicable.
+          Use "const" where applicable.
 
-	  Use prefix increment operator instead of postfix increment
-	  operator where applicable.  The former is more efficient.
+          Use prefix increment operator instead of postfix increment
+          operator where applicable.  The former is more efficient.
 
 Mon Apr 26 15:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 

@@ -97,11 +97,10 @@ sub getDefaultDomain {
         if ($^O eq 'MSWin32') {
           if (open($fh, 'ipconfig /all |')) {
             while(<$fh>) {
-              if (/Primary\s+DNS\s+Suffix[^:]+:\s+(.*)/) {
-                $domain = $1;
-              }
-              elsif (/DNS\s+Suffix\s+Search[^:]+:\s+(.*)/) {
-                $domain = $1;
+              if (!defined $domain) {
+                if (/DNS\s+Suffix[^:]+:\s+(.+)/) {
+                  $domain = $1;
+                }
               }
             }
             close($fh);
