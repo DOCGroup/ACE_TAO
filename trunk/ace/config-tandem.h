@@ -379,8 +379,6 @@
 //ACE_LACKS_NETDB_REENTRANT_FUNCTIONS   Platform does not support reentrant
 // netdb functions (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r,
 // gethostbyname_r, getservbyname_r).
-//ACE_LACKS_RPC_H                       Platform lacks the ONC RPC header
-// files.
 //ACE_LACKS_PARAM_H                     Platform lacks <sys/param.h> (e.g.,
 //MVS)
 //ACE_LACKS_POSIX_PROTOTYPES                    Platform lacks POSIX prototypes for

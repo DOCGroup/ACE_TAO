@@ -14,7 +14,6 @@
 
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_SYSV_MSG_H
-#define ACE_LACKS_RPC_H
 #define ACE_HAS_SIG_MACROS
 #define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_TELLDIR
@@ -61,7 +60,6 @@
 # define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
 # define ACE_HAS_VOIDPTR_SOCKOPT
 # define ACE_LACKS_GETPGID
-# define ACE_LACKS_RPC_H
   // The strtok_r declaration is protected in string.h.
   extern "C" char *strtok_r __P ((char *__s, __const char *__delim,
                                   char **__save_ptr));

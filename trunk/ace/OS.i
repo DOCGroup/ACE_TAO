@@ -417,10 +417,6 @@ operator - (const ACE_Time_Value &tv1,
 
 #if !defined (ACE_WIN32)
 
-# if !defined (ACE_LACKS_RPC_H)
-#   include /**/ <rpc/rpc.h>
-# endif /* ACE_LACKS_RPC_H */
-
 // Matthew Stevens 7-10-95 Fix GNU GCC 2.7 for memchr() problem.
 # if defined (ACE_HAS_GNU_CSTRING_H)
 // Define this file to keep /usr/include/memory.h from being included.
@@ -10847,7 +10843,7 @@ ACE_OS::isatty (ACE_HANDLE handle)
   ACE_UNUSED_ARG (handle);
   return 0;
 #  endif /* ACE_HAS_WINCE */
-# else 
+# else
   // ACE_TRACE ("ACE_OS::isatty");
   ACE_OSCALL_RETURN (::isatty (handle), int, -1);
 # endif /* defined (ACE_LACKS_ISATTY) */

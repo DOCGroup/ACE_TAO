@@ -37,10 +37,6 @@
 // Platform supports Term Ioctls
 #define ACE_HAS_TERM_IOCTLS
 
-// Platform supports recvmsg and sendmsg.
-// #define ACE_HAS_MSG
-#define ACE_LACKS_RPC_H
-
 // Compiler/platform contains the <sys/syscall.h> file.
 //#define ACE_HAS_SYSCALL_H
 
