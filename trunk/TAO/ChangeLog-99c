@@ -1,6 +1,11 @@
+Fri Jan 29 09:07:47 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp: use
+          RtecScheduler::Criticality_t, Importance_t, and Info_Type_T.
+
 Thu Jan 28 21:36:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Updated the dependencies in all the Makefiles.
+        * Updated the dependencies in all the Makefiles.
 
 Thu Jan 28 20:49:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
