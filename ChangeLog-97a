@@ -1,3 +1,13 @@
+Sat Jan 25 11:34:56 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/OS.i: Moved out all code for Time_Value from #if region. It
+	  is common to all.
+
+	* ace/Reactor: Added helper routines to stop the VC++ compiler from
+	  bitching about destructors in exception handling code.
+
+	* ace/ace.{mak,mdp}: Removed Time_Value.cpp from project.
+
 Fri Jan 24 09:01:50 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* examples/Connection/misc/Connection_Handler.cpp: added
