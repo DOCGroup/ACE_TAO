@@ -35,7 +35,8 @@ TAO_Trader (Trader_Components components)
   
   if (ACE_BIT_ENABLED (components, LOOKUP))
     {
-      TAO_Lookup<TRADER_SELF>* lookup = new TAO_Lookup<TRADER_SELF> (*this);
+      TAO_Lookup<TRADER_SELF, TRADER_LOCK_TYPE>* lookup =
+        new TAO_Lookup<TRADER_SELF, TRADER_LOCK_TYPE> (*this);
       this->trading_components ().lookup_if (lookup->_this (env));
       this->ifs_[LOOKUP_IF] = lookup;
     }
@@ -47,7 +48,8 @@ TAO_Trader (Trader_Components components)
     }
   if (ACE_BIT_ENABLED (components, ADMIN))
     {
-      TAO_Admin<TRADER_SELF>* admin = new TAO_Admin<TRADER_SELF> (*this);
+      TAO_Admin<TRADER_SELF,TRADER_LOCK_TYPE>* admin =
+        new TAO_Admin<TRADER_SELF,TRADER_LOCK_TYPE> (*this);
       this->trading_components ().admin_if (admin->_this (env));
       this->ifs_[ADMIN_IF] = admin;
     }

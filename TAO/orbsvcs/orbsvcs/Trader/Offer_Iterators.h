@@ -134,6 +134,9 @@ public:
   // Add an offer the iterator should iterate over.
   
 private:
+
+  TAO_Query_Only_Offer_Iterator (const TAO_Query_Only_Offer_Iterator&);
+  TAO_Query_Only_Offer_Iterator& operator=(const TAO_Query_Only_Offer_Iterator&);
   
   ACE_Unbounded_Queue <CosTrading::Offer *> offers_;
   // Structure that stores pointers to offers
@@ -166,7 +169,7 @@ public:
   
   TAO_Offer_Iterator_Collection (void);
 
-  virtual ~TAO_Offer_Iterator_Collection (void) {}
+  virtual ~TAO_Offer_Iterator_Collection (void);
 
   virtual CORBA::Boolean next_n (CORBA::ULong n,
 				 CosTrading::OfferSeq_out offers,
@@ -183,27 +186,18 @@ public:
 		    CosTrading::UnknownMaxLeft));
   // Determine how many offers are left in the collection.
  
-  void add_offer_iterator (CosTrading::OfferIterator* offer_iter);
+  void add_offer_iterator (CosTrading::OfferIterator_ptr offer_iter);
   // Add an iterator to the collection.
 
 private:
 
-  struct Iter_Info
-  {
-    CosTrading::OfferIterator_var iter_;
-    // Object reference for this iterator in the collection.
-    
-    CORBA::ULong num_left_;
-    // Cached value of the number of elements left in this iterator. 
-  };
+  TAO_Offer_Iterator_Collection (const TAO_Offer_Iterator_Collection&);
+  TAO_Offer_Iterator_Collection& operator= (const TAO_Offer_Iterator_Collection&);
   
-  typedef ACE_Unbounded_Queue <Iter_Info> Offer_Iters;
+  typedef ACE_Unbounded_Queue <CosTrading::OfferIterator*> Offer_Iters;
 
   Offer_Iters iters_;
-  // The iterator collection.
-  
-  CORBA::ULong total_left_;
-  // Cached value of the number of offers left in the collection.
+  // The iterator collection. 
 };
 
   // *************************************************************
@@ -267,13 +261,15 @@ class TAO_Offer_Id_Iterator : public POA_CosTrading::OfferIdIterator
   
  private:
 
+  TAO_Offer_Id_Iterator (const TAO_Offer_Id_Iterator&);
+  TAO_Offer_Id_Iterator& operator= (TAO_Offer_Id_Iterator&);
+  
   typedef ACE_Unbounded_Queue
     <
     CosTrading::OfferId
     >
     Offer_Id_Queue;
-  
-  
+    
   Offer_Id_Queue ids_;
 };
 

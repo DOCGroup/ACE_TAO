@@ -135,8 +135,6 @@ TAO_Constraint_Interpreter::evaluate(TAO_Constraint_Evaluator& evaluator)
   // TAO_Preference_Interpreter
   // *************************************************************
 
-const CORBA::Double TRADER_MAX_DOUBLE = 1.79769313486231570e+308;
-
 TAO_Preference_Interpreter::
 TAO_Preference_Interpreter(CosTradingRepos::ServiceTypeRepository::TypeStruct* ts,
 			   const char* preference,
@@ -199,7 +197,6 @@ order_offer (CosTrading::OfferId offer_id,
   if (this->root_ != 0)
     {
       Preference_Info pref_info;
-      TAO_Expression_Type expr_type = this->root_->expr_type ();
       
       pref_info.offer_ = offer;
       pref_info.offer_id_ = offer_id;
@@ -315,3 +312,10 @@ TAO_Lex_String_Input::reset(char* input_string)
   TAO_Lex_String_Input::end_ = input_string +
     ACE_OS::strlen(TAO_Lex_String_Input::string_);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Unbounded_Queue<TAO_Preference_Interpreter::Preference_Info> Ordered_Offers; 
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Unbounded_Queue<TAO_Preference_Interpreter::Preference_Info> Ordered_Offers; 
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -85,8 +85,8 @@ public:
   // property name. If the index is out of bounds, the method returns 
   // a null pointer (that is, 0).
   
-protected:
-
+ protected:  
+  
   typedef CosTradingDynamic::DynamicProp DP_Struct;
   typedef CosTradingDynamic::DynamicPropEval DP_Eval;
   
@@ -95,6 +95,11 @@ protected:
   // information.
 
   int supports_dp_;
+
+ private:
+
+  TAO_Property_Evaluator (const TAO_Property_Evaluator&);
+  TAO_Property_Evaluator& operator= (const TAO_Property_Evaluator&);
 };
 
   // *************************************************************
@@ -149,6 +154,9 @@ public:
   
 private:
 
+  TAO_Property_Evaluator_By_Name (const TAO_Property_Evaluator_By_Name&);
+  TAO_Property_Evaluator_By_Name& operator= (const TAO_Property_Evaluator_By_Name&);
+  
   typedef ACE_Hash_Map_Manager
     <
     TAO_String_Hash_Key,
@@ -234,7 +242,7 @@ public:
 
   ~TAO_Policies (void);
   
-  CORBA::ULong search_card (CORBA::Environment& _env)
+  CORBA::ULong search_card (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -246,7 +254,7 @@ public:
   // trader's def_search_card attribute is used.
   // END SPEC
   
-  CORBA::ULong match_card (CORBA::Environment& _env)
+  CORBA::ULong match_card (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -258,7 +266,7 @@ public:
   // attribute is used.
   // END SPEC
   
-  CORBA::ULong return_card (CORBA::Environment& _env)
+  CORBA::ULong return_card (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -272,7 +280,7 @@ public:
   
   // = Offer consideration policies
   
-  CORBA::Boolean use_modifiable_properties (CORBA::Environment& _env)
+  CORBA::Boolean use_modifiable_properties (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -285,7 +293,7 @@ public:
   // included.
   // END SPEC
   
-  CORBA::Boolean use_dynamic_properties (CORBA::Environment& _env)
+  CORBA::Boolean use_dynamic_properties (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -298,7 +306,7 @@ public:
   // included.
   // END SPEC
   
-  CORBA::Boolean use_proxy_offers (CORBA::Environment& _env)
+  CORBA::Boolean use_proxy_offers (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -310,7 +318,7 @@ public:
   // specified, such offers will be included.
   // END SPEC
   
-  CORBA::Boolean exact_type_match (CORBA::Environment& _env)
+  CORBA::Boolean exact_type_match (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -322,7 +330,7 @@ public:
   
   // = Federated trader policies (not implemented yet)
   
-  CosTrading::TraderName* starting_trader (CORBA::Environment& _env)
+  CosTrading::TraderName* starting_trader (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
 		    CosTrading::Lookup::InvalidPolicyValue));
   // BEGIN SPEC
@@ -341,22 +349,24 @@ public:
   // "starting_trader" policy with the first component removed.
   // END SPEC
 
-  CosTrading::FollowOption link_follow_rule (CORBA::Environment& _env)
+  CosTrading::FollowOption link_follow_rule (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
   // Determine the link follow policy for this query overall.
-  
-  CosTrading::FollowOption link_follow_rule (const char* link_name,
-					     CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
-		     CosTrading::Lookup::InvalidPolicyValue));
-  // Determine the link follow policy for a given <link_name>.
-  
+
   // BEGIN SPEC
   //The "link_follow_rule" policy indicates how the client wishes
   //links to be followed in the resolution of its query. See the
   //discussion in "Link Follow Behavior" on page 16-16 for details. 
   // END SPEC
 
+  
+  CosTrading::FollowOption link_follow_rule (const CosTrading::Link::LinkInfo& link_info,
+					     CORBA::Environment& _env) const
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
+		     CosTrading::Lookup::InvalidPolicyValue,
+                     CosTrading::Link::IllegalLinkName,
+                     CosTrading::Link::UnknownLinkName));
+  // Determine the link follow policy for a given <link_name>.
   // This method returns the link_follow_rule for a link whose name is 
   // <link_name> using the following formula:
   // if the importer specified a link_follow_rule policy
@@ -364,8 +374,8 @@ public:
   //          query.link_follow_rule)
   // else min(trader.max_follow_policy, link.limiting_follow_rule,
   //          trader.def_follow_policy) 
-  
-  CORBA::ULong hop_count (CORBA::Environment& _env)
+      
+  CORBA::ULong hop_count (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
@@ -380,37 +390,51 @@ public:
   // decremented before passing on to a federated trader. 
   // END SPEC
 
-  CosTrading::Admin::OctetSeq* request_id (CORBA::Environment& _env)
+  CosTrading::Admin::OctetSeq* request_id (CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
   // Return the request_id passed to the query method across a link to
   // another trader. 
-  
-  CosTrading::PolicySeq* policies_to_forward (void);
-  // Policies to forward to the next trader in a directed federated query.
-  
-  CosTrading::PolicySeq*
-    policies_to_pass (CosTrading::FollowOption def_pass_on_follow_rule,
-		      CORBA::ULong offers_returned,
-		      CosTrading::Admin_ptr admin_if);
-  // Policies to pass on to the next generation of queries. Decrements 
-  // the hop counter,adds a link_follow_rule if none exists, adjusts
-  // the return_card, and adds the stem_id if none exists.
-  
-private:
 
+  void copy_to_pass (CosTrading::PolicySeq& policy_seq,
+                     const CosTrading::Admin::OctetSeq& request_id) const;
+  // Policies to forward to the next trader in a federated query.
+  
+  void copy_to_forward (CosTrading::PolicySeq& policy_seq,
+                        CosTrading::TraderName* name) const;
+  // Policies to forward to the next trader in a directed query.
+
+  void copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
+                              const CosTrading::Link::LinkInfo& link_info,
+                              CORBA::Environment& _env) const
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
+                     CosTrading::Lookup::InvalidPolicyValue));
+  // Determine the link follow policy to pass down the link with <link_name>.
+  // This method returns the link_follow_rule for a link whose name is 
+  // <link_name> using the following formula:
+  // If the importer specified a link_follow_rule, policy
+  //      pass on min(query.link_follow_rule, link.limiting_follow_rule,
+  //                  trader.max_follow_policy)
+  // else pass on min(link.def_pass_on_follow_rule,
+  //                  trader.max_follow_policy)
+  
+private:  
+  
   CORBA::ULong ulong_prop (POLICY_TYPE pol,
-			   CORBA::Environment& _env)
+			   CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
   // Reconclile a ULong property with its default.
   
   CORBA::Boolean boolean_prop (POLICY_TYPE pol,
-			       CORBA::Environment& _env)
+			       CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
   // Reconcile a Boolean property with its debault.
+
+  TAO_Policies (const TAO_Policies&);
+  TAO_Policies& operator= (const TAO_Policies&);
   
   CosTrading::Policy* policies_[TAO_NUM_POLICIES];
   // The policies indexable from the enumerated type.
-  
+
   TAO_Trader_Base& trader_;
   // For the validating identifier names.
 };
@@ -462,6 +486,9 @@ public:
   
 private:
 
+  TAO_Policy_Manager (const TAO_Policy_Manager&);
+  TAO_Policy_Manager& operator= (const TAO_Policy_Manager&);
+  
   CosTrading::Policy& fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type);
   
   int poltable_[TAO_Policies::REQUEST_ID + 1];
@@ -513,6 +540,9 @@ public:
   
 private:
 
+  TAO_Offer_Modifier (const TAO_Offer_Modifier&);
+  TAO_Offer_Modifier& operator= (const TAO_Offer_Modifier&);
+  
   typedef ACE_Unbounded_Set<TAO_String_Hash_Key> Prop_Names;
 
   typedef ACE_Hash_Map_Manager
@@ -601,6 +631,9 @@ public:
   
 private:
 
+  TAO_Offer_Filter (const TAO_Offer_Filter&);
+  TAO_Offer_Filter& operator= (const TAO_Offer_Filter&);
+  
   typedef ACE_Unbounded_Set<TAO_String_Hash_Key> Names;
     
   Names mod_props_;
@@ -640,7 +673,8 @@ public:
   // Verify that the specified properties are correct.
 
   TAO_Property_Filter (const TAO_Property_Filter& prop_filter);
-
+  TAO_Property_Filter& operator= (const TAO_Property_Filter& prop_filter);
+  
   void filter_offer (CosTrading::Offer& source,
 		     CosTrading::Offer& destination);
   // Copy the desired properties from the source offer to the
@@ -648,6 +682,7 @@ public:
   
 private:
 
+  
   typedef ACE_Unbounded_Set< TAO_String_Hash_Key > Prop_Names;
   typedef ACE_Unbounded_Queue< CosTrading::Property* > Prop_Queue;
   
