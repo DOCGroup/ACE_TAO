@@ -1,3 +1,10 @@
+Wed Jan 12 15:57:30 2005 Huang-Ming Huang <hh1@cse.wustl.edu>
+  
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTRT_Group_Manager.cpp
+        
+        Fixed unused variable warning. Thanks to Jonny Willemsen
+        <jwillemsen@remedy.nl> for pointing out.
+        
 Tue Jan 11 23:19:33 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/GIOP_Message_Base.cpp:
@@ -7,13 +14,14 @@ Tue Jan 11 23:19:33 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Tue Jan 11 20:44:30 2005 Huang-Ming Huang <hh1@cse.wustl.edu>
   
-        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTRT_Group_Manager
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTRT_Group_Manager.cpp
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGRMaker.h
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGRMaker.cpp
           
           Fixed problem with the scenario when the secondary event 
           channel crashes and a new backup joins in the object group.
-          Thanks for Thia Chang Chao for reporting the problem.
+          Thanks to Thia Chang Chao <tchangch@dso.org.sg> for reporting 
+          the problem.
           
         * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp
         * orbsvcs/FTRT_Event_Service/ftec
