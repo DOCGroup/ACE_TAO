@@ -1,25 +1,46 @@
+// $Id$
+//
+//===============================================================================
+//
+//
+// = FILENAME
+//     MyFooServant.cpp
+//
+// = DESCRIPTION
+//     This is a simple foo servant implementation
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//==================================================================================
+
+
+
 #include "MyFooServant.h"
 
-MyFooServant::MyFooServant (PortableServer::POA_ptr poa, 
+// Constructor
+MyFooServant::MyFooServant (PortableServer::POA_ptr poa,
                             CORBA::Long value)
-  : poa_ (PortableServer::POA::_duplicate (poa)), 
-    value_ (value) 
+  : poa_ (PortableServer::POA::_duplicate (poa)),
+    value_ (value)
 {
 }
-  
-MyFooServant::~MyFooServant (void) 
-{ 
+
+// Destructor
+MyFooServant::~MyFooServant (void)
+{
 }
 
-PortableServer::POA_ptr 
+// Return the Default POA of this Servant
+PortableServer::POA_ptr
 MyFooServant::_default_POA (CORBA::Environment &env)
-{ 
-  return PortableServer::POA::_duplicate (this->poa_); 
+{
+  return PortableServer::POA::_duplicate (this->poa_);
 }
 
-CORBA::Long 
-MyFooServant::doit (CORBA::Environment &env) 
-{ 
-  return this->value_; 
+// Return this->value
+CORBA::Long
+MyFooServant::doit (CORBA::Environment &env)
+{
+  return this->value_;
 }
-
