@@ -32,6 +32,18 @@ OBJFILES = \
         $(OBJDIR)\UIPMC_Profile.obj \
         $(OBJDIR)\UIPMC_Transport.obj \
         $(OBJDIR)\UIPMC_Wait_Never.obj
+	$(OBJDIR)\PG_Factory_Map.obj \
+	$(OBJDIR)\PG_Factory_Set.obj \
+	$(OBJDIR)\PG_GenericFactory.obj \
+	$(OBJDIR)\PG_Location_Equal_To.obj \
+	$(OBJDIR)\PG_Location_Hash.obj \
+	$(OBJDIR)\PG_Location_Map.obj \
+	$(OBJDIR)\PG_MemberInfo.obj \
+	$(OBJDIR)\PG_ObjectGroupManager.obj \
+	$(OBJDIR)\PG_ObjectGroup_Map.obj \
+	$(OBJDIR)\PG_Operators.obj \
+	$(OBJDIR)\PG_PropertyManager.obj \
+	$(OBJDIR)\PG_Property_Utils.obj
 
 RESOURCE = $(OBJDIR)\PortableGroup.res
 
