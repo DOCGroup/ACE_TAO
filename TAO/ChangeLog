@@ -1,3 +1,14 @@
+Thu Nov 18 06:00:26 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/IORManipulation/IORManipulation.cpp:
+
+	  Moved explicit release of the TAO_Stub_Auto_Ptr to transfer
+	  "ownership" of the contained TAO_Stub to the new Object_var as
+	  soon as it is created.  This avoids a crash in the case where
+	  the Invalid_IOR exception was thrown.  At that point both
+	  objects assume they own the TAO_Stub, which causes it to be
+	  deleted twice when the stack is unwound.
+
 Thu Nov 18 11:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/releasenotes/ec.html:
