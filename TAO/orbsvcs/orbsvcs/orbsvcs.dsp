@@ -461,7 +461,6 @@ DEP_CPP_CC_LO=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -510,6 +509,7 @@ DEP_CPP_CC_LO=\
 	
 NODEP_CPP_CC_LO=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -780,7 +780,6 @@ DEP_CPP_CC_LOC=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -830,6 +829,7 @@ DEP_CPP_CC_LOC=\
 	
 NODEP_CPP_CC_LOC=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -1099,7 +1099,6 @@ DEP_CPP_CONCU=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -1149,6 +1148,7 @@ DEP_CPP_CONCU=\
 	
 NODEP_CPP_CONCU=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -1350,7 +1350,6 @@ DEP_CPP_CONCU=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -1399,6 +1398,7 @@ DEP_CPP_CONCU=\
 	
 NODEP_CPP_CONCU=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	
 
 !ENDIF 
@@ -1604,7 +1604,6 @@ DEP_CPP_CONFI=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -1669,6 +1668,7 @@ DEP_CPP_CONFI=\
 	
 NODEP_CPP_CONFI=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosTimeBaseC.h"\
@@ -1999,7 +1999,6 @@ DEP_CPP_CONST=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -2053,6 +2052,7 @@ DEP_CPP_CONST=\
 	
 NODEP_CPP_CONST=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -2360,7 +2360,6 @@ DEP_CPP_CONSTR=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -2414,6 +2413,7 @@ DEP_CPP_CONSTR=\
 	
 NODEP_CPP_CONSTR=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -2721,7 +2721,6 @@ DEP_CPP_CONSTRA=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -2774,6 +2773,7 @@ DEP_CPP_CONSTRA=\
 	
 NODEP_CPP_CONSTRA=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -3080,7 +3080,6 @@ DEP_CPP_CONSTRAI=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -3143,6 +3142,7 @@ DEP_CPP_CONSTRAI=\
 	
 NODEP_CPP_CONSTRAI=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -3459,7 +3459,6 @@ DEP_CPP_CONSTRAIN=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -3513,6 +3512,7 @@ DEP_CPP_CONSTRAIN=\
 	
 NODEP_CPP_CONSTRAIN=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -3820,7 +3820,6 @@ DEP_CPP_COSCO=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -3868,6 +3867,7 @@ DEP_CPP_COSCO=\
 	
 NODEP_CPP_COSCO=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -4069,7 +4069,6 @@ DEP_CPP_COSCO=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -4117,6 +4116,7 @@ DEP_CPP_COSCO=\
 	
 NODEP_CPP_COSCO=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -4329,7 +4329,6 @@ DEP_CPP_COSCON=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -4377,6 +4376,7 @@ DEP_CPP_COSCON=\
 	
 NODEP_CPP_COSCON=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -4578,7 +4578,6 @@ DEP_CPP_COSCON=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -4626,6 +4625,7 @@ DEP_CPP_COSCON=\
 	
 NODEP_CPP_COSCON=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -4838,7 +4838,6 @@ DEP_CPP_COSLI=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -4886,6 +4885,7 @@ DEP_CPP_COSLI=\
 	
 NODEP_CPP_COSLI=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -5094,7 +5094,6 @@ DEP_CPP_COSLI=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -5142,6 +5141,7 @@ DEP_CPP_COSLI=\
 	
 NODEP_CPP_COSLI=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -5361,7 +5361,6 @@ DEP_CPP_COSLIF=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -5409,6 +5408,7 @@ DEP_CPP_COSLIF=\
 	
 NODEP_CPP_COSLIF=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -5617,7 +5617,6 @@ DEP_CPP_COSLIF=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -5665,6 +5664,7 @@ DEP_CPP_COSLIF=\
 	
 NODEP_CPP_COSLIF=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -5884,7 +5884,6 @@ DEP_CPP_COSNA=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -5934,6 +5933,7 @@ DEP_CPP_COSNA=\
 	
 NODEP_CPP_COSNA=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosNamingS.h"\
@@ -6135,7 +6135,6 @@ DEP_CPP_COSNA=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -6184,6 +6183,7 @@ DEP_CPP_COSNA=\
 	
 NODEP_CPP_COSNA=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	
 
 !ENDIF 
@@ -6389,7 +6389,6 @@ DEP_CPP_COSNAM=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -6437,6 +6436,7 @@ DEP_CPP_COSNAM=\
 	
 NODEP_CPP_COSNAM=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosNamingS.h"\
@@ -6638,7 +6638,6 @@ DEP_CPP_COSNAM=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -6686,6 +6685,7 @@ DEP_CPP_COSNAM=\
 	
 NODEP_CPP_COSNAM=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosNamingS.h"\
@@ -6898,7 +6898,6 @@ DEP_CPP_COSNAMI=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -6946,6 +6945,7 @@ DEP_CPP_COSNAMI=\
 	
 NODEP_CPP_COSNAMI=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosNamingS.h"\
@@ -7147,7 +7147,6 @@ DEP_CPP_COSNAMI=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -7195,6 +7194,7 @@ DEP_CPP_COSNAMI=\
 	
 NODEP_CPP_COSNAMI=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosNamingS.h"\
@@ -7452,7 +7452,6 @@ DEP_CPP_COSTI=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -7500,6 +7499,7 @@ DEP_CPP_COSTI=\
 	
 NODEP_CPP_COSTI=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -7701,7 +7701,6 @@ DEP_CPP_COSTI=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -7749,6 +7748,7 @@ DEP_CPP_COSTI=\
 	
 NODEP_CPP_COSTI=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -7961,7 +7961,6 @@ DEP_CPP_COSTIM=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -8009,6 +8008,7 @@ DEP_CPP_COSTIM=\
 	
 NODEP_CPP_COSTIM=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -8210,7 +8210,6 @@ DEP_CPP_COSTIM=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -8258,6 +8257,7 @@ DEP_CPP_COSTIM=\
 	
 NODEP_CPP_COSTIM=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -8470,7 +8470,6 @@ DEP_CPP_COSTR=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -8518,6 +8517,7 @@ DEP_CPP_COSTR=\
 	
 NODEP_CPP_COSTR=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -8719,7 +8719,6 @@ DEP_CPP_COSTR=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -8767,6 +8766,7 @@ DEP_CPP_COSTR=\
 	
 NODEP_CPP_COSTR=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -8979,7 +8979,6 @@ DEP_CPP_COSTRA=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -9027,6 +9026,7 @@ DEP_CPP_COSTRA=\
 	
 NODEP_CPP_COSTRA=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -9228,7 +9228,6 @@ DEP_CPP_COSTRA=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -9276,6 +9275,7 @@ DEP_CPP_COSTRA=\
 	
 NODEP_CPP_COSTRA=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -9510,7 +9510,6 @@ DEP_CPP_DISPA=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -9576,6 +9575,7 @@ DEP_CPP_DISPA=\
 	
 NODEP_CPP_DISPA=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosTimeBaseC.h"\
@@ -9828,7 +9828,6 @@ DEP_CPP_DISPA=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -9894,6 +9893,7 @@ DEP_CPP_DISPA=\
 	
 NODEP_CPP_DISPA=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\Event\ace\ReactorEx.h"\
 	".\Event\CORBA_Utils_T.cpp"\
 	".\Event\CORBA_Utils_T.h"\
@@ -10107,7 +10107,6 @@ DEP_CPP_DYNSC=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -10162,6 +10161,7 @@ DEP_CPP_DYNSC=\
 	
 NODEP_CPP_DYNSC=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\RtecSchedulerC.h"\
@@ -10472,7 +10472,6 @@ DEP_CPP_EC_GA=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -10529,6 +10528,7 @@ DEP_CPP_EC_GA=\
 	
 NODEP_CPP_EC_GA=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -10840,7 +10840,6 @@ DEP_CPP_EC_GAT=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -10894,6 +10893,7 @@ DEP_CPP_EC_GAT=\
 	
 NODEP_CPP_EC_GAT=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -11237,7 +11237,6 @@ DEP_CPP_ENTRI=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -11286,6 +11285,7 @@ DEP_CPP_ENTRI=\
 	
 NODEP_CPP_ENTRI=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	
@@ -11482,7 +11482,6 @@ DEP_CPP_ENTRI=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -11530,6 +11529,7 @@ DEP_CPP_ENTRI=\
 	
 NODEP_CPP_ENTRI=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	
 
 !ENDIF 
@@ -11755,7 +11755,6 @@ DEP_CPP_EVENT=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -11828,6 +11827,7 @@ DEP_CPP_EVENT=\
 	
 NODEP_CPP_EVENT=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosTimeBaseC.h"\
@@ -12078,7 +12078,6 @@ DEP_CPP_EVENT=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -12151,6 +12150,7 @@ DEP_CPP_EVENT=\
 	
 NODEP_CPP_EVENT=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\Event\ace\ReactorEx.h"\
 	".\Event\CORBA_Utils_T.cpp"\
 	".\Event\CORBA_Utils_T.h"\
@@ -12377,7 +12377,6 @@ DEP_CPP_EVENT_=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -12430,6 +12429,7 @@ DEP_CPP_EVENT_=\
 	
 NODEP_CPP_EVENT_=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\RtecEventChannelAdminC.h"\
@@ -12725,7 +12725,6 @@ DEP_CPP_IOR_M=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -12774,6 +12773,7 @@ DEP_CPP_IOR_M=\
 	
 NODEP_CPP_IOR_M=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -12972,7 +12972,6 @@ DEP_CPP_IOR_M=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -13021,6 +13020,7 @@ DEP_CPP_IOR_M=\
 	
 NODEP_CPP_IOR_M=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	
 
 !ENDIF 
@@ -13226,7 +13226,6 @@ DEP_CPP_LIFEC=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -13274,6 +13273,7 @@ DEP_CPP_LIFEC=\
 	
 NODEP_CPP_LIFEC=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -13489,7 +13489,6 @@ DEP_CPP_LIFEC=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -13537,6 +13536,7 @@ DEP_CPP_LIFEC=\
 	
 NODEP_CPP_LIFEC=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -13763,7 +13763,6 @@ DEP_CPP_LIFECY=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -13811,6 +13810,7 @@ DEP_CPP_LIFECY=\
 	
 NODEP_CPP_LIFECY=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -14026,7 +14026,6 @@ DEP_CPP_LIFECY=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -14074,6 +14073,7 @@ DEP_CPP_LIFECY=\
 	
 NODEP_CPP_LIFECY=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -14300,7 +14300,6 @@ DEP_CPP_LOCAL=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -14353,6 +14352,7 @@ DEP_CPP_LOCAL=\
 	
 NODEP_CPP_LOCAL=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosTimeBaseC.h"\
@@ -14577,7 +14577,6 @@ DEP_CPP_LOCAL=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -14630,6 +14629,7 @@ DEP_CPP_LOCAL=\
 	
 NODEP_CPP_LOCAL=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	
 
 !ENDIF 
@@ -14835,7 +14835,6 @@ DEP_CPP_LOGGE=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -14884,6 +14883,7 @@ DEP_CPP_LOGGE=\
 	
 NODEP_CPP_LOGGE=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\LoggerC.h"\
 	".\LoggerC.i"\
 	".\LoggerS.h"\
@@ -15136,7 +15136,6 @@ DEP_CPP_LOGGER=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -15184,6 +15183,7 @@ DEP_CPP_LOGGER=\
 	
 NODEP_CPP_LOGGER=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\LoggerC.h"\
 	".\LoggerC.i"\
 	".\LoggerS.h"\
@@ -15385,7 +15385,6 @@ DEP_CPP_LOGGER=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -15433,6 +15432,7 @@ DEP_CPP_LOGGER=\
 	
 NODEP_CPP_LOGGER=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\LoggerC.h"\
 	".\LoggerC.i"\
 	".\LoggerS.h"\
@@ -15645,7 +15645,6 @@ DEP_CPP_LOGGERS=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -15693,6 +15692,7 @@ DEP_CPP_LOGGERS=\
 	
 NODEP_CPP_LOGGERS=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\LoggerC.h"\
 	".\LoggerC.i"\
 	".\LoggerS.h"\
@@ -15894,7 +15894,6 @@ DEP_CPP_LOGGERS=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -15942,6 +15941,7 @@ DEP_CPP_LOGGERS=\
 	
 NODEP_CPP_LOGGERS=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\LoggerC.h"\
 	".\LoggerC.i"\
 	".\LoggerS.h"\
@@ -16174,7 +16174,6 @@ DEP_CPP_MEMOR=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -16238,6 +16237,7 @@ DEP_CPP_MEMOR=\
 	
 NODEP_CPP_MEMOR=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosTimeBaseC.h"\
@@ -16488,7 +16488,6 @@ DEP_CPP_MEMOR=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -16552,6 +16551,7 @@ DEP_CPP_MEMOR=\
 	
 NODEP_CPP_MEMOR=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\Event\ace\ReactorEx.h"\
 	".\Event\CORBA_Utils_T.cpp"\
 	".\Event\CORBA_Utils_T.h"\
@@ -16783,7 +16783,6 @@ DEP_CPP_MODUL=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -16846,6 +16845,7 @@ DEP_CPP_MODUL=\
 	
 NODEP_CPP_MODUL=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosTimeBaseC.h"\
@@ -17096,7 +17096,6 @@ DEP_CPP_MODUL=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -17159,6 +17158,7 @@ DEP_CPP_MODUL=\
 	
 NODEP_CPP_MODUL=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\Event\ace\ReactorEx.h"\
 	".\Event\CORBA_Utils_T.cpp"\
 	".\Event\CORBA_Utils_T.h"\
@@ -17375,7 +17375,6 @@ DEP_CPP_NAMIN=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -17427,6 +17426,7 @@ DEP_CPP_NAMIN=\
 	
 NODEP_CPP_NAMIN=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosNamingS.h"\
@@ -17633,7 +17633,6 @@ DEP_CPP_NAMIN=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -17685,6 +17684,7 @@ DEP_CPP_NAMIN=\
 	
 NODEP_CPP_NAMIN=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	
 
 !ENDIF 
@@ -17890,7 +17890,6 @@ DEP_CPP_OFFER=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -17941,6 +17940,7 @@ DEP_CPP_OFFER=\
 	
 NODEP_CPP_OFFER=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -18265,7 +18265,6 @@ DEP_CPP_REACT=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -18325,6 +18324,7 @@ DEP_CPP_REACT=\
 	
 NODEP_CPP_REACT=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosTimeBaseC.h"\
@@ -18570,7 +18570,6 @@ DEP_CPP_REACT=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -18630,6 +18629,7 @@ DEP_CPP_REACT=\
 	
 NODEP_CPP_REACT=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\Event\ace\ReactorEx.h"\
 	
 
@@ -18858,7 +18858,6 @@ DEP_CPP_RT_TA=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -18925,6 +18924,7 @@ DEP_CPP_RT_TA=\
 	
 NODEP_CPP_RT_TA=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosTimeBaseC.h"\
@@ -19177,7 +19177,6 @@ DEP_CPP_RT_TA=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -19244,6 +19243,7 @@ DEP_CPP_RT_TA=\
 	
 NODEP_CPP_RT_TA=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\Event\ace\ReactorEx.h"\
 	".\Event\CORBA_Utils_T.cpp"\
 	".\Event\CORBA_Utils_T.h"\
@@ -19455,7 +19455,6 @@ DEP_CPP_RTECE=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -19503,6 +19502,7 @@ DEP_CPP_RTECE=\
 	
 NODEP_CPP_RTECE=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -19725,7 +19725,6 @@ DEP_CPP_RTECE=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -19773,6 +19772,7 @@ DEP_CPP_RTECE=\
 	
 NODEP_CPP_RTECE=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -20006,7 +20006,6 @@ DEP_CPP_RTECEV=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -20054,6 +20053,7 @@ DEP_CPP_RTECEV=\
 	
 NODEP_CPP_RTECEV=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -20276,7 +20276,6 @@ DEP_CPP_RTECEV=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -20324,6 +20323,7 @@ DEP_CPP_RTECEV=\
 	
 NODEP_CPP_RTECEV=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -20557,7 +20557,6 @@ DEP_CPP_RTECEVE=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -20605,6 +20604,7 @@ DEP_CPP_RTECEVE=\
 	
 NODEP_CPP_RTECEVE=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -20813,7 +20813,6 @@ DEP_CPP_RTECEVE=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -20861,6 +20860,7 @@ DEP_CPP_RTECEVE=\
 	
 NODEP_CPP_RTECEVE=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -21080,7 +21080,6 @@ DEP_CPP_RTECEVEN=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -21128,6 +21127,7 @@ DEP_CPP_RTECEVEN=\
 	
 NODEP_CPP_RTECEVEN=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -21336,7 +21336,6 @@ DEP_CPP_RTECEVEN=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -21384,6 +21383,7 @@ DEP_CPP_RTECEVEN=\
 	
 NODEP_CPP_RTECEVEN=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -21603,7 +21603,6 @@ DEP_CPP_RTECS=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -21651,6 +21650,7 @@ DEP_CPP_RTECS=\
 	
 NODEP_CPP_RTECS=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -21859,7 +21859,6 @@ DEP_CPP_RTECS=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -21907,6 +21906,7 @@ DEP_CPP_RTECS=\
 	
 NODEP_CPP_RTECS=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -22126,7 +22126,6 @@ DEP_CPP_RTECSC=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -22174,6 +22173,7 @@ DEP_CPP_RTECSC=\
 	
 NODEP_CPP_RTECSC=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -22382,7 +22382,6 @@ DEP_CPP_RTECSC=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -22430,6 +22429,7 @@ DEP_CPP_RTECSC=\
 	
 NODEP_CPP_RTECSC=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -22679,7 +22679,6 @@ DEP_CPP_RUNTI=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -22733,6 +22732,7 @@ DEP_CPP_RUNTI=\
 	
 NODEP_CPP_RUNTI=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosTimeBaseC.h"\
@@ -23000,7 +23000,6 @@ DEP_CPP_SCHED=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -23053,6 +23052,7 @@ DEP_CPP_SCHED=\
 	
 NODEP_CPP_SCHED=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\RtecSchedulerC.h"\
@@ -23342,7 +23342,6 @@ DEP_CPP_SCHEDU=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -23395,6 +23394,7 @@ DEP_CPP_SCHEDU=\
 	
 NODEP_CPP_SCHEDU=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\RtecSchedulerC.h"\
@@ -23703,7 +23703,6 @@ DEP_CPP_SCHEDUL=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -23755,6 +23754,7 @@ DEP_CPP_SCHEDUL=\
 	
 NODEP_CPP_SCHEDUL=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosTimeBaseC.h"\
@@ -24038,7 +24038,6 @@ DEP_CPP_SCHEDULE=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -24093,6 +24092,7 @@ DEP_CPP_SCHEDULE=\
 	
 NODEP_CPP_SCHEDULE=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\RtecSchedulerC.h"\
@@ -24403,7 +24403,6 @@ DEP_CPP_SCHEDULER=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -24453,6 +24452,7 @@ DEP_CPP_SCHEDULER=\
 	
 NODEP_CPP_SCHEDULER=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\RtecSchedulerC.h"\
@@ -24704,7 +24704,6 @@ DEP_CPP_SERVI=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -24754,6 +24753,7 @@ DEP_CPP_SERVI=\
 	
 NODEP_CPP_SERVI=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -25059,7 +25059,6 @@ DEP_CPP_STRAT=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -25116,6 +25115,7 @@ DEP_CPP_STRAT=\
 	
 NODEP_CPP_STRAT=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\RtecSchedulerC.h"\
@@ -25224,6 +25224,66 @@ DEP_CPP_STRAT=\
 NODEP_CPP_STRAT=\
 	"..\..\..\ace\sys_conf.h"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Time\TAO_Time_Service_Clerk.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Time\TAO_Time_Service_Server.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Time\TAO_TIO.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Time\TAO_UTO.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -25428,7 +25488,6 @@ DEP_CPP_TIME_=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -25478,6 +25537,7 @@ DEP_CPP_TIME_=\
 	
 NODEP_CPP_TIME_=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	
@@ -25529,7 +25589,52 @@ NODEP_CPP_TIME_=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\Time\Timer_Helper.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\Timer_Module.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeServiceC.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeServiceS.cpp
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
@@ -25743,7 +25848,6 @@ DEP_CPP_TRADE=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -25806,6 +25910,7 @@ DEP_CPP_TRADE=\
 	
 NODEP_CPP_TRADE=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -26123,7 +26228,6 @@ DEP_CPP_TRADER=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -26173,6 +26277,7 @@ DEP_CPP_TRADER=\
 	
 NODEP_CPP_TRADER=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -26526,11 +26631,43 @@ SOURCE=.\Sched\Strategy_Scheduler.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Time\TAO_Time_Service_Clerk.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Time\TAO_Time_Service_Server.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Time\TAO_TIO.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Time\TAO_UTO.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Time_Utilities.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Time\Timer_Helper.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\Timer_Module.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeServiceC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeServiceS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeServiceS_T.h
 # End Source File
 # Begin Source File
 
@@ -26636,6 +26773,18 @@ SOURCE=.\Sched\Strategy_Scheduler.i
 
 SOURCE=.\Event\Timer_Module.i
 # End Source File
+# Begin Source File
+
+SOURCE=.\TimeServiceC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeServiceS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeServiceS_T.i
+# End Source File
 # End Group
 # Begin Group "IDL Files"
 
@@ -26648,13 +26797,13 @@ SOURCE=.\CosConcurrencyControl.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSCONC="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -26688,13 +26837,13 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSCONC="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -26734,7 +26883,7 @@ InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -26774,7 +26923,7 @@ InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -26806,13 +26955,13 @@ SOURCE=.\CosLifeCycle.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSLIFE="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
 	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -26846,13 +26995,13 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSLIFE="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -26892,7 +27041,7 @@ InputName=CosLifeCycle
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -26932,7 +27081,7 @@ InputName=CosLifeCycle
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -26964,13 +27113,13 @@ SOURCE=.\CosNaming.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSNAMIN="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
 	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27004,13 +27153,13 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSNAMIN="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27050,7 +27199,7 @@ InputName=CosNaming
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27090,7 +27239,7 @@ InputName=CosNaming
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27122,13 +27271,13 @@ SOURCE=.\CosPropertyService.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSPR="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
 
 BuildCmds= \
 	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27161,13 +27310,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27216,13 +27365,13 @@ SOURCE=.\CosTimeBase.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSTIME="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTimeBase.idl
 InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27256,13 +27405,13 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSTIME="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTimeBase.idl
 InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27302,7 +27451,7 @@ InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27342,7 +27491,7 @@ InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27374,13 +27523,13 @@ SOURCE=.\CosTrading.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSTRAD="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
 	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27414,13 +27563,13 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSTRAD="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27460,7 +27609,7 @@ InputName=CosTrading
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27500,7 +27649,7 @@ InputName=CosTrading
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27541,13 +27690,13 @@ SOURCE=.\LifeCycleService.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__LIFECYC="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
 	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27581,13 +27730,13 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__LIFECYC="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27627,7 +27776,7 @@ InputName=LifeCycleService
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27667,7 +27816,7 @@ InputName=LifeCycleService
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27699,13 +27848,13 @@ SOURCE=.\Logger.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__LOGGER_="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
 	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27739,13 +27888,13 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__LOGGER_="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27785,7 +27934,7 @@ InputName=Logger
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27825,7 +27974,7 @@ InputName=Logger
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27857,13 +28006,13 @@ SOURCE=.\RtecEventChannelAdmin.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENT="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27897,13 +28046,13 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENT="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27943,7 +28092,7 @@ InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27984,7 +28133,7 @@ InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28016,13 +28165,13 @@ SOURCE=.\RtecEventComm.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENTC="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28056,13 +28205,13 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENTC="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28102,7 +28251,7 @@ InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28142,7 +28291,7 @@ InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28174,13 +28323,13 @@ SOURCE=.\RtecScheduler.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECSCH="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28214,13 +28363,13 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECSCH="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28260,7 +28409,7 @@ InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28300,7 +28449,7 @@ InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28332,13 +28481,13 @@ SOURCE=.\RtecUDPAdmin.idl
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECU="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
 BuildCmds= \
 	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28372,13 +28521,13 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECU="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compile
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28405,6 +28554,95 @@ BuildCmds= \
    $(BuildCmds)
 
 "$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeService.idl
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+USERDEP__TIMES="..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\TimeService.idl
+InputName=TimeService
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+USERDEP__TIMES="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\TimeService.idl
+InputName=TimeService
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
+                                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
@@ -28661,7 +28899,6 @@ DEP_CPP_OFFER_=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -28713,6 +28950,7 @@ DEP_CPP_OFFER_=\
 	
 NODEP_CPP_OFFER_=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -28932,7 +29170,6 @@ DEP_CPP_OFFER_I=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -28986,6 +29223,7 @@ DEP_CPP_OFFER_I=\
 	
 NODEP_CPP_OFFER_I=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -28999,6 +29237,21 @@ NODEP_CPP_OFFER_I=\
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeServiceS_T.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -29205,7 +29458,6 @@ DEP_CPP_TRADER_=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -29267,6 +29519,7 @@ DEP_CPP_TRADER_=\
 	
 NODEP_CPP_TRADER_=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -29486,7 +29739,6 @@ DEP_CPP_TRADER_T=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -29548,6 +29800,7 @@ DEP_CPP_TRADER_T=\
 	
 NODEP_CPP_TRADER_T=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\

@@ -1,9 +1,12 @@
-Wed Dec 31 00:01:40 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+Thu Dec 31 00:11:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/server.cpp: Added support so that
-	  the program can break out of main () in case of any exception/error.
-	
-Wed Dec 30 21:12:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+	* orbsvcs/tests/Time/Time.dsp: 
+	* orbsvcs/Time_Service/Time_Service.dsp: 
+	* orbsvcs/orbsvcs/orbsvcs.dsp: 
+
+	  Added new Time Service files.
+
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: Fixed comment typo.
 
 	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp (main): 
 	  Added code to check the effectiveness of the hashing of
@@ -19,8 +22,11 @@ Wed Dec 30 21:12:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
  	  we do not have to create a new reference every time the POA
  	  reference is needed.
 
-Wed Dec 30 23:04:44 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+Wed Dec 31 00:01:40 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
+	* examples/POA/On_Demand_Loading/server.cpp: Added support so that
+	  the program can break out of main () in case of any exception/error.
+	
 	* examples/POA/On_Demand_Loading/Servant_Manager.h:
 	  Made <dllname_> and <create_symbol_> as ACE_CString variables.
 	  Thanks to Irfan for suggesting it.
