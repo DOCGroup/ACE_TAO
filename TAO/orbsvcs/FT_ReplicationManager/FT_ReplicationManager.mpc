@@ -1,4 +1,4 @@
-project : taoserver, fault_tolerance, iormanip, ftorb {
+project : taoserver, orbsvcsexe, fault_tolerance, iormanip, ftorb {
   exename  = FT_ReplicationManager
   Source_Files {
     FT_ReplicationManager.cpp
