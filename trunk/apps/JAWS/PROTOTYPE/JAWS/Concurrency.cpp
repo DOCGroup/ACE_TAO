@@ -23,6 +23,7 @@ JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
 JAWS_Concurrency_Base::~JAWS_Concurrency_Base (void)
 {
   delete this->thr_mgr_;
+  delete this->reaper_;
 }
 
 ACE_Message_Block *
@@ -166,9 +167,9 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
   if (handler != 0)
     {
       handler->message_block ()->release ();
-      handler->factory ()->destroy_io_handler (handler);
+      delete handler; // handler->factory ()->destroy_io_handler (handler);
     }
-  ts_db->release ();
+  delete ts_db; // ts_db->release ();
 
   return result;
 }

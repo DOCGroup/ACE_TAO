@@ -71,7 +71,17 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 
       io->send_error_message (handler, msg, sizeof (msg));
       if (handler->status () == JAWS_IO_Handler::WRITE_OK)
-        return 0;
+        {
+          JAWS_HTTP_10_Headers *table = info->table ();
+          Symbol_Table_Iterator &iter = table->iter ();
+          for (iter.first (); ! iter.is_done (); iter.next ())
+            {
+              table->remove (*(iter.key ()));
+              ACE_OS::free (ACE_reinterpret_cast (void *, *(iter.key ())));
+              ACE_OS::free (ACE_reinterpret_cast (void *, *(iter.item ())));
+            }
+          return 0;
+        }
     }
   else
     {
@@ -81,17 +91,31 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
                          0,
                          "",
                          0);
+
+      JAWS_HTTP_10_Headers *table = info->table ();
+      Symbol_Table_Iterator &iter = table->iter ();
+      for (iter.first (); ! iter.is_done (); iter.next ())
+        {
+          table->remove (*(iter.key ()));
+          ACE_OS::free (ACE_reinterpret_cast (void *, *(iter.key ())));
+          ACE_OS::free (ACE_reinterpret_cast (void *, *(iter.item ())));
+        }
+
       switch (handler->status ())
         {
         case JAWS_IO_Handler::TRANSMIT_OK:
+          delete info;
           return 0;
         case JAWS_IO_Handler::TRANSMIT_ERROR:
+          delete info;
           return -1;
         default:
+          delete info;
           return 1;
         }
     }
 
+  delete info;
   return -1;
 #endif
 }
