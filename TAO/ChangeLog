@@ -1,3 +1,10 @@
+Tue Jan 20 17:24:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Borland/ChatClient.bpr:
+          Don't use -O2, this causes problems with BCB6 in a release build,
+          use -Og -Ov -OS as seperate options. This not sets -Oi which is
+          the problem.
+
 Tue Jan 20 17:01:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Advanced/ch_8_and_10/server.h:
