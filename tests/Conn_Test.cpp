@@ -46,11 +46,11 @@ USELIB("..\ace\aced.lib");
 static int n_servers = 2;
 static int n_clients = 4;
 #else
-static int n_servers = 4;
-static int n_clients = 10;
+static int n_servers = 5;
+static int n_clients = 5;
 #endif /* ACE_HAS_PHARLAP */
 
-static int n_client_iterations = 2;
+static int n_client_iterations = 3;
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *)
 {
@@ -183,16 +183,27 @@ Svc_Handler::idle (u_long flags)
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::idle (flags);
 }
 
+//
 // The following works around bugs with some operating systems, which
 // don't allow multiple threads/process to call accept() on the same
-// listen-mode port/socket.
-#if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
-typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
-#elif defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
-typedef ACE_Thread_Mutex ACCEPTOR_LOCKING;
+// listen-mode port/socket.  Also, note that since timed accept is
+// implemented using select(), and we use timed accepts with threads,
+// we need a real lock even if the OS has thread-safe accept when
+// using timed accepts.
+//
+#if defined (ACE_LACKS_FORK)
+#  if defined (ACE_HAS_THREADS)
+     typedef ACE_Thread_Mutex ACCEPTOR_LOCKING;
+#  else
+     typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
+#  endif /* ACE_HAS_THREADS */
 #else
-typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
-#endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
+#  if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
+     typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
+#  else
+     typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
+#  endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
+#endif /* ACE_LACKS_FORK */
 
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 #define LOCK_SOCK_ACCEPTOR ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>
