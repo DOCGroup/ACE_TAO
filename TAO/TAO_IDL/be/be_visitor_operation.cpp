@@ -59,7 +59,7 @@
 #include "be_visitor_operation/ami_ch.cpp"
 #include "be_visitor_operation/ami_cs.cpp"
 #include "be_visitor_operation/ami_handler_reply_stub_operation_ch.cpp"
-#include "be_visitor_operation/ami_handler_skeleton_cs.cpp"
+#include "be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp"
 #include "be_visitor_operation/ami_exception_holder_operation_cs.cpp"
 
 #if 0

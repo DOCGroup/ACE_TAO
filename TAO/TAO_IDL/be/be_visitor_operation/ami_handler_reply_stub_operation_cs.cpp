@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    ami_handler_skeleton_cs.cpp
+//    ami_handler_reply_stub_operation_cs.cpp
 //
 // = DESCRIPTION
 //    Visitor generating code for Operation in the stubs file.
@@ -24,25 +24,25 @@
 
 #include "be_visitor_operation.h"
 
-ACE_RCSID(be_visitor_operation, ami_handler_skeleton_cs, "$Id$")
+ACE_RCSID(be_visitor_operation, ami_handler_reply_stub_operation_cs, "$Id$")
 
 
 // ************************************************************
 // Operation visitor for client stubs
 // ************************************************************
 
-be_visitor_operation_ami_handler_skeleton_cs::be_visitor_operation_ami_handler_skeleton_cs (be_visitor_context *ctx)
+be_visitor_operation_ami_handler_reply_stub_operation_cs::be_visitor_operation_ami_handler_reply_stub_operation_cs (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_ami_handler_skeleton_cs::~be_visitor_operation_ami_handler_skeleton_cs (void)
+be_visitor_operation_ami_handler_reply_stub_operation_cs::~be_visitor_operation_ami_handler_reply_stub_operation_cs (void)
 {
 }
 
 // processing to be done after every element in the scope is processed
 int
-be_visitor_operation_ami_handler_skeleton_cs::post_process (be_decl *bd)
+be_visitor_operation_ami_handler_reply_stub_operation_cs::post_process (be_decl *bd)
 {
   // all we do here is to insert a comma and a newline
   TAO_OutStream *os = this->ctx_->stream ();
@@ -52,7 +52,7 @@ be_visitor_operation_ami_handler_skeleton_cs::post_process (be_decl *bd)
 }
 
 int
-be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *node)
+be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_operation *node)
 {
   TAO_OutStream *os; // output stream
   be_type *bt;       // type node
@@ -67,7 +67,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ami_handler_skeleton_cs::"
+                         "(%N:%l) be_visitor_ami_handler_reply_stub_operation_cs::"
                          "visit_operation - "
                          "Bad return type\n"),
                         -1);
@@ -85,7 +85,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   if (!parent)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_skeleton_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_reply_stub_operation_cs::"
                          "visit_operation - "
                          "node information not sufficient :-<\n"),
                         -1);
@@ -110,20 +110,17 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   // Generate the argument list.
   *os << "TAO_InputCDR &_tao_in, " << be_nl
       << "Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
-      << "CORBA::ULong reply_status," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV)"<< be_uidt << be_uidt_nl
-      << be_nl;
+      << "CORBA::ULong reply_status";
+
+    *os << "," << be_nl
+        << "CORBA::Environment &ACE_TRY_ENV";
+        
+   *os << ")" << be_uidt << be_uidt_nl;
 
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.
   // last argument - is always CORBA::Environment
   *os << "{\n" << be_idt;
-
-  // Deal with differences between IDL mapping for true C++ exceptions and
-  // alternate mapping. Since our code uses the ACE_TRY_ENV variable in a
-  // number of places, for the true exception case, we will have to explicitly
-  // declare the ACE_TRY_ENV variable.
-  *os << this->gen_environment_var () << be_nl;
 
   // Generate any pre stub info if and only if none of our parameters is of the
   // native type.
@@ -170,7 +167,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) ami_handler_skeleton_cs::"
+                         "(%N:%l) ami_handler_reply_stub_operation_cs::"
                          "visit_operation - "
                          "codegen for return var decl failed\n"),
                         -1);
@@ -182,7 +179,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   if (this->gen_marshal_and_invoke (node, bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%1) ami_handler_skeleton_cs::"
+                         "(%N:%1) ami_handler_reply_stub_operation_cs::"
                          "visit_operation - "
                          "gen_demarshal_params failed\n"),
                         -1);
@@ -202,7 +199,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   if (!original)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%1) ami_handler_skeleton_cs::"
+                         "(%N:%1) ami_handler_reply_stub_operation_cs::"
                          "visit_operation - "
                          "original interface is not set\n"),
                         -1);
@@ -236,8 +233,12 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
       << "exception_holder_var->is_system_exception (0);" << be_uidt_nl
       << "exception_holder_var->byte_order (ACE_CDR_BYTE_ORDER);" << be_nl
       << be_nl
-      << "_tao_reply_handler_object->foo_excep (exception_holder_var," << be_nl
-      << " ACE_TRY_ENV);" << be_uidt_nl
+      << "_tao_reply_handler_object->foo_excep (exception_holder_var";
+
+  if (!idl_global->exception_support ())
+    *os << "," << be_nl << " ACE_TRY_ENV";
+
+  *os << ");" << be_uidt_nl
       << "}" << be_uidt_nl
       << "return;" << be_uidt_nl;
 
@@ -253,7 +254,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
 }
 
 int
-be_visitor_operation_ami_handler_skeleton_cs::visit_argument (be_argument *node)
+be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_argument (be_argument *node)
 {
   // this method is used to generate the ParamData table entry
 
@@ -265,7 +266,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_argument (be_argument *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_skeleton_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_reply_stub_operation_cs::"
                          "visit_argument - "
                          "Bad argument type\n"),
                         -1);
@@ -291,7 +292,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_argument (be_argument *node)
 }
 
 int
-be_visitor_operation_ami_handler_skeleton_cs::gen_raise_exception (be_type *bt,
+be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_raise_exception (be_type *bt,
                                                                     const char *excep,
                                                                     const char *completion_status)
 {
@@ -317,7 +318,7 @@ be_visitor_operation_ami_handler_skeleton_cs::gen_raise_exception (be_type *bt,
         {
           delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_ami_handler_skeleton_cs::"
+                             "(%N:%l) be_visitor_operation_ami_handler_reply_stub_operation_cs::"
                              "gen_raise_exception - "
                              "codegen for return var failed\n"),
                             -1);
@@ -328,7 +329,7 @@ be_visitor_operation_ami_handler_skeleton_cs::gen_raise_exception (be_type *bt,
 }
 
 int
-be_visitor_operation_ami_handler_skeleton_cs::gen_check_exception (be_type *bt)
+be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_check_exception (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_visitor *visitor;
@@ -354,7 +355,7 @@ be_visitor_operation_ami_handler_skeleton_cs::gen_check_exception (be_type *bt)
         {
           delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_ami_handler_skeleton_cs::"
+                             "(%N:%l) be_visitor_operation_ami_handler_reply_stub_operation_cs::"
                              "gen_check_exception - "
                              "codegen failed\n"),
                             -1);
@@ -373,20 +374,20 @@ be_visitor_operation_ami_handler_skeleton_cs::gen_check_exception (be_type *bt)
 // Operation visitor for interpretive client skeletons of the AMI reply handler
 // ************************************************************
 
-be_interpretive_visitor_operation_ami_handler_skeleton_cs::
-be_interpretive_visitor_operation_ami_handler_skeleton_cs (be_visitor_context *ctx)
-  : be_visitor_operation_ami_handler_skeleton_cs (ctx)
+be_interpretive_visitor_operation_ami_handler_reply_stub_operation_cs::
+be_interpretive_visitor_operation_ami_handler_reply_stub_operation_cs (be_visitor_context *ctx)
+  : be_visitor_operation_ami_handler_reply_stub_operation_cs (ctx)
 {
 }
 
-be_interpretive_visitor_operation_ami_handler_skeleton_cs::~be_interpretive_visitor_operation_ami_handler_skeleton_cs (void)
+be_interpretive_visitor_operation_ami_handler_reply_stub_operation_cs::~be_interpretive_visitor_operation_ami_handler_reply_stub_operation_cs (void)
 {
 }
 
 // concrete implementation of the template methods
 
 int
-be_interpretive_visitor_operation_ami_handler_skeleton_cs::gen_pre_stub_info (be_operation *node,
+be_interpretive_visitor_operation_ami_handler_reply_stub_operation_cs::gen_pre_stub_info (be_operation *node,
                                                                               be_type *bt)
 {
   ACE_UNUSED_ARG (node);
@@ -397,7 +398,7 @@ be_interpretive_visitor_operation_ami_handler_skeleton_cs::gen_pre_stub_info (be
 }
 
 int
-be_interpretive_visitor_operation_ami_handler_skeleton_cs::
+be_interpretive_visitor_operation_ami_handler_reply_stub_operation_cs::
 gen_marshal_and_invoke (be_operation*node,
                         be_type *bt)
 {
@@ -414,20 +415,20 @@ gen_marshal_and_invoke (be_operation*node,
 // Operation visitor for compiled client skeletons of the AMI reply handler
 // ************************************************************
 
-be_compiled_visitor_operation_ami_handler_skeleton_cs::
-be_compiled_visitor_operation_ami_handler_skeleton_cs (be_visitor_context *ctx)
-  : be_visitor_operation_ami_handler_skeleton_cs (ctx)
+be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs::
+be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs (be_visitor_context *ctx)
+  : be_visitor_operation_ami_handler_reply_stub_operation_cs (ctx)
 {
 }
 
-be_compiled_visitor_operation_ami_handler_skeleton_cs::~be_compiled_visitor_operation_ami_handler_skeleton_cs (void)
+be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs::~be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs (void)
 {
 }
 
 // concrete implementation of the template methods
 
 int
-be_compiled_visitor_operation_ami_handler_skeleton_cs::gen_pre_stub_info (be_operation *node,
+be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs::gen_pre_stub_info (be_operation *node,
                                                                           be_type *bt)
 {
   ACE_UNUSED_ARG (bt);
@@ -444,7 +445,7 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::gen_pre_stub_info (be_ope
           delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) "
-                             "be_compiled_visitor_operation_ami_handler_skeleton_cs::"
+                             "be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs::"
                              "gen_pre_stub_info - "
                              "Exceptionlist generation error\n"),
                             -1);
@@ -456,7 +457,7 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::gen_pre_stub_info (be_ope
 }
 
 int
-be_compiled_visitor_operation_ami_handler_skeleton_cs::
+be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs::
   gen_marshal_and_invoke (be_operation *node,
                           be_type *bt)
 {
@@ -482,7 +483,7 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::
         {
           delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l)  be_compiled_visitor_operation_ami_handler_skeleton_cs::"
+                             "(%N:%l)  be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs::"
                              "gen_marshal_params - "
                              "codegen for args failed\n"),
                             -1);
@@ -520,7 +521,7 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) ami_handler_skeleton_cs::"
+                         "(%N:%l) ami_handler_reply_stub_operation_cs::"
                          "visit_operation - "
                          "codegen for making upcall failed\n"),
                         -1);

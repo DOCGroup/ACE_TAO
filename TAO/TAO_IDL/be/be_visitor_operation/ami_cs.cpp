@@ -121,6 +121,8 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   // last argument - is always CORBA::Environment
   *os << "{" << be_idt_nl;
 
+  *os << this->gen_environment_var () << be_nl;
+
   be_type *bt = be_type::narrow_from_decl (node->arguments ()->return_type ());
 
   // generate any pre stub info if and only if none of our parameters is of the

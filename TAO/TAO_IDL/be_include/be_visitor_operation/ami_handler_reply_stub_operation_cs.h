@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    operation_ami_handler_skeleton_cs.h
+//    operation_ami_handler_reply_stub_operation_cs.h
 //
 // = DESCRIPTION
 //    Visitor for generating code skelton code for IDL operations
@@ -19,14 +19,14 @@
 //
 // ============================================================================
 
-#ifndef _BE_VISITOR_OPERATION_OPERATION_AMI_HANDLER_SKELETON_CS_H_
-#define _BE_VISITOR_OPERATION_OPERATION_AMI_HANDLER_SKELETON_CS_H_
+#ifndef _BE_VISITOR_OPERATION_OPERATION_AMI_HANDLER_REPLY_STUB_OPERATION_CS_H_
+#define _BE_VISITOR_OPERATION_OPERATION_AMI_HANDLER_REPLY_STUB_OPERATION_CS_H_
 
 // ************************************************************
 // Operation visitor for client stubs
 // ************************************************************
 
-class be_visitor_operation_ami_handler_skeleton_cs : public be_visitor_operation
+class be_visitor_operation_ami_handler_reply_stub_operation_cs : public be_visitor_operation
 {
   //
   // = TITLE
@@ -38,10 +38,10 @@ class be_visitor_operation_ami_handler_skeleton_cs : public be_visitor_operation
   //
   //
 public:
-  be_visitor_operation_ami_handler_skeleton_cs (be_visitor_context *ctx);
+  be_visitor_operation_ami_handler_reply_stub_operation_cs (be_visitor_context *ctx);
   // constructor
 
-  ~be_visitor_operation_ami_handler_skeleton_cs (void);
+  ~be_visitor_operation_ami_handler_reply_stub_operation_cs (void);
   // destructor
 
   virtual int visit_operation (be_operation *node);
@@ -73,7 +73,7 @@ public:
 
 // specialized visitors
 
-class be_interpretive_visitor_operation_ami_handler_skeleton_cs : public be_visitor_operation_ami_handler_skeleton_cs
+class be_interpretive_visitor_operation_ami_handler_reply_stub_operation_cs : public be_visitor_operation_ami_handler_reply_stub_operation_cs
 {
   //
   // = TITLE
@@ -85,10 +85,10 @@ class be_interpretive_visitor_operation_ami_handler_skeleton_cs : public be_visi
   //
   //
 public:
-  be_interpretive_visitor_operation_ami_handler_skeleton_cs (be_visitor_context *);
+  be_interpretive_visitor_operation_ami_handler_reply_stub_operation_cs (be_visitor_context *);
   // ctor
 
-  ~be_interpretive_visitor_operation_ami_handler_skeleton_cs (void);
+  ~be_interpretive_visitor_operation_ami_handler_reply_stub_operation_cs (void);
   // dtor
 
   virtual int gen_pre_stub_info (be_operation *, be_type *);
@@ -99,11 +99,11 @@ public:
 
 };
 
-class be_compiled_visitor_operation_ami_handler_skeleton_cs : public be_visitor_operation_ami_handler_skeleton_cs
+class be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs : public be_visitor_operation_ami_handler_reply_stub_operation_cs
 {
   //
   // = TITLE
-  //   be_compiled_visitor_operation_ami_handler_skeleton_cs
+  //   be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs
   //
   // = DESCRIPTION
   //   This is a concrete visitor to generate the client skeletons
@@ -111,10 +111,10 @@ class be_compiled_visitor_operation_ami_handler_skeleton_cs : public be_visitor_
   //
   //
 public:
-  be_compiled_visitor_operation_ami_handler_skeleton_cs (be_visitor_context *);
+  be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs (be_visitor_context *);
   // ctor
 
-  ~be_compiled_visitor_operation_ami_handler_skeleton_cs (void);
+  ~be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs (void);
   // dtor
 
   virtual int gen_pre_stub_info (be_operation *, be_type *);
@@ -126,4 +126,4 @@ public:
 };
 
 
-#endif /* _BE_VISITOR_OPERATION_OPERATION_AMI_HANDLER_SKELETON_CS_H_ */
+#endif /* _BE_VISITOR_OPERATION_OPERATION_AMI_HANDLER_REPLY_STUB_OPERATION_CS_H_ */
