@@ -80,8 +80,9 @@ namespace CIAO
 
               // delegate the populating process
               // @@ need to avoid this copy, possible memory leak @@
-              pcd.deployRequirement[i] =
-                *Requirement_Handler::process_Requirement (this->iter_);
+              // Arvind: Addressed
+              Requirement_Handler::process_Requirement (this->iter_,
+                                                        pcd.deployRequirement[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("deployedResource")))
             {

@@ -90,8 +90,9 @@ namespace CIAO
 
               // delegate the populating process
               // @@ need to avoid this copy, possible memory leak @@
-              mdd.deployRequirement[i] =
-                *Requirement_Handler::process_Requirement (this->iter_);
+              // Arvind: Addressed
+              Requirement_Handler::process_Requirement (this->iter_,
+                                                        mdd.deployRequirement[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("artifact")))
             {

@@ -2,7 +2,7 @@
 /**
  *  @file  Requirement_Handler.h
  *
- *  $Id$ 
+ *  $Id$
  *
  *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  */
@@ -42,8 +42,9 @@ namespace CIAO
     class Config_Handler_Export Requirement_Handler
     {
     public:
-      static Deployment::Requirement *
-        process_Requirement (DOMNodeIterator * iter);
+      static void
+        process_Requirement (DOMNodeIterator * iter,
+                             Deployment::Requirement &ret_struct);
       // process elements of type Requirement in the descriptor files
 
     };
