@@ -111,6 +111,20 @@ int be_visitor_interface_direct_collocated_ss::visit_interface (be_interface *no
       << "return this->servant_->_is_a (logical_type_id, ACE_TRY_ENV);" << be_uidt_nl
       << "}\n\n" << be_uidt_nl;
 
+  // Generate _tao_QueryInterface implementation
+  *os << "void *" << be_nl
+      << node->full_coll_name (be_interface::DIRECT)
+      << "::_tao_QueryInterface (ptr_arith_t type)" << be_nl
+      << "{" << be_idt_nl
+      << "void *result =" << be_nl
+      << "  this->TAO_Collocated_Object::_tao_QueryInterface (type);"
+      << be_nl
+      << "if (result != 0)" << be_nl
+      << "  return result;" << be_nl;
+  *os << "return this->" << node->name ()
+      << "::_tao_QueryInterface (type);" << be_uidt_nl
+      << "}\n" << be_nl;
+
   // Generate _get_servant implementation.
   *os << node->full_skel_name () << "_ptr "
       << node->full_coll_name (be_interface::DIRECT) << "::"

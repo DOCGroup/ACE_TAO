@@ -132,6 +132,7 @@ TAO_NAMESPACE  POA_Messaging
         const CORBA::Char *logical_type_id,
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
+    virtual void *_tao_QueryInterface (ptr_arith_t type);
 
     ReplyHandler_ptr _get_servant (void) const;
 

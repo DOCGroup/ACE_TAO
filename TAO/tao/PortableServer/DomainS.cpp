@@ -495,6 +495,15 @@ CORBA::Boolean POA_CORBA__tao_direct_collocated_DomainManager::_is_a(
   return this->servant_->_is_a (logical_type_id, ACE_TRY_ENV);
 }
 
+void *
+POA_CORBA__tao_direct_collocated_DomainManager::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *value =
+    this->TAO_Collocated_Object::_tao_QueryInterface (type);
+  if (value != 0)
+    return value;
+  return this->CORBA_DomainManager::_tao_QueryInterface (type);
+}
 
 POA_CORBA_DomainManager_ptr POA_CORBA__tao_direct_collocated_DomainManager::_get_servant (void) const
 {
@@ -811,7 +820,7 @@ ACE_CHECK;
  ACE_UNUSED_ARG (_tao_server_request);
  ACE_UNUSED_ARG (_tao_object_reference);
  ACE_THROW (CORBA::NO_IMPLEMENT ());
-#endif /* TAO_HAS_INTERFACE_REPOSITORY */ 
+#endif /* TAO_HAS_INTERFACE_REPOSITORY */
 }
 
 void POA_CORBA_ConstructionPolicy::_is_a_skel (
@@ -928,7 +937,7 @@ POA_CORBA_ConstructionPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy::POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy (
   TAO_Stub *stub
 )
-  :  POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy (stub),
+  :  ACE_NESTED_CLASS (POA_CORBA, _tao_thru_poa_collocated_CORBA_Policy (stub)),
     CORBA_Object (stub, 1)
 {
 }

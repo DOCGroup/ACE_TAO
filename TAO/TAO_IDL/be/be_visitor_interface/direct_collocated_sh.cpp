@@ -103,6 +103,9 @@ int be_visitor_interface_direct_collocated_sh::visit_interface (be_interface *no
       << "CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
+  *os << "virtual void *_tao_QueryInterface (ptr_arith_t type);\n"
+      << be_nl;
+
   if (!node->is_nested ())
     {
       // The skeleton name is the outermost, we need to printout the
