@@ -157,7 +157,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
   if (CORBA::is_nil (a_party) || 
       CORBA::is_nil (b_party))
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       "\n(%P|%t) TAO_StreamCtrl::bind_devs: "
+                       "(%P|%t) TAO_StreamCtrl::bind_devs: "
                        "a_party or b_party is null!\n"),
                       1);
   
@@ -176,7 +176,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
   TAO_CHECK_ENV_RETURN (env, 1);
   
   ACE_DEBUG ((LM_DEBUG,
-              "\n(%P|%t) TAO_StreamCtrl::create_A: succeeded"));
+              "(%P|%t) TAO_StreamCtrl::create_A: succeeded\n"));
 
   // Request b_party to create the endpoint and vdev
 
@@ -191,7 +191,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
   TAO_CHECK_ENV_RETURN (env, 1);
   
   ACE_DEBUG ((LM_DEBUG,
-              "\n(%P|%t) TAO_StreamCtrl::create_B: succeeded"));
+              "(%P|%t) TAO_StreamCtrl::create_B: succeeded\n"));
   
   ACE_DEBUG ((LM_DEBUG, 
               "\nstream_endpoint_b_ = %s",
@@ -276,6 +276,7 @@ TAO_StreamCtrl::unbind_party (AVStreams::StreamEndPoint_ptr the_ep,
 
 TAO_StreamEndPoint::TAO_StreamEndPoint (void)
 {
+  this->handle_open ();
 }
 
 // Stop the physical flow of data on the stream
@@ -416,6 +417,7 @@ TAO_StreamEndPoint::set_source_id (CORBA::Long source_id,
 
 TAO_StreamEndPoint::~TAO_StreamEndPoint (void)
 {
+  this->handle_close ();
 }
 
 // ----------------------------------------------------------------------
@@ -726,7 +728,7 @@ TAO_Client_MMDevice <T>::create_A (AVStreams::StreamCtrl_ptr the_requester,
                                    CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG, 
-              "\n(%P|%t) TAO_MMDevice::create_A: called"));
+              "(%P|%t) TAO_MMDevice::create_A: called\n"));
 
   TAO_VDev *vdev = new TAO_VDev;
   the_vdev = AVStreams::VDev::_duplicate (vdev->_this (env));
@@ -784,7 +786,7 @@ TAO_Server_MMDevice <T>::create_B (AVStreams::StreamCtrl_ptr the_requester,
                                    CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG, 
-              "\n(%P|%t) TAO_MMDevice::create_B: called"));
+              "(%P|%t) TAO_MMDevice::create_B: called\n"));
 
   TAO_VDev *vdev = new TAO_VDev;
   the_vdev = AVStreams::VDev::_duplicate (vdev->_this (env));
