@@ -1,3 +1,7 @@
+Mon Oct 21 22:30:51 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/SString_Test.cpp (ACE_TMAIN): Fixed awarning in Win32 builds.
+
 Mon Oct 21 20:04:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/WIN32_Asynch_IO.h:
