@@ -82,6 +82,12 @@ public:
   ACE_CString &operator= (const ACE_CString &);
   // Assignment operator (does copy memory).
 
+  void set (const char *s);
+  // Copy <s>
+
+  void set (const char *s, size_t len);
+  // Copy <len> bytes of <s> (will NUL terminate the result)
+
   ACE_CString substring (size_t offset, ssize_t length = -1) const;
   // Return a substring given an offset and length, if length == -1
   // use rest of str return empty substring if offset or offset/length
@@ -348,6 +354,12 @@ public:
 
   ACE_WString &operator= (const ACE_WString &);
   // Assignment operator (does copy memory).
+
+  void set (const ACE_USHORT16 *s);
+  // Copy <s>
+
+  void set (const ACE_USHORT16 *s, size_t len);
+  // Copy <len> bytes of <s> (will NUL terminate the result)
 
   ACE_WString substring (size_t offset, ssize_t length = -1) const;
   // Return a substring given an offset and length, if length == -1

@@ -43,8 +43,6 @@ IIOP_ServerRequest::~IIOP_ServerRequest (void)
 ULONG
 IIOP_ServerRequest::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
-
   ACE_ASSERT (refcount_ > 0);
   return refcount_++;
 }
@@ -53,8 +51,6 @@ ULONG
 IIOP_ServerRequest::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
-
     ACE_ASSERT (this != 0);
 
     if (--refcount_ != 0)

@@ -224,6 +224,8 @@ protected:
   PortableServer::RequestProcessingPolicyValue request_processing_;
 };
 
+class TAO_Temporary_Creation_Time;
+
 class TAO_Creation_Time
 {
 public:
@@ -236,7 +238,34 @@ public:
   
   virtual const void *creation_time (void) const;
   
-  virtual int creation_time_length (void) const;
+  static int creation_time_length (void);
+  
+  int operator== (const TAO_Creation_Time &rhs) const;
+
+  int operator!= (const TAO_Creation_Time &rhs) const;
+
+  int operator== (const TAO_Temporary_Creation_Time &rhs) const;
+
+  int operator!= (const TAO_Temporary_Creation_Time &rhs) const;
+
+private:
+  
+  // 32 bit ulong requires 8 octets
+  static const int max_space_required_for_two_ulong_to_hex;
+
+  // Timestamp buffer
+  char time_stamp_[(8 * 2) + 1];
+
+};
+
+// Special creation time only useful in the lifetime of the upcall
+class TAO_Temporary_Creation_Time
+{
+public:
+
+  TAO_Temporary_Creation_Time (void);
+
+  virtual void creation_time (const void *creation_time);
   
   int operator== (const TAO_Creation_Time &rhs) const;
 
@@ -244,8 +273,7 @@ public:
 
 private:
   
-  // 32 bit ulong requires 8 octets
-  char time_stamp_[(8 * 2) + 1];
+  void *time_stamp_;
 };
 
 class TAO_POA_Current;
@@ -500,11 +528,28 @@ protected:
 
   virtual int is_poa_generated_key (const TAO_ObjectKey &key);
 
+  virtual int parse_key_permanent_id (const TAO_ObjectKey &key,
+                                      String &poa_name,
+                                      PortableServer::ObjectId_out id,
+                                      CORBA::Boolean &persistent,
+                                      TAO_Temporary_Creation_Time &poa_creation_time);
+
+  virtual int parse_key_temporary_id (const TAO_ObjectKey &key,
+                                      String &poa_name,
+                                      PortableServer::ObjectId_out id,
+                                      CORBA::Boolean &persistent,
+                                      TAO_Temporary_Creation_Time &poa_creation_time);
+
   virtual int parse_key (const TAO_ObjectKey &key,
                          String &poa_name,
                          PortableServer::ObjectId_out id,
                          CORBA::Boolean &persistent,
-                         TAO_Creation_Time &poa_creation_time);
+                         TAO_Temporary_Creation_Time &poa_creation_time,
+                         int temporary_id);
+
+  virtual int rfind (const TAO_ObjectKey &key,
+                     char c, 
+                     int pos = TAO_POA::String::npos) const;
 
   virtual int locate_servant_i (const TAO_ObjectKey &key,
                                 CORBA::Environment &env);
