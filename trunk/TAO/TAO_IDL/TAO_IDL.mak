@@ -31,6 +31,7 @@ NULL=nul
 !ENDIF 
 ################################################################################
 # Begin Project
+# PROP Target_Last_Scanned "TAO_IDL - Win32 Release"
 RSC=rc.exe
 CPP=cl.exe
 
@@ -171,7 +172,7 @@ LINK32=link.exe
 LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no\
- /pdb:"$(OUTDIR)/tao_idl.pdb" /machine:I386 /out:"$(OUTDIR)/tao_idl.exe" 
+ /pdb:"$(OUTDIR)/TAO_IDL.pdb" /machine:I386 /out:"$(OUTDIR)/TAO_IDL.exe" 
 LINK32_OBJS= \
 	"$(INTDIR)\ast_argument.obj" \
 	"$(INTDIR)\ast_array.obj" \
@@ -414,7 +415,7 @@ LINK32=link.exe
 LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
- /pdb:"$(OUTDIR)/tao_idl.pdb" /debug /machine:I386 /out:"$(OUTDIR)/tao_idl.exe" 
+ /pdb:"$(OUTDIR)/TAO_IDL.pdb" /debug /machine:I386 /out:"$(OUTDIR)/TAO_IDL.exe" 
 LINK32_OBJS= \
 	"$(INTDIR)\ast_argument.obj" \
 	"$(INTDIR)\ast_array.obj" \
@@ -551,12 +552,93 @@ LINK32_OBJS= \
 # Begin Source File
 
 SOURCE=.\util\utl_decllist.cpp
-NODEP_CPP_UTL_D=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_D=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_decllist.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_decllist.obj" : $(SOURCE) $(DEP_CPP_UTL_D) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -565,12 +647,93 @@ NODEP_CPP_UTL_D=\
 # Begin Source File
 
 SOURCE=.\util\utl_error.cpp
-NODEP_CPP_UTL_E=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_E=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_error.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_error.obj" : $(SOURCE) $(DEP_CPP_UTL_E) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -579,12 +742,93 @@ NODEP_CPP_UTL_E=\
 # Begin Source File
 
 SOURCE=.\util\utl_exceptlist.cpp
-NODEP_CPP_UTL_EX=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_EX=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_exceptlist.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_exceptlist.obj" : $(SOURCE) $(DEP_CPP_UTL_EX) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -593,12 +837,93 @@ NODEP_CPP_UTL_EX=\
 # Begin Source File
 
 SOURCE=.\util\utl_exprlist.cpp
-NODEP_CPP_UTL_EXP=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_EXP=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_exprlist.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_exprlist.obj" : $(SOURCE) $(DEP_CPP_UTL_EXP) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -607,12 +932,93 @@ NODEP_CPP_UTL_EXP=\
 # Begin Source File
 
 SOURCE=.\util\utl_global.cpp
-NODEP_CPP_UTL_G=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_G=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_global.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_global.obj" : $(SOURCE) $(DEP_CPP_UTL_G) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -621,12 +1027,93 @@ NODEP_CPP_UTL_G=\
 # Begin Source File
 
 SOURCE=.\util\utl_identifier.cpp
-NODEP_CPP_UTL_I=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_I=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_identifier.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_identifier.obj" : $(SOURCE) $(DEP_CPP_UTL_I) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -635,12 +1122,93 @@ NODEP_CPP_UTL_I=\
 # Begin Source File
 
 SOURCE=.\util\utl_idlist.cpp
-NODEP_CPP_UTL_ID=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_ID=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_idlist.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_idlist.obj" : $(SOURCE) $(DEP_CPP_UTL_ID) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -649,12 +1217,93 @@ NODEP_CPP_UTL_ID=\
 # Begin Source File
 
 SOURCE=.\util\utl_indenter.cpp
-NODEP_CPP_UTL_IN=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_IN=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_indenter.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_indenter.obj" : $(SOURCE) $(DEP_CPP_UTL_IN) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -663,12 +1312,93 @@ NODEP_CPP_UTL_IN=\
 # Begin Source File
 
 SOURCE=.\util\utl_labellist.cpp
-NODEP_CPP_UTL_L=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_L=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_labellist.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_labellist.obj" : $(SOURCE) $(DEP_CPP_UTL_L) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -677,12 +1407,93 @@ NODEP_CPP_UTL_L=\
 # Begin Source File
 
 SOURCE=.\util\utl_list.cpp
-NODEP_CPP_UTL_LI=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_LI=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_list.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_list.obj" : $(SOURCE) $(DEP_CPP_UTL_LI) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -691,12 +1502,93 @@ NODEP_CPP_UTL_LI=\
 # Begin Source File
 
 SOURCE=.\util\utl_namelist.cpp
-NODEP_CPP_UTL_N=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_N=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_namelist.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_namelist.obj" : $(SOURCE) $(DEP_CPP_UTL_N) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -705,12 +1597,93 @@ NODEP_CPP_UTL_N=\
 # Begin Source File
 
 SOURCE=.\util\utl_scope.cpp
-NODEP_CPP_UTL_S=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_S=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_scope.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_scope.obj" : $(SOURCE) $(DEP_CPP_UTL_S) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -719,12 +1692,93 @@ NODEP_CPP_UTL_S=\
 # Begin Source File
 
 SOURCE=.\util\utl_stack.cpp
-NODEP_CPP_UTL_ST=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_ST=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_stack.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_stack.obj" : $(SOURCE) $(DEP_CPP_UTL_ST) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -733,12 +1787,93 @@ NODEP_CPP_UTL_ST=\
 # Begin Source File
 
 SOURCE=.\util\utl_string.cpp
-NODEP_CPP_UTL_STR=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_STR=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_string.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_string.obj" : $(SOURCE) $(DEP_CPP_UTL_STR) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -747,12 +1882,93 @@ NODEP_CPP_UTL_STR=\
 # Begin Source File
 
 SOURCE=.\util\utl_strlist.cpp
-NODEP_CPP_UTL_STRL=\
-	".\util\idl.h"\
-	".\util\idl_extern.h"\
+DEP_CPP_UTL_STRL=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\utl_strlist.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\utl_strlist.obj" : $(SOURCE) $(DEP_CPP_UTL_STRL) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -761,12 +1977,93 @@ NODEP_CPP_UTL_STRL=\
 # Begin Source File
 
 SOURCE=.\narrow\narrow.cpp
-NODEP_CPP_NARRO=\
-	".\narrow\idl.h"\
-	".\narrow\idl_extern.h"\
+DEP_CPP_NARRO=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\narrow.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\narrow.obj" : $(SOURCE) $(DEP_CPP_NARRO) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -775,13 +2072,96 @@ NODEP_CPP_NARRO=\
 # Begin Source File
 
 SOURCE=.\fe\fe_declarator.cpp
-NODEP_CPP_FE_DE=\
-	".\fe\fe_private.h"\
-	".\fe\idl.h"\
-	".\fe\idl_extern.h"\
+DEP_CPP_FE_DE=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_declarator.h"\
+	".\include\fe_extern.h"\
+	".\include\fe_interface_header.h"\
+	".\include\fe_private.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\fe_declarator.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\fe_declarator.obj" : $(SOURCE) $(DEP_CPP_FE_DE) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -790,16 +2170,96 @@ NODEP_CPP_FE_DE=\
 # Begin Source File
 
 SOURCE=.\fe\fe_extern.cpp
-NODEP_CPP_FE_EX=\
-	".\fe\fe_private.h"\
-	".\fe\idl.h"\
-	".\fe\idl_extern.h"\
-	".\fe\utl_error.h"\
-	".\fe\utl_indenter.h"\
-	".\fe\utl_string.h"\
+DEP_CPP_FE_EX=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_declarator.h"\
+	".\include\fe_extern.h"\
+	".\include\fe_interface_header.h"\
+	".\include\fe_private.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\fe_extern.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\fe_extern.obj" : $(SOURCE) $(DEP_CPP_FE_EX) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -808,13 +2268,96 @@ NODEP_CPP_FE_EX=\
 # Begin Source File
 
 SOURCE=.\fe\fe_init.cpp
-NODEP_CPP_FE_IN=\
-	".\fe\fe_private.h"\
-	".\fe\idl.h"\
-	".\fe\idl_extern.h"\
+DEP_CPP_FE_IN=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_declarator.h"\
+	".\include\fe_extern.h"\
+	".\include\fe_interface_header.h"\
+	".\include\fe_private.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\fe_init.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\fe_init.obj" : $(SOURCE) $(DEP_CPP_FE_IN) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -823,13 +2366,96 @@ NODEP_CPP_FE_IN=\
 # Begin Source File
 
 SOURCE=.\fe\fe_interface_header.cpp
-NODEP_CPP_FE_INT=\
-	".\fe\fe_private.h"\
-	".\fe\idl.h"\
-	".\fe\idl_extern.h"\
+DEP_CPP_FE_INT=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_declarator.h"\
+	".\include\fe_extern.h"\
+	".\include\fe_interface_header.h"\
+	".\include\fe_private.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\fe_interface_header.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\fe_interface_header.obj" : $(SOURCE) $(DEP_CPP_FE_INT) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -838,13 +2464,96 @@ NODEP_CPP_FE_INT=\
 # Begin Source File
 
 SOURCE=.\fe\fe_private.cpp
-NODEP_CPP_FE_PR=\
-	".\fe\fe_private.h"\
-	".\fe\idl.h"\
-	".\fe\idl_extern.h"\
+DEP_CPP_FE_PR=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_declarator.h"\
+	".\include\fe_extern.h"\
+	".\include\fe_interface_header.h"\
+	".\include\fe_private.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\fe_private.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\fe_private.obj" : $(SOURCE) $(DEP_CPP_FE_PR) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -854,12 +2563,93 @@ NODEP_CPP_FE_PR=\
 
 SOURCE=.\fe\lex.yy.cpp
 DEP_CPP_LEX_Y=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
 	".\fe\y.tab.h"\
-	
-NODEP_CPP_LEX_Y=\
-	".\fe\fe_private.h"\
-	".\fe\idl.h"\
-	".\fe\idl_extern.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_declarator.h"\
+	".\include\fe_extern.h"\
+	".\include\fe_interface_header.h"\
+	".\include\fe_private.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\lex.yy.obj" : $(SOURCE) $(DEP_CPP_LEX_Y) "$(INTDIR)"
@@ -871,13 +2661,96 @@ NODEP_CPP_LEX_Y=\
 # Begin Source File
 
 SOURCE=.\fe\y.tab.cpp
-NODEP_CPP_Y_TAB=\
-	".\fe\fe_private.h"\
-	".\fe\idl.h"\
-	".\fe\idl_extern.h"\
+DEP_CPP_Y_TAB=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_declarator.h"\
+	".\include\fe_extern.h"\
+	".\include\fe_interface_header.h"\
+	".\include\fe_private.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\y.tab.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\y.tab.obj" : $(SOURCE) $(DEP_CPP_Y_TAB) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -886,14 +2759,95 @@ NODEP_CPP_Y_TAB=\
 # Begin Source File
 
 SOURCE=.\driver\drv_args.cpp
-NODEP_CPP_DRV_A=\
-	".\driver\drv_link.h"\
-	".\driver\drv_private.h"\
-	".\driver\idl.h"\
-	".\driver\idl_extern.h"\
+DEP_CPP_DRV_A=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\drv_link.h"\
+	".\include\drv_private.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\drv_args.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\drv_args.obj" : $(SOURCE) $(DEP_CPP_DRV_A) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -903,54 +2857,108 @@ NODEP_CPP_DRV_A=\
 
 SOURCE=.\driver\drv_fork.cpp
 DEP_CPP_DRV_F=\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Process.h"\
-	{$(INCLUDE)}"\ace\Process.i"\
-	{$(INCLUDE)}"\ace\Process_Manager.h"\
-	{$(INCLUDE)}"\ace\Process_Manager.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	
-NODEP_CPP_DRV_F=\
-	".\driver\drv_private.h"\
-	".\driver\idl.h"\
-	".\driver\idl_extern.h"\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Process.h"\
+	"..\..\ace/Process.i"\
+	"..\..\ace/Process_Manager.h"\
+	"..\..\ace/Process_Manager.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\drv_private.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\drv_fork.obj" : $(SOURCE) $(DEP_CPP_DRV_F) "$(INTDIR)"
@@ -962,14 +2970,95 @@ NODEP_CPP_DRV_F=\
 # Begin Source File
 
 SOURCE=.\driver\drv_init.cpp
-NODEP_CPP_DRV_I=\
-	".\driver\drv_link.h"\
-	".\driver\drv_private.h"\
-	".\driver\idl.h"\
-	".\driver\idl_extern.h"\
+DEP_CPP_DRV_I=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\drv_link.h"\
+	".\include\drv_private.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\drv_init.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\drv_init.obj" : $(SOURCE) $(DEP_CPP_DRV_I) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -978,14 +3067,95 @@ NODEP_CPP_DRV_I=\
 # Begin Source File
 
 SOURCE=.\driver\drv_link.cpp
-NODEP_CPP_DRV_L=\
-	".\driver\drv_link.h"\
-	".\driver\drv_private.h"\
-	".\driver\idl.h"\
-	".\driver\idl_extern.h"\
+DEP_CPP_DRV_L=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\drv_link.h"\
+	".\include\drv_private.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\drv_link.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\drv_link.obj" : $(SOURCE) $(DEP_CPP_DRV_L) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -994,14 +3164,95 @@ NODEP_CPP_DRV_L=\
 # Begin Source File
 
 SOURCE=.\driver\drv_main.cpp
-NODEP_CPP_DRV_M=\
-	".\driver\drv_link.h"\
-	".\driver\drv_private.h"\
-	".\driver\idl.h"\
-	".\driver\idl_extern.h"\
+DEP_CPP_DRV_M=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\drv_link.h"\
+	".\include\drv_private.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\drv_main.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\drv_main.obj" : $(SOURCE) $(DEP_CPP_DRV_M) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1011,55 +3262,109 @@ NODEP_CPP_DRV_M=\
 
 SOURCE=.\driver\drv_preproc.cpp
 DEP_CPP_DRV_P=\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Process.h"\
-	{$(INCLUDE)}"\ace\Process.i"\
-	{$(INCLUDE)}"\ace\Process_Manager.h"\
-	{$(INCLUDE)}"\ace\Process_Manager.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\Version.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	
-NODEP_CPP_DRV_P=\
-	".\driver\drv_link.h"\
-	".\driver\drv_private.h"\
-	".\driver\idl.h"\
-	".\driver\idl_extern.h"\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Process.h"\
+	"..\..\ace/Process.i"\
+	"..\..\ace/Process_Manager.h"\
+	"..\..\ace/Process_Manager.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\drv_link.h"\
+	".\include\drv_private.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\drv_preproc.obj" : $(SOURCE) $(DEP_CPP_DRV_P) "$(INTDIR)"
@@ -1071,13 +3376,94 @@ NODEP_CPP_DRV_P=\
 # Begin Source File
 
 SOURCE=.\driver\drv_private.cpp
-NODEP_CPP_DRV_PR=\
-	".\driver\drv_private.h"\
-	".\driver\idl.h"\
-	".\driver\idl_extern.h"\
+DEP_CPP_DRV_PR=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\drv_private.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\drv_private.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\drv_private.obj" : $(SOURCE) $(DEP_CPP_DRV_PR) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1086,13 +3472,141 @@ NODEP_CPP_DRV_PR=\
 # Begin Source File
 
 SOURCE=.\be\be_args.cpp
-NODEP_CPP_BE_AR=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_AR=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_args.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_args.obj" : $(SOURCE) $(DEP_CPP_BE_AR) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1101,13 +3615,141 @@ NODEP_CPP_BE_AR=\
 # Begin Source File
 
 SOURCE=.\be\be_argument.cpp
-NODEP_CPP_BE_ARG=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_ARG=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_argument.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_argument.obj" : $(SOURCE) $(DEP_CPP_BE_ARG) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1116,13 +3758,141 @@ NODEP_CPP_BE_ARG=\
 # Begin Source File
 
 SOURCE=.\be\be_array.cpp
-NODEP_CPP_BE_ARR=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_ARR=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_array.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_array.obj" : $(SOURCE) $(DEP_CPP_BE_ARR) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1131,13 +3901,141 @@ NODEP_CPP_BE_ARR=\
 # Begin Source File
 
 SOURCE=.\be\be_attribute.cpp
-NODEP_CPP_BE_AT=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_AT=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_attribute.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_attribute.obj" : $(SOURCE) $(DEP_CPP_BE_AT) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1146,13 +4044,141 @@ NODEP_CPP_BE_AT=\
 # Begin Source File
 
 SOURCE=.\be\be_codegen.cpp
-NODEP_CPP_BE_CO=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_CO=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_codegen.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_codegen.obj" : $(SOURCE) $(DEP_CPP_BE_CO) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1161,13 +4187,141 @@ NODEP_CPP_BE_CO=\
 # Begin Source File
 
 SOURCE=.\be\be_constant.cpp
-NODEP_CPP_BE_CON=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_CON=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_constant.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_constant.obj" : $(SOURCE) $(DEP_CPP_BE_CON) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1176,13 +4330,141 @@ NODEP_CPP_BE_CON=\
 # Begin Source File
 
 SOURCE=.\be\be_decl.cpp
-NODEP_CPP_BE_DE=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_DE=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_decl.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_decl.obj" : $(SOURCE) $(DEP_CPP_BE_DE) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1191,13 +4473,141 @@ NODEP_CPP_BE_DE=\
 # Begin Source File
 
 SOURCE=.\be\be_enum.cpp
-NODEP_CPP_BE_EN=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_EN=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_enum.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_enum.obj" : $(SOURCE) $(DEP_CPP_BE_EN) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1206,13 +4616,141 @@ NODEP_CPP_BE_EN=\
 # Begin Source File
 
 SOURCE=.\be\be_enum_val.cpp
-NODEP_CPP_BE_ENU=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_ENU=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_enum_val.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_enum_val.obj" : $(SOURCE) $(DEP_CPP_BE_ENU) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1221,13 +4759,141 @@ NODEP_CPP_BE_ENU=\
 # Begin Source File
 
 SOURCE=.\be\be_exception.cpp
-NODEP_CPP_BE_EX=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_EX=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_exception.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_exception.obj" : $(SOURCE) $(DEP_CPP_BE_EX) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1236,13 +4902,141 @@ NODEP_CPP_BE_EX=\
 # Begin Source File
 
 SOURCE=.\be\be_expression.cpp
-NODEP_CPP_BE_EXP=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_EXP=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_expression.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_expression.obj" : $(SOURCE) $(DEP_CPP_BE_EXP) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1251,14 +5045,142 @@ NODEP_CPP_BE_EXP=\
 # Begin Source File
 
 SOURCE=.\be\be_factory.cpp
-NODEP_CPP_BE_FA=\
-	".\be\be.h"\
-	".\be\be_sunsoft.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_FA=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_sunsoft.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_factory.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_factory.obj" : $(SOURCE) $(DEP_CPP_BE_FA) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1267,13 +5189,141 @@ NODEP_CPP_BE_FA=\
 # Begin Source File
 
 SOURCE=.\be\be_field.cpp
-NODEP_CPP_BE_FI=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_FI=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_field.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_field.obj" : $(SOURCE) $(DEP_CPP_BE_FI) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1282,13 +5332,141 @@ NODEP_CPP_BE_FI=\
 # Begin Source File
 
 SOURCE=.\be\be_generator.cpp
-NODEP_CPP_BE_GE=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_GE=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_generator.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_generator.obj" : $(SOURCE) $(DEP_CPP_BE_GE) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1297,13 +5475,141 @@ NODEP_CPP_BE_GE=\
 # Begin Source File
 
 SOURCE=.\be\be_helper.cpp
-NODEP_CPP_BE_HE=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_HE=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_helper.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_helper.obj" : $(SOURCE) $(DEP_CPP_BE_HE) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1312,13 +5618,141 @@ NODEP_CPP_BE_HE=\
 # Begin Source File
 
 SOURCE=.\be\be_init.cpp
-NODEP_CPP_BE_IN=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_IN=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_init.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_init.obj" : $(SOURCE) $(DEP_CPP_BE_IN) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1327,13 +5761,141 @@ NODEP_CPP_BE_IN=\
 # Begin Source File
 
 SOURCE=.\be\be_interface.cpp
-NODEP_CPP_BE_INT=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_INT=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_interface.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_interface.obj" : $(SOURCE) $(DEP_CPP_BE_INT) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1342,13 +5904,141 @@ NODEP_CPP_BE_INT=\
 # Begin Source File
 
 SOURCE=.\be\be_interface_fwd.cpp
-NODEP_CPP_BE_INTE=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_INTE=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_interface_fwd.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_interface_fwd.obj" : $(SOURCE) $(DEP_CPP_BE_INTE) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1357,13 +6047,141 @@ NODEP_CPP_BE_INTE=\
 # Begin Source File
 
 SOURCE=.\be\be_module.cpp
-NODEP_CPP_BE_MO=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_MO=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_module.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_module.obj" : $(SOURCE) $(DEP_CPP_BE_MO) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1372,13 +6190,141 @@ NODEP_CPP_BE_MO=\
 # Begin Source File
 
 SOURCE=.\be\be_operation.cpp
-NODEP_CPP_BE_OP=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_OP=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_operation.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_operation.obj" : $(SOURCE) $(DEP_CPP_BE_OP) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1387,13 +6333,141 @@ NODEP_CPP_BE_OP=\
 # Begin Source File
 
 SOURCE=.\be\be_predefined_type.cpp
-NODEP_CPP_BE_PR=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_PR=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_predefined_type.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_predefined_type.obj" : $(SOURCE) $(DEP_CPP_BE_PR) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1402,13 +6476,141 @@ NODEP_CPP_BE_PR=\
 # Begin Source File
 
 SOURCE=.\be\be_produce.cpp
-NODEP_CPP_BE_PRO=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_PRO=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_produce.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_produce.obj" : $(SOURCE) $(DEP_CPP_BE_PRO) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1417,13 +6619,141 @@ NODEP_CPP_BE_PRO=\
 # Begin Source File
 
 SOURCE=.\be\be_root.cpp
-NODEP_CPP_BE_RO=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_RO=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_root.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_root.obj" : $(SOURCE) $(DEP_CPP_BE_RO) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1432,13 +6762,141 @@ NODEP_CPP_BE_RO=\
 # Begin Source File
 
 SOURCE=.\be\be_scope.cpp
-NODEP_CPP_BE_SC=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_SC=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_scope.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_scope.obj" : $(SOURCE) $(DEP_CPP_BE_SC) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1447,13 +6905,141 @@ NODEP_CPP_BE_SC=\
 # Begin Source File
 
 SOURCE=.\be\be_sequence.cpp
-NODEP_CPP_BE_SE=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_SE=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_sequence.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_sequence.obj" : $(SOURCE) $(DEP_CPP_BE_SE) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1462,13 +7048,141 @@ NODEP_CPP_BE_SE=\
 # Begin Source File
 
 SOURCE=.\be\be_state.cpp
-NODEP_CPP_BE_ST=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_ST=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_state.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_state.obj" : $(SOURCE) $(DEP_CPP_BE_ST) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1477,13 +7191,141 @@ NODEP_CPP_BE_ST=\
 # Begin Source File
 
 SOURCE=.\be\be_string.cpp
-NODEP_CPP_BE_STR=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_STR=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_string.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_string.obj" : $(SOURCE) $(DEP_CPP_BE_STR) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1492,13 +7334,141 @@ NODEP_CPP_BE_STR=\
 # Begin Source File
 
 SOURCE=.\be\be_structure.cpp
-NODEP_CPP_BE_STRU=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_STRU=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_structure.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_structure.obj" : $(SOURCE) $(DEP_CPP_BE_STRU) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1507,14 +7477,142 @@ NODEP_CPP_BE_STRU=\
 # Begin Source File
 
 SOURCE=.\be\be_sunsoft.cpp
-NODEP_CPP_BE_SU=\
-	".\be\be.h"\
-	".\be\be_sunsoft.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_SU=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_sunsoft.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_sunsoft.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_sunsoft.obj" : $(SOURCE) $(DEP_CPP_BE_SU) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1523,13 +7621,141 @@ NODEP_CPP_BE_SU=\
 # Begin Source File
 
 SOURCE=.\be\be_type.cpp
-NODEP_CPP_BE_TY=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_TY=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_type.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_type.obj" : $(SOURCE) $(DEP_CPP_BE_TY) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1538,13 +7764,141 @@ NODEP_CPP_BE_TY=\
 # Begin Source File
 
 SOURCE=.\be\be_typedef.cpp
-NODEP_CPP_BE_TYP=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_TYP=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_typedef.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_typedef.obj" : $(SOURCE) $(DEP_CPP_BE_TYP) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1553,13 +7907,141 @@ NODEP_CPP_BE_TYP=\
 # Begin Source File
 
 SOURCE=.\be\be_union.cpp
-NODEP_CPP_BE_UN=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_UN=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_union.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_union.obj" : $(SOURCE) $(DEP_CPP_BE_UN) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1568,13 +8050,141 @@ NODEP_CPP_BE_UN=\
 # Begin Source File
 
 SOURCE=.\be\be_union_branch.cpp
-NODEP_CPP_BE_UNI=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_UNI=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_union_branch.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_union_branch.obj" : $(SOURCE) $(DEP_CPP_BE_UNI) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1583,13 +8193,141 @@ NODEP_CPP_BE_UNI=\
 # Begin Source File
 
 SOURCE=.\be\be_union_label.cpp
-NODEP_CPP_BE_UNIO=\
-	".\be\be.h"\
-	".\be\idl.h"\
-	".\be\idl_extern.h"\
+DEP_CPP_BE_UNIO=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Atomic_Op.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Event_Handler.h"\
+	"..\..\ace/Event_Handler.i"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/Singleton.cpp"\
+	"..\..\ace/Singleton.h"\
+	"..\..\ace/Singleton.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/SV_Semaphore_Complex.h"\
+	"..\..\ace/SV_Semaphore_Complex.i"\
+	"..\..\ace/SV_Semaphore_Simple.h"\
+	"..\..\ace/SV_Semaphore_Simple.i"\
+	"..\..\ace/Synch.h"\
+	"..\..\ace/Synch.i"\
+	"..\..\ace/Synch_T.cpp"\
+	"..\..\ace/Synch_T.h"\
+	"..\..\ace/Synch_T.i"\
+	"..\..\ace/Thread.h"\
+	"..\..\ace/Thread.i"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\be_include\be.h"\
+	".\be_include\be_argument.h"\
+	".\be_include\be_array.h"\
+	".\be_include\be_attribute.h"\
+	".\be_include\be_codegen.h"\
+	".\be_include\be_constant.h"\
+	".\be_include\be_decl.h"\
+	".\be_include\be_enum.h"\
+	".\be_include\be_enum_val.h"\
+	".\be_include\be_exception.h"\
+	".\be_include\be_expression.h"\
+	".\be_include\be_factory.h"\
+	".\be_include\be_field.h"\
+	".\be_include\be_generator.h"\
+	".\be_include\be_helper.h"\
+	".\be_include\be_interface.h"\
+	".\be_include\be_interface_fwd.h"\
+	".\be_include\be_module.h"\
+	".\be_include\be_operation.h"\
+	".\be_include\be_predefined_type.h"\
+	".\be_include\be_root.h"\
+	".\be_include\be_scope.h"\
+	".\be_include\be_sequence.h"\
+	".\be_include\be_state.h"\
+	".\be_include\be_string.h"\
+	".\be_include\be_structure.h"\
+	".\be_include\be_type.h"\
+	".\be_include\be_typedef.h"\
+	".\be_include\be_union.h"\
+	".\be_include\be_union_branch.h"\
+	".\be_include\be_union_label.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\be_union_label.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\be_union_label.obj" : $(SOURCE) $(DEP_CPP_BE_UNIO) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1598,12 +8336,93 @@ NODEP_CPP_BE_UNIO=\
 # Begin Source File
 
 SOURCE=.\ast\ast_argument.cpp
-NODEP_CPP_AST_A=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_A=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_argument.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_argument.obj" : $(SOURCE) $(DEP_CPP_AST_A) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1612,12 +8431,93 @@ NODEP_CPP_AST_A=\
 # Begin Source File
 
 SOURCE=.\ast\ast_array.cpp
-NODEP_CPP_AST_AR=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_AR=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_array.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_array.obj" : $(SOURCE) $(DEP_CPP_AST_AR) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1626,12 +8526,93 @@ NODEP_CPP_AST_AR=\
 # Begin Source File
 
 SOURCE=.\ast\ast_attribute.cpp
-NODEP_CPP_AST_AT=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_AT=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_attribute.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_attribute.obj" : $(SOURCE) $(DEP_CPP_AST_AT) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1640,12 +8621,93 @@ NODEP_CPP_AST_AT=\
 # Begin Source File
 
 SOURCE=.\ast\ast_check.cpp
-NODEP_CPP_AST_C=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_C=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_check.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_check.obj" : $(SOURCE) $(DEP_CPP_AST_C) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1654,12 +8716,93 @@ NODEP_CPP_AST_C=\
 # Begin Source File
 
 SOURCE=.\ast\ast_concrete_type.cpp
-NODEP_CPP_AST_CO=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_CO=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_concrete_type.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_concrete_type.obj" : $(SOURCE) $(DEP_CPP_AST_CO) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1668,12 +8811,93 @@ NODEP_CPP_AST_CO=\
 # Begin Source File
 
 SOURCE=.\ast\ast_constant.cpp
-NODEP_CPP_AST_CON=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_CON=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_constant.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_constant.obj" : $(SOURCE) $(DEP_CPP_AST_CON) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1682,12 +8906,93 @@ NODEP_CPP_AST_CON=\
 # Begin Source File
 
 SOURCE=.\ast\ast_decl.cpp
-NODEP_CPP_AST_D=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_D=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_decl.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_decl.obj" : $(SOURCE) $(DEP_CPP_AST_D) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1696,12 +9001,93 @@ NODEP_CPP_AST_D=\
 # Begin Source File
 
 SOURCE=.\ast\ast_enum.cpp
-NODEP_CPP_AST_E=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_E=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_enum.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_enum.obj" : $(SOURCE) $(DEP_CPP_AST_E) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1710,12 +9096,93 @@ NODEP_CPP_AST_E=\
 # Begin Source File
 
 SOURCE=.\ast\ast_enum_val.cpp
-NODEP_CPP_AST_EN=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_EN=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_enum_val.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_enum_val.obj" : $(SOURCE) $(DEP_CPP_AST_EN) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1724,12 +9191,93 @@ NODEP_CPP_AST_EN=\
 # Begin Source File
 
 SOURCE=.\ast\ast_exception.cpp
-NODEP_CPP_AST_EX=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_EX=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_exception.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_exception.obj" : $(SOURCE) $(DEP_CPP_AST_EX) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1738,12 +9286,93 @@ NODEP_CPP_AST_EX=\
 # Begin Source File
 
 SOURCE=.\ast\ast_expression.cpp
-NODEP_CPP_AST_EXP=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_EXP=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_expression.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_expression.obj" : $(SOURCE) $(DEP_CPP_AST_EXP) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1752,12 +9381,93 @@ NODEP_CPP_AST_EXP=\
 # Begin Source File
 
 SOURCE=.\ast\ast_field.cpp
-NODEP_CPP_AST_F=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_F=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_field.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_field.obj" : $(SOURCE) $(DEP_CPP_AST_F) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1766,12 +9476,93 @@ NODEP_CPP_AST_F=\
 # Begin Source File
 
 SOURCE=.\ast\ast_generator.cpp
-NODEP_CPP_AST_G=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_G=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_generator.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_generator.obj" : $(SOURCE) $(DEP_CPP_AST_G) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1780,12 +9571,93 @@ NODEP_CPP_AST_G=\
 # Begin Source File
 
 SOURCE=.\ast\ast_interface.cpp
-NODEP_CPP_AST_I=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_I=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_interface.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_interface.obj" : $(SOURCE) $(DEP_CPP_AST_I) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1794,12 +9666,93 @@ NODEP_CPP_AST_I=\
 # Begin Source File
 
 SOURCE=.\ast\ast_interface_fwd.cpp
-NODEP_CPP_AST_IN=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_IN=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_interface_fwd.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_interface_fwd.obj" : $(SOURCE) $(DEP_CPP_AST_IN) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1808,12 +9761,93 @@ NODEP_CPP_AST_IN=\
 # Begin Source File
 
 SOURCE=.\ast\ast_module.cpp
-NODEP_CPP_AST_M=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_M=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_module.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_module.obj" : $(SOURCE) $(DEP_CPP_AST_M) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1822,12 +9856,93 @@ NODEP_CPP_AST_M=\
 # Begin Source File
 
 SOURCE=.\ast\ast_operation.cpp
-NODEP_CPP_AST_O=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_O=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_operation.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_operation.obj" : $(SOURCE) $(DEP_CPP_AST_O) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1836,12 +9951,93 @@ NODEP_CPP_AST_O=\
 # Begin Source File
 
 SOURCE=.\ast\ast_predefined_type.cpp
-NODEP_CPP_AST_P=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_P=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_predefined_type.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_predefined_type.obj" : $(SOURCE) $(DEP_CPP_AST_P) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1850,12 +10046,93 @@ NODEP_CPP_AST_P=\
 # Begin Source File
 
 SOURCE=.\ast\ast_recursive.cpp
-NODEP_CPP_AST_R=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_R=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_recursive.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_recursive.obj" : $(SOURCE) $(DEP_CPP_AST_R) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1864,12 +10141,93 @@ NODEP_CPP_AST_R=\
 # Begin Source File
 
 SOURCE=.\ast\ast_redef.cpp
-NODEP_CPP_AST_RE=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_RE=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_redef.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_redef.obj" : $(SOURCE) $(DEP_CPP_AST_RE) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1878,12 +10236,93 @@ NODEP_CPP_AST_RE=\
 # Begin Source File
 
 SOURCE=.\ast\ast_root.cpp
-NODEP_CPP_AST_RO=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_RO=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_root.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_root.obj" : $(SOURCE) $(DEP_CPP_AST_RO) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1892,12 +10331,93 @@ NODEP_CPP_AST_RO=\
 # Begin Source File
 
 SOURCE=.\ast\ast_sequence.cpp
-NODEP_CPP_AST_S=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_S=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_sequence.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_sequence.obj" : $(SOURCE) $(DEP_CPP_AST_S) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1906,12 +10426,93 @@ NODEP_CPP_AST_S=\
 # Begin Source File
 
 SOURCE=.\ast\ast_string.cpp
-NODEP_CPP_AST_ST=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_ST=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_string.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_string.obj" : $(SOURCE) $(DEP_CPP_AST_ST) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1920,12 +10521,93 @@ NODEP_CPP_AST_ST=\
 # Begin Source File
 
 SOURCE=.\ast\ast_structure.cpp
-NODEP_CPP_AST_STR=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_STR=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_structure.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_structure.obj" : $(SOURCE) $(DEP_CPP_AST_STR) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1934,12 +10616,93 @@ NODEP_CPP_AST_STR=\
 # Begin Source File
 
 SOURCE=.\ast\ast_type.cpp
-NODEP_CPP_AST_T=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_T=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_type.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_type.obj" : $(SOURCE) $(DEP_CPP_AST_T) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1948,12 +10711,93 @@ NODEP_CPP_AST_T=\
 # Begin Source File
 
 SOURCE=.\ast\ast_typedef.cpp
-NODEP_CPP_AST_TY=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_TY=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_typedef.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_typedef.obj" : $(SOURCE) $(DEP_CPP_AST_TY) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1962,12 +10806,93 @@ NODEP_CPP_AST_TY=\
 # Begin Source File
 
 SOURCE=.\ast\ast_union.cpp
-NODEP_CPP_AST_U=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_U=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_union.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_union.obj" : $(SOURCE) $(DEP_CPP_AST_U) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1976,12 +10901,93 @@ NODEP_CPP_AST_U=\
 # Begin Source File
 
 SOURCE=.\ast\ast_union_branch.cpp
-NODEP_CPP_AST_UN=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_UN=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_union_branch.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_union_branch.obj" : $(SOURCE) $(DEP_CPP_AST_UN) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1990,12 +10996,93 @@ NODEP_CPP_AST_UN=\
 # Begin Source File
 
 SOURCE=.\ast\ast_union_label.cpp
-NODEP_CPP_AST_UNI=\
-	".\ast\idl.h"\
-	".\ast\idl_extern.h"\
+DEP_CPP_AST_UNI=\
+	"..\..\ace/ACE.h"\
+	"..\..\ace/ACE.i"\
+	"..\..\ace/Auto_Ptr.cpp"\
+	"..\..\ace/Auto_Ptr.h"\
+	"..\..\ace/Auto_Ptr.i"\
+	"..\..\ace/config-win32-common.h"\
+	"..\..\ace/config-win32.h"\
+	"..\..\ace/config.h"\
+	"..\..\ace/Log_Msg.h"\
+	"..\..\ace/Log_Priority.h"\
+	"..\..\ace/Log_Record.h"\
+	"..\..\ace/Log_Record.i"\
+	"..\..\ace/Managed_Object.cpp"\
+	"..\..\ace/Managed_Object.h"\
+	"..\..\ace/Managed_Object.i"\
+	"..\..\ace/Object_Manager.h"\
+	"..\..\ace/Object_Manager.i"\
+	"..\..\ace/OS.h"\
+	"..\..\ace/OS.i"\
+	"..\..\ace/SString.h"\
+	"..\..\ace/SString.i"\
+	"..\..\ace/stdcpp.h"\
+	"..\..\ace/Trace.h"\
+	"..\..\ace/Version.h"\
+	"..\..\ace/ws2tcpip.h"\
+	".\include\ast.h"\
+	".\include\ast_argument.h"\
+	".\include\ast_array.h"\
+	".\include\ast_attribute.h"\
+	".\include\ast_concrete_type.h"\
+	".\include\ast_constant.h"\
+	".\include\ast_decl.h"\
+	".\include\ast_enum.h"\
+	".\include\ast_enum_val.h"\
+	".\include\ast_exception.h"\
+	".\include\ast_expression.h"\
+	".\include\ast_extern.h"\
+	".\include\ast_field.h"\
+	".\include\ast_generator.h"\
+	".\include\ast_interface.h"\
+	".\include\ast_interface_fwd.h"\
+	".\include\ast_module.h"\
+	".\include\ast_operation.h"\
+	".\include\ast_predefined_type.h"\
+	".\include\ast_root.h"\
+	".\include\ast_sequence.h"\
+	".\include\ast_string.h"\
+	".\include\ast_structure.h"\
+	".\include\ast_type.h"\
+	".\include\ast_typedef.h"\
+	".\include\ast_union.h"\
+	".\include\ast_union_branch.h"\
+	".\include\ast_union_label.h"\
+	".\include\be_extern.h"\
+	".\include\drv_extern.h"\
+	".\include\fe_extern.h"\
+	".\include\global_extern.h"\
+	".\include\idl.h"\
+	".\include\idl_bool.h"\
+	".\include\idl_defines.h"\
+	".\include\idl_extern.h"\
+	".\include\idl_fwd.h"\
+	".\include\idl_global.h"\
+	".\include\idl_narrow.h"\
+	".\include\intlmacros.h"\
+	".\include\nr_extern.h"\
+	".\include\util.h"\
+	".\include\utl_decllist.h"\
+	".\include\utl_error.h"\
+	".\include\utl_exceptlist.h"\
+	".\include\utl_exprlist.h"\
+	".\include\utl_identifier.h"\
+	".\include\utl_idlist.h"\
+	".\include\utl_indenter.h"\
+	".\include\utl_labellist.h"\
+	".\include\utl_list.h"\
+	".\include\utl_namelist.h"\
+	".\include\utl_scope.h"\
+	".\include\utl_scoped_name.h"\
+	".\include\utl_stack.h"\
+	".\include\utl_string.h"\
+	".\include\utl_strlist.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
-"$(INTDIR)\ast_union_label.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\ast_union_label.obj" : $(SOURCE) $(DEP_CPP_AST_UNI) "$(INTDIR)"
    $(CPP) $(CPP_PROJ) $(SOURCE)
 
 
