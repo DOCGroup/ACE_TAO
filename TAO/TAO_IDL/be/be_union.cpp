@@ -803,7 +803,7 @@ be_union::compute_default_value (void)
                          ASYS_TEXT ("- unimplemented discriminant type ")
                          ASYS_TEXT ("(longlong or ulonglong)\n")),
                         -1);
-      break;
+      ACE_NOTREACHED (break;)
     case AST_Expression::EV_char:
       if (total_case_members == ACE_OCTET_MAX+1)
         this->default_value_.computed_ = 0;
@@ -846,7 +846,7 @@ be_union::compute_default_value (void)
                          ASYS_TEXT ("(%N:%l) be_union::compute_default_value ")
                          ASYS_TEXT ("- Bad discriminant type\n")),
                         -1);
-      break;
+      ACE_NOTREACHED (break;)
     } // end of switch
   
   // if we have determined that we don't need a default case and even then a
