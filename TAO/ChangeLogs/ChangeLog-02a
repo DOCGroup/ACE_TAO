@@ -1,3 +1,7 @@
+Mon Aug 13 20:09:24 2001  Balachandran  <bala@cs.wustl.edu>
+
+        * TAO version 1.1.19 released.
+
 Mon Aug 13 12:05:17 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
