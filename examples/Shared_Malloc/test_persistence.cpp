@@ -35,7 +35,7 @@ public:
   void name (char* name)
     {
       if (this->name_)
-	shmem_manager->free (this->name_);
+        shmem_manager->free (this->name_);
       this->name_ = (char*) shmem_manager->malloc (ACE_OS::strlen (name) + 1);
       ACE_OS::strcpy (this->name_, name);
     }
@@ -77,47 +77,47 @@ public:
       char buf2[BUFSIZ];
 
       if (::scanf ("%s", option) <= 0)
-	{
-	  ACE_ERROR ((LM_ERROR, "try again\n"));
-	  return 0;
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "try again\n"));
+          return 0;
+        }
 
       int result = 0;
       switch (option[0])
-	{
-	case 'I' :
-	case 'i' :
-	  if (::scanf ("%s %s", buf1, buf2) <= 0)
-	    break;
-	  result = insert_employee (buf1, ACE_OS::atoi (buf2));
-	  break;
-	case 'F' :
-	case 'f' :
-	  if (::scanf ("%s", buf1) <= 0)
-	    break;
-	  result = find_employee (buf1);
-	  break;
-	case 'D' :
-	case 'd' :
-	  if (::scanf ("%s", buf1) <= 0)
-	    break;
-	  result = delete_employee (buf1);
-	  break;
-	case 'L' :
-	case 'l' :
-	  result = list_employees ();
-	  break;
-	case 'Q' :
-	case 'q' :
-	  return -1;
-	  ACE_NOTREACHED(break);
-	  default :
-	  cout << "unrecognized command" << endl;
-	}
+        {
+        case 'I' :
+        case 'i' :
+          if (::scanf ("%s %s", buf1, buf2) <= 0)
+            break;
+          result = insert_employee (buf1, ACE_OS::atoi (buf2));
+          break;
+        case 'F' :
+        case 'f' :
+          if (::scanf ("%s", buf1) <= 0)
+            break;
+          result = find_employee (buf1);
+          break;
+        case 'D' :
+        case 'd' :
+          if (::scanf ("%s", buf1) <= 0)
+            break;
+          result = delete_employee (buf1);
+          break;
+        case 'L' :
+        case 'l' :
+          result = list_employees ();
+          break;
+        case 'Q' :
+        case 'q' :
+          return -1;
+          ACE_NOTREACHED(break);
+          default :
+          cout << "unrecognized command" << endl;
+        }
       if (result == 0)
-	cout << "Last operation was successful!!" << endl;
+        cout << "Last operation was successful!!" << endl;
       else
-	cout << "Last operation failed!! " << endl;
+        cout << "Last operation failed!! " << endl;
 
       menu ();
 
@@ -144,7 +144,7 @@ private:
   int insert_employee (char* name, u_long id)
     {
       if (find_employee (name) == 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "Employee already exists\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "Employee already exists\n"), -1);
 
       Employee* new_employee = new Employee (name, id);
       shmem_manager->bind (name, new_employee);
@@ -155,14 +155,14 @@ private:
     {
       void *temp;
       if (shmem_manager->find (name, temp) == 0)
-	{
-	  Employee *employee = (Employee *) temp;
+        {
+          Employee *employee = (Employee *) temp;
 
-	  ACE_DEBUG ((LM_DEBUG, "The following employee was found.......\n\n"));
-	  ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n",
-		      employee->name (), employee->id ()));
-	  return 0;
-	}
+          ACE_DEBUG ((LM_DEBUG, "The following employee was found.......\n\n"));
+          ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n",
+                      employee->name (), employee->id ()));
+          return 0;
+        }
 
       return -1;
     }
@@ -174,13 +174,13 @@ private:
       ACE_DEBUG ((LM_DEBUG, "The following employees were found.......\n\n"));
 
       for (void* temp = 0;
-	  iterator.next (temp) != 0;
-	  iterator.advance ())
-	{
-	  Employee *employee = (Employee *) temp;
-	  ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n",
-		      employee->name (), employee->id ()));
-	}
+          iterator.next (temp) != 0;
+          iterator.advance ())
+        {
+          Employee *employee = (Employee *) temp;
+          ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n",
+                      employee->name (), employee->id ()));
+        }
       return 0;
     }
 
@@ -189,18 +189,18 @@ private:
       void *temp;
 
       if (shmem_manager->unbind (name, temp) == 0)
-	{
-	  Employee *employee = (Employee *) temp;
+        {
+          Employee *employee = (Employee *) temp;
 
-	  ACE_DEBUG ((LM_DEBUG,
-		      "The following employee was found and deleted.......\n\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "The following employee was found and deleted.......\n\n"));
 
-	  ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n",
-		      employee->name (), employee->id ()));
+          ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n",
+                      employee->name (), employee->id ()));
 
-	  delete employee;
-	  return 0;
-	}
+          delete employee;
+          return 0;
+        }
 
       ACE_DEBUG ((LM_DEBUG, "There is no employee with name %s", name));
       return -1;
@@ -226,17 +226,19 @@ main (int argc, char *argv[])
   for(;;)
     if (handler.service() == -1)
       {
-	ACE_DEBUG ((LM_DEBUG, "closing down ....\n"));
-	break;
+        ACE_DEBUG ((LM_DEBUG, "closing down ....\n"));
+        break;
       }
 
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+// The following instantiation is in ace/System_Time.cpp:
+// template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 template class ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
+// The following instantiation is in ace/System_Time.cpp:
+// #pragma instantiate ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
 #pragma instantiate ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
