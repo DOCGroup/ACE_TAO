@@ -15,7 +15,6 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "PS_ForwardC.h"
 #include "IdUniquenessStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -30,20 +30,8 @@
 
 namespace PortableServer
 {
-  class ServantActivator;
-
-  typedef ServantActivator *ServantActivator_ptr;
-  typedef TAO_Objref_Var_T<ServantActivator> ServantActivator_var;
-
-  class ServantLocator;
-
-  typedef ServantLocator *ServantLocator_ptr;
-  typedef TAO_Objref_Var_T<ServantLocator> ServantLocator_var;
-
   class ServantManager;
-
   typedef ServantManager *ServantManager_ptr;
-  typedef TAO_Objref_Var_T<ServantManager> ServantManager_var;
 }
 
 namespace TAO
@@ -104,11 +92,11 @@ namespace TAO
       virtual
       PortableServer::Servant
       locate_servant (const char *operation,
-                        const PortableServer::ObjectId &system_id,
-                        TAO::Portable_Server::Servant_Upcall &servant_upcall,
-                        TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                        int &wait_occurred_restart_call
-                        ACE_ENV_ARG_DECL) = 0;
+                      const PortableServer::ObjectId &system_id,
+                      TAO::Portable_Server::Servant_Upcall &servant_upcall,
+                      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
+                      int &wait_occurred_restart_call
+                      ACE_ENV_ARG_DECL) = 0;
 
     protected:
       TAO_POA* poa_;

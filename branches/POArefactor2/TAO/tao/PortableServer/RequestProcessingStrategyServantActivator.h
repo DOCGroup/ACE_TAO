@@ -30,40 +30,13 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-namespace CORBA
-{
-  class PolicyError;
-  class PolicyList;
-}
-
 namespace PortableServer
 {
   class ServantActivator;
 
   typedef ServantActivator *ServantActivator_ptr;
   typedef TAO_Objref_Var_T<ServantActivator> ServantActivator_var;
-
-  class ServantLocator;
-
-  typedef ServantLocator *ServantLocator_ptr;
-  typedef TAO_Objref_Var_T<ServantLocator> ServantLocator_var;
-
-  class ServantManager;
-
-  typedef ServantManager *ServantManager_ptr;
-  typedef TAO_Objref_Var_T<ServantManager> ServantManager_var;
 }
-
-namespace TAO
-{
-  namespace Portable_Server
-  {
-    class Servant_Upcall;
-    class POA_Current_Impl;
-  }
-}
-
-class TAO_POA;
 
 namespace TAO
 {

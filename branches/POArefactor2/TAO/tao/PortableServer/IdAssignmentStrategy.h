@@ -15,21 +15,15 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "Policy_Strategy.h"
-#include "ace/Service_Config.h"
-#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#include "Policy_Strategy.h"
+#include "tao/Basic_Types.h"
 
-namespace CORBA
-{
-  class PolicyError;
-  class PolicyList;
-}
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 namespace TAO
 {
