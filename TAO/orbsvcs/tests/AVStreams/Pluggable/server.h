@@ -8,6 +8,7 @@
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Transport.h"
 #include "orbsvcs/AV/sfp.h"
+#include "orbsvcs/AV/MCast.h"
 
 class FTP_Server_StreamEndPoint
   :public TAO_Server_StreamEndPoint
@@ -18,6 +19,9 @@ public:
   // call to make a new flow handler for a dgram flow.
   virtual int make_tcp_flow_handler (TAO_AV_TCP_Flow_Handler *&handler);
   // call to make a new flow handler for a dgram flow.
+  virtual int make_dgram_mcast_flow_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
+  // call to make a new flow handler for a mcast dgram flow.
+
   virtual int get_sfp_callback (const char *flowname,
                                 TAO_SFP_Callback *&callback);
 };
@@ -48,6 +52,14 @@ public:
   virtual int start (void);
   virtual int handle_input (ACE_HANDLE fd);
   virtual int get_handle (void) const;
+};
+
+class FTP_Server_UDP_MCast_Flow_Handler
+  :public TAO_AV_UDP_MCast_Flow_Handler,
+   public FTP_Server_Flow_Handler
+{
+public:
+  virtual int handle_input (ACE_HANDLE fd);
 };
 
 class FTP_SFP_Callback

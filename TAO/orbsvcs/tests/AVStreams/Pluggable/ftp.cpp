@@ -39,6 +39,15 @@ FTP_Client_StreamEndPoint::make_tcp_flow_handler (TAO_AV_TCP_Flow_Handler *&hand
                   -1);
 }
 
+int
+FTP_Client_StreamEndPoint::make_dgram_mcast_flow_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler)
+{
+  ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::make_udp_flow_handler"));
+  ACE_NEW_RETURN (handler,
+                  FTP_Client_UDP_MCast_Flow_Handler (this->orb_manager_),
+                  -1);
+}
+
 int 
 FTP_Client_StreamEndPoint::get_sfp_object (const char *flowname,
                                            TAO_SFP_Object *&sfp_object)
@@ -97,6 +106,32 @@ FTP_Client_UDP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
 
 int
 FTP_Client_TCP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
+                                         const void *arg)
+{
+  return FTP_Client_Flow_Handler::handle_timeout (tv,arg);
+}
+
+FTP_Client_UDP_MCast_Flow_Handler::FTP_Client_UDP_MCast_Flow_Handler (TAO_ORB_Manager *orb_manager)
+  :FTP_Client_Flow_Handler (orb_manager)
+{
+}
+
+int
+FTP_Client_UDP_MCast_Flow_Handler::start (void)
+{
+  ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::start"));
+  ACE_Time_Value interval (2);
+  ACE_Time_Value delta = ACE_Time_Value::zero;
+  this->timer_id_ =  
+    TAO_AV_CORE::instance ()->reactor ()->schedule_timer (this,
+                                                          0,
+                                                          delta,
+                                                          interval);
+  return 0;
+}
+
+int
+FTP_Client_UDP_MCast_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
                                          const void *arg)
 {
   return FTP_Client_Flow_Handler::handle_timeout (tv,arg);

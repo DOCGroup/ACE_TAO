@@ -11,6 +11,7 @@
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Transport.h"
 #include "orbsvcs/AV/sfp.h"
+#include "orbsvcs/AV/MCast.h"
 
 class FTP_Client_Flow_Handler
   :public virtual TAO_AV_Flow_Handler
@@ -62,6 +63,17 @@ protected:
   TAO_SFP_Object *sfp_object_;
 };
 
+class FTP_Client_UDP_MCast_Flow_Handler
+  :public FTP_Client_Flow_Handler,
+   public TAO_AV_UDP_MCast_Flow_Handler
+{
+public:
+  FTP_Client_UDP_MCast_Flow_Handler (TAO_ORB_Manager *orb_manager = 0);
+  virtual int start (void);
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg = 0);
+};
+
 class FTP_SFP_Object
   :public TAO_SFP_Object
 {
@@ -83,6 +95,10 @@ public:
 
   virtual int make_tcp_flow_handler (TAO_AV_TCP_Flow_Handler *&handler);
   // call to make a new flow handler for a dgram flow.
+  
+  virtual int make_dgram_mcast_flow_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
+  // call to make a new flow handler for a mcast dgram flow.
+
   virtual int get_sfp_object (const char *flowname,
                               TAO_SFP_Object *&sfp_object);
 protected:
