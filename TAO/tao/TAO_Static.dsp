@@ -547,10 +547,6 @@ SOURCE=.\Protocol_Factory.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Per_Priority.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Reactor_Registry.h
 # End Source File
 # Begin Source File
@@ -639,34 +635,6 @@ SOURCE=.\Services_Activate.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SHMIOP_Acceptor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connect.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connector.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Endpoint.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Profile.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Transport.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Single_Reactor.h
 # End Source File
 # Begin Source File
@@ -744,38 +712,6 @@ SOURCE=.\Transport_Mux_Strategy.h
 # Begin Source File
 
 SOURCE=.\typecode.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Acceptor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Connect.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Connector.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Endpoint.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\uiop_endpoints.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Profile.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Transport.h
 # End Source File
 # Begin Source File
 
@@ -1135,10 +1071,6 @@ SOURCE=.\Profile.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Per_Priority.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Reactor_Registry.i
 # End Source File
 # Begin Source File
@@ -1192,22 +1124,6 @@ SOURCE=.\Service_Callbacks.i
 # Begin Source File
 
 SOURCE=.\Services.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Acceptor.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connect.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Endpoint.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Profile.i
 # End Source File
 # Begin Source File
 
@@ -1268,22 +1184,6 @@ SOURCE=.\Timeprobe.i
 # Begin Source File
 
 SOURCE=.\typecode.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Connect.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Endpoint.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\uiop_endpoints.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Profile.i
 # End Source File
 # Begin Source File
 
@@ -1759,10 +1659,6 @@ SOURCE=.\Protocol_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Per_Priority.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Reactor_Registry.cpp
 # End Source File
 # Begin Source File
@@ -1836,34 +1732,6 @@ SOURCE=.\Services.cpp
 # Begin Source File
 
 SOURCE=.\Services_Activate.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Acceptor.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connect.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connector.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Endpoint.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Profile.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
@@ -1944,42 +1812,6 @@ SOURCE=.\Typecode.cpp
 # Begin Source File
 
 SOURCE=.\Typecode_Constants.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Acceptor.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Connect.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Connector.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Endpoint.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\uiop_endpoints.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Lite_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Profile.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
