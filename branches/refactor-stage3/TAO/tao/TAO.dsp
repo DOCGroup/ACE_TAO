@@ -1084,6 +1084,10 @@ SOURCE=.\Argument.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Array_VarOut_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Invocation.h
 # End Source File
 # Begin Source File
@@ -1325,6 +1329,10 @@ SOURCE=.\Fault_Tolerance_Service.h
 # Begin Source File
 
 SOURCE=.\FILE_Parser.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Array_Argument_T.h
 # End Source File
 # Begin Source File
 
@@ -1581,6 +1589,10 @@ SOURCE=.\object.h
 # Begin Source File
 
 SOURCE=.\Object_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableServer\Object_Argument_T.h
 # End Source File
 # Begin Source File
 
@@ -2670,6 +2682,11 @@ SOURCE=.\BD_String_Argument_T.cpp
 # Begin Source File
 
 SOURCE=.\Codeset_Translator_Factory_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Array_Argument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

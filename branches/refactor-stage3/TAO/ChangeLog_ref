@@ -1,3 +1,30 @@
+Mon Jun 23 16:50:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Cleanup_Func_Registry.h:
+
+          Added #include that was added in the main trunk, to avoid a
+          build errorin this branch.
+
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+
+          New files, for handling array arguments.
+
+        * tao/TAO.dsp:
+        * tao/Makefile.tao:
+
+          Added new files to project and makefile.
+
+        * tao/Var_Size_Argument_T.cpp:
+
+          Changed demarshaling and Any extraction methods to call
+          .inout() on the _var member instead of .out(). The _var's
+          pointer has already been allocated but not initialized,
+          and calling .out() will destroy it, expecting a new
+          allocation, which is not the intended behavior.
+
 Sun Jun 22 000:31:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/BD_String_Argument_T.cpp:
