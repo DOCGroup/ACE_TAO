@@ -502,6 +502,10 @@ ACE_Reactor::notify (ACE_Event_Handler *event_handler,
                      ACE_Reactor_Mask mask,
                      ACE_Time_Value *tv)
 {
+  // First, try to remember this reactor in the event handler, in case
+  // the event handler goes away before the notification is delivered.
+  if (event_handler != 0 && event_handler->reactor () == 0)
+    event_handler->reactor (this);
   return this->implementation ()->notify (event_handler,
                                           mask,
                                           tv);
@@ -517,6 +521,12 @@ ACE_INLINE int
 ACE_Reactor::max_notify_iterations (void)
 {
   return this->implementation ()->max_notify_iterations ();
+}
+
+ACE_INLINE int
+ACE_Reactor::purge_pending_notifications (ACE_Event_Handler *eh)
+{
+  return this->implementation ()->purge_pending_notifications (eh);
 }
 
 ACE_INLINE int

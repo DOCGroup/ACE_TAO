@@ -71,6 +71,12 @@ ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl ()
 }
 
 ACE_INLINE int
+ACE_Select_Reactor_Impl::purge_pending_notifications (ACE_Event_Handler *eh)
+{
+  return this->notify_handler_->purge_pending_notifications (eh);
+}
+
+ACE_INLINE int
 ACE_Select_Reactor_Impl::supress_notify_renew (void)
 {
   return this->supress_renew_;
