@@ -292,9 +292,11 @@ DualEC_Supplier::init ()
 // Private class that implements a termination servant.
 
 void
-DualEC_Supplier::Terminator::shutdown (CORBA::Environment &)
+DualEC_Supplier::Terminator::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+
   ACE_TRY
     {
       TAO_ORB_Core_instance ()->orb ()->shutdown ();
