@@ -1,3 +1,10 @@
+Mon Aug 23 06:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+          Fixed incorrect usage of iterator, thanks to Sebastien Roy
+          <sroy@positron.qc.ca> for reporting this. This fixes bugzilla
+          id [1911].
+
 Sun Aug 22 10:04:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/DynamicAny.mpc:
