@@ -1187,6 +1187,27 @@ private:
 };
 #endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
 
+class ACE_Export ACE_Condition_Attributes
+{
+public:
+  ACE_Condition_Attributes (int type = ACE_DEFAULT_SYNCH_TYPE);
+  // Constructor
+
+  ~ACE_Condition_Attributes (void);
+  // Destructor
+
+private:
+  friend class ACE_Condition_Thread_Mutex;
+
+  ACE_condattr_t attributes_;
+  // The attributes
+
+private:
+  // = Prevent assignment and initialization.
+  void operator= (const ACE_Condition_Attributes &);
+  ACE_Condition_Attributes (const ACE_Condition_Attributes &);
+};
+
 class ACE_Export ACE_Condition_Thread_Mutex
 {
   // = TITLE
@@ -1210,6 +1231,12 @@ class ACE_Export ACE_Condition_Thread_Mutex
   //     with compilers precludes this...
 public:
   ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
+                              LPCTSTR name = 0,
+                              void *arg = 0);
+  // Initialize the condition variable.
+
+  ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
+                              ACE_Condition_Attributes &attributes,
                               LPCTSTR name = 0,
                               void *arg = 0);
   // Initialize the condition variable.

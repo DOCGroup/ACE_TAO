@@ -670,6 +670,18 @@ ACE_Thread_Mutex_Guard::remove (void)
 }
 #endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
 
+ACE_INLINE
+ACE_Condition_Attributes::ACE_Condition_Attributes (int type)
+{
+  (void) ACE_OS::condattr_init (this->attributes_, type);
+}
+
+ACE_INLINE
+ACE_Condition_Attributes::~ACE_Condition_Attributes (void)
+{
+  ACE_OS::condattr_destroy (this->attributes_);
+}
+
 ACE_INLINE int
 ACE_Condition_Thread_Mutex::remove (void)
 {

@@ -1,3 +1,25 @@
+Tue Aug 17 17:17:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/OS.i:
+	* ace/OS.cpp:
+	  Added new data type to handle condition variable attributes
+	  (ACE_condattr_t).
+ 	  New methods to manipulate that data type (ACE_OS::cond_attr_init 
+	  and destroy)
+	  Add new method to create a condition variable from a
+	  pre-initialized attribute.
+
+	* ace/Synch.h:
+	* ace/Synch.i:
+	* ace/Synch.cpp:
+	  Added new wrapper for the ACE_condattr_t structure.
+
+	* ace/Token.h:
+	* ace/Token.cpp:
+	  Use ACE_Condition_Attributes to minimize the number of memory
+	  allocations and locks in the critical path of the TP_Reactor.
+
 Tue Aug 17 15:55:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/TCP/TCP.{dsw,dsp}:

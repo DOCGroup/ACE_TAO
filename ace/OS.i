@@ -2308,60 +2308,126 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 }
 
 ACE_INLINE int
-ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
+ACE_OS::condattr_init (ACE_condattr_t &attributes,
+                       int type)
 {
-  // ACE_TRACE ("ACE_OS::cond_init");
   ACE_UNUSED_ARG (type);
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (arg);
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
-  pthread_condattr_t attributes;
   int result = -1;
 
+  if (
 #     if defined  (ACE_HAS_PTHREADS_DRAFT4)
-  if (::pthread_condattr_create (&attributes) == 0
-      && ::pthread_cond_init (cv, attributes) == 0
+      ::pthread_condattr_create (&attributes) == 0
 #     elif defined (ACE_HAS_PTHREADS_STD) || defined (ACE_HAS_PTHREADS_DRAFT7)
-  if (ACE_ADAPT_RETVAL(::pthread_condattr_init (&attributes), result) == 0
+      ACE_ADAPT_RETVAL(::pthread_condattr_init (&attributes), result) == 0
 #       if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)
       && ACE_ADAPT_RETVAL(::pthread_condattr_setpshared(&attributes, type),
                           result) == 0
 #       endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_MUTEXATTR_PSHARED */
-      && ACE_ADAPT_RETVAL(::pthread_cond_init (cv, &attributes), result) == 0
 #     else  /* this is draft 6 */
-  if (::pthread_condattr_init (&attributes) == 0
+      ::pthread_condattr_init (&attributes) == 0
 #       if !defined (ACE_LACKS_CONDATTR_PSHARED)
       && ::pthread_condattr_setpshared (&attributes, type) == 0
 #       endif /* ACE_LACKS_CONDATTR_PSHARED */
 #       if defined (ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP)
       && ::pthread_condattr_setkind_np (&attributes, type) == 0
 #       endif /* ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP */
-      && ::pthread_cond_init (cv, &attributes) == 0
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
       )
      result = 0;
   else
      result = -1;       // ACE_ADAPT_RETVAL used it for intermediate status
+
+  return result;
+#   elif defined (ACE_HAS_STHREADS)
+  attributes.type = type;
+
+  return 0;
+#   endif /* ACE_HAS_PTHREADS && ACE_HAS_STHREADS */
+
+# else
+  ACE_UNUSED_ARG (attributes);
+  ACE_UNUSED_ARG (type);
+  ACE_NOTSUP_RETURN (-1);
+# endif /* ACE_HAS_THREADS */
+}
+
+ACE_INLINE int
+ACE_OS::condattr_destroy (ACE_condattr_t &attributes)
+{
+# if defined (ACE_HAS_THREADS)
+#   if defined (ACE_HAS_PTHREADS)
+
 #     if defined (ACE_HAS_PTHREADS_DRAFT4)
   ::pthread_condattr_delete (&attributes);
 #     else
   ::pthread_condattr_destroy (&attributes);
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
+#   elif defined (ACE_HAS_STHREADS)
+  attributes.type = 0;
+  return 0;
+#   endif /* ACE_HAS_PTHREADS && ACE_HAS_STHREADS */
+  ACE_UNUSED_ARG (attributes);
+  return 0;
+# endif /* ACE_HAS_THREADS */
+}
+
+ACE_INLINE int
+ACE_OS::cond_init (ACE_cond_t *cv,
+                   ACE_condattr_t &attributes,
+                   LPCTSTR name,
+                   void *arg)
+{
+  // ACE_TRACE ("ACE_OS::cond_init");
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+# if defined (ACE_HAS_THREADS)
+#   if defined (ACE_HAS_PTHREADS)
+  int result = -1;
+
+  if (
+#     if defined  (ACE_HAS_PTHREADS_DRAFT4)
+      ::pthread_cond_init (cv, attributes) == 0
+#     elif defined (ACE_HAS_PTHREADS_STD) || defined (ACE_HAS_PTHREADS_DRAFT7)
+      ACE_ADAPT_RETVAL(::pthread_cond_init (cv, &attributes), result) == 0
+#     else  /* this is draft 6 */
+      ::pthread_cond_init (cv, &attributes) == 0
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
+      )
+     result = 0;
+  else
+     result = -1;       // ACE_ADAPT_RETVAL used it for intermediate status
+
   return result;
 #   elif defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_init (cv, type, arg),
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_init (cv,
+                                                    attributes.type,
+                                                    arg),
                                        ace_result_),
                      int, -1);
 #   endif /* ACE_HAS_PTHREADS && ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (cv);
-  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_THREADS */
+}
+
+ACE_INLINE int
+ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
+{
+  ACE_condattr_t attributes;
+  if (ACE_OS::condattr_init (attributes, type) == 0
+      && ACE_OS::cond_init (cv, attributes, name, arg) == 0)
+    {
+      (void) ACE_OS::condattr_destroy (attributes);
+      return 0;
+    }
+  return -1;
 }
 
 ACE_INLINE int

@@ -2090,6 +2090,7 @@ typedef pthread_t ACE_thread_t;
 #     if !defined (ACE_LACKS_COND_T)
 typedef pthread_mutex_t ACE_mutex_t;
 typedef pthread_cond_t ACE_cond_t;
+typedef pthread_condattr_t ACE_condattr_t;
 #     endif /* ! ACE_LACKS_COND_T */
 typedef pthread_mutex_t ACE_thread_mutex_t;
 
@@ -2245,7 +2246,12 @@ typedef rwlock_t ACE_rwlock_t;
 #     if !defined (ACE_HAS_POSIX_SEM)
 typedef sema_t ACE_sema_t;
 #     endif /* !ACE_HAS_POSIX_SEM */
+
 typedef cond_t ACE_cond_t;
+struct ACE_Export ACE_condattr_t
+{
+  int type;
+};
 typedef ACE_thread_t ACE_hthread_t;
 typedef ACE_mutex_t ACE_thread_mutex_t;
 
@@ -2501,6 +2507,11 @@ protected:
 
   size_t was_broadcast_;
   // Keeps track of whether we were broadcasting or just signaling.
+};
+
+struct ACE_Export ACE_condattr_t
+{
+  int type;
 };
 #   endif /* ACE_LACKS_COND_T */
 
@@ -5278,10 +5289,17 @@ public:
   static long sysconf (int);
 
   // = A set of wrappers for condition variables.
+  static int condattr_init (ACE_condattr_t &attributes,
+                             int type = ACE_DEFAULT_SYNCH_TYPE);
+  static int condattr_destroy (ACE_condattr_t &attributes);
   static int cond_broadcast (ACE_cond_t *cv);
   static int cond_destroy (ACE_cond_t *cv);
   static int cond_init (ACE_cond_t *cv,
                         int type = ACE_DEFAULT_SYNCH_TYPE,
+                        LPCTSTR name = 0,
+                        void *arg = 0);
+  static int cond_init (ACE_cond_t *cv,
+                        ACE_condattr_t &attributes,
                         LPCTSTR name = 0,
                         void *arg = 0);
   static int cond_signal (ACE_cond_t *cv);
