@@ -1,3 +1,12 @@
+Fri May 23 07:28:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IORInterceptor/IORInterceptor_List.h: 
+	* tao/IORInterceptor/IORInterceptor_List.cpp: Fixed compilation
+	  problems on Win32.
+
+	* tao/IORInterceptor/TAO_IORInterceptor.dsp: Added the new file to
+	  the project.
+
 Fri May 23 06:03:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  This checkin cleans up things that were not properly done during
