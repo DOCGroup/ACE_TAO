@@ -1,3 +1,37 @@
+Mon Mar 15 19:05:22 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: New config file that covers all of the AIX 4.x
+          versions with C Set++ (xlC) and g++.  Many thanks to Susan
+          Liebeskind <shl@cc.gatech.edu> for doing to port to AIX 4.3 and
+          testing, providing needed changes!
+
+        * ace/OS.i (wait): Fixed to handle ACE_HAS_UNION_WAIT case correctly,
+          without depending on AIX - thanks to Susan Liebeskind for this too!
+
+        * ace/ACE.cpp (fork, with zombie avoidance): Fixed to work right
+          with ACE_HAS_UNION_WAIT (ala AIX 4.2).
+
+        * include/makeinclude/rules.lib.GNU: New template instantiation
+          scheme for AIX with C Set++ (xlC); goes with...
+        * etc/xlc_dummy.cpp: New file, purpose of which is to help with AIX
+          xlC template instantiation.  This is the new, improved method from
+          IBM suport.  It still generates a zillion duplicate definition
+          warnings, but IBM doesn't have any better solution.
+
+        * include/makeinclude/platform_aix4.2.GNU: This will work with both
+          AIX 4.2 and 4.3 now.  I'll take care of the naming soon.
+
+        * tests/Map_Test.(cpp h): Moved template defs to new file, Map_Test.h
+          to satisfy AIX xlC.  Thanks to Susan for this too.
+
+        * tests/DLL_Test.(cpp h): Moved template defs to new file, DLL_Test.h
+          to satisfy AIX xlC.
+
+        * tests/Makefile, Makefile.DLL: Fixed to build libDLL_Test correctly
+          on AIX w/ xlC.
+
+        * tests/run_tests.sh: Sets LIBPATH correctly for AIX (4.2 at least).
+
 Mon Mar 15 00:26:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/ACE-netsvcs.html: Updated this to document the current
