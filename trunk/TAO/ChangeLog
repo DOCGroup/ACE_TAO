@@ -1,3 +1,8 @@
+Wed Nov 27 15:22:13 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp: Fixed a
+	  warning from our daily builds.
+
 Wed Nov 27 14:02:16 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/OBV/TC_Alignment/Makefile:
