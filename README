@@ -55,23 +55,23 @@ interfaces:
 
         . IPC mechanisms
                 -- e.g., Internet- and UNIX-domain sockets, TLI, Named
-		   Pipes (for UNIX and Win32) and STREAM pipes;
+                   Pipes (for UNIX and Win32) and STREAM pipes;
 
         . Event demultiplexing
                 -- e.g., select(), poll(), and Win32
-		   WaitForMultipleObjects and I/O completion ports;
+                   WaitForMultipleObjects and I/O completion ports;
 
         . Multi-threading and synchronization
                 -- e.g., Solaris threads, POSIX Pthreads, and Win32
-		   threads;
+                   threads;
 
         . Explicit dynamic linking
                 -- e.g., dlopen/dlsym on UNIX and LoadLibrary/GetProc
-		   on Win32;
+                   on Win32;
 
         . Memory-mapped files and shared memory management
-		-- e.g., BSD mmap(), SYSV shared memory, and Win32
-		   shared memory;
+                -- e.g., BSD mmap(), SYSV shared memory, and Win32
+                   shared memory;
 
         . System V IPC
                 -- e.g., shared memory, semaphores, message queues.
@@ -90,29 +90,29 @@ into applications.  The framework portion of ACE contains the
 following class categories:
 
         . The Reactor
-		-- Supports both Reactive and Proactive I/O;
+                -- Supports both Reactive and Proactive I/O;
 
         . The Service Configurator
-		-- Support dynamic (re)configuration of objects;
+                -- Support dynamic (re)configuration of objects;
 
         . The ADAPTIVE Service Executive
-		-- A user-level implementation of System V STREAMS,
-		   that supports modular integration of
-		   hierarchically-related communicaion services;
+                -- A user-level implementation of System V STREAMS,
+                   that supports modular integration of
+                   hierarchically-related communicaion services;
 
-	. Concurrency
-		-- Various types of higher-level concurrency
-		   control and synchronization patterns (such as
-		   Polymorphic Futures and Active Objects);
+        . Concurrency
+                -- Various types of higher-level concurrency
+                   control and synchronization patterns (such as
+                   Polymorphic Futures and Active Objects);
 
-	. Shared Malloc
-		-- Components for managing dynamically allocation
-		   of shared and local memory;
+        . Shared Malloc
+                -- Components for managing dynamically allocation
+                   of shared and local memory;
 
-	. CORBA integration
-		-- Integrates ACE with CORBA implementations
-		   (such as single-threaded and multi-threaded
-		   Orbix and Visibroker for C++).
+        . CORBA integration
+                -- Integrates ACE with CORBA implementations
+                   (such as single-threaded and multi-threaded
+                   Orbix and Visibroker for C++).
 
 ----------------------------------------
 
@@ -122,13 +122,13 @@ Finally, ACE provides a standard library of distributed services that
 are packaged as components.  These service components play two roles
 in ACE:
 
-	1. They provide reusable components for common distributed
-	   system tasks such as logging, naming, locking, and time
-	   synchronization.
+        1. They provide reusable components for common distributed
+           system tasks such as logging, naming, locking, and time
+           synchronization.
 
-	2. They illustrate how to utilize ACE features such as the
-	   Reactor, Service Configurator, Service Initialization,
-	   Concurrency, and IPC components.
+        2. They illustrate how to utilize ACE features such as the
+           Reactor, Service Configurator, Service Initialization,
+           Concurrency, and IPC components.
 
 ----------------------------------------
 
@@ -526,6 +526,7 @@ Sudish Joseph <sj@eng.mindspring.net>
 Loren Rittle <rittle@comm.mot.com>
 Alexander Ovsiankin <sasha@technologist.com>
 Fred Kuhns <fredk@arl.wustl.edu>
+Ravi Nagabhyru <ravi@future-minds.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive
@@ -544,5 +545,5 @@ improvements, suggestions, and or comments, I'd like to hear about it.
 
         Thanks,
 
-		Douglas C. Schmidt
-	        schmidt@cs.wustl.edu
+                Douglas C. Schmidt
+                schmidt@cs.wustl.edu
