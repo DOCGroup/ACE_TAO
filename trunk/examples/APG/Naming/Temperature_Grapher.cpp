@@ -54,6 +54,7 @@ void Temperature_Grapher::update_graph (void)
     }
   // Listing 4
 
+#if !defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   // Listing 5 code/ch21
   Graphable_Element_List graphable;
   ACE_BINDING_ITERATOR set_iterator (set);
@@ -78,4 +79,5 @@ void Temperature_Grapher::update_graph (void)
   this->naming_context_.rebind ("lastGraphed",
                                 lastUpdate->int_value ());
   // Listing 6
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 }
