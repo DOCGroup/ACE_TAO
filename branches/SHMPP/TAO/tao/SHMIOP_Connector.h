@@ -75,7 +75,7 @@ private:
 class TAO_Export TAO_SHMIOP_Connector : public TAO_Connector
 {
   // = TITLE
-  //   IIOP-specific Connector bridge for pluggable protocols.
+  //   SHMIOP-specific Connector bridge for pluggable protocols.
   //
   // = DESCRIPTION
   //   Concrete instance of the TAO_Connector class.  Responsible
@@ -195,7 +195,7 @@ private:
   TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
 
   TAO_SHMIOP_BASE_CONNECTOR base_connector_;
-  // The connector initiating connection requests for IIOP.
+  // The connector initiating connection requests for SHMIOP.
 
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy_;
