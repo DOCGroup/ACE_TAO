@@ -2904,7 +2904,7 @@ ACE::daemonize (const ACE_TCHAR pathname[],
 
   ACE_OS::umask (0); // clear our file mode creation mask.
 
-  // Close down the files.
+  // Close down the I/O handles.
   if (close_all_handles)
     for (int i = ACE::max_handles () - 1; i >= 0; i--)
       ACE_OS::close (i);
