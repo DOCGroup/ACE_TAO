@@ -3850,13 +3850,14 @@ union semun
 
 // Create some useful typedefs.
 typedef const char **SYS_SIGLIST;
+typedef void *(*ACE_THR_FUNC)(void *);
 // This is for C++ static methods.
 # if defined (VXWORKS)
-typedef FUNCPTR ACE_THR_FUNC;  // where typedef int (*FUNCPTR) (...)
+typedef FUNCPTR ACE_THR_FUNC_INTERNAL;  // where typedef int (*FUNCPTR) (...)
 # elif defined (ACE_PSOS)
-typedef void (*ACE_THR_FUNC)(void *);
+typedef void (*ACE_THR_FUNC_INTERNAL)(void *);
 # else
-typedef void *(*ACE_THR_FUNC)(void *);
+typedef void *(*ACE_THR_FUNC_INTERNAL)(void *);
 # endif /* VXWORKS */
 
 extern "C" {
