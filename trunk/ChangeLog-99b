@@ -1,3 +1,11 @@
+Fri Jul  9 11:10:23 1999  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU: Re-suppress warning
+          829 on 10.x because there's an offending system header file.
+
+        * tests/test_config.h (ACE_Test_Output::set_output): Change test_dir
+          to be const because it's initialized with a string literal.
+
 Fri Jul  9 10:52:45 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Caching_Utility_T.cpp (minimum): Checked the state of the
