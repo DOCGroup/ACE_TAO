@@ -101,11 +101,6 @@ protected:
   /// Object.
   int svc_i (void);
 
-  /// Need to be implemented by the underlying protocol objects
-  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
-                              ACE_Time_Value *max_wait_time = 0) = 0;
-
-
 #if !defined (TAO_CONNECTION_HANDLER_BUF_SIZE)
 #   define TAO_CONNECTION_HANDLER_BUF_SIZE 1024
 #endif /*TAO_CONNECTION_HANDLER_BUF_SIZE */

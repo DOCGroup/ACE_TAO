@@ -66,6 +66,9 @@ public:
   /// Return the message size
   CORBA::ULong message_size (void) const;
 
+  /// Return the message size
+  CORBA::ULong payload_size (void) const;
+
   /// Return the byte order information
   CORBA::Octet byte_order (void) const;
 

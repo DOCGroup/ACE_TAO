@@ -5,6 +5,12 @@
 ACE_INLINE CORBA::ULong
 TAO_GIOP_Message_State::message_size (void) const
 {
+  return this->message_size_ + TAO_GIOP_MESSAGE_HEADER_LEN;
+}
+
+ACE_INLINE CORBA::ULong
+TAO_GIOP_Message_State::payload_size (void) const
+{
   return this->message_size_;
 }
 

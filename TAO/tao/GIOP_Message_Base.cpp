@@ -21,8 +21,8 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               size_t /*input_cdr_size*/)
   : message_state_ (orb_core,
                     this),
-    output_ (0),
     message_queue_ (orb_core),
+    output_ (0),
     generator_parser_ (0)
 {
 #if defined(ACE_HAS_PURIFY)

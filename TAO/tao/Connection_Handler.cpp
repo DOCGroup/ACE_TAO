@@ -93,7 +93,8 @@ TAO_Connection_Handler::svc_i (void)
   while (!this->orb_core_->has_shutdown ()
          && result >= 0)
     {
-      result = this->handle_input_i (ACE_INVALID_HANDLE, max_wait_time);
+      result =
+        this->transport ()->handle_input_i (ACE_INVALID_HANDLE, max_wait_time);
 
       if (result == -1 && errno == ETIME)
         {

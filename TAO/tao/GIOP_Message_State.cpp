@@ -18,6 +18,15 @@ ACE_RCSID(tao, GIOP_Message_State, "$Id$")
 TAO_GIOP_Message_State::TAO_GIOP_Message_State (
     TAO_ORB_Core * /*orb_core*/,
     TAO_GIOP_Message_Base * /*base*/)
+  : giop_version_ (TAO_DEF_GIOP_MAJOR,
+                   TAO_DEF_GIOP_MINOR),
+    byte_order_ (0),
+    message_type_ (0),
+    message_size_ (0),
+    request_id_ (0),
+    more_fragments_ (0),
+    missing_data_ (0),
+    message_status_ (TAO_GIOP_WAITING_FOR_HEADER)
 {
 
 }
@@ -104,7 +113,6 @@ TAO_GIOP_Message_State::parse_magic_bytes (char *buf)
         && buf [2] == 0x4f   // 'O'
         && buf [3] == 0x50)) // 'P'
     {
-            // For the present...
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) bad header, "

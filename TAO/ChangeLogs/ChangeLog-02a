@@ -1,4 +1,30 @@
-Sat Jun  12 17:42:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+Tue Jun  12 18:42:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.inl: The message_size () now returns the
+	  payload size + the GIOP header length. Added a new method
+	  payload_size () that returns the payload size alone.
+
+	* tao/GIOP_Message_Base.cpp: Fixed a warning with g++ builds.
+
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.cpp: The svc_i () method now calls
+	  handle_input_i () on the transport instead of the method in the
+	  same class. The handle_input_i () in the TAO_Connection_Handler
+	  class has been removed as it is no longer used.
+
+	* tao/IIOP_Connection_Handler.h:
+	* tao/IIOP_Connection_Handler.cpp: Removed the implementation of
+	  handle_input_i ().
+
+	* tao/Incoming_Message_Queue.cpp: When trying to make a new data
+	  block we dont add the size of GIOP header. The message_size ()
+	  now returns with that value.
+
+	* tao/Incoming_Message_Queue.inl: Fixed a link error in g++
+	  builds.
+
+Tue Jun  12 17:42:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	First set of checkins for big two ways.
 
