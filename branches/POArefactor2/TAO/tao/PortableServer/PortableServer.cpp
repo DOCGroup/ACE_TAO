@@ -30,6 +30,9 @@
 #include "tao/PortableServer/RequestProcessingStrategyFactoryImpl.h"
 #include "tao/PortableServer/ServantRetentionStrategyFactoryImpl.h"
 
+#include "tao/PortableServer/ThreadPolicyValueORBControl.h"
+#include "tao/PortableServer/ThreadPolicyValueSingle.h"
+
 ACE_RCSID (PortableServer,
            PortableServer,
            "$Id$")
@@ -63,6 +66,16 @@ TAO_POA_Initializer::init (void)
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyFactoryImpl
+    );
+
+  // Policy Values
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_ORB_CTRL_Thread_Policy
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_SINGLE_THREAD_Thread_Policy
     );
 
   // Strategies
