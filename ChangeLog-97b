@@ -1,3 +1,9 @@
+Mon Oct 20 06:21:24 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Added a new special case for _KCC so that its
+ 	  ACE_UNUSED_ARG will work properly.  Thanks to Torbjorn Lindgren
+ 	  <tl@funcom.no> for reporting this.
+
 Mon Oct 20 02:04:19 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.22, released Mon Oct 20 02:04:19 1997.
