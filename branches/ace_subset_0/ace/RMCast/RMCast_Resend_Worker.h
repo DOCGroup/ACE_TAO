@@ -5,8 +5,8 @@
 #define ACE_RMCAST_RESEND_WORKER_H
 #include "ace/pre.h"
 
-#include "RMCast.h"
-#include "RMCast_Copy_On_Write.h"
+#include "ace/RMCast/RMCast.h"
+#include "ace/RMCast/RMCast_Copy_On_Write.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,7 +42,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_Resend_Worker.i"
+#include "ace/RMCast/RMCast_Resend_Worker.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -1,9 +1,12 @@
 // DLL.cpp
 // $Id$
 
-#include "ace/DLL.h"
+#include "ace/Svcconf/DLL.h"
 
-#include "ace/Log_Msg.h"
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
+
 #include "ace/ACE.h"
 
 ACE_RCSID(ace, DLL, "$Id$")
@@ -27,10 +30,12 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
                              open_mode)),
     close_on_destruction_ (close_on_destruction)
 {
+#ifdef ACE_SUBSET_0
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%s\n"),
                 this->error ()));
+#endif
 }
 
 // The library is closed before the class gets destroyed depending on
@@ -98,15 +103,19 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
               if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
                 break;  // end up returning 0
             }
+#ifdef ACE_SUBSET_0
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("%s\n"), this->error ()),
                             -1);
+#endif
         }
       while (0);
 #else
+#ifdef ACE_SUBSET_0
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("%s\n"), this->error ()),
                         -1);
+#endif /* ACE_SUBSET_0 */
 #endif /* AIX */
     }
 
@@ -176,10 +185,14 @@ ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle,
                      int close_on_destruction)
 {
   // Close the handle in use before accepting the next one.
+#ifdef ACE_SUBSET_0
   if (this->close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("%s\n"), this->error ()),
                       -1);
+#else
+  this->close();
+#endif
 
   this->handle_ = handle;
   this->close_on_destruction_ = close_on_destruction;

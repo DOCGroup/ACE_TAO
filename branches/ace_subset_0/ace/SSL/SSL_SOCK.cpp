@@ -3,10 +3,10 @@
 // $Id$
 
 
-#include "SSL_SOCK.h"
+#include "ace/SSL/SSL_SOCK.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "SSL_SOCK.i"
+#include "ace/SSL/SSL_SOCK.i"
 #endif
 
 ACE_RCSID (ACE_SSL,

@@ -2,16 +2,16 @@
 // $Id$
 //
 
-#include "RMCast_IO_UDP.h"
-#include "RMCast_UDP_Proxy.h"
-#include "RMCast_Module_Factory.h"
+#include "ace/RMCast/RMCast_IO_UDP.h"
+#include "ace/RMCast/RMCast_UDP_Proxy.h"
+#include "ace/RMCast/RMCast_Module_Factory.h"
 
-#include "ace/Handle_Set.h"
-#include "ace/Reactor.h"
-#include "ace/Message_Block.h"
+#include "ace/OS/Handle_Set.h"
+#include "ace/Demux/Reactor.h"
+#include "ace/Utils/Message_Block.h"
 
 #if !defined (__ACE_INLINE__)
-# include "RMCast_IO_UDP.i"
+# include "ace/RMCast/RMCast_IO_UDP.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, RMCast_IO_UDP, "$Id$")

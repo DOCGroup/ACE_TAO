@@ -5,7 +5,7 @@
 #define ACE_RMCAST_FORK_H
 #include "ace/pre.h"
 
-#include "RMCast_Module.h"
+#include "ace/RMCast/RMCast_Module.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -48,7 +48,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_Fork.i"
+#include "ace/RMCast/RMCast_Fork.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

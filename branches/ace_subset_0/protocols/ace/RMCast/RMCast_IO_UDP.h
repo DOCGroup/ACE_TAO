@@ -14,11 +14,11 @@
 #define ACE_RMCAST_IO_UDP_H
 #include "ace/pre.h"
 
-#include "RMCast_Module.h"
-#include "ace/SOCK_Dgram_Mcast.h"
-#include "ace/Hash_Map_Manager.h"
-#include "ace/Synch.h"
-#include "ace/INET_Addr.h"
+#include "ace/RMCast/RMCast_Module.h"
+#include "ace/Sockets/SOCK_Dgram_Mcast.h"
+#include "ace/Utils/Hash_Map_Manager.h"
+#include "ace/Threads/Synch.h"
+#include "ace/IPC/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -131,7 +131,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_IO_UDP.i"
+#include "ace/RMCast/RMCast_IO_UDP.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

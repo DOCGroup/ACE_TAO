@@ -1,15 +1,15 @@
 // $Id$
 
-#include "RMCast_Reassembly.h"
-#include "RMCast_Partial_Message.h"
-#include "ace/Message_Block.h"
+#include "ace/RMCast/RMCast_Reassembly.h"
+#include "ace/RMCast/RMCast_Partial_Message.h"
+#include "ace/Utils/Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "RMCast_Reassembly.i"
+#include "ace/RMCast/RMCast_Reassembly.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, RMCast_Reassembly, "$Id$")

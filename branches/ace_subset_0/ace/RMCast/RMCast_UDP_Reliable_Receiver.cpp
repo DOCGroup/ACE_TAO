@@ -1,11 +1,11 @@
 // $Id$
 
-#include "RMCast_UDP_Reliable_Receiver.h"
-#include "RMCast_UDP_Event_Handler.h"
-#include "ace/Reactor.h"
+#include "ace/RMCast/RMCast_UDP_Reliable_Receiver.h"
+#include "ace/RMCast/RMCast_UDP_Event_Handler.h"
+#include "ace/Demux/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
-# include "RMCast_UDP_Reliable_Receiver.i"
+# include "ace/RMCast/RMCast_UDP_Reliable_Receiver.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, RMCast_UDP_Reliable_Receiver, "$Id$")

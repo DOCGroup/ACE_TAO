@@ -15,9 +15,9 @@
 #define ACE_RMCAST_REORDERING_H
 #include "ace/pre.h"
 
-#include "RMCast_Module.h"
-#include "ace/RB_Tree.h"
-#include "ace/Synch.h"
+#include "ace/RMCast/RMCast_Module.h"
+#include "ace/Utils/Templates/RB_Tree.h"
+#include "ace/Threads/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -89,7 +89,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_Reordering.i"
+#include "ace/RMCast/RMCast_Reordering.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

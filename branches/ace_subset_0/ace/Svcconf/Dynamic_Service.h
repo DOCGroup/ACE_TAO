@@ -15,9 +15,9 @@
 #define ACE_DYNAMIC_SERVICE_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
-#include "ace/Dynamic_Service_Base.h"
+#include "ace/Svcconf/Dynamic_Service_Base.h"
 
 /**
  * @class ACE_Dynamic_Service
@@ -37,11 +37,11 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Dynamic_Service.i"
+#include "ace/Svcconf/Dynamic_Service.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-# include "ace/Dynamic_Service.cpp"
+# include "ace/Svcconf/Dynamic_Service.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -5,7 +5,7 @@
 #define ACE_RMCAST_ACK_WORKER_H
 #include "ace/pre.h"
 
-#include "RMCast_Retransmission.h"
+#include "ace/RMCast/RMCast_Retransmission.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,7 +40,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_Ack_Worker.i"
+#include "ace/RMCast/RMCast_Ack_Worker.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

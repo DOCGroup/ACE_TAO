@@ -2,15 +2,18 @@
 //
 // $Id$
 
-#include "ace/Handle_Set.h"
-#include "ace/Log_Msg.h"
+#include "ace/OS/Handle_Set.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #include <openssl/err.h>
 
-#include "SSL_SOCK_Stream.h"
+#include "ace/SSL/SSL_SOCK_Stream.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "SSL_SOCK_Stream.i"
+#include "ace/SSL/SSL_SOCK_Stream.i"
 #endif
 
 ACE_RCSID (ACE_SSL,

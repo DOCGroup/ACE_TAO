@@ -5,15 +5,15 @@
 #ifndef ACE_RB_TREE_C
 #define ACE_RB_TREE_C
 
-#include "ace/RB_Tree.h"
-#include "ace/SString.h"
+#include "ace/Utils/Templates/RB_Tree.h"
+#include "ace/Utils/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/RB_Tree.i"
+#include "ace/Utils/Templates/RB_Tree.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, RB_Tree, "$Id$")

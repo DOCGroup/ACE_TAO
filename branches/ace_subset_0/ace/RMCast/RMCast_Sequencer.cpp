@@ -2,10 +2,10 @@
 // $Id$
 //
 
-#include "RMCast_Sequencer.h"
+#include "ace/RMCast/RMCast_Sequencer.h"
 
 #if !defined (__ACE_INLINE__)
-# include "RMCast_Sequencer.i"
+# include "ace/RMCast/RMCast_Sequencer.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, RMCast_Sequencer, "$Id$")

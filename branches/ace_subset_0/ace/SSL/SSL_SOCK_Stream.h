@@ -18,7 +18,7 @@
 
 #include "ace/pre.h"
 
-#include "SSL_Export.h"
+#include "ace/SSL/SSL_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,10 +26,10 @@
 
 #include <openssl/err.h>
 
-#include "SSL_SOCK.h"
-#include "SSL_Context.h"
+#include "ace/SSL/SSL_SOCK.h"
+#include "ace/SSL/SSL_Context.h"
 
-#include "ace/SOCK_Stream.h"
+#include "ace/Sockets/SOCK_Stream.h"
 
 
 /**
@@ -294,7 +294,7 @@ protected:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "SSL_SOCK_Stream.i"
+#include "ace/SSL/SSL_SOCK_Stream.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"

@@ -3,10 +3,10 @@
 #ifndef ACE_RMCAST_COPY_ON_WRITE_CPP
 #define ACE_RMCAST_COPY_ON_WRITE_CPP
 
-#include "RMCast_Copy_On_Write.h"
+#include "ace/RMCast/RMCast_Copy_On_Write.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "RMCast_Copy_On_Write.i"
+#include "ace/RMCast/RMCast_Copy_On_Write.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(RMCast, RMCast_Copy_On_Write, "$Id$")

@@ -5,13 +5,13 @@
 #define ACE_RMCAST_UDP_RELIABLE_SENDER_H
 #include "ace/pre.h"
 
-#include "RMCast_Singleton_Factory.h"
-#include "RMCast_IO_UDP.h"
-#include "RMCast_Sequencer.h"
-#include "RMCast_Retransmission.h"
-#include "RMCast_Membership.h"
-#include "RMCast_Fragment.h"
-#include "RMCast_Fork.h"
+#include "ace/RMCast/RMCast_Singleton_Factory.h"
+#include "ace/RMCast/RMCast_IO_UDP.h"
+#include "ace/RMCast/RMCast_Sequencer.h"
+#include "ace/RMCast/RMCast_Retransmission.h"
+#include "ace/RMCast/RMCast_Membership.h"
+#include "ace/RMCast/RMCast_Fragment.h"
+#include "ace/RMCast/RMCast_Fork.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -71,7 +71,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_UDP_Reliable_Sender.i"
+#include "ace/RMCast/RMCast_UDP_Reliable_Sender.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

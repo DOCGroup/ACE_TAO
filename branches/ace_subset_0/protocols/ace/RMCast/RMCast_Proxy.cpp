@@ -2,10 +2,10 @@
 // $Id$
 //
 
-#include "RMCast_Proxy.h"
+#include "ace/RMCast/RMCast_Proxy.h"
 
 #if !defined (__ACE_INLINE__)
-# include "RMCast_Proxy.i"
+# include "ace/RMCast/RMCast_Proxy.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, RMCast_Proxy, "$Id$")

@@ -2,12 +2,12 @@
 // $Id$
 //
 
-#include "RMCast_Reordering.h"
-#include "RMCast_Proxy.h"
-#include "ace/Message_Block.h"
+#include "ace/RMCast/RMCast_Reordering.h"
+#include "ace/RMCast/RMCast_Proxy.h"
+#include "ace/Utils/Message_Block.h"
 
 #if !defined (__ACE_INLINE__)
-# include "RMCast_Reordering.i"
+# include "ace/RMCast/RMCast_Reordering.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, RMCast_Reordering, "$Id$")

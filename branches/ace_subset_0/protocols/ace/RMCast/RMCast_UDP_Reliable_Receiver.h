@@ -5,9 +5,9 @@
 #define ACE_RMCAST_UDP_RELIABLE_RECEIVER_H
 #include "ace/pre.h"
 
-#include "RMCast_Singleton_Factory.h"
-#include "RMCast_Reliable_Factory.h"
-#include "RMCast_IO_UDP.h"
+#include "ace/RMCast/RMCast_Singleton_Factory.h"
+#include "ace/RMCast/RMCast_Reliable_Factory.h"
+#include "ace/RMCast/RMCast_IO_UDP.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,7 +42,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_UDP_Reliable_Receiver.i"
+#include "ace/RMCast/RMCast_UDP_Reliable_Receiver.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

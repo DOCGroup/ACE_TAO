@@ -15,8 +15,8 @@
 #define ACE_RMCAST_PARTIAL_MESSAGE_H
 #include "ace/pre.h"
 
-#include "RMCast_Export.h"
-#include "ace/Task.h"
+#include "ace/RMCast/RMCast_Export.h"
+#include "ace/Streams/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -95,7 +95,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_Partial_Message.i"
+#include "ace/RMCast/RMCast_Partial_Message.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

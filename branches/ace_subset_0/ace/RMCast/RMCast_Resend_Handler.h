@@ -4,8 +4,8 @@
 #define ACE_RMCAST_RESEND_HANDLER_H
 #include "ace/pre.h"
 
-#include "RMCast_Export.h"
-#include "ace/Event_Handler.h"
+#include "ace/RMCast/RMCast_Export.h"
+#include "ace/Demux/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +37,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_Resend_Handler.i"
+#include "ace/RMCast/RMCast_Resend_Handler.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -16,13 +16,13 @@
 
 #include "ace/pre.h"
 
-#include "SSL_Export.h"
+#include "ace/SSL/SSL_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK.h"
+#include "ace/Sockets/SOCK.h"
 
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 # define ACE_SSL_SOCK_ACCEPTOR ACE_SSL_SOCK_Acceptor
@@ -82,7 +82,7 @@ protected:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "SSL_SOCK.i"
+#include "ace/SSL/SSL_SOCK.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"

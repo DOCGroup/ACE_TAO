@@ -1,9 +1,9 @@
 // $Id$
 
-#include "RMCast_Partial_Message.h"
+#include "ace/RMCast/RMCast_Partial_Message.h"
 
 #if !defined (__ACE_INLINE__)
-#include "RMCast_Partial_Message.i"
+#include "ace/RMCast/RMCast_Partial_Message.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, RMCast_Partial_Message, "$Id$")

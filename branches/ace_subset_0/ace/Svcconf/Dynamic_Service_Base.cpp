@@ -1,12 +1,16 @@
 // $Id$
 
-#include "ace/Dynamic_Service_Base.h"
-#include "ace/Service_Config.h"
-#include "ace/Service_Repository.h"
-#include "ace/Log_Msg.h"
+#include "ace/Svcconf/Dynamic_Service_Base.h"
+#include "ace/Svcconf/Service_Config.h"
+#include "ace/Svcconf/Service_Repository.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace, Dynamic_Service_Base, "$Id$")
 
+#ifdef ACE_SUBSET_0
 void
 ACE_Dynamic_Service_Base::dump (void) const
 {
@@ -16,6 +20,7 @@ ACE_Dynamic_Service_Base::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 // Get the instance using <name>.
 

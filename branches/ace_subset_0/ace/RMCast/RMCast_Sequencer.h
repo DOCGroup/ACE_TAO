@@ -15,8 +15,8 @@
 #define ACE_RMCAST_SEQUENCER_H
 #include "ace/pre.h"
 
-#include "RMCast_Module.h"
-#include "ace/Synch.h"
+#include "ace/RMCast/RMCast_Module.h"
+#include "ace/Threads/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -47,7 +47,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_Sequencer.i"
+#include "ace/RMCast/RMCast_Sequencer.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

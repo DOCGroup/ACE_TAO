@@ -1,10 +1,10 @@
 // $Id$
 
-#include "RMCast_Resend_Handler.h"
-#include "RMCast_Retransmission.h"
+#include "ace/RMCast/RMCast_Resend_Handler.h"
+#include "ace/RMCast/RMCast_Retransmission.h"
 
 #if !defined (__ACE_INLINE__)
-# include "RMCast_Resend_Handler.i"
+# include "ace/RMCast/RMCast_Resend_Handler.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, RMCast_Resend_Handler, "$Id$")

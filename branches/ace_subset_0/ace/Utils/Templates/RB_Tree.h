@@ -15,8 +15,8 @@
 #define ACE_RB_TREE_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
-#include "ace/Functor.h"
+#include "ace/OS/OS.h"
+#include "ace/Utils/Functor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -783,11 +783,11 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/RB_Tree.i"
+#include "ace/Utils/Templates/RB_Tree.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/RB_Tree.cpp"
+#include "ace/Utils/Templates/RB_Tree.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -1,16 +1,19 @@
 // -*- C++ -*-
 
-#include "SSL_Context.h"
+#include "ace/SSL/SSL_Context.h"
 
-#include "sslconf.h"
+#include "ace/SSL/sslconf.h"
 
 #if !defined(__ACE_INLINE__)
-#include "SSL_Context.inl"
+#include "ace/SSL/SSL_Context.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch.h"
-#include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
+#include "ace/Threads/Synch.h"
+#include "ace/Utils/Object_Manager.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #include <openssl/x509.h>
 #include <openssl/err.h>
@@ -68,12 +71,17 @@ ACE_SSL_Context::ssl_library_init (void)
         {
           // rwlock_init(&(ACE_SSL_Context::lock_[i]), USYNC_THREAD,
           // 0);
+#ifdef ACE_SUBSET_0
           if (ACE_OS::mutex_init (&(ACE_SSL_Context::lock_[i]),
                                   USYNC_THREAD) != 0)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) ACE_SSL_Context::ssl_library_init ")
                         ACE_TEXT ("- %p\n"),
-                        ACE_TEXT ("mutex_init")));
+                        ACE_TEXT ("mutex_init")))
+#else
+	      ACE_OS::mutex_init (&(ACE_SSL_Context::lock_[i]),
+                                  USYNC_THREAD);
+#endif
         }
 
 # if !defined (WIN32)
@@ -427,10 +435,12 @@ ACE_SSL_Context::report_error (unsigned long error_code)
 
   (void) ::ERR_error_string (error_code, error_string);
 
+#ifdef ACE_SUBSET_0
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACE_SSL (%P|%t) error code: %u - %s\n"),
               error_code,
               error_string));
+#endif
 }
 
 void
