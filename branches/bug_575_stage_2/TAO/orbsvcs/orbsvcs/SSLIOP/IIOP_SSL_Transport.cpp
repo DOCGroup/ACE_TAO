@@ -1,6 +1,7 @@
 // $Id$
 
 #include "IIOP_SSL_Transport.h"
+#include "IIOP_SSL_Connection_Handler.h"
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -25,7 +26,7 @@ TAO_IIOP_SSL_Transport::~TAO_IIOP_SSL_Transport (void)
 
 int
 TAO_IIOP_SSL_Transport::handle_input_i (TAO_Resume_Handle &rh,
-                                        ACE_Time_Value *max_wait_time
+                                        ACE_Time_Value *max_wait_time,
                                         int block)
 {
   int result = 0;

@@ -24,6 +24,9 @@
 
 #include "tao/IIOP_Transport.h"
 
+class TAO_ORB_Core;
+class TAO_IIOP_SSL_Connection_Handler;
+class TAO_Resume_Handle;
 
 /**
  * @class TAO_IIOP_SSL_Transport

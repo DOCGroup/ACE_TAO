@@ -1,3 +1,12 @@
+Thu Jul  5 22:35:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp: Fixed compile
+	  errors in g++. The new IIOP_SSL_Transport classes now does the
+	  functionality of the IIOP_SSL_Connection_Handler classes. The
+	  connection handler classes exist now only to create the
+	  transport. 
+
 Thu Jul  5 21:44:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
