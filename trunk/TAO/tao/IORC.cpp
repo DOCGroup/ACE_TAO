@@ -430,7 +430,7 @@ TAO_IOP::TAO_IOR_Manipulation::IORList::~IORList (void) // dtor
 static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_IORList[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  45, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x4d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x2f494f52), ACE_NTOHL (0x4c697374), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:TAO_IOP/TAO_IOR_Manipulation/IORList:1.0 
+  45, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x4d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x2f494f52), ACE_NTOHL (0x4c697374), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:TAO_IOP/TAO_IOR_Manipulation/IORList:1.0
   8, ACE_NTOHL (0x494f524c), ACE_NTOHL (0x69737400),  // name = IORList
   CORBA::tk_sequence, // typecode kind
   68, // encapsulation length
@@ -438,7 +438,7 @@ static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_IORList[] =
     CORBA::tk_objref,
     52, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      29, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4f62), ACE_NTOHL (0x6a656374), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:CORBA/Object:1.0
+      29, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4f62), ACE_NTOHL (0x6a656374), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
       7, ACE_NTOHL (0x4f626a65), ACE_NTOHL (0x63740000),  // name = Object
 
     0,
@@ -789,7 +789,7 @@ CORBA::Boolean TAO_IOP::TAO_IOR_Manipulation::_is_a (const CORBA::Char *value, C
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);

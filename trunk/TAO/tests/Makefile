@@ -21,7 +21,8 @@ DIRS  = CDR \
 	MT_Server \
 	FL_Cube \
 	POA \
-	Faults
+	Faults \
+	IORManipulation
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
