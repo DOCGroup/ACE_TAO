@@ -1,3 +1,28 @@
+Tue Jun 24 15:47:16 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/MakeProjectCreator/config/ciao_client.mpb: Added
+	  $(CIAO_ROOT)/ciao to idlflags.
+
+	  Added $(TAO_ROOT)/orbsvcs/orbsvcs to libpaths and linking
+	  Security to even a simple stub DLL because of the way
+	  components.idl is being set up.  (Hint: we really don't need
+	  them.)
+
+	* bin/MakeProjectCreator/config/ciao_component.mpb: Reorganized
+	  the template since I moved some of the libraries to ciao_client
+	  to fix the components.idl definition problem.
+
+	* bin/MakeProjectCreator/config/ciao_servant.mpb: Added this new
+	  template to isolate customize CIDL rules for servant DLLs.  It
+	  turned out they also requires the stuff defined in the
+	  Deployment module (thus, the CIAO_Server library.)
+
+	* bin/MakeProjectCreator/templates/gnu.mpd: Added code to define
+	  CIAO_ROOT in Makefiles if it's not defined already.
+
+	  Thanks to Chad Elliott for helping me setting up the custom
+	  rules for CIDL compiler and answering my tons of questions.
+
 Tue June 24 16:26:06 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
          * ace/QoS/QoS_Session.h:
