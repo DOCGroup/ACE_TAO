@@ -55,18 +55,29 @@ public:
   // Create a <Log_Record> and set its priority, time stamp, and
   // process id.
 
+#if !defined (ACE_HAS_WINCE)    // @@ Sould this be ACE_LACKS_IOSTREAM_TOTALLY?
   int print (const ASYS_TCHAR host_name[], 
 	     int verbose = 1, 
 	     FILE *fp = stderr);
   // Write the contents of the logging record to the appropriate
   // <FILE>.
 
-#if !defined (ACE_HAS_WINCE)    // @@ Sould this be ACE_LACKS_IOSTREAM_TOTALLY?
   int print (const ASYS_TCHAR host_name[], 
 	     int verbose, 
 	     ostream &stream);
   // Write the contents of the logging record to the appropriate
   // <ostream>.
+#else
+  int print (const ASYS_TCHAR host_name[], 
+	     int verbose, 
+	     FILE *fp);
+  // Write the contents of the logging record to the appropriate
+  // <FILE>.
+
+  int print (const ASYS_TCHAR host_name[],
+             int verbose = 1,
+             ACE_CE_Bridge *log_ = 0);
+  // For Windows CE, the default is to log messages to a preset window.
 #endif /* ! ACE_HAS_WINCE */
 
   // = Marshall/demarshall
