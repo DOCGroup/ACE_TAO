@@ -1,0 +1,43 @@
+This program illustrates how to implement a simple client and server
+using CORBA, IIOP, and asynchronous method invocations (AMI).  Client
+applications can use this service to download and display files from a
+CORBA server on the network.  The core functionality of this program
+is as follows:
+
+        * Client applications register callbacks with servers using
+           the Observer pattern.  The server will ``push'' chunks of
+           data to the client.  Thus, the client will play the role of
+           a ``server,'' as well.
+           
+        * Operations in the IDL interface will use exceptions to propagate
+          problems back to clients.
+
+        * The CORBA Naming Service is used to bind and resolve object
+          references, rather than using a file.
+    
+The client program performs the following activities:
+          
+        1. From the command-line, it reads the name of the pathname
+           you want to download.  It then initializes the client-side
+           ORB and uses resolve_initial_references() to obtain a
+           reference to a Naming Service (which must be running). This
+           object reference is then downcast via _narrow() to an
+           object reference for a CosNaming::NamingContext interface,
+           which is then used to resolve the object reference that the
+           server bound earlier.  After narrowing this to the Server
+           interface, the register_callback() operation is called via
+           the object reference to pass the Callback interface from
+           the client to the server, which then uses AMI to push
+           chunks of the file to the client.
+          
+        2. The server calls the sendc_next_chunk() method on the
+           callback, passing in the offset and the next chunk.  
+          
+        3. When the client receives the next_chunk() callback that
+           contains a chunk of the file, the contents are written into
+           a temporary file created in your a cache (e.g.,
+           /tmp/yourloginname) on the local host.  Then, an external
+           viewer is spawned to display the file.  The type of viewer
+           to spawn is determined by examining the the content_type_
+           metadata returned by the server.
+       

@@ -1,3 +1,8 @@
+Mon Jun 19 11:29:54 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Content_Server: Added README files for the
+	  various examples.
+
 Mon Jun 19 03:27:47 2000  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Content_Server/AMI_Observer/Push_Web_Server_i.h:
