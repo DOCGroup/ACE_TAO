@@ -861,8 +861,6 @@ struct ACE_OVERLAPPED
   ACE_HANDLE hEvent;
 };
 
-typedef OVERLAPPED ACE_OVERLAPPED;
-
 #   if !defined (USER_INCLUDE_SYS_TIME_TM)
 #     if defined (ACE_PSOS_DIAB_PPC)
 typedef struct timespec timespec_t;
@@ -3493,6 +3491,8 @@ PAGE_NOCACHE  */
 #     define _O_TEXT   O_TEXT
 #   endif /* __BORLANDC__ */
 
+typedef OVERLAPPED ACE_OVERLAPPED;
+
 typedef DWORD ACE_thread_t;
 #   if !defined(__MINGW32__)
 typedef long pid_t;
@@ -3700,18 +3700,6 @@ struct ACE_OVERLAPPED
   ACE_HANDLE hEvent;
 };
 
-// Callback function that's used by the QoS-enabled <ACE_OS::ioctl>
-// method.
-#if defined(ACE_HAS_WINSOCK2) && ACE_HAS_WINSOCK2 != 0
-typedef LPWSAOVERLAPPED_COMPLETION_ROUTINE ACE_OVERLAPPED_COMPLETION_FUNC;
-typedef GROUP ACE_SOCK_GROUP;
-#else
-typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (u_long error,
-                                                u_long bytes_transferred,
-                                                ACE_OVERLAPPED *overlapped,
-                                                u_long flags);
-typedef u_long ACE_SOCK_GROUP;
-#endif /* ACE_HAS_WINSOCK2 != 0 */
 
 // Add some typedefs and macros to enhance Win32 conformance...
 #   if !defined (LPSECURITY_ATTRIBUTES)
@@ -3773,6 +3761,7 @@ extern "C"
 #       undef queue
 #     endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 #   endif /* VXWORKS */
+
 
 // This part if to avoid STL name conflict with the map structure
 // in net/if.h.
@@ -5103,6 +5092,11 @@ class ACE_Accept_QoS_Params;
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
+
+// Callback function that's used by the QoS-enabled <ACE_OS::ioctl>
+// method.
+typedef LPWSAOVERLAPPED_COMPLETION_ROUTINE ACE_OVERLAPPED_COMPLETION_FUNC;
+typedef GROUP ACE_SOCK_GROUP;
 #else  /*  (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 struct ACE_Protocol_Info
 {
@@ -5112,7 +5106,17 @@ struct ACE_Protocol_Info
   char szProtocol[255+1];
 };
 
+// Callback function that's used by the QoS-enabled <ACE_OS::ioctl>
+// method.
+typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (u_long error,
+                                                u_long bytes_transferred,
+                                                ACE_OVERLAPPED *overlapped,
+                                                u_long flags);
+typedef u_long ACE_SOCK_GROUP;
+
 #endif /* (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
+
+
 /**
  * @class ACE_OS
  *
