@@ -56,9 +56,9 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   // rfc850-date    = weekday "," SP dd-month-yy SP hh:mm:ss SP "GMT"
   // asctime-date   = wkday SP month dd SP hh:mm:ss SP yyyy
 
-  const char *rfc1123_date = "%3s,;%2d;%3s;%4d;%2d:%2d:%2d;GMT";
-  const char *rfc850_date = "%s,;%2d-%3s-%2d;%2d:%2d:%2d;GMT";
-  const char *asctime_date = "%3s;%3s;%2d;%2d:%2d:%2d;%4d";
+  const char * const rfc1123_date = "%3s,;%2d;%3s;%4d;%2d:%2d:%2d;GMT";
+  const char * const rfc850_date = "%s,;%2d-%3s-%2d;%2d:%2d:%2d;GMT";
+  const char * const asctime_date = "%3s;%3s;%2d;%2d:%2d:%2d;%4d";
 
   // Should also support other versions (such as from NNTP and SMTP)
   // for robustness, but it should be clear how to extend this.
