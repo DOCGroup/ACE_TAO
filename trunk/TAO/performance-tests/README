@@ -15,6 +15,35 @@ READMEs on how to run the following performance tests:
           This is a simple latency test, single threaded and
           multi-threaded clients and servers are included.  
 
+        . AMI_Latency
+
+          A latency test for AMI requests
+
+        . DII_Latency
+
+          A latency test for DII requests
+
+        . DSI_Latency
+
+          A latency test for DSI servers
+
+        . Deferred_Latency
+
+          A latency test for deferred synchronous requests
+
+	. Single_Threaded_Latency
+
+	  Latency test for single threaded applications
+
+	. Thread_Pool_Latency
+
+	  Latency test for thread pool servers (and threaded clients)
+
+	. Thread_Per_Connection_Latency
+
+	  Latency test for thread-per-connection servers (and threaded
+	  clients)
+
         . POA
         
           Various tests of the TAO's POA performance.
@@ -31,8 +60,8 @@ READMEs on how to run the following performance tests:
           for RT CORBA spec real-time features can be found in
           $TAO_ROOT/tests/RTCORBA.
 
-        . Thruput
+        . Throughput
 
-          Throughput tests for TAO, VisiBroker, and Orbix based on
-          TTCP.
+          Throughput tests (bytes per second) for TAO.
+
 

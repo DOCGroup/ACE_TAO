@@ -15,6 +15,13 @@ DIRS  = Cubit \
         Pluggable \
         RTCorba \
 	Latency \
+	AMI_Latency \
+	DII_Latency \
+	DSI_Latency \
+	Single_Threaded_Latency \
+	Thread_Pool_Latency \
+	Thread_Per_Connection_Latency \
+	Deferred_Latency \
 	Callback \
 	Throughput
 
