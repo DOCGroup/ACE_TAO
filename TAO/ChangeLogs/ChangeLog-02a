@@ -1,3 +1,9 @@
+Tue Apr 30 09:36:37 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): Removed a stray
+	  "%s%s%s%s".  Thanks to Vitaly Prapirny <marl@mebius.net> for
+ 	  reporting this.
+
 Mon Apr 29 16:41:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Messaging/TAO_Ext.pidl: Added some documentation.

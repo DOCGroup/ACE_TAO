@@ -161,7 +161,6 @@ DRV_cpp_init (void)
       if (cpp_path != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s%s%s%s",
                       ACE_TEXT ("Warning: The environment variable ")
                       ACE_TEXT ("CPP_LOCATION has been deprecated.\n")
                       ACE_TEXT ("         Please use TAO_IDL_PREPROCESSOR ")
