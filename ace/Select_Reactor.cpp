@@ -104,7 +104,13 @@ ACE_Select_Reactor_Handler_Repository::open (size_t size)
   for (size_t h = 0; h < size; h++)
     ACE_SELECT_REACTOR_EVENT_HANDLER (this, h) = 0;
 #endif /* ACE_WIN32 */
-  return 0;
+  
+  // Increase the number of handles if <size> is greater than the
+  // current limit.
+  if (size > ACE::max_handles ())
+    return ACE::set_handle_limit (size);
+  else
+    return 0;
 }
 
 // Initialize a repository of the appropriate <size>.

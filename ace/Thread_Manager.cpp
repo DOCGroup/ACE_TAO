@@ -953,7 +953,7 @@ ACE_Thread_Manager::set_grp (ACE_thread_t t_id, int grp_id)
 
 int
 ACE_Thread_Manager::apply_grp (int grp_id,
-                               THR_FUNC func,
+                               ACE_THR_MEMBER_FUNC func,
                                int arg)
 {
   ACE_TRACE ("ACE_Thread_Manager::apply_grp");
@@ -976,7 +976,7 @@ ACE_Thread_Manager::suspend_grp (int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend_grp");
   return this->apply_grp (grp_id,
-                          THR_FUNC (&ACE_Thread_Manager::suspend_thr));
+                          ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::suspend_thr));
 }
 
 // Resume a group of threads.
@@ -986,7 +986,7 @@ ACE_Thread_Manager::resume_grp (int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_grp");
   return this->apply_grp (grp_id,
-                          THR_FUNC (&ACE_Thread_Manager::resume_thr));
+                          ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::resume_thr));
 }
 
 // Kill a group of threads.
@@ -996,7 +996,7 @@ ACE_Thread_Manager::kill_grp (int grp_id, int signum)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill_grp");
   return this->apply_grp (grp_id,
-                          THR_FUNC (&ACE_Thread_Manager::kill_thr), signum);
+                          ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::kill_thr), signum);
 }
 
 // Cancel a group of threads.
@@ -1006,11 +1006,11 @@ ACE_Thread_Manager::cancel_grp (int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_grp");
   return this->apply_grp (grp_id,
-                          THR_FUNC (&ACE_Thread_Manager::cancel_thr));
+                          ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::cancel_thr));
 }
 
 int
-ACE_Thread_Manager::apply_all (THR_FUNC func, int arg)
+ACE_Thread_Manager::apply_all (ACE_THR_MEMBER_FUNC func, int arg)
 {
   ACE_TRACE ("ACE_Thread_Manager::apply_all");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -1032,14 +1032,14 @@ int
 ACE_Thread_Manager::resume_all (void)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_all");
-  return this->apply_all (THR_FUNC (&ACE_Thread_Manager::resume_thr));
+  return this->apply_all (ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::resume_thr));
 }
 
 int
 ACE_Thread_Manager::suspend_all (void)
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend_all");
-  return this->apply_all (THR_FUNC (&ACE_Thread_Manager::suspend_thr));
+  return this->apply_all (ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::suspend_thr));
 }
 
 int
@@ -1053,7 +1053,7 @@ int
 ACE_Thread_Manager::cancel_all (void)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel_all");
-  return this->apply_all (THR_FUNC (&ACE_Thread_Manager::cancel_thr));
+  return this->apply_all (ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::cancel_thr));
 }
 
 // Wait for group of threads
@@ -1230,7 +1230,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 
 int
 ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
-                                THR_FUNC func,
+                                ACE_THR_MEMBER_FUNC func,
                                 int arg)
 {
   ACE_TRACE ("ACE_Thread_Manager::apply_task");
@@ -1295,7 +1295,7 @@ ACE_Thread_Manager::suspend_task (ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend_task");
   return this->apply_task (task,
-                           THR_FUNC (&ACE_Thread_Manager::suspend_thr));
+                           ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::suspend_thr));
 }
 
 // Resume a task.
@@ -1304,7 +1304,7 @@ ACE_Thread_Manager::resume_task (ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_task");
   return this->apply_task (task,
-                           THR_FUNC (&ACE_Thread_Manager::resume_thr));
+                           ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::resume_thr));
 }
 
 // Kill a task.
@@ -1314,7 +1314,7 @@ ACE_Thread_Manager::kill_task (ACE_Task_Base *task, int /* signum */)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill_task");
   return this->apply_task (task,
-                           THR_FUNC (&ACE_Thread_Manager::kill_thr));
+                           ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::kill_thr));
 }
 
 // Cancel a task.
@@ -1323,7 +1323,7 @@ ACE_Thread_Manager::cancel_task (ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel_task");
   return this->apply_task (task,
-                           THR_FUNC (&ACE_Thread_Manager::cancel_thr));
+                           ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::cancel_thr));
 }
 
 // Locate the index in the table associated with <task> from the

@@ -1,4 +1,22 @@
-Thu Oct 23 05:21:43 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Thu Oct 23 11:20:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/ACE.cpp (max_handles): If FD_SETSIZE is enabled return
+	  this as the number of handles.  This isn't perfect, but it's
+	  probably better than returning -1.
+
+	* ace/Select_Reactor.cpp (open): Added a call to
+	  ACE::set_handle_limit() if the requested size for the Reactor is
+	  greater than the current max number of descriptors in the process.
+	  Thanks to Neil Lavelle <nlavelle@imcl.com> for motivating this.
+
+	* ace/Thread_Manager: Changed the name THR_FUNC to
+ 	  ACE_THR_MEMBER_FUNC since it's now a global typedef on VxWorks
+ 	  and we don't have to have clashes with other names.
+
+	* ace/Thread_Manager.h: There are mutually incompatible bugs with
+ 	  VxWorks and MVS.  Therefore, we have to conditionally compile
+ 	  the THR_FUNC differently for these two platforms.  Thanks to
+ 	  Chuck Gehr <gehr@sweng.stortek.com> for reporting this.
 
 	* ace/OS.cpp (thr_create): Added a fix to set the Chorus stack
  	  size correctly.  Thanks to Wei Chiang <chiang@tele.nokia.fi> for
