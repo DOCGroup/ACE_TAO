@@ -1,3 +1,14 @@
+Thu May  2 01:44:35 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Connection_Handler.cpp (decr_pending_upcalls): Uninlined a
+	  few methods.
+
+	* tao/PortableServer/Default_Servant_Dispatcher.cpp: Changed
+	  ACE_ENV_ARG_DECL to ACE_ENV_ARG_DECL_NOT_USED.
+
+	* tests/RTCORBA/Collocation/Collocation.cpp
+	  (setup_test_parameters): Fixed macro error.
+
 Thu May  2 00:39:48 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Security/*/Maefile: Updated dependencies. This
