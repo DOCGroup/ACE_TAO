@@ -7,6 +7,8 @@
 #include "tao/debug.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "Transport.h"
+#include "ORB_Core.h"
+#include "Client_Strategy_Factory.h"
 
 ACE_RCSID(tao, Muxed_TMS, "$Id$")
 
@@ -14,7 +16,8 @@ ACE_RCSID(tao, Muxed_TMS, "$Id$")
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport),
     request_id_generator_ (0),
-    orb_core_ (transport->orb_core ())
+    orb_core_ (transport->orb_core ()),
+    dispatcher_table_ (TAO_RD_TABLE_SIZE)
 {
 }
 
@@ -60,8 +63,12 @@ int
 TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
                                 TAO_Reply_Dispatcher *rd)
 {
-
-  int result = this->dispatcher_table_.bind (request_id, rd);
+  // NOTE: The most dangerous form of code. At the outset one would
+  // think that there is a race here since we are not using the
+  // lock. But no, there is a implicit synhronization since only one
+  // thread can be active on this path.
+  int result =
+    this->dispatcher_table_.bind (request_id, rd);
 
   if (result != 0)
     {
@@ -99,8 +106,13 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 
   // Grab the reply dispatcher for this id.
   {
-    ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
-    result = this->dispatcher_table_.unbind (params.request_id_, rd);
+    ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                      ace_mon,
+                      this->lock_,
+                      -1);
+
+    result =
+      this->dispatcher_table_.unbind (params.request_id_, rd);
 
     if (TAO_debug_level > 8)
       ACE_DEBUG ((LM_DEBUG,
