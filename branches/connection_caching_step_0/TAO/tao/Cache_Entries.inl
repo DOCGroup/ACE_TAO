@@ -157,8 +157,21 @@ TAO_Cache_ExtId::index (void)
   return this->index_;
 }
 
+ACE_INLINE CORBA::ULong
+TAO_Cache_ExtId::index (void) const
+{
+  return this->index_;
+}
+
+
 ACE_INLINE void
 TAO_Cache_ExtId::index (CORBA::ULong index)
 {
   this->index_ = index;
+}
+
+ACE_INLINE TAO_Base_Connection_Property *
+TAO_Cache_ExtId::property (void) const
+{
+  return this->connection_property_;
 }
