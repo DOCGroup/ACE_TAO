@@ -25,10 +25,10 @@
 #include "ace/Sched_Params.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_PRIOCNTL)
+#if defined (ACE_HAS_PRIOCNTL) && defined (ACE_HAS_STHREADS)
 # include /**/ <sys/rtpriocntl.h>
 # include /**/ <sys/tspriocntl.h>
-#endif /* ACE_HAS_PRIOCNTL */
+#endif /* ACE_HAS_PRIOCNTL && defined (ACE_HAS_STHREADS) */
 
 ACE_RCSID(ace, Sched_Params, "$Id$")
 
@@ -36,7 +36,7 @@ int
 ACE_Sched_Params::priority_min (const Policy policy,
                                 const int scope)
 {
-#if defined (ACE_HAS_PRIOCNTL)
+#if defined (ACE_HAS_PRIOCNTL) && defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (scope);
 
   // Assume that ACE_SCHED_OTHER indicates TS class, and that other
@@ -114,14 +114,14 @@ ACE_Sched_Params::priority_min (const Policy policy,
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_PRIOCNTL */
+#endif /* ACE_HAS_PRIOCNTL && defined (ACE_HAS_STHREADS) */
 }
 
 int
 ACE_Sched_Params::priority_max (const Policy policy,
                                 const int scope)
 {
-#if defined (ACE_HAS_PRIOCNTL)
+#if defined (ACE_HAS_PRIOCNTL) && defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (scope);
 
   // Assume that ACE_SCHED_OTHER indicates TS class, and that other
@@ -194,7 +194,7 @@ ACE_Sched_Params::priority_max (const Policy policy,
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_PRIOCNTL */
+#endif /* ACE_HAS_PRIOCNTL && defined (ACE_HAS_STHREADS) */
 }
 
 int
