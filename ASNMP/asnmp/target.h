@@ -1,5 +1,7 @@
-/* -*-C++-*- */
+// -*-C++-*-
+
 // $Id$
+
 #ifndef TARGET_
 #define TARGET_
 // ============================================================================
@@ -132,7 +134,7 @@ class ASNMP_Export SnmpTarget
     // SnmpTarget.  The caller MUST use the delete operation on the return
     // value when done.
 
-   friend int operator==(const SnmpTarget& lhs, const SnmpTarget& rhs);
+   friend bool operator==(const SnmpTarget& lhs, const SnmpTarget& rhs);
    // manipulate the base part
 
    SnmpTarget& operator=(const SnmpTarget& lhs);
@@ -227,7 +229,7 @@ class ASNMP_Export UdpTarget: public SnmpTarget
     UdpTarget& operator=( const UdpTarget& target);
     // overloaded assignment
 
-    friend int operator==( const UdpTarget &lhs, const UdpTarget &rhs);
+    friend bool operator==( const UdpTarget &lhs, const UdpTarget &rhs);
     // compare two C targets
 
     const char *to_string();

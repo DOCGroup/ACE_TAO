@@ -1,5 +1,7 @@
-/* -*-C++-*- */
+// -*-C++-*-
+
 // $Id$
+
 #ifndef ADDRESS_
 #define ADDRESS_
 // ============================================================================
@@ -110,40 +112,40 @@ public:
    virtual ~Address();
    // allow destruction of derived classes
 
-   friend ASNMP_Export int operator==( const Address &lhs,const Address &rhs);
+   friend ASNMP_Export bool operator==( const Address &lhs,const Address &rhs);
    // overloaded equivlence operator, are two addresses equal?
 
-   friend ASNMP_Export int operator!=( const Address &lhs,const Address &rhs);
+   friend ASNMP_Export bool operator!=( const Address &lhs,const Address &rhs);
    // overloaded not equivlence operator, are two addresses not equal?
 
-   friend ASNMP_Export int operator>( const Address &lhs,const Address &rhs);
+   friend ASNMP_Export bool operator>( const Address &lhs,const Address &rhs);
    // overloaded > operator, is a1 > a2
 
-   friend ASNMP_Export int operator>=( const Address &lhs,const Address &rhs);
+   friend ASNMP_Export bool operator>=( const Address &lhs,const Address &rhs);
    // overloaded >= operator, is a1 >= a2
 
-   friend ASNMP_Export int operator<( const Address &lhs,const Address &rhs);
+   friend ASNMP_Export bool operator<( const Address &lhs,const Address &rhs);
    // overloaded < operator, is a1 < a2
 
-   friend ASNMP_Export int operator<=( const Address &lhs,const Address &rhs);
+   friend ASNMP_Export bool operator<=( const Address &lhs,const Address &rhs);
    // overloaded <= operator, is a1 <= a2
 
-   friend ASNMP_Export int operator==( const Address &lhs,const char *rhs);
+   friend ASNMP_Export bool operator==( const Address &lhs,const char *rhs);
    // equivlence operator overloaded, are an address and a string equal?
 
-   friend ASNMP_Export int operator!=( const Address &lhs,const char *rhs);
+   friend ASNMP_Export bool operator!=( const Address &lhs,const char *rhs);
    // overloaded not equivlence operator, are an address and string not equal?
 
-   friend ASNMP_Export int operator>( const Address &lhs,const char *rhs);
+   friend ASNMP_Export bool operator>( const Address &lhs,const char *rhs);
    // overloaded < , is an address greater than a string?
 
-   friend ASNMP_Export int operator>=( const Address &lhs,const char *rhs);
+   friend ASNMP_Export bool operator>=( const Address &lhs,const char *rhs);
    // overloaded >=, is an address greater than or equal to a string?
 
-   friend ASNMP_Export int operator<( const Address &lhs,const char *rhs);
+   friend ASNMP_Export bool operator<( const Address &lhs,const char *rhs);
    // overloaded < , is an address less than a string?
 
-   friend ASNMP_Export int operator<=( const Address &lhs,const char *rhs);
+   friend ASNMP_Export bool operator<=( const Address &lhs,const char *rhs);
    // overloaded <=, is an address less than or equal to a string?
 
    virtual operator const char *() const = 0;

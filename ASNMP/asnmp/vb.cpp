@@ -382,16 +382,18 @@ void set_exception_status( Vb *vb, const SmiUINT32 status)
 
 // equivlence operator overloaded
 // hack, by side effect, compare based on string formatting output_
-int operator==( const Vb &lhs, const Vb &rhs)
+bool operator==( const Vb &lhs, const Vb &rhs)
 {
   if ( lhs.iv_vb_oid_ != rhs.iv_vb_oid_)
-       return 0;
+       return false;
 
-  if (lhs.iv_vb_value_ != 0 && rhs.iv_vb_value_ != 0) {
-     int val = ACE_OS::strcmp(lhs.iv_vb_value_->to_string(),
-              rhs.iv_vb_value_->to_string());
-     return !val;
-   }
+  if (lhs.iv_vb_value_ != 0 && rhs.iv_vb_value_ != 0)
+    {
+      const int val =
+        ACE_OS::strcmp (lhs.iv_vb_value_->to_string(),
+                        rhs.iv_vb_value_->to_string());
+      return !val;
+    }
   else
-    return 0;
+    return false;
 }

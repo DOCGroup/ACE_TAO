@@ -204,121 +204,121 @@ OctetStr& OctetStr::operator=( const OctetStr &octet)
 }
 
 //==============[ equivlence operator overloaded ]====================
-int operator==( const OctetStr &lhs, const OctetStr &rhs)
+bool operator==( const OctetStr &lhs, const OctetStr &rhs)
 {
    if( lhs.left_comparison( rhs.smival.value.string.len, rhs)==0)
-       return 1;
+       return true;
    else
-       return 0;
+       return false;
 }
 
 //==============[ not equivlence operator overloaded ]================
-int operator!=( const OctetStr &lhs, const OctetStr &rhs)
+bool operator!=( const OctetStr &lhs, const OctetStr &rhs)
 {
    if( lhs.left_comparison( rhs.smival.value.string.len, rhs)!=0)
-       return 1;
+       return true;
    else
-       return 0;
+       return false;
 }
 
 //==============[ less than < overloaded ]============================
-int operator<( const OctetStr &lhs, const OctetStr &rhs)
+bool operator<( const OctetStr &lhs, const OctetStr &rhs)
 {
    if( lhs.left_comparison( rhs.smival.value.string.len, rhs)<0)
-      return 1;
+      return true;
    else
-      return 0;
+      return false;
 }
 
 //==============[ less than <= overloaded ]===========================
-int operator<=( const OctetStr &lhs, const OctetStr &rhs)
+bool operator<=( const OctetStr &lhs, const OctetStr &rhs)
 {
    if(( lhs.left_comparison( rhs.smival.value.string.len, rhs)<0) ||
       ( lhs.left_comparison( rhs.smival.value.string.len, rhs)==0))
-      return 1;
+      return true;
    else
-      return 0;
+      return false;
 }
 
 //===============[ greater than > overloaded ]========================
-int operator>( const OctetStr &lhs, const OctetStr &rhs)
+bool operator>( const OctetStr &lhs, const OctetStr &rhs)
 {
   if( lhs.left_comparison( rhs.smival.value.string.len, rhs)>0)
-      return 1;
+      return true;
   else
-      return 0;
+      return false;
 }
 
 //===============[ greater than >= overloaded ]=======================
-int operator>=( const OctetStr &lhs, const OctetStr &rhs)
+bool operator>=( const OctetStr &lhs, const OctetStr &rhs)
 {
   if(( lhs.left_comparison( rhs.smival.value.string.len, rhs)>0) ||
      ( lhs.left_comparison( rhs.smival.value.string.len, rhs)==0))
-     return 1;
+     return true;
   else
-     return 0;
+     return false;
 }
 
 //===============[ equivlence operator overloaded ]===================
-int operator==( const OctetStr &lhs,const char  *rhs)
+bool operator==( const OctetStr &lhs,const char  *rhs)
 {
    OctetStr to( rhs);
    if( lhs.left_comparison( to.smival.value.string.len,to)==0)
-       return 1;
+       return true;
    else
-       return 0;
+       return false;
 }
 
 //===============[ not equivlence operator overloaded ]===============
-int operator!=( const OctetStr &lhs,const char  *rhs)
+bool operator!=( const OctetStr &lhs,const char  *rhs)
 {
    OctetStr to( rhs);
    if ( lhs.left_comparison( to.smival.value.string.len,to)!=0)
-       return 1;
+       return true;
    else
-       return 0;
+       return false;
 }
 
 //===============[ less than < operator overloaded ]==================
-int operator<( const OctetStr &lhs,const char  *rhs)
+bool operator<( const OctetStr &lhs,const char  *rhs)
 {
    OctetStr to( rhs);
    if ( lhs.left_comparison( to.smival.value.string.len,to)<0)
-       return 1;
+       return true;
    else
-       return 0;
+       return false;
 }
 
 //===============[ less than <= operator overloaded ]=================
-int operator<=( const OctetStr &lhs,char  *rhs)
+bool operator<=( const OctetStr &lhs,char  *rhs)
 {
    OctetStr to( rhs);
    if (( lhs.left_comparison( to.smival.value.string.len,to)<0) ||
        ( lhs.left_comparison( to.smival.value.string.len,to)==0))
-      return 1;
+      return true;
    else
-      return 0;
+      return false;
 }
 
 //===============[ greater than > operator overloaded ]===============
-int operator>( const OctetStr &lhs,const char  *rhs)
+bool operator>( const OctetStr &lhs,const char  *rhs)
 {
    OctetStr to( rhs);
    if ( lhs.left_comparison( to.smival.value.string.len,to)>0)
-       return 1;
+       return true;
    else
-       return 0;
+       return false;
 }
 
 //===============[ greater than >= operator overloaded ]==============
-int operator>=( const OctetStr &lhs,const char  *rhs)
+bool operator>=( const OctetStr &lhs,const char  *rhs)
 {
    OctetStr to( rhs);
    if (( lhs.left_comparison( to.smival.value.string.len,to)>0) ||
        ( lhs.left_comparison( to.smival.value.string.len,to)==0))
-      return 1;
+      return true;
    else
-      return 0;
+      return false;
 }
 
 //===============[ append operator, appends a string ]================

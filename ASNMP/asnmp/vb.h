@@ -1,5 +1,7 @@
-/* -*-C++-*- */
+// -*-C++-*-
+
 // $Id$
+
 #ifndef VB_CLS_
 #define VB_CLS_
 // ============================================================================
@@ -95,7 +97,7 @@ public:
   Vb& operator=( const Vb &vb);
   // assignment to another Vb object overloaded
 
-  friend ASNMP_Export int operator==( const Vb &lhs, const Vb &rhs);
+  friend ASNMP_Export bool operator==( const Vb &lhs, const Vb &rhs);
   // equivlence operator overloaded
 
   //-----[ set oid / get oid part]------------------------------------------
@@ -201,4 +203,3 @@ protected:
 };
 
 #endif  // VB_CLS_
-
