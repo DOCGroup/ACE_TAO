@@ -50,15 +50,23 @@ INTDIR=<%intermediate_dir%>\<%noextension(project_file)%>
 
 ALL : <%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"
 
+DEPEND :
+	depgen.pl<%foreach(includes)%> -I"<%include%>"<%endfor%><%foreach(defines cpu_defines common_defines)%> -D<%define%>=1<%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%> -D<%dllflag%>=1<%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%> -D<%libflag%>=1<%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%>=1<%endfor%><%endif%> -f "<%noextension(project_file)%>.dep"<%foreach(source_files)%> <%source_file%><%endfor%>
 
+<%if(idl_files)%>
+IDL_STUBS :<%foreach(idl_files)%> "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%dirname(idl_file)%><%endif%><%endif%>\<%basenoextension(idl_file)%>C.cpp"<%endfor%>
+
+<%endif%>
 CLEAN :
 	-@erase "$(INTDIR)\*.obj"
 	-@erase "$(INTDIR)\*.res"
 	-@erase "$(INTDIR)\*.pch"
 	-@erase "$(INTDIR)\*.idb"
 	-@erase "$(OUTDIR)\*.exp"
-	-@erase "$(OUTDIR)\*.lib"
 	-@erase "$(OUTDIR)\*.ilk"
+
+REALCLEAN : CLEAN
+	-@erase "$(OUTDIR)\*.lib"
 <%if(pdb)%>
 <%if(exename)%>
 	-@erase "$(INSTALLDIR)\<%exename%>.pdb"
@@ -71,6 +79,9 @@ CLEAN :
 <%endif%>
 <%endif%>
 	-@erase "<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"
+<%if(idl_files)%>
+        -@erase<%foreach(idl_files)%> "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%dirname(idl_file)%><%endif%><%endif%>\<%basenoextension(idl_file)%>C.*" "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%dirname(idl_file)%><%endif%><%endif%>\<%basenoextension(idl_file)%>S.*"<%endfor%>
+<%endif%>
 
 <%if(install)%>
 "$(INSTALLDIR)" :
