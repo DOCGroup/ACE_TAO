@@ -100,6 +100,12 @@ TAO_ServerRequest::~TAO_ServerRequest (void)
 {
 }
 
+CORBA::ORB_ptr
+TAO_ServerRequest::orb (void)
+{
+  return this->orb_core_->orb ();
+}
+
 void
 TAO_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
 {
