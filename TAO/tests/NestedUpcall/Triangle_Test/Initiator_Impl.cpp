@@ -48,7 +48,7 @@ Initiator_Impl::foo_object_B (CORBA::Environment &env)
                                 TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) BEGIN Initiator_Impl::foo_object_B: Returned from call.\n"));
+                  "(%P|%t) Initiator_Impl::foo_object_B: Returned from call.\n"));
     }
   TAO_CATCHANY
     {

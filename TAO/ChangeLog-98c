@@ -1,3 +1,8 @@
+Sun Jun 28 16:10:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * tests/NestedUpcalls/Triangle_Test/Makefile: Added
+	  this Makefile for use on Unix machines.
+
 Sun Jun 28 15:30:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* tao/GIOP.cpp: In method location_forwarding, removed
