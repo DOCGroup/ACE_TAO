@@ -22,7 +22,7 @@
 #include "AVStreams_i.h"
 
 template <class T_Producer, class T_Consumer>
-class TAO_ORBSVCS_Export TAO_FDev :
+class TAO_AV_Export TAO_FDev :
   public virtual POA_AVStreams::FDev,
   public virtual TAO_PropertySet,
   public virtual PortableServer::RefCountServantBase

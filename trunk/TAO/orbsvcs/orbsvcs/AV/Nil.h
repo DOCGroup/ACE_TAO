@@ -21,7 +21,7 @@
 
 #include "Policy.h"
 
-// class TAO_ORBSVCS_Export TAO_AV_UDP_MCast_Object  : public TAO_AV_Protocol_Object
+// class TAO_AV_Export TAO_AV_UDP_MCast_Object  : public TAO_AV_Protocol_Object
 // {
 // public:
 //   TAO_AV_UDP_MCast_Object (TAO_AV_Callback *callback,

@@ -22,7 +22,7 @@
 #include "ace/Addr.h"
 #include "tao/TAO.h"
 #include "tao/debug.h"
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/AV/AV_export.h"
 
 struct TAO_AV_frame_info
 {
@@ -46,7 +46,7 @@ struct TAO_AV_RTCP_Sdes
   CORBA::String_var value_;
 };
 
-class TAO_ORBSVCS_Export TAO_AV_Policy
+class TAO_AV_Export TAO_AV_Policy
 {
 public:
   TAO_AV_Policy (CORBA::ULong type);

@@ -86,22 +86,6 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp"
 # Begin Source File
 
-SOURCE=.\AV\AVStreams_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\AVStreamsC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\AVStreamsS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\BCU.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Sched\Config_Scheduler.cpp
 # End Source File
 # Begin Source File
@@ -362,10 +346,6 @@ SOURCE=.\Event\EC_UDP_Admin.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\AV\Endpoint_Strategy.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Naming\Entries.cpp
 # End Source File
 # Begin Source File
@@ -383,10 +363,6 @@ SOURCE=.\Event_Utilities.cpp
 # Begin Source File
 
 SOURCE=.\CosEvent\EventChannel_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\FlowSpec_Entry.cpp
 # End Source File
 # Begin Source File
 
@@ -422,14 +398,6 @@ SOURCE=.\Event\Local_ESTypes.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\AV\MCast.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=".\AV\media-timer.cpp"
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\Memory_Pools.cpp
 # End Source File
 # Begin Source File
@@ -446,14 +414,6 @@ SOURCE=.\Naming\Naming_Utils.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Null_MediaCtrlC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Null_MediaCtrlS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Trader\Offer_Iterators.cpp
 # End Source File
 # Begin Source File
@@ -467,14 +427,6 @@ SOURCE=.\Naming\Persistent_Entries.cpp
 # Begin Source File
 
 SOURCE=.\Naming\Persistent_Naming_Context.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\Policy.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\Protocol_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -499,10 +451,6 @@ SOURCE=.\Sched\Reconfig_Scheduler.cpp
 # Begin Source File
 
 SOURCE=.\Event\RT_Task.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\RTCP.cpp
 # End Source File
 # Begin Source File
 
@@ -538,10 +486,6 @@ SOURCE=.\RtecUDPAdminS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\AV\RTP.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Runtime_Scheduler.cpp
 # End Source File
 # Begin Source File
@@ -570,22 +514,6 @@ SOURCE=.\Trader\Service_Type_Repository.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\AV\sfp.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\sfpC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\sfpS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\source.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Sched\Strategy_Scheduler.cpp
 # End Source File
 # Begin Source File
@@ -607,10 +535,6 @@ SOURCE=.\Time\TAO_TIO.cpp
 # Begin Source File
 
 SOURCE=.\Time\TAO_UTO.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\TCP.cpp
 # End Source File
 # Begin Source File
 
@@ -651,14 +575,6 @@ SOURCE=.\Trader\Trader_Utils.cpp
 # Begin Source File
 
 SOURCE=.\Naming\Transient_Naming_Context.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\Transport.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\UDP.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -958,14 +874,6 @@ SOURCE=.\Event\Fast_Reactor.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\AV\Flows_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\FlowSpec_Entry.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\GPlot_File.h
 # End Source File
 # Begin Source File
@@ -1010,18 +918,6 @@ SOURCE=.\Trader\Locking.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\AV\MCast.h
-# End Source File
-# Begin Source File
-
-SOURCE=".\AV\media-timer.h"
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\Memory_Pools.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\Module_Factory.h
 # End Source File
 # Begin Source File
@@ -1058,14 +954,6 @@ SOURCE=.\Naming\Persistent_Naming_Context.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\AV\Policy.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\Protocol_Factory.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\ReactorTask.h
 # End Source File
 # Begin Source File
@@ -1079,10 +967,6 @@ SOURCE=.\Sched\Reconfig_Scheduler.h
 # Begin Source File
 
 SOURCE=.\Event\RT_Task.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\RTCP.h
 # End Source File
 # Begin Source File
 
@@ -1110,14 +994,6 @@ SOURCE=.\RtecSchedulerS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\AV\RTP.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Runtime_Scheduler.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Sched\SchedEntry.h
 # End Source File
 # Begin Source File
@@ -1142,10 +1018,6 @@ SOURCE=.\Trader\Service_Type_Repository.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\AV\source.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Sched\Strategy_Scheduler.h
 # End Source File
 # Begin Source File
@@ -1167,10 +1039,6 @@ SOURCE=.\Time\TAO_UTO.h
 # Begin Source File
 
 SOURCE=.\Event\Task_Manager.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\TCP.h
 # End Source File
 # Begin Source File
 
@@ -1215,14 +1083,6 @@ SOURCE=.\Trader\Trader_Utils.h
 # Begin Source File
 
 SOURCE=.\Naming\Transient_Naming_Context.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\Transport.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\UDP.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
@@ -1392,91 +1252,6 @@ SOURCE=.\TimeServiceS_T.i
 # Begin Group "IDL Files"
 
 # PROP Default_Filter "idl"
-# Begin Source File
-
-SOURCE=.\AVStreams.idl
-
-!IF  "$(CFG)" == "ORB Services Static - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__AVSTR="..\..\..\bin\Release\tao_idl_static.exe"	
-# Begin Custom Build - Invoking TAO_IDL
-InputPath=.\AVStreams.idl
-InputName=AVStreams
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -Ge 1  -I../../   -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h         $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__AVSTR="..\..\..\bin\tao_idl_static.exe"	
-# Begin Custom Build - Invoking TAO_IDL
-InputPath=.\AVStreams.idl
-InputName=AVStreams
-
-BuildCmds= \
-	..\..\..\bin\tao_idl_static -Ge 1  -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export         -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
 # Begin Source File
 
 SOURCE=.\CosEventChannelAdmin.idl
@@ -2329,91 +2104,6 @@ BuildCmds= \
 # End Source File
 # Begin Source File
 
-SOURCE=.\Null_MediaCtrl.idl
-
-!IF  "$(CFG)" == "ORB Services Static - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__NULL_="..\..\..\bin\Release\tao_idl_static.exe"	
-# Begin Custom Build - Invoking TAO_IDL
-InputPath=.\Null_MediaCtrl.idl
-InputName=Null_MediaCtrl
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -Ge 1  -I../../   -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h         $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__NULL_="..\..\..\bin\tao_idl_static.exe"	
-# Begin Custom Build - Invoking TAO_IDL
-InputPath=.\Null_MediaCtrl.idl
-InputName=Null_MediaCtrl
-
-BuildCmds= \
-	..\..\..\bin\tao_idl_static -Ge 1  -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export         -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\RtecEventChannelAdmin.idl
 
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
@@ -2754,91 +2444,6 @@ BuildCmds= \
 # End Source File
 # Begin Source File
 
-SOURCE=.\sfp.idl
-
-!IF  "$(CFG)" == "ORB Services Static - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__SFP_I="..\..\..\bin\Release\tao_idl_static.exe"	
-# Begin Custom Build - Invoking TAO_IDL
-InputPath=.\sfp.idl
-InputName=sfp
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -Ge 1  -I../../   -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h         $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__SFP_I="..\..\..\bin\tao_idl_static.exe"	
-# Begin Custom Build - Invoking TAO_IDL
-InputPath=.\sfp.idl
-InputName=sfp
-
-BuildCmds= \
-	..\..\..\bin\tao_idl_static -Ge 1  -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export         -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\TimeBase.idl
 
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
@@ -3024,11 +2629,6 @@ SOURCE=.\CosTradingS_T.cpp
 # Begin Source File
 
 SOURCE=.\Event\EC_ProxyPushSupplier_Set_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\Flows_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

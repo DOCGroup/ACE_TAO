@@ -34,7 +34,7 @@
 #include "ace/SOCK_Acceptor.h"
 
 #include "tao/TAO.h"
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/AV/AV_export.h"
 #include "orbsvcs/CosPropertyServiceS.h"
 #include "orbsvcs/AVStreamsS.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
@@ -64,7 +64,7 @@ extern "C" int gethostname(char* name, int len);
 #if !defined (TAO_ORBSVCS_HAS_Trader)
 
 // =  Classes to deal with the ACE_Hash_Map_Manager.
-class TAO_ORBSVCS_Export TAO_String_Hash_Key : public CORBA::String_var
+class TAO_AV_Export TAO_String_Hash_Key : public CORBA::String_var
 {
   // = TITLE
   //     Key for the Hash Table. The EXT_ID of the
@@ -109,7 +109,7 @@ typedef ACE_Singleton <TAO_AV_Core,ACE_Null_Mutex> TAO_AV_CORE;
 int deactivate_servant (PortableServer::Servant servant);
 char *get_flowname (const char *flow_spec_entry_str);
 
-class TAO_ORBSVCS_Export AV_Null_MediaCtrl
+class TAO_AV_Export AV_Null_MediaCtrl
   : public virtual POA_Null_MediaCtrl,
     public virtual PortableServer::RefCountServantBase
 {
@@ -118,7 +118,7 @@ public:
 };
 
 
-class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl
+class TAO_AV_Export TAO_Basic_StreamCtrl
   : public virtual POA_AVStreams::Basic_StreamCtrl,
     public virtual TAO_PropertySet,
     public virtual PortableServer::RefCountServantBase
@@ -219,7 +219,7 @@ protected:
   //sequence of flow names.
 };
 
-class TAO_ORBSVCS_Export TAO_Negotiator
+class TAO_AV_Export TAO_Negotiator
   : public POA_AVStreams::Negotiator,
     public virtual PortableServer::RefCountServantBase
 {
@@ -262,7 +262,7 @@ protected:
   AVStreams::MMDevice_ptr mmdevice_;
 };
 
-class TAO_ORBSVCS_Export TAO_StreamCtrl
+class TAO_AV_Export TAO_StreamCtrl
   : public virtual POA_AVStreams::StreamCtrl,
     public virtual TAO_Basic_StreamCtrl,
     public virtual PortableServer::RefCountServantBase
@@ -392,7 +392,7 @@ protected:
   CORBA::ULong source_id_;
 };
 
-class TAO_ORBSVCS_Export TAO_MCastConfigIf
+class TAO_AV_Export TAO_MCastConfigIf
   : public virtual POA_AVStreams::MCastConfigIf,
     public virtual TAO_PropertySet,
     public virtual PortableServer::RefCountServantBase
@@ -471,7 +471,7 @@ class TAO_AV_Source;
 class TAO_AV_RTP_State;
 class TAO_AV_Flow_Handler;
 
-class TAO_ORBSVCS_Export TAO_Base_StreamEndPoint
+class TAO_AV_Export TAO_Base_StreamEndPoint
 {
   // = DESCRIPTION
   //    Base class for the A/V StreamEndPoint class. this class
@@ -530,7 +530,7 @@ class TAO_AV_Connector;
 class TAO_Forward_FlowSpec_Entry;
 class TAO_Reverse_FlowSpec_Entry;
 
-class TAO_ORBSVCS_Export TAO_StreamEndPoint
+class TAO_AV_Export TAO_StreamEndPoint
   : public virtual POA_AVStreams::StreamEndPoint,
     public virtual TAO_Base_StreamEndPoint,
     public virtual TAO_PropertySet,
@@ -702,7 +702,7 @@ protected:
 };
 
 
-class TAO_ORBSVCS_Export TAO_StreamEndPoint_A :
+class TAO_AV_Export TAO_StreamEndPoint_A :
   public virtual POA_AVStreams::StreamEndPoint_A,
   public virtual TAO_StreamEndPoint,
   public virtual PortableServer::RefCountServantBase
@@ -750,7 +750,7 @@ public:
 #define TAO_Client_StreamEndPoint TAO_StreamEndPoint_A
 #define TAO_Server_StreamEndPoint TAO_StreamEndPoint_B
 
-class TAO_ORBSVCS_Export TAO_StreamEndPoint_B :
+class TAO_AV_Export TAO_StreamEndPoint_B :
   public virtual POA_AVStreams::StreamEndPoint_B,
   public virtual TAO_StreamEndPoint,
   public virtual PortableServer::RefCountServantBase
@@ -775,7 +775,7 @@ public:
   // Destructor
 };
 
-class TAO_ORBSVCS_Export TAO_VDev
+class TAO_AV_Export TAO_VDev
   :public virtual TAO_PropertySet,
    public virtual POA_AVStreams::VDev,
    public virtual PortableServer::RefCountServantBase
@@ -859,7 +859,7 @@ protected:
 
 class TAO_AV_Endpoint_Strategy;
 
-class TAO_ORBSVCS_Export TAO_MMDevice
+class TAO_AV_Export TAO_MMDevice
   :public virtual POA_AVStreams::MMDevice,
    public TAO_PropertySet,
    public virtual PortableServer::RefCountServantBase
@@ -997,7 +997,7 @@ protected:
 class TAO_FlowConsumer;
 class TAO_FlowProducer;
 
-class TAO_ORBSVCS_Export TAO_FlowConnection
+class TAO_AV_Export TAO_FlowConnection
  : public virtual POA_AVStreams::FlowConnection,
    public TAO_PropertySet,
    public virtual PortableServer::RefCountServantBase
@@ -1113,7 +1113,7 @@ protected:
   CORBA::String_var protocol_;
 };
 
-class TAO_ORBSVCS_Export TAO_FlowEndPoint :
+class TAO_AV_Export TAO_FlowEndPoint :
   public virtual POA_AVStreams::FlowEndPoint,
   public virtual TAO_PropertySet,
   public virtual PortableServer::RefCountServantBase,
@@ -1326,7 +1326,7 @@ protected:
   CORBA::String_var reverse_channel_;
 };
 
-class TAO_ORBSVCS_Export TAO_FlowProducer:
+class TAO_AV_Export TAO_FlowProducer:
   public virtual POA_AVStreams::FlowProducer,
   public virtual TAO_FlowEndPoint,
   public virtual PortableServer::RefCountServantBase
@@ -1410,7 +1410,7 @@ protected:
   CORBA::String_var peer_address_;
 };
 
-class TAO_ORBSVCS_Export TAO_FlowConsumer :
+class TAO_AV_Export TAO_FlowConsumer :
   public virtual POA_AVStreams::FlowConsumer,
   public virtual TAO_FlowEndPoint,
   public virtual PortableServer::RefCountServantBase
@@ -1456,7 +1456,7 @@ public:
 };
 
 
-class TAO_ORBSVCS_Export TAO_MediaControl
+class TAO_AV_Export TAO_MediaControl
   :public virtual POA_AVStreams::MediaControl,
    public virtual PortableServer::RefCountServantBase
 {
@@ -1504,7 +1504,7 @@ public:
 
 };
 
-class TAO_ORBSVCS_Export TAO_AV_QoS
+class TAO_AV_Export TAO_AV_QoS
 {
 public:
   TAO_AV_QoS (void);

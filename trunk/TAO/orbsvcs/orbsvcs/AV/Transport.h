@@ -24,7 +24,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Addr.h"
 #include "ace/SOCK_Dgram.h"
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/AV/AV_export.h"
 #include "AV_Core.h"
 #include "FlowSpec_Entry.h"
 
@@ -75,7 +75,7 @@ protected:
 };
 
 //  Transports
-class TAO_ORBSVCS_Export TAO_AV_Transport
+class TAO_AV_Export TAO_AV_Transport
 {
   // TITLE
   //   = A Base class for the different transport protocols.
@@ -177,7 +177,7 @@ protected:
 typedef ACE_Unbounded_Set<TAO_AV_Connector*> TAO_AV_ConnectorSet;
 typedef ACE_Unbounded_Set_Iterator<TAO_AV_Connector*> TAO_AV_ConnectorSetItor;
 
-class TAO_ORBSVCS_Export TAO_AV_Connector_Registry
+class TAO_AV_Export TAO_AV_Connector_Registry
 {
 public:
   TAO_AV_Connector_Registry (void);
@@ -201,7 +201,7 @@ typedef ACE_Unbounded_Set<TAO_AV_Acceptor*>
 typedef ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*>
         TAO_AV_AcceptorSetItor;
 
-class TAO_ORBSVCS_Export TAO_AV_Acceptor_Registry
+class TAO_AV_Export TAO_AV_Acceptor_Registry
 {
 public:
   TAO_AV_Acceptor_Registry (void);
