@@ -66,10 +66,10 @@ endif # Naming
 ifneq (,$(findstring Event2,$(TAO_ORBSVCS)))
   ifeq (,$(findstring Event,$(TAO_ORBSVCS)))
     IDL_SRCS += \
-	RtecEventComm \
-	RtecEventChannelAdmin \
-	RtecUDPAdmin \
-	RtecDefaultEventData
+        RtecEventComm \
+        RtecEventChannelAdmin \
+        RtecUDPAdmin \
+        RtecDefaultEventData
   endif # ! Event
   TAO_ORBSVCS_SRCS += \
         Event/EC_Event_Channel \
@@ -127,10 +127,10 @@ endif # CosEvent
 
 ifneq (,$(findstring Event,$(TAO_ORBSVCS)))
   IDL_SRCS += \
-	RtecEventComm \
-	RtecEventChannelAdmin \
-	RtecUDPAdmin \
-	RtecDefaultEventData
+        RtecEventComm \
+        RtecEventChannelAdmin \
+        RtecUDPAdmin \
+        RtecDefaultEventData
   TAO_ORBSVCS_SRCS += \
         Event_Utilities \
         Event/BCU \
@@ -195,10 +195,10 @@ ifneq (,$(findstring Trader,$(TAO_ORBSVCS)))
         Trader/Trader_Interfaces \
         Trader/Trader_T \
         Trader/Trader_Utils \
-	Trader/Interpreter \
-	Trader/Trader_Constraint_Visitors \
-	Trader/Interpreter_Utils_T \
-	Trader/Interpreter_Utils
+        Trader/Interpreter \
+        Trader/Trader_Constraint_Visitors \
+        Trader/Interpreter_Utils_T \
+        Trader/Interpreter_Utils
 
   ifeq (,$(findstring Naming,$(TAO_ORBSVCS)))
     #### The Trader needs IOR_Multicast, so add it in if the
@@ -223,7 +223,7 @@ ifneq (,$(findstring Concurrency,$(TAO_ORBSVCS)))
 endif # Concurrency
 
 ifneq (,$(findstring Time,$(TAO_ORBSVCS)))
-  IDL_SRCS += TimeBase TimeService
+  IDL_SRCS := TimeBase TimeService $(IDL_SRCS)
   TAO_ORBSVCS_SRCS += \
         Time_Utilities \
         Time/TAO_Time_Service_Server \
@@ -250,75 +250,75 @@ endif # Naming
 ifneq (,$(findstring Log,$(TAO_ORBSVCS)))
   IDL_SRCS += DsLogAdmin
   TAO_ORBSVCS_SRCS += \
-	Log/LogRecordStore \
+        Log/LogRecordStore \
         Log/BasicLogFactory_i \
-	Log/Iterator_i \
-	Log/BasicLog_i \
-	Log/Log_i \
-	Log/LogMgr_i \
-	Log/Log_Constraint_Visitors \
-	Log/Log_Constraint_Interpreter
+        Log/Iterator_i \
+        Log/BasicLog_i \
+        Log/Log_i \
+        Log/LogMgr_i \
+        Log/Log_Constraint_Visitors \
+        Log/Log_Constraint_Interpreter
 #If the Trader is not being build, include the files that we need.
 ifeq (,$(findstring Trader,$(TAO_ORBSVCS)))
   TAO_ORBSVCS_SRCS += \
-	Trader/Interpreter \
-	Trader/Constraint_Visitors \
-	Trader/Constraint_Nodes \
-	Trader/Constraint_l \
-	Trader/Constraint_y \
-	Trader/Interpreter_Utils_T \
-	Trader/Interpreter_Utils
+        Trader/Interpreter \
+        Trader/Constraint_Visitors \
+        Trader/Constraint_Nodes \
+        Trader/Constraint_l \
+        Trader/Constraint_y \
+        Trader/Interpreter_Utils_T \
+        Trader/Interpreter_Utils
 endif # !Trader
   #### Log Service requires the definition of TimeT
   ifeq (,$(findstring Time,$(TAO_ORBSVCS)))
-     IDL_SRCS += TimeBase
+     IDL_SRCS := TimeBase $(IDL_SRCS)
   endif # ! Time
 endif # Log
 
 ifneq (,$(findstring Notify,$(TAO_ORBSVCS)))
   IDL_SRCS += \
-	CosNotification \
-	CosNotifyChannelAdmin \
-	CosNotifyComm \
-	CosNotifyFilter
+        CosNotification \
+        CosNotifyChannelAdmin \
+        CosNotifyComm \
+        CosNotifyFilter
 
   TAO_ORBSVCS_SRCS += \
-	Notify/Notify_EventChannelFactory_i     \
-	Notify/Notify_EventChannel_i \
-	Notify/Notify_QoSAdmin_i \
-	Notify/NotifySubscribe_i \
-	Notify/NotifyPublish_i \
-	Notify/Notify_FilterAdmin_i \
-	Notify/Notify_ConsumerAdmin_i \
-	Notify/Notify_SupplierAdmin_i \
-	Notify/Notify_ProxyConsumer_i \
-	Notify/Notify_ProxySupplier_i \
-	Notify/Notify_ProxyPushConsumer_i \
-	Notify/Notify_ProxyPushSupplier_i \
-	Notify/Notify_Dispatcher \
-	Notify/Notify_Filter_i \
-	Notify/Notify_FilterFactory_i \
-	Notify/Notify_Constraint_Interpreter \
-	Notify/Notify_Constraint_Visitors \
-	Notify/Notify_StructuredProxyPushSupplier_i \
-	Notify/Notify_StructuredProxyPushConsumer_i \
-	Notify/Notify_StructuredPushConsumer \
-	Notify/Notify_StructuredPushSupplier
+        Notify/Notify_EventChannelFactory_i     \
+        Notify/Notify_EventChannel_i \
+        Notify/Notify_QoSAdmin_i \
+        Notify/NotifySubscribe_i \
+        Notify/NotifyPublish_i \
+        Notify/Notify_FilterAdmin_i \
+        Notify/Notify_ConsumerAdmin_i \
+        Notify/Notify_SupplierAdmin_i \
+        Notify/Notify_ProxyConsumer_i \
+        Notify/Notify_ProxySupplier_i \
+        Notify/Notify_ProxyPushConsumer_i \
+        Notify/Notify_ProxyPushSupplier_i \
+        Notify/Notify_Dispatcher \
+        Notify/Notify_Filter_i \
+        Notify/Notify_FilterFactory_i \
+        Notify/Notify_Constraint_Interpreter \
+        Notify/Notify_Constraint_Visitors \
+        Notify/Notify_StructuredProxyPushSupplier_i \
+        Notify/Notify_StructuredProxyPushConsumer_i \
+        Notify/Notify_StructuredPushConsumer \
+        Notify/Notify_StructuredPushSupplier
 
 #If the Trader is not being build, include the files that we need.
 ifeq (,$(findstring Trader,$(TAO_ORBSVCS)))
   TAO_ORBSVCS_SRCS += \
-	Trader/Interpreter \
-	Trader/Constraint_Visitors \
-	Trader/Constraint_Nodes \
-	Trader/Constraint_l \
-	Trader/Constraint_y \
-	Trader/Interpreter_Utils_T \
-	Trader/Interpreter_Utils
+        Trader/Interpreter \
+        Trader/Constraint_Visitors \
+        Trader/Constraint_Nodes \
+        Trader/Constraint_l \
+        Trader/Constraint_y \
+        Trader/Interpreter_Utils_T \
+        Trader/Interpreter_Utils
 endif # !Trader
   #### Notification Service requires the definition of TimeT
   ifeq (,$(findstring Time,$(TAO_ORBSVCS)))
-     IDL_SRCS += TimeBase
+     IDL_SRCS := TimeBase $(IDL_SRCS)
   endif # ! Time
 
   #### Notification Service requires the definition of CosEvent
