@@ -50,7 +50,7 @@ class ACE_Export ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
   //     to waiting on the timer queue and event. If the event is
   //     signaled, the thread will refresh the time it is currently
   //     waiting on (in case the earliest time has changed).
-  
+
   friend class ACE_Proactor;
   // Proactor has special privileges
   // Access needed to: timer_event_
@@ -65,7 +65,7 @@ public:
   int destroy (void);
   // Proactor calls this to shut down the timer handler
   // gracefully. Just calling the destructor alone doesnt do what
-  // <destroy> does. <destroy> make sure the thread exits properly. 
+  // <destroy> does. <destroy> make sure the thread exits properly.
 
 protected:
   virtual int svc (void);
@@ -97,8 +97,8 @@ ACE_Proactor_Timer_Handler::~ACE_Proactor_Timer_Handler (void)
 
   // Signal timer event.
   this->timer_event_.signal ();
-  
-  // Wait for the Timer Handler thread to exit. 
+
+  // Wait for the Timer Handler thread to exit.
   this->thr_mgr ()->wait ();
 }
 
@@ -113,12 +113,12 @@ ACE_Proactor_Timer_Handler::svc (void)
     {
       // Is the timer queue empty?
       empty_flag = this->proactor_.timer_queue ()->is_empty ();
-      
+
       if (!empty_flag)
-	{
-	  // Get the earliest absolute time.
-	  absolute_time = this->proactor_.timer_queue ()->earliest_time ();
-          
+        {
+          // Get the earliest absolute time.
+          absolute_time = this->proactor_.timer_queue ()->earliest_time ();
+
           // Block for absolute time.
           result = this->timer_event_.wait (&absolute_time);
         }
@@ -127,7 +127,7 @@ ACE_Proactor_Timer_Handler::svc (void)
           // Wait for ever.
           result = this->timer_event_.wait ();
         }
-      
+
       // Check for timer expiries.
       if (result == -1)
         {
@@ -163,13 +163,13 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
                                              const ACE_Time_Value &time)
 {
   ACE_UNUSED_ARG (timer_queue);
-  
+
   if (this->proactor_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall,")
                        ASYS_TEXT (" no completion port to post timeout to?!@\n")),
                       -1);
-  
+
   // Create the Asynch_Timer.
   ACE_Asynch_Result_Impl *asynch_timer = this->proactor_->create_asynch_timer (*handler,
                                                                                act,
@@ -183,7 +183,7 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
                        "ACE_Proactor_Handle_Timeout_Upcall::timeout:"
                        "create_asynch_timer failed"),
                       -1);
-  
+
   // Post a completion.
   if (asynch_timer->post_completion (this->proactor_->implementation ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -244,7 +244,7 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
     delete_timer_queue_ (0)
 {
   this->implementation (implementation);
-  
+
   if (this->implementation () == 0)
     {
 #if defined (ACE_HAS_AIO_CALLS)
@@ -266,11 +266,11 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
 
   // Set the timer queue.
   this->timer_queue (tq);
-  
+
   // Create the timer handler
   ACE_NEW (this->timer_handler_,
            ACE_Proactor_Timer_Handler (*this));
-  
+
   // Activate <timer_handler>
   if (this->timer_handler_->activate (THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -292,16 +292,16 @@ ACE_Proactor::instance (size_t /* threads */)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-				*ACE_Static_Object_Lock::instance (),
+                                *ACE_Static_Object_Lock::instance (),
                                 0));
 
       if (ACE_Proactor::proactor_ == 0)
-	{
-	  ACE_NEW_RETURN (ACE_Proactor::proactor_,
+        {
+          ACE_NEW_RETURN (ACE_Proactor::proactor_,
                           ACE_Proactor,
                           0);
-	  ACE_Proactor::delete_proactor_ = 1;
-	}
+          ACE_Proactor::delete_proactor_ = 1;
+        }
     }
   return ACE_Proactor::proactor_;
 }
@@ -312,7 +312,7 @@ ACE_Proactor::instance (ACE_Proactor *r)
   ACE_TRACE ("ACE_Proactor::instance");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-			    *ACE_Static_Object_Lock::instance (), 0));
+                            *ACE_Static_Object_Lock::instance (), 0));
 
   ACE_Proactor *t = ACE_Proactor::proactor_;
 
@@ -329,7 +329,7 @@ ACE_Proactor::close_singleton (void)
   ACE_TRACE ("ACE_Proactor::close_singleton");
 
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
-		     *ACE_Static_Object_Lock::instance ()));
+                     *ACE_Static_Object_Lock::instance ()));
 
   if (ACE_Proactor::delete_proactor_)
     {
@@ -355,7 +355,7 @@ ACE_Proactor::run_event_loop (void)
   // whether it is zero or non-zero.
   if (ACE_Proactor::end_event_loop_ != 0)
     return 0;
-   
+
   // First time you are in. Increment the thread count.
   {
     // Obtain the lock in the MT environments.
@@ -366,32 +366,32 @@ ACE_Proactor::run_event_loop (void)
     // Increment the thread count.
     ACE_Proactor::event_loop_thread_count_ ++;
   }
-    
+
   // Run the event loop.
   while (1)
     {
       // Check the end loop flag. It is ok to do this without lock,
-      // since we care just whether it is zero or non-zero. 
+      // since we care just whether it is zero or non-zero.
       if (ACE_Proactor::end_event_loop_ != 0)
           break;
-      
+
       // <end_event_loop> is not set. Ready to do <handle_events>.
       result = ACE_Proactor::instance ()->handle_events ();
 
       if (ACE_Service_Config::reconfig_occurred ())
-	ACE_Service_Config::reconfigure ();
-      
+        ACE_Service_Config::reconfigure ();
+
       else if (result == -1)
-	break;
+        break;
     }
-  
+
   // Leaving the event loop. Decrement the thread count.
 
   // Obtain the lock in the MT environments.
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
 #endif /* ACE_MT_SAFE */
-  
+
   // Decrement the thread count.
   ACE_Proactor::event_loop_thread_count_ --;
 
@@ -414,19 +414,19 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
     (ACE_Object_Manager::ACE_PROACTOR_EVENT_LOOP_LOCK);
 #endif /* ACE_MT_SAFE */
 
-  // Early check. It is ok to do this without lock, since we care just 
+  // Early check. It is ok to do this without lock, since we care just
   // whether it is zero or non-zero.
   if (ACE_Proactor::end_event_loop_ != 0 ||
       tv == ACE_Time_Value::zero)
     return 0;
-  
+
   // First time you are in. Increment the thread count.
   {
     // Obtain the lock in the MT environments.
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
 #endif /* ACE_MT_SAFE */
-    
+
     // Increment the thread count.
     ACE_Proactor::event_loop_thread_count_ ++;
   }
@@ -444,11 +444,11 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
       result = ACE_Proactor::instance ()->handle_events (tv);
 
       if (ACE_Service_Config::reconfig_occurred ())
-	ACE_Service_Config::reconfigure ();
-      
+        ACE_Service_Config::reconfigure ();
+
       // An error has occurred.
       else if (result == -1)
-	break;
+        break;
     }
 
   // Leaving the event loop. Decrement the thread count.
@@ -457,7 +457,7 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
 #endif /* ACE_MT_SAFE */
-  
+
   // Decrement the thread count.
   ACE_Proactor::event_loop_thread_count_ --;
 
@@ -468,10 +468,10 @@ int
 ACE_Proactor::end_event_loop (void)
 {
   ACE_TRACE ("ACE_Proactor::end_event_loop");
-  
+
   // Obtain the lock, set the end flag and post the wakeup
-  // completions. 
-  
+  // completions.
+
   // Obtain the lock in the MT environments.
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Thread_Mutex *lock =
@@ -479,18 +479,18 @@ ACE_Proactor::end_event_loop (void)
     (ACE_Object_Manager::ACE_PROACTOR_EVENT_LOOP_LOCK);
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
 #endif /* ACE_MT_SAFE */
-  
+
   // Set the end flag.
   ACE_Proactor::end_event_loop_ = 1;
-    
+
   // Number of completions to post.
   int how_many = ACE_Proactor::event_loop_thread_count_;
-  
+
   // Reset the thread count.
   ACE_Proactor::event_loop_thread_count_ = 0;
 
   // Post completions to all the threads so that they will all wake
-  // up. 
+  // up.
   return ACE_Proactor::post_wakeup_completions (how_many);
 }
 
@@ -510,7 +510,7 @@ ACE_Proactor::close (void)
                        "%N:%l:(%P | %t):%p\n",
                        "ACE_Proactor::close:implementation couldnt be closed"),
                       -1);
-  
+
   // Delete the implementation.
   if (this->delete_implementation_)
     {
@@ -524,7 +524,7 @@ ACE_Proactor::close (void)
       delete this->timer_handler_;
       this->timer_handler_ = 0;
     }
-  
+
   // Delete the timer queue.
   if (this->delete_timer_queue_)
     {
@@ -538,7 +538,7 @@ ACE_Proactor::close (void)
 
 int
 ACE_Proactor::register_handle (ACE_HANDLE handle,
-			       const void *completion_key)
+                               const void *completion_key)
 {
   return this->implementation ()->register_handle (handle,
                                                    completion_key);
@@ -575,12 +575,12 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
   // absolute time.
   ACE_Time_Value absolute_time =
     this->timer_queue_->gettimeofday () + time;
-  
+
   // Only one guy goes in here at a time
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                     ace_mon,
                     this->timer_queue_->mutex (),
-                    -1);  
+                    -1);
 
   // Schedule the timer
   long result = this->timer_queue_->schedule (&handler,
@@ -591,7 +591,7 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
     {
       // no failures: check to see if we are the earliest time
       if (this->timer_queue_->earliest_time () == absolute_time)
-        
+
         // wake up the timer thread
         if (this->timer_handler_->timer_event_.signal () == -1)
           {
@@ -965,7 +965,7 @@ template class ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
         ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Timer_Heap_Iterator_T<ACE_Handler *,\
         ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_Wheel_T<ACE_Handler *,
+#pragma instantiate ACE_Timer_Wheel_T<ACE_Handler *,\
         ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Timer_Wheel_Iterator_T<ACE_Handler *,\
         ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>

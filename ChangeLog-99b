@@ -1,3 +1,8 @@
+Thu Jun 24 13:53:53 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Proactor.cpp: added missing backslash to one of
+          the instantiation pragmas.
+
 Thu Jun 24 12:53:22 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.(h i): Added check for ACE_HAS_WINSOCK2 != 0 wherever
