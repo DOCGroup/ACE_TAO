@@ -46,68 +46,55 @@ Sat Sep 28 13:57:30 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tao/PortableServer/AMH_Response_Handler.h (virtual):
 	
-	This seems like a 'stop-gap' fix right now due to pressure to cut
-	the beta.  Having the PortableServer ResponseHandler class derive
-	from a Ref-counted Object seems to solve the problem of
-	ResponseHandlers not being reference counted (and we don't require
-	any IDL-compiler changes), since reference-counting in
-	CORBA::Object seems to be a no-op.  Whether this is the class that
-	should have the functionality of ref-counting is debatable.  It
-	could also be added to the client-side or server-side RH but that
-	would require IDL-compiler changes.  Ossama also raises the
-	question of why the server-side ResponseHandler was inheriting
-	from the client-side RH.  Though I think I know the reason for
-	this, I'll have to work it out fully and then docuemnt it
-	somewhere.  Another issue is the dreaded diamond inheritance that
-	is here in the current hierarchy.  Though g++ didn;t have any
-	problems doing the 'right thing' : i.e., calling the correct
-	reference-counting class, we'll have to try and get rid of it, if
-	possible.  Thanks to Martin Johnson <mjhn@bigpond.net.au>  for
-	bringing up the memory-leak in:
-	Sat Sep 28 13:55:56 2002  Mayur Deshpande  <mayur@ics.uci.edu>
-	that led to all this.
+	  This seems like a 'stop-gap' fix right now due to pressure to
+	  cut the beta.  Having the PortableServer ResponseHandler class
+	  derive  from a Ref-counted Object seems to solve the problem of
+	  ResponseHandlers not being reference counted (and we don't
+	  require any IDL-compiler changes), since reference-counting in
+	  CORBA::Object seems to be a no-op.  Whether this is the class
+	  that should have the functionality of ref-counting is debatable.
+	  It could also be added to the client-side or server-side RH but
+	  that would require IDL-compiler changes.  
+
+	  Ossama also raises the question of why the server-side
+	  ResponseHandler was inheriting from the client-side RH.  Though
+	  I think I know the reason for this, I'll have to work it out
+	  fully and then docuemnt it somewhere.  Another issue is the
+	  dreaded diamond inheritance that is here in the current
+	  hierarchy.  Though g++ didn;t have any problems doing the 'right
+	  thing' : i.e., calling the correct reference-counting class,
+	  we'll have to try and get rid of it, if possible.  Thanks to
+	  Martin Johnson <mjhn@bigpond.net.au>  for bringing up the
+	  memory-leak in: Sat Sep 28 13:55:56 2002  Mayur Deshpande
+	  <mayur@ics.uci.edu> that led to all this.
 
 Sat Sep 28 13:55:56 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* examples/AMH/Sink_Server/Timer_Handler.cpp (class
-	Timer_Handler):
+	  Timer_Handler): 
 
-	The ResponseHandler 'duplicated' in the AMH_Servant was not
-	released here after it was used.  This caused a memory-leak.  This
-	has been fixed now along with the change in:
-	Sat Sep 28 13:57:30 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+	  The ResponseHandler 'duplicated' in the AMH_Servant was
+	  not released here after it was used.  This caused a
+	  memory-leak.  This has been fixed now along with the change in: 
+	  Sat Sep 28 13:57:30 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 2002-09-28  D A Hanvey  <dhanvey@qub.ac.uk>
 
-	* orbsvcs/examples/Log
+	* orbsvcs/examples/Log:
 	 
 	  Removed the folders /Client and /test.
 
 2002-09-28  D A Hanvey  <dhanvey@qub.ac.uk>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/README
-	* orbsvcs/Logging_Service/Event_Logging_Service/README
-	* orbsvcs/Logging_Service/Notify_Logging_Service/README
-	* orbsvcs/Logging_Service/README
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/README
+	* orbsvcs/Logging_Service/Basic_Logging_Service/README:
+	* orbsvcs/Logging_Service/Event_Logging_Service/README:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/README:
+	* orbsvcs/Logging_Service/README:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/README:
 
-	* orbsvcs/tests/Log/README
-	* orbsvcs/tests/Log/Basic_Log_Test/README
-	ChangeLogTag: Sat Sep 28 07:49:01 2002  D A Hanvey <d.hanvey@qub.ac.uk>
-
-	
-2002-09-28  parsons  <parsons@SNS060100>
-
-	* TAO_IDL/be/be_codegen.cpp, ChangeLog:
-	ChangeLogTag: Sat Sep 28 01:49:01 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
-
-	* TAO_IDL/be/be_codegen.cpp, TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ci.cpp, ChangeLog:
-	ChangeLogTag: Fri Sep 27 21:32:45 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
-
-2002-09-28  bala  <bala@SNS060100>
-
-	* ChangeLog, tao/Any.cpp:
-	ChangeLogTag: Fri Sep 27 21:07:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+	* orbsvcs/tests/Log/README:
+	* orbsvcs/tests/Log/Basic_Log_Test/README:
+	  ChangeLogTag: Sat Sep 28 07:49:01 2002  D A Hanvey <d.hanvey@qub.ac.uk>
 
 Sat Sep 28 01:49:01 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
@@ -118,29 +105,16 @@ Sat Sep 28 01:49:01 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 Sat Sep 28 01:12:53 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
 	* Branch qubdhanvey01 merged.
-	ChangeLogTag: Sat Sep 28 11:54:50 2002  D A Hanvey <d.hanvey@qub.ac.uk>
+	  ChangeLogTag: Sat Sep 28 11:54:50 2002  D A Hanvey
+	  <d.hanvey@qub.ac.uk> 
 
 Sat Sep 28 01:10:32 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
 	* orbsvcs/orbsvcs/Makefile.DsEventLogAdmin
 	* orbsvcs/orbsvcs/Makefile.DsNotifyLogAdmin
 	* orbsvcs/orbsvcs/Makefile.RTEventLogAdmin
-	ChangeLogTag: Sat Sep 28 11:51:23 2002  D A Hanvey <d.hanvey@qub.ac.uk>
-
-Sat Sep 28 01:08:22 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
-
-	* TAO_IDL/be/be_codegen.cpp, ChangeLog:
-	ChangeLogTag: Sat Sep 28 01:49:01 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
-
-	* TAO_IDL/be/be_codegen.cpp, TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ci.cpp, ChangeLog:
-	ChangeLogTag: Fri Sep 27 21:32:45 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
-
-Sat Sep 28 01:07:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
-
-	* ChangeLog, tao/Any.cpp:
-	ChangeLogTag: Fri Sep 27 21:07:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
-
-
+	  ChangeLogTag: Sat Sep 28 11:51:23 2002  D A Hanvey
+	  <d.hanvey@qub.ac.uk> 
 Fri Sep 27 21:32:45 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
