@@ -167,8 +167,15 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
 
       ACE_DEBUG ((LM_DEBUG, "running the test\n"));
-      if (this->orb_->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+      for (;;)
+        {
+          ACE_Time_Value tv (0, 10000);
+          this->orb_->perform_work (tv, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 1);
+          if (this->active_count_ <= 0)
+            break;
+        }
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       this->dump_results ();
@@ -206,8 +213,6 @@ ECT_Consumer_Driver::shutdown_consumer (void*,
 
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
   this->active_count_--;
-  if (this->active_count_ <= 0)
-    this->orb_->shutdown ();
 }
 
 void

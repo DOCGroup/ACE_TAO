@@ -1,3 +1,9 @@
+Fri Sep  1 22:01:07 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+          Use perform_work() instead of run()/shutdown() because we need
+          to do some cleanup after the event loop finishes.
+
 Fri Sep  1 18:16:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
