@@ -1,3 +1,8 @@
+Mon Nov 29 07:36:03 2004  Olli Savia  <ops@iki.fi>
+
+        * apps/JAWS/server/HTTP_Helpers.cpp:
+          Added "const" qualifiers to silence compile time warnings.
+        
 Sun Nov 28 17:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/notify_serv.mpb:
@@ -7,7 +12,7 @@ Sun Nov 28 17:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 Sun Nov 28 16:16:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-vxworks5.x.h:
-	  Added ACE_HAS_USING_KEYWORD for DIAB compiler.
+          Added ACE_HAS_USING_KEYWORD for DIAB compiler.
 
 Sun Nov 28 12:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -20,60 +25,60 @@ Sun Nov 28 12:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 Sat Nov 27 14:51:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
-	  Changed use of 'mkdir -p' to '$(MKDIR)' command for more compatibility.
+          Changed use of 'mkdir -p' to '$(MKDIR)' command for more compatibility.
 
 Fri Nov 26 19:38:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* Makefile.am:
+        * configure.ac:
+        * Makefile.am:
 
-	  Use AC_SUBST instead of AM_CONDITIONAL for directories that may
-	  be omitted in a distribution.
+          Use AC_SUBST instead of AM_CONDITIONAL for directories that may
+          be omitted in a distribution.
 
 Fri Nov 26 17:54:32 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/tao_other_tests.lst:
+        * bin/tao_other_tests.lst:
 
-	  Added orbsvcs/test/Log/Basic_Log_Test test to the list.
+          Added orbsvcs/test/Log/Basic_Log_Test test to the list.
 
 Fri Nov 26 18:24:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_Thread.inl (thr_getprio): WinCE doesn't support
-	  GetPriorityClass, so this method will do ENOTSUP on WinCE.
+        * ace/OS_NS_Thread.inl (thr_getprio): WinCE doesn't support
+          GetPriorityClass, so this method will do ENOTSUP on WinCE.
 
-	Also fixed the Friday ChangeLog entries that said it was Nov 25.
+        Also fixed the Friday ChangeLog entries that said it was Nov 25.
 
 Fri Nov 26 17:46:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp: Corrected
-	  wide-char issues.
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp: Corrected
+          wide-char issues.
 
-	* examples/Threads/task_three.cpp: ACE_OSTREAM_TYPE is not always a
-	  class that offers close(). So just delete the object when it's
-	  not needed any longer. Also, remove the reference from ACE_Log_Msg.
+        * examples/Threads/task_three.cpp: ACE_OSTREAM_TYPE is not always a
+          class that offers close(). So just delete the object when it's
+          not needed any longer. Also, remove the reference from ACE_Log_Msg.
 
 Fri Nov 26 19:12:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * examples/Threads/task_three.cpp:
-	  Fixed another compile problem.
+          Fixed another compile problem.
 
 Fri Nov 26 16:16:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
-	  Fixed compile problems.
+          Fixed compile problems.
 
 Fri Nov 26 12:00:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
-	* ace/config-vxworks5.x.h:
-	  Added ACE_HAS_STANDARD_CPP_LIBRARY for DIAB builds.
+        * ace/config-vxworks5.x.h:
+          Added ACE_HAS_STANDARD_CPP_LIBRARY for DIAB builds.
 
 Fri Nov 26 11:04:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * examples/Threads/task_three.cpp:
         * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
-	* examples/Logger/Acceptor-server/server_loggerd.cpp:
+        * examples/Logger/Acceptor-server/server_loggerd.cpp:
         * examples/Log_Msg/test_log_msg.cpp:
-	  Fixed problems with iostreams for ACE_LACKS_IOSTREAM_TOTALLY builds
+          Fixed problems with iostreams for ACE_LACKS_IOSTREAM_TOTALLY builds
           (VxWorks DIAB).
 
 Fri Nov 26 10:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -102,9 +107,9 @@ Fri Nov 26 08:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Nov 25 15:45:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/tao_other_tests.lst:
+        * bin/tao_other_tests.lst:
 
-	  Added orbsvcs/test/Bug_XXXX_Regression tests to the list.
+          Added orbsvcs/test/Bug_XXXX_Regression tests to the list.
 
 Thu Nov 25 18:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -115,9 +120,9 @@ Thu Nov 25 18:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Nov 25 09:25:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/tao_other_tests.lst:
+        * bin/tao_other_tests.lst:
 
-	  Added FaultTolerance tests to list.
+          Added FaultTolerance tests to list.
 
 Thu Nov 25 14:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -128,38 +133,38 @@ Thu Nov 25 14:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Nov 24 17:23:22 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\Timer_Wheel_T.cpp (expire):
+        * ace\Timer_Wheel_T.cpp (expire):
 
-	  ACE_Timer_Wheel_T<>::expire() made the upcall before
-	  rescheduling a recurring timer.  The problem with this is that
-	  if the upcall code tries to cancel the recurring timer, the
-	  cancel will fail since the timer has not been rescheduled.  The
-	  fix is to move the rescheduling code before the upcall code.
-	  Thanks to Domingos Monteiro <d.monteiro@netia.net> for reporting
-	  and providing a fix for this bug.
+          ACE_Timer_Wheel_T<>::expire() made the upcall before
+          rescheduling a recurring timer.  The problem with this is that
+          if the upcall code tries to cancel the recurring timer, the
+          cancel will fail since the timer has not been rescheduled.  The
+          fix is to move the rescheduling code before the upcall code.
+          Thanks to Domingos Monteiro <d.monteiro@netia.net> for reporting
+          and providing a fix for this bug.
 
 Wed Nov 24 16:02:21 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Asynch_Connector.{h cpp}: Removed the locally-defined
-	  "static ACE_INET_Addr local_default" used for the default
-	  local address on connects. In the lower levels of ACE, the local
-	  address is compared to ACE_Addr::sap_any, and this one didn't
-	  match with IPv6 defined. The default arg is now ACE_Addr::sap_any,
-	  like the other default local addresses, such as ACE_Connector.
+        * ace/Asynch_Connector.{h cpp}: Removed the locally-defined
+          "static ACE_INET_Addr local_default" used for the default
+          local address on connects. In the lower levels of ACE, the local
+          address is compared to ACE_Addr::sap_any, and this one didn't
+          match with IPv6 defined. The default arg is now ACE_Addr::sap_any,
+          like the other default local addresses, such as ACE_Connector.
 
-	* ace/WIN32_Asynch_IO.cpp: If a ACE_OS::bind() fails, print a message
-	  with the real reason in it, not just "ACE_OS::bind failed".
+        * ace/WIN32_Asynch_IO.cpp: If a ACE_OS::bind() fails, print a message
+          with the real reason in it, not just "ACE_OS::bind failed".
 
-	* tests/Proactor_Test.cpp: Added a check to see that the test
-	  actually does some data transfer, else it isn't really doing
-	  anything.
+        * tests/Proactor_Test.cpp: Added a check to see that the test
+          actually does some data transfer, else it isn't really doing
+          anything.
 
 Wed Nov 24 14:40:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/NonBlocking_Conn_Test.cpp (test): Don't leave bogus
-	  ACE_INET_Addr entries in addresses[] if a name lookup fails.
-	  Doing so causes screwups later when each entry is assumed to
-	  have a legit address to form into a string.
+        * tests/NonBlocking_Conn_Test.cpp (test): Don't leave bogus
+          ACE_INET_Addr entries in addresses[] if a name lookup fails.
+          Doing so causes screwups later when each entry is assumed to
+          have a legit address to form into a string.
 
 Wed Nov 24 13:32:32 2004  Chad Elliott  <elliott_c@ociweb.com>
 
