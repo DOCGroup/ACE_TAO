@@ -1,3 +1,21 @@
+Tue Aug 26 17:57:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/Makefile:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/include/utl_namelist.h:
+        * TAO_IDL/util/utl_namelist.cpp:
+
+          Fixed a bug in the IDL grammar representation - the 'truncatable'
+          keyword was out of place, so its use, even if correct, output a
+          syntax error instead of the intended 'not supported' warning.
+          Thanks to Manas <manasr_sahoo@yahoo.com> for reporting the
+          problem. Also changed the C++ generation from idl.yy to use
+          bison instead of yacc. Thanks to Krishnakumar Balasubramanian
+          <kitty@dre.vanderbilt.edu> for his help with this.
+
 Tue Aug 26 16:19:30 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/OBV/Collocated/Forward/Client_Task.cpp 
