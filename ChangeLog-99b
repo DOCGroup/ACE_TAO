@@ -1,4 +1,9 @@
-Tue Jul 20 17:41:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Tue Jul 20 18:30:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Cached_Connect_Strategy_T.h:  All functions in
+	  ACE_Cached_Connect_Strategy_Ex and ACE_Cached_Connect_Strategy
+	  that contain specific information about the map used by the
+	  class should not be virtual.
 
 	* ace/Future_Set.cpp (next_readable): Removed extra code that was
 	  left behind from a debugging stage.  Thanks to author John
