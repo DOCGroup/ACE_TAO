@@ -12,7 +12,7 @@ require Process;
 $status = 0;
 $iorfile = "echo.ior";
 
-$SV = Process::Create ("server$EXE_EXT", "-o $iorfile ");
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-o $iorfile ");
 if (ACE::waitforfile_timed ($iorfile, 15) == -1) {
   print STDERR "ERROR: timedout waiting for file <$iorfile>\n";
   $SV->Kill (); $SV->TimedWait (1);
