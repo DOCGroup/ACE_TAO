@@ -131,7 +131,7 @@ SOURCE=.\control.idl
 
 !IF  "$(CFG)" == "Structured_Filter_Supplier - Win32 Release"
 
-USERDEP__CONTR="..\..\..\..\..\bin\tao_idl.exe"	
+USERDEP__CONTR="..\..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
 InputPath=.\control.idl
 InputName=control
