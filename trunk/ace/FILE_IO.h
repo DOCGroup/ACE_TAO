@@ -14,10 +14,6 @@
 #define ACE_FILE_IO_H
 #include /**/ "ace/pre.h"
 
-#if defined (ACE_HAS_STREAM_PIPES)
-#  include "ace/OS_NS_stropts.h"
-#endif /* ACE_HAS_STREAM_PIPES */
-
 #include "ace/FILE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -29,6 +25,10 @@
 // Used in the FILE_IO.h file...
 #include "ace/os_include/os_stdio.h"
 #include "ace/os_include/sys/os_uio.h"
+
+#if defined (ACE_HAS_STREAM_PIPES)
+#  include "ace/OS_NS_stropts.h"
+#endif /* ACE_HAS_STREAM_PIPES */
 
 // Forward decl.
 class ACE_Message_Block;
