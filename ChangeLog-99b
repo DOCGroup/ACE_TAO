@@ -3,13 +3,14 @@ Thu Aug 05 14:53:44 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-vxworks5.x.h: added support for the Diab
           compiler, version 4.2a or later.  Compilation succeeds
           but links still have unresolved symbols related to
-          new and delete.  [Bug 207]
+          new and delete. [Bug 207]
 
-        * ace/OS.h,README: added support for ACE_LACKS_NEW_H.
+        * ace/OS.h,README: added support for ACE_LACKS_NEW_H. [Bug 207]
 
         * ace/OS.h: for VxWorks, use the ANSI prototypes for
           inet_ntoa.h, etc., for all VxWorks compilers, not just
           Green Hills.  This allows compilation to succeed with Diab 4.2a.
+          [Bug 207]
 
         Thanks to Erik Johannes <ejohannes@oresis.com> for helping with
         this quick port to Diab 4.2a for VxWorks.
