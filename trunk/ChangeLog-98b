@@ -28,6 +28,10 @@ Fri Oct 30 11:53:16 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/run_tests.sh: really commented out Thread_Pool_Reactor_Test.
           It _wasn't_ commented out in the 4.6 release.
 
+        * tests/Mem_Map_Test.cpp (reverse_file): removed volatile
+          qualifier because it no longer seems to be necessary for LynxOS
+          3.0.0/PowerPC.
+
 Fri Oct 30 09:23:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/SString.h: Cleaned up the ACE_SString comments to be more
