@@ -122,7 +122,8 @@ endif # ImplRepo
 ifneq (,$(findstring Property,$(TAO_ORBSVCS)))
   IDL_SRCS += CosPropertyService
   TAO_ORBSVCS_SRCS += \
-        Property/CosPropertyService_i
+        Property/CosPropertyService_i\
+	Property/CosPropertyService_i_T
 endif # Property
 
 ifneq (,$(findstring Trader,$(TAO_ORBSVCS)))
@@ -225,7 +226,8 @@ ifneq (,$(findstring AV,$(TAO_ORBSVCS)))
   TAO_ORBSVCS_SRCS += \
         AV/AVStreams_i \
         AV/Endpoint_Strategy \
-        AV/Endpoint_Strategy_T
+        AV/Endpoint_Strategy_T\
+	AV/AVStreams_i_T
 endif # AV
 
 IDL_FILES = \
