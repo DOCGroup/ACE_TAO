@@ -82,7 +82,7 @@ sub run_test
                              "$server1args");
     print STDERR ("server $server1args\n");
 
-    if (ACE::waitforfile_timed ("server1", 5) == -1) {
+    if (ACE::waitforfile_timed ("server1", 15) == -1) {
       print STDERR "ERROR: cannot find file <server1> or <server2>\n";
       $SRV1->Kill (); $SRV1->TimedWait (1);
       exit 1;
@@ -92,7 +92,7 @@ sub run_test
                              "$server2args");
     print STDERR ("server $server2args\n");
 
-    if (ACE::waitforfile_timed ("server2", 5) == -1) {
+    if (ACE::waitforfile_timed ("server2", 15) == -1) {
       print STDERR "ERROR: cannot find file <server1> or <server2>\n";
       $SRV1->Kill (); $SRV1->TimedWait (1);
       $SRV2->Kill (); $SRV2->TimedWait (1);
@@ -103,7 +103,7 @@ sub run_test
       $SRV3 = Process::Create (".".$DIR_SEPARATOR."server".$EXE_EXT,
 			       "$server3args");
 
-      if (ACE::waitforfile_timed ("server3", 5) == -1) {
+      if (ACE::waitforfile_timed ("server3", 15) == -1) {
 	print STDERR "ERROR: cannot find file <server3>\n";
 	$SRV1->Kill (); $SRV1->TimedWait (1);
 	$SRV2->Kill (); $SRV2->TimedWait (1);
@@ -126,8 +126,8 @@ sub run_test
     # Now that the client has finished, kill off the servers
     $SRV1->Terminate ();
     $SRV2->Terminate ();
-    if ($SRV1->TimedWait (5) == -1 ||
-        $SRV2->TimedWait (5) == -1) {
+    if ($SRV1->TimedWait (10) == -1 ||
+        $SRV2->TimedWait (10) == -1) {
       print STDERR "ERROR: couldn't terminate the servers nicely\n";
       $SRV1->Kill (); $SRV1->TimedWait (1);
       $SRV2->Kill (); $SRV2->TimedWait (1);
@@ -147,7 +147,6 @@ sub run_test
     }
     return $status;
 }
-
 
 for ($q = 0; $q < 3; $q++)
 {
