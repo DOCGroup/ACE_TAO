@@ -1,3 +1,61 @@
+Fri Sep 24 11:57:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * Benchmark/Marshal_Test/TAO/Makefile:
+        * Benchmark/benchmark/Makefile:
+        * examples/Makefile:
+        * examples/AMI/Makefile:
+        * examples/Advanced/Makefile:
+        * examples/OBV/Makefile:
+        * examples/POA/Makefile:
+        * examples/POA/Adapter_Activator/Makefile:
+        * examples/POA/Explicit_Activation/Makefile:
+        * examples/POA/Loader/Makefile:
+        * examples/POA/On_Demand_Activation/Makefile:
+        * examples/POA/On_Demand_Loading/Makefile:
+        * examples/POA/Reference_Counted_Servant/Makefile:
+        * examples/POA/RootPOA/Makefile:
+        * examples/Simple/Makefile:
+        * examples/Simulator/Makefile:
+        * orbsvcs/Makefile:
+        * orbsvcs/Concurrency_Service/Makefile:
+        * orbsvcs/CosEvent_Service/Makefile:
+        * orbsvcs/Dump_Schedule/Makefile:
+        * orbsvcs/Event_Service/Makefile:
+        * orbsvcs/Naming_Service/Makefile:
+        * orbsvcs/Scheduling_Service/Makefile:
+        * orbsvcs/Trading_Service/Makefile:
+        * orbsvcs/examples/Makefile:
+        * orbsvcs/examples/CosEC/Makefile:
+        * orbsvcs/examples/RtEC/Makefile:
+        * orbsvcs/examples/RtEC/Schedule/Makefile:
+        * orbsvcs/examples/RtEC/Simple/Makefile:
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/AVStreams/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/Makefile:
+        * orbsvcs/tests/CosEC_Basic/Makefile:
+        * orbsvcs/tests/EC_Basic/Makefile:
+        * orbsvcs/tests/EC_Mcast/Makefile:
+        * orbsvcs/tests/EC_Multiple/Makefile:
+        * orbsvcs/tests/Event/Makefile:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/Event_Latency/Makefile:
+        * orbsvcs/tests/Property/Makefile:
+        * orbsvcs/tests/Sched/Makefile:
+        * orbsvcs/tests/Sched_Conf/Makefile:
+        * performance-tests/Makefile:
+        * performance-tests/Cubit/Makefile:
+        * performance-tests/Cubit/TAO/Makefile:
+        * performance-tests/POA/Makefile:
+        * performance-tests/Thruput/Makefile:
+        * tests/Makefile:
+        * tests/NestedUpcall/Makefile:
+        * tests/POA/Makefile:
+        * utils/Makefile:
+        * utils/IOR-parser/Makefile: Reordered make rules inclusion
+	  order.
+
 Fri Sep 24 11:09:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Stub.cpp:
@@ -8,7 +66,7 @@ Fri Sep 24 11:09:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Thu Sep 23 15:40:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB.h (CORBA_ORB): Added "= TAO_default_environment ()" to 
+	* tao/ORB.h (CORBA_ORB): Added "= TAO_default_environment ()" to
 	  the various create_dyn_*() methods so that they can be used more
  	  portably.  Thanks to Philippe Merle <Philippe.Merle@lifl.fr> for
  	  reporting this.
