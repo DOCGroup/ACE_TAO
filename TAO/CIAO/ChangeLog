@@ -1,3 +1,10 @@
+Thu Mar 24 09:21:59 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/examples/Swapping/Sender/Sender.mpc:
+
+          Added the "after" clause in the MPC file to fix a
+          linker error.
+
 Thu Mar 24 08:46:07 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ExecImplSourceGenerator.cpp:
@@ -5,24 +12,24 @@ Thu Mar 24 08:46:07 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/Literals.hpp:
         * CIDLC/ServantSourceGenerator.cpp:
         * CIDLC/TypeNameEmitter.cpp:
-        
+
           - Added generation of ACE_UNUSED_ARG macros for local variables in
             the get_registered_consumers() method for upgradeable components,
             to avoid unused argument warnings if the component has no
             event consumers.
-            
+
           - Added predefined string literals for "ACE_UNUSED_ARG",
             "ACE_CHECK_RETURN", and "ACE_THROW_RETURN".
 
 Wed Mar 23 19:45:32 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/CCF/IDL2/IDL2.vcpoj:
-        
+
           Added more new files to the project, ValueTypeMember.hpp and
           ValueTypeMember.tpp in IDL2/Traversal.
-          
+
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Restored backend code that was commented out until frontend
           support for traversal of valuetype/eventtype members was added.
 
