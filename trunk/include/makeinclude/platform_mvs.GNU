@@ -11,6 +11,7 @@ LD            = $(CXX)
 DLD           = $(CXX)
 AR            = ar
 ARFLAGS       = ruv
+RANLIB        = echo
 #LDFLAGS      = -W l,p,map
  
 # MVCMD needed because cxx does not use the -o option to place objects
