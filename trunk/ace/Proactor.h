@@ -27,14 +27,14 @@
 // This only works on Win32 platforms and on Unix platforms supporting
 // POSIX aio calls.
 
-#include "ace/OS.h"
-#include "ace/Asynch_IO.h"
-#include "ace/Asynch_IO_Impl.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Timer_Queue.h"
-#include "ace/Timer_List.h"
-#include "ace/Timer_Heap.h"
-#include "ace/Timer_Wheel.h"
+#  include "ace/OS.h"
+#  include "ace/Asynch_IO.h"
+#  include "ace/Asynch_IO_Impl.h"
+#  include "ace/Thread_Manager.h"
+#  include "ace/Timer_Queue.h"
+#  include "ace/Timer_List.h"
+#  include "ace/Timer_Heap.h"
+#  include "ace/Timer_Wheel.h"
 
 // Forward declarations.
 class ACE_Proactor_Impl;
@@ -564,11 +564,14 @@ private:
   ACE_Proactor &operator= (const ACE_Proactor &);
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Proactor.i"
-#endif /* __ACE_INLINE__ */
+#  if defined (__ACE_INLINE__)
+#    include "ace/Proactor.i"
+#  endif /* __ACE_INLINE__ */
 
 #else /* NOT WIN32 or POSIX with AIO features. */
+
+#  include "ace/OS.h"     // Need ACE_Time_Value
+
 class ACE_Export ACE_Proactor
 {
 public:
