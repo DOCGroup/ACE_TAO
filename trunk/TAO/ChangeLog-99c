@@ -1,4 +1,11 @@
+Mon Feb  8 00:00:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Simulator/Event_Supplier/Makefile: 
+	  Some binaries did not link both NavWeapC.o and NavWeapS.o, this
+	  is needed for colocation support.
+
 Sun Feb  7 23:45:19 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
         * Updated makefile dependencies in
 	orbsvcs/tests/Simulator/Event_Supplier
 
