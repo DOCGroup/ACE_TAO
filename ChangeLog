@@ -1,3 +1,11 @@
+Mon Jun 21 23:19:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/ftorbutils.mpb:
+
+	  This base project requires minimum CORBA support to be disabled.
+	  Projects that depend on these base projects must be aware of
+	  this.  Added an "avoids += minimum_corba" entry.
+
 Mon Jun 21 22:31:45 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-freebsd.h:
