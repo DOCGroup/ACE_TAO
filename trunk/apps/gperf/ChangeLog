@@ -1,5 +1,8 @@
 Sun Jul 19 13:11:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* src/new.cpp: Added support for the _RWSTD_THROW_SPEC macro for
+ 	  DEC UNIX.  Thanks to David Levine for reporting this.
+
 	* src/Key_List.cpp: Fixed one of those nasty "for loop counter
  	  scoping glitches.  Again, thanks to David Levine and DEC C++ for
  	  catching this.  * src/Key_List.cpp (reorder): Clarified the code
