@@ -12,10 +12,15 @@ BIN   	= ior-parser
 
 FILES  	= ior-handler
 
+LIBNAME  = libIOR
+LIB      = $(LIBNAME).a
+SHLIB    = $(LIBNAME).$(SOEXT)
+
 SRC   	= $(addsuffix .cpp,$(FILES))
+LSRC	= $(addsuffix .cpp,$(FILES))
 OBJ	= $(addsuffix .o,$(FILES))
 
-BUILD	= $(VBIN)
+#BUILD	= $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
