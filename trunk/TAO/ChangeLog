@@ -1,3 +1,11 @@
+Wed Dec 31 10:13:48 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* tao/IFR_Client/IFR_Base.pidl:
+
+	  Removed defenitions of CORBA::Identifier and 
+	  CORBA::RepositoryId since they are already defined in orb.idl.
+	
+
 Wed Dec 31 09:54:05 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h:
