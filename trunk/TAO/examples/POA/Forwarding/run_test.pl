@@ -6,7 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "../../../../bin";
-require ACEutils;
+use ACEutils;
 
 # Set STDERR to autoflush (weird unbufferd output stuff)
 $| = 1;

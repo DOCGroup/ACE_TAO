@@ -1,3 +1,20 @@
+Sun Feb 25 19:37:24 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/POA/Adapter_Activator/run_test.pl:
+        * examples/POA/DSI/run_test.pl:
+        * examples/POA/Explicit_Activation/run_test.pl:
+        * examples/POA/FindPOA/run_test.pl:
+        * examples/POA/Forwarding/run_test.pl:
+        * examples/POA/Loader/run_test.pl:
+        * examples/POA/NewPOA/run_test.pl:
+        * examples/POA/On_Demand_Activation/run_test.pl:
+        * examples/POA/On_Demand_Loading/run_test.pl:
+        * examples/POA/Reference_Counted_Servant/run_test.pl:
+        * examples/POA/RootPOA/run_test.pl:
+        * examples/POA/TIE/run_test.pl:
+          Instead of pushing a new directory to @INC we use 'use lib
+          <path>;' much cleaner and it works with 'use Foo;'.
+
 Sun Feb 25 11:31:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/POA/Adapter_Activator/run_test.pl:
