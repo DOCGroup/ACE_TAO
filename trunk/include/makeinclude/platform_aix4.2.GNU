@@ -23,8 +23,7 @@ SHLIBA      = $(SHLIB:lib%.so=lib%shr.a)
 ifdef SHLIB
 ACELIB      = -lACEshr
 endif
-LLIBS	    = -ltli_r -ldl  $(ACELIB)
-LIBS	    += $(filter-out $(SHLIBA:lib%.a=-l%), $(LLIBS))
+LIBS	    += -ltli_r -ldl
 ARFLAGS	    = ruv
 AR	    = ar
 LDFLAGS	    += -bI:/lib/pse.exp 
