@@ -379,6 +379,7 @@ public:
   // 'D': print timestamp in month/day/year hour:minute:sec:usec format.
   // 't': print thread id (1 if single-threaded)
   // 'u': print as unsigned int
+  // 'W': print out a wide (Unicode) character string (currently Win32 only).
   // 'X', 'x': print as a hex number
   // '%': print out a single percent sign, '%'
 

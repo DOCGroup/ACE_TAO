@@ -611,6 +611,7 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
 //   't': print thread id (1 if single-threaded)
 //   'u': print as unsigned int
 //   'X', 'x': print as a hex number
+//   'W': print out a wide (Unicode) character string (currently Win32 only).
 //   '%': format a single percent sign, '%'
 
 ssize_t
@@ -936,6 +937,9 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                   break;
                 case 'W':
                   // @@ UNICODE
+#if defined (ACE_WIN32)
+                  fp[1] = 'S';
+#endif /* ACE_WIN32 */
                 case 'd': case 'c': case 'i': case 'o':
                 case 'u': case 'x': case 'X':
                   type = 4 + wpc; // 4, 5, 6

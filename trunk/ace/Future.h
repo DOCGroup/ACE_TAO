@@ -98,33 +98,6 @@ class ACE_Future_Rep
 private:
   friend class ACE_Future<T>;
 
-  // Create, attach, detach and assign encapsulates the reference
-  // count handling and the object lifetime of ACE_Future_Rep<T>
-  // instances.
-
-  static ACE_Future_Rep<T> *create (void);
-  // Create a ACE_Future_Rep<T> and initialize the reference count.
-
-  static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *&rep);
-  // Increase the reference count and return argument. Uses the
-  // attribute "value_ready_mutex_" to synchronize reference count
-  // updating.
-  //
-  // Precondition (rep != 0).
-
-  static void detach (ACE_Future_Rep<T> *&rep);
-  // Decreases the reference count and and deletes rep if there are no
-  // more references to rep.
-  //
-  // Precondition (rep != 0)
-
-  static void assign (ACE_Future_Rep<T> *&rep,
-                      ACE_Future_Rep<T> *new_rep);
-  // Decreases the rep's reference count and and deletes rep if there
-  // are no more references to rep. Then assigns new_rep to rep.
-  //
-  // Precondition (rep != 0 && new_rep != 0)
-
   int set (const T &r,
            ACE_Future<T> &caller);
   // Set the result value.  The specified <caller> represents the
@@ -170,6 +143,31 @@ private:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+
+  // = Encapsulate reference count and object lifetime of instances.
+
+  static ACE_Future_Rep<T> *create (void);
+  // Create a ACE_Future_Rep<T> and initialize the reference count.
+
+  static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *&rep);
+  // Increase the reference count and return argument. Uses the
+  // attribute "value_ready_mutex_" to synchronize reference count
+  // updating.
+  //
+  // Precondition (rep != 0).
+
+  static void detach (ACE_Future_Rep<T> *&rep);
+  // Decreases the reference count and and deletes rep if there are no
+  // more references to rep.
+  //
+  // Precondition (rep != 0)
+
+  static void assign (ACE_Future_Rep<T> *&rep,
+                      ACE_Future_Rep<T> *new_rep);
+  // Decreases the rep's reference count and and deletes rep if there
+  // are no more references to rep. Then assigns new_rep to rep.
+  //
+  // Precondition (rep != 0 && new_rep != 0)
 
   // = Constructor and destructor private
   ACE_Future_Rep (void);
