@@ -1,3 +1,11 @@
+Fri Mar 29 08:32:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Makefile.bor:
+          Added new Cached_Allocator_Test
+
+        * tests/Cached_Allocator_Test.cpp:
+          Fixed unicode build errors
+
 Thu Mar 28 23:47:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * ace/OS.h:
@@ -118,7 +126,7 @@ Thu Mar 28 16:15:17 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 Thu Mar 28 13:31:19 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/POSIX_Asynch_IO.cpp (handle_close): 
+	* ace/POSIX_Asynch_IO.cpp (handle_close):
 	  Fixed the warnings on Debian_Core build that were caused by the
 	  changes earlier today.
 
