@@ -33,7 +33,7 @@ namespace TAO_Notify
   }
 
   void
-  Topology_Object::init (Topology_Parent * topology_parent ACE_ENV_ARG_DECL_NOT_USED)
+  Topology_Object::set_parent (Topology_Parent * topology_parent ACE_ENV_ARG_DECL_NOT_USED)
   {
     this->topology_parent_ = topology_parent;
     initialize (topology_parent);
