@@ -1,3 +1,10 @@
+Fri Dec 19 23:20:42 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* tests/IOStream_Test.cpp (client): Removed an extra read.
+
+	* ace/OS.h: ACE_SEH_FINALLY should always be executed on UNIX
+	  platforms.
+
 Fri Dec 19 18:49:26 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/IOStream_T.i: Enhanced ACE_IOStream and its companions as
@@ -14,21 +21,21 @@ Fri Dec 19 18:49:26 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	  Thanks to James Johnson <jcej@lads.com> for these fixes.
 
-	* ace/Log_Record.i: Removed a no-op assignment to Time_Value 
+	* ace/Log_Record.i: Removed a no-op assignment to Time_Value
 	  in the encode() method.    Thanks to Patrick J. McNerthney
  	  <pat@thememedia.com> for reporting this.
-	  
+
 	* ace/Log_Record.i: The time stamp put into the ACE_Log_Record
 	  gets all messed up when the ACE_Log_Record is transmitted to the
 	  Server_Logging_Handler and the client is run on a little-endian
 	  architecture.  This is because the ACE_Log_Record::encode method
-	  does: 
- 
+	  does:
+
           this->time_stamp_ = ACE_Time_Value
-  
+
           htonl (this->time_stamp_.sec ()),
           htonl (this->time_stamp_.usec ()));
- 
+
           When the ACE_Time_Value is passed in the resulting values from
  	  "htonl", it calls "normalize" which totally messes with the
  	  values passed.  Thanks to Patrick J. McNerthney
