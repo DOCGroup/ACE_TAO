@@ -24,7 +24,7 @@
 
 // Forward decl.
 class ACE_Service_Repository;
-class ACE_Service_Record;
+class ACE_Service_Type;
 class ACE_Allocator;
 class ACE_Reactor;
 class ACE_Proactor;
@@ -283,7 +283,7 @@ public:
 
   // = Member functions used by various other parts
   //   of the Service Configurator class category.
-  static int initialize (const ACE_Service_Record *, char parameters[]);
+  static int initialize (const ACE_Service_Type *, char parameters[]);
   // Dynamically link the shared object file and retrieve
   // a pointer to the designated shared object in this file. 
 

@@ -195,7 +195,7 @@ ACE_Remove_Node::apply (void)
 
 }
 
-ACE_Dynamic_Node::ACE_Dynamic_Node (const ACE_Service_Record *sr,
+ACE_Dynamic_Node::ACE_Dynamic_Node (const ACE_Service_Type *sr,
 				    char *parms)
   : ACE_Static_Node (sr->name (), parms),
     record_ (sr)
@@ -203,7 +203,7 @@ ACE_Dynamic_Node::ACE_Dynamic_Node (const ACE_Service_Record *sr,
   ACE_TRACE ("ACE_Dynamic_Node::ACE_Dynamic_Node");
 }
 
-const ACE_Service_Record *
+const ACE_Service_Type *
 ACE_Dynamic_Node::record (void) const
 {
   ACE_TRACE ("ACE_Dynamic_Node::record");
@@ -252,14 +252,14 @@ ACE_Static_Node::ACE_Static_Node (const char *nm,
   ACE_TRACE ("ACE_Static_Node::ACE_Static_Node");
 }
 
-const ACE_Service_Record *
+const ACE_Service_Type *
 ACE_Static_Node::record (void) const
 {
   ACE_TRACE ("ACE_Static_Node::record");
-  ACE_Service_Record *sr;
+  ACE_Service_Type *sr;
 
   if (ACE_Service_Repository::instance()->find (this->name (),
-						(const ACE_Service_Record **) &sr) == -1)
+						(const ACE_Service_Type **) &sr) == -1)
     return 0;
   else
     return sr;

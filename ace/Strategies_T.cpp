@@ -164,10 +164,10 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 
   if (svc_handler != 0)
     {
-      // Create an ACE_Service_Record containing the SVC_Handler and
+      // Create an ACE_Service_Type containing the SVC_Handler and
       // insert into this->svc_rep_;
 
-      ACE_Service_Type stp =
+      ACE_Service_Type_Impl stp =
 	new ACE_Service_Object_Type (svc_handler, this->svc_name_);
 
       if (stp == 0)
@@ -176,8 +176,8 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 	  return -1;
 	}
 
-      ACE_Service_Record *srp =
-	new ACE_Service_Record (this->svc_name_, stp, handle, 1);
+      ACE_Service_Type *srp =
+	new ACE_Service_Type (this->svc_name_, stp, handle, 1);
 
       if (srp == 0)
 	{

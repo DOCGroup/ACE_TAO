@@ -149,7 +149,7 @@ ACE_Service_Manager::list_services (void)
   ACE_TRACE ("ACE_Service_Manager::list_services");
   ACE_Service_Repository_Iterator sri (*ACE_Service_Repository::instance ());
 
-  for (const ACE_Service_Record *sr; 
+  for (const ACE_Service_Type *sr; 
        sri.next (sr) != 0; 
        sri.advance ())
     {

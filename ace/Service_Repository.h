@@ -17,12 +17,17 @@
 #if !defined (ACE_SERVICE_REPOSITORY_H)
 #define ACE_SERVICE_REPOSITORY_H
 
-#include "ace/Service_Record.h"
+#include "ace/Service_Types.h"
 
 class ACE_Export ACE_Service_Repository
   // = TITLE
-  //     Provide the abstract base class that supplies common server
-  //     repository operations.
+  //     A container for all services offered by a Service
+  //     Configurator-based application.  This allows an
+  //     administrative entity to centrally manage and control the
+  //     behavior of application services.
+  //
+  // = DESCRIPTION
+  //     This class contains a vector of <ACE_Service_Types> *'s.
 {
   friend class ACE_Service_Repository_Iterator;
 public:
@@ -55,11 +60,11 @@ public:
 
   // = Search structure operations (all acquire locks as necessary). 
 
-  int insert (const ACE_Service_Record *);
+  int insert (const ACE_Service_Type *);
   // Insert a new service record.
 
   int find (const char name[], 
-	    const ACE_Service_Record **srp = 0, 
+	    const ACE_Service_Type **srp = 0, 
 	    int ignore_suspended = 1);
   // Locate an entry with <name> in the table.  If <ignore_suspended>
   // is set then only consider services marked as resumed.  If the
@@ -72,10 +77,10 @@ public:
   // Remove an existing service record.
 
   // = Liveness control
-  int resume (const char[], const ACE_Service_Record ** = 0);
+  int resume (const char[], const ACE_Service_Type ** = 0);
   // Resume a service record.
 
-  int suspend (const char[], const ACE_Service_Record ** = 0);
+  int suspend (const char[], const ACE_Service_Type ** = 0);
   // Suspend a service record.
 
   int current_size (void);
@@ -92,12 +97,12 @@ public:
 
 private:
   int find_i (const char service_name[],
-	      const ACE_Service_Record ** = 0, 
+	      const ACE_Service_Type ** = 0, 
 	      int ignore_suspended = 1);
   // Locates <service_name>.  Must be called without locks being
   // held...
 
-  const ACE_Service_Record **service_vector_;
+  const ACE_Service_Type **service_vector_;
   // Contains all the configured services.
 
   int current_size_;
@@ -130,7 +135,7 @@ public:
 
   // = Iteration methods.
 
-  int next (const ACE_Service_Record *&next_item);
+  int next (const ACE_Service_Type *&next_item);
   // Pass back the <next_item> that hasn't been seen in the set.
   // Returns 0 when all items have been seen, else 1.
 
