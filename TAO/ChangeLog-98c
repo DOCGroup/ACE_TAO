@@ -8,6 +8,9 @@ Fri Nov 20 07:08:28 1998  David L. Levine  <levine@cs.wustl.edu>
           that VxWorks has a limitation of 100 characters for the full
           path name to an NFS file.
 
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.h: removed -s from
+          force_argv because its no longer used.
+
 Fri Nov 20 07:48:54 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
         * tao/CDR.{h, i}:
