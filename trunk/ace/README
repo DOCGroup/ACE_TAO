@@ -315,6 +315,7 @@ ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as
                                         a long constant.
 ACE_HAS_MALLOC_STATS                    Enabled malloc statistics
                                         collection.
+ACE_HAS_MINIMAL_ACE_OS                  Disables some #includes in ace/OS.*.
 ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION     Avoid #including ace/streams.h
                                         in OS.h.  Users must include
                                         ace/streams.h, <iostream>, or
