@@ -1,3 +1,9 @@
+Wed Sep 27 14:02:30 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Reactor/WFMO_Reactor/test_abandoned.cpp
+	  (handle_timeout): Moved <--this->iterations_> outside the DEBUG
+	  statement.
+
 Wed Sep 27 08:46:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/RMCast.dsw:
