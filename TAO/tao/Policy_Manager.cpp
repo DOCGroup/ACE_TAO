@@ -287,7 +287,7 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
 
   for (CORBA::ULong i = 0; i < policies.length ();  ++i)
     {
-      CORBA::Policy_var policy = policies[i].in ();
+      CORBA::Policy_var policy = policies[i];
       if (CORBA::is_nil (policy.in ()))
         continue;
 

@@ -1,3 +1,10 @@
+Wed Jan 10 12:07:21 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/Policy_Manager.cpp:
+	  Reverted change by Darrell on Jan 8 since it was causing
+	  the Timed_Buffered_Oneways and Timeout tests to fail under
+	  the Linux and EGCS builds.
+
 Tue Jan  9 14:31:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/server_shmiop.conf:
