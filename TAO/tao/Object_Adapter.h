@@ -274,6 +274,8 @@ protected:
 
   ACE_Lock *lock_;
 
+public:
+
   class poa_name_iterator
   {
     // = TITLE

@@ -1543,9 +1543,9 @@ TAO_Resource_Factory::get_global_collocation_table (void)
 }
 
 TAO_Resource_Factory::Pre_Allocated::Pre_Allocated (void)
-  : object_adapter_ (TAO_ORB_CORE::instance ()->server_factory ()->active_object_map_creation_parameters (),
+  : r_ (TAO_ORB_CORE::instance ()->resource_factory ()->reactor_lock ()),
+    object_adapter_ (TAO_ORB_CORE::instance ()->server_factory ()->active_object_map_creation_parameters (),
                      *TAO_ORB_CORE::instance ()),
-    r_ (TAO_ORB_CORE::instance ()->resource_factory ()->reactor_lock ()),
     cached_connect_strategy_ (TAO_ORB_CORE::instance ()->client_factory ()->create_client_creation_strategy ())
 {
   // Make sure that the thread manager does not wait for threads
