@@ -91,20 +91,23 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       // This only works for IIOP objrefs.  If we're handed an objref
       // that's not an IIOP objref, fail -- application must use an
       // ORB that's configured differently.
-      IIOP_Object *iiopobj =
-	ACE_dynamic_cast (IIOP_Object*, obj->_stubobj ());
+      // IIOP_Object *iiopobj = 
+      //   ACE_dynamic_cast (IIOP_Object*, obj->_stubobj ());
 
-      if (iiopobj == 0)
+      if (obj->_stubobj () == 0)
         return CORBA::string_copy ((CORBA::String) iiop_prefix);
+
+      TAO_IIOP_Profile *iiop_profile =
+            ACE_dynamic_cast (TAO_IIOP_Profile *, obj->_stubobj ()->profile_in_use ());
 
       CORBA::String_var key;
       TAO_POA::encode_sequence_to_string (key.inout(),
-                                          iiopobj->profile.object_key);
+                                          iiop_profile->object_key ());
 
       u_int buflen = (ACE_OS::strlen (iiop_prefix) +
                       1 /* major # */ + 1 /* minor # */ +
                       2 /* double-slash separator */ +
-                      ACE_OS::strlen (iiopobj->profile.host) +
+                      ACE_OS::strlen (iiop_profile->host_) +
                       1 /* colon separator */ +
                       5 /* port number */ +
                       1 /* slash separator */ +
@@ -115,10 +118,11 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       ACE_OS::sprintf (buf,
                        "%s%c.%c//%s:%d/%s",
                        iiop_prefix,
-                       digits [iiopobj->profile.iiop_version.major],
-                       digits [iiopobj->profile.iiop_version.minor],
-                       iiopobj->profile.host,
-                       iiopobj->profile.port,
+                       digits [iiop_profile->version ()->major],
+                       digits [iiop_profile->version ()->minor],
+                       // @@ UGLY!
+                       iiop_profile->host_,
+                       iiop_profile->port_,
                        key.in ());
       return buf;
     }
@@ -174,7 +178,7 @@ ior_string_to_object (const char *str,
   mb.wr_ptr (len);
   TAO_InputCDR stream (&mb, byte_order);
 
-  CORBA::Object_ptr objref;
+  CORBA::Object_ptr objref=0;
   if (stream.decode (CORBA::_tc_Object,
 		     &objref, 0,
 		     env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -184,7 +188,6 @@ ior_string_to_object (const char *str,
 }
 
 // Destringify URL style IIOP objref.
-
 static CORBA::Object_ptr
 iiop_string_to_object (const char *string,
                        CORBA::Environment &env)
@@ -200,77 +203,12 @@ iiop_string_to_object (const char *string,
   // gets thoroughly excercised/debugged!  Without a typeID, the
   // _narrow will be required to make an expensive remote "is_a" call.
 
+  // Now make the IIOP_Object ...
   IIOP_Object *data;
+    ACE_NEW_RETURN (data, IIOP_Object ((char *) 0), CORBA::Object::_nil ());
 
-  // null type ID.
-  ACE_NEW_RETURN (data, IIOP_Object ((char *) 0),
-                  CORBA::Object::_nil ());
-
-  // Remove the "N.N//" prefix, and verify the version's one
-  // that we accept
-
-  if (isdigit (string [0]) && isdigit (string [2]) && string [1] == '.'
-      && string [3] == '/' && string [4] == '/')
-    {
-      data->profile.iiop_version.major = (char) (string [0] - '0');
-      data->profile.iiop_version.minor = (char) (string [2] - '0');
-      string += 5;
-    }
-  else
-    {
-      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      data->_decr_refcnt ();
-      return CORBA::Object::_nil ();
-    }
-
-  if (data->profile.iiop_version.major != IIOP::MY_MAJOR
-      || data->profile.iiop_version.minor > IIOP::MY_MINOR)
-    {
-      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      data->_decr_refcnt ();
-      return CORBA::Object::_nil ();
-    }
-
-  // Pull off the "hostname:port/" part of the objref
-
-  // Copy the string because we are going to modify it...
-  CORBA::String_var copy = CORBA::string_dup (string);
-
-  char *start = copy.inout ();
-  char *cp = ACE_OS::strchr (start, ':');
-  if (cp == 0)
-    {
-      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      data->_decr_refcnt ();
-      return CORBA::Object::_nil ();
-    }
-
-  data->profile.host = CORBA::string_alloc (1 + cp - start);
-  for (cp = data->profile.host;
-       *start != ':';
-       *cp++ = *start++)
-    continue;
-
-  *cp = 0; start++;
-
-  cp = ACE_OS::strchr (start, '/');
-
-  if (cp == 0)
-    {
-      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      CORBA::string_free (data->profile.host);
-      data->profile.host = 0;
-      data->_decr_refcnt ();
-      return CORBA::Object::_nil ();
-    }
-
-  data->profile.port = (short) ACE_OS::atoi (start);
-  data->profile.reset_object_addr ();
-  start = ++cp;
-
-  // Parse the object key
-  TAO_POA::decode_string_to_sequence (data->profile.object_key,
-                                      start);
+  // init address info in profile
+  data->profile_in_use ()->parse_string (string, env);
 
   // Create the CORBA level proxy.
   TAO_ServantBase *servant =
@@ -321,9 +259,12 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 
   if (this->optimize_collocation_objects_ && sobj != 0)
     {
-      IIOP_Object *iiopobj =
-	ACE_dynamic_cast (IIOP_Object*, sobj);
+      IIOP_Object *iiopobj = 
+              ACE_dynamic_cast (IIOP_Object*, sobj);
 
+      TAO_IIOP_Profile *iiop_profile =
+              ACE_dynamic_cast (TAO_IIOP_Profile *, sobj->profile_in_use ());
+      
       // Make sure users passed in an IIOP_Object otherwise, we don't
       // know what to do next.
       if (iiopobj == 0)
@@ -338,27 +279,28 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
         }
 #if 0
       ACE_DEBUG ((LM_DEBUG,
-		  "IIOP_ORB: checking collocation for <%s:%d>\n",
-		  iiopobj->profile.object_addr ().get_host_name (),
-		  iiopobj->profile.object_addr ().get_port_number ()));
+                  "IIOP_ORB: checking collocation for <%s:%d>\n",
+                  iiop_profile->object_addr ().get_host_name(),
+                  iiop_profile->object_addr ().get_port_number()));
 #endif
+
       CORBA::Environment env;
-      TAO_ObjectKey_var objkey = iiopobj->key (env);
+      TAO_ObjectKey_var objkey = iiop_profile->_key (env);
 
       if (env.exception ())
         {
 #if 0
           ACE_DEBUG ((LM_DEBUG,
                       "IIOP_ORB: cannot find key for <%s:%d>\n",
-                      iiopobj->profile.object_addr ().get_host_name (),
-                      iiopobj->profile.object_addr ().get_port_number ()));
+                      iiop_profile->object_addr ().get_host_name (),
+                      iiop_profile->object_addr ().get_port_number ()));
 #endif
           return 0;
         }
 
       // Check if the object requested is a collocated object.
       TAO_POA *poa = TAO_ORB_Core_instance ()->
-        get_collocated_poa (iiopobj->profile.object_addr ());
+        get_collocated_poa (iiop_profile->object_addr());
 
       if (poa != 0)
         {
@@ -369,8 +311,8 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 #if 0
               ACE_DEBUG ((LM_DEBUG,
                           "IIOP_ORB: cannot find servant for <%s:%d>\n",
-                          iiopobj->profile.object_addr ().get_host_name (),
-                          iiopobj->profile.object_addr ().get_port_number ()));
+                          iiop_profile->object_addr ().get_host_name (),
+                          iiop_profile->object_addr().get_port_number()));
 #endif
               return 0;
             }
@@ -378,8 +320,8 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 #if 0
           ACE_DEBUG ((LM_DEBUG,
                       "IIOP_ORB: object at <%s:%d> is collocated\n",
-                      iiopobj->profile.object_addr ().get_host_name (),
-                      iiopobj->profile.object_addr ().get_port_number ()));
+                      iiop_profile->object_addr().get_host_name(),
+                      iiop_profile->object_addr().get_port_number()));
 #endif
           return servant;
         }

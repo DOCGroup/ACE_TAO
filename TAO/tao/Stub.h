@@ -45,6 +45,8 @@ enum TAO_Param_Type
   PARAM_RETURN  // = PARAM_OUT
 };
 
+class TAO_Profile;
+
 struct TAO_Param_Data
 {
   // = TITLE
@@ -269,13 +271,45 @@ public:
   // only supports one protocol -- the problem won't show up.
   // "Multiprotocol ORBs" will need to solve that problem though.  ]
 
-  virtual TAO_ObjectKey *key (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
+  // This is profile specific and so should be called throug the profile_in_use
+  // member function.
+  // virtual TAO_ObjectKey *key (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
   // Return the object key as an out parameter.  Caller should release
   // return value when finished with it.
 
   // = Memory management.
   virtual CORBA::ULong _incr_refcnt (void) = 0;
   virtual CORBA::ULong _decr_refcnt (void) = 0;
+
+  virtual TAO_Profile *set_profile_in_use (TAO_Profile *pfile) = 0;
+  // Makes a copy of the profile and frees the existing profile_in_use.
+
+  virtual TAO_Profile *profile_in_use (void) {return 0;};
+  // @@ In order to support pluggable protocols add a method to return
+  //    a reference to a TAO_Profile (hence TAO_Transport) object.  This 
+  //    object will keep a reference to the service handler hint. fredk
+  // returns a pointer to the profile_in_use object.  This object
+  // retains ownership of this object.
+
+  virtual TAO_Profile *get_profile(void) {return 0;};
+  // returns null if profile_in_use == null
+  // otherwise return a pointer to a new profile object.
+  // The caller is responsible for freeing this memory!
+
+  virtual TAO_Profile *get_fwd_profile (void) {return 0;};
+  // Returns the current forwarding profile.
+
+  virtual TAO_Profile *get_fwd_profile_i (void) {return 0;};
+  // Returns the current forwarding profile.
+
+  virtual TAO_Profile *set_fwd_profile (const TAO_Profile *new_profile) = 0;
+  // Sets forwarding profile and returns the current value.
+
+  virtual ACE_Lock &get_fwd_profile_lock (void) = 0;
+  // Gives reference to the lock guarding the forwarding profile.
+
+  virtual void reset_first_locate_request (void) = 0;
+  // reset the flag telling that the locate request should be used
 
 protected:
   virtual ~STUB_Object (void);

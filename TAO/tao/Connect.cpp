@@ -42,16 +42,43 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Connect_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_SVC_HANDLER (t ? t : TAO_ORB_Core_instance()->thr_mgr (), 0, 0),
-    orb_core_ (TAO_ORB_Core_instance ())
+TAO_IIOP_Handler_Base::TAO_IIOP_Handler_Base (ACE_Thread_Manager *t)
+  : TAO_SVC_HANDLER (t)
 {
 }
 
+TAO_IIOP_Handler_Base::TAO_IIOP_Handler_Base (TAO_ORB_Core *orb_core)
+  : TAO_SVC_HANDLER (orb_core->thr_mgr (), 0, 0)
+{
+}
+
+TAO_IIOP_Handler_Base::TAO_IIOP_Handler_Base (ACE_Thread_Manager *t, int x, int y)
+  : TAO_SVC_HANDLER (t, 0, 0)
+{
+}
+
+// @@ For pluggable protocols, added a reference to the corresponding transport obj.
+TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager *t)
+  : TAO_IIOP_Handler_Base (t ? t : TAO_ORB_Core_instance()->thr_mgr (), 0, 0),
+    orb_core_ (TAO_ORB_Core_instance ())
+{
+  iiop_transport_ = new TAO_IIOP_Server_Transport(this);
+}
+
+// @@ For pluggable protocols, added a reference to the corresponding transport obj.
+//@@    iiop_transport_(new TAO_IIOP_Transport(TAO_IOP_TAG_INTERNET_IOP, this))
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (TAO_ORB_Core *orb_core)
-  : TAO_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : TAO_IIOP_Handler_Base (orb_core),
     orb_core_ (orb_core)
 {
+  iiop_transport_ = new TAO_IIOP_Server_Transport(this);
+}
+
+TAO_Transport *
+TAO_Server_Connection_Handler::transport (void)
+{
+  // @@ For now return nothing since all is not in place!
+  return iiop_transport_;
 }
 
 int
@@ -385,8 +412,7 @@ TAO_Server_Connection_Handler::send_response (TAO_OutputCDR &output)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
 
-  TAO_SVC_HANDLER *this_ptr = this;
-  TAO_GIOP::send_request (this_ptr,
+  TAO_GIOP::send_request (this->iiop_transport_,
                           output,
                           this->orb_core_);
 }
@@ -487,8 +513,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
       ACE_ENDTRY;
 
       // hand it to the next lower layer
-      TAO_SVC_HANDLER *this_ptr = this;
-      TAO_GIOP::send_request (this_ptr, output, this->orb_core_);
+      TAO_GIOP::send_request (this->iiop_transport_, output, this->orb_core_);
     }
 }
 
@@ -523,14 +548,13 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   int result = 0;
   int error_encountered = 0;
   CORBA::Boolean response_required = 0;
-  TAO_SVC_HANDLER *this_ptr = this;
   CORBA::ULong request_id = 0;
 
   ACE_TRY_NEW_ENV
     {
       // Try to recv a new request.
       TAO_GIOP::Message_Type type =
-        TAO_GIOP::recv_request (this_ptr, input, this->orb_core_);
+        TAO_GIOP::recv_request (this->iiop_transport_, input, this->orb_core_);
 
       // Check to see if we've been cancelled cooperatively.
       if (this->orb_core_->orb ()->should_shutdown () != 0)
@@ -659,11 +683,13 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   return result;
 }
 
+// @@ For pluggable protocols, added a reference to the corresponding transport obj.
 TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_SVC_HANDLER (t == 0 ? TAO_ORB_Core_instance ()->thr_mgr () : t, 0, 0),
+  : TAO_IIOP_Handler_Base (t == 0 ? TAO_ORB_Core_instance ()->thr_mgr () : t, 0, 0),
     expecting_response_ (0),
     input_available_ (0)
 {
+  iiop_transport_ = new TAO_IIOP_Client_Transport(this);
 }
 
 TAO_ST_Client_Connection_Handler::TAO_ST_Client_Connection_Handler (ACE_Thread_Manager *t)
@@ -679,17 +705,30 @@ TAO_MT_Client_Connection_Handler::TAO_MT_Client_Connection_Handler (ACE_Thread_M
            ACE_SYNCH_CONDITION (TAO_ORB_Core_instance ()->leader_follower_lock ()));
 }
 
+// @@ Need to get rid of the Transport Objects!
 TAO_Client_Connection_Handler::~TAO_Client_Connection_Handler (void)
 {
+  delete this->iiop_transport_;
+  this->iiop_transport_ = 0;
+}
+
+TAO_Transport *
+TAO_Client_Connection_Handler::transport (void)
+{
+  return this->iiop_transport_;
 }
 
 TAO_ST_Client_Connection_Handler::~TAO_ST_Client_Connection_Handler (void)
 {
+  delete this->iiop_transport_;
+  this->iiop_transport_ = 0;
 }
 
 TAO_MT_Client_Connection_Handler::~TAO_MT_Client_Connection_Handler (void)
 {
   delete this->cond_response_available_;
+  delete this->iiop_transport_;
+  this->iiop_transport_ = 0;
 }
 
 int
@@ -804,6 +843,9 @@ TAO_Client_Connection_Handler::check_unexpected_data (void)
   return -1;
 }
 
+// @@ this seems odd that the connection handler would call methods in the
+//    GIOP object.  Some of this mothod's functionality should be moved
+//    to GIOP. fredk
 int
 TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
                                                 TAO_OutputCDR &stream,
@@ -823,7 +865,7 @@ TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
   // be dynamically linked in (wouldn't that be cool/freaky?)
 
   // Send the request
-  int success  = (int) TAO_GIOP::send_request (this,
+  int success  = (int) TAO_GIOP::send_request (this->iiop_transport_,
                                                stream,
                                                orb_core);
   if (!success)
@@ -899,7 +941,7 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
   if (!is_twoway)
     {
       // Send the request
-      int success  = (int) TAO_GIOP::send_request (this,
+      int success  = (int) TAO_GIOP::send_request (this->iiop_transport_,
                                                    stream,
                                                    orb_core);
 
@@ -920,7 +962,7 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
       this->calling_thread_ = ACE_Thread::self ();
 
       // Send the request
-      int success = (int) TAO_GIOP::send_request (this,
+      int success = (int) TAO_GIOP::send_request (this->iiop_transport_,
                                                   stream,
                                                   orb_core);
 

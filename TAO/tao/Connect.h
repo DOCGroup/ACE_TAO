@@ -32,11 +32,25 @@
 
 // Forward Decls
 class TAO_OA_Parameters;
+class TAO_Transport;
+class TAO_IIOP_Transport;
+class TAO_IIOP_Client_Transport;
+class TAO_IIOP_Server_Transport;
 
 typedef ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
 
-class TAO_Export TAO_Client_Connection_Handler : public TAO_SVC_HANDLER
+class TAO_IIOP_Handler_Base : public TAO_SVC_HANDLER
+{
+public:
+  TAO_IIOP_Handler_Base (ACE_Thread_Manager *t);
+  TAO_IIOP_Handler_Base (TAO_ORB_Core *orb_core);
+  TAO_IIOP_Handler_Base (ACE_Thread_Manager *t, int x, int y);
+
+  virtual TAO_Transport *transport (void) = 0;
+};
+
+class TAO_Export TAO_Client_Connection_Handler : public TAO_IIOP_Handler_Base
 {
   // = TITLE
   //      <Svc_Handler> used on the client side and returned by the
@@ -72,7 +86,14 @@ public:
   virtual int close (u_long flags = 0);
   // Object termination hook.
 
+  virtual TAO_Transport *transport (void);
+
 protected:
+
+  TAO_IIOP_Client_Transport *iiop_transport_;
+  // @@ New transport object reference.
+  // The handler is responsible for creating this object when
+  // it is instantiated. fredk
 
   int check_unexpected_data (void);
   // This method checks for unexpected data
@@ -142,7 +163,7 @@ protected:
 
 class TAO_ORB_Core;
 
-class TAO_Export TAO_Server_Connection_Handler : public TAO_SVC_HANDLER
+class TAO_Export TAO_Server_Connection_Handler : public TAO_IIOP_Handler_Base
 {
   // = TITLE
   //   Handles requests on a single connection in a server.
@@ -183,9 +204,14 @@ public:
   // <response_required> to zero if the request is for a oneway or
   // non-zero if for a two-way and <response> to any necessary
   // response (including errors).  In case of errors, -1 is returned
-  // and additional information carried in <TAO_IN_ENV>.
+  // and additional information carried in <env>.
+
+  TAO_Transport *transport (void);
 
 protected:
+  TAO_IIOP_Server_Transport *iiop_transport_;
+  // @@ New transport object reference.
+
   virtual int handle_locate (TAO_InputCDR &msg,
                              TAO_OutputCDR &response,
                              CORBA::Boolean &response_required,
@@ -222,9 +248,5 @@ protected:
 #if defined (__ACE_INLINE__)
 # include "tao/Connect.i"
 #endif /* __ACE_INLINE__ */
-
-typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
-                              TAO_SOCK_ACCEPTOR>
-        TAO_ACCEPTOR;
 
 #endif /* TAO_CONNECT_H */

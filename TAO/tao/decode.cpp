@@ -563,7 +563,7 @@ TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
     }
 }
 
-// Decode obj ref.
+// Decode obj ref.  An IOR
 CORBA::TypeCode::traverse_status
 TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
                             const void *data, // where the result will go
@@ -658,69 +658,40 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
 
         // Ownership of type_hint is given to IIOP_Object
         ACE_NEW_RETURN (objdata,
-                        IIOP_Object (type_hint),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+                IIOP_Object (type_hint),
+                CORBA::TypeCode::TRAVERSE_STOP);
 
-        IIOP::Profile *profile = &objdata->profile;
-
-        // Read and verify major, minor versions, ignoring IIOP
-        // profiles whose versions we don't understand.
-        //
-        // XXX this doesn't actually go back and skip the whole
-        // encapsulation...
-        if (!(str.read_octet (profile->iiop_version.major)
-              && profile->iiop_version.major == IIOP::MY_MAJOR
-              && str.read_octet (profile->iiop_version.minor)
-              && profile->iiop_version.minor <= IIOP::MY_MINOR))
-          {
-            ACE_DEBUG ((LM_DEBUG, "detected new v%d.%d IIOP profile",
-                        profile->iiop_version.major,
-                        profile->iiop_version.minor));
+ 
+        // return code will be -1 if an error occurs
+        // otherwise 0 for stop (can't read this profile type or version)
+        // and 1 for continue.
+        // @@ check with carlos about how TRAVERSE_CONTINUE is used!
+        switch (objdata->profile_in_use ()->parse (str, continue_decoding, env))
+        {
+          case -1:
+            objdata->_decr_refcnt ();
+            return CORBA::TypeCode::TRAVERSE_STOP;
+            break;
+          case 0:
             objdata->type_id = (const char *) 0;
             objdata->_decr_refcnt ();
             objdata = 0;
             continue;
-          }
+            break;
+          case 1:
+          default:
+            // all other return values indicate success
+            break;
+        }
 
-        // Get host and port
-        if (str.decode (CORBA::_tc_string,
-                        &profile->host,
-                        0,
-                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE
-            || !str.read_ushort (profile->port))
-          {
-            env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-            ACE_DEBUG ((LM_DEBUG, "error decoding IIOP host/port"));
-            objdata->_decr_refcnt ();
-            return CORBA::TypeCode::TRAVERSE_STOP;
-          }
-
-        profile->reset_object_addr ();
-
-        // ... and object key.
-
-        continue_decoding = str.decode (TC_opaque,
-                                        &profile->object_key,
-                                        0,
-                                        env) == CORBA::TypeCode::TRAVERSE_CONTINUE;
-
-        if (str.length () != 0)
-          {
-            env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-            ACE_DEBUG ((LM_DEBUG,
-                        "%d bytes out of %d left after IIOP profile data\n",
-                        str.length (), encap_len));
-            objdata->_decr_refcnt ();
-            return CORBA::TypeCode::TRAVERSE_STOP;
-          }
-      }
-
+    }
+            
   if (objdata == 0)
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       ACE_DEBUG ((LM_DEBUG, "objdata is 0, maybe because "
                   "no IIOP v%d.%d (or earlier) profile in IOR!\n",
-                  IIOP::MY_MAJOR, IIOP::MY_MINOR ));
+                  TAO_IIOP_Profile::DEF_IIOP_MAJOR, TAO_IIOP_Profile::DEF_IIOP_MINOR));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
   else
@@ -1023,7 +994,8 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                                   {
                                     CORBA::Long l;
                                     TAO_InputCDR stream ((ACE_Message_Block *)
-                                                         member_label->_tao_get_cdr ());
+                                                         member_label->value
+                                                         ());
                                     (void)stream.decode (discrim_tc, &l, 0, env);
                                     if (l == *(CORBA::Long *) discrim_val)
                                       discrim_matched = 1;

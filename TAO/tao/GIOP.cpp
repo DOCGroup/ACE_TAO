@@ -41,6 +41,12 @@
 // @@ there is lots of unverified I/O here.  In all cases, if an
 // error is detected when marshaling or unmarshaling, it should be
 // reported.
+// @@ Some dependance on the specific underlying transport protocol used.
+//    This must be removed in order to support pluggable protocols.
+//    TAO_Connector and TAO_Transport objects will be introduced
+//    to abstract away the specific transport protocol used.  We will
+//    just expose behavior (methods) to all transport protocols that
+//    can be used with GIOP!  fredk
 
 #include "tao/corba.h"
 #include "tao/Timeprobe.h"
@@ -182,19 +188,19 @@ operator>>(TAO_InputCDR &cdr,
            ++i)
         cdr >> x[i];
     }
-
   return cdr.good_bit ();
 }
 
 CORBA::Boolean
-TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
+TAO_GIOP::send_request (TAO_Transport  *transport,
                         TAO_OutputCDR &stream,
                         TAO_ORB_Core *orb_core)
 {
+
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_SEND_REQUEST_START);
 
-  char *buf = (char *) stream.buffer ();
-  size_t buflen = stream.total_length ();
+  char *buf = (char *) stream.buffer (); // ptr to first buffer
+  size_t total_len = stream.total_length ();  // length of all buffers
 
   // assert (buflen == (stream.length - stream.remaining));
 
@@ -209,15 +215,18 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
   // networking infrastructure (e.g., IPSEC).
 
   size_t header_len = TAO_GIOP_HEADER_LEN;
+  // @@ Ug, not sure what to do with this IIOP specific code!
+  //    An idea would be to change this to ->use_lite_protocol
+  //    that way it is not IIOP specific.  fredk
   size_t offset = TAO_GIOP_MESSAGE_SIZE_OFFSET;
-  if (orb_core->orb_params ()->use_IIOP_lite_protocol ())
+  if (orb_core->orb_params ()->use_lite_protocol ())
     {
       header_len = TAO_IIOP_LITE_HEADER_LEN;
       offset = TAO_IIOP_LITE_MESSAGE_SIZE_OFFSET;
     }
 
-  CORBA::ULong bodylen = buflen - header_len;
-
+  CORBA::ULong bodylen = total_len - header_len;
+  
 #if !defined (TAO_ENABLE_SWAP_ON_WRITE)
   *ACE_reinterpret_cast(CORBA::ULong*,buf + offset) = bodylen;
 #else
@@ -237,85 +246,35 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
 #if 0
   TAO_GIOP::dump_msg ("send",
                       ACE_reinterpret_cast (u_char *, buf),
-                      buflen);
-#endif /* 0 */
+                      total_len);
+#endif
 
-  TAO_SOCK_Stream &peer = handler->peer ();
+  // this guarantees to send all data (bytes) or return an error
+  ssize_t n = transport->send (stream.begin ());
 
-  const int TAO_WRITEV_MAX = IOV_MAX;
-  iovec iov[TAO_WRITEV_MAX];
-  int iovcnt = 0;
-
-  for (const ACE_Message_Block *i = stream.begin ();
-       i != stream.end ();
-       i = i->cont ())
-    {
-      iov[iovcnt].iov_base = i->rd_ptr ();
-      iov[iovcnt].iov_len = i->length ();
-      iovcnt++;
-
-      // The buffer is full make a OS call.
-
-      // @@ TODO this should be optimized on a per-platform basis, for
-      // instance, some platforms do not implement writev() there we
-      // should copy the data into a buffer and call send_n(). In
-      // other cases there may be some limits on the size of the
-      // iovec, there we should set TAO_WRITEV_MAX to that limit.
-      if (iovcnt == TAO_WRITEV_MAX)
-        {
-          ssize_t n = peer.sendv_n (iov,
-                                    iovcnt);
-          if (n == -1)
-            {
-              if (TAO_orbdebug)
-                ACE_DEBUG ((LM_DEBUG,
-                            "(%P|%t) closing conn %d after fault %p\n",
-                            peer.get_handle (),
-                            "GIOP::send_request"));
-              handler->handle_close ();
-              return 0;
-            }
-          else if (n == 0)
-            {
-              if (TAO_orbdebug)
-                ACE_DEBUG ((LM_DEBUG,
-                            "(%P|%t) GIOP::send_request (): "
-                            "EOF, closing conn %d\n",
-                            peer.get_handle ()));
-              handler->handle_close ();
-              return 0;
-            }
-
-          iovcnt = 0;
-        }
+  if (n == -1) {
+    if (TAO_orbdebug) {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) closing conn %d after fault %p\n",
+                  transport->handle (), "GIOP::send_request ()"));
     }
+    transport->close_conn ();
+    return 0 ;
+  } 
 
-  if (iovcnt != 0)
+  // @@ Don't know about this one, when will we get a 0 from the write if we
+  //    assume that there is data to write.  I would only expect a 0 if there
+  //    was nothing to send or if nonblocking.
+  if (n == 0)
+  {
+    if (TAO_orbdebug) 
     {
-      ssize_t n = peer.sendv_n (iov,
-                                iovcnt);
-      if (n == -1)
-        {
-          if (TAO_orbdebug)
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) closing conn %d after fault %p\n",
-                        peer.get_handle (),
-                        "GIOP::send_request"));
-          handler->handle_close ();
-          return 0;
-        }
-      else if (n == 0)
-        {
-          if (TAO_orbdebug)
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) GIOP::send_request (): "
-                        "EOF, closing conn %d\n",
-                        peer.get_handle ()));
-          handler->handle_close ();
-          return 0;
-        }
-      iovcnt = 0;
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) GIOP::send_request (): ",
+                  "EOF, closing conn %d\n", transport->handle()));
     }
+    transport->close_conn();
+    return 0;
+  }
 
   return 1;
 }
@@ -335,8 +294,8 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
 // orderly disconnect as provided by TCP.  This quality of service is
 // required to write robust distributed systems.)
 
-static const char
-close_message [TAO_GIOP_HEADER_LEN] =
+// static CORBA::Octet 
+static const char close_message [TAO_GIOP_HEADER_LEN] = 
 {
   'G', 'I', 'O', 'P',
   TAO_GIOP_MessageHeader::MY_MAJOR,
@@ -347,8 +306,7 @@ close_message [TAO_GIOP_HEADER_LEN] =
 };
 
 void
-TAO_GIOP::close_connection (TAO_Client_Connection_Handler *&handler,
-                            void *)
+TAO_GIOP::close_connection (TAO_Transport *transport, void *)
 {
   // It's important that we use a reliable shutdown after we send this
   // message, so we know it's received.
@@ -360,20 +318,19 @@ TAO_GIOP::close_connection (TAO_Client_Connection_Handler *&handler,
                       (const u_char *) close_message,
                       TAO_GIOP_HEADER_LEN);
 
-  ACE_HANDLE which = handler->peer ().get_handle ();
-  if (handler->peer ().send_n (close_message,
-                               TAO_GIOP_HEADER_LEN) == -1)
-    {
-      if (TAO_orbdebug)
+  // @@ Carlos, can you please check the return value on this?
+  ACE_HANDLE which = transport->handle ();
+  if (transport->send ((const u_char *) close_message, TAO_GIOP_HEADER_LEN) == -1)
+  {
+    if (TAO_orbdebug)
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) error closing connection %d\n",
                     which));
-    }
-  handler->handle_close ();
-  handler = 0;
+  }
+
+  transport->close_conn ();
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) shut down socket %d\n",
-              which));
+              "(%P|%t) shut down transport, handle %d\n", which));
 }
 
 // Send an "I can't understand you" message -- again, the message is
@@ -394,38 +351,39 @@ error_message [TAO_GIOP_HEADER_LEN] =
 };
 
 void
-TAO_GIOP::send_error (TAO_SVC_HANDLER *&handler)
+TAO_GIOP::send_error (TAO_Transport *transport)
 {
   TAO_GIOP::dump_msg ("send_error",
                       (const u_char *) error_message,
                       TAO_GIOP_HEADER_LEN);
+  ACE_HANDLE which = transport->handle ();
+  // @@ Carlos, can you please check to see if <send_n> should have
+  // it's reply checked?
+  if (transport->send ((const u_char *)error_message, TAO_GIOP_HEADER_LEN) == -1)
+  {
+    if (TAO_orbdebug != 0)
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) error sending error to %d\n",
+                  which));
+  }
 
-  ACE_HANDLE which = handler->peer ().get_handle ();
-  if (handler->peer ().send_n (error_message,
-                               TAO_GIOP_HEADER_LEN) == -1)
-    {
-      if (TAO_orbdebug != 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) error sending error to %d\n",
-                    which));
-                    
-    }
-  if (TAO_orbdebug)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) aborted socket %d\n",
-                which));
-  handler = 0;
+  if (TAO_orbdebug) {
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) aborted transport handle %d\n", transport->handle ()));
+  }
+  // @@
+  transport->close_conn ();
+  transport = 0;
 }
 
 ssize_t
-TAO_GIOP::read_buffer (TAO_SOCK_Stream &peer,
+TAO_GIOP::read_buffer (TAO_Transport *transport,
                        char *buf,
                        size_t len)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_READ_BUFFER_START);
 
-  ssize_t bytes_read = peer.recv_n (buf,
-                                    len);
+  ssize_t bytes_read = transport->receive (buf, len);
+
   if (bytes_read == -1 && errno == ECONNRESET)
     {
       // We got a connection reset (TCP RSET) from the other side,
@@ -459,15 +417,14 @@ TAO_GIOP::read_buffer (TAO_SOCK_Stream &peer,
 // buffering.  How fast could it be with both optimizations applied?
 
 TAO_GIOP::Message_Type
-TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
+TAO_GIOP::recv_request (TAO_Transport *transport,
                         TAO_InputCDR &msg,
-			TAO_ORB_Core* orb_core)
+                        TAO_ORB_Core* orb_core)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_RECV_REQUEST_START);
 
   TAO_GIOP::Message_Type retval;
   CORBA::ULong message_size;
-  TAO_SOCK_Stream &connection = handler->peer ();
 
   // Read the message header off the wire.
   //
@@ -482,7 +439,9 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   CDR::mb_align (&msg.start_);
 
   ssize_t header_len = TAO_GIOP_HEADER_LEN;
-  if (orb_core->orb_params ()->use_IIOP_lite_protocol ())
+
+  // @@ would like to use use_lite_protocol, fredk
+  if (orb_core->orb_params ()->use_lite_protocol ())
     header_len = 5;
 
   if (CDR::grow (&msg.start_,
@@ -491,7 +450,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
     return TAO_GIOP::CommunicationError;
 
   char *header = msg.start_.rd_ptr ();
-  ssize_t len = TAO_GIOP::read_buffer (connection,
+  ssize_t len = TAO_GIOP::read_buffer (transport,
                                        header,
                                        header_len);
   // Read the header into the buffer.
@@ -503,8 +462,8 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
         case 0:
           if (TAO_orbdebug)
             ACE_DEBUG ((LM_DEBUG,
-                        "(%t) End of connection %d\n",
-                        connection.get_handle ()));
+                        "(%t) End of connection, transport handle %d\n",
+                        transport->handle ()));
           return TAO_GIOP::EndOfFile;
           // @@ should probably find some way to report this without
           // an exception, since for most servers it's not an error.
@@ -542,9 +501,9 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 			      message_size,
 			      orb_core) == -1)
     {
-      TAO_GIOP::send_error (handler);
-      return TAO_GIOP::EndOfFile;
-      // We didn't really receive anything useful here.
+      TAO_GIOP::send_error (transport);
+      return TAO_GIOP::EndOfFile; // We didn't really receive 
+                                  // anything useful here.
     }
 
   // Make sure we have the full length in memory, growing the buffer
@@ -570,7 +529,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
   // Read the rest of this message into the buffer.
 
-  len = TAO_GIOP::read_buffer (connection,
+  len = TAO_GIOP::read_buffer (transport,
                                payload,
                                (size_t) message_size);
 
@@ -581,8 +540,8 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
         case 0:
           if (TAO_orbdebug)
             ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) TAO_GIOP::recv_request body, EOF on handle %d\n",
-                        connection.get_handle ()));
+                        "(%P|%t) TAO_GIOP::recv_request body, EOF on transport handle %d\n",
+                        transport->handle ()));
           break;
           /* NOTREACHED */
         case -1:
@@ -688,7 +647,7 @@ TAO_GIOP::parse_header (TAO_InputCDR &cdr,
 			CORBA::ULong &message_size,
 			TAO_ORB_Core *orb_core)
 {
-  if (orb_core->orb_params ()->use_IIOP_lite_protocol ())
+  if (orb_core->orb_params ()->use_lite_protocol ())
     return TAO_GIOP::parse_header_lite (cdr,
 					do_byte_swap,
 					message_type,
@@ -765,7 +724,7 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
 			 TAO_OutputCDR &msg,
 			 TAO_ORB_Core* orb_core)
 {
-  if (orb_core->orb_params ()->use_IIOP_lite_protocol ())
+  if (orb_core->orb_params ()->use_lite_protocol ())
     return TAO_GIOP::start_message_lite (type, msg);
   else
     return TAO_GIOP::start_message_std (type, msg);

@@ -85,29 +85,29 @@ TAO_ORB_Core::orb_params(void)
   return TAO_OC_RETRIEVE (orb_params);
 }
 
-ACE_INLINE TAO_CONNECTOR *
-TAO_ORB_Core::connector (TAO_CONNECTOR *c)
+ACE_INLINE TAO_Connector_Registry *
+TAO_ORB_Core::connector_registry (TAO_Connector_Registry *cr)
 {
-  TAO_CONNECTOR *old_connector = this->connector_;
-  this->connector_ = c;
-  return old_connector;
+  TAO_Connector_Registry *old_cr = this->connector_registry_;
+  this->connector_registry_ = cr;
+  return old_cr;
 }
 
-ACE_INLINE TAO_CONNECTOR *
-TAO_ORB_Core::connector (void)
+ACE_INLINE TAO_Connector_Registry *
+TAO_ORB_Core::connector_registry (void)
 {
-  return TAO_OC_RETRIEVE (connector);
+  return TAO_OC_RETRIEVE (connector_registry);
 }
 
-ACE_INLINE TAO_ACCEPTOR *
-TAO_ORB_Core::acceptor (TAO_ACCEPTOR *a)
+ACE_INLINE TAO_Acceptor *
+TAO_ORB_Core::acceptor (TAO_Acceptor *a)
 {
-  TAO_ACCEPTOR *old_acceptor = this->acceptor_;
+  TAO_Acceptor *old_acceptor = this->acceptor_;
   this->acceptor_ = a;
   return old_acceptor;
 }
 
-ACE_INLINE TAO_ACCEPTOR *
+ACE_INLINE TAO_Acceptor *
 TAO_ORB_Core::acceptor (void)
 {
   return TAO_OC_RETRIEVE (acceptor);

@@ -26,79 +26,6 @@
 
 class TAO_GIOP_Invocation;
 
-class TAO_Export IIOP
-{
-  // = TITLE
-  //   This class provides a namespace.
-public:
-  // = IIOP Protocol version is distinct from GIOP version.
-  enum
-  {
-    MY_MAJOR = 1,
-    MY_MINOR = 0
-  };
-
-  struct Version
-  {
-    CORBA::Octet major;
-    CORBA::Octet minor;
-
-    Version (CORBA::Octet maj = MY_MAJOR,
-             CORBA::Octet min = MY_MINOR);
-  };
-
-  struct TAO_Export Profile
-    // = TITLE
-    // IOR support ... Profile is encapsulated in an IIOP profile
-    // entry within an IOR.  Note that this structure is specified
-    // by CORBA 2.0, so we can't screw with it too much.
-  {
-    Version iiop_version;
-    TAO_opaque object_key;
-    char *host;
-    CORBA::UShort port;
-
-    Profile (void);
-    // Default constructor
-
-    Profile (const char *host,
-             CORBA::UShort port,
-             const TAO_opaque &object_key,
-             const ACE_INET_Addr &addr);
-    // Called by server.
-
-    Profile (const Profile &src);
-    // Copy constructor.
-
-    ~Profile (void);
-    // Destructor.
-
-    void reset_object_addr (void);
-    // Sets <object_addr_> cache from <host> and <port>
-
-    ACE_INET_Addr &object_addr (void);
-    // Returns the <ACE_INET_Addr> for this profile.
-
-    Profile &operator= (const Profile &src);
-    // copy operator
-
-    int operator== (const Profile &src);
-    // comparison
-
-  protected:
-
-    void set (const char *h,
-              CORBA::UShort p,
-              const TAO_opaque &key,
-              const ACE_INET_Addr &addr);
-    // Workhorse
-
-    ACE_INET_Addr object_addr_;
-    // Cached instance of <ACE_INET_Addr> for use in making
-    // invocations, etc.
-  };
-};
-
 class TAO_Export IIOP_Object : public STUB_Object
 {
   // = TITLE
@@ -157,30 +84,62 @@ public:
   // Construct from a repository (type) ID.
 
   IIOP_Object (char *repository_id,
-               const char *host,
-               CORBA::UShort port,
-               const TAO_opaque &object_key,
-               const ACE_INET_Addr &addr);
-  // Construct from a repository ID and IIOP profile information.
+               const TAO_Profile *profile);
+  // Construct from a repository ID and a profile ID.
+
+  IIOP_Object (char *repository_id,
+               const TAO_Profile &profile);
+  // Construct from a repository ID and a profile ID.
+
+  // @@ IIOP_Object should take a IIOP_Profile object and not
+  // this connection specific information like hostname, port etc.
+  IIOP_Object (const char *host,
+               const CORBA::UShort p,
+               const TAO_ObjectKey &objkey,
+               char *repository_id = 0);
+  // This constructor will usually be used by the client side.
+
+  IIOP_Object (char *repository_id,
+               const ACE_INET_Addr &addr,
+               const TAO_ObjectKey &objkey);
+  // Constructor used typically by the server side.
 
   // = Memory management.
   virtual CORBA::ULong _incr_refcnt (void);
   virtual CORBA::ULong _decr_refcnt (void);
 
-  virtual TAO_ObjectKey *key (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+  // @@ Doesn't belong here!! This is profile specific, thus it is now
+  //    kept in the Profile Object!  fredk
+  // TAO_ObjectKey *key (CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Return the object key as an out parameter.  Caller should release
   // return value when finished with it.
 
-  IIOP::Profile profile;
-  // Profile for this object.
+  TAO_Profile *set_profile_in_use (void);
 
-  IIOP::Profile *get_fwd_profile (void);
+  TAO_Profile *set_profile_in_use (TAO_Profile *pfile);
+  // Makes a copy of the profile and frees the existing profile_in_use.
+
+  // @@ replaces direct acces to the iiop_profile, the OLD way of
+  //    of doing it!  fredk
+  TAO_Profile *profile_in_use(void);
+  // returns a pointer to the profile_in_use object.  This object
+  // retains ownership of this object.
+
+  virtual TAO_Profile *get_profile(void);
+  // returns null if profile_in_use == null
+  // otherwise return a pointer to a new profile object.
+  // The caller is responsible for freeing this memory!
+
+  TAO_Profile *get_fwd_profile (void);
+  //@@ IIOP::Profile *get_fwd_profile (void);
   // THREAD-SAFE.  Returns the current forwarding profile.
 
-  IIOP::Profile *get_fwd_profile_i (void);
+  TAO_Profile *get_fwd_profile_i (void);
+  //@@ IIOP::Profile *get_fwd_profile_i (void);
   // NON-THREAD-SAFE.  Returns the current forwarding profile.
 
-  IIOP::Profile *set_fwd_profile (IIOP::Profile *new_profile);
+  TAO_Profile *set_fwd_profile (const TAO_Profile *new_profile);
+  //@@ IIOP::Profile *set_fwd_profile (IIOP::Profile *new_profile);
   // THREAD-SAFE.  Sets a new value for the forwarding profile and
   // returns the current value.
 
@@ -193,10 +152,20 @@ public:
   void use_locate_requests (CORBA::Boolean use_it);
   // set the flags to use locate_requests.
 
-  TAO_Client_Connection_Handler *&handler (void);
-  // Return the <handler_> pointer by reference.
+  // Previously, the handler pointer was stored here and used as the
+  // hint when the connect was performed.  After the connect it was used
+  // for communicating with the handler.  Now, these operations take
+  // place via the *selected* profile.  Thus there is a 
+  // profile->{hint(),cleanup_hint(),reset_hint(),idle()}.  reads and
+  // writes the the underlying socket are performed using the new
+  // transport object. profile->transport ().{receive(),send()}
+  // 
+  // NOTE, After the connection is successful, the selected profile will
+  // be referenece in 
+  // profile_in_use_, profile_in_use()
 
-  void reset_handler (void);
+  //TAO_Client_Connection_Handler *&handler (void);
+  //@@ void reset_handler (void);
   // Reset the <handler_>.  Usually used on errors.
 
 protected:
@@ -214,7 +183,15 @@ protected:
   // vs. twoway invocations.
 
 protected:
-  IIOP::Profile *fwd_profile_;
+  // @@ For now, we keep track of transport specific profiles here,
+  //    but in the next iteration this will go away ... only transport
+  //    neutral info is kept here => IIOP_Object should also go away!
+  //    fredk
+  TAO_IIOP_Profile *profile_;
+  TAO_IIOP_Profile *profile_in_use_;
+  // this is the profile that we are currently sending/receiving with
+
+  TAO_IIOP_Profile *fwd_profile_;
   // Store the forwarding profile
 
   ACE_Lock* fwd_profile_lock_ptr_;
@@ -235,13 +212,17 @@ protected:
   CORBA::Boolean first_locate_request_;
   // distinguishes the first from following calls
 
-  TAO_Client_Connection_Handler *handler_;
+  // TAO_Client_Connection_Handler *handler_;
   // This handler is going to be used to keep track of the last client
   // connection handler used by the stub.  It is also used as a "hint"
   // to the cached connector.  Note that all changes to this pointer
   // are made by the cached connector, i.e., under the lock of the
   // cached connector. Don't modify this pointer at will except in the
   // case of error, in which case should be set to zero.
+  // @@ Change this in order to support pluggable protocols, i.e. multiple
+  //    transport layer protocols at the GIOP level.  Replace this with
+  //    a refernece to the TAO_IIOP_Connector object which will reference
+  //    both the new TAO_IIOP_Transport and specific service handler. fredk
 
   ~IIOP_Object (void);
   // Destructor is to be called only through _decr_refcnt()

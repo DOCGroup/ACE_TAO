@@ -51,27 +51,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_IIOP_Object_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-void
-IIOP::Profile::set (const char *h,
-                    CORBA::UShort p,
-                    const TAO_opaque &key,
-                    const ACE_INET_Addr &addr)
-{
-  this->port = p;
-  this->object_addr_ = addr;
-
-  delete [] this->host;
-
-  if (h)
-    {
-      ACE_NEW (this->host,
-               char[ACE_OS::strlen (h) + 1]);
-      ACE_OS::strcpy (this->host, h);
-    }
-
-  this->object_key = key;
-}
-
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
 // sets.
 //
@@ -81,24 +60,8 @@ CORBA::ULong
 IIOP_Object::hash (CORBA::ULong max,
                    CORBA::Environment &env)
 {
-  CORBA::ULong hashval;
-
-  env.clear ();
-
-  // Just grab a bunch of convenient bytes and hash them; could do
-  // more (hostname, full key, exponential hashing) but no real need
-  // to do so except if performance requires a more costly hash.
-
-  hashval = profile.object_key.length () * profile.port;
-  hashval += profile.iiop_version.minor;
-
-  if (profile.object_key.length () >= 4)
-    {
-      hashval += profile.object_key [1];
-      hashval += profile.object_key [3];
-    }
-
-  return hashval % max;
+  // we rely on the profile object to has it's address info
+  return profile_in_use_->hash (max, env);
 }
 
 int operator==(const TAO_opaque& rhs,
@@ -128,13 +91,12 @@ int operator!=(const TAO_opaque& rhs,
 // object.)
 //
 // NOTE that this must NOT go across the network!
-
+// @@ Not sure what meaning this now has when multiple protocols are used for
+// the same object!!
 CORBA::Boolean
 IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
                             CORBA::Environment &env)
 {
-  env.clear ();
-
   if (CORBA::is_nil (other_obj) == 1)
     return 0;
 
@@ -144,7 +106,7 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
     return 0;
 
   // Compare the profiles
-  return this->profile == other_iiop_obj->profile;
+  return this->profile_in_use_->is_equivalent (other_iiop_obj->profile_in_use_, env);
 }
 
 // Memory managment
@@ -167,15 +129,77 @@ IIOP_Object::_decr_refcnt (void)
       return this->refcount_;
   }
 
+  if (this->profile_in_use_ !=0               &&
+      this->profile_in_use_ != this->profile_ &&
+      this->profile_in_use_ != this->fwd_profile_)
+  {
+      this->profile_in_use_->reset_hint ();
+      delete this->profile_in_use_;
+  }
+
+  this->profile_in_use_ = 0;
+
+  if (this->profile_)
+  {
+    this->profile_->reset_hint ();
+    delete this->profile_;
+    this->profile_ = 0;
+  }
+
+  if (fwd_profile_) 
+  {
+    this->fwd_profile_->reset_hint ();
+    delete this->fwd_profile_;
+    this->fwd_profile_ = 0;
+  }
   delete this;
   return 0;
 }
 
-// TAO extensions
-TAO_ObjectKey*
-IIOP_Object::key (CORBA::Environment &)
+// Note that if the repository ID (typeID) is NULL, it will make
+// narrowing rather expensive, though it does ensure that type-safe
+// narrowing code gets thoroughly exercised/debugged!  Without a
+// typeID, the _narrow will be required to make an expensive remote
+// "is_a" call.
+
+IIOP_Object::IIOP_Object (const char *host,
+                          const CORBA::UShort port,
+                          const TAO_ObjectKey &objkey,
+                          char *repository_id)
+  : STUB_Object (repository_id),
+    profile_ (0),
+    profile_in_use_ (0),
+    fwd_profile_ (0),
+    fwd_profile_lock_ptr_ (0),
+    fwd_profile_success_ (0),
+    // what about ACE_SYNCH_MUTEX refcount_lock_
+    refcount_ (1),
+    use_locate_request_ (0),
+    first_locate_request_ (0)
 {
-  return new TAO_ObjectKey (this->profile.object_key);
+  profile_ = profile_in_use_ = new TAO_IIOP_Profile (host, port, objkey);
+  this->fwd_profile_lock_ptr_ =
+           TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
+}
+
+// Constructor.  It will usually be used by the server side.
+IIOP_Object::IIOP_Object (char *repository_id,
+                          const ACE_INET_Addr &addr,
+                          const TAO_ObjectKey &objkey)
+  : STUB_Object (repository_id),
+    profile_ (0),
+    profile_in_use_ (0),
+    fwd_profile_ (0),
+    fwd_profile_lock_ptr_ (0),
+    fwd_profile_success_ (0),
+    // what about ACE_SYNCH_MUTEX refcount_lock_
+    refcount_ (1),
+    use_locate_request_ (0),
+    first_locate_request_ (0)
+{
+  profile_ = profile_in_use_ = new TAO_IIOP_Profile (addr, objkey);
+  this->fwd_profile_lock_ptr_ =
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
 }
 
 // THREADING NOTE: Code below this point is of course thread-safe (at
@@ -236,7 +260,7 @@ private:
 // which does all the work.
 
 void
-IIOP_Object::do_static_call (CORBA::Environment &env,
+IIOP_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
                              const TAO_Call_Data *info,
                              void** args)
 
@@ -260,9 +284,9 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
 
       // Simply let these exceptions propagate up
       // (if any of them occurs.)
-      call.start (env);
+      call.start (TAO_IN_ENV);
 
-      status = call.invoke (env);
+      status = call.invoke (TAO_IN_ENV);
 
       this->first_locate_request_ = 0;
 
@@ -291,9 +315,9 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
       for (;;)
         {
           // Start the call by constructing the request message header.
-          TAO_TRY_VAR_EX (env, SYSEX1)
+          TAO_TRY_VAR_EX (TAO_IN_ENV, SYSEX1)
             {
-              call.start (env);
+              call.start (TAO_IN_ENV);
               TAO_CHECK_ENV_EX (SYSEX1);
 
               ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
@@ -315,7 +339,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
                   if (this->fwd_profile_success_ == 1)
                     {
                       this->fwd_profile_success_ = 0;
-                      env.clear ();
+                      TAO_IN_ENV.clear ();
                       TAO_GOTO (roundtrip_continue_label);
                     }
                 }
@@ -323,14 +347,14 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
             }
           TAO_ENDTRY;
 
-          this->put_params (env, info, call, args);
-          TAO_CHECK_ENV_RETURN_VOID (env);
+          this->put_params (TAO_IN_ENV, info, call, args);
+          TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
 
-          TAO_TRY_VAR_EX (env, SYSEX2)
+          TAO_TRY_VAR_EX (TAO_IN_ENV, SYSEX2)
             {
-              status = call.invoke (info->excepts, info->except_count, env);
+              status = call.invoke (info->excepts, info->except_count, TAO_IN_ENV);
               TAO_CHECK_ENV_EX (SYSEX2);
             }
           TAO_CATCH (CORBA_SystemException, ex)
@@ -350,7 +374,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
                   if (this->fwd_profile_success_ == 1)
                     {
                       this->fwd_profile_success_ = 0;
-                      env.clear ();
+                      TAO_IN_ENV.clear ();
                       TAO_GOTO (roundtrip_continue_label);
                     }
                 }
@@ -384,7 +408,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
                       // (ASG) will do 03/22/98.
                       // @@ IMHO this should be handled in the stub
                       // (coryan)
-                      switch (pdp->tc->kind (env))
+                      switch (pdp->tc->kind (TAO_IN_ENV))
                         {
                         case CORBA::tk_string:
                           {
@@ -411,7 +435,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
                       // different policies for different kinds of
                       // structures).
                       if (pdp->value_size == 0)
-                        call.get_value (pdp->tc, ptr, env);
+                        call.get_value (pdp->tc, ptr, TAO_IN_ENV);
                       else
                         {
                           // @@ (ASG) -  I think we must completely
@@ -421,12 +445,12 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
 
                           // assert (value_size == tc->size());
                           *(void **)ptr = new CORBA::Octet [pdp->value_size];
-                          call.get_value (pdp->tc, *(void **)ptr, env);
+                          call.get_value (pdp->tc, *(void **)ptr, TAO_IN_ENV);
                         }
 
-                      if (env.exception ())
+                      if (TAO_IN_ENV.exception ())
                         {
-                          dexc (env, "do_static_call, get reply parameter");
+                          dexc (TAO_IN_ENV, "do_static_call, get reply parameter");
                           return;
                         }
                     }
@@ -438,7 +462,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
           if (status != TAO_GIOP_LOCATION_FORWARD)
             {
               // @@ What is the right exception to throw in this case?
-              env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
+              TAO_IN_ENV.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
               return;
             }
           TAO_LABEL (roundtrip_continue_label);
@@ -452,9 +476,9 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
 
           // Start the call by constructing the request message header.
-          TAO_TRY_VAR_EX (env, SYSEX3)
+          TAO_TRY_VAR_EX (TAO_IN_ENV, SYSEX3)
             {
-              call.start (env);
+              call.start (TAO_IN_ENV);
               TAO_CHECK_ENV_EX (SYSEX3);
               ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
             }
@@ -475,7 +499,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
                   if (this->fwd_profile_success_ == 1)
                     {
                       this->fwd_profile_success_ = 0;
-                      env.clear ();
+                      TAO_IN_ENV.clear ();
                       TAO_GOTO (oneway_continue_label);
                     }
                 }
@@ -483,11 +507,11 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
             }
           TAO_ENDTRY;
 
-          this->put_params (env, info, call, args);
-          TAO_CHECK_ENV_RETURN_VOID (env);
+          this->put_params (TAO_IN_ENV, info, call, args);
+          TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
-          /* TAO_GIOP_ReplyStatusType status = */ call.invoke (env);
+          /* TAO_GIOP_ReplyStatusType status = */ call.invoke (TAO_IN_ENV);
 
           // @@ and lock this
           if (this->fwd_profile_ != 0)
