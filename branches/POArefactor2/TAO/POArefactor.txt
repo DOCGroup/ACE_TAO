@@ -1,3 +1,13 @@
+Tue Nov 16 13:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Added the new files, in the PortableServer directory I don't have to
+          do this, but in tao.mpc all files are listed explicitly.
+
+        * tao/PortableServer/PortableInterceptorC.h:
+          Removed the Objref_Traits for ::PortableInterceptor::IORInterceptor,
+          it was removed earlier.
+
 Tue Nov 16 12:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/IdUniquenessStrategyMultiple.cpp:
