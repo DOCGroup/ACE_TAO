@@ -43,29 +43,34 @@ JAWS_IO_Synch_Acceptor::accept (ACE_SOCK_Stream &new_stream,
                                 int reset_new_handle) const
 {
   return this->acceptor_.accept (new_stream, remote_addr, timeout,
-                                restart, reset_new_handle);
+                                 restart, reset_new_handle);
 }
 
 
 int
 JAWS_IO_Asynch_Acceptor::open (const ACE_INET_Addr &address)
 {
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+  // Tell the acceptor to listen on this->port_, which makes an
+  // asynchronous I/O request to the OS.
+  return this->acceptor_.open (address, JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE);
+#else
   ACE_UNUSED_ARG (address);
   return -1;
+#endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
 }
 
 int
 JAWS_IO_Asynch_Acceptor::accept (size_t bytes_to_read)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms
   return this->acceptor_.accept (bytes_to_read);
 #else
   ACE_UNUSED_ARG (bytes_to_read);
   return -1;
-#endif /* defined (ACE_WIN32) */
+#endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
 }
-
 
 
 
