@@ -1,3 +1,8 @@
+Tue Jun 29 06:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Protocols/Controller/Controller.mpc:
+          Changed project name to avoid duplicate project names
+
 Mon Jun 28 11:58:01 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/tests/RobotAssembly/RobotAssembly.mpc:
