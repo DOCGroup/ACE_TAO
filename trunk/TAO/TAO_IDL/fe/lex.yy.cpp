@@ -1924,6 +1924,12 @@ idl_parse_line_and_file(char *buf)
     return;
   }
 
+  /* Check to see if we're running under the screwy Microsoft scheme
+  /* of putting #line num instead of #num. */ 
+
+  if (ACE_OS::strncmp (r, "line", 4) == 0)
+    r += 4;
+
   /* Find line number */
   for (r++; *r == ' ' || *r == '\t'; r++);
   h = r;
