@@ -98,7 +98,7 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 	  ACE_DEBUG ((LM_DEBUG, "enqueueing message of size %d\n", 
 		      mb->msg_priority ()));
           // Enqueue in priority order.
-          if (msg_queue->enqueue (mb) == -1)
+          if (msg_queue->enqueue_prio (mb) == -1)
             ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
         }
     }

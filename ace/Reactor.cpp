@@ -413,7 +413,7 @@ ACE_Reactor::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\nowner_ = %d\n", this->owner_));
 
 #if defined (ACE_MT_SAFE)
-  this->notification_handler_.dump ();
+  this->notify_handler_.dump ();
   this->token_.dump ();
 #endif /* ACE_MT_SAFE */
 
@@ -510,9 +510,9 @@ ACE_Reactor_Token::sleep_hook (void)
 }
 
 void
-ACE_Notification_Handler::dump (void) const
+ACE_Reactor_Notify::dump (void) const
 {
-  ACE_TRACE ("ACE_Notification_Handler::dump");
+  ACE_TRACE ("ACE_Reactor_Notify::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "reactor_ = %x", this->reactor_));
@@ -521,9 +521,9 @@ ACE_Notification_Handler::dump (void) const
 }
 
 int
-ACE_Notification_Handler::open (ACE_Reactor *r)
+ACE_Reactor_Notify::open (ACE_Reactor *r)
 {
-  ACE_TRACE ("ACE_Notification_Handler::open");
+  ACE_TRACE ("ACE_Reactor_Notify::open");
 
   this->reactor_ = r;
   if (this->notification_pipe_.open () == -1)
@@ -544,17 +544,17 @@ ACE_Notification_Handler::open (ACE_Reactor *r)
 }
 
 int
-ACE_Notification_Handler::close (void)
+ACE_Reactor_Notify::close (void)
 {
-  ACE_TRACE ("ACE_Notification_Handler::close");
+  ACE_TRACE ("ACE_Reactor_Notify::close");
   return this->notification_pipe_.close ();
 }
 
 ssize_t
-ACE_Notification_Handler::notify (ACE_Event_Handler *eh, 
+ACE_Reactor_Notify::notify (ACE_Event_Handler *eh, 
 				  ACE_Reactor_Mask mask)
 {
-  ACE_TRACE ("ACE_Notification_Handler::notify");
+  ACE_TRACE ("ACE_Reactor_Notify::notify");
   ACE_Notification_Buffer buffer (eh, mask);
 
   ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
@@ -570,9 +570,9 @@ ACE_Notification_Handler::notify (ACE_Event_Handler *eh,
 // Reactor.
 
 int
-ACE_Notification_Handler::handle_notifications (ACE_Handle_Set &rmask)
+ACE_Reactor_Notify::handle_notifications (ACE_Handle_Set &rmask)
 {
-  ACE_TRACE ("ACE_Notification_Handler::handle_notification");
+  ACE_TRACE ("ACE_Reactor_Notify::handle_notification");
 
   ACE_HANDLE read_handle = this->notification_pipe_.read_handle ();
 
@@ -595,9 +595,9 @@ ACE_Notification_Handler::handle_notifications (ACE_Handle_Set &rmask)
 // to Paul Stephenson at Ericsson for suggesting this approach.
 
 int
-ACE_Notification_Handler::handle_input (ACE_HANDLE handle)
+ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_Notification_Handler::handle_input");
+  ACE_TRACE ("ACE_Reactor_Notify::handle_input");
   // Precondition: this->reactor_.token_.current_owner () ==
   // ACE_Thread::self ();
 
@@ -667,7 +667,7 @@ ACE_Reactor::notify (ACE_Event_Handler *eh,
   // the caller to dictate which Event_Handler method the receiver
   // invokes.
 
-  n = this->notification_handler_.notify (eh, mask);
+  n = this->notify_handler_.notify (eh, mask);
 #else
   eh = eh;
   mask = mask;
@@ -810,7 +810,8 @@ ACE_Reactor::ready_ops (ACE_HANDLE handle,
 int
 ACE_Reactor::open (size_t size, 
 		   int restart, 
-		   ACE_Sig_Handler *sh)
+		   ACE_Sig_Handler *sh,
+		   ACE_Timer_Queue *tq)
 {
   ACE_TRACE ("ACE_Reactor::open");
   ACE_MT (ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1));
@@ -835,17 +836,23 @@ ACE_Reactor::open (size_t size,
       this->delete_signal_handler_ = 0;
     }
 
-  // We do this first in case the handler_rep_ call fails (which it
-  // sometimes does on Win32 when we restart applications quickly due
-  // to the use of sockets as a notification mechanism).  At least
-  // this way the timer_queue_ isn't 0, so we can still use the
-  // Reactor as a timer...
-  ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_Queue, -1);
-  
+  this->timer_queue_ = tq;
+
+  if (this->timer_queue_ == 0)
+    {
+      // We do this first in case the handler_rep_ call fails (which
+      // it sometimes does on Win32 when we restart applications
+      // quickly due to the use of sockets as a notification
+      // mechanism).  At least this way the timer_queue_ isn't 0, so
+      // we can still use the Reactor as a timer...
+      ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_Queue, -1);
+      this->delete_timer_queue_ = 1;
+    }
+
   if (this->handler_rep_.open (size) == -1)
     return -1;
 #if defined (ACE_MT_SAFE)
-  else if (this->notification_handler_.open (this) == -1)
+  else if (this->notify_handler_.open (this) == -1)
     {
       // Make sure to release resources.
       this->handler_rep_.close (this);
@@ -867,8 +874,10 @@ ACE_Reactor::open (size_t size,
   return 0;
 }
 
-ACE_Reactor::ACE_Reactor (ACE_Sig_Handler *sh)
+ACE_Reactor::ACE_Reactor (ACE_Sig_Handler *sh,
+			  ACE_Timer_Queue *tq)
   : timer_queue_ (0),
+    delete_timer_queue_ (0),
     requeue_position_ (-1), // Requeue at end of waiters by default.
     initialized_ (0),
 #if defined (ACE_MT_SAFE)
@@ -877,14 +886,18 @@ ACE_Reactor::ACE_Reactor (ACE_Sig_Handler *sh)
     timer_skew_ (0, ACE_TIMER_SKEW)
 {
   ACE_TRACE ("ACE_Reactor::ACE_Reactor");
-  if (this->open (ACE_Reactor::DEFAULT_SIZE, 0, sh))
+  if (this->open (ACE_Reactor::DEFAULT_SIZE, 0, sh, tq))
     ACE_ERROR ((LM_ERROR, "%p\n", "open failed"));
 }
 
 // Initialize the new ACE_Reactor.
 
-ACE_Reactor::ACE_Reactor (size_t size, int rs, ACE_Sig_Handler *sh)
+ACE_Reactor::ACE_Reactor (size_t size, 
+			  int rs, 
+			  ACE_Sig_Handler *sh,
+			  ACE_Timer_Queue *tq)
   : timer_queue_ (0),
+    delete_timer_queue_ (0),
     requeue_position_ (-1), // Requeue at end of waiters by default.
     initialized_ (0),
 #if defined (ACE_MT_SAFE)
@@ -894,7 +907,7 @@ ACE_Reactor::ACE_Reactor (size_t size, int rs, ACE_Sig_Handler *sh)
 {
   ACE_TRACE ("ACE_Reactor::ACE_Reactor");
 
-  if (this->open (size, rs, sh) == -1)
+  if (this->open (size, rs, sh, tq) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "open failed"));
 }
 
@@ -916,11 +929,13 @@ ACE_Reactor::close (void)
         delete this->signal_handler_;
       this->signal_handler_ = 0;
 
-      delete this->timer_queue_;
+      if (this->delete_timer_queue_)
+	delete this->timer_queue_;
+
       this->timer_queue_ = 0;
 
 #if defined (ACE_MT_SAFE)
-      this->notification_handler_.close ();
+      this->notify_handler_.close ();
 #endif /* ACE_MT_SAFE */
 
 #if defined (ACE_USE_POLL)
@@ -1442,7 +1457,7 @@ ACE_Reactor::dispatch (int nfound,
   // ACE_Reactor's internal tables.  We'll handle all these threads
   // and then break out to continue the event loop.
   
-  if (this->notification_handler_.handle_notifications (rmask) == 0)
+  if (this->notify_handler_.handle_notifications (rmask) == 0)
 #endif /* ACE_MT_SAFE */
     {
       ACE_HANDLE h;

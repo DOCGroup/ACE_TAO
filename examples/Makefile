@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #	@(#)Makefile	1.1	10/18/96
 #
-#	Makefile for the tests directory
+#	Makefile for the ACE examples directory
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -20,6 +20,8 @@ DIRS  =	ASX \
 	Reactor	\
 	Service_Configurator \
 	Shared_Malloc \
+	Shared_Memory \
+	System_V_IPC \
 	Threads
 
 # Makefiles TBD:

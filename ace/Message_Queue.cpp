@@ -135,8 +135,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::close (void)
       delete temp;
     }
 
-  if (this->delete_notification_strategy_)
-    delete this->delete_notification_strategy_;
+  delete this->notification_strategy_;
 
   return res;
 }

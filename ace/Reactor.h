@@ -37,17 +37,20 @@ class ACE_Reactor;
 // The following two classes have to be moved out here to keep the SGI
 // C++ compiler happy (it doesn't like nested classes).
 
-class ACE_Export ACE_Notification_Handler : public ACE_Event_Handler
+class ACE_Export ACE_Reactor_Notify : public ACE_Event_Handler
   // = TITLE
-  //     Callback and unblock the ACE_Reactor if it's sleeping.
+  //     Unblock the <ACE_Reactor> from its event loop.
   //
   // = DESCRIPTION
-  //     This implementation is necessary for cases where the Reactor
-  //     is being run in a multi-threaded program.  In this case, we
-  //     need a special trick to unblock select() or poll() when
-  //     updates occur in somewhere other than the main ACE_Reactor
-  //     thread.  All we do is write data to a pipe or socket that the
-  //     ACE_Reactor is listening on.
+  //     This implementation is necessary for cases where the
+  //     <ACE_Reactor> is run in a multi-threaded program.  In this
+  //     case, we need to be able to unblock select() or poll() when
+  //     updates occur other than in the main <ACE_Reactor> thread.
+  //     To do this, we signal an auto-reset event the <ACE_Reactor>
+  //     is listening on.  If an <ACE_Event_Handler> and
+  //     <ACE_Reactor_Mask> is passed to <notify>, the appropriate
+  //     <handle_*> method is dispatched in the context of the
+  //     <ACE_Reactor> thread.
 {
 public:
   // = Initialization and termination methods.
@@ -249,17 +252,20 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_Reactor (ACE_Sig_Handler * = 0);
+  ACE_Reactor (ACE_Sig_Handler * = 0,
+	       ACE_Timer_Queue * = 0);
   // Initialize the new ACE_Reactor with the default size.
 
   ACE_Reactor (size_t size, 
 	       int restart = 0, 
-	       ACE_Sig_Handler * = 0);
+	       ACE_Sig_Handler * = 0,
+	       ACE_Timer_Queue * = 0);
   // Initialize the new ACE_Reactor of size <size>.
 
   virtual int open (size_t size = DEFAULT_SIZE, 
 		    int restart = 0, 
-		    ACE_Sig_Handler * = 0);
+		    ACE_Sig_Handler * = 0,
+		    ACE_Timer_Queue * = 0);
   // Initialize the new ACE_Reactor of size <size>.
 
   virtual void close (void);
@@ -556,18 +562,23 @@ protected:
   // Notify the appropriate <callback> in the context of the <eh>
   // associated with <handle> that a particular event has occurred.
 
-  ACE_Timer_Queue *timer_queue_; 
-  // Defined as a pointer to allow overriding by derived classes...
-
   ACE_Handler_Repository handler_rep_;
   // Pointer to an array of <ACE_Event_Handler *>s used to keep track
   // of the user-defined callbacks.
+
+  ACE_Timer_Queue *timer_queue_; 
+  // Defined as a pointer to allow overriding by derived classes...
+
+  int delete_timer_queue_;
+  // Keeps track of whether we should delete the timer queue (if we
+  // didn't create it, then we don't delete it).
 
   ACE_Sig_Handler *signal_handler_;
   // Handle signals without requiring global/static variables. 
 
   int delete_signal_handler_;
-  // Keeps track of whether we should delete the signal handler.
+  // Keeps track of whether we should delete the signal handler (if we
+  // didn't create it, then we don't delete it).
 
   // = Track which handles we are interested 
   // for various types of (reading, writing, and exception) events.
@@ -600,7 +611,7 @@ protected:
   // The original thread that created this Reactor.
 
 #if defined (ACE_MT_SAFE)
-  ACE_Notification_Handler notification_handler_;
+  ACE_Reactor_Notify notify_handler_;
   // Callback object that unblocks the ACE_Reactor if it's sleeping.
 
   ACE_Reactor_Token token_;
@@ -610,7 +621,7 @@ protected:
   // Enqueue ourselves into the list of waiting threads at the
   // appropriate point specified by <requeue_position_>.  
 
-  friend class ACE_Notification_Handler;
+  friend class ACE_Reactor_Notify;
 #endif /* ACE_MT_SAFE */
 
   friend class ACE_Handler_Repository;
