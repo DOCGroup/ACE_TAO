@@ -1,3 +1,49 @@
+Sun Sep 19 14:19:06 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/README:
+	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+	  Unit tests for the CORBA sequence classes, we are currently
+	  replacing the implementation of CORBA sequence in TAO.  In good
+	  TDD form I am writing the tests first, and adding them to this
+	  directory.
+	  The initial implementations will also reside in this directory
+	  but the plan is to move them to the library once all the
+	  portability bugs are cleaned up.
+	  If you are interested in TDD you may want to check the code to
+	  see how I managed to test exceptions in operator new[] without
+	  introducing run-time overhead.  Likewise, the user can configure
+	  the range checking functions in CORBA sequences.
+
+	* tests/Sequence_Unit_Tests/sequence_traits.hpp:
+	  Define trait class templates to implement sequences.  These
+	  traits can be partially of fully specialized by the user to
+	  modify the default behavior.
+
+	* tests/Sequence_Unit_Tests/generic_sequence.hpp:
+	  Generic sequence implementation, currently implements bounded
+	  and unbounded sequences of self-managed types, but I expect to
+	  implement all sequences using a single class.  The variations
+	  between all the different sequence types will be factored out to
+	  trait classes.
+
+	* tests/Sequence_Unit_Tests/sequence.hpp:
+	  The interface for unbounded and bounded sequences of
+	  self-managed types.
+
+	* tests/Sequence_Unit_Tests/Bounded_Primitive_Types.cpp:
+	* tests/Sequence_Unit_Tests/Unbounded_Primitive_Types.cpp:
+	  Unit tests for bounded and unbounded sequences.  They are based
+	  on the boost unit test framework, so they only compile if boost
+	  is configured.
+
+	* tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+	* tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+	  Smoke test (basic compilation) for sequences of self-managed
+	  types.  They compile on all platforms.
+
+	* tests/Sequence_Unit_Tests/run_test.pl:
+	  Run all the tests.
+
 Sat Sep 18 19:32:55 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbavcs/orbsvcs/DsLogAdmin.idl:
