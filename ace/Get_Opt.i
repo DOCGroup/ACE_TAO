@@ -38,9 +38,3 @@ ACE_Get_Opt::opt_ind (void)
 { 
   return this->optind; 
 }
-
-ACE_INLINE const ACE_TCHAR *
-ACE_Get_Opt::optstring (void) const 
-{ 
-  return this->optstring_.c_str ();
-}

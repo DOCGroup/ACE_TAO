@@ -33,6 +33,13 @@ typedef ACE_WCHAR_T ACE_WSTRING_TYPE;
 typedef ACE_String_Base<char> ACE_CString;
 typedef ACE_String_Base<ACE_WSTRING_TYPE> ACE_WString;
 
+// This allows one to use W or C String based on the Unicode
+// setting
+#if defined (ACE_USES_WCHAR)
+typedef ACE_WString ACE_TString;
+#else /* ACE_USES_WCHAR */
+typedef ACE_CString ACE_TString;
+#endif /* ACE_USES_WCHAR */
 
 #include "ace/post.h"
 

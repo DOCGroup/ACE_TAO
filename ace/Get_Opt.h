@@ -15,7 +15,7 @@
 #define ACE_GET_OPT_H
 #include "ace/pre.h"
 
-#include "ace/SString.h"
+#include "ace/SStringfwd.h"
 #include "ace/Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -408,7 +408,7 @@ private:
   void last_option (const ACE_TString &s);
 
   /// Holds the option string.
-  ACE_TString optstring_;
+  ACE_TString *optstring_;
 
   /// Treat all options as long options.
   int long_only_;
@@ -420,7 +420,7 @@ private:
 
   /// This is the last option, short or long, that was processed.  This
   /// is handy to have in cases where the option passed was invalid.
-  ACE_TString last_option_;
+  ACE_TString *last_option_;
 
   /**
    * The next char to be scanned in the option-element in which the

@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Get_Opt.i"
@@ -94,9 +95,10 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
     optind (skip),
     opterr (report_errors),
     optarg (0),
-    optstring_ (optstring),
+    optstring_ (0),
     long_only_ (long_only),
     has_colon_ (0),
+    last_option_ (0),
     nextchar_ (0),
     optopt_ (0),
     ordering_ (ordering),
@@ -105,6 +107,9 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
     long_option_ (0)
 {
   ACE_TRACE ("ACE_Get_Opt::ACE_Get_Opt");
+
+  ACE_NEW (this->optstring_, ACE_TString (optstring));
+  ACE_NEW (this->last_option_, ACE_TString (""));
 
   // First check to see if POSIXLY_CORRECT was set.
   if (ACE_OS::getenv (ACE_LIB_TEXT ("POSIXLY_CORRECT")) != 0)
@@ -161,6 +166,8 @@ ACE_Get_Opt::~ACE_Get_Opt (void)
           option = 0;
         }
     }
+  delete this->optstring_;
+  delete this->last_option_;
 }
 
 int
@@ -322,7 +329,7 @@ ACE_Get_Opt::long_option_i (void)
       return pfound->val_;
     }
   if (!this->long_only_ || this->argv_[this->optind][1] == '-'
-      || this->optstring_.find (*this->nextchar_) == ACE_TString::npos)
+      || this->optstring_->find (*this->nextchar_) == ACE_TString::npos)
     {
       // Okay, we couldn't find a long option.  If it isn't long_only (which
       // means try the long first, and if not found try the short) or a long
@@ -351,7 +358,7 @@ ACE_Get_Opt::short_option_i (void)
 
   ACE_TCHAR *oli = 0;
   oli = ACE_const_cast (ACE_TCHAR*,
-                        ACE_OS::strchr (this->optstring_.c_str (), opt));
+                        ACE_OS::strchr (this->optstring_->c_str (), opt));
 
   /* Increment `optind' when we start to process its last character.  */
   if (*this->nextchar_ == '\0')
@@ -482,7 +489,7 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
       // add it.
       ACE_TCHAR *s = 0;
       if ((s = ACE_const_cast (ACE_TCHAR*,
-                               ACE_OS::strchr (this->optstring_.c_str (),
+                               ACE_OS::strchr (this->optstring_->c_str (),
                                                short_option))) != 0)
         {
           // Short option exists, so verify the argument options
@@ -530,11 +537,11 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
       else
         {
           // Didn't find short option, so add it...
-          this->optstring_ += (ACE_TCHAR) short_option;
+          *this->optstring_ += (ACE_TCHAR) short_option;
           if (has_arg == ARG_REQUIRED)
-            this->optstring_ += ACE_LIB_TEXT (":");
+            *this->optstring_ += ACE_LIB_TEXT (":");
           else if (has_arg == ARG_OPTIONAL)
-            this->optstring_ += ACE_LIB_TEXT ("::");
+            *this->optstring_ += ACE_LIB_TEXT ("::");
         }
     }
 
@@ -569,13 +576,13 @@ ACE_Get_Opt::long_option (void) const
 const ACE_TCHAR*
 ACE_Get_Opt::last_option (void) const
 {
-  return this->last_option_.c_str ();
+  return this->last_option_->c_str ();
 }
 
 void
 ACE_Get_Opt::last_option (const ACE_TString &last_option)
 {
-  this->last_option_ = last_option;
+  *this->last_option_ = last_option;
 }
 
 void
@@ -592,10 +599,10 @@ ACE_Get_Opt::dump (void) const
               ACE_LIB_TEXT ("nextchar_ = %s\n")
               ACE_LIB_TEXT ("optopt_ = %c\n")
               ACE_LIB_TEXT ("ordering_ = %d\n"),
-              this->optstring_.c_str (),
+              this->optstring_->c_str (),
               this->long_only_,
               this->has_colon_,
-              this->last_option_.c_str (),
+              this->last_option_->c_str (),
               this->nextchar_,
               this->optopt_,
               this->ordering_));
@@ -689,6 +696,12 @@ ACE_Get_Opt::permute (void)
       return EOF;
     }
   return 0;
+}
+
+const ACE_TCHAR *
+ACE_Get_Opt::optstring (void) const 
+{ 
+  return this->optstring_->c_str ();
 }
 
 ACE_Get_Opt::ACE_Get_Opt_Long_Option::ACE_Get_Opt_Long_Option (const ACE_TCHAR *name,
