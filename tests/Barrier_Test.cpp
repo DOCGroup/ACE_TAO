@@ -4,17 +4,17 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Barrier_Test.cpp
 //
 // = DESCRIPTION
 //     This program illustrates how the ACE barrier synchronization
-//     mechanisms work. 
+//     mechanisms work.
 //
 // = AUTHOR
 //    Prashant Jain and Doug Schmidt
-// 
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -28,7 +28,7 @@ struct Tester_Args
   //     These arguments are passed into each test thread.
 {
   Tester_Args (ACE_Barrier &tb, int i)
-    : tester_barrier_ (tb), 
+    : tester_barrier_ (tb),
     n_iterations_ (i) {}
 
   ACE_Barrier &tester_barrier_;
@@ -45,7 +45,7 @@ struct Tester_Args
 static void *
 tester (Tester_Args *args)
 {
-  for (int iterations = 1; 
+  for (int iterations = 1;
        iterations <= args->n_iterations_;
        iterations++)
     {
@@ -60,7 +60,7 @@ tester (Tester_Args *args)
 
 #endif /* ACE_HAS_THREADS */
 
-int 
+int
 main (int, char *[])
 {
   ACE_START_TEST ("Barrier_Test");
@@ -70,22 +70,22 @@ main (int, char *[])
   int n_iterations = ACE_MAX_ITERATIONS;
 
   ACE_Barrier tester_barrier (n_threads);
-  
+
   Tester_Args args (tester_barrier, n_iterations);
 
-  for (int iteration_count = 0;
+  for (size_t iteration_count = 0;
        iteration_count < ACE_MAX_ITERATIONS;
        iteration_count++)
     {
-      ACE_DEBUG ((LM_DEBUG, "starting iteration %d\n", 
-		  iteration_count));
+      ACE_DEBUG ((LM_DEBUG, "starting iteration %d\n",
+                  iteration_count));
 
-      if (ACE_Thread_Manager::instance ()->spawn_n 
+      if (ACE_Thread_Manager::instance ()->spawn_n
           (n_threads,
-	   ACE_THR_FUNC (tester), 
-	   (void *) &args,
-	   THR_NEW_LWP | THR_JOINABLE) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
+           ACE_THR_FUNC (tester),
+           (void *) &args,
+           THR_NEW_LWP | THR_JOINABLE) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
       ACE_Thread_Manager::instance ()->wait ();
     }
