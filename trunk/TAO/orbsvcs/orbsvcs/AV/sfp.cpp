@@ -1374,6 +1374,8 @@ template class ACE_Singleton<TAO_SFP_Base, TAO_SYNCH_MUTEX>;
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<CORBA::ULong,ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex> *,ACE_Null_Mutex>
 
 #pragma instantiate ACE_Singleton<TAO_SFP_Base, TAO_SYNCH_MUTEX>
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+template ACE_Singleton<TAO_SFP_Base, ACE_Thread_Mutex> *ACE_Singleton<TAO_SFP_Base, ACE_Thread_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_SFP_Factory)
