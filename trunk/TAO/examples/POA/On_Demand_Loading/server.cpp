@@ -13,7 +13,7 @@
 //
 //=============================================================================
 
-#include "Server_i.h"
+#include "Server_Manager.h"
 
 ACE_RCSID(On_Demand_Loading, server, "$Id$")
 

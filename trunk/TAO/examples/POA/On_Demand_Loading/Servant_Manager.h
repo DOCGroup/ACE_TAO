@@ -53,10 +53,6 @@ public:
   // Returns an ObjectId when given an dll name and the factory method
   // to be invoked in the dll.
   
-  void parse_string (const char *s);
-  // Parse the string to obtain the dll name and the symbol which will
-  // get us the servant pointer.
-  
   PortableServer::Servant obtain_servant (const char *str,
                                           PortableServer::POA_ptr poa,
                                           long value);
@@ -71,6 +67,11 @@ public:
   // The servant is destroyed and the dll that was dynamically linked
   // is closed.
 
+ private:
+  void parse_string (const char *s);
+  // Parse the string to obtain the dll name and the symbol which will
+  // get us the servant pointer.
+  
   CORBA::ORB_var orb_;
   // A reference to the ORB.
   
