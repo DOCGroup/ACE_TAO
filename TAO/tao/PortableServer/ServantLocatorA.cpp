@@ -69,7 +69,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantLocator (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_ServantLocator =
+  ::CORBA::TypeCode_ptr const _tc_ServantLocator =
     &_tc_TAO_tc_PortableServer_ServantLocator;
 }
 

@@ -70,7 +70,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_BufferingConstraintMode (
 
 namespace TAO
 {
-  ::CORBA::TypeCode_ptr _tc_BufferingConstraintMode =
+  ::CORBA::TypeCode_ptr const _tc_BufferingConstraintMode =
     &_tc_TAO_tc_TAO_BufferingConstraintMode;
 }
 
@@ -171,7 +171,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_BufferingConstraint (
 
 namespace TAO
 {
-  ::CORBA::TypeCode_ptr _tc_BufferingConstraint =
+  ::CORBA::TypeCode_ptr const _tc_BufferingConstraint =
     &_tc_TAO_tc_TAO_BufferingConstraint;
 }
 
@@ -213,7 +213,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_BufferingConstraintPolicy (
 
 namespace TAO
 {
-  ::CORBA::TypeCode_ptr _tc_BufferingConstraintPolicy =
+  ::CORBA::TypeCode_ptr const _tc_BufferingConstraintPolicy =
     &_tc_TAO_tc_TAO_BufferingConstraintPolicy;
 }
 

@@ -83,7 +83,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyType;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PolicyType;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -166,7 +166,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyList;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PolicyList;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -219,7 +219,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyTypeSeq;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PolicyTypeSeq;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -258,7 +258,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SetOverrideType;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_SetOverrideType;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66

@@ -43,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -56,7 +56,6 @@ namespace TAO
 
 // Traits specializations for PortableServer::POAManager.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::POAManager_ptr
 TAO::Objref_Traits<PortableServer::POAManager>::duplicate (
     PortableServer::POAManager_ptr p
@@ -65,7 +64,6 @@ TAO::Objref_Traits<PortableServer::POAManager>::duplicate (
   return PortableServer::POAManager::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableServer::POAManager>::release (
     PortableServer::POAManager_ptr p
@@ -74,14 +72,12 @@ TAO::Objref_Traits<PortableServer::POAManager>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::POAManager_ptr
 TAO::Objref_Traits<PortableServer::POAManager>::nil (void)
 {
   return PortableServer::POAManager::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableServer::POAManager>::marshal (
     PortableServer::POAManager_ptr p,
@@ -224,7 +220,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager_AdapterInactive (
     0
   );
 
-::CORBA::TypeCode_ptr PortableServer::POAManager::_tc_AdapterInactive =
+::CORBA::TypeCode_ptr const PortableServer::POAManager::_tc_AdapterInactive =
   &_tc_TAO_tc_PortableServer_POAManager_AdapterInactive;
 
 PortableServer::POAManager::POAManager (void)
@@ -286,6 +282,12 @@ PortableServer::POAManager::_duplicate (POAManager_ptr obj)
   return obj;
 }
 
+void
+PortableServer::POAManager::_tao_release (POAManager_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 PortableServer::POAManager::_is_a (
     const char *value
@@ -327,7 +329,7 @@ PortableServer::POAManager::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

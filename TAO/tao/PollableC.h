@@ -147,6 +147,8 @@ namespace CORBA
     // The static operations.
     static Pollable_ptr _duplicate (Pollable_ptr obj);
     
+    static void _tao_release (Pollable_ptr obj);
+    
     static Pollable_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -186,7 +188,7 @@ namespace CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -250,6 +252,8 @@ namespace CORBA
     // The static operations.
     static DIIPollable_ptr _duplicate (DIIPollable_ptr obj);
     
+    static void _tao_release (DIIPollable_ptr obj);
+    
     static DIIPollable_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -268,7 +272,7 @@ namespace CORBA
     
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -308,6 +312,8 @@ namespace CORBA
     
     // The static operations.
     static PollableSet_ptr _duplicate (PollableSet_ptr obj);
+    
+    static void _tao_release (PollableSet_ptr obj);
     
     static PollableSet_ptr _narrow (
         CORBA::Object_ptr obj
@@ -464,7 +470,7 @@ namespace CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -504,7 +510,7 @@ namespace TAO
 #if !defined (_CORBA_POLLABLESET__TRAITS_CH_)
 #define _CORBA_POLLABLESET__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits< ::CORBA::PollableSet>
   {
     static ::CORBA::PollableSet_ptr duplicate (
@@ -525,7 +531,7 @@ namespace TAO
 #if !defined (_CORBA_POLLABLE__TRAITS_CH_)
 #define _CORBA_POLLABLE__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits< ::CORBA::Pollable>
   {
     static ::CORBA::Pollable_ptr duplicate (
@@ -546,7 +552,7 @@ namespace TAO
 #if !defined (_CORBA_DIIPOLLABLE__TRAITS_CH_)
 #define _CORBA_DIIPOLLABLE__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits< ::CORBA::DIIPollable>
   {
     static ::CORBA::DIIPollable_ptr duplicate (

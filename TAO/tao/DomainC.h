@@ -130,6 +130,8 @@ namespace CORBA
     // The static operations.
     static DomainManager_ptr _duplicate (DomainManager_ptr obj);
     
+    static void _tao_release (DomainManager_ptr obj);
+    
     static DomainManager_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -159,7 +161,7 @@ namespace CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -207,7 +209,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_DomainManager;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_DomainManager;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -254,6 +256,8 @@ namespace CORBA
     // The static operations.
     static ConstructionPolicy_ptr _duplicate (ConstructionPolicy_ptr obj);
     
+    static void _tao_release (ConstructionPolicy_ptr obj);
+    
     static ConstructionPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -284,7 +288,7 @@ namespace CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -332,7 +336,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ConstructionPolicy;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ConstructionPolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -392,7 +396,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_DomainManagerList;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_DomainManagerList;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -402,7 +406,7 @@ namespace CORBA
 // Proxy Broker Factory function pointer declarations.
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:120
+// be\be_visitor_root/root.cpp:230
 
 extern TAO_Export
 TAO::Collocation_Proxy_Broker *
@@ -426,7 +430,7 @@ namespace TAO
 #if !defined (_CORBA_DOMAINMANAGER__TRAITS_CH_)
 #define _CORBA_DOMAINMANAGER__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits< ::CORBA::DomainManager>
   {
     static ::CORBA::DomainManager_ptr duplicate (
@@ -447,7 +451,7 @@ namespace TAO
 #if !defined (_CORBA_CONSTRUCTIONPOLICY__TRAITS_CH_)
 #define _CORBA_CONSTRUCTIONPOLICY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits< ::CORBA::ConstructionPolicy>
   {
     static ::CORBA::ConstructionPolicy_ptr duplicate (

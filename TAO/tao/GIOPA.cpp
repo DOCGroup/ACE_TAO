@@ -70,7 +70,7 @@ static CORBA::TypeCode _tc_TAO_tc_GIOP_AddressingDisposition (
 
 namespace GIOP
 {
-  ::CORBA::TypeCode_ptr _tc_AddressingDisposition =
+  ::CORBA::TypeCode_ptr const _tc_AddressingDisposition =
     &_tc_TAO_tc_GIOP_AddressingDisposition;
 }
 
@@ -115,7 +115,7 @@ static CORBA::TypeCode _tc_TAO_tc_GIOP_Version (
 
 namespace GIOP
 {
-  ::CORBA::TypeCode_ptr _tc_Version =
+  ::CORBA::TypeCode_ptr const _tc_Version =
     &_tc_TAO_tc_GIOP_Version;
 }
 
@@ -285,7 +285,7 @@ static CORBA::TypeCode _tc_TAO_tc_GIOP_IORAddressingInfo (
 
 namespace GIOP
 {
-  ::CORBA::TypeCode_ptr _tc_IORAddressingInfo =
+  ::CORBA::TypeCode_ptr const _tc_IORAddressingInfo =
     &_tc_TAO_tc_GIOP_IORAddressingInfo;
 }
 
@@ -584,7 +584,7 @@ static CORBA::TypeCode _tc_TAO_tc_GIOP_TargetAddress (
 
 namespace GIOP
 {
-  ::CORBA::TypeCode_ptr _tc_TargetAddress =
+  ::CORBA::TypeCode_ptr const _tc_TargetAddress =
     &_tc_TAO_tc_GIOP_TargetAddress;
 }
 

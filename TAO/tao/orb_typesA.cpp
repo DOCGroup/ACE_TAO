@@ -61,7 +61,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ORBid (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ORBid =
+  ::CORBA::TypeCode_ptr const _tc_ORBid =
     &_tc_TAO_tc_CORBA_ORBid;
 }
 
@@ -96,7 +96,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_Flags (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_Flags =
+  ::CORBA::TypeCode_ptr const _tc_Flags =
     &_tc_TAO_tc_CORBA_Flags;
 }
 
@@ -134,7 +134,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_Identifier (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_Identifier =
+  ::CORBA::TypeCode_ptr const _tc_Identifier =
     &_tc_TAO_tc_CORBA_Identifier;
 }
 
@@ -173,6 +173,6 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_RepositoryId (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_RepositoryId =
+  ::CORBA::TypeCode_ptr const _tc_RepositoryId =
     &_tc_TAO_tc_CORBA_RepositoryId;
 }

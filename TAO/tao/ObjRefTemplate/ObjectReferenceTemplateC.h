@@ -135,7 +135,7 @@ namespace PortableInterceptor
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/valuetype_ch.cpp:391
+    // be\be_visitor_valuetype/valuetype_ch.cpp:404
     
   public:
     virtual CORBA::Object_ptr make_object (
@@ -143,7 +143,7 @@ namespace PortableInterceptor
       ) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/valuetype_ch.cpp:238
+    // be\be_visitor_valuetype/valuetype_ch.cpp:246
   
   protected:
     ObjectReferenceFactory (void);
@@ -162,7 +162,7 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceFactory;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ObjectReferenceFactory;
   
   // TAO_IDL - Generated from
   // be\be_valuetype.cpp:525
@@ -214,7 +214,7 @@ namespace PortableInterceptor
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/valuetype_ch.cpp:391
+    // be\be_visitor_valuetype/valuetype_ch.cpp:404
     
   public:
     virtual char * server_id (
@@ -222,7 +222,7 @@ namespace PortableInterceptor
       ) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/valuetype_ch.cpp:391
+    // be\be_visitor_valuetype/valuetype_ch.cpp:404
     
   public:
     virtual char * orb_id (
@@ -230,7 +230,7 @@ namespace PortableInterceptor
       ) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/valuetype_ch.cpp:391
+    // be\be_visitor_valuetype/valuetype_ch.cpp:404
     
   public:
     virtual ::PortableInterceptor::AdapterName * adapter_name (
@@ -238,7 +238,7 @@ namespace PortableInterceptor
       ) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/valuetype_ch.cpp:238
+    // be\be_visitor_valuetype/valuetype_ch.cpp:246
   
   protected:
     ObjectReferenceTemplate (void);
@@ -257,7 +257,7 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplate;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ObjectReferenceTemplate;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -317,7 +317,7 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplateSeq;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ObjectReferenceTemplateSeq;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -341,7 +341,7 @@ namespace TAO
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_ORT_Export Value_Traits<PortableInterceptor::ObjectReferenceFactory>
   {
     static void add_ref (PortableInterceptor::ObjectReferenceFactory *);
@@ -354,7 +354,7 @@ namespace TAO
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_ORT_Export Value_Traits<PortableInterceptor::ObjectReferenceTemplate>
   {
     static void add_ref (PortableInterceptor::ObjectReferenceTemplate *);

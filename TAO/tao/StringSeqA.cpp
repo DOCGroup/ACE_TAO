@@ -69,7 +69,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_StringSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_StringSeq =
+  ::CORBA::TypeCode_ptr const _tc_StringSeq =
     &_tc_TAO_tc_CORBA_StringSeq;
 }
 

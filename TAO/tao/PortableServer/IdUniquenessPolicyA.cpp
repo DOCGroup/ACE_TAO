@@ -81,7 +81,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdUniquenessPolicyValue (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_IdUniquenessPolicyValue =
+  ::CORBA::TypeCode_ptr const _tc_IdUniquenessPolicyValue =
     &_tc_TAO_tc_PortableServer_IdUniquenessPolicyValue;
 }
 
@@ -123,7 +123,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdUniquenessPolicy (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_IdUniquenessPolicy =
+  ::CORBA::TypeCode_ptr const _tc_IdUniquenessPolicy =
     &_tc_TAO_tc_PortableServer_IdUniquenessPolicy;
 }
 

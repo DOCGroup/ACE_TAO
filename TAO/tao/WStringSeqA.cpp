@@ -70,7 +70,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_WStringSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_WStringSeq =
+  ::CORBA::TypeCode_ptr const _tc_WStringSeq =
     &_tc_TAO_tc_CORBA_WStringSeq;
 }
 

@@ -84,7 +84,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantRetentionPolicyValue (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_ServantRetentionPolicyValue =
+  ::CORBA::TypeCode_ptr const _tc_ServantRetentionPolicyValue =
     &_tc_TAO_tc_PortableServer_ServantRetentionPolicyValue;
 }
 
@@ -128,7 +128,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantRetentionPolicy (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_ServantRetentionPolicy =
+  ::CORBA::TypeCode_ptr const _tc_ServantRetentionPolicy =
     &_tc_TAO_tc_PortableServer_ServantRetentionPolicy;
 }
 

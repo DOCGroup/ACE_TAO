@@ -98,7 +98,7 @@ namespace PortableServer
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectId;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ObjectId;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598

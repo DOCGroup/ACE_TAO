@@ -74,7 +74,7 @@ static CORBA::TypeCode _tc_TAO_tc_IIOP_ListenPoint (
 
 namespace IIOP
 {
-  ::CORBA::TypeCode_ptr _tc_ListenPoint =
+  ::CORBA::TypeCode_ptr const _tc_ListenPoint =
     &_tc_TAO_tc_IIOP_ListenPoint;
 }
 
@@ -146,7 +146,7 @@ static CORBA::TypeCode _tc_TAO_tc_IIOP_ListenPointList (
 
 namespace IIOP
 {
-  ::CORBA::TypeCode_ptr _tc_ListenPointList =
+  ::CORBA::TypeCode_ptr const _tc_ListenPointList =
     &_tc_TAO_tc_IIOP_ListenPointList;
 }
 
@@ -248,7 +248,7 @@ static CORBA::TypeCode _tc_TAO_tc_IIOP_BiDirIIOPServiceContext (
 
 namespace IIOP
 {
-  ::CORBA::TypeCode_ptr _tc_BiDirIIOPServiceContext =
+  ::CORBA::TypeCode_ptr const _tc_BiDirIIOPServiceContext =
     &_tc_TAO_tc_IIOP_BiDirIIOPServiceContext;
 }
 

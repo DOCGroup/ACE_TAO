@@ -69,7 +69,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_UShortSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_UShortSeq =
+  ::CORBA::TypeCode_ptr const _tc_UShortSeq =
     &_tc_TAO_tc_CORBA_UShortSeq;
 }
 

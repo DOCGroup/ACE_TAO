@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -55,7 +55,6 @@ namespace TAO
 
 // Traits specializations for PortableServer::IdAssignmentPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::IdAssignmentPolicy_ptr
 TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::duplicate (
     PortableServer::IdAssignmentPolicy_ptr p
@@ -64,7 +63,6 @@ TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::duplicate (
   return PortableServer::IdAssignmentPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::release (
     PortableServer::IdAssignmentPolicy_ptr p
@@ -73,14 +71,12 @@ TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::IdAssignmentPolicy_ptr
 TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::nil (void)
 {
   return PortableServer::IdAssignmentPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::marshal (
     PortableServer::IdAssignmentPolicy_ptr p,
@@ -147,6 +143,12 @@ PortableServer::IdAssignmentPolicy::_duplicate (IdAssignmentPolicy_ptr obj)
     }
   
   return obj;
+}
+
+void
+PortableServer::IdAssignmentPolicy::_tao_release (IdAssignmentPolicy_ptr obj)
+{
+  CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -216,7 +218,7 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::IdAssignmentPolic
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

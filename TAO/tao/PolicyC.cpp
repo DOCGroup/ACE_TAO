@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be\be_codegen.cpp:302
 
 
 #include "PolicyC.h"
@@ -48,7 +48,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -74,7 +74,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PolicyError::PolicyError (void)
   : CORBA::UserException (
@@ -177,7 +177,7 @@ void CORBA::PolicyError::_tao_decode (
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/exception_ctor.cpp:66
+// be\be_visitor_exception/exception_ctor.cpp:66
 
 CORBA::PolicyError::PolicyError (
     CORBA::PolicyErrorCode _tao_reason
@@ -197,7 +197,7 @@ CORBA::TypeCode_ptr CORBA::PolicyError::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_PolicyError[] =
 {
@@ -259,7 +259,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::InvalidPolicies::InvalidPolicies (void)
   : CORBA::UserException (
@@ -362,7 +362,7 @@ void CORBA::InvalidPolicies::_tao_decode (
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/exception_ctor.cpp:66
+// be\be_visitor_exception/exception_ctor.cpp:66
 
 CORBA::InvalidPolicies::InvalidPolicies (
     const CORBA::UShortSeq & _tao_indices
@@ -382,7 +382,7 @@ CORBA::TypeCode_ptr CORBA::InvalidPolicies::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_InvalidPolicies[] =
 {
@@ -448,7 +448,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::Policy.
 
@@ -490,7 +490,7 @@ TAO::Collocation_Proxy_Broker *
   ) = 0;
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 CORBA::PolicyType CORBA::Policy::policy_type (
     ACE_ENV_SINGLE_ARG_DECL
@@ -532,7 +532,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 ::CORBA::Policy_ptr CORBA::Policy::copy (
     ACE_ENV_SINGLE_ARG_DECL
@@ -574,7 +574,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::Policy::destroy (
     ACE_ENV_SINGLE_ARG_DECL
@@ -727,7 +727,7 @@ CORBA::Policy::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::PolicyManager.
 
@@ -868,7 +868,7 @@ CORBA::PolicyManager::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::PolicyCurrent.
 
@@ -1017,7 +1017,7 @@ CORBA::PolicyCurrent::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/cdr_op_cs.cpp:60
+// be\be_visitor_exception/cdr_op_cs.cpp:60
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -1050,7 +1050,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/cdr_op_cs.cpp:60
+// be\be_visitor_exception/cdr_op_cs.cpp:60
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -1111,7 +1111,7 @@ CORBA::Policy::_tao_scope (void) const
 // ****************************************************************
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_cs.cpp:63
+// be\be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -1147,7 +1147,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -130,6 +130,8 @@ namespace PortableServer
     // The static operations.
     static ServantActivator_ptr _duplicate (ServantActivator_ptr obj);
     
+    static void _tao_release (ServantActivator_ptr obj);
+    
     static ServantActivator_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -176,7 +178,7 @@ namespace PortableServer
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -204,7 +206,7 @@ namespace PortableServer
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServantActivator;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ServantActivator;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -221,7 +223,7 @@ namespace TAO
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR__TRAITS_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::ServantActivator>
   {
     static ::PortableServer::ServantActivator_ptr duplicate (

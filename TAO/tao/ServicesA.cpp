@@ -65,7 +65,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceType (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ServiceType =
+  ::CORBA::TypeCode_ptr const _tc_ServiceType =
     &_tc_TAO_tc_CORBA_ServiceType;
 }
 
@@ -104,7 +104,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceOption (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ServiceOption =
+  ::CORBA::TypeCode_ptr const _tc_ServiceOption =
     &_tc_TAO_tc_CORBA_ServiceOption;
 }
 
@@ -145,7 +145,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceDetailType (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ServiceDetailType =
+  ::CORBA::TypeCode_ptr const _tc_ServiceDetailType =
     &_tc_TAO_tc_CORBA_ServiceDetailType;
 }
 
@@ -241,7 +241,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceDetail (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ServiceDetail =
+  ::CORBA::TypeCode_ptr const _tc_ServiceDetail =
     &_tc_TAO_tc_CORBA_ServiceDetail;
 }
 
@@ -306,7 +306,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceOptionSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ServiceOptionSeq =
+  ::CORBA::TypeCode_ptr const _tc_ServiceOptionSeq =
     &_tc_TAO_tc_CORBA_ServiceOptionSeq;
 }
 
@@ -428,7 +428,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceDetailSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ServiceDetailSeq =
+  ::CORBA::TypeCode_ptr const _tc_ServiceDetailSeq =
     &_tc_TAO_tc_CORBA_ServiceDetailSeq;
 }
 
@@ -630,7 +630,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceInformation (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ServiceInformation =
+  ::CORBA::TypeCode_ptr const _tc_ServiceInformation =
     &_tc_TAO_tc_CORBA_ServiceInformation;
 }
 

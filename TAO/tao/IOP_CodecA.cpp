@@ -61,7 +61,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_Codec (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_Codec =
+  ::CORBA::TypeCode_ptr const _tc_Codec =
     &_tc_TAO_tc_IOP_Codec;
 }
 
@@ -100,7 +100,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_EncodingFormat (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_EncodingFormat =
+  ::CORBA::TypeCode_ptr const _tc_EncodingFormat =
     &_tc_TAO_tc_IOP_EncodingFormat;
 }
 
@@ -174,7 +174,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_Encoding (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_Encoding =
+  ::CORBA::TypeCode_ptr const _tc_Encoding =
     &_tc_TAO_tc_IOP_Encoding;
 }
 
@@ -211,7 +211,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_CodecFactory (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_CodecFactory =
+  ::CORBA::TypeCode_ptr const _tc_CodecFactory =
     &_tc_TAO_tc_IOP_CodecFactory;
 }
 

@@ -69,7 +69,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_NativePriority (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_NativePriority =
+  ::CORBA::TypeCode_ptr const _tc_NativePriority =
     &_tc_TAO_tc_RTCORBA_NativePriority;
 }
 
@@ -107,7 +107,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_Priority (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_Priority =
+  ::CORBA::TypeCode_ptr const _tc_Priority =
     &_tc_TAO_tc_RTCORBA_Priority;
 }
 
@@ -147,7 +147,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_NetworkPriority (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_NetworkPriority =
+  ::CORBA::TypeCode_ptr const _tc_NetworkPriority =
     &_tc_TAO_tc_RTCORBA_NetworkPriority;
 }
 
@@ -187,7 +187,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ThreadpoolId (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ThreadpoolId =
+  ::CORBA::TypeCode_ptr const _tc_ThreadpoolId =
     &_tc_TAO_tc_RTCORBA_ThreadpoolId;
 }
 
@@ -265,7 +265,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ThreadpoolLane (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ThreadpoolLane =
+  ::CORBA::TypeCode_ptr const _tc_ThreadpoolLane =
     &_tc_TAO_tc_RTCORBA_ThreadpoolLane;
 }
 
@@ -368,7 +368,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ThreadpoolLanes (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ThreadpoolLanes =
+  ::CORBA::TypeCode_ptr const _tc_ThreadpoolLanes =
     &_tc_TAO_tc_RTCORBA_ThreadpoolLanes;
 }
 
@@ -418,7 +418,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_PriorityModel (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_PriorityModel =
+  ::CORBA::TypeCode_ptr const _tc_PriorityModel =
     &_tc_TAO_tc_RTCORBA_PriorityModel;
 }
 
@@ -458,7 +458,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_PriorityModelPolicy (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_PriorityModelPolicy =
+  ::CORBA::TypeCode_ptr const _tc_PriorityModelPolicy =
     &_tc_TAO_tc_RTCORBA_PriorityModelPolicy;
 }
 
@@ -498,7 +498,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ThreadpoolPolicy (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ThreadpoolPolicy =
+  ::CORBA::TypeCode_ptr const _tc_ThreadpoolPolicy =
     &_tc_TAO_tc_RTCORBA_ThreadpoolPolicy;
 }
 
@@ -538,7 +538,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ProtocolProperties (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ProtocolProperties =
+  ::CORBA::TypeCode_ptr const _tc_ProtocolProperties =
     &_tc_TAO_tc_RTCORBA_ProtocolProperties;
 }
 
@@ -659,7 +659,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_Protocol (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_Protocol =
+  ::CORBA::TypeCode_ptr const _tc_Protocol =
     &_tc_TAO_tc_RTCORBA_Protocol;
 }
 
@@ -805,7 +805,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ProtocolList (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ProtocolList =
+  ::CORBA::TypeCode_ptr const _tc_ProtocolList =
     &_tc_TAO_tc_RTCORBA_ProtocolList;
 }
 
@@ -847,7 +847,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ServerProtocolPolicy (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ServerProtocolPolicy =
+  ::CORBA::TypeCode_ptr const _tc_ServerProtocolPolicy =
     &_tc_TAO_tc_RTCORBA_ServerProtocolPolicy;
 }
 
@@ -889,7 +889,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ClientProtocolPolicy (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ClientProtocolPolicy =
+  ::CORBA::TypeCode_ptr const _tc_ClientProtocolPolicy =
     &_tc_TAO_tc_RTCORBA_ClientProtocolPolicy;
 }
 
@@ -931,7 +931,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_PrivateConnectionPolicy (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_PrivateConnectionPolicy =
+  ::CORBA::TypeCode_ptr const _tc_PrivateConnectionPolicy =
     &_tc_TAO_tc_RTCORBA_PrivateConnectionPolicy;
 }
 
@@ -973,7 +973,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_TCPProtocolProperties (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_TCPProtocolProperties =
+  ::CORBA::TypeCode_ptr const _tc_TCPProtocolProperties =
     &_tc_TAO_tc_RTCORBA_TCPProtocolProperties;
 }
 
@@ -1015,7 +1015,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_GIOPProtocolProperties (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_GIOPProtocolProperties =
+  ::CORBA::TypeCode_ptr const _tc_GIOPProtocolProperties =
     &_tc_TAO_tc_RTCORBA_GIOPProtocolProperties;
 }
 
@@ -1061,7 +1061,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_UnixDomainProtocolProperties (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_UnixDomainProtocolProperties =
+  ::CORBA::TypeCode_ptr const _tc_UnixDomainProtocolProperties =
     &_tc_TAO_tc_RTCORBA_UnixDomainProtocolProperties;
 }
 
@@ -1107,7 +1107,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_SharedMemoryProtocolProperties (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_SharedMemoryProtocolProperties =
+  ::CORBA::TypeCode_ptr const _tc_SharedMemoryProtocolProperties =
     &_tc_TAO_tc_RTCORBA_SharedMemoryProtocolProperties;
 }
 
@@ -1153,7 +1153,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_UserDatagramProtocolProperties (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_UserDatagramProtocolProperties =
+  ::CORBA::TypeCode_ptr const _tc_UserDatagramProtocolProperties =
     &_tc_TAO_tc_RTCORBA_UserDatagramProtocolProperties;
 }
 
@@ -1199,7 +1199,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_StreamControlProtocolProperties (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_StreamControlProtocolProperties =
+  ::CORBA::TypeCode_ptr const _tc_StreamControlProtocolProperties =
     &_tc_TAO_tc_RTCORBA_StreamControlProtocolProperties;
 }
 
@@ -1283,7 +1283,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_PriorityBand (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_PriorityBand =
+  ::CORBA::TypeCode_ptr const _tc_PriorityBand =
     &_tc_TAO_tc_RTCORBA_PriorityBand;
 }
 
@@ -1392,7 +1392,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_PriorityBands (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_PriorityBands =
+  ::CORBA::TypeCode_ptr const _tc_PriorityBands =
     &_tc_TAO_tc_RTCORBA_PriorityBands;
 }
 
@@ -1438,7 +1438,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_PriorityBandedConnectionPolicy (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_PriorityBandedConnectionPolicy =
+  ::CORBA::TypeCode_ptr const _tc_PriorityBandedConnectionPolicy =
     &_tc_TAO_tc_RTCORBA_PriorityBandedConnectionPolicy;
 }
 
@@ -1472,7 +1472,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_Current (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_Current =
+  ::CORBA::TypeCode_ptr const _tc_Current =
     &_tc_TAO_tc_RTCORBA_Current;
 }
 
@@ -1506,7 +1506,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_Mutex (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_Mutex =
+  ::CORBA::TypeCode_ptr const _tc_Mutex =
     &_tc_TAO_tc_RTCORBA_Mutex;
 }
 
@@ -1540,7 +1540,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_RTORB (
 
 namespace RTCORBA
 {
-  ::CORBA::TypeCode_ptr _tc_RTORB =
+  ::CORBA::TypeCode_ptr const _tc_RTORB =
     &_tc_TAO_tc_RTCORBA_RTORB;
 }
 

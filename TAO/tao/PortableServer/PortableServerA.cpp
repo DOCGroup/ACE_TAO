@@ -69,7 +69,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAList (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_POAList =
+  ::CORBA::TypeCode_ptr const _tc_POAList =
     &_tc_TAO_tc_PortableServer_POAList;
 }
 
@@ -105,7 +105,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_POA =
+  ::CORBA::TypeCode_ptr const _tc_POA =
     &_tc_TAO_tc_PortableServer_POA;
 }
 

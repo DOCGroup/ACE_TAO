@@ -96,7 +96,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_RequestProcessingPolicyValue (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_RequestProcessingPolicyValue =
+  ::CORBA::TypeCode_ptr const _tc_RequestProcessingPolicyValue =
     &_tc_TAO_tc_PortableServer_RequestProcessingPolicyValue;
 }
 
@@ -142,7 +142,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_RequestProcessingPolicy (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_RequestProcessingPolicy =
+  ::CORBA::TypeCode_ptr const _tc_RequestProcessingPolicy =
     &_tc_TAO_tc_PortableServer_RequestProcessingPolicy;
 }
 

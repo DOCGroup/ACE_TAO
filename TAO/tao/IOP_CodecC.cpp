@@ -44,7 +44,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -57,7 +57,6 @@ namespace TAO
 
 // Traits specializations for IOP::Codec.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IOP::Codec_ptr
 TAO::Objref_Traits<IOP::Codec>::duplicate (
     IOP::Codec_ptr p
@@ -66,7 +65,6 @@ TAO::Objref_Traits<IOP::Codec>::duplicate (
   return IOP::Codec::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<IOP::Codec>::release (
     IOP::Codec_ptr p
@@ -75,14 +73,12 @@ TAO::Objref_Traits<IOP::Codec>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IOP::Codec_ptr
 TAO::Objref_Traits<IOP::Codec>::nil (void)
 {
   return IOP::Codec::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<IOP::Codec>::marshal (
     IOP::Codec_ptr p,
@@ -225,7 +221,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_InvalidTypeForEncoding (
     0
   );
 
-::CORBA::TypeCode_ptr IOP::Codec::_tc_InvalidTypeForEncoding =
+::CORBA::TypeCode_ptr const IOP::Codec::_tc_InvalidTypeForEncoding =
   &_tc_TAO_tc_IOP_Codec_InvalidTypeForEncoding;
 
 // TAO_IDL - Generated from 
@@ -357,7 +353,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_FormatMismatch (
     0
   );
 
-::CORBA::TypeCode_ptr IOP::Codec::_tc_FormatMismatch =
+::CORBA::TypeCode_ptr const IOP::Codec::_tc_FormatMismatch =
   &_tc_TAO_tc_IOP_Codec_FormatMismatch;
 
 // TAO_IDL - Generated from 
@@ -488,7 +484,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_TypeMismatch (
     0
   );
 
-::CORBA::TypeCode_ptr IOP::Codec::_tc_TypeMismatch =
+::CORBA::TypeCode_ptr const IOP::Codec::_tc_TypeMismatch =
   &_tc_TAO_tc_IOP_Codec_TypeMismatch;
 
 IOP::Codec::Codec (void)
@@ -550,6 +546,12 @@ IOP::Codec::_duplicate (Codec_ptr obj)
   return obj;
 }
 
+void
+IOP::Codec::_tao_release (Codec_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 IOP::Codec::_is_a (
     const char *value
@@ -608,7 +610,6 @@ IOP::Encoding::_tao_any_destructor (
 
 // Traits specializations for IOP::CodecFactory.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IOP::CodecFactory_ptr
 TAO::Objref_Traits<IOP::CodecFactory>::duplicate (
     IOP::CodecFactory_ptr p
@@ -617,7 +618,6 @@ TAO::Objref_Traits<IOP::CodecFactory>::duplicate (
   return IOP::CodecFactory::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<IOP::CodecFactory>::release (
     IOP::CodecFactory_ptr p
@@ -626,14 +626,12 @@ TAO::Objref_Traits<IOP::CodecFactory>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IOP::CodecFactory_ptr
 TAO::Objref_Traits<IOP::CodecFactory>::nil (void)
 {
   return IOP::CodecFactory::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<IOP::CodecFactory>::marshal (
     IOP::CodecFactory_ptr p,
@@ -774,7 +772,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_CodecFactory_UnknownEncoding (
     0
   );
 
-::CORBA::TypeCode_ptr IOP::CodecFactory::_tc_UnknownEncoding =
+::CORBA::TypeCode_ptr const IOP::CodecFactory::_tc_UnknownEncoding =
   &_tc_TAO_tc_IOP_CodecFactory_UnknownEncoding;
 
 IOP::CodecFactory::CodecFactory (void)
@@ -834,6 +832,12 @@ IOP::CodecFactory::_duplicate (CodecFactory_ptr obj)
     }
   
   return obj;
+}
+
+void
+IOP::CodecFactory::_tao_release (CodecFactory_ptr obj)
+{
+  CORBA::release (obj);
 }
 
 CORBA::Boolean

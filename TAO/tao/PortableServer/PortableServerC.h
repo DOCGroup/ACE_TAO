@@ -162,7 +162,7 @@ namespace PortableServer
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_POAList;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_POAList;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -307,6 +307,8 @@ namespace PortableServer
     // The static operations.
     static POA_ptr _duplicate (POA_ptr obj);
     
+    static void _tao_release (POA_ptr obj);
+    
     static POA_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -370,7 +372,7 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_AdapterAlreadyExists;
+    static ::CORBA::TypeCode_ptr const _tc_AdapterAlreadyExists;
 
 #endif /* end #if !defined */
     
@@ -420,7 +422,7 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_AdapterNonExistent;
+    static ::CORBA::TypeCode_ptr const _tc_AdapterNonExistent;
 
 #endif /* end #if !defined */
     
@@ -478,7 +480,7 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_InvalidPolicy;
+    static ::CORBA::TypeCode_ptr const _tc_InvalidPolicy;
 
 #endif /* end #if !defined */
     
@@ -530,7 +532,7 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_NoServant;
+    static ::CORBA::TypeCode_ptr const _tc_NoServant;
 
 #endif /* end #if !defined */
     
@@ -582,7 +584,7 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_ObjectAlreadyActive;
+    static ::CORBA::TypeCode_ptr const _tc_ObjectAlreadyActive;
 
 #endif /* end #if !defined */
     
@@ -632,7 +634,7 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_ObjectNotActive;
+    static ::CORBA::TypeCode_ptr const _tc_ObjectNotActive;
 
 #endif /* end #if !defined */
     
@@ -682,7 +684,7 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_ServantAlreadyActive;
+    static ::CORBA::TypeCode_ptr const _tc_ServantAlreadyActive;
 
 #endif /* end #if !defined */
     
@@ -732,7 +734,7 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_ServantNotActive;
+    static ::CORBA::TypeCode_ptr const _tc_ServantNotActive;
 
 #endif /* end #if !defined */
     
@@ -782,7 +784,7 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_WrongAdapter;
+    static ::CORBA::TypeCode_ptr const _tc_WrongAdapter;
 
 #endif /* end #if !defined */
     
@@ -832,7 +834,7 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_WrongPolicy;
+    static ::CORBA::TypeCode_ptr const _tc_WrongPolicy;
 
 #endif /* end #if !defined */
     
@@ -1233,7 +1235,7 @@ namespace PortableServer
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1261,7 +1263,7 @@ namespace PortableServer
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_POA;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_POA;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -1278,7 +1280,7 @@ namespace TAO
 #if !defined (_PORTABLESERVER_POA__TRAITS_CH_)
 #define _PORTABLESERVER_POA__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::POA>
   {
     static ::PortableServer::POA_ptr duplicate (

@@ -99,7 +99,7 @@ namespace TAO
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_BufferingConstraintMode;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_BufferingConstraintMode;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -153,7 +153,7 @@ namespace TAO
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_BufferingConstraint;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_BufferingConstraint;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -198,6 +198,8 @@ namespace TAO
     
     // The static operations.
     static BufferingConstraintPolicy_ptr _duplicate (BufferingConstraintPolicy_ptr obj);
+    
+    static void _tao_release (BufferingConstraintPolicy_ptr obj);
     
     static BufferingConstraintPolicy_ptr _narrow (
         CORBA::Object_ptr obj
@@ -247,7 +249,7 @@ namespace TAO
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -275,7 +277,7 @@ namespace TAO
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_BufferingConstraintPolicy;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_BufferingConstraintPolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -302,7 +304,7 @@ namespace TAO
 #if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY__TRAITS_CH_)
 #define _TAO_BUFFERINGCONSTRAINTPOLICY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits< ::TAO::BufferingConstraintPolicy>
   {
     static ::TAO::BufferingConstraintPolicy_ptr duplicate (

@@ -92,7 +92,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ImplicitActivationPolicyValue (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_ImplicitActivationPolicyValue =
+  ::CORBA::TypeCode_ptr const _tc_ImplicitActivationPolicyValue =
     &_tc_TAO_tc_PortableServer_ImplicitActivationPolicyValue;
 }
 
@@ -137,7 +137,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ImplicitActivationPolicy (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_ImplicitActivationPolicy =
+  ::CORBA::TypeCode_ptr const _tc_ImplicitActivationPolicy =
     &_tc_TAO_tc_PortableServer_ImplicitActivationPolicy;
 }
 
