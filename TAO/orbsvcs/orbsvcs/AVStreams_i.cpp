@@ -428,7 +428,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
                     const AVStreams::flowSpec &the_spec,  
                     CORBA::Environment &env)
 {
-  this->streamctrl_var_ = the_ctrl;
+  this->streamctrl_ = the_ctrl;
   this->peer_ = the_peer_dev;
   return 0;
 }

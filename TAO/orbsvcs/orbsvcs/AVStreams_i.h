@@ -21,8 +21,6 @@
 
 #include "orbsvcs/AVStreamsS.h"
 
-// Implementation classes follow
-
 class TAO_Basic_StreamCtrl : public virtual POA_AVStreams::Basic_StreamCtrl
 {
 public:
@@ -63,7 +61,7 @@ class TAO_StreamCtrl : public virtual POA_AVStreams::StreamCtrl,
                          public virtual TAO_Basic_StreamCtrl
 {
 public:
-  TAO_StreamCtrl (void);
+  TAO_StreamCtrl (CORBA::ORB_var orb);
 
   virtual CORBA::Boolean bind_devs (AVStreams::MMDevice_ptr a_party, 
                                     AVStreams::MMDevice_ptr b_party, 
@@ -85,10 +83,16 @@ public:
   virtual void unbind (CORBA::Environment &env);
 
   virtual ~TAO_StreamCtrl (void);
+private:
+  CORBA::ORB_var orb_;
+  AVStreams::VDev_var vdev_a_;
+  AVStreams::VDev_var vdev_b_;
+  AVStreams::StreamEndPoint_A_var stream_endpoint_a_;
+  AVStreams::StreamEndPoint_B_var stream_endpoint_b_;
 
 };  
 
-class TAO_StreamEndPoint : public POA_AVStreams::StreamEndPoint
+class TAO_StreamEndPoint : public virtual POA_AVStreams::StreamEndPoint
 {
 public:
   TAO_StreamEndPoint (void);
@@ -151,7 +155,8 @@ public:
 
 };
 
-class TAO_StreamEndPoint_A : public POA_AVStreams::StreamEndPoint_A
+class TAO_StreamEndPoint_A : public virtual POA_AVStreams::StreamEndPoint_A,
+                             public virtual TAO_StreamEndPoint
 {
 public:
   TAO_StreamEndPoint_A (void);
@@ -173,7 +178,8 @@ public:
 
 };
 
-class TAO_StreamEndPoint_B : public POA_AVStreams::StreamEndPoint_B
+class TAO_StreamEndPoint_B : public virtual POA_AVStreams::StreamEndPoint_B,
+                             public virtual TAO_StreamEndPoint
 {
 public:
   TAO_StreamEndPoint_B (void);
@@ -186,7 +192,7 @@ public:
 
 };
 
-class TAO_VDev : public POA_AVStreams::VDev
+class TAO_VDev : public virtual POA_AVStreams::VDev
 {
 public:
   TAO_VDev (void);
@@ -219,6 +225,9 @@ public:
                                      CORBA::Environment &env);
   
   virtual ~TAO_VDev (void);
+private:
+  AVStreams::StreamCtrl_var streamctrl_;
+  AVStreams::VDev_var peer_;
 };
 
 class TAO_MMDevice : public POA_AVStreams::MMDevice
