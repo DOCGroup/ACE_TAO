@@ -40,6 +40,13 @@
 #define ACE_HAS_BROKEN_EXTENDED_TEMPLATES
 #endif /* __GNUC__ */
 
+// Necessary to do this so that the set of classes used in ACE
+// for TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY = 1 option is 
+// the same as those used for ACE_HAS_BROKEN_EXTENDED_TEMPLATES
+#if (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1)
+#define ACE_HAS_BROKEN_EXTENDED_TEMPLATES
+#endif /*TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1*/
+ 
 #include "ace/Cached_Connect_Strategy_T.h"
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
@@ -164,15 +171,16 @@ public:
                                                             TAO_ATTRIBUTES>
           TAO_CACHING_UTILITY;
 
-#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) || \
-(TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1)
+#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) || (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1)
   typedef ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES,
                                    TAO_CACHING_UTILITY>
           TAO_CACHING_STRATEGY;
 #else
+#if (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0)
   typedef ACE_Caching_Strategy<TAO_ATTRIBUTES,
                                TAO_CACHING_UTILITY>
           TAO_CACHING_STRATEGY;
+#endif /* (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0) */
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES
           TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0*/
 
