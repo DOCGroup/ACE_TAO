@@ -1,3 +1,10 @@
+Thu Jul 24 13:01:46 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\RTCORBA\Priority_Inversion_With_Bands\test_i.cpp
+	  (initialize): 
+	  
+	  ACE_ENV_ARG was not used in this function.
+
 Thu Jul 24 11:35:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Dual_Impl_T.h:
