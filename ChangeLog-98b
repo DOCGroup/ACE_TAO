@@ -4,6 +4,10 @@ Fri May 29 23:06:02 1998  David L. Levine  <levine@cs.wustl.edu>
           (template) class declaration because g++ 2.7.2.3 couldn't
           find it there.
 
+        * ace/Thread_Manager.cpp (remove_thr, VxWorks only): added [] to
+          delete of tid array.  Thanks to Arturo Montes
+          <mitosys@colomsat.net.co> for reporting this.
+
 Fri May 29 21:59:01 1998  James C Hu  <jxh@cs.wustl.edu>
 
         * RB_Tree.h:
