@@ -1,165 +1,171 @@
+Wed Aug 11 11:03:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp (recursive_build,
+          recursive_name): changed ACE_CU64_TO_CU32 to a static cast,
+          because the division converts to 32 bits with ACE_LACKS_LONGLONG_T.
+
 Wed Aug 11 10:40:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.cpp:
-	  Added an ACE_DEBUG message to an ACE_CATCHANY block that I
-	  missed yesterday.
+        * tao/Any.cpp:
+          Added an ACE_DEBUG message to an ACE_CATCHANY block that I
+          missed yesterday.
 
 Wed Aug 11 10:21:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/NestedUpcall/Simple/client.cpp:
-	  Removed unused variable
+        * tests/NestedUpcall/Simple/client.cpp:
+          Removed unused variable
 
-	* tao/Tagged_Components.cpp:
-	  Use CORBA::Boolean with to_boolean() helper classes, not
-	  CORBA::Octet.  Unfortunately only a few platform catches those,
-	  thanks to David for pointing it out.
+        * tao/Tagged_Components.cpp:
+          Use CORBA::Boolean with to_boolean() helper classes, not
+          CORBA::Octet.  Unfortunately only a few platform catches those,
+          thanks to David for pointing it out.
 
 Wed Aug 11 10:04:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/Event_Comm/Consumer_Handler.cpp:
-	* examples/OBV/Typed_Events/Event_Types_impl.cpp:
-	* examples/POA/Default_Servant/File_i.cpp:
-	* examples/Quoter/server.cpp:
-	* examples/Simple/bank/AccountManager_i.cpp:
-	* examples/Simple/bank/Account_i.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
-	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
-	* orbsvcs/tests/Event/Basic/BCast.cpp:
-	* orbsvcs/tests/Event/Basic/BCast.h:
-	* performance-tests/Thruput/TAO/utils.cpp:
-	* utils/nslist/nslist.cpp:
-	  Fixed several warnings under gcc-2.95
+        * examples/Event_Comm/Consumer_Handler.cpp:
+        * examples/OBV/Typed_Events/Event_Types_impl.cpp:
+        * examples/POA/Default_Servant/File_i.cpp:
+        * examples/Quoter/server.cpp:
+        * examples/Simple/bank/AccountManager_i.cpp:
+        * examples/Simple/bank/Account_i.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * orbsvcs/tests/Event/Basic/BCast.cpp:
+        * orbsvcs/tests/Event/Basic/BCast.h:
+        * performance-tests/Thruput/TAO/utils.cpp:
+        * utils/nslist/nslist.cpp:
+          Fixed several warnings under gcc-2.95
 
 Wed Aug 11 09:18:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	  The following changes are used to surface the ServiceContextList
-	  so interceptors can access them at inteception points.
+          The following changes are used to surface the ServiceContextList
+          so interceptors can access them at inteception points.
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i: The ORB_Core no longer owns the
-	  ServiceContextList object.  ServiceContextList objects are now
-	  associated with Invocation or ServerRequest objects.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i: The ORB_Core no longer owns the
+          ServiceContextList object.  ServiceContextList objects are now
+          associated with Invocation or ServerRequest objects.
 
-	* tao/GIOP.cpp:
-	* tao/GIOP.h: Disabled the definition/implementation of
-	  TAO_GIOP_ServiceContextList and changed to use
-	  IOP::ServiceContextList.  The TAO_GIOP_ServiceContextList was
-	  apparently redundant.
-	  (write_request_header): The request ServiceContextList is now
-	  passed down thru this method and its friends instead of getting
-	  the default one from the ORB_Core.
+        * tao/GIOP.cpp:
+        * tao/GIOP.h: Disabled the definition/implementation of
+          TAO_GIOP_ServiceContextList and changed to use
+          IOP::ServiceContextList.  The TAO_GIOP_ServiceContextList was
+          apparently redundant.
+          (write_request_header): The request ServiceContextList is now
+          passed down thru this method and its friends instead of getting
+          the default one from the ORB_Core.
 
-	* tao/Server_Request.h:
-	* tao/GIOP_Server_Request.cpp:
-	* tao/GIOP_Server_Request.h:
-	* tao/GIOP_Server_Request.i: ServerRequest and friends now owns
-	  the request ServiceContextList object passed from the client.
-	  It also maintains a separate ServiceContextList object for two
-	  way calls.
+        * tao/Server_Request.h:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.i: ServerRequest and friends now owns
+          the request ServiceContextList object passed from the client.
+          It also maintains a separate ServiceContextList object for two
+          way calls.
 
-	* tao/Pluggable.cpp:
-	* tao/Pluggable.h:
-	* tao/IIOP_Transport.cpp:
-	* tao/IIOP_Transport.h:
-	* tao/UIOP_Transport.cpp:
-	* tao/UIOP_Transport.h: The <start_request> method now takes an
-	  extra ServiceContextList argument to build a request headers.
+        * tao/Pluggable.cpp:
+        * tao/Pluggable.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/IIOP_Transport.h:
+        * tao/UIOP_Transport.cpp:
+        * tao/UIOP_Transport.h: The <start_request> method now takes an
+          extra ServiceContextList argument to build a request headers.
 
-	* tao/Asynch_Invocation.cpp:
-	* tao/Asynch_Invocation.h:
-	* tao/Asynch_Invocation.i:
-	* tao/Invocation.cpp:
-	* tao/Invocation.h:
-	* tao/Invocation.i: The invocation class now owns the request
-	  ServiceContextList.  Accessors for both request and reply
-	  ServiceContextList are added.
+        * tao/Asynch_Invocation.cpp:
+        * tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.i:
+        * tao/Invocation.cpp:
+        * tao/Invocation.h:
+        * tao/Invocation.i: The invocation class now owns the request
+          ServiceContextList.  Accessors for both request and reply
+          ServiceContextList are added.
 
-	* tao/Transport_Mux_Strategy.cpp:
-	* tao/Transport_Mux_Strategy.h: Changed the use of
-	  TAO_GIOP_ServiceContextList to IOP::ServiceContextList.
+        * tao/Transport_Mux_Strategy.cpp:
+        * tao/Transport_Mux_Strategy.h: Changed the use of
+          TAO_GIOP_ServiceContextList to IOP::ServiceContextList.
 
-	* tao/Reply_Dispatcher.cpp:
-	* tao/Reply_Dispatcher.h:
-	* tao/Reply_Dispatcher.i: Added accesor to the reply
-	  ServiceContextList object so we can get a hold on the object
-	  from the invocation object.
+        * tao/Reply_Dispatcher.cpp:
+        * tao/Reply_Dispatcher.h:
+        * tao/Reply_Dispatcher.i: Added accesor to the reply
+          ServiceContextList object so we can get a hold on the object
+          from the invocation object.
 
-	* tao/Typecode_Constants.cpp: Removed the typecode constant for
-	  TAO_GIOP_ServiceContext and TAO_GIOP_ServiceContextList.  We now
-	  use the ones defined in IOPC.cpp.
+        * tao/Typecode_Constants.cpp: Removed the typecode constant for
+          TAO_GIOP_ServiceContext and TAO_GIOP_ServiceContextList.  We now
+          use the ones defined in IOPC.cpp.
 
 Wed Aug 11 09:45:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/IDL_Test/main.cpp:
-	  Removed an unneeded '#pragma once' and fixed
-	  some ACE_CHECK_RETURNs used inside a try block.
-	  Thanks to David for pointing out the boo-boos.
+        * TAO/tests/IDL_Test/main.cpp:
+          Removed an unneeded '#pragma once' and fixed
+          some ACE_CHECK_RETURNs used inside a try block.
+          Thanks to David for pointing out the boo-boos.
 
 Tue Aug 10 21:55:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/lex.yy.cpp:
-	* TAO/fe/lex.yy.cpp.diff:
-	  Substituted a hard 'break;' for TAO_YY_BREAK in
-	  two places. TAO_YY_BREAK is defined as
-	  ACE_NOTREACHED (break;), which, for some compilers,
-	  is defined in OS.h as a null statement. TAO_YY_BREAK
-	  is used in many places after a 'return xxx' statement,
-	  but in the aforementioned two places, there was no
-	  'return', so for those compilers, control was falling
-	  through to the next case. Thanks to
-	  Christopher Kohlhoff <chris@kohlhoff.com> for tracking
-	  this down on Borland C++ Builder.
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO/fe/lex.yy.cpp.diff:
+          Substituted a hard 'break;' for TAO_YY_BREAK in
+          two places. TAO_YY_BREAK is defined as
+          ACE_NOTREACHED (break;), which, for some compilers,
+          is defined in OS.h as a null statement. TAO_YY_BREAK
+          is used in many places after a 'return xxx' statement,
+          but in the aforementioned two places, there was no
+          'return', so for those compilers, control was falling
+          through to the next case. Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> for tracking
+          this down on Borland C++ Builder.
 
 Tue Aug 10 20:40:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
-	  It was ACE_CU64_TO_CU32 instead of ACE_U64_TO_U32
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+          It was ACE_CU64_TO_CU32 instead of ACE_U64_TO_U32
 
 Tue Aug 10 19:59:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.h:
-	* tao/Any.i:
-	* tao/Any.cpp:
-	* tao/CDR.h:
-	* tao/CDR.i:
-	  Added the wstring versions of the <<=, >>=, << and >>
-	  operators. Also moved the <<= operators in Any.i to
-	  Any.cpp (they are much too long to inline), and
-	  added an ACE_DEBUG message to the previously empty
-	  ACE_CATCHANY block in the Any operators.
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Any.cpp:
+        * tao/CDR.h:
+        * tao/CDR.i:
+          Added the wstring versions of the <<=, >>=, << and >>
+          operators. Also moved the <<= operators in Any.i to
+          Any.cpp (they are much too long to inline), and
+          added an ACE_DEBUG message to the previously empty
+          ACE_CATCHANY block in the Any operators.
 
 Tue Aug 10 12:11:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/TAO_Test.dsw:
-	* TAO/tests/README:
-	  Added IDL_Test project to workspace and added a
-	  paragraph about IDL_Test to README.
+        * TAO/tests/TAO_Test.dsw:
+        * TAO/tests/README:
+          Added IDL_Test project to workspace and added a
+          paragraph about IDL_Test to README.
 
 Tue Aug 10 11:52:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	  The timeout values were not normalized, leading to strange
-	  errors in the calls to select()
+        * tao/ORB_Core.cpp:
+          The timeout values were not normalized, leading to strange
+          errors in the calls to select()
 
 Tue Aug 10 11:48:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/IDL_Test/pragma.idl:
-	* TAO/tests/IDL_Test/run_test.pl:
-	* TAO/tests/IDL_Test/main.cpp:
-	* TAO/tests/IDL_Test/Makefile:
-	* TAO/tests/IDL_Test/README:
-	  Added new .idl file to generate pragma prefixes,
-	  including various declarations that have caused
-	  the prefixes to be dropped in the past. Added code
-	  to main.cpp to check the correctness of the prefixes,
-	  and a perl script to run the test. Finally, changes
-	  to Makefile and README reflecting the above additions.
+        * TAO/tests/IDL_Test/pragma.idl:
+        * TAO/tests/IDL_Test/run_test.pl:
+        * TAO/tests/IDL_Test/main.cpp:
+        * TAO/tests/IDL_Test/Makefile:
+        * TAO/tests/IDL_Test/README:
+          Added new .idl file to generate pragma prefixes,
+          including various declarations that have caused
+          the prefixes to be dropped in the past. Added code
+          to main.cpp to check the correctness of the prefixes,
+          and a perl script to run the test. Finally, changes
+          to Makefile and README reflecting the above additions.
 
 Tue Aug 10 08:51:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
