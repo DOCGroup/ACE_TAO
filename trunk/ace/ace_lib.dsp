@@ -8567,5 +8567,36 @@ SOURCE=.\Readme
 SOURCE=..\Version
 # End Source File
 # End Group
+# Begin Group "Resource Files"
+
+# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
+# Begin Source File
+
+SOURCE=.\ace.rc
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+
+!ENDIF 
+
+# End Source File
+# End Group
 # End Target
 # End Project
