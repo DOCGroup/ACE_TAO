@@ -457,7 +457,7 @@ Event_Channel::bind_proxy (Connection_Handler *connection_handler)
       /* NOTREACHED */
     }
 
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
 
 int
@@ -493,7 +493,7 @@ Event_Channel::subscribe (const Event_Key &event_addr,
       /* NOTREACHED */
     }
 
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
 
 int
