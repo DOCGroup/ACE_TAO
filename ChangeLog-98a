@@ -1,3 +1,8 @@
+Fri Apr 17 08:31:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Signal.cpp (dispatch): Fixed a typo.  Thanks for David
+ 	  Levine's help pointing this out.
+
 Thu Apr 16 21:12:48 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Signal.cpp: There was a major portability violation in the
