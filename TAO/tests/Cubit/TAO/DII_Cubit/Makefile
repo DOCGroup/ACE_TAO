@@ -1,8 +1,7 @@
 #----------------------------------------------------------------------------
 #	$Id$
 #
-#	Top-level Makefile for the ACE-ified Sun Ref. implementation
-#	of IIOP ORB
+#	Test for the DII features of TAO
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -11,21 +10,21 @@
 
 LDLIBS     =  -lTAO
 
-PROG_SRCS =	svr.cpp clnt.cpp cubit.cpp \
-		test1.cpp test1_clnt.cpp test1_svr.cpp
+PROG_SRCS =	svr.cpp client.cpp cubit_i.cpp \
+		test1.cpp test1_client.cpp test1_svr.cpp
 
 LSRC = $(PROG_SRCS)
 
 CUBIT_SVR_OBJS = svr.o cubit_i.o cubitS.o
-CUBIT_CLT_OBJS = clnt.o cubitC.o
+CUBIT_CLT_OBJS = client.o cubitC.o
 
 BASIC_SVR_OBJS = test1.o test1_svr.o
-BASIC_CLT_OBJS = test1.o test1_clnt.o
+BASIC_CLT_OBJS = test1.o test1_client.o
 
 ECHO_SVR_OBJS = test1.o
 ECHO_CLT_OBJS = test1.o
 
-BIN = svr clnt
+BIN = svr client
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
@@ -50,13 +49,13 @@ OCFLAGS =
 svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-clnt:	$(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
+client:	$(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 test1_svr:	$(addprefix $(VDIR),$(BASIC_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-test1_clnt:	$(addprefix $(VDIR),$(BASIC_CLT_OBJS))
+test1_client:	$(addprefix $(VDIR),$(BASIC_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 ########
@@ -68,23 +67,23 @@ test1_clnt:	$(addprefix $(VDIR),$(BASIC_CLT_OBJS))
 check:	$(TESTS)
 	@echo "testing with 'cube' calls, stub + DII, IOR strings"
 	@./svr -i30 -o non-internet > obj.1 & sleep 5
-	@./clnt -n250 -O `cat obj.1` -x
+	@./client -n250 -O `cat obj.1` -x
 	@echo ''
 	@echo "testing request forwarding with 'cube' calls, stub + DII"
 	@./svr -f -i30 > obj.2 & sleep 5
-	@./clnt -n250 -O `cat obj.2` -x
+	@./client -n250 -O `cat obj.2` -x
 	@echo ''
 	@echo "testing transmission of primitive data types"
 	@./test1_svr -i30 > obj.3 & sleep 5
-	@./test1_clnt -n50 -O `cat obj.3` -x
+	@./test1_client -n50 -O `cat obj.3` -x
 	@echo ''
 #	@echo "testing echo of primitive data values"
 #	@./echo_svr -i30 > obj.4 & sleep 5
-#	@./echo_clnt -O `cat obj.4` -x
+#	@./echo_client -O `cat obj.4` -x
 #	@echo ''
 	@echo "testing with 'cube' calls, MT-ized (no forwarding)"
 	@./svr -t -i30 -o non-internet > obj.5 & sleep 5
-	@./clnt -n250 -O `cat obj.5` -x
+	@./client -n250 -O `cat obj.5` -x
 	@echo ''
 
 ifdef LOCALRULES
@@ -92,21 +91,21 @@ ifdef LOCALRULES
 # CUBIT test
 svr:		svr.o cubit.o
 	$(LINK.cc) -o svr svr.o cubit.o $(LDLIBS) $(POSTLINK)
-clnt:		cubit.o clnt.o
-	$(LINK.cc) -o clnt clnt.o cubit.o $(LDLIBS) $(POSTLINK)
+client:		cubit.o client.o
+	$(LINK.cc) -o client client.o cubit.o $(LDLIBS) $(POSTLINK)
 
 ########
 # BASIC DATATYPES test
-test1_clnt:	test1.o test1_clnt.o
-	$(LINK.cc) -o test1_clnt test1_clnt.o test1.o $(LDLIBS) $(POSTLINK)
+test1_client:	test1.o test1_client.o
+	$(LINK.cc) -o test1_client test1_client.o test1.o $(LDLIBS) $(POSTLINK)
 test1_svr:	test1.o test1_svr.o
 	$(LINK.cc) -o test1_svr test1_svr.o test1.o $(LDLIBS) $(POSTLINK)
 
 ########
 # ECHO test ... "test1" where the operation semantics are violated;
 # this aids some porting work, but is a less rigorous test
-echo_clnt:	test1.o echo_clnt.o
-	$(LINK.cc) -o echo_clnt echo_clnt.o test1.o $(LDLIBS) $(POSTLINK)
+echo_client:	test1.o echo_client.o
+	$(LINK.cc) -o echo_client echo_client.o test1.o $(LDLIBS) $(POSTLINK)
 echo_svr:	test1.o echo_svr.o
 	$(LINK.cc) -o echo_svr echo_svr.o test1.o $(LDLIBS) $(POSTLINK)
 endif
@@ -307,7 +306,7 @@ endif
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  cubit_i.h cubitS.h cubitC.h
-.obj/clnt.o .obj/clnt.so .shobj/clnt.o .shobj/clnt.so: clnt.cpp \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -495,7 +494,7 @@ endif
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- cubitC.h clnt.h
+ cubitC.h client.h
 .obj/cubit.o .obj/cubit.so .shobj/cubit.o .shobj/cubit.so: cubit.cpp cubit.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -864,7 +863,7 @@ endif
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h
-.obj/test1_clnt.o .obj/test1_clnt.so .shobj/test1_clnt.o .shobj/test1_clnt.so: test1_clnt.cpp test1.h \
+.obj/test1_client.o .obj/test1_client.so .shobj/test1_client.o .shobj/test1_client.so: test1_client.cpp test1.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
