@@ -272,7 +272,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                   ACE_TRY_CHECK;
 
                   int status = this->create_interface_def (node,
-                                                           ACE_TRY_ENV)
+                                                           ACE_TRY_ENV);
                   ACE_TRY_CHECK;
 
                   return status;
