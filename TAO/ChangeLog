@@ -1,3 +1,9 @@
+Sun Nov 28 11:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+          Don't mix virtual and non-virtual inheritance, use virtual for both
+          bases, fixes HPUX warnings
+
 Sun Nov 28 11:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/notify_persist_export.h:
