@@ -22,19 +22,6 @@ ACE_OS::wait (int *status)
 }
 
 ACE_INLINE pid_t
-ACE_OS::wait (pid_t pid,
-              ACE_exitcode *status,
-              int wait_options,
-              ACE_HANDLE handle)
-{
-  ACE_OS_TRACE ("ACE_OS::wait");
-  return ACE_OS::waitpid (pid,
-                          status,
-                          wait_options,
-                          handle);
-}
-
-ACE_INLINE pid_t
 ACE_OS::waitpid (pid_t pid,
                  ACE_exitcode *status,
                  int wait_options,
@@ -105,4 +92,18 @@ ACE_OS::waitpid (pid_t pid,
                      pid_t, -1);
 #endif /* VXWORKS || ACE_PSOS */
 }
+
+ACE_INLINE pid_t
+ACE_OS::wait (pid_t pid,
+              ACE_exitcode *status,
+              int wait_options,
+              ACE_HANDLE handle)
+{
+  ACE_OS_TRACE ("ACE_OS::wait");
+  return ACE_OS::waitpid (pid,
+                          status,
+                          wait_options,
+                          handle);
+}
+
 
