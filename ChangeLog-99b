@@ -1,4 +1,9 @@
-Thu May 13 11:28:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu May 13 17:27:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* netsvcs/lib/Name_Handler.cpp: Replaced several calls to
+	  ACE_WString::rep with ACE_WString::fast_rep to avoid memory
+	  leaks.  Thanks to Valery Arkhangorodsky
+	  <valerya@servicesoft.com> for reporting this.
 
 	* ace/Registry.cpp (close): Only close <key_> when we do own a
 	  key.
