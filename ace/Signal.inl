@@ -290,7 +290,6 @@ ACE_Sig_Guard::~ACE_Sig_Guard (void)
 #endif /* !ACE_LACKS_UNIX_SIGNALS */
 }
 
-#if defined (ACE_HAS_WINCE)
 ACE_INLINE
 ACE_Sig_Handler::ACE_Sig_Handler (void)
 {
@@ -300,7 +299,6 @@ ACE_INLINE
 ACE_Sig_Handler::~ACE_Sig_Handler (void)
 {
 }
-#endif /* ACE_HAS_WINCE */
 
 ACE_INLINE int
 ACE_Sig_Handler::in_range (int signum)

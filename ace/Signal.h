@@ -273,11 +273,9 @@ private:
 class ACE_Export ACE_Sig_Handler
 {
 public:
-#if defined (ACE_HAS_WINCE)
   /// Default ctor/dtor.
   ACE_Sig_Handler (void);
   virtual ~ACE_Sig_Handler (void);
-#endif /* ACE_HAS_WINCE */
 
   // = Registration and removal methods.
   /**
