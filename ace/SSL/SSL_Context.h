@@ -136,10 +136,20 @@ public:
   const char *private_key_file_name (void) const;
 
   /// Set the private key file.
+  /**
+   * @note This method should only be called after a certificate has
+   *       been set since key verification is performed against the
+   *       certificate, among other things.
+   */
   int private_key (const char *file_name,
                    int type = SSL_FILETYPE_PEM);
 
-  /// Verify if the private key is valid
+  /// Verify that the private key is valid.
+  /**
+   * @note This method should only be called after a certificate has
+   *       been set since key verification is performed against the
+   *       certificate, among other things.
+   */
   int verify_private_key (void);
 
   /// Get the file name and file format used for the certificate file
