@@ -19,7 +19,8 @@ int
 TAO_Object_Table_Impl::find (const PortableServer::Servant servant)
 {
   PortableServer::ObjectId* id;
-  int ret = this->find (servant, id);
+  PortableServer::ObjectId_out id_out (id);
+  int ret = this->find (servant, id_out);
   if (ret == -1)
     return -1;
   

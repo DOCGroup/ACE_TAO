@@ -1,3 +1,8 @@
+Sun Mar  1 10:40:31 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/{poa, objtable}.cpp: Removed the "Anachronism" warning
+	associated with the _out parameters passed to the find () method.
+
 Sat Feb 28 18:37:54 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosProperty_Hash.cpp:
@@ -9,7 +14,7 @@ Sat Feb 28 18:37:54 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 	* orbsvcs/orbsvcs/CosPropertyService.idl:
 	* orbsvcs/tests/Makefile (DIRS): Added the directory
 	CosPropertyService under DIRS  here. It is compiled when av=1.
-				 
+
 Fri Feb 27 19:55:09 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp (main): Added this
