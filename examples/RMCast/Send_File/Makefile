@@ -48,8 +48,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -172,6 +174,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/RMCast/RMCast_IO_UDP.i \
+ $(ACE_ROOT)/ace/RMCast/RMCast_UDP_Proxy.h \
+ $(ACE_ROOT)/ace/RMCast/RMCast_Proxy.h \
+ $(ACE_ROOT)/ace/RMCast/RMCast_Proxy.i \
+ $(ACE_ROOT)/ace/RMCast/RMCast_UDP_Proxy.i \
  $(ACE_ROOT)/ace/RMCast/RMCast_Sequencer.h \
  $(ACE_ROOT)/ace/RMCast/RMCast_Sequencer.i \
  $(ACE_ROOT)/ace/RMCast/RMCast_Retransmission.h \
@@ -218,8 +224,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -344,6 +352,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/RMCast/RMCast_IO_UDP.i \
+ $(ACE_ROOT)/ace/RMCast/RMCast_UDP_Proxy.h \
+ $(ACE_ROOT)/ace/RMCast/RMCast_Proxy.h \
+ $(ACE_ROOT)/ace/RMCast/RMCast_Proxy.i \
+ $(ACE_ROOT)/ace/RMCast/RMCast_UDP_Proxy.i \
  $(ACE_ROOT)/ace/RMCast/RMCast_UDP_Reliable_Receiver.i \
  $(ACE_ROOT)/ace/FILE_IO.h \
  $(ACE_ROOT)/ace/FILE.h \

@@ -1,3 +1,11 @@
+Wed Jan 24 10:17:03 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/Makefile:
+	  Add dependencies (again). They were lost is a previous commit.
+
+	* */Makefile:
+	  Update dependencies (yet another time).
+
 Wed Jan 24 09:41:54 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Configuration.cpp:
