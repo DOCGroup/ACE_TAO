@@ -18662,6 +18662,21 @@ NODEP_CPP_OBJECT=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\ObjectIDList.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Operation_Table.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -30909,6 +30924,10 @@ SOURCE=.\Object_KeyC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ObjectIDList.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Operation_Table.h
 # End Source File
 # Begin Source File
@@ -31146,6 +31165,10 @@ SOURCE=.\object.i
 # Begin Source File
 
 SOURCE=.\Object_KeyC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ObjectIDList.i
 # End Source File
 # Begin Source File
 
