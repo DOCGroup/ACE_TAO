@@ -1,15 +1,21 @@
+Fri Apr 24 09:09:49 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-linux-common.h: added ACE_HAS_4_4BSD_SENDMSG_RECVMSG.
+          Thanks to Sandro Doro <doros@aureus.sublink.org> for recommending
+          this.
+
 Fri Apr 24 04:12:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/version_tests/version_tests.dsw:
-	* tests/version_tests/OrdMultiSet_Test.dsp: Added new project
-	  file.  
+        * tests/version_tests/version_tests.dsw:
+        * tests/version_tests/OrdMultiSet_Test.dsp: Added new project
+          file.
 
 Thu Apr 23 22:52:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/tests.dsw: Somehow, Thread_Mutex_Test.dsp got removed from
- 	  the workspace.
-	
-	* tests/Thread_Mutex_Test.dsp: Update include/lib path.
+          the workspace.
+
+        * tests/Thread_Mutex_Test.dsp: Update include/lib path.
 
 Fri Apr 24 00:12:32 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -17,41 +23,41 @@ Fri Apr 24 00:12:32 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Apr 23 22:28:02 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Service_Config: Began adding support for the new service
- 	  configurator feature that will make it possible to dynamically
- 	  configure services that are read in from the command-line.
-  	  Thanks to Karlheinz for requesting this.
+        * ace/Service_Config: Began adding support for the new service
+          configurator feature that will make it possible to dynamically
+          configure services that are read in from the command-line.
+          Thanks to Karlheinz for requesting this.
 
-	* ace/Parse_Node.cpp (open_handle),
-	  ace/Svc_Conf.l: The line for the service object for the service
-	  configurator contains the DLL specifications.  Previously, it
-	  was possible to specify either the absolute path name of the DLL
-	  or only the name of the DLL itself.  For the latter, the service
-	  configurator is searching for the DLL using the PATH environment
-	  variable.  If we used the absolute path name it was not
-	  possible to use environment variables in the string.  It is now
-	  possible to do this for Win32 using their %foo% notation.
-	  Thanks to Andreas Schuelke <Andreas.Schuelke@med.siemens.de> for
-	  providing these fixes.
+        * ace/Parse_Node.cpp (open_handle),
+          ace/Svc_Conf.l: The line for the service object for the service
+          configurator contains the DLL specifications.  Previously, it
+          was possible to specify either the absolute path name of the DLL
+          or only the name of the DLL itself.  For the latter, the service
+          configurator is searching for the DLL using the PATH environment
+          variable.  If we used the absolute path name it was not
+          possible to use environment variables in the string.  It is now
+          possible to do this for Win32 using their %foo% notation.
+          Thanks to Andreas Schuelke <Andreas.Schuelke@med.siemens.de> for
+          providing these fixes.
 
-	* etc/Svc_Conf_y.cpp.diff,
-	  etc/Svc_Conf_l.cpp.diff,
-	  ace/Makefile: Change the YY* symbols to ACE_YY* symbols to
-	  avoid clashes if we link with other flex/yacc generated code.
+        * etc/Svc_Conf_y.cpp.diff,
+          etc/Svc_Conf_l.cpp.diff,
+          ace/Makefile: Change the YY* symbols to ACE_YY* symbols to
+          avoid clashes if we link with other flex/yacc generated code.
 
-	* apps/Gateway/Gateway/gatewayd.cpp,
-	  apps/Gateway/Peer/peerd.cpp: Added a check to see if the
-	  svc.conf file exists before trying to parse the arguments.
-  	  Thanks to Dani Flexer <danif@ivory-sw.com> for reporting this.
+        * apps/Gateway/Gateway/gatewayd.cpp,
+          apps/Gateway/Peer/peerd.cpp: Added a check to see if the
+          svc.conf file exists before trying to parse the arguments.
+          Thanks to Dani Flexer <danif@ivory-sw.com> for reporting this.
 
-	* apps/Gateway/Peer/Options.cpp (parse_args): Added the "C:"
- 	  qualifier to the get_opt string.  Thanks to Dani Flexer
- 	  <danif@ivory-sw.com> for reporting this.
+        * apps/Gateway/Peer/Options.cpp (parse_args): Added the "C:"
+          qualifier to the get_opt string.  Thanks to Dani Flexer
+          <danif@ivory-sw.com> for reporting this.
 
-	* ace/Activation_Queue.h: Extended ACE_Activation_Queue so that it
- 	  can be a proper base class by making the destructor virtual and
- 	  putting the methods into the protected section.  Thanks to Garry
- 	  Brother <gmbroth@romulus.ncsc.mil> for this.
+        * ace/Activation_Queue.h: Extended ACE_Activation_Queue so that it
+          can be a proper base class by making the destructor virtual and
+          putting the methods into the protected section.  Thanks to Garry
+          Brother <gmbroth@romulus.ncsc.mil> for this.
 
         * ace/XtReactor.cpp: Commented out most of the logic if we're
           running on Win32 because (1) it doesn't work correctly since
