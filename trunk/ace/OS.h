@@ -1890,6 +1890,9 @@ struct iovec
 typedef DWORD ACE_id_t;
 typedef int ACE_pri_t;
 
+typedef HINSTANCE ACE_SHLIB_HANDLE;
+const int ACE_DEFAULT_SHLIB_MODE = 0;
+
 #else /* !defined (ACE_WIN32) */
 
 typedef const char *LPCTSTR;
@@ -2185,8 +2188,6 @@ extern "C" int sigwait (sigset_t *set);
 #include /**/ <tiuser.h> 
 #endif /* ACE_HAS_TIUSER_H */
 
-#endif /* ! ACE_WIN32 */
-
 /* Set the proper handle type for dynamically-loaded libraries. */
 /* Also define a default 'mode' for loading a library - the names and values */
 /* differ between OSes, so if you write code that uses the mode, be careful */
@@ -2195,9 +2196,6 @@ extern "C" int sigwait (sigset_t *set);
 #include /**/ <dlfcn.h>
 typedef void *ACE_SHLIB_HANDLE;
 const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
-#elif defined (ACE_WIN32)
-typedef HINSTANCE ACE_SHLIB_HANDLE;
-const int ACE_DEFAULT_SHLIB_MODE = 0;
 #elif defined (__hpux)
 # if __cplusplus >= 199707L
 #include /**/ <dl.h>

@@ -1,7 +1,8 @@
 Wed Jun 25 02:36:05 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
-	* ace/OS.h: Added (line: 2188) #endif /* ! ACE_WIN32 */.  (Unbalanced
- 	  if - endif?)
+	* ace/OS.h: Moved definition of ACE_SHLIB_HANDLE typedef and
+ 	  ACE_DEFAULT_SHLIB_MODE global variable for Win32 to where it
+ 	  belongs.
 
 Wed Jun 25 01:23:58 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
