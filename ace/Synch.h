@@ -558,16 +558,16 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
-class ACE_Export ACE_Null_Condition_Mutex
+class ACE_Export ACE_Null_Condition
   // = TITLE
   //     Implement a do nothing <ACE_Condition> variable wrapper, i.e.,
   //     all methods are no ops.  This class is necessary since some
   //     C++ compilers are *very* lame...
 {
 public:
-  ACE_Null_Condition_Mutex (ACE_Null_Mutex &m, int = 0, 
+  ACE_Null_Condition (ACE_Null_Mutex &m, int = 0, 
 			    LPCTSTR = 0, void * = 0): mutex_ (m) {}
-  ~ACE_Null_Condition_Mutex (void) {}
+  ~ACE_Null_Condition (void) {}
   int remove (void) { return 0; }
   int wait (ACE_Time_Value * = 0) { errno = ETIME; return -1; }
   int signal (void) { return 0; }
@@ -585,8 +585,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Null_Condition_Mutex &);
-  ACE_Null_Condition_Mutex (const ACE_Null_Condition_Mutex &c): mutex_
+  void operator= (const ACE_Null_Condition &);
+  ACE_Null_Condition (const ACE_Null_Condition &c): mutex_
     (c.mutex_) {}
 };
 
