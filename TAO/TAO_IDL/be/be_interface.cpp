@@ -198,7 +198,12 @@ int be_interface::gen_client_header (void)
   *ch << "static " << local_name () << "_ptr " << "_narrow (" <<
     "CORBA::Object_ptr obj);" << nl;
   *ch << "static " << local_name () << "_ptr " << "_nil (" <<
-    "void);\n\n";
+    "void);" << nl;
+
+  // generate a TAO-specific _bind method similar to what Orbix and VisiBroker
+  // have
+  *ch << "static " << this->local_name () << "_ptr _bind (const char *host, "
+      << "CORBA::ULong port, const char *key, CORBA::Environment &env);\n\n";
 
   // generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
@@ -320,7 +325,7 @@ int be_interface::gen_client_stubs (void)
   *cs << "if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) " <<
     "!= NOERROR)\n";
   cs->incr_indent ();
-  *cs << "return " << name () << "::_nil ();\n";
+  *cs << "return " << this->name () << "::_nil ();\n";
   cs->decr_indent ();
   *cs << nl;
   *cs << "obj->Release (); " <<
@@ -330,18 +335,41 @@ int be_interface::gen_client_stubs (void)
   *cs << "return new_obj;\n";
   cs->decr_indent ();
   *cs << "} // end of if" << nl;
-  *cs << "return " << name () << "::_nil (); // _narrow failed\n";
+  *cs << "return " << this->name () << "::_nil (); // _narrow failed\n";
   cs->decr_indent ();
   *cs << "} // end of _narrow" << nl << nl;
 
   // _nil method
-  *cs << name () << "_ptr " << name () << "::_nil (void)" <<
+  *cs << this->name () << "_ptr " << this->name () << "::_nil (void)" <<
     nl;
   *cs << "{\n";
   cs->incr_indent ();
   *cs << "return (" << name () << "_ptr)NULL;\n";
   cs->decr_indent ();
   *cs << "} // end of _nil" << nl << nl;
+
+  // the _bind method
+  *cs << this->name () << "_ptr " << this->name () << "::_bind (" <<
+    "const char *host, CORBA::ULong port, const char *key, " <<
+    "CORBA::Environment &env)" << nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "CORBA::ORB_ptr orb = 0;" << nl;
+  *cs << "CORBA::Object_ptr objref = CORBA::Object::_nil ();" << nl << nl;
+  *cs << "static char IOR [256];" << nl;
+  *cs << "orb =  TAO_ORB_Core_instance ()->orb (); // access the ORB" << nl;
+  *cs << "if (!orb) return " << this->name () <<
+    "::_nil (); // return null obj" << nl << nl;
+  *cs << "ACE_OS::memset (IOR, '\\0', 256);" << nl;
+  *cs << "ACE_OS::sprintf (IOR, \"iiop:1.0//%s:%d/%s\", host, port, key);" <<
+    nl;
+  *cs << "objref = orb->string_to_object (IOR, env);" << nl;
+  *cs << "if (CORBA::is_nil (objref))" << nl;
+  *cs << "\treturn " << this->name () << "::_nil ();" << nl;
+  *cs << "else // narrow it" << nl;
+  *cs << "\treturn " << this->name () << "::_narrow (objref);" << nl;
+  cs->decr_indent (0);
+  *cs << "}\n\n";
 
   // generate code for the elements of the interface
   if (be_scope::gen_client_stubs () == -1)
@@ -382,10 +410,10 @@ int be_interface::gen_server_header (void)
   TAO_OutStream *sh; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
-  static char namebuf [TAO_CodeGen::MAXNAMELEN]; // holds the class name
+  static char namebuf [NAMEBUFSIZE]; // holds the class name
   AST_Decl *d;       // enclosing scope
 
-  ACE_OS::memset (namebuf, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -753,9 +781,9 @@ be_interface::gen_var_defn (void)
   TAO_OutStream *ch; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
-  char namebuf [TAO_CodeGen::MAXNAMELEN];  // names
+  char namebuf [NAMEBUFSIZE];  // names
 
-  ACE_OS::memset (namebuf, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (namebuf, "%s_var", this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -831,13 +859,13 @@ be_interface::gen_var_impl (void)
   TAO_OutStream *ci; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
-  char fname [TAO_CodeGen::MAXNAMELEN];  // to hold the full and
-  char lname [TAO_CodeGen::MAXNAMELEN];  // local _var names
+  char fname [NAMEBUFSIZE];  // to hold the full and
+  char lname [NAMEBUFSIZE];  // local _var names
 
-  ACE_OS::memset (fname, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (fname, "%s_var", this->fullname ());
 
-  ACE_OS::memset (lname, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_var", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -1001,9 +1029,9 @@ be_interface::gen_out_defn (void)
   TAO_OutStream *ch; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
-  char namebuf [TAO_CodeGen::MAXNAMELEN];  // to hold the _out name
+  char namebuf [NAMEBUFSIZE];  // to hold the _out name
 
-  ACE_OS::memset (namebuf, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (namebuf, "%s_out", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator

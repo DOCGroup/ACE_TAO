@@ -336,7 +336,7 @@ be_decl::repoID (void)
 int
 be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
 {
-  static char buf [TAO_CodeGen::MAXNAMELEN];
+  static char buf [NAMEBUFSIZE];
   long slen;
   unsigned int i;
 
@@ -372,9 +372,9 @@ be_decl::gen_var_defn (void)
 {
   TAO_OutStream *ch; // output stream
   TAO_NL  nl;        // end line
-  char namebuf [TAO_CodeGen::MAXNAMELEN];  // names
+  char namebuf [NAMEBUFSIZE];  // names
 
-  ACE_OS::memset (namebuf, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (namebuf, "%s_var", this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -543,13 +543,13 @@ be_decl::gen_var_defn (void)
   switch (this->node_type ())
     {
     case AST_Decl::NT_interface:
-      *ch << local_name () << "_ptr &ptr (void);\n";
+      *ch << local_name () << "_ptr ptr (void) const;\n";
       break;
     case AST_Decl::NT_array:
-      *ch << local_name () << "_slice *&ptr (void);\n";
+      *ch << local_name () << "_slice *ptr (void) const;\n";
       break;
     default:
-      *ch << local_name () << " *&ptr(void);\n";
+      *ch << local_name () << " *ptr(void) const;\n";
     }
 
 
@@ -584,13 +584,13 @@ be_decl::gen_var_impl (void)
 {
   TAO_OutStream *ci; // output stream
   TAO_NL  nl;        // end line
-  char fname [TAO_CodeGen::MAXNAMELEN];  // to hold the full and
-  char lname [TAO_CodeGen::MAXNAMELEN];  // local _var names
+  char fname [NAMEBUFSIZE];  // to hold the full and
+  char lname [NAMEBUFSIZE];  // local _var names
 
-  ACE_OS::memset (fname, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (fname, "%s_var", this->fullname ());
 
-  ACE_OS::memset (lname, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_var", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -752,8 +752,8 @@ be_decl::gen_var_impl (void)
 
       // the additional ptr () member function
       ci->indent ();
-      *ci << "ACE_INLINE " << name () << "_ptr &" << nl;
-      *ci << fname << "::ptr (void)" << nl;
+      *ci << "ACE_INLINE " << name () << "_ptr " << nl;
+      *ci << fname << "::ptr (void) const" << nl;
       *ci << "{\n";
       ci->incr_indent ();
       *ci << "return this->ptr_;\n";
@@ -920,8 +920,8 @@ be_decl::gen_var_impl (void)
 
         // the additional ptr () member function
         ci->indent ();
-        *ci << "ACE_INLINE " << name () << "_slice *&" << nl;
-        *ci << fname << "::ptr (void)" << nl;
+        *ci << "ACE_INLINE " << name () << "_slice *" << nl;
+        *ci << fname << "::ptr (void) const" << nl;
         *ci << "{\n";
         ci->incr_indent ();
         *ci << "return this->ptr_;\n";
@@ -1117,8 +1117,8 @@ be_decl::gen_var_impl (void)
 
           // the additional ptr () member function
           ci->indent ();
-          *ci << "ACE_INLINE " << name () << " *&" << nl;
-          *ci << fname << "::ptr (void)" << nl;
+          *ci << "ACE_INLINE " << name () << " *" << nl;
+          *ci << fname << "::ptr (void) const" << nl;
           *ci << "{\n";
           ci->incr_indent ();
           *ci << "return this->ptr_;\n";
@@ -1309,8 +1309,8 @@ be_decl::gen_var_impl (void)
 
         // the additional ptr () member function
         ci->indent ();
-        *ci << "ACE_INLINE " << name () << " *&" << nl;
-        *ci << fname << "::ptr (void)" << nl;
+        *ci << "ACE_INLINE " << name () << " *" << nl;
+        *ci << fname << "::ptr (void) const" << nl;
         *ci << "{\n";
         ci->incr_indent ();
         *ci << "return this->ptr_;\n";
@@ -1328,9 +1328,9 @@ be_decl::gen_out_defn (void)
 {
   TAO_OutStream *ch; // output stream
   TAO_NL  nl;        // end line
-  char namebuf [TAO_CodeGen::MAXNAMELEN];  // to hold the _out name
+  char namebuf [NAMEBUFSIZE];  // to hold the _out name
 
-  ACE_OS::memset (namebuf, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (namebuf, "%s_out", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -1448,13 +1448,13 @@ be_decl::gen_out_impl (void)
 {
   TAO_OutStream *ci; // output stream
   TAO_NL  nl;        // end line
-  char fname [TAO_CodeGen::MAXNAMELEN];  // to hold the full and
-  char lname [TAO_CodeGen::MAXNAMELEN];  // local _out names
+  char fname [NAMEBUFSIZE];  // to hold the full and
+  char lname [NAMEBUFSIZE];  // local _out names
 
-  ACE_OS::memset (fname, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (fname, "%s_out", this->fullname ());
 
-  ACE_OS::memset (lname, '\0', TAO_CodeGen::MAXNAMELEN);
+  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_out", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -1495,7 +1495,7 @@ be_decl::gen_out_impl (void)
       *ci << "ACE_INLINE" << nl;
       *ci << fname << "::" << lname << " (" << this->name () <<
         "_var &p) // constructor from _var" << nl;
-      *ci << "\t: ptr_ (p.ptr ())" << nl;
+      *ci << "\t: ptr_ (p.out ())" << nl;
       *ci << "{\n";
       ci->incr_indent ();
       *ci << "CORBA::release (this->ptr_);" << nl;
