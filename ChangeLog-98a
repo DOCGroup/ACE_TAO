@@ -1,3 +1,11 @@
+Fri Apr  3 21:18:51 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS (cleanup): Created a dummy ACE_Cleanup constructor since
+	  the lack of this may be causing a bug with CC and the linker for
+	  TAO's IDL compiler.  Also moved the constructor and destructor of
+	  ACE_Cleanup into the OS.i file and made them inline.  We'll fix
+	  this bug yet!!!!
+
 Fri Apr 03 18:45:35 1998  Steve Huston  <shuston@riverace.com>
 
 	* apps/JAWS/clients/Blobby/Makefile
@@ -22,8 +30,6 @@ Fri Apr 03 18:45:35 1998  Steve Huston  <shuston@riverace.com>
 	
 	* performance-tests/Makefile: Removed UDP from list of dirs to build.
 	
-Fri Apr 03 17:10:32 1998  Steve Huston  <shuston@riverace.com>
-
 	* include/makeinclude/rules.bin.GNU: Set OBJEXT and VOBJS from the
 	  SRC files in the Makefile (LSRC sets VLOBJS in rules.lib.GNU;
 	  SRC sets VOBJS in rules.bin.GNU).
@@ -32,8 +38,6 @@ Fri Apr 03 17:10:32 1998  Steve Huston  <shuston@riverace.com>
 	  on $(PSRC) in addition to $(SRC).  PSRC is new - if you have more
 	  than one program to build in a makefile, set PSRC to the source
 	  files for make depend.
-
-Fri Apr 03 11:57:14 1998  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/rules.lib.GNU: Use VLOBJS for archive lib object
 	  files; using VOBJS gets it confused with VOBJS in rules.bin.GNU and

@@ -3808,7 +3808,10 @@ class ACE_Export ACE_Cleanup
   // = TITLE
   //    Base class for objects that are cleaned by ACE_Object_Manager.
 public:
-  virtual ~ACE_Cleanup ();
+  ACE_Cleanup (void);
+  // No-op constructor.
+
+  virtual ~ACE_Cleanup (void);
   // Destructor.
 
   virtual void cleanup (void *param = 0);
