@@ -535,9 +535,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Caching_Strategies_T.h \
- $(ACE_ROOT)/ace/Caching_Strategy_Utility_T.h \
- $(ACE_ROOT)/ace/Caching_Strategy_Utility_T.i \
- $(ACE_ROOT)/ace/Caching_Strategy_Utility_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Utility_T.h \
+ $(ACE_ROOT)/ace/Caching_Utility_T.i \
+ $(ACE_ROOT)/ace/Caching_Utility_T.cpp \
  $(ACE_ROOT)/ace/Cleanup_Strategies_T.h \
  $(ACE_ROOT)/ace/Cleanup_Strategies_T.i \
  $(ACE_ROOT)/ace/Cleanup_Strategies_T.cpp \
@@ -1751,9 +1751,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Caching_Strategies_T.h \
- $(ACE_ROOT)/ace/Caching_Strategy_Utility_T.h \
- $(ACE_ROOT)/ace/Caching_Strategy_Utility_T.i \
- $(ACE_ROOT)/ace/Caching_Strategy_Utility_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Utility_T.h \
+ $(ACE_ROOT)/ace/Caching_Utility_T.i \
+ $(ACE_ROOT)/ace/Caching_Utility_T.cpp \
  $(ACE_ROOT)/ace/Cleanup_Strategies_T.h \
  $(ACE_ROOT)/ace/Cleanup_Strategies_T.i \
  $(ACE_ROOT)/ace/Cleanup_Strategies_T.cpp \
