@@ -1187,7 +1187,7 @@ CORBA::ORB_init (int &argc,
 
   TAO_ORB_Core_Auto_Ptr safe_oc (oc);
 
-  ///#if TAO_HAS_INTERCEPTORS == 1
+  ///  #if TAO_HAS_INTERCEPTORS == 1
 
   // -------------------------------------------------------------
   // @@ These ORB initializer instantiations should go away.  They
@@ -1217,7 +1217,7 @@ CORBA::ORB_init (int &argc,
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 #endif  /* TAO_HAS_RT_CORBA == 1 */
 
-  #if TAO_HAS_CORBA_MESSAGING == 1
+#if TAO_HAS_CORBA_MESSAGING == 1
   /// Register the Messaging ORBInitializer.
   ACE_NEW_THROW_EX (temp_orb_initializer,
                     TAO_Messaging_ORBInitializer,
@@ -1275,13 +1275,13 @@ CORBA::ORB_init (int &argc,
                           CORBA::COMPLETED_NO),
                         CORBA::ORB::_nil ());
 
-  ///   #if TAO_HAS_INTERCEPTORS == 1
+  ///#if TAO_HAS_INTERCEPTORS == 1
   /// Call the ORBInitializer::post_init() on each registered ORB
   /// initializer.
   TAO_ORBInitializer_Registry::instance ()->post_init (orb_init_info.in (),
                                                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
-  /// #endif  /* TAO_HAS_INTERCEPTORS == 1 */
+  ///#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
