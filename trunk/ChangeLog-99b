@@ -1,5 +1,8 @@
 Wed Aug 18 10:42:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Timer_List_T.cpp (reset_interval): Added a constcast to
+	  make SunC++ 4.2 happy.  Thanks to Andy for reporting this.
+
 	* ace/WFMO_Reactor.i (reset_timer_interval): The return type
 	  was incorrect...  Thanks to Andy and Jeff for reporting this.
 

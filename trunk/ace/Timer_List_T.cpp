@@ -232,7 +232,8 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (const long timer_id,
 
   ACE_Timer_Node_T<TYPE> *node =
     ACE_reinterpret_cast (ACE_Timer_Node_T<TYPE> *,
-                          timer_id);
+                          ACE_const_cast (long,
+                                          timer_id));
 
   node->set_interval (interval);
 
