@@ -590,8 +590,6 @@ TAO_CodeGen::start_server_template_header (const char *fname)
 
       *this->server_template_header_ << "#endif /* _MSC_VER */\n\n";
 
-      *this->server_template_header_ << "#if defined (ACE_HAS_USING_KEYWORD)\n\n";
-
       return 0;
     }
 }
@@ -817,8 +815,6 @@ TAO_CodeGen::start_server_template_inline (const char *fname)
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_template_inline_);
-
-  *this->server_template_inline_ << "#if defined (ACE_HAS_USING_KEYWORD)\n\n";
 
   return 0;
 }
@@ -1069,8 +1065,6 @@ TAO_CodeGen::end_implementation_header (const char *fname)
 int
 TAO_CodeGen::end_server_template_header (void)
 {
-  *this->server_template_header_ << "#endif /* ACE_HAS_USING_KEYWORD */\n";
-
   // Insert the code to include the inline file.
   *this->server_template_header_ << "\n#if defined (__ACE_INLINE__)\n";
   *this->server_template_header_
@@ -1118,8 +1112,6 @@ TAO_CodeGen::end_server_template_header (void)
 int
 TAO_CodeGen::end_server_template_inline (void)
 {
-  *this->server_template_inline_ << "#endif /* ACE_HAS_USING_KEYWORD */\n";
-
   return 0;
 }
 
