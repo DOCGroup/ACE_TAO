@@ -70,7 +70,7 @@ main (int argc, char *argv[])
 	orb->object_to_string (server.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      // ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -90,7 +90,7 @@ main (int argc, char *argv[])
 
       orb->run ();
 
-      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+      // ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
     }
   ACE_CATCHANY
     {

@@ -784,9 +784,12 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // preallocated reply dispatcher.
 
   // Bind.
+
+  TAO_Transport_Mux_Strategy *tms = this->transport_->tms ();
+
   int retval =
-    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
-                                               &this->rd_);
+    tms->bind_dispatcher (this->op_details_.request_id (),
+                          &this->rd_);
   if (retval == -1)
     {
       // @@ What is the right way to handle this error?
@@ -858,6 +861,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   if (reply_error == -1)
     {
+      tms->unbind_dispatcher (this->op_details_.request_id ());
       if (errno == ETIME)
         {
           // Just a timeout, don't close the connection or
@@ -1048,9 +1052,14 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   // The rest of this function is very similar to
   // TWO_GIOP_Twoway_Invocation::invoke_i, because we must
   // wait for a reply. See comments in that code.
+  // @@ Jeff: is it possible to factor out this code into a common
+  // case class or something?  In fact, what is the difference between
+  // the two classes now?
+  TAO_Transport_Mux_Strategy *tms = this->transport_->tms ();
+
   int retval =
-    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
-                                               &rd);
+    tms->bind_dispatcher (this->op_details_.request_id (),
+                          &rd);
   if (retval == -1)
     {
       // @@ What is the right way to handle this error?
@@ -1098,6 +1107,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   // Check the reply error.
   if (reply_error == -1)
     {
+      tms->unbind_dispatcher (this->op_details_.request_id ());
       if (errno == ETIME)
         {
           // Just a timeout, don't close the connection or
@@ -1271,6 +1281,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   // preallocated reply dispatcher.
 
   // Bind.
+  TAO_Transport_Mux_Strategy *tms = this->transport_->tms ();
+
   int retval =
     this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
                                                &this->rd_);
@@ -1330,6 +1342,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   // Check the reply error.
   if (reply_error == -1)
     {
+      tms->unbind_dispatcher (this->op_details_.request_id ());
       if (errno == ETIME)
         {
           // Just a timeout, don't close the connection or
