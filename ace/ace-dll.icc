@@ -182,6 +182,7 @@ option
                                               'Obstack.h',
                                               'OS.h',
                                               'OS_Dirent.h',
+                                              'OS_Errno.h',
                                               'OS_Log_Msg_Attributes.h',
                                               'OS_Memory.h',
                                               'OS_String.h',
@@ -392,6 +393,7 @@ option
                  source type(cpp) "Obstack.cpp"
                  source type(cpp) "OS.cpp"
                  source type(cpp) "OS_Dirent.cpp"
+                 source type(cpp) "OS_Errno.cpp"
                  source type(cpp) "OS_Log_Msg_Attributes.cpp"
                  source type(cpp) "OS_Memory.cpp"
                  source type(cpp) "OS_String.cpp"
