@@ -22,9 +22,9 @@ ACE_Service_Type_Impl::dump (void) const
   ACE_TRACE ("ACE_Service_Type_Impl::dump");
 }
 
-ACE_Service_Type_Impl::ACE_Service_Type_Impl (const void *so, 
-				    const char *s_name, 
-				    unsigned int f)
+ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so, 
+                                              const char *s_name, 
+                                              u_int f)
   : name_ (0),
     obj_ (so), 
     flags_ (f)
@@ -63,9 +63,9 @@ ACE_Service_Type_Impl::fini (void) const
   return 0;
 }
 
-ACE_Service_Object_Type::ACE_Service_Object_Type (const void *so,
+ACE_Service_Object_Type::ACE_Service_Object_Type (void *so,
 						  const char *s_name,
-						  unsigned int f)
+						  u_int f)
   : ACE_Service_Type_Impl (so, s_name, f)
 {
   ACE_TRACE ("ACE_Service_Object_Type::ACE_Service_Object_Type");
@@ -75,7 +75,7 @@ int
 ACE_Service_Object_Type::init (int argc, char *argv[]) const
 {
   ACE_TRACE ("ACE_Service_Object_Type::init");
-  const void *obj = this->object ();
+  void *obj = this->object ();
   ACE_Service_Object *so = (ACE_Service_Object *) obj;
 
   if (so == 0)
@@ -92,7 +92,7 @@ ACE_Module_Type::dump (void) const
   ACE_TRACE ("ACE_Module_Type::dump");
 }
 
-ACE_Module_Type::ACE_Module_Type (const void *m,
+ACE_Module_Type::ACE_Module_Type (void *m,
 				  const char *m_name,
 				  u_int f)
   : ACE_Service_Type_Impl (m, m_name, f)
@@ -104,7 +104,7 @@ int
 ACE_Module_Type::init (int argc, char *argv[]) const
 {
   ACE_TRACE ("ACE_Module_Type::init");
-  const void *obj = this->object ();
+  void *obj = this->object ();
   MT_Module *mod = (MT_Module *) obj;
   MT_Task *reader = mod->reader ();
   MT_Task *writer = mod->writer ();
@@ -120,7 +120,7 @@ int
 ACE_Module_Type::suspend (void) const
 {
   ACE_TRACE ("ACE_Module_Type::suspend");
-  const void *obj = this->object ();
+  void *obj = this->object ();
   MT_Module *mod = (MT_Module *) obj;
   MT_Task *reader = mod->reader ();
   MT_Task *writer = mod->writer ();
@@ -136,7 +136,7 @@ int
 ACE_Module_Type::resume (void) const
 {
   ACE_TRACE ("ACE_Module_Type::resume");
-  const void *obj = this->object ();
+  void *obj = this->object ();
   MT_Module *mod = (MT_Module *) obj;
   MT_Task *reader = mod->reader ();
   MT_Task *writer = mod->writer ();
@@ -156,7 +156,7 @@ ACE_Module_Type::fini (void) const
 {
   ACE_TRACE ("ACE_Module_Type::fini");
 
-  const void *obj = this->object ();
+  void *obj = this->object ();
   MT_Module *mod = (MT_Module *) obj;
   MT_Task *reader = mod->reader ();
   MT_Task *writer = mod->writer ();
@@ -236,9 +236,9 @@ ACE_Stream_Type::resume (void) const
   return 0;
 }
 
-ACE_Stream_Type::ACE_Stream_Type (const void *s,
+ACE_Stream_Type::ACE_Stream_Type (void *s,
 				  const char *s_name,
-				  unsigned int f)
+				  u_int f)
   : ACE_Service_Type_Impl (s, s_name, f),
     head_ (0)
 {
@@ -264,7 +264,7 @@ int
 ACE_Stream_Type::fini (void) const
 {
   ACE_TRACE ("ACE_Stream_Type::fini");
-  const void *obj = this->object ();
+  void *obj = this->object ();
   MT_Stream *str = (MT_Stream *) obj;
 
   for (ACE_Module_Type *m = this->head_; m != 0; )
@@ -291,7 +291,7 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
 {
   ACE_TRACE ("ACE_Stream_Type::remove");
   ACE_Module_Type *prev = 0;
-  const void *obj = this->object ();
+  void *obj = this->object ();
   MT_Stream *str = (MT_Stream *) obj;
   int result = 0;
 
@@ -328,7 +328,7 @@ int
 ACE_Stream_Type::push (ACE_Module_Type *new_module)
 {
   ACE_TRACE ("ACE_Stream_Type::push");
-  const void *obj = this->object ();
+  void *obj = this->object ();
   MT_Stream *str = (MT_Stream *) obj;
 
   new_module->link (this->head_);
@@ -356,7 +356,7 @@ ACE_Service_Object_Type::fini (void) const
 {
   ACE_TRACE ("ACE_Service_Object_Type::fini");
 
-  const void *obj = this->object ();
+  void *obj = this->object ();
 
   ACE_Service_Object *so = (ACE_Service_Object *) obj;
 

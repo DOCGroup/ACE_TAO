@@ -107,7 +107,11 @@ void
 ACE_Parse_Node::print (void) const
 {
   ACE_TRACE ("ACE_Parse_Node::print");
-  ACE_DEBUG ((LM_DEBUG, "svc = %s\n", this->name ()));
+
+  ACE_DEBUG ((LM_DEBUG,
+              "svc = %s\n",
+              this->name ()));
+
   if (this->next_)
     this->next_->print ();
 }
@@ -151,10 +155,12 @@ void
 ACE_Suspend_Node::apply (void)
 {
   ACE_TRACE ("ACE_Suspend_Node::apply");
+
   if (ACE_Service_Config::suspend (this->name ()) == -1)
     ace_yyerrno++;
 
-  ACE_DEBUG ((LM_DEBUG, "did suspend on %s, error = %d\n",
+  ACE_DEBUG ((LM_DEBUG,
+              "did suspend on %s, error = %d\n",
 	      this->name (), ace_yyerrno));
 }
 
@@ -165,8 +171,10 @@ ACE_Resume_Node::apply (void)
   if (ACE_Service_Config::resume (this->name ()) == -1)
     ace_yyerrno++;
 
-  ACE_DEBUG ((LM_DEBUG, "did resume on %s, error = %d\n",
-	     this->name (), ace_yyerrno));
+  ACE_DEBUG ((LM_DEBUG,
+              "did resume on %s, error = %d\n",
+	     this->name (),
+              ace_yyerrno));
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Remove_Node)
@@ -190,8 +198,10 @@ ACE_Remove_Node::apply (void)
   if (ACE_Service_Config::remove (this->name ()) == -1)
     ace_yyerrno++;
 
-  ACE_DEBUG ((LM_DEBUG, "did remove on %s, error = %d\n",
-	     this->name (), ace_yyerrno));
+  ACE_DEBUG ((LM_DEBUG,
+              "did remove on %s, error = %d\n",
+	     this->name (),
+              ace_yyerrno));
 
 }
 
@@ -214,13 +224,15 @@ void
 ACE_Dynamic_Node::apply (void)
 {
   ACE_TRACE ("ACE_Dynamic_Node::apply");
+
   if (ACE_Service_Config::initialize (this->record (),
 				      this->parameters ()) == -1)
     ace_yyerrno++;
 
-  ACE_DEBUG ((LM_DEBUG, "did dynamic on %s, error = %d\n",
-	     this->name (), ace_yyerrno));
-
+  ACE_DEBUG ((LM_DEBUG,
+              "did dynamic on %s, error = %d\n",
+	     this->name (),
+              ace_yyerrno));
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Dynamic_Node)
@@ -258,8 +270,8 @@ ACE_Static_Node::record (void) const
   ACE_TRACE ("ACE_Static_Node::record");
   ACE_Service_Type *sr;
 
-  if (ACE_Service_Repository::instance()->find (this->name (),
-						(const ACE_Service_Type **) &sr) == -1)
+  if (ACE_Service_Repository::instance()->find 
+      (this->name (), (const ACE_Service_Type **) &sr) == -1)
     return 0;
   else
     return sr;
@@ -280,8 +292,10 @@ ACE_Static_Node::apply (void)
 				      this->parameters ()) == -1)
     ace_yyerrno++;
 
-  ACE_DEBUG ((LM_DEBUG, "did static on %s, error = %d\n",
-	     this->name (), ace_yyerrno));
+  ACE_DEBUG ((LM_DEBUG,
+              "did static on %s, error = %d\n",
+              this->name (),
+              ace_yyerrno));
 }
 
 
@@ -340,7 +354,7 @@ ACE_Location_Node::handle (void) const
 }
 
 void
-ACE_Location_Node::set_symbol (const void *s)
+ACE_Location_Node::set_symbol (void *s)
 {
   ACE_TRACE ("ACE_Location_Node::set_symbol");
   this->symbol_ = s;
@@ -372,14 +386,21 @@ ACE_Location_Node::open_handle (void)
     {
       ace_yyerrno++;
 
-      ACE_ERROR ((LM_ERROR, "dlopen failed for %s", dl_pathname));
+      ACE_ERROR ((LM_ERROR,
+                  "dlopen failed for %s",
+                  dl_pathname));
 
       char *errmsg = ACE_OS::dlerror ();
 
       if (errmsg != 0)
-	ACE_ERROR_RETURN ((LM_ERROR, ": %s\n", errmsg), 0);
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           ": %s\n",
+                           errmsg),
+                          0);
       else
-	ACE_ERROR_RETURN ((LM_ERROR, "\n"), 0);
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "\n"),
+                          0);
     }
   else
     return this->handle ();
@@ -402,13 +423,13 @@ ACE_Object_Node::ACE_Object_Node (const char *path,
   this->must_delete_ = 0;
 }
 
-const void *
+void *
 ACE_Object_Node::symbol (void)
 {
   ACE_TRACE ("ACE_Object_Node::symbol");
   if (this->open_handle () != 0)
     {
-      this->symbol_ = (const void *)
+      this->symbol_ = (void *)
 	ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
 		       (char *) this->object_name_);
 
@@ -423,9 +444,14 @@ ACE_Object_Node::symbol (void)
 	  char *errmsg = ACE_OS::dlerror ();
 
 	  if (errmsg != 0)
-	    ACE_ERROR_RETURN ((LM_ERROR, ": %s\n", errmsg), 0);
+	    ACE_ERROR_RETURN ((LM_ERROR,
+                               ": %s\n",
+                               errmsg),
+                              0);
 	  else
-	    ACE_ERROR_RETURN ((LM_ERROR, "\n"), 0);
+	    ACE_ERROR_RETURN ((LM_ERROR,
+                               "\n"),
+                              0);
 	}
       return this->symbol_;
     }
@@ -455,19 +481,19 @@ ACE_Function_Node::ACE_Function_Node (const char *path,
   this->must_delete_ = 1;
 }
 
-const void *
+void *
 ACE_Function_Node::symbol (void)
 {
   ACE_TRACE ("ACE_Function_Node::symbol");
   if (this->open_handle () != 0)
     {
-      const void *(*func) (void) = 0;
+      void *(*func) (void) = 0;
       this->symbol_ = 0;
 
       // Locate the factory function <function_name> in the shared
       // object.
 
-      func = (const void *(*)(void))
+      func = (void *(*)(void))
 	ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
 		       (ACE_DL_TYPE) this->function_name_);
 
@@ -479,15 +505,21 @@ ACE_Function_Node::symbol (void)
 	    {
 	      ace_yyerrno++;
 
-	      ACE_ERROR ((LM_ERROR, "dlsym failed for function %s\n",
+	      ACE_ERROR ((LM_ERROR,
+                          "dlsym failed for function %s\n",
 			  this->function_name_));
 
 	      char *errmsg = ACE_OS::dlerror ();
 
 	      if (errmsg != 0)
-		ACE_ERROR_RETURN ((LM_ERROR, ": %s\n", errmsg), 0);
+		ACE_ERROR_RETURN ((LM_ERROR,
+                                   ": %s\n",
+                                   errmsg),
+                                  0);
 	      else
-		ACE_ERROR_RETURN ((LM_ERROR, "\n"), 0);
+		ACE_ERROR_RETURN ((LM_ERROR,
+                                   "\n"),
+                                  0);
 	    }
 	}
       // Invoke the factory function and record it's return value.
@@ -496,7 +528,10 @@ ACE_Function_Node::symbol (void)
       if (this->symbol_ == 0)
 	{
 	  ace_yyerrno++;
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", this->function_name_), 0);
+	  ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             this->function_name_),
+                            0);
 	}
     }
   return this->symbol_;
@@ -528,8 +563,10 @@ void
 ACE_Dummy_Node::apply (void)
 {
   ACE_TRACE ("ACE_Dummy_Node::apply");
-  ACE_DEBUG ((LM_DEBUG, "did operations on stream %s, error = %d\n",
-	     this->name (), ace_yyerrno));
+  ACE_DEBUG ((LM_DEBUG,
+              "did operations on stream %s, error = %d\n",
+	     this->name (),
+              ace_yyerrno));
 }
 
 ACE_Dummy_Node::~ACE_Dummy_Node (void)
@@ -554,12 +591,12 @@ ACE_Static_Function_Node::ACE_Static_Function_Node (const char *func_name)
   this->must_delete_ = 1;
 }
 
-const void *
+void *
 ACE_Static_Function_Node::symbol (void)
 {
   ACE_TRACE ("ACE_Static_Function_Node::symbol");
 
-  const void *(*func) (void) = 0;
+  void *(*func) (void) = 0;
   this->symbol_ = 0;
 
   // Locate the factory function <function_name> in the statically
@@ -573,8 +610,10 @@ ACE_Static_Function_Node::symbol (void)
        iter.advance ())
     {
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
-      if (ACE_OS::strcmp (ssd->name_, this->function_name_) == 0)
-	func = (const void *(*)(void)) ssd->alloc_;
+
+      if (ACE_OS::strcmp (ssd->name_,
+                          this->function_name_) == 0)
+	func = (void *(*)(void)) ssd->alloc_;
     }
 	  
   if (func == 0)
@@ -599,7 +638,9 @@ ACE_Static_Function_Node::symbol (void)
     {
       ace_yyerrno++;
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "%p\n", this->function_name_), 0);
+			 "%p\n",
+                         this->function_name_),
+                        0);
     }
 
   return this->symbol_;
