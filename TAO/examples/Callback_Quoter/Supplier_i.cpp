@@ -1,10 +1,26 @@
 // $Id$
+// ===========================================================
+//
+//
+// = LIBRARY
+//    TAO/examples/Callback_Quoter
+//
+// = FILENAME
+//    Supplier_i.cpp
+//
+// = DESCRIPTION
+//    Implementation of the Supplier class.
+//
+// = AUTHOR
+//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+// ===========================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS.h"
 #include "Supplier_i.h"
-
-ACE_RCSID(Callback_Quoter, Supplier, "$Id$")
+#include "ace/Reactor.h"
 
 // Constructor.
 
@@ -21,6 +37,8 @@ Supplier::~Supplier (void)
   ACE_OS::free (this->ior_);
   ACE_DEBUG ((LM_DEBUG,
               "Market Status Supplier daemon exiting!\n"));
+
+  
 }
 
 // Reads the Server factory IOR from a file.
@@ -34,15 +52,16 @@ Supplier::read_ior (char *filename)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for writing: %p\n",
-                       filename),
-                      -1);
+                        filename,"file_open"),
+                        -1);
 
   ACE_Read_Buffer ior_buffer (f_handle);
   char *data = ior_buffer.read ();
 
   if (data == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to read ior: %p\n"),
+                       "Unable to read ior: %p\n",
+                       "read_file"),
                       -1);
 
   this->ior_ = ACE_OS::strdup (data);
@@ -83,7 +102,8 @@ Supplier::parse_args (void)
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             get_opts.optarg),
+                             get_opts.optarg,
+                             "get_args"),
                             -1);
         break;
 
@@ -140,8 +160,28 @@ Supplier::send_market_status (const char *stock_name,
 int
 Supplier::run (void)
 {
+  
+  long timer_id = 0;
+ 
   ACE_DEBUG ((LM_DEBUG,
               "Market Status Supplier Daemon is running...\n "));
+
+  
+  ACE_Time_Value period (1);
+
+  
+  timer_id = reactor_used ()->schedule_timer (supplier_timer_handler_, 
+                                                  "Periodic stockfeed",
+                                                  period,
+                                                 period);
+   if ( timer_id== -1)
+        ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "schedule_timer"), -1);
+                                            
+   // ACE_DEBUG ((LM_DEBUG,
+   //               "cancelling timer\n"));
+   //  this->reactor_used ()->cancel_timer (timer_id);
+
+  /*
 
   // @@ Ultimately, let's replace this with an ACE_OS::sleep() call or
   // something.
@@ -158,9 +198,11 @@ Supplier::run (void)
       if (this->send_market_status (stock_name, value) < 0)
         break;
     }
-
+  */
+   this->reactor_used ()->run_event_loop ();
   return 0;
 }
+
 
 int
 Supplier::via_naming_service (void)
@@ -209,6 +251,13 @@ Supplier::init (int argc, char **argv)
 
   TAO_TRY
     {
+
+      // Create the Timer_Handler.
+      ACE_NEW_RETURN (supplier_timer_handler_,
+                  Supplier_Timer_Handler (this,this->reactor_used ()),
+                  -1);
+
+     
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
@@ -254,4 +303,11 @@ Supplier::init (int argc, char **argv)
   TAO_ENDTRY;
 
   return 0;
+}
+
+
+ACE_Reactor*
+Supplier::reactor_used (void) const
+{
+  return (ACE_Reactor::instance ());
 }
