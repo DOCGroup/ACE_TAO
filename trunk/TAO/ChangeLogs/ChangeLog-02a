@@ -1,3 +1,15 @@
+Wed Feb  9 21:26:46 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (init):
+
+	  Moved parsing of "-ORBSvcConfDirective" before "-ORBSvcConf"
+	  because "-ORBSvcConf" was interpreting "Directive" as its
+	  argument.  The CORBA spec states that ORB options should be
+	  recognized if there is no space between the option and its
+	  argument.  As such this was an "order of parsing" problem, not
+	  a problem with the option parser itself.  Thanks to Dale Wood
+	  <dale_wood@Mitel.com> for providing a fix.
+
 Wed Feb  9 20:56:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Notify/NotifyPublish_i.h:
