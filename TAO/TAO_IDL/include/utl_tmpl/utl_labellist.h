@@ -63,7 +63,7 @@
 ** USE: Included from util.hh
 */
 
-#include	<iostream.h>
+#include	"ace/stdcpp.h"
 #include	"idl_fwd.h"
 #include	"utl_list.h"
 #include	"ast_union_label.h"

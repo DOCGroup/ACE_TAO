@@ -75,7 +75,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from util.hh
 */
 
-#include	<iostream.h>
+#include	"ace/stdcpp.h"
 #include	"idl_fwd.h"
 #include	"utl_string.h"
 
