@@ -1,3 +1,10 @@
+Thu Nov 13 16:08:20 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* tao/corba.h: Added TAO_Export definition.
+
+	* tao/*.h:  Replaced ACE_Svc_Export with TAO_Export.  Added
+	  default definition to build TAO DLL on Win32.
+
 Thu Nov 13 01:47:02 1997  Chris Cleeland  <cleeland@macarena.cs.wustl.edu>
 
 	* tao/iiopobj.cpp (IIOP_Object): Removed the duplicate CTORs that
@@ -8,7 +15,7 @@ Wed Nov 12 23:59:29 1997    <nw1@COYOTE>
 
 	* TAO/TAO_IDL/tao_idl.dsp: Changed to generate multithreaded codes
  	  on NT.
-	
+
 	* TAO/TAO_IDL/be/be_scope.cpp:
 	* TAO/TAO_IDL/fe/idl.ll:
 	* TAO/TAO_IDL/fe/lex.yy.cpp:
@@ -25,8 +32,8 @@ Wed Nov 12 23:59:29 1997    <nw1@COYOTE>
 	* TAO/TAO_IDL/include/utl_tmpl/utl_namelist.h:
 	* TAO/TAO_IDL/include/utl_tmpl/utl_strlist.h:  Changed to use
 	  "ace/stdcpp.h" and removed inclusion of header files that
-	  conflict with standard C++ library. 
-	
+	  conflict with standard C++ library.
+
 Wed Nov 12 18:59:20 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/iioporb.cpp: Added call to set object address in Profile.
