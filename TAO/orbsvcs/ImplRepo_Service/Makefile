@@ -19,8 +19,8 @@ PROG_SRCS = \
         ImplRepo_i.cpp \
         Repository.cpp \
         Options.cpp \
-	tao_ir.cpp \
-	tao_ir_i.cpp
+	tao_imr.cpp \
+	tao_imr_i.cpp
 
 SRC = $(PROG_SRCS)
 
@@ -30,12 +30,12 @@ IMPLREPO_SVR_OBJS = \
 	Repository.o \
 	Options.o
 
-TAO_IR_OBJS = \
-	tao_ir.o \
-	tao_ir_i.o
+tao_imr_OBJS = \
+	tao_imr.o \
+	tao_imr_i.o
 
 BIN2 = ImplRepo_Service \
-	tao_ir
+	tao_imr
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
@@ -67,7 +67,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 ImplRepo_Service: $(addprefix $(VDIR),$(IMPLREPO_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
+tao_imr: $(addprefix $(VDIR),$(tao_imr_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 #----------------------------------------------------------------------------
@@ -810,7 +810,7 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
-.obj/tao_ir.o .obj/tao_ir.so .shobj/tao_ir.o .shobj/tao_ir.so: tao_ir.cpp tao_ir_i.h \
+.obj/tao_imr.o .obj/tao_imr.so .shobj/tao_imr.o .shobj/tao_imr.so: tao_imr.cpp tao_imr_i.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1080,7 +1080,7 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/ImplRepoC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/ImplRepoC.i
-.obj/tao_ir_i.o .obj/tao_ir_i.so .shobj/tao_ir_i.o .shobj/tao_ir_i.so: tao_ir_i.cpp tao_ir_i.h \
+.obj/tao_imr_i.o .obj/tao_imr_i.so .shobj/tao_imr_i.o .shobj/tao_imr_i.so: tao_imr_i.cpp tao_imr_i.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \

@@ -1693,44 +1693,6 @@ SOURCE=.\Naming\Hash_Naming_Context.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.cpp
-
-!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.cpp
-
-!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Trader\Interpreter.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
@@ -1789,25 +1751,6 @@ SOURCE=.\Trader\Interpreter_Utils_T.cpp
 # Begin Source File
 
 SOURCE=.\IOR_Multicast.cpp
-
-!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\IR_Helper.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
@@ -3213,23 +3156,11 @@ SOURCE=.\Naming\Hash_Naming_Context.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\ImplRepoS_T.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\IOR_Multicast.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IR_Helper.h
 # End Source File
 # Begin Source File
 
@@ -3701,18 +3632,6 @@ SOURCE=.\Event_Utilities.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\LifeCycleServiceC.i
 # End Source File
 # Begin Source File
@@ -3722,18 +3641,6 @@ SOURCE=.\LifeCycleServiceS.i
 # Begin Source File
 
 SOURCE=.\Event\Memory_Pools.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\PingS_T.i
 # End Source File
 # Begin Source File
 
@@ -5836,247 +5743,6 @@ BuildCmds= \
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\DsLogAdmin.idl
 InputName=DsLogAdmin
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepo.idl
-
-!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__IMPLR="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
-InputPath=.\ImplRepo.idl
-InputName=ImplRepo
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__IMPLR="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
-InputPath=.\ImplRepo.idl
-InputName=ImplRepo
-
-BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__IMPLR="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
-InputPath=.\ImplRepo.idl
-InputName=ImplRepo
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__IMPLR="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
-InputPath=.\ImplRepo.idl
-InputName=ImplRepo
-
-BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
-
-# PROP BASE Ignore_Default_Tool 1
-# PROP Ignore_Default_Tool 1
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
-InputPath=.\ImplRepo.idl
-InputName=ImplRepo
-
-BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
-
-# PROP BASE Ignore_Default_Tool 1
-# PROP Ignore_Default_Tool 1
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
-InputPath=.\ImplRepo.idl
-InputName=ImplRepo
 
 BuildCmds= \
 	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl

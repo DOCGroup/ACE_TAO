@@ -63,7 +63,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "tao_ir"=..\..\ImplRepo_Service\tao_ir.dsp - Package Owner=<4>
+Project: "tao_imr"=..\..\ImplRepo_Service\tao_imr.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

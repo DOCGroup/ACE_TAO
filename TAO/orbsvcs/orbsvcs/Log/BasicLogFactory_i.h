@@ -25,6 +25,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_ORBSVCS_Export BasicLogFactory_i :
 public POA_DsLogAdmin::BasicLogFactory,
 public LogMgr_i
@@ -74,4 +81,9 @@ public:
   DsLogAdmin::LogMgr_var log_mgr_;
   // Our object ref. after <active>ation.
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
 #endif /* TLS_BASICLOGFACTORY_I_H */

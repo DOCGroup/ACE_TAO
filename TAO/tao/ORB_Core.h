@@ -406,6 +406,10 @@ public:
   const char *orbid (void) const;
   // Return ORBid string.
 
+  const CORBA::Object_ptr implrepo_service (void);
+  void implrepo_service (const CORBA::Object_ptr ir);
+  // Set/Get the IOR of the Implementation Repository service.
+
 protected:
   int set_iiop_endpoint (int dotted_decimal_addresses,
                          CORBA::UShort port,
@@ -455,6 +459,13 @@ protected:
 
   TAO_ProtocolFactorySet *protocol_factories_;
   // Pointer to the list of protocol loaded into this ORB instance.
+
+  CORBA::Object_ptr implrepo_service_;
+  // The cached IOR for the Implementation Repository.
+  // @@ If this is a _var, where should it get deleted? (brunsch)
+
+  int use_implrepo_;
+  // Flag for whether the implrepo support is enabled or not.
 
   CORBA::ORB_var orb_;
   // @@ Should we keep a single ORB pointer? This is good because

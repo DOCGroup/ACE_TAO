@@ -21,6 +21,12 @@
 #include "Offer_Iterators.h"
 #include "Offer_Database.h"
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
 template <class MAP_LOCK_TYPE>
 class TAO_Register_Offer_Iterator : public TAO_Offer_Iterator
 {
@@ -76,5 +82,9 @@ private:
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Offer_Iterators_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* TAO_REGISTER_OFFER_ITERATOR_H */

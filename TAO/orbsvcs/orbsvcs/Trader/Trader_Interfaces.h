@@ -23,6 +23,13 @@
 #include "Constraint_Interpreter.h"
 #include "Offer_Iterators_T.h"
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 // Hack because g++ forced this inane circular dependecy!
 
 class TAO_Constraint_Interpreter;
@@ -999,5 +1006,9 @@ private:
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Trader_Interfaces.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* TAO_TRADER_INTERFACES_H */

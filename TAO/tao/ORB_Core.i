@@ -194,6 +194,12 @@ TAO_ORB_Core::orbid (void) const
   return this->orbid_;
 }
 
+ACE_INLINE void 
+TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
+{
+  this->implrepo_service_ = ir;
+}
+
 // ****************************************************************
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
@@ -346,3 +352,4 @@ TAO_ORB_Table::first_orb (void)
 {
   return this->first_orb_;
 }
+

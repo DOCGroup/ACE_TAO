@@ -1126,6 +1126,63 @@ SOURCE=.\IIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImplRepoC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS_T.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\InconsistentTypeCodeC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -2879,6 +2936,18 @@ SOURCE=.\IIOP_Transport.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImplRepoC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\InconsistentTypeCodeC.h
 # End Source File
 # Begin Source File
@@ -3320,6 +3389,18 @@ SOURCE=.\IIOP_Connect.i
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS_T.i
 # End Source File
 # Begin Source File
 

@@ -95,16 +95,67 @@ TAO_Naming_Service::init (int argc,
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      result = this->orb_manager_.init_child_poa (argc,
-                                                  argv,
-                                                  "child_poa",
-                                                  ACE_TRY_ENV);
+      this->orb_ = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (result == -1)
-        return result;
 
-      orb = this->orb_manager_.orb ();
-      child_poa = this->orb_manager_.child_poa ();
+      // Get the POA from the ORB.
+      CORBA::Object_var poa_object =
+        this->orb_->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (poa_object.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                          -1);
+
+      // Get the POA object.
+      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in (),
+                                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Get the POA_Manager.
+      PortableServer::POAManager_var poa_manager = 
+        this->root_poa_->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::PolicyList policies (2);
+      policies.length (2);
+
+      // Id Assignment policy
+      policies[0] =
+        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID,
+                                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Lifespan policy
+      policies[1] =
+        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT,
+                                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // We use a different POA, otherwise the user would have to change
+      // the object key each time it invokes the server.
+
+      this->ns_poa_ = this->root_poa_->create_POA ("NameService",
+                                                   poa_manager.in (),
+                                                   policies,
+                                                   ACE_TRY_ENV);
+      // Warning!  If create_POA fails, then the policies won't be
+      // destroyed and there will be hell to pay in memory leaks!
+      ACE_TRY_CHECK;
+
+      // Creation of the new POAs over, so destroy the Policy_ptr's.
+      for (CORBA::ULong i = 0;
+           i < policies.length ();
+           ++i)
+        {
+          CORBA::Policy_ptr policy = policies[i];
+          policy->destroy (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
 
       // Check the non-ORB arguments.  this needs to come before we
       // initialize my_naming_server so that we can pass on some of
@@ -114,8 +165,8 @@ TAO_Naming_Service::init (int argc,
       if (result < 0)
         return result;
 
-      result = this->my_naming_server_.init (orb.in (),
-                                             child_poa.in (),
+      result = this->my_naming_server_.init (this->orb_.in (),
+                                             this->ns_poa_.in (),
                                              context_size_,
                                              0,
                                              0,
@@ -164,13 +215,13 @@ TAO_Naming_Service::run (CORBA_Environment& ACE_TRY_ENV)
 
   if (time_ == 0)
     {
-      result = this->orb_manager_.run (ACE_TRY_ENV);
+      result = this->orb_->run (ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
     }
   else
     {
-      ACE_Time_Value t (time_);
-      result = this->orb_manager_.run (ACE_TRY_ENV, &t);
+      ACE_Time_Value tv (time_);
+      result = this->orb_->run (tv, ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -181,4 +232,14 @@ TAO_Naming_Service::run (CORBA_Environment& ACE_TRY_ENV)
 
 TAO_Naming_Service::~TAO_Naming_Service (void)
 {
+  ACE_TRY_NEW_ENV
+    {
+      this->root_poa_->destroy (1, 1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore
+    }
+  ACE_ENDTRY;
 }
