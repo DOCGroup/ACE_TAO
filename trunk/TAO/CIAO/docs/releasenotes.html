@@ -179,16 +179,14 @@
   </tr>
 
   <tr>
-    <td>CCIDL (CIAO Component Implementation IDL) Compiler</td>
+    <td>CIDL (Component Implementation Defintion Language) Compiler</td>
     <td>
-        We still have no solid schedule as to when an implemention of
-        CCIDL will be available at
-        this point and we do not have immediate plan to integrate
-        Persistence State Service into CCIDL.  For starter, we will
-        probably only support a simple construct like the following:
+		An implementation that supports a subset of CIDL appropriate for
+		DRE systems has been implemented.
+        We do not have immediate plans to integrate
+        Persistence State Service into the CIAO CIDL compiler. At present
+        we support only a simple construct like the following:
 <pre>
-        import ::some_idl_module;
-
         module component_composite_name {
           composition service component_home_executor {
             implements component_home;
@@ -196,8 +194,8 @@
           };
         };
 </pre>
-        We will also need to generate the operation implementation
-        inherit from following interfaces:
+        The compiler generates operation implementations
+        inherited from following interfaces:
         <ul>
           <li><code>Navigation</code>
           <li><code>Receptacle</code>
@@ -207,12 +205,6 @@
           <li>Executor
         </ul>
 
-        For the implementation of the three introspection interfaces,
-        one way to implement it is to simply(?) generate the code that
-        build the component meta-data when queried (such as,
-        <code>get_all_facets</code> method,) or to create a generic
-        implementation and use an XML file that describe the component
-        to fill in these meta-data.
     </td>
   </tr>
 </table><p>
@@ -357,7 +349,7 @@ certain release together.  All interfaces and types are under
 <!-- <hr> -->
 <!-- <address></address> -->
 <!-- <\!-- hhmts start -\-> -->
-<!-- Last modified: Wed Dec 18 23:20:37 Central Standard Time 2002 -->
+<!-- Last modified: Sun Jun 1 23:20:37 Central Standard Time 2003 -->
 <!-- <\!-- hhmts end -\-> -->
 <!-- <address>Nanbor Wang &lt;nanbor@cs.wustl.edu&gt;</address> -->
 </body> </html>
