@@ -259,19 +259,19 @@ main (int argc, char *argv[])
         opt_priority_reactor = 0;
         break;
       case 'i':
-        opt_max_msgs = atoi (getopt.optarg);
+        opt_max_msgs = atoi (getopt.opt_arg ());
         break;
       case 'c':
-        opt_nchildren = atoi (getopt.optarg);
+        opt_nchildren = atoi (getopt.opt_arg ());
         break;
       case 'l':
-        opt_nloops = atoi (getopt.optarg);
+        opt_nloops = atoi (getopt.opt_arg ());
         break;
       case 'm':
-        max_retries = atoi (getopt.optarg);
+        max_retries = atoi (getopt.opt_arg ());
         break;
       case 't':
-        opt_max_duration = atoi (getopt.optarg);
+        opt_max_duration = atoi (getopt.opt_arg ());
         break;
       case '?':
       default:

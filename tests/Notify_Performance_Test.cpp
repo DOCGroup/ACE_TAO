@@ -167,10 +167,10 @@ main (int argc, ACE_TCHAR *argv[])
         opt_wfmo_reactor = 1;
         break;
       case 'c':
-        opt_nthreads = ACE_OS::atoi (getopt.optarg);
+        opt_nthreads = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'l':
-        opt_nloops = ACE_OS::atoi (getopt.optarg);
+        opt_nloops = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'd':
         opt_pass_notify_data = 1;

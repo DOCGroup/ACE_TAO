@@ -38,10 +38,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (cc)
       {
       case 't':
-        table_size = ACE_OS::atoi (get_opt.optarg);
+        table_size = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'i':
-        iterations = ACE_OS::atoi (get_opt.optarg);
+        iterations = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case '?':
       case 'h':

@@ -232,14 +232,14 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'f':
         if (ACE_Service_Config::svc_conf_file_queue_->enqueue_tail
-            (ACE_TString (getopt.optarg)) == -1)
+            (ACE_TString (getopt.opt_arg ())) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("%p\n"),
                              "enqueue_tail"),
                             -1);
         break;
       case 'k':
-        ACE_Service_Config::logger_key_ = getopt.optarg;
+        ACE_Service_Config::logger_key_ = getopt.opt_arg ();
         break;
       case 'n':
         ACE_Service_Config::no_static_svcs_ = 1;
@@ -253,7 +253,7 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
           // doesn't really support signals very well...
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
           ACE_Service_Config::signum_ =
-            ACE_OS::atoi (getopt.optarg);
+            ACE_OS::atoi (getopt.opt_arg ());
 
           if (ACE_Reactor::instance ()->register_handler
               (ACE_Service_Config::signum_,
@@ -270,7 +270,7 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
                           ACE_SVC_QUEUE,
                           -1);
         if (ACE_Service_Config::svc_queue_->enqueue_tail
-            (ACE_TString (getopt.optarg)) == -1)
+            (ACE_TString (getopt.opt_arg ())) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("%p\n"),
                              "enqueue_tail"),

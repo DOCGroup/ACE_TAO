@@ -313,7 +313,7 @@ main (int argc, ACE_TCHAR *argv[])
       switch (opt)
         {
         case 'f':
-          fn = get_opt.optarg;
+          fn = get_opt.opt_arg ();
           break;
         case 'r':
           writing = 0;

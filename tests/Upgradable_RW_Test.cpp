@@ -123,19 +123,19 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'e':
-        n_entries = ACE_OS::atoi (get_opt.optarg);
+        n_entries = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'f':
         thr_flags = THR_BOUND | THR_SCHED_FIFO;
         break;
       case 'r':
-        n_readers = ACE_OS::atoi (get_opt.optarg);
+        n_readers = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'w':
-        n_writers = ACE_OS::atoi (get_opt.optarg);
+        n_writers = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'n':
-        n_iterations = ACE_OS::atoi (get_opt.optarg);
+        n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'u':
         use_try_upgrade = 1;

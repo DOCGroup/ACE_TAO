@@ -132,7 +132,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
       switch (c)
         {
         case 'f':
-          temp = get_opt.optarg;
+          temp = get_opt.opt_arg ();
           // Now tokenize the string to get all the flags
           this->tokenize (temp);
           // If LOGGER was specified, set up the default logger key.
@@ -144,26 +144,26 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'i':
           // Interval (in secs) at which logfile size is sampled.
-          this->interval_ = ACE_OS::strtoul (get_opt.optarg, 0, 10);
+          this->interval_ = ACE_OS::strtoul (get_opt.opt_arg (), 0, 10);
           break;
         case 'k':
           // Ensure that the LOGGER flag is set
           ACE_SET_BITS (this->flags_, ACE_Log_Msg::LOGGER);
           delete [] this->logger_key_;
-          this->logger_key_ = ACE::strnew (get_opt.optarg);
+          this->logger_key_ = ACE::strnew (get_opt.opt_arg ());
           break;
         case 'm':
           // Maximum logfile size (in KB).  Must be a non-zero value.
-          this->max_size_ = ACE_OS::strtoul (get_opt.optarg, 0, 10);
+          this->max_size_ = ACE_OS::strtoul (get_opt.opt_arg (), 0, 10);
           this->max_size_ <<= 10;       // convert to KB
           break;
         case 'n':
           delete [] this->program_name_;
-          this->program_name_ = ACE::strnew (get_opt.optarg);
+          this->program_name_ = ACE::strnew (get_opt.opt_arg ());
           break;
         case 'N':
           // The max number for the log_file being created
-          this->max_file_number_ = ACE_OS::atoi (get_opt.optarg) - 1;
+          this->max_file_number_ = ACE_OS::atoi (get_opt.opt_arg ()) - 1;
           this->fixed_number_ = 1;
           break;
         case 'o':
@@ -171,7 +171,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
           this->order_files_ = 1;
           break;
         case 'p':
-          temp = get_opt.optarg;
+          temp = get_opt.opt_arg ();
           // Now tokenize the string to setup process log priority
           this->priorities (temp, ACE_Log_Msg::PROCESS);
           break;
@@ -179,10 +179,10 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
           // Ensure that the OSTREAM flag is set
           ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
           delete [] this->filename_;
-          this->filename_ = ACE::strnew (get_opt.optarg);
+          this->filename_ = ACE::strnew (get_opt.opt_arg ());
           break;
         case 't':
-          temp = get_opt.optarg;
+          temp = get_opt.opt_arg ();
           // Now tokenize the string to setup thread log priority
           this->priorities (temp, ACE_Log_Msg::THREAD);
           break;
