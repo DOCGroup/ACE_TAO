@@ -10,11 +10,11 @@
 #include "ace/OS_main.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/Exception.h"
-#include "Config_Handlers/XercesString.h"
+#include "Old_Config_Handlers/XercesString.h"
 #include <xercesc/util/XMLUniDefs.hpp>
-#include "Config_Handlers/Config_Handler_export.h"
-#include "Config_Handlers/DnC_Dump.h"
-#include "Config_Handlers/Config_Error_Handler.h"
+#include "Old_Config_Handlers/Config_Handler_export.h"
+#include "Old_Config_Handlers/DnC_Dump.h"
+#include "Old_Config_Handlers/Config_Error_Handler.h"
 
 using Config_Handler::XStr;
 using xercesc::XMLUni;
