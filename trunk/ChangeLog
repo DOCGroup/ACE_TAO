@@ -1,3 +1,9 @@
+Sun Oct 24 08:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Removed OTHER and ALL from some tests, I don't see why these tests
+          just shouldn't run on a few platforms.
+
 Sat Oct 23 11:27:47 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/WIN32_Asynch_IO.cpp (shared_write): Changed the return values
@@ -7,11 +13,11 @@ Sat Oct 23 11:27:47 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
   	  Thanks to Jaroslaw Nozderko <jaroslaw.nozderko@polkomtel.com.pl>
  	  for reporting this.
 
-	* ace/POSIX_Proactor.cpp (ACE_AIOCB_Notify_Pipe_Manager): 
+	* ace/POSIX_Proactor.cpp (ACE_AIOCB_Notify_Pipe_Manager):
 	  Added a call to
-	  
+
 	  ACE_Flag_Manip::set_flags (this->pipe_.read_handle (), ACE_NONBLOCK);
-	  
+
 	  so that the ACE_POSIX_AIOCB_Proactor doesn't hang on SuSe Linux
  	  9.1.  Thanks to Vukajlo <vukajlo@finsoft.co.yu> for reporting
  	  this fix.
