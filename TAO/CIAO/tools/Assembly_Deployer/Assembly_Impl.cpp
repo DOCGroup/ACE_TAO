@@ -90,12 +90,15 @@ CIAO::AssemblyFactory_Impl::lookup (Components::Cookie * c
                    Components::Deployment::InvalidAssembly))
 {
   ::Components::Deployment::Assembly_var retv;
+
   if (c == 0)
     ACE_THROW_RETURN (::Components::Deployment::InvalidAssembly (), 0);
 
   ACE_Active_Map_Manager_Key key;
-  if (CIAO::Map_Key_Cookie::extract (c, key) == -1)
+
+  if (CIAO::Map_Key_Cookie::extract (c, key) == false)
     ACE_THROW_RETURN (::Components::Deployment::InvalidAssembly (), 0);
+
 
   if (this->assembly_map_.find (key,
                                 retv) != 0)
@@ -116,8 +119,10 @@ CIAO::AssemblyFactory_Impl::destroy (Components::Cookie * c
     ACE_THROW (::Components::Deployment::InvalidAssembly ());
 
   ACE_Active_Map_Manager_Key key;
-  if (CIAO::Map_Key_Cookie::extract (c, key) == -1)
+
+  if (CIAO::Map_Key_Cookie::extract (c, key) == false)
     ACE_THROW (::Components::Deployment::InvalidAssembly ());
+
 
   if (this->assembly_map_.unbind (key,
                                   assembly) != 0)
