@@ -1,3 +1,8 @@
+Wed Apr 28 00:44:59 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/CosEvent_Service/CosEvent_Service.{h,cpp}:
+	   modified to use the new RtEC.
+
 Tue Apr 27 23:32:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/TAO.cpp (deactivate_under_child_poa and deactivate): Added
