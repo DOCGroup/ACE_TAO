@@ -16,17 +16,15 @@
 #define TAO_ORB_TABLE_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Null_Mutex.h"
+
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
-
 #include "ace/Hash_Map_Manager_T.h"
-
-#include "tao/TAO_Export.h"
+#include "ace/Null_Mutex.h"
 
 // Forward declarations.
 class TAO_ORB_Core;
@@ -87,14 +85,14 @@ public:
   /// Set the ORB related to the orb_id as the default ORB and not the
   /// ORB that is first binded.
   void set_default (const char *orb_id);
-  
+
   /// Method the ORB invokes to specify that it doesnt want to be the
   /// default ORB if there are more than one ORB registered.
   void not_default (const char *orb_id);
 
-  /// Accessor to the underlying table_ 
+  /// Accessor to the underlying table_
   Table * table (void);
-   
+
 private:
 
   /// Prevent copying
@@ -107,7 +105,7 @@ private:
   void update_orbs();
 
   /// Variable to check if the first ORB decides not to be the default
-  CORBA::Boolean first_orb_not_default_;
+  bool first_orb_not_default_;
 
   /// The implementation.
   Table table_;

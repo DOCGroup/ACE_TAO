@@ -1,3 +1,13 @@
+Fri Aug 27 01:12:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ORB_Table.h:
+
+	  No need to include "tao/corbafwd.h".
+
+	* tao/TC_Constants_Forward.h:
+
+	  Added missing "tao/TAO_Export.h" include.
+
 Fri Aug 27 08:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Integrated ORTrefactor_2 branch into main. Previously the PortableServer
