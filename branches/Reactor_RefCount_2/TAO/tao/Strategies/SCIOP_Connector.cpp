@@ -157,124 +157,165 @@ TAO_SCIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   TAO_SCIOP_Endpoint *sciop_endpoint =
     this->remote_endpoint (desc->endpoint ());
 
-   if (sciop_endpoint == 0)
-     return -1;
+  if (sciop_endpoint == 0)
+    return -1;
 
-   const ACE_INET_Addr &remote_address =
-     sciop_endpoint->object_addr ();
+  const ACE_INET_Addr &remote_address =
+    sciop_endpoint->object_addr ();
 
-   if (TAO_debug_level > 2)
-     ACE_DEBUG ((LM_DEBUG,
-                 "TAO (%P|%t) - SCIOP_Connector::make_connection, "
-                 "to <%s:%d>\n",
-                 sciop_endpoint->host(), sciop_endpoint->port()));
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - SCIOP_Connector::make_connection, "
+                "to <%s:%d>\n",
+                sciop_endpoint->host(), sciop_endpoint->port()));
 
-   // Get the right synch options
-   ACE_Synch_Options synch_options;
+  // Get the right synch options
+  ACE_Synch_Options synch_options;
 
-   this->active_connect_strategy_->synch_options (max_wait_time,
-                                                  synch_options);
+  this->active_connect_strategy_->synch_options (max_wait_time,
+                                                 synch_options);
 
-   TAO_SCIOP_Connection_Handler *svc_handler = 0;
+  TAO_SCIOP_Connection_Handler *svc_handler = 0;
 
-   // Active connect
-   int result = this->base_connector_.connect (svc_handler,
-                                               remote_address,
-                                               synch_options);
+  // Connect.
+  int result = this->base_connector_.connect (svc_handler,
+                                              remote_address,
+                                              synch_options);
 
-   if (result == -1 && errno == EWOULDBLOCK)
-     {
-       if (TAO_debug_level > 2)
-         ACE_DEBUG ((LM_DEBUG,
-                     "TAO (%P|%t) - SCIOP_Connector::make_connection, "
-                     "going to wait for connection completion on local"
-                     "handle [%d]\n",
-                     svc_handler->get_handle ()));
+  // This call creates the service handler and bumps the #REFCOUNT# up
+  // one extra.  There are three possibilities: (a) connection
+  // succeeds immediately - in this case, the #REFCOUNT# on the
+  // handler is two; (b) connection completion is pending - in this
+  // case, the #REFCOUNT# on the handler is also two; (c) connection
+  // fails immediately - in this case, the #REFCOUNT# on the handler
+  // is one since close() gets called on the handler.
+  //
+  // The extra reference count in
+  // TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
+  // the case when connection completion is pending and we are going
+  // to wait on a variable in the handler to changes, signifying
+  // success or failure.  Note, that this increment cannot be done
+  // once the connect() returns since this might be too late if
+  // another thread pick up the completion and potentially deletes the
+  // handler before we get a chance to increment the reference count.
 
-       result =
-         this->active_connect_strategy_->wait (svc_handler,
-                                               max_wait_time);
+  // No immediate result.  Wait for completion.
+  if (result == -1 && errno == EWOULDBLOCK)
+    {
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - SCIOP_Connector::make_connection, "
+                    "going to wait for connection completion on local"
+                    "handle [%d]\n",
+                    svc_handler->get_handle ()));
 
-       if (TAO_debug_level > 2)
-         {
-           ACE_DEBUG ((LM_DEBUG,
-                       "TAO (%P|%t) - SCIOP_Connector::make_connection"
-                       "wait done for handle[%d], result = %d\n",
-                       svc_handler->get_handle (), result));
-         }
+      // Wait for connection completion.
+      result =
+        this->active_connect_strategy_->wait (svc_handler,
+                                              max_wait_time);
 
-     }
+      if (TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - SCIOP_Connector::make_connection"
+                      "wait done for handle[%d], result = %d\n",
+                      svc_handler->get_handle (), result));
+        }
 
-   int status =
-     svc_handler->is_finalized ();
+      // Check if the handler has been closed.
+      int closed =
+        svc_handler->is_finalized ();
 
-   // Reduce the refcount to the svc_handler that we have. The
-   // increment to the handler is done in make_svc_handler (). Now
-   // that we dont need the reference to it anymore we can decrement
-   // the refcount whether the connection is successful ot not.
-   // REFCNT: Matches with TAO_Connect_Strategy<>::make_svc_handler()
-   long refcount = svc_handler->decr_refcount ();
+      // In case of failure, check if the connection has been closed.
+      if (result == -1)
+        {
+          if (!closed)
+            {
+              // Handler has not been closed - close it now.  This
+              // happens when there is a problem while waiting other
+              // than the connection failure.
+              svc_handler->close ();
+            }
+        }
+    }
 
-   ACE_ASSERT (refcount >= 0);
+  // Irrespective of success or failure, remove the extra #REFCOUNT#.
+  svc_handler->remove_reference ();
 
-   ACE_UNUSED_ARG (refcount);
+  // In case of errors.
+  if (result == -1)
+    {
+      // Give users a clue to the problem.
+      if (TAO_debug_level)
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "TAO (%P|%t) - SCIOP_Connector::make_connection, "
+                      "connection to <%s:%d> failed (%p)\n",
+                      sciop_endpoint->host (), sciop_endpoint->port (),
+                      "errno"));
+        }
 
-   if (result == -1)
-     {
-       // Give users a clue to the problem.
-       if (TAO_debug_level)
-         {
-           ACE_DEBUG ((LM_ERROR,
-                       "TAO (%P|%t) - SCIOP_Connector::make_connection, "
-                       "connection to <%s:%d> failed (%p)\n",
-                       sciop_endpoint->host (), sciop_endpoint->port (),
-                       "errno"));
-         }
+      return -1;
+    }
 
-       (void) this->active_connect_strategy_->post_failed_connect (svc_handler,
-                                                                   status);
+  // At this point, the connection has be successfully connected.
+  // #REFCOUNT# is one.
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - SCIOP_Connector::make_connection, "
+                "new connection to <%s:%d> on Transport[%d]\n",
+                sciop_endpoint->host (), sciop_endpoint->port (),
+                svc_handler->peer ().get_handle ()));
 
-       return -1;
-     }
+  TAO_Transport *transport =
+    svc_handler->transport ();
 
-   if (TAO_debug_level > 2)
-     ACE_DEBUG ((LM_DEBUG,
-                 "TAO (%P|%t) - SCIOP_Connector::make_connection, "
-                 "new connection to <%s:%d> on Transport[%d]\n",
-                 sciop_endpoint->host (), sciop_endpoint->port (),
-                 svc_handler->peer ().get_handle ()));
+  // Add the handler to Cache
+  int retval =
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
+                                                                             base_transport);
 
-   TAO_Transport *base_transport =
-     TAO_Transport::_duplicate (svc_handler->transport ());
+  // Failure in adding to cache.
+  if (retval != 0)
+    {
+      // Close the handler.
+      svc_handler->close ();
 
-   // Add the handler to Cache
-   int retval =
-     this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
-                                                                              base_transport);
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "TAO (%P|%t) - SCIOP_Connector::make_connection, "
+                      "could not add the new connection to cache\n"));
+        }
 
-   if (retval != 0 && TAO_debug_level > 0)
-     {
-       ACE_DEBUG ((LM_DEBUG,
-                   "TAO (%P|%t) - SCIOP_Connector::make_connection, "
-                   "could not add the new connection to cache\n"));
-     }
+      return -1;
+    }
 
-   // If the wait strategy wants us to be registered with the reactor
-   // then we do so.
-   retval =  base_transport->wait_strategy ()->register_handler ();
+  // Registration failures.
+  if (retval != 0)
+    {
+      // Purge from the connection cache.
+      transport->purge_entry ();
 
-   if (retval != 0 && TAO_debug_level > 0)
-     {
-       ACE_DEBUG ((LM_DEBUG,
-                   "TAO (%P|%t) - SCIOP_Connector::make_connection, "
-                   "could not register the new connection in the reactor\n"));
-     }
+      // Close the handler.
+      svc_handler->close ();
 
-   // Handover the transport pointer to the Invocation class.
-   TAO_Transport *&transport = invocation->transport ();
-   transport = base_transport;
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "TAO (%P|%t) - SCIOP_Connector::make_connection, "
+                      "could not register the new connection in the reactor\n"));
+        }
 
-   return 0;
+      return -1;
+    }
+
+  // Handover the transport pointer to the Invocation class.
+  TAO_Transport *&invocation_transport =
+    invocation->transport ();
+  invocation_transport = transport;
+
+  return 0;
 }
 
 
