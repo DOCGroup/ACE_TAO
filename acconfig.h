@@ -173,7 +173,7 @@
 #undef _SVID3
 
 /* SunOS / Solaris specific configuration parameters */
-/* Nothing yet */
+#undef _RWSTD_NO_EXCEPTIONS
 
 /* Tandem specific configuration parameters */
 /* Nothing yet */

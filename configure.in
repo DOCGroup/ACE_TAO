@@ -882,7 +882,7 @@ case "$target" in
   *osf3.2*)
     LIBS="$LIBS -lmach -lsys5 -lcxx -lc -lrt"
     ;;
-  *osf4.0*)
+  *osf4.0* | *osf5.0*)
     LIBS="$LIBS -lmach -lrt"
     ;;
   *psos*)
@@ -1763,6 +1763,7 @@ ACE_CACHE_CHECK(for sig_atomic_t,
          ])
 ], AC_DEFINE(ACE_HAS_SIG_ATOMIC_T),)
 
+
 dnl
 dnl SECTION 7: checks for structures
 dnl
@@ -1992,6 +1993,7 @@ semun us;
         ])
 ], AC_DEFINE(ACE_HAS_SEMUN),)
 
+
 dnl
 dnl SECTION 8: checks for variables
 dnl
@@ -2171,6 +2173,9 @@ ACE_CACHE_CHECK(for sys_nerr in headers,
    AC_CHECK_FUNC(sys_nerr,,
      AC_DEFINE(ACE_LACKS_SYS_NERR))
   ])
+
+dnl Save the cache for debugging purposes
+AC_CACHE_SAVE
 
 dnl
 dnl SECTION 9: checks for compiler characteristics
@@ -3418,6 +3423,8 @@ dnl   [
    dnl AC_DEFINE(ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 dnl   ],)
 
+dnl Save the cache for debugging purposes
+AC_CACHE_SAVE
 
 dnl
 dnl SECTION 10: checks for library functions
@@ -3964,6 +3971,9 @@ AC_CHECK_FUNC(write_timedwait, dnl
 AC_CHECK_FUNC(writev_timedwait, dnl
   AC_DEFINE(ACE_HAS_WRITEV_TIMEDWAIT),)
 
+dnl Save the cache for debugging purposes
+AC_CACHE_SAVE
+
 dnl Check for POSIX Semaphore functions
 dnl We only check for a few of them since some platforms don't have these.
 AC_CHECK_FUNC(sem_init,,) dnl
@@ -4124,8 +4134,12 @@ dnl name.
     AC_DEFINE(ACE_LACKS_PTHREAD_SIGMASK))
 
   AC_CHECK_FUNC(pthread_key_create, dnl
-    AC_DEFINE(ACE_HAS_THREAD_SPECIFIC_STORAGE),
-    AC_DEFINE(ACE_HAS_TSS_EMULATION))
+    [AC_DEFINE(ACE_HAS_THREAD_SPECIFIC_STORAGE)],
+    [
+     AC_CHECK_FUNC(pthread_keycreate,
+       [AC_DEFINE(ACE_HAS_THREAD_SPECIFIC_STORAGE)],
+       [AC_DEFINE(ACE_HAS_TSS_EMULATION)])
+    ])
 
   AC_CHECK_FUNC(pthread_condattr_setkind_np, dnl
     AC_DEFINE(ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP),)
@@ -4273,6 +4287,135 @@ int foo = PTHREAD_PROCESS_SHARED;
                   [
                    AC_DEFINE(ACE_HAS_PTHREAD_PROCESS_ENUM)
                   ],)
+
+dnl Check if pthread_create requires an extern "C" start routine
+ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
+[
+ACE_CACHE_CHECK(if pthread_create requires an extern \"C\" start routine,
+  ace_cv_lib_pthread_c_func,[
+    AC_TRY_COMPILE(
+      [
+#include <pthread.h>
+
+void *ace_start_routine(void *);
+      ],
+      [
+pthread_create(0, 0, ace_start_routine, 0);
+      ],
+      [
+       ace_cv_lib_pthread_c_func=no
+      ],
+      [
+       dnl Check if extern "C" start routine is required.
+       AC_TRY_COMPILE(
+         [
+#include <pthread.h>
+
+extern "C" void *ace_start_routine(void *);
+         ],
+         [
+pthread_create(0, 0, ace_start_routine, 0);
+         ],
+         [
+          ace_cv_lib_pthread_c_func=yes
+         ],
+         [
+          ace_cv_lib_pthread_c_func=no
+         ])
+      ])
+  ],
+  [
+   AC_DEFINE(ACE_HAS_THR_C_FUNC)
+  ],)
+])  dnl ACE_CONVERT_WARNINGS_TO_ERRORS
+
+dnl Check if pthread_key_create has a standard arg thread destructor
+ACE_CACHE_CHECK(if pthread_key_create has std arg thread destructor,
+  ace_cv_lib_pthread_stdarg_dest,[
+    if test "$ac_cv_func_pthread_key_create" = yes; then
+      ace_pthread_key_create=pthread_key_create
+    else
+      ace_pthread_key_create=pthread_keycreate
+    fi
+    AC_TRY_COMPILE(
+      [
+#include <pthread.h>
+
+void ace_destructor(void *);
+      ],
+      [
+${ace_pthread_key_create}(0, ace_destructor);
+      ],
+      [
+       ace_cv_lib_pthread_stdarg_dest=no
+      ],
+      [
+       AC_TRY_COMPILE(
+         [
+#include <pthread.h>
+
+void ace_destructor(...);
+         ],
+         [
+${ace_pthread_key_create}(0, ace_destructor);
+         ],
+         [
+          ace_cv_lib_pthread_stdarg_dest=yes
+         ],
+         [
+          ace_cv_lib_pthread_stdarg_dest=no
+         ])
+      ])
+  ],
+  [
+   AC_DEFINE(ACE_HAS_STDARG_THR_DEST)
+  ],)
+
+dnl Check if pthread_key_create requires an extern "C" start routine
+ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
+[
+ACE_CACHE_CHECK(if pthread_key_create requires an extern \"C\" start routine,
+  ace_cv_lib_pthread_c_dest,[
+    if test "$ac_cv_func_pthread_key_create" = yes; then
+      ace_pthread_key_create=pthread_key_create
+    else
+      ace_pthread_key_create=pthread_keycreate
+    fi
+    AC_TRY_COMPILE(
+      [
+#include <pthread.h>
+
+void ace_destructor(void *);
+      ],
+      [
+${ace_pthread_key_create}(0, ace_destructor);
+      ],
+      [
+       ace_cv_lib_pthread_c_dest=no
+      ],
+      [
+       dnl Check if extern "C" start routine is required.
+       AC_TRY_COMPILE(
+         [
+#include <pthread.h>
+
+extern "C" void ace_destructor(void *);
+         ],
+         [
+${ace_pthread_key_create}(0, ace_destructor);
+         ],
+         [
+          ace_cv_lib_pthread_c_dest=yes
+         ],
+         [
+          ace_cv_lib_pthread_c_dest=no
+         ])
+      ])
+  ],
+  [
+   AC_DEFINE(ACE_HAS_THR_C_DEST)
+  ],)
+])  dnl ACE_CONVERT_WARNINGS_TO_ERRORS
                   
 dnl FIXME: These tests look sloppy to me.  -Ossama
   AC_CACHE_CHECK(for minimum thread priority,
@@ -5111,16 +5254,17 @@ ACE_CACHE_CHECK(for unbuffered streambufs,
       ])
   ], , AC_DEFINE(ACE_LACKS_UNBUFFERED_STREAMBUF))
 
+
 dnl Check if signal takes a void (*)(int) as second argument
-AC_CACHE_CHECK(if signal takes a void (*)(int) as second argument,
+ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
+[
+ACE_CACHE_CHECK(if signal takes a void (*)(int) as second argument,
   ace_cv_lib_signal_vi1_2,[
     AC_TRY_COMPILE(
       [
 #include <signal.h>
        typedef void (*SA)(int);
-       void handler(int)
-       {
-       }
+       void handler(int) { }
       ],
       [
        SA nn = handler;
@@ -5130,18 +5274,43 @@ AC_CACHE_CHECK(if signal takes a void (*)(int) as second argument,
        ace_cv_lib_signal_vi1_2=yes
       ],
       [
-       ace_cv_lib_signal_vi1_2=no
+       dnl Check if extern "C" signal handler is required.
+       AC_TRY_COMPILE(
+         [
+#include <signal.h>
+extern "C"
+  {
+    typedef void (*SA)(int);
+    void handler(int) { }
+  }
+         ],
+         [
+          SA nn = handler;
+          signal(SIGINT, nn);
+         ],
+         [
+          ace_cv_lib_signal_vi1_2=yes
+         ],
+         [
+          ace_cv_lib_signal_vi1_2=no
+         ])
       ])
-  ])
+  ],
+  [
+   AC_DEFINE(ACE_HAS_SIG_C_FUNC)
+  ],)
+])  dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
 dnl Check if signal takes a void (*)(void) as second argument
-AC_CACHE_CHECK(if signal takes a void (*)(void) as second argument,
+ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
+[
+ACE_CACHE_CHECK(if signal takes a void (*)(void) as second argument,
   ace_cv_lib_signal_vv1_2,[
     AC_TRY_COMPILE(
       [
 #include <signal.h>
        typedef void (*SA)(void);
-       void handler(int) { }
+       void handler(void) { }
       ],
       [
        SA nn = handler;
@@ -5151,12 +5320,37 @@ AC_CACHE_CHECK(if signal takes a void (*)(void) as second argument,
        ace_cv_lib_signal_vv1_2=yes
       ],
       [
-       ace_cv_lib_signal_vv1_2=no
+       dnl Check if extern "C" signal handler is required.
+       AC_TRY_COMPILE(
+         [
+#include <signal.h>
+extern "C"
+  {
+    typedef void (*SA)(void);
+    void handler(void) { }
+  }
+         ],
+         [
+          SA nn = handler;
+          signal(SIGINT, nn);
+         ],
+         [
+          ace_cv_lib_signal_vv1_2=yes
+         ],
+         [
+          ace_cv_lib_signal_vv1_2=no
+         ])
       ])
+  ],
+  [
+   AC_DEFINE(ACE_HAS_SIG_C_FUNC)
   ])
+])  dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
 dnl Check if signal takes a void (*)(int, ...) as second argument
-AC_CACHE_CHECK(if signal takes a void (*)(int, ...) as second argument,
+ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
+[
+ACE_CACHE_CHECK(if signal takes a void (*)(int, ...) as second argument,
   ace_cv_lib_signal_vi1a2_2,[
     AC_TRY_COMPILE(
       [
@@ -5172,12 +5366,37 @@ AC_CACHE_CHECK(if signal takes a void (*)(int, ...) as second argument,
        ace_cv_lib_signal_vi1a2_2=yes
       ],
       [
-       ace_cv_lib_signal_vi1a2_2=no
+       dnl Check if extern "C" signal handler is required.
+       AC_TRY_COMPILE(
+         [
+#include <signal.h>
+extern "C"
+  {
+    typedef void (*SA)(int, ...);
+    void handler(int, ...) { }
+  }
+         ],
+         [
+          SA nn = handler;
+          signal(SIGINT, nn);
+         ],
+         [
+          ace_cv_lib_signal_vi1a2_2=yes
+         ],
+         [
+          ace_cv_lib_signal_vi1a2_2=no
+         ])
       ])
-  ])
+  ],
+  [
+   AC_DEFINE(ACE_HAS_SIG_C_FUNC)
+  ],)
+])  dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
 dnl Check if signal takes a void (*)(...) as second argument
-AC_CACHE_CHECK(if signal takes a void (*)(...) as second argument,
+ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
+[
+ACE_CACHE_CHECK(if signal takes a void (*)(...) as second argument,
   ace_cv_lib_signal_va1_2,[
     AC_TRY_COMPILE(
       [
@@ -5193,9 +5412,32 @@ AC_CACHE_CHECK(if signal takes a void (*)(...) as second argument,
        ace_cv_lib_signal_va1_2=yes
       ],
       [
-       ace_cv_lib_signal_va1_2=no
+       dnl Check if extern "C" signal handler is required.
+       AC_TRY_COMPILE(
+         [
+#include <signal.h>
+extern "C"
+  {
+    typedef void (*SA)(...);
+    void handler(...) { }
+  }
+         ],
+         [
+          SA nn = handler;
+          signal(SIGINT, nn);
+         ],
+         [
+          ace_cv_lib_signal_va1_2=yes
+         ],
+         [
+          ace_cv_lib_signal_va1_2=no
+         ])
       ])
-  ])
+  ],
+  [
+   AC_DEFINE(ACE_HAS_SIG_C_FUNC)
+  ],)
+])  dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
 dnl Check if signal returns a void (*)(int)
 AC_CACHE_CHECK(if signal returns a void (*)(int),
@@ -5203,13 +5445,14 @@ AC_CACHE_CHECK(if signal returns a void (*)(int),
     AC_TRY_COMPILE(
       [
 #include <signal.h>
-       typedef void (*SA)(int);
-       void foo(SA nn) { }
+
+typedef void (*SA)(int);
+void foo(SA nn) { }
       ],
       [
-       SA nn = SIG_DFL;
-       nn = signal(SIGINT, 0);
-       foo(nn);
+SA nn = SIG_DFL;
+nn = signal(SIGINT, 0);
+foo(nn);
       ],
       [
        ace_cv_lib_signal_vi1_ret=yes
@@ -5225,13 +5468,14 @@ AC_CACHE_CHECK(if signal returns a void (*)(void),
     AC_TRY_COMPILE(
       [
 #include <signal.h>
-       typedef void (*SA)(void);
-       void foo(SA nn) { }
+
+typedef void (*SA)(void);
+void foo(SA nn) { }
       ],
       [
-       SA nn = SIG_DFL;
-       nn = signal(SIGINT, 0);
-       foo(nn);
+SA nn = SIG_DFL;
+nn = signal(SIGINT, 0);
+foo(nn);
       ],
       [
        ace_cv_lib_signal_vv1_ret=yes
@@ -5247,7 +5491,8 @@ AC_CACHE_CHECK(if signal returns a void (*)(int, ...),
     AC_TRY_COMPILE(
       [
 #include <signal.h>
-       typedef void (*SA)(int, ...);
+
+typedef void (*SA)(int, ...);
       ],
       [
        SA oo = signal(SIGINT, 0);
@@ -5266,7 +5511,8 @@ AC_CACHE_CHECK(if signal returns a void (*)(...),
     AC_TRY_COMPILE(
       [
 #include <signal.h>
-       typedef void (*SA)(...);
+
+typedef void (*SA)(...);
       ],
       [
        SA oo = signal(SIGINT, 0);
