@@ -118,7 +118,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Instantiate client
-      TimeoutClient* client = new TimeoutClient (orb,
+      TimeoutClient* client = new TimeoutClient (orb.in (),
                                                  timeout_var.in (),
                                                  timeoutHandler_var.in (),
                                                  &timeoutHandler_i,

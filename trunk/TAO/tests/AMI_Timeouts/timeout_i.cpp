@@ -31,7 +31,7 @@ Timeout_i::~Timeout_i ()
 
 void
 Timeout_i::sendTimeToWait (CORBA::Long msec,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, 
@@ -49,7 +49,7 @@ Timeout_i::sendTimeToWait (CORBA::Long msec,
 };
 
 void
-Timeout_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+Timeout_i::shutdown (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   orb_->shutdown (false);
@@ -76,7 +76,7 @@ TimeoutHandler_i::~TimeoutHandler_i ()
 };
 
 void
-TimeoutHandler_i::sendTimeToWait (CORBA::Environment &ACE_TRY_ENV)
+TimeoutHandler_i::sendTimeToWait (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -86,8 +86,8 @@ TimeoutHandler_i::sendTimeToWait (CORBA::Environment &ACE_TRY_ENV)
 };
 
 void
-TimeoutHandler_i::sendTimeToWait_excep (AMI_TimeoutExceptionHolder * excep_holder,
-                                        CORBA::Environment &ACE_TRY_ENV)
+TimeoutHandler_i::sendTimeToWait_excep (AMI_TimeoutExceptionHolder *,
+                                        CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
