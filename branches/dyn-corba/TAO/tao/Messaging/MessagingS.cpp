@@ -387,7 +387,7 @@ void POA_Messaging::ReplyHandler::_interface_skel (
   )
 {
   POA_Messaging::ReplyHandler *_tao_impl = (POA_Messaging::ReplyHandler *) _tao_servant;
-  CORBA_InterfaceDef_ptr _tao_retval = 0;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
   CORBA::Boolean _tao_result = 0;
 
   TAO_IFR_Client_Adapter *_tao_adapter =
