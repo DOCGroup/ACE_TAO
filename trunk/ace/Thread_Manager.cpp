@@ -1738,6 +1738,10 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 {
   ACE_TRACE ("ACE_Thread_Manager::wait");
 
+#if !defined (VXWORKS)
+  ACE_Double_Linked_List<ACE_Thread_Descriptor_Base> term_thr_list_copy;
+#endif /* VXWORKS */
+
 #if defined (ACE_HAS_THREADS)
   {
     // Just hold onto the guard while waiting.
@@ -1779,6 +1783,16 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
         this->remove_thr_all ();
 
 #if !defined (VXWORKS)
+  ACE_Thread_Descriptor_Base* item;
+  while ((item = this->terminated_thr_list_.delete_head ()) != 0)
+    {
+      term_thr_list_copy.insert_tail (item);
+    }                
+#endif /* VXWORKS */
+    // Release the guard, giving other threads a chance to run.
+  }
+
+#if !defined (VXWORKS)
     // @@ VxWorks doesn't support thr_join (yet.)  We are working
     //on our implementation.   Chorus'es thr_join seems broken.
     ACE_Thread_Descriptor_Base *item;
@@ -1787,7 +1801,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
     if (ACE_Object_Manager::shutting_down () != 1)
       {
 #endif /* CHORUS */
-        while ((item = this->terminated_thr_list_.delete_head ()) != 0)
+        while ((item = term_thr_list_copy.delete_head ()) != 0)
           {
             if (ACE_BIT_DISABLED (item->flags_, THR_DETACHED | THR_DAEMON)
                 || ACE_BIT_ENABLED (item->flags_, THR_JOINABLE))
@@ -1806,8 +1820,6 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 #endif /* CHORUS */
 
 #endif /* ! VXWORKS */
-    // Release the guard, giving other threads a chance to run.
-  }
 #else
   ACE_UNUSED_ARG (timeout);
   ACE_UNUSED_ARG (abandon_detached_threads);

@@ -1,16 +1,23 @@
+Fri Mar 18 13:15:10 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Thread_Manager.cpp:
+
+          Fixed a deadlock condition where two threads calling wait() will
+          block forever waiting for each other.
+
 Fri Mar 18 10:25:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/ace.mpc:
+        * ace/ace.mpc:
 
-	  Add pkgconfig_files section.
+          Add pkgconfig_files section.
 
 Fri Mar 18 09:56:55 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/QoS/qos.mpc:
-	* ace/SSL/ssl.mpc:
-	* protocols/ace/HTBP/HTBP.mpc:
+        * ace/QoS/qos.mpc:
+        * ace/SSL/ssl.mpc:
+        * protocols/ace/HTBP/HTBP.mpc:
 
-	  Add pkgconfig_files section.
+          Add pkgconfig_files section.
 
 Fri Mar 18 08:28:51 2005  Chad Elliott  <elliott_c@ociweb.com>
 
