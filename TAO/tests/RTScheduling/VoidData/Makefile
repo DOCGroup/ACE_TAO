@@ -14,18 +14,20 @@ endif # ! TAO_ROOT
 
 BIN_UNCHECKED = VoidData
 
-SRC = $(addsuffix .cpp, $(BIN_UNCHECKED))
 
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
 
 CLIENT_OBJS = test_client.o testC.o
 
+SRC = testC.cpp test_client.cpp
+
 BUILD = $(BIN)
 VBIN = $(BIN:%=%$(VAR))
 
 CPPFLAGS += -I$(TAO_ROOT)/tao/RTScheduling
 LIBS = -lTAO_RTScheduler
+TAO_IDLFLAGS += -Ge 1 -I$(TAO_ROOT)
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
