@@ -14,10 +14,10 @@
 // TESTING ADDITION
 // This is needed for AIX 3.2.5 
 #if defined(_AIX)
-#include <sys/ioctl.h>
+#include /**/ <sys/ioctl.h>
 #endif
 #if defined(__sun__) && !defined(_SVR4)
-#include <sys/sockio.h>
+#include /**/ <sys/sockio.h>
 #endif
 // END TESTING ADDITION
 
