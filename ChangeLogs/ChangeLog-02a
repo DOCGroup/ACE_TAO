@@ -1,3 +1,9 @@
+Tue Jun 11 20:02:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/DLL_Manager.cpp (ACE_DLL_Handle::error()): Change to a
+          different form of auto_ptr initialization that Visual Age C++
+          likes better.
+
 Tue Jun 11 13:17:29 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Cache_Map_Manager_T.h: 
@@ -33,9 +39,9 @@ Mon Jun 10 14:23:28 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 Sun Jun  9 20:01:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Makefile: Something is wrong with my ACE_ROOT environment variable,
-	  which caused problems with the dependency generation.  This is now
-	  fixed.
+	* ace/Makefile: Something is wrong with my ACE_ROOT environment
+          variable, which caused problems with the dependency generation.
+          This is now fixed.
 
 Sun Jun  9 19:31:04 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
