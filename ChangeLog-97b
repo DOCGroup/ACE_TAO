@@ -21,6 +21,7 @@ Sat Nov 22 14:38:22 1997  Steve Huston  <shuston@riverace.com>
 	* examples/Connection/misc/test_upipe.cpp:
  	* examples/Connection/non_blocking/CPP-connector.cpp:
 	* examples/Threads/process_mutex.cpp:
+	* examples/Threads/process_semaphore.cpp:
 	  Added 'const' to "char *" - can't initialize a char * with
 	  a const string.  Fixes Riverace problem ID P38, P40.
 
