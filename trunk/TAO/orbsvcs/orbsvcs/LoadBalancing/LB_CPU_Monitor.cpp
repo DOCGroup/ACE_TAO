@@ -5,6 +5,7 @@ ACE_RCSID (LoadBalancing,
            LB_CPU_Monitor,
            "$Id$")
 
+
 TAO_LB_CPU_Monitor::TAO_LB_CPU_Monitor (const char * location_id,
                                         const char * location_kind)
   : location_ (1)
