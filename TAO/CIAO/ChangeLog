@@ -1,3 +1,9 @@
+Thu Feb  3 20:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Segment_Timer/Segment_Timer.mpc:
+          Removed TAO_ROOT again, the gnu template has been changed so that
+          when CIAO is detected, also TAO_ROOT is set
+
 Thu Feb  3 12:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ciao/NodeApplication_Impl.h:
