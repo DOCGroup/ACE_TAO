@@ -57,7 +57,7 @@ QUEUE* squeue(ALLOCATOR* shmem_allocator)
   // memory-mapped file we know it's already initialized.
   if (shmem_allocator->find (QUEUE_NAME, queue) == 0)
     return (QUEUE *) queue;
-  
+
   // Create a new map (because we've just created a new
   // memory-mapped file).
   size_t queue_size = sizeof (QUEUE);
@@ -76,7 +76,7 @@ QUEUE* squeue(ALLOCATOR* shmem_allocator)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("squeue bind\n")));
       shmem_allocator->remove();
-        
+
       return 0;
     }
 
@@ -184,7 +184,7 @@ int sendRecord (int recordId,  ALLOCATOR *shmem_allocator)
 }
 
 // Listing 2 code/ch17
-int handle_parent (char *cmdLine)
+int handle_parent (ACE_TCHAR *cmdLine)
 {
   ALLOCATOR *shmem_allocator = 0;
   ACE_MMAP_Memory_Pool_Options options
@@ -200,7 +200,7 @@ int handle_parent (char *cmdLine)
 
   ACE_Process processa, processb;
   ACE_Process_Options poptions;
-  poptions.command_line ("%s a", ACE_TEXT_ALWAYS_CHAR (cmdLine));
+  poptions.command_line ("%s a", cmdLine);
   processa.spawn (poptions);
   processb.spawn (poptions);
 

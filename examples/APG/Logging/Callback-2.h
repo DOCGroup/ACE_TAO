@@ -5,6 +5,7 @@
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
 #include "ace/SString.h"
+#include "ace/Time_Value.h"
 
 class Callback : public ACE_Log_Msg_Callback
 {

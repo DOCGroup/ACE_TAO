@@ -2,10 +2,11 @@
 
 #include "ace/DEV_Connector.h"
 #include "ace/TTY_IO.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(writer, writer, "$Id$")
 
-int 
+int
 main (int argc, char *argv[])
 {
   if (argc < 2)

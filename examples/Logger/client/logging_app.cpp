@@ -8,6 +8,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(client, logging_app, "$Id$")
 
@@ -15,7 +17,7 @@ static u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
 static const char *const LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;
 static const int MAX_ITERATIONS = 10;
 
-int 
+int
 main (int argc, char *argv[])
 {
   const char *logger_host = argc > 1 ? argv[1] : LOGGER_HOST;
@@ -28,11 +30,11 @@ main (int argc, char *argv[])
 
   if (connector.connect (logger, addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-  
+
   for (int i = 0; i < max_iterations; i++)
     {
-      ACE_Log_Record log_record (LM_DEBUG, 
-				 ACE_OS::time ((time_t *) 0), 
+      ACE_Log_Record log_record (LM_DEBUG,
+				 ACE_OS::time ((time_t *) 0),
 				 ACE_OS::getpid ());
 
       char buf[BUFSIZ];

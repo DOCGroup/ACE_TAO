@@ -24,6 +24,8 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
 #include "ace/FIFO_Recv.h"
 #include "ace/FIFO_Send.h"
 #include "ace/Pipe.h"
