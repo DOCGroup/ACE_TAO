@@ -1,3 +1,9 @@
+Sun Sep 26 14:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer.mpc:
+          No need to list files in the IDL_Files section, the PortableServer
+          directory is enough. Readded the disappeared PIDL_Files section
+
 Sun Sep 26 14:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
