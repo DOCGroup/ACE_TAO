@@ -466,7 +466,19 @@ int
 ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
 {
   // ACE_TRACE ("ACE_OS::sched_params");
-#if defined (ACE_HAS_STHREADS)
+#if defined (CHORUS)
+  int result;
+  struct sched_param param;
+  ACE_thread_t thr_id = ACE_OS::thr_self ();
+
+  param.sched_priority = sched_params.priority ();
+
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id,
+								sched_params.policy (),
+								&param),
+				       result),
+		     int, -1);
+#elif defined (ACE_HAS_STHREADS)
   // Set priority class, priority, and quantum of this LWP or process as
   // specified in sched_params.
 
@@ -631,19 +643,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
 
   // Set the thread priority on the current thread.
   return ACE_OS::thr_setprio (sched_params.priority ());
-
-#elif defined (CHORUS)
-  int result;
-  struct sched_param param;
-  ACE_thread_t thr_id = ACE_OS::thr_self ();
-
-  param.sched_priority = sched_params.priority ();
-
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id,
-								sched_params.policy (),
-								&param),
-				       result),
-		     int, -1);
 #else
   ACE_UNUSED_ARG (sched_params);
   ACE_NOTSUP_RETURN (-1);
@@ -1281,6 +1280,14 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
 #    endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
 
+#     if defined (CHORUS)
+  // if it is a super actor, we can't set stacksize.
+  // But for the time bing we are all non-super actors
+  // To be fixed later
+  if (stacksize == 0)
+      stacksize = 0x100000;
+#     endif /*CHORUS */
+
   if (stacksize != 0)
     {
       size_t size = stacksize;
@@ -1448,7 +1455,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
 	{
 	  struct sched_param sparam;
-
 	  ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
 
 #      if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_SETKIND_NP)
@@ -1473,32 +1479,42 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  sparam.sched_priority = priority;
 #      endif
 
-#      if !defined (ACE_HAS_FSU_PTHREADS)
-	  int retval = 0;
-#        if defined (ACE_HAS_SETKIND_NP)
-	  retval = ::pthread_attr_setsched (&attr, SCHED_OTHER);
-#        else /* ACE_HAS_SETKIND_NP */
-	  retval = ::pthread_attr_setschedparam (&attr, &sparam);
-#        endif /* ACE_HAS_SETKIND_NP */
-	  if (retval != 0)
-	    {
-#        if defined (ACE_HAS_SETKIND_NP)
-	      ::pthread_attr_delete (&attr);
-#        else /* ACE_HAS_SETKIND_NP */
-	      ::pthread_attr_destroy (&attr);
-#        endif /* ACE_HAS_SETKIND_NP */
-	      errno = retval;
-	      return -1;
-	    }
+#      if defined (ACE_HAS_FSU_PTHREADS)
+	 if (sparam.sched_priority >= PTHREAD_MIN_PRIORITY
+	     && sparam.sched_priority <= PTHREAD_MAX_PRIORITY)
+	   attr.prio = sparam.sched_priority;
+	 else
+	   {
+	     pthread_attr_destroy (&attr);
+             errno = EINVAL;
+	     return -1;
+	   }
 #      else
-	  if (sparam.sched_priority >= PTHREAD_MIN_PRIORITY
-	      && sparam.sched_priority <= PTHREAD_MAX_PRIORITY)
-	    attr.prio = sparam.sched_priority;
-	  else
-	    {
-	      pthread_attr_destroy (&attr);
-	      return -1;
-	    }
+         {
+#        if defined (ACE_HAS_STHREADS)
+           // Solaris POSIX only allows priorities > 0 to
+           // ::pthread_attr_setschedparam.  If a priority of 0 was
+           // requested, set the thread priority after creating it, below.
+           if (priority > 0)
+#        endif /* STHREADS */
+             {
+#        if defined (ACE_HAS_SETKIND_NP)
+               result = ::pthread_attr_setsched (&attr, SCHED_OTHER);
+#        else /* ACE_HAS_SETKIND_NP */
+               result = ::pthread_attr_setschedparam (&attr, &sparam);
+#        endif /* ACE_HAS_SETKIND_NP */
+               if (result != 0)
+                 {
+#        if defined (ACE_HAS_SETKIND_NP)
+                   ::pthread_attr_delete (&attr);
+#        else /* ACE_HAS_SETKIND_NP */
+                   ::pthread_attr_destroy (&attr);
+#        endif /* ACE_HAS_SETKIND_NP */
+                   errno = result;
+                   return -1;
+                 }
+             }
+         }
 #      endif	/* ACE_HAS_FSU_PTHREADS */
 	}
 
@@ -1584,6 +1600,46 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   // ACE_thread_t and ACE_hthread_t are the same.
   if (result != -1)
     *thr_handle = *thr_id;
+
+  // If the priority is 0, then we might have to set it now because we couldn't
+  // set it with ::pthread_attr_setschedparam, as noted above.  This doesn't
+  // provide strictly correct behavior, because the thread was created
+  // (above) with the priority of its parent.  (That applies regardless
+  // of the inherit_sched attribute:  if it was PTHREAD_INHERIT_SCHED, then
+  // it certainly inherited its parent's priority.  If it was
+  // PTHREAD_EXPLICIT_SCHED, then "attr" was initialized by the Solaris
+  // ::pthread_attr_init () to contain NULL for the priority, which indicated
+  // to Solaris ::pthread_create () to inherit the parent priority.)
+  if (priority == 0)
+    {
+      // Check the priority of this thread, which is the parent of the
+      // newly created thread.  If it is 0, then the newly created thread
+      // will have inherited the priority of 0, so there's no need to
+      // explicitly set it.
+      struct sched_param sparam;
+      int policy = 0;
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_self (),
+                                                             &policy,
+                                                             &sparam), 
+                                    result), int, 
+                  -1, result);
+
+      if (sparam.sched_priority != 0)
+        {
+          ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
+          // The memset to 0 sets the priority to 0, so we don't need
+          // to explicitly set sparam.sched_priority.
+
+          // The only policy currently (version 2.5.1) supported by by Solaris
+          // is SCHED_OTHER, so that's hard-coded below.
+          ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (
+                                                 *thr_id,
+                                                 SCHED_OTHER,
+                                                 &sparam),
+                                               result),
+                             int, -1);
+        }
+    }
 #    else
   *thr_handle = ACE_OS::NULL_hthread;
 #    endif /* ACE_HAS_STHREADS */
@@ -1603,15 +1659,28 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   if (result != -1)
     {
+      // With Solaris threads, ACE_thread_t and ACE_hthread_t are the same.
+      *thr_handle = *thr_id;
+
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
 	{
 	  // Set the priority of the new thread and then let it
 	  // continue, but only if the user didn't start it suspended
 	  // in the first place!
-	  ACE_OS::thr_setprio (*thr_handle, priority);
+          if ((result = ACE_OS::thr_setprio (*thr_id, priority)) != 0)
+            {
+              errno = result;
+              return -1;
+            }
 
 	  if (start_suspended == 0)
-	    ACE_OS::thr_continue (*thr_handle);
+            {
+	      if ((result = ACE_OS::thr_continue (*thr_id)) != 0)
+                {
+                  errno = result;
+                  return -1;
+                }
+            }
 	}
     }
   return result;

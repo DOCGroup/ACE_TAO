@@ -2,9 +2,19 @@ package imaging.framework;
 
 import java.awt.*;
 import java.awt.image.*;
+import java.applet.*;
+import java.util.*;
+import java.io.*;
+import java.net.*;
 
 class DialogManager
 {
+  public static void popDialog (int type, String message, Applet parent)
+  {
+    codeBase_ = parent.getCodeBase ().toString ();
+    popDialog (type, message);
+  }
+
   public static void popDialog (int type, String message)
   {
     Frame frame = null;
@@ -13,6 +23,9 @@ class DialogManager
       {
       case DialogType.ABOUT:
 	frame = new AboutFrame ();
+	break;
+      case DialogType.HELP:
+	frame = new HelpFrame (codeBase_);
 	break;
       case DialogType.MALFORMED_URL:
       case DialogType.NOT_SUPPORTED:
@@ -28,6 +41,7 @@ class DialogManager
 		(d.height - frame.size ().height)/2);
     frame.show ();
   }
+  private static String codeBase_ = "";
 }
 
 class MessageFrame extends Frame
@@ -84,9 +98,7 @@ class AboutFrame extends Frame
   public AboutFrame ()
   {
     super ("About");
-    this.setText ();
-    
-    this.resize (500,700);
+    this.resize (300,300);
     this.setLayout (new BorderLayout ());
 
     Panel okButtonPanel = new Panel ();
@@ -97,17 +109,42 @@ class AboutFrame extends Frame
 
   public void paint (Graphics g)
   {
-    g.clearRect (0, 0, this.size ().width, this.size ().height);
-    g.setFont (new Font ("TimesRoman", Font.PLAIN, 18));
-    this.setBackground (Color.white);
-    int x = 20;
+    int width = this.size ().width;
+    int height = this.size ().height;
+
+    g.clearRect (0, 0, width, height);
+    this.setBackground (Color.cyan);
+
+    // First draw the title
+    g.setFont (new Font ("TimesRoman", Font.BOLD | Font.ITALIC, 48));
+    FontMetrics fontMetrics = g.getFontMetrics ();
+    int x = (width - fontMetrics.stringWidth (title_))/2;
     int y = 100;
 
-    for (int i = 0; i < AboutFrame.MAXROWS; i++)
-      {
-	g.drawString(this.text_[i], x, y);
-	y += g.getFont ().getSize () + 5;
-      }
+    Color color = g.getColor ();
+    g.setColor (Color.orange);
+    g.drawString(title_, x+2, y+2);
+    g.setColor (color);
+    g.drawString(title_, x, y);
+
+    // Then draw author's name
+    g.setFont (new Font ("TimesRoman", Font.ITALIC, 24));
+    fontMetrics = g.getFontMetrics ();
+    x = (width - fontMetrics.stringWidth (by_))/2;
+    y += 50;
+    g.drawString(by_, x, y);
+
+    x = (width - fontMetrics.stringWidth (author_))/2;
+    y += 50;
+    g.drawString(author_, x, y);
+
+    // Finally draw other information -- version number etc.
+    g.setFont (new Font ("TimesRoman", Font.ITALIC, 18));
+    fontMetrics = g.getFontMetrics ();
+    x = (width - fontMetrics.stringWidth (info_))/2;
+    y += 50;
+    g.drawString(info_, x, y);
+
   }
 
   // Handle window destroy events
@@ -136,35 +173,97 @@ class AboutFrame extends Frame
       return false;
   }
 
-  private void setText ()
+  private String title_ = "MedJava";
+  private String by_ = "by";
+  private String author_ = "Prashant Jain";
+  private String info_ = "Version 1.0";
+  private Button okButton_ = new Button (" ok ");
+}
+
+class HelpFrame extends Frame
+{
+  public HelpFrame (String codeBase)
   {
-    text_[0] = "This is a prototype of a large scale distributed medical";
-    text_[1] = "imaging system.  It has been developed using Java, in";
-    text_[2] = "particular, several components of Java ACE.";
-    text_[3] = "";
-    text_[4] = "The prototype allows images to be downloaded across the";
-    text_[5] = "network.  It then provides several filters that can be";
-    text_[6] = "used to do image processing.  The image filters are";
-    text_[7] = "configured into the system dynamically using the Service";
-    text_[8] = "Configurator pattern.  In the current implementation, the";
-    text_[9] = "filters are specified via a configuration file located at";
-    text_[10] = "server.  The file can be modified at runtime to add";
-    text_[11] = "additional filters or to remove some filters.  This allows";
-    text_[12] = "filters to be configured and reconfigured dynamically.";
-    text_[13] = "";
-    text_[14] = "Currently, images can not be uploaded.  This is mainly due";
-    text_[15] = "to security restrictions imposed by current servers. Our";
-    text_[16] = "goal is to use the prototpe in conjunction with JAWS, an";
-    text_[17] = "adaptive web server we are currently developing in which we";
-    text_[18] = "plan to provide support for image uploading.";
-    text_[19] = "";
-    text_[20] = "For more information about this prototype, please contact";
-    text_[21] = "Prashant Jain (pjain@cs.wustl.edu).";
+    super ("Help");
+    this.setBackground (Color.cyan);
+    this.text_.setEditable (false);
+    Font defaultFont = new Font ("TimesRoman", Font.PLAIN, 14);
+    this.text_.setFont (defaultFont);
+
+    try
+      {
+	URL url = new URL (codeBase + "../ImageProcessing/framework/help.conf");
+	String delim = "\n";
+	
+	// Get the input stream and pipe it to a DataInputStream
+	DataInputStream iStream = new DataInputStream (url.openStream ());
+	
+	// Keep reading the data until we are done
+	String tempString = iStream.readLine ();
+	while (tempString != null)
+	  {
+	    if (tempString.startsWith ("<START>"))
+	      delim = "";
+	    else if (tempString.startsWith ("<END>"))
+	      delim = "\n";
+	    else if (tempString.startsWith ("<TAB>"))
+	      this.text_.appendText ("\t");
+	    else if (tempString.startsWith ("<P>"))
+	      this.text_.appendText ("\n");
+	    else
+	      {
+		this.text_.appendText (tempString);
+		this.text_.appendText (delim);
+	      }
+	    tempString = iStream.readLine ();		
+	  }
+      }
+    catch (MalformedURLException e)
+      {
+	System.err.println (e);
+      }
+    catch (IOException e)
+      {
+	System.err.println (e);
+      }
+    
+    this.resize (600,700);
+    this.setLayout (new BorderLayout ());
+    
+    Panel okButtonPanel = new Panel ();
+    okButtonPanel.add (this.okButton_);
+    this.add ("South", okButtonPanel);
+    this.add ("Center", this.text_);
   }
 
-  private final static int MAXROWS = 22;
+  // Handle window destroy events
+  public boolean handleEvent (Event evt)
+  {
+    if (evt.id == Event.WINDOW_DESTROY)
+      {
+	this.dispose ();
+	return true;
+      }
+    return super.handleEvent (evt);
+  }
+
+  // Handle all action events
+  public boolean action (Event e, Object arg)
+  {
+    if (e.target instanceof Button)
+      {
+	if (e.target == this.okButton_)
+	  {
+	    this.dispose ();
+	  }
+	return true;
+      }
+    else
+      return false;
+  }
+
+  private Vector helpInfo_ = new Vector ();
   private Button okButton_ = new Button (" ok ");
-  private TextArea textArea_ = null;
-  private String [] text_ = new String [AboutFrame.MAXROWS];
+  private TextArea text_ = new TextArea ();
 }
 

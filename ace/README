@@ -57,6 +57,7 @@ ACE_HAS_IP_MULTICAST			Platform supports IP multicast
 ACE_HAS_IRIX_GETTIMEOFDAY		Denotes that IRIX 5.3 has second argument to gettimeofday() which is variable ... 
 ACE_HAS_IRIX62_THREADS			Platform supports the very odd IRIX 6.2 threads...
 ACE_HAS_THR_KEYDELETE			Platform supports thr_keydelete (e.g,. UNIXWARE)
+ACE_HAS_THR_MINSTACK			Platform calls thr_minstack() rather than thr_min_stack() (e.g., Tandem).
 ACE_HAS_LIMITED_RUSAGE_T		The rusage_t structure has only two fields.
 ACE_HAS_LONGLONG_T			Compiler/platform supports the "long long" datatype.
 ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as a long constant.
@@ -162,6 +163,7 @@ ACE_HAS_XLI 				Platform has the XLI version of TLI
 ACE_HAS_XT 				Platform has Xt and Motif
 ACE_HAS_YIELD_VOID_PTR			Platform requires pthread_yield() to take a NULL.
 ACE_LACKS_ACCESS			Platform lacks access() (e.g., VxWorks and Chorus)
+ACE_LACKS_ACE_IOSTREAM			Platform can not build ace/IOStream{,_T}.cpp.  This does not necessarily mean that the platform does not support iostreams.
 ACE_LACKS_CONST_STRBUF_PTR		Platform uses struct strbuf * rather than const struct strbuf * (e.g., HP/UX 10.x)
 ACE_LACKS_CONST_TIMESPEC_PTR		Platform forgot const in cond_timewait (e.g., HP/UX).
 ACE_LACKS_COND_T			Platform lacks condition variables (e.g., Win32 and VxWorks)
@@ -170,7 +172,6 @@ ACE_LACKS_EXEC				Platform lacks the exec() family of system calls (e.g., Win32,
 ACE_LACKS_FILELOCKS			Platform lacks file locking mechanism
 ACE_LACKS_GETPGID			Platform lacks getpgid() call (e.g., Win32, Chorus, and FreeBSD).
 ACE_LACKS_GETSERVBYNAME			Platforms lacks getservbyname() (e.g., VxWorks and Chorus).
-ACE_LACKS_IOSTREAM_SETGET		Platforms lacks IOStream get/set operators (e.g., SGI IRIX 6.2).
 ACE_LACKS_IOSTREAM_FX			iostream header does not declare ipfx (), opfx (), etc.
 ACE_LACKS_LINEBUFFERED_STREAMBUF	Platform lacks streambuf "linebuffered ()".
 ACE_LACKS_MADVISE			Platform lacks madvise() (e.g., Linux)
@@ -188,6 +189,7 @@ ACE_LACKS_NETDB_REENTRANT_FUNCTIONS	Platform does not support reentrant netdb fu
 ACE_LACKS_RPC_H				Platform lacks the ONC RPC header files.  
 ACE_LACKS_PARAM_H			Platform lacks <sys/param.h> (e.g., MVS)
 ACE_LACKS_POSIX_PROTO			Platform lacks POSIX prototypes for certain System V functions like shared memory and message queues.
+ACE_LACKS_PRI_T				Platform lacks pri_t (e.g., Tandem NonStop UNIX).
 ACE_LACKS_PTHREAD_CANCEL		Platform lacks pthread_cancel().
 ACE_LACKS_PTHREAD_THR_SIGSETMASK	Platform lacks pthread_thr_sigsetmask (e.g., MVS, HP/UX, and OSF/1 3.2)
 ACE_LACKS_PWD_REENTRANT_FUNCTIONS	Platform lacks getpwnam_r() methods (e.g., SGI 6.2).
@@ -238,6 +240,7 @@ ACE_TEMPLATES_REQUIRE_PRAGMA		Compiler's template mechanism must use a pragma Th
 ACE_TEMPLATES_REQUIRE_SOURCE		Compiler's template mechanim must see source code (i.e., .cpp files).  This is used for GNU G++.
 ACE_TEMPLATES_REQUIRE_SPECIALIZATION    Compiler's template mechanism requires the use of explicit C++ specializations for all used templates. This is also used for GNU G++ if you don't use the "repo" patches.
 ACE_USE_POLL				Use the poll() event demultiplexor rather than select().
+ACE_USES_ASM_SYMBOL_IN_DLSYM		Platform uses assembly symbols instead of C symbols in dlsym()
 ACE_WSOCK_VERSION 			A parameter list indicating the version of WinSock (e.g., "1, 1" is version 1.1).
 ----------------------------------------
 

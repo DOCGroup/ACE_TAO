@@ -1,5 +1,18 @@
 #include "objtable.h"
 
+// Template Specialization for char*
+int ACE_Hash_Map_Manager<const char*, CORBA_Object_ptr,ACE_SYNCH_RW_MUTEX>::equal(const char* const&id1,
+												                                  const char* const&id2)
+{
+   return strcmp(id1, id2) == 0;
+}
+
+// Template Specialization for char*
+size_t ACE_Hash_Map_Manager<const char*, CORBA_Object_ptr,ACE_SYNCH_RW_MUTEX>::hash(const char* const&ext_id)
+{
+   return ACE::hash_pjw (ext_id);
+}
+
 TAO_Dynamic_Hash_ObjTable::TAO_Dynamic_Hash_ObjTable (CORBA_ULong size)
 {
   if (size > 0)
@@ -16,16 +29,17 @@ int
 TAO_Dynamic_Hash_ObjTable::bind (const CORBA_OctetSeq &key,
 				 CORBA_Object_ptr obj)
 {
-  ACE_CString objkey ((char *) key.buffer);
-  return this->hash_.bind (objkey, obj);
+  ACE_CString objkey ((char *) key.buffer, key.length);
+
+  return this->hash_.bind (objkey.rep(), obj);
 }
 
 int
 TAO_Dynamic_Hash_ObjTable::find (const CORBA_OctetSeq &key,
 				 CORBA_Object_ptr &obj)
 {
-  ACE_CString objkey ((char *) key.buffer);
-  return this->hash_.find (objkey, obj);
+  ACE_CString objkey ((char *) key.buffer, key.length);
+  return this->hash_.find (objkey.rep(), obj);
 }
 
 // Linear search strategy.

@@ -212,7 +212,7 @@ ACE_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 	  break;
 	}
       // Here's the first free slot, so let's take it.
-      else if (ACE_REACTOR_EVENT_HANDLER (this, i) == ACE_INVALID_HANDLE
+      else if (ACE_REACTOR_HANDLE (i) == ACE_INVALID_HANDLE
 	       && assigned_slot == -1)
 	assigned_slot = i;
     }
@@ -1031,9 +1031,9 @@ ACE_Reactor::remove_handler_i (const ACE_Handle_Set &handles,
   ACE_TRACE ("ACE_Reactor::remove_handler_i");
   ACE_HANDLE h;
 
-  for (ACE_Handle_Set_Iterator handle_iter (handles);
-       (h = handle_iter ()) != ACE_INVALID_HANDLE;
-       ++handle_iter)
+  ACE_Handle_Set_Iterator handle_iter (handles);
+
+  while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
     if (this->remove_handler_i (h, mask) == -1)
       return -1;
 
@@ -1048,9 +1048,8 @@ ACE_Reactor::register_handler_i (const ACE_Handle_Set &handles,
   ACE_TRACE ("ACE_Reactor::register_handler_i");
   ACE_HANDLE h;
 
-  for (ACE_Handle_Set_Iterator handle_iter (handles);
-       (h = handle_iter ()) != ACE_INVALID_HANDLE;
-       ++handle_iter)
+  ACE_Handle_Set_Iterator handle_iter (handles);
+  while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
     if (this->register_handler_i (h, handler, mask) == -1)
       return -1;
 
@@ -1427,16 +1426,15 @@ ACE_Reactor::dispatch_io_handlers (int &number_of_active_handles,
     {
       ACE_HANDLE handle;
 
-      // Handle output events (this code needs to come first
-      // to handle the obscure case of piggy-backed data
-      // coming along with the final handshake message of a
-      // nonblocking connection).
+      // Handle output events (this code needs to come first to handle
+      // the obscure case of piggy-backed data coming along with the
+      // final handshake message of a nonblocking connection).
 
-      for (ACE_Handle_Set_Iterator handle_iter_wr (dispatch_set.wr_mask_);
-	   (handle = handle_iter_wr ()) != ACE_INVALID_HANDLE 
+      ACE_Handle_Set_Iterator handle_iter_wr (dispatch_set.wr_mask_);
+
+      while ((handle = handle_iter_wr ()) != ACE_INVALID_HANDLE
 	     && number_dispatched < number_of_active_handles
-	     && this->state_changed_ == 0;
-	   ++handle_iter_wr)
+	     && this->state_changed_ == 0)
 	{
 	  number_dispatched++;
 	  this->notify_handle (handle,
@@ -1461,11 +1459,12 @@ ACE_Reactor::dispatch_io_handlers (int &number_of_active_handles,
       ACE_HANDLE handle;
 
       // Handle "exceptional" events.
-      for (ACE_Handle_Set_Iterator handle_iter_ex (dispatch_set.ex_mask_);
-	   (handle = handle_iter_ex ()) != ACE_INVALID_HANDLE 
+
+      ACE_Handle_Set_Iterator handle_iter_ex (dispatch_set.ex_mask_);
+
+      while ((handle = handle_iter_ex ()) != ACE_INVALID_HANDLE 
 	     && number_dispatched < number_of_active_handles
-	     && this->state_changed_ == 0;
-	   ++handle_iter_ex)
+	     && this->state_changed_ == 0)
 	{
 	  this->notify_handle (handle,
 			       ACE_Event_Handler::EXCEPT_MASK,
@@ -1475,6 +1474,7 @@ ACE_Reactor::dispatch_io_handlers (int &number_of_active_handles,
 	  number_dispatched++;
 	}
     }
+
   if (number_dispatched > 0)
     {
       number_of_active_handles -= number_dispatched;
@@ -1489,11 +1489,12 @@ ACE_Reactor::dispatch_io_handlers (int &number_of_active_handles,
       ACE_HANDLE handle;
 
       // Handle input, passive connection, and shutdown events.
-      for (ACE_Handle_Set_Iterator handle_iter_rd (dispatch_set.rd_mask_);
-	   (handle = handle_iter_rd ()) != ACE_INVALID_HANDLE 
+
+      ACE_Handle_Set_Iterator handle_iter_rd (dispatch_set.rd_mask_);
+
+      while ((handle = handle_iter_rd ()) != ACE_INVALID_HANDLE 
 	     && number_dispatched < number_of_active_handles
-	     && this->state_changed_ == 0;
-	   ++handle_iter_rd)
+	     && this->state_changed_ == 0)
 	{
 	  this->notify_handle (handle,
 			       ACE_Event_Handler::READ_MASK,
@@ -1503,9 +1504,11 @@ ACE_Reactor::dispatch_io_handlers (int &number_of_active_handles,
 	  number_dispatched++;
 	}
     }
+
   if (number_dispatched > 0)
     {
       number_of_active_handles -= number_dispatched;
+
       if (this->state_changed_)
 	return -1;
     }
@@ -1569,7 +1572,7 @@ ACE_Reactor::dispatch (int number_of_active_handles,
 	break; // State has changed, exit inner loop.
       else if (this->dispatch_io_handlers 
 	       (number_of_active_handles, dispatch_set) == -1)
-	// State has changed exit inner loop.
+	// State has changed, so exit the inner loop.
 	break; 
 
     }

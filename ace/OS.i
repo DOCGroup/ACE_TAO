@@ -912,11 +912,12 @@ ACE_OS::unlink (const char *path)
 #endif /* VXWORKS */
 }
 
+
 ACE_INLINE char *
 ACE_OS::tempnam (const char *dir, const char *pfx)
 {
   // ACE_TRACE ("ACE_OS::tempnam");
-#if defined (VXWORKS)
+#if defined (VXWORKS) || defined (ACE_LACKS_TEMPNAM)
   ACE_NOTSUP_RETURN (0);
 #else
 #if defined (WIN32)
@@ -926,6 +927,7 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
 #endif /* WIN32 */
 #endif /* VXWORKS */
 }
+
 
 ACE_INLINE LPTSTR
 ACE_OS::cuserid (LPTSTR user, size_t maxlen)
@@ -4152,9 +4154,16 @@ ACE_OS::thr_min_stack (void)
   // ACE_TRACE ("ACE_OS::thr_min_stack");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
+#if defined (ACE_HAS_THR_MINSTACK)
+  // Tandem did some weirdo mangling of STHREAD names...
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_minstack (), 
+				       ace_result_), 
+		     int, -1);
+#else                                                      
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_min_stack (), 
-                                       ace_result_), 
-                     int, -1);
+                                       ace_result_),       
+		     int, -1);      
+#endif /* !ACE_HAS_THR_MINSTACK */                         
 #elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_HAS_SETKIND_NP)
 #if defined (ACE_HAS_IRIX62_THREADS)
   return (size_t) ACE_OS::sysconf (_SC_THREAD_STACK_MIN);
@@ -5078,6 +5087,13 @@ ACE_OS::dlsym (void *handle, ACE_DL_TYPE symbolname)
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 #if defined (ACE_LACKS_POSIX_PROTO)
   ACE_OSCALL_RETURN (::dlsym (handle, (char*) symbolname), void *, 0);
+#elif defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
+  char asm_symbolname [MAXPATHLEN] ;
+  if (strlen (symbolname) + 2 > sizeof asm_symbolname)
+    return 0 ;
+  ACE_OS::strcpy (asm_symbolname, "_") ;
+  ACE_OS::strcpy (asm_symbolname + 1, symbolname) ;
+  ACE_OSCALL_RETURN (::dlsym (handle, asm_symbolname), void *, 0);
 #else
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #endif /* ACE_LACKS_POSIX_PROTO */
@@ -5649,11 +5665,17 @@ ACE_OS::open (const char *filename,
 #endif /* ACE_WIN32 */
 }
 
+
 ACE_INLINE double
 ACE_OS::difftime (time_t t1, time_t t0)
 {
+#if defined (ACE_DIFFTIME)
+  return ACE_DIFFTIME(t1, t0);
+#else
   return ::difftime (t1, t0);
+#endif /* ACE_DIFFTIME */
 }
+
 
 ACE_INLINE char *
 ACE_OS::ctime (const time_t *t)
@@ -6393,7 +6415,7 @@ ACE_OS::sleep (u_int seconds)
 #if defined (ACE_WIN32)
   ::Sleep (seconds * 1000);
   return 0;
-#elif defined (VXWORKS)
+#elif defined (ACE_HAS_CLOCK_GETTIME)
   struct timespec rqtp;
   // Initializer doesn't work with Green Hills 1.8.7
   rqtp.tv_sec = seconds;
@@ -6833,8 +6855,14 @@ ACE_OS::sigaddset (sigset_t *s, int signum)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigaddset (s, signum), int, -1);
 #else
-  if (signum < 1 || signum > NSIG)
-    return 1 ;			// Invalid signum, return error
+  if (s == NULL) {
+    errno = EFAULT ;
+    return -1 ;
+  }
+  if (signum < 1 || signum > NSIG) {
+    errno = EINVAL ;
+    return -1 ;			// Invalid signum, return error
+  }
   *s |= (1 << (signum - 1)) ;
   return 0 ;
 #endif /* !ACE_LACKS_SIGSET */
@@ -6846,8 +6874,14 @@ ACE_OS::sigdelset (sigset_t *s, int signum)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigdelset (s, signum), int, -1);
 #else
-  if (signum < 1 || signum > NSIG)
-    return 1 ;			// Invalid signum, return error
+  if (s == NULL) {
+    errno = EFAULT ;
+    return -1 ;
+  }
+  if (signum < 1 || signum > NSIG) {
+    errno = EINVAL ;
+    return -1 ;			// Invalid signum, return error
+  }
   *s &= ~(1 << (signum - 1)) ;
   return 0 ;
 #endif /* !ACE_LACKS_SIGSET */
@@ -6859,6 +6893,10 @@ ACE_OS::sigemptyset (sigset_t *s)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigemptyset (s), int, -1);
 #else
+  if (s == NULL) {
+    errno = EFAULT ;
+    return -1 ;
+  }
   *s = 0 ;
   return 0 ;
 #endif /* !ACE_LACKS_SIGSET */
@@ -6870,6 +6908,10 @@ ACE_OS::sigfillset (sigset_t *s)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigfillset (s), int, -1);
 #else
+  if (s == NULL) {
+    errno = EFAULT ;
+    return -1 ;
+  }
   *s = ~(sigset_t) 0 ;
   return 0 ;
 #endif /* !ACE_LACKS_SIGSET */
@@ -6881,8 +6923,14 @@ ACE_OS::sigismember (sigset_t *s, int signum)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigismember (s, signum), int, -1);
 #else
-  if (signum < 1 || signum > NSIG)
-    return 1 ;			// Invalid signum, return error
+  if (s == NULL) {
+    errno = EFAULT ;
+    return -1 ;
+  }
+  if (signum < 1 || signum > NSIG) {
+    errno = EINVAL ;
+    return -1 ;			// Invalid signum, return error
+  }
   return ((*s & (1 << (signum - 1))) != 0) ;
 #endif /* !ACE_LACKS_SIGSET */
 }

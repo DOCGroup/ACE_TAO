@@ -40,7 +40,7 @@ public:
 
   int cgi (void) const;
   const char * cgi_args (void) const;
-  const char * const * cgi_env (void) const;
+  const char ** cgi_env (void) const;
 
   const char * query_string (void) const;
   const char * path_info (void) const;

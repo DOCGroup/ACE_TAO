@@ -100,8 +100,10 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
 template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_SYNCH>;
   
   #if defined (ACE_HAS_TLI)
-  template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_NULL_SYNCH>;
-  // else LOGGING_PEER_STREAM is ACE_SOCK_STREAM,
+    #if defined (ACE_HAS_THREADS)
+      template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_NULL_SYNCH>;
+    #endif /* ACE_HAS_THREADS */
+  // else if ! ACE_HAS_TLI, LOGGING_PEER_STREAM is ACE_SOCK_STREAM,
   // and the specialization would be
   //   template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
   // That specialization is in TS_Server_Handler.cpp, so we don't need it

@@ -157,7 +157,7 @@ public class ImageApp extends Applet
     Choice choice = new Choice ();
 
     // Add the default choice first
-    choice.addItem ("None");
+    choice.addItem ("Filters:");
 
     // Now do the file processing -- to determine which filters need
     // to be loaded.
@@ -169,11 +169,6 @@ public class ImageApp extends Applet
       this.configFile_ = getParameter ("configFile");
     if (this.configFile_ == null)
       this.configFile_ = "http://www.cs.wustl.edu/~pjain/java/ACE_wrappers/java/ImageProcessing/framework/filter.conf";
-
-    if (this.filterContext_ == null)
-      this.filterContext_ = getParameter ("filterContext");
-    if (this.filterContext_ == null)
-      this.filterContext_ = "http://www.cs.wustl.edu/~pjain/java/ACE_wrappers/java/ImageProcessing/";
 
     URL url;
     String configInfo= null;
@@ -223,7 +218,6 @@ public class ImageApp extends Applet
 		fullFilterName = tokens.nextToken ();
 		filterName = this.extractFilterName (fullFilterName);
 		
-		//		URL filter = new URL (this.filterContext_ + fullFilterName + ".class");
 		System.out.println ("Loading: " + fullFilterName);
 		// Load the filter class
 		Class c = Class.forName (fullFilterName);
@@ -270,7 +264,6 @@ public class ImageApp extends Applet
 
   private Panel centerPanel_ = new Panel ();
   private String configFile_ = null;
-  private String filterContext_ = null;
   private Choice choice_ = null;
   private ImageCanvas imageCanvas_ = new ImageCanvas ();
   private FilePanel filePanel_;

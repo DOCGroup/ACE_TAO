@@ -47,10 +47,8 @@ static void cube_union_dii(unsigned &, unsigned &,
                            CORBA_Object_ptr, CORBA_Environment &);
 
 // Global variables
-CORBA_ORB_ptr      orb_ptr;
+const char* TAO_arg_ior = 0;
 unsigned           loop_count = 1;
-CORBA_Object_ptr   objref = CORBA_Object::_nil();
-CORBA_Environment	 env;
 int                exit_later = 0;
 
 // = TITLE
@@ -76,12 +74,7 @@ int parse_args(int argc, char *argv[])
    
       case 'O':			// stringified objref
          {
-            objref = orb_ptr->string_to_object (
-               (CORBA_String)opts.optarg, env);
-            if (env.exception () != 0) {
-               print_exception (env.exception (), "string2object");
-               return 1;
-            }
+           TAO_arg_ior = ACE_OS::strdup(opts.optarg);
          }
          continue;
    
@@ -106,258 +99,269 @@ int parse_args(int argc, char *argv[])
 
 int
 main (int    argc, char   *argv[])
-   {
+{
+  CORBA_ORB_ptr orb_ptr;
+  CORBA_Object_ptr objref = CORBA_Object::_nil();
+  CORBA_Environment env;
 
-#if defined (VXWORKS)
-    // Work around VxWorks' lack of command line
-
-    loop_count = 50;
-    int dummy = 1;
-    orb_ptr = CORBA_ORB_init (dummy, (char **)0, "internet", env);
-    if (env.exception() != 0)
+  orb_ptr = CORBA_ORB_init(argc, argv, "internet", env);
+  if (env.exception() != 0)
     {
-       print_exception(env.exception(), "ORB initialization");
-       return 1;
+      print_exception(env.exception(), "ORB initialization");
+      return 1;
     }
 
-    hostAdd( "mv2604d", "130.38.183.132" ); 
+  //
+  // Parse command line and verify parameters.
+  //
+  parse_args(argc, argv);
 
-    objref = orb_ptr->string_to_object (
-		(CORBA_String)"iiop:1.0//mv2604d:1000/key0", env);
-#else
+  if (TAO_arg_ior == 0)
+    ACE_ERROR_RETURN((LM_ERROR, "%s: must specify an object reference using -O <ior>\n", argv[0]), 1);
 
-    orb_ptr = CORBA_ORB_init(argc, argv, "internet", env);
-    if (env.exception() != 0)
+  objref = orb_ptr->string_to_object ((CORBA_String)TAO_arg_ior, env);
+
+  ACE_OS::free((void*)TAO_arg_ior);
+  TAO_arg_ior = 0;
+
+  if (env.exception () != 0)
     {
-       print_exception(env.exception(), "ORB initialization");
-       return 1;
+      print_exception (env.exception (), "string2object");
+      return 1;
     }
 
-    //
-    // Parse command line and verify parameters.
-    //
-    parse_args(argc, argv);
+  if (CORBA_is_nil (objref) == CORBA_B_TRUE)
+    ACE_ERROR_RETURN((LM_ERROR, "%s:  must identify non-null target objref\n", argv [0]), 1);
 
-#endif
+  // Narrow the CORBA_Object reference to the stub object, checking
+  // the type along the way using _is_a
+  Cubit_ptr aCubit = Cubit::_narrow(objref);
+  if (aCubit == 0)
+    ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Unable to narrow object reference to a Cubit_ptr.\n"), 1);
 
-    if (CORBA_is_nil (objref) == CORBA_B_TRUE) {
-       ACE_OS::fprintf (stderr, "%s:  must identify non-null target objref\n",
-          argv [0]);
-       return 1;
-    }
+  //
+  // Make the calls in a loop.
+  //
+  unsigned i;
+  unsigned call_count, error_count;
 
-   // Narrow the CORBA_Object reference to the stub object, checking
-   // the type along the way using _is_a
-    Cubit_ptr aCubit = Cubit::_narrow(objref);
+  call_count = 0;
+  error_count = 0;
 
-    //
-    // Make the calls in a loop.
-    //
-    unsigned			i;
-    unsigned			call_count, error_count;
+  ACE_Time_Value before, after;
 
-    call_count = 0;
-    error_count = 0;
+  before = ACE_OS::gettimeofday();
 
-    ACE_Time_Value before, after;
-
-    before = ACE_OS::gettimeofday();
-
-    for (i = 0; i < loop_count; i++) {
-       //
-       // Cube an octet.
-       //
-       CORBA_Octet	arg_octet, ret_octet;
+  for (i = 0; i < loop_count; i++)
+    {
+      //
+      // Cube an octet.
+      //
+      CORBA_Octet	arg_octet, ret_octet;
        
-       call_count++;
-       ret_octet = aCubit->Cubit_cube_octet (arg_octet = func (i), env);
-       if (env.exception () != 0) {
+      call_count++;
+      ret_octet = aCubit->Cubit_cube_octet (arg_octet = func (i), env);
+      if (env.exception () != 0)
+        {
           print_exception (env.exception (), "from cube_octet");
           error_count++;
-       } else {
+        }
+      else
+        {
           dmsg2 ("cube octet:  %d --> %d\n", arg_octet, ret_octet);
           arg_octet = arg_octet * arg_octet * arg_octet;
           if (arg_octet != ret_octet) {
-             ACE_OS::printf ("** cube_octet(%d) ERROR (--> %d)\n",
-                (CORBA_Octet) func (i), ret_octet);
-             error_count++;
+            ACE_OS::printf ("** cube_octet(%d) ERROR (--> %d)\n",
+                            (CORBA_Octet) func (i), ret_octet);
+            error_count++;
           }
-       }
+        }
 
-       //
-       // Cube a short.
-       //
-       CORBA_Short	arg_short, ret_short;
+      //
+      // Cube a short.
+      //
+      CORBA_Short	arg_short, ret_short;
        
-       call_count++;
-       ret_short = aCubit->Cubit_cube_short (arg_short = func (i), env);
-       if (env.exception () != 0) {
+      call_count++;
+      ret_short = aCubit->Cubit_cube_short (arg_short = func (i), env);
+      if (env.exception () != 0)
+        {
           print_exception (env.exception (), "from cube_short");
           error_count++;
-       } else {
+        }
+      else
+        {
           dmsg2 ("cube short:  %d --> %d\n", arg_short, ret_short);
           arg_short = arg_short * arg_short * arg_short;
-          if (arg_short != ret_short) {
-             ACE_OS::printf ("** cube_short(%d) ERROR (--> %d)\n",
-                (CORBA_Short) func (i), ret_short);
-             error_count++;
-          }
-       }
+          if (arg_short != ret_short)
+            {
+              ACE_OS::printf ("** cube_short(%d) ERROR (--> %d)\n",
+                              (CORBA_Short) func (i), ret_short);
+              error_count++;
+            }
+        }
 
-       //
-       // Cube a long.
-       //
-       CORBA_Long	arg_long, ret_long;
+      //
+      // Cube a long.
+      //
+      CORBA_Long	arg_long, ret_long;
        
-       call_count++;
-       ret_long = aCubit->Cubit_cube_long (arg_long = func (i), env);
-       if (env.exception () != 0) {
+      call_count++;
+      ret_long = aCubit->Cubit_cube_long (arg_long = func (i), env);
+      if (env.exception () != 0)
+        {
           print_exception (env.exception (), "from cube_long");
           error_count++;
-       } else {
+        }
+      else
+        {
           dmsg2 ("cube long:  %d --> %d\n", arg_long, ret_long);
           arg_long = arg_long * arg_long * arg_long;
           if (arg_long != ret_long) {
-             ACE_OS::printf ("** cube_long(%ld) ERROR (--> %ld)\n",
-                (CORBA_Long) func (i), ret_long);
-             error_count++;
+            ACE_OS::printf ("** cube_long(%ld) ERROR (--> %ld)\n",
+                            (CORBA_Long) func (i), ret_long);
+            error_count++;
           }
-       }
+        }
 
-       //
-       // Cube a "struct" ...
-       //
-       Cubit_Many	arg_struct, *ret_struct;
+      //
+      // Cube a "struct" ...
+      //
+      Cubit_Many	arg_struct, *ret_struct;
        
-       call_count++;
+      call_count++;
        
-       arg_struct.l = func (i);
-       arg_struct.s = func (i);
-       arg_struct.o = func (i);
+      arg_struct.l = func (i);
+      arg_struct.s = func (i);
+      arg_struct.o = func (i);
        
-       ret_struct = aCubit->Cubit_cube_struct (arg_struct, env);
-       if (env.exception () != 0) {
+      ret_struct = aCubit->Cubit_cube_struct (arg_struct, env);
+      if (env.exception () != 0)
+        {
           print_exception (env.exception (), "from cube_struct");
           error_count++;
-       } else {
+        }
+      else
+        {
           dmsg ("cube struct ...");
           arg_struct.l = arg_struct.l * arg_struct.l * arg_struct.l;
           arg_struct.s = arg_struct.s * arg_struct.s * arg_struct.s;
           arg_struct.o = arg_struct.o * arg_struct.o * arg_struct.o;
           
           if (arg_struct.l != ret_struct->l
-             || arg_struct.s != ret_struct->s
-             || arg_struct.o != ret_struct->o) {
-             ACE_OS::printf ("** cube_struct ERROR\n");
-             error_count++;
-          }
+              || arg_struct.s != ret_struct->s
+              || arg_struct.o != ret_struct->o)
+            {
+              ACE_OS::printf ("** cube_struct ERROR\n");
+              error_count++;
+            }
           delete ret_struct;
-       }
+        }
        
     }
     
-    after = ACE_OS::gettimeofday();
+  after = ACE_OS::gettimeofday();
     
-    if (call_count > 0) 
+  if (call_count > 0) 
     {
-       if (error_count == 0)
-       {
+      if (error_count == 0)
+        {
           ACE_Time_Value diff = after - before;
           unsigned long	us = diff.sec() * 1000 * 1000 + diff.usec();
           
           us /= call_count;
           
           if (us > 0)
-             ACE_OS::printf ("cube average call ACE_OS::time\t= %ld.%.03ldms, \t"
-             "%ld calls/second\n",
-             us / 1000, us % 1000,
-             1000000L / us);
-       }
+            ACE_OS::printf ("cube average call ACE_OS::time\t= %ld.%.03ldms, \t"
+                            "%ld calls/second\n",
+                            us / 1000, us % 1000,
+                            1000000L / us);
+        }
 
-       ACE_OS::printf ("%d calls, %d errors\n", call_count, error_count);
+      ACE_OS::printf ("%d calls, %d errors\n", call_count, error_count);
+    }
+
+  //
+  // Simple test for DII:  call "cube_struct".  (It's not timed
+  // since the copious mallocation of DII would bias numbers against
+  // typical stub-based calls.)
+  //
+  do {
+    //
+    // Create the request ...
+    //
+    CORBA_Request_ptr	req;
+       
+    req = objref->_request ((const CORBA_String) "cube_struct", env);
+    if (env.exception () != 0) {
+      print_exception (env.exception (), "DII request create");
+      break;
     }
 
     //
-    // Simple test for DII:  call "cube_struct".  (It's not timed
-    // since the copious mallocation of DII would bias numbers against
-    // typical stub-based calls.)
+    // ... initialise the argument list and result ...
     //
-    do {
-       //
-       // Create the request ...
-       //
-       CORBA_Request_ptr	req;
+    Cubit_Many	arg, *result;
        
-       req = objref->_request ((const CORBA_String) "cube_struct", env);
-       if (env.exception () != 0) {
-          print_exception (env.exception (), "DII request create");
-          break;
-       }
-
-       //
-       // ... initialise the argument list and result ...
-       //
-       Cubit_Many	arg, *result;
+    arg.o = 3; arg.l = 5; arg.s = -7;
        
-       arg.o = 3; arg.l = 5; arg.s = -7;
+    CORBA_Any	tmp_arg (TC_Cubit_Many, &arg, CORBA_B_FALSE);
        
-       CORBA_Any	tmp_arg (TC_Cubit_Many, &arg, CORBA_B_FALSE);
-       
-       req->arguments ()->add_value (0, tmp_arg, CORBA_ARG_IN, env);
-       if (env.exception () != 0) {
-          print_exception (env.exception (), "DII request arg add");
-          CORBA_release (req);
-          break;
-       }
-       
-       req->result ()->value ()
-          ->replace (TC_Cubit_Many, 0, CORBA_B_TRUE, env);
-       if (env.exception () != 0) {
-          print_exception (env.exception (), "DII request result type");
-          CORBA_release (req);
-          break;
-       }
-
-       //
-       // Make the invocation, verify the result
-       //
-       req->invoke ();
-       if (req->env ()->exception () != 0) {
-          print_exception (req->env ()->exception (), "DII invoke");
-          CORBA_release (req);
-          break;
-       }
-       
-       result = (Cubit_Many *) req->result ()->value ()->value ();
-       
-       if (result->o != 27 || result->l != 125 || result->s != -343)
-          ACE_OS::fprintf (stderr, "DII cube_struct -- bad results\n");
-       else
-          dmsg ("DII cube_struct ... success!!");
-       
-       CORBA_release (req);
-       
-    } while (0);
-
-    //
-    // Two more tests, using the "cube_union" function
-    //
-    cube_union_dii(call_count, error_count, objref, env);
-    if (env.exception () != 0)
-       error_count++;
-    
-    cube_union_stub(i, call_count, error_count, objref, env);
-    if (env.exception () != 0)
-       error_count++;
-    
-    if (exit_later) {
-       aCubit->Cubit_please_exit (env);
-       dexc (env, "server, please ACE_OS::exit");
+    req->arguments ()->add_value (0, tmp_arg, CORBA_ARG_IN, env);
+    if (env.exception () != 0) {
+      print_exception (env.exception (), "DII request arg add");
+      CORBA_release (req);
+      break;
     }
+       
+    req->result ()->value ()
+      ->replace (TC_Cubit_Many, 0, CORBA_B_TRUE, env);
+    if (env.exception () != 0) {
+      print_exception (env.exception (), "DII request result type");
+      CORBA_release (req);
+      break;
+    }
+
+    //
+    // Make the invocation, verify the result
+    //
+    req->invoke ();
+    if (req->env ()->exception () != 0) {
+      print_exception (req->env ()->exception (), "DII invoke");
+      CORBA_release (req);
+      break;
+    }
+       
+    result = (Cubit_Many *) req->result ()->value ()->value ();
+       
+    if (result->o != 27 || result->l != 125 || result->s != -343)
+      ACE_OS::fprintf (stderr, "DII cube_struct -- bad results\n");
+    else
+      dmsg ("DII cube_struct ... success!!");
+       
+    CORBA_release (req);
+       
+  } while (0);
+
+  //
+  // Two more tests, using the "cube_union" function
+  //
+  cube_union_dii(call_count, error_count, objref, env);
+  if (env.exception () != 0)
+    error_count++;
     
-    CORBA_release (objref);
+  cube_union_stub(i, call_count, error_count, objref, env);
+  if (env.exception () != 0)
+    error_count++;
     
-    return (error_count == 0) ? 0 : 1;
+  if (exit_later) {
+    aCubit->Cubit_please_exit (env);
+    dexc (env, "server, please ACE_OS::exit");
+  }
+    
+  CORBA_release (objref);
+    
+  return (error_count == 0) ? 0 : 1;
 }
 
 

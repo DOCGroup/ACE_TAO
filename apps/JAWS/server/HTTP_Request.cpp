@@ -60,20 +60,21 @@ HTTP_Request::parse_request (ACE_Message_Block &mb)
 
   // In Apache, they assume that each header line should not exceed 8K.
 
-  if (this->headers_.complete_header_line (mb.rd_ptr ()))
+  int result = this->headers_.complete_header_line (mb.rd_ptr ());
+  if (result != 0)
     {
       if (!this->got_request_line ())
         {
           this->parse_request_line (mb.rd_ptr ());
-          while (this->headers_.complete_header_line (mb.rd_ptr ()))
+          while (this->headers_.complete_header_line (mb.rd_ptr ()) > 0)
             this->headers_.parse_header_line (mb.rd_ptr ());
         }
-      else
+      else if (result > 0)
         do
           {
             this->headers_.parse_header_line (mb.rd_ptr ());
           }
-        while (this->headers_.complete_header_line (mb.rd_ptr ()));
+        while (this->headers_.complete_header_line (mb.rd_ptr ()) > 0);
     }
 
   mb.wr_ptr (strlen(mb.rd_ptr ()) - mb.length ());
@@ -104,8 +105,6 @@ HTTP_Request::parse_request_line (char * const request_line)
   *ptr = '\0';
   ptr += offset;
 
-  ACE_DEBUG ((LM_DEBUG, " (%t) request being parsed: %s\n", buf));
-
   char *lasts; // for strtok_r
 
   // Get the request type.
@@ -132,7 +131,7 @@ HTTP_Request::parse_request_line (char * const request_line)
               this->method (), this->uri (),
               (this->version () ? this->version () : "HTTP/0.9")));
 
-  ACE_OS::memmove (buf, ptr, ACE_OS::strlen (ptr));
+  ACE_OS::memmove (buf, ptr, ACE_OS::strlen (ptr)+1);
 }
 
 int
@@ -186,10 +185,10 @@ HTTP_Request::cgi (void) const
   return this->cgi_;
 }
 
-const char * const *
+const char **
 HTTP_Request::cgi_env (void) const
 {
-  return this->cgi_env_;
+  return (const char **)this->cgi_env_;
 }
 
 const char *
@@ -269,7 +268,12 @@ HTTP_Request::data_length (void)
 int
 HTTP_Request::content_length (void)
 {
-  return content_length_;
+  if (this->content_length_ == -1)
+    {
+      const char * clv = this->headers_["Content-length"];
+      this->content_length_ = (clv ? ACE_OS::atoi (clv) : 0);
+    }
+  return this->content_length_;
 }
 
 int
