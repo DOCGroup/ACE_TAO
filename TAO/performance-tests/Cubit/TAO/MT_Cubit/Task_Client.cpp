@@ -136,17 +136,21 @@ Task_State::Task_State (int argc, char **argv)
 
   if (ior_file_ != 0)
     {
-      FILE *iorFile = fopen (ior_file_, "r");
+      FILE *iorFile = ACE_OS::fopen (ior_file_, "r");
       char buf[BUFSIZ];
       int i = 0, j=0;
       while (ACE_OS::fgets (buf, BUFSIZ, iorFile) != 0)
-	{ j=ACE_OS::strlen(buf); buf[j-1]=0;iors_[i] = ACE_OS::strdup (buf); printf("ior[%d]=\"%s\"\n",i,iors_[i]); i++;  }
+	{ 
+	  j=ACE_OS::strlen(buf); 
+	  buf[j-1]=0;iors_[i] = ACE_OS::strdup (buf); 
+	  i++;  
+	}
       fclose (iorFile);
     }
 
   // thread_count_ + 1 because there is one utilization thread also
   // wanting to begin at the same time the clients begin..
-  ACE_NEW (barrier_, ACE_Barrier (thread_count_ + 1));
+  ACE_NEW (barrier_, ACE_Barrier (thread_count_));// + 1));
   ACE_NEW (latency_, double [thread_count_]);
   ACE_NEW (global_jitter_array_, double *[thread_count_]);
   ACE_NEW (ave_latency_, int [thread_count_]);
@@ -717,16 +721,19 @@ Client::run_tests (Cubit_ptr cb,
 
       ACE_Profile_Timer::ACE_Elapsed_Time et;
 
+      //      ACE_DEBUG ((LM_DEBUG, "   (%t) elapsed time= %u, latency=%u\n",et.real_time,latency));
+#if !defined (ACE_HAS_PRUSAGE_T) && !defined (ACE_HAS_GETRUSAGE) && defined (ACE_LACKS_FLOATING_POINT)
       // Store the time in usecs.
       et.real_time = delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
         delta_t.usec ();
 
-      //      ACE_DEBUG ((LM_DEBUG, "   (%t) elapsed time= %u, latency=%u\n",et.real_time,latency));
-#if !defined (ACE_HAS_PRUSAGE_T) && !defined (ACE_HAS_GETRUSAGE) && defined (ACE_LACKS_FLOATING_POINT)
       delta = ((40 * fabs (et.real_time) / 100) + (60 * delta / 100)); // pow(10,6)
       latency += et.real_time;
-      my_jitter_array [i] = et.real_time; // in units of milliseconds.
+      my_jitter_array [i] = et.real_time; // in units of microseconds.
 #else
+      // Store the time in secs.
+      et.real_time = delta_t.sec ();
+
       delta = ((40 * fabs (et.real_time * (1000 * 1000)) / 100) + (60 * delta / 100)); // pow(10,6)
       latency += et.real_time;
       my_jitter_array [i] = et.real_time * 1000;
