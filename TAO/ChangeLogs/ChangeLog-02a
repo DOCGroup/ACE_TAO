@@ -1,3 +1,26 @@
+Fri Mar 31 20:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+	  Added a <_proxy_> member per TAO_interface_Smart_PRoxy_Base
+	  so that the <base_proxy_> got be narrowed and stored for future
+	  invocations. Also added generation of export macros for the 
+	  smart proxy classes. Thanks to Aniruddha Gokhale
+	  <gokhale@research.bell-labs.com> for pointing this out.
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp (get_proxy):
+	  Changed the implmentation of this method to overcome the problem
+	  faced when using ACE_dynamic_cast on some compilers. Now
+	  <_unchecked_narrow> is used for the downcasting. Also it was
+	  necessary to unregister the smart proxy factory so it into get
+	  into an infinite loop of creating smart proxies. This doesnt
+	  harm the design in any way because the factory is unregistered
+	  only during the first invocation of the smart proxy. And
+	  anyways, to use create a smart proxy its necessary to create a
+	  smart proxy factory.	
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Added Smart_Proxies.{i,h,cpp} to both these workspaces.
+	* docs/Smart_Proxies.html: Updated the documentation.
+	
 Fri Mar 31 18:36:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Accept_State.cpp (write_reply_header): 
