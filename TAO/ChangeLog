@@ -4,7 +4,7 @@ Mon Dec  8 18:50:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Cosmetic changes to source code.
 
-        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
 
           In generating the operation string name passed to the
           TAO::Invocation_Adapter constructor in stub code, changed
