@@ -25,8 +25,8 @@
 
 #include "global_extern.h"
 
-ACE_RCSID (be, 
-           be_attribute, 
+ACE_RCSID (be,
+           be_attribute,
            "$Id$")
 
 be_attribute::be_attribute (void)
@@ -77,9 +77,15 @@ be_attribute::be_attribute (idl_bool ro,
            be_operation_default_strategy (0));
   this->set_strategy_ = bods;
 
+  // TAO_IDL generated attribute methods currently have an exception
+  // specification containing CORBA::SystemException.  Make sure we
+  // generate a "tao/SystemException.h" include directive.
+  ACE_SET_BITS (idl_global->decls_seen_info_,
+                idl_global->decls_seen_masks.operation_seen_);
+
   if (!this->imported () && !this->is_local ())
     {
-      // For the return types of the two operations 
+      // For the return types of the two operations
       // generated from this attribute.
       this->set_arg_seen_bit (be_type::narrow_from_decl (ft));
       ACE_SET_BITS (idl_global->decls_seen_info_,
