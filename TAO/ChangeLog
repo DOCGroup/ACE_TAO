@@ -1,3 +1,10 @@
+2004-05-06  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation: 
+	Portable_Interceptors_Service_Context_Manipulation.mpc was truncated to 
+	PI_Svc_Context_Manip.mpc to enable file manipulation for FS without 
+	support for very long filenames (eg. QNX).
+
 Wed May  5 15:10:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ORB.cpp (init_orb_globals):
