@@ -58,11 +58,6 @@ BIN2 = ImplRepo_Service \
        ImR_Activator \
        tao_imr
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-  BIN = $(BIN2)
-
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -71,6 +66,8 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
   ifeq (ImplRepo,$(findstring ImplRepo,$(TAO_ORBSVCS)))
