@@ -38,31 +38,35 @@ public:
   virtual ~TAO_Default_Servant_Dispatcher (void);
 
   /// Pre_invoke remote request.
-  void pre_invoke_remote_request (TAO_Root_POA &poa,
-                                  CORBA::Short servant_priority,
-                                  TAO_ServerRequest &req,
-                                  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-                                  ACE_ENV_ARG_DECL);
+  void pre_invoke_remote_request (
+        TAO_Root_POA &poa,
+        CORBA::Short servant_priority,
+        TAO_ServerRequest &req,
+        TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+        ACE_ENV_ARG_DECL);
 
   /// Pre_invoke collocated request.
-  void pre_invoke_collocated_request (TAO_Root_POA &poa,
-                                      CORBA::Short servant_priority,
-                                      TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-                                      ACE_ENV_ARG_DECL);
+  void pre_invoke_collocated_request (
+        TAO_Root_POA &poa,
+        CORBA::Short servant_priority,
+        TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+        ACE_ENV_ARG_DECL);
 
   /// Post_invoke request.
-  void post_invoke (TAO_Root_POA &poa,
-                    TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state);
+  void post_invoke (
+        TAO_Root_POA &poa,
+        TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state);
 
   /// Factory method for creating new POA's.
-  TAO_Root_POA *create_Root_POA (const ACE_CString &name,
-                                 TAO_POA_Manager &poa_manager,
-                                 const TAO_POA_Policy_Set &policies,
-                                 ACE_Lock &lock,
-                                 TAO_SYNCH_MUTEX &thread_lock,
-                                 TAO_ORB_Core &orb_core,
-                                 TAO_Object_Adapter *object_adapter
-                                 ACE_ENV_ARG_DECL);
+  TAO_Root_POA *create_Root_POA (
+        const ACE_CString &name,
+        TAO_POA_Manager &poa_manager,
+        const TAO_POA_Policy_Set &policies,
+        ACE_Lock &lock,
+        TAO_SYNCH_MUTEX &thread_lock,
+        TAO_ORB_Core &orb_core,
+        TAO_Object_Adapter *object_adapter
+        ACE_ENV_ARG_DECL);
 };
 
 #include /**/ "ace/post.h"

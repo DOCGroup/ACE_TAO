@@ -62,6 +62,5 @@ void
 TAO_Default_Servant_Dispatcher::post_invoke (
   TAO_Root_POA &,
   TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
-
 {
 }
