@@ -148,14 +148,14 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
-          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+          *os << "this->_reset (" << ub->label ()->label_val ()->n ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
-          *os << "this->reset (" << ub->label ()->label_val ()
+          *os << "this->_reset (" << ub->label ()->label_val ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
@@ -231,14 +231,14 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
-          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+          *os << "this->_reset (" << ub->label ()->label_val ()->n ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
-          *os << "this->reset (" << ub->label ()->label_val ()
+          *os << "this->_reset (" << ub->label ()->label_val ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
@@ -308,14 +308,14 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
-          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+          *os << "this->_reset (" << ub->label ()->label_val ()->n ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
-          *os << "this->reset (" << ub->label ()->label_val ()
+          *os << "this->_reset (" << ub->label ()->label_val ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
@@ -393,14 +393,14 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
-          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+          *os << "this->_reset (" << ub->label ()->label_val ()->n ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
-          *os << "this->reset (" << ub->label ()->label_val ()
+          *os << "this->_reset (" << ub->label ()->label_val ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
@@ -479,14 +479,14 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
-          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+          *os << "this->_reset (" << ub->label ()->label_val ()->n ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
-          *os << "this->reset (" << ub->label ()->label_val ()
+          *os << "this->_reset (" << ub->label ()->label_val ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
@@ -620,14 +620,14 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
-          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+          *os << "this->_reset (" << ub->label ()->label_val ()->n ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
-          *os << "this->reset (" << ub->label ()->label_val ()
+          *os << "this->_reset (" << ub->label ()->label_val ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";"
               << be_nl;
@@ -713,14 +713,14 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
-          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+          *os << "this->_reset (" << ub->label ()->label_val ()->n ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
-          *os << "this->reset (" << ub->label ()->label_val ()
+          *os << "this->_reset (" << ub->label ()->label_val ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
@@ -758,14 +758,14 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
-          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+          *os << "this->_reset (" << ub->label ()->label_val ()->n ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
-          *os << "this->reset (" << ub->label ()->label_val ()
+          *os << "this->_reset (" << ub->label ()->label_val ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
@@ -798,14 +798,14 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
-          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+          *os << "this->_reset (" << ub->label ()->label_val ()->n ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
-          *os << "this->reset (" << ub->label ()->label_val ()
+          *os << "this->_reset (" << ub->label ()->label_val ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
@@ -905,14 +905,14 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
-          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+          *os << "this->_reset (" << ub->label ()->label_val ()->n ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
-          *os << "this->reset (" << ub->label ()->label_val ()
+          *os << "this->_reset (" << ub->label ()->label_val ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";"
               << be_nl;
@@ -1063,14 +1063,14 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       // check if the case label is a symbol or a literal
       if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
         {
-          *os << "this->reset (" << ub->label ()->label_val ()->n ()
+          *os << "this->_reset (" << ub->label ()->label_val ()->n ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
               << ";" << be_nl;
         }
       else
         {
-          *os << "this->reset (" << ub->label ()->label_val ()
+          *os << "this->_reset (" << ub->label ()->label_val ()
               << ", 0);" << be_nl;
           *os << "this->disc_ = " << ub->label ()->label_val () << ";" <<
             be_nl;
