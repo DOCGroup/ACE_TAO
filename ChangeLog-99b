@@ -4,7 +4,8 @@ Wed Nov 10 10:55:34 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Commented the ACE_TRACE statements. On some compiler/platform
 	  combinations these methods get called before the Object Manager
-	  is initialized, which causes the ACE_TRACE call to seg fault.
+	  is initialized, which causes the ACE_TRACE call to seg fault
+	  when tracing is enabled in ACE.
 
 Tue Nov  9 17:50:01 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
