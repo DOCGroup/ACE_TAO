@@ -78,7 +78,7 @@ protected:
   // The receiver of log records
 };
 
-#if !defined (ACE_HAS_TLI)
+#if 1   //!defined (ACE_HAS_TLI)
 #define LOGGING_PEER_ACCEPTOR ACE_SOCK_ACCEPTOR
 #define LOGGING_PEER_STREAM ACE_SOCK_STREAM
 #else /* use sockets */
