@@ -1,3 +1,29 @@
+Sat Feb  1 12:24:11 2003  Ossama Othman  <ossama@uci.edu>
+
+	* configure.ac:
+
+	  Do not define the _POSIX_THREADS and
+	  _POSIX_THREAD_SAFE_FUNCTIONS preprocessor macros.  They are
+	  feature test macros defined by the platform, and are not meant
+	  to be defined by anything other than the platform itself.
+
+	* m4/config_h.m4 (ACE_PREP_CONFIG_HEADER):
+
+	  Fixed autoheader templates for the ACE_UINT64_TYPEDEF and
+	  _POSIX_PTHREAD_SEMANTICS macros so that they include a "#undef
+	  ..." in the template.  Without the "#undef" the value of the
+	  macro will not be substituted by `configure' script.  That led
+	  to build failures.  Those failures have been corrected by this
+	  fix.
+
+	  Removed autoheader templates for the _POSIX_THREADS and
+	  _POSIX_THREAD_SAFE_FUNCTIONS preprocessor macros.  They are
+	  feature test macros defined by the platform, and are not meant
+	  to be defined by anything other than the platform itself.
+
+	  Added descriptions for many preprocessor macros potentially
+	  defined/substituted by the `configure' script.
+
 Sat Feb  1 10:20:45 2003  Ossama Othman  <ossama@uci.edu>
 
 	* Makefile.am:

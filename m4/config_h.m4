@@ -45,37 +45,25 @@ AH_BOTTOM([
 ])
 
 
-AH_VERBATIM([_POSIX_THREADS],
-[
-#ifndef _POSIX_THREADS
-# undef _POSIX_THREADS
-#endif
-])
-
-AH_VERBATIM([_POSIX_THREAD_SAFE_FUNCTIONS],
-[#ifndef _POSIX_THREAD_SAFE_FUNCTIONS
-# undef _POSIX_THREAD_SAFE_FUNCTIONS
-#endif
-])
-
 AH_VERBATIM([_POSIX_PTHREAD_SEMANTICS],
 [/* Some platforms need _POSIX_PTHREAD_SEMANTICS to make some functions work */
+#undef _POSIX_PTHREAD_SEMANTICS
 #ifndef _POSIX_PTHREAD_SEMANTICS
 # undef _POSIX_PTHREAD_SEMANTICS
 #endif
 ])
 
 dnl ACE currently doesn't use these; however the configure script does
-AH_TEMPLATE([ACE_LACKS_SYSTIMES_H],[])
+AH_TEMPLATE([ACE_LACKS_SYSTIMES_H],[The `sys/times.h' header is unavailable])
 AH_TEMPLATE([ACE_LACKS_UNBUFFERED_STREAMBUF],[])
 AH_TEMPLATE([ACE_HAS_STDCPP_STL_INCLUDES],[])
 
 AH_TEMPLATE([ACE_HAS_LIBC_H],[])
 AH_TEMPLATE([ACE_HAS_OSFCN_H],[])
-AH_TEMPLATE([ACE_HAS_NEW_NO_H],[])
-AH_TEMPLATE([ACE_HAS_NEW_H],[])
-AH_TEMPLATE([ACE_HAS_STDEXCEPT_NO_H],[])
-AH_TEMPLATE([ACE_HAS_EXCEPTION_H],[])
+AH_TEMPLATE([ACE_HAS_NEW_NO_H],[Platform provides new style C++ <new> header])
+AH_TEMPLATE([ACE_HAS_NEW_H],[Platform provides C++ <new.h> header])
+AH_TEMPLATE([ACE_HAS_STDEXCEPT_NO_H],[Platform provides C++ <stdexcept> header])
+AH_TEMPLATE([ACE_HAS_EXCEPTION_H],[Platform provides C++ <exception.h> header])
 
 AH_TEMPLATE([ACE_HAS_SYS_IOCTL_H],[Platform provides <sys/ioctl.h> header.])
 
@@ -104,7 +92,7 @@ dnl /* results from checks for library functions */
 dnl /* results from checks for system services */
 
 dnl AIX specific configuration parameters
-AH_TEMPLATE([AIX],[])
+AH_TEMPLATE([AIX],[Configure for use on AIX])
 AH_TEMPLATE([_BSD],[])
 AH_TEMPLATE([_BSD_INCLUDES],[])
 
@@ -147,19 +135,19 @@ dnl FreeBSD specific configuration parameters
 dnl Nothing yet
 
 dnl HP/UX specific configuration parameters
-AH_TEMPLATE([HPUX],[])
-AH_TEMPLATE([HPUX_10],[])
-AH_TEMPLATE([HPUX_11],[])
-AH_TEMPLATE([_HPUX_SOURCE],[])
+AH_TEMPLATE([HPUX],[Configure for use on HP-UX])
+AH_TEMPLATE([HPUX_10],[Configure for use on HP-UX 10])
+AH_TEMPLATE([HPUX_11],[Configure for use on HP-UX 11])
+AH_TEMPLATE([_HPUX_SOURCE],[Enable HP-UX specific features in platform headers])
 AH_TEMPLATE([ACE_HAS_BROKEN_HPUX_TEMPLATES],
 [Earlier versions of HP/UX C++ are damned...])
 
 dnl Irix specific configuration parameters
-AH_TEMPLATE([IRIX5],[])
-AH_TEMPLATE([IRIX6],[])
+AH_TEMPLATE([IRIX5],[Configure for use on Irix 5])
+AH_TEMPLATE([IRIX6],[Configure for use on Irix 6])
 AH_TEMPLATE([_BSD_TYPES],[])
 AH_TEMPLATE([_SGI_MP_SOURCE],[])
-AH_TEMPLATE([_MODERN_C_],[])
+AH_TEMPLATE([_MODERN_C_],[Enable modern features in SGI C++ compiler])
 AH_TEMPLATE([ACE_HAS_IRIX62_THREADS],
 [Platform supports the very odd IRIX 6.2 threads...])
 
@@ -178,14 +166,14 @@ dnl MVS specific configuration parameters
 dnl Nothing yet
 
 dnl NetBSD specific configuration parameters
-AH_TEMPLATE([ACE_NETBSD],[])
+AH_TEMPLATE([ACE_NETBSD],[Configure for use on NetBSD])
 
 dnl OSF/1 and Digital Unix specific configuration parameters
 AH_TEMPLATE([DEC_CXX],[])
-AH_TEMPLATE([DIGITAL_UNIX],[])
+AH_TEMPLATE([DIGITAL_UNIX],[Configure for use on Digital Unix])
 
 dnl pSOS specific configuration parameters
-AH_TEMPLATE([ACE_PSOS],[])
+AH_TEMPLATE([ACE_PSOS],[Configure for use on pSoS])
 AH_TEMPLATE([ACE_PSOSIM],[])
 AH_TEMPLATE([ACE_PSOSTBD],[])
 
@@ -200,15 +188,15 @@ dnl Tandem specific configuration parameters
 dnl Nothing yet
 
 dnl UnixWare specific configuration parameters
-AH_TEMPLATE([UNIXWARE],[])
+AH_TEMPLATE([UNIXWARE],[Configure for use on UnixWare])
 AH_TEMPLATE([UNIXWARE_2_0],[])
 AH_TEMPLATE([UNIXWARE_2_1],[])
 
 dnl VXWorks specific configuration parameters
-AH_TEMPLATE([VXWORKS],[])
+AH_TEMPLATE([VXWORKS],[Configure for use on VxWorks])
 
 dnl Win32 specific configuration parameters
-AH_TEMPLATE([ACE_WIN32],[])
+AH_TEMPLATE([ACE_WIN32],[Configure for use on Win32])
 
 AH_TEMPLATE([ACE_DISABLE_DEBUG_DLL_CHECK],
 [Define this if you don't want debug version ACE search for debug version
@@ -243,7 +231,7 @@ AH_TEMPLATE([ACE_HAS_DLL],[Build ACE using the frigging PC DLL nonsense...])
 
 AH_TEMPLATE([ACE_HAS_STRICT],[Use the STRICT compilation mode on Win32.])
 
-AH_TEMPLATE([CYGWIN32], [], [GNU Win32 environement])
+AH_TEMPLATE([CYGWIN32], [GNU Win32 environement])
 AH_TEMPLATE([ACE_HAS_CYGWIN32_SOCKET_H],[Platform has cygwin32 socket.h.])
 
 
@@ -252,28 +240,28 @@ AH_TEMPLATE([ACE_DEFAULT_BASE_ADDR],[])
 AH_TEMPLATE([ACE_DEFAULT_BASE_ADDRL],[])
 AH_TEMPLATE([ACE_DEFAULT_CLOSE_ALL_HANDLES],[])
 AH_TEMPLATE([ACE_DEFAULT_MAX_SOCKET_BUFSIZ],[])
-AH_TEMPLATE([ACE_DEFAULT_SELECT_REACTOR_SIZE],[])
+AH_TEMPLATE([ACE_DEFAULT_SELECT_REACTOR_SIZE],[The default number of handles the select()-based reactor should handle])
 AH_TEMPLATE([ACE_MALLOC_ALIGN],[])
 AH_TEMPLATE([ACE_MAP_PRIVATE],[])
 AH_TEMPLATE([ACE_THR_PRI_FIFO_DEF],[])
 AH_TEMPLATE([ACE_TIMER_SKEW],[])
-AH_TEMPLATE([ACE_UINT64_FORMAT_SPECIFIER],[])
-AH_TEMPLATE([ACE_USE_RCSID],[])
+AH_TEMPLATE([ACE_UINT64_FORMAT_SPECIFIER],[The format specifier (e.g. "%Lu") for the 64 bit unsigned integer type])
+AH_TEMPLATE([ACE_USE_RCSID],[Enable embedding of global RCS ID strings into compiled object file])
 AH_TEMPLATE([IP_ADD_MEMBERSHIP],[])
 AH_TEMPLATE([IP_DROP_MEMBERSHIP],[])
 
 
 dnl Specify sizes of given built-in types.  If a size isn't defined here,
 dnl then ace/Basic_Types.h will attempt to deduce the size.
-dnl AH_TEMPLATE([ACE_SIZEOF_CHAR],[])
-AH_TEMPLATE([ACE_SIZEOF_SHORT],[])
-AH_TEMPLATE([ACE_SIZEOF_INT],[])
-AH_TEMPLATE([ACE_SIZEOF_LONG],[])
-AH_TEMPLATE([ACE_SIZEOF_LONG_LONG],[])
-AH_TEMPLATE([ACE_SIZEOF_VOID_P],[])
-AH_TEMPLATE([ACE_SIZEOF_FLOAT],[])
-AH_TEMPLATE([ACE_SIZEOF_DOUBLE],[])
-AH_TEMPLATE([ACE_SIZEOF_LONG_DOUBLE],[])
+dnl AH_TEMPLATE([ACE_SIZEOF_CHAR],[Size of native "char" type])
+AH_TEMPLATE([ACE_SIZEOF_SHORT],[Size of the native "short" type])
+AH_TEMPLATE([ACE_SIZEOF_INT],[Size of the native "int" type])
+AH_TEMPLATE([ACE_SIZEOF_LONG],[Size of the native "long" type])
+AH_TEMPLATE([ACE_SIZEOF_LONG_LONG],[Size of the native "long long" type])
+AH_TEMPLATE([ACE_SIZEOF_VOID_P],[Size of the native "pointer to void" type])
+AH_TEMPLATE([ACE_SIZEOF_FLOAT],[Size of the native "float" type])
+AH_TEMPLATE([ACE_SIZEOF_DOUBLE],[Size of the native "double" type])
+AH_TEMPLATE([ACE_SIZEOF_LONG_DOUBLE],[Size of the native "long double" type])
 
 
 AH_VERBATIM([ACE_UINT64_TYPEDEF],
@@ -284,6 +272,7 @@ AH_VERBATIM([ACE_UINT64_TYPEDEF],
    We only make the typedef if ACE_UINT64_TYPEDEF is defined.  Otherwise,
    let ace/Basic_Types.h do the work for us.
 */
+#undef ACE_UINT64_TYPEDEF
 #ifdef ACE_UINT64_TYPEDEF
    typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
