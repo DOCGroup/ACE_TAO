@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.67 $)dnl
+AC_REVISION($Revision 0.68 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -40,6 +40,25 @@ AC_INIT(ace/ACE.cpp)
 
 dnl Require GNU Autoconf 2.13 or better.
 AC_PREREQ(2.13)
+
+dnl Add maintainer mode option to the option list.
+AM_MAINTAINER_MODE
+
+dnl Until autoconf support in ACE is complete, prevent this script
+dnl from running unless the user explictly forces the configure script
+dnl to run using the "--enable-maintainer-mode" configure script
+dnl option.
+if test $USE_MAINTAINER_MODE != yes; then
+  AC_MSG_ERROR([
+    ACE autoconf support is currently disabled by default since it is
+    still under development.  Please use the stock ACE build procedure
+    detailed in the file \`ACE-INSTALL.html'.
+
+    If you wish to experiment with ACE's autoconf support then use the
+    \"--enable-maintainer-mode\" configure script option to enable
+    autoconf support.  For more details see the file
+    \`ACE-configuration.txt'.])
+fi  dnl  test $USE_MAINTAINER_MODE != yes
 
 dnl If we are configuring in a CVS controlled directory then don't
 dnl continue any further.  The idea is to prevent automatically
@@ -183,9 +202,6 @@ AC_CHECK_PROGS(PROF, gprof prof,) dnl
 dnl
 dnl SECTION 2: Configure script command line options
 dnl
-
-dnl Add maintainer mode option to the option list.
-AM_MAINTAINER_MODE
 
 dnl Determine which subsets to build
 dnl This is done using the autoconf "--enable-foobar" mechanism.
