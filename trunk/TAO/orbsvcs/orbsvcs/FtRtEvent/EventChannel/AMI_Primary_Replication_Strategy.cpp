@@ -205,13 +205,13 @@ AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
       ACE_TRY_CHECK;
     }
     ACE_CATCHALL {
-      add_member_handler.add_member_excep(NULL);
+      add_member_handler.add_member_excep(NULL ACE_ENV_ARG_PARAMETER);
     }
     ACE_ENDTRY;
   }
   // decrement the number of members so the event can be signaled once
   // all replys have been received.
-  add_member_handler.add_member_excep(NULL);
+  add_member_handler.add_member_excep(NULL ACE_ENV_ARG_PARAMETER);
 
   event.wait();
 }

@@ -1,7 +1,15 @@
+Fri Feb 20 13:16:21 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.cpp:
+          Fixed compilation problem in emulated exception build.
+
 Fri Feb 20 12:54:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_argument.cpp:
-        
+
           In the constructor, after getting the argument's scope, added
           a check for 0 result. Previous errors in the IDL file could
           cause this to be 0, so we need a check to avoid a subsequent

@@ -80,12 +80,12 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
 
   CORBA::Object_var obj =
     IOGR_Maker::instance()->make_iogr(iors ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+  ACE_CHECK_RETURN(Info_ptr());
 
   result->iogr =
     ::FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+  ACE_CHECK_RETURN(Info_ptr());
 
 
   /// check if sucessor changed
@@ -100,12 +100,12 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
 
     obj =  IOGR_Maker::instance()->merge_iors(iors
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    ACE_CHECK_RETURN(Info_ptr());
 
     result->successor =
       FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    ACE_CHECK_RETURN(Info_ptr());
   }
   else {
     result->successor = info_->successor;
@@ -126,7 +126,7 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
       ACE_ENV_ARG_PARAMETER);
     CORBA::PolicyList_var pols;
     result->backups[i]->_validate_connection (pols.out ());
-    ACE_CHECK_RETURN(0);
+    ACE_CHECK_RETURN(Info_ptr());
   }
   return result;
 }
