@@ -71,6 +71,9 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n"),
                     this->request_id_, params.request_id_));
+
+      // The return value 0 informs the transport that the mux strategy
+      // did not find the right reply handler.
       return 0;
     }
 
@@ -80,9 +83,8 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   this->rd_ = 0;
 
   // Dispatch the reply.
-  int result = rd->dispatch_reply (params);
-
-  return result;
+  // Returns 1 on success, -1 on failure.
+  return rd->dispatch_reply (params);
 }
 
 /*TAO_GIOP_Message_State *
