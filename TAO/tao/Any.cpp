@@ -89,7 +89,7 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
   size = this->type_->size (env);
 
   // allocate sufficient memory and deep copy the data
-  // XXXTAO - the following allocation to be addressed by our memory management
+  // @@ - the following allocation to be addressed by our memory management
   // scheme
   this->value_ = (char *) ACE_OS::calloc (1, size);
   (void) DEEP_COPY (this->type_, src.value_, this->value_, env);
@@ -113,7 +113,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
   if (this->any_owns_data_)
     {
       DEEP_FREE (this->type_, this->value_, 0, env);
-      // XXXTAO: The following needs to be addressed properly. We need to make
+      // @@: The following needs to be addressed properly. We need to make
       // sure if we use "delete" or "free"
       //      delete this->value_;
     }
@@ -129,7 +129,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
   size = this->type_->size (env);
 
   // allocate sufficient storage and deep copy the data
-  // XXXTAO - address the following
+  // @@ - address the following
   this->value_ = (char *) ACE_OS::calloc (1, size);
   (void) DEEP_COPY (this->type_, src.value_, this->value_, env);
   return *this;
@@ -154,7 +154,7 @@ CORBA_Any::~CORBA_Any (void)
     {
       // we own the data. So first do a deep free and then deallocate it.
       DEEP_FREE (this->type_, this->value_, 0, env);
-      // XXXTAO - address the following
+      // @@ - address the following
       // delete this->value_;
     }
 
@@ -175,7 +175,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
       if (this->value_)
         {
           DEEP_FREE (this->type_, this->value_, 0, env);
-          // XXXTAO - to be addressed
+          // @@ - to be addressed
           //          delete this->value_;
         }
     }
