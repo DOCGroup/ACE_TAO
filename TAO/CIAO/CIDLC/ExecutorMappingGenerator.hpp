@@ -5,23 +5,30 @@
 #ifndef EXECUTOR_MAPPING_GENERATOR_HPP
 #define EXECUTOR_MAPPING_GENERATOR_HPP
 
+#include "CCF/CompilerElements/FileSystem.hpp"
+
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 #include "CCF/CodeGenerationKit/CommandLineDescriptor.hpp"
 
-//@@ Don't really nee this. just forward declaration of TranslationUnit would
-//   be enough.
-#include "CCF/CIDL/SyntaxTree.hpp"
+//@@ SemanticGraphFwd could be useful here.
+//
+#include "CCF/CIDL/SemanticGraph.hpp"
 
 class ExecutorMappingGenerator
 {
 public:
 
+  //@@ should be static?
   void
   options (CL::Description& d);
 
+  //@@ maybe I should introduce constant and non-constant
+  //   traversal.
+  //
   void
   generate (CommandLine const& cl,
-            CCF::CIDL::SyntaxTree::TranslationUnitPtr const&);
+            CCF::CIDL::SemanticGraph::TranslationUnit&,
+            fs::path file);
 };
 
 #endif // EXECUTOR_MAPPING_GENERATOR_HPP
