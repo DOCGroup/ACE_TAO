@@ -18,6 +18,10 @@
 //
 // ============================================================================
 
+#include "ace/OS.h"
+
+#if defined (ACE_WIN32)
+
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Process_Mutex.h"
@@ -60,7 +64,7 @@ Event_Handler::handle_signal (int,
                               siginfo_t *s,
                               ucontext_t *)
 {
-  HANDLE handle = s->si_handle_;
+  ACE_HANDLE handle = s->si_handle_;
   if (handle == this->handle_.handle ())
     ACE_Reactor::instance ()->register_handler (this,
                                                 this->mutex_->lock ().proc_mutex_);
@@ -123,3 +127,10 @@ ACE_TMAIN (int , ACE_TCHAR *[])
 
   return 0;
 }
+#else /* !ACE_WIN32 */
+int
+ACE_TMAIN (int , ACE_TCHAR *[])
+{
+  return 0;
+}
+#endif /* ACE_WIN32 */

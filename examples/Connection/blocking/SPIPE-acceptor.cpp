@@ -71,7 +71,7 @@ IPC_Server::~IPC_Server (void)
 }
 
 int 
-IPC_Server::handle_signal (int signum,
+IPC_Server::handle_signal (int,
                            siginfo_t *,
                            ucontext_t *)
 {
@@ -132,7 +132,7 @@ IPC_Server::parse_args (int argc, char *argv[])
 	case 'r':
 	  ACE_OS::strncpy (rendezvous_,
 			   ACE_TEXT_CHAR_TO_TCHAR (get_opt.opt_arg ()),
-			   sizeof rendezvous_ / sizeof ACE_TCHAR);
+			   sizeof (rendezvous_) / sizeof (ACE_TCHAR));
 	  break;
 	case 't':
 	  n_threads_ = ACE_OS::atoi (get_opt.opt_arg ());

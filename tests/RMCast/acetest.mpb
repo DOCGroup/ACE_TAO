@@ -1,5 +1,6 @@
 project : aceexe {
 
+  requires += rmcast
   after += Test_Output
   libs  += Test_Output
 

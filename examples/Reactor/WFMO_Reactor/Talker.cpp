@@ -132,6 +132,10 @@
 //
 // ============================================================================
 
+#include "ace/OS.h"
+
+#if defined (ACE_WIN32)
+
 #include "ace/Reactor.h"
 #include "ace/Reactor_Notification_Strategy.h"
 #include "ace/WIN32_Proactor.h"
@@ -581,3 +585,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
+#else /* !ACE_WIN32 */
+int
+ACE_TMAIN (int , ACE_TCHAR *[])
+{
+  return 0;
+}
+#endif /* ACE_WIN32 */
