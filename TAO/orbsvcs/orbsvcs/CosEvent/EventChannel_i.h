@@ -26,11 +26,11 @@
 #include "orbsvcs/CosEvent/ConsumerAdmin_i.h"
 #include "orbsvcs/CosEvent/SupplierAdmin_i.h"
 
-class EventChannel_i : public POA_CosEventChannelAdmin::EventChannel
+class TAO_ORBSVCS_Export EventChannel_i : public POA_CosEventChannelAdmin::EventChannel
 {
   // = TITLE
   //   class EventChannel_i implements the standard Cos EventChannel
-  //   interface. 
+  //   interface.
   //
   // = DESCRIPTION
   //   This Cos EventChannel implementation is based on TAO's

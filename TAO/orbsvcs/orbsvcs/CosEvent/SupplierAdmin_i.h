@@ -25,7 +25,7 @@
 #include "orbsvcs/CosEventChannelAdminC.h"
 #include "orbsvcs/CosEvent/ProxyPushConsumer_i.h"
 
-class SupplierAdmin_i : public POA_CosEventChannelAdmin::SupplierAdmin
+class TAO_ORBSVCS_Export SupplierAdmin_i : public POA_CosEventChannelAdmin::SupplierAdmin
 {
   // = TITLE
   //   class SupplierAdmin_i implements the SupplierAdmin interface.
