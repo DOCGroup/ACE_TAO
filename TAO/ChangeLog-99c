@@ -1,3 +1,13 @@
+Fri Dec  3 08:58:11 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/Trading_Service/Makefile.bor: Add
+ 	  $(OBJDIR)\Trading_Server.obj to object list.  Thanks to Mike
+ 	  Gingell <mgingell@istar.ca> for reporting this.
+
+	* orbsvcs/orbsvcs/Makefile.bor: Added -I..\..\tao to compile line
+	  and added $(OBJDIR)\EC_Negation_Filter.obj to object list.
+  	  Thanks to Mike Gingell <mgingell@istar.ca> for reporting this.
+
 Fri Dec 03 02:32:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Any.h:
