@@ -1,13 +1,19 @@
+Thu Oct 09 19:36:08 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FT_ServerPolicy_i.cpp
+          Changed to include FT_ServerPolicy_i.inl instead of
+          FT_ServerPolicy_i.i
+
 Thu Oct 09 10:37:58 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp: 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.dsp: 
-	* tests/ICMG_Any_Bug/Hello.dsw: 
-	* tests/ICMG_Any_Bug/client.dsp: 
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp:
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.dsp:
+	* tests/ICMG_Any_Bug/Hello.dsw:
+	* tests/ICMG_Any_Bug/client.dsp:
 	* tests/ICMG_Any_Bug/server.dsp: Fix for build errors on
 	  Win2K_MSVC6_DLL_Debug build - changed the include path, library
 	  path and path for the IDL compiler.
-	
+
 Thu Oct  9 08:13:55 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/Kokyu_dsrt_schedulers/Makefile.Kokyu_DSRT_Schedulers:
