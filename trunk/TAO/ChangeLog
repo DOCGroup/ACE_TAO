@@ -1,29 +1,37 @@
+Wed Mar  5 10:21:54 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/GIOP_Message_Lite.cpp (parse_incoming_messages):
+
+          When copying out the the message size, transfer the bytes into
+          a stack allocated character buffer to avoid bus errors on sparc
+          hardware.
+
 Wed Mar  5 09:41:55 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* tao/Makefile.bor (OBJFILES): 
+        * tao/Makefile.bor (OBJFILES):
 
-	Fixed typo in file list.
+        Fixed typo in file list.
 
 Wed Mar  5 09:07:02 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* tao/Transport.cpp (assign_translators): 
+        * tao/Transport.cpp (assign_translators):
 
-	Removed the ACE_INLINE from the function
+        Removed the ACE_INLINE from the function
 
 Wed Mar  5 08:54:53 CST 2003 Pradeep Gore <pradeep@oomworks.com>
 
-	* orbsvcs/Notify_Service/NT_Notify_Service.cpp:
-	  Corrected the changed service driver name.
+        * orbsvcs/Notify_Service/NT_Notify_Service.cpp:
+          Corrected the changed service driver name.
 
 Wed Mar  5 06:14:34 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* tao/Makefile.bor (OBJFILES): 
+        * tao/Makefile.bor (OBJFILES):
 
-	Added Codeset related files to makefile.
+        Added Codeset related files to makefile.
 
 Wed Mar  5 00:01:09 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-        * TAO_IDL/util/utl_global.cpp (validate_included_idl_files): 
+        * TAO_IDL/util/utl_global.cpp (validate_included_idl_files):
         Swapped the order of parameters to passed to realpath, which is the
         non-windows function used for canonizing a path.
 
