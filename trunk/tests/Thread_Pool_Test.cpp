@@ -233,3 +233,7 @@ main (int, char *[])
   ACE_END_TEST;
   return 0;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)   
+template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

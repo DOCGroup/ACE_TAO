@@ -124,4 +124,7 @@ main (int, char *[])
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple>;
+template class ACE_Guard<ACE_SV_Semaphore_Simple>;
+template class ACE_Write_Guard<ACE_SV_Semaphore_Simple>;
+template class ACE_Read_Guard<ACE_SV_Semaphore_Simple>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

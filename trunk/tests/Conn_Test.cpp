@@ -265,4 +265,15 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Message_Queue<ACE_NULL_SYNCH>;
+template class ACE_Svc_Tuple<Svc_Handler>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<Svc_Handler> *, ACE_RW_Mutex>;
+template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Svc_Handler> *, ACE_RW_Mutex>;
+template class ACE_Write_Guard<ACE_RW_Mutex>;
+template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Guard<ACE_RW_Mutex>;
+template class ACE_Concurrency_Strategy<Svc_Handler>;
+template class ACE_TSS<ACE_Dynamic>;
+template class ACE_Task<ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
+template class ACE_Module<ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
+template class ACE_Thru_Task<ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

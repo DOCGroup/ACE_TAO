@@ -179,3 +179,8 @@ int main (int, char *[])
   return 0;
 }
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Write_Guard<ACE_RW_Mutex>;
+template class ACE_Guard<ACE_RW_Mutex>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
