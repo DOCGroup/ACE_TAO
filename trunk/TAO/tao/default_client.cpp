@@ -90,7 +90,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
                 }
             }
         }
-      else if (ACE_OS::strcmp (argv[curarg], "-ORBrequestmuxstrategy") == 0)
+      else if (ACE_OS::strcmp (argv[curarg], "-ORBTransportMuxStrategy") == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -130,7 +130,7 @@ TAO_Default_Client_Strategy_Factory::create_iiop_profile_lock (void)
 //    -ORBclientconnectionhandler option to implement the WS factory,
 //    but you need new options for the TMS...
 
-// Create the correct client request muxing strategy.
+// Create the correct client transport muxing strategy.
 TAO_Transport_Mux_Strategy *
 TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (void)
 {
