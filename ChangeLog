@@ -1,3 +1,12 @@
+Fri Feb 21 12:52:00 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Global_Macros.h:
+	* ace/OS.h:
+
+	  Moved ACE_CORBA_{1,2,3} and ACE_NESTED_CLASS macro out of OS.h
+	  and into Global_Macros.h.  Helps avoid inclusion of OS.h in some
+	  cases.
+
 Fri Feb 21 10:05:23 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Local_Name_Space_T.cpp:
