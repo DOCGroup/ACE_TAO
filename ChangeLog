@@ -1,3 +1,9 @@
+Wed Jul 09 21:37:52 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\MT_Reactor_Timer_Test.cpp (handle_close): 
+
+	  Removed unused arg warning.
+
 Wed Jul 09 21:22:24 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* ace\Timer_Heap_T.cpp (insert): 
