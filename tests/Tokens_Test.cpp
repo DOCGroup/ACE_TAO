@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Tokens_Test.cpp
 //
@@ -22,7 +22,7 @@
 //
 // = AUTHOR
 //    Tim Harrison
-// 
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -41,6 +41,12 @@ typedef ACE_Token_Invariant_Manager TOKEN_INVARIANTS;
 static const char *server_host = ACE_DEFAULT_SERVER_HOST;
 static const int server_port = 23456;
 
+// Synchronize starts of threads, so that they all start before one
+// has a chance to finish and clean up the TSS objects.  To avoid
+// creating a static object, it is dynamically allocated, before
+// spawning any threads.
+static ACE_Barrier *thread_start;
+
 struct Test_Params
 {
 public:
@@ -58,23 +64,24 @@ run_thread (void *vp)
   collection.insert (*(tp->token2_));
 
   ACE_DEBUG ((LM_DEBUG, "(%t) new thread.\n"));
+  thread_start->wait ();
 
   int count = 50;
   while (count--)
     {
       if (collection.acquire () == -1)
-	{
-	  if (ACE_OS::last_error () == EDEADLK)
-	    {
-	      ACE_DEBUG ((LM_DEBUG, "deadlock detected in acquire"));
-	      continue;
-	    }
-	  ACE_ERROR ((LM_ERROR, "(%t) %p acquire failed\n","run_thread"));
-	  return (void *) -1;
-	}
-      
+        {
+          if (ACE_OS::last_error () == EDEADLK)
+            {
+              ACE_DEBUG ((LM_DEBUG, "deadlock detected in acquire"));
+              continue;
+            }
+          ACE_ERROR ((LM_ERROR, "(%t) %p acquire failed\n","run_thread"));
+          return (void *) -1;
+        }
+
       ACE_ASSERT ((TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1) ||
-		  (TOKEN_INVARIANTS::instance ()->acquired (tp->token2_) == 1));
+                  (TOKEN_INVARIANTS::instance ()->acquired (tp->token2_) == 1));
 
       ACE_DEBUG ((LM_DEBUG, "(%t) %s acquired.\n", collection.name ()));
 
@@ -82,18 +89,18 @@ run_thread (void *vp)
       TOKEN_INVARIANTS::instance ()->releasing (tp->token2_);
 
       if (collection.renew () == -1)
-	{
-	  if (ACE_OS::last_error () == EDEADLK)
-	    {
-	      ACE_DEBUG ((LM_DEBUG, "deadlock detected"));
-	      goto deadlock;
-	    }
-	  ACE_ERROR ((LM_ERROR, "(%t) %p renew failed\n","run_thread"));
-	  return (void *) -1;
-	}
+        {
+          if (ACE_OS::last_error () == EDEADLK)
+            {
+              ACE_DEBUG ((LM_DEBUG, "deadlock detected"));
+              goto deadlock;
+            }
+          ACE_ERROR ((LM_ERROR, "(%t) %p renew failed\n","run_thread"));
+          return (void *) -1;
+        }
 
       ACE_ASSERT ((TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1) ||
-		  (TOKEN_INVARIANTS::instance ()->acquired (tp->token2_) == 1));
+                  (TOKEN_INVARIANTS::instance ()->acquired (tp->token2_) == 1));
 
       ACE_DEBUG ((LM_DEBUG, "(%t) %s renewed.\n", collection.name ()));
 
@@ -103,24 +110,25 @@ run_thread (void *vp)
       TOKEN_INVARIANTS::instance ()->releasing (tp->token2_);
 
       if (collection.release () == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "(%t) %p release failed\n","run_thread"));
-	  return (void *) -1;
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "(%t) %p release failed\n","run_thread"));
+          return (void *) -1;
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) %s released.\n", collection.name ()));
     }
 
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) thread exiting.\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) thread finished.\n"));
+
   return 0;
 }
 
 static int
 run_test (ACE_Token_Proxy *A,
-	  ACE_Token_Proxy *B,
-	  ACE_Token_Proxy *R,
-	  ACE_Token_Proxy *W)
+          ACE_Token_Proxy *B,
+          ACE_Token_Proxy *R,
+          ACE_Token_Proxy *W)
 {
   // Parameters to be passed to the threads.
   Test_Params tp1, tp2, tp3;
@@ -143,15 +151,15 @@ run_test (ACE_Token_Proxy *A,
   ACE_Thread_Manager *mgr = ACE_Thread_Manager::instance ();
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &tp1, THR_BOUND) == -1)
+                 (void *) &tp1, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 1 failed"), -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &tp2, THR_BOUND) == -1)
+                 (void *) &tp2, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 2 failed"), -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &tp3, THR_BOUND) == -1)
+                 (void *) &tp3, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 3 failed"), -1);
 
   // Wait for all threads to exit.
@@ -173,10 +181,11 @@ main (int, char *[])
   ACE_NEW_RETURN (B, ACE_Local_Mutex ("L Mutex B", 0, 0), -1);
   ACE_NEW_RETURN (R, ACE_Local_RLock ("L Reader Lock", 0, 0), -1);
   ACE_NEW_RETURN (W, ACE_Local_WLock ("L Writer Lock", 0, 0), -1);
+  ACE_NEW_RETURN (thread_start, ACE_Barrier (3), -1);
 
   run_test (A, B, R, W);
 
-  LPCTSTR cl = 
+  LPCTSTR cl =
     __TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR
     __TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR
     __TEXT ("servers") ACE_DIRECTORY_SEPARATOR_STR
@@ -199,9 +208,9 @@ main (int, char *[])
   // Wait for the server to start.
   ACE_OS::sleep (3);
 
-  ACE_DEBUG ((LM_DEBUG, 
-	      "Using Token Server on %s at port %d.\n", 
-	      server_host, server_port));
+  ACE_DEBUG ((LM_DEBUG,
+              "Using Token Server on %s at port %d.\n",
+              server_host, server_port));
   ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port, server_host));
 
   delete A;
@@ -223,6 +232,8 @@ main (int, char *[])
   if (new_process.terminate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "Kill failed.\n"), -1);
 
+  delete thread_start;
+  thread_start = 0;
   delete A;
   delete B;
   delete R;
@@ -230,8 +241,8 @@ main (int, char *[])
 
   ACE_DEBUG ((LM_DEBUG, "(%t) main thread exiting.\n"));
 #else
-  ACE_ERROR ((LM_ERROR, 
-	      "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR,
+              "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
