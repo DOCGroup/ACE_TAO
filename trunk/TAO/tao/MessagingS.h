@@ -119,7 +119,7 @@ TAO_NAMESPACE  POA_Messaging
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     Messaging::RebindMode rebind_mode (
@@ -240,7 +240,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     Messaging::SyncScope synchronization (
@@ -361,7 +361,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     Messaging::PriorityRange priority_range (
@@ -482,7 +482,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     Messaging::PriorityRange priority_range (
@@ -603,7 +603,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     TimeBase::UtcT start_time (
@@ -724,7 +724,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     TimeBase::UtcT end_time (
@@ -845,7 +845,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     TimeBase::UtcT start_time (
@@ -966,7 +966,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     TimeBase::UtcT end_time (
@@ -1087,7 +1087,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     TimeBase::TimeT relative_expiry (
@@ -1208,7 +1208,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     TimeBase::TimeT relative_expiry (
@@ -1329,7 +1329,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     Messaging::RoutingTypeRange routing_range (
@@ -1450,7 +1450,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     CORBA::UShort max_hops (
@@ -1571,7 +1571,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     Messaging::Ordering allowed_orders (
@@ -1701,7 +1701,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
 private:
@@ -1741,7 +1741,7 @@ private:
         CORBA::ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
-        CORBA::Environment &_tao_env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
 
@@ -1753,7 +1753,7 @@ private:
         CORBA::ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
-        CORBA::Environment &_tao_env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
 
@@ -1765,7 +1765,7 @@ private:
         CORBA::ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
-        CORBA::Environment &_tao_env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
 
@@ -1778,7 +1778,7 @@ private:
         CORBA::ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
-        CORBA::Environment &_tao_env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
 
@@ -1790,7 +1790,7 @@ private:
         CORBA::ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
-        CORBA::Environment &_tao_env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
 
@@ -1802,7 +1802,7 @@ private:
         CORBA::ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
-        CORBA::Environment &_tao_env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
 
@@ -1814,7 +1814,7 @@ private:
         CORBA::ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
-        CORBA::Environment &_tao_env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
 
@@ -1840,7 +1840,7 @@ private:
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
 
@@ -1848,7 +1848,7 @@ private:
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
 
@@ -1945,7 +1945,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     CORBA::Object_ptr operation_target (

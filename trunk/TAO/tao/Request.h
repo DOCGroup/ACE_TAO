@@ -135,12 +135,12 @@ private:
                  CORBA::NVList_ptr args,
                  CORBA::NamedValue_ptr result,
                  CORBA::Flags flags,
-                 CORBA::Environment &TAO_IN_ENV =
+                 CORBA::Environment &ACE_TRY_ENV =
                    TAO_default_environment ());
 
   CORBA_Request (CORBA::Object_ptr obj,
                  const CORBA::Char *op,
-                 CORBA::Environment &TAO_IN_ENV =
+                 CORBA::Environment &ACE_TRY_ENV =
                    TAO_default_environment ());
 
   ~CORBA_Request (void);

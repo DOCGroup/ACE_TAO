@@ -82,12 +82,12 @@ public:
   static CORBA_DomainManager_ptr _duplicate (CORBA_DomainManager_ptr obj);
   static CORBA_DomainManager_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static CORBA_DomainManager_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static CORBA_DomainManager_ptr _nil (void);
@@ -99,7 +99,7 @@ public:
     );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &env =
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -250,12 +250,12 @@ public:
   static CORBA_ConstructionPolicy_ptr _duplicate (CORBA_ConstructionPolicy_ptr obj);
   static CORBA_ConstructionPolicy_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static CORBA_ConstructionPolicy_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static CORBA_ConstructionPolicy_ptr _nil (void);
@@ -268,7 +268,7 @@ public:
     );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &env =
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;

@@ -315,7 +315,7 @@ public:
   // Make the TypeCode for the CORBA::UnknownUserException standard
   // exception.
 
-  static void init (CORBA_Environment &TAO_IN_ENV =
+  static void init (CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ());
   // Runtime initialization of all standard exception typecodes.
   // Called from <CORBA::ORB_init>.
@@ -325,7 +325,7 @@ public:
 
   static CORBA_SystemException *
        create_system_exception (const char *id,
-                                CORBA_Environment &TAO_IN_ENV =
+                                CORBA_Environment &ACE_TRY_ENV =
                                     TAO_default_environment ());
   // Create a CORBA::SystemException given the interface repository
   // ID.
@@ -382,12 +382,12 @@ public:
   // Add and consume a TypeCode to the list
 
   CORBA::TypeCode_ptr item (CORBA::ULong slot,
-                            CORBA_Environment &TAO_IN_ENV =
+                            CORBA_Environment &ACE_TRY_ENV =
                             TAO_default_environment ());
   // Return the typecode at slot i. Raises the "Bounds" exception.
 
   void remove (CORBA::ULong slot,
-               CORBA_Environment &TAO_IN_ENV =
+               CORBA_Environment &ACE_TRY_ENV =
                TAO_default_environment ());
   // Remove the typecode at slot i. Raises the "Bounds" exception.
 

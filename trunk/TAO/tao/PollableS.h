@@ -66,7 +66,7 @@ TAO_NAMESPACE  POA_CORBA
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     CORBA::Boolean is_ready (
@@ -122,7 +122,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     CORBA::Boolean is_ready (
@@ -178,7 +178,7 @@ private:
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     CORBA::DIIPollable_ptr create_dii_pollable (

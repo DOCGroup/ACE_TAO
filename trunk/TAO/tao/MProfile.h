@@ -141,7 +141,7 @@ public:
   // the profiles will not change during the call.
 
   CORBA::ULong hash (CORBA::ULong max,
-                     CORBA::Environment &env);
+                     CORBA::Environment &ACE_TRY_ENV);
   // use all registered profiles.  The hash() method is called on each
   // profile and the results are averaged together.
   // NON-THREAD SAFE.

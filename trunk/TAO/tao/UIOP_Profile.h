@@ -66,7 +66,7 @@ public:
 
   TAO_UIOP_Profile (const char *string,
                     TAO_ORB_Core *orb_core,
-                    CORBA::Environment &env);
+                    CORBA::Environment &ACE_TRY_ENV);
   // Create object using a string ior.
 
   TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile);
@@ -82,10 +82,10 @@ public:
   // Destructor is to be called only through <_decr_refcnt>.
 
   int parse_string (const char *string,
-                    CORBA::Environment &env);
+                    CORBA::Environment &ACE_TRY_ENV);
   // Initialize this object using the given input string.
 
-  CORBA::String to_string (CORBA::Environment &env);
+  CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV);
   // Return a string representation for this profile.
   // client must deallocate memory.
 
@@ -111,7 +111,7 @@ public:
   // and version are the same.
 
   CORBA::ULong hash (CORBA::ULong max,
-                     CORBA::Environment &env);
+                     CORBA::Environment &ACE_TRY_ENV);
   // Return a hash value for this object.
 
   int addr_to_string (char *buffer, size_t length);
