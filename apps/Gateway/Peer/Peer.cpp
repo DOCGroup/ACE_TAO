@@ -521,7 +521,7 @@ Peer_Handler::await_supplier_id (void)
 
   if (ACE::register_stdin_handler (this,
 				   ACE_Reactor::instance (),
-				   ACE_Thread_Manager::instance () ()) == -1)
+				   ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_stdin_handler"), -1);
   return 0;
 }

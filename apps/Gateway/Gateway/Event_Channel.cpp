@@ -49,7 +49,7 @@ ACE_Event_Channel::compute_performance_statistics (void)
 
   if (this->options ().threading_strategy_ != ACE_Event_Channel_Options::REACTIVE)
     {
-      if (ACE_Thread_Manager::instance () ()->suspend_all () == -1)
+      if (ACE_Thread_Manager::instance ()->suspend_all () == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "suspend_all"), -1);
       ACE_DEBUG ((LM_DEBUG, "(%t) suspending all threads..."));
     }
@@ -99,7 +99,7 @@ ACE_Event_Channel::compute_performance_statistics (void)
 
   if (this->options ().threading_strategy_ != ACE_Event_Channel_Options::REACTIVE)
     {
-      if (ACE_Thread_Manager::instance () ()->resume_all () == -1)
+      if (ACE_Thread_Manager::instance ()->resume_all () == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "resume_all"), -1);
       ACE_DEBUG ((LM_DEBUG, "(%t) resuming all threads..."));
     }
@@ -155,7 +155,7 @@ ACE_Event_Channel::put (ACE_Message_Block *event,
 	  // At this point, we should assign a thread-safe locking
 	  // strategy to the Message_Block is we're running in a
 	  // multi-threaded configuration.
-	  // data->locking_strategy (MB_Locking_Strategy::instance () ());
+	  // data->locking_strategy (MB_Locking_Strategy::instance ());
 
 	  for (Proxy_Handler **proxy_handler = 0; 
 	       dsi.next (proxy_handler) != 0; 
@@ -227,7 +227,7 @@ ACE_Event_Channel::complete_proxy_connection (Proxy_Handler *proxy_handler)
 					   sizeof (int)) == -1)
       ACE_ERROR ((LM_ERROR, "(%t) %p\n", "set_option"));
   
-  proxy_handler->thr_mgr (ACE_Thread_Manager::instance () ());
+  proxy_handler->thr_mgr (ACE_Thread_Manager::instance ());
 
   // Our state is now "established."
   proxy_handler->state (Proxy_Handler::ESTABLISHED);
@@ -317,7 +317,7 @@ ACE_Event_Channel::close (u_long)
 {
   if (this->options ().threading_strategy_ != ACE_Event_Channel_Options::REACTIVE)
     {
-      if (ACE_Thread_Manager::instance () ()->suspend_all () == -1)
+      if (ACE_Thread_Manager::instance ()->suspend_all () == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "suspend_all"), -1);
       ACE_DEBUG ((LM_DEBUG, "(%t) suspending all threads\n"));
     }
