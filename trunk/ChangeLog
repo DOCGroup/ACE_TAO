@@ -1,3 +1,9 @@
+Fri Oct 24 10:48:41 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Changed documentation to reflect the fact that
+	  $ACE_ROOT/lib also has to added LD_LIBRARY_PATH since some of
+	  the libraries are generated in this directory.
+
 Fri Oct 24 10:46:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Makefile: Added lib to the release files.
