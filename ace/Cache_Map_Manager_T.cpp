@@ -9,6 +9,7 @@
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
 
 #if !defined (__ACE_INLINE__)

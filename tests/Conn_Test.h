@@ -24,6 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Null_Condition.h"
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Stream.h"
 

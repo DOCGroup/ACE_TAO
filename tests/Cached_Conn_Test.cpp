@@ -36,6 +36,7 @@
 #define ACE_HAS_BROKEN_EXTENDED_TEMPLATES
 #endif /* __GNUC__ */
 
+#include "ace/OS_NS_string.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"

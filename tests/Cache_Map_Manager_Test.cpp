@@ -25,6 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_time.h"
 #include "test_config.h"
 #include "ace/Hash_Cache_Map_Manager_T.h"
