@@ -191,24 +191,37 @@ BE_produce (void)
         {
           ifr_removing_visitor removing_visitor;
           visitor = &removing_visitor;
+
+          TAO_IFR_VISITOR_WRITE_GUARD;
+
+          if (root->ast_accept (visitor) == -1)
+            {
+              ACE_ERROR ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) BE_produce -")
+                  ACE_TEXT (" failed to accept visitor\n")
+                ));
+
+              BE_abort ();
+            }
         }
       else
         {
           ifr_adding_visitor adding_visitor;
           visitor = &adding_visitor;
-        }
 
-      TAO_IFR_VISITOR_WRITE_GUARD;
+          TAO_IFR_VISITOR_WRITE_GUARD;
 
-      if (root->ast_accept (visitor) == -1)
-        {
-          ACE_ERROR ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) BE_produce -")
-              ACE_TEXT (" failed to accept visitor\n")
-            ));
+          if (root->ast_accept (visitor) == -1)
+            {
+              ACE_ERROR ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) BE_produce -")
+                  ACE_TEXT (" failed to accept visitor\n")
+                ));
 
-          BE_abort ();
+              BE_abort ();
+            }
         }
     }
   ACE_CATCHANY
