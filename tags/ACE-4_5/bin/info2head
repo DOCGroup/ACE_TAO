@@ -1,0 +1,166 @@
+#! /bin/sh
+# =============================================================================
+#
+# = DESCRIPTION
+#     Front end to awk script for generating manual pages from classinfo
+#     files.
+#
+# = AUTHOR(S)
+#     Graham Dumpleton
+#     K. Dorn
+# 
+# = COPYRIGHT
+#     Copyright 1991 OTC LIMITED
+#     Copyright 1994 DUMPLETON SOFTWARE CONSULTING PTY LIMITED
+#
+# =============================================================================
+
+OSE_HOST=
+
+OSE_RELEASE_NAME=
+export OSE_RELEASE_NAME
+
+OSE_ROOT=${OSE_ROOT-$ACE_ROOT}
+export OSE_ROOT
+
+OSE_VERSION_ROOT=$OSE_ROOT
+export OSE_VERSION_ROOT
+
+BINDIR="$OSE_VERSION_ROOT/$OSE_HOST/bin"
+LIBDIR=${CLASSINFOLIBDIR-"$OSE_VERSION_ROOT/bin"}
+
+AWK="${AWK-gawk}"
+
+
+if test "$AWK" = "gawk"
+then
+  VARG="-v"
+fi
+
+EXT="3"
+
+#
+# Error.
+#
+ERROR()
+{
+  echo "`basename $0`: $1" >&2
+  shift
+  while test $# != "0"
+  do
+    echo $1 >&2
+    shift
+  done
+  exit 1
+}
+
+#
+# Usage message.
+#
+USAGE()
+{
+  ERROR "Usage: `basename $0` file.ci"
+} 
+
+#
+# Check usage.
+#
+if test $# != "1" -o "'basename $1 .ci'" = "$1"
+then
+  USAGE
+fi
+
+#
+# Check for awk file etc.
+#
+INFO2DOC=$LIBDIR/info2doc.awk
+MANFMT=$LIBDIR/info2head.fmt
+HIDINGFMT=$LIBDIR/hiding.fmt
+
+if test ! -f $HIDINGFMT
+then
+  ERROR "Can't find $HIDINGFMT"
+fi
+
+if test ! -f $INFO2DOC
+then
+  ERROR "Can't find $INFO2DOC"
+fi
+
+if test ! -f $MANFMT
+then
+  ERROR "Can't find $MANFMT"
+fi
+
+
+
+ADTS=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^(CLASS|STRUCT|UNION)$" && $2 !~ "(::|<)" {
+  printf( "%s\n", $2 )
+}
+$1 ~ "^TEMPLATE$" && $3 !~ "::" {
+  printf( "%s\n", $3 )
+}' $1`
+
+
+VPUBL=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^PUBLIC$" {
+ if ( $2 ~ "on" )
+  printf("%s","publ=on");
+ else
+  printf("%s","publ=");
+}' $HIDINGFMT`
+
+VPROT=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^PROTECTED$" {
+ if ( $2 ~ "on" )
+  printf("%s","prot=on");
+ else
+  printf("%s","prot=");
+}' $HIDINGFMT`
+
+VPRIV=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^PRIVATE$" {
+ if ( $2 ~ "on" )
+  printf("%s","priv=on");
+ else
+  printf("%s","priv=");
+}' $HIDINGFMT`
+
+echo " $VPUBL   $VPROT    $VPRIV "
+
+
+#     $VARG publ=on $VARG prot= $VARG priv= \
+#     $VARG $VPUBL $VARG $VPROT $VARG $VPRIV \
+if test ! -z "$ADTS"
+then
+  for ADT in $ADTS
+  do
+    echo "$ADT"
+
+    echo "making $ADTS.hxx file ..."
+    $AWK -f $INFO2DOC \
+     $VARG $VPUBL $VARG $VPROT $VARG $VPRIV \
+     $VARG pass=0 $VARG device=text $VARG infile=$1 \
+     $VARG class=$ADT \
+     $MANFMT $MANFMT > $ADT.$EXT
+#    troff -a $ADT.$EXT > $ADT.hxx
+    cp $ADT.$EXT $ADT.hxx
+    echo "$ADTS.hxx file done!"
+#    echo "removing $ADTS.$EXT file ..."
+    \rm $ADT.$EXT 
+#    echo "file $ADTS.$EXT file removed!"
+  done
+fi
