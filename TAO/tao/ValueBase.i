@@ -70,55 +70,55 @@ CORBA_DefaultValueRefCountBase::_tao_refcount_value (void)
 // Detection of flags in the CDR Stream
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::is_null_ref (const CORBA::ULong tag)
+TAO_OBV_GIOP_Flags::is_null_ref (CORBA::ULong tag)
 {
   return (tag == Null_ref);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::is_value_tag (const CORBA::ULong tag)
+TAO_OBV_GIOP_Flags::is_value_tag (CORBA::ULong tag)
 {
   return ((tag & Value_tag_sigbits) == Value_tag_base);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags:: has_codebase_url(const CORBA::ULong tag)
+TAO_OBV_GIOP_Flags:: has_codebase_url(CORBA::ULong tag)
 {
   return (tag & Codebase_url);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::has_no_type_info (const CORBA::ULong tag)
+TAO_OBV_GIOP_Flags::has_no_type_info (CORBA::ULong tag)
 {
   return ((tag & Type_info_sigbits) == Type_info_no);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::has_single_type_info (const CORBA::ULong tag)
+TAO_OBV_GIOP_Flags::has_single_type_info (CORBA::ULong tag)
 {
   return ((tag & Type_info_sigbits) == Type_info_single);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::has_list_type_info (const CORBA::ULong tag)
+TAO_OBV_GIOP_Flags::has_list_type_info (CORBA::ULong tag)
 {
   return ((tag & Type_info_sigbits) == Type_info_list);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags:: is_chunked (const CORBA::ULong tag)
+TAO_OBV_GIOP_Flags:: is_chunked (CORBA::ULong tag)
 {
   return (tag & Chunked_encoding);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::is_indirection_tag (const CORBA::ULong tag)
+TAO_OBV_GIOP_Flags::is_indirection_tag (CORBA::ULong tag)
 {
   return (tag == Indirection_tag);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags:: block_size (const CORBA::ULong tag, CORBA::ULong &size)
+TAO_OBV_GIOP_Flags:: block_size (CORBA::ULong tag, CORBA::ULong &size)
 {
   if ((tag >= Block_size_tag_min) &&
       (tag <= Block_size_tag_max))
@@ -130,14 +130,18 @@ TAO_OBV_GIOP_Flags:: block_size (const CORBA::ULong tag, CORBA::ULong &size)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags:: end_tag_depth (const CORBA::ULong tag,
+TAO_OBV_GIOP_Flags:: end_tag_depth (CORBA::ULong tag,
                                     CORBA::ULong &depth)
 {
-  if (ACE_static_cast (CORBA::Long, tag)
-          >= (ACE_static_cast (CORBA::Long, End_tag_min)) &&
-      ACE_static_cast (CORBA::Long, tag)
-          <= (ACE_static_cast (CORBA::Long, End_tag_max)))
+  // @@ Torsten: could you please check that I did not break anything
+  //    here?  Your code was giving us all sort of headaches on NT
+  //    because the compiler insists in making 0x8000000L an unsigned
+  //    long (and IMHO it is right).
+  if (End_tag_min <= tag
+      && tag <= End_tag_max)
     {
+      // @@ Torsten: do you think this is right? After all you are
+      //    storing things back into a ULong....
       depth = - ACE_static_cast (CORBA::Long, tag);
       return 1;
     }
@@ -145,13 +149,11 @@ TAO_OBV_GIOP_Flags:: end_tag_depth (const CORBA::ULong tag,
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags:: indirection (const CORBA::ULong tag,
+TAO_OBV_GIOP_Flags:: indirection (CORBA::ULong tag,
                                   CORBA::Long &jump)
 {
-  if (ACE_static_cast (CORBA::Long, tag)
-          >= (ACE_static_cast (CORBA::Long, Indirection_min)) &&
-      ACE_static_cast (CORBA::Long, tag)
-          <= (ACE_static_cast (CORBA::Long, Indirection_max)))
+  if (Indirection_min <= tag
+      && tag <= Indirection_max)
     {
       jump = ACE_static_cast (CORBA::Long, tag);
       return 1;
@@ -161,13 +163,13 @@ TAO_OBV_GIOP_Flags:: indirection (const CORBA::ULong tag,
 
 /*
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags:: (const CORBA::ULong tag)
+TAO_OBV_GIOP_Flags:: (CORBA::ULong tag)
 {
   return ( );
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags:: (const CORBA::ULong tag)
+TAO_OBV_GIOP_Flags:: (CORBA::ULong tag)
 {
   return ( );
 }

@@ -82,7 +82,7 @@ int be_visitor::visit_valuetype_fwd (be_valuetype_fwd *)
 {
   return 0;
 }
-#endif IDL_HAS_VALUETYPE
+#endif /* IDL_HAS_VALUETYPE */
 
 int be_visitor::visit_structure (be_structure *)
 {

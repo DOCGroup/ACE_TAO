@@ -539,7 +539,7 @@ main (int argc, char *argv[])
                 return -1;
               }
 
-            char ch;
+            int ch;
             ACE_CString aString;
 
             while (!ifstr.eof ())

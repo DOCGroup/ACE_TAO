@@ -59,7 +59,7 @@ TAO_ValueFactory_Map::rebind (const char *repo_id,
 {
 //  ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, map_->mutex(),-1);
 //   --- but must be recursive
-  char *prev_repo_id;
+  const char *prev_repo_id;
   CORBA_ValueFactory_ptr prev_factory;
   int ret = this->map_.rebind (CORBA::string_dup (repo_id),
                                  factory,
@@ -70,7 +70,7 @@ TAO_ValueFactory_Map::rebind (const char *repo_id,
       if (ret == 1)    // there was a previous factory
         {
           factory = prev_factory;
-          CORBA::string_free (prev_repo_id);
+          CORBA::string_free (ACE_const_cast(char*,prev_repo_id));
         }
     }
   return ret;

@@ -75,13 +75,13 @@ TAO_ECG_UDP_Request_Index::operator!= (const TAO_ECG_UDP_Request_Index& rhs) con
 
 // ****************************************************************
 
-void
+ACE_INLINE void
 TAO_ECG_UDP_Request_Entry::inc_timeout (void)
 {
   this->timeout_counter_++;
 }
 
-int
+ACE_INLINE int
 TAO_ECG_UDP_Request_Entry::get_timeout (void) const
 {
   return this->timeout_counter_;
