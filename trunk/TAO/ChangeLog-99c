@@ -1,3 +1,22 @@
+Thu Apr  8 14:17:31 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/sfp/sfp_client.dsp:
+	* orbsvcs/tests/AVStreams/sfp/sfp_server.dsp:
+	* orbsvcs/tests/AVStreams/sfp/sfp_tests.dsw:
+		Added these project/ worspace files for VC++.
+	
+	* orbsvcs/tests/AVStreams/sfp/server.cpp : 
+	* orbsvcs/tests/AVStreams/sfp/client.cpp : 
+		Added a ORB shutdown so that the tests terminate when the
+	SFP stream terminates.
+
+	* orbsvcs/tests/AVStreams/sfp/common.h:
+		Added a #include "orbsvcs_export.h" for VC++.
+	
+	* orbsvcs/orbsvcs/AV/sfp.{h,cpp} : Changed the DUMP_BUF macro to a
+	function. Fixed the signed/unsigned warnings on NT.Fixed a missing
+	return 0 so that the tests work on NT.
+
 Thu Apr  8 13:49:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Active_Object_Map.cpp: 
