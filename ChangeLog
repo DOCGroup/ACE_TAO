@@ -1,16 +1,43 @@
+Fri Oct 31 07:38:40 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Allow a user to set the sharedname to empty to force only static
+          builds.  Also, fixed the output directory target such that it will
+          be executed before the library is generated.
+
+        * bin/MakeProjectCreator/templates/automake.mpd:
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/ghs.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/va4icc.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+
+          Allow these templates to work properly if the sharedname is set to
+          empty.
+
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+        * bin/MakeProjectCreator/templates/vc7dll.mpt:
+
+          Partially fixed a bug with static libraries.  The wrong
+          configuration type and library tool was being used.  A correct
+          implementation of the vc7 type would involve splitting the static
+          build targets from the dynamic into separate projects.
+
 Thu Oct 30 16:14:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Thread_Manager.cpp (spawn_i): 
+        * ace/Thread_Manager.cpp (spawn_i):
 
-	  Fixed ACE_Thread_Manager problem on VxWorks where thread id
-	  could be corrupted by taking address of a temporary
-	  variable. Thank to Dennis Noll, and Brian Mendel for tracking
-	  this down. 
+          Fixed ACE_Thread_Manager problem on VxWorks where thread id
+          could be corrupted by taking address of a temporary
+          variable. Thank to Dennis Noll, and Brian Mendel for tracking
+          this down.
 
 Thu Oct 30 11:57:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/tao_orb_tests.lst: Added a couple of Portable_Interceptor
-	  tests to the daily builds.
+        * bin/tao_orb_tests.lst: Added a couple of Portable_Interceptor
+          tests to the daily builds.
 
 Thu Oct 30 09:33:15 2003  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -147,9 +147,7 @@ RSC=rc.exe
 RSC_PROJ=/l 0x409 /fo"$(INTDIR)\<%basenoextension(resource_file)%>.res"<%foreach(defines cpu_defines macros)%> /d <%define%><%endfor%><%foreach(includes)%> /i "<%include%>"<%endfor%>
 <%endfor%>
 BSC32=bscmake.exe
-<%if(sharedname)%>
-BSC32_FLAGS=/nologo <%if(type_is_dynamic)%>/o"$(OUTDIR)\<%sharedname%>.bsc"<%endif%>
-<%endif%>
+BSC32_FLAGS=/nologo <%if(sharedname || staticname)%>/o"$(OUTDIR)\<%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%>.bsc"<%endif%>
 BSC32_SBRS= \
 
 <%if(type_is_binary)%>
