@@ -245,11 +245,6 @@ class ACE_Export ACE_OutputCDR
   //     + Operations return an error status, because exceptions are
   //       not widely available in C++ (yet).
   //
-  //   A particularly useful static member function for this buffer is
-  //   an interpretive encoding routine, usable as a typecode
-  //   interpreter callback.  Ditto for decoding.  These are used to
-  //   support all OMG-IDL datatypes, even those not supported
-  //   directly by put/get primitives.
 public:
   friend class ACE_Char_Codeset_Translator;
   friend class ACE_WChar_Codeset_Translator;
@@ -535,11 +530,6 @@ class ACE_Export ACE_InputCDR
   //     + Operations return an error status, because exceptions are
   //       not widely available in C++ (yet).
   //
-  //   A particularly useful static member function for this buffer is
-  //   an interpretive encoding routine, usable as a typecode
-  //   interpreter callback.  Ditto for decoding.  These are used to
-  //   support all OMG-IDL datatypes, even those not supported
-  //   directly by put/get primitives.
 public:
   friend class ACE_Char_Codeset_Translator;
   friend class ACE_WChar_Codeset_Translator;
@@ -710,6 +700,19 @@ public:
   // NOTE: In the current implementation the chain has length 1, but
   // we are planning to change that.
 
+  // = The following functions are useful to read the contents of the
+  //   CDR stream from a socket or file.
+
+  int grow (size_t newsize);
+  // Grow the internal buffer, reset rd_ptr() to the first byte in the 
+  // new buffer that is properly aligned, and set wr_ptr() to
+  // rd_ptr() + newsize
+
+  void reset_byte_order (int byte_order);
+  // After reading and partially parsing the contents the user can
+  // detect a change in the byte order, this method will let him
+  // change it.
+
   char* rd_ptr (void);
   // Returns the current position for the rd_ptr....
 
@@ -800,8 +803,8 @@ class ACE_Export ACE_Char_Codeset_Translator
   //   CDR streams.
   //
   // = DESCRIPTION
-  //   This class is a base class for defining codeset translation    
-  //   routines to handle the character set translations required by 
+  //   This class is a base class for defining codeset translation
+  //   routines to handle the character set translations required by
   //   both CDR Input streams and CDR Output streams.
   //
 public:
@@ -819,7 +822,7 @@ public:
                                             ACE_CDR::Char*,
                                             ACE_CDR::ULong) = 0;
   // Read an array of characters from the stream, converting the
-  // characters from the stream codeset to the native codeset. 
+  // characters from the stream codeset to the native codeset.
 
   virtual ACE_CDR::Boolean write_char (ACE_OutputCDR&,
                                        ACE_CDR::Char) = 0;
@@ -872,7 +875,7 @@ protected:
   // many cases to minimize memory allocations during marshaling.
   // On success <buf> will contain a contiguous area in the CDR stream
   // that can hold <size> bytes aligned to <align>.
-  // Results 
+  // Results
 
   void good_bit (ACE_OutputCDR& out, int bit);
   // Used by derived classes to set errors in the CDR stream.
@@ -887,8 +890,8 @@ class ACE_Export ACE_WChar_Codeset_Translator
   //   CDR streams.
   //
   // = DESCRIPTION
-  //   This class is a base class for defining codeset translation    
-  //   routines to handle the character set translations required by 
+  //   This class is a base class for defining codeset translation
+  //   routines to handle the character set translations required by
   //   both CDR Input streams and CDR Output streams.
   //
 public:
@@ -950,7 +953,7 @@ protected:
   // many cases to minimize memory allocations during marshaling.
   // On success <buf> will contain a contiguous area in the CDR stream
   // that can hold <size> bytes aligned to <align>.
-  // Results 
+  // Results
 
   void good_bit (ACE_OutputCDR& out, int bit);
   // Used by derived classes to set errors in the CDR stream.
