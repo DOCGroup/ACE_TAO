@@ -62,7 +62,12 @@ interface Cubit
 
   void cube_sequence (in vector input,
 		      out vector output);
-  // Cube several longs...
+  // Cube several longs.
+
+
+  typedef sequence<octet> Raw;
+  void cube_raw (in Raw input, out Raw output);
+  // Cube an octet sequence.
 
   oneway void shutdown ();
   // shutdown the application.
