@@ -37,13 +37,13 @@
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/GIOP_Message_Acceptors.h"
+#include "tao/IIOP_Connect.h"
 
 #include "SSLIOP_Transport.h"
 
 // Forward Decls
 class TAO_ORB_Core;
 class TAO_ORB_Core_TSS_Resources;
-
 
 typedef ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SSL_SVC_HANDLER;
@@ -56,16 +56,6 @@ public:
   TAO_SSLIOP_Handler_Base (ACE_Thread_Manager *t);
   TAO_SSLIOP_Handler_Base (TAO_ORB_Core *orb_core);
 
-  struct TCP_Properties
-  {
-    // = TITLE
-    //   TCP protocol properties specification for a set of
-    //   connections.
-    //
-    int send_buffer_size;
-    int recv_buffer_size;
-    int no_delay;
-  };
 };
 
 class TAO_SSLIOP_Export TAO_SSLIOP_Client_Connection_Handler : public TAO_SSLIOP_Handler_Base
@@ -129,7 +119,7 @@ protected:
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
 
-  TCP_Properties *tcp_properties_;
+  TAO_IIOP_Handler_Base::TCP_Properties *tcp_properties_;
   // TCP configuration for this connection.
 };
 
@@ -212,7 +202,7 @@ protected:
   u_long refcount_;
   // Reference count, to avoid early deletes...
 
-  TCP_Properties *tcp_properties_;
+  TAO_IIOP_Handler_Base::TCP_Properties *tcp_properties_;
   // TCP configuration for this connection.
 };
 
