@@ -41,7 +41,7 @@ Headers::parse_header_line (char * const header_line)
 
   if (header != NULL && this->map_.mapped (header)) {
     while (isspace (*value)) value++;
-    this->map_[header].value_ = value;
+    this->map_[header] = value;
   }
 
   // write back the unused portion of the input
