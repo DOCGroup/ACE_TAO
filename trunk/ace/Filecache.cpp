@@ -680,8 +680,6 @@ ACE_Filecache_Object::update (void) const
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>;
-template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 template class ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>;
 template class ACE_Hash_Map_Manager<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
@@ -696,7 +694,6 @@ template class ACE_Hash_Map_Iterator_Base<ACE_CString, ACE_Filecache_Object *, A
 template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>;
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 #pragma instantiate ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>
 #pragma instantiate ACE_Hash_Map_Manager<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>
