@@ -1,3 +1,10 @@
+Thu Sep 23 23:51:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	  Add RtecDefaultEventData.idl and its children to the project
+	  files.
+
 Thu Sep 23 21:53:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile:
