@@ -20,7 +20,7 @@
 
 #include "eh_i.h"
 
-CORBA::String_var remote_reactor_key = 0;
+CORBA::String_var remote_reactor_key = (char *) 0;
 
 // Completely arbitrary constant that ought to be big enough.
 #define MAX_IOR_SIZE 4096
@@ -114,7 +114,7 @@ main (int argc, char *argv[])
                           -1);
 
       CORBA::Object_var reactor_object =
-        orb->string_to_object (remote_reactor_key.in (),
+        orb->string_to_object (ACE_const_cast(char*, remote_reactor_key.in ()),
                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
