@@ -438,18 +438,18 @@ public:
 #if (TAO_HAS_FT_CORBA == 1)
 
   // Start of FT-CORBA stuff
-  CORBA::Boolean set_group_primary_member (const CORBA::Object &member,
-                                           const FT_TagFTGroupTaggedComponent &group_info);
+  int set_group_primary_member (const CORBA::Object &member,
+                                const FT_TagFTGroupTaggedComponent &group_info);
 
   // Set the member <member> as primary and set the group information
   // for the primary as specified by <group_info>
 
-  CORBA::Boolean set_group_info (const CORBA::Object &member,
-                                 const FT_TagFTGroupTaggedComponent &group_info);
+  int set_group_info (const CORBA::Object &member,
+                      const FT_TagFTGroupTaggedComponent &group_info);
   // Set the group information for the member <member> of the Object
   // group as specified by <group_info>
 
-  CORBA::Boolean unset_group_primary_member (const CORBA::Object &member);
+  int unset_group_primary_member (const CORBA::Object &member);
   // Unset the primary membership assigned to <member>
 
 
