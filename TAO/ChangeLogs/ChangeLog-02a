@@ -1,3 +1,18 @@
+Fri Feb 11 18:20:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/y.tab.cpp:
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/util/utl_scope.cpp:
+	  The prevention of the redefinition of a scope
+	  within itself was preventing that redefinition
+	  not just in the scope immediately within, but 
+	  in all contained scopes. Thanks to 
+	  Klaus Hofmann <Klaus.Hofmann@astrum.de>
+	  for sending in the example IDL file that pointed
+	  this out.
+
 Fri Feb 11 14:56:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAO_Internal.cpp: I forgot to add the initialization for
