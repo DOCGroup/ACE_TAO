@@ -934,7 +934,7 @@ private:
   CORBA_ORB &operator= (const CORBA_ORB &);
 };
 
-class CORBA_ORB_var
+class TAO_Export CORBA_ORB_var
 {
 public:
   CORBA_ORB_var (void); // default constructor
