@@ -1,3 +1,12 @@
+Wed Aug  4 00:30:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/orbconf.h:
+	  Changed the default: TAO_CONNECTION_CACHING_STRATEGY to LRU.
+
+	* docs/Options.html:
+	  Added ORBConnectionCachingStrategy and ORBPurgePercentage
+	  options.
+		
 Wed Aug  4 00:23:34 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/InterfaceC.cpp:
