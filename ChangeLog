@@ -1,8 +1,15 @@
+Sun Mar 28 19:07:44 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/config/notifytest.mpb:
+	  Updated name of NotifyTests library name, it should have TAO_ to
+	  match my update of today in the NotifyTests lib MPC file. This way
+	  this library has exactly the same name as in none mpc builds.
+
 Sun Mar 28 12:16:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ACEXML/common/NamespaceSupport.i:
-	 
-	  Removed functors that were there in this file. 
+
+	  Removed functors that were there in this file.
 
 	* ACEXML/common/XML_Types.h:
 
@@ -18,8 +25,8 @@ Sun Mar 28 12:14:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Functors for ACE_CString and ACE_WString. They have been placed
 	  in seperate files to avoid coupling the rest of ACE (which uses
 	  Functor.h) with strings that could lead to increased
-	  footprints. 
-	
+	  footprints.
+
 	* ace/Makefile.ace:
 	* ace/ace.mpc:
 
