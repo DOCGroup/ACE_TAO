@@ -1,3 +1,39 @@
+Thu Oct 21 14:55:02 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * examples/Quoter/Quoter.dsw:
+          Added the LifeCycle Server to the workspace.
+
+        * examples/Quoter/run_test.pl:
+          Cleaned up the perl code and made it use the new debug 
+          flag format
+
+        * orbsvcs/LifeCycle_Service/Factory_Trader.h
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.h
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service_i.h
+        * examples/Quoter/Factory_Finder.h:
+        * examples/Quoter/Factory_Finder_i.h:
+        * examples/Quoter/Generic_Factory.h:
+        * examples/Quoter/Generic_Factory_i.h:
+        * examples/Quoter/client.h:
+        * examples/Quoter/server.h:
+          Added the debug flag support.          
+
+        * orbsvcs/LifeCycle_Service/Factory_Trader.cpp
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service_i.cpp
+        * examples/Quoter/Factory_Finder.cpp:
+        * examples/Quoter/Factory_Finder_i.cpp:
+        * examples/Quoter/Generic_Factory.cpp:
+        * examples/Quoter/Generic_Factory_i.cpp:
+        * examples/Quoter/client.cpp:
+        * examples/Quoter/server.cpp:
+          Added such things as POA manager activation, better debug
+          messages, debug flag support, and fixed other miscellaneous
+          problems.  
+
+          Note, the Quoter test doesn't run successfully yet, but most of
+          the problems have been cleared up.
+
 Thu Oct 21 14:19:29 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * docs/implrepo/index.html: Removed the discussion link and 
