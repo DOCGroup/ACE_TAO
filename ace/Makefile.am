@@ -28,264 +28,87 @@ else
 ACE_GETHRTIME_CPP =
 endif
 
-# Define which ACE subsets should be included in the library
+# Define which ACE components to build
 if BUILD_OS_FILES
 LIBACE_OS = libACE_OS.la
-OS_FILES = \
-        Basic_Types.cpp \
-        OS.cpp \
-        Sched_Params.cpp
 else
-LIBACE_OS = 
-OS_FILES = 
+LIBACE_OS =  
 endif
 
 if BUILD_UTILS_FILES
 LIBACE_UTILS = libACE_Utils.la
-UTILS_FILES = \
-        ACE.cpp \
-        Active_Map_Manager.cpp \
-        Arg_Shifter.cpp \
-        ARGV.cpp \
-        Containers.cpp \
-        Dirent.cpp \
-        Dynamic.cpp \
-        Filecache.cpp \
-        Functor.cpp \
-        Get_Opt.cpp \
-        Hash_Map_Manager.cpp \
-        High_Res_Timer.cpp \
-        Method_Request.cpp \
-        Object_Manager.cpp \
-        Profile_Timer.cpp \
-        Registry.cpp \
-        SString.cpp \
-        Stats.cpp \
-        System_Time.cpp \
-        Time_Request_Reply.cpp \
-        Timeprobe.cpp \
-        Timer_Hash.cpp \
-        Timer_Heap.cpp \
-        Timer_List.cpp \
-        Timer_Queue.cpp \
-        Timer_Wheel.cpp \
-        $(ACE_GETHRTIME_CPP)
 else
-LIBACE_UTILS =
-UTILS_FILES = 
+LIBACE_UTILS = 
 endif
 
 if BUILD_LOGGING_FILES
 LIBACE_LOGGING = libACE_Logging.la
-LOGGING_FILES = \
-        Dump.cpp \
-        Log_Msg.cpp \
-        Log_Record.cpp \
-        Trace.cpp
 else
 LIBACE_LOGGING = 
-LOGGING_FILES = 
 endif
 
 
 if BUILD_THREADS_FILES
 LIBACE_THREADS = libACE_Threads.la
-THREADS_FILES = \
-        Activation_Queue.cpp \
-        Process.cpp \
-        Process_Manager.cpp \
-        Synch.cpp \
-        Synch_Options.cpp \
-        Thread.cpp \
-        Thread_Manager.cpp \
-        Token.cpp
 else
 LIBACE_THREADS = 
-THREADS_FILES = 
 endif
 
 if BUILD_DEMUX_FILES
 LIBACE_DEMUX = libACE_Demux.la
-DEMUX_FILES = \
-        Event_Handler.cpp \
-        Handle_Set.cpp \
-        POSIX_Proactor.cpp \
-        Priority_Reactor.cpp \
-        Proactor.cpp \
-        Reactor.cpp \
-        Select_Reactor.cpp \
-        Select_Reactor_Base.cpp \
-        WFMO_Reactor.cpp
 else
 LIBACE_DEMUX = 
-DEMUX_FILES = 
 endif
 
 if BUILD_CONNECTION_FILES
 LIBACE_CONNECTION = libACE_Connection.la
-CONNECTION_FILES = \
-        Asynch_IO.cpp \
-        Asynch_IO_Impl.cpp \
-        POSIX_Asynch_IO.cpp \
-        Strategies.cpp
 else
 LIBACE_CONNECTION = 
-CONNECTION_FILES = 
 endif
 
 if BUILD_SOCKETS_FILES
 LIBACE_SOCKETS = libACE_Sockets.la
-SOCKETS_FILES = \
-        IPC_SAP.cpp \
-        LSOCK.cpp \
-        LSOCK_Acceptor.cpp \
-        LSOCK_CODgram.cpp \
-        LSOCK_Connector.cpp \
-        LSOCK_Dgram.cpp \
-        LSOCK_Stream.cpp \
-        SOCK.cpp \
-        SOCK_Acceptor.cpp \
-        SOCK_CODgram.cpp \
-        SOCK_Connector.cpp \
-        SOCK_Dgram.cpp \
-        SOCK_Dgram_Bcast.cpp \
-        SOCK_Dgram_Mcast.cpp \
-        SOCK_IO.cpp \
-        SOCK_Stream.cpp
 else
 LIBACE_SOCKETS = 
-SOCKETS_FILES = 
 endif
 
 if BUILD_IPC_FILES
 LIBACE_IPC = libACE_IPC.la
-IPC_FILES = \
-        Addr.cpp \
-        DEV.cpp \
-        DEV_Addr.cpp \
-        DEV_Connector.cpp \
-        DEV_IO.cpp \
-        FIFO.cpp \
-        FIFO_Recv.cpp \
-        FIFO_Recv_Msg.cpp \
-        FIFO_Send.cpp \
-        FIFO_Send_Msg.cpp \
-        FILE_Addr.cpp \
-        FILE.cpp \
-        FILE_Connector.cpp \
-        FILE_IO.cpp \
-        INET_Addr.cpp \
-        IO_SAP.cpp \
-        IOStream.cpp \
-        Pipe.cpp \
-        Signal.cpp \
-        SPIPE_Addr.cpp \
-        SPIPE.cpp \
-        SPIPE_Acceptor.cpp \
-        SPIPE_Connector.cpp \
-        SPIPE_Stream.cpp \
-        SV_Message.cpp \
-        SV_Message_Queue.cpp \
-        SV_Semaphore_Complex.cpp \
-        SV_Semaphore_Simple.cpp \
-        SV_Shared_Memory.cpp \
-        TLI.cpp \
-        TLI_Acceptor.cpp \
-        TLI_Connector.cpp \
-        TLI_Stream.cpp \
-        TTY_IO.cpp \
-        UNIX_Addr.cpp \
-        UPIPE_Acceptor.cpp \
-        UPIPE_Connector.cpp \
-        UPIPE_Stream.cpp
 else
 LIBACE_IPC = 
-IPC_FILES = 
 endif
 
 if BUILD_SVCCONF_FILES
 LIBACE_SVCCONF = libACE_Svcconf.la
-SVCCONF_FILES = \
-        DLL.cpp \
-        Parse_Node.cpp \
-        Service_Config.cpp \
-        Service_Manager.cpp \
-        Service_Object.cpp \
-        Service_Repository.cpp \
-        Service_Types.cpp \
-        Shared_Object.cpp \
-        Svc_Conf_l.cpp \
-        Svc_Conf_y.cpp
 else
 LIBACE_SVCCONF = 
-SVCCONF_FILES = 
 endif
 
 if BUILD_STREAMS_FILES
 LIBACE_STREAMS = libACE_Streams.la
-STREAMS_FILES = \
-        CDR_Stream.cpp \
-        Message_Block.cpp \
-        Message_Queue.cpp \
-        Task.cpp
 else
 LIBACE_STREAMS = 
-STREAMS_FILES = 
 endif
 
 if BUILD_MEMORY_FILES
 LIBACE_MEMORY = libACE_Memory.la
-MEMORY_FILES = \
-        Malloc.cpp \
-        Mem_Map.cpp \
-        Memory_Pool.cpp \
-        Obstack.cpp \
-        Read_Buffer.cpp \
-        Shared_Memory.cpp \
-        Shared_Memory_MM.cpp \
-        Shared_Memory_SV.cpp
 else
 LIBACE_MEMORY = 
-MEMORY_FILES = 
 endif
 
 if BUILD_TOKEN_FILES
 LIBACE_TOKEN = libACE_Token.la
-TOKEN_FILES = \
-        Local_Tokens.cpp \
-        Remote_Tokens.cpp \
-        Token_Collection.cpp \
-        Token_Invariants.cpp \
-        Token_Manager.cpp \
-        Token_Request_Reply.cpp
 else
 LIBACE_TOKEN = 
-TOKEN_FILES = 
 endif
 
 if BUILD_OTHER_FILES
 LIBACE_OTHER = libACE_Other.la
-OTHER_FILES = \
-        CORBA_Handler.cpp \
-        CORBA_Ref.cpp \
-        Local_Name_Space.cpp \
-        Msg_WFMO_Reactor.cpp \
-        Name_Proxy.cpp \
-        Name_Request_Reply.cpp \
-        Name_Space.cpp \
-        Naming_Context.cpp \
-        Registry_Name_Space.cpp \
-        Remote_Name_Space.cpp \
-        TP_Reactor.cpp \
-        XtReactor.cpp
 else
 LIBACE_OTHER = 
-OTHER_FILES = 
 endif
 
-# Only build the full ACE library if no specific ACE components were
-# selected by the user
-if BUILD_ALL_COMPONENTS
+if BUILD_FULL_LIBRARY
 LIBACE = libACE.la
 else
 LIBACE =
@@ -307,212 +130,6 @@ lib_LTLIBRARIES = \
         $(LIBACE_MEMORY) \
         $(LIBACE_TOKEN) \
         $(LIBACE_OTHER)
-
-libACE_la_SOURCES = \
-        ACE.cpp \
-        ACED.cpp \
-        ACER.cpp \
-        ARGV.cpp \
-        Acceptor.cpp \
-        Activation_Queue.cpp \
-        Active_Map_Manager.cpp \
-        Active_Map_Manager_T.cpp \
-        Addr.cpp \
-        Arg_Shifter.cpp \
-        Asynch_Acceptor.cpp \
-        Asynch_IO.cpp \
-        Asynch_IO_Impl.cpp \
-        Auto_Ptr.cpp \
-        Basic_Types.cpp \
-        CDR_Stream.cpp \
-        CORBA_Handler.cpp \
-        CORBA_Ref.cpp \
-        Connector.cpp \
-        Containers.cpp \
-        Containers_T.cpp \
-        DEV.cpp \
-        DEV_Addr.cpp \
-        DEV_Connector.cpp \
-        DEV_IO.cpp \
-        DLL.cpp \
-        Date_Time.cpp \
-        Dirent.cpp \
-        Dump.cpp \
-        Dump_T.cpp \
-        Dynamic.cpp \
-        Dynamic_Service.cpp \
-        Env_Value_T.cpp \
-        Event_Handler.cpp \
-        Event_Handler_T.cpp \
-        FIFO.cpp \
-        FIFO_Recv.cpp \
-        FIFO_Recv_Msg.cpp \
-        FIFO_Send.cpp \
-        FIFO_Send_Msg.cpp \
-        FILE.cpp \
-        FILE_Addr.cpp \
-        FILE_Connector.cpp \
-        FILE_IO.cpp \
-        Filecache.cpp \
-        Free_List.cpp \
-        Functor.cpp \
-        Functor_T.cpp \
-        Future.cpp \
-        Get_Opt.cpp \
-        Handle_Set.cpp \
-        Hash_Map_Manager.cpp \
-        Hash_Map_Manager_T.cpp \
-        Hash_Purgable_Map_Manager_T.cpp \
-        High_Res_Timer.cpp \
-        INET_Addr.cpp \
-        IOStream.cpp \
-        IOStream_T.cpp \
-        IO_Cntl_Msg.cpp \
-        IO_SAP.cpp \
-        IPC_SAP.cpp \
-        LOCK_SOCK_Acceptor.cpp \
-        LSOCK.cpp \
-        LSOCK_Acceptor.cpp \
-        LSOCK_CODgram.cpp \
-        LSOCK_Connector.cpp \
-        LSOCK_Dgram.cpp \
-        LSOCK_Stream.cpp \
-        Local_Name_Space.cpp \
-        Local_Name_Space_T.cpp \
-        Local_Tokens.cpp \
-        Log_Msg.cpp \
-        Log_Record.cpp \
-        Malloc.cpp \
-        Malloc_T.cpp \
-        Managed_Object.cpp \
-        Map.cpp \
-        Map_Manager.cpp \
-        Map_T.cpp \
-        Mem_Map.cpp \
-        Memory_Pool.cpp \
-        Message_Block.cpp \
-        Message_Block_T.cpp \
-        Message_Queue.cpp \
-        Message_Queue_T.cpp \
-        Method_Request.cpp \
-        Module.cpp \
-        Msg_WFMO_Reactor.cpp \
-        Multiplexor.cpp \
-        NT_Service.cpp \
-        Name_Proxy.cpp \
-        Name_Request_Reply.cpp \
-        Name_Space.cpp \
-        Naming_Context.cpp \
-        OS.cpp \
-        Object_Manager.cpp \
-        Obstack.cpp \
-        POSIX_Asynch_IO.cpp \
-        POSIX_Proactor.cpp \
-        Pair.cpp \
-        Pair_T.cpp \
-        Parse_Node.cpp \
-        Pipe.cpp \
-        Priority_Reactor.cpp \
-        Proactor.cpp \
-        Process.cpp \
-        Process_Manager.cpp \
-        Profile_Timer.cpp \
-        RB_Tree.cpp \
-        Reactor.cpp \
-        Read_Buffer.cpp \
-        Registry.cpp \
-        Registry_Name_Space.cpp \
-        Remote_Name_Space.cpp \
-        Remote_Tokens.cpp \
-        SOCK.cpp \
-        SOCK_Acceptor.cpp \
-        SOCK_CODgram.cpp \
-        SOCK_Connector.cpp \
-        SOCK_Dgram.cpp \
-        SOCK_Dgram_Bcast.cpp \
-        SOCK_Dgram_Mcast.cpp \
-        SOCK_IO.cpp \
-        SOCK_Stream.cpp \
-        SPIPE.cpp \
-        SPIPE_Acceptor.cpp \
-        SPIPE_Addr.cpp \
-        SPIPE_Connector.cpp \
-        SPIPE_Stream.cpp \
-        SString.cpp \
-        SV_Message.cpp \
-        SV_Message_Queue.cpp \
-        SV_Semaphore_Complex.cpp \
-        SV_Semaphore_Simple.cpp \
-        SV_Shared_Memory.cpp \
-        Sched_Params.cpp \
-        Select_Reactor.cpp \
-        Select_Reactor_Base.cpp \
-        Select_Reactor_T.cpp \
-        Service_Config.cpp \
-        Service_Manager.cpp \
-        Service_Object.cpp \
-        Service_Repository.cpp \
-        Service_Types.cpp \
-        Shared_Memory.cpp \
-        Shared_Memory_MM.cpp \
-        Shared_Memory_SV.cpp \
-        Shared_Object.cpp \
-        Signal.cpp \
-        Singleton.cpp \
-        Stats.cpp \
-        Strategies.cpp \
-        Strategies_T.cpp \
-        Stream.cpp \
-        Stream_Modules.cpp \
-        Svc_Conf_l.cpp \
-        Svc_Conf_y.cpp \
-        Svc_Handler.cpp \
-        Synch.cpp \
-        Synch_Options.cpp \
-        Synch_T.cpp \
-        System_Time.cpp \
-        TLI.cpp \
-        TLI_Acceptor.cpp \
-        TLI_Connector.cpp \
-        TLI_Stream.cpp \
-        TP_Reactor.cpp \
-        TTY_IO.cpp \
-        Task.cpp \
-        Task_T.cpp \
-        Template_Instantiations.cpp \
-        Thread.cpp \
-        Thread_Manager.cpp \
-        Time_Request_Reply.cpp \
-        Timeprobe.cpp \
-        Timeprobe_T.cpp \
-        Timer_Hash.cpp \
-        Timer_Hash_T.cpp \
-        Timer_Heap.cpp \
-        Timer_Heap_T.cpp \
-        Timer_List.cpp \
-        Timer_List_T.cpp \
-        Timer_Queue.cpp \
-        Timer_Queue_Adapters.cpp \
-        Timer_Queue_T.cpp \
-        Timer_Wheel.cpp \
-        Timer_Wheel_T.cpp \
-        Token.cpp \
-        Token_Collection.cpp \
-        Token_Invariants.cpp \
-        Token_Manager.cpp \
-        Token_Request_Reply.cpp \
-        Trace.cpp \
-        Typed_SV_Message.cpp \
-        Typed_SV_Message_Queue.cpp \
-        UNIX_Addr.cpp \
-        UPIPE_Acceptor.cpp \
-        UPIPE_Connector.cpp \
-        UPIPE_Stream.cpp \
-        WFMO_Reactor.cpp \
-        WIN32_Asynch_IO.cpp \
-        WIN32_Proactor.cpp \
-        XtReactor.cpp \
-        gethrtime.cpp
 
 libACE_OS_la_SOURCES = \
         Basic_Types.cpp \
@@ -546,7 +163,11 @@ libACE_Utils_la_SOURCES = \
         Timer_List.cpp \
         Timer_Queue.cpp \
         Timer_Wheel.cpp \
-        gethrtime.cpp
+        $(ACE_GETHRTIME_CPP)
+
+# We only want `gethrtime.cpp' if building on Pentium(tm) so we need
+# to let Automake know that `gethrtime.cpp' is conditionally built.
+EXTRA_libACE_Utils_la_SOURCES = gethrtime.cpp
 
 libACE_Logging_la_SOURCES = \
         Dump.cpp \
@@ -581,7 +202,7 @@ libACE_Connection_la_SOURCES = \
         POSIX_Asynch_IO.cpp \
         Strategies.cpp
 
-libACE_Socket_la = \
+libACE_Sockets_la_SOURCES = \
         IPC_SAP.cpp \
         LSOCK.cpp \
         LSOCK_Acceptor.cpp \
@@ -689,6 +310,20 @@ libACE_Other_la_SOURCES = \
         TP_Reactor.cpp \
         XtReactor.cpp
 
+libACE_la_SOURCES = \
+	$(libACE_OS_la_SOURCES) \
+	$(libACE_Utils_la_SOURCES) \
+	$(libACE_Logging_la_SOURCES) \
+	$(libACE_Threads_la_SOURCES) \
+	$(libACE_Demux_la_SOURCES) \
+	$(libACE_Connection_la_SOURCES) \
+	$(libACE_Sockets_la_SOURCES) \
+	$(libACE_IPC_la_SOURCES) \
+	$(libACE_Svcconf_la_SOURCES) \
+	$(libACE_Streams_la_SOURCES) \
+	$(libACE_Memory_la_SOURCES) \
+	$(libACE_Token_la_SOURCES) \
+	$(libACE_Other_la_SOURCES)
 
 ## The following is an excerpt from the "libtool" manual, written by
 ## Gordon Matzigkeit:
@@ -770,6 +405,7 @@ ACE_TEMPLATE_FILES = \
         Svc_Handler.cpp \
         Synch_T.cpp \
         Task_T.cpp \
+        Template_Instantiations.cpp \
         Timeprobe_T.cpp \
         Timer_Hash_T.cpp \
         Timer_Heap_T.cpp \
