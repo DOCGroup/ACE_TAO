@@ -124,7 +124,6 @@
 
 // Platform supports POSIX timers via timestruc_t.
 #define ACE_HAS_POSIX_TIME
-#define ACE_HAS_SVR4_TIME
 
 // ACE_HAS_CLOCK_GETTIME requires linking with -lposix4.
 #define ACE_HAS_CLOCK_GETTIME

@@ -121,15 +121,9 @@
 
 //**************************************************************
 // Not so sure how next lines should look like
-// Platform supports POSIX timers via timestruc_t.
-// This will *NOT* work in 6.4, but ACE doesn't use it anymore.
-// #define ACE_HAS_POSIX_TIME
-// #define ACE_HAS_SVR4_TIME
-
 
 // Platform supports POSIX timers via timestruc_t.
 #define ACE_HAS_POSIX_TIME
-// #define ACE_HAS_SVR4_TIME
 #define ACE_LACKS_SYSTIME_H
 //**************************************************************
 
@@ -140,8 +134,7 @@
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
-
 
 #endif /* ACE_CONFIG_IRIX6X_COMMON_H */

@@ -8,7 +8,7 @@
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)
-#define __ACE_INLINE__
+# define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
 #if defined (__GNUG__)
@@ -51,17 +51,17 @@ struct ip_mreq
 };
 
 #if !defined (ACE_HAS_FSU_PTHREADS)
-#define ACE_HAS_FSU_PTHREADS
+# define ACE_HAS_FSU_PTHREADS
 #endif
 #if !defined (ACE_HAS_PTHREADS_DRAFT6)
-#define ACE_HAS_PTHREADS_DRAFT6
+# define ACE_HAS_PTHREADS_DRAFT6
 #endif
 
 // Added for compilation on the m88k
 #if defined (m88k)
-#define ACE_LACKS_T_ERRNO
-#define ACE_LACKS_MADVISE
-#define ACE_HAS_GNU_CSTRING_H
+# define ACE_LACKS_T_ERRNO
+# define ACE_LACKS_MADVISE
+# define ACE_HAS_GNU_CSTRING_H
 #endif  /* m88k */
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
@@ -104,7 +104,7 @@ struct ip_mreq
 
 #if !defined (m88k)
 // Compiler/platform supports SunOS high resolution timers.
-#define ACE_HAS_HI_RES_TIMER
+# define ACE_HAS_HI_RES_TIMER
 #endif  /* m88k */
 
 // Platform supports IP multicast
@@ -123,7 +123,6 @@ struct ip_mreq
 
 // Platform supports POSIX timers via timestruc_t.
 #define ACE_HAS_POSIX_TIME
-#define ACE_HAS_SVR4_TIME
 
 // Platform supports the /proc file system.
 #define ACE_HAS_PROC_FS
@@ -217,7 +216,7 @@ struct ip_mreq
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
 // Defines the page size of the system.

@@ -24,8 +24,8 @@
 #define ACE_HAS_STRING_CLASS
 
 // DF: Seems apropriate since this is a new compiler...
-#if ! defined (__ACE_INLINE__)
-#define __ACE_INLINE__
+#if !defined (__ACE_INLINE__)
+# define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
 #define ACE_HAS_BROKEN_MSG_H
@@ -107,7 +107,6 @@
 
 // Platform defines struct timespec in <sys/timers.h>
 #define ACE_HAS_BROKEN_POSIX_TIME
-// #define ACE_HAS_SVR4_TIME
 
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
@@ -171,14 +170,14 @@
 
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
-        #define ACE_MT_SAFE 1
+# define ACE_MT_SAFE 1
 #endif
 
 #define ACE_NEEDS_DEV_IO_CONVERSION
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
 // Defines the page size of the system.
