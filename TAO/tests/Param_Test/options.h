@@ -21,6 +21,7 @@
 #define OPTIONS_H
 
 #include "ace/Singleton.h"
+#include "ace/Read_Buffer.h"
 #include "tao/corba.h"
 
 class Options
@@ -87,6 +88,9 @@ public:
   // If we should request the server to shutdown.
 
 private:
+  int read_ior (char *filename);
+  // Function to read the servant IOR from a file.
+
   char *ior_;
   // IOR for the servant
 
