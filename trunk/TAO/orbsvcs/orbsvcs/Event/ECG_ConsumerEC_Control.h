@@ -27,6 +27,7 @@ class TAO_EC_ProxyPushSupplier;
 
 namespace CORBA
 {
+  class Environment;
   class SystemException;
 }
 

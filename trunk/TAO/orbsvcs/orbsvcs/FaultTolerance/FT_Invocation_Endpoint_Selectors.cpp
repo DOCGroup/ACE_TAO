@@ -7,6 +7,7 @@
 #include "tao/Profile.h"
 #include "tao/Endpoint.h"
 #include "tao/Base_Transport_Property.h"
+#include "tao/Environment.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
@@ -189,7 +190,7 @@ TAO_FT_Invocation_Endpoint_Selector::try_connect (
         r->try_connect (&desc,
                         max_wait_time
                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (false);
 
       // @@ Good place to handle timeouts.. We can omit timeouts and
       // go ahead looking for other things... There are some small

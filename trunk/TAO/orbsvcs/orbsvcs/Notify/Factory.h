@@ -44,6 +44,11 @@ class TAO_Notify_Consumer;
 class TAO_Notify_Supplier;
 class TAO_Notify_Peer;
 
+namespace CORBA
+{
+  class Environment;
+}
+
 template <class PROXY> class TAO_ESF_Proxy_Collection;
 
 typedef TAO_ESF_Proxy_Collection<TAO_Notify_ProxyConsumer> TAO_Notify_ProxyConsumer_Collection;
