@@ -1,3 +1,8 @@
+Thu Jun 26 01:34:46 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
+
+	* ace/{FILE,DEV}.{h,i}: Added the disable(int signum) function to
+ 	  prevent NT from disabling a FILE/DEV using socket calls.
+
 Wed Jun 25 12:59:00 1997    <irfan@TWOSTEP>
 
 	* ace/Synch_T.h (ACE_SYNCH_PROCESS_MUTEX and
