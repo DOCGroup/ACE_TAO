@@ -107,13 +107,6 @@ TAO_Server_Connection_Handler::transport (void)
 int
 TAO_Server_Connection_Handler::open (void*)
 {
-  // Called by the <Strategy_Acceptor> when the handler is completely
-  // connected.
-  ACE_INET_Addr addr;
-
-  if (this->peer ().get_remote_addr (addr) == -1)
-    return -1;
-
 #if !defined (ACE_LACKS_SOCKET_BUFSIZ)
   int sndbufsize =
     this->orb_core_->orb_params ()->sock_sndbuf_size ();
@@ -148,15 +141,21 @@ TAO_Server_Connection_Handler::open (void*)
   // operation fails we are out of luck (some platforms do not support
   // it and return -1).
 
-  char client[MAXHOSTNAMELEN + 1];
+  // Called by the <Strategy_Acceptor> when the handler is completely
+  // connected.
+  ACE_INET_Addr addr;
 
-  if (addr.get_host_name (client, MAXHOSTNAMELEN) == -1)
-    addr.addr_to_string (client, sizeof (client));
+  if (this->peer ().get_remote_addr (addr) == -1)
+    return -1;
 
-  if (TAO_orbdebug)
+  char client[MAXHOSTNAMELEN + 16];
+
+  (void) addr.addr_to_string (client, sizeof (client));
+
+  if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) connection from client %s\n",
-                client));
+                "(%P|%t) connection from client <%s> on %d\n",
+                client, this->peer ().get_handle ()));
   return 0;
 }
 
@@ -883,6 +882,22 @@ TAO_Client_Connection_Handler::open (void *)
   // operation fails we are out of luck (some platforms do not support
   // it and return -1).
 
+  // Called by the <Strategy_Acceptor> when the handler is completely
+  // connected.
+  ACE_INET_Addr addr;
+
+  if (this->peer ().get_remote_addr (addr) == -1)
+    return -1;
+
+  char server[MAXHOSTNAMELEN + 16];
+
+  (void) addr.addr_to_string (server, sizeof (server));
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "(%P|%t) connection to server <%s> on %d\n",
+                server, this->peer ().get_handle ()));
+
   // Register the handler with the Reactor if necessary.
   return this->transport ()->wait_strategy ()->register_handler ();
 }
@@ -905,11 +920,10 @@ TAO_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
   //    in turn take appropiate action (such as sending exceptions to
   //    all waiting reply handlers).
 
-  if (TAO_orbdebug)
+  if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "(%P|%t) TAO_Client_Connection_Handler::handle_close (%d, %d)\n",
-                 handle,
-                 rm));
+                 "(%P|%t) TAO_Client_Connection_Handler::"
+                 "handle_close (%d, %d)\n", handle, rm));
 
   if (this->recycler ())
     this->recycler ()->mark_as_closed (this->recycling_act ());
@@ -928,6 +942,8 @@ TAO_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
     }
 
   this->peer ().close ();
+
+  this->transport ()->handle_close ();
 
   return 0;
 }

@@ -1,3 +1,46 @@
+Sat May 29 22:49:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Wait_Strategy.h:
+	* tao/Wait_Strategy.cpp:
+	  The Wait_On_Reactor strategy was not passing up errors to the
+	  user.
+	  Don't hold the leader-follower lock while sending the request.
+	  Don't forget to reset reply_received when sending a request.
+	  Added a *lot* of debugging messages trying to fix the LF
+	  strategy, they should go away on the production version.
+	  New helper method for handle_input() and handle_close(), it is
+	  used to decide if we should wake up any sleeping threads.
+	  Removed obsolete @@ comments.
+
+	* tao/Connect.cpp:
+	  Re-organized some of the debugging code so it will be easier to
+	  remove/compile out.
+	  Inform the Transport when the connection closes, for example.
+
+	* tao/Pluggable.h:
+	* tao/Pluggable.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/IIOP_Transport.cpp:
+	  New handle_close() method used to detect a connection going
+	  down, the transport can use that to raise exceptions on all
+	  waiting threads (or Reply_Handlers).
+	  More debugging messages.
+	  Changed signature of destroy_cdr_stream()
+
+	* tao/Invocation.cpp:
+	  If send() fails then cleanup the transport ASAP.
+	  Bind the request id, dispatcher and CDR stream *before* sending
+	  the request.
+	  If send() fails report back to the user.
+
+	* tao/ORB_Core.cpp:
+	  The leader-follower lock is held by the user during the new
+	  leader election, otherwise some nasty race conditions creep in.
+
+	* tao/Request_Mux_Strategy.h:
+	* tao/Request_Mux_Strategy.cpp:
+	  Changed signature of destroy_cdr_stream()
+
 Sat May 29 22:35:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/NestedUpcall/Reactor/Makefile:

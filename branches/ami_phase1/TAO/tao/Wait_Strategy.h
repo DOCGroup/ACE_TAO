@@ -59,9 +59,8 @@ public:
   virtual int handle_input (void) = 0;
   // Handle the input.
 
-  // @@ Alex: this class should *not* depend on the IIOP_Handlers,
-  //    can't you use TAO_Transport for this? After all it returns an
-  //    Event_Handler if you need one...
+  virtual int handle_close (void) = 0;
+  // The connection was closed, take appropiate action...
 
   virtual int register_handler (void) = 0;
   // Register the handler with the Reactor if it makes sense for the
@@ -103,9 +102,8 @@ public:
   // Handle the input. Delegate this job to Transport object. Before
   // that suspend the handler in the Reactor.
 
-  // @@ Alex: this class should *not* depend on the IIOP_Handlers,
-  //    can't you use TAO_Transport for this? After all it returns an
-  //    Event_Handler if you need one...
+  virtual int handle_close (void);
+  // The connection was closed, take appropiate action...
 
   virtual int register_handler (void);
   // Register the handler with the Reactor.
@@ -115,7 +113,7 @@ public:
 
 private:
   int reply_received_;
-  // This flag indicates if a *complete* reply has been received. Used 
+  // This flag indicates if a *complete* reply has been received. Used
   // to exit the event loop.
 };
 
@@ -149,7 +147,8 @@ public:
   // Handle the input. Delegate this job to Transport object. Before
   // that, suspend the handler in the Reactor.
 
-  // @@ Alex: another use of IIOP_Handler...
+  virtual int handle_close (void);
+  // The connection was closed, take appropiate action...
 
   virtual int register_handler (void);
   // Register the handler with the Reactor.
@@ -161,6 +160,10 @@ protected:
   ACE_SYNCH_CONDITION* cond_response_available (void);
   // Return the cond_response_available, initializing it if necessary.
 
+  void wake_up (void);
+  // Helper method to wake us up when we are a follower...
+
+protected:
   ACE_thread_t calling_thread_;
   // the thread ID of the thread we were running in.
 
@@ -200,7 +203,8 @@ public:
   virtual int handle_input (void);
   // Handle the input. Delegate this job to Transport object.
 
-  // @@ Alex: another use of IIOP_Handler...
+  virtual int handle_close (void);
+  // The connection was closed, take appropiate action...
 
   virtual int register_handler (void);
   // No-op. Return 0.

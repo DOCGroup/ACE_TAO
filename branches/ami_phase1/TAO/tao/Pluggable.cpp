@@ -63,6 +63,12 @@ TAO_Transport::input_cdr_stream (void) const
   return this->rms_->get_cdr_stream ();
 }
 
+void
+TAO_Transport::destroy_cdr_stream (TAO_InputCDR *cdr) const
+{
+  this->rms_->destroy_cdr_stream (cdr);
+}
+
 // Set the total size of the incoming message. (This does not
 // include the header size).
 void
@@ -181,6 +187,12 @@ TAO_Transport::suspend_handler (void)
 
 int
 TAO_Transport::resume_handler (void)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+int
+TAO_Transport::handle_close (void)
 {
   ACE_NOTSUP_RETURN (-1);
 }

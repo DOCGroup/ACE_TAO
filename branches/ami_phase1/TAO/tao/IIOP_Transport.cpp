@@ -245,10 +245,18 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
     case TAO_GIOP::MessageError:
       // Handle errors like these.
       // @@ this->reply_handler_->error ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO (%P|%t) %N:%l handle_client_input: "
+                         "error on stream.\n"),
+                        -1);
       return -1;
 
     case TAO_GIOP::Fragment:
       // Handle this.
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO (%P|%t) %N:%l handle_client_input: "
+                         "fragment.\n"),
+                        -1);
       return -1;
 
     case TAO_GIOP::Request:
@@ -257,6 +265,10 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
       // on the firt iteration, leave it for the nearby future...
       // ERROR too.
       // @@ this->reply_handler_->error ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO (%P|%t) %N:%l handle_client_input: "
+                         "request.\n"),
+                        -1);
       return -1;
 
     case TAO_GIOP::CancelRequest:
@@ -264,6 +276,10 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
     case TAO_GIOP::CloseConnection:
       // @@ Errors for the time being.
       // @@ this->reply_handler_->error ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO (%P|%t) %N:%l handle_client_input: "
+                         "wrong message.\n"),
+                        -1);
       return -1;
 
     case TAO_GIOP::LocateReply:
@@ -324,11 +340,16 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
 
   // Handle the reply.
   if (reply_dispatcher->dispatch_reply () == -1)
-    return -1;
-
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO (%P|%t) %N:%l handle_client_input: "
+                         "dispatch reply.\n"),
+                        -1);
+      return -1;
+    }
   // This is a NOOP for the Exclusive request case, but it actually
   // destroys the stream in the muxed case.
-  this->rms_->destroy_cdr_stream ();
+  this->destroy_cdr_stream (cdr);
 
   // Return something to indicate the reply is received.
   return 1;
@@ -360,6 +381,14 @@ TAO_IIOP_Client_Transport::resume_handler (void)
 }
 
 int
+TAO_IIOP_Client_Transport::handle_close (void)
+{
+  this->wait_strategy ()->handle_close ();
+  // @@ Should we? : this->rms_->handle_close ();
+  return 0;
+}
+
+int
 TAO_IIOP_Client_Transport::check_unexpected_data (void)
 {
   // @@ Alex: This should *not* be part of the client connection
@@ -386,6 +415,9 @@ TAO_IIOP_Client_Transport::check_unexpected_data (void)
       // Both will result in us returning -1 and this connection
       // getting closed
       //
+      // if (errno == EWOULDBLOCK)
+      // return 0;
+
       if (TAO_debug_level)
         ACE_DEBUG ((LM_WARNING,
                     "TAO_IIOP_Client_Transport::check_unexpected_data: "

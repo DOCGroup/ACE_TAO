@@ -161,6 +161,9 @@ public:
   // Resume the handler from the reactor. This will be called by the
   // Wait Strategy if Reactor is used  for that strategy.
 
+  virtual int handle_close (void);
+  // The connection was closed, let everybody know about it....
+
 protected:
   int check_unexpected_data (void);
   // This method checks for unexpected data.
