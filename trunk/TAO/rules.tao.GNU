@@ -185,10 +185,22 @@ IDL_EXT2=Cli.h $(IDL_EXT2_MINUS)
 
 .SUFFIXES: $(IDL_EXT)
 
+$(foreach ext, $(IDL_EXT_MINUS), %$(ext)): %$(IDL_CLIENT_HDR_EXT)
+	@
+
 ifneq ($(tao_dont_use_idl_make_rule),1)
-$(foreach ext, $(IDL_EXT) $(IDL_EXT2), %$(ext)): %.idl $(TAO_IDL_DEP)
+%C.h: %.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 endif
+
+$(foreach ext, $(IDL_EXT2_MINUS), %$(ext)): %Cli.h
+	@
+
+ifneq ($(tao_dont_use_idl_make_rule),1)
+%Cli.h: %.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $<
+endif
+
 
 # Turn on symbol versioning. The scheme that we follow is to allow
 # applications dependent on libraries, with same version numbers (major,
