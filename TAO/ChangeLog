@@ -1,3 +1,11 @@
+Tue Apr 29 10:58:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+          Removed unused argument and moved the setting of a flag to the
+          end of the method in which it appears more than once, so that
+          the second check will not return a bogus value.
+
 Tue Apr 29 16:13:46 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* tests/Abstract_Interface/client.cpp: Fixed build error.
