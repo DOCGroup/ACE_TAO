@@ -59,6 +59,16 @@
 # if defined (_GNU_SOURCE)
 #   define ACE_HAS_STRNLEN
 #   define ACE_HAS_WCSNLEN
+
+  // This is probably not a 100%-sure-fire check... Red Hat Linux 9
+  // and Enterprise Linux 3 and up have a new kernel that can send signals
+  // across threads. This was not possible prior because there was no real
+  // difference between a process and a thread. With this, the
+  // ACE_POSIX_SIG_Proactor is the only chance of getting asynch I/O working.
+  // There are restrictions, such as all socket operations being silently
+  // converted to synchronous by the kernel, that make aio a non-starter
+  // for most Linux platforms at this time. But we'll start to crawl...
+#   define ACE_POSIX_SIG_PROACTOR
 # endif
 
   // To avoid the strangeness with Linux's ::select (), which modifies

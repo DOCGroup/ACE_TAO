@@ -1,3 +1,14 @@
+Mon Apr 12 17:43:51 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-linux-common.h: In the newer-glibc section, add a
+	  #define ACE_POSIX_SIG_PROACTOR. This is a (possibly incomplete)
+	  attempt to make Linux use the sig proactor for newer linuxes such
+	  as Red Hat Linux 9 and Enterprise Linux 3, where it is possible to
+	  send a signal across threads in a process. I'm not terribly worried
+	  if the check is imperfect, since there's no chance for asynch I/O to
+	  work any other way, and not at all on Linux versions that can't do
+	  the cross-thread signals.
+
 Mon Apr 12 16:40:33 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-hpux-11.00.h: Force the Proactor implementation to
