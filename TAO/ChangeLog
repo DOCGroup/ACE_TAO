@@ -1,3 +1,11 @@
+Wed Apr 30 16:31:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_array/array_cs.h:
+
+          Fixed explicit template instatiation for arrays.
+
 Wed Apr 30 14:59:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_sequence.cpp:

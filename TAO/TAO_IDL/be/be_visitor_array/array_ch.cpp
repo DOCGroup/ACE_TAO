@@ -233,9 +233,10 @@ int be_visitor_array_ch::visit_array (be_array *node)
               << node->local_name () << "_slice," << be_nl
               << "tao_" << node->local_name () << "_life" << be_uidt_nl
               << ">" << be_uidt_nl
-              << node->local_name () << "_var;" << be_uidt_nl;
+              << node->local_name () << "_var;" << be_uidt;
 
-          *os << "typedef" << be_idt_nl
+          *os << be_nl << be_nl
+              << "typedef" << be_idt_nl
               << "TAO_Array_Out_T<" << be_idt << be_idt_nl
               << node->local_name () << "_var," << be_nl
               << node->local_name () << "_slice," << be_nl
