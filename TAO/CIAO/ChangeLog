@@ -1,3 +1,12 @@
+Tue May 27 09:57:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_DetailView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_MapView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_NodeItem.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_RootPanel.cpp:
+	  Removed these Qt generated files.  Andrey fixed the mpc file for
+	  this component so they will be generated on the fly.
+	
 Mon May 26 21:34:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/Simple_Component_Server/Simple_Component_Server.cpp:
