@@ -38,6 +38,8 @@
 
 ACE_RCSID(tests, Priority_Reactor_Test, "$Id$")
 
+static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+
 // The number of children to run, it can be changed using the -c
 // option.
 static int opt_nchildren =

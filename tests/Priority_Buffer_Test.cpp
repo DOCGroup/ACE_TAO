@@ -28,6 +28,8 @@ ACE_RCSID(tests, Priority_Buffer_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+
 // Global message count.
 static int count = 0;
 
@@ -106,7 +108,7 @@ producer (void *args)
 
   ACE_Message_Block *mb;
 
-  for (char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
     {
       count++;
 

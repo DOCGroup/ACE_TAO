@@ -4314,10 +4314,6 @@ SOURCE=.\Auto_Ptr.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Base_Pointer_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Base_Thread_Adapter.h
 # End Source File
 # Begin Source File
@@ -4346,7 +4342,7 @@ SOURCE=.\Caching_Strategies_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Caching_Strategy_Utility_T.h
+SOURCE=.\Caching_Utility_T.h
 # End Source File
 # Begin Source File
 
@@ -4906,10 +4902,6 @@ SOURCE=.\Reactor_Impl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ReactorEx.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Read_Buffer.h
 # End Source File
 # Begin Source File
@@ -5067,10 +5059,6 @@ SOURCE=.\SString.h
 # Begin Source File
 
 SOURCE=.\Stats.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\stdcpp.h
 # End Source File
 # Begin Source File
 

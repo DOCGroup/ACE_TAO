@@ -78,8 +78,6 @@ const size_t ACE_MAX_ITERATIONS = 10;
 const size_t ACE_MAX_PROCESSES = 10;
 const size_t ACE_MAX_THREADS = 4;
 
-char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
-
 #define ACE_START_TEST(NAME) \
   const ACE_TCHAR *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
