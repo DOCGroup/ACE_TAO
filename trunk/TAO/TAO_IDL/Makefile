@@ -9,17 +9,19 @@
 #----------------------------------------------------------------------------
 
 INFO	= 
+LIBS	= -lACE
 DIRS	= driver fe ast util narrow be
 BIN	= tao
 TAOLIBS	= -ldrv -lfe -last -lutil -lnarrow -lbe
 CLONE	= 
-
+BUILD	= $(VBIN)
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
@@ -29,14 +31,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 #----------------------------------------------------------------------------
 
 all:
-	cp ./driver/libdrv.$(SOEXT) \
-		./fe/libfe.$(SOEXT) \
-		./ast/libast.$(SOEXT) \
-		./util/libutil.$(SOEXT) \
-		./narrow/libnarrow.$(SOEXT) \
-		./be/libbe.$(SOEXT) \
-		 /project/mambo/gokhale/lib
-	$(CXX) -g -o tao $(TAOLIBS) $(LIBS) -lthread
+	$(PRELINK) $(CXX) -g -o tao $(TAOLIBS) $(LIBS) -lthread
 
 tags:
 	rm -f TAGS
