@@ -147,7 +147,7 @@ ACE_Overlapped_IO::initiate (u_long &bytes_transferred)
 #else
   bytes_transferred = bytes_transferred;
   ACE_NOTSUP_RETURN (-1);
-#endif
+#endif /* ACE_WIN32 */
 }
 
 ACE_Overlapped_IO::operator ACE_OVERLAPPED * (void)
@@ -190,7 +190,7 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads, ACE_Timer_Queue *tq)
 		    "%p CreateIoCompletionPort failed errno = %d.\n",
 		    "ACE_Proactor::initiate", error));
     }
-#endif
+#endif /* ACE_WIN32 */
 }
 
 ACE_Proactor::~ACE_Proactor (void)
