@@ -35,10 +35,8 @@ ACE_RCSID(HTIOP,
 
 template <class SVC_HANDLER>
 TAO::HTIOP::Creation_Strategy<SVC_HANDLER>::Creation_Strategy (TAO_ORB_Core *orb_core,
-                                                           void *arg,
-                                                           CORBA::Boolean flag)
+                                                               CORBA::Boolean flag)
   : orb_core_ (orb_core),
-    arg_ (arg),
     lite_flag_ (flag)
 {
 }

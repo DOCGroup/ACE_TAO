@@ -481,8 +481,7 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
                             ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
-                  CREATION_STRATEGY (this->orb_core_,
-                                               0),
+                  CREATION_STRATEGY (this->orb_core_,0),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,
@@ -516,7 +515,7 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
       // @@ Should this be a catastrophic error???
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\n\nTAO (%P|%t) TAO::HTIOP::Acceptor::open_i ")
+                    ACE_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i ")
                     ACE_TEXT ("- %p\n\n"),
                     ACE_TEXT ("cannot get local addr")));
       return -1;
@@ -542,7 +541,7 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
       for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("\nTAO (%P|%t) TAO::HTIOP::Acceptor::open_i - ")
+                      ACE_LIB_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i - ")
                       ACE_LIB_TEXT ("listening on: <%s:%u>\n"),
                       ACE_TEXT_CHAR_TO_TCHAR(this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
