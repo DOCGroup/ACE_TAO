@@ -675,13 +675,33 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	    if (env.exception () != 0)
 	      return TAO_GIOP_SYSTEM_EXCEPTION;
 
-	    this->inp_stream_.decode (exception->_type (),
-				      &exception, 0,
-				      env);
-	    env.exception (exception);
-	    return TAO_GIOP_SYSTEM_EXCEPTION;
+	    if (exception != 0)
+	      {
+		this->inp_stream_.decode (exception->_type (),
+					  &exception, 0,
+					  env);
+		if (env.exception () != 0)
+		  return TAO_GIOP_SYSTEM_EXCEPTION;
+		env.exception (exception);
+		return TAO_GIOP_SYSTEM_EXCEPTION;
+	      }
+	    else
+	      {
+		// @@ TODO We should have policies to handle this
+		// error, for instance:
+		// + the spec requires us to silently raise a
+		// CORBA::UNKNOWN exception
+		// + Don't print a message and try
+		// + Print the message and try
+		// + Print the message and rasize CORBA::UNKNOWN
+		ACE_ERROR ((LM_ERROR,
+			    "Received Reply with SYSTEM_EXCEPTION "
+			    "status, but unknown or invalid "
+			    "exception.\n"
+			    "Trying to interpret as a user exception"));
+	      }
 	  }
-	else
+	// else // this else is commented out, see the coment above
 	  {
 	    // Find it in the operation description and then use that
 	    // to get the typecode.
@@ -709,14 +729,9 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 		if (ACE_OS::strcmp (buf, xid) != 0)
 		    continue;
 
-		// @@ TODO Somehow store the CDR inside the Any, we
-		// know what is the typecode (tcp), but there is no
-		// constructor for Any taking a TypeCode and a CDR
-		// stream, it may be that we need an extension to the
-		// CORBA_Any class
-		// const ACE_Message_Block* cdr = 
-		// this->inp_stream_.start ();
-		CORBA_Any any;
+		const ACE_Message_Block* cdr = 
+		  this->inp_stream_.start ();
+		CORBA_Any any (tcp, cdr);
 		CORBA_Exception *exception = 
 		  new CORBA_UnknownUserException (any);
 		env.exception (exception);
@@ -724,12 +739,13 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
               }
           }
 
-        // If we couldn't find this exception's typecode, report it as
-        // CORBA::UNKNOWN exception.
-	
+        // If we couldn't find the right exception, report it as
+	// CORBA::UNKNOWN.
+
 	env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE));
 	return TAO_GIOP_SYSTEM_EXCEPTION;
       }
+    // NOTREACHED
 	
     case TAO_GIOP_LOCATION_FORWARD:
       return (this->location_forward (this->inp_stream_, env));
@@ -939,13 +955,18 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 	    if (env.exception () != 0)
 	      return TAO_GIOP_SYSTEM_EXCEPTION;
 
-	    this->inp_stream_.decode (exception->_type (),
-				      exception, 0,
-				      env);
-	    if (env.exception () != 0)
-	      return TAO_GIOP_SYSTEM_EXCEPTION;
+	    if (exception != 0)
+	      {
+		this->inp_stream_.decode (exception->_type (),
+					  exception, 0,
+					  env);
+		// @@ What do we do if an exception is raised while
+		// demarshaling an exception????
+		env.exception (exception);
+		return TAO_GIOP_SYSTEM_EXCEPTION;
+	      }
           }
-        else
+	// else // this else is commented out, see the coment above
           {
             // search the table of exceptions and see if there is a match
             for (CORBA::ULong i = 0;
@@ -978,25 +999,18 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 					      env);
 		    if (env.exception () != 0)
 		      return TAO_GIOP_SYSTEM_EXCEPTION;
-                    break;
+		    env.exception (exception);
+		    return TAO_GIOP_USER_EXCEPTION;
                   }
               } // end of loop
             CORBA::string_free (buf);
           }
 
-        // If we couldn't find this exception's typecode, report it as
-        // a CORBA::UNKNOWN, i.e. we got an exception that was not the
-	// right type...
+        // If we couldn't find the right exception, report it as
+	// CORBA::UNKNOWN.
 
-        if (exception == 0)
-          {
-	    env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_YES));
-            return TAO_GIOP_SYSTEM_EXCEPTION;
-          }
-
-        env.exception (exception);
-        return (TAO_GIOP_ReplyStatusType) reply_status;
-
+	env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_YES));
+	return TAO_GIOP_SYSTEM_EXCEPTION;
       }
     // NOTREACHED
 
