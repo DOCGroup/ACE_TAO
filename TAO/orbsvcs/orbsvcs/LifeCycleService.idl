@@ -57,7 +57,7 @@ module LifeCycleService
       // multiply defined symbols in the above configuration. We need
       // to fix the IDL compile at some point of time. Till then this
       // should be okay...
-      typedef CosLifeCycle::Criterias SeqNamedValuePair;
+      typedef CosLifeCycle::Criteria SeqNamedValuePair;
       typedef CosLifeCycle::Criteria Criteria;
 
       exception NotAvailable { string reason; };

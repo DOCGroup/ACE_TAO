@@ -1,3 +1,9 @@
+Mon Jun  2 00:44:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/LifeCycleService.idl (LifeCycleService): Fixed 
+	  a stupid typo. Actually caught this a half an hour back but 
+	  couldnt  get this into the repository.
+
 Mon Jun  2 00:25:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/IDL_Test/Makefile: Disable the test if
