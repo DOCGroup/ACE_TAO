@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file POA.h
+ *  @file POA_Helper.h
  *
  *  $Id$
  *
