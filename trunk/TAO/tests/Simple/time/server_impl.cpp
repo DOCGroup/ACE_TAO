@@ -39,7 +39,6 @@ Server_Impl::parse_args (void)
                            argv_ [0]),
                           1);
       }
-
   // Indicates successful parsing of command line.
   return 0;
 }
@@ -89,7 +88,10 @@ int
 Server_Impl::run (CORBA::Environment& env)
 {
   if (this->orb_manager_.run (env) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Server_Impl::run"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Server_Impl::run"),
+                      -1);
+
   return 0;
 }
 

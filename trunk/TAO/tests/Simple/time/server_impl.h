@@ -10,8 +10,8 @@
 //    server_impl.h
 //
 // = DESCRIPTION
-//    Class which implements a CORBA server which sets up the simple object
-//    implementation and the orb.
+//    A CORBA server that initializes the time server implementation
+//    and the ORB.
 //
 // = AUTHORS
 //    Darrell Brunsch <brunsch@cs.wustl.edu>
@@ -27,20 +27,17 @@
 class Server_Impl
 {
   // = TITLE
-  //   CORBA Server Implementation
-  //
-  // = DESCRIPTION
-  //   
+  //   CORBA Server implementation.
 public:
   // = Initialization and termination methods.
   Server_Impl (void);
-  // Default constructor
+  // Constructor.
 
   ~Server_Impl (void);
-  // Destructor
+  // Destructor.
 
-  int init (int argc, char **argv, CORBA::Environment& env);
-  // Initialize the Server state - parsing arguments and waiting
+  int init (int argc, char *argv[], CORBA::Environment& env);
+  // Initialize the Server state - parsing arguments and waiting.
 
   int run (CORBA::Environment& env);
   // Run the orb 
