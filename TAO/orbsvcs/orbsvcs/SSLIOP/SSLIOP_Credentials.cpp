@@ -174,11 +174,28 @@ TAO::SSLIOP_Credentials::operator== (const TAO::SSLIOP_Credentials &rhs)
   // EVP_PKEY *ea = this->evp_.in ();
   // EVP_PKEY *eb = rhs.evp_.in ();
 
+  ACE_DECLARE_NEW_CORBA_ENV;
+  // No need for a full blown ACE_TRY/CATCH block.
+
+  const SecurityLevel3::CredentialsType lct =
+    this->creds_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
+
+  const SecurityLevel3::CredentialsType rct =
+    rhs.creds_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
+
+  // Don't bother check the creds_id and expiry_time attributes.  They
+  // are checked implicitly by the below X509_cmp() call.
+  //
+  // Additionally, the creds_state attribute is not included in the
+  // check since it is not considered important when distinguishing
+  // between two Credentials.
+
   return
-//     this->accepting_options_supported_ == rhs.accepting_options_supported_
-//     && this->accepting_options_required_ == rhs.accepting_options_required_
-//     && this->invocation_options_supported_ == rhs.invocation_options_supported_    && this->invocation_options_required_ == rhs.invocation_options_required_
-    ((xa == xb) || (xa != 0 && xb != 0 && ::X509_cmp (xa, xb) == 0))
+    lct == rct
+    && this->creds_usage_ == rhs.creds_usage_
+    && ((xa == xb) || (xa != 0 && xb != 0 && ::X509_cmp (xa, xb) == 0))
 //     && ((ea == eb) || (ea != 0 && eb != 0 && ::EVP_PKEY_cmp (ea, eb) == 0))
     ;
 }
@@ -186,7 +203,7 @@ TAO::SSLIOP_Credentials::operator== (const TAO::SSLIOP_Credentials &rhs)
 CORBA::ULong
 TAO::SSLIOP_Credentials::hash (void) const
 {
-  ::X509 *x509 = this->x509_.in ();
+  ::X509 * x509 = this->x509_.in ();
 
   return (x509 == 0 ? 0 : ::X509_issuer_name_hash (x509));
 }
