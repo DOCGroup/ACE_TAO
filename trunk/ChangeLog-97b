@@ -23,9 +23,9 @@ Sat Sep 20 17:32:23 1997  David L. Levine  <levine@cs.wustl.edu>
 	  get the same effect from the "make" command line, e.g.,
 	  "make optimize=1 debug=0".
 
-	  I (tried to) add optimize=1 to platform_*.GNU files that
-	  had -O, etc., in their C[C]FLAGS.  Therefore, there should
-	  be no net effect from this change on any platform.
+	  I add optimize=1 to platform_*.GNU files that had -O, etc.,
+	  in their C[C]FLAGS.  Therefore, there should be no net effect
+	  from this change on any platform.
 
 	* include/makeinclude/wrapper_macros.GNU:
 	  I _removed_ the disabling of "debug" when "optimize=1" is
