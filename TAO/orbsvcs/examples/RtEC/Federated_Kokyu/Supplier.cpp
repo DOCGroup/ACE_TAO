@@ -6,6 +6,7 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/RtecEventCommC.h"
 #include <ace/Counter.h>
+#include <ace/OS_NS_sys_time.h>
 
 #if defined (ACE_HAS_DSUI)
 #include <dsui.h>

@@ -11,6 +11,7 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Event_Limit.h"
+#include <ace/OS_NS_sys_time.h>
 
 #include "Kokyu_EC.h"
 #include "Consumer.h"
