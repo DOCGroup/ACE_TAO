@@ -243,8 +243,7 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
- SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
+ SSL_Context.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -375,8 +374,7 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
- SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
+ SSL_Context.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -515,8 +513,7 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
- SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
+ SSL_Context.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -627,8 +624,7 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
- SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
+ SSL_Context.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -743,8 +739,7 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
- SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
+ SSL_Context.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
