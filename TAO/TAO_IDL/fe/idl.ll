@@ -263,9 +263,10 @@ idl_parse_line_and_file(char *buf)
   UTL_String	*nm;
 
   /* Skip initial '#' */
-  if (*r != '#') {
+  if (*r != '#') 
     return;
-  }
+  else
+    r++;
 
   /* Check to see if we're running under the screwy Microsoft scheme
   /* of putting #line num instead of #num. */ 
