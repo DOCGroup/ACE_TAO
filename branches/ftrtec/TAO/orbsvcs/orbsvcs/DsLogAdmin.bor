@@ -1,0 +1,76 @@
+#
+# Makefile for building the TAO DsLogAdmin library
+#
+
+NAME = TAO_DsLogAdmin
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
+	-I..\.. -Ge 1 -Wb,export_macro=TAO_Log_Export \
+	-Wb,export_include=Log/log_export.h -Wb,pre_include=ace/pre.h \
+	-Wb,post_include=ace/post.h
+
+IDLFILES = \
+	$(IDLDIR)\DsLogAdmin.idl \
+	$(IDLDIR)\DsLogNotification.idl
+
+OBJFILES = \
+	$(OBJDIR)\BasicLog_i.obj \
+	$(OBJDIR)\BasicLogFactory_i.obj \
+	$(OBJDIR)\DsLogAdminC.obj \
+	$(OBJDIR)\DsLogAdminS.obj \
+	$(OBJDIR)\DsLogNotificationC.obj \
+	$(OBJDIR)\DsLogNotificationS.obj \
+	$(OBJDIR)\Iterator_i.obj \
+	$(OBJDIR)\Log_Constraint_Interpreter.obj \
+	$(OBJDIR)\Log_Constraint_Visitors.obj \
+	$(OBJDIR)\Log_i.obj \
+	$(OBJDIR)\LogMgr_i.obj \
+	$(OBJDIR)\LogNotification.obj \
+	$(OBJDIR)\LogRecordStore.obj \
+	$(OBJDIR)\PersistStore.obj
+
+RESOURCE = $(OBJDIR)\DsLogAdmin.res
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS) \
+  $(TAO_TRADING_CFLAGS) \
+  $(TAO_DYNAMICANY_CFLAGS) \
+  $(TAO_ETCL_CFLAGS) \
+	$(TAO_LOG_CFLAGS) \
+	-DTAO_LOG_BUILD_DLL
+
+CPPDIR = .;Log
+
+IDLDIR = .
+
+INCDIR_NAME = orbsvcs\Log
+INCLUDES = Log\*.h
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_SVC_UTILS_LIB) \
+	$(TAO_TRADING_LIB) \
+	$(TAO_DYNAMICANY_LIB) \
+	$(TAO_ETCL_LIB)
+
+all: idl_src_files
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+$(IDLDIR)\DsLogAdminC.cpp $(IDLDIR)\DsLogAdminS.cpp: $(IDLDIR)\DsLogAdmin.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\DsLogNotificationC.cpp $(IDLDIR)\DsLogNotificationS.cpp: $(IDLDIR)\DsLogNotification.idl
+	$(TAO_IDL) $**

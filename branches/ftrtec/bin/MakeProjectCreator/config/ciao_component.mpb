@@ -1,0 +1,4 @@
+project : ciao_client, portableserver {
+  after    += CIAO_Container
+  libs     += CIAO_Container
+}

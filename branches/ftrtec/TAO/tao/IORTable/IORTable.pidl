@@ -1,0 +1,79 @@
+// ================================================================
+/**
+ * @file IORTable.pidl
+ *
+ * $Id$
+ *
+ * @author Carlos O'Ryan <coryan@uci.edu>
+ *
+ * @brief Pre-compiled IDL source for the IORTable module.
+ *
+ * This file was used to generate the code in
+ * IORTable{C,S,S_T}.{h,i,cpp}
+ *
+ *   The command used to generate code from this file is:
+ *
+ *     tao_idl -o orig -Ge 1 -Sa -St \
+ *          -Wb,export_macro=TAO_IORTable_Export \
+ *          -Wb,export_include=iortable_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          IORTable.pidl
+ *
+ */
+// ================================================================
+
+/// Define a module to avoid namespace pollution
+module IORTable
+{
+  local interface Locator;
+
+  /// The object key is already in the IORTable
+  exception AlreadyBound {};
+
+  /// Cannot find the object key in the IORTable
+  exception NotFound {};
+
+  /// Define the IORTable interface
+  /**
+   *
+   *  Any TAO server can be configured as an corbaloc agent.
+   *  Such agents forward requests generated using a simple
+   *  ObjectKey in a corbaloc specifcation to the real location
+   *  of the object.
+   *  In TAO we implement this feature by dynamically (or
+   *  statically) adding a new Object Adapter to the ORB, that
+   *  handles any sort of request.
+   */
+  local interface Table
+  {
+    /// Bind <object_key> to the <IOR>
+    void bind (in string object_key,
+               in string IOR)
+      raises (AlreadyBound);
+
+    /// Bind <object_key> to the <IOR>
+    void rebind (in string object_key,
+                 in string IOR);
+
+    /// Remove the binding for <object_key>
+    void unbind (in string object_key)
+      raises (NotFound);
+
+    /// Set the locator, if no binding is set for an object_key we try
+    /// to use the locator to resolve it
+    void set_locator (in Locator the_locator);
+  };
+
+  /// Callback interface to locate  object keys dynamically
+  /**
+   * The application can provide a callback interface to locate object
+   * keys dynamically.
+   */
+  local interface Locator
+  {
+    /// Returns an IOR to use for <object_key>
+    string locate (in string object_key)
+      raises (NotFound);
+  };
+};
