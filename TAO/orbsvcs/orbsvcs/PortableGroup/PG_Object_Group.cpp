@@ -558,7 +558,7 @@ TAO::PG_Object_Group::locations_of_members (ACE_ENV_SINGLE_ARG_DECL)
   size_t pos = 0;
   for (MemberMap_Iterator it = this->members_.begin();
       it != this->members_.end();
-      this->members_.begin())
+      ++it)
   {
     const PortableGroup::Location & location = (*it).ext_id_;
     PortableGroup::Location & out = (*result)[pos];
