@@ -1,3 +1,10 @@
+Wed Aug 11 09:45:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/IDL_Test/main.cpp:
+	  Removed an unneeded '#pragma once' and fixed
+	  some ACE_CHECK_RETURNs used inside a try block.
+	  Thanks to David for pointing out the boo-boos.
+
 Tue Aug 10 21:55:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/lex.yy.cpp:
