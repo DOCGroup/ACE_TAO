@@ -263,7 +263,7 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
         {
           // Ignore exceptions, we must isolate other clients from
           // problems on this one.
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                "ProxySupplier::disconnect_push_supplier");
         }
       ACE_ENDTRY;

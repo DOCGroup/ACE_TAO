@@ -1,3 +1,17 @@
+Tue Jan 18 08:56:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.i:
+          Added a protected modified for the supplier (or consumer in the
+          ProxySupplier case), this is useful for users that inherit from
+          the ProxySupplier or ProxyConsumer and change the policies used
+          to communicate with the peer.  Notice that this changes should
+          only be made once the connection is complete, i.e. after
+          connect_push_XXX() has completed.
+
 Mon Jan 17 22:13:05 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:

@@ -127,7 +127,12 @@ public:
   virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV =
                                 TAO_default_environment ());
 
-private:
+protected:
+  void supplier (RtecEventComm::PushSupplier_ptr supplier);
+  void supplier_i (RtecEventComm::PushSupplier_ptr supplier);
+  // Set the supplier, used by some implementations to change the
+  // policies used when invoking operations on the supplier.
+
   CORBA::Boolean is_connected_i (void) const;
   // The private version (without locking) of is_connected().
 

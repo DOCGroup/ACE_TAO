@@ -30,6 +30,20 @@ TAO_EC_ProxyPushSupplier::consumer (void) const
   return this->consumer_.in ();
 }
 
+ACE_INLINE void
+TAO_EC_ProxyPushSupplier::consumer_i (RtecEventComm::PushConsumer_ptr consumer)
+{
+  this->consumer_ = consumer;
+}
+
+ACE_INLINE void
+TAO_EC_ProxyPushSupplier::consumer (RtecEventComm::PushConsumer_ptr consumer)
+{
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+
+  this->consumer_i (consumer);
+}
+
 ACE_INLINE const RtecEventChannelAdmin::ConsumerQOS&
 TAO_EC_ProxyPushSupplier::subscriptions (void) const
 {
