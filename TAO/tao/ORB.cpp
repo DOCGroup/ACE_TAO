@@ -231,6 +231,28 @@ CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion,
                                ACE_TRY_ENV);
 }
 
+int
+CORBA_ORB::perform_work (const ACE_Time_Value &tv)
+{
+  ACE_Reactor *r = this->orb_core_->reactor ();
+
+  // Set the owning thread of the Reactor to the one which we're
+  // currently in.  This is necessary b/c it's possible that the
+  // application is calling us from a thread other than that in which
+  // the Reactor's CTOR (which sets the owner) was called.
+  r->owner (ACE_Thread::self ());
+
+  ACE_Time_Value tmp_tv (tv);
+
+  return r->handle_events (tmp_tv);
+}
+
+CORBA::Boolean
+CORBA_ORB::work_pending (void)
+{
+  return this->orb_core_->reactor ()->work_pending ();
+}
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 void
@@ -254,28 +276,6 @@ CORBA_ORB::create_list (CORBA::Long count,
           new_list->values_.enqueue_tail (nv);
         }
     }
-}
-
-int
-CORBA_ORB::perform_work (const ACE_Time_Value &tv)
-{
-  ACE_Reactor *r = this->orb_core_->reactor ();
-
-  // Set the owning thread of the Reactor to the one which we're
-  // currently in.  This is necessary b/c it's possible that the
-  // application is calling us from a thread other than that in which
-  // the Reactor's CTOR (which sets the owner) was called.
-  r->owner (ACE_Thread::self ());
-
-  ACE_Time_Value tmp_tv (tv);
-
-  return r->handle_events (tmp_tv);
-}
-
-CORBA::Boolean
-CORBA_ORB::work_pending (void)
-{
-  return this->orb_core_->reactor ()->work_pending ();
 }
 
 // The following functions are not implemented - they just throw
