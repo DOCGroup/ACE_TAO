@@ -32,6 +32,9 @@
 #define ACE_LACKS_UNISTD_H
 #define ACE_LACKS_RLIMIT
 
+#define ACE_SIZEOF_LONG_LONG 8
+typedef unsigned __int64 ACE_UINT64;
+
 #if defined (ACE_HAS_ANSI_CASTS) && (ACE_HAS_ANSI_CASTS == 0)
 #undef  ACE_HAS_ANSI_CASTS
 #endif /* ACE_HAS_ANSI_CASTS && ACE_HAS_ANSI_CASTS == 0 */
