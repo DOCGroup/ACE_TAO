@@ -45,7 +45,7 @@ PortableInterceptor::Cookie_ptr PortableInterceptor::Cookie::_unchecked_narrow (
         );
 }
 
-PortableInterceptor::Cookie_ptr 
+PortableInterceptor::Cookie_ptr
 PortableInterceptor::Cookie::_duplicate (Cookie_ptr obj)
 {
   if (!CORBA::is_nil (obj))
@@ -58,7 +58,7 @@ void *PortableInterceptor::Cookie::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &Cookie::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, Cookie)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
@@ -234,7 +234,7 @@ PortableInterceptor::Interceptor_ptr PortableInterceptor::Interceptor::_unchecke
         );
 }
 
-PortableInterceptor::Interceptor_ptr 
+PortableInterceptor::Interceptor_ptr
 PortableInterceptor::Interceptor::_duplicate (Interceptor_ptr obj)
 {
   if (!CORBA::is_nil (obj))
@@ -247,7 +247,7 @@ void *PortableInterceptor::Interceptor::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &Interceptor::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
@@ -293,7 +293,7 @@ PortableInterceptor::ServerRequestInterceptor_ptr PortableInterceptor::ServerReq
         );
 }
 
-PortableInterceptor::ServerRequestInterceptor_ptr 
+PortableInterceptor::ServerRequestInterceptor_ptr
 PortableInterceptor::ServerRequestInterceptor::_duplicate (ServerRequestInterceptor_ptr obj)
 {
   if (!CORBA::is_nil (obj))
@@ -306,11 +306,11 @@ void *PortableInterceptor::ServerRequestInterceptor::_tao_QueryInterface (ptr_ar
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ServerRequestInterceptor::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, ServerRequestInterceptor)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &Interceptor::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -364,7 +364,7 @@ PortableInterceptor::ClientRequestInterceptor_ptr PortableInterceptor::ClientReq
         );
 }
 
-PortableInterceptor::ClientRequestInterceptor_ptr 
+PortableInterceptor::ClientRequestInterceptor_ptr
 PortableInterceptor::ClientRequestInterceptor::_duplicate (ClientRequestInterceptor_ptr obj)
 {
   if (!CORBA::is_nil (obj))
@@ -377,11 +377,11 @@ void *PortableInterceptor::ClientRequestInterceptor::_tao_QueryInterface (ptr_ar
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ClientRequestInterceptor::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, ClientRequestInterceptor)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &Interceptor::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -406,3 +406,31 @@ const char* PortableInterceptor::ClientRequestInterceptor::_interface_repository
 }
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+    template class TAO_Object_Manager<PortableInterceptor::Cookie,PortableInterceptor::Cookie_var>;
+  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  #  pragma instantiate TAO_Object_Manager<PortableInterceptor::Cookie,PortableInterceptor::Cookie_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+    template class TAO_Object_Manager<PortableInterceptor::Interceptor,PortableInterceptor::Interceptor_var>;
+  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  #  pragma instantiate TAO_Object_Manager<PortableInterceptor::Interceptor,PortableInterceptor::Interceptor_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+    template class TAO_Object_Manager<PortableInterceptor::ServerRequestInterceptor,PortableInterceptor::ServerRequestInterceptor_var>;
+  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  #  pragma instantiate TAO_Object_Manager<PortableInterceptor::ServerRequestInterceptor,PortableInterceptor::ServerRequestInterceptor_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+    template class TAO_Object_Manager<PortableInterceptor::ClientRequestInterceptor,PortableInterceptor::ClientRequestInterceptor_var>;
+  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  #  pragma instantiate TAO_Object_Manager<PortableInterceptor::ClientRequestInterceptor,PortableInterceptor::ClientRequestInterceptor_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
