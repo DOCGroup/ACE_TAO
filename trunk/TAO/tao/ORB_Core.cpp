@@ -1081,7 +1081,7 @@ TAO_Resource_Factory::TAO_Resource_Factory (void)
   : resource_source_ (TAO_GLOBAL),
     poa_source_ (TAO_GLOBAL),
     collocation_table_source_ (TAO_GLOBAL),
-    use_lock_freed_reactor_ (0)
+    reactor_lock_ (TAO_TOKEN)
 {
 }
 
@@ -1114,9 +1114,9 @@ TAO_Resource_Factory::poa_source (void)
 }
 
 int
-TAO_Resource_Factory::use_lock_freed_reactor (void)
+TAO_Resource_Factory::reactor_lock (void)
 {
-  return use_lock_freed_reactor_;
+  return reactor_lock_;
 }
 
 int
@@ -1185,9 +1185,9 @@ TAO_Resource_Factory::parse_args (int argc, char **argv)
             char *name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name, "null") == 0)
-              use_lock_freed_reactor_ = 1;
+              reactor_lock_ = TAO_NULL_LOCK;
             else if (ACE_OS::strcasecmp (name, "token") == 0)
-              use_lock_freed_reactor_= 0;
+              reactor_lock_= TAO_TOKEN;
           }
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBcoltable") == 0)
@@ -1342,7 +1342,7 @@ TAO_Resource_Factory::get_global_collocation_table (void)
 }
 
 TAO_Resource_Factory::Pre_Allocated::Pre_Allocated (void)
-  : r_ (TAO_ORB_CORE::instance ()->resource_factory ()->use_lock_freed_reactor ())
+  : r_ (TAO_ORB_CORE::instance ()->resource_factory ()->reactor_lock ())
 {
   // Make sure that the thread manager does not wait for threads
   this->tm_.wait_on_exit (0);

@@ -181,7 +181,7 @@ public:
   // else 0
 
   void set_leader_thread (void) ;
-  // sets the thread_available flag and the thread ID of the leader 
+  // sets the thread_available flag and the thread ID of the leader
   // thread in the leader-follower model
 
   void set_leader_thread (ACE_thread_t thread_ID);
@@ -240,7 +240,7 @@ public:
   // usually created on the stack, but, the spec allows their creation
   // on the heap and/or as class members; we need to investigate the
   // tradeoffs and take a decision.
-  // 
+  //
 
 private:
   int init (int& argc, char ** argv);
@@ -342,7 +342,7 @@ private:
 
   TSS_ALLOCATOR data_block_allocator_;
   // The Allocator for the ACE_Data_Blocks.
-  
+
   TSS_ALLOCATOR cdr_buffer_allocator_;
   // The Allocator for the CDR buffers.
 
@@ -394,6 +394,13 @@ public:
   {
     TAO_GLOBAL,
     TAO_TSS
+  };
+
+  // = Type of Reactor
+  enum
+  {
+    TAO_TOKEN,                  // Use ACE_Token as Select_Reactor's internal lock
+    TAO_NULL_LOCK               // Use ACE_Noop_Token as Select_Reactor's internal lock
   };
 
   // = Range of values for <{resource source specifier}>.
@@ -483,7 +490,7 @@ public:
   // created in application space by <CORBA::ORB_init()>, but needs to
   // be available to stubs and generated code.
 
-  virtual int use_lock_freed_reactor (void);
+  virtual int reactor_lock (void);
 
   // @@ I suspect that putting these structs inside of this class is
   // going to break some compilers (e.g., HP/YUX) when you try to use
@@ -574,7 +581,7 @@ protected:
   // thread-specific.  It defaults to TAO_GLOBAL if not set
   // specifically.
 
-  int use_lock_freed_reactor_;
+  int reactor_lock_;
   // Flag indicating wether we should provide a lock-freed reactor
   // or not.
 
