@@ -77,6 +77,10 @@
 # define ACE_LACKS_MIN_MAX_TEMPLATES
 #endif /* ! egcs */
 
+#if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
+# define ACE_SIZEOF_LONG_DOUBLE 12
+#endif /* i386 */
+
 #if !defined (__MINGW32__) && (defined (i386) || defined (__i386__))
   // If running an Intel, assume that it's a Pentium so that
   // ACE_OS::gethrtime () can use the RDTSC instruction.  If running a
