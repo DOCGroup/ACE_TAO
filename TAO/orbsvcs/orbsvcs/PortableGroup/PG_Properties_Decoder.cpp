@@ -27,7 +27,7 @@ TAO_PG::Properties_Decoder::Properties_Decoder()
 
 TAO_PG::Properties_Decoder::Properties_Decoder (
   const PortableGroup::Properties & property_set
-    ACE_ENV_SINGLE_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
   : defaults_ (0)
 {
@@ -37,7 +37,7 @@ TAO_PG::Properties_Decoder::Properties_Decoder (
 TAO_PG::Properties_Decoder::Properties_Decoder (
     const PortableGroup::Properties & property_set,
     Properties_Decoder * defaults
-    ACE_ENV_SINGLE_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
   : defaults_ (defaults)
 {
