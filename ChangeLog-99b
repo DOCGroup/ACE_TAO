@@ -1,3 +1,15 @@
+Thu Aug 12 11:36:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/Svc_Handler.cpp:
+	* ace/Future.cpp:
+	  Some platforms require arguments in the exception thrown from
+	  operator new. The standard (std::bad_alloc) does not require
+	  any.
+	  Added a new macro (ACE_throw_bad_alloc) that takes care of these 
+	  differences, including platforms that don't throw exceptions but 
+	  return something.
+
 Wed Aug 11 17:00:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * tests/Cached_Accept_Conn_Test.cpp:

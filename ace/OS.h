@@ -7130,10 +7130,17 @@ private:
 
 # if defined(ACE_NEW_THROWS_EXCEPTIONS)
 #   if defined (__SUNPRO_CC)
-#     include /**/ <exception.h>
-      // Note: we catch ::xalloc rather than just xalloc because of a
-      // name clash with unsafe_ios::xalloc()
-#     define ACE_bad_alloc ::xalloc
+#      if (__SUNPRO_CC < 0x500)
+#        include /**/ <exception.h>
+         // Note: we catch ::xalloc rather than just xalloc because of
+         // a name clash with unsafe_ios::xalloc()
+#        define ACE_bad_alloc ::xalloc
+#        define ACE_throw_bad_alloc throw ACE_bad_alloc ("no more memory")
+#      else
+#        include /**/ <new>
+#        define ACE_bad_alloc std::bad_alloc
+#        define ACE_throw_bad_alloc throw ACE_bad_alloc ()
+#      endif /* __SUNPRO_CC < 0x500 */
 #   else
     // I know this works for HP aC++... if <stdexcept> is used, it
     // introduces other stuff that breaks things, like <memory>, which
@@ -7144,6 +7151,7 @@ private:
 #     else
 #       define ACE_bad_alloc bad_alloc
 #     endif /* RWSTD_NO_NAMESPACE */
+#     define ACE_throw_bad_alloc throw ACE_bad_alloc ()
 #   endif /* __SUNPRO_CC */
 
 #   define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
@@ -7166,6 +7174,10 @@ private:
    do { POINTER = new CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return; } \
    } while (0)
+
+# define ACE_throw_bad_alloc \
+      void* gcc_will_complain_if_literal_0_is_returned = 0; \
+      return gcc_will_complain_if_literal_0_is_returned
 
 # endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
