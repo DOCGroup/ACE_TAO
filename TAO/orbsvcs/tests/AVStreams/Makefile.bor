@@ -5,6 +5,8 @@
 DIRS = \
         Asynch_Three_Stage \
         Component_Switching \
+        Multicast \
+        Pluggable \
         Simple_Three_Stage \
         Simple_Two_Stage
 
