@@ -4,17 +4,17 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Priority_Task_Test.cpp
 //
 // = DESCRIPTION
 //      This is a simple test to illustrate the priority mechanism of
-//      ACE Tasks.  
+//      ACE Tasks.
 //
 // = AUTHOR
 //    Doug Schmidt
-// 
+//
 // ============================================================================
 
 #include "ace/Task.h"
@@ -43,13 +43,18 @@ public:
   int svc (void);
   // Runs on a separate thread an checks the priority.
 
+  int succeeded (void) { return error_ == 0; }
+  // Returns 1 if priority was set properly, 0 otherwise.
+
 private:
   int priority_;
+  u_int error_;
 };
 
 Priority_Task::Priority_Task (void)
   : ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
-    priority_ (0)
+    priority_ (0),
+    error_ (0)
 {
 }
 
@@ -80,7 +85,7 @@ Priority_Task::open (void *arg)
       this->priority_ = 0;
 
       if (this->activate (flags, 1, 1, this->priority_) == -1)
-	ACE_DEBUG ((LM_ERROR, "(%t) task activation at priority 0 failed, exiting!\n%a", -1));
+        ACE_DEBUG ((LM_ERROR, "(%t) task activation at priority 0 failed, exiting!\n%a", -1));
     }
 
   return 0;
@@ -96,15 +101,24 @@ Priority_Task::svc (void)
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) prio = %d, priority_ = %d\n", 
-	      prio, this->priority_));
-  ACE_ASSERT (this->priority_ == prio);
+  if (prio == this->priority_)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%t) actual prio of %d equals desired priority\n",
+                  prio));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_ERROR, "(%t) actual prio = %d, desired priority_ = %d!\n",
+                  prio, this->priority_));
+      ++error_;
+    }
+
   return 0;
 }
 
 #endif /* ACE_HAS_THREADS */
 
-int 
+int
 main (int, char *[])
 {
   ACE_START_TEST ("Priority_Task_Test");
@@ -113,6 +127,7 @@ main (int, char *[])
 
   Priority_Task tasks[ACE_MAX_ITERATIONS];
 
+  int status = 0;
   int i;
 
   // Spawn off ACE_MAX_ITERATIONS of tasks, passing each one their
@@ -123,7 +138,7 @@ main (int, char *[])
   // class.  The FIFO priorities are used because they're all nonnegative.
 
   ACE_Sched_Priority_Iterator priority (ACE_SCHED_FIFO,
-					ACE_SCOPE_THREAD);
+                                        ACE_SCOPE_THREAD);
 
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
@@ -132,9 +147,9 @@ main (int, char *[])
 
       // If there are more priorities get the next one...
       if (priority.more ())
-	{
-	  priority.next ();
-	}
+        {
+          priority.next ();
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) %d tasks spawned, wait for them to exit . . .\n",
@@ -143,9 +158,18 @@ main (int, char *[])
   // Wait for all tasks to exit.
   ACE_Thread_Manager::instance ()->wait ();
 
+  for (i = 0; i < ACE_MAX_ITERATIONS; i++)
+    {
+      if (! tasks[i].succeeded)
+        {
+          ++status;
+          break;
+        }
+    }
+
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
-  return 0;
+  return status;
 }
