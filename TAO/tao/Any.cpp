@@ -539,7 +539,14 @@ CORBA_Any::operator>>= (char *&s) const
       if (this->any_owns_data_)
         {
           TAO_InputCDR stream (this->cdr_);
-          return stream.read_string (s);
+	  if (stream.read_string (s))
+	    {
+	      char** tmp = new char*;
+	      *tmp = s;
+	      ACE_const_cast(CORBA_Any*,this)->value_ = tmp;
+	      return 1;
+	    }
+	  return 0;
         }
       else
         {
@@ -567,6 +574,12 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
                             0,
                             env)
               == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
+	  if (flag)
+	    {
+	      TypeCode** tmp = new TypeCode*;
+	      *tmp = tc;
+	      ACE_const_cast(CORBA_Any*,this)->value_ = tmp;
+	    }
           return flag;
         }
       else
@@ -681,8 +694,13 @@ CORBA_Any::operator>>= (to_string s) const
           if (this->any_owns_data_)
             {
               TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
-              CORBA::Boolean flag = stream.read_string (s.val_);
-              return flag;
+	      if (stream.read_string (s.val_))
+	        {
+	          char **tmp = new char*;
+	          *tmp = s.val_;
+	          ACE_const_cast(CORBA_Any*,this)->value_ = tmp;
+	          return 1;
+	        }
             }
           else
             {
@@ -709,6 +727,13 @@ CORBA_Any::operator>>= (to_object obj) const
           CORBA::Boolean flag = (stream.decode (CORBA::_tc_Object,
                                                 &obj.ref_, 0, env)
                                  == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1:0;
+	  if (flag)
+	    {
+	      CORBA::Object_ptr *tmp = new CORBA::Object_ptr;
+	      *tmp = obj.ref_;
+	      ACE_const_cast(CORBA_Any*,this)->value_ = tmp;
+	      return 1;
+            }
           // we own this allocated value
           //          this->value_ = obj.ref_;
           return flag;
