@@ -23,6 +23,8 @@
 #  Service_Config_Test
 #  Enum_Interfaces_Test
 #
+# TSS_Test sometimes issues a memPartFree message during shutdown.
+#
 # Some other tests are commented out below.  They
 # currently fail on VxWorks for unknown reasons.
 
@@ -112,6 +114,7 @@ ld < Barrier_Test
 write 2, "Barrier_Test ", 13
 ace_main; unld "Barrier_Test"
 
+#### Uses ACE_OS::cond_timedwait (), which isn't supported on VxWorks.
 #### ld < Buffer_Stream_Test
 #### write 2, "Buffer_Stream_Test ", 19
 #### ace_main; unld "Buffer_Stream_Test"
@@ -132,17 +135,18 @@ ld < Message_Queue_Notifications_Test
 write 2, "Message_Queue_Notifications_Test ", 33
 ace_main; unld "Message_Queue_Notifications_Test"
 
-#### ld < Message_Queue_Test
-#### write 2, "Message_Queue_Test ", 19
-#### ace_main; unld "Message_Queue_Test"
+ld < Message_Queue_Test
+write 2, "Message_Queue_Test ", 19
+ace_main; unld "Message_Queue_Test"
 
-#### ld < Simple_Message_Block_Test
-#### write 2, "Simple_Message_Block_Test ", 26
-#### ace_main; unld "Simple_Message_Block_Test"
+ld < Simple_Message_Block_Test
+write 2, "Simple_Message_Block_Test ", 26
+ace_main; unld "Simple_Message_Block_Test"
 
-ld < Message_Block_Test
-write 2, "Message_Block_Test ", 19
-ace_main; unld "Message_Block_Test"
+#### Page faults:
+#### ld < Message_Block_Test
+#### write 2, "Message_Block_Test ", 19
+#### ace_main; unld "Message_Block_Test"
 
 ld < Priority_Task_Test
 write 2, "Priority_Task_Test ", 19
