@@ -33,11 +33,14 @@ be_union_branch::be_union_branch (void)
 {
 }
 
-be_union_branch::be_union_branch (UTL_LabelList *ll, AST_Type *ft,
-                                  UTL_ScopedName *n, UTL_StrList *p)
+be_union_branch::be_union_branch (UTL_LabelList *ll, 
+                                  AST_Type *ft,
+                                  UTL_ScopedName *n, 
+                                  UTL_StrList *p)
   : AST_UnionBranch (ll, ft, n, p),
     AST_Field (AST_Decl::NT_union_branch, ft, n, p),
-    AST_Decl (AST_Decl::NT_union_branch, n, p)
+    AST_Decl (AST_Decl::NT_union_branch, n, p),
+    tc_generated_ (0)
 {
 }
 
@@ -171,6 +174,18 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
                           -1);
     }
   return 0;
+}
+
+idl_bool
+be_union_branch::tc_generated (void)
+{
+  return this->tc_generated_;
+}
+
+void
+be_union_branch::tc_generated (idl_bool val)
+{
+  this->tc_generated_ = val;
 }
 
 int
