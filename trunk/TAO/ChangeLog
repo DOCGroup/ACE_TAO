@@ -13,16 +13,16 @@ Tue Jun  8 09:07:43 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Jun 08 12:07:55 2004  Simon McQueen  <sm@prismtechnologies.com>
 
-   * tao/ORB_Core.cpp:
-   * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
-   * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+         * tao/ORB_Core.cpp:
+         * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+         * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
 
-   Allow the setting of an environment variable 'TAO_USE_IMR' which
-   has the same effect as specifying an -ORBUseIMR value for all
-   servers on a host (any explicitly set -ORBUseIMR value passed
-   to individual ORBs will override it).
+           Allow the setting of an environment variable 'TAO_USE_IMR'
+ 	   which has the same effect as specifying an -ORBUseIMR value for
+  	   all servers on a host (any explicitly set -ORBUseIMR value
+  	   passed to individual ORBs will override it).
 
-   This fixes bug #1336.
+	   This fixes bug #1336.
 
 Fri Jun  4 00:16:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 

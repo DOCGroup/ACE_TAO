@@ -2627,8 +2627,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             {
               if (errno == ENOTSUP)
                 {
-                  // Unlikely:  ::thr_getconcurrency () is supported but
-                  // ::thr_setconcurrency () is not?
+                  // Unlikely: ::thr_getconcurrency () is supported
+                  // but ::thr_setconcurrency () is not?
                 }
               else
                 return -1;
