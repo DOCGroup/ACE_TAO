@@ -25,10 +25,13 @@ MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick_ptr ev
     = this->context_->get_connection_GPSLocation (ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  if (CORBA::is_nil (loc.in ()))
+    ACE_THROW (CORBA::BAD_INV_ORDER ());
+
   CORBA::Long position = loc->pos (ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, "DISPLAY: Current Location is: %d\n"));
+  ACE_DEBUG ((LM_DEBUG, "DISPLAY: Current Location is: %d\n", position));
 }
 
 // Operations from Components::SessionComponent

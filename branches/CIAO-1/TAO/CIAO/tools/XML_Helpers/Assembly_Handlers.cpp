@@ -545,6 +545,7 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
                                ACEXML_SAXException
                                ("Internal error, no memory."));
           ACEXML_CHECK;
+          this->state_ = COMPONENT_INSTANTIATION;
 
         }
       else if (ACE_OS::strcmp (qName, "registerwithhomefinder") == 0 ||
@@ -583,7 +584,25 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
           ACEXML_CHECK;
 
           this->comp_register_info_.name_ = name;
+          this->comp_register_info_.method_ =
+            CIAO::Assembly_Placement::componentinstantiation::NAMINGSERVICE;
         }
+      else if (ACE_OS::strcmp (qName, "writeiortofile") == 0)
+        {
+          const char *name;
+          CIAO::XML_Utils::get_single_attribute ("name",
+                                                 name,
+                                                 atts
+                                                 ACEXML_ENV_ARG_PARAMETER);
+          ACEXML_CHECK;
+
+          this->comp_register_info_.name_ = name;
+          this->comp_register_info_.method_ =
+            CIAO::Assembly_Placement::componentinstantiation::IORFILE;
+        }
+
+      break;
+
 
       break;
 

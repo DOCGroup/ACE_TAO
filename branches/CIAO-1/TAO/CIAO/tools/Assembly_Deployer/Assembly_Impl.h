@@ -15,8 +15,8 @@
 //=============================================================================
 
 
-#ifndef CIAO_SERVERACTIVATOR_IMPL_H
-#define CIAO_SERVERACTIVATOR_IMPL_H
+#ifndef CIAO_ASSEMBLY_IMPL_H
+#define CIAO_ASSEMBLY_IMPL_H
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
@@ -27,6 +27,9 @@
 
 #include "ace/Active_Map_Manager_T.h"
 #include "CCM_DeploymentS.h"
+#include "../XML_Helpers/Assembly_Spec.h"
+#include "Deployment_Configuration.h"
+#include "Assembly_Visitors.h"
 
 namespace CIAO
 {
@@ -40,7 +43,7 @@ namespace CIAO
    * implies, this is actually part of the deployment interface and is
    * used to manage the lifecycle of containers running on the server.
    */
-  class CIAO_SERVER_Export AssemblyFactory_Impl
+  class AssemblyFactory_Impl
     : public virtual POA_Components::Deployment::AssemblyFactory,
       public virtual PortableServer::RefCountServantBase
   {
@@ -56,8 +59,10 @@ namespace CIAO
     /// increase the reference count of the POA.
     virtual PortableServer::POA_ptr _default_POA (void);
 
-    /// Initialize the AssemblyFactory.
-    int init (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    /// Initialize the AssemblyFactory with a configuration file.
+    /// @sa CIAO::Deployment_Configuration
+    int init (const char *config_file
+              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Components::Deployment::Assembly defined attributes/operations.
@@ -87,6 +92,9 @@ namespace CIAO
 
     /// Keep a list of managed Assembly objects.
     ACE_Active_Map_Manager<Components::Deployment::Assembly_var> assembly_map_;
+
+    /// Deployment Configuration Info.
+    CIAO::Deployment_Configuration deployment_config_;
   };
 
   /**
@@ -99,14 +107,16 @@ namespace CIAO
    * implies, this is actually part of the deployment interface and is
    * used to manage the lifecycle of containers running on the server.
    */
-  class CIAO_SERVER_Export Assembly_Impl
+  class Assembly_Impl
     : public virtual POA_Components::Deployment::Assembly,
       public virtual PortableServer::RefCountServantBase
   {
   public:
     /// Constructor
     Assembly_Impl (CORBA::ORB_ptr o,
-                   PortableServer::POA_ptr p);
+                   PortableServer::POA_ptr p,
+                   Assembly_Spec *spec,
+                   Deployment_Configuration &config);
 
     /// Destructor
     virtual ~Assembly_Impl (void);
@@ -115,8 +125,12 @@ namespace CIAO
     /// increase the reference count of the POA.
     virtual PortableServer::POA_ptr _default_POA (void);
 
-    /// Initialize the Assembly.
-    int init (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    /**
+     * Initialize the Assembly with an Assembly_Spec and a reference
+     * to a Deployment_Configuration object.  The Assembly class
+     * assumes the ownership of Assembly_Spec.
+     */
+    int init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Components::Deployment::Assembly defined attributes/operations.
@@ -147,6 +161,14 @@ namespace CIAO
 
     /// <Debug> instance counter.
     static CORBA::ULong assembly_count_;
+
+    /// Deployment Configuration Info.
+    Deployment_Configuration &deployment_config_;
+
+    /// Assembly Specification.
+    Assembly_Spec *assembly_spec_;
+
+    Assembly_Context assembly_context_;
   };
 }
 
@@ -155,4 +177,4 @@ namespace CIAO
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* CIAO_SERVERACTIVATOR_IMPL_H */
+#endif /* CIAO_ASSEMBLY_IMPL_H */
