@@ -1,3 +1,9 @@
+Thu Jul 08 11:00:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp
+          orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: fixed undeclared
+          symbol typo, type conversion errors from nightly builds.
+
 Thu Jul 08 10:28:25 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time_Utilities.i (TimeT_to_Time_Value):
