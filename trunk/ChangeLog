@@ -1,14 +1,22 @@
+Tue Feb 22 18:03:41 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Ping_Socket.cpp: Rather than try to use struct ip, which can
+	  change subtly between platforms, use the well-known layout of the
+	  IP header to pick off the length field. This avoids a maze of
+	  #if blocks to use the platform struct properly at the cost of
+	  using low-level details.
+
 Tue Feb 22 21:30:04 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Link.cpp: Replaced assignment of auto_ptr's
-	with a call to reset() in search for a way around VxWorks' broken
-	implementation.
+	  with a call to reset() in search for a way around VxWorks' broken
+	  implementation.
 
 Tue Feb 22 21:20:22 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Stack.cpp:
 	* protocols/ace/RMCast/Stack.h: Moved implementation of functions
-	from .h to .cpp. This should get rid of warnings in VC7.1 build.
+	  from .h to .cpp. This should get rid of warnings in VC7.1 build.
 
 Mon Feb 21 18:18:29 2005  Steve Huston  <shuston@riverace.com>
 
