@@ -41,6 +41,7 @@ ACE_HAS_BROKEN_ENUMS			Compiler can't handle large enums (e.g., HP/UX C++)
 ACE_HAS_BROKEN_HPUX_TEMPLATES		Earlier versions of HP/UX C++ are damned...
 ACE_HAS_BROKEN_MSG_H			Platform headers don't support <msg.h> prototypes
 ACE_HAS_BROKEN_MMAP_H			HP/UX does not wrap the mmap(2) header files with extern "C".
+ACE_HAS_BROKEN_NESTED_TEMPLATES		MSVC has trouble with defining STL containers for nested structs and classes
 ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS	Platform has a bug with non-blocking connects (e.g., WinNT 4.0)
 ACE_HAS_BROKEN_POSIX_TIME               Platform defines struct timespec in <sys/timers.h>
 ACE_HAS_BROKEN_RANDR			OS/compiler's header files are inconsistent with libC definition of rand_r().
