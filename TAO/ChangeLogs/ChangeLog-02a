@@ -1,3 +1,10 @@
+Mon Mar 27 11:11:01 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Acceptors.h:
+	* tao/GIOP_Message_Acceptors.i: Added a destructor to the class
+	  TAO_GIOP_Message_Acceptors. This would reset the OutputCDR
+	  that it holds. 
+
 Mon Mar 27 09:05:58 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Basic/Makefile:
