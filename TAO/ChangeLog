@@ -1,3 +1,9 @@
+Fri Nov 29 12:31:20 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+
+          Changes to IDL compiler settings for this project.
+
 Fri Nov 29 11:42:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
