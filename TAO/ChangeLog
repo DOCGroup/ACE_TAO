@@ -1,19 +1,33 @@
+Wed Sep 10 07:48:55 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Added some randomization to the generation of the gperf input
+          filename.  This allows multiple tao_idl instances to process idl
+          files that have the same but are in different directories.
+
+        * tests/Oneway_Buffering/Oneway_Buffering.mpc:
+
+          Reverted my change from Mon Sep  8 07:06:38 2003.  With my
+          automatic parallel dependency change for MPC, this is not
+          necessary.
+
 Mon Sep  8 23:29:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/IOP_IORC.h:
+        * tao/IOP_IORC.h:
 
-	  Moved HPUX-specific "#undef IOR" immediately after the last
-	  header include.  It ended up being hidden in some cases, which
-	  causes syntax errors in the `IOP_IORC.i' inline file to appear.
+          Moved HPUX-specific "#undef IOR" immediately after the last
+          header include.  It ended up being hidden in some cases, which
+          causes syntax errors in the `IOP_IORC.i' inline file to appear.
 
 Mon Sep  8 23:21:51 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile (LIBS):
-	* examples/RTScheduling/MIF_Scheduler/Makefile (LIBS):
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile (LIBS):
+        * examples/RTScheduling/MIF_Scheduler/Makefile (LIBS):
 
-	  Added missing "RTCORBA", "TAO_Svc_Utils" and "TAO_IORTable"
-	  libraries to the list of libraries to link.  They must be
-	  explicitly listed for statically linked builds.
+          Added missing "RTCORBA", "TAO_Svc_Utils" and "TAO_IORTable"
+          libraries to the list of libraries to link.  They must be
+          explicitly listed for statically linked builds.
 
 Mon Sep  8 18:56:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
