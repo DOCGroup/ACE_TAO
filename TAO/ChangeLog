@@ -1,3 +1,8 @@
+Fri May 23 17:40:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.cpp (add_interceptor): Fixed compilation errors in
+	  builds where exceptions are turned off.
+
 Fri May 23 17:02:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ObjectKey_Table.cpp: Some cosmetic fixes.
