@@ -1364,3 +1364,10 @@ Log_i::reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         ++this->current_threshold_;
     }
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class TAO_Unbounded_Sequence<DsLogAdmin::TimeInterval>;
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate TAO_Unbounded_Sequence<DsLogAdmin::TimeInterval>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
