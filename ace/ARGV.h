@@ -6,11 +6,10 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu>
  *  @author Everett Anderson
  */
 //=============================================================================
-
 
 #ifndef ACE_ARGUMENT_VECTOR_H
 #define ACE_ARGUMENT_VECTOR_H
