@@ -32,7 +32,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Long calculate (
-                         CORBA::Long one, 
+                         CORBA::Long one,
                          CORBA::Long two,
                          CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));
