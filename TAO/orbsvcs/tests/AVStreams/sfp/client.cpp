@@ -2,8 +2,10 @@
 
 #include "common.h"
 #include "ace/Event_Handler.h"
+#include "ace/Get_Opt.h"
 
-char *data = "Hello how are you";
+static char *data = "Hello how are you";
+static char *addr = server_addr;
 int fragment = 0;
 
 class frame_handler: public ACE_Event_Handler
@@ -18,11 +20,11 @@ class frame_handler: public ACE_Event_Handler
     {
       reactor->schedule_timer (this,
                                0,
-                               20);
+                               10);
     }
 
   // Called when timer expires.  
-  int handle_timeout (const ACE_Time_Value &tv,
+  int handle_timeout (const ACE_Time_Value &/* tv */,
                       const void *arg = 0)
     {
        ACE_DEBUG ((LM_DEBUG,"frame_handler:handle_timeout\n"));
@@ -65,16 +67,38 @@ private:
 };
 
 int
+parse_args (int argc,char **argv)
+{
+  ACE_Get_Opt opts (argc,argv,"fa:");
+  char c;
+  while ((c = opts ()) != -1)
+    {	
+      switch (c)
+        {
+        case 'f':
+          fragment = 1;
+          break;
+        case 'a':
+          addr = ACE_OS::strdup (opts.optarg);
+          break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,"Usage:client [-f] [-a addr]"),-1); 
+        }	
+    }
+  return 0;	
+}
+
+
+int
 main (int argc, char **argv)
 {
   TAO_ORB_Manager orb_manager;
   
   orb_manager.init (argc,argv);
 
-  if (argc > 1)
-    if (ACE_OS::strcmp (argv[1],"-f") == 0)
-      fragment = 1;
-    
+  int result = parse_args (argc,argv);    
+  if (result < 0)
+    return 1;
   ACE_Time_Value timeout1 (5),timeout2 (50);
 
   TAO_SFP sfp (orb_manager.orb (),
@@ -83,9 +107,7 @@ main (int argc, char **argv)
            timeout2,
            0);
 
-  int result;
-
-  result = sfp.start_stream (server_addr);
+  result = sfp.start_stream (addr);
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,"sfp start failed\n"),1);
 
