@@ -9,7 +9,7 @@ Collocated_ORBInitializer::Collocated_ORBInitializer (void)
 
 void
 Collocated_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr info
+    PortableInterceptor::ORBInitInfo_ptr
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -69,4 +69,3 @@ Collocated_ORBInitializer::post_init (
       //Throw exception?
     }
 }
-
