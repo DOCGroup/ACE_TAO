@@ -748,7 +748,8 @@ protected:
 
   PortableServer::Servant default_servant_;
 
-  typedef ACE_Hash_Map_Manager<String, TAO_POA *, ACE_Null_Mutex> CHILDREN;
+  typedef ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex> 
+          CHILDREN;
 
   CHILDREN children_;
 

@@ -1,3 +1,10 @@
+Sat Oct 17 10:34:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/Sequence: Added a hash() method to TAO_Base_Sequence().
+  	  This makes it possible to use TAO bounded and unbounded
+ 	  sequences in the ACE_Hash_Map_Manager.  Thanks to David Levine
+ 	  and John Geiss for reporting this.
+
 Sat Oct 17 00:44:10 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.29 released.

@@ -45,8 +45,8 @@ public:
   // Ensure that the buffer contains space for at least <length>
   // elements.  The constructor must be called for any new elements,
   // the old ones (if any) must be copied into the buffer using
-  // operator= and then their destructors must be called.
-  // Finally the old buffer must be released.
+  // operator= and then their destructors must be called.  Finally the
+  // old buffer must be released.
 
   virtual void _deallocate_buffer (void) = 0;
   // Must deallocate the buffer and then set it to zero.
@@ -58,15 +58,19 @@ public:
   // release the objects only from position <0> to <length-1>; so
   // shrink and then delete could result in a memory leak.
 
-  virtual void _downcast (void* target,
-			  CORBA_Object* src,
+  virtual void _downcast (void *target,
+			  CORBA_Object *src,
 			  CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Used for sequences of objects to downcast a recently demarshalled
   // object reference into the right type.
 
-  virtual CORBA_Object* _upcast (void* src) const;
+  virtual CORBA_Object *_upcast (void *src) const;
   // Used for sequences of object to convert from the derived type
   // into the Object class.
+
+  // = TAO-specific method.
+  virtual u_long hash (void) const;
+  // Returns a hash value.
 
 protected:
   TAO_Base_Sequence (void);

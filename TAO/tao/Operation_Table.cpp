@@ -121,7 +121,6 @@ TAO_Active_Demux_OpTable::TAO_Active_Demux_OpTable (const
     tablesize_ (dbsize),
     tbl_ (0)
 {
-
   ACE_NEW (tbl_,
            TAO_Active_Demux_OpTable_Entry[dbsize]);
 
