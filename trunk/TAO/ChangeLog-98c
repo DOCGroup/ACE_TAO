@@ -1,7 +1,11 @@
+Tue Dec  8 00:49:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/CDR.i: Applied more exception handle macros.
+
 Mon Dec  7 22:00:50 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_expression.cpp:
-          
+
           Changed a few lines so the idl compiler will accept a value
           of 65535 for a const unsigned short (it previously rejected
           anything > 65534).
