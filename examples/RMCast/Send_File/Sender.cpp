@@ -32,7 +32,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (mcast_group.set (argv[2]) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot read file <%s>\n", filename),
+                         "Cannot setup multicast group <%s>\n", 
+                         argv[2]),
                         1);
     }
 
