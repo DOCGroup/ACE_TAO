@@ -12,6 +12,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # Do not use environment variables here since not all platforms use ACE_ROOT
 use lib "../../../../../bin";
 
+require Process;
 require ACEutils;
 
 $iorfile = "cubit.ior";
@@ -20,9 +21,6 @@ $svnsflags = " -o $iorfile";
 $clnsflags = " -f $iorfile";
 $clflags = "";
 $svflags = "";
-
-# Make sure the file is gone, so we can wait on it.
-unlink $iorfile;
 
 # Parse the arguments
 
@@ -76,15 +74,17 @@ for ($i = 0; $i <= $#ARGV; $i++)
   }
 }
 
-(-f $exepref."server".$Process::EXE_EXT  &&
- -f $exepref."client".$Process::EXE_EXT)  ||
+(-f $exepref."server".$EXE_EXT  &&
+ -f $exepref."client".$EXE_EXT)  ||
   die "$0: server and/or client need to be built!\n";
 
-$SV = Process::Create ($exepref."server".$Process::EXE_EXT,
+unlink $iorfile;
+
+sleep 2;
+
+$SV = Process::Create ($exepref."server".$EXE_EXT,
                        $svflags.
                        $svnsflags);
-
-# Put in a wait between the server and client
 
 if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
@@ -92,7 +92,7 @@ if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
   exit 1;
 }
 
-$CL = Process::Create ($exepref . "client".$Process::EXE_EXT,
+$CL = Process::Create ($exepref . "client".$EXE_EXT,
                        " $clflags $clnsflags -x");
 
 $client = $CL->TimedWait (60);
