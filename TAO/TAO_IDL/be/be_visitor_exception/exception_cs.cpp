@@ -76,13 +76,16 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "{" << be_nl;
       *os << "}\n\n";
 
-      *os << "void "
-          << node->name () << "::_tao_any_destructor (void *x)" << be_nl
-          << "{" << be_idt_nl
-          << node->local_name () << " *tmp = ACE_static_cast ("
-          << node->local_name () << "*,x);" << be_nl
-          << "delete tmp;" << be_uidt_nl
-          << "}\n\n";
+      if (!node->is_local ())
+        {
+          *os << "void "
+              << node->name () << "::_tao_any_destructor (void *x)" << be_nl
+              << "{" << be_idt_nl
+              << node->local_name () << " *tmp = ACE_static_cast ("
+              << node->local_name () << "*,x);" << be_nl
+              << "delete tmp;" << be_uidt_nl
+              << "}\n\n";
+        }
 
       // copy constructor
       os->indent ();
@@ -159,27 +162,52 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
       *os << be_nl
           << "void " << node->name ()
-          << "::_tao_encode (" << be_idt << be_idt_nl
-          << "TAO_OutputCDR &cdr," << be_nl
-          << "CORBA::Environment &ACE_TRY_ENV) const"
-          << be_uidt << be_uidt_nl
-          << "{" << be_idt_nl
-          << "if (cdr << *this)" << be_nl
-          << "  return;" << be_nl
-          << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
-          << "}\n\n";
+          << "::_tao_encode (" << be_idt << be_idt_nl;
+      if (!node->is_local ())
+        {
+          *os << "TAO_OutputCDR &cdr," << be_nl
+              << "CORBA::Environment &ACE_TRY_ENV) const"
+              << be_uidt << be_uidt_nl
+              << "{" << be_idt_nl
+              << "if (cdr << *this)" << be_nl
+              << "  return;" << be_nl
+              << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
+              << "}\n\n";
+        }
+      else
+        {
+          *os << "TAO_OutputCDR &," << be_nl
+              << "CORBA::Environment &ACE_TRY_ENV) const"
+              << be_uidt << be_uidt_nl
+              << "{" << be_idt_nl
+              << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
+              << "}\n\n";
+        }
+
 
       *os << be_nl
           << "void " << node->name ()
-          << "::_tao_decode (" << be_idt << be_idt_nl
-          << "TAO_InputCDR &cdr," << be_nl
-          << "CORBA::Environment &ACE_TRY_ENV)"
-          << be_uidt << be_uidt_nl
-          << "{" << be_idt_nl
-          << "if (cdr >> *this)" << be_nl
-          << "  return;" << be_nl
-          << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
-          << "}\n\n";
+          << "::_tao_decode (" << be_idt << be_idt_nl;
+      if (!node->is_local ())
+        {
+          *os << "TAO_InputCDR &cdr," << be_nl
+              << "CORBA::Environment &ACE_TRY_ENV)"
+              << be_uidt << be_uidt_nl
+              << "{" << be_idt_nl
+              << "if (cdr >> *this)" << be_nl
+              << "  return;" << be_nl
+              << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
+              << "}\n\n";
+        }
+      else
+        {
+          *os << "TAO_InputCDR &," << be_nl
+              << "CORBA::Environment &ACE_TRY_ENV)"
+              << be_uidt << be_uidt_nl
+              << "{" << be_idt_nl
+              << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
+              << "}\n\n";
+        }
 
       // generate the _alloc method
       os->indent ();

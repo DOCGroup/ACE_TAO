@@ -1875,7 +1875,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "CORBA::ServerRequest &req, " << be_nl
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
-                      << "CORBA::Environment &env =" << be_idt_nl
+                      << "CORBA::Environment &ACE_TRY_ENV =" << be_idt_nl
                       << "TAO_default_environment ()"
                       << be_uidt << be_uidt_nl
                       << ");" << be_uidt << "\n\n";
@@ -1890,7 +1890,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "CORBA::ServerRequest &req," << be_nl
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
-                      << "CORBA::Environment &env" << be_uidt_nl
+                      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
                   *os << ancestor->full_skel_name ()
@@ -1926,7 +1926,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "CORBA::ServerRequest &req," << be_nl
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
-                      << "CORBA::Environment &env =" << be_idt_nl
+                      << "CORBA::Environment &ACE_TRY_ENV =" << be_idt_nl
                       << "TAO_default_environment ()"
                       << be_uidt << be_uidt_nl
                       << ");" << be_uidt << "\n\n";
@@ -1941,7 +1941,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "CORBA::ServerRequest &req," << be_nl
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
-                      << "CORBA::Environment &env" << be_uidt_nl
+                      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl
                       << ancestor->full_skel_name ()
@@ -1973,7 +1973,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "CORBA::ServerRequest &req," << be_nl
                           << "void *obj," << be_nl
                           << "void *context," << be_nl
-                          << "CORBA::Environment &env = " << be_idt_nl
+                          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
                           << "TAO_default_environment ()"
                           << be_uidt << be_uidt_nl
                           << ");" << be_uidt << "\n\n";
@@ -1989,7 +1989,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "CORBA::ServerRequest &req," << be_nl
                           << "void *obj," << be_nl
                           << "void *context," << be_nl
-                          << "CORBA::Environment &env" << be_uidt_nl
+                          << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
                           << ")" << be_uidt_nl
                           << "{" << be_idt_nl
                           << ancestor->full_skel_name ()

@@ -41,9 +41,9 @@ be_visitor_interface_is::~be_visitor_interface_is (void)
 int
 be_visitor_interface_is::visit_interface (be_interface *node)
 {
-  
+
   this->ctx_->interface (node);
-  
+
   TAO_OutStream *os; // output stream
 
   if (node->impl_skel_gen () || node->imported ())
@@ -51,7 +51,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
 
   os = this->ctx_->stream ();
 
-  
+
   // generate the skeleton class name
 
   os->indent (); // start with whatever indentation level we are at
@@ -62,11 +62,11 @@ be_visitor_interface_is::visit_interface (be_interface *node)
   // find if we are at the top scope or inside some module
   *os << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () <<"::" << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () <<
         " (void)" << be_idt_nl;
-  
+
   /*
   if(node->n_inherits () >0)
     {
-      //generate the default constructors of all the base classes      
+      //generate the default constructors of all the base classes
       node->gen_def_ctors(os);
     }
   */
@@ -77,19 +77,19 @@ be_visitor_interface_is::visit_interface (be_interface *node)
   // destructor
   os->indent ();
   *os << "// Implementation skeleton destructor" << be_nl;
-  
+
   *os << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () <<"::~" << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () <<
     " (void)" << be_idt_nl;
-  
+
   *os << "{" <<be_nl;
   *os << "}" << be_nl <<be_uidt_nl;
 
   if (idl_global->gen_copy_ctor () )
     {
       *os << "//Implementation Skeleton Copy Constructor" << be_nl;
-      
+
       *os <<idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () <<"::"
-          << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () << " (const " 
+          << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () << " (const "
           << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () << "& t)"<< be_idt_nl;
       if(node->n_inherits () >0)
         {
@@ -105,7 +105,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
       *os << "//Implementation Skeleton Copy Assignment" << be_nl;
 
       *os << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () << "& "
-          << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () << "::operator=(const " 
+          << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () << "::operator=(const "
           << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () << "& t)" <<be_idt_nl
           << "{" << be_idt_nl
           << "return *this;" << be_uidt_nl
@@ -113,7 +113,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
     }
 
   // generate code for elements in the scope (e.g., operations)
-  
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -127,7 +127,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
     {
       // this interface inherits from other interfaces
       be_interface *intf; // inherited interface
-      
+
       for (int i = 0; i < node->n_inherits (); i++)
 	{
 	  intf = be_interface::narrow_from_decl (node->inherits ()[i]);
@@ -150,8 +150,8 @@ be_visitor_interface_is::visit_interface (be_interface *node)
                          "traversal of inhertance graph failed\n"),
                         -1);
     }
-  
-  
+
+
   return 0;
 }
 
@@ -169,7 +169,7 @@ be_visitor_interface_is::method_helper (be_interface *derived,
       ctx.state (TAO_CodeGen::TAO_INTERFACE_IS);
       ctx.interface (derived);
       ctx.stream (os);
-      
+
       be_visitor* visitor = tao_cg->make_visitor (&ctx);
       if (visitor == 0 || visitor->visit_scope (node) == -1)
         {

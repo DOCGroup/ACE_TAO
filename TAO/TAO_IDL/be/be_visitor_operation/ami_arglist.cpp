@@ -14,7 +14,7 @@
 //    Visitor generating code for the parameter list of the Operation signature.
 //
 // = AUTHOR
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu> 
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -29,11 +29,11 @@ ACE_RCSID(be_visitor_operation, ami_arglist, "$Id$")
 
 // ************************************************************
 //   operation visitor  to generate the argument list for the AMI
-//   stub. 
+//   stub.
 //   We have separated code generation for this from the 4 main
 //   visitors to avoid code duplication and tight coupling
   // ************************************************************
-  
+
 be_visitor_operation_ami_arglist::be_visitor_operation_ami_arglist (be_visitor_context
                                                                     *ctx)
   : be_visitor_scope (ctx)
@@ -48,25 +48,25 @@ int
 be_visitor_operation_ami_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   *os << " (" << be_idt << be_idt << "\n";
 
-  
+
   // Start with current indentation level.
   os->indent ();
 
-  
+
   be_decl *interface =
     be_interface::narrow_from_scope (node->defined_in ())->decl ();
   if (interface == 0)
     cerr << "Invalid interface";
 
-  // @@ Michael: This is not very nice, but we do not have 
+  // @@ Michael: This is not very nice, but we do not have
   //             a be_interface pointer and therefor no strategy.
   {
     char *full_name = 0;
-    
-    interface->compute_full_name ("AMI_", 
+
+    interface->compute_full_name ("AMI_",
                                   "Handler",
                                   full_name);
     // Genereate scope name.
@@ -102,13 +102,13 @@ be_visitor_operation_ami_arglist::visit_operation (be_operation *node)
           << "TAO_default_environment ()"
           << be_uidt;
     }
-  
+
   // Done with the argument list.
   *os << be_uidt_nl << ")" << be_uidt;
-  
+
   if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_OPERATION_ARGLIST_CH)
     *os << ";";
-  
+
   *os << "\n";
 
   return 0;

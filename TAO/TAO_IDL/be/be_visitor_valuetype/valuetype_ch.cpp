@@ -165,7 +165,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
             {
               *os << ", ";
             }
-          *os << "public virtual ACE_CORBA_1 (ValueBase)" << be_nl;
+          *os << "public virtual CORBA_ValueBase" << be_nl;
         }
 
       // generate the body

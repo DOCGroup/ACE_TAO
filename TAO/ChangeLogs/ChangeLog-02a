@@ -1,28 +1,74 @@
+Fri Apr 28 19:57:41 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Minor fixes to the IDL compiler to facilitate the automatic
+          generation of code in the TAO library (i.e. the locality
+          constrained interfaces).
+
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+          Operations in locality constrained interfaces should have a
+          default value for the CORBA::Environment argument.
+
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+          Do not generate a _tao_any_destructor implementation for
+          locality constrained types.
+          The _tao_encode() and _tao_decode() methods should be trivial
+          for locality constrained exceptions.
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+          Use CORBA_Object in place of ACE_CORBA_1(Object), the former is
+          more readable and easier to maintain.  Ditto cor CORBA_ValueBase
+          and CORBA_ValueFactoryBase
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_si.cpp:
+          Use ACE_TRY_ENV for all the CORBA::Environment arguments.
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+          Fixed indentation in the generated code.
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          Removed spurious blank at the end of a line.
+
+        * TAO_IDL/be/be_visitor_interface/interface_is.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument.cpp:
+
+          Cosmetic fixes
+
 Fri Apr 28 14:41:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Xt_Stopwatch/Makefile: Ran a make depend on the
-	  file. Thanks to Bill Tonseth <tonseth@shamra.mv.com> for
-	  reporting this. 
+        * tests/Xt_Stopwatch/Makefile: Ran a make depend on the
+          file. Thanks to Bill Tonseth <tonseth@shamra.mv.com> for
+          reporting this.
 
 Fri Apr 28 13:40:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/diffs/InterceptorC.h.diff:
-	* tao/diffs/InterceptorC.cpp.diff:
-	* tao/diffs/InterceptorC.cpp:
-	* tao/Makefile (interceptor.target): Updated the patches for
-	  Interceptor.pidl and regenerate InterceptorC.*.
+        * tao/diffs/InterceptorC.h.diff:
+        * tao/diffs/InterceptorC.cpp.diff:
+        * tao/diffs/InterceptorC.cpp:
+        * tao/Makefile (interceptor.target): Updated the patches for
+          Interceptor.pidl and regenerate InterceptorC.*.
 
 Fri Apr 28 13:16:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/InterceptorC.h: This file needs to be conditionally
-	  compiled.
+        * tao/InterceptorC.h: This file needs to be conditionally
+          compiled.
 
 Fri Apr 28 11:17:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/InterceptorC.cpp:
-	  Moved the line '#if (TAO_HAS_INTERCEPTORS == 1)' line to come
-	  after the line '#include tao/InterceptorC.h' to avoid link
-	  errors on NT.
+        * tao/InterceptorC.cpp:
+          Moved the line '#if (TAO_HAS_INTERCEPTORS == 1)' line to come
+          after the line '#include tao/InterceptorC.h' to avoid link
+          errors on NT.
 
 Fri Apr 28 08:29:09 2000  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -115,7 +115,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "// set the ownership" << be_nl << be_nl
       << "// overridden ServantBase operations" << be_nl
       << "PortableServer::POA_ptr _default_POA (" << be_idt << be_idt_nl
-      << "CORBA::Environment &env = " << be_idt_nl
+      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "TAO_default_environment ()"
       << be_uidt << be_uidt_nl
       << ");" << be_uidt << "\n";
@@ -169,4 +169,3 @@ be_visitor_interface_tie_sh::method_helper (be_interface *,
   delete visitor;
   return 0;
 }
-
