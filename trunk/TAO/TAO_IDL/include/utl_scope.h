@@ -161,12 +161,14 @@ public:
   virtual AST_Decl              *lookup_by_name(UTL_ScopedName *,
                                                 idl_bool treat_as_ref,
                                                 idl_bool in_parent = 1,
-                                                long start_index = 0);
+                                                long start_index = 0,
+                                                long scope_offset = 0);
 
   // Look up the Identifier * specified only in the local scope
   virtual AST_Decl              *lookup_by_name_local(Identifier *,
                                                       idl_bool treat_as_ref,
-                                                      long index = 0);
+                                                      long index = 0,
+                                                      long scope_offset = 0);
 
   // Look up a predefined type by its ExprType
   virtual AST_Decl
