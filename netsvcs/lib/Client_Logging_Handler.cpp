@@ -20,8 +20,8 @@ ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (ACE_HANDLE output_handle
   if (ACE_Reactor::instance ()->register_handler (SIGPIPE,
                                                   this) == -1)
     ACE_ERROR ((LM_ERROR,
-                "%n: %p\n",
-		"register_handler (SIGPIPE)"));
+                ACE_TEXT ("%n: %p\n"),
+		ACE_TEXT ("register_handler (SIGPIPE)")));
 #endif /* !ACE_LACKS_UNIX_SIGNALS */
 }
 
@@ -55,18 +55,18 @@ ACE_Client_Logging_Handler::open (void *)
        ACE_Event_Handler::READ_MASK
        | ACE_Event_Handler::EXCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%n: %p\n",
-		       "register_handler)"),
+                       ACE_TEXT ("%n: %p\n"),
+		       ACE_TEXT ("register_handler")),
                       -1);
   // Figure out what remote port we're really bound to.
   if (this->peer ().get_remote_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "get_remote_addr"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("get_remote_addr")),
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "connected to client on handle %u\n",
+	      ACE_TEXT ("connected to client on handle %u\n"),
 	      this->peer ().get_handle ()));
   return 0;
 }
@@ -77,7 +77,7 @@ ACE_Client_Logging_Handler::get_handle (void) const
   ACE_TRACE ("ACE_Client_Logging_Handler::get_handle");
 
   ACE_ERROR ((LM_ERROR,
-	      "get_handle() shouldn't be called\n"));
+	      ACE_TEXT ("get_handle() shouldn't be called\n")));
 
   return ACE_INVALID_HANDLE;
 }
@@ -88,13 +88,13 @@ int
 ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "in handle_input, handle = %u\n",
+              ACE_TEXT ("in handle_input, handle = %u\n"),
               handle));
 
   if (handle == this->logging_output_)
     // We're getting a message from the logging server!
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "received data from server!\n"),
+                       ACE_TEXT ("received data from server!\n")),
                       -1);
   ACE_Log_Record log_record;
 #if defined (ACE_HAS_STREAM_PIPES)
@@ -121,12 +121,12 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 	   | ACE_Event_Handler::EXCEPT_MASK
 	   | ACE_Event_Handler::DONT_CALL) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
-                           "%n: %p\n",
-			   "remove_handler"),
+                           ACE_TEXT ("%n: %p\n"),
+			   ACE_TEXT ("remove_handler")),
                           -1);
       spipe.close ();
       ACE_DEBUG ((LM_DEBUG,
-                  "client closing down\n"));
+                  ACE_TEXT ("client closing down\n")));
       return 0;
     }
 #else
@@ -154,15 +154,15 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 	   | ACE_Event_Handler::EXCEPT_MASK
 	   | ACE_Event_Handler::DONT_CALL) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
-                           "%n: %p\n",
-			   "remove_handler"), 
+                           ACE_TEXT ("%n: %p\n"),
+			   ACE_TEXT ("remove_handler")),
                           0);
       if (handle == this->peer ().get_handle ())
         this->peer ().close ();
       else
         ACE_OS::closesocket (handle);
       ACE_DEBUG ((LM_DEBUG,
-                  "client closing down\n"));
+                  ACE_TEXT ("client closing down\n")));
       return 0;
       /* NOTREACHED */
 
@@ -179,13 +179,13 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                | ACE_Event_Handler::EXCEPT_MASK
                | ACE_Event_Handler::DONT_CALL) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "%n: %p\n",
-                               "remove_handler"), 
+                               ACE_TEXT ("%n: %p\n"),
+                               ACE_TEXT ("remove_handler")),
                               0);
  
           ACE_OS::closesocket (handle);
           ACE_DEBUG ((LM_DEBUG,
-                      "client closing down\n"));
+                      ACE_TEXT ("client closing down\n")));
           return 0;
         }
 #endif /* ACE_WIN32 */
@@ -199,7 +199,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
       if (retrieved != length)
        {
            ACE_DEBUG ((LM_DEBUG,
-                       "partial message retrieved, attempting second try...\n"));
+                       ACE_TEXT ("partial message retrieved, attempting second try...\n")));
  
           int remainder = length - retrieved;
  
@@ -209,7 +209,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
            if (secondtry != remainder)
              {
                ACE_DEBUG ((LM_DEBUG,
-                           "second try failed\n"));
+                           ACE_TEXT ("second try failed\n")));
  
                if (ACE_Reactor::instance ()->remove_handler
                    (handle,
@@ -218,16 +218,16 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                     | ACE_Event_Handler::DONT_CALL) == -1)
                  {
                    ACE_ERROR_RETURN ((LM_ERROR,
-                                      "%n: %p\n",
-                                      "remove_handler"), 
+                                      ACE_TEXT ("%n: %p\n"),
+                                      ACE_TEXT ("remove_handler")),
                                      0);
                  }
  
                ACE_OS::closesocket (handle);
                
                ACE_ERROR_RETURN ((LM_ERROR,
-                                  "%p\n",
-                                  "recv"),
+                                  ACE_TEXT ("%p\n"),
+                                  ACE_TEXT ("recv")),
                                  0);
              }
        }
@@ -237,8 +237,8 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   // Forward the logging record to the server.
   if (this->send (log_record) == -1)
     ACE_ERROR ((LM_ERROR,
-		"%p\n",
-		"send"));
+		ACE_TEXT ("%p\n"),
+		ACE_TEXT ("send")));
   return 0;
 }
 
@@ -257,7 +257,7 @@ int
 ACE_Client_Logging_Handler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "shutting down!!!\n"));
+              ACE_TEXT ("shutting down!!!\n")));
 
   if (this->logging_output_ != ACE_STDERR)
     ACE_OS::closesocket (this->logging_output_);
@@ -430,7 +430,7 @@ ACE_Client_Logging_Acceptor::init (int argc, char *argv[])
   // Initialize the acceptor endpoint.
   if (this->open (LOGGING_ADDR (this->logger_key_)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
+                       ACE_TEXT ("%p\n"),
                        this->logger_key_),
                       -1);
 
@@ -442,8 +442,8 @@ ACE_Client_Logging_Acceptor::init (int argc, char *argv[])
                    this->server_addr_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%p, using stderr\n",
-		  "can't connect to logging server"));
+                  ACE_TEXT ("%p, using stderr\n"),
+		  ACE_TEXT ("can't connect to logging server")));
       // If we can't connect to the server then we'll send the logging
       // messages to stderr.
       stream.set_handle (ACE_STDERR);
@@ -455,12 +455,12 @@ ACE_Client_Logging_Acceptor::init (int argc, char *argv[])
       // Figure out what remote port we're really bound to.
       if (stream.get_remote_addr (server_addr) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "get_remote_addr"),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("get_remote_addr")),
                           -1);
       ACE_DEBUG ((LM_DEBUG,
-		  "starting up Client Logging Daemon, "
-		  "connected to port %d on handle %u\n",
+		  ACE_TEXT ("starting up Client Logging Daemon, ")
+		  ACE_TEXT ("connected to port %d on handle %u\n"),
 		  server_addr.get_port_number (),
 		  stream.get_handle ()));
     }
@@ -494,16 +494,16 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, char *argv[])
 	  break;
 	default:
 	  ACE_ERROR_RETURN ((LM_ERROR,
-			    "%n:\n[-p server-port]\n%a", 1),
-			   -1);
+                             ACE_TEXT ("%n:\n[-p server-port]\n%a"), 1),
+                            -1);
 	}
     }
 
   if (this->server_addr_.set (this->server_port_,
 			      this->server_host_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "set"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("set")),
                       -1);
   return 0;
 }
