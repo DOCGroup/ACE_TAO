@@ -248,9 +248,10 @@ main(int argc, char **argv)
      *
      * Check if stdin and handle file name appropriately
      */
-    if (DRV_nfiles == 0) {
-      DRV_files[0] = "standard input";
-    }
+    if (DRV_nfiles == 0)
+      {
+        DRV_files[0] = "standard input";
+      }
     DRV_file_index = 0;
     DRV_drive(DRV_files[DRV_file_index]);
   }

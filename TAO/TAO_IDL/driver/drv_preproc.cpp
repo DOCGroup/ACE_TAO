@@ -263,30 +263,27 @@ DRV_pre_proc(char *myfile)
 
   (void) ACE_OS::mktemp (tmp_file); ACE_OS::strcat (tmp_file, ".cc");
   (void) ACE_OS::mktemp (tmp_ifile); ACE_OS::strcat (tmp_ifile, ".cc");
-  if (strcmp(myfile, "standard input") == 0) {
-    idl_global->set_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
-    idl_global->set_main_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
-    idl_global->
-        set_stripped_filename(
-            (*DRV_FE_new_UTL_String)(DRV_stripped_name(tmp_ifile))
-        );
-    idl_global->set_real_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
-    DRV_copy_input(stdin, tmp_ifile, "standard input");
-    idl_global->set_read_from_stdin(I_TRUE);
-  } else {
-    FILE *fd = fopen(myfile, "r");
-    DRV_copy_input(fd, tmp_ifile, myfile);
-    fclose(fd);
-    idl_global->set_read_from_stdin(I_FALSE);
-    idl_global->set_filename((*DRV_FE_new_UTL_String)(myfile));
-    idl_global->set_main_filename((*DRV_FE_new_UTL_String)(myfile));
-    idl_global->
-        set_stripped_filename(
-            (*DRV_FE_new_UTL_String)(DRV_stripped_name(myfile))
-        );
-    idl_global->set_real_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
-  }
-
+  if (strcmp(myfile, "standard input") == 0) 
+    {
+      idl_global->set_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
+      idl_global->set_main_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
+      idl_global->set_stripped_filename((*DRV_FE_new_UTL_String)(DRV_stripped_name(tmp_ifile)));
+      idl_global->set_real_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
+      DRV_copy_input(stdin, tmp_ifile, "standard input");
+      idl_global->set_read_from_stdin(I_TRUE);
+    }
+  else
+    {
+      FILE *fd = fopen(myfile, "r");
+      DRV_copy_input(fd, tmp_ifile, myfile);
+      fclose(fd);
+      idl_global->set_read_from_stdin(I_FALSE);
+      idl_global->set_filename((*DRV_FE_new_UTL_String)(myfile));
+      idl_global->set_main_filename((*DRV_FE_new_UTL_String)(myfile));
+      idl_global->set_stripped_filename((*DRV_FE_new_UTL_String)(DRV_stripped_name(myfile)));
+      idl_global->set_real_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
+    }
+  
   // We use ACE instead of the (low level) fork facilities, this also
   // work on NT.
   ACE_Process manager;
