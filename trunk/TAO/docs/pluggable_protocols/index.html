@@ -44,24 +44,24 @@ Washington University at St.Louis
 </UL>
 <LI><A NAME="TOC_SECTION200" HREF="#SECTION200">Pluggable Protocol Framework Components</A>
 <UL>
-<LI><A NAME="TOC_SECTION210" HREF="#SECTION210">The <TT> Acceptor</TT></A>
+<LI><A NAME="TOC_SECTION210" HREF="#SECTION210">The <TT>Acceptor</TT></A>
 <UL>
 <LI><A NAME="TOC_SECTION211" HREF="#SECTION211">Context</A>
 <LI><A NAME="TOC_SECTION212" HREF="#SECTION212">Problem</A>
 <LI><A NAME="TOC_SECTION213" HREF="#SECTION213">Solution</A>
 <LI><A NAME="TOC_SECTION214" HREF="#SECTION214">Applying the solution to TAO</A>
-<LI><A NAME="TOC_SECTION215" HREF="#SECTION215"><TT> Acceptor</TT> Implementation</A>
+<LI><A NAME="TOC_SECTION215" HREF="#SECTION215"><TT>Acceptor</TT> Implementation</A>
 </UL>
-<LI><A NAME="TOC_SECTION220" HREF="#SECTION220">The <TT> Connector</TT></A>
+<LI><A NAME="TOC_SECTION220" HREF="#SECTION220">The <TT>Connector</TT></A>
 <UL>
 <LI><A NAME="TOC_SECTION221" HREF="#SECTION221">Context</A>
 <LI><A NAME="TOC_SECTION222" HREF="#SECTION222">Problem</A>
 <LI><A NAME="TOC_SECTION223" HREF="#SECTION223">Solution</A>
 <LI><A NAME="TOC_SECTION224" HREF="#SECTION224">Applying the solution in TAO</A>
-<LI><A NAME="TOC_SECTION225" HREF="#SECTION225"><TT> Connector</TT> Implementation</A>
+<LI><A NAME="TOC_SECTION225" HREF="#SECTION225"><TT>Connector</TT> Implementation</A>
 </UL>
-<LI><A NAME="TOC_SECTION230" HREF="#SECTION230">The <TT> Profile</TT> Object</A>
-<LI><A NAME="TOC_SECTION240" HREF="#SECTION240">The <TT> Protocol_Factory</TT> Object</A>
+<LI><A NAME="TOC_SECTION230" HREF="#SECTION230">The <TT>Profile</TT> Object</A>
+<LI><A NAME="TOC_SECTION240" HREF="#SECTION240">The <TT>Protocol_Factory</TT> Object</A>
 <LI><A NAME="TOC_SECTION250" HREF="#SECTION250">The <TT> Transport</TT> Object</A>
 <UL>
 <LI><A NAME="TOC_SECTION251" HREF="#SECTION251">Context</A>
@@ -317,7 +317,8 @@ object, hiding the transport- and strategy-specific details of the acceptor.
 </H3>
 
 <P>
-TAO's <TT>Acceptor</TT> interface, shown below, is declared in the file <TT>&lt;tao/Pluggable.h&gt;</TT>.
+TAO's <TT>Acceptor</TT> interface, shown below, is declared in the  file
+<TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
 All <TT>Acceptor</TT> implementations must inherit from the <TT>TAO_Acceptor</TT>
 abstract base class.
 
@@ -571,12 +572,12 @@ by any other protocol can be used.
 <P>
  
 <DL>
-<DT><STRONG><TT>open</TT>.</STRONG></DT>
+<DT><STRONG><TT><A NAME="TAO_Acceptor::open">open</A></TT>.</STRONG></DT>
 <DD>The <TT>open</TT> method initializes the acceptor, i.e. sets
 the protocol version to use (if supported), parses any protocol-specific options
 (if any) and creates the endpoint passed to it.
 <P>
-The address specified by using the <TT>-ORBEndpoint</TT> ORB option is passed
+The address specified by using the <TT><A HREF="../Options.html#-ORBEndpoint">-ORBEndpoint</A></TT> ORB option is passed
 directly to this method. If more than one address is specified within a given
 <TT>-ORBEndpoint</TT> option then each address is passed one by one to this
 method by the pluggable protocols framework. For example, the following <TT>-ORBEndpoint</TT>
@@ -603,7 +604,7 @@ handle the address passed to this method.
 
 <P>
  </DD>
-<DT><STRONG><TT>open_default</TT>.</STRONG></DT>
+<DT><STRONG><TT><A NAME="TAO_Acceptor::open_default">open_default</A></TT>.</STRONG></DT>
 <DD>Each pluggable protocol should have the ability to
 open a default endpoint. For example, it should be possible to make the pluggable
 protocol open an endpoint without specifying an address, in which case an address
@@ -901,7 +902,7 @@ object and to the <TT>Transport</TT> objects that were created.
 </H3>
 
 <P>
-TAO's <TT>Connector</TT> interface, shown below, is declared in the file <TT>&lt;tao/Pluggable.h&gt;</TT>.
+TAO's <TT>Connector</TT> interface, shown below, is declared in the file <TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
 All <TT>Connector</TT> implementations must inherit from the <TT>TAO_Connector</TT>
 abstract base class.
 
@@ -1110,7 +1111,7 @@ Handler</TT> being used.
 <P>
  </DD>
 <DT><STRONG><TT>preconnect</TT>.</STRONG></DT>
-<DD>The <TT>preconnect</TT> method is invoked when the <TT>-ORBPreconnect</TT>
+<DD>The <TT>preconnect</TT> method is invoked when the <TT><A HREF="../Options.html#-ORBPreconnect">-ORBPreconnect</A></TT>
 ORB option is used. It causes a blocking connection to be made to the specified
 address. Multiple connections can be made to the same endpoint. For example,
 the following <TT>-ORBPreconnect</TT> option will cause two IIOP blocking connections
@@ -1289,8 +1290,10 @@ definitions.
 <P>
 All protocol-specific <TT>Profile</TT> implementations should inherit from the
 <TT>TAO_Profile</TT> abstract base class. The <TT>TAO_Profile</TT> interface
-is declared in the file <TT>&lt;tao/Profile.h&gt;</TT>. Its interface follows. Only
-the methods that must be implemented are shown:
+is declared in the file
+<TT>&lt;<A HREF="../../tao/Profile.h">tao/Profile.h&gt;</A></TT>.
+Its interface follows. Only the methods that must be implemented are shown:
+
 
 <P>
 
@@ -1473,14 +1476,17 @@ object using the provided string. The string passed to this method has the forma
 <DL COMPACT>
 <DT>
 <DD>N.n@address/object_key</DD>
-</DL>or
+</DL>
+<P>
+or
 
 <P>
 
 <DL COMPACT>
 <DT>
 <DD>address/object_key</DD>
-</DL>where the <TT>address</TT> and the object key delimiter `<TT>/</TT>' are pluggable
+</DL>
+<P>where the <TT>address</TT> and the object key delimiter `<TT>/</TT>' are pluggable
 protocol specific. The <TT>parse_string</TT> method must be able to extract
 the protocol version (even if it isn't used), the address and the object key
 from the provided string. It is generally a good idea to use the <TT>parse_string</TT>
@@ -1501,9 +1507,12 @@ address in the following IIOP URL style IOR:
 <DL COMPACT>
 <DT>
 <DD>iioploc://1.1@foo.bar.com:1234/yet_another_object_key</DD>
-</DL>is ``<TT>foo.bar.com:1234</TT>.'' Much of the in TAO's existing pluggable
+</DL>
+<P>is ``<TT>foo.bar.com:1234</TT>.'' Much of the in TAO's existing pluggable
 protocols may also be factored out because that code is common to all pluggable
-protocols.
+protocols.  The URL style IOR created by this method should be usable
+by TAO's <A HREF="../INS.html">Interoperable Naming Service</A> via the
+<TT><A HREF="../Options.html#-ORBInitRef">-ORBInitRef</A></TT> ORB option.
 
 <P>
  </DD>
@@ -1616,8 +1625,9 @@ an <TT>Acceptor</TT> on the server-side, and a <TT>Connector</TT> on the client-
 
 <P>
 All <TT>Protocol_Factory</TT> implementations should be derived from the <TT>TAO_Protocol_Factory</TT>
-abstract base class defined in <TT>&lt;tao/Protocol_Factory.h&gt;</TT>. The <TT>TAO_Protocol_Factory</TT>
-interface is shown below:
+abstract base class defined in
+<TT>&lt;<A HREF="../../tao/Protocol_Factory.h">tao/Protocol_Factory.h</A>&gt;</TT>.
+The <TT>TAO_Protocol_Factory</TT> interface is shown below:
 
 <P>
 
@@ -2032,7 +2042,7 @@ Server Inter-ORB and Transport Class Diagram</CAPTION>
  $\resizebox* {5in}{!}{\includegraphics{graphics/pp_iops.eps}}$
  -->
 <IMG
- WIDTH="563" HEIGHT="750" ALIGN="BOTTOM" BORDER="0"
+ WIDTH="422" HEIGHT="563" ALIGN="BOTTOM" BORDER="0"
  SRC="img5.png"
  ALT="pp_iops"> </DIV>
 <P>
@@ -2069,7 +2079,7 @@ creates and initializes these objects.
 
 <P>
 All TAO pluggable protocol <TT>Transport</TT> classes must inherit from the
-<TT>TAO_Transport</TT> abstract base class defined in <TT>&lt;tao/Pluggable.h&gt;</TT>.
+<TT>TAO_Transport</TT> abstract base class defined in <TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
 The <TT>TAO_Transport</TT> interface is shown below. Again, only the methods
 that should be implemented for a given pluggable protocol are shown:
 
@@ -2381,19 +2391,46 @@ is built.  These are the REACTOR, ACCEPTOR, CONNECTOR, FACTORY, STRATEGY,
 and SERVICE CONFIGURATOR PATTERN.  The papers that I found helpful on these 
 were:
 <BR>
-<BLOCKQUOTE>Reactor
-	Reactor1-93.pdf<BR>
-	Reactor2-93.pdf<BR>
-	Reactor-rules.ps<BR>
-	Reactor-siemens.ps<BR>
-	Svc-conf.ps<BR>
-	Acc-Con.ps</BLOCKQUOTE>
+<BLOCKQUOTE>
+Reactor (
+<A HREF="http://www.cs.wustl.edu/~schmidt/Reactor.ps.gz">PostScript</A> |
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor.pdf.gz">PDF</A>
+)<BR>
+
+Reactor1-93 (
+<A HREF="http://www.cs.wustl.edu/~schmidt/Reactor1-93.ps.gz">PostScript</A> |
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor1-93.pdf.gz">PDF</A>
+)<BR>
+
+Reactor2-93 (
+<A HREF="http://www.cs.wustl.edu/~schmidt/Reactor2-93.ps.gz">PostScript</A> |
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor2-93.pdf.gz">PDF</A>
+)<BR>
+
+reactor-rules (
+<A HREF="http://www.cs.wustl.edu/~schmidt/reactor-rules.ps.gz">PostScript</A> |
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/reactor-rules.pdf.gz">PDF</A>
+)<BR>
+
+reactor-siemens (
+<A HREF="http://www.cs.wustl.edu/~schmidt/reactor-siemens.ps.gz">PostScript</A> |
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/reactor-siemens.pdf.gz">PDF</A>
+)<BR>
+
+Svc-Conf (
+<A HREF="http://www.cs.wustl.edu/~schmidt/Svc-Conf.ps.gz">PostScript</A>
+)<BR>
+
+Acc-Con (
+<A HREF="http://www.cs.wustl.edu/~schmidt/Acc-Con.ps.gz">PostScript</A>
+)
+</BLOCKQUOTE>
 <BR>
 <P>These are all readily available from the TAO and ACE website.
 <BR>
 <P>My starting point for understanding how to add a pluggable protocol to the TAO ORB came
-from mailing list entry from Carlos O'Ryan (coryan@cs.wustl.edu).   One can find it in
-the archives of the comp.soft-sys.ace.  It is dated 1999/06/02 RE: [ace-users] TAO: ATM pluggable
+from mailing list entry from <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>.   One can find it in
+the archives of the comp.soft-sys.ace newsgroup.  It is dated 1999/06/02 RE: [ace-users] TAO: ATM pluggable
 protocol.  I will repeat the section of that email that was particularly useful to me. (In the email,
 he is responding to someone who had inquired about adding the ATM protocol).
 <BR>
@@ -2410,27 +2447,32 @@ he is responding to someone who had inquired about adding the ATM protocol).
 <P>	The profile class handles the addressing format for your transport.  It would
 basically be a wrapper around the ACE_ATM_Addr() class.
 The Connector and Acceptor classes are simply wrappers around 
-ACE_Acceptor<ACE_ATM_ACCEPTOR> and 
-ACE_Connector<ACE_ATM_ACCEPTOR>, again no big deal (I think). 
+ACE_Acceptor&lt;ACE_ATM_ACCEPTOR&gt; and 
+ACE_Connector&lt;ACE_ATM_ACCEPTOR&gt;, again no big deal (I think). 
 The factory is even simpler.
 
 <P>Things get really interesting in the Transport and Connect classes.  Transport
 just implements external polymorphism over the Client_Connector_Handler and
-the Service_Connnector_Handler objects defined in the Connect.{h,i,cpp}, those are
-simply ACE_Svc_Handler<ACE_ATM_Stream>, but they don't do much work, they
+the Service_Connector_Handler objects defined in the Connect.{h,i,cpp}, those are
+simply ACE_Svc_Handler&lt;ACE_ATM_Stream&gt;, but they don't do much work, they
 just delegate on the Transport classes.  This somewhat strange design is easy to
-understand once you realize that all the ACE_Svc_Handler<> classes are not type
+understand once you realize that all the ACE_Svc_Handler&lt;&gt; classes are not type
 compatible (except in their most basic ACE_Event_Handler form).  So they must
 be wrapped using the TAO_Transport class.
 
 </BLOCKQUOTE>
 
 <BR>
-<P>Review also the index.html file entitled "Release Information for the ACE ORB (TAO)"
-in the tao\docs\releasenotes\ directory, section "Pluggable Protocols"
+<P>Review also the
+``<A HREF="../releasenotes/index.html#pp">Pluggable Protocols</A>''
+in the
+``<A HREF="../releasenotes/index.html">Release Information for the ACE
+ORB (TAO)</A>''
+in the
+<A HREF="../releasenotes">TAO/docs/releasenotes</A> directory.
 <BR><P>
 Just for completeness sake, I'll include some other mailing list entries which were helpful
-in getting me started.  The following is from Ossama Othman (othman@cs.wustl.edu). 
+in getting me started.  The following is from <A HREF="mailto:othman@cs.wustl.edu">Ossama Othman</A>.
 
 <BLOCKQUOTE>The stock TAO distribution has support for two transport protocols,
 TCP/IP and local namespace sockets (aka Unix Domain sockets).  However,
@@ -2464,7 +2506,7 @@ and tao/IIOP* then you shouldn't have much of a problem.</BLOCKQUOTE>
 <P>Here are some links that describe the pluggable protocols framework but
 not how to implement one:
 <BLOCKQUOTE>
-<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/index.html#pp">http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/index.html#pp</A><BR>
+<A HREF="../releasenotes/index.html#pp">http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/index.html#pp</A><BR>
 
 <A HREF="http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz">http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz</A>
 </BLOCKQUOTE>
@@ -2491,14 +2533,15 @@ See (TBD) ftp site for this Rose diagram.
 <BR><P>
 The new classes created were.
 <BR>
-<BLOCKQUOTE>TAO_SCRAMNet_Profile  (Derived from TAO_Profile in pluggable.h)<BR>
-TAO_SCRAMNet_Acceptor (Derived from TAO_Acceptor in pluggable.h) <BR>
-TAO_SCRAMNet_Connector  (Derived from TAO_Connector in pluggable.h)<BR>
-TAO_SCRAMNet_Transport  (Derived from TAO_Transport in pluggable.h)
+<BLOCKQUOTE>
+TAO_SCRAMNet_Profile  (Derived from TAO_Profile in <A HREF="../../tao/Profile.h">Profile.h</A>)<BR>
+TAO_SCRAMNet_Acceptor (Derived from TAO_Acceptor in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>) <BR>
+TAO_SCRAMNet_Connector  (Derived from TAO_Connector in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>)<BR>
+TAO_SCRAMNet_Transport  (Derived from TAO_Transport in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>)
 	<BLOCKQUOTE>TAO_SCRAMNet_Server_Transport<BR>
-	TAO_SCRAMNet_Client_Trasnport</BLOCKQUOTE><BR>
-TAO_SCRAMNet_Protocol_Factory (Derived from TAO_Protocol Factory in protocol_factory.h)<BR>
-TAO_SCRAMNet_Handler_Base (as in IIOP_Connect.h)
+	TAO_SCRAMNet_Client_Transport</BLOCKQUOTE><BR>
+TAO_SCRAMNet_Protocol_Factory (Derived from TAO_Protocol Factory in <A HREF="../../tao/Protocol_Factory.h">Protocol_Factory.h</A>)<BR>
+TAO_SCRAMNet_Handler_Base (as in <A HREF="../../tao/IIOP_Connect.h">IIOP_Connect.h</A>)
 	<BLOCKQUOTE>TAO_SCRAMNet_Client_Connection_Handler<BR>
 	TAO_SCRAMNet_Server_Connection_Handler</BLOCKQUOTE></BLOCKQUOTE><BR>
 
@@ -2890,8 +2933,8 @@ information correctly.
 In order to create the ORB with the Win32 Reactor at the core as well as the
 SCRAMNet protocol factory loaded and initialize I needed to use the
 svc.conf file with the the following options 
- -ORBReactorType wfmo
--ORBProtocolFactory SCRAMNet_Factory
+<A HREF="../Options.html#-ORBReactorType">-ORBReactorType</A> wfmo
+<A HREF="../Options.html#-ORBProtocolFactory">-ORBProtocolFactory</A> SCRAMNet_Factory
 <BR><P>
 
 Beyond the above, I just traced through the operation of the IIOP
@@ -2920,7 +2963,8 @@ as the following:
 
 <DL COMPACT>
 <DT>
-<DD><dynamic&nbsp;FOOIOP_Factory&nbsp;Service_Object&nbsp;*&nbsp;TAO_FOO:_make_TAO_FOOIOP_Protocol_Factory()&nbsp;&#34;&#34;&nbsp;&nbsp;
+<DD>
+dynamic&nbsp;FOOIOP_Factory&nbsp;Service_Object&nbsp;*&nbsp;TAO_FOO:_make_TAO_FOOIOP_Protocol_Factory()&nbsp;&#34;&#34;
 <BR>
 static&nbsp;Resource_Factory&nbsp;&#34;-ORBProtocolFactory&nbsp;FOOIOP_Factory&#34;
 <P>
@@ -2929,7 +2973,12 @@ static&nbsp;Resource_Factory&nbsp;&#34;-ORBProtocolFactory&nbsp;FOOIOP_Factory&#
 into the ORB. By default the IIOP and UIOP (if supported) pluggable protocols
 are loaded into TAO if no such entries are provided. Explicitly specifying which
 protocols to load in this way prevents any pluggable protocols from being loaded
-by default. Multiple pluggable protocols can be loaded simply by adding more
+by default.  The
+<TT><A HREF="../Options.html#-ORBProtocolFactory">-ORBProtocolFactory</A></TT>
+ORB option causes the specified protocol factory to be loaded into the
+ORB.
+
+Multiple pluggable protocols can be loaded simply by adding more
 <TT>Service Configurator</TT> configuration file entries. For example, the following
 entries would cause the TAO's IIOP and the fictional FOOIOP pluggable protocols
 to be loaded:
@@ -2938,16 +2987,22 @@ to be loaded:
 
 <DL COMPACT>
 <DT>
-<DD>dynamic&nbsp;FOOIOP_Factory&nbsp;Service_Object&nbsp;*&nbsp;TAO_FOO:_make_TAO_FOOIOP_Protocol_Factory()&nbsp;&#34;&#34;&nbsp;&nbsp;
+<DD>dynamic&nbsp;FOOIOP_Factory&nbsp;Service_Object&nbsp;*&nbsp;TAO_FOO:_make_TAO_FOOIOP_Protocol_Factory()&nbsp;&#34;&#34;
 <BR>
-static&nbsp;Resource_Factory&nbsp;&#34;-ORBProtocolFactory&nbsp;FOOIOP_Factory&#34;&nbsp;
+static&nbsp;Resource_Factory&nbsp;&#34;-ORBProtocolFactory&nbsp;FOOIOP_Factory&#34;
 <BR>
 dynamic&nbsp;IIOP_Factory&nbsp;Service_Object&nbsp;*&nbsp;TAO:_make_TAO_IIOP_Protocol_Factory()&nbsp;&#34;&#34;&nbsp;&nbsp;
 <BR>
 static&nbsp;Resource_Factory&nbsp;&#34;-ORBProtocolFactory&nbsp;IIOP_Factory&#34;
 <P>
 </DD>
-</DL>In this case, TAO's UIOP pluggable protocol would <I>not</I> be loaded.
+</DL>In this case, TAO's UIOP pluggable protocol would <I>not</I> be
+loaded.  <TT>Service Configurator</TT> configuration file names are
+not limited to the name ``<TT>svc.conf</TT>.''  The ORB can be told
+to use a configuration file other than ``<TT>svc.conf</TT>'' by using the
+<TT><A HREF="../Options.html#-ORBSvcConf">-ORBSvcConf</A></TT>
+ORB option.
+
 
 <P>
 Note that the FOOIOP protocol resides in a library other than the TAO library,
@@ -2958,10 +3013,19 @@ makes TAO's pluggable protocol framework ``pluggable.''
 
 <P>
 Creating an endpoint specific to a given pluggable protocol is simply a matter
-of using TAO's <TT>-ORBEndpoint</TT> ORB option. This is detailed in the documentation
-for the <TT>open</TT> and <TT>open_default</TT> methods in the <TT>Acceptor</TT>
-section of this document. Once an endpoint is created, the client uses the IOR
-that points to the object on that endpoint to make requests on that object.
+of using TAO's <TT><A HREF="../Options.html#-ORBEndpoint">-ORBEndpoint</A></TT> ORB option. This is detailed in the documentation
+for the
+<TT><A HREF="#TAO_Acceptor::open">open</A></TT>
+and
+<TT><A HREF="#TAO_Acceptor::open_default">open_default</A></TT>
+methods in the
+<TT><A HREF="#SECTION210">Acceptor</A></TT>
+section of this document. Once an endpoint is created, the client uses
+the IOR that points to the object on that endpoint to make requests on
+that object.
+
+<P>
+All ORB options are described <A HREF="../Options.html">here</A>.
 
 <P>
 <HR>
@@ -3014,7 +3078,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:othman@cs.wustl.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Thu Dec 16 19:07:50 CST 1999
+Last modified: Thu Dec 16 20:36:48 CST 1999
 <!-- hhmts end -->
 </BODY>
 </HTML>
