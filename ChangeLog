@@ -1,3 +1,20 @@
+Fri Dec  7 10:22:25 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.i (close):
+
+	  Do not invalidate the handle when closing the
+	  ACE_SSL_SOCK_Stream.  Doing so causes subtle side-effects when a
+	  reactor invokes an event handler that uses a shutdown
+	  ACE_SSL_SOCK_Stream.  For example, if an SSL handshake fails
+	  then the stream andle will be invalidated.  This prevents the
+	  ACE_SSL_Accept_Handler from being removed from the reactor.
+	  Later when handle_events() is called the reactor will attempt
+	  to call the ACE_SSL_Accept_Handler with the shutdown
+	  ACE_SSL_SOCK_Stream, which appears to cause an access violation
+	  on Windows, and a "hand" on Unix platforms.  Thanks to Vladimir
+	  Chovanec <Vladimir.CHOVANEC@asset.sk> for tracking down this
+	  problem.
+
 Thu Dec 06 20:28:02 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/SString.cpp (ACE_NS_WString): Char string constructor only

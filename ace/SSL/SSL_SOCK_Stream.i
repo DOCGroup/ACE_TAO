@@ -278,12 +278,6 @@ ACE_SSL_SOCK_Stream::close (void)
     case SSL_ERROR_NONE:
     case SSL_ERROR_SYSCALL:  // Ignore this error condition.
 
-      // Don't set the handle in OpenSSL; only in the SSL_SOCK_Stream.
-      // We do this to avoid any potential side effects.  Invoking
-      // ACE_SSL_SOCK::set_handle() bypasses the OpenSSL SSL_set_fd()
-      // call ACE_SSL_SOCK_Stream::set_handle() does.
-      this->ACE_SSL_SOCK::set_handle (ACE_INVALID_HANDLE);
-
       // Reset the SSL object to allow another connection to be made
       // using this ACE_SSL_SOCK_Stream instance.  This prevents the
       // previous SSL session state from being associated with the new
@@ -321,4 +315,3 @@ ACE_SSL_SOCK_Stream::ssl (void) const
 {
   return this->ssl_;
 }
-
