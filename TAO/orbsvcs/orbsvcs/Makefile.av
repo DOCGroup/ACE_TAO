@@ -8384,7 +8384,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/os_include/os_aio.h \
   $(ACE_ROOT)/ace/os_include/sys/os_un.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
-  $(ACE_ROOT)/ace/OS.i AV/RTCP.h \
+  $(ACE_ROOT)/ace/OS.i \
+  AV/RTCP.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \

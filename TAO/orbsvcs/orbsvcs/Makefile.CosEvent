@@ -4939,7 +4939,8 @@ endif
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Get_Opt.i \
   $(ACE_ROOT)/ace/Argv_Type_Converter.h \
-  $(ACE_ROOT)/ace/Argv_Type_Converter.inl
+  $(ACE_ROOT)/ace/Argv_Type_Converter.inl \
+  $(TAO_ROOT)/tao/debug.h
 
 .obj/CosEventCommC.o .obj/CosEventCommC.so .shobj/CosEventCommC.o .shobj/CosEventCommC.so: CosEventCommC.cpp CosEventCommC.h \
   $(ACE_ROOT)/ace/pre.h \

@@ -6451,14 +6451,13 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   Notify/EventTypeSeq.inl Notify/Admin.inl \
+  $(TAO_ROOT)/tao/debug.h \
   Notify/Method_Request_Dispatch_T.cpp Notify/ProxySupplier.h \
   Notify/Proxy.h Notify/Refcountable_Guard_T.h \
   Notify/Refcountable_Guard_T.inl Notify/Refcountable_Guard_T.cpp \
   Notify/Proxy.inl Notify/ProxySupplier.inl \
-  Notify/Method_Request_Dispatch.inl \
-  $(TAO_ROOT)/tao/debug.h \
-  Notify/Consumer.h Notify/Peer.h Notify/Peer.inl Notify/Consumer.inl \
-  Notify/ConsumerAdmin.h \
+  Notify/Method_Request_Dispatch.inl Notify/Consumer.h Notify/Peer.h \
+  Notify/Peer.inl Notify/Consumer.inl Notify/ConsumerAdmin.h \
   NotifyExtS.h \
   NotifyExtS_T.h \
   NotifyExtS_T.i \
@@ -9155,6 +9154,7 @@ endif
   Notify/Any/AnyEvent.inl Notify/Method_Request_Dispatch.h \
   Notify/Method_Request.h Notify/Method_Request.inl \
   Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  $(TAO_ROOT)/tao/debug.h \
   Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
   Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Event_Manager.h \
   ESF/ESF_Worker.h \
@@ -9197,7 +9197,6 @@ endif
   NotifyExtS_T.cpp \
   NotifyExtS.i \
   Notify/ConsumerAdmin.inl Notify/Any/CosEC_ProxyPushSupplier.inl \
-  $(TAO_ROOT)/tao/debug.h \
   Notify/Any/PushConsumer.h Notify/Any/PushConsumer.inl
 
 .obj/ProxyPushConsumer.o .obj/ProxyPushConsumer.so .shobj/ProxyPushConsumer.o .shobj/ProxyPushConsumer.so: Notify/Any/ProxyPushConsumer.cpp \
@@ -9998,6 +9997,7 @@ endif
   Notify/Any/AnyEvent.inl Notify/Method_Request_Dispatch.h \
   Notify/Method_Request.h Notify/Method_Request.inl \
   Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  $(TAO_ROOT)/tao/debug.h \
   Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
   Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Event_Manager.h \
   ESF/ESF_Worker.h \
@@ -10040,7 +10040,6 @@ endif
   NotifyExtS_T.cpp \
   NotifyExtS.i \
   Notify/ConsumerAdmin.inl Notify/Any/ProxyPushSupplier.inl \
-  $(TAO_ROOT)/tao/debug.h \
   Notify/Any/PushConsumer.h Notify/Any/PushConsumer.inl
 
 .obj/PushConsumer.o .obj/PushConsumer.so .shobj/PushConsumer.o .shobj/PushConsumer.so: Notify/Any/PushConsumer.cpp Notify/Any/PushConsumer.h \
@@ -11268,6 +11267,7 @@ endif
   Notify/Peer.inl Notify/Consumer.inl Notify/Structured/StructuredEvent.h \
   Notify/Structured/StructuredEvent.inl Notify/Method_Request_Dispatch.h \
   Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  $(TAO_ROOT)/tao/debug.h \
   Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
   Notify/Any/ProxyPushSupplier.inl Notify/Any/CosEC_ProxyPushConsumer.h \
   Notify/Any/CosEC_ProxyPushConsumer.inl \
@@ -14075,6 +14075,7 @@ endif
   Notify/Any/AnyEvent.inl Notify/Method_Request_Dispatch.h \
   Notify/Method_Request.h Notify/Method_Request.inl \
   Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  $(TAO_ROOT)/tao/debug.h \
   Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
   Notify/Worker_Task.h Notify/Worker_Task.inl \
   Notify/Structured/StructuredProxyPushSupplier.inl \
@@ -19523,6 +19524,7 @@ endif
   Notify/Method_Request_Dispatch.h Notify/Method_Request.h \
   Notify/Method_Request.inl Notify/Method_Request_Dispatch_T.h \
   Notify/Method_Request_Dispatch_T.inl \
+  $(TAO_ROOT)/tao/debug.h \
   Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
   Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Buffering_Strategy.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
@@ -21115,6 +21117,7 @@ endif
   Notify/Any/AnyEvent.inl Notify/Method_Request_Dispatch.h \
   Notify/Method_Request.h Notify/Method_Request.inl \
   Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  $(TAO_ROOT)/tao/debug.h \
   Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
   Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Event_Manager.h \
   ESF/ESF_Worker.h \
@@ -21157,7 +21160,6 @@ endif
   NotifyExtS_T.cpp \
   NotifyExtS.i \
   Notify/ConsumerAdmin.inl Notify/Sequence/SequenceProxyPushSupplier.inl \
-  $(TAO_ROOT)/tao/debug.h \
   Notify/Sequence/SequencePushConsumer.h \
   Notify/Sequence/Batch_Buffering_Strategy.h Notify/Buffering_Strategy.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
@@ -23114,6 +23116,7 @@ endif
   Notify/Any/AnyEvent.inl Notify/Method_Request_Dispatch.h \
   Notify/Method_Request.h Notify/Method_Request.inl \
   Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  $(TAO_ROOT)/tao/debug.h \
   Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
   Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Event_Manager.h \
   ESF/ESF_Worker.h \
@@ -23157,7 +23160,6 @@ endif
   NotifyExtS.i \
   Notify/ConsumerAdmin.inl \
   Notify/Structured/StructuredProxyPushSupplier.inl \
-  $(TAO_ROOT)/tao/debug.h \
   Notify/Structured/StructuredPushConsumer.h \
   Notify/Structured/StructuredPushConsumer.inl
 
