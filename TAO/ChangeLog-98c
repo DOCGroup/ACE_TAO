@@ -1,3 +1,9 @@
+Fri Oct  2 16:09:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/IIOP_Object.i (use_locate_requests): Changed the 1s to 0s so
+ 	  they would work correctly.  Thanks to Michael Kircher
+ 	  <mlkirche@trick.informatik.uni-stuttgart.de> for reporting this.
+
 Fri Oct 02 09:02:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Removed an
