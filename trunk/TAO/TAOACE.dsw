@@ -402,6 +402,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "FT_ORB"=.\orbsvcs\orbsvcs\FT_ORB.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORManip
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Fault Tolerance"=.\orbsvcs\orbsvcs\Fault_Tolerance.dsp - Package Owner=<4>
 
 Package=<5>
@@ -412,6 +436,9 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name FT_ORB
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name CosEvent
