@@ -74,6 +74,9 @@ Trading_Service::init (int argc, char* argv[], CORBA::Environment &ACE_TRY_ENV)
 
   CORBA::ORB_ptr orb = this->orb_manager_.orb ();
 
+  this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   // Create a Trader Object and set its Service Type Repository.
   auto_ptr<TAO_Trader_Factory::TAO_TRADER> auto_trader (TAO_Trader_Factory::create_trader (argc, argv));
   this->trader_ = auto_trader;
@@ -288,22 +291,22 @@ Trading_Service::shutdown (void)
               CosTrading::Link::LinkInfo_var link_info =
                 our_link->describe_link (link_name_seq[i], ACE_TRY_ENV);
               ACE_TRY_CHECK;
-                  
+
               ACE_DEBUG ((LM_DEBUG, "*** Removing link to %s.\n",
                           ACE_static_cast (const char*, link_name_seq[i])));
               our_link->remove_link (link_name_seq[i], ACE_TRY_ENV);
               ACE_TRY_CHECK;
-                  
+
               CosTrading::Lookup_ptr remote_lookup;
               remote_lookup = link_info->target.in ();
-                  
+
               ACE_DEBUG ((LM_DEBUG, "*** Retrieving its link interface.\n"));
               CosTrading::Link_var remote_link =
                 remote_lookup->link_if (ACE_TRY_ENV);
               ACE_TRY_CHECK;
-                  
+
               ACE_DEBUG ((LM_DEBUG, "*** Removing its link to us.\n"));
-                  
+
               if (this->bootstrapper_)
                 remote_link->remove_link ("Bootstrap", ACE_TRY_ENV);
               else
