@@ -97,6 +97,11 @@ private:
       ACE_ENV_ARG_DECL
     );
 
+  int valuetype_factory_test (
+      CORBA::ExtValueDef::ExtFullValueDescription_var &
+      ACE_ENV_ARG_DECL
+    );
+
 private:
   CORBA::Boolean debug_;
   // Flag to output detailed error messages.

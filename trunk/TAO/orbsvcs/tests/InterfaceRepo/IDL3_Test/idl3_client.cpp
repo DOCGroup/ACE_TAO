@@ -20,6 +20,7 @@ const char *VT_BASE_ID = "IDL:help/v_base:1.0";
 
 const CORBA::ULong ATTRS_LEN = 1;
 const CORBA::ULong OPS_LEN = 1;
+const CORBA::ULong FACTORY_LEN = 2;
 
 const char *ATTR_LOCAL_NAMES[] = 
   {
@@ -160,6 +161,30 @@ const char *MEM_IDS[] =
   {
     "IDL:mod/test_valuetype/test_mem1:1.0",
     "IDL:mod/test_valuetype/test_mem2:1.0",
+  };
+
+const CORBA::ULong FACTORY_MEMBER_LENS[] =
+  {
+    1,
+    2
+  };
+
+const CORBA::ULong FACTORY_EXCEP_LENS[] =
+  {
+    0,
+    2
+  };
+
+const char *FACTORY_MEMBER_NAMES[][2] =
+  {
+    {"set_tm1", 0},
+    {"set_tm1a", "set_tm2"}
+  };
+
+const char *FACTORY_EXCEP_NAMES[][2] =
+  {
+    {0, 0},
+    {"help::whups", "help::doh"}
   };
 
 IDL3_Client::IDL3_Client (void)
@@ -466,6 +491,15 @@ IDL3_Client::valuetype_test (ACE_ENV_SINGLE_ARG_DECL)
 
   status = this->valuetype_member_test (desc
                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
+  status = this->valuetype_factory_test (desc
+                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (status != 0)
@@ -1237,6 +1271,107 @@ IDL3_Client::valuetype_member_test (
             }
 
           return -1;
+        }
+    }
+
+  return 0;
+}
+
+int
+IDL3_Client::valuetype_factory_test (
+    CORBA::ExtValueDef::ExtFullValueDescription_var &desc
+    ACE_ENV_ARG_DECL
+  )
+{
+  CORBA::ULong length = desc->initializers.length ();
+
+  if (length != FACTORY_LEN)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "valuetype_factory_test: "
+                      "wrong number of factories\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::ULong inside_len = 0;
+  const char *tmp = 0;
+
+  for (CORBA::ULong i = 0; i < FACTORY_LEN; ++i)
+    {
+      inside_len = desc->initializers[i].members.length ();
+
+      if (inside_len != FACTORY_MEMBER_LENS[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "valuetype_factory_test: "
+                          "wrong number of params in factory #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      CORBA::ULong j = 0;
+
+      for (j = 0; j < FACTORY_MEMBER_LENS[i]; ++j)
+        {
+          tmp = desc->initializers[i].members[j].name.in ();
+
+          if (tmp == 0 
+              || ACE_OS::strcmp (tmp, FACTORY_MEMBER_NAMES[i][j]) != 0)
+            {
+              if (this->debug_)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "valuetype_factory_test: "
+                              "wrong name for arg #%d in factory #%d\n",
+                              j + 1,
+                              i + 1));
+                }
+
+              return -1;
+            }
+        }
+
+      inside_len = desc->initializers[i].exceptions.length ();
+
+      if (inside_len != FACTORY_EXCEP_LENS[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "valuetype_factory_test: "
+                          "wrong number of exceptions in factory #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      for (j = 0; j < FACTORY_EXCEP_LENS[i]; ++j)
+        {
+          tmp = desc->initializers[i].exceptions[j].name.in ();
+
+          if (tmp == 0 
+              || ACE_OS::strcmp (tmp, FACTORY_EXCEP_NAMES[i][j]) != 0)
+            {
+              if (this->debug_)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "valuetype_factory_test: "
+                              "wrong name for exception #%d in factory #%d\n",
+                              j + 1,
+                              i + 1));
+                }
+
+              return -1;
+            }
         }
     }
 

@@ -450,8 +450,8 @@ private:
 
   ACE_TString create_value_common (
       CORBA::DefinitionKind container_kind,
-      ACE_Configuration_Section_Key container_key,
-      ACE_Configuration_Section_Key new_key,
+      ACE_Configuration_Section_Key &container_key,
+      ACE_Configuration_Section_Key &new_key,
       const char *id,
       const char *name,
       const char *version,
