@@ -128,6 +128,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
 
   if (node->exceptions ())
     {
+      int i = 0;
 
       // Initialize an iterator to iterate thru the exception list.
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
@@ -147,7 +148,18 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
 
             }
 
-          *os << be_nl << ", " << excp->name ();
+          if (i == 0 && iface != 0 && iface->is_valuetype ())
+            {
+              *os << be_idt_nl;
+            }
+
+          if (i != 0 || !(iface != 0 && iface->is_valuetype ()))
+            {
+              *os << be_nl << ", ";
+            }
+
+          *os << excp->name ();
+          ++i;
         }
     }
 
