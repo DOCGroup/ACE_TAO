@@ -1,81 +1,86 @@
+Tue Jul 07 09:26:22 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Thread_Manager.h: updated comments that describe
+          ACE_thread_t * argument to spawn () family.
+
 Tue Jul  7 10:48:42 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
 
-	* tests/CLASSIX/CLASSIX_Con_Acc_Test.cpp:
-	Use a counter, max. number of unread messages, instead of wait
+        * tests/CLASSIX/CLASSIX_Con_Acc_Test.cpp:
+        Use a counter, max. number of unread messages, instead of wait
         to work around the blocking problem in ipcSend()
 
 Mon Jul  6 22:32:19 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* ace/ace_bcc.ide: 
-	Updates for Borland C++ 5.x.
+        * ace/ace_bcc.ide:
+        Updates for Borland C++ 5.x.
 
-	* ace/config-win32.h: 
-	Made sure ACE_HAS_WINNT4 and _WIN32_WINNT are always defined if
-	they were not explicitly defined.
+        * ace/config-win32.h:
+        Made sure ACE_HAS_WINNT4 and _WIN32_WINNT are always defined if
+        they were not explicitly defined.
 
-	* ace/config-win32-borland.h: 
-	* ace/config-win32-common.h: 
-	Moved all the Borland definitions to a config-win32-borland.h
-	file.
+        * ace/config-win32-borland.h:
+        * ace/config-win32-common.h:
+        Moved all the Borland definitions to a config-win32-borland.h
+        file.
 
-	* ace/OS.h (ACE_SEH_TRY): 
-	Added correct support for Borland C++ 5.x.
+        * ace/OS.h (ACE_SEH_TRY):
+        Added correct support for Borland C++ 5.x.
 
-	* ace/OS.cpp: 
-	Replaced the ugly hack to access wProcessorArchitecture under
-	Borland compilers for an even uglier hack, but that will work on
-	every Borland compiler, as long as the members of SYSTEM_INFO are
-	consistent. See the code and get sick!
+        * ace/OS.cpp:
+        Replaced the ugly hack to access wProcessorArchitecture under
+        Borland compilers for an even uglier hack, but that will work on
+        every Borland compiler, as long as the members of SYSTEM_INFO are
+        consistent. See the code and get sick!
 
-	* ace/LOCK_SOCK_Acceptor.h: 
-	* ace/Array.cpp: 
-	* ace/Arg_Shifter.cpp: 
-	Were missing an "ace/" in some includes.
+        * ace/LOCK_SOCK_Acceptor.h:
+        * ace/Array.cpp:
+        * ace/Arg_Shifter.cpp:
+        Were missing an "ace/" in some includes.
 
-	* tests/tests_bcc.ide: 
-	Added all (well, most) of the tests to the project file.
+        * tests/tests_bcc.ide:
+        Added all (well, most) of the tests to the project file.
 
-	* tests/Makefile: 
-	* tests/Message_Queue_Notifications_Test.cpp: 
-	* tests/Message_Queue_Notifications_Test.bpr: 
-	* tests/Message_Queue_Notifications_Test.dsp: 
-	* tests/MsgQueue_Notifications_Test.cpp: 
-	* tests/MsgQueue_Notifications_Test.bpr: 
-	* tests/MsgQueue_Notifications_Test.dsp: 
-	* tests/run_tests.bat: 
-	* tests/run_tests.psosim: 
-	* tests/run_tests.sh: 
-	* tests/run_tests.vxworks: 
-	* tests/tests.bpg: 
-	* tests/tests.dsw: 
-	* tests/tests.mak: 
-	* tests/WinCE/Message_Queue_Notifications_Test.dsp: 
-	* tests/WinCE/MsgQueue_Notifications_Test.dsp: 
-	* tests/version_tests/Message_Queue_Notification_Test.dsp: 
-	* tests/version_tests/MsgQueue_Notifications_Test.dsp  : 
-	Changed name of Message_Queue_Notifications_Test to
-	MsgQueue_Notifications_Test, to avoid problems with Borland
-	compilers.
+        * tests/Makefile:
+        * tests/Message_Queue_Notifications_Test.cpp:
+        * tests/Message_Queue_Notifications_Test.bpr:
+        * tests/Message_Queue_Notifications_Test.dsp:
+        * tests/MsgQueue_Notifications_Test.cpp:
+        * tests/MsgQueue_Notifications_Test.bpr:
+        * tests/MsgQueue_Notifications_Test.dsp:
+        * tests/run_tests.bat:
+        * tests/run_tests.psosim:
+        * tests/run_tests.sh:
+        * tests/run_tests.vxworks:
+        * tests/tests.bpg:
+        * tests/tests.dsw:
+        * tests/tests.mak:
+        * tests/WinCE/Message_Queue_Notifications_Test.dsp:
+        * tests/WinCE/MsgQueue_Notifications_Test.dsp:
+        * tests/version_tests/Message_Queue_Notification_Test.dsp:
+        * tests/version_tests/MsgQueue_Notifications_Test.dsp  :
+        Changed name of Message_Queue_Notifications_Test to
+        MsgQueue_Notifications_Test, to avoid problems with Borland
+        compilers.
 
-	* tests/Enum_Interfaces_Test.cpp: 
-	Added some output to test ACE_OS::uname().
+        * tests/Enum_Interfaces_Test.cpp:
+        Added some output to test ACE_OS::uname().
 
-	* tests/Basic_Types_Test.cpp: 
-	Changed a couple of debug lines to contain only one \n.
+        * tests/Basic_Types_Test.cpp:
+        Changed a couple of debug lines to contain only one \n.
 
 Mon Jul  6 14:24:11 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
-	
-	* tests/CLASSIX/CLASSIX_Con_Acc_Test.cpp:
-	Add a pause after each send_n()(i.e. ipcSend()) as a temporary
-	work around over the block problem in ipcSend() when the resources are
-	exhaused.
+
+        * tests/CLASSIX/CLASSIX_Con_Acc_Test.cpp:
+        Add a pause after each send_n()(i.e. ipcSend()) as a temporary
+        work around over the block problem in ipcSend() when the resources are
+        exhaused.
 
 
 Mon Jul  6 03:56:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.h (ACE_Thread_Manager::thr_self): Instead of
-	  refering to ACE_Thread::thr_self, it should mention
-	  ACE_Thread::self.
+        * ace/Thread_Manager.h (ACE_Thread_Manager::thr_self): Instead of
+          refering to ACE_Thread::thr_self, it should mention
+          ACE_Thread::self.
 
 Fri Jul 03 17:02:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -434,18 +439,18 @@ Sat Jun 27 00:27:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
           - Introduced enums and took the magic numbers out.
 
-Fri Jun	26 20:37:06 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
-	* tests/Logger/clnt.h
-	* tests/Logger/clnt.cpp
-	* tests/Logger/svr.cpp
-	* orbsvcs/orbsvcs/Log/Logger_i.h
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp
-	* orbsvcs/orbsvcs/Logger.idl
+Fri Jun 26 20:37:06 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+        * tests/Logger/clnt.h
+        * tests/Logger/clnt.cpp
+        * tests/Logger/svr.cpp
+        * orbsvcs/orbsvcs/Log/Logger_i.h
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp
+        * orbsvcs/orbsvcs/Logger.idl
 
-	The current status of this is incomplete. The svr* test is guaranteed
-	to be nonfunctional (I cannot yet speak for the rest). 
+        The current status of this is incomplete. The svr* test is guaranteed
+        to be nonfunctional (I cannot yet speak for the rest).
 
-	
+
 Fri Jun 26 14:52:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/test_config.h: Don't close the ofstream before opening the
