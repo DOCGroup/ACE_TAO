@@ -1,3 +1,8 @@
+Fri Feb 20 08:29:35 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (svc): added .in ()
+          dereference to several objref uses.
+
 Thu Feb 19 12:54:50 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
