@@ -1,6 +1,11 @@
+Tue Mar  2 07:43:07 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.inl:
+          Add file missing from previous checkin.
+
 Tue Mar  2 19:09:33 2004  Olli Savia  <ops@iki.fi>
 
-	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp
         * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp
         * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp
         * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp
@@ -10,17 +15,17 @@ Tue Mar  2 19:09:33 2004  Olli Savia  <ops@iki.fi>
 
 Tue Mar  2 13:59:33 2004  David Smith  <dts@prismtechnologies.com>
 
-	* tao/Any_Impl_T.cpp:
-	* tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Impl_T.cpp:
+        * tao/Any_Dual_Impl_T.cpp:
 
-	Fixed compile problem with aCC 3.37.
-	Thanks to Kris Dekeyser <Kris.Dekeyser@lms.be> for pointing
-	this out.
+        Fixed compile problem with aCC 3.37.
+        Thanks to Kris Dekeyser <Kris.Dekeyser@lms.be> for pointing
+        this out.
 
 Tue Mar  2 09:05:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
-        
+ 
           Added specialization of TAO::Any_Impl_T<>::to_object for
           CORBA::Object. Otherwise the default template implementation
           is used, which always returns (boolean) 0 and does nothing.
@@ -29,10 +34,10 @@ Tue Mar  2 09:05:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Mar  1 16:52:15 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.h:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.cpp: 	
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.cpp:
 
-	  Include the inline file.
+          Include the inline file.
 
 Mon Mar  1 12:31:38 2004  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -45,154 +50,154 @@ Mon Mar  1 12:31:38 2004  Dale Wilson  <wilson_d@ociweb.com>
 
 Sun Feb 29 22:10:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Environment.i (release ()):
+        * tao/Environment.i (release ()):
 
-	  Removed an unneeded check for null pointer. Thanks to Gabriele
-	  Trombetti<gabtromb@isis.vanderbilt.edu> for pointing this out. 
+          Removed an unneeded check for null pointer. Thanks to Gabriele
+          Trombetti<gabtromb@isis.vanderbilt.edu> for pointing this out.
 
 Sun Feb 29 20:00:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ObjectKey_Table.cpp:
+        * tao/ObjectKey_Table.cpp:
 
-	  The TAO::ObjectKey_Table uses ACE_RB_Tree as the container of
-	  the object  keys for TAO. RB_Tree uses ordering functor
-	  TAO::Less_Than_ObjectKey. However, the functor was not strictly
-	  ordered. Thanks to Milan Cvetkovic <milan.cvetkovic@mpathix.com>
-	  for finding this problem. The bad ordering lead to some of the
-	  object keys being left in the tree which caused huge growth in
-	  runtime memory.
+          The TAO::ObjectKey_Table uses ACE_RB_Tree as the container of
+          the object  keys for TAO. RB_Tree uses ordering functor
+          TAO::Less_Than_ObjectKey. However, the functor was not strictly
+          ordered. Thanks to Milan Cvetkovic <milan.cvetkovic@mpathix.com>
+          for finding this problem. The bad ordering lead to some of the
+          object keys being left in the tree which caused huge growth in
+          runtime memory.
 
 Sun Feb 29 17:43:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Latency/Thread_Per_Connection/Roundtrip.cpp:
+        * performance-tests/Latency/Thread_Per_Connection/Roundtrip.cpp:
 
-	  Do not use a boolean value of true while callin shutdown ().
+          Do not use a boolean value of true while callin shutdown ().
 
 Sun Feb 29 17:07:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/tests/Miop/McastHello/Makefile:
-	* orbsvcs/tests/Security/Big_Request/Makefile:
-	* orbsvcs/tests/ior_corbaname/Makefile:
+        * orbsvcs/tests/Security/Big_Request/Makefile:
+        * orbsvcs/tests/ior_corbaname/Makefile:
 
-	  These makefiles needed some special attention.
+          These makefiles needed some special attention.
 
 Sun Feb 29 16:46:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Makefile*:
-	* examples/Makefile*:
-	* utils/Makefile*:
-	* docs/tutorials/Makefile*: 
+        * tao/Makefile*:
+        * examples/Makefile*:
+        * utils/Makefile*:
+        * docs/tutorials/Makefile*:
 
           Regenerated dependencies.
 
 Sun Feb 29 14:58:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/tutorials/Quoter/Event_Service/Makefile:
-	* docs/tutorials/Quoter/Naming_Service/Makefile:
-	* docs/tutorials/Quoter/RT_Event_Service/Makefile:
-	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile:
-	* orbsvcs/examples/Log/Basic/Makefile:
-	* orbsvcs/examples/Notify/Filter/Makefile:
-	* orbsvcs/examples/Notify/Subscribe/Makefile:
-	* orbsvcs/examples/RtEC/Schedule/Makefile:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
-	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile:
-	* orbsvcs/tests/AVStreams/Component_Switching/Makefile:
-	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
-	* orbsvcs/tests/AVStreams/Latency/Makefile:
-	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile:
-	* orbsvcs/tests/AVStreams/Multicast/Makefile:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
-	* orbsvcs/tests/AVStreams/Multiple_Flows/Makefile:
-	* orbsvcs/tests/AVStreams/Pluggable/Makefile:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile:
-	* orbsvcs/tests/Concurrency/Makefile:
-	* orbsvcs/tests/CosEvent/lib/Makefile:
-	* orbsvcs/tests/EC_Custom_Marshal/Makefile:
-	* orbsvcs/tests/EC_Multiple/Makefile:
-	* orbsvcs/tests/Event/lib/Makefile:
-	* orbsvcs/tests/Interoperable_Naming/Makefile:
-	* orbsvcs/tests/Log/Basic_Log_Test/Makefile:
-	* orbsvcs/tests/ior_corbaname/Makefile:
+        * docs/tutorials/Quoter/Event_Service/Makefile:
+        * docs/tutorials/Quoter/Naming_Service/Makefile:
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile:
+        * orbsvcs/examples/Log/Basic/Makefile:
+        * orbsvcs/examples/Notify/Filter/Makefile:
+        * orbsvcs/examples/Notify/Subscribe/Makefile:
+        * orbsvcs/examples/RtEC/Schedule/Makefile:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile:
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile:
+        * orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+        * orbsvcs/tests/AVStreams/Latency/Makefile:
+        * orbsvcs/tests/AVStreams/Modify_QoS/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/Makefile:
+        * orbsvcs/tests/AVStreams/Pluggable/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile:
+        * orbsvcs/tests/Concurrency/Makefile:
+        * orbsvcs/tests/CosEvent/lib/Makefile:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile:
+        * orbsvcs/tests/EC_Multiple/Makefile:
+        * orbsvcs/tests/Event/lib/Makefile:
+        * orbsvcs/tests/Interoperable_Naming/Makefile:
+        * orbsvcs/tests/Log/Basic_Log_Test/Makefile:
+        * orbsvcs/tests/ior_corbaname/Makefile:
 
-	  Another set of changes to ORBSVCS_COMPONENTS check. This should
-	  get these tests compiling almost on all the platforms. Don't be
-	  surprised if you see link errors in our daily builds. They were
-	  there in the tests, for god knows how long. These set of changes
-	  should get them compiling and throw up errors in our daily
-	  builds. 
+          Another set of changes to ORBSVCS_COMPONENTS check. This should
+          get these tests compiling almost on all the platforms. Don't be
+          surprised if you see link errors in our daily builds. They were
+          there in the tests, for god knows how long. These set of changes
+          should get them compiling and throw up errors in our daily
+          builds.
 
 Sun Feb 29 17:52:11 UTC 2004  Johnny Willemsen  <jwillemsem@remedy.nl>
 
-	* orbsvcs/performance-tests/LoadBalancing/client.cpp:
-	  Fixed unused variable warning
+        * orbsvcs/performance-tests/LoadBalancing/client.cpp:
+          Fixed unused variable warning
 
 Sun Feb 29 10:15:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Makefile*:
-	* performance-tests/Makefile*:
+        * tests/Makefile*:
+        * performance-tests/Makefile*:
 
     	  Regenerated dependencies using old g++-dep script.
 
 Sun Feb 29 10:34:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Advanced/ch_18/Makefile:
-	* examples/Callback_Quoter/Makefile:
-	* examples/Event_Comm/Makefile:
-	* examples/Logging/Makefile:
-	* examples/Persistent_Grid/Makefile:
-	* examples/Simple/bank/Makefile:
-	* examples/Simple/echo/Makefile:
-	* examples/Simple/grid/Makefile:
-	* examples/Simple/time/Makefile:
-	* examples/Simple/time-date/Makefile:
-	* examples/Simulator/Event_Supplier/Makefile:
-	* examples/ior_corbaloc/Makefile:
-	* orbsvcs/Dump_Schedule/Makefile:
-	* orbsvcs/Time_Service/Makefile:
+        * examples/Advanced/ch_18/Makefile:
+        * examples/Callback_Quoter/Makefile:
+        * examples/Event_Comm/Makefile:
+        * examples/Logging/Makefile:
+        * examples/Persistent_Grid/Makefile:
+        * examples/Simple/bank/Makefile:
+        * examples/Simple/echo/Makefile:
+        * examples/Simple/grid/Makefile:
+        * examples/Simple/time/Makefile:
+        * examples/Simple/time-date/Makefile:
+        * examples/Simulator/Event_Supplier/Makefile:
+        * examples/ior_corbaloc/Makefile:
+        * orbsvcs/Dump_Schedule/Makefile:
+        * orbsvcs/Time_Service/Makefile:
 
-	  All these Makefiles were busted. They don't build in our daily
-	  builds. The check for ORBSVCS_COMPONENTS was done in the wrong
-	  place. I remember Thomas Lockhart mentioning about some of these
-	  things. I think he had caught all of this already.
+          All these Makefiles were busted. They don't build in our daily
+          builds. The check for ORBSVCS_COMPONENTS was done in the wrong
+          place. I remember Thomas Lockhart mentioning about some of these
+          things. I think he had caught all of this already.
 
 
 Sun Feb 29 08:40:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/Makefile*:
+        * orbsvcs/Makefile*:
 
-	  Regenerated it again since there were a few errors the last
-	  time.
+          Regenerated it again since there were a few errors the last
+          time.
 
 Sun Feb 29 08:28:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/Makefile*:
+        * orbsvcs/Makefile*:
 
   	  Regenerated dependencies using old g++-dep script.
 
 Sun Feb 29 08:26:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Makefile*:
+        * tao/Makefile*:
 
-	  Regenerated dependencies using old g++-dep script.
+          Regenerated dependencies using old g++-dep script.
 
 Sun Feb 29 09:49:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO/orbsvcs/examples/ORT/ORT.mpc:
-	  Removed idl_files from client to reduce build dependencies
+        * TAO/orbsvcs/examples/ORT/ORT.mpc:
+          Removed idl_files from client to reduce build dependencies
 
 Fri Feb 27 16:28:51 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* examples/POA/Explicit_Activation/Alt_Resources/Resource_Factory.cpp (allocate_reactor_impl):
+        * examples/POA/Explicit_Activation/Alt_Resources/Resource_Factory.cpp (allocate_reactor_impl):
 
-	  Set errno to zero before creating the Reactor.  Otherwise, the
-	  code in TAO_Default_Resource_Factory::get_reactor() improperly
-	  think there was a failure in creating the Reactor.
+          Set errno to zero before creating the Reactor.  Otherwise, the
+          code in TAO_Default_Resource_Factory::get_reactor() improperly
+          think there was a failure in creating the Reactor.
 
-	* examples/POA/Explicit_Activation/alternate.conf:
+        * examples/POA/Explicit_Activation/alternate.conf:
 
-	  Removed old "-ORBresources global" option.
+          Removed old "-ORBresources global" option.
 
 Fri Feb 27 11:33:39 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
@@ -201,10 +206,10 @@ Fri Feb 27 11:33:39 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
 Fri Feb 27 10:22:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
 
-	  Fixed a compilation error inVC71. Thanks to Johnny for reporting
-	  this.
+          Fixed a compilation error inVC71. Thanks to Johnny for reporting
+          this.
 
 Fri Feb 27 09:05:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -293,83 +298,83 @@ Wed Feb 25 08:41:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Feb 24 15:15:15 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
 
-	  Removed the debug level check for printing frames sent message.
+          Removed the debug level check for printing frames sent message.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
 
-	  Removed the debug level check for printing frames received
-	  message. Fixed the multiple definition compile error.
+          Removed the debug level check for printing frames received
+          message. Fixed the multiple definition compile error.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.dsp:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.bor:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/AVStreams_Simple_Two_Stage.mpc:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.dsp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.bor:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/AVStreams_Simple_Two_Stage.mpc:
 
-	  Added the source file for Receiver_Stats.
+          Added the source file for Receiver_Stats.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
 
-	  Fixed the "overriding commands for target" warnings by removing
-	  the inclusion of rules.bin.GNU.
+          Fixed the "overriding commands for target" warnings by removing
+          the inclusion of rules.bin.GNU.
 
 Tue Feb 24 19:46:41 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
-	  Fixed compile problem in msvc6 build.
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+          Fixed compile problem in msvc6 build.
 
 Tue Feb 24 19:41:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Sequence_Latency/DSI/DSI.mpc:
-	  Removed after and IDL_Files from client project, just let MPC do its
-	  job.
+        * performance-tests/Sequence_Latency/DSI/DSI.mpc:
+          Removed after and IDL_Files from client project, just let MPC do its
+          job.
 
-	* performance-tests/Sequence_Latency/AMH/Single_Threaded/Single_Threaded.mpc:
-	  Removed after and IDL_Files from client project, just let MPC do its
-	  job. Instead of requiring ami and adding idlflags, just add amh as base
-	  project.
+        * performance-tests/Sequence_Latency/AMH/Single_Threaded/Single_Threaded.mpc:
+          Removed after and IDL_Files from client project, just let MPC do its
+          job. Instead of requiring ami and adding idlflags, just add amh as base
+          project.
 
 Tue Feb 24 19:20:05 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h:
-	  Removed useless forward declaration which caused a warning in the
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h:
+          Removed useless forward declaration which caused a warning in the
           VC71 build.
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
-	  Made the assignment operator private and added a private copy
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+          Made the assignment operator private and added a private copy
           constructor. A TAO_PropertySet cannot be copied and this fixes
-	  link errors in the VC71 build.
+          link errors in the VC71 build.
 
 Tue Feb 24 19:15:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
-	  Removed empty IDL_Files and after from the client project. Let MPC
-	  just do its job and then it works without problems. Because of this
-	  we had a build order dependency between client and server and this
-	  caused problems in our static builds. Thanks to Chad Elliott with
-	  helping solve this.
+        * performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
+          Removed empty IDL_Files and after from the client project. Let MPC
+          just do its job and then it works without problems. Because of this
+          we had a build order dependency between client and server and this
+          caused problems in our static builds. Thanks to Chad Elliott with
+          helping solve this.
 
 Tue Feb 24 19:07:17 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/Trading/TT_Info.h:
-	  Added missing export macros to fix link errors in the VC71 build
+        * orbsvcs/tests/Trading/TT_Info.h:
+          Added missing export macros to fix link errors in the VC71 build
 
 Tue Feb 24 18:43:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
-	  This example needs native C++ exceptions
+        * orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
+          This example needs native C++ exceptions
 
 Tue Feb 24 18:36:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/performance-tests/LoadBalancing/server.cpp:
-	* orbsvcs/performance-tests/LoadBalancing/ServerRequestInterceptor.cpp:
-	  Fixed wrong exception macro usage
+        * orbsvcs/performance-tests/LoadBalancing/server.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/ServerRequestInterceptor.cpp:
+          Fixed wrong exception macro usage
 
 Tue Feb 24 18:32:06 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
-	  The client project requires native C++ exceptions
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
+          The client project requires native C++ exceptions
 
 Tue Feb 24 17:46:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -378,9 +383,9 @@ Tue Feb 24 17:46:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Feb 23 19:08:37 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.inl:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.inl:
 
-	  Added the missing inline file.
+          Added the missing inline file.
 
 Mon Feb 23 16:05:12 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
@@ -418,82 +423,82 @@ Mon Feb 23 10:59:03 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
 Sat Feb 21 09:36:45 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* tao/Codeset_Manager.cpp (TAO_Codeset_Item): Replaced
-	  delete [] this->name_ with ACE_OS::free (this->name_) since
+        * tao/Codeset_Manager.cpp (TAO_Codeset_Item): Replaced
+          delete [] this->name_ with ACE_OS::free (this->name_) since
  	  this->name_ was allocated by ACE_OS::strdup().  Thanks to
  	  Olivier Brunet <o.brunet@free.fr> for reporting this.
 
 Sat Feb 21 08:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.h:
-	  Fixed include paths
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.h:
+          Fixed include paths
 
 Fri Feb 20 17:14:46 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/GIOP_Message_Generator_Parser_10.cpp (write_request_header):
+        * tao/GIOP_Message_Generator_Parser_10.cpp (write_request_header):
 
-	  Added code to add the username as principal in the request
-	  header.  This is required for some older ORBs, such as Orbix3.
-	  To turn on this code, TAO_PEER_REQUIRES_PRINCIPAL must be
-	  defined at compile time.  This fixes bug 1686.
+          Added code to add the username as principal in the request
+          header.  This is required for some older ORBs, such as Orbix3.
+          To turn on this code, TAO_PEER_REQUIRES_PRINCIPAL must be
+          defined at compile time.  This fixes bug 1686.
 
 Fri Feb 20 21:24:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Simple/time/client_static.dsp:
-	* examples/Simple/time/server_static.dsp:
-	* orbsvcs/Event_Service/Event_Service_static.dsp:
-	* orbsvcs/Event_Service/Event_Service_static.dsw:
-	* orbsvcs/examples/CosEC/RtEC_Based/lib/TAO_RTEC_COSEC_static.dsp:
-	* orbsvcs/Naming_Service/Naming_Server_static.dsp:
-	* orbsvcs/Naming_Service/Naming_Server_static.dsw:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsw:
-	* TAO_IDL/tao_idl_static.dsp:
-	  Removed these static msvc6 project files. Use MPC to generate these
-	  if you need them. These are outdated and should have gone before 1.4
-	  was released.
+        * examples/Simple/time/client_static.dsp:
+        * examples/Simple/time/server_static.dsp:
+        * orbsvcs/Event_Service/Event_Service_static.dsp:
+        * orbsvcs/Event_Service/Event_Service_static.dsw:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/TAO_RTEC_COSEC_static.dsp:
+        * orbsvcs/Naming_Service/Naming_Server_static.dsp:
+        * orbsvcs/Naming_Service/Naming_Server_static.dsw:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsw:
+        * TAO_IDL/tao_idl_static.dsp:
+          Removed these static msvc6 project files. Use MPC to generate these
+          if you need them. These are outdated and should have gone before 1.4
+          was released.
 
 Fri Feb 20 15:00:13 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.h:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/README:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
 
-	  Added command line arguments to specify the number and size of
-	  frames to be sent from the sender to the reciever.
+          Added command line arguments to specify the number and size of
+          frames to be sent from the sender to the reciever.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.h:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.cpp:
 
-	  Contains operations for collecting and recording inter-frame
-	  arrival times. It is used by the receiver for collecting stats.
+          Contains operations for collecting and recording inter-frame
+          arrival times. It is used by the receiver for collecting stats.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
 
-	  Modified to include compilation of the Receiver_Stats file.
+          Modified to include compilation of the Receiver_Stats file.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.h:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
 
-	  Modified to use Receiver_Stats to collect and record the
-	  inter-frame arrival times to a stats file.
+          Modified to use Receiver_Stats to collect and record the
+          inter-frame arrival times to a stats file.
 
-	* orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl:
+        * orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl:
 
-	  Modified the script in order to allow the user to specify the
-	  transport protocols and debug levels at the command line.
+          Modified the script in order to allow the user to specify the
+          transport protocols and debug levels at the command line.
 
-	* orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+        * orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
 
-	  Modified the script in order to allow the user to specify the
-	  debug levels at the command line.
+          Modified the script in order to allow the user to specify the
+          debug levels at the command line.
 
 Fri Feb 20 20:10:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Latency/Collocation/Collocated_Test.cpp:
-	* performance-tests/Latency/Collocation/Server_Task.cpp:
-	* performance-tests/Latency/Collocation/Server_Task.h:
-	  Fixed warning in Solaris 8 Forte 8 build
+        * performance-tests/Latency/Collocation/Collocated_Test.cpp:
+        * performance-tests/Latency/Collocation/Server_Task.cpp:
+        * performance-tests/Latency/Collocation/Server_Task.h:
+          Fixed warning in Solaris 8 Forte 8 build
 
 Fri Feb 20 13:46:57 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -524,104 +529,104 @@ Fri Feb 20 12:54:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Feb 20 18:20:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Latency/Collocation/Collocated_Test.cpp:
-	  Fixed compile problem in emulated exception build.
+        * performance-tests/Latency/Collocation/Collocated_Test.cpp:
+          Fixed compile problem in emulated exception build.
 
 Fri Feb 20 18:10:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/Utils/Makefile:
-	  Added missing export defines to fix compile problem with Cygwin.
-	  Thanks to Pavan Mandalkar <pm2@cs.wustl.edu> for reporting this
+        * tao/Utils/Makefile:
+          Added missing export defines to fix compile problem with Cygwin.
+          Thanks to Pavan Mandalkar <pm2@cs.wustl.edu> for reporting this
           problem. This fixes [BUGID:1749].
 
 Fri Feb 20 16:00:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp:
-	  Use ACE_OS::sleep instead of sleep
+        * orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp:
+          Use ACE_OS::sleep instead of sleep
 
-	* orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
-	  Added missing includes
+        * orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
+          Added missing includes
 
 Fri Feb 20 15:56:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/performance-tests/LoadBalancing/client.cpp:
-	* orbsvcs/performance-tests/LoadBalancing/RPS_Monitor.cpp:
-	* orbsvcs/performance-tests/LoadBalancing/server.cpp:
-	  Added missing includes, removed include of stdio.h from client.cpp,
-	  it is not needed.
+        * orbsvcs/performance-tests/LoadBalancing/client.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/RPS_Monitor.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/server.cpp:
+          Added missing includes, removed include of stdio.h from client.cpp,
+          it is not needed.
 
 Fri Feb 20 15:43:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h:
-	  Added missing export macro to fix link errors in BCB build
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h:
+          Added missing export macro to fix link errors in BCB build
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.h:
-	  Made includes consistent with the other files of LoadBalancing
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.h:
+          Made includes consistent with the other files of LoadBalancing
 
 Thu Feb 19 20:25:10 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader.cpp:
-	  TAO_Trader_Factory::manufacture_trader was not applying
-	  import_attributes and support_attributes correctly.
-	  Thanks to Jean-Marc Prud'homme <JPrudhomme@interstarinc.com>
-	  for contributing this fix.
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+          TAO_Trader_Factory::manufacture_trader was not applying
+          import_attributes and support_attributes correctly.
+          Thanks to Jean-Marc Prud'homme <JPrudhomme@interstarinc.com>
+          for contributing this fix.
 
 Thu Feb 19 18:55:13 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (protocol_object_set):
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (is_protocol_object_set):
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp (protocol_object_set):
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp (is_protocol_object_set):
 
-	  Added the above methods in order to set/get a flag that shows if
-	  the protocol_object is set and hence if the mmdevices are bound
-	  successfully.
+          Added the above methods in order to set/get a flag that shows if
+          the protocol_object is set and hence if the mmdevices are bound
+          successfully.
 
-	  The problem of the ACE_Acceptor::handle_input () not being
-	  called manifested when running the AVStreams tests on a single
-	  host (for eg. daily builds). The problem on a single host (and
-	  which could manifest itself sometimes in a multiple host
-	  scenario too) was due to the sequence in which the various
-	  requests to the sender arrived and were processed. There are two
-	  kinds of send and receive that go on. One is the GIOP requests
-	  and the other the out of band AVStreams connection setup
-	  requests. When a two-way bind_devs call is made by the sender
-	  the AVStreams initiates the setup of the out-of-band data path
-	  by creating an acceptor and listening for a connect request on
-	  the sender. It also initiates a connect on the receiver. When
-	  the connect call is made by the receiver the sender OS accepts
-	  the connection though it does not process the accept at the
-	  application level. Before it can process the connect request it
-	  receives a reply to the bind_devs as the receiver assumes it is
-	  connected to the sender. The bind_devs reply is processed before
-	  the connect request is processed at the application
-	  level. Hence, the application continues to execute and there is
-	  no thread to accept the connect request. So the
-	  ACE_Acceptor::handle_input does not get called and subsequently
-	  the protocol_object on which data is sent is also not
-	  created. Immediately after the bind_devs the sender::pace_data
-	  is called which tries to send the frames on a null
-	  protocol_object and results in a seg fault. This was fixed by
-	  checking for the protocol object set flag in the
-	  TAO_Base_StreamEndPoint::handle_postconnect method. If the flag
-	  is not set then the application gives the reactor a chance to
-	  process the pending requests which could be the expected connect
-	  request.
+          The problem of the ACE_Acceptor::handle_input () not being
+          called manifested when running the AVStreams tests on a single
+          host (for eg. daily builds). The problem on a single host (and
+          which could manifest itself sometimes in a multiple host
+          scenario too) was due to the sequence in which the various
+          requests to the sender arrived and were processed. There are two
+          kinds of send and receive that go on. One is the GIOP requests
+          and the other the out of band AVStreams connection setup
+          requests. When a two-way bind_devs call is made by the sender
+          the AVStreams initiates the setup of the out-of-band data path
+          by creating an acceptor and listening for a connect request on
+          the sender. It also initiates a connect on the receiver. When
+          the connect call is made by the receiver the sender OS accepts
+          the connection though it does not process the accept at the
+          application level. Before it can process the connect request it
+          receives a reply to the bind_devs as the receiver assumes it is
+          connected to the sender. The bind_devs reply is processed before
+          the connect request is processed at the application
+          level. Hence, the application continues to execute and there is
+          no thread to accept the connect request. So the
+          ACE_Acceptor::handle_input does not get called and subsequently
+          the protocol_object on which data is sent is also not
+          created. Immediately after the bind_devs the sender::pace_data
+          is called which tries to send the frames on a null
+          protocol_object and results in a seg fault. This was fixed by
+          checking for the protocol object set flag in the
+          TAO_Base_StreamEndPoint::handle_postconnect method. If the flag
+          is not set then the application gives the reactor a chance to
+          process the pending requests which could be the expected connect
+          request.
 
-	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
-	* orbsvcs/orbsvcs/AV/RTP.cpp:
-	* orbsvcs/orbsvcs/AV/TCP.cpp:
-	* orbsvcs/orbsvcs/AV/UDP.cpp:
+        * orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+        * orbsvcs/orbsvcs/AV/TCP.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
 
-	  Set the protocol object set flag when the protocol object is created.
+          Set the protocol object set flag when the protocol object is created.
 
-	* orbsvcs/orbsvcs/AV/Transport.cpp (close_all):
+        * orbsvcs/orbsvcs/AV/Transport.cpp (close_all):
 
-	  Fixed an incorrect deletion of connector objects in the
-	  Connector Registry.
+          Fixed an incorrect deletion of connector objects in the
+          Connector Registry.
 
-	  The above fixes should fix the various scoreboard build errors
-	  in AVStreams tests and also fix problems with SCTP_SEQ pluggable
-	  transport.
+          The above fixes should fix the various scoreboard build errors
+          in AVStreams tests and also fix problems with SCTP_SEQ pluggable
+          transport.
 
 Thu Feb 19 15:17:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -661,25 +666,25 @@ Thu Feb 19 09:36:57 2004  Dale Wilson  <wilson_d@ociweb.com>
 
 Thu Feb 19 13:34:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Latency/Collocation/Collocated_Test.cpp:
-	  Fixed compile problem in Cygwin emulated exception build
+        * performance-tests/Latency/Collocation/Collocated_Test.cpp:
+          Fixed compile problem in Cygwin emulated exception build
 
 Wed Feb 18 13:58:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
   	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
 
-	  Fixed remaining compilation errors on Borland. Thanks to Johnny
-	  for pointing this out.
+          Fixed remaining compilation errors on Borland. Thanks to Johnny
+          for pointing this out.
 
 Wed Feb 18 18:12:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Latency/Collocation/Collocated_Test.cpp:
-	  Added missing include to fix BCB6 compile problem.
+        * performance-tests/Latency/Collocation/Collocated_Test.cpp:
+          Added missing include to fix BCB6 compile problem.
 
 Wed Feb 18 18:08:34 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Latency/Collocation/Client_Task.cpp:
-	  Fixed redefinition of i in msvc6 builds.
+        * performance-tests/Latency/Collocation/Client_Task.cpp:
+          Fixed redefinition of i in msvc6 builds.
 
 Wed Feb 18 10:51:03 MST 2004  Scott Harris  <harris_s@ociweb.com>
 
@@ -699,8 +704,8 @@ Wed Feb 18 10:47:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
 
-	  Fixed compilation errors on Borland. Thanks to Johnny for pointing
-	  it out.
+          Fixed compilation errors on Borland. Thanks to Johnny for pointing
+          it out.
 
 Wed Feb 18 09:32:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
