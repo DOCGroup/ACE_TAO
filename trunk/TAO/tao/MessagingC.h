@@ -2165,9 +2165,6 @@ extern TAO_Export  Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_Repl
 // Any operators for interface Messaging::ReplyHandler
 TAO_Export void operator<<= (CORBA::Any &, Messaging::ReplyHandler_ptr);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyHandler *&);
-
-TAO_Export void operator<<= (CORBA::Any &, const Messaging::ExceptionHolder_ptr); //
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ExceptionHolder *&);
 #endif /* TAO_HAS_AMI_CALLBACK == 1 */
 
 #if (TAO_HAS_AMI_POLLER == 1)

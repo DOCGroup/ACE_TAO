@@ -1664,7 +1664,7 @@ TAO_NAMESPACE PortableServer{
 #if !defined (_PORTABLESERVER_POA_CH_)
 #define _PORTABLESERVER_POA_CH_
 
-  class TAO_Export POA: public virtual ACE_CORBA_1 (Object)
+  class TAO_Export POA : public virtual ACE_CORBA_1 (Object)
   {
   public:
   #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -2381,10 +2381,15 @@ TAO_Export void operator<<= (CORBA::Any &, const PortableServer::ObjectId &); //
 TAO_Export void operator<<= (CORBA::Any &, PortableServer::ObjectId*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ObjectId *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableServer::ObjectId *&);
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 TAO_Export void operator<<= (CORBA::Any &, const PortableServer::ForwardRequest &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, PortableServer::ForwardRequest*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ForwardRequest *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableServer::ForwardRequest *&);
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
