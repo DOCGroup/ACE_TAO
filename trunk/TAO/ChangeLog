@@ -1,3 +1,14 @@
+Thu Aug 29 12:30:33 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTCORBA/RT_Protocols_Hooks.h: 
+	* tao/RTCORBA/RT_Protocols_Hooks.h: 
+
+	  Moved the resolving of the RT_Current object from the
+	  RT_Protocols_Hooks::get_dscp_codepoint method to the
+	  RT_Protocols_Hooks::init_hooks method so it gets resolved only
+	  once. Initially it was resolved every time the the
+	  RT_Protocols_Hooks::get_dscp_codepoint method was invoked.
+	
 Thu Aug 29 10:23:57 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/FT_ORB.dsp:
