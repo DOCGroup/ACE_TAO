@@ -1,3 +1,20 @@
+Wed May 23 17:37:30 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst:
+	* tests/run_test.lst:
+
+	Removed some tests from being run on Single Threaded
+	Configuration as they were spawning threads. The tests removed
+	are:
+	   TAO/performance-tests/AMI_Latency/run_test.pl
+	   TAO/tests/AMI_Timeouts/run_test.pl
+
+	and
+
+	   tests/Logging_Strategy_Test
+
+	This is related to Bug Id 912.
+
 Wed May 23 17:33:59 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* bin/make_pretty.pl:
