@@ -28,7 +28,7 @@ class CC_TestUtils
   static char *get_lock_mode_name (CosConcurrencyControl::lock_mode mode);
   // Function to return a human readable string from a lock_mode enum.
 
-  static CosConcurrencyControl::LockSet_ptr CC_TestUtils::create_lock_set (void);
+  static CosConcurrencyControl::LockSet_ptr create_lock_set (void);
   // Creates a lock set by means of th lock set factory in the concurrency
   // service server.
  private:

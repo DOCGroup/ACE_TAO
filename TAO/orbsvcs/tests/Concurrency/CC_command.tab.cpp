@@ -53,7 +53,7 @@ typedef union
 #include <memory.h>
 #endif
 
-#include <values.h>
+/* #include <values.h> /*
 
 #ifdef __cplusplus
 
@@ -303,7 +303,7 @@ int ace_cc_yychar;			/* current input token number */
 #define ACE_CC_YYLEX()		ace_cc_yycvtok(ace_cc_yylex())
 /*
 ** ace_cc_yycvtok - return a token if i is a wchar_t value that exceeds 255.
-**	If i<255, i itself is the token.  If i>255 but the neither 
+**	If i<255, i itself is the token.  If i>255 but the neither
 **	of the 30th or 31st bit is on, i is already a token.
 */
 #if defined(__STDC__) || defined(__cplusplus)
@@ -324,7 +324,7 @@ int ace_cc_yycvtok(i) int i;
 		while ((last>=first)&&(first>=0)) {/*Binary search loop*/
 			mid = (first+last)/2;
 			j = ace_cc_yymbchars[mid].character;
-			if( j==i ){/*Found*/ 
+			if( j==i ){/*Found*/
 				return ace_cc_yymbchars[mid].tvalue;
 			}else if( j<i ){
 				first = mid + 1;
@@ -766,7 +766,7 @@ int ace_cc_yyparse()
 	*/
 	switch( ace_cc_yytmp )
 	{
-		
+
 case 2:
 # line 52 "CC_command.y"
 { cmdlist->add(new CC_Sleep_Cmd(0));
@@ -864,4 +864,3 @@ case 30:
 	}
 	goto ace_cc_yystack;		/* reset registers in driver code */
 }
-
