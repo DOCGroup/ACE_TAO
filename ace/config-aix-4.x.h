@@ -200,10 +200,12 @@
 #if (ACE_AIX_MINOR_VERS >= 3)
 #  define ACE_HAS_PTHREADS_STD
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
+// ACE_LACKS_SETSCHED should not be needed, but the OS.* doesn't fine tune
+// this enough - it's too overloaded. Fix after ACE 5 is done.
+#  define ACE_LACKS_SETSCHED
 #else
 #  define ACE_HAS_PTHREADS_DRAFT7
 #  define ACE_LACKS_RWLOCK_T
-#  define ACE_LACKS_SETSCHED
 #  define ACE_LACKS_THREAD_STACK_ADDR
 // If ACE doesn't compile due to the lack of these methods, please
 // send email to ace-users@cs.wustl.edu reporting this.
