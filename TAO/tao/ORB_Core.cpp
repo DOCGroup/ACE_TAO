@@ -270,9 +270,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // The following things should be changed to use the ACE_Env_Value<>
   // template sometime.
 
-  // List of comma separated prefixes from ORBDefaultInitRef.
-  ACE_CString default_init_ref;
-
   // Name Service port use for Multicast
   u_short ns_port = 0;
 
@@ -281,9 +278,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
   // Implementation Repository Service port #.
   u_short ir_port = 0;
-
-  // Mcast endpoint for the Naming Service discovery.
-  ACE_CString mde;
 
   // Buffer sizes for kernel socket buffers
   // @@ should be a default defined for each protocol implementation?
@@ -461,10 +455,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                           ACE_TEXT ("Invalid endpoint(s) specified:\n%s\n"),
                           endpts.c_str ()));
               ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                                                  CORBA_SystemException::_tao_minor_code (
-                                                                                          TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                          EINVAL),
-                                                  CORBA::COMPLETED_NO), -1);
+                                  CORBA::SystemException::_tao_minor_code (
+                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                    EINVAL),
+                                  CORBA::COMPLETED_NO),
+                                -1);
             }
 
           arg_shifter.consume_arg ();
@@ -490,10 +485,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                           ACE_TEXT ("argument '%s'\n"),
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (
-                                                 CORBA_SystemException::_tao_minor_code (
-                                                                                         TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                         0),
-                                                 CORBA::COMPLETED_NO), -1);
+                                  CORBA::SystemException::_tao_minor_code (
+                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                    0),
+                                  CORBA::COMPLETED_NO),
+                                -1);
             }
 
           arg_shifter.consume_arg ();
@@ -514,7 +510,8 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           // Specify mcast address:port for the Naming Service Multicast
           // Discovery Protocol.
 
-          mde = current_arg;
+          this->orb_params ()->mcast_discovery_endpoint (current_arg);
+
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -555,10 +552,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                           ACE_TEXT ("argument '%s'\n"),
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (
-                                                 CORBA_SystemException::_tao_minor_code (
-                                                                                         TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                         0),
-                                                 CORBA::COMPLETED_NO), -1);
+                                  CORBA::SystemException::_tao_minor_code (
+                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                    0),
+                                  CORBA::COMPLETED_NO),
+                                -1);
             }
 
           arg_shifter.consume_arg ();
@@ -596,10 +594,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                           ACE_TEXT ("argument '%s'\n"),
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (
-                                                 CORBA_SystemException::_tao_minor_code (
-                                                                                         TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                         0),
-                                                 CORBA::COMPLETED_NO), -1);
+                                  CORBA::SystemException::_tao_minor_code (
+                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                    0),
+                                  CORBA::COMPLETED_NO),
+                                -1);
             }
 
           arg_shifter.consume_arg ();
@@ -767,10 +766,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                           ACE_TEXT ("specified:\n%s\n"),
                           preconnections.c_str ()));
               ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                                                  CORBA_SystemException::_tao_minor_code (
-                                                                                          TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                          EINVAL),
-                                                  CORBA::COMPLETED_NO), -1);
+                                  CORBA::SystemException::_tao_minor_code (
+                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                    EINVAL),
+                                  CORBA::COMPLETED_NO),
+                                -1);
             }
 
           arg_shifter.consume_arg ();
@@ -798,32 +798,35 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                           ACE_TEXT ("format is ObjectID=IOR\n"),
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (
-                                                 CORBA_SystemException::_tao_minor_code (
-                                                                                         TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                         0),
-                                                 CORBA::COMPLETED_NO), -1);
+                                  CORBA::SystemException::_tao_minor_code (
+                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                    0),
+                                  CORBA::COMPLETED_NO),
+                                -1);
             }
           ACE_CString object_id (current_arg,
                                  pos - current_arg);
           ACE_CString IOR (pos + 1);
           if (this->init_ref_map_.bind (object_id, IOR) != 0)
-            {
-              ACE_ERROR ((LM_ERROR,
+            {              ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("Cannot store ORBInitRef ")
                           ACE_TEXT ("argument '%s'\n"),
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (
-                                                 CORBA_SystemException::_tao_minor_code (
-                                                                                         TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                         0),
-                                                 CORBA::COMPLETED_NO), -1);
+                                  CORBA::SystemException::_tao_minor_code (
+                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                    0),
+                                  CORBA::COMPLETED_NO),
+                                -1);
             }
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBDefaultInitRef")))
         {
-          default_init_ref = current_arg;
+          // Set the list of prefixes from -ORBDefaultInitRef.
+          this->orb_params ()->default_init_ref (current_arg);
+
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -884,11 +887,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           ACE_NEW_THROW_EX (output_stream,
                             ofstream (),
                             CORBA::NO_MEMORY (
-                                              CORBA_SystemException::_tao_minor_code (
-                                                                                      TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                      ENOMEM),
-                                              CORBA::COMPLETED_NO));
-          ACE_CHECK_RETURN (1);
+                              CORBA::SystemException::_tao_minor_code (
+                                TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                ENOMEM),
+                              CORBA::COMPLETED_NO));
+          ACE_CHECK_RETURN (-1);
 
           output_stream->open (file_name, ios::out | ios::app);
 
@@ -979,10 +982,10 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
             }
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                                              CORBA_SystemException::_tao_minor_code (
-                                                                                      TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                      EINVAL),
-                                              CORBA::COMPLETED_NO),
+                              CORBA::SystemException::_tao_minor_code (
+                                TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                EINVAL),
+                              CORBA::COMPLETED_NO),
                             -1);
         }
 
@@ -1034,10 +1037,10 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                   ACE_TEXT ("ORB Core unable to initialize the ")
                   ACE_TEXT ("Service Configurator")));
       ACE_THROW_RETURN (CORBA::INITIALIZE (
-                                           CORBA_SystemException::_tao_minor_code (
-                                                                                   TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                   0),
-                                           CORBA::COMPLETED_NO),
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_ORB_CORE_INIT_LOCATION_CODE,
+                            0),
+                          CORBA::COMPLETED_NO),
                         -1);
     }
 
@@ -1057,10 +1060,10 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to find a Resource Factory instance")));
       ACE_THROW_RETURN (CORBA::INTERNAL (
-                                         CORBA_SystemException::_tao_minor_code (
-                                                                                 TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                 0),
-                                         CORBA::COMPLETED_NO),
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_ORB_CORE_INIT_LOCATION_CODE,
+                            0),
+                          CORBA::COMPLETED_NO),
                         -1);
     }
 
@@ -1086,10 +1089,10 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to initialize reactor")));
       ACE_THROW_RETURN (CORBA::INITIALIZE (
-                                           CORBA_SystemException::_tao_minor_code (
-                                                                                   TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                   0),
-                                           CORBA::COMPLETED_NO),
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_ORB_CORE_INIT_LOCATION_CODE,
+                            0),
+                          CORBA::COMPLETED_NO),
                         -1);
     }
 
@@ -1102,10 +1105,10 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                   ACE_TEXT ("ORB Core unable to find a ")
                   ACE_TEXT ("Server Strategy Factory instance")));
       ACE_THROW_RETURN (CORBA::INTERNAL (
-                                         CORBA_SystemException::_tao_minor_code (
-                                                                                 TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                 0),
-                                         CORBA::COMPLETED_NO),
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_ORB_CORE_INIT_LOCATION_CODE,
+                            0),
+                          CORBA::COMPLETED_NO),
                         -1);
     }
 
@@ -1143,12 +1146,12 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   CORBA::ORB_ptr temp_orb = CORBA::ORB::_nil ();
 
   ACE_NEW_THROW_EX (temp_orb,
-                    CORBA_ORB (this),
+                    CORBA::ORB (this),
                     CORBA::NO_MEMORY (
-                                      CORBA_SystemException::_tao_minor_code (
-                                                                              TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                              ENOMEM),
-                                      CORBA::COMPLETED_NO));
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_ORB_CORE_INIT_LOCATION_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (-1);
 
   this->orb_ = temp_orb;
@@ -1166,14 +1169,10 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // deferred until after the service config entries had been
   // determined.
 
-  // Set the list of prefixes from -ORBDefaultInitRef.
-  this->orb_params ()->default_init_ref (default_init_ref);
-
   this->orb_params ()->service_port (NAMESERVICE, ns_port);
   this->orb_params ()->service_port (TRADINGSERVICE, ts_port);
   this->orb_params ()->service_port (IMPLREPOSERVICE, ir_port);
 
-  this->orb_params ()->mcast_discovery_endpoint (mde);
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
   this->orb_params ()->nodelay (nodelay);
   if (rcv_sock_size != 0)
@@ -1191,10 +1190,10 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // Load all protocol factories!
   if (trf->init_protocol_factories () == -1)
     ACE_THROW_RETURN (CORBA::INITIALIZE (
-                                         CORBA_SystemException::_tao_minor_code (
-                                                                                 TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                 0),
-                                         CORBA::COMPLETED_NO),
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_ORB_CORE_INIT_LOCATION_CODE,
+                          0),
+                        CORBA::COMPLETED_NO),
                       -1);
 
   // init the ORB core's pointer
@@ -1207,25 +1206,25 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // configured protocol.
   if (this->connector_registry ()->open (this) != 0)
     ACE_THROW_RETURN (CORBA::INITIALIZE (
-                                         CORBA_SystemException::_tao_minor_code (
-                                                                                 TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                 0),
-                                         CORBA::COMPLETED_NO),
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_ORB_CORE_INIT_LOCATION_CODE,
+                          0),
+                        CORBA::COMPLETED_NO),
                       -1);
 
   // Have the connector registry parse the preconnects.
   if (this->orb_params ()->preconnects ().is_empty () == 0)
     this->connector_registry ()->preconnect (
-                                             this,
-                                             this->orb_params ()->preconnects ());
+            this,
+            this->orb_params ()->preconnects ());
 
   // Set ORB-level policy defaults.
   if (this->set_default_policies () != 0)
     ACE_THROW_RETURN (CORBA::INITIALIZE (
-                                         CORBA_SystemException::_tao_minor_code (
-                                                                                 TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                 0),
-                                         CORBA::COMPLETED_NO),
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_ORB_CORE_INIT_LOCATION_CODE,
+                          0),
+                        CORBA::COMPLETED_NO),
                       -1);
 
   // As a last step perform initializations of the service callbacks
@@ -2106,7 +2105,7 @@ TAO_ORB_Core::resolve_rir (const char *name,
       // specified protocol.
       const char object_key_delimiter =
         this->connector_registry ()->object_key_delimiter (
-                                                           list_of_profiles.c_str ());
+                     list_of_profiles.c_str ());
 
       // Make sure that the default initial reference doesn't end
       // with the object key delimiter character.
