@@ -79,6 +79,9 @@ int
 ACEXML_NamespaceSupport::declarePrefix (const ACEXML_Char *prefix,
                                         const ACEXML_Char *uri)
 {
+  if (!prefix || !uri)
+    return -1;
+
   // Unless predefined by w3.org(?) NS prefix can never start with
   // "xml".
   if (ACE_OS_String::strcmp (ACEXML_TABOO_NS_PREFIX, prefix) == 0)
@@ -109,6 +112,9 @@ ACEXML_NamespaceSupport::getDeclaredPrefixes (ACEXML_STR_LIST &prefixes) const
 const ACEXML_Char *
 ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
 {
+  if (!uri)
+    return 0;
+
   ACEXML_NS_CONTEXT_ENTRY *entry;
 
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
@@ -143,6 +149,9 @@ int
 ACEXML_NamespaceSupport::getPrefixes (const ACEXML_Char *uri,
                                       ACEXML_STR_LIST &prefixes) const
 {
+  if (!uri)
+    return -1;
+
   ACEXML_NS_CONTEXT_ENTRY *entry;
 
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
@@ -160,6 +169,9 @@ ACEXML_NamespaceSupport::getPrefixes (const ACEXML_Char *uri,
 const ACEXML_Char *
 ACEXML_NamespaceSupport::getURI (const ACEXML_Char *prefix) const
 {
+  if (!prefix)
+    return 0;
+
   ACEXML_NS_CONTEXT_ENTRY *entry;
 
   if (this->effective_context_->find (ACEXML_String (prefix, 0, 0),
@@ -233,14 +245,16 @@ ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
 
   ACEXML_NS_CONTEXT_ENTRY *entry;
 
-  if (this->effective_context_->find (prefix, entry) == 0)
-    uri = entry->int_id_.c_str ();
+  if (prefix != ACEXML_DEFAULT_NS_PREFIX)
+    {
+      if (this->effective_context_->find (prefix, entry) == 0)
+        uri = entry->int_id_.c_str ();
+    }
   else
     {
       uri = ACEXML_DEFAULT_NS_PREFIX;
       return -1;
     }
-
   return 0;
 }
 

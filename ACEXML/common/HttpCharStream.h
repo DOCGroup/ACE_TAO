@@ -62,8 +62,7 @@ public:
   /**
    *  Read the next batch of ACEXML_Char strings
    */
-  virtual int read (ACEXML_Char *str,
-                    size_t len);
+  virtual int read (ACEXML_Char *str, size_t len);
 
   /**
    *  Peek the next ACEXML_Char in the CharStream.  Return the

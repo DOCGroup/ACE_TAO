@@ -53,8 +53,8 @@ ACEXML_FileCharStream::determine_encoding (void)
   else
     {
       this->encoding_ = ACE::strnew (temp);
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File's encoding is %s\n"),
-                  this->encoding_));
+//       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File's encoding is %s\n"),
+//                   this->encoding_));
     }
   // Rewind the stream
   this->rewind();
@@ -115,7 +115,7 @@ int
 ACEXML_FileCharStream::read (ACEXML_Char *str,
                              size_t len)
 {
-  return ACE_OS::fread (str, len, sizeof (ACEXML_Char), this->infile_);
+  return ACE_OS::fread (str, sizeof (ACEXML_Char), len, this->infile_);
 }
 
 int

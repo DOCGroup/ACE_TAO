@@ -76,10 +76,8 @@ ACEXML_SAXPrint_Handler::ignorableWhitespace (const ACEXML_Char *,
                                               int ACEXML_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("* Event ignorableWhitespace () ***************\n")));
+//   ACE_DEBUG ((LM_DEBUG,
+//               ACE_TEXT ("* Event ignorableWhitespace () ***************\n")));
 }
 
 void
@@ -101,8 +99,7 @@ ACEXML_SAXPrint_Handler::setDocumentLocator (ACEXML_Locator * locator)
 {
 
   this->locator_ = locator;
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("* Event setDocumentLocator () ***************\n")));
+  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("* Event setDocumentLocator () ***************\n")));
 }
 
 void

@@ -320,7 +320,7 @@ ACEXML_HttpCharStream::determine_encoding (void)
   else
     {
       this->encoding_ = ACE::strnew (temp);
-      ACE_DEBUG ((LM_DEBUG, "URI's encoding is %s\n", this->encoding_));
+      //   ACE_DEBUG ((LM_DEBUG, "URI's encoding is %s\n", this->encoding_));
     }
   // Move over the byte-order-mark if present.
   for (int j = 0; j < 3; ++j)

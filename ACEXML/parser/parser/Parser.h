@@ -231,7 +231,7 @@ protected:
    *
    * @retval 0 on success and -1 otherwise.
    */
-  int parse_char_reference (ACEXML_Char *buf, size_t len);
+  int parse_char_reference (ACEXML_Char *buf, size_t& len);
 
   /**
    * Parse a reference name, i.e., foo in "&foo;" or "%foo;". The first
@@ -785,6 +785,15 @@ private:
    *  declarations also.
    */
   static const ACEXML_Char namespace_prefixes_feature_[];
+
+  /**
+   *  @var validation_feature_
+   *
+   *  This constant string defines the SAX XML Validation feature. When
+   *  this feature is enabled, the parser validates the document in
+   *  addition to checking for well-formedness.
+   */
+  static const ACEXML_Char validation_feature_[];
 
   /* @} */
 

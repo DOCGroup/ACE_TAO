@@ -52,7 +52,7 @@ ACEXML_Encoding::get_encoding (const char* input)
     return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF8];
   else
     {
-      ACE_ERROR ((LM_ERROR, "Unknown encoding. Assuming UTF-8\n"));
+      // ACE_ERROR ((LM_ERROR, "Unknown encoding. Assuming UTF-8\n"));
       return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF8];
     }
 }

@@ -1,3 +1,45 @@
+Mon Nov 18 20:30:30 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/CharStream.h:
+        * ACEXML/common/Encoding.cpp:
+        * ACEXML/common/FileCharStream.cpp:
+        * ACEXML/common/FileCharStream.h:
+        * ACEXML/common/StrCharStream.cpp:
+        * ACEXML/common/StrCharStream.h:
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/HttpCharStream.h:
+
+          Fixed a number of minor typos and debugging statements.
+
+        * ACEXML/common/LocatorImpl.cpp: Check for a valid string before
+          assigning it to the new Locator.
+
+        * ACEXML/common/NamespaceSupport.cpp:
+
+          Make sure that we don't have a null prefix before trying to
+          dereference the prefix.
+
+        * ACEXML/common/ZipCharStream.cpp:
+        * ACEXML/common/ZipCharStream.h:
+
+          New stream which reads files from a ZIP archive.
+
+        * ACEXML/common/StreamFactory.cpp:
+
+          Modified to accomodate ZipCharStream.
+
+        * ACEXML/examples/SAXPrint/Print_Handler.cpp:
+        * ACEXML/examples/SAXPrint/SAXPrint_Handler.cpp:
+        * ACEXML/examples/SAXPrint/main.cpp:
+
+          Commented out a lot of unnecessary debug statements.
+
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/parser/parser/Parser.h:
+
+          Lots of bugfixes. Finally we parse the XML version of XHTML
+          specification without dumping core.
+
 Sat Nov 16 21:18:55 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/parser/parser/Parser.cpp:

@@ -2,16 +2,16 @@
 
 //=============================================================================
 /**
- *  @file    FileCharStream.h
+ *  @file    ZipCharStream.h
  *
  *  $Id$
  *
- *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
 //=============================================================================
 
-#ifndef _ACEXML_FILECHARSTREAM_H_
-#define _ACEXML_FILECHARSTREAM_H_
+#ifndef _ACEXML_ZIPCHARSTREAM_H_
+#define _ACEXML_ZIPCHARSTREAM_H_
 
 #include "ace/pre.h"
 #include "ACEXML/common/ACEXML_Export.h"
@@ -22,21 +22,24 @@
 
 #include "ACEXML/common/CharStream.h"
 #include "ACEXML/common/Encoding.h"
-#include "ace/streams.h"
+#include "zziplib.h"
+
+// Ugly wart to get aroung a macro version of read
+#undef read
 
 /**
- * @class ACEXML_FileCharStream FileCharStream.h "ACEXML/common/FileCharStream.h"
+ * @class ACEXML_ZipCharStream ZipCharStream.h "ACEXML/common/ZipCharStream.h"
  *
- * An implementation of ACEXML_CharStream for reading input from a file.
+ * An implementation of ACEXML_CharStream for reading input from a ZIP archive.
  */
-class ACEXML_Export ACEXML_FileCharStream : public ACEXML_CharStream
+class ACEXML_Export ACEXML_ZipCharStream : public ACEXML_CharStream
 {
 public:
   /// Default constructor.
-  ACEXML_FileCharStream (void);
+  ACEXML_ZipCharStream (void);
 
   /// Destructor
-  virtual ~ACEXML_FileCharStream (void);
+  virtual ~ACEXML_ZipCharStream (void);
 
   /// Open a file.
   int open (const ACEXML_Char *name);
@@ -61,8 +64,7 @@ public:
   /**
    * Read the next batch of ACEXML_Char strings
    */
-  virtual int read (ACEXML_Char *str,
-                    size_t len);
+  virtual int read (ACEXML_Char *str, size_t len);
 
   /**
    *  Determine the encoding of the file.
@@ -93,6 +95,12 @@ protected:
    */
   virtual int getchar_i (char& ch);
 
+  /**
+   * Peek @c offset bytes into the stream and return the character at @c
+   * offset. If EOF is reached, return -1.
+   */
+  virtual int peekchar_i (int offset = 0);
+
 private:
 
 #if defined (ACE_USES_WCHAR)
@@ -103,7 +111,7 @@ private:
   int get_i (ACEXML_Char& ch);
 
   /**
-   *  Read the next character from the stream taking into account the
+   *  Return the next character from the stream taking into account the
    *  encoding of the file. Subsequent call to get() returns this
    *  character.
    */
@@ -114,15 +122,12 @@ private:
   ACEXML_Char*  filename_;
   ACEXML_Char*  encoding_;
   off_t         size_;
-  FILE*         infile_;
-  // This is needed to ensure that we can implement a peek operation on a
-  // UTF-16 encoded file. It is a bit hackish, but there is no other way of
-  // implementing a peek() as the standard I/O FILE* guarantees only one
-  // pushback.
-  ACEXML_Char   peek_;
+  ZZIP_FILE*    infile_;
+  char          buf_[80];
+  int           pos_;
+  int           limit_;
 };
-
 
 #include "ace/post.h"
 
-#endif /* _ACEXML_FILECHARSTREAM_H_ */
+#endif /* _ACEXML_ZIPCHARSTREAM_H_ */
