@@ -1,0 +1,13 @@
+// $Id$
+
+This test application exercises basic features of TAO's Naming
+Service.  It behaves as follows:
+
+        1. It obtains an object reference to a remote Naming
+           Service (which currently must be handed started,
+           but will ultimately be run in by a perl script).
+
+        2. It binds(), resolves(), and unbinds() an object
+           reference into the Naming Context.
+
+We'll add more features to this test over time.

@@ -83,7 +83,7 @@ private:
   NS_NamingContext naming_context_impl_;
   // Naming context implemetation for "NameService".
 
-  CosNaming::NamingContext_var naming_context_var_;
+  CosNaming::NamingContext_var naming_context_;
   // NamingContext ptr.
 
   TAO_IOR_Multicast *ior_multicast_;
@@ -111,6 +111,14 @@ public:
   TAO_Naming_Client (void);
   //Default constructor.
 
+  int init (CORBA::ORB_ptr orb,
+	    int argc = 0,
+            char **argv = 0);
+  // Initialize the name server under the given ORB and POA.  The
+  // <argc> and <argv> commmand-line arguments are parsed to determine
+  // if this name server instance is part of a naming tree that
+  // resides under the default name server.
+
   ~TAO_Naming_Client (void);
   // Destructor.
 
@@ -120,7 +128,7 @@ public:
   // Returns a <NamingContext_ptr>.
 
 private:
-  CosNaming::NamingContext_var naming_context_var_;
+  CosNaming::NamingContext_var naming_context_;
   // NamingContext ptr.
 };
 
