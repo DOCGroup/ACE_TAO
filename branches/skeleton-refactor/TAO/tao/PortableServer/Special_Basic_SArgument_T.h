@@ -31,7 +31,7 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S>
-  class TAO_Export In_Special_Basic_SArgument_T : public Argument
+  class In_Special_Basic_SArgument_T : public Argument
   {
   public:
     In_Special_Basic_SArgument_T (void);
@@ -53,7 +53,7 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S>
-  class TAO_Export Inout_Special_Basic_SArgument_T : public Argument
+  class Inout_Special_Basic_SArgument_T : public Argument
   {
   public:
     Inout_Special_Basic_SArgument_T (void);
@@ -76,7 +76,7 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S>
-  class TAO_Export Out_Special_Basic_SArgument_T : public Argument
+  class Out_Special_Basic_SArgument_T : public Argument
   {
   public:
     Out_Special_Basic_SArgument_T (void);
@@ -98,7 +98,7 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S>
-  class TAO_Export Ret_Special_Basic_SArgument_T : public Argument
+  class Ret_Special_Basic_SArgument_T : public Argument
   {
   public:
     Ret_Special_Basic_SArgument_T (void);
@@ -121,7 +121,7 @@ namespace TAO
    *
    */
   template<typename T, typename to_T, typename from_T>
-  struct TAO_Export Special_Basic_SArg_Traits_T
+  struct Special_Basic_SArg_Traits_T
   {
     typedef T                                               ret_type;
     typedef T                                               in_type;
