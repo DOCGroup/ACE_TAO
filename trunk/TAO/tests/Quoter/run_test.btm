@@ -83,7 +83,7 @@ REM read in the IOR from the file
 for %%d in (@%nsiorfile) do set ior=%%d
 
 REM Start the server
-start "Quoter Server" %leave Quoter_Server.exe -ORBport %svport -ORBobjrefstyle url -ORBnameserviceior %ior -ORBsvcconf server.conf 
+start "Quoter Server" %leave server.exe -ORBport %svport -ORBobjrefstyle url -ORBnameserviceior %ior -ORBsvcconf server.conf 
 
 %done
 
@@ -95,7 +95,7 @@ REM read in the IOR from the file
 for %%d in (@%nsiorfile) do set ior=%%d
 
 REM Start the factory finder
-rem start "Quoter Factory Finder" %leave QuoterFactoryFinder.exe -ORBport %ffport -ORBobjrefstyle url -ORBnameserviceior %ior -ORBsvcconf svc.conf
+start "Quoter Factory Finder" %leave QuoterFactoryFinder.exe -ORBport %ffport -ORBobjrefstyle url -ORBnameserviceior %ior -ORBsvcconf svc.conf
 
 %done
 
@@ -107,7 +107,7 @@ REM read in the IOR from the file
 for %%d in (@%nsiorfile) do set ior=%%d
 
 REM And now start the client
-for /l %x in (1,1,%n) do Quoter_Client.exe -ORBobjrefstyle url -ORBport %clport -ORBnameserviceior %ior -ORBsvcconf client.conf
+for /l %x in (1,1,%n) do client.exe -ORBobjrefstyle url -ORBport %clport -ORBnameserviceior %ior -ORBsvcconf client.conf
 
 %done
 

@@ -14,9 +14,8 @@
 // ============================================================================
 
 #include "tao/corba.h"
-//#include "ace/Auto_Ptr.h"
-#include "quoter_impl.h"
-#include "quoterC.h"
+#include "QuoterImpl.h"
+#include "QuoterC.h"
 
 // Constructor
 

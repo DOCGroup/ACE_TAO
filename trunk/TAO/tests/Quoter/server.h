@@ -10,7 +10,7 @@
 //    quoter_server.h
 //
 // = DESCRIPTION
-//    @@@ Working on it
+//    @@ Working on it
 //
 // = AUTHORS
 //    Darrell Brunsch 
@@ -23,10 +23,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "orbsvcs/CosNamingC.h"
-#include "quoter_impl.h"
-#include "quoterC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "tao/tao.h"
+#include "QuoterImpl.h"
+#include "QuoterC.h"
 
 class Quoter_Server 
 {
