@@ -84,7 +84,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 #   if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
-  ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
+  ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   if (::gethostbyaddr_r ((char *) addr, length, type, result,
                          (struct hostent_data *) buffer)== 0)
@@ -187,7 +187,7 @@ ACE_OS::gethostbyname_r (const char *name,
   // AIX 4.3
   ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
 #   elif defined (AIX) || defined (HPUX_10)
-  ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
+  ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   if (::gethostbyname_r (name, result, (struct hostent_data *) buffer) == 0)
     return result;
@@ -478,7 +478,7 @@ ACE_OS::getservbyname_r (const char *svc,
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 # if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
-  ::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
+  ACE_OS::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
 
   if (::getservbyname_r (svc, proto, result, (struct servent_data *) buf) == 0)
     return result;
