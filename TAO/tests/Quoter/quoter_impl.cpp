@@ -16,6 +16,7 @@
 #include "tao/corba.h"
 //#include "ace/Auto_Ptr.h"
 #include "quoter_impl.h"
+#include "quoterC.h"
 
 // Constructor
 
@@ -36,6 +37,7 @@ Quoter_Factory_Impl::create_quoter (const char *name,
   ACE_UNUSED_ARG (name);
   return my_quoter_._this (env);
 }
+
 
 // Constructor
 
@@ -75,9 +77,71 @@ void Quoter_Impl::destroy (CORBA::Environment &env)
 CosLifeCycle::LifeCycleObject_ptr
 Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
                    const CosLifeCycle::Criteria & the_criteria,
-                   CORBA::Environment &_tao_environment) {
+                   CORBA::Environment &_env_there) {
 
-  return 0;
+  TAO_TRY {
+    // The name of the Quoter Factory
+    CosLifeCycle::Key factoryKey (1);  // max = 1 
+    factoryKey.length(1);
+    factoryKey[0].id = CORBA::string_dup ("quoter_factory");
+    
+    // Find an appropriate factory over there
+    CosLifeCycle::Factories_ptr factories_ptr = 
+      there->find_factories (factoryKey,_env_there);
+
+    // Only a NoFactory exception might have occured, so if it occured, 
+    // then go immediately back.
+    if (_env_there.exception() != 0) {
+      // _env_there contains already the exception
+      return CosLifeCycle::LifeCycleObject::_nil();
+    }
+
+    // now it is known that there is at least one factory
+    Stock::Quoter_var quoter_var;
+    for (unsigned int i = 0; i < factories_ptr->length (); i++) {
+
+      // get the first object reference to a factory
+      CORBA::Object_var quoter_FactoryObj_var = (*factories_ptr)[i];
+
+      // narrow it to a Quoter Factory
+      Stock::Quoter_Factory_var quoter_Factory_var =
+        Stock::Quoter_Factory::_narrow (quoter_FactoryObj_var.in (),
+                                        TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // try to get a Quoter created by this factory
+      quoter_var = quoter_Factory_var->create_quoter ("quoter_copied", TAO_TRY_ENV);
+      // @@ mk1: The create_quoter should return an exception
+      TAO_CHECK_ENV;
+
+      if (CORBA::is_nil (quoter_var.in ())) {
+
+        // if we had already our last chance, then give up
+        if (i == factories_ptr->length ()) {
+          _env_there.exception (new CosLifeCycle::NoFactory (factoryKey));
+          return CosLifeCycle::LifeCycleObject::_nil();
+        }
+        else {
+          ACE_ERROR((LM_ERROR,"Quoter::copy: Factory did not create the Quoter properly.\n"));
+          // else tell what's wrong and try the next factory
+        }
+      }
+      else {
+          break;
+          // if succeeded in creating a new Quoter over there, then stop trying
+      }
+    }
+
+    // return an object reference to the newly created Quoter
+    return (CosLifeCycle::LifeCycleObject_ptr) quoter_var;
+  }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("SYS_EX");
+      return CosLifeCycle::LifeCycleObject::_nil();
+    }
+  TAO_ENDTRY;
+  return CosLifeCycle::LifeCycleObject::_nil();
 }
 
 void
