@@ -10,7 +10,7 @@ inline ssize_t
 ACE_FILE_IO::send_n (const void *buf, size_t n) const
 {
   ACE_TRACE ("ACE_FILE_IO::send_n");
-  return ACE::send_n (this->get_handle (), buf, n);
+  return ACE::write_n (this->get_handle (), buf, n);
 }
 
 // Receive exactly N bytes from this file into BUF.  Keep trying until
@@ -20,7 +20,7 @@ inline ssize_t
 ACE_FILE_IO::recv_n (void *buf, size_t n) const
 {
   ACE_TRACE ("ACE_FILE_IO::recv_n");
-  return ACE::recv_n (this->get_handle (), buf, n);
+  return ACE::read_n (this->get_handle (), buf, n);
 }
 
 inline ssize_t
