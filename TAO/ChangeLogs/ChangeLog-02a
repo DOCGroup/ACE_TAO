@@ -1,3 +1,24 @@
+Fri May 25 12:04:02 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/examples/Security/Send_File/client_nopasswd.conf: 
+	* orbsvcs/examples/Security/Send_File/server_nopasswd.conf: 
+	  Updated to use client_key and server_key certificates as the
+	  private keys.
+
+	* orbsvcs/examples/Security/Send_File/server_cert.pem: 
+	* orbsvcs/examples/Security/Send_File/server_key.pem: 
+	* orbsvcs/examples/Security/Send_File/client_cert.pem: 
+	* orbsvcs/examples/Security/Send_File/client_key.pem: 
+	* orbsvcs/examples/Security/Send_File/cacert.pem: 
+	* orbsvcs/tests/Security/Secure_Invocation/client_key.pem: 
+	* orbsvcs/tests/Security/Secure_Invocation/client_cert.pem: 
+	* orbsvcs/tests/Security/Secure_Invocation/server_key.pem: 
+	* orbsvcs/tests/Security/Secure_Invocation/server_cert.pem: 
+	* orbsvcs/tests/Security/Secure_Invocation/cacert.pem: 
+	
+ 	  The previous certificates expired. So, used the ones in 
+	  $ACE_ROOT/TAO/orbsvcs/tests/Security/SecurityLevel1
+	
 Fri May 25 13:32:55 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* TAO_IDL/include/idl_global.h: Moved template instantiations into 
