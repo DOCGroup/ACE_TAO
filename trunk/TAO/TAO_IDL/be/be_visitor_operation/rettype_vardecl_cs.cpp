@@ -57,9 +57,9 @@ be_visitor_operation_rettype_vardecl_cs::visit_array (be_array *node)
 
   os->indent ();
 
-  *os << bt->name () << "_slice *_tao_retval = 0;";
+  *os << bt->name () << "_slice *_tao_bare_ptr = 0;";
 
-  *os << be_nl << be_nl;
+  *os << be_nl;
 
   return 0;
 }
@@ -96,7 +96,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface (be_interface *node)
     bt = node;
 
   os->indent ();
-  *os << bt->name () << "_ptr _tao_retval = " << bt->name () << "::_nil ();";
+  *os << bt->name () << "_var _tao_retval;";
 
   *os << be_nl << be_nl;
 
@@ -115,7 +115,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface_fwd (be_interface_fwd *
     bt = node;
 
   os->indent ();
-  *os << bt->name () << "_ptr _tao_retval = " << bt->name () << "::_nil ();";
+  *os << bt->name () << "_var _tao_retval;";
 
   *os << be_nl << be_nl;
 
@@ -137,7 +137,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype (be_valuetype *node)
 
   os->indent ();
 
-  *os << bt->name () << "* _tao_retval = 0;";
+  *os << bt->name () << " *_tao_bare_ptr = 0;";
 
   *os << be_nl << be_nl;
 
@@ -156,7 +156,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype_fwd (be_valuetype_fwd *
     bt = node;
 
   os->indent ();
-  *os << bt->name () << "* _tao_retval = 0;";
+  *os << bt->name () << " *_tao_bare_ptr = 0;";
 
   *os << be_nl << be_nl;
 
@@ -180,11 +180,11 @@ be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (be_predefined_ty
     {
     case AST_PredefinedType::PT_pseudo:
       os->indent ();
-      *os << bt->name () << "_ptr _tao_retval = 0;";
+      *os << bt->name () << "_var _tao_retval;";
       break;
     case AST_PredefinedType::PT_any:
       os->indent ();
-      *os << bt->name () << "* _tao_retval = 0;";
+      *os << bt->name () << " *_tao_bare_ptr = 0;";
       break;
     case AST_PredefinedType::PT_void:
       break;
@@ -213,7 +213,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_sequence (be_sequence *node)
     bt = node;
 
   os->indent ();
-  *os << bt->name () << "* _tao_retval = 0;";
+  *os << bt->name () << " *_tao_bare_ptr = 0;";
 
   *os << be_nl << be_nl;
   return 0;
@@ -228,11 +228,11 @@ be_visitor_operation_rettype_vardecl_cs::visit_string (be_string *node)
 
   if (node->width () == sizeof (char))
     {
-      *os << "char* _tao_retval = 0;";
+      *os << "CORBA::String_var _tao_retval;";
     }
   else
     {
-      *os << "CORBA::WChar* _tao_retval = 0;";
+      *os << "CORBA::WString_var _tao_retval;";
     }
 
   *os << be_nl << be_nl;
@@ -256,7 +256,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_structure (be_structure *node)
   // aggregate type
   if (node->size_type () == be_decl::VARIABLE)
 	  {
-	    *os << bt->name () << "* _tao_retval = 0;" << be_nl;
+	    *os << bt->name () << " *_tao_bare_ptr = 0;" << be_nl;
 	  }
   else
 	  {
@@ -301,7 +301,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_union (be_union *node)
   // aggregate type
   if (node->size_type () == be_decl::VARIABLE)
     {
-      *os << bt->name () << "* _tao_retval = 0;";
+      *os << bt->name () << " *_tao_bare_ptr = 0;";
     }
   else
     {

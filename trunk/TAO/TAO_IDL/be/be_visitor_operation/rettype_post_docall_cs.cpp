@@ -102,7 +102,7 @@ be_visitor_operation_compiled_rettype_post_docall::visit_array (be_array *node)
 
   *os << bt->name () << "_forany _tao_retval_forany ("
       << be_idt << be_idt_nl
-      << "_tao_retval" << be_uidt_nl
+      << "_tao_retval.inout ()" << be_uidt_nl
       << ");\n" << be_uidt;
   return 0;
 }

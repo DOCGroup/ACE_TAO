@@ -788,8 +788,6 @@ gen_marshal_and_invoke (be_operation *node,
   *os << be_nl
       << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
       << "continue;" << be_uidt_nl
-      << "// if (_invoke_status == TAO_INVOKE_EXCEPTION)" << be_idt_nl
-      << "// cannot happen" << be_uidt_nl
       << "if (_invoke_status != TAO_INVOKE_OK)" << be_nl
       << "{" << be_idt_nl;
 

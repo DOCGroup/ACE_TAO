@@ -236,21 +236,15 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
         {
           // now generate the normal successful return statement
           os->indent ();
-          *os << "return ";
-          // return the appropriate return value
-          ctx = *this->ctx_;
-          ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
-          visitor = tao_cg->make_visitor (&ctx);
-          if (!visitor || (bt->accept (visitor) == -1))
+          if (bt->size_type () == be_decl::VARIABLE
+              || bt->base_node_type () == AST_Decl::NT_array)
             {
-              delete visitor;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_operation_cs::"
-                                 "visit_operation - "
-                                 "codegen for return var failed\n"),
-                                -1);
+              *os << "return _tao_retval._retn ();";
             }
-          *os << ";";
+          else
+            {
+              *os << "return _tao_retval;";
+            }
         }
     } // end of if (!native)
 
@@ -303,8 +297,6 @@ be_visitor_operation_cs::gen_raise_exception (be_type *bt,
                                               const char *completion_status)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
-  be_visitor_context ctx;
 
   if (this->void_return_type (bt))
     {
@@ -313,23 +305,17 @@ be_visitor_operation_cs::gen_raise_exception (be_type *bt,
     }
   else
     {
-      *os << "ACE_THROW_RETURN ("
-          << excep << " (" << completion_status << "), ";
-
-      // return the appropriate return value
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (bt->accept (visitor) == -1))
+      if (bt->size_type () == be_decl::VARIABLE
+          || bt->base_node_type () == AST_Decl::NT_array)
         {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "gen_raise_exception - "
-                             "codegen for return var failed\n"),
-                            -1);
+          *os << "ACE_THROW_RETURN (" << excep 
+              << " (" << completion_status << "), 0);\n";
         }
-      *os << ");\n";
+      else
+        {
+          *os << "ACE_THROW_RETURN (" << excep 
+              << " (" << completion_status << "), _tao_retval);\n";
+        }
     }
   return 0;
 }
@@ -338,8 +324,6 @@ int
 be_visitor_operation_cs::gen_check_exception (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
-  be_visitor_context ctx;
 
   os->indent ();
   // check if there is an exception
@@ -350,23 +334,15 @@ be_visitor_operation_cs::gen_check_exception (be_type *bt)
     }
   else
     {
-      *os << "ACE_CHECK_RETURN (";
-      // << "_tao_environment, ";
-
-      // return the appropriate return value
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (bt->accept (visitor) == -1))
+      if (bt->size_type () == be_decl::VARIABLE
+          || bt->base_node_type () == AST_Decl::NT_array)
         {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "gen_check_exception - "
-                             "codegen failed\n"),
-                            -1);
+          *os << "ACE_CHECK_RETURN (0);\n";
         }
-      *os << ");\n";
+      else
+        {
+          *os << "ACE_CHECK_RETURN  (_tao_retval);\n";
+        }
     }
 
   return 0;
@@ -796,8 +772,6 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   *os << be_nl
       << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
       << "continue;" << be_uidt_nl
-      << "// if (_invoke_status == TAO_INVOKE_EXCEPTION)" << be_idt_nl
-      << "// cannot happen" << be_uidt_nl
       << "if (_invoke_status != TAO_INVOKE_OK)" << be_nl
       << "{" << be_idt_nl;
 

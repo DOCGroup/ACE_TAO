@@ -58,8 +58,9 @@ be_visitor_operation_rettype_pre_docall_cs::visit_array (be_array *node)
     bt = node;
 
   os->indent ();
-  *os << "ACE_ALLOCATOR_RETURN (_tao_retval, " << bt->name ()
-      << "_alloc (), _tao_retval);\n";
+  *os << "ACE_ALLOCATOR_RETURN (_tao_bare_ptr, " << bt->name ()
+      << "_alloc (), 0);" << be_nl;
+  *os << bt->name () << "_var _tao_retval (_tao_bare_ptr);\n";
   return 0;
 }
 
@@ -93,7 +94,8 @@ visit_predefined_type (be_predefined_type *node)
     {
     case AST_PredefinedType::PT_any:
       os->indent ();
-      *os << "ACE_NEW_RETURN (_tao_retval, CORBA::Any, _tao_retval);\n";
+      *os << "ACE_NEW_RETURN (_tao_bare_ptr, CORBA::Any, 0);" << be_nl
+          << "CORBA::Any_var _tao_retval (_tao_bare_ptr);\n";
       break;
     default:
       break;
@@ -113,7 +115,8 @@ be_visitor_operation_rettype_pre_docall_cs::visit_sequence (be_sequence *node)
     bt = node;
 
   os->indent ();
-  *os << "ACE_NEW_RETURN (_tao_retval, " << bt->name () << ", _tao_retval);\n";
+  *os << "ACE_NEW_RETURN (_tao_bare_ptr, " << bt->name () << ", 0);" << be_nl
+      << bt->name () << "_var _tao_retval (_tao_bare_ptr);\n";
   return 0;
 }
 
@@ -132,7 +135,8 @@ be_visitor_operation_rettype_pre_docall_cs::visit_structure (be_structure *node)
   if (node->size_type () == be_type::VARIABLE)
     {
       os->indent ();
-      *os << "ACE_NEW_RETURN (_tao_retval, " << bt->name () << ", _tao_retval);\n";
+      *os << "ACE_NEW_RETURN (_tao_bare_ptr, " << bt->name () << ", 0);" << be_nl
+          << bt->name () << "_var _tao_retval (_tao_bare_ptr);\n";
     }
   return 0;
 }
@@ -168,7 +172,8 @@ be_visitor_operation_rettype_pre_docall_cs::visit_union (be_union *node)
   if (node->size_type () == be_type::VARIABLE)
     {
       os->indent ();
-      *os << "ACE_NEW_RETURN (_tao_retval, " << bt->name () << ", _tao_retval);\n";
+      *os << "ACE_NEW_RETURN (_tao_bare_ptr, " << bt->name () << ", 0);" << be_nl
+          << bt->name () << "_var _tao_retval (_tao_bare_ptr);\n";
     }
   return 0;
 }
