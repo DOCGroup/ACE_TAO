@@ -1,3 +1,8 @@
+Tue Mar 11 21:38:42 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/OS.i (open): Improved support for passing flags through to
+	  CreateFile ().
+
 Tue Mar 11 14:30:12 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-vxworks-ghs-1.8.h: added ACE_LACKS_SYS_NERR.
