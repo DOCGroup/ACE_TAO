@@ -281,7 +281,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
           // be_decl *parents_parent = be_interface::narrow_from_scope (parent_interface->scope ())->decl ();
           // Generate the scope::operation name.
           //  *os << parents_parent->full_name () << "::";
-          *os << parent->full_name () << "::";
+          *os << "POA_"<< parent->full_name () << "::";
         }
 
       *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
