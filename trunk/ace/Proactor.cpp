@@ -192,7 +192,7 @@ private:
 
 ACE_AIO_Accept_Handler::ACE_AIO_Accept_Handler (ACE_Proactor *proactor)
   : proactor_ (proactor),
-    message_block_ (sizeof (ACE_Asynch_Accept::Result *))
+    message_block_ (sizeof (ACE_Asynch_Accept::Result *) + 64)
 {
   // Open the pipe.
   this->pipe_.open ();

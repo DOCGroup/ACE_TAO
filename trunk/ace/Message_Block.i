@@ -219,8 +219,8 @@ ACE_Message_Block::base (char *msg_data,
 			 Message_Flags msg_flags)
 {
   ACE_TRACE ("ACE_Message_Block::base");
-  this->rd_ptr_ = msg_data;
-  this->wr_ptr_ = msg_data;
+  this->rd_ptr_ = 0;
+  this->wr_ptr_ = 0;
   this->data_block ()->base (msg_data, msg_length, msg_flags);
 }
 
@@ -228,14 +228,14 @@ ACE_INLINE char *
 ACE_Message_Block::rd_ptr (void) const
 {
   ACE_TRACE ("ACE_Message_Block::rd_ptr");
-  return this->rd_ptr_;
+  return this->base () + this->rd_ptr_;
 }
 
 ACE_INLINE void
 ACE_Message_Block::wr_ptr (char *new_ptr)
 {
   ACE_TRACE ("ACE_Message_Block::wr_ptr");
-  this->wr_ptr_ = new_ptr;
+  this->wr_ptr_ = new_ptr - this->base ();
 }
 
 // Return a pointer to 1 past the end of the data buffer.
@@ -259,7 +259,7 @@ ACE_INLINE void
 ACE_Message_Block::rd_ptr (char *new_ptr)
 {
   ACE_TRACE ("ACE_Message_Block::rd_ptr");
-  this->rd_ptr_ = new_ptr;
+  this->rd_ptr_ = new_ptr - this->base ();
 }
 
 ACE_INLINE void
@@ -273,7 +273,7 @@ ACE_INLINE char *
 ACE_Message_Block::wr_ptr (void) const
 {
   ACE_TRACE ("ACE_Message_Block::wr_ptr");
-  return this->wr_ptr_;
+  return this->base () + this->wr_ptr_;
 }
 
 ACE_INLINE void
