@@ -1,3 +1,8 @@
+Wed Jul 07 12:41:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/compiler.html: Added documentation on how to control the
+	  generation of collocation stubs of different strategies.
+
 Wed Jul 07 09:47:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp
