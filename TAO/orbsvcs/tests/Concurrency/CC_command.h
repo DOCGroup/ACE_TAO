@@ -36,7 +36,7 @@ class CC_Command
   //    the base class for the auxillary commands start, wait, and sleep.
 {
  public:
-  ~CC_Command(void);
+  virtual ~CC_Command(void);
   // Destructor
 
   virtual int execute() = 0;
@@ -316,7 +316,7 @@ class CC_Excep_Cmd: public CC_Command
   CC_Excep_Cmd(char *excep);
   // Constructor.
 
-  ~CC_Excep_Cmd(void);
+  virtual ~CC_Excep_Cmd(void);
   // Destructor.
 
   virtual int execute(void);
@@ -341,7 +341,7 @@ class CC_Dummy_Cmd: public CC_Command
   CC_Dummy_Cmd(void);
   // Constructor.
 
-  ~CC_Dummy_Cmd(void);
+  virtual ~CC_Dummy_Cmd(void);
   // Destructor.
 
   virtual int execute(void);
@@ -362,7 +362,7 @@ class CC_Print_Cmd: public CC_Command
   CC_Print_Cmd(char *message);
   // Constructor.
 
-  ~CC_Print_Cmd(void);
+  virtual ~CC_Print_Cmd(void);
   // Destructor.
 
   virtual int execute(void);
