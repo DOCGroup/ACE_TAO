@@ -220,6 +220,11 @@ Messaging::SyncScope POA_Messaging::_tao_collocated_SyncScopePolicy::synchroniza
                                           );
 }
 
+Messaging::SyncScope POA_Messaging::_tao_collocated_SyncScopePolicy::synchronization  (void)
+{
+  return this->servant_->synchronization ();
+}
+
 
 Messaging::SyncScopePolicy*
 POA_Messaging::SyncScopePolicy::_this (CORBA_Environment &ACE_TRY_ENV)

@@ -1769,30 +1769,6 @@ TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
 
 // ****************************************************************
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
-
-TAO_None_Sync_Strategy &
-TAO_ORB_Core::none_sync_strategy (void)
-{
-  return *this->none_sync_strategy_;
-}
-
-TAO_Flush_Sync_Strategy &
-TAO_ORB_Core::flush_sync_strategy (void)
-{
-  return *this->flush_sync_strategy_;
-}
-
-#endif /* TAO_HAS_CORBA_MESSAGING */
-
-TAO_Transport_Sync_Strategy &
-TAO_ORB_Core::transport_sync_strategy (void)
-{
-  return *this->transport_sync_strategy_;
-}
-
-// ****************************************************************
-
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources *tss)
 {
@@ -2027,42 +2003,6 @@ TAO_ORB_Core::reactor (TAO_Acceptor *acceptor)
     }
   return this->reactor_;
 }
-
-TAO_POA_Current &
-TAO_ORB_Core::poa_current (void) const
-{
-  return *this->poa_current_;
-}
-
-CORBA_Environment*
-TAO_ORB_Core::default_environment (void) const
-{
-  return TAO_TSS_RESOURCES::instance ()->default_environment_;
-}
-
-void
-TAO_ORB_Core::default_environment (CORBA_Environment *env)
-{
-  TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
-}
-
-#if defined (TAO_HAS_CORBA_MESSAGING)
-
-TAO_Policy_Current &
-TAO_ORB_Core::policy_current (void)
-{
-  return *this->policy_current_;
-}
-
-#endif /* TAO_HAS_CORBA_MESSAGING */
-
-#if defined (TAO_HAS_RT_CORBA)
-TAO_Priority_Mapping *
-TAO_ORB_Core::priority_mapping (void)
-{
-  return this->priority_mapping_;
-}
-#endif /* TAO_HAS_RT_CORBA */
 
 int
 TAO_ORB_Core::get_thread_priority (CORBA::Short &priority)

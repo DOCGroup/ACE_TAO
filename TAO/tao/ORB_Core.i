@@ -194,6 +194,67 @@ TAO_ORB_Core::orbid (void) const
   return this->orbid_;
 }
 
+// ****************************************************************
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+ACE_INLINE TAO_None_Sync_Strategy &
+TAO_ORB_Core::none_sync_strategy (void)
+{
+  return *this->none_sync_strategy_;
+}
+
+ACE_INLINE TAO_Flush_Sync_Strategy &
+TAO_ORB_Core::flush_sync_strategy (void)
+{
+  return *this->flush_sync_strategy_;
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+ACE_INLINE TAO_Transport_Sync_Strategy &
+TAO_ORB_Core::transport_sync_strategy (void)
+{
+  return *this->transport_sync_strategy_;
+}
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+ACE_INLINE TAO_Policy_Current &
+TAO_ORB_Core::policy_current (void)
+{
+  return *this->policy_current_;
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+#if defined (TAO_HAS_RT_CORBA)
+
+ACE_INLINE TAO_Priority_Mapping *
+TAO_ORB_Core::priority_mapping (void)
+{
+  return this->priority_mapping_;
+}
+
+#endif /* TAO_HAS_RT_CORBA */
+
+ACE_INLINE TAO_POA_Current &
+TAO_ORB_Core::poa_current (void) const
+{
+  return *this->poa_current_;
+}
+
+ACE_INLINE CORBA_Environment *
+TAO_ORB_Core::default_environment (void) const
+{
+  return TAO_TSS_RESOURCES::instance ()->default_environment_;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::default_environment (CORBA_Environment *env)
+{
+  TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
+}
 
 // ****************************************************************
 
