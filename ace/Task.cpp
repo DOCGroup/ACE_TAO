@@ -5,7 +5,6 @@
 #include "ace/Task.h"
 #include "ace/Module.h"
 #include "ace/Service_Config.h"
-#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Task.i"
