@@ -57,7 +57,7 @@ rsvp_callback (rapi_sid_t sid,
   qos_flowspecx_t *csxp = &flow_spec_list->specbody_qosx;
 
   ACE_QoS ace_qos = qos_session->qos ();
-  ACE_Flow_Spec receiving_flow = ace_qos.receiving_flowspec ();
+  ACE_Flow_Spec sending_flow = ace_qos.sending_flowspec ();
 
   switch(eventype)
     {
@@ -65,22 +65,40 @@ rsvp_callback (rapi_sid_t sid,
       {
         ACE_DEBUG ((LM_DEBUG,
                     "RSVP PATH Event received\n"
-                    "No. of TSpecs received : %d\n",
-                    flow_spec_no));
+                    "No. of TSpecs received : %d %d\n",
+                    flow_spec_no, csxp->spec_type));
 
-        ACE_Flow_Spec sending_fs (csxp->xspec_r,
-                                  csxp->xspec_b,
-                                  csxp->xspec_p,
-                                  0,
-                                  0,
-                                  0,
-                                  csxp->xspec_M,
-                                  csxp->xspec_m,
-                                  25,
-                                  0);
+        ACE_Flow_Spec receiving_fs (csxp->xspec_r,
+				    csxp->xspec_b,
+				    csxp->xspec_p,
+				    0,
+				    csxp->xspec_S,
+				    1,
+				    csxp->xspec_M,
+				    csxp->xspec_m,
+				    25,
+				    0);
+	
 
+	ACE_DEBUG ((LM_DEBUG,
+		    "\nTSpec :\n"
+		    "\t Spec Type = %d\n"
+		    "\t Rate = %f\n"
+		    "\t Bucket = %f\n"
+		    "\t Peak = %f\n"
+		    "\t MPU = %d\n"
+		    "\t MDU = %d\n"
+              "\t TTL = %d\n",
+		    csxp->spec_type,
+		    csxp->xspec_r,
+		    csxp->xspec_b,
+		    csxp->xspec_p,
+		    csxp->xspec_m,
+		    csxp->xspec_M,
+		    25));
+	
         // Set the sending flowspec QoS of the given session.
-        ace_qos.sending_flowspec (sending_fs);
+        ace_qos.receiving_flowspec (receiving_fs);
 	
 	qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_PATH_EVENT);
       }
@@ -98,7 +116,7 @@ rsvp_callback (rapi_sid_t sid,
         {
         case QOS_GUARANTEEDX:
           // Slack term in MICROSECONDS
-          receiving_flow.delay_variation (csxp->xspec_S);
+          sending_flow.delay_variation (csxp->xspec_S);
 
           // @@How does the guaranteed rate parameter map to the ACE_Flow_Spec.
           // Note there is no break !!
@@ -106,17 +124,17 @@ rsvp_callback (rapi_sid_t sid,
         case QOS_CNTR_LOAD:
 
           // qos_service_type.
-          receiving_flow.service_type (csxp->spec_type);
+          sending_flow.service_type (csxp->spec_type);
           // Token Bucket Average Rate (B/s)
-          receiving_flow.token_rate (csxp->xspec_r);
+          sending_flow.token_rate (csxp->xspec_r);
           // Token Bucket Rate (B)
-          receiving_flow.token_bucket_size (csxp->xspec_b);
+          sending_flow.token_bucket_size (csxp->xspec_b);
           // Peak Data Rate (B/s)
-          receiving_flow.peak_bandwidth (csxp->xspec_p);
+          sending_flow.peak_bandwidth (csxp->xspec_p);
           // Minimum Policed Unit (B)
-          receiving_flow.minimum_policed_size (csxp->xspec_m);
+          sending_flow.minimum_policed_size (csxp->xspec_m);
           // Max Packet Size (B)
-          receiving_flow.max_sdu_size (csxp->xspec_M);
+          sending_flow.max_sdu_size (csxp->xspec_M);
 
           break;
 
@@ -126,7 +144,7 @@ rsvp_callback (rapi_sid_t sid,
                             0);
         };
 
-      ace_qos.receiving_flowspec (receiving_flow);
+      ace_qos.sending_flowspec (sending_flow);
 
       qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_EVENT);
       
@@ -303,7 +321,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
               t_spec->tspecbody_qosx.xtspec_m,
               t_spec->tspecbody_qosx.xtspec_M,
               sending_flowspec.ttl ()));
-
+  
   // This the source sender port.
   ACE_INET_Addr sender_addr (this->source_port ());
 
@@ -431,7 +449,7 @@ ACE_RAPI_Session::init_tspec_simplified (const ACE_Flow_Spec &flow_spec)
   // There may be some type incompatibility here.
   // Note the types of the LHS are float32_t, uint32_t etc.
 
-  ctxp->spec_type = QOS_TSPEC;
+  ctxp->spec_type = flow_spec.service_type ();//QOS_TSPEC;
   ctxp->xtspec_r  = flow_spec.token_rate ();           // Token Rate (B/s)
   ctxp->xtspec_b  = flow_spec.token_bucket_size ();    // Token Bucket Depth (B)
   ctxp->xtspec_p  = flow_spec.peak_bandwidth ();       // Peak Data Rate (B/s)
