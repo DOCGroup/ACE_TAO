@@ -1,17 +1,17 @@
 Fri May 08 22:29:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast.cpp (subscribe): CE UNICODE related fix.
+        * ace/SOCK_Dgram_Mcast.cpp (subscribe): CE UNICODE related fix.
 
 Fri May  8 11:57:23 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Map_Manager.cpp: Fixed a bug where we weren't calling
- 	  close_i() when resizing the buffer.
+        * ace/Map_Manager.cpp: Fixed a bug where we weren't calling
+          close_i() when resizing the buffer.
 
-	* ace/Thread_Manager.cpp (set_grp): In
- 	  ACE_Thread_Manager::{get,set}_grp we must check to see that we
- 	  have a valid pointer after the ACE_FIND.  Otherwise a seg fault
- 	  occurs.  Thanks to Chris Lahey <CLahey@cccis.com> for reporting
- 	  this.
+        * ace/Thread_Manager.cpp (set_grp): In
+          ACE_Thread_Manager::{get,set}_grp we must check to see that we
+          have a valid pointer after the ACE_FIND.  Otherwise a seg fault
+          occurs.  Thanks to Chris Lahey <CLahey@cccis.com> for reporting
+          this.
 
 Fri May 08 09:47:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -21,6 +21,15 @@ Fri May 08 09:47:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (sleep): On Linux without ::poll () (prior to glibc),
           copy the ACE_Time_Value argument because the system modifies it.
+
+        * include/makeinclude/platform_osf1_4.0.GNU: moved -lm from LIBS
+          to MATHLIB.
+
+        * performance-tests/UDP/Makefile: added $(MATHLIB) to LDLIBS.
+
+        * tests/Aio_Platform_Test.cpp (have_asynchio): use
+          _SC_LISTIO_AIO_MAX instead of _SC_AIO_LISTIO_MAX if it's
+          #defined.  It is on DU 4.0.
 
 Fri May 08 08:43:42 1998  Steve Huston  <shuston@riverace.com>
 
