@@ -1,10 +1,19 @@
+Wed Feb  5 10:02:10 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
+
+	  Removed "ACE_OS::" scope modifier from fscanf() call.  fscanf()
+	  doesn't exist in that scope.  Fixes compile-time problems
+	  revealed by some compilers.  Thanks to Matthias Blankenhaus
+	  <matthias@ingrian.com> for reporting the problem.
+
 Wed Feb  5 10:59:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
 
-		  Added a missing check for typecode support before generating
-		  the typecode for an enum. Thanks to Mario Hofmann 
-		  <Mario.Hofmann@SystemaGmbH.de> for reporting the bug.
+	  Added a missing check for typecode support before generating
+	  the typecode for an enum. Thanks to Mario Hofmann 
+	  <Mario.Hofmann@SystemaGmbH.de> for reporting the bug.
 
 Wed Feb  5 09:44:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
