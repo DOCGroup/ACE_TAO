@@ -1,3 +1,19 @@
+Mon Jan 26 16:02:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * include/makeinclude/build_dll.bor:
+        * include/makeinclude/build_exe.bor:
+        * include/makeinclude/build_lib.bor:
+        * include/makeinclude/clean.bor:
+          The CBuilderX Preview compiler uses the .o extension for object
+          files, all other Borland versions use .obj. Some time ago I
+          introduced $(OBJ_EXT) to handle this, but this was not complete
+          yet. Change the makefile instructure to handle $(OBJ_EXT) instead
+          of obj and changed the MPC Borland template to generate $(OBJ_EXT)
+          instead of obj. This way everything works as normally, but when
+          you use the new CBuilderX Preview environment you must regenerate
+          your makefiles using MPC.
+
 Mon Jan 26 09:35:51 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/make.mpd:
