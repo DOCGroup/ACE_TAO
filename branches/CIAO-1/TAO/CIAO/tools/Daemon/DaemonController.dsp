@@ -78,7 +78,15 @@ SOURCE=.\controller_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Daemon_Commands.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DaemonController.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Softpkg_Commands.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -88,6 +96,14 @@ SOURCE=.\DaemonController.cpp
 
 SOURCE=.\controller_i.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\Daemon_Commands.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Softpkg_Commands.h
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
@@ -95,6 +111,14 @@ SOURCE=.\controller_i.h
 # Begin Source File
 
 SOURCE=.\controller_i.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Daemon_Commands.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Softpkg_Commands.inl
 # End Source File
 # End Group
 # End Target

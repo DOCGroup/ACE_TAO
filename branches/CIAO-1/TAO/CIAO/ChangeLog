@@ -1,3 +1,26 @@
+Wed Mar 05 21:43:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  Moved all Daemon controller related classes into CIAO::Daemon_i
+	  namespace.
+
+	* tools/Daemon/Softpkg_Commands.cpp:
+	* tools/Daemon/Softpkg_Commands.h:
+	* tools/Daemon/Softpkg_Commands.inl: Added two new "start_home"
+	  and "end_home" command for starting up and shutting down a
+	  ComponentServer for a single component home.  Still need
+	  implementation.
+
+	* tools/Daemon/DaemonController.cpp:
+	* tools/Daemon/DaemonController.dsp:
+
+	* tools/Daemon/controller_i.cpp:
+	* tools/Daemon/controller_i.h:
+	* tools/Daemon/controller_i.inl:
+	* tools/Daemon/Daemon_Commands.cpp:
+	* tools/Daemon/Daemon_Commands.h:
+	* tools/Daemon/Daemon_Commands.inl: Moved most of the Daemon
+	  controlling commands into this file.
+
 Tue Mar 04 20:40:21 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/RateGen/RateGenE.idl: Fixed a typo.

@@ -19,168 +19,95 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 namespace CIAO
 {
-  class Command;
-
-  /**
-   * @class controller
-   *
-   * @brief Daemon Controller.
-   */
-  class controller
+  namespace Daemon_i
   {
-  public:
-    controller (void);
+    class Command_Base;
 
-    ~controller (void);
+    /**
+     * @class controller
+     *
+     * @brief Daemon Controller.
+     */
+    class controller
+    {
+    public:
+      controller (void);
 
-    int parse_args (int argc, char *argv[] ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      ~controller (void);
 
-    int init (int argc,
-              char *argv[]
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      int parse_args (int argc, char *argv[] ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      int init (int argc,
+                char *argv[]
+                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    int fini (void);
+      int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
-    void print_usage (void);
+      int fini (void);
 
-    int write_IOR (const char *ior,
-                   const char *filename);
+      void print_usage (void);
 
-    /// Does not increase reference count.
-    Daemon_ptr daemon ();
-    CORBA::ORB_ptr orb ();
+      int write_IOR (const char *ior,
+                     const char *filename);
 
-  protected:
-    CORBA::ORB_var orb_;
+      /// Does not increase reference count.
+      Daemon_ptr daemon ();
+      CORBA::ORB_ptr orb ();
 
-    Command *cmd_;
+    protected:
+      CORBA::ORB_var orb_;
 
-    Daemon_var daemon_;
-  };
+      Command_Base *cmd_;
 
-  /**
-   * @class Command
-   *
-   * @brief Abstract base for CIAO daemon controller supported commands.
-   */
-  class Command
-  {
-  public:
-    Command (controller *c);
+      Daemon_var daemon_;
+    };
 
-    virtual ~Command () = 0;
+    /**
+     * @class Command
+     *
+     * @brief Abstract base for CIAO daemon controller supported commands.
+     */
+    class Command
+    {
+    public:
+      Command (controller *c);
 
-    virtual int parse_args (int argc,
-                            char *argv[]
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+      virtual ~Command () = 0;
 
-    virtual int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+      virtual int parse_args (int argc,
+                              char *argv[]
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
-  protected:
-    controller *controller_;
-  };
+      virtual int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
 
-  class CMD_Install : public Command
-  {
-  public:
-    CMD_Install (controller *c);
+    protected:
+      controller *controller_;
+    };
 
-    virtual ~CMD_Install ();
+    /**
+     * @class Command_Base
+     *
+     * @brief Abstract base for CIAO daemon controller supported commands.
+     */
+    class Command_Base
+    {
+    public:
+      Command_Base (controller *c);
 
-    virtual int parse_args (int argc,
-                            char *argv[]
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      virtual ~Command_Base () = 0;
 
-    virtual int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  private:
-    CORBA::String_var component_name_;
-    CORBA::String_var location_;
-  };
+      virtual int parse_args (int argc,
+                              char *argv[]
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
-  class CMD_Get_IOR : public Command
-  {
-  public:
-    CMD_Get_IOR (controller *c);
+      virtual int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
 
-    virtual ~CMD_Get_IOR ();
-
-    virtual int parse_args (int argc,
-                            char *argv[]
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-    virtual int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  private:
-    CORBA::String_var service_name_;
-    CORBA::String_var filename_;
-  };
-
-  class CMD_Uninstall : public Command
-  {
-  public:
-    CMD_Uninstall (controller *c);
-
-    virtual ~CMD_Uninstall ();
-
-    virtual int parse_args (int argc,
-                            char *argv[]
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-    virtual int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  private:
-    CORBA::String_var component_name_;
-  };
-
-  class CMD_Shutdown : public Command
-  {
-  public:
-    CMD_Shutdown (controller *c);
-
-    virtual ~CMD_Shutdown ();
-
-    virtual int parse_args (int argc,
-                            char *argv[]
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-    virtual int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  };
-
-  class CMD_Replace : public Command
-  {
-  public:
-    CMD_Replace (controller *c);
-
-    virtual ~CMD_Replace ();
-
-    virtual int parse_args (int argc,
-                            char *argv[]
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-    virtual int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  private:
-    CORBA::String_var component_name_;
-    CORBA::String_var location_;
-  };
-
-  class CMD_Query : public Command
-  {
-  public:
-    CMD_Query (controller *c);
-
-    virtual ~CMD_Query ();
-
-    virtual int parse_args (int argc,
-                            char *argv[]
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-    virtual int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  private:
-    CORBA::String_var component_name_;
-  };
+    protected:
+      controller *controller_;
+    };
+  }
 }
 
 
