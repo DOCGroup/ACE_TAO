@@ -44,9 +44,7 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-.PRECIOUS: testC.h testC.i testC.cpp
-.PRECIOUS: testS.h testS.i testS.cpp
-.PRECIOUS: testS_T.h testS_T.i testS_T.cpp
+.PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))))
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
@@ -61,7 +59,7 @@ simple-client: $(addprefix $(VDIR),$(SIMPLE_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-$(RM) testC.* testS.* testS_T.*
+	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
