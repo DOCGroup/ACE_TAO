@@ -152,7 +152,7 @@ SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "OBV TC Alignment Server - Win32 Release"
 
-USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
 InputPath=.\test.idl
 InputName=test
