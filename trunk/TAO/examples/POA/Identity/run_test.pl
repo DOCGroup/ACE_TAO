@@ -5,7 +5,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../bin';
+unshift @INC, '../../../../bin';
 require Process;
 require ACEutils;
 

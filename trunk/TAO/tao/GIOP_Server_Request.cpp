@@ -107,17 +107,31 @@ TAO_GIOP_ServerRequest::parse_header_std (void)
       input.skip_bytes (key_length);
     }
 
-  CORBA::Long length;
-  hdr_status = hdr_status && input.read_long (length);
-  if (hdr_status)
+  if (input.char_translator () == 0)
     {
-      // Do not include NULL character at the end.
-      // @@ This is not getting demarshaled using the codeset
-      //    translators!
-      this->operation_.set (input.rd_ptr (),
-                            length - 1,
-                            0);
-      hdr_status = input.skip_bytes (length);
+      CORBA::ULong length;
+      hdr_status = hdr_status && input.read_ulong (length);
+      if (hdr_status)
+        {
+          // Do not include NULL character at the end.
+          // @@ This is not getting demarshaled using the codeset
+          //    translators!
+          this->operation_.set (input.rd_ptr (),
+                                length - 1,
+                                0);
+          hdr_status = input.skip_bytes (length);
+        }
+    }
+  else
+    {
+      // @@ We could optimize for this case too, i.e. do in-place
+      //    demarshaling of the string... But there is an issue
+      //    pending on the OMG as to whether the operation should be
+      //    sent in the connection negotiated codeset or always in
+      //    ISO8859-1.
+      CORBA::String_var tmp;
+      hdr_status = hdr_status && input.read_string (tmp.inout ());
+      this->operation_.set (tmp._retn (), 1);
     }
 
   if (hdr_status)
@@ -155,17 +169,31 @@ TAO_GIOP_ServerRequest::parse_header_lite (void)
       input.skip_bytes (key_length);
     }
 
-  CORBA::Long length;
-  hdr_status = hdr_status && input.read_long (length);
-  if (hdr_status)
+  if (input.char_translator () == 0)
     {
-      // Do not include NULL character at the end.
-      // @@ This is not getting demarshaled using the codeset
-      //    translators!
-      this->operation_.set (input.rd_ptr (),
-                            length - 1,
-                            0);
-      hdr_status = input.skip_bytes (length);
+      CORBA::ULong length;
+      hdr_status = hdr_status && input.read_ulong (length);
+      if (hdr_status)
+        {
+          // Do not include NULL character at the end.
+          // @@ This is not getting demarshaled using the codeset
+          //    translators!
+          this->operation_.set (input.rd_ptr (),
+                                length - 1,
+                                0);
+          hdr_status = input.skip_bytes (length);
+        }
+    }
+  else
+    {
+      // @@ We could optimize for this case too, i.e. do in-place
+      //    demarshaling of the string... But there is an issue
+      //    pending on the OMG as to whether the operation should be
+      //    sent in the connection negotiated codeset or always in
+      //    ISO8859-1.
+      CORBA::String_var tmp;
+      hdr_status = hdr_status && input.read_string (tmp.inout ());
+      this->operation_.set (tmp._retn (), 1);
     }
 
   return hdr_status ? 0 : -1;
