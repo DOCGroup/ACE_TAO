@@ -54,7 +54,7 @@ Benchmark_Method_Base::exec (ACE_Service_Repository_Iterator *sri)
 
           ACE_DEBUG ((LM_DEBUG, "\nstarting up %s\n", sr->name ()));
 
-          int notused = this->pre_run_test () == 0 && this->run_test () == 0 &&
+          int notused = this->pre_run_test (bp) == 0 && this->run_test () == 0 &&
             this->post_run_test () == 0;
           notused = notused;
         }
