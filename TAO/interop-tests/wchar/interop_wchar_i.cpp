@@ -38,7 +38,7 @@ interop_WChar_Passer_i::~interop_WChar_Passer_i (void)
 }
 
 char *
-interop_WChar_Passer_i::orb_name (void)
+interop_WChar_Passer_i::orb_name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return CORBA::string_dup ("TAO");
@@ -46,14 +46,16 @@ interop_WChar_Passer_i::orb_name (void)
 
 CORBA::Boolean
 interop_WChar_Passer_i::wchar_to_server (CORBA::WChar test,
-                                         CORBA::Short key)
+                                         CORBA::Short key
+                                         ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return ref_.match_wchar (key,test);
 }
 
 CORBA::WChar
-interop_WChar_Passer_i::wchar_from_server (CORBA::Short key)
+interop_WChar_Passer_i::wchar_from_server (CORBA::Short key
+                                           ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return ref_.get_wchar (key);
@@ -61,14 +63,16 @@ interop_WChar_Passer_i::wchar_from_server (CORBA::Short key)
 
 CORBA::Boolean
 interop_WChar_Passer_i::wstring_to_server (const CORBA::WChar * test,
-                                           CORBA::Short key)
+                                           CORBA::Short key
+                                           ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return ref_.match_wstring(key,test);
 }
 
 CORBA::WChar *
-interop_WChar_Passer_i::wstring_from_server (CORBA::Short key)
+interop_WChar_Passer_i::wstring_from_server (CORBA::Short key
+                                             ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return CORBA::wstring_dup (ref_.get_wstring(key));
@@ -76,14 +80,16 @@ interop_WChar_Passer_i::wstring_from_server (CORBA::Short key)
 
 CORBA::Boolean
 interop_WChar_Passer_i::warray_to_server (const interop::warray test,
-                                          CORBA::Short key)
+                                          CORBA::Short key
+                                          ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return ref_.match_warray(key,test);
 }
 
 interop::warray_slice *
-interop_WChar_Passer_i::warray_from_server (CORBA::Short key)
+interop_WChar_Passer_i::warray_from_server (CORBA::Short key
+                                            ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return interop::warray_dup (ref_.get_warray(key));
@@ -91,7 +97,8 @@ interop_WChar_Passer_i::warray_from_server (CORBA::Short key)
 
 CORBA::Boolean
 interop_WChar_Passer_i::wstruct_to_server (const interop::wstruct & test,
-                                           CORBA::Short key)
+                                           CORBA::Short key
+                                           ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return
@@ -102,7 +109,8 @@ interop_WChar_Passer_i::wstruct_to_server (const interop::wstruct & test,
 }
 
 interop::wstruct *
-interop_WChar_Passer_i::wstruct_from_server (CORBA::Short key)
+interop_WChar_Passer_i::wstruct_from_server (CORBA::Short key
+                                             ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   interop::wstruct *ws = new interop::wstruct ();
@@ -115,7 +123,8 @@ interop_WChar_Passer_i::wstruct_from_server (CORBA::Short key)
 
 CORBA::Boolean
 interop_WChar_Passer_i::wunion_to_server (const interop::wunion & test,
-                                          CORBA::Short key)
+                                          CORBA::Short key
+                                          ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   switch (test._d()) {
@@ -133,7 +142,8 @@ interop_WChar_Passer_i::wunion_to_server (const interop::wunion & test,
 
 interop::wunion *
 interop_WChar_Passer_i::wunion_from_server (CORBA::Short key,
-                                            interop::wchar_types type)
+                                            interop::wchar_types type
+                                            ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   interop::wunion *wu = new interop::wunion ();
@@ -154,7 +164,8 @@ interop_WChar_Passer_i::wunion_from_server (CORBA::Short key,
 
 CORBA::Boolean
 interop_WChar_Passer_i::any_to_server (const CORBA::Any &test,
-                                       CORBA::Short key)
+                                       CORBA::Short key
+                                       ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   CORBA::WChar wc;
@@ -179,7 +190,8 @@ interop_WChar_Passer_i::any_to_server (const CORBA::Any &test,
 
 CORBA::Any*
 interop_WChar_Passer_i::any_from_server (CORBA::Short key,
-                                         interop::wchar_types type)
+                                         interop::wchar_types type
+                                         ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   CORBA::Any *any = new CORBA::Any;
@@ -201,25 +213,26 @@ interop_WChar_Passer_i::any_from_server (CORBA::Short key,
 }
 
 CORBA::Any *
-interop_WChar_Passer_i::any_echo (const CORBA::Any &test)
+interop_WChar_Passer_i::any_echo (const CORBA::Any &test
+                                  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return new CORBA::Any (test);
 }
 
 void
-interop_WChar_Passer_i::exception_test ( CORBA::Short key )
+interop_WChar_Passer_i::exception_test ( CORBA::Short key
+                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    interop::WChar_Passer::WStringException))
 {
-  interop::WChar_Passer::WStringException ex(ref_.get_except(key),
-                                             this->wchar_from_server(key));
-  throw ex;
+  ACE_THROW (interop::WChar_Passer::WStringException(ref_.get_except(key),
+                                             this->wchar_from_server(key)));
 }
 
 void
-interop_WChar_Passer_i::shutdown ( )
+interop_WChar_Passer_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
-  this->orb_->shutdown(0);
+  this->orb_->shutdown(0 ACE_ENV_ARG_PARAMETER);
 }

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Wchar_UCS4_UTC16_Translator.h
+ *  @file  UTF16_BOM_Translator.h
  *
  *  $Id$
  *
@@ -14,7 +14,7 @@
 
 #ifndef UTF16_BOM_TRANSLATOR_H
 #define UTF16_BOM_TRANSLATOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -30,7 +30,7 @@
 /**
  * @class UTF16_BOM_Translator
  *
- * @brief Codeset translation specialization.
+ * @brief Codeset translation specialization - Manages Byte Order Marker
  *
  * This class performs the codeset translation:
  *   - Native:        UTF16 (i.e. Unicode)
@@ -81,5 +81,5 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* UTF16_BOM_TRANSLATOR_H */
