@@ -498,6 +498,13 @@ would load all the options listed within "".
 <TR>
   <TD><CODE>-ORBConnectionCachingStrategy</CODE> <EM>type</EM></TD>
   <TD><a name="-ORBConnectionCachingStrategy"></a>
+      <FONT COLOR=RED>This option is <STRONG>deprecated</STRONG>.  Use
+      -ORBConnectionPurgingStrategy instead.</FONT>
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>-ORBConnectionPurgingStrategy</CODE> <EM>type</EM></TD>
+  <TD><a name="-ORBConnectionPurgingStrategy"></a>
       Opened connections are added to the transport cache so they can be
       reused.  However, if a process continues to run and these
       connections are not reused, the cache will continue to grow.

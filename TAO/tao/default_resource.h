@@ -113,7 +113,6 @@ public:
 
   virtual int init_protocol_factories (void);
 
-  virtual TAO_Resource_Factory::Caching_Strategy connection_caching_strategy_type (void) const;
   virtual int cache_maximum (void) const;
   virtual int purge_percentage (void) const;
   virtual int max_muxed_connections (void) const;
@@ -159,9 +158,9 @@ protected:
   /// list of loaded protocol factories.
   TAO_ProtocolFactorySet protocol_factories_;
 
-  /// Specifies the typeof caching strategy we should use for
-  /// connection management.
-  TAO_Resource_Factory::Caching_Strategy connection_caching_type_;
+  /// Specifies the typeof purging strategy we should use for cleaning
+  /// up unused connections
+  TAO_Resource_Factory::Purging_Strategy connection_purging_type_;
 
   /// Specifies the maximum number of connections which should get cached
   /// in the ORB.

@@ -147,12 +147,6 @@ TAO_Resource_Factory::init_protocol_factories (void)
   return -1;
 }
 
-TAO_Resource_Factory::Caching_Strategy
-TAO_Resource_Factory::connection_caching_strategy_type (void) const
-{
-  return TAO_Resource_Factory::NOOP;
-}
-
 int
 TAO_Resource_Factory::cache_maximum (void) const
 {

@@ -1,3 +1,33 @@
+Tue Apr 30 17:03:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Resource_Factory.h:
+	* tao/Resource_Factory.cpp: Changed the name of the enum
+	  Connection_Strategy to Purging_Strategy. Removed
+	  connection_caching_strategy_type () from the interface since it
+	  is no longer used. 
+
+	* tao/default_resource.cpp:
+	* tao/default_resource.h: Changed all references of
+	  TAO_Resource_Factory::Connection_strategy to
+	  TAO_Resource_Factory::Purging_Strategy. Added a new -ORB option, 
+          -ORBConnectionPurgingStrategy. This would replace the option
+	  -ORBConnectionCachingStrategy which will be deprecated in the
+	  future. The new option has the same functionality of the
+	  -ORBConnectionCachingStrategy but with a more meaningful name.
+
+	* tao/orbconf.h: Added a new #define
+	  TAO_CONNECTION_PURGING_STRATEGY that will replace the existing
+	  TAO_CONNECTION_CACHING_STRATEGY. The latter will be deprecated. 
+	  
+	* tao/Strategies/advanced_resource.cpp: Changed references of
+	  Connection_Strategy to Purging_Strategy. 
+
+	* docs/Options.html: Added documentation for the new ORB option,
+	  -ORBConnectionPurgingStrategy.
+
+	* tests/Connection_Purging/*.conf: Replaced all the occurences of
+	  -ORBConnectionCachingStrategy with -ORBConnectionPurgingStrategy.
+
 Tue Apr 30 21:41:12 UTC 2002  Craig Rodrigues
 
 	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:

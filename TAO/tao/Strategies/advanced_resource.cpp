@@ -187,13 +187,13 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
             {
               this->report_option_value_error (ACE_LIB_TEXT("-ORBInputCDRAllocator"), current_arg);
             }
-          
+
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_LIB_TEXT("-ORBReactorThreadQueue"))))
         {
-          if (ACE_OS::strcasecmp (current_arg, 
+          if (ACE_OS::strcasecmp (current_arg,
                                   ACE_LIB_TEXT ("LIFO")) == 0)
             this->threadqueue_type_ = TAO_THREAD_QUEUE_LIFO;
           else if (ACE_OS::strcasecmp (current_arg,
@@ -642,7 +642,7 @@ TAO_Advanced_Resource_Factory::create_purging_strategy (void)
 {
   TAO_Connection_Purging_Strategy *strategy = 0;
 
-  switch(this->connection_caching_type_)
+  switch(this->connection_purging_type_)
     {
     case TAO_Resource_Factory::LFU:
       ACE_NEW_RETURN (strategy,
