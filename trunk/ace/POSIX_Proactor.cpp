@@ -464,7 +464,10 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (void)
 {
   // Initialize the array.
   for (size_t ai = 0; ai < this->aiocb_list_max_size_; ai++)
-    aiocb_list_[ai] = 0;
+    {
+      aiocb_list_[ai] = 0;
+      result_list_ [ai] = 0;
+    }
 
   // Accept Handler for aio_accept. Remember! this issues a Asynch_Read
   // on the notify pipe for doing the Asynch_Accept.
@@ -564,10 +567,6 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
   int result_suspend = 0;
   if (milli_seconds == ACE_INFINITE)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "ACE_POSIX_AIOCB_Proactor::handle_events:"
-                  "Indefinite blocking on aio_suspend\n"));
-
       // Indefinite blocking.
       result_suspend = aio_suspend (this->aiocb_list_,
                                     this->aiocb_list_max_size_,
@@ -575,10 +574,6 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "ACE_POSIX_AIOCB_Proactor::handle_events:"
-                  "Finite blocking on aio_suspend\n"));
-
       // Block on <aio_suspend> for <milli_seconds>
       timespec timeout;
       timeout.tv_sec = milli_seconds / 1000;
@@ -587,10 +582,6 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
                                     this->aiocb_list_max_size_,
                                     &timeout);
     }
-
-  ACE_DEBUG ((LM_DEBUG,
-              "ACE_POSIX_AIOCB_Proactor::handle_events: result_aiosuspend %d\n",
-              result_suspend));
 
   // Check for errors
   if (result_suspend == -1)
@@ -653,12 +644,16 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
   ACE_ASSERT (ai != this->aiocb_list_max_size_);
 
   // Retrive the result pointer.
-  ACE_POSIX_Asynch_Result *asynch_result =
-    ACE_reinterpret_cast (ACE_POSIX_Asynch_Result *,
-                          this->aiocb_list_[ai]);
+  ACE_POSIX_Asynch_Result *asynch_result = this->result_list_ [ai];
+    
+  // ACE_reinterpret_cast (ACE_POSIX_Asynch_Result *,
+  //                   this->aiocb_list_[ai]);
+  // ACE_dynamic_cast (ACE_POSIX_Asynch_Result *,
+  //                   this->aiocb_list_[ai]);
 
   // Invalidate entry in the aiocb list.
   this->aiocb_list_[ai] = 0;
+  this->result_list_ [ai] = 0;
   this->aiocb_list_cur_size_--;
 
   // Call the application code.
@@ -725,7 +720,9 @@ ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor (ACE_POSIX_Asynch_Result *r
                       -1);
 
   // Store the pointers.
-  this->aiocb_list_[ai] = result;
+  this->aiocb_list_[ai] = result; 
+  this->result_list_ [ai] = result;
+
   this->aiocb_list_cur_size_ ++;
 
   return 0;

@@ -533,8 +533,12 @@ ACE_POSIX_SIG_Asynch_Read_Stream::shared_read (ACE_POSIX_Asynch_Read_Stream_Resu
   // We want queuing of RT signal to notify completion.
   result->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   result->aio_sigevent.sigev_signo = result->signal_number ();
+  
+  // Keep ACE_POSIX_Asynch_Result, the base class pointer in the
+  // signal value. 
+  ACE_POSIX_Asynch_Result *base_result = result;
   result->aio_sigevent.sigev_value.sival_ptr = ACE_reinterpret_cast (void *,
-                                                                     (ACE_POSIX_Asynch_Result *) result);
+                                                                     base_result);
 
   // Fire off the aio read.
   if (aio_read (result) == -1)
@@ -862,8 +866,12 @@ ACE_POSIX_SIG_Asynch_Write_Stream::shared_write (ACE_POSIX_Asynch_Write_Stream_R
   // We want queuing of RT signal to notify completion.
   result->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   result->aio_sigevent.sigev_signo = result->signal_number ();
+
+  // Keep ACE_POSIX_Asynch_Result, the base class pointer in the
+  // signal value. 
+  ACE_POSIX_Asynch_Result *base_result = result;
   result->aio_sigevent.sigev_value.sival_ptr = ACE_reinterpret_cast (void *,
-                                                                     (ACE_POSIX_Asynch_Result *) result);
+                                                                     base_result);
 
   // Fire off the aio write.
   if (aio_write (result) == -1)
@@ -1716,12 +1724,12 @@ protected:
 
   ACE_POSIX_Proactor *posix_proactor_;
   // POSIX_Proactor.
-
+  
   ACE_Unbounded_Queue<ACE_POSIX_Asynch_Accept_Result*> result_queue_;
   // Queue of Result pointers that correspond to all the <accept>'s
   // pending.
 
-  ACE_Thread_Mutex lock_;
+  ACE_SYNCH_MUTEX lock_;
   // The lock to protect the  result queue which is shared. The queue
   // is updated by main thread in the register function call and
   // through the auxillary thread  in the deregister fun. So let us
@@ -1827,7 +1835,7 @@ ACE_POSIX_Asynch_Accept_Handler::deregister_accept_call (void)
   // The queue is updated by main thread in the register function call and
   // thru the auxillary thread  in the deregister fun. So let us mutex
   // it.
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
   // Get the first item (result ptr) from the Queue.
   ACE_POSIX_Asynch_Accept_Result* result = 0;
@@ -1873,7 +1881,7 @@ ACE_POSIX_AIOCB_Asynch_Accept_Handler::register_accept_call (ACE_POSIX_Asynch_Ac
   // The queue is updated by main thread in the register function call
   // and thru the auxillary thread in the deregister fun. So let us
   // mutex it.
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
   return register_accept_call_i (result);
 }
@@ -1940,7 +1948,7 @@ ACE_POSIX_SIG_Asynch_Accept_Handler::register_accept_call (ACE_POSIX_Asynch_Acce
   // The queue is updated by main thread in the register function call
   // and thru the auxillary thread in the deregister fun. So let us
   // mutex it.
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   
   // Do the work.
   if (this->register_accept_call_i (result) == -1)

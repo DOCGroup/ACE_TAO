@@ -261,12 +261,15 @@ protected:
   ACE_AIOCB_Notify_Pipe_Manager* aiocb_notify_pipe_manager_;
   // This class takes care of doing <accept> when we use
   // AIO_CONTROL_BLOCKS strategy.
-
+  
   aiocb *aiocb_list_ [ACE_RTSIG_MAX];
   // Use an array to keep track of all the aio's issued
   // currently. We'll limit the array size to Maximum RT signals that
   // can be queued in a process.  This is the upper limit how many aio
   // operations can be pending at a time.
+
+  ACE_POSIX_Asynch_Result *result_list_ [ACE_RTSIG_MAX];
+  // @@ I am keeing an extra copy of the <aiocb_
 
   size_t aiocb_list_max_size_;
   // To maintain the maximum size of the array (list).
