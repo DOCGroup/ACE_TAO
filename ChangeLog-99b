@@ -1,3 +1,13 @@
+Tue May 04 20:38:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * tests/RB_Tree_Test.cpp: Added missing explicit template 
+          instantiations for ACE_RB_Tree_Iterator_Base.  Thanks to 
+          Carlos O'Ryan for reporting this.
+
+        * include/makeinclude/platform_psos_diab_ppc.GNU: added -g flag
+          back into debug flags since it can easily be deactivated via
+          make debug=0.
+          
 1999-05-04  Seth Widoff  <swidoff@cs.cmu.edu>
 
 	* ace/Containers_T.cpp (ACE_Array_Base<T>::max_size):
