@@ -1,3 +1,8 @@
+Wed Mar  8 19:19:46 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-irix6.x-common.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
+	  to 2.
+
 Wed Mar  8 15:59:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-hpux-10.x.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
