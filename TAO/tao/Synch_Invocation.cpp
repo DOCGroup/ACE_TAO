@@ -8,6 +8,8 @@
 #include "operation_details.h"
 #include "Pluggable_Messaging.h"
 #include "Wait_Strategy.h"
+#include "Messaging_SyncScopeC.h"
+#include "TAOC.h"
 
 ACE_RCSID (tao,
            Synch_Invocation,
@@ -196,5 +198,60 @@ namespace TAO
 
     }
     return;
+  }
+
+
+
+  /*************************************************************************/
+
+  Synch_Oneway_Invocation::Synch_Oneway_Invocation (Profile_Transport_Resolver &r,
+                                                    TAO_Operation_Details &d)
+    : Synch_Twoway_Invocation (r, d)
+  {
+  }
+
+  int
+  Synch_Oneway_Invocation::communicate (Argument **args,
+                                        int args_number
+                                        ACE_ENV_ARG_DECL)
+  {
+    const CORBA::Octet response_flags =
+      this->detail_.response_flags ();
+
+    if (response_flags == CORBA::Octet (Messaging::SYNC_NONE)
+        || response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING)
+        || response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
+      {
+        TAO_Target_Specification tspec;
+        this->init_target_spec (tspec);
+
+        TAO_OutputCDR &cdr =
+          this->resolver_.transport ()->messaging_object ()->out_stream ();
+
+        this->write_header (tspec,
+                            cdr
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (-1);
+
+        this->marshal_data (args,
+                            args_number,
+                            cdr
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (-1);
+
+
+        this->send_message (TAO_Transport::TAO_ONEWAY_REQUEST,
+                            cdr
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (-1);
+      }
+    else
+      {
+        return Synch_Twoway_Invocation::communicate (args,
+                                                     args_number
+                                                     ACE_ENV_ARG_PARAMETER);
+      }
+
+    return 0;
   }
 }

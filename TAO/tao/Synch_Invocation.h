@@ -46,6 +46,18 @@ namespace TAO
                              int args_number
                              ACE_ENV_ARG_DECL);
   };
+
+  class TAO_Export Synch_Oneway_Invocation: public Synch_Twoway_Invocation
+  {
+  public:
+    Synch_Oneway_Invocation (Profile_Transport_Resolver &resolver,
+                             TAO_Operation_Details &detail);
+
+    int communicate (Argument **args,
+                     int args_number
+                     ACE_ENV_ARG_DECL);
+
+  };
 }
 
 #endif /*TAO_SYNCH_INVOCATION_H*/
