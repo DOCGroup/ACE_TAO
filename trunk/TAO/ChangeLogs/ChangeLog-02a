@@ -1,3 +1,10 @@
+Tue Mar 26 07:46:42 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+
+          Added back the -u option to the get_opts in parse_args().  It was
+          accidentally removed during a merge.
+
 Tue Mar 26 07:26:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * TAO/tao/Services.cpp:
