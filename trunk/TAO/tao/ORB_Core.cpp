@@ -990,8 +990,6 @@ TAO_ORB_Core::unset_leader_wake_up_follower (void)
 {
   ACE_Guard <ACE_SYNCH_MUTEX> g (TAO_ORB_Core_instance ()->leader_follower_lock ());
 
-  TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
-
   this->unset_leader_thread ();
 
   if (TAO_ORB_Core_instance ()->follower_available ()
