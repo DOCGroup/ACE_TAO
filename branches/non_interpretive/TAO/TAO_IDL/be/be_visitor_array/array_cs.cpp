@@ -99,7 +99,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
   os->indent ();
 
-  *os << "void ::" << fname << "_forany"
+  *os << "void " << fname << "_forany"
       << "::_tao_any_destructor (void *x)" << be_nl
       << "{" << be_idt_nl
       << fname << "_slice *tmp = ACE_static_cast ("
@@ -272,12 +272,12 @@ int be_visitor_array_cs::visit_array (be_array *node)
     }
   *os << be_uidt_nl << "}\n\n";
 
-  // If we contain an anonymous sequence, 
+  // If we contain an anonymous sequence,
   // generate code for the seuqence here.
   if (bt->node_type () == AST_Decl::NT_sequence)
     {
-      if (this->gen_anonymous_base_type (bt, 
-                                         TAO_CodeGen::TAO_SEQUENCE_CS) 
+      if (this->gen_anonymous_base_type (bt,
+                                         TAO_CodeGen::TAO_SEQUENCE_CS)
           == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -285,7 +285,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
                              "visit_array - "
                              "gen_anonymous_base_type failed\n"),
                             -1);
-        }              
+        }
     }
 
 #if 0

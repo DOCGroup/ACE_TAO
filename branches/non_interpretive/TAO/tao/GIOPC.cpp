@@ -388,11 +388,11 @@ TAO_NAMESPACE_BEGIN (GIOP)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_TargetAddress, &_tc_TAO_tc_GIOP_TargetAddress)
 TAO_NAMESPACE_END
 
-VOID
+void
 GIOP::IORAddressingInfo::_tao_any_destructor (void *x)
 {
   GIOP::IORAddressingInfo *tmp = ACE_static_cast (GIOP::IORAddressingInfo*,x);
-  delete x;
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, const GIOP::IORAddressingInfo &_tao_elem) // copying

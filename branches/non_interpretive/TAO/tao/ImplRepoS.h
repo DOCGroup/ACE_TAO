@@ -40,7 +40,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -52,7 +52,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -60,26 +60,26 @@ TAO_NAMESPACE  POA_ImplementationRepository
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     ::ImplementationRepository::ServerObject *_this (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual const char* _interface_repository_id (void) const;
 
     virtual void ping (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -87,15 +87,15 @@ TAO_NAMESPACE  POA_ImplementationRepository
       )) = 0;
 
     static void ping_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void shutdown (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -103,10 +103,10 @@ TAO_NAMESPACE  POA_ImplementationRepository
       )) = 0;
 
     static void shutdown_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -127,13 +127,13 @@ TAO_NAMESPACE  POA_ImplementationRepository
         const CORBA::Char *logical_type_id,
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-
+    
     virtual CORBA::Boolean _non_existent(
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-
+    
         virtual void ping (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -141,7 +141,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
 
     virtual void shutdown (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -153,7 +153,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
 #endif /* end #if !defined */
 
-
+  
 #if defined (ACE_HAS_USING_KEYWORD)
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -170,7 +170,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // ctor with T*, ownership flag and a POA
     ~ServerObject_tie (void);
     // dtor
-
+    
     // TIE specific functions
     T *_tied_object (void);
     // return the underlying object
@@ -182,14 +182,14 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // do we own it
     void _is_owner (CORBA::Boolean b);
     // set the ownership
-
+    
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &env = 
           TAO_default_environment ()
       );
     void ping (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -197,7 +197,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
 
     void shutdown (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -208,7 +208,7 @@ private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
-
+    
     // copy and assignment are not allowed
     ServerObject_tie (const ServerObject_tie &);
     void operator= (const ServerObject_tie &);
@@ -230,7 +230,7 @@ private:
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -242,7 +242,7 @@ private:
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -250,19 +250,19 @@ private:
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     ::ImplementationRepository::Administration *_this (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -270,7 +270,7 @@ private:
 
     virtual void activate_server (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -280,17 +280,17 @@ private:
       )) = 0;
 
     static void activate_server_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void register_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -299,17 +299,17 @@ private:
       )) = 0;
 
     static void register_server_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void reregister_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -317,16 +317,16 @@ private:
       )) = 0;
 
     static void reregister_server_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void remove_server (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -335,16 +335,16 @@ private:
       )) = 0;
 
     static void remove_server_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void shutdown_server (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -353,10 +353,10 @@ private:
       )) = 0;
 
     static void shutdown_server_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -364,7 +364,7 @@ private:
         const char * server,
         const char * addr,
         ImplementationRepository::ServerObject_ptr server_object,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -373,16 +373,16 @@ private:
       )) = 0;
 
     static void server_is_running_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void server_is_shutting_down (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -391,17 +391,17 @@ private:
       )) = 0;
 
     static void server_is_shutting_down_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void find (
         const char * server,
         ImplementationRepository::ServerInformation_out info,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -410,10 +410,10 @@ private:
       )) = 0;
 
     static void find_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -421,7 +421,7 @@ private:
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list,
         ImplementationRepository::ServerInformationIterator_out server_iterator,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -429,10 +429,10 @@ private:
       )) = 0;
 
     static void list_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -453,14 +453,14 @@ private:
         const CORBA::Char *logical_type_id,
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-
+    
     virtual CORBA::Boolean _non_existent(
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-
+    
         virtual void activate_server (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -472,7 +472,7 @@ private:
     virtual void register_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -483,7 +483,7 @@ private:
     virtual void reregister_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -492,7 +492,7 @@ private:
 
     virtual void remove_server (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -502,7 +502,7 @@ private:
 
     virtual void shutdown_server (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -514,7 +514,7 @@ private:
         const char * server,
         const char * addr,
         ImplementationRepository::ServerObject_ptr server_object,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -524,7 +524,7 @@ private:
 
     virtual void server_is_shutting_down (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -535,7 +535,7 @@ private:
     virtual void find (
         const char * server,
         ImplementationRepository::ServerInformation_out info,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -547,7 +547,7 @@ private:
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list,
         ImplementationRepository::ServerInformationIterator_out server_iterator,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -559,7 +559,7 @@ private:
 
 #endif /* end #if !defined */
 
-
+  
 #if defined (ACE_HAS_USING_KEYWORD)
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -576,7 +576,7 @@ private:
     // ctor with T*, ownership flag and a POA
     ~Administration_tie (void);
     // dtor
-
+    
     // TIE specific functions
     T *_tied_object (void);
     // return the underlying object
@@ -588,15 +588,15 @@ private:
     // do we own it
     void _is_owner (CORBA::Boolean b);
     // set the ownership
-
+    
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &env = 
           TAO_default_environment ()
       );
     void activate_server (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -608,7 +608,7 @@ private:
     void register_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -619,7 +619,7 @@ private:
     void reregister_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -628,7 +628,7 @@ private:
 
     void remove_server (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -638,7 +638,7 @@ private:
 
     void shutdown_server (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -650,7 +650,7 @@ private:
         const char * server,
         const char * addr,
         ImplementationRepository::ServerObject_ptr server_object,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -660,7 +660,7 @@ private:
 
     void server_is_shutting_down (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -671,7 +671,7 @@ private:
     void find (
         const char * server,
         ImplementationRepository::ServerInformation_out info,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -683,7 +683,7 @@ private:
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list,
         ImplementationRepository::ServerInformationIterator_out server_iterator,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -694,7 +694,7 @@ private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
-
+    
     // copy and assignment are not allowed
     Administration_tie (const Administration_tie &);
     void operator= (const Administration_tie &);
@@ -716,7 +716,7 @@ private:
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -728,7 +728,7 @@ private:
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -736,19 +736,19 @@ private:
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     ::ImplementationRepository::ServerInformationIterator *_this (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -757,7 +757,7 @@ private:
     virtual CORBA::Boolean next_n (
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -765,15 +765,15 @@ private:
       )) = 0;
 
     static void next_n_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void destroy (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -781,10 +781,10 @@ private:
       )) = 0;
 
     static void destroy_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::ServerRequest &_tao_req, 
+        void *_tao_obj, 
+        void *_tao_context, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
@@ -805,15 +805,15 @@ private:
         const CORBA::Char *logical_type_id,
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-
+    
     virtual CORBA::Boolean _non_existent(
         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-
+    
         virtual CORBA::Boolean next_n (
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -821,7 +821,7 @@ private:
       ));
 
     virtual void destroy (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -833,7 +833,7 @@ private:
 
 #endif /* end #if !defined */
 
-
+  
 #if defined (ACE_HAS_USING_KEYWORD)
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -850,7 +850,7 @@ private:
     // ctor with T*, ownership flag and a POA
     ~ServerInformationIterator_tie (void);
     // dtor
-
+    
     // TIE specific functions
     T *_tied_object (void);
     // return the underlying object
@@ -862,16 +862,16 @@ private:
     // do we own it
     void _is_owner (CORBA::Boolean b);
     // set the ownership
-
+    
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &env =
+        CORBA::Environment &env = 
           TAO_default_environment ()
       );
     CORBA::Boolean next_n (
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -879,7 +879,7 @@ private:
       ));
 
     void destroy (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -890,7 +890,7 @@ private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
-
+    
     // copy and assignment are not allowed
     ServerInformationIterator_tie (const ServerInformationIterator_tie &);
     void operator= (const ServerInformationIterator_tie &);

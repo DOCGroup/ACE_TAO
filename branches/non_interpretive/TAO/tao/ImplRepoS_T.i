@@ -11,30 +11,30 @@
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerObject_tie<T>::ServerObject_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerObject_tie<T>::ServerObject_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerObject_tie<T>::ServerObject_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerObject_tie<T>::ServerObject_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -117,30 +117,30 @@ void POA_ImplementationRepository::ServerObject_tie<T>::shutdown  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_ImplementationRepository::Administration_tie<T>::Administration_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::Administration_tie<T>::Administration_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::Administration_tie<T>::Administration_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::Administration_tie<T>::Administration_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -354,30 +354,30 @@ void POA_ImplementationRepository::Administration_tie<T>::list  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerInformationIterator_tie<T>::ServerInformationIterator_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerInformationIterator_tie<T>::ServerInformationIterator_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerInformationIterator_tie<T>::ServerInformationIterator_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerInformationIterator_tie<T>::ServerInformationIterator_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE

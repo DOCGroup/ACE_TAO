@@ -60,7 +60,7 @@ PortableInterceptor::Cookie::_duplicate (PortableInterceptor::Cookie_ptr obj)
 
 void PortableInterceptor::Cookie::_tao_any_destructor (void *x)
 {
-  PortableInterceptor::Cookie* tmp = ACE_const_cast (PortableInterceptor::Cookie*,x);
+  PortableInterceptor::Cookie *tmp = ACE_static_cast (PortableInterceptor::Cookie*,x);
   CORBA::release (tmp);
 }
 
@@ -360,7 +360,7 @@ PortableInterceptor::ServerRequestInterceptor::_duplicate (PortableInterceptor::
 
 void PortableInterceptor::ServerRequestInterceptor::_tao_any_destructor (void *x)
 {
-  PortableInterceptor::ServerRequestInterceptor* tmp = ACE_const_cast (PortableInterceptor::ServerRequestInterceptor*,x);
+  PortableInterceptor::ServerRequestInterceptor *tmp = ACE_static_cast (PortableInterceptor::ServerRequestInterceptor*,x);
   CORBA::release (tmp);
 }
 
@@ -435,7 +435,7 @@ PortableInterceptor::ClientRequestInterceptor::_duplicate (PortableInterceptor::
 
 void PortableInterceptor::ClientRequestInterceptor::_tao_any_destructor (void *x)
 {
-  PortableInterceptor::ClientRequestInterceptor* tmp = ACE_const_cast (PortableInterceptor::ClientRequestInterceptor*,x);
+  PortableInterceptor::ClientRequestInterceptor *tmp = ACE_static_cast (PortableInterceptor::ClientRequestInterceptor*,x);
   CORBA::release (tmp);
 }
 

@@ -1,3 +1,63 @@
+Mon Mar 13 14:19:27 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+	  There are two versions of the >>= operators:
+
+	  CORBA::Boolean >>= (const Any&, T*&)
+	  CORBA::Boolean >>= (const Any&, const T*&)
+
+	  the first one is deprecated, but we still support it. Jeff
+	  Parsons pointed out that the first version can be implemented
+	  using the second version as follows:
+	      return any >>= ACE_const_cast(const T*&,x);
+	  i also simplified the implementation of the second version.
+
+	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	  Had to revert Jeff fix for the _tao_any_destructor functions
+	  declared in deeply nested modules.  GCC gets utterly confused by
+	  this declaration
+	  void ::Foo::Bar::_tao_any_destructor (void *) ....
+
+	* tao/Makefile:
+	* tao/deep_free.cpp:
+	* tao/Marshal.h:
+	* tao/Marshal.i:
+	  Removed (finally!) the deep_free methods.  Now we only need to
+	  remove the support classes to finally get rid of all the
+	  interpretive marshaling code.
+
+	* tao/GIOPC.cpp:
+	* tao/IOPC.cpp:
+	* tao/ImplRepoC.h:
+	* tao/ImplRepoC.i:
+	* tao/ImplRepoC.cpp:
+	* tao/ImplRepoS.h:
+	* tao/ImplRepoS.i:
+	* tao/ImplRepoS.cpp:
+	* tao/ImplRepoS_T.h:
+	* tao/ImplRepoS_T.i:
+	* tao/ImplRepoS_T.cpp:
+	* tao/InterceptorC.cpp:
+	* tao/POAC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/TAOC.cpp:
+	  Fix the hand-crafted files with respect to the two versions of
+	  the >>= operators.
+
+	* TAO_IDL/Makefile:
+	  Updated dependencies
+
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	  Cosmetic fixes.
+
 Mon Mar 13 08:23:23 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Any.h:

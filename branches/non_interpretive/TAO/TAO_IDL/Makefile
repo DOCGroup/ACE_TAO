@@ -10336,19 +10336,13 @@ tags:
  be_include/be_interface_strategy.h be_include/be_visitor_argument.h \
  be_include/be_visitor_argument/argument.h \
  be_include/be_visitor_argument/arglist.h \
- be_include/be_visitor_argument/pre_docall_cs.h \
- be_include/be_visitor_argument/docall_cs.h \
- be_include/be_visitor_argument/post_docall_cs.h \
- be_include/be_visitor_argument/post_docall_compiled_cs.h \
  be_include/be_visitor_argument/vardecl_ss.h \
- be_include/be_visitor_argument/pre_upcall_ss.h \
  be_include/be_visitor_argument/upcall_ss.h \
  be_include/be_visitor_argument/post_upcall_ss.h \
  be_include/be_visitor_argument/marshal_ss.h \
- be_include/be_visitor_argument/post_marshal_ss.h \
- be_include/be_visitor_argument/compiled_marshal_cs.h \
- be_include/be_visitor_argument/compiled_marshal_ss.h \
  be_include/be_visitor_argument/pre_invoke_cs.h \
+ be_include/be_visitor_argument/invoke_cs.h \
+ be_include/be_visitor_argument/post_invoke_cs.h \
  be_include/be_visitor_array.h be_include/be_visitor_array/array.h \
  be_include/be_visitor_array/array_ch.h \
  be_include/be_visitor_array/array_ci.h \
@@ -10462,9 +10456,7 @@ tags:
  be_include/be_visitor_operation/rettype.h \
  be_include/be_visitor_operation/rettype_is.h \
  be_include/be_visitor_operation/rettype_vardecl_cs.h \
- be_include/be_visitor_operation/rettype_pre_docall_cs.h \
- be_include/be_visitor_operation/rettype_docall_cs.h \
- be_include/be_visitor_operation/rettype_post_docall_cs.h \
+ be_include/be_visitor_operation/rettype_post_invoke_cs.h \
  be_include/be_visitor_operation/rettype_return_cs.h \
  be_include/be_visitor_operation/exceptlist_cs.h \
  be_include/be_visitor_operation/argument.h \
@@ -10474,7 +10466,6 @@ tags:
  be_include/be_visitor_operation/rettype_assign_ss.h \
  be_include/be_visitor_operation/rettype_post_upcall_ss.h \
  be_include/be_visitor_operation/rettype_marshal_ss.h \
- be_include/be_visitor_operation/compiled_marshal.h \
  be_include/be_visitor_operation/rettype_pre_invoke_cs.h \
  be_include/be_visitor_operation/ami_ch.h \
  be_include/be_visitor_operation/ami_cs.h \
@@ -10891,34 +10882,22 @@ tags:
  be_include/be_visitor_argument.h \
  be_include/be_visitor_argument/argument.h \
  be_include/be_visitor_argument/arglist.h \
- be_include/be_visitor_argument/pre_docall_cs.h \
- be_include/be_visitor_argument/docall_cs.h \
- be_include/be_visitor_argument/post_docall_cs.h \
- be_include/be_visitor_argument/post_docall_compiled_cs.h \
  be_include/be_visitor_argument/vardecl_ss.h \
- be_include/be_visitor_argument/pre_upcall_ss.h \
  be_include/be_visitor_argument/upcall_ss.h \
  be_include/be_visitor_argument/post_upcall_ss.h \
  be_include/be_visitor_argument/marshal_ss.h \
- be_include/be_visitor_argument/post_marshal_ss.h \
- be_include/be_visitor_argument/compiled_marshal_cs.h \
- be_include/be_visitor_argument/compiled_marshal_ss.h \
  be_include/be_visitor_argument/pre_invoke_cs.h \
+ be_include/be_visitor_argument/invoke_cs.h \
+ be_include/be_visitor_argument/post_invoke_cs.h \
  be/be_visitor_argument/arglist.cpp \
  be/be_visitor_argument/argument.cpp \
- be/be_visitor_argument/docall_cs.cpp \
  be/be_visitor_argument/marshal_ss.cpp \
- be/be_visitor_argument/post_docall_cs.cpp \
- be/be_visitor_argument/post_docall_compiled_cs.cpp \
- be/be_visitor_argument/post_marshal_ss.cpp \
  be/be_visitor_argument/post_upcall_ss.cpp \
- be/be_visitor_argument/pre_docall_cs.cpp \
- be/be_visitor_argument/pre_upcall_ss.cpp \
  be/be_visitor_argument/upcall_ss.cpp \
  be/be_visitor_argument/vardecl_ss.cpp \
- be/be_visitor_argument/compiled_marshal_cs.cpp \
- be/be_visitor_argument/compiled_marshal_ss.cpp \
- be/be_visitor_argument/pre_invoke_cs.cpp
+ be/be_visitor_argument/pre_invoke_cs.cpp \
+ be/be_visitor_argument/invoke_cs.cpp \
+ be/be_visitor_argument/post_invoke_cs.cpp
 
 .obj/be_visitor_array.o .obj/be_visitor_array.so .shobj/be_visitor_array.o .shobj/be_visitor_array.so: be/be_visitor_array.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -12326,9 +12305,7 @@ tags:
  be_include/be_visitor_operation/rettype.h \
  be_include/be_visitor_operation/rettype_is.h \
  be_include/be_visitor_operation/rettype_vardecl_cs.h \
- be_include/be_visitor_operation/rettype_pre_docall_cs.h \
- be_include/be_visitor_operation/rettype_docall_cs.h \
- be_include/be_visitor_operation/rettype_post_docall_cs.h \
+ be_include/be_visitor_operation/rettype_post_invoke_cs.h \
  be_include/be_visitor_operation/rettype_return_cs.h \
  be_include/be_visitor_operation/exceptlist_cs.h \
  be_include/be_visitor_operation/argument.h \
@@ -12338,7 +12315,6 @@ tags:
  be_include/be_visitor_operation/rettype_assign_ss.h \
  be_include/be_visitor_operation/rettype_post_upcall_ss.h \
  be_include/be_visitor_operation/rettype_marshal_ss.h \
- be_include/be_visitor_operation/compiled_marshal.h \
  be_include/be_visitor_operation/rettype_pre_invoke_cs.h \
  be_include/be_visitor_operation/ami_ch.h \
  be_include/be_visitor_operation/ami_cs.h \
@@ -12728,9 +12704,7 @@ tags:
  be_include/be_visitor_operation/rettype.h \
  be_include/be_visitor_operation/rettype_is.h \
  be_include/be_visitor_operation/rettype_vardecl_cs.h \
- be_include/be_visitor_operation/rettype_pre_docall_cs.h \
- be_include/be_visitor_operation/rettype_docall_cs.h \
- be_include/be_visitor_operation/rettype_post_docall_cs.h \
+ be_include/be_visitor_operation/rettype_post_invoke_cs.h \
  be_include/be_visitor_operation/rettype_return_cs.h \
  be_include/be_visitor_operation/exceptlist_cs.h \
  be_include/be_visitor_operation/argument.h \
@@ -12740,7 +12714,6 @@ tags:
  be_include/be_visitor_operation/rettype_assign_ss.h \
  be_include/be_visitor_operation/rettype_post_upcall_ss.h \
  be_include/be_visitor_operation/rettype_marshal_ss.h \
- be_include/be_visitor_operation/compiled_marshal.h \
  be_include/be_visitor_operation/rettype_pre_invoke_cs.h \
  be_include/be_visitor_operation/ami_ch.h \
  be_include/be_visitor_operation/ami_cs.h \
@@ -12767,33 +12740,24 @@ tags:
  be_include/be_visitor_argument.h \
  be_include/be_visitor_argument/argument.h \
  be_include/be_visitor_argument/arglist.h \
- be_include/be_visitor_argument/pre_docall_cs.h \
- be_include/be_visitor_argument/docall_cs.h \
- be_include/be_visitor_argument/post_docall_cs.h \
- be_include/be_visitor_argument/post_docall_compiled_cs.h \
  be_include/be_visitor_argument/vardecl_ss.h \
- be_include/be_visitor_argument/pre_upcall_ss.h \
  be_include/be_visitor_argument/upcall_ss.h \
  be_include/be_visitor_argument/post_upcall_ss.h \
  be_include/be_visitor_argument/marshal_ss.h \
- be_include/be_visitor_argument/post_marshal_ss.h \
- be_include/be_visitor_argument/compiled_marshal_cs.h \
- be_include/be_visitor_argument/compiled_marshal_ss.h \
  be_include/be_visitor_argument/pre_invoke_cs.h \
+ be_include/be_visitor_argument/invoke_cs.h \
+ be_include/be_visitor_argument/post_invoke_cs.h \
  be/be_visitor_operation/operation_is.cpp \
  be/be_visitor_operation/rettype.cpp \
  be/be_visitor_operation/rettype_is.cpp \
  be/be_visitor_operation/rettype_assign_ss.cpp \
- be/be_visitor_operation/rettype_docall_cs.cpp \
  be/be_visitor_operation/rettype_marshal_ss.cpp \
- be/be_visitor_operation/rettype_post_docall_cs.cpp \
+ be/be_visitor_operation/rettype_post_invoke_cs.cpp \
  be/be_visitor_operation/rettype_post_upcall_ss.cpp \
- be/be_visitor_operation/rettype_pre_docall_cs.cpp \
  be/be_visitor_operation/rettype_return_cs.cpp \
  be/be_visitor_operation/rettype_vardecl_cs.cpp \
  be/be_visitor_operation/rettype_vardecl_ss.cpp \
  be/be_visitor_operation/tie_sh.cpp be/be_visitor_operation/tie_si.cpp \
- be/be_visitor_operation/compiled_marshal.cpp \
  be/be_visitor_operation/rettype_pre_invoke_cs.cpp \
  be/be_visitor_operation/ami_ch.cpp be/be_visitor_operation/ami_cs.cpp \
  be/be_visitor_operation/ami_handler_reply_stub_operation_ch.cpp \

@@ -548,7 +548,7 @@ void operator<<= (CORBA::Any &_tao_any, const IOP::TaggedProfile &_tao_elem) // 
 
 void IOP::TaggedProfile::_tao_any_destructor (void *x)
 {
-  IOP::TaggedProfile *tmp = ACE_const_cast(IOP::TaggedProfile*,x);
+  IOP::TaggedProfile *tmp = ACE_static_cast(IOP::TaggedProfile*,x);
   delete tmp;
 }
 
@@ -679,7 +679,7 @@ void operator<<= (CORBA::Any &_tao_any, const IOP::IOR &_tao_elem) // copying
 
 void IOP::IOR::_tao_any_destructor (void *x)
 {
-  IOP::IOR *tmp = ACE_const_cast(IOP::IOR*,x);
+  IOP::IOR *tmp = ACE_static_cast(IOP::IOR*,x);
   delete tmp;
 }
 
@@ -810,7 +810,7 @@ void operator<<= (CORBA::Any &_tao_any, const IOP::TaggedComponent &_tao_elem) /
 
 void IOP::TaggedComponent::_tao_any_destructor (void *x)
 {
-  IOP::TaggedComponent *tmp = ACE_const_cast(IOP::TaggedComponent*,x);
+  IOP::TaggedComponent *tmp = ACE_static_cast(IOP::TaggedComponent*,x);
   delete tmp;
 }
 
@@ -946,7 +946,7 @@ void operator<<= (
 
 void IOP::MultipleComponentProfile::_tao_any_destructor (void *x)
 {
-  IOP::MultipleComponentProfile *tmp = ACE_const_cast(IOP::MultipleComponentProfile*,x);
+  IOP::MultipleComponentProfile *tmp = ACE_static_cast(IOP::MultipleComponentProfile*,x);
   delete tmp;
 }
 
@@ -1077,7 +1077,7 @@ void operator<<= (CORBA::Any &_tao_any, const IOP::ServiceContext &_tao_elem) //
 
 void IOP::ServiceContext::_tao_any_destructor (void *x)
 {
-  IOP::ServiceContext *tmp = ACE_const_cast(IOP::ServiceContext*,x);
+  IOP::ServiceContext *tmp = ACE_static_cast(IOP::ServiceContext*,x);
   delete tmp;
 }
 
@@ -1213,7 +1213,7 @@ void operator<<= (
 
 void IOP::ServiceContextList::_tao_any_destructor (void *x)
 {
-  IOP::ServiceContextList *tmp = ACE_const_cast(IOP::ServiceContextList*,x);
+  IOP::ServiceContextList *tmp = ACE_static_cast(IOP::ServiceContextList*,x);
   delete tmp;
 }
 

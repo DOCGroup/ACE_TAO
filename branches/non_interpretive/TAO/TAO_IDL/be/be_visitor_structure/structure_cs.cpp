@@ -63,7 +63,7 @@ int be_visitor_structure_cs::visit_structure (be_structure *node)
 
       TAO_OutStream *os = this->ctx_->stream ();
       os->indent ();
-      *os << "void ::"
+      *os << "void "
           << node->name () << "::_tao_any_destructor (void *x)" << be_nl
           << "{" << be_idt_nl
           << node->name () << " *tmp = ACE_static_cast ("
