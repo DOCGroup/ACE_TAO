@@ -2,11 +2,11 @@
 
 // ===================================================================
 /**
- *  @file   TAO_Codeset_Translator_Factory.h
+ *  @file   Codeset_Translator_Factory.h
  *
  *  $Id$
  *
- *  @author  OCIWeb at St. Louis
+ *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
 // =========================
 #ifndef TAO_CODESET_TRANSLATOR_FACTORY_H
