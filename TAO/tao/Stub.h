@@ -48,14 +48,11 @@ class TAO_Policy_Manager_Impl;
 
 enum TAO_Param_Type
 {
-  // @@ Is there any use for this enum? I would assume that the
-  //    similar ones on corbfwd.h are enough!
-  // @@ Jeff: can you check into that?
-
   // = TITLE
-  //   TAO_Param_Type
-  // =DESCRIPTION
-  // Parameter mode of a given parameter.
+  //    TAO_Param_Type
+  //
+  // = DESCRIPTION
+  //    Parameter mode of a given parameter.
   PARAM_IN,
   PARAM_OUT,
   PARAM_INOUT,
