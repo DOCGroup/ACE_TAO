@@ -287,11 +287,12 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ((*iter).int_id_)->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
+	CORBA::ULong i = 0;
     // @@ (OO) The "continue loop" condition portion of the for
     //         statement is executed during each loop iteration.  To
     //         improve performance execute it only once outside the
     //         for-loop.
-    for (CORBA::ULong i = 0; i < facets->length (); ++i)
+    for (i = 0; i < facets->length (); ++i)
     {
       // @@ (OO) Incrementally increasing the length in this manner is
       //         extremely slow, since all elements must be copied
@@ -326,7 +327,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     //         statement is executed during each loop iteration.  To
     //         improve performance execute it only once outside the
     //         for-loop.
-    for (CORBA::ULong i = 0; i < consumers->length (); ++i)
+    for (i = 0; i < consumers->length (); ++i)
     {
       // @@ (OO) Please see the comments in the previous loop
       //         regarding how to avoid the very slow performance of

@@ -12,6 +12,7 @@
 
 namespace Deployment
 {
+#if 0 
   /*
    *  Generic dump functions
    */
@@ -1042,6 +1043,7 @@ namespace Deployment
         ACE_THROW (CORBA::INTERNAL ());
       }
   }
+#endif /*if 0*/
 }
 
 #endif /* DNC_DUMP_C */

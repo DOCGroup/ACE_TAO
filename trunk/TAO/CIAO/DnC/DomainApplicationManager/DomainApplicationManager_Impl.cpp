@@ -194,7 +194,8 @@ split_plan (void)
 {
   // Initialize the total number of child deployment plans specified
   // by the global plan.
-  for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
+  CORBA::ULong i;
+  for ( i = 0; i < this->num_child_plans_; ++i)
   {
     ::Deployment::DeploymentPlan_var tmp_plan;
     ACE_NEW_RETURN (tmp_plan,
@@ -228,7 +229,7 @@ split_plan (void)
   //     variabl.
   // (2) Retrieve the necessary information to contruct the node-level
   //     plans one by one.
-  for (CORBA::ULong i = 0; i < (this->plan_.instance).length (); ++i)
+  for ( i = 0; i < (this->plan_.instance).length (); ++i)
     {
       // Fill in the child deployment plan in the map.
 
