@@ -1,3 +1,9 @@
+Fri Mar 11 10:33:28 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* docs/schema/cdp.xsd
+
+	Corrected an incorrect element in the schema.
+	
 Fri Mar 11 12:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentsC.h:
