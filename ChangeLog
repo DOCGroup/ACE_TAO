@@ -1,3 +1,8 @@
+Fri Mar 14 11:49:27 2003  Steve Huston  <shuston@riverace.com>
+
+	* tests/Cached_Allocator_Test.cpp: Fix access out-of-bounds error.
+	  Thanks to Alexander Libman <alexl@aurema.com> for this fix.
+
 Thu Mar 13 16:11:48 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Log_Msg.cpp (log_hexdump):
