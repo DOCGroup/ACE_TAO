@@ -5701,7 +5701,10 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 }
 # endif /* ! ACE_HAS_THREADS || ACE_LACKS_RWLOCK_T */
 
-#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS) && ! (defined (ACE_HAS_PACE) && ! defined (ACE_HAS_WIN32))
+// If we're using PACE then we don't want this method (since PACE
+// takes care of it) unless we're on Windows. Win32 mutexes, semaphores,
+// and condition variables are not yet supported in PACE.
+#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS) && ! (defined (ACE_HAS_PACE) && ! defined (ACE_WIN32))
 // NOTE: The ACE_OS::cond_* functions for some non-Unix platforms are
 // defined here either because they're too big to be inlined, or
 // to avoid use before definition if they were inline.

@@ -2613,7 +2613,7 @@ public:
 };
 
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#   endif /* !ACE_HAS_PACE */
+#   endif /* !ACE_HAS_PACE || defined (ACE_WIN32) */
 
 // These need to be different values, neither of which can be 0...
 #     define USYNC_THREAD 1
@@ -2635,7 +2635,10 @@ public:
 #     define THR_SCHED_DEFAULT       0
 #   endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS */
 
-#   if defined (ACE_LACKS_COND_T) && !defined (ACE_HAS_PACE)
+// If we're using PACE then we don't want this class (since PACE
+// takes care of it) unless we're on Windows. Win32 mutexes, semaphores,
+// and condition variables are not yet supported in PACE.
+#   if defined (ACE_LACKS_COND_T) && (!defined (ACE_HAS_PACE) || defined (ACE_WIN32))
 /**
  * @class ACE_cond_t
  *
