@@ -5,7 +5,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 #
 # Creates an ACE or TAO kit.  Intended to be called from the
-# ACE or TAO top-level GNUMakefiles.
+# ACE or TAO top-level GNUmakefiles.
 #
 # The first three lines above let this script run without specifying the
 # full path to perl, as long as it is in the user's PATH.
@@ -284,7 +284,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
   $status = &generate_makefiles ();
 
   if ($status != 0) {
-      die "$0: failed to generate GNUMakefiles\n";
+      die "$0: failed to generate GNUmakefiles\n";
   }
 
   $status = &create_kit ();
@@ -743,7 +743,7 @@ sub diff () {
 
 
 ########
-######## Generate GNUMakefiles and workspace/project files.
+######## Generate GNUmakefiles and workspace/project files.
 ########
 sub generate_makefiles () {
 
@@ -824,12 +824,12 @@ sub create_kit () {
       # Create a list of files that needs to be packed with CIAO
       # including ACE+TAO.
       my $tmp_rel_file = '';
-      chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/GNUMakefile show_release_files`);
+      chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/GNUmakefile show_release_files`);
       $release_files .= ' ';
       $release_files .= $tmp_rel_file;
       $tmp_rel_file = '';
       $release_files .= ' ';
-      chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/CIAO/GNUMakefile show_release_files`);
+      chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/CIAO/GNUmakefile show_release_files`);
       $release_files .= $tmp_rel_file;
 
       print "RELEASE FILES from CIAO are $release_files \n";
@@ -867,7 +867,7 @@ sub create_kit () {
   if ($kit eq 'ace+tao' || $kit eq 'ace+tao+ciao') {
       # Set the relese files once again
     my $tmp_rel_file = '';
-    chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/GNUMakefile show_release_files`);
+    chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/GNUmakefile show_release_files`);
     $release_files = $base_release_files;
     $release_files .= ' ';
     $release_files .= $tmp_rel_file;
@@ -918,7 +918,7 @@ sub create_kit () {
       }
 
       # Reset it again with autoconf files
-      chomp ($release_files = `$make -f ACE_wrappers/GNUMakefile show_autoconf_release_files`);
+      chomp ($release_files = `$make -f ACE_wrappers/GNUmakefile show_autoconf_release_files`);
 
       $build_command =
         "$rm ACE.zip ACE-lib.zip; " .

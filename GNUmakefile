@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #       $Id$
 #
-#       Top-level GNUMakefile for the ACE toolkit libraries, tests, and
+#       Top-level GNUmakefile for the ACE toolkit libraries, tests, and
 #       applications
 #----------------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ DIRS    = ace \
           websvcs \
 	  Kokyu
 
-CLONE   = GNUMakefile \
+CLONE   = GNUmakefile \
           ace \
           apps \
           bin \
@@ -133,7 +133,7 @@ CONTROLLED_FILES = \
         COPYING \
         ChangeLog* \
         FAQ \
-        GNUMakefile \
+        GNUmakefile \
         Makefile.am \
         PROBLEM-REPORT-FORM \
         README \
@@ -223,14 +223,14 @@ release: $(APPLY_NEW_TAG)
 tag:
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -v $(REL) -u
 
-#### The following target is for use by the TAO GNUMakefile.  It should not
+#### The following target is for use by the TAO GNUmakefile.  It should not
 #### be called directly from the command line.  The releasetao target
 #### creates the combined ACE-TAO kit.
 releasetao:
 	@$(ACE_ROOT)/bin/make_release -k ace+tao $(ACE_TAG) $(TAO_TAG) \
          $(INSTALL_KIT) $(ZIP_FILES) $(CHECK)
 
-#### The following target is for use by the CIAO GNUMakefile.  It should not
+#### The following target is for use by the CIAO GNUmakefile.  It should not
 #### be called directly from the command line.  The releaseciao target
 #### creates the combined ACE+TAO+CIAO kit.
 releaseciao:

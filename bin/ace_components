@@ -3,7 +3,7 @@
 #
 # Encapsulates set/access of a components file, which records set of
 # components that were built in a library.  Intended to be used by
-# GNUMakefiles and scripts.  See ACE_wrappers/ace/GNUMakefile for an
+# GNUmakefiles and scripts.  See ACE_wrappers/ace/GNUmakefile for an
 # example.
 #
 usage="usage: $0 --ace | --orbsvcs | --tao | --pace \
