@@ -454,25 +454,40 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
   if (iiop_profile == 0)
     return -1;
 
-  const ACE_INET_Addr &oa =
+  const ACE_INET_Addr &remote_address =
     iiop_profile->object_addr ();
 
-  ACE_Synch_Options synch_options;
+  TAO_IIOP_Client_Connection_Handler *svc_handler = 0;
+  int result = 0;
+
   if (max_wait_time != 0)
-    synch_options.set (ACE_Synch_Options::USE_TIMEOUT,
-                       *max_wait_time);
+    {
+      ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
+                                       *max_wait_time);
 
-  TAO_IIOP_Client_Connection_Handler* result;
+      // The connect call will set the hint () stored in the Profile
+      // object; but we obtain the transport in the <svc_handler>
+      // variable. Other threads may modify the hint, but we are not
+      // affected.
+      result = this->base_connector_.connect (iiop_profile->hint (),
+                                              svc_handler,
+                                              remote_address,
+                                              synch_options);
+    }
+  else
+    {
+      // The connect call will set the hint () stored in the Profile
+      // object; but we obtain the transport in the <svc_handler>
+      // variable. Other threads may modify the hint, but we are not
+      // affected.
+      result = this->base_connector_.connect (iiop_profile->hint (),
+                                              svc_handler,
+                                              remote_address);
+    }
 
-  // The connect call will set the hint () stored in the Profile
-  // object; but we obtain the transport in the <result>
-  // variable. Other threads may modify the hint, but we are not
-  // affected.
-  if (this->base_connector_.connect (iiop_profile->hint (),
-                                     result,
-                                     oa,
-                                     synch_options) == -1)
-    { // Give users a clue to the problem.
+  if (result == -1)
+    {
+      // Give users a clue to the problem.
       if (TAO_orbdebug)
         {
           char buffer [MAXNAMELEN * 2];
@@ -489,7 +504,7 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
       return -1;
     }
 
-  transport = result->transport ();
+  transport = svc_handler->transport ();
   return 0;
 }
 

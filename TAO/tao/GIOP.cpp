@@ -448,10 +448,13 @@ TAO_GIOP::send_message (TAO_Transport *transport,
   // socket never gets set to a nonblocking mode ... some Linux
   // versions seem to need it though.  Leaving it costs little.
 
-  TAO_GIOP::dump_msg ("send",
-                      ACE_reinterpret_cast (u_char *,
-                                            buf),
-                      stream.length ());
+  if (TAO_debug_level >= 5)
+    {
+      TAO_GIOP::dump_msg ("send",
+                          ACE_reinterpret_cast (u_char *,
+                                                buf),
+                          stream.length ());
+    }
 
   // This guarantees to send all data (bytes) or return an error.
   ssize_t n = transport->send (stub,

@@ -1,3 +1,9 @@
+Tue Feb 22 13:57:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/ACE.cpp (send_n and recv_n): Reduced the number of calls to
+	  message_block->length () by caching the value.  Also inlined
+	  some of the smaller functions.
+
 Tue Feb 22 12:29:44 2000  Ossama Othman  <ossama@uci.edu>
 
 	* m4/threads.m4 (ACE_CHECK_THREAD_FLAGS):
