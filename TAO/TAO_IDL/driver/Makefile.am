@@ -12,9 +12,11 @@
 ## needed to process this file.
 AUTOMAKE_OPTIONS = 1.4
 
-INCLUDES = -I$(top_builddir) -I$(top_srcdir) \
-           -I$(top_srcdir)/TAO_IDL/include \
-           -I$(top_srcdir)/TAO_IDL/be_include
+INCLUDES = \
+  -I$(top_builddir) \
+  -I$(top_srcdir) \
+  -I$(top_srcdir)/TAO_IDL/include \
+  -I$(top_srcdir)/TAO_IDL/be_include
 
 noinst_LIBRARIES = libdriver.a
 
