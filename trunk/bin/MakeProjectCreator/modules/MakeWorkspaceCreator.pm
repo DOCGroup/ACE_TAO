@@ -63,7 +63,7 @@ sub write_comps {
   my(@list)     = $self->number_target_deps($projects, $pjs, \%targnum);
 
   ## Print out the "all" target
-  print $fh $crlf . "all:";
+  print $fh $crlf . 'all:';
   foreach my $project (@list) {
     print $fh " $$pjs{$project}->[0]";
   }
@@ -82,7 +82,7 @@ sub write_comps {
   ## Print out each target separately
   foreach my $project (@list) {
     my($dname) = dirname($project);
-    print $fh $crlf . $$pjs{$project}->[0] . ":";
+    print $fh $crlf . $$pjs{$project}->[0] . ':';
     if (defined $targnum{$project}) {
       foreach my $number (@{$targnum{$project}}) {
         print $fh " $$pjs{$list[$number]}->[0]";
