@@ -6,6 +6,11 @@ Wed Oct 23 23:37:32 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 	  'const cosPropertyService::PropertyName' since this is now what the
 	  IDL compiler generates in the method signature.
 
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+
+	  Same as above for two overlooked occurrences of a string literal where
+	  'const CosTrading::LinkName' is generated.
+
 Wed Oct 23 22:48:09 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/examples/Log/Basic/Client.dsp:
