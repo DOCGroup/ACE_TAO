@@ -91,6 +91,7 @@ TAO_ORBInitializer_Registry::pre_init (
   PortableInterceptor::ORBInitInfo_ptr info,
   CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_UNUSED_ARG(ACE_TRY_ENV);
   size_t initializer_count = this->initializers_.size ();
   for (size_t i = 0; i < initializer_count; ++i)
     {
@@ -105,6 +106,7 @@ TAO_ORBInitializer_Registry::post_init (
   PortableInterceptor::ORBInitInfo_ptr info,
   CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_UNUSED_ARG(ACE_TRY_ENV);
   size_t initializer_count = this->initializers_.size ();
   for (size_t i = 0; i < initializer_count; ++i)
     {
