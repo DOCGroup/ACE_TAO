@@ -74,10 +74,21 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("specializedConfig")))
             {
+              // fetch the component package reference handler
+              PC_Handler pc_handler (iter_, false);
+
+              // increase the length of the sequence
+              CORBA::ULong i (pc.specializedConfig.length ());
+              pc.specializedConfig.length (i + 1);
+
+              // delegate the populating process
+              pc_handler.process_PackageConfiguration (pc.specializedConfig[i]);
+              /*
               // Fetch the text node which contains the "specializedConfig"
               node = this->iter_->nextNode();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
               this->process_specializedConfig (text->getNodeValue(), pc);
+              */
             }
           else if (node_name == XStr (ACE_TEXT ("configProperty")))
             {
@@ -149,20 +160,6 @@ namespace CIAO
       if (UUID)
         {
           pc.UUID = XMLString::transcode (UUID);
-        }
-    }
-
-    /// handle specializedConfig attribute
-    void PC_Handler::process_specializedConfig
-      (const XMLCh* specializedConfig, ::Deployment::PackageConfiguration &pc)
-    {
-      if (specializedConfig)
-        {
-          // first increment the length of the sequence
-          CORBA::ULong i (pc.specializedConfig.length ());
-          pc.specializedConfig.length (i+1);
-          // insert the new specializedConfig
-          pc.specializedConfig[i] = strtoul (XMLString::transcode (specializedConfig), 0, 10);
         }
     }
 
