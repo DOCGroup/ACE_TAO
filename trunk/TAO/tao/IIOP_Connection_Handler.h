@@ -146,6 +146,10 @@ private:
 
   /// TCP configuration for this connection.
   TAO_IIOP_Properties *tcp_properties_;
+
+  /// Flag that we will be passing to the event handler to indicate
+  /// whether the handle will be resumed by the method or not.
+  int resume_flag_;
 };
 
 
