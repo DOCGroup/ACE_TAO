@@ -45,7 +45,7 @@ class ACE_Static_Svc_Descriptor
   //   Holds the information necessary to describe a statically linked
   //   Svc.
 public:
-  ASYS_TCHAR *name_;
+  LPCTSTR name_;
   // Name of the service.
 
   int type_;
