@@ -97,6 +97,38 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
   ACE_TRACE ("ACE_SPIPE_Stream::send_handle");
 #if defined (ACE_HAS_STREAM_PIPES)
   return ACE_OS::ioctl (this->get_handle (), I_SENDFD, (void *) handle);
+#elif defined (ACE_WIN32)
+  DWORD procID;
+  WSAPROTOCOL_INFO protInfo;
+  ssize_t res;
+  res = this->recv(&procID, sizeof(procID));
+  if (res != sizeof(procID))
+  {
+    if(res != -1)
+        errno = ENXIO;
+    return -1;
+  }
+  if (::WSADuplicateSocket ((SOCKET)handle, procID, &protInfo) == -1)
+  {
+    ACE_OS::set_errno_to_wsa_last_error();
+      return -1;
+  }
+  res = this->send(&protInfo, sizeof(protInfo));
+  if (res != sizeof(protInfo))
+  {
+    if(res != -1)
+        errno = ENXIO;
+    return -1;
+  }
+  // This is just for synchronization, we will ignore the data
+  res = this->recv(&procID, sizeof(procID));
+  if (res != sizeof(procID))
+  {
+    if(res != -1)
+        errno = ENXIO;
+    return -1;
+  }
+  return 0;
 #else
   handle = handle;
   ACE_NOTSUP_RETURN (-1);
@@ -119,6 +151,40 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
       handle = recvfd.fd;
       return 0;
     }
+#elif defined (ACE_WIN32)
+  pid_t procID = ACE_OS::getpid();
+  WSAPROTOCOL_INFO protInfo;
+  ssize_t res;
+  res = this->send(&procID, sizeof(procID));
+  if (res != sizeof(procID))
+  {
+    if(res != -1)
+        errno = ENXIO;
+    return -1;
+  }
+  res = this->recv(&protInfo, sizeof(protInfo));
+  if (res != sizeof(protInfo))
+  {
+    if(res != -1)
+        errno = ENXIO;
+     return -1;
+  }
+  handle = ACE_OS::socket (FROM_PROTOCOL_INFO, FROM_PROTOCOL_INFO, FROM_PROTOCOL_INFO,
+                           &protInfo, 0, 0);
+  if (handle == ACE_INVALID_HANDLE)
+  {
+    return -1;
+  }
+  // Since it does not matter what the data is, just send something to
+  // synchronize the end of the exchange
+  res = this->send(&procID, sizeof(procID));
+  if (res != sizeof(procID))
+  {
+    if(res != -1)
+        errno = ENXIO;
+    return -1;
+  }
+  return 0;
 #else
   handle = handle;
   ACE_NOTSUP_RETURN (-1);
