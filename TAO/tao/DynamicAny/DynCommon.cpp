@@ -10,6 +10,7 @@
 #include "DynStruct_i.h"
 #include "DynUnion_i.h"
 #include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/CDR.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
 
