@@ -1,3 +1,8 @@
+Sat Aug  9 01:03:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/VarOut_T.cpp:
+          Added #include OS_Memory.h needed on Solaris.
+
 Fri Aug  8 08:45:50 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.RTKokyuEvent: Updated dependencies to

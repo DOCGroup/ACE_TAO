@@ -4,6 +4,7 @@
 #define TAO_VAROUT_T_C
 
 #include "tao/VarOut_T.h"
+#include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/VarOut_T.inl"
