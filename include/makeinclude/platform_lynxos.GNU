@@ -86,6 +86,6 @@ ARFLAGS         = ruv
 RANLIB          = @true
 PRELIB          = @true
 
-To save much disk space, strip all executables.  Comment the
-following line out if you want to debug.
+# To save much disk space, strip all executables.  Comment the
+# following line out if you want to debug.
 POSTLINK        = ; strip $@
