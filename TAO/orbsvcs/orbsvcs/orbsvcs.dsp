@@ -28583,6 +28583,8 @@ SOURCE=.\RtecUDPAdmin.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
+
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
