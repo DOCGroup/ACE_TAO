@@ -72,13 +72,22 @@ TAO_Dynamic_Property::evalDP(const char* name,
   if (handlers_iter != this->handlers_.end())
     {
       TAO_DP_Evaluation_Handler* handler = (*handlers_iter).second;
-      result = handler->evalDP (extra_info, _env);
-
+      result = handler->evalDP (extra_info, returned_type, _env);
+      TAO_CHECK_ENV_RETURN (_env, result);
+      
       if (! returned_type->equal(result->type(), _env))
-	TAO_THROW_RETURN (CosTradingDynamic::DPEvalFailure(), result);
+	{
+	  TAO_THROW_RETURN (CosTradingDynamic::DPEvalFailure
+			    (name, returned_type, extra_info),
+			    result);
+	}
     }
   else
-    TAO_THROW_RETURN (CosTradingDynamic::DPEvalFailure(), result);
+    {
+      TAO_THROW_RETURN (CosTradingDynamic::DPEvalFailure
+			(name, returned_type, extra_info),
+			result);
+    }
 
   return result;
 }

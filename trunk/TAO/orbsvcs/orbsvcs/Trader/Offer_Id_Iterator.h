@@ -75,15 +75,15 @@ class TAO_Offer_Id_Iterator : public POA_CosTrading::OfferIdIterator
   // extracted from the iterator. It returns FALSE if there are no
   // further offer identifiers to be extracted. 
   
-  void insert_id(const char* new_id);
+  void insert_id(CosTrading::OfferId new_id);
   // Insert a <new_id> into the contents of the iterator.
   
  private:
 
 #ifdef OS_NO_DEFAULT_TEMPLATE_ARGUMENTS
-  typedef queue<char*, deque<char*> > OFFER_ID_QUEUE;
+  typedef queue<CosTrading::OfferId, deque<CosTrading::OfferId> > OFFER_ID_QUEUE;
 #else
-  typedef queue<char*> OFFER_ID_QUEUE;
+  typedef queue<CosTrading::OfferId> OFFER_ID_QUEUE;
 #endif /* OS_NO_DEFAULT_TEMPLATE_ARGUMENTS */
   
   OFFER_ID_QUEUE ids_;

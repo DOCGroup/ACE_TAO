@@ -157,7 +157,7 @@ private:
   typedef TRADER::SERVICE_TYPE_MAP SERVICE_TYPE_MAP;
   typedef pair<CosTrading::OfferId, CosTrading::Offer*> OFFER;
   typedef deque<OFFER> LOOKUP_OFFER_LIST;
-  typedef list<string> TYPE_LIST;
+  typedef deque<char*> TYPE_LIST;
 
   TAO_Offer_Iterator*
     create_offer_iterator (const char *type,

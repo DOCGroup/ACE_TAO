@@ -19,6 +19,7 @@
 
 #include <set>
 #include <deque>
+#include "Trader.h"
 
 class TAO_Property_Filter
 // = TITLE

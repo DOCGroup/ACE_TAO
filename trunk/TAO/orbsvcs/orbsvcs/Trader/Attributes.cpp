@@ -86,16 +86,16 @@ TAO_Support_Attributes_Impl::type_repos (CosTrading::TypeRepository_ptr new_valu
 TAO_Import_Attributes_Impl::TAO_Import_Attributes_Impl (TAO_Trader_Base &trader)
   : trader_ (trader),
     def_search_card_ (10),
-    max_search_card_ (10),
+    max_search_card_ (100),
     def_match_card_ (10),
-    max_match_card_ (10), 
+    max_match_card_ (100), 
     def_return_card_ (10),
-    max_return_card_ (10), 
+    max_return_card_ (100), 
     max_list_ (0),
-    def_hop_count_ (0),
-    max_hop_count_ (0),
-    def_follow_policy_ (CosTrading::local_only),
-    max_follow_policy_ (CosTrading::local_only)
+    def_hop_count_ (5),
+    max_hop_count_ (5),
+    def_follow_policy_ (CosTrading::if_no_local),
+    max_follow_policy_ (CosTrading::always)
 {
 }
  

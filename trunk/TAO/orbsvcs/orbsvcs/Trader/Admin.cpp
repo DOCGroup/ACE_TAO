@@ -297,12 +297,14 @@ TAO_Admin<TRADER>::list_offers (CORBA::ULong how_many,
   id_itr = CosTrading::OfferIdIterator::_nil ();
   if (how_many > 0)
     {      
-      if (oi->next_n (how_many, ids, _env) == (CORBA::Boolean)0)
+      if (oi->next_n (how_many, ids, _env) == CORBA::B_FALSE)
 	{
 	  // No more items left in the iterator.
 	  oi->destroy (_env);
 	  oi = CosTrading::OfferIdIterator::_nil ();
-	}       
+	}
+      else
+	id_itr = oi;
     }
   else
     ids = new CosTrading::OfferIdSeq(0);

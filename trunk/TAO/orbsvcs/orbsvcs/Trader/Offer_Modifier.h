@@ -19,6 +19,7 @@
 
 #include <set>
 #include <map>
+#include "Trader.h"
 
 class TAO_Offer_Modifier
 // = TITLE

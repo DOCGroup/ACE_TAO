@@ -28,6 +28,7 @@ class TAO_DP_Evaluation_Handler
 public:
 
   virtual CORBA::Any* evalDP(const CORBA::Any& extra_info,
+			     CORBA::TypeCode_ptr returned_type,
 			     CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure)) = 0;
   
