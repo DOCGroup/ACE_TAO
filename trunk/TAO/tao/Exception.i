@@ -26,13 +26,13 @@ CORBA_SystemException::minor (CORBA::ULong m)
 }
 
 ACE_INLINE CORBA::CompletionStatus
-CORBA_SystemException::completion (void) const
+CORBA_SystemException::completed (void) const
 {
   return this->completed_;
 }
 
 ACE_INLINE void
-CORBA_SystemException::completion (CORBA::CompletionStatus c)
+CORBA_SystemException::completed (CORBA::CompletionStatus c)
 {
   this->completed_ = c;
 }

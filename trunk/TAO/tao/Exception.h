@@ -146,10 +146,10 @@ public:
   void minor (CORBA::ULong m);
   // set the minor status
 
-  CORBA::CompletionStatus completion (void) const;
+  CORBA::CompletionStatus completed (void) const;
   // get the completion status
 
-  void completion (CORBA::CompletionStatus c);
+  void completed (CORBA::CompletionStatus c);
   // set the operation completion status
 
   static CORBA_SystemException *_narrow (CORBA_Exception* exception);
