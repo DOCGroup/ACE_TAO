@@ -7,7 +7,11 @@ Sat Nov  8 04:11:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_main.h
         * ace/OS_main.cpp:
-          Fixed last checkin on Windows and WINCE.
+          Fixed last checkin on Windows and WINCE.  This involved adding a
+          pure virtual method and implementing it in a derived class in
+          the macro and having it call the users entry point on Windows.
+          Otherwise the ACE dll complained about unresolved externals when
+          linking.
 
 Fri Nov  7 23:29:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
