@@ -1,3 +1,21 @@
+Fri Jul 13 15:59:45 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* netsvcs/servers/main.cpp (main): The server was always outputing
+	  LM_DEBUG information, even when the program was not run with the
+	  -d command line argument.  Therefore, changed the following
+	  lines from: 
+ 
+          if (ACE::debug () == 0)
+	    ACE_Log_Msg::disable_debug_messages ();
+ 
+          to:
+ 
+          if (ACE::debug () == 0)
+	    ACE_LOG_MSG->priority_mask (~LM_DEBUG, ACE_Log_Msg::PROCESS);
+  
+          Thanks to Jerry D. De Master <jdemaster@rite-solutions.com> for
+	  reporting this fix.  
+  
 Fri Jul 13 12:16:03 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Asynch_BIO.h:
@@ -469,17 +487,7 @@ Fri Jul  6 08:36:20 2001  Chad Elliott  <elliott_c@ociweb.com>
           contain Other.  The netsvcs library requires Naming_Context.
 
 Fri Jul  6 05:44:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-<<<<<<< ChangeLog
-<<<<<<< ChangeLog
-=======
-
-        * ace/Makefile (LOGGING_FILES): Added support for
-          Log_Msg_UNIX_Syslog.
->>>>>>> 4.2247
-=======
->>>>>>> 4.2257
-
-<<<<<<< ChangeLog
+  
         * ace/Makefile (LOGGING_FILES): Added support for
           Log_Msg_UNIX_Syslog.
 
@@ -493,22 +501,7 @@ Fri Jul  6 05:44:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
         * ace/SOCK_Dgram.h: Fixed a typo in one of the send() method
           comments.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be> for
           reporting this.
-<<<<<<< ChangeLog
-=======
-        * ace/Log_Msg_UNIX_Syslog.{h,cpp}:
-        * ace/Log_Msg.cpp,
-        * ace/OS.h: Added support for a new UNIX syslog backend for the
-          ACE_Log_Msg class.  Thanks to Jerry D. De Master
-          <jdemaster@rite-solutions.com> and Robert Davidson
-          <robert@rdavidson.freeserve.co.uk>.
-
-        * ace/SOCK_Dgram.h: Fixed a typo in one of the send() method
-          comments.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be> for
-          reporting this.
->>>>>>> 4.2247
-=======
->>>>>>> 4.2257
-
+  
         * ace/config-macosx.h: Added a new file courtesy of John
           Zorko so that things will work on MacOSX.
 
