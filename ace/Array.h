@@ -55,7 +55,11 @@ public:
   // = Set/get methods.
 
   T &operator [] (size_t index);
-  // Set/get item in the array at location <index>.  Doesn't
+  // Set item in the array at location <index>.  Doesn't
+  // perform range checking.
+
+  const T &operator [] (size_t index) const;
+  // Get item in the array at location <index>.  Doesn't
   // perform range checking.
 
   int set (const T &new_item, size_t index);
@@ -64,7 +68,9 @@ public:
 
   int get (T &item, size_t index) const;
   // Get an item in the array at location <index>.  Returns -1 if
-  // <index> is not in range, else returns 0.
+  // <index> is not in range, else returns 0.  Note that this function
+  // copies the item.  If you want to avoid the copy, you can use
+  // the const operator [], but then you'll be responsible for range checking.
 
   size_t size (void) const;
   // Returns the <cur_size_> of the array.
