@@ -14,11 +14,11 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-LIBNAME=libTypeCodeFactory_DLL
+LIBNAME = libTypeCodeFactory_DLL
 LIB = $(LIBNAME).a
 SHLIB = $(LIBNAME).$(SOEXT)
 
-LSRC= \
+LSRC = \
 	TypeCodeFactory_skel.cpp \
 	TypeCodeFactory_i.cpp \
 	TCF_Loader.cpp
