@@ -1,3 +1,16 @@
+Wed Jul 17 01:00:26 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.h (operator==):
+	* orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.cpp (operator==):
+
+	  Removed extraneous "struct" from parameter list.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Operators.h (operator==):
+	  (operator!=):
+
+	  Export these global functions.  Addresses link-time errors in MS
+	  Windows builds.
+
 Wed Jul 17 00:49:06 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Any.cpp (operator>>=):
