@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 // Exception macros
@@ -332,7 +334,7 @@ TAO_POA::servant_to_system_id (PortableServer::Servant servant,
                                        ACE_ENV_ARG_PARAMETER);
 }
 
-PortableServer::Servant
+ACE_INLINE PortableServer::Servant
 TAO_POA::reference_to_servant (CORBA::Object_ptr reference
                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
