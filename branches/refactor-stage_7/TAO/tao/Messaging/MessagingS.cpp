@@ -217,7 +217,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::get_strategy (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Collocation_Strategy strategy =
-    TAO_ORB_Core::collocation_strategy_new (obj ACE_ENV_ARG_PARAMETER);
+    TAO_ORB_Core::collocation_strategy (obj ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TAO_CS_REMOTE_STRATEGY);
   
   return strategy;

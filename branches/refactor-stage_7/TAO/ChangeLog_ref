@@ -1,3 +1,13 @@
+Thu Sep  4 17:13:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Messaging/MessagingS.cpp:
+	* tao/Messaging/MessagingS.h: Changes forced from the removal of
+	  Collocated_Object.* and changes to the ORB_Core.
+	
+Thu Sep  4 17:09:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/*/Makefile*: Updated dependencies.
+
 Thu Sep  4 16:52:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Transport_Connector.cpp:
