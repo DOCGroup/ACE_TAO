@@ -1,3 +1,9 @@
+Wed Dec 19 09:39:03 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/Message_Queue_Test_Ex.cpp:
+
+	  Fixed compiler warning. Deleted an unused variable declaration.
+
 Wed Dec 19 10:31:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor:
