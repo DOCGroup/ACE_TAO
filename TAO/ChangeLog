@@ -10,7 +10,7 @@ Mon Dec  6 13:14:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           during regeneration, even though there is no need in
           this particular case. Sometimes I have IDL files in
           this directory for debugging purposes, and it was
-          easier to add the empty block than to try and refactory
+          easier to add the empty block than to try and refactor
           the inherited .mpb files.
 
 Mon Dec  6 12:50:17 2004  Chad Elliott  <elliott_c@ociweb.com>
