@@ -6,15 +6,17 @@
 # To be used on FreeBSD platform without pthread support.
 
 debug = 1
+optimize = 1
 
 CC              = gcc
 CXX		= g++
-CFLAGS          += -w -O2 -fno-strict-prototypes
+CFLAGS          += -w -fno-strict-prototypes
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 DLD             = ld
 LD		= $(CXX) 
 LIBS            += -lstdc++ -lcompat
+OCFLAGS         += -O2
 PIC             = -fpic -DPIC
 AR              = ar
 ARFLAGS         = ruv

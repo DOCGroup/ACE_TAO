@@ -5,6 +5,7 @@
 # for not link -lc and -lgcc and other not shared libraries
 
 debug = 1
+optimize = 1
 
 CC              = gcc
 # for threads
@@ -14,13 +15,15 @@ CC              = gcc
 # LDLIBS	+= -L $(ACE_ROOT)/ace -L ./ ${MIT_PTHREADS_DIR}/init/init.o -lACE # -z muldefs
 LDLIBS	+= -L $(ACE_ROOT)/ace -L ./ -lACE # -z muldefs
 CXX		= g++
-CFLAGS		+= -b elf -w -O2
-CCFLAGS		+= -b elf -O2 -fpic -Xpg4plus -fno-implicit-templates -I ${MIT_PTHREADS_DIR}/include -I /usr/progressive/lib/g++-include
+CFLAGS		+= -b elf -w
+CCFLAGS		+= -b elf -fpic -Xpg4plus -fno-implicit-templates -I ${MIT_PTHREADS_DIR}/include -I /usr/progressive/lib/g++-include
 DCFLAGS		+= -gstabs
 DCCFLAGS	+= $(DCFLAGS)
 DLD             = $(CXX)
 LD              = $(CXX)
 LIBS            = -L${MIT_PTHREADS_DIR} -lnsl -lpthread
+OCFLAGS		+= -O2
+OCCFLAGS        += $(OCFLAGS)
 PIC             = -fpic
 AR              = ar
 ARFLAGS         = ruv

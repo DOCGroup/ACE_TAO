@@ -3,16 +3,18 @@
 # SunOS 4.x (Solaris 1.x) with g++ *not* using Orbix
 
 debug = 1
+optimize = 1
 
 CC	= gcc 
 CXX	= g++
-CFLAGS  += -O2 -fno-strict-prototypes
+CFLAGS  += -fno-strict-prototypes
 CCFLAGS += $(CFLAGS) -fno-implicit-templates
 DCFLAGS	+= -g
 DLD	= /bin/ld
 LD	= $(CXX)
 #
 # for G++ v2.6.0
+OCFLAGS	+= -O2
 PIC	= -fpic
 AR	= ar
 ARFLAGS	= ruv

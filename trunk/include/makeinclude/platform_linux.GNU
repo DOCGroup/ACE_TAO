@@ -4,15 +4,17 @@
 # should allow ACE to be built on Linux.
 
 debug = 1
+optimize = 1
 
 CC              = gcc
 CXX		= g++
-CFLAGS		+= -w -O2 -fno-strict-prototypes
+CFLAGS		+= -w -fno-strict-prototypes
 CCFLAGS		+= $(CFLAGS) -fno-implicit-templates
 DCFLAGS		+= -g
 DLD             = $(CXX)
 LD		= $(CXX)
 LIBS		+= -ldl 
+OCFLAGS		+= -O2
 PIC             = -fPIC
 AR              = ar
 ARFLAGS         = ruv

@@ -4,10 +4,11 @@
 # *not* using Orbix
 
 debug = 1
+optimize = 1
 
 CC		= gcc
 CXX             = g++
-CFLAGS		+= -w -O2
+CFLAGS		+= -w
 CCFLAGS		+= $(CFLAGS) -D__m88k__ -fno-implicit-templates -fno-strict-prototypes
 DCFLAGS		+= -g
 DLD		= $(CXX) 
@@ -18,6 +19,7 @@ LDFLAGS		+= -L $(ACE_ROOT)/ace -L ./
 LDFLAGS		+= -L/devel/rmm/v1.0/local/src/threads/lib
 LIBS		+= -lsocket -ldl -lnsl -lgen -lstdc++ -lg++
 LIBS		+= -lgthreads -lgmalloc
+OCFLAGS		+= -O2
 PIC		= -fpic
 AR		= ar 
 ARFLAGS		= ruv 

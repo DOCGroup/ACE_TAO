@@ -3,6 +3,7 @@
 # Irix 6.[234] with SGI C++ in -32 (aka -o32) mode
 
 debug = 1
+optimize = 1
 
 # Note that -32 mode doesn't have exceptions enabled by default, and 
 # that the man-page cautions against it's use (you may not be able to
@@ -23,7 +24,7 @@ LD		= $(CXX)
 
 # Basic flags
 CPPFLAGS	+= -D_SGI_MP_SOURCE
-CCFLAGS		+= -O
+OCCFLAGS	+= -O
 CCFLAGS		+= +pp -woff 3203,3209,3161,3262,3665,3937,3259,3920
 # Instantiate everything; without this, apps/Gateway/Gateway/gatewayd might
 # not build due to missing template instantiations.

@@ -10,6 +10,7 @@
 ####    ace/IOStream_T.cpp for an explanation and example.
 
 debug = 1
+optimize = 1
 static_libs_only = 1
 
 
@@ -48,7 +49,7 @@ BIN_DIR         = $(HOST_DIR)/bin
 
 CC              = cc$(TOOLENV)
 CXX             = g++$(TOOLENV)
-CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -O -pipe -Wall
+CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -pipe -Wall
 #### Note: -f-no-implicit-templates doesn't seem to work well with
 ####       g++ cygnus-2.7.2-960126 for pc486 target.  Some
 ####       member functions don't get instantiated.  Wind River knows
@@ -58,6 +59,9 @@ DCFLAGS         += -g
 INCLDIRS        += -I$(WIND_BASE)/target/h
 LD              = ld$(TOOLENV)
 LDFLAGS         += -X -r .obj/__ctordtor.o
+#### WindRiver only recommends -O, not -O2, with some CPUs, including
+#### the i386 family.
+OCFLAGS         += -O
 PIC             =
 AR              = ar$(TOOLENV)
 ARFLAGS         = rv

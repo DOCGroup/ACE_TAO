@@ -3,6 +3,7 @@
 # Chorus 3.1b with GNU g++ 2.7.2
 
 debug = 1
+optimize = 1
 
 include         $(CLASSIXDIR)/dtool/htgt-cf.rf
 INC_DIR         = $(CLASSIXDIR)/include
@@ -11,7 +12,7 @@ LIB_DIR		= $(CLASSIXDIR)/lib
 #CC		= gcc
 #CXX		= g++
 CXX             = $(CC)
-CFLAGS		+= -w -O2
+CFLAGS		+= -w
 CCFLAGS		+= $(CFLAGS) -fno-implicit-templates	\
 		   -fno-strict-prototypes     		\
 		   -nostdinc 				\
@@ -29,6 +30,7 @@ LDFLAGS		+= -r -Ur -nostdlib			\
 		   -L$(LIB_DIR)/CC			\
 		   -L$(LIB_DIR)/classix
 #LIBS		+= -lC -lcx.u
+OCFLAGS		+= -O2
 PIC		= -fPIC
 #AR		= ar
 AR		= $(XDIR)/bin/ar

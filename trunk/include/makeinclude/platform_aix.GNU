@@ -28,7 +28,9 @@ ARFLAGS	    = ruv
 AR	    = ar
 LDFLAGS	    += -bI:/lib/pse.exp
 # Should be set to optimize for your particular computer.  This
-# is set to be optimized for RS/6000 43P
+# is set to be optimized for RS/6000 43P.
+# OCCFLAGS is not used by default.  To used it, set optimize=1
+# either in this file or on the command line.
 OCCFLAGS    += -qarch=ppc -qtune=604
 RANLIB	    = ranlib
 SOFLAGS	    = -p 0

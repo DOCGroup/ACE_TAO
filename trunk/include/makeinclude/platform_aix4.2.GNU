@@ -27,7 +27,9 @@ AR	    = ar
 LDFLAGS	    += -bI:/lib/pse.exp 
 # Default OCCFLAGS builds common code for all RS/6000 architectures but
 # this can be set to optimize for your particular computer. The commented
-# out example optimizes for RS/6000 43P
+# out example optimizes for RS/6000 43P.
+# OCCFLAGS is not used by default.  To used it, set optimize=1
+# either in this file or on the command line.
 #OCCFLAGS    += -qarch=ppc -qtune=604
 OCCFLAGS    += -qarch=com 
 RANLIB	    = ranlib

@@ -3,6 +3,7 @@
 # Irix 6.[234] with SGI C++ in -n32 mode
 
 debug = 1
+optimize = 1
 
 # This suppresses common compiler warnings which appear in the 
 # ACE code but should not matter.  The warnings can be turned on
@@ -15,7 +16,7 @@ LD		= $(CXX)
 
 # Basic flags
 CPPFLAGS	+= -D_SGI_MP_SOURCE
-CCFLAGS		+= -O
+OCCFLAGS	+= -O
 CCFLAGS		+= -woff 1188,1682,1171,1681,1110
 # Instantiate everything; without this, apps/Gateway/Gateway/gatewayd might
 # not build due to missing template instantiations.
