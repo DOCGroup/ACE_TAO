@@ -1,3 +1,13 @@
+Tue Aug 03 16:58:08 1999  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* ace/ATM_Acceptor.{h,cpp}:
+	* ace/ATM_Connector.{h,cpp}:
+	* ace/ATM_Stream.{h,i,cpp}:
+	* ace/ATM_Params.cpp:
+	* ace/ATM_QoS.cpp:
+	* ace/XTI_ATM_Mcast.{h,i,cpp}:
+          Fixed inlining errors.
+
 Tue Aug 03 16:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* ace/Auto_Ptr.h: created ACE_AUTO_PTR_RESET macros, which depend on
