@@ -37,4 +37,4 @@ TAO_Default_Client_Strategy_Factory::parse_args (int /* argc */, char ** /* argv
   return 0;
 }
 
-ACE_SVC_FACTORY_DEFINE (TAO_Default_Client_Strategy_Factory)
+ACE_FACTORY_DEFINE (TAO, TAO_Default_Client_Strategy_Factory)
