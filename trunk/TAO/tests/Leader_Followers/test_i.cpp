@@ -19,14 +19,11 @@ test_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::ULong
 test_i::method (CORBA::ULong work,
-                CORBA::ULong requesting_thread_id,
                 CORBA::Environment &)
   ACE_THROW_SPEC (())
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Server: Working for %d milli seconds requested by thread %d @ %T\n",
-              work,
-              requesting_thread_id));
+              "Server: Working for %d milli seconds @ %T\n"));
 
   // Time required to process this request. <work> is time units in
   // milli seconds.

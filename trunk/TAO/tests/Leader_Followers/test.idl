@@ -4,7 +4,6 @@
 
 interface test
 {
-  unsigned long method (in unsigned long work,
-                        in unsigned long requesting_thread_id);
+  unsigned long method (in unsigned long work);
   oneway void shutdown ();
 };
