@@ -425,10 +425,13 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open");
 
   if (this->service_name_ == 0 && service_name != 0)
-    this->service_name_ = ACE_OS::strdup (service_name);
+    ACE_ALLOCATOR_RETURN (this->service_name_,
+                          ACE_OS::strdup (service_name),
+                          -1);
   if (this->service_description_ == 0 && service_description != 0)
-    this->service_description_ = ACE_OS::strdup (service_description);
-
+    ACE_ALLOCATOR_RETURN (this->service_description_,
+                          ACE_OS::strdup (service_description),
+                          -1);
   this->reactor (reactor);
 
   // Must supply a valid Reactor to Acceptor::open()...
@@ -501,9 +504,13 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor");
   
   if (service_name != 0)
-    this->service_name_ = ACE_OS::strdup (service_name);
+    ACE_ALLOCATOR_RETURN (this->service_name_,
+                          ACE_OS::strdup (service_name),
+                          -1);
   if (service_description != 0)
-    this->service_description_ = ACE_OS::strdup (service_description);
+    ACE_ALLOCATOR_RETURN (this->service_description_,
+                          ACE_OS::strdup (service_description),
+                          -1);
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> 

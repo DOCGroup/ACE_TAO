@@ -97,9 +97,9 @@ ACE_INET_Addr::string_to_addr (const char s[])
 {
   ACE_TRACE ("ACE_INET_Addr::string_to_addr");
   // Need to make a duplicate since we'll be overwriting the string.
-  char *t = ACE_OS::strdup (s);
-  if (t == 0)
-    return -1;
+  char *t;
+
+  ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (s), -1)
 
   char *ip_addr = ACE_OS::strchr (t, ':');
   int result;

@@ -125,9 +125,13 @@ ACE_ARGV::string_to_array (void)
      
      // Check for environment variable substitution here.
      if (this->substitute_env_args_)
-       this->argv_[i] = ACE::strenvdup (arg);
+       ACE_ALLOCATOR_RETURN (this->argv_[i],
+                             ACE::strenvdup (arg),
+                             -1);
      else
-       this->argv_[i] = ACE_OS::strdup (arg);
+       ACE_ALLOCATOR_RETURN (this->argv_[i], 
+                             ACE_OS::strdup (arg),
+                             -1);
    }
  
  this->argv_[this->argc_] = 0;

@@ -84,6 +84,13 @@ ACE_Time_Value::operator FILETIME () const
 
 #endif
 
+ACE_Cleanup_Info::ACE_Cleanup_Info (void)
+  : object_ (0),
+    cleanup_hook_ (0),
+    param_ (0) 
+{
+}
+
 void
 ACE_Time_Value::dump (void) const
 {
@@ -248,7 +255,12 @@ ACE_OS::uname (struct utsname *name)
     char processor[10] = "Unknown";
     char subtype[10] = "Unknown";
 
-    switch (sinfo.wProcessorArchitecture)
+#if defined (__BORLANDC__)
+    // Some changes should be made in winbase.h...
+    switch (sinfo.s.wProcessorArchitecture) 
+#else
+      switch (sinfo.wProcessorArchitecture)
+#endif /* __BORLAND__ */
     {
     case PROCESSOR_ARCHITECTURE_INTEL:
       ACE_OS::strcpy (processor, "Intel");
