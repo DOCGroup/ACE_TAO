@@ -61,6 +61,8 @@ ACE_RCSID(tao, decode, "$Id$")
 // code out into a separate routine called both by CDR::decoder () and
 // by the code retrieving typecode parameters from encapsulations.
 
+typedef TAO_Object_Field_T<CORBA::Object,CORBA::Object_var> TAO_Object_Field_Class;
+
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Primitive::decode (CORBA::TypeCode_ptr  tc,
                                const void *data,
@@ -693,8 +695,8 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
 
             if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
               {
-                TAO_Object_Field_T<CORBA_Object>* field =
-                  ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
+                TAO_Object_Field_Class* field =
+                  ACE_reinterpret_cast (TAO_Object_Field_Class *,
                                         ACE_const_cast (void *, data));
                 field->_downcast (object, ACE_TRY_ENV);
               }
@@ -855,7 +857,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
       // get the member typecode
       member_tc = tc->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-      
+
       // have we reached the default label?, if so,
       // save a handle to the typecode for the default
       if (default_index >= 0 && default_index-- == 0)
@@ -875,8 +877,8 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                 {
                   // we know that the object pointer is stored in a
                   // TAO_Object_Field_T parametrized type
-                  TAO_Object_Field_T<CORBA_Object>* field =
-                    ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
+                  TAO_Object_Field_Class* field =
+                    ACE_reinterpret_cast (TAO_Object_Field_Class *,
                                           member_val);
                   field->_downcast (object, ACE_TRY_ENV);
                   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
@@ -906,8 +908,8 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
             {
               // we know that the object pointer is stored in a
               // TAO_Object_Field_T parametrized type
-              TAO_Object_Field_T<CORBA_Object>* field =
-                ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
+              TAO_Object_Field_Class* field =
+                ACE_reinterpret_cast (TAO_Object_Field_Class *,
                                       member_val);
               field->_downcast (object, ACE_TRY_ENV);
               ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);

@@ -226,7 +226,9 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
   os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
   *os << "this->u_." << ub->local_name ()
-      << "_ = new TAO_Object_Field_T<" << bt->name ()
+      << "_ = new TAO_Object_Field_T<"
+      << bt->name () << ","
+      << bt->name () << "_var"
       << "> (" << bt->name () << "::_duplicate (u.u_."
       << ub->local_name () << "_->ptr ()));" << be_uidt_nl;
 
@@ -262,7 +264,9 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (be_interface_fwd 
   os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
   *os << "this->u_." << ub->local_name ()
-      << "_ = new TAO_Object_Field_T<" << bt->name ()
+      << "_ = new TAO_Object_Field_T<"
+      << bt->name () << ","
+      << bt->name () << "_var"
       << "> (" << bt->name () << "::_duplicate (u.u_."
       << ub->local_name () << "_->ptr ()));" << be_uidt_nl;
 
@@ -303,7 +307,7 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (be_predefined_t
       *os << "this->u_." << ub->local_name () << "_ = ";
       if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
         {
-          *os << "new TAO_Object_Field_T<CORBA::Object> "
+          *os << "new TAO_Object_Field_T<CORBA::Object,CORBA::Object_var> "
               << "(CORBA::Object::_duplicate (u.u_."
               << ub->local_name () << "_->ptr ()));" << be_uidt_nl;
         }

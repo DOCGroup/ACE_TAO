@@ -17,7 +17,6 @@ template class TAO_Unbounded_Sequence<Param_Test::Fixed_Struct>;
 template class TAO_Bounded_Sequence<Param_Test::Fixed_Struct,32>;
 template class TAO_Unbounded_Object_Sequence<Coffee,Coffee_var>;
 template class TAO_Bounded_Object_Sequence<Coffee,Coffee_var,32>;
-template class TAO_Object_Manager<Coffee,Coffee_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::Any>
 #pragma instantiate TAO_Bounded_Sequence<CORBA::Long,32>
@@ -28,5 +27,4 @@ template class TAO_Object_Manager<Coffee,Coffee_var>;
 #pragma instantiate TAO_Bounded_Sequence<Param_Test::Fixed_Struct,32>
 #pragma instantiate TAO_Unbounded_Object_Sequence<Coffee,Coffee_var>
 #pragma instantiate TAO_Bounded_Object_Sequence<Coffee,Coffee_var,32>
-#pragma instantiate TAO_Object_Manager<Coffee,Coffee_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

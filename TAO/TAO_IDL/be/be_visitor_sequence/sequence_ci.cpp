@@ -56,12 +56,12 @@ be_visitor_sequence_ci::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ci::"
                          "visit_sequence - "
-                         "codegen. for the primitive type sequence\n"), 
+                         "codegen. for the primitive type sequence\n"),
                         -1);
     }
 
   // end of instantiation
-  
+
   // generate the ifdefined macro for the sequence type
   os->gen_ifdef_macro (node->flatname ());
 
@@ -116,7 +116,7 @@ be_visitor_sequence_ci::instantiate_sequence (be_sequence *node)
     case be_sequence::MNG_STRING: // sequence of strings
       if (!node->unbounded ())
         this->gen_bounded_str_sequence (node);
-      // else 
+      // else
       //   inheriting from the right class is enough
       break;
     default: // not a managed type
@@ -128,9 +128,9 @@ be_visitor_sequence_ci::instantiate_sequence (be_sequence *node)
 	  be_predefined_type *predef = 0;
 	  if (bt->base_node_type () == AST_Type::NT_pre_defined)
 	    {
-	      be_typedef* alias = 
+	      be_typedef* alias =
 		be_typedef::narrow_from_decl (bt);
-	      
+
 	      if (alias == 0)
 		{
 		  predef =
@@ -151,7 +151,7 @@ be_visitor_sequence_ci::instantiate_sequence (be_sequence *node)
 	    this->gen_unbounded_sequence (node);
 #else
 	  // @@ This needs to be fixed. (Michael)
-	  be_predefined_type * bpt = 
+	  be_predefined_type * bpt =
 	    be_predefined_type::narrow_from_decl (node->base_type());
 	  if (bpt)
 	    {
@@ -475,7 +475,7 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (const " << fname <<
     " &p) // copy constructor" << be_nl;
-  *os << "  : ptr_ (ACE_const_cast (" << fname 
+  *os << "  : ptr_ (ACE_const_cast (" << fname
       << "&,p).ptr_)" << be_nl;
   *os << "{}\n\n";
 
@@ -486,7 +486,7 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
     " &p)" << be_nl;
   *os << "{\n";
   os->incr_indent ();
-  *os << "this->ptr_ = ACE_const_cast (" << fname 
+  *os << "this->ptr_ = ACE_const_cast (" << fname
       << "&,p).ptr_;" << be_nl;
   *os << "return *this;\n";
   os->decr_indent ();

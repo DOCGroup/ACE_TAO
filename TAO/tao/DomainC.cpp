@@ -346,11 +346,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManager_ptr 
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA_DomainManager>;
+  template class TAO_Object_Field_T<CORBA_DomainManager,CORBA_DomainManager_var>;
   template class TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>;
   template class TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Field_T<CORBA_DomainManager>
+# pragma instantiate TAO_Object_Field_T<CORBA_DomainManager,CORBA_DomainManager_var>
 # pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>
 # pragma instantiate TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -408,9 +408,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ConstructionPolicy
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA_ConstructionPolicy>;
+  template class TAO_Object_Field_T<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Field_T<CORBA_ConstructionPolicy>
+# pragma instantiate TAO_Object_Field_T<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */
