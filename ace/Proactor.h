@@ -102,6 +102,9 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #else /* NOT WIN32 */
+
+#include "ace/Timer_Queue.h"
+
 class ACE_Export ACE_Proactor
 {
 public:

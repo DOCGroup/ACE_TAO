@@ -52,7 +52,7 @@ JAWS_VFS_Node::open (int flags)
       handle_ = ACE_INVALID_HANDLE;
     }
 
-  this->handle_ = ACE_OS::open (this->path_, flags);
+  this->handle_ = ACE_OS::open (this->path_, flags, S_IRUSR|S_IRGRP|S_IROTH|S_IWUSR|S_IWGRP|S_IWOTH);
   if (this->handle_ == ACE_INVALID_HANDLE) 
     {
       switch (errno) 
