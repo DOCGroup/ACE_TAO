@@ -45,7 +45,7 @@ Echo_Client_Request_Interceptor::preinvoke (CORBA::ULong rid,
   ACE_NEW (buf,
            CORBA::Octet [string_len]);
 
-  ACE_OS::strcpy (ACE_static_cast (char *, buf), request_msg);
+  ACE_OS::strcpy (ACE_reinterpret_cast (char *, buf), request_msg);
   sc[length].context_data.replace (string_len, string_len, buf, 1);
 }
 
@@ -67,7 +67,7 @@ Echo_Client_Request_Interceptor::postinvoke (CORBA::ULong rid,
   for (CORBA::ULong size = 0; size < sc.length (); ++size)
     if (sc[size].context_id == reply_ctx_id)
       {
-        const char *buf = ACE_static_cast (const char *, sc[size].context_data.get_buffer ());
+        const char *buf = ACE_reinterpret_cast (const char *, sc[size].context_data.get_buffer ());
         ACE_DEBUG ((LM_DEBUG,
                     "  Received service context: %s\n",
                     buf));
@@ -117,7 +117,7 @@ Echo_Server_Request_Interceptor::preinvoke (CORBA::ULong rid,
   for (CORBA::ULong size = 0; size < sc.length (); ++size)
     if (sc[size].context_id == request_ctx_id)
       {
-        const char *buf = ACE_static_cast (const char *, sc[size].context_data.get_buffer ());
+        const char *buf = ACE_reinterpret_cast (const char *, sc[size].context_data.get_buffer ());
         ACE_DEBUG ((LM_DEBUG,
                     "  Received service context: %s\n",
                     buf));
@@ -149,7 +149,7 @@ Echo_Server_Request_Interceptor::postinvoke (CORBA::ULong rid,
   ACE_NEW (buf,
            CORBA::Octet [string_len]);
 
-  ACE_OS::strcpy (ACE_static_cast (char *, buf), reply_msg);
+  ACE_OS::strcpy (ACE_reinterpret_cast (char *, buf), reply_msg);
   sc[length].context_data.replace (string_len, string_len, buf, 1);
 }
 
