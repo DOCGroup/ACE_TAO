@@ -1,3 +1,11 @@
+Wed Sep 20 11:51:03 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp :
+	 
+	  Modified the mprofile_helper so that a object reference
+	  consisting of multiple endpoints is returned instead of just
+	  returning a object reference with a single endpoint.
+	
 Wed Sep 20 11:25:31 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/examples/Makefile (DIRS):

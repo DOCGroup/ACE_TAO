@@ -246,13 +246,16 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (ACE_Array_Base <char *>  &add
   // Make one MProfile for all of these endpoints
   TAO_MProfile mprofile;
 
+  CORBA::Object_ptr obj = CORBA::Object::_nil ();
+  
   for (CORBA::ULong j = 0; j != count_addr; ++j)
     {
-      CORBA::Object_ptr obj = CORBA::Object::_nil ();
-
+      TAO_MProfile jth_mprofile;
+      // = new TAO_MProfile;
+      
       int retv =
         orb->orb_core ()->connector_registry ()->make_mprofile (addr [j],
-                                                                mprofile,
+                                                                jth_mprofile,
                                                                 ACE_TRY_ENV);
 
       ACE_CHECK_RETURN (CORBA::Object::_nil ());   // Return nil.
@@ -266,32 +269,44 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (ACE_Array_Base <char *>  &add
                               CORBA::COMPLETED_NO),
                             CORBA::Object::_nil ());
         }
-
-      // Now make the TAO_Stub.
-      TAO_Stub *data = 0;
-      ACE_NEW_THROW_EX (data,
-                        TAO_Stub ((char *) 0, mprofile,
-                                  orb->orb_core ()),
-                        CORBA::NO_MEMORY (
-                          CORBA_SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-      TAO_Stub_Auto_Ptr safe_data (data);
-
-      obj = orb->orb_core ()->create_object (data);
-      if (!CORBA::is_nil (obj))
+      
+      // Add this profile to the main mprofile.
+      TAO_MProfile *jth_mprofile_ptr = &jth_mprofile;
+      
+      int result = mprofile.add_profiles (jth_mprofile_ptr);
+      
+      if (result == -1)
         {
-          // All is well, so release the stub object from its
-          // auto_ptr.
-          (void) safe_data.release ();
-
-          // and return the object reference to the application.
-          return obj;
+          // The profle is not added. Either ways, go to the
+          // next endpoint. 
         }
     }
+  
+  // Now make the TAO_Stub.
+  TAO_Stub *data = 0;
+  ACE_NEW_THROW_EX (data,
+                    TAO_Stub ((char *) 0, mprofile,
+                              orb->orb_core ()),
+                    CORBA::NO_MEMORY (
+                       CORBA_SystemException::_tao_minor_code (
+                          TAO_DEFAULT_MINOR_CODE,
+                          ENOMEM),
+                       CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  
+  TAO_Stub_Auto_Ptr safe_data (data);
+  
+  obj = orb->orb_core ()->create_object (data);
+  if (!CORBA::is_nil (obj))
+    {
+      // All is well, so release the stub object from its
+      // auto_ptr.
+      (void) safe_data.release ();
+      
+      // and return the object reference to the application.
+      return obj;
+    }
+
 
   return CORBA::Object::_nil ();
 }
