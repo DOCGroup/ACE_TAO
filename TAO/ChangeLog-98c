@@ -1,3 +1,16 @@
+Fri Jan 16 23:38:38 1998    <coryan@MILONGA>
+
+	* tao/decode.cpp: 
+	* tao/deep_free.cpp: 
+	* tao/giop.h: 
+	* tao/iiopobj.cpp: 
+	* tao/sequence.h: 
+	* tao/sequence_T.h: 
+	* tao/sequence_T.cpp: 
+	  Fixed some memory *deallocation* problems with sequences, they
+	  needed a _deallocate_buffer() method, not to implement the base
+	  class destructor, but to implement deep_free.
+
 Fri Jan 16 18:01:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* The Event Service works on Solaris/SunCC again.
