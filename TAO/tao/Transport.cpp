@@ -1970,14 +1970,12 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
     }
 
   // Process the message...
-  if (this->process_parsed_messages (qd,
-                                     rh) == -1)
-    return -1;
+  int retval = this->process_parsed_messages (qd, rh);
 
   // Delete the Queued_Data..
   TAO_Queued_Data::release (qd);
 
-  return 0;
+  return retval;
 }
 
 int

@@ -1,3 +1,20 @@
+Thu Mar 20 12:34:24 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* all: First merge back to OCI.
+
+Thu Mar 20 12:17:23 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/Strategies/DIOP_Transport.cpp (handle_input_i):
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
+	  (handle_input_i):
+
+	  Update to use new parsing and message processing methods
+	  consistent with PMB changes.
+
+	* tao/Transport.cpp (process_queue_head): Corrected a possible memory
+	  leak where, if process_parsed_messages returned with an error,
+	  the TAO_Queued_Data instance wouldn't be released.
+
 Tue Mar 18 14:57:07 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* VERSION:
