@@ -483,7 +483,7 @@ CORBA_ORB::resolve_service (const char *service_name,
                 ACE_OS::getenv ("NameServicePort");
 
               if (port_number != 0)
-                port = ACE_OS::atoi (port_number);
+                port = (u_short) ACE_OS::atoi (port_number);
               else
                 port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
             }
@@ -544,7 +544,7 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
               const char *port_number = ACE_OS::getenv ("TradingServicePort");
 
               if (port_number != 0)
-                port = ACE_OS::atoi (port_number);
+                port = (u_short) ACE_OS::atoi (port_number);
               else
                 port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
             }
@@ -603,7 +603,7 @@ CORBA_ORB::resolve_implrepo_service (ACE_Time_Value *timeout,
                 const char *port_number = ACE_OS::getenv ("ImplRepoServicePort");
 
                 if (port_number != 0)
-                  port = ACE_OS::atoi (port_number);
+                  port = (u_short) ACE_OS::atoi (port_number);
                 else
                   port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
               }
@@ -658,11 +658,11 @@ CORBA_ORB::multicast_query (char *&buf,
         {
           // Convert the acceptor port into network byte order.
           ACE_UINT16 response_port =
-            ACE_HTONS (my_addr.get_port_number ());
+            (ACE_UINT16) ACE_HTONS (my_addr.get_port_number ());
 
           // Length of service name we will send.
           CORBA::Short data_len =
-            ACE_HTONS (ACE_OS::strlen (service_name) + 1);
+            (CORBA::Short) ACE_HTONS (ACE_OS::strlen (service_name) + 1);
 
           // Vector we will send.  It contains: 1) length of service
           // name string, 2)port on which we are listening for
@@ -740,7 +740,7 @@ CORBA_ORB::multicast_query (char *&buf,
                     {
                       // Allocate more space for the ior if we don't
                       // have enough.
-                      ior_len = ACE_NTOHS (ior_len);
+                      ior_len = (CORBA::Short) ACE_NTOHS (ior_len);
                       if (ior_len > TAO_DEFAULT_IOR_SIZE)
                         {
                           buf = CORBA::string_alloc (ior_len);
@@ -1626,7 +1626,7 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
   ACE_NEW_THROW_EX (obj,
                     CORBA_Object (data,
                                   servant,
-                                  collocated),
+                                  (CORBA::Boolean) collocated),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -1823,7 +1823,7 @@ operator<< (TAO_OutputCDR& cdr, const TAO_opaque& x)
   else
     cdr.write_octet_array_mb (x.mb ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
-  return cdr.good_bit ();
+  return (CORBA::Boolean) cdr.good_bit ();
 }
 
 CORBA::Boolean
@@ -1839,7 +1839,7 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
   x.mb ()->wr_ptr (x.mb ()->rd_ptr () + length);
   cdr.skip_bytes (length);
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
-  return cdr.good_bit ();
+  return (CORBA::Boolean) cdr.good_bit ();
 }
 
 // *************************************************************

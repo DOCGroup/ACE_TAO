@@ -199,7 +199,7 @@ TAO_Stub::set_valid_profile (void)
 ACE_INLINE CORBA::Boolean
 TAO_Stub::valid_profile (void)
 {
-  return profile_success_;
+  return (CORBA::Boolean) profile_success_;
 }
 
 ACE_INLINE TAO_Profile *

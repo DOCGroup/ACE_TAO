@@ -560,7 +560,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
 
           while (bounds-- && continue_skipping == 1)
             {
-              continue_skipping = stream->skip (tc2, ACE_TRY_ENV);
+              continue_skipping = (CORBA::Boolean) stream->skip (tc2, ACE_TRY_ENV);
               ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
             }
           if (continue_skipping)
@@ -601,7 +601,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
 
   while (bounds-- && continue_skipping == 1)
     {
-      continue_skipping = stream->skip (tc2, ACE_TRY_ENV);
+      continue_skipping = (CORBA::Boolean) stream->skip (tc2, ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
     }
 

@@ -596,11 +596,11 @@ TAO_Object_Adapter::poa_name_iterator::poa_name_iterator (int begin,
                                                           const CORBA::Octet *folded_buffer)
   : size_ (size),
     folded_buffer_ (folded_buffer),
-    last_separator_ (~0)
+    last_separator_ ((CORBA::ULong) ~0)
 {
   if (begin)
     {
-      this->position_ = ~0;
+      this->position_ = (CORBA::ULong) ~0;
       this->operator++ ();
     }
   else

@@ -1055,17 +1055,15 @@ TAO_CDR_Interpreter::calc_union_attr_is_var_sized_member
   (TAO_InputCDR *stream,
    CORBA::Boolean &flag)
 {
-    CORBA::ULong temp;
+    CORBA::Long temp;
     flag = 0;
 
     // Get the tk_ "kind"  field
-    if (stream->read_ulong (temp) == 0)
+    if (stream->read_long (temp) == 0)
       // Error.
     return -1;
 
-  CORBA::TCKind kind = (CORBA::TCKind) temp;
-
-  switch (kind)
+  switch (temp)
     {
     case CORBA::tk_null:
     case CORBA::tk_void:

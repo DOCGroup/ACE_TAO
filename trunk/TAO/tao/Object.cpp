@@ -476,7 +476,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA_Object* x)
       cdr.write_ulong (1);
       cdr.write_char ('\0');
       cdr.write_ulong (0);
-      return cdr.good_bit ();
+      return (CORBA::Boolean) cdr.good_bit ();
     }
 
   TAO_Stub *stubobj = x->_stubobj ();
@@ -503,7 +503,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA_Object* x)
       if (p->encode (cdr) == 0)
         return 0;
     }
-  return cdr.good_bit ();
+  return (CORBA::Boolean) cdr.good_bit ();
 }
 
 CORBA::Boolean
@@ -521,7 +521,7 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   if (profile_count == 0)
     {
       x = CORBA::Object::_nil ();
-      return cdr.good_bit ();
+      return (CORBA::Boolean) cdr.good_bit ();
     }
 
   // get a profile container to store all profiles in the IOR.
@@ -578,14 +578,18 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
     collocated = 1;
 
   // Create a new CORBA_Object and give it the TAO_Stub just created.
-  ACE_NEW_RETURN (x, CORBA_Object (objdata, servant, collocated), 0);
+  ACE_NEW_RETURN (x, 
+                  CORBA_Object (objdata, 
+                                servant, 
+                                (CORBA::Boolean) collocated), 
+                  0);
 
   // the corba proxy would have already incremented the reference count on
   // the objdata. So we decrement it here by 1 so that the objdata is now
   // fully owned by the corba_proxy that was created.
   // objdata->_decr_refcnt ();
 
-  return cdr.good_bit ();
+  return (CORBA::Boolean) cdr.good_bit ();
 }
 
 // ****************************************************************

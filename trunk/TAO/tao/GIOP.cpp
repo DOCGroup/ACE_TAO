@@ -307,7 +307,7 @@ operator<< (TAO_OutputCDR &cdr,
        ++i)
     cdr << x[i];
 
-  return cdr.good_bit ();
+  return (CORBA::Boolean) cdr.good_bit ();
 }
 
 CORBA::Boolean
@@ -327,7 +327,7 @@ operator>> (TAO_InputCDR &cdr,
            ++i)
         cdr >> x[i];
     }
-  return cdr.good_bit ();
+  return (CORBA::Boolean) cdr.good_bit ();
 }
 
 CORBA::Boolean
@@ -1459,7 +1459,7 @@ TAO_GIOP::start_message_std (const TAO_GIOP_Version &version,
   msg.write_octet (version.major);
   msg.write_octet (version.minor);
   msg.write_octet (TAO_ENCAP_BYTE_ORDER);
-  msg.write_octet (type);
+  msg.write_octet ((CORBA::Octet) type);
 
   // Write a dummy <size> later it is set to the right value...
   CORBA::ULong size = 0;
@@ -1480,7 +1480,7 @@ TAO_GIOP::start_message_lite (const TAO_GIOP_Version &,
   CORBA::ULong size = 0;
   msg.write_ulong (size);
 
-  msg.write_octet (type);
+  msg.write_octet ((CORBA::Octet) type);
 
   return 1;
 }
@@ -1583,8 +1583,8 @@ TAO_GIOP::parse_header_std (TAO_InputCDR &input,
     }
   else
     {
-      state.byte_order     = buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
-      state.more_fragments = buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x02;
+      state.byte_order     = (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01);
+      state.more_fragments = (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x02);
       if (TAO_debug_level > 2
           && state.giop_version.minor == 1
           && (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
