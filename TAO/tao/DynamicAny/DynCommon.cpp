@@ -482,7 +482,19 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
       if (good_type)
         {
           TAO_OutputCDR cdr;
-          value->marshal (cdr);
+
+          if (CORBA::is_nil (value))
+            {
+              // Empty type hint, no profile.
+              cdr.write_ulong (1);
+              cdr.write_char ('\0');
+              cdr.write_ulong (0);
+            }
+          else
+            {
+              value->marshal (cdr);
+            }
+
           TAO::Unknown_IDL_Type *unk = 0;
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (this->type_.in (),
