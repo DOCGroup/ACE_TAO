@@ -1,4 +1,3 @@
-// Array.cpp
 // $Id$
 
 #if !defined (ARRAY_C)
@@ -23,7 +22,7 @@ ACE_Array<T>::ACE_Array (size_t size)
 
 template <class T>
 ACE_Array<T>::ACE_Array (size_t size,
-		 const T &default_value)
+                 const T &default_value)
   : max_size_ (size),
     cur_size_ (size)
 {
@@ -118,12 +117,21 @@ ACE_Array<T>::operator== (const ACE_Array<T> &s) const
   return 1;
 }
 
-// Compare this array with <s> for inequality.
-
 template <class T> int
-ACE_Array<T>::operator!= (const ACE_Array<T> &s) const
+ACE_Array_Iterator<T>::next (T *&item)
 {
-  return !(*this == s);
+  // ACE_TRACE ("ACE_Array_Iterator<T>::next");
+
+  if (this->done ())
+    {
+      item = 0;
+      return 0;
+    }
+  else
+    {
+      item = &array_[current_];
+      return 1;
+    }
 }
 
 #endif /* ARRAY_C */
