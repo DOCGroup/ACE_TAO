@@ -3,9 +3,10 @@
 
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
-#include "shared.h"
 
 #if defined (ACE_HAS_STREAM_PIPES)
+
+#include "shared.h"
 
 const int DEFAULT_SIZE = 4 * 1024;
 const int DEFAULT_COUNT = 100;

@@ -3,9 +3,10 @@
 
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
-#include "shared.h"
 
 #if defined (ACE_HAS_STREAM_PIPES)
+
+#include "shared.h"
 
 int 
 main (int argc, char *argv[])
