@@ -6,9 +6,6 @@ TAO_Active_Object_Map::is_servant_in_map (PortableServer::Servant servant)
   return this->id_uniqueness_strategy_->is_servant_in_map (servant);
 }
 
-// @@ Irfan, a lot of these methods are rather large -- should we
-// really be trying to inline them all?!
-
 ACE_INLINE int
 TAO_Active_Object_Map::is_user_id_in_map (const PortableServer::ObjectId &user_id)
 {
