@@ -1,3 +1,11 @@
+Fri Dec 19 01:27:00 UTC 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* examples/Reactor/WFMO_Reactor/Abandoned.cpp (handle_timeout): 
+
+	  Must remove handler from the Reactor before the handler dies.
+	  Otherwise, a call back from the Reactor will result in a seg
+	  fault.
+
 Fri Dec 19 01:26:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Process_Mutex.cpp:

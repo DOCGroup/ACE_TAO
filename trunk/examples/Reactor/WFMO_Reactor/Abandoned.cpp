@@ -92,6 +92,9 @@ Event_Handler::handle_timeout (const ACE_Time_Value &,
     {
       ACE_Reactor::instance ()->remove_handler (this->handle_.handle (),
                                                 ACE_Event_Handler::DONT_CALL);
+
+      ACE_Reactor::instance ()->cancel_timer (this);
+
       ACE_Reactor::end_event_loop ();
     }
   else
