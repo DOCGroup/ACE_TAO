@@ -484,7 +484,8 @@ public:
                int grp_id = -1,
                void *stack[] = 0,
                size_t stack_size[] = 0,
-               ACE_hthread_t thread_handles[] = 0);
+               ACE_hthread_t thread_handles[] = 0,
+               ACE_Task_Base *task = 0);
   // Spawn N new threads, which execute <func> with argument <arg>.
   // If <thread_ids> != 0 the thread_ids of successfully spawned
   // threads will be placed into the <thread_ids> buffer (which must

@@ -131,7 +131,8 @@ ACE_Task_Base::activate (long flags,
                                grp_id,
                                stack,
                                stack_size,
-                               thread_handles);
+                               thread_handles,
+                               task);
   if (grp_spawned == -1)
     {
       // If spawn_n fails, restore original thread count.

@@ -702,7 +702,8 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
                              int grp_id,
                              void *stack[],
                              size_t stack_size[],
-                             ACE_hthread_t thread_handles[])
+                             ACE_hthread_t thread_handles[],
+                             ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn_n");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -722,7 +723,8 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
                          priority,
                          grp_id,
                          stack == 0 ? 0 : stack[i],
-                         stack_size == 0 ? 0 : stack_size[i]) == -1)
+                         stack_size == 0 ? 0 : stack_size[i],
+                         task) == -1)
         return -1;
     }
 
