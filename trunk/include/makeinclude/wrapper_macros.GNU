@@ -127,8 +127,12 @@
 
 #### Default to building shared libraries only.  Set it here to give the
 #### platform a chance to override.
-shared_libs = 1
-static_libs = 0
+ifeq ($(shared_libs),)
+  shared_libs = 1
+endif # shared_libs
+ifeq ($(static_libs),)
+  static_libs = 0
+endif # static_libs
 
 #### Let platform just look at whether or not exceptions is defined.
 #### With the following override, it doesn't have to check for 0.
