@@ -147,15 +147,15 @@
   // but we'd have to do that consistently in all config files.
 #   define ACE_SIZEOF_LONG_LONG 8
 #   if ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8
-#     if defined (__Lynx__)
-        typedef unsigned long long ACE_UINT64;
-#     elif defined (__GNUG__)
+#     if defined (__GNUG__) && !defined (__Lynx__) && \
+         (!defined (linux) || defined (__GLIBC__))
         // So that g++ -pedantic doesn't complain about no ANSI C++ long long.
-        // (The g++ that ships with LynxOS 2.5.0 doesn't have u_longlong_t.)
         typedef u_longlong_t ACE_UINT64;
 #     else
+        // The g++ that ships with LynxOS 2.5.0 doesn't have u_longlong_t.
+        // Same for Linux prior to glibc 2.0.
         typedef unsigned long long ACE_UINT64;
-#     endif /* __GNUG__ */
+#     endif /* __GNUG__ && !__Lynx__ && (!inux || __GLIBC__) */
 #   endif /* ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8 */
 # else /* ! ACE_HAS_LONGLONG_T */
 
