@@ -31,9 +31,13 @@
 typedef ACE_QoS ATM_QoS;
 #elif defined (ACE_HAS_FORE_ATM_XTI)
 typedef struct netbuf ATM_QoS;
+#elif defined (ACE_HAS_LINUX_ATM)
+#include "atm.h"
+#include "ATM_Params.h"
+typedef struct atm_qos ATM_QoS;
 #else
 typedef int ATM_QoS;
-#endif /* ACE_HAS_FORE_ATM_WS2 */
+#endif /* ACE_HAS_FORE_ATM_WS2 || ACE_HAS_FORE_ATM_XTI || ACE_HAS_LINUX_ATM */
 
 class ACE_Export ACE_ATM_QoS
 {
@@ -50,12 +54,14 @@ public:
   static const int OPT_FLAGS_CPID;
   static const int OPT_FLAGS_PMP;
   static const int DEFAULT_SELECTOR;
+  static const int DEFAULT_PKT_SIZE;
 
   // = Initializattion and termination methods.
-  ACE_ATM_QoS ();
+  ACE_ATM_QoS(int = DEFAULT_PKT_SIZE);
   // Default constructor.
 
-  ACE_ATM_QoS( int );
+  ACE_ATM_QoS(int,
+              int = DEFAULT_PKT_SIZE);
   // Constructor with a CBR rate.
 
   ~ACE_ATM_QoS ();
@@ -65,7 +71,8 @@ public:
                  int);
   // Set the rate.
 
-  void set_cbr_rate (int);
+  void set_cbr_rate (int,
+                     int = DEFAULT_PKT_SIZE);
   // Set CBR rate in cells per second.
 
   ATM_QoS get_qos (void);

@@ -12,21 +12,48 @@ ACE_RCSID(ace, ATM_QoS, "$Id$")
 
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
 #define BHLI_MAGIC "FORE_ATM"
-  // This is line rate in cells/s for an OC-3 MM interface.
-  const long ACE_ATM_QoS::LINE_RATE = 353207;
+// This is line rate in cells/s for an OC-3 MM interface.
+const long ACE_ATM_QoS::LINE_RATE = 353207;
 const int ACE_ATM_QoS::OPT_FLAGS_CPID = 0x1;
 const int ACE_ATM_QoS::OPT_FLAGS_PMP = 0x2;
 const int ACE_ATM_QoS::DEFAULT_SELECTOR = 0x99;
+const int ACE_ATM_QoS::DEFAULT_PKT_SIZE = 8192;
+#elif defined (ACE_HAS_LINUX_ATM)
+//pbrandao:for Linux:
+//pbrandao:for now stick with current definitions
+//pbrandao:see if later need to change
+const long ACE_ATM_QoS::LINE_RATE = 353207;
+const int ACE_ATM_QoS::OPT_FLAGS_CPID = 0x1;
+const int ACE_ATM_QoS::OPT_FLAGS_PMP = 0x2;
+const int ACE_ATM_QoS::DEFAULT_SELECTOR = 0x99;
+const int ACE_ATM_QoS::DEFAULT_PKT_SIZE = 8192;
 #else
 const long ACE_ATM_QoS::LINE_RATE = 0L;
 const int ACE_ATM_QoS::OPT_FLAGS_CPID = 0;
 const int ACE_ATM_QoS::OPT_FLAGS_PMP = 0;
 const int ACE_ATM_QoS::DEFAULT_SELECTOR = 0x0;
-#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
+const int ACE_ATM_QoS::DEFAULT_PKT_SIZE = 0;
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_QoS)
 
-  ACE_ATM_QoS::ACE_ATM_QoS( int rate )
+ACE_ATM_QoS::ACE_ATM_QoS (int pktSize)
+{
+  ACE_TRACE ("ACE_ATM_QoS::ACE_ATM_QoS");
+#if defined (ACE_HAS_LINUX_ATM)
+    ACE_OS::memset(&qos_, 0, sizeof(qos_));
+    qos_.aal = ATM_PROTOCOL_DEFAULT;
+    qos_.rxtp.traffic_class = ATM_ANYCLASS;
+    qos_.rxtp.max_sdu = pktSize;
+    qos_.txtp.traffic_class = ATM_ANYCLASS;
+    qos_.txtp.max_sdu = pktSize;
+#else
+    ACE_UNUSED_ARG (pktSize);
+#endif /* ACE_HAS_LINUX_ATM */
+}
+
+ACE_ATM_QoS::ACE_ATM_QoS(int rate,
+                         int pktSize)
 {
   ACE_TRACE( "ACE_ATM_QoS::ACE_ATM_QoS" );
 #if defined (ACE_HAS_FORE_ATM_WS2)
@@ -40,9 +67,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_ATM_QoS)
   // Setting up cbr parameters ...
   ie_aalparams.AALType = AALTYPE_5;
   ie_aalparams.AALSpecificParameters.AAL5Parameters.ForwardMaxCPCSSDUSize 
-    = 1516; //8096;
+    = pktSize; // was 1516;
   ie_aalparams.AALSpecificParameters.AAL5Parameters.BackwardMaxCPCSSDUSize 
-    = 1516; //8096;
+    = pktSize; // was 1516;
   ie_aalparams.AALSpecificParameters.AAL5Parameters.Mode = AAL5_MODE_MESSAGE;
   ie_aalparams.AALSpecificParameters.AAL5Parameters.SSCSType = AAL5_SSCS_NULL;
 
@@ -87,6 +114,12 @@ ACE_ALLOC_HOOK_DEFINE(ACE_ATM_QoS)
   size += sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(ATM_QOS_CLASS_IE);
 
   qos_.ProviderSpecific.buf = (char *) ACE_OS::malloc(size);
+  if (qos_.ProviderSpecific.buf == 0) {
+    ACE_ERROR((LM_ERROR,
+               ASYS_TEXT("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
+               size));
+    return;
+  }
   qos_.ProviderSpecific.len = size;
   ACE_OS::memset(qos_.ProviderSpecific.buf, 0, size);
 
@@ -167,13 +200,34 @@ ACE_ALLOC_HOOK_DEFINE(ACE_ATM_QoS)
   qos_.receiving_flowspec( recv_fspec );
 #elif defined (ACE_HAS_FORE_ATM_XTI)
   ACE_UNUSED_ARG (rate);
+  ACE_UNUSED_ARG (pktSize);
+#elif defined (ACE_HAS_LINUX_ATM)
+  ACE_OS::memset(&qos_,
+                 0,
+                 sizeof(qos_));
+  qos_.aal = ATM_PROTOCOL_DEFAULT;
+  qos_.rxtp.max_sdu = pktSize;
+
+  if (rate > 0) {
+    qos_.rxtp.pcr = rate;  
+    qos_.rxtp.traffic_class = ATM_CBR;
+    qos_.txtp.traffic_class = ATM_CBR;
+    qos_.txtp.pcr = rate;   
+  }
+  else {
+    qos_.rxtp.traffic_class = ATM_UBR;
+    qos_.txtp.traffic_class = ATM_UBR;
+  }
+
+  qos_.txtp.max_sdu = pktSize;
 #else
   ACE_UNUSED_ARG (rate);
-#endif /* ACE_HAS_FORE_ATM_WS2 */
+#endif /* ACE_HAS_FORE_ATM_WS2 || ACE_HAS_FORE_ATM_XTI || ACE_HAS_LINUX_ATM */
 }
 
 void
-ACE_ATM_QoS::set_cbr_rate (int rate)
+ACE_ATM_QoS::set_cbr_rate (int rate,
+                           int pktSize)
 {
   ACE_TRACE ("ACE_ATM_QoS::set_cbr_rate");
 #if defined (ACE_HAS_FORE_ATM_WS2)
@@ -193,9 +247,9 @@ ACE_ATM_QoS::set_cbr_rate (int rate)
   FORE has changed this - we no longer specify QoS this way
   ie_aalparams.AALType = AALTYPE_5;
   ie_aalparams.AALSpecificParameters.AAL5Parameters.ForwardMaxCPCSSDUSize 
-    = 1516; //8096;
+    = pktSize; // was 1516;
   ie_aalparams.AALSpecificParameters.AAL5Parameters.BackwardMaxCPCSSDUSize 
-    = 1516; //8096;
+    = pktSize; // was 1516;
   ie_aalparams.AALSpecificParameters.AAL5Parameters.Mode = AAL5_MODE_MESSAGE;
   ie_aalparams.AALSpecificParameters.AAL5Parameters.SSCSType = AAL5_SSCS_NULL;
 
@@ -240,6 +294,12 @@ ACE_ATM_QoS::set_cbr_rate (int rate)
   size += sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(ATM_QOS_CLASS_IE);
 
   qos_.ProviderSpecific.buf = (char *) ACE_OS::malloc(size);
+  if (qos_.ProviderSpecific.buf == 0) {
+    ACE_ERROR((LM_ERROR,
+               ASYS_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
+               size));
+    return;
+  }
   qos_.ProviderSpecific.len = size;
   ACE_OS::memset(qos_.ProviderSpecific.buf, 0, size);
 
@@ -342,9 +402,17 @@ ACE_ATM_QoS::set_cbr_rate (int rate)
   */
 #elif defined (ACE_HAS_FORE_ATM_XTI)
   ACE_UNUSED_ARG (rate);
+  ACE_UNUSED_ARG (pktSize);
+#elif defined (ACE_HAS_LINUX_ATM)
+  ACE_UNUSED_ARG (pktSize);
+
+  qos_.rxtp.traffic_class = ATM_CBR;
+  qos_.rxtp.pcr = rate;    
+  qos_.txtp.traffic_class = ATM_CBR;
+  qos_.txtp.pcr = rate;    
 #else
   ACE_UNUSED_ARG (rate);
-#endif /* ACE_HAS_FORE_ATM_WS2 */
+#endif /* ACE_HAS_FORE_ATM_WS2 || ACE_HAS_FORE_ATM_XTI || ACE_HAS_LINUX_ATM */
 }
 
 void
@@ -359,7 +427,7 @@ ACE_ATM_QoS::set_rate (ACE_HANDLE fd,
                        int flags)
 {
   ACE_TRACE ("ACE_ATM_QoS::set_rate");
-#if defined (ACE_HAS_FORE_ATM_WS2)
+#if defined (ACE_HAS_FORE_ATM_WS2) || defined (ACE_HAS_LINUX_ATM)
   set_cbr_rate( rate );
   
   ACE_UNUSED_ARG( fd );
@@ -373,7 +441,7 @@ ACE_ATM_QoS::set_rate (ACE_HANDLE fd,
   qos_.len = optlen;
 #else
   ACE_UNUSED_ARG (rate);
-#endif /* ACE_HAS_FORE_ATM_WS2 */
+#endif /* ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM || ACE_HAS_FORE_ATM_XTI */
 }
 
 char*
@@ -382,7 +450,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
                                 int flags,
                                 long *len)
 {
-#if defined (ACE_HAS_FORE_ATM_WS2)
+#if defined (ACE_HAS_FORE_ATM_WS2) || defined (ACE_HAS_LINUX_ATM)
   ACE_UNUSED_ARG (fd);
   ACE_UNUSED_ARG (rate);
   ACE_UNUSED_ARG (flags);

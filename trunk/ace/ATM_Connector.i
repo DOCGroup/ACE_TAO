@@ -85,6 +85,15 @@ ACE_ATM_Connector::add_leaf (ACE_ATM_Stream &current_stream,
                     ::WSAGetLastError());
   
   return (result != ACE_INVALID_HANDLE);
+#elif defined (ACE_HAS_LINUX_ATM)
+  ACE_OS::printf("ATM_Connector(add_leaf): not yet implemented in Linux \n");
+
+  ACE_UNUSED_ARG(current_stream);
+  ACE_UNUSED_ARG(remote_sap);
+  ACE_UNUSED_ARG(leaf_id);
+  ACE_UNUSED_ARG(timeout);
+
+  return 0;
 #else
   ACE_UNUSED_ARG(current_stream);
   ACE_UNUSED_ARG(remote_sap);

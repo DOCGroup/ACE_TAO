@@ -36,11 +36,18 @@ typedef struct netbuf Param_Udata;
 #define ACE_XTI_ATM_DEVICE ""
 typedef int Param_Info;
 typedef int Param_Udata;
+#elif defined (ACE_HAS_LINUX_ATM)
+#include "atm.h"
+#define AF_ATM PF_ATMSVC
+#define ACE_XTI_ATM_DEVICE ""
+#define ATM_PROTOCOL_DEFAULT ATM_AAL5
+typedef int Param_Info;
+typedef int Param_Udata;
 #else
 #define ACE_XTI_ATM_DEVICE ""
 typedef int Param_Info;
 typedef int Param_Udata;
-#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 
 class ACE_Export ACE_ATM_Params
 {
@@ -55,7 +62,12 @@ public:
                   int oflag = O_RDWR,
                   int protocol_family = AF_ATM,
                   int protocol = ATM_PROTOCOL_DEFAULT,
-                  int type = SOCK_RAW,
+                  int type = 
+#if defined (ACE_HAS_LINUX_ATM)
+                  SOCK_DGRAM,
+#else
+                  SOCK_RAW,
+#endif /* ACE_HAS_LINUX_ATM */
                   ACE_Protocol_Info *protocol_info = 0,
                   ACE_SOCK_GROUP g = 0,
                   u_long flags 

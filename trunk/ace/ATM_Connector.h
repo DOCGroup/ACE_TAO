@@ -28,7 +28,7 @@
 
 #if defined (ACE_HAS_ATM)
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (ACE_HAS_LINUX_ATM)
 #include "SOCK_Connector.h"
 typedef ACE_SOCK_Connector ATM_Connector;
 #else
@@ -74,19 +74,20 @@ public:
   // the user is letting the OS do the binding.  If <reuse_addr> == 1
   // then the <local_addr> is reused, even if it hasn't been cleanedup yet.
 
-  connect (ACE_ATM_Stream &new_stream,
-           const ACE_ATM_Addr &remote_sap,
-           ACE_ATM_Params params = ACE_ATM_Params(),
-           ACE_ATM_QoS options = ACE_ATM_QoS(),
-           ACE_Time_Value *timeout = 0,
-           const ACE_ATM_Addr &local_sap = ACE_ATM_Addr( "", 0 ),
-           int reuse_addr = 0,
+  int connect (ACE_ATM_Stream &new_stream,
+               const ACE_ATM_Addr &remote_sap,
+               ACE_ATM_Params params = ACE_ATM_Params(),
+               ACE_ATM_QoS options = ACE_ATM_QoS(),
+               ACE_Time_Value *timeout = 0,
+               const ACE_ATM_Addr &local_sap = ACE_ATM_Addr( "",
+                                                             0 ),
+               int reuse_addr = 0,
 #if defined (ACE_WIN32)
-           int flags = 0,
+               int flags = 0,
 #else
-           int flags = O_RDWR,
+               int flags = O_RDWR,
 #endif /* ACE_WIN32 */
-           int perms = 0);
+               int perms = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
   // with.  The <params> are the parameters needed for either socket
@@ -123,6 +124,10 @@ public:
 
   int reset_new_handle (ACE_HANDLE handle);
   // Resets any event associations on this handle
+
+  // = Meta-type info
+  typedef ACE_ATM_Addr PEER_ADDR;
+  typedef ACE_ATM_Stream PEER_STREAM;
 
   void dump (void) const;
   // Dump the state of an object.

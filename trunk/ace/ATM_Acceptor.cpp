@@ -6,6 +6,10 @@ ACE_RCSID(ace, ATM_Acceptor, "$Id$")
 
 #if defined (ACE_HAS_ATM)
 
+#if defined (ACE_HAS_LINUX_ATM)
+#include "linux/atmdev.h"
+#endif /* ACE_HAS_LINUX_ATM */
+
 #if !defined (__ACE_INLINE__)
 #include "ace/ATM_Acceptor.i"
 #endif /* __ACE_INLINE__ */
@@ -66,6 +70,20 @@ ACE_ATM_Acceptor::get_local_addr( ACE_ATM_Addr &local_addr )
   ACE_UNUSED_ARG( local_addr );
   
   return 0;
+#elif defined (ACE_HAS_LINUX_ATM)
+  ATM_Addr *myaddr = (ATM_Addr *)local_addr.get_addr();
+  int addrlen = sizeof(myaddr->sockaddratmsvc);
+  
+  if (ACE_OS::getsockname(acceptor_.get_handle(),
+                          (struct sockaddr *) &(myaddr->sockaddratmsvc),
+                          &addrlen) < 0) {
+    ACE_DEBUG((LM_DEBUG,
+               ASYS_TEXT("ATM_Acceptor(get_local_addr): ioctl: %d\n"),
+               errno));
+    return -1;
+  }
+
+  return (0);
 #else
   ACE_UNUSED_ARG( local_addr );
 
@@ -88,36 +106,25 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
                                       params.get_device());
   return (handle == ACE_INVALID_HANDLE ? -1 : 0);
 #elif defined (ACE_HAS_FORE_ATM_WS2)
-  //Unable to use ACE_SOCK_Acceptor.open 
-  //because of its assumption of using SOCK_STREAM
-  //return (ACE_HANDLE)(acceptor_.open (remote_sap,       //ACE_Addr
-  //                        protocol_info,                //ACE_Protocol_Info
-  //                        0,                            //ACE_SOCK_Group
-  //                        0,                            //u_long flags
-  //                        params.get_reuse_addr(),      
-  //                        params.get_protocol_family(),
-  //                        backlog,
-  //                        params.get_protocol()));
-
   struct sockaddr_atm local_atm_addr;
-  ACE_HANDLE          ret;
-  DWORD               flags = 0;
+  ACE_HANDLE ret;
+  DWORD flags = 0;
 
   /* Create a local endpoint of communication */
 
   // Only leaves can listen.
   flags = ACE_FLAG_MULTIPOINT_C_LEAF | ACE_FLAG_MULTIPOINT_D_LEAF;
-          
 
-  if ((ret = ACE_OS::socket (AF_ATM, 
-                             SOCK_RAW, 
-                             ATMPROTO_AAL5, 
-                             NULL, 
-                             0, 
-                             flags )) 
-    == ACE_INVALID_HANDLE) {
-    ACE_OS::printf( "Acceptor(open): socket %d\n", ::WSAGetLastError()), 
-    ACE_OS::exit (1);
+  if ((ret = ACE_OS::socket (AF_ATM,
+                             SOCK_RAW,
+                             ATMPROTO_AAL5,
+                             NULL,
+                             0,
+                             flags ))
+      == ACE_INVALID_HANDLE) {
+    ACE_OS::printf( "Acceptor(open): socket %d\n",
+                    ::WSAGetLastError());
+    return (ret);
   }
 
   ((ACE_SOCK_Acceptor *)this) -> set_handle( ret );
@@ -137,7 +144,7 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
                     ACE_reinterpret_cast(struct sockaddr *, &local_atm_addr),
                     sizeof local_atm_addr) == -1) {
     ACE_OS::printf( "Acceptor(open): bind %d\n", ::WSAGetLastError()); 
-    ACE_OS::exit (1);
+    return (ACE_INVALID_HANDLE);
   }
 
   /* Make endpoint listen for service requests */
@@ -145,7 +152,78 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
                       backlog) 
                     == -1) {
     ACE_OS::printf( "Acceptor(open): listen %d\n", ::WSAGetLastError());
-    ACE_OS::exit (1);
+    return (ACE_INVALID_HANDLE);
+  }
+
+  return 0;
+#elif defined (ACE_HAS_LINUX_ATM)
+  //we need to set the qos before binding to the socket
+  //use remote_sap as local_sap
+
+  ACE_ATM_Addr local_sap;
+  ATM_Addr *local_sap_addr = (ATM_Addr*)local_sap.get_addr();
+  ACE_ATM_QoS def_qos;
+  ATM_QoS qos = def_qos.get_qos();
+
+  ACE_HANDLE handle;
+  if ((handle = ACE_OS::socket (params.get_protocol_family(), 
+                                params.get_type(), 
+                                params.get_protocol(), 
+                                params.get_protocol_info(), 
+                                params.get_sock_group(), 
+                                params.get_flags() 
+                                ))
+      == ACE_INVALID_HANDLE) {
+    ACE_DEBUG(LM_DEBUG,
+              ASYS_TEXT("Acceptor(socket): socket %d\n"),
+              errno);
+    return (ACE_INVALID_HANDLE);
+  }
+   
+  ((ACE_SOCK_Acceptor *)this) -> set_handle( handle );
+  if (ACE_OS::setsockopt(handle,
+                         SOL_ATM,
+                         SO_ATMQOS,
+                         ACE_reinterpret_cast(char*, &qos),
+                         sizeof(qos)) < 0) {
+    ACE_OS::printf("Acceptor(setsockopt): setsockopt:%d\n",
+                   errno);
+  }
+
+  struct atmif_sioc req;
+  struct sockaddr_atmsvc aux_addr[1024];
+
+  req.number = 0;
+  req.arg = aux_addr;
+  req.length = sizeof(aux_addr);
+  if (ACE_OS::ioctl(handle,
+                    ATM_GETADDR,
+                    &req) < 0) {
+    ACE_OS::perror( "Acceptor(setsockopt): ioctl:");
+  }
+  else {
+    local_sap_addr->sockaddratmsvc = aux_addr[0];
+  }
+  local_sap.set_selector(((ACE_ATM_Addr*)&remote_sap)->get_selector());
+
+  if (ACE_OS::bind (handle,
+                    ACE_reinterpret_cast(struct sockaddr *,
+                                         &(local_sap_addr->sockaddratmsvc)),
+                    sizeof (local_sap_addr->sockaddratmsvc)
+                    ) == -1) {
+    ACE_DEBUG(LM_DEBUG,
+              ASYS_TEXT("Acceptor(open): bind %d\n"),
+              errno);
+    return -1;
+  }
+  // Make endpoint listen for service requests
+  if (ACE_OS::listen (handle,
+                      backlog) 
+      == -1) {
+    ACE_DEBUG(LM_DEBUG,
+              ASYS_TEXT("Acceptor(listen): listen %d\n"),
+              errno);
+    return -1;
   }
 
   return 0;
@@ -153,7 +231,7 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
   ACE_UNUSED_ARG (remote_sap);
   ACE_UNUSED_ARG (backlog);
   ACE_UNUSED_ARG (params);
-#endif /* ACE_HAS_FORE_ATM_XTI/ACE_HAS_FORE_ATM_WS2 */
+#endif /* ACE_HAS_FORE_ATM_XTI/ACE_HAS_FORE_ATM_WS2/ACE_HAS_LINUX_ATM */
 }
 
 int
@@ -178,11 +256,6 @@ ACE_ATM_Acceptor::accept (ACE_ATM_Stream &new_sap,
                            params.get_user_data(),
                            &optbuf));
 #elif defined (ACE_HAS_FORE_ATM_WS2)
-//  return (acceptor_.accept(new_sap.get_stream(),
-//                           remote_addr,
-//                           timeout,
-//                           restart,
-//                           reset_new_handle));
   ACE_HANDLE n_handle;
   ACE_HANDLE s_handle = (( ACE_SOCK_Acceptor *) this ) -> get_handle();
   struct sockaddr_atm *cli_addr 
@@ -190,17 +263,37 @@ ACE_ATM_Acceptor::accept (ACE_ATM_Stream &new_sap,
   int caddr_len = sizeof( struct sockaddr_atm ); 
 
   do {
-    n_handle = ACE_OS::accept( s_handle, 
-                              ACE_reinterpret_cast( struct sockaddr *, 
-                                                    cli_addr ),
+    n_handle = ACE_OS::accept(s_handle,
+                              ACE_reinterpret_cast(struct sockaddr *,
+                                                   cli_addr ),
                               &caddr_len );
   } while ( n_handle == ACE_INVALID_HANDLE && errno == EINTR );
 
-  (( ACE_ATM_Addr *)remote_addr ) -> set( cli_addr, 
+  (( ACE_ATM_Addr *)remote_addr ) -> set( cli_addr,
                         (( ACE_ATM_Addr *)remote_addr ) -> get_selector());
   (( ACE_IPC_SAP *)&new_sap ) -> set_handle( n_handle );
 
   return 0;
+#elif defined (ACE_HAS_LINUX_ATM)
+  ACE_UNUSED_ARG (params);
+
+  ACE_HANDLE s_handle = (( ACE_SOCK_Acceptor *) this ) -> get_handle();
+  struct atm_qos accept_qos = qos.get_qos();
+
+  if (ACE_OS::setsockopt(s_handle,
+                         SOL_ATM,
+                         SO_ATMQOS,
+                         ACE_reinterpret_cast(char*,
+                                              &accept_qos),
+                         sizeof(accept_qos)) < 0) {
+    ACE_OS::printf("Acceptor(accept): error setting Qos"); 
+  }
+
+  return(acceptor_.accept(new_sap.get_stream(),
+                          remote_addr,
+                          timeout,
+                          restart,
+                          reset_new_handle));
 #else
   ACE_UNUSED_ARG(new_sap);
   ACE_UNUSED_ARG(remote_addr);
@@ -214,4 +307,3 @@ ACE_ATM_Acceptor::accept (ACE_ATM_Stream &new_sap,
 }
 
 #endif /* ACE_HAS_ATM */
-
