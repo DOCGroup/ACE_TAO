@@ -1,3 +1,9 @@
+Tue Jun  1 21:44:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* include/makeinclude/platform_linux_lxpthread.GNU:
+	  Added the rt library to the command line, ACE uses aynchronous
+	  I/O by default on linux.
+
 Tue Jun  1 16:48:58 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	   Ported <ACE_Asynch_Operation::cancel> to POSIX platforms based
