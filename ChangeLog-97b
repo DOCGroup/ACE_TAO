@@ -35,6 +35,10 @@ Thu Sep 11 10:37:00 1997  Carlos O'Ryan  <coryan@polka.cs.wustl.edu>
 
 Thu Sep 11 08:52:36 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/OS.cpp (thr_key_detach): check to see if the
+	  ACE_TSS_Cleanup lock has been constructed, and not
+	  destructed, before attempting to use it.  Statics are evil.
+
 	* ace/Log_Msg.cpp (~ACE_Log_Msg): release guard before calling
 	  ACE_Log_Msg_Manager::close (), because that deletes the lock.
 
