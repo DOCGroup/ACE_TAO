@@ -1,26 +1,31 @@
+Fri Jan 29 13:07:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/configurations.html: Added links to various examples for
+	  different configurations.
+
 Fri Jan 29 12:22:22 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/server_discovery/AV_Demo : 
-	Moved Seths README to AV_Demo	
+	* orbsvcs/tests/AVStreams/server_discovery/AV_Demo :
+	Moved Seths README to AV_Demo
 
-	* orbsvcs/tests/AVStreams/server_discovery/README : 
-	Provided information about how to run the Java Interface 
+	* orbsvcs/tests/AVStreams/server_discovery/README :
+	Provided information about how to run the Java Interface
 	to the AV Demo
 
-	* orbsvcs/tests/AVStreams/mpeg/README: 
+	* orbsvcs/tests/AVStreams/mpeg/README:
 	Added how to run the AV Demo with the Trading Service
 
-	
+
 
 Fri Jan 29 11:01:50 1999 Fred Kuhns <fredk@cs,wustl.edu>
 
-  * Updated profile references in 
+  * Updated profile references in
       orbsvcs/Time_Service/IR_Helper.cpp
       orbsvcs/ImplRepo_Service/ImplRepo_i.cpp
 
 Fri Jan 29 09:57:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Event_Service/Event_Service.cpp: 
+	* orbsvcs/Event_Service/Event_Service.cpp:
 	  I commited a version with support for the new Event Channel,
 	  this was a mistake, I'm reverting the change.
 
