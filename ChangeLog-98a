@@ -1,3 +1,8 @@
+Fri Mar 27 09:50:52 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Strategies_T.cpp: Added #include "ace/Service_Repository.h" for
+	  compile on HP.  Thanks to Steve Coy <stevec@magna.com.au> for this.
+
 Fri Mar 27 09:21:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/test_config.h: with Green Hills on VxWorks, rename
