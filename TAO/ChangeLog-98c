@@ -1,3 +1,11 @@
+Wed Jan  6 09:31:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
+          The UDP_Receiver::init() method should only create the RT_Info
+	  if it is not there already. Thanks to Dave Meyer
+          <dmeyer@std.saic.com> and J. Russell Noseworthy
+          <rnosewor@objectsciences.com> for providing this fix.
+
 Wed Jan 06 09:04:46 1999  Carlos O'Ryan  <coryan@JIG>
 
 	* docs/releasenotes/TODO.html: 
