@@ -29,14 +29,13 @@ TimeoutClient::TimeoutClient (CORBA::ORB_ptr orb,
 , INVOKE_ASYNCH(true)
 {
 
-};
-
+}
 
 
 TimeoutClient::~TimeoutClient ()
 {
 
-};
+}
 
 
 int
@@ -62,6 +61,7 @@ TimeoutClient::init ()
 
   return 0;
 }
+
 
 void
 TimeoutClient::send (bool async,
@@ -97,6 +97,7 @@ TimeoutClient::send (bool async,
     }
   ACE_ENDTRY;
 }
+
 
 int
 TimeoutClient::svc ()
