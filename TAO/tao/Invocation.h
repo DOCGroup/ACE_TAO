@@ -206,7 +206,7 @@ protected:
    * Returns TAO_INVOKE_RESTART if the write call failed and the
    * request must be re-attempted.
    *
-   * @param is_synchronous If set invoke() does not return until the
+   * @param write_semantics If set invoke() does not return until the
    *        message is completely delivered to the underlying
    *        transport mechanism, or an error is detected.
    *
@@ -214,7 +214,7 @@ protected:
    * that the server closed the connection simply to release
    * resources.
    */
-  int invoke (CORBA::Boolean is_synchronous
+  int invoke (CORBA::Boolean write_semantics
               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
