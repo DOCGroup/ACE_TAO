@@ -20,7 +20,7 @@ inline ssize_t
 ACE_SPIPE_Stream::send_n (const void *buf, size_t n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send_n");
-  return ACE::send_n (this->get_handle (), buf, n);
+  return ACE::write_n (this->get_handle (), buf, n);
 }
 
 // Receive exactly N bytes from this socket into BUF.  Keep trying
@@ -30,7 +30,7 @@ inline ssize_t
 ACE_SPIPE_Stream::recv_n (void *buf, size_t n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::recv_n");
-  return ACE::recv_n (this->get_handle (), buf, n);
+  return ACE::read_n (this->get_handle (), buf, n);
 }
 
 inline ssize_t
