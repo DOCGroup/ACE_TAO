@@ -152,6 +152,11 @@ Receiver::open (ACE_HANDLE handle,
                                                   initial_read_size,
                                                   0,
                                                   ACE_INVALID_HANDLE);
+      
+      // <complete> for Accept would have already moved the <wr_ptr>
+      // forward. Update it to the beginning position.
+      duplicate.wr_ptr (-message_block.length ());
+      
       // This will call the callback.
       fake_result.complete (message_block.length (), 1, 0);
     }
