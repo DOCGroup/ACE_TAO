@@ -506,7 +506,7 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
       if (eh != 0 && (*eh) (this))
         continue;
 
-      if (result == -1)
+      if (result == -1 || result == 0)
         break;
     }
 
