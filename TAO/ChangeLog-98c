@@ -1,3 +1,22 @@
+Fri Mar 20 23:25:28 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/tests/Trading_Service/Makefile:
+	* orbsvcs/tests/Trading_Service/export_tests.cpp:
+	* orbsvcs/tests/Trading_Service/import_tests.cpp:
+	* orbsvcs/tests/Trading_Service/Offer_Exporter.{h,cpp}:
+	* orbsvcs/tests/Trading_Service/Offer_Importer.{h,cpp}:	
+	* orbsvcs/tests/Trading_Service/Service_Type_Exporter.{h,cpp}:
+	* orbsvcs/tests/Trading_Service/TT_Info.{h,cpp}:
+	* orbsvcs/tests/Trading_Service/TTest.idl:
+	I've added the rough draft of tests that pound the Trading Service
+	with a variety of method invocations.
+
+	* orbsvcs/Trading_Service/trader.cpp:
+	* orbsvcs/Trading_Service/Makefile:
+	The trader now responds to resolve_intial_references multicast
+	requests with the IOR of its Lookup interface, as per the
+	specification. 
+	
 Fri Mar 20 21:48:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.1.9, released Fri Mar 20 21:48:47 1998.
