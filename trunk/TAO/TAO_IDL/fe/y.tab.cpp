@@ -9,7 +9,7 @@
 extern	"C" int tao_yywrap();
 #endif	// (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 
-void tao_yyerror (char *);
+void tao_yyerror (const char *);
 int tao_yylex (void);
 extern "C" int tao_yywrap (void);
 extern char tao_yytext[];
@@ -161,7 +161,7 @@ tao_yywrap()
  * idl_global->err() operations
  */
 void
-tao_yyerror(char *)
+tao_yyerror(const char *)
 {
 }
 tao_yytabelem tao_yyexca[] ={
