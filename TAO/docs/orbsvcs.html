@@ -26,7 +26,7 @@
       this library is located in
       <CODE>$TAO_ROOT/orbsvcs/orbsvcs</CODE>.
       Usually the include path is only <CODE>$TAO_ROOT/orbsvcs</CODE>,
-      so files are included like in:</P>
+      so files are included like this:</P>
 
 <P><CODE>
 #include "orbsvcs/CosNamingC.h"
@@ -39,32 +39,117 @@
       (since they use other services.)
       Further,
       the current support for collocation requires that clients link
-      the skeleton files also.
+      the skeleton files anyway.
     </P>
 
     <P>In the future we intend to use ACE Service Configurator to give
-    the users control over servant collocation.
-    As a first cut all the service implementations are included in the
-    orbsvcs library <CODE>$TAO_ROOT/orbsvcs/orbsvcs</CODE>,
-    since there are serveral services and each one require several
-    files we have given a different directory to each service;
-    for instance <B>Naming Service</B> is in
-    <CODE>$TAO_ROOT/orbsvcs/orbsvcs/Naming</CODE>.
-    This structure could also simplify a future split into several
-    libraries (if it proves necessary).</P>
+      the users control over collocation of the services implementation.
+      As a first cut all the service implementations are included in the
+      orbsvcs library <CODE>$TAO_ROOT/orbsvcs/orbsvcs</CODE>;
+      Since there are serveral services and each one is implemented
+      using several files we have given a different directory to each
+      service.
+      This structure could also simplify a future split into several
+      libraries (if it proves necessary).
+    </P>
 
-    <P>Please note that in this revision we still have a separate
-    binary for each service,
-    once the complete support for ACE Service Configurator is included
-    we will probably have a single server,
-    much like in <CODE>$ACE_ROOT/netsvcs</CODE>.</P>
+    <P>The complete list of directories is (so far):</P>
 
-    <P>Finally some test are located in
-      <CODE>$TAO_ROOT/orbsvcs/tests</CODE>,
-      since most tests require several files each one has its own
-      directory.</P>
+    <P>
+    <TABLE BORDER="2"
+      CELLSPACING="2"
+      CELLPADDING= "0">
+      <TR>
+	<TH>Service</TH>
+	<TH>Implementation Sub-directory</TH></TR>
+      <TR>
+	<TD>Naming Service</TD><TD><CODE>orbsvcs/Naming</CODE></TD></TR>
+      <TR>
+	<TD>Event Service</TD><TD><CODE>orbsvcs/Event</CODE></TD></TR>
+      <TR>
+	<TD>Scheduling Service</TD><TD><CODE>orbsvcs/Sched</CODE></TD></TR>
+      <TR>
+	<TD>Trading Service</TD><TD><CODE>orbsvcs/Trader</CODE></TD></TR>
+      <TR>
+	<TD>Property Service</TD><TD><CODE>orbsvcs/Property</CODE></TD></TR>
+      <TR>
+	<TD>A/V Streams Service</TD><TD><CODE>orbsvcs/AV</CODE></TD></TR>
+      <TR>
+	<TD>Concurrenty Service</TD><TD><CODE>orbsvcs/AV</CODE></TD></TR>
+    </TABLE>
+    </P>
 
-  <H1>SEE ALSO</H1>
+    <P>Please note that in this revision we still have standalone
+      binaries for some of the services,
+      though many applications may want to control what process
+      implements a particular service it has proved useful for
+      debugging purposes to keep the most used services separated;
+      the binaries in question are located in
+      <CODE>$TAO_ROOT/orbsvcs</CODE>, and the list includes:
+    </P>
+
+    <UL>
+      <LI>Concurrenty_Service</LI>
+      <LI>Event_Service</LI>
+      <LI>Naming_Service</LI>
+      <LI>Scheduling_Service</LI>
+      <LI>Trading_Service</LI>
+      <LI>Dump_Schedule</LI>, though this is a simple utility to dump
+    the results of a schedule.
+    </UL>
+
+    <P>In the future we plan to use a single binary and ACE Service
+      Configurator and keep a single binary.</P>
+
+    <P>Finally the tests and example programs are located in
+      <CODE>$TAO_ROOT/orbsvcs/tests</CODE>;
+      once more each may involves more than a single binary,
+      so each one is kept in its own directory;
+      the following list describes the contents of each one:
+    </P>
+    
+    <P>
+    <TABLE BORDER="2"
+      CELLSPACING="2"
+      CELLPADDING= "0">
+      <TR>
+	<TH>Test directory</TH>
+	<TH>Purpose</TH></TR>
+      <TR>
+	<TD><CODE>Simple_Naming</CODE></TD>
+	<TD>A very simple Naming Service test</TD></TR>
+      <TR>
+	<TD><CODE>Naming</CODE></TD>
+	<TD>A more advanced test of the Naming Service test</TD></TR>
+      <TR>
+	<TD><CODE>Logger</CODE></TD>
+	<TD>An example logging service using the Naming Service to
+	  locate a factory</TD></TR>
+      <TR>
+	<TD><CODE>Event_Latency</CODE></TD>
+	<TD>Test the Event Service and measure end-to-end latency,
+	it also uses the Scheduling and Naming services</TD></TR>
+      <TR>
+	<TD><CODE>EC_Multiple</CODE></TD>
+	<TD>Connect two Event Channels using the
+	  <CODE>EC_Gateway</CODE>,
+	  measure latency, utilization and minimum spacing</TD></TR>
+      <TR>
+	<TD><CODE>AVStreams</CODE></TD>
+	<TD>A complete A/V server and client</TD></TR>
+      <TR>
+	<TD><CODE>Concurrency</CODE></TD>
+	<TD>Test the Concurrency Service</TD></TR>
+      <TR>
+	<TD><CODE>CosPropertyService</CODE></TD>
+	<TD>A simple test of the Property Service</TD></TR>
+      <TR>
+	<TD><CODE>Simulator</CODE></TD>
+	<TD>Show how to use the Event Service with Java</TD></TR>
+    </TABLE>
+    </P>
+
+  <H2>SEE ALSO</H2>
 
   <P>You may you to check TAO
      <A HREF="releasenotes/index.html">release notes</A>
