@@ -1,3 +1,10 @@
+Fri Jan 23 13:06:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-tru64.h:
+          Define ACE_LACKS_STDINT_H when DIGITAL_UNIX is greater than
+          0x40E instead of 0x510. Thanks to Daniel Miranda
+          <dmiranda@telecompersonal.com.ar> for reporting this.
+
 Fri Jan 23 11:05:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
