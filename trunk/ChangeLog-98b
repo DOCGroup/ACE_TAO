@@ -1,36 +1,41 @@
 Mon Sep  7 12:39:10 EDT 1998  James CE Johnson <jcej@lads.com>
 
           docs/tutorials/008/page01.html
-	  docs/tutorials/008/page02.html
-	  docs/tutorials/008/page03.html
-	  docs/tutorials/008/page04.html
-	  docs/tutorials/008/page05.html
-	  docs/tutorials/009/Makefile
-	  docs/tutorials/009/broadcast_client.cpp
-	  docs/tutorials/009/directed_client.cpp
-	  docs/tutorials/009/page01.html
-	  docs/tutorials/009/page02.html
-	  docs/tutorials/009/page03.html
-	  docs/tutorials/009/page04.html
-	  docs/tutorials/009/page05.html
-	  docs/tutorials/009/server.cpp
+          docs/tutorials/008/page02.html
+          docs/tutorials/008/page03.html
+          docs/tutorials/008/page04.html
+          docs/tutorials/008/page05.html
+          docs/tutorials/009/Makefile
+          docs/tutorials/009/broadcast_client.cpp
+          docs/tutorials/009/directed_client.cpp
+          docs/tutorials/009/page01.html
+          docs/tutorials/009/page02.html
+          docs/tutorials/009/page03.html
+          docs/tutorials/009/page04.html
+          docs/tutorials/009/page05.html
+          docs/tutorials/009/server.cpp
 
-	  Cleanup on Tutorial 008 and creation of Tutorial 009 which expands
-	  008 by making the server more selective in who it responds to.
+          Cleanup on Tutorial 008 and creation of Tutorial 009 which expands
+          008 by making the server more selective in who it responds to.
 
 Mon Sep  7 10:06:54 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE.h (ACE): Moved strnew (wchar_t *) into an ACE_WIN32
- 	  section to protect it properly.  Thanks to David Levine for
- 	  reporting this.
+        * ace/ACE.h (ACE): Moved strnew (wchar_t *) into an ACE_WIN32
+          section to protect it properly.  Thanks to David Levine for
+          reporting this.
 
-	* ace:config-sco-*.h: Added ACE_HAS_DIRENT on the advice of Arturo
- 	  Montes <mitosys@colomsat.com.co>.
+        * ace:config-sco-*.h: Added ACE_HAS_DIRENT on the advice of Arturo
+          Montes <mitosys@colomsat.com.co>.
 
 Mon Sep 07 09:52:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added general rule to put system
           call wrappers in ACE_OS, extensions in ACE.
+
+        * ace/config-osf1-4.0.h: added ACE_HAS_DIRENT and
+          _POSIX_PTHREAD_SEMANTICS.  The latter was necessary
+          to tell ACE_OS::readdir_r () to use the three-arg
+          ::readdir_r ().
 
 Mon Sep  7 01:02:58 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -119,7 +124,7 @@ Sat Sep  5 15:25:33 EDT 1998  James CE Johnson  <jcej@lads.com>
           docs/tutorials/009/CVS/Entries
 
           Began the next set of tutorials on the topic of Datagrams.
-	  Thanks to Jeff Hellzen for this suggestion.
+          Thanks to Jeff Hellzen for this suggestion.
 
 Fri Sep  4 18:56:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
