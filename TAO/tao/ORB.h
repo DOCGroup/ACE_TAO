@@ -503,7 +503,7 @@ protected:
 private:
 
   /// Resolve the given service based on the service ID.
-  CORBA_Object_ptr resolve_service (MCAST_SERVICEID service_id
+  CORBA::Object_ptr resolve_service (TAO_MCAST_SERVICEID service_id
                                     TAO_ENV_ARG_DECL);
 
   /// Convert an OMG IOR into an object reference.

@@ -128,7 +128,7 @@ TAO_IIOP_Connection_Handler::open (void*)
 
   // Set the id in the transport now that we're active.
   // Use C-style cast b/c otherwise we get warnings on lots of compilers
-  this->transport ()->id ( (int) this->get_handle ());
+  this->transport ()->id ((int) this->get_handle ());
 
   return 0;
 }
@@ -262,12 +262,12 @@ TAO_IIOP_Connection_Handler::resume_handler (void)
 }
 
 int
-TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE)
+TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
   // Instantiate the resume handle here.. This will automatically
   // resume the handle once data is written..
-  TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->get_handle ());
+  TAO_Resume_Handle resume_handle (this->orb_core (),
+                                   handle);
   return this->transport ()->handle_output ();
 }
 
@@ -338,13 +338,13 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
 
 int
-TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
+TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE handle)
 {
   // Increase the reference count on the upcall that have passed us.
   long upcalls = this->incr_pending_upcalls ();
 
-  TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->get_handle ());
+  TAO_Resume_Handle resume_handle (this->orb_core (),
+                                   handle);
 
   int retval = this->transport ()->handle_input_i (resume_handle);
 
