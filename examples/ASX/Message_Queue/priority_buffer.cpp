@@ -43,7 +43,7 @@ consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
         ACE_OS::puts (mb->rd_ptr ());
 
       // Free up the buffer memory and the Message_Block.
-      ACE_Service_Config::allocator ()->free (mb->rd_ptr ());
+      ACE_Service_Config::alloc ()->free (mb->rd_ptr ());
       delete mb;
 
       if (length == 0)
@@ -69,7 +69,7 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 
   // Keep reading stdin, until we reach EOF. 
 
-  for (int n; ; )
+  for (;;)
     {
       // Allocate a new buffer.
       char *buffer = rb.read ('\n');
