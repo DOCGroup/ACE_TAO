@@ -10,7 +10,8 @@
 #----------------------------------------------------------------------------
 DIRS_PARALLEL = 1
 
-BIN =   Aio_Platform_Test \
+BIN =   ACE_Test \
+        Aio_Platform_Test \
         Arg_Shifter_Test \
         ARGV_Test \
         Atomic_Op_Test \

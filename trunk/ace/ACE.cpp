@@ -254,7 +254,8 @@ const ACE_TCHAR *
 ACE::execname (const ACE_TCHAR *old_name)
 {
 #if defined (ACE_WIN32)
-  if (ACE_OS::strstr (old_name, ACE_LIB_TEXT (".exe")) == 0)
+  const ACE_TCHAR *suffix = ACE_OS::strrchr (old_name, ACE_LIB_TEXT ('.'));
+  if (suffix == 0 || ACE_OS::strcasecmp (suffix, ACE_LIB_TEXT (".exe")) != 0)
     {
       ACE_TCHAR *new_name;
 
@@ -271,7 +272,8 @@ ACE::execname (const ACE_TCHAR *old_name)
       end = ACE_OS::strecpy (new_name, old_name);
 
       // Concatenate the .exe suffix onto the end of the executable.
-      ACE_OS::strcpy (end, ACE_LIB_TEXT (".exe"));
+      // end points _after_ the terminating nul.
+      ACE_OS::strcpy (end - 1, ACE_LIB_TEXT (".exe"));
 
       return new_name;
     }
