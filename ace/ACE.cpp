@@ -2450,31 +2450,33 @@ ACE::restore_non_blocking_mode (ACE_HANDLE handle,
 // Portions taken from mdump by J.P. Knight (J.P.Knight@lut.ac.uk)
 // Modifications by Todd Montgomery.
 
-int
+size_t
 ACE::format_hexdump (const char *buffer,
-                     int size,
+                     size_t size,
                      ACE_TCHAR *obuf,
-                     int obuf_sz)
+                     size_t obuf_sz)
 {
   ACE_TRACE ("ACE::format_hexdump");
 
   u_char c;
   ACE_TCHAR textver[16 + 1];
 
-  int maxlen = (obuf_sz / 68) * 16;
+  // We can fit 16 bytes output in text mode per line, 4 chars per byte.
+  size_t maxlen = (obuf_sz / 68) * 16;
 
   if (size > maxlen)
     size = maxlen;
 
-  int i;
+  size_t i;
 
-  for (i = 0; i < (size >> 4); i++)
+  size_t lines = size / 16;
+  for (i = 0; i < lines; i++)
     {
-      int j;
+      size_t j;
 
       for (j = 0 ; j < 16; j++)
         {
-          c = (u_char) buffer[(i << 4) + j];
+          c = (u_char) buffer[(i << 4) + j];    // or, buffer[i*16+j]
           ACE_OS::sprintf (obuf,
                            ACE_LIB_TEXT ("%02x "),
                            c);
