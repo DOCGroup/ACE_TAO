@@ -119,6 +119,15 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "return *tmp;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  *os << "CORBA::Boolean" << be_nl
+      << "tao_" << node->flat_name () << "_marshal (" << be_idt << be_idt_nl
+      << node->name () << "_ptr p," << be_nl
+      << "TAO_OutputCDR &strm" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return p->marshal (strm);" << be_uidt_nl
+      << "}";
+
   // Generate the _var class.
   if (node->gen_var_impl () == -1)
     {
@@ -382,12 +391,20 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "return retv;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "const char* " << node->full_name ()
+  *os << "const char*" << be_nl
+      << node->full_name ()
       << "::_interface_repository_id (void) const"
       << be_nl
       << "{" << be_idt_nl
       << "return \"" << node->repoID ()
       << "\";" << be_uidt_nl
+      << "}";
+
+  *os << be_nl << be_nl
+      << "CORBA::Boolean" << be_nl
+      << node->name () << "::marshal (TAO_OutputCDR &cdr)" << be_nl
+      << "{" << be_idt_nl
+      << "return (cdr << this);" << be_uidt_nl
       << "}";
 
   // Generate code for the elements of the component.
