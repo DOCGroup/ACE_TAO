@@ -23,7 +23,7 @@ extern "C" {
   /** 
      PACE's implementation of the POSIX macro assert.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
-     IEEE Std 1003.1, 1996 Edition), Section 8.1..
+     IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   PACE_INLINE void pace_assert (int expression);
 
