@@ -1,3 +1,16 @@
+
+        * ace/config-win32-common.h:
+          Added define ACE_LACKS_PWD_FUNCTIONS, Win32 doesn't have this also,
+          and by setting this define we don't need to explicitly check for
+          win32 anymore when we use this macro.
+
+        * ace/OS_NS_pwd.inl:
+          Simplified some checks, just check for ACE_LACKS_PWD_FUNCTIONS
+          and not also for ACE_WIN32
+
+        * examples/APG/Processes/Spawn.cpp:
+          Just check for ACE_LACKS_PWD_FUNCTIONS
+
 Thu Nov 17 15:55:00 2004  Gary Maxey  <gary.maxey@hp.com>
 
         * bin/PerlACE/Process_Unix.pm
