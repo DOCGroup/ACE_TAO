@@ -182,10 +182,10 @@ TAO/orbsvcs/tests/AVStreams/Component_Switching/run_test.pl: !MINIMUM
 
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !SUNCC5_1
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM !SUNCC5_1
-TAO/orbsvcs/tests/Event/Basic/run_test.pl: !ST
-TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST
-TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: !ST
-TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST
+TAO/orbsvcs/tests/Event/Basic/run_test.pl: !ST !MINIMUM
+TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST !MINIMUM
+TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: !ST !MINIMUM
+TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/run_test.pl: SANDBOX
 TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: SANDBOX
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM
