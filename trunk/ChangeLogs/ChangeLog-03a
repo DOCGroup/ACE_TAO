@@ -1,3 +1,34 @@
+Tue May 16 12:01:56 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Msg_WFMO_Reactor.cpp:
+        * ace/Msg_WFMO_Reactor.h:
+
+          Applied some patches that Bruce Trask <BTRASK@contactsystems.com>
+          sent for building ACE on Pharlap.
+
+        * ace/OS.cpp:
+        * ace/OS.h:
+        * ace/Process.cpp:
+        * ace/ace_wchar.h:
+
+          GetEnvironmentStrings is the only Windows API function that I've
+          seen that doesn't follow the same FuncA/FuncW naming that the
+          rest do.  So I added a wrapper in ACE_OS (getenvstrings) and it
+          does the appropriate magic in the .cpp file to get this to work.
+          
+          This only showed up when UNICODE was defined but ACE_USES_WCHAR
+          wasn't.
+
+        * ace/Process.cpp:
+
+          Removed a comment that stated that the WinCE version of
+          inherit_environment () was in Process.i.  Actually, there isn't 
+          a version for CE at all.
+
+        * tests/CDR_Array_Test.cpp:
+
+          Updated the test so it works with ACE_USES_WCHAR.
+
 Tue May 16 10:02:33 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/CDR_File_Test.cpp:

@@ -393,8 +393,6 @@ ACE_Process_Options::ACE_Process_Options (int ie,
 
 #if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
-// Notice that CE version is an empty function and is placed
-// in Process.i for efficiency.
 void
 ACE_Process_Options::inherit_environment (void)
 {
@@ -404,7 +402,7 @@ ACE_Process_Options::inherit_environment (void)
   environment_inherited_ = 1;
 
   // Get the existing environment.
-  ACE_TCHAR *existing_environment = ACE_TEXT_GetEnvironmentStrings ();
+  ACE_TCHAR *existing_environment = ACE_OS::getenvstrings ();
 
   int slot = 0;
 
