@@ -5056,7 +5056,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 		size_t nbyte,
 		off_t offset)
 {
-#if defined (ACE_HAD_P_READ_WRITE)
+#if defined (ACE_HAS_P_READ_WRITE)
 #if defined (ACE_WIN32)
   // This will work irrespective of whether the <handle> is in
   // OVERLAPPED mode or not.
@@ -5120,7 +5120,7 @@ ACE_OS::pread (ACE_HANDLE handle,
 	       size_t nbyte,
 	       off_t offset)
 {
-#if defined (ACE_HAD_P_READ_WRITE)
+#if defined (ACE_HAS_P_READ_WRITE)
 #if defined (ACE_WIN32)
   // This will work irrespective of whether the <handle> is in
   // OVERLAPPED mode or not.  
