@@ -1,3 +1,11 @@
+Mon Aug 11 10:54:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TOA_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+
+          Added check that eliminates generation of the argument name
+          for the TAO::Argument ** parameter, if it is not used, i.e.,
+          if the operation has a void return type and no parameters.
+
 Mon Aug 11 09:52:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Fixed_Array_Argument_T.inl:
