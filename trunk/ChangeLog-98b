@@ -1,5 +1,11 @@
 Thu Jul 30 19:03:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.h: Changed the type
+ 	  to class Thread_Timer_Queue_Test_Driver from
+ 	  Timer_Queue_Test_Driver <Thread_Timer_Queue, Input_Task,
+ 	  Input_Task::ACTION> to work around a bug with MSVC++.  Thanks to
+ 	  Gonzo for pointing this out.
+
 	* examples/Connection/blocking/SPIPE-{connector,acceptor}.cpp:
  	  Added #include "ace/Proactor.h".  Thanks to Gonzo for reporting
  	  this.
