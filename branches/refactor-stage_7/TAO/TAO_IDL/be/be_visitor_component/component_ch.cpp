@@ -55,6 +55,17 @@ be_visitor_component_ch::visit_component (be_component *node)
   // Now the interface definition itself.
   os->gen_ifdef_macro (node->flat_name ());
 
+  if (!node->is_local () && !node->is_abstract ())
+    {
+      // Forward class declarations.
+      *os << be_nl << be_nl
+          << "class " << node->base_proxy_impl_name () << ";" << be_nl
+          << "class " << node->remote_proxy_impl_name () << ";" << be_nl
+          << "class " << node->base_proxy_broker_name () << ";" << be_nl
+          << "class " << node->remote_proxy_broker_name () << ";"
+          << be_nl << be_nl;
+    }
+
   // Now generate the class definition.
   *os << "class " << be_global->stub_export_macro ()
       << " " << node->local_name () << be_idt_nl
@@ -89,12 +100,15 @@ be_visitor_component_ch::visit_component (be_component *node)
   *os << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << "friend class TAO::Narrow_Utils<"
-      << node->local_name () << ">;" << be_nl
+
+      // Generate the _ptr_type and _var_type typedefs.
       << "typedef " << node->local_name () << "_ptr _ptr_type;"
       << be_nl
       << "typedef " << node->local_name () << "_var _var_type;"
       << be_nl;
+
+  // Generate the static variable that we use for narrowing.
+  *os << "static int _tao_class_id;" << be_nl << be_nl;
 
   // Generate the static _duplicate, _narrow, and _nil operations.
   *os << "// The static operations." << be_nl
@@ -102,6 +116,12 @@ be_visitor_component_ch::visit_component (be_component *node)
       << node->local_name () << "_ptr obj);" << be_nl << be_nl
       << "static " << node->local_name () << "_ptr "
       << "_narrow (" << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj" << be_nl
+      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
+
+  *os << "static " << node->local_name () << "_ptr "
+      << "_unchecked_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj" << be_nl
       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
@@ -141,6 +161,10 @@ be_visitor_component_ch::visit_component (be_component *node)
       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt;
 
+  // The _tao_QueryInterface method.
+  *os << be_nl << be_nl
+      << "virtual void *_tao_QueryInterface (ptrdiff_t type);";
+
   // The _interface_repository_id method.
   *os << be_nl << be_nl
       << "virtual const char* _interface_repository_id (void) const;";
@@ -151,7 +175,7 @@ be_visitor_component_ch::visit_component (be_component *node)
   // Add the Proxy Broker member variable.
   *os << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
-      << "TAO::Collocation_Proxy_Broker *"
+      << node->base_proxy_broker_name () << " *"
       << "the" << node->base_proxy_broker_name ()
       << "_;";
 
@@ -185,6 +209,14 @@ be_visitor_component_ch::visit_component (be_component *node)
       << "TAO_Abstract_ServantBase *servant = 0," << be_nl
       << "TAO_ORB_Core *oc = 0" << be_uidt_nl
       << ");" << be_uidt;
+
+  // Friends declarations.
+  *os << be_nl << be_nl
+      << "friend class " << node->remote_proxy_impl_name () << ";"
+      << be_nl
+      << "friend class " << node->thru_poa_proxy_impl_name () << ";"
+      << be_nl
+      << "friend class " << node->direct_proxy_impl_name () << ";";
 
   // Protected destructor.
   *os << be_nl << be_nl

@@ -1,3 +1,22 @@
+Tue Oct  7 16:48:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/Makefile.BE: Added the be_visitor_traits.cpp back into
+	  the Makefile. 
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_root.cpp:
+	* TAO_IDL/be/be_visitor_traits.cpp:
+	* TAO_IDL/be/be_visitor_component/component_ch.cpp:
+	* TAO_IDL/be/be_visitor_component/component_cs.cpp:
+	* TAO_IDL/be/be_visitor_component/component_sh.cpp:
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	* TAO_IDL/be_include/be_visitor_component/component_cs.h:
+	  
+	  Reverted this change "Wed Oct  1 10:57:12 2003  Jeff Parsons
+	  <j.parsons@vanderbilt.edu>" that specialized object traits
+	  outside the generated user provided namepsace. 
+
 Tue Oct  7 09:35:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_traits.cpp:
