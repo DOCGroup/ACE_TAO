@@ -1,3 +1,9 @@
+Wed May 05 12:20:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp: added missing
+          template instantiations for ACE_RB_Tree_Iterator_Base.  Thanks
+          to David Levine for reporting this.
+
 Wed May 05 09:52:18 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/CosEvent_Service/Makefile: added subset dependency
