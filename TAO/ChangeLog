@@ -23,6 +23,8 @@ Thu May  6 13:12:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  (disconnect_push_consumer):
 	* orbsvcs/tests/FtRtEvent/PushSupplier.cpp
 	  (disconnect_push_supplier):
+	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp
+	  (send_reply):
 
 	  Fixed "better conversion sequence" g++ warning.
 
