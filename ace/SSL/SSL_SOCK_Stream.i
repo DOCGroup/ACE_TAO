@@ -81,6 +81,19 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
           (void) ::SSL_shutdown (this->ssl_);
           return bytes_sent;
 
+        case SSL_ERROR_SYSCALL:
+          if (bytes_sent == 0)
+            // An EOF occured but the SSL "close_notify" message was
+            // not sent.  This is a protocol error, but we ignore it.
+            return 0;
+
+          // If not an EOF, then fall through to "default" case.
+
+          // On some platforms (e.g. MS Windows) OpenSSL does not
+          // store the last error in errno so explicitly do so.
+
+          ACE_OS::set_errno_to_last_error ();
+
         default:
           ACE_SSL_Context::report_error ();
 
