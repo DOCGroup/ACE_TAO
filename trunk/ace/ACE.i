@@ -116,3 +116,15 @@ ACE::hex2byte (char c)
   else
     return (u_char) (10 + c - 'A');
 }
+
+ACE_INLINE char
+ACE::debug (void)
+{
+  return ACE::debug_;
+}
+
+ACE_INLINE void
+ACE::debug (char c)
+{
+  ACE::debug_ = c;
+}

@@ -595,6 +595,10 @@ public:
   static u_char hex2byte (char c);
   // Convert a hex character to its byte representation.
 
+  // = Set/get the debug level.
+  static char debug (void);
+  static void debug (char d);
+
 private:
   static int enter_recv_timedwait (ACE_HANDLE handle,
                                    const ACE_Time_Value *timeout,
@@ -628,6 +632,9 @@ private:
 
   static const char hex_chars_[];
   // Hex characters.
+
+  static char debug_;
+  // Are we debugging ACE?
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

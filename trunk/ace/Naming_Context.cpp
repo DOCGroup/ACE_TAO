@@ -345,7 +345,9 @@ ACE_Naming_Context::dump ()
 int
 ACE_Naming_Context::init (int argc, char *argv[])
 {
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Naming_Context::init\n")));
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("ACE_Naming_Context::init\n")));
   this->name_options_->parse_args (argc, argv);
   return this->open (this->name_options_->context ());
 }
@@ -353,7 +355,9 @@ ACE_Naming_Context::init (int argc, char *argv[])
 int
 ACE_Naming_Context::fini (void)
 {
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Naming_Context::fini\n")));
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("ACE_Naming_Context::fini\n")));
 
   this->close_down ();
 

@@ -1,3 +1,16 @@
+Fri Sep  4 13:53:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Naming_Context.cpp,
+	  ace/Service_Config.cpp,
+	  ace/Service_Types.cpp,
+	  ace/Service_Repository.cpp: Now we only print out service config
+ 	  information if we're ACE::debug() is non-0.  This is more
+ 	  consistent with other parts of ACE.  Thanks to XuYifeng
+ 	  <xuyf@pop.zg169.net> for reporting this.
+
+	* ace/Service_Config: Moved the debug() stuff from here and put it
+ 	  into class ACE so that it will be more globally visible.
+
 Fri Sep 04 11:56:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/XtReactor_Test.cpp (main): Removed '.cpp' from

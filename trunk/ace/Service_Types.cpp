@@ -50,23 +50,27 @@ int
 ACE_Service_Type_Impl::fini (void) const
 {
   ACE_TRACE ("ACE_Service_Type_Impl::fini");
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("destroying %s, flags = %d\n"),
-	     this->name_, this->flags_));
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("destroying %s, flags = %d\n"),
+                this->name_,
+                this->flags_));
 
   delete [] (ASYS_TCHAR *) this->name_;
   ((ACE_Service_Type_Impl *) this)->name_ = 0;
 
-#if 1
-  if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_OBJ))
+  if (ACE_BIT_ENABLED (this->flags_,
+                       ACE_Service_Type::DELETE_OBJ))
     {
       if (gobbler_ != 0)
         gobbler_ (this->object ());
       else
-        operator delete ((void *) this->object ());	// cast to remove const-ness
+        // Cast to remove const-ness.
+        operator delete ((void *) this->object ());	
     }
-#endif /* 0 */
 
-  if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_THIS))
+  if (ACE_BIT_ENABLED (this->flags_, 
+                       ACE_Service_Type::DELETE_THIS))
     delete (ACE_Service_Type_Impl *) this;
 
   return 0;
@@ -85,6 +89,7 @@ int
 ACE_Service_Object_Type::init (int argc, ASYS_TCHAR *argv[]) const
 {
   ACE_TRACE ("ACE_Service_Object_Type::init");
+
   void *obj = this->object ();
   ACE_Service_Object *so = (ACE_Service_Object *) obj;
 
@@ -188,7 +193,10 @@ ACE_Module_Type::info (ASYS_TCHAR **str, size_t len) const
   ACE_TRACE ("ACE_Module_Type::info");
   ASYS_TCHAR buf[BUFSIZ];
 
-  ACE_OS::sprintf (buf, ASYS_TEXT ("%s\t %s"), this->name (), ASYS_TEXT ("# ACE_Module\n"));
+  ACE_OS::sprintf (buf,
+                   ASYS_TEXT ("%s\t %s"),
+                   this->name (),
+                   ASYS_TEXT ("# ACE_Module\n"));
 
   if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -230,7 +238,10 @@ int
 ACE_Stream_Type::suspend (void) const
 {
   ACE_TRACE ("ACE_Stream_Type::suspend");
-  for (ACE_Module_Type *m = this->head_; m != 0; m = m->link ())
+
+  for (ACE_Module_Type *m = this->head_;
+       m != 0;
+       m = m->link ())
     m->suspend ();
 
   return 0;
@@ -240,7 +251,10 @@ int
 ACE_Stream_Type::resume (void) const
 {
   ACE_TRACE ("ACE_Stream_Type::resume");
-  for (ACE_Module_Type *m = this->head_; m != 0; m = m->link ())
+
+  for (ACE_Module_Type *m = this->head_;
+       m != 0;
+       m = m->link ())
     m->resume ();
 
   return 0;
@@ -261,7 +275,10 @@ ACE_Stream_Type::info (ASYS_TCHAR **str, size_t len) const
   ACE_TRACE ("ACE_Stream_Type::info");
   ASYS_TCHAR buf[BUFSIZ];
 
-  ACE_OS::sprintf (buf, ASYS_TEXT ("%s\t %s"), this->name (), ASYS_TEXT ("# STREAM\n"));
+  ACE_OS::sprintf (buf,
+                   ASYS_TEXT ("%s\t %s"),
+                   this->name (),
+                   ASYS_TEXT ("# STREAM\n"));
 
   if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -282,7 +299,8 @@ ACE_Stream_Type::fini (void) const
       ACE_Module_Type *t = m->link ();
 
       // Final arg is an indication to *not* delete the Module.
-      str->remove (m->name (), MT_Module::M_DELETE_NONE);
+      str->remove (m->name (),
+                   MT_Module::M_DELETE_NONE);
 
       // Finalize the Module (this may delete it, but we don't really
       // care since we don't access it again).
@@ -300,6 +318,7 @@ int
 ACE_Stream_Type::remove (ACE_Module_Type *mod)
 {
   ACE_TRACE ("ACE_Stream_Type::remove");
+
   ACE_Module_Type *prev = 0;
   void *obj = this->object ();
   MT_Stream *str = (MT_Stream *) obj;
@@ -318,7 +337,8 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
 	    prev->link (link);
 
 	  // Final arg is an indication to *not* delete the Module.
-	  if (str->remove (m->name (), MT_Module::M_DELETE_NONE) == -1)
+	  if (str->remove (m->name (),
+                           MT_Module::M_DELETE_NONE) == -1)
 	    result = -1;
 
 	  // This call may end up deleting m, which is ok since we
@@ -375,7 +395,8 @@ ACE_Service_Object_Type::fini (void) const
       so->fini ();
 
 #if 0
-      if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_OBJ))
+      if (ACE_BIT_ENABLED (this->flags_,
+                           ACE_Service_Type::DELETE_OBJ))
 	delete so;
 #endif /* 1 */
     }
