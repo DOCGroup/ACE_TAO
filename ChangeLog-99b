@@ -1,3 +1,9 @@
+Fri Jul 09 12:45:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/test_config.h (set_output): We should use non-unicode
+	  version of ACE_OS::getenv to initialize test_dir on "regular"
+	  UNICODE compilation.  Thanks to Steve for reporting this.
+
 Fri Jul  9 12:43:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Reactor.i (schedule_wakeup): Fixed a misplaced assignment
@@ -6,8 +12,8 @@ Fri Jul  9 12:43:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Fri Jul  9 12:16:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Cache_Map_Manager_Test.cpp: 
-	  SunC++4.0 compiler doesnt accept typedefs with templates and 
+	* tests/Cache_Map_Manager_Test.cpp:
+	  SunC++4.0 compiler doesnt accept typedefs with templates and
 	  having ::, for example: HASH_MAP::iterator. One has to typedef
 	  HASH_MAP::iterator and use it to typedef something else. Fixed
 	  this problem in the above test.
