@@ -1078,6 +1078,7 @@ AC_CHECK_HEADER(sys/procfs.h, dnl
      [
      ],
      [
+      dnl If ace_has_procfs_conflict = no then define ACE_HAS_PROC_FS.
       AC_DEFINE(ACE_HAS_PROC_FS)
      ])
   ],)
@@ -2236,6 +2237,56 @@ if test "$cross_compiling" != yes; then
 fi dnl test "$cross_compiling" != yes
 
 dnl Other checks
+
+
+dnl Check for istream operator>> for char, unsigned char and signed char
+ACE_CACHE_CHECK(for istream operator>> for char types,
+  ace_cv_feature_char_right_shifts,
+  [
+   AC_TRY_COMPILE([
+#include <iostream.h>
+                  ],
+                  [
+unsigned char a = 0;
+cin >> a;
+
+#ifndef ACE_LACKS_SIGNED_CHAR
+signed char b = 0;
+cin >> b;
+#endif
+                  ],
+                  [
+                   ace_cv_feature_char_right_shifts=yes
+                  ],
+                  [
+                   ace_cv_feature_char_right_shifts=no
+                  ])
+  ], , AC_DEFINE(ACE_LACKS_CHAR_RIGHT_SHIFTS))
+
+
+dnl Check for istream operator>> for char *, unsigned char * and signed char *
+ACE_CACHE_CHECK(for istream operator>> for char * types,
+  ace_cv_feature_char_ptr_right_shifts,
+  [
+   AC_TRY_COMPILE([
+#include <iostream.h>
+                  ],
+                  [
+unsigned char * a = 0;
+cin >> a;
+
+#ifndef ACE_LACKS_SIGNED_CHAR
+signed char * b = 0;
+cin >> b;
+#endif
+                  ],
+                  [
+                   ace_cv_feature_char_ptr_right_shifts=yes
+                  ],
+                  [
+                   ace_cv_feature_char_ptr_right_shifts=no
+                  ])
+  ], , AC_DEFINE(ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS))
 
 dnl Check if we have working C++ explicit template destructors
 dnl Thanks to Nanbor Wang <nanbor@cs.wustl.edu> for providing this test.
@@ -5986,7 +6037,7 @@ WE_HAVE_PTHREADS_D4
 #include <pthread.h>
 #include <stdio.h>
 
-#ifdef __CPLUSPLUS
+#ifdef __cplusplus
 extern "C"
 #endif
 void *

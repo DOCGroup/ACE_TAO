@@ -1245,6 +1245,14 @@
 /* Platform/compiler lacks the ualarm() prototype (e.g., Solaris) */
 #undef ACE_LACKS_UALARM_PROTOTYPE
 
+/* Compiler does not have any istream operator>> for chars, u_chars, or
+   signed chars. */
+#undef ACE_LACKS_CHAR_RIGHT_SHIFTS
+
+/* Compiler does not have operator>> (istream &, u_char *) or
+   operator>> (istream &, signed char *) */
+#undef ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS
+
 /* Platform lacks the ucontext.h file */
 #undef ACE_LACKS_UCONTEXT_H
 
