@@ -1,3 +1,16 @@
+Mon Aug 11 09:05:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+          Change the name of the local pointer variable in _tao_any_destructor
+          to '_tao_tmp_pointer' from 'tmp' to avoid a name clash with an
+          IDL type called 'tmp'.
+
 Mon Aug 11 08:56:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ClientRequestInterceptor_Adapter.h:
