@@ -91,7 +91,7 @@ TAO_Synch_Reply_Dispatcher::reply_cdr (void) const
 
 
 // *********************************************************************
-
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
 // Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (const TAO_Reply_Handler_Skeleton &reply_handler_skel,
                                                           Messaging::ReplyHandler_ptr reply_handler_ptr)
@@ -150,3 +150,4 @@ TAO_Asynch_Reply_Dispatcher::message_state (void) const
 {
   return this->message_state_;
 }
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
