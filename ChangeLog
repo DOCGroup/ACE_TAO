@@ -1,6 +1,37 @@
+Wed Apr  9 08:22:56 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/default.rel:
+        * bin/MakeProjectCreator/config/taoexe.mpb:
+        * bin/MakeProjectCreator/config/taolib.mpb:
+        * bin/MakeProjectCreator/config/vcfullmacros.mpt:
+        * bin/MakeProjectCreator/config/vcpartialmacros.mpt:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/GNUProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/Parser.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateInputReader.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+        * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
+        * bin/MakeProjectCreator/templates/em3vcpdllexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplib.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplibexe.mpt:
+        * bin/MakeProjectCreator/templates/nmakedll.mpt:
+        * bin/MakeProjectCreator/templates/nmakeexe.mpt:
+        * bin/MakeProjectCreator/templates/va4icc.mpd:
+        * bin/MakeProjectCreator/templates/vc6dspdll.mpt:
+        * bin/MakeProjectCreator/templates/vc6dspdllexe.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsplib.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsplibexe.mpt:
+        * bin/MakeProjectCreator/templates/vc7dll.mpt:
+        * bin/MakeProjectCreator/templates/vc7exe.mpt:
+
+          Removed as much hard coded ACE and TAO related text and put it in
+          configuration files.
+
 Tue Apr  8 15:03:51 2003  Steve Huston  <shuston@riverace.com>
 
-	* tests/tests.mpc: Added Unbounded_Set_Test_Ex.
+        * tests/tests.mpc: Added Unbounded_Set_Test_Ex.
 
 Tue Apr  8 13:29:05 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -11,15 +42,15 @@ Tue Apr  8 13:29:05 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Apr  8 13:12:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Min_Max.h: #included config-all.h. This is needed for the
-	  header file to be used succesfully. This fixes [BUG 1485  and
-	  thanks to Paul Marquis <pmarquis@pobox.com> for reporting this
-	  problem.
+        * ace/Min_Max.h: #included config-all.h. This is needed for the
+          header file to be used succesfully. This fixes [BUG 1485  and
+          thanks to Paul Marquis <pmarquis@pobox.com> for reporting this
+          problem.
 
 Tue Apr 08 17:01:02 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* apps/mkcsregdb/mkcsregdb.dsp: Changed 'Use run time library'
-	  setting to fix error in Release configuration.
+        * apps/mkcsregdb/mkcsregdb.dsp: Changed 'Use run time library'
+          setting to fix error in Release configuration.
 
 Tue Apr  8 06:50:38 2003  Chad Elliott  <elliott_c@ociweb.com>
 

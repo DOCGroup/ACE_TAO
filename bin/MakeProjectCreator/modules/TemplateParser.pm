@@ -329,6 +329,11 @@ sub get_value {
         ## Then get it from our known values
         if (!defined $value) {
           $value = $self->{'values'}->{$name};
+          if (!defined $value) {
+            ## Call back onto the project creator to allow
+            ## it to fill in the value before defaulting to undef.
+            $value = $self->{'prjc'}->fill_value($name);
+          }
         }
       }
     }
@@ -351,13 +356,8 @@ sub get_value_with_default {
   else {
     $value = $self->{'defaults'}->{$name};
     if (!defined $value) {
-      ## Call back onto the project creator to allow
-      ## it to fill in the value before defaulting to an empty string.
-      $value = $self->{'prjc'}->fill_value($name);
-      if (!defined $value) {
-#        print "DEBUG: WARNING: $name defaulting to empty string\n";
-        $value = '';
-      }
+#      print "DEBUG: WARNING: $name defaulting to empty string\n";
+      $value = '';
     }
     else {
 #      print "DEBUG: WARNING: $name using default value of $value\n";

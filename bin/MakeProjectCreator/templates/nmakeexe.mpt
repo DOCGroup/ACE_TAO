@@ -6,7 +6,6 @@ default_configuration = Debug
 type_is_binary        = 1
 common_defines        = WIN32 _CONSOLE
 subsystem             = console
-pch_defines           = ACE_USING_PCH
 pdb                   = 1
 
 Win32 {
@@ -70,7 +69,7 @@ MFC Release {
   subsystem             = windows
   use_debug_libraries   = 0
   compile_flags         = /W3 /GX /O2 /MD /GR
-  defines               = NDEBUG _AFXDLL ACE_HAS_MFC
+  defines               = NDEBUG _AFXDLL
   compile_flags_removed = /YX
   output_dir            = MFC_Release
   intermediate_dir      = MFC_Release
@@ -83,7 +82,7 @@ MFC Debug {
   subsystem             = windows
   use_debug_libraries   = 1
   compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
-  defines               = _DEBUG _AFXDLL ACE_HAS_MFC
+  defines               = _DEBUG _AFXDLL
   compile_flags_removed = /YX
   output_dir            = MFC_Debug
   intermediate_dir      = MFC_Debug
@@ -95,7 +94,7 @@ Static MFC Release {
   subsystem             = windows
   use_debug_libraries   = 0
   compile_flags         = /W3 /GX /O2 /MD /GR
-  defines               = NDEBUG _AFXDLL ACE_HAS_MFC
+  defines               = NDEBUG _AFXDLL
   compile_flags_removed = /YX
   lib_modifier          = mfcs
   need_libflags         = 1
@@ -108,7 +107,7 @@ Static MFC Debug {
   subsystem             = windows
   use_debug_libraries   = 1
   compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
-  defines               = _DEBUG _AFXDLL ACE_HAS_MFC
+  defines               = _DEBUG _AFXDLL
   compile_flags_removed = /YX
   lib_modifier          = mfcsd
   need_libflags         = 1
@@ -116,3 +115,4 @@ Static MFC Debug {
   intermediate_dir      = Static_MFC_Debug
 }
 
+conditional_include "vcfullmacros"

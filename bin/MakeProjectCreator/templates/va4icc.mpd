@@ -16,8 +16,6 @@ if $__TOS_WIN__ {
                 define ("<%libflag%>", "1"),
 <%endfor%>
 <%endif%>
-                define ("ACE_HAS_WINSOCK2","1"),
-                define ("ACE_HAS_WCHAR_TYPEDEFS_CHAR","1"),
                 define ("_stricmp", "stricmp"),
                 define ("_strnicmp", "strnicmp"),
                 define ("_O_TEMPORARY", 0x08),
@@ -25,8 +23,6 @@ if $__TOS_WIN__ {
                 define ("_O_TRUNC", "O_TRUNC"),
                 define ("_O_EXCL", "O_EXCL"),
                 define ("_INTEGRAL_MAX_BITS", 64),
-                define ('ACE_LACKS_RTTI', '1'),
-                define ('ACE_USE_RCSID', '0'),
                 gen('check', 'bounds', 'no'),
                 gen('libansi', 'yes'),
                 link('typecheck', 'yes'),
@@ -39,9 +35,6 @@ if $__TOS_WIN__ {
 if $__TOS_AIX__ {
         option PlatformOptions =
                 defaults('xlC_r'),
-                define ('ACE_AIX_VERS', '<%aix_vers("501")%>'),
-                define ('ACE_LACKS_RTTI', '1'),
-                define ('ACE_USE_RCSID', '0'),
                 gen('check', 'bounds', 'no'),
                 gen('libansi', 'yes'),
                 link('typecheck', 'yes'),
