@@ -55,7 +55,7 @@ public:
   virtual CORBA::Boolean _is_a (const char *logical_type_id
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /// Default <_non_existent>: always returns false.
+  /// Default _non_existent: always returns false.
   virtual CORBA::Boolean _non_existent (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
@@ -65,7 +65,7 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
 
-  /// Default <_get_component>: always returns CORBA::Object::_nil().
+  /// Default _get_component: always returns CORBA::Object::_nil().
   virtual CORBA::Object_ptr _get_component (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
@@ -108,7 +108,6 @@ protected:
   /// Assignment operator.
   TAO_ServantBase &operator= (const TAO_ServantBase &);
 
-
   virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
                                             void *servant_upcall,
                                             void *derived_this
@@ -119,11 +118,6 @@ protected:
                                              void *derived_this
                                              ACE_ENV_ARG_DECL);
 
-
-  /// Register a CORBA IDL operation name.
-  /*virtual int _bind (const char *opname,
-                     const TAO_Skeleton skel_ptr);
-  */
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
 
@@ -215,7 +209,6 @@ private:
  */
 class TAO_PortableServer_Export TAO_ServantBase_var
 {
-
 public:
   TAO_ServantBase_var (void);
 

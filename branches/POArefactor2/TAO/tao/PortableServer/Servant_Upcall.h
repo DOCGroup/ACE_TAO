@@ -63,7 +63,7 @@ namespace TAO
       class Pre_Invoke_State
       {
       public:
-        // Constructor.
+        /// Constructor.
         Pre_Invoke_State (void);
 
         enum State
@@ -72,18 +72,17 @@ namespace TAO
           PRIORITY_RESET_REQUIRED
         };
 
-        // Indicates whether the priority of the thread needs to be
-        // reset back to its original value.
+        /// Indicates whether the priority of the thread needs to be
+        /// reset back to its original value.
         State state_;
 
-        // Original native priority of the thread.
+        /// Original native priority of the thread.
         CORBA::Short original_native_priority_;
 
-        // Original CORBA priority of the thread.
+        /// Original CORBA priority of the thread.
         CORBA::Short original_CORBA_priority_;
       };
 
-      // @@ POA: Servant_Upcall (TAO_Object_Adapter &object_adapter);
       /// Constructor.
       Servant_Upcall (TAO_ORB_Core *orb_core);
 
@@ -150,10 +149,10 @@ namespace TAO
 
   #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-      /// Set the <active_object_map_entry>.
+      /// Set the active_object_map_entry.
       void active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry);
 
-      /// Get the <active_object_map_entry>.
+      /// Get the active_object_map_entry.
       TAO_Active_Object_Map::Map_Entry *active_object_map_entry (void) const;
 
       /// We are using the servant locator for this upcall.
@@ -171,8 +170,10 @@ namespace TAO
         SERVANT_LOCK_ACQUIRED
       };
 
-      // State accessors.
+      /// Get the state.
       State state (void) const;
+
+      /// Set the state.
       void state (State);
 
     protected:
