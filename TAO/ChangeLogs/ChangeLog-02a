@@ -1,3 +1,10 @@
+Fri Apr 14 08:16:02 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosEvent:
+	* orbsvcs/orbsvcs/Makefile.RTEvent:
+	  The DU C++ compiler needs to have the templates in a directory
+	  accessible through the -I flags.
+
 Fri Apr 14 09:12:24 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile: don't build LifeCycle Service with
