@@ -102,8 +102,6 @@ public:
 
 typedef ACE_Acceptor<Handler, ACE_SOCK_ACCEPTOR> Logging_Acceptor;
 
-static const u_short PORT = 10003;
-
 int 
 main (int argc, char *argv [])
 {
@@ -123,7 +121,7 @@ main (int argc, char *argv [])
 
   Logging_Acceptor peer_acceptor ;
 	
-  if (peer_acceptor.open (ACE_INET_Addr (argc > 1 ? atoi (argv[1]) : PORT)) == - 1) 
+  if (peer_acceptor.open (ACE_INET_Addr (argc > 1 ? atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT)) == - 1) 
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), - 1);
 
   else if (ACE_Service_Config::reactor ()->register_handler 
