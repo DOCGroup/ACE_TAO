@@ -1298,7 +1298,7 @@ namespace PortableInterceptor
     virtual void tao_ft_interception_point (
         PortableInterceptor::ServerRequestInfo_ptr ,
         CORBA::OctetSeq_out 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_NOT_USED
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

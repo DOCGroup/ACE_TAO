@@ -210,6 +210,23 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TimeBase::IntervalT &);
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:1050
 
+
+// TAO_IDL - Generated from
+// be/be_visitor_structure/any_op_ch.cpp:52
+
+TAO_Export void operator<<= (CORBA::Any &, const TimeBase::UtcT &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, TimeBase::UtcT*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, TimeBase::UtcT *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const TimeBase::UtcT *&);
+
+// TAO_IDL - Generated from
+// be/be_visitor_structure/any_op_ch.cpp:52
+
+TAO_Export void operator<<= (CORBA::Any &, const TimeBase::IntervalT &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, TimeBase::IntervalT*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, TimeBase::IntervalT *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const TimeBase::IntervalT *&);
+
 #if defined (__ACE_INLINE__)
 #include "TimeBaseC.i"
 #endif /* defined INLINE */
