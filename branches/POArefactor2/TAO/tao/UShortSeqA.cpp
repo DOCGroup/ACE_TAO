@@ -30,23 +30,23 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_UShortSeq[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   32,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f5553),
-  ACE_NTOHL (0x686f7274),
-  ACE_NTOHL (0x5365713a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f5553), 
+  ACE_NTOHL (0x686f7274), 
+  ACE_NTOHL (0x5365713a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/UShortSeq:1.0
     10,
-  ACE_NTOHL (0x5553686f),
-  ACE_NTOHL (0x72745365),
+  ACE_NTOHL (0x5553686f), 
+  ACE_NTOHL (0x72745365), 
   ACE_NTOHL (0x71000000),  // name = UShortSeq
     CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
@@ -71,7 +71,7 @@ namespace CORBA
     &_tc_TAO_tc_CORBA_UShortSeq;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -108,8 +108,8 @@ CORBA::Boolean operator>>= (
     CORBA::UShortSeq *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const CORBA::UShortSeq *&,
+  return _tao_any >>= const_cast<
+      const CORBA::UShortSeq *&> (
       _tao_elem
     );
 }
@@ -129,8 +129,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
@@ -145,5 +143,4 @@ CORBA::Boolean operator>>= (
         CORBA::UShortSeq \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

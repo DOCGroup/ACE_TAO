@@ -2,7 +2,7 @@
 
 // $Id$
 
-// Typecode stuff, originall in
+// Basic types
 
 #ifndef TAO_ORB_TYPES_IDL
 #define TAO_ORB_TYPES_IDL

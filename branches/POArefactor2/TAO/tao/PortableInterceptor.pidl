@@ -30,8 +30,6 @@
  *
  * Patches for changes to the generated code are available in the
  * `diffs' directory.
- * Move the typecodes for exceptions in PortableIntercaptorA.cpp to
- * PortableInterceptorC.cpp.
  */
 
 // File: PortableInterceptor.idl
