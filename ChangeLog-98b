@@ -1,38 +1,43 @@
+Fri Jan 01 18:57:22 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Containers_T.i (ACE_Array,ACE_Array::operator=):
+          added missing ACE_INLINE's.
+
 Fri Jan  1 12:22:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Containers_T.h: 
-	* ace/Containers_T.i: 
-	* ace/Containers_T.cpp: 
-	* bin/Array_Helper: 
-	* bin/Array.pl: 
-	  Moved most of the implementation of ACE_Array into
-	  ACE_Array_Base this class does not require == or != operators
-	  defined for the template parameter.
-	  I also added methods to access and manipulate the capacity of
-	  the array (max_size) as opposed to always changing its size (the
-	  portion actually used).
+        * ace/Containers_T.h:
+        * ace/Containers_T.i:
+        * ace/Containers_T.cpp:
+        * bin/Array_Helper:
+        * bin/Array.pl:
+          Moved most of the implementation of ACE_Array into
+          ACE_Array_Base this class does not require == or != operators
+          defined for the template parameter.
+          I also added methods to access and manipulate the capacity of
+          the array (max_size) as opposed to always changing its size (the
+          portion actually used).
 
-	* ace/Object_Manager.cpp: 
-	* ace/Template_Instantiations.cpp: 
-	* ace/OS.cpp: 
-	* apps/JAWS/clients/Caching/URL_Properties.cpp: 
-	  Fixed ACE_Array instantiations.
+        * ace/Object_Manager.cpp:
+        * ace/Template_Instantiations.cpp:
+        * ace/OS.cpp:
+        * apps/JAWS/clients/Caching/URL_Properties.cpp:
+          Fixed ACE_Array instantiations.
 
 Thu Dec 31 13:25:53 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/019/server[2].cpp: 
-	Test that the segment was created.  If it already existed, the
-	malloc() will return 0 and we'll crash.
+        * docs/tutorials/019/server[2].cpp:
+        Test that the segment was created.  If it already existed, the
+        malloc() will return 0 and we'll crash.
 
 Thu Dec 31 12:10:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/RB_Tree_Test.cpp: 
-	  Added missing template instantiation, actually it seems that the
-	  IRIX MIPSPro compiler was not doing recursive instantiation.
+        * tests/RB_Tree_Test.cpp:
+          Added missing template instantiation, actually it seems that the
+          IRIX MIPSPro compiler was not doing recursive instantiation.
 
-	* ace/ACE.cpp: 
-	  Use ACE_NOTREACHED in ACE::set_handle_limit(), the IRIX compiler
-	  was complaining again..
+        * ace/ACE.cpp:
+          Use ACE_NOTREACHED in ACE::set_handle_limit(), the IRIX compiler
+          was complaining again..
 
 Thu Dec 31 10:58:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
