@@ -70,16 +70,6 @@ public:
   // returns the number of bytes read.  The caller is responsible for
   // deleting the member in the <iov_base> field of <io_vec>.
 
-  ssize_t sendv_n (const iovec iov[],
-                   size_t n) const;
-  // Send an <iovec> of size <n> to the connected socket (uses
-  // <ACE::sendv_n>).  Will block until all bytes are sent or an error
-  // occurs.
-
-  ssize_t recvv_n (iovec iov[],
-                   size_t n) const;
-  // Receive an <iovec> of size <n> to the connected socket.
-
   ssize_t send (const void *buf,
                 size_t n,
                 int flags,

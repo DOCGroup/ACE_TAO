@@ -80,6 +80,16 @@ public:
   // <recv_n> return <len> (i.e., the number of bytes requested to be
   // read).
 
+  ssize_t sendv_n (const iovec iov[],
+                   size_t n) const;
+  // Send an <iovec> of size <n> to the connected socket (uses
+  // <ACE::sendv_n>).  Will block until all bytes are sent or an error
+  // occurs.
+
+  ssize_t recvv_n (iovec iov[],
+                   size_t n) const;
+  // Receive an <iovec> of size <n> to the connected socket.
+
   // = Send/receive an ``urgent'' character (see TCP specs...).
   ssize_t send_urg (void *ptr, int len = sizeof (char));
   ssize_t recv_urg (void *ptr, int len = sizeof (char));

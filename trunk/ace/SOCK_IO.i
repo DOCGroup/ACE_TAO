@@ -69,26 +69,6 @@ ACE_SOCK_IO::sendv (const iovec iov[], size_t n) const
 }
 
 ASYS_INLINE ssize_t
-ACE_SOCK_IO::sendv_n (const iovec iov[], size_t n) const
-{
-  ACE_TRACE ("ACE_SOCK_IO::sendv_n");
-  return ACE::sendv_n (this->get_handle (),
-                       iov,
-                       n);
-}
-
-// Recv an n byte message from the connected socket.
-
-ASYS_INLINE ssize_t
-ACE_SOCK_IO::recvv_n (iovec iov[], size_t n) const
-{
-  ACE_TRACE ("ACE_SOCK_IO::recvv_n");
-  // @@ Carlos, can you please update this to call the
-  // new ACE::recvv_n() method that you write?
-  return ACE_OS::recvv (this->get_handle (), iov, n);
-}
-
-ASYS_INLINE ssize_t
 ACE_SOCK_IO::send (const void *buf, size_t n,
                    ACE_OVERLAPPED *overlapped) const
 {
