@@ -1,3 +1,12 @@
+Sat Jul 18 11:29:43 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/RT_Task.h
+          orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp
+
+	  Changed to always typedef ACE_ES_QUEUE as the base
+	  template class ACE_Message_Queue<ACE_SYNCH> and
+	  explicitly construct dynamic message queues as needed.
+
 Sat Jul 18 10:19:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Logger/client.cpp (nesting_test): added return 0
