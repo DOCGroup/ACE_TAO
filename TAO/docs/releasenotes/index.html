@@ -180,7 +180,7 @@ Notification Service
 <td VALIGN=TOP>
 <ul>
 <b>CCM Related</b>
-<br>
+<br><BR>
 <li>
 <a href="../../CIAO/docs/index.html">CORBA Component Model (CIAO)</a></li>
 <li>
@@ -218,8 +218,6 @@ on the handler. The Reactor also increments this reference count when making
 upcalls on the handler. The reference count is decremented when an upcall
 completes or when the handler is removed from the Reactor.</li>
 
-<br>&nbsp;
-<p>&nbsp;
 <p>This mechanism is similar to what happens between POAs and Servants
 and it allows for the safe deletion of handlers. This mechanism is particularly
 need for multi-threaded applications that can have multiple threads executing
@@ -631,8 +629,6 @@ the MSVC project. For the Release version, the Optimizations box in the
 C/C++ tab has 'Maximize Speed' selected. This setting turned out to cause
 a problem when</li>
 
-<br>&nbsp;
-<p>&nbsp;
 <p>const char *foo = ......
 <p>occurs in the source code. The variable foo is sometimes not allocated
 or assigned properly, and if foo is part of generated code, it will then
@@ -656,53 +652,28 @@ work is now ongoing to extend TAO's OBV implementation until it includes
 the complete CORBA value type specification. Some of the items yet to be
 implemented include:</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
 <ul>
 <li>
 Boxed value types</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
 <li>
 Custom marshaling</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
 <li>
 Truncation</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
 <li>
 Marshaling of complex state (graphs with cycles)</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;</ul>
+</ul>
 For a complete description of value type semantics, see chapter 5 in the
 CORBA specification.
-<br>&nbsp;
-<br>&nbsp;
 <li>
 The generated sequence classes should not be generated per sequence, but
 per type and parent scope. Which means, that the overhead of having the
 source code generated serveral times should be reduced. To do this, an
 extra pass over the internal representation of the IDL file has to be done.</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
 <li>
 Updated and portable support for wide characters and wide strings. The
 original implementation supports Unicode only. At the time, the CORBA specification
@@ -720,10 +691,7 @@ CDR transfer syntax, see section 15.3 in the CORBA specification. and for
 information about the marshaling of IDL character types specifically, see
 section 15.3.1.6.</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;</ul>
+</ul>
 
 <p><br><!--#include virtual="orbcore.html" -->
 <hr>
@@ -759,8 +727,6 @@ instance, there is now the concept of communication layers: Objects (e.g.,
 references, method invocations, etc.), ORB Messaging, Transport, and Network.
 The Object layer is just the usual stubs and skeletons.</li>
 
-<br>&nbsp;
-<p>&nbsp;
 <p>The common interfaces have been defined in the new abstract classes
 that form the core of TAO's pluggable protocol framework, e.g.,
 <tt>TAO_Connector</tt>,
@@ -778,10 +744,6 @@ This is important since there may be several different ways to access an
 object. Each profile for an object may encode information pertaining to
 QoS, network and transport protocols, addresses or routes.</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;
 <li>
 <b>Example Transport protocols</b> - Aside from IIOP, five additional transport
 protocols are distributed with TAO:</li>
@@ -861,8 +823,6 @@ and is meant to be a drop-in replacement for the IIOP pluggable protocol.
 TAO's SSLIOP pluggable protocol implementation supports both the standard
 IIOP transport protocol and the secure IIOP over SSL transport protocol.</li>
 
-<br>&nbsp;
-<p>&nbsp;
 <p>No changes were made to the core TAO sources to provide to this SSL
 support, nor does TAO contain any security related hooks. TAO's SSLIOP
 implementation is completely self-contained. This ensures that the core
@@ -946,9 +906,7 @@ the null terminator, but Posix.1g only requires that local IPC rendezvous
 point arrays contain a maximum of <b>at least</b> 100 characters, including
 the null terminator.</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<p>&nbsp;If an endpoint is longer than what the platform supports then
+<P>If an endpoint is longer than what the platform supports then
 it will be truncated so that it fits, and a warning will be issued.
 <li>
 Avoid using <i>relative</i> paths in your UIOP endpoints. If possible,
@@ -961,8 +919,6 @@ able to communicate with the server since its point of communication, the
 rendezvous point, was not found. On the other hand, if an absolute path
 was used, the client would know exactly where to find the rendezvous point.</li>
 
-<br>&nbsp;
-<p>&nbsp;
 <p>It is up to the user to make sure that a given UIOP endpoint is accessible
 by both the server and the client.
 <li>
@@ -976,10 +932,7 @@ strings, i.e. <tt>/tmp/foo</tt> and <tt>foo</tt> are not the same, lexicographic
 On the other hand, if both the endpoint and the preconnect are the same
 string then a preconnection will be established and used successfully.</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;</blockquote>
+</blockquote>
 The <tt><a href="../ORBEndpoint.html">-ORBEndpoint</a></tt> option uses
 a syntax similar to that of the URL style object reference shown above.
 The only difference is that the object key delimiter and the object key
@@ -994,8 +947,6 @@ for endpoints created on a host with multiple network interfaces. It should
 no longer be necessary to manually specify an endpoint for each network
 interface.</li>
 
-<br>&nbsp;
-<p>&nbsp;
 <p>This means that server IORs will contain profiles for all of the default
 endpoints created on each network interface the server is listening on,
 if no explicit endpoints were specified.</ul>
@@ -1009,10 +960,7 @@ Critical Work:
 <li>
 None.</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;</ul>
+</ul>
 Future Work:
 <ul>
 <li>
@@ -1038,8 +986,6 @@ TAO supports the POA spec. This section will carry updates as available.</li>
 Known issues:
 <br>Future work:
 <br>Recently completed work:
-<br>&nbsp;
-<br>&nbsp;
 <ul>
 <li>
 ORB::shutdown now properly deactives all the POA Managers.</li>
@@ -1087,16 +1033,12 @@ method call from the client to the server; (b) it is varible in size, and
 therefore, does not lend itself to smart and effective parsing; (c) the
 searching based on the complete POA name is very ineffient.</li>
 
-<br>&nbsp;
-<p>&nbsp;
 <p>The new solution is to use an active demux table, and flatten the POA
 hierarchy. This will help in the searching since active demuxing is fast
 and predictable. This will also help in the parsing since the demux key
 will be fixed size.
 <p>Note that for persistent ids, we have to pass the complete POA name
 in addition to the demux key in order to handle POA creation on demand.
-<br>&nbsp;
-<br>&nbsp;
 <li>
 There were some POA objects in a typical server that are not freed up properly,
 resulting in a memory leak. This has now been fixed.</li>
@@ -1123,15 +1065,11 @@ We have decided not to support active demuxing for method name lookup.
 The benefit of this optimization was questionable since the current perfect
 hashing scheme provide very good and predictable behavior.</li>
 
-<br>&nbsp;
-<p>&nbsp;
 <p>Also, note that this optimization will require many changes. We would
 have to use the help of the IDL compiler to modify the object key that
 is passed for every method call differently. Note that this scheme doesn't
 work in the case of multiple inheritance or when the client stubs are not
 TAO.
-<br>&nbsp;
-<br>&nbsp;
 <li>
 Improved the parsing of object keys belonging to the RootPOA. Since this
 is the default POA and is commonly used, we have given it a reserved byte
@@ -1167,10 +1105,7 @@ and expecting the reference counting behavior provided by the POA. Note
 that the old scheme of direct call through to the servant is also still
 available.</li>
 
-<br>&nbsp;
-<p>&nbsp;
-<br>&nbsp;
-<br>&nbsp;</ul>
+</ul>
 
 <hr>
 <br><!--#include virtual="OBV.html" -->
@@ -1286,8 +1221,6 @@ that meets the Linked Trader conformance criteria --- it implements the
 <tt>Link</tt> interfaces, but not
 the <tt>Proxy</tt> interface. Notably, the TAO trader supports the following
 features:
-<br>&nbsp;
-<br>&nbsp;
 <ul>
 <li>
 Multithreaded operation;</li>
@@ -1348,8 +1281,6 @@ Point of contact: <a href="mailto:tworm@cs.wustl.edu">Torben Worm</a>
 <p>Current status (as of May 3rd): The <a href="http://www.omg.org/technology/documents/formal/concurrency_service.htm">Concurrency
 Service</a> provides a mechanism that allows clients to acquire and release
 various types of locks in a distributed system.
-<br>&nbsp;
-<br>&nbsp;
 <ul>
 <li>
 A simple version of the Concurrency Service has been implemented, i.e.
@@ -1714,8 +1645,6 @@ with the standard policy manipulation CORBA features (e.g. <tt>PolicyManager</tt
 meaning that this policy can be set on a per-ORB, per-thread or per-object
 basis.</li>
 
-<br>&nbsp;
-<p>&nbsp;
 <p>This policy makes it possible to, for example, make both secure and
 insecure invocations within the same client process.
 <li>
@@ -1730,8 +1659,6 @@ in conjunction with the standard policy manipulation CORBA features (e.g.
 <tt>PolicyCurrent</tt>), meaning that this policy can be set on a per-ORB,
 per-thread or per-object basis.</li>
 
-<br>&nbsp;
-<p>&nbsp;
 <p>This policy makes it possible to, for example, make authenticated and
 non-authenticated invocations within the same client process.
 <li>
