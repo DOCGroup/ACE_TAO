@@ -20,7 +20,7 @@ ACE_INLINE void *
 ACE_New_Allocator::calloc (size_t nbytes,
                            char initial_value)
 {
-  char *ptr;
+  char *ptr = 0;
 
   ACE_NEW_RETURN (ptr, char[nbytes], 0);
 
@@ -232,4 +232,3 @@ ACE_Static_Allocator_Base::ACE_Static_Allocator_Base (char *buffer,
     offset_ (0)
 {
 }
-

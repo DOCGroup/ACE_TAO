@@ -217,7 +217,7 @@ run_test (int disable_notify_pipe)
 {
   // Create special reactors with the appropriate flags enabled.
 
-  ACE_Select_Reactor *reactor_impl;
+  ACE_Select_Reactor *reactor_impl = 0;
   if (disable_notify_pipe)
     ACE_NEW (reactor_impl,
              ACE_Select_Reactor (0, 0, 1));
