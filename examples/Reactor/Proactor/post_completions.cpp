@@ -99,7 +99,7 @@ public:
 
       // Print the completion details.
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Completion sequence number %d, success : %d, error : %d, signal_number : %d, %ud more to go\n", 
+                  "(%t) Completion sequence number %d, success : %d, error : %d, signal_number : %d, %u more to go\n", 
                   this->sequence_number_,
                   this->success_,
                   this->error_,
