@@ -276,14 +276,15 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
   if (this->message_status_ == TAO_GIOP_WAITING_FOR_PAYLOAD)
     {
       size_t len = this->current_buffer_.length ();
-      char *buf =
-        this->current_buffer_.rd_ptr () - TAO_GIOP_MESSAGE_HEADER_LEN;
+      char *buf = this->current_buffer_.rd_ptr ();
       if (len == this->message_state_.message_size)
         {
           // If the buffer length is equal to the size of the payload we
           // have exactly one message. Check whether we have received
           // only the first part of the fragment.
           this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
+
+          buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
 
           if (TAO_debug_level >= 4)
             this->mesg_base_->dump_msg (
@@ -301,23 +302,34 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
           // from  1 to N.
           this->message_status_ = TAO_GIOP_MULTIPLE_MESSAGES;
 
-          // Now copy the first message in to the <supp_buffer_>
-          this->supp_buffer_.size (this->message_state_.message_size);
-          this->supp_buffer_.copy (this->current_buffer_.rd_ptr (),
-                                   this->message_state_.message_size);
+          buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
 
           if (TAO_debug_level >= 4)
             this->mesg_base_->dump_msg (
-                "Recv msg",
-                ACE_reinterpret_cast (u_char *,
-                                      buf),
-                this->message_state_.message_size);
+              "Recv msg",
+              ACE_reinterpret_cast (u_char *,
+                                    buf),
+              this->message_state_.message_size);
 
-          // We have one of the messages copied. Let us move the
-          // rd_ptr in <current_buffer_> after that message
-          this->current_buffer_.rd_ptr (this->message_state_.message_size);
+          this->supp_buffer_.data_block (
+            this->current_buffer_.data_block ()->clone ());
 
-          return this->message_state_.is_complete (this->supp_buffer_);
+          // Set the read and write pointer for the supplementary
+          // buffer.
+          size_t rd_pos = this->rd_pos ();
+          this->supp_buffer_.rd_ptr (rd_pos +
+                                     this->message_state_.message_size);
+          this->supp_buffer_.wr_ptr (this->wr_pos ());
+
+          // Reset the current buffer
+          this->current_buffer_.reset ();
+
+          // Set the read and write pointers again for the current buffer
+          this->current_buffer_.rd_ptr (rd_pos);
+          this->current_buffer_.wr_ptr (rd_pos +
+                                        this->message_state_.message_size);
+
+          return this->message_state_.is_complete (this->current_buffer_);
         }
     }
 
@@ -332,41 +344,103 @@ TAO_GIOP_Message_Handler::more_messages (void)
 {
   if (this->message_status_ == TAO_GIOP_MULTIPLE_MESSAGES)
     {
-      if (this->current_buffer_.length () >
-          TAO_GIOP_MESSAGE_HEADER_LEN)
-        return this->parse_header ();
-      else
+      size_t len = this->supp_buffer_.length ();
+
+      // @@ Once we start receing fragments, somthing like this would
+      // be needed. We will revisit this then.
+      /*      if (len > TAO_GIOP_MESSAGE_HEADER_LEN)
         {
-          // We have some message but it is not of sufficient length
-          // for us to process. We copy that left over piece to the
-          // start of the <current_buffer_> and align the rd_ptr &
-          // wr_ptr.
-          this->align_left_info ();
-          this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
+          this->current_buffer_.reset ();
+          if (len > (TAO_GIOP_MESSAGE_HEADER_LEN +
+                     TAO_GIOP_MESSAGE_FRAGMENT_HEADER))
+            {
+              this->current_buffer_.copy (
+                this->supp_buffer_.rd_ptr (),
+                TAO_GIOP_MESSAGE_HEADER_LEN +
+                TAO_GIOP_MESSAGE_FRAGMENT_HEADER);
 
-          // No more meaningful messages
-          return TAO_MESSAGE_BLOCK_INCOMPLETE;
+              this->supp_buffer_.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN +
+                                         TAO_GIOP_MESSAGE_FRAGMENT_HEADER);
+            }
+            else*/
+      if (len > TAO_GIOP_MESSAGE_HEADER_LEN)
+        {
+          this->current_buffer_.copy (
+                                      this->supp_buffer_.rd_ptr (),
+                                      TAO_GIOP_MESSAGE_HEADER_LEN);
+
+          this->supp_buffer_.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
+
+          if (this->parse_header () == -1)
+            return -1;
+
+          return this->get_message ();
         }
-    }
 
+
+    }
 
   return TAO_MESSAGE_BLOCK_COMPLETE;
 }
 
-void
-TAO_GIOP_Message_Handler::align_left_info (void)
+
+int
+TAO_GIOP_Message_Handler::get_message (void)
 {
-  // Copy left over stuff in to <supp_buffer_>
-  this->supp_buffer_.copy (this->current_buffer_.rd_ptr (),
-                           this->current_buffer_.length ());
+  if (this->message_status_ == TAO_GIOP_WAITING_FOR_PAYLOAD)
+    {
+      size_t len = this->supp_buffer_.length ();
 
-  // Reset the current buffer
-  this->current_buffer_.reset ();
+      if (len == this->message_state_.message_size)
+        {
+          // If the buffer length is equal to the size of the payload we
+          // have exactly one message. Check whether we have received
+          // only the first part of the fragment.
+          this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
+          this->current_buffer_.copy (this->supp_buffer_.rd_ptr (),
+                                      this->message_state_.message_size);
 
-  // Copy the info from the <supp_buffer_>
-  this->current_buffer_.copy (this->supp_buffer_.rd_ptr (),
-                              this->supp_buffer_.length ());
+          char * buf =
+            this->current_buffer_.rd_ptr ();
 
-  // Reset the <supp_buffer_>
-  this->supp_buffer_.reset ();
+          buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
+
+          if (TAO_debug_level >= 4)
+            this->mesg_base_->dump_msg (
+                "Recv msg",
+                ACE_reinterpret_cast (u_char *,
+                                      buf),
+                this->message_state_.message_size);
+
+          this->supp_buffer_.rd_ptr (this->message_state_.message_size);
+          return this->message_state_.is_complete (this->current_buffer_);
+        }
+      else if (len > this->message_state_.message_size)
+        {
+          // If the length is greater we have received some X messages
+          // and a part of X + 1  messages (probably) with X varying
+          // from  1 to N.
+          this->message_status_ = TAO_GIOP_MULTIPLE_MESSAGES;
+
+          this->current_buffer_.copy (this->supp_buffer_.rd_ptr (),
+                                      this->message_state_.message_size);
+
+          char * buf =
+            this->current_buffer_.rd_ptr ();
+
+          buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
+
+          if (TAO_debug_level >= 4)
+            this->mesg_base_->dump_msg (
+              "Recv msg",
+              ACE_reinterpret_cast (u_char *,
+                                    buf),
+              this->message_state_.message_size);
+
+          this->supp_buffer_.rd_ptr (this->message_state_.message_size);
+          return this->message_state_.is_complete (this->current_buffer_);
+        }
+    }
+
+  return TAO_MESSAGE_BLOCK_INCOMPLETE;
 }

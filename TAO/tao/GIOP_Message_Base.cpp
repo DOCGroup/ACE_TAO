@@ -1163,7 +1163,7 @@ TAO_GIOP_Message_Base::more_messages (void)
   this->set_state (state.giop_version.major,
                    state.giop_version.minor);
 
-  retval =  this->message_handler_.is_message_ready ();
+  // retval =  this->message_handler_.is_message_ready ();
 
   if (retval == 1)
     {
