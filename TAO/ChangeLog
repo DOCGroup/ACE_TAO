@@ -1,3 +1,17 @@
+Tue Dec  7 16:39:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * orbsvcs/IFR_Service/be_init.cpp:
+        
+          Created a flag in the IDL front end global data class,
+          set by the tao_ifr backend, to be used as an additional
+          check to decide whether to generate the AST nodes
+          associated with 'uses multiple'. These 'implied IDL'
+          declarations should not go into the IFR.
+
 Tue Dec  7 16:35:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/Bug_1393_Regression/run_test.pl:

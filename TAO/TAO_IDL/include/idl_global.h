@@ -536,6 +536,9 @@ public:
   void pass_orb_idl (idl_bool val);
   // Accessor for the pass_orb_idl_ member.
   
+  bool using_ifr_backend (void) const;
+  void using_ifr_backend (bool val);
+  
   int check_gperf (void);
   // Currently called only from IDL backend, but could be useful elsewhere.
   
@@ -629,6 +632,9 @@ private:
   
   idl_bool pass_orb_idl_;
   // Treat orb.idl like any other included IDL file.
+  
+  bool using_ifr_backend_;
+  // Set by the IFR backend itself.
 };
 
 
