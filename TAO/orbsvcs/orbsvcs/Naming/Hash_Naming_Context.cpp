@@ -2,7 +2,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    cos
+//    TAO_CosNaming
 //
 // = FILENAME
 //   Hash_Naming_Context.cpp
@@ -12,15 +12,23 @@
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 //
 // ============================================================================
+
 #include "Hash_Naming_Context.h"
 #include "nsconf.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(Naming, Hash_Naming_Context, "$Id$")
+ACE_RCSID (Naming,
+           Hash_Naming_Context,
+           "$Id$")
+
+
+// -------------------------------------------------
 
 TAO_Bindings_Map::~TAO_Bindings_Map (void)
 {
 }
+
+// -------------------------------------------------
 
 TAO_Hash_Naming_Context::TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
                                                   const char *poa_id)
@@ -357,20 +365,18 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n
 
   // Stores the binding type for the first name component.
   CosNaming::BindingType type;
+
   // Stores the object reference bound to the first name component.
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
+  CORBA::Object_var result;
 
   if (this->context_->find (n[0].id,
                             n[0].kind,
-                            obj,
+                            result.out (),
                             type) == -1)
     ACE_THROW_RETURN (CosNaming::NamingContext::NotFound
                       (CosNaming::NamingContext::missing_node,
                        n),
                       CORBA::Object::_nil ());
-
-  // Store the value in var to avoid memory leaks.
-  CORBA::Object_var result = obj;
 
   // If the name we have to resolve is a compound name, we need to
   // resolve it recursively.
@@ -384,7 +390,7 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n
           // Narrow to NamingContext.
           context = CosNaming::NamingContext::_narrow (result.in ()
                                                        ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (result._retn ());
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
         }
       else
         // The first name component wasn't bound to a NamingContext.
@@ -515,7 +521,10 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n
             result->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK_EX(DESTROY);
           }
-        ACE_CATCHANY {} ACE_ENDTRY;
+        ACE_CATCHANY
+          {
+          }
+        ACE_ENDTRY;
       }
       // Re-raise the exception in bind_context()
       ACE_RE_THROW;

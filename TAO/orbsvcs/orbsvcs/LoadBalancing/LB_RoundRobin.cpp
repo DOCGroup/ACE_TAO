@@ -10,8 +10,9 @@ ACE_RCSID (LoadBalancing,
            "$Id$")
 
 
-TAO_LB_RoundRobin::TAO_LB_RoundRobin (void)
-  : lock_ (),
+TAO_LB_RoundRobin::TAO_LB_RoundRobin (PortableServer::POA_ptr poa)
+  : poa_ (PortableServer::POA::_duplicate (poa)),
+    lock_ (),
     location_index_map_ (TAO_PG_MAX_OBJECT_GROUPS)
 {
 }
@@ -58,6 +59,20 @@ TAO_LB_RoundRobin::push_loads (
   ACE_THROW (CosLoadBalancing::StrategyNotAdaptive ());
 }
 
+CosLoadBalancing::LoadList *
+TAO_LB_RoundRobin::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
+                              const PortableGroup::Location & the_location
+                              ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosLoadBalancing::LocationNotFound))
+{
+  if (CORBA::is_nil (load_manager))
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+
+  return load_manager->get_loads (the_location
+                                  ACE_ENV_ARG_PARAMETER);
+}
+
 CORBA::Object_ptr
 TAO_LB_RoundRobin::next_member (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -67,6 +82,9 @@ TAO_LB_RoundRobin::next_member (
                    PortableGroup::ObjectGroupNotFound,
                    PortableGroup::MemberNotFound))
 {
+  if (CORBA::is_nil (load_manager))
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::Object::_nil ());
+
   const PortableGroup::ObjectGroupId id =
     load_manager->get_object_group_id (object_group
                                        ACE_ENV_ARG_PARAMETER);
@@ -130,4 +148,19 @@ TAO_LB_RoundRobin::next_member (
   return load_manager->get_member_ref (object_group,
                                        locations[index]
                                        ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_LB_RoundRobin::analyze_loads (
+    PortableGroup::ObjectGroup_ptr /* object_group */,
+    CosLoadBalancing::LoadManager_ptr /* load_manager */
+    ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+
+PortableServer::POA_ptr
+TAO_LB_RoundRobin::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
 }

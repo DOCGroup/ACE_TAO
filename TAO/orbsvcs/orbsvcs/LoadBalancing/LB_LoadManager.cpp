@@ -13,6 +13,7 @@
 
 #include "tao/debug.h"
 
+
 ACE_RCSID (LoadBalancing,
            LB_LoadManager,
            "$Id$")
@@ -21,6 +22,7 @@ ACE_RCSID (LoadBalancing,
 TAO_LB_LoadManager::TAO_LB_LoadManager (void)
   : reactor_ (0),
     poa_ (),
+    root_poa_ (),
     monitor_lock_ (),
     load_lock_ (),
     load_alert_lock_ (),
@@ -34,9 +36,10 @@ TAO_LB_LoadManager::TAO_LB_LoadManager (void)
     pull_handler_ (),
     timer_id_ (-1),
     lm_ref_ (),
-    round_robin_ (0),
-    random_ (0),
-    least_loaded_ (0),
+    round_robin_ (),
+    random_ (),
+    least_loaded_ (),
+    built_in_balancing_strategy_info_name_ (1),
     built_in_balancing_strategy_name_ (1),
     custom_balancing_strategy_name_ (1)
 {
@@ -52,9 +55,6 @@ TAO_LB_LoadManager::TAO_LB_LoadManager (void)
 
 TAO_LB_LoadManager::~TAO_LB_LoadManager (void)
 {
-  delete this->round_robin_;
-  delete this->random_;
-  delete this->least_loaded_;
 }
 
 void
@@ -67,12 +67,63 @@ TAO_LB_LoadManager::push_loads (
   if (loads.length () == 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             guard,
-             this->load_lock_);
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX,
+               guard,
+               this->load_lock_);
 
-  if (this->load_map_.rebind (the_location, loads) == -1)
-    ACE_THROW (CORBA::INTERNAL ());
+    if (this->load_map_.rebind (the_location, loads) == -1)
+      ACE_THROW (CORBA::INTERNAL ());
+  }
+
+  // Analyze loads for object groups that have members residing at the
+  // given location.
+  PortableGroup::ObjectGroups_var groups =
+    this->object_group_manager_.groups_at_location (the_location
+                                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  const CORBA::ULong len = groups->length ();
+
+  for (CORBA::ULong i = 0; i < len; ++i)
+    {
+      PortableGroup::ObjectGroup_ptr object_group =
+        groups[i].in ();
+
+      ACE_TRY
+        {
+          PortableGroup::Properties_var properties =
+            this->get_properties (object_group
+                                  ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          PortableGroup::Value value;
+          CosLoadBalancing::Strategy_ptr strategy;
+
+          if ((TAO_PG::get_property_value (
+                 this->built_in_balancing_strategy_name_,
+                 properties.in (),
+                 value)
+               || TAO_PG::get_property_value (
+                    this->custom_balancing_strategy_name_,
+                    properties.in (),
+                    value))
+              && (value >>= strategy)
+              && !CORBA::is_nil (strategy))
+            {
+              strategy->analyze_loads (object_group,
+                                       this->lm_ref_.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
+        }
+      ACE_CATCHANY
+        {
+          // Ignore all exceptions.
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+    }
 }
 
 CosLoadBalancing::LoadList *
@@ -118,6 +169,7 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location
 
       // @note This could be problematic if the LoadAlert object is
       //       registered with more than LoadManager.
+
       if (info.alerted == 1)
         return;  // No need to set the alert status.  It has already
                  // been set.
@@ -130,29 +182,32 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location
         CosLoadBalancing::LoadAlert::_duplicate (info.load_alert.in ());
 
       // The alert condition will be enabled.
-      // @note There is a subtle problem here.  If the below
-      //       remote invocation fails, this variable will be
-      //       incorrectly set to "true."
+      // @@ What happens if the below call fails?  This variable
+      //    should be reset to zero!
       info.alerted = 1;
 
-      // Release the lock prior to making the below remote invocation.
-      ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock (this->load_alert_lock_);
-      ACE_GUARD (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>,
-                 reverse_guard,
-                 reverse_lock);
+      {
+        // Release the lock prior to making the below remote
+        // invocation.
+        ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock (
+          this->load_alert_lock_);
+        ACE_GUARD (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>,
+                   reverse_guard,
+                   reverse_lock);
 
-      // Use AMI to make the following operation
-      // "non-blocking," allowing the caller to continue
-      // without being forced to wait for a response.
-      //
-      // AMI is used to improve member selection times and overall
-      // throughput since the LoadAlert object need not be alerted
-      // synchronously.  In particular, the load alert can and
-      // should be performed in parallel to other tasks, such as
-      // member selection.
-      load_alert->sendc_enable_alert (this->load_alert_handler_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        // Use AMI to make the following operation "non-blocking,"
+        // allowing the caller to continue without being forced to
+        // wait for a response.
+        //
+        // AMI is used to improve member selection times and overall
+        // throughput since the LoadAlert object need not be alerted
+        // synchronously.  In particular, the load alert can and
+        // should be performed in parallel to other tasks, such as
+        // member selection.
+        load_alert->sendc_enable_alert (this->load_alert_handler_.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+      }
     }
   else
     ACE_THROW (CosLoadBalancing::LoadAlertNotFound ());
@@ -184,29 +239,32 @@ TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location
         CosLoadBalancing::LoadAlert::_duplicate (info.load_alert.in ());
 
       // The alert condition will be disabled.
-      // @note There is a subtle problem here.  If the below
-      //       remote invocation fails, this variable will be
-      //       incorrectly set to "false."
+      // @@ What happens if the below call fails?  This variable
+      //    should be reset to one!
       info.alerted = 0;
 
-      // Release the lock prior to making the below remote invocation.
-      ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock (this->load_alert_lock_);
-      ACE_GUARD (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>,
-                 reverse_guard,
-                 reverse_lock);
+      {
+        // Release the lock prior to making the below remote
+        // invocation.
+        ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock (
+          this->load_alert_lock_);
+        ACE_GUARD (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>,
+                   reverse_guard,
+                   reverse_lock);
 
-      // Use AMI to make the following operation
-      // "non-blocking," allowing the caller to continue
-      // without being forced to wait for a response.
-      //
-      // AMI is used to improve member selection times and overall
-      // throughput since the LoadAlert object need not be alerted
-      // synchronously.  In particular, the load alert can and
-      // should be performed in parallel to other tasks, such as
-      // member selection.
-      load_alert->sendc_disable_alert (this->load_alert_handler_.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        // Use AMI to make the following operation "non-blocking,"
+        // allowing the caller to continue without being forced to
+        // wait for a response.
+        //
+        // AMI is used to improve member selection times and overall
+        // throughput since the LoadAlert object need not be alerted
+        // synchronously.  In particular, the load alert can and
+        // should be performed in parallel to other tasks, such as
+        // member selection.
+        load_alert->sendc_disable_alert (this->load_alert_handler_.in ()
+                                         ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+      }
     }
   else
     ACE_THROW (CosLoadBalancing::LoadAlertNotFound ());
@@ -295,8 +353,8 @@ TAO_LB_LoadManager::remove_load_alert (
 
 void
 TAO_LB_LoadManager::register_load_monitor (
-    CosLoadBalancing::LoadMonitor_ptr load_monitor,
-    const PortableGroup::Location & the_location
+    const PortableGroup::Location & the_location,
+    CosLoadBalancing::LoadMonitor_ptr load_monitor
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosLoadBalancing::MonitorAlreadyPresent))
@@ -334,12 +392,16 @@ TAO_LB_LoadManager::register_load_monitor (
                         "TAO_LB_LoadManager::register_load_monitor: "
                         "Unable to schedule timer.\n"));
 
+          (void) this->monitor_map_.unbind (the_location);
+
           ACE_THROW (CORBA::INTERNAL ());
         }
     }
   else if (result == 1)
-    ACE_THROW (CosLoadBalancing::MonitorAlreadyPresent ());
-  else
+    {
+      ACE_THROW (CosLoadBalancing::MonitorAlreadyPresent ());
+    }
+  else if (result != 0)
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
@@ -414,11 +476,12 @@ TAO_LB_LoadManager::set_default_properties (
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
-  this->check_strategy_prop (props
-                             ACE_ENV_ARG_PARAMETER);
+  PortableGroup::Properties new_props (props);
+  this->preprocess_properties (new_props
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->property_manager_.set_default_properties (props
+  this->property_manager_.set_default_properties (new_props
                                                   ACE_ENV_ARG_PARAMETER);
 }
 
@@ -453,12 +516,13 @@ TAO_LB_LoadManager::set_type_properties (
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
-  this->check_strategy_prop (overrides
-                             ACE_ENV_ARG_PARAMETER);
+  PortableGroup::Properties new_overrides (overrides);
+  this->preprocess_properties (new_overrides
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->property_manager_.set_type_properties (type_id,
-                                               overrides
+                                               new_overrides
                                                ACE_ENV_ARG_PARAMETER);
 }
 
@@ -497,12 +561,13 @@ TAO_LB_LoadManager::set_properties_dynamically (
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
-  this->check_strategy_prop (overrides
-                             ACE_ENV_ARG_PARAMETER);
+  PortableGroup::Properties new_overrides (overrides);
+  this->preprocess_properties (new_overrides
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->property_manager_.set_properties_dynamically (object_group,
-                                                      overrides
+                                                      new_overrides
                                                       ACE_ENV_ARG_PARAMETER);
 }
 
@@ -586,6 +651,17 @@ TAO_LB_LoadManager::locations_of_members (
                                                       ACE_ENV_ARG_PARAMETER);
 }
 
+PortableGroup::ObjectGroups *
+TAO_LB_LoadManager::groups_at_location (
+    const PortableGroup::Location & the_location
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return
+    this->object_group_manager_.groups_at_location (the_location
+                                                    ACE_ENV_ARG_PARAMETER);
+}
+
 PortableGroup::ObjectGroupId
 TAO_LB_LoadManager::get_object_group_id (
     PortableGroup::ObjectGroup_ptr object_group
@@ -642,9 +718,15 @@ TAO_LB_LoadManager::create_object (
 //   this->init (ACE_ENV_SINGLE_ARG_PARAMETER);
 //   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+
+  PortableGroup::Criteria new_criteria (the_criteria);
+  this->preprocess_properties (new_criteria
+                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
   CORBA::Object_ptr obj =
     this->generic_factory_.create_object (type_id,
-                                          the_criteria,
+                                          new_criteria,
                                           factory_creation_id
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
@@ -735,46 +817,24 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid
 
   // Prefer custom load balancing strategies over built-in ones.
   PortableGroup::Value value;
-  CosLoadBalancing::Strategy_var balancing_strategy;
-  CosLoadBalancing::StrategyInfo * built_in;  // Built-in Strategy
-                                              // information.
+  CosLoadBalancing::Strategy_ptr strategy;
 
-  if ((TAO_PG::get_property_value (this->custom_balancing_strategy_name_,
+  if ((TAO_PG::get_property_value (this->built_in_balancing_strategy_name_,
                                    properties.in (),
                                    value)
-       && (value >>= balancing_strategy.inout ())
-       && !CORBA::is_nil (balancing_strategy.in ())))
+       || TAO_PG::get_property_value (this->custom_balancing_strategy_name_,
+                                      properties.in (),
+                                      value))
+       && (value >>= strategy)
+       && !CORBA::is_nil (strategy))
     {
-      return balancing_strategy->next_member (object_group.in (),
-                                              this->lm_ref_.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+      return strategy->next_member (object_group.in (),
+                                    this->lm_ref_.in ()
+                                    ACE_ENV_ARG_PARAMETER);
     }
-  else if (TAO_PG::get_property_value (this->built_in_balancing_strategy_name_,
-                                       properties.in (),
-                                       value)
-           && (value >>= built_in))
-    {
-      balancing_strategy = this->built_in_strategy (built_in
-                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-      if (!CORBA::is_nil (balancing_strategy.in ()))
-        {
-          return balancing_strategy->next_member (object_group.in (),
-                                                  this->lm_ref_.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-        }
-      else
-        {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            CORBA::Object::_nil ());
-        }
-    }
-  else
-    {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        CORBA::Object::_nil ());
-    }
+  ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                    CORBA::Object::_nil ());
 }
 
 void
@@ -884,6 +944,7 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
       ACE_CHECK;
 
       this->reactor_ = reactor;
+      this->root_poa_ = PortableServer::POA::_duplicate (root_poa);
     }
 
   if (CORBA::is_nil (this->lm_ref_.in ()))
@@ -916,6 +977,10 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
       ACE_CHECK;
     }
 
+  this->built_in_balancing_strategy_info_name_.length (1);
+  this->built_in_balancing_strategy_info_name_[0].id =
+    CORBA::string_dup ("org.omg.CosLoadBalancing.StrategyInfo");
+
   this->built_in_balancing_strategy_name_.length (1);
   this->built_in_balancing_strategy_name_[0].id =
     CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy");
@@ -925,223 +990,188 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
     CORBA::string_dup ("org.omg.CosLoadBalancing.CustomStrategy");
 }
 
-CosLoadBalancing::Strategy_ptr
-TAO_LB_LoadManager::built_in_strategy (CosLoadBalancing::StrategyInfo * info
-                                       ACE_ENV_ARG_DECL)
-{
-  ACE_ASSERT (info != 0);
-
-  const char * name = info->name.in ();
-  const PortableGroup::Properties & props = info->props;
-
-  CosLoadBalancing::Strategy_ptr strategy =
-    CosLoadBalancing::Strategy::_nil ();
-
-  // @todo We should probably shove this code into a factory.
-
-  if (ACE_OS::strcmp ("RoundRobin", name) == 0)
-    {
-      // Double-checked locking
-      if (this->round_robin_ == 0)
-        {
-          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                            guard,
-                            this->lock_,
-                            0);
-
-          if (this->round_robin_ == 0)
-            {
-              ACE_NEW_THROW_EX (this->round_robin_,
-                                TAO_LB_RoundRobin,
-                                CORBA::NO_MEMORY ());
-              ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
-            }
-        }
-
-      strategy = this->round_robin_;
-    }
-
-  else if (ACE_OS::strcmp ("Random", name) == 0)
-    {
-      // Double-checked locking
-      if (this->random_ == 0)
-        {
-          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                            guard,
-                            this->lock_,
-                            0);
-
-          if (this->random_ == 0)
-            {
-              ACE_NEW_THROW_EX (this->random_,
-                                TAO_LB_Random,
-                                CORBA::NO_MEMORY ());
-              ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
-            }
-        }
-
-      strategy = this->random_;
-    }
-
-  else if (ACE_OS::strcmp ("LeastLoaded", name) == 0)
-    {
-      this->init_least_loaded (props
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
-
-      strategy = this->least_loaded_;
-    }
-
-  else
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    "ERROR: TAO_LB_LoadManager::next_member - "
-                    "Unknown/unexpected built-in Strategy:\n"
-                    "     \"%s\"\n",
-                    strategy));
-
-      // This should never occur!
-      return CosLoadBalancing::Strategy::_nil ();
-    }
-
-  ACE_ASSERT (!CORBA::is_nil (strategy));
-
-  return CosLoadBalancing::Strategy::_duplicate (strategy);
-}
-
 void
-TAO_LB_LoadManager::check_strategy_prop (
-  const PortableGroup::Properties & props
-  ACE_ENV_ARG_DECL)
+TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props
+                                           ACE_ENV_ARG_DECL)
 {
+  // @@ This is slow.  Optimize this code.
+
   const CORBA::ULong len = props.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
-      const PortableGroup::Property & property = props[i];
-      if (ACE_OS::strcmp (property.nam[0].id.in (),
-                          "org.omg.CosLoadBalancing.CustomStrategy") == 0)
+      PortableGroup::Property & property = props[i];
+      if (property.nam == this->custom_balancing_strategy_name_)
         {
-          CosLoadBalancing::CustomStrategy_var strategy;
-          if (!(property.val >>= strategy.inout ())
-              || CORBA::is_nil (strategy.in ()))
+          CosLoadBalancing::CustomStrategy_ptr strategy;
+          if (!(property.val >>= strategy)
+              || CORBA::is_nil (strategy))
             ACE_THROW (PortableGroup::InvalidProperty (property.nam,
                                                        property.val));
         }
 
-      else if (ACE_OS::strcmp (property.nam[0].id.in (),
-                               "org.omg.CosLoadBalancing.Strategy") == 0)
+      else if (property.nam == this->built_in_balancing_strategy_info_name_)
         {
           CosLoadBalancing::StrategyInfo * info;
+
           if (property.val >>= info)
             {
-              if (ACE_OS::strcmp (info->name.in (), "LeastLoaded") == 0)
+              // Convert the property from a "StrategyInfo" property
+              // to a "Strategy" property.
+
+              CosLoadBalancing::Strategy_var strategy =
+                this->make_strategy (info
+                                     ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
+
+              if (!CORBA::is_nil (strategy.in ()))
                 {
-                  this->init_least_loaded (info->props
-                                           ACE_ENV_ARG_PARAMETER);
-                  ACE_CHECK;
+                  property.nam = this->built_in_balancing_strategy_name_;
+
+                  property.val <<= strategy.in ();
                 }
+              else
+                ACE_THROW (PortableGroup::InvalidProperty (property.nam,
+                                                           property.val));
             }
           else
             ACE_THROW (PortableGroup::InvalidProperty (property.nam,
                                                        property.val));
         }
-
-    }
-}
-
-void
-TAO_LB_LoadManager::init_least_loaded (const PortableGroup::Properties & props
-                                       ACE_ENV_ARG_DECL)
-{
-  // Double-checked locking
-  if (this->least_loaded_ == 0)
-    {
-      ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
-
-      if (this->least_loaded_ == 0)
+      else if (property.nam == this->built_in_balancing_strategy_name_)
         {
-          CORBA::Float critical_threshold =
-            TAO_LB::LL_DEFAULT_CRITICAL_THRESHOLD;
-          CORBA::Float reject_threshold = TAO_LB::LL_DEFAULT_REJECT_THRESHOLD;
-          CORBA::Float tolerance = TAO_LB::LL_DEFAULT_TOLERANCE;
-          CORBA::Float dampening = TAO_LB::LL_DEFAULT_DAMPENING;
-          CORBA::Float per_balance_load = TAO_LB::LL_DEFAULT_PER_BALANCE_LOAD;
-
-          const CORBA::ULong len = props.length ();
-          for (CORBA::ULong i = 0; i < len; ++i)
-            {
-              const PortableGroup::Property & property = props[i];
-              if (ACE_OS::strcmp (property.nam[0].id.in (),
-                                  "org.omg.CosLoadBalancing.Strategy.LeastLoaded.CriticalThreshold") == 0)
-                {
-                  this->extract_float_property (property,
-                                                critical_threshold
-                                                ACE_ENV_ARG_PARAMETER);
-                  ACE_CHECK;
-                }
-
-              else if (ACE_OS::strcmp (property.nam[0].id.in (),
-                                       "org.omg.CosLoadBalancing.Strategy.LeastLoaded.RejectThreshold") == 0)
-                {
-                  this->extract_float_property (property,
-                                                reject_threshold
-                                                ACE_ENV_ARG_PARAMETER);
-                  ACE_CHECK;
-                }
-
-              else if (ACE_OS::strcmp (property.nam[0].id.in (),
-                                       "org.omg.CosLoadBalancing.Strategy.LeastLoaded.Tolerance") == 0)
-                {
-                  this->extract_float_property (property,
-                                                tolerance
-                                                ACE_ENV_ARG_PARAMETER);
-                  ACE_CHECK;
-                }
-
-              else if (ACE_OS::strcmp (property.nam[0].id.in (),
-                                       "org.omg.CosLoadBalancing.Strategy.LeastLoaded.Dampening") == 0)
-                {
-                  this->extract_float_property (property,
-                                                dampening
-                                                ACE_ENV_ARG_PARAMETER);
-                  ACE_CHECK;
-                }
-
-              else if (ACE_OS::strcmp (property.nam[0].id.in (),
-                                       "org.omg.CosLoadBalancing.Strategy.LeastLoaded.PerBalanceLoad") == 0)
-                {
-                  this->extract_float_property (property,
-                                                per_balance_load
-                                                ACE_ENV_ARG_PARAMETER);
-                  ACE_CHECK;
-                }
-            }
-
-          // Use default "LeastLoaded" properties.
-          ACE_NEW_THROW_EX (this->least_loaded_,
-                            TAO_LB_LeastLoaded (critical_threshold,
-                                                reject_threshold,
-                                                tolerance,
-                                                dampening,
-                                                per_balance_load),
-                            CORBA::NO_MEMORY (
-                              CORBA::SystemException::_tao_minor_code (
-                                TAO_DEFAULT_MINOR_CODE,
-                                ENOMEM),
-                              CORBA::COMPLETED_NO));
-          ACE_CHECK;
+          // It is illegal to set the Strategy property externally.
+          ACE_THROW (PortableGroup::InvalidProperty (property.nam,
+                                                     property.val));
         }
     }
 }
 
-void
-TAO_LB_LoadManager::extract_float_property (
-  const PortableGroup::Property & property,
-  CORBA::Float & value
-  ACE_ENV_ARG_DECL)
+CosLoadBalancing::Strategy_ptr
+TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info
+                                   ACE_ENV_ARG_DECL)
 {
-  if (!(property.val >>= value))
-    ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                               property.val));
+  /**
+   * @todo We need a strategy factory.  This is just too messy.
+   */
+
+  if (ACE_OS::strcmp (info->name.in (), "RoundRobin") == 0)
+    {
+      {
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                          monitor,
+                          this->lock_,
+                          CosLoadBalancing::Strategy::_nil ());
+
+        if (CORBA::is_nil (this->round_robin_.in ()))
+          {
+            TAO_LB_RoundRobin * rr_servant;
+            ACE_NEW_THROW_EX (rr_servant,
+                              TAO_LB_RoundRobin (this->root_poa_.in ()),
+                              CORBA::NO_MEMORY ());
+            ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+
+            PortableServer::ServantBase_var s = rr_servant;
+
+            this->round_robin_ =
+              rr_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+          }
+      }
+
+      return CosLoadBalancing::Strategy::_duplicate (this->round_robin_.in ());
+    }
+
+  else if (ACE_OS::strcmp (info->name.in (), "Random") == 0)
+    {
+      {
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                          monitor,
+                          this->lock_,
+                          CosLoadBalancing::Strategy::_nil ());
+
+        if (CORBA::is_nil (this->random_.in ()))
+          {
+            TAO_LB_Random * rnd_servant;
+            ACE_NEW_THROW_EX (rnd_servant,
+                              TAO_LB_Random (this->root_poa_.in ()),
+                              CORBA::NO_MEMORY ());
+            ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+
+            PortableServer::ServantBase_var s = rnd_servant;
+
+            this->random_ =
+              rnd_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+          }
+      }
+
+      return CosLoadBalancing::Strategy::_duplicate (this->random_.in ());
+    }
+
+  else if (ACE_OS::strcmp (info->name.in (), "LeastLoaded") == 0)
+    {
+      // If no LeastLoaded properties have been set, just use the
+      // default/cached LeastLoaded instance.  Otherwise create and
+      // return a new LeastLoaded instance with the appropriate
+      // properties.
+
+      if (info->props.length () == 0)
+        {
+          {
+            ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                              monitor,
+                              this->lock_,
+                              CosLoadBalancing::Strategy::_nil ());
+
+            if (CORBA::is_nil (this->least_loaded_.in ()))
+              {
+                TAO_LB_LeastLoaded * ll_servant;
+                ACE_NEW_THROW_EX (ll_servant,
+                                  TAO_LB_LeastLoaded (this->root_poa_.in ()),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+
+                PortableServer::ServantBase_var s = ll_servant;
+
+                this->least_loaded_ =
+                  ll_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+                ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+              }
+          }
+
+          return
+            CosLoadBalancing::Strategy::_duplicate (this->least_loaded_.in ());
+        }
+      else
+        {
+          TAO_LB_LeastLoaded * ll_servant;
+          ACE_NEW_THROW_EX (ll_servant,
+                            TAO_LB_LeastLoaded (this->root_poa_.in ()),
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+
+          PortableServer::ServantBase_var s = ll_servant;
+
+          ll_servant->init (info->props
+                            ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
+
+          return ll_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        }
+    }
+
+  return CosLoadBalancing::Strategy::_nil ();
 }
+
+// void
+// TAO_LB_LoadManager::update_strategy ()
+// {
+// }
+
+// void
+// TAO_LB_LoadManager::deactivate_strategy (ACE_ENV_ARG_DECL)
+// {
+//   PortableServer::ObjectId_var oid =
+//     this->poa_->reference_to_id (
+//   this->poa_->deactivate_object ();
+// }

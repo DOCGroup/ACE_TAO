@@ -34,9 +34,9 @@ TAO_LB_MemberLocator::preinvoke (
       ACE_TRY_CHECK;
 
 //       ACE_DEBUG ((LM_DEBUG, "%N:%l\n"));
-
 //       ACE_DEBUG ((LM_DEBUG,
 //                   "FORWARDED\n"));
+
       ACE_ASSERT (!CORBA::is_nil (member.in ()));
       // Throw a forward exception to force the client to redirect its
       // requests to the member chosen by the LoadBalancer.
