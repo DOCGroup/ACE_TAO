@@ -75,7 +75,7 @@ private:
                             CORBA::Long,
                             ACE_Hash < const char * >,
                             ACE_Equal_To < const char * >,
-                            ACE_Thread_Mutex > request_id_table_;
+                            ACE_Null_Mutex > request_id_table_;
 
   ACE_UINT32 messages_count_;
 

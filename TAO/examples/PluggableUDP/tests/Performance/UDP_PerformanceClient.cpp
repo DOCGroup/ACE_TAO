@@ -56,7 +56,6 @@ UDP_PerformanceClient::svc ()
       ACE_TRY_CHECK;
 
       ACE_High_Res_Timer timer;
-      ACE_UINT32 i = 0;
       while (1)
         {
           ACE_DEBUG ((LM_DEBUG,
