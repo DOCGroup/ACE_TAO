@@ -1,3 +1,15 @@
+Sun Mar 26 13:32:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_stack.cpp:
+	  Removed unused AST_Decl* variable in method push(), and
+	  the ScopeAsDecl() call that initializes it. This narrowing
+	  operation was causing a crash on cxx/Linux-alpha. This may
+	  not solve the underlying problem, if any. If that's the
+	  case, the error will turn up elsewhere the next time the
+	  IDL compiler is run on the above platform, but in any case,
+	  the local variable, the initialization, and the ACE_UNUSED_ARG
+	  statement were all superfluous in UTL_ScopeStack::push().
+
 Sat Mar 25 22:10:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: 
