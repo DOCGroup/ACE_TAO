@@ -349,8 +349,8 @@ control various optimizations during request processing.<P>
 	which can increase performance.  If you use the
 	<CODE>direct</CODE> strategy,  your interfaces must be
 	compiled with the
-	<CODE><A
-	href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/compiler.html#collocation-stubs">-Gd</A></CODE> IDL <A HREF="compiler.html">compiler option</a>. </TD></TR>
+	<CODE><A href="compiler.html#collocation-stubs">-Gd</A></CODE>
+        IDL <A HREF="compiler.html">compiler option</a>. </TD></TR>
     <TR>
       <TD><CODE>-ORBNodelay</CODE> <EM>boolean (0|1)</EM></TD>
       <TD><A name=-ORBNodelay></A>Enable or disable the <CODE>TCP_NODELAY</CODE>
@@ -397,9 +397,8 @@ control various optimizations during request processing.<P>
 <h4><A name=CMPS>4. Connection Management and Protocol Selection</A></h4>
 
 TAO can send and receive requests and replies using various <A
-pluggable_protocols">transport protocols</a>.  Each protocol has its
-own concept of an <A
-http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html">endpoint</CODE>.
+HREF="pluggable_protocols">transport protocols</a>.  Each protocol has
+its own concept of an <A HREF="ORBEndpoint.html">endpoint</A>.
 The following options manage connections and control protocol
 selection within a TAO application.<P>
 
@@ -443,8 +442,7 @@ selection within a TAO application.<P>
 	ORT </a> (Object Reference Template) specification.  It
 	instructs a server ORB	to listen for requests on the
 	interface specified by	<code>endpoint</code>.
-	TAO <A
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/docs/ORBEndpoint.html?rev=HEAD">
+	TAO <A href="ORBEndpoint.html">
 	endpoints</A>  are specified using a URL style format. An
 	endpoint has the form:
 	<BLOCKQUOTE><CODE>protocol://V.v@addr1,...,W.w@addrN

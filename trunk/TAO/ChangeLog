@@ -1,3 +1,12 @@
+Wed Sep  3 21:59:47 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* docs/Options.html:
+
+	  Fixed incorrect HTML.
+
+	  Fixed absolute links flagged by "fuzz".  When possible, relative
+	  links should be used.
+
 Wed Sep  3 20:32:00 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/RTScheduling/Scheduler.cpp (TAO_Scheduler):
