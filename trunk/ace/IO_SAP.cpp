@@ -40,7 +40,7 @@ ACE_IO_SAP::enable (int signum) const
   if (ACE_IO_SAP::pid_ == 0)
     ACE_IO_SAP::pid_ = ACE_OS::getpid ();
 
-#if !defined(ACE_WIN32)
+#if !defined(ACE_WIN32) && !defined (VXWORKS)
 
   switch (signum)
     {
@@ -91,7 +91,7 @@ ACE_IO_SAP::disable (int signum) const
 {
   ACE_TRACE ("ACE_IO_SAP::disable");
 
-#if !defined(ACE_WIN32)
+#if !defined(ACE_WIN32) && !defined (VXWORKS)
 
   switch (signum)
     {

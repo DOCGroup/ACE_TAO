@@ -41,7 +41,7 @@ ACE_IPC_SAP::enable (int signum) const
   if (ACE_IPC_SAP::pid_ == 0)
     ACE_IPC_SAP::pid_ = ACE_OS::getpid ();
 
-#if defined(ACE_WIN32)
+#if defined (ACE_WIN32) || defined (VXWORKS)
   switch (signum)
     {
     case ACE_NONBLOCK:
@@ -100,7 +100,7 @@ ACE_IPC_SAP::disable (int signum) const
 {
   ACE_TRACE ("ACE_IPC_SAP::disable");
 
-#if defined(ACE_WIN32)
+#if defined (ACE_WIN32) || defined (VXWORKS)
   switch (signum)
     {
     case ACE_NONBLOCK:

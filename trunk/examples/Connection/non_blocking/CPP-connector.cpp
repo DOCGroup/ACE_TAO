@@ -14,7 +14,7 @@
 
 template <PR_ST_1>
 Peer_Handler<PR_ST_2>::Peer_Handler (ACE_Reactor *r)
-  : action_ (&Peer_Handler<PR_ST_2>::idle)
+  : action_ (&Peer_Handler<PR_ST_2>::uninitialized)
 {
   this->reactor (r);
 }
@@ -49,9 +49,9 @@ Peer_Handler<PR_ST_2>::open (void *)
 }
 
 template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::idle (void)
+Peer_Handler<PR_ST_2>::uninitialized (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "idle!\n"));
+  ACE_DEBUG ((LM_DEBUG, "uninitialized!\n"));
   return 0;
 }
 
