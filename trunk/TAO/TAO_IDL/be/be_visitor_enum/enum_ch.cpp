@@ -63,6 +63,9 @@ be_visitor_enum_ch::visit_enum (be_enum *node)
                              ), -1);
         }
 
+      os->indent ();
+      *os << node->local_name () 
+          << "_TAO_ENUM_32BIT_ENFORCER = 0xFFFFFFFF\n";
       os->decr_indent ();
       *os << "};" << be_nl;
       // As per the ORBOS spec, we need the following typedef
@@ -96,7 +99,7 @@ be_visitor_enum_ch::post_process (be_decl *bd)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Am I the last one?
-  if (!this->last_node (bd))
+//  if (!this->last_node (bd))
     *os << "," << be_nl;
   return 0;
 }
