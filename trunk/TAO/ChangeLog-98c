@@ -1,3 +1,44 @@
+Sat Mar 21 11:00:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+        * tao: Made lots of minor enhancements to formatting and style.
+
+	* tao: Removed the invoke.cpp file and moved its functionality
+ 	  back into iiopobj.cpp, where it belongs.
+
+	* tao/sequence_T.i (replace): Added a cast to (T *) so compilers
+ 	  wouldn't complain!  Thanks to Sergio for pointing this out.
+
+	* tao: Renamed IIOP_Object::do_call() to
+ 	  IIOP_Object::do_static_call() to be symmetrical with
+ 	  do_dynamic_call()...
+
+	* tao/typecode.cpp: Due to the new reorganization of the code in
+ 	  interp.cpp we're now able to put all the CORBA_TypeCode methods
+ 	  back into typecode.cpp, where they belong...
+
+	* tao: Added a new interp.h file and moved the TypeCode table
+	  intialization function into that file.
+
+	* tao/orbobj.cpp: Removed the friggin' global functions
+
+	  extern void __TC_init_table (void);
+	  extern void __TC_init_standard_exceptions (CORBA::Environment &env);
+
+	  and put them inside of classes, where they belong...
+
+	* tao/corbacom.cpp: Moved CORBA::ORB_init() from orbobj.cpp
+	  (what was it doing there) to corbacom.cpp, which is where it
+ 	  belongs!
+
+	* tao/giop.cpp: Moved the TAO_GIOP_MsgType enum into the TAO_GIOP
+ 	  class namespace and renamed all the enums accordingly.
+
+	* tao/except.cpp: Added except.i file to split off inlines into
+	  their own file.
+
+	* tao/sequence_T.i (replace): Fixed some typos in the template
+ 	  code.  Thanks to Ben Eng <ben@jetpen.com> for reporting these.
+
 Sat Mar 21 17:55:40 1998  Michael Kircher  <mk1@cs.wustl.edu>
 	
 	* orbsvcs/test/Simulator/NavWeap.idl: removed typo
@@ -7,11 +48,6 @@ Sat Mar 21 17:55:40 1998  Michael Kircher  <mk1@cs.wustl.edu>
 	  demo under orbsvcs/test/Simulator/Sim_Display. See the readme
 	  file under orbsvcs/test/Simulator for further details.  
 	
-Sat Mar 21 11:00:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* tao/sequence_T.i (replace): Fixed some typos in the template
- 	  code.  Thanks to Ben Eng <ben@jetpen.com> for reporting these.
-
 Fri Mar 20 23:25:28 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/tests/Trading_Service/Makefile:
