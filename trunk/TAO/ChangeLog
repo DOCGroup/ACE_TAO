@@ -1,3 +1,11 @@
+Thu Jun 19 14:56:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+          Added missing explicit template instantiations
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
+          Documentation update
+
 Thu Jun 19 06:12:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Filter.cpp:
