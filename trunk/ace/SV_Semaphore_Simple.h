@@ -74,7 +74,7 @@ public:
   // call is intended to be called from a server, for example, when it
   // is being shut down, as we do an IPC_RMID on the ACE_SV_Semaphore,
   // regardless of whether other processes may be using it or not.
-  // Most other processes should use close() below.
+  // Most other processes should use <close> below.
 
   // = Semaphore acquire and release methods.
   int acquire (u_short n = 0, int flags = 0) const;

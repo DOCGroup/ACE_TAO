@@ -502,7 +502,8 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
   if (disable_notify_pipe == 0)
     {
-      this->select_reactor_ = ACE_dynamic_cast (ACE_Select_Reactor_Impl *, r);
+      this->select_reactor_ = 
+        ACE_dynamic_cast (ACE_Select_Reactor_Impl *, r);
 
       if (select_reactor_ == 0)
         {

@@ -11,7 +11,6 @@
 
 ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
 
-#if 0
 typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 
 // Default address for memory-mapped files.
@@ -208,12 +207,3 @@ template class ACE_Based_Pointer_Basic<Dummy_Data>;
 #pragma instantiate ACE_Based_Pointer<Dummy_Data>
 #pragma instantiate ACE_Based_Pointer_Basic<Dummy_Data>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#else
-int
-main (int, char *[])
-{
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "sorry, example not finished yet\n"),
-                    1);
-}
-#endif /* 0 */

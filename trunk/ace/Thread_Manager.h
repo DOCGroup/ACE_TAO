@@ -84,31 +84,31 @@ class ACE_Export ACE_At_Thread_Exit
   friend class ACE_Thread_Manager;
 public:
   // Default constructor
-  ACE_At_Thread_Exit(void);
+  ACE_At_Thread_Exit (void);
 
   // The destructor
-  virtual ~ACE_At_Thread_Exit(void);
+  virtual ~ACE_At_Thread_Exit (void);
 
-  // At_Thread_Exit has the ownership?
-  int is_owner() const;
+  // <At_Thread_Exit> has the ownership?
+  int is_owner (void) const;
 
-  // Set the ownership of the At_Thread_Exit
-  int is_owner(int owner);
+  // Set the ownership of the <At_Thread_Exit>.
+  int is_owner (int owner);
 
-  // This At_Thread_Exit was applied?
-  int was_applied() const;
+  // This <At_Thread_Exit> was applied?
+  int was_applied (void) const;
 
-  // Set applied state of At_Thread_Exit
-  int was_applied(int applied);
+  // Set applied state of <At_Thread_Exit>.
+  int was_applied (int applied);
 
 protected:
-  ACE_At_Thread_Exit* next_;
-  // The next At_Thread_Exit hook in the list.
+  ACE_At_Thread_Exit *next_;
+  // The next <At_Thread_Exit> hook in the list.
 
   // Do the apply if necessary
-  void do_apply();
+  void do_apply (void);
 
-  virtual void apply() = 0;
+  virtual void apply (void) = 0;
   // The apply method.
 
   ACE_Thread_Descriptor* td_;
@@ -125,24 +125,24 @@ class ACE_Export ACE_At_Thread_Exit_Func : public ACE_At_Thread_Exit
 {
 public:
    // Constructor
-   ACE_At_Thread_Exit_Func(void* object,
-                           ACE_CLEANUP_FUNC func,
-                           void* param = 0);
+   ACE_At_Thread_Exit_Func (void *object,
+                            ACE_CLEANUP_FUNC func,
+                            void *param = 0);
 
   virtual ~ACE_At_Thread_Exit_Func (void);
 
 protected:
-   void* object_;
+   void *object_;
    // The object to be cleanup
 
    ACE_CLEANUP_FUNC func_;
    // The cleanup func
 
-   void* param_;
+   void *param_;
    // A param if required
 
    // The apply method
-   void apply();
+   void apply (void);
 };
 
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
@@ -352,10 +352,10 @@ class ACE_Export ACE_Thread_Manager
   //    correctly, you are probably doing something wrong.  Rule of
   //    thumb, use ACE_Thread to manage your daemon threads.
   //
-  //    Notice that if there're threads live beyond the scope of main (),
-  //    you are sure to have resource leaks in your program.  Remember
-  //    to wait on threads before exiting main() if that could happen
-  //    in your programs.
+  //    Notice that if there're threads live beyond the scope of
+  //    <main>, you are sure to have resource leaks in your program.
+  //    Remember to wait on threads before exiting <main> if that
+  //    could happen in your programs.
 public:
   friend class ACE_Thread_Control;
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
@@ -415,14 +415,14 @@ public:
   int open (size_t size = 0);
   // No-op.  Currently unused.
 
-  int close ();
+  int close (void);
   // Release all resources.
   // By default, this method will wait till all threads
   // exit.  However, when called from <close_singleton>, most global resources
   // are destroyed and thus, we don't try to wait but just clean up the thread
   // descriptor list.
 
-  // The ACE_thread_t * argument to each of the spawn () family member
+  // The <ACE_thread_t> * argument to each of the <spawn> family member
   // functions is interpreted and used as shown in the following
   // table.  NOTE:  the final option, to provide task names, is _only_
   // supported on VxWorks!
@@ -501,7 +501,7 @@ public:
   // failure.  If <abandon_detached_threads> is set, wait will first
   // check thru its thread list for threads with THR_DETACHED or
   // THR_DAEMON flags set and remove these threads.  Notice that
-  // unlike other wait_* function, by default, wait () does wait on
+  // unlike other wait_* function, by default, <wait> does wait on
   // all thread spawned by this thread_manager no matter the detached
   // flags are set or not unless it is called with
   // <abandon_detached_threads> flag set.

@@ -40,7 +40,7 @@ public:
   ACE_Env_Value (void);
   // Default constructor which isn't bound to a specific environment
   // variable name or a default value.  Before being useful it must
-  // <open()>ed.
+  // <open>'d.
 
   ACE_Env_Value (const ASYS_TCHAR *varname,
                  const T &vardefault);

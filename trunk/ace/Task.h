@@ -83,9 +83,9 @@ public:
   // interpret this as a flag to shut down the <Task>.
 
   virtual int module_closed (void);
-  // Hook called during ACE_Module::close().  The default
+  // Hook called during <ACE_Module::close>.  The default
   // implementation calls forwards the call to close(1).  Please
-  // notice the changed value of the default argument of close().
+  // notice the changed value of the default argument of <close>.
   // This allows tasks to differ between the call has been originated
   // from <ACE_Thread_Exit> or from <module_closed>.  Be aware that
   // close(0) will be also called when a thread associated with the

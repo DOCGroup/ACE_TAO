@@ -41,15 +41,15 @@ class ACE_Export ACE_SV_Semaphore_Complex : private ACE_SV_Semaphore_Simple
   //      initialized to a large number, decremented on every create
   //      or open and incremented on every close. This way we can use
   //      the "adjust" feature provided by System V so that any
-  //      process that exit's without calling close() is accounted
+  //      process that exit's without calling <close> is accounted
   //      for. It doesn't help us if the last process does this (as we
   //      have no way of getting control to remove the
   //      ACE_SV_Semaphore) but it will work if any process other than
   //      the last does an exit (intentional or unintentional).
   //
   //      The second member, [1], of the ACE_SV_Semaphore is used as a
-  //      lock variable to avoid any race conditions in the create()
-  //      and close() functions.
+  //      lock variable to avoid any race conditions in the <create>
+  //      and <close> functions.
   //
   //      The members beyond [1] are actual ACE_SV_Semaphore values in
   //      the array of SV_Semaphores (which may be sized by the user

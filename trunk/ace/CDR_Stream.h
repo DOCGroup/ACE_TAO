@@ -450,9 +450,9 @@ private:
   // to be packed with the right alignment restrictions.  It is mostly
   // designed for buffers of the basic types.
   //
-  // This operation uses memcpy(); as explained above it is expected
-  // that using assignment is faster that memcpy() for one element,
-  // but for several elements memcpy() should be more efficient, it
+  // This operation uses <memcpy>; as explained above it is expected
+  // that using assignment is faster that <memcpy> for one element,
+  // but for several elements <memcpy> should be more efficient, it
   // could be interesting to find the break even point and optimize
   // for that case, but that would be too platform dependent.
 
@@ -474,7 +474,7 @@ private:
                        char *&buf);
   // Grow the CDR stream. When it returns <buf> contains a pointer to
   // memory in the CDR stream, with at least <size> bytes ahead of it
-  // and aligned to an <align> boundary. It moved the wr_ptr() to <buf
+  // and aligned to an <align> boundary. It moved the <wr_ptr> to <buf
   // + size>.
 
   int do_byte_swap (void) const;
@@ -701,9 +701,9 @@ public:
   //   CDR stream from a socket or file.
 
   int grow (size_t newsize);
-  // Grow the internal buffer, reset rd_ptr() to the first byte in the
-  // new buffer that is properly aligned, and set wr_ptr() to
-  // rd_ptr() + newsize
+  // Grow the internal buffer, reset <rd_ptr> to the first byte in the
+  // new buffer that is properly aligned, and set <wr_ptr> to <rd_ptr>
+  // + newsize
 
   void reset_byte_order (int byte_order);
   // After reading and partially parsing the contents the user can
@@ -789,9 +789,9 @@ private:
   // to be packed with the right alignment restrictions.  It is mostly
   // designed for buffers of the basic types.
   //
-  // This operation uses memcpy(); as explained above it is expected
-  // that using assignment is faster that memcpy() for one element,
-  // but for several elements memcpy() should be more efficient, it
+  // This operation uses <memcpy>; as explained above it is expected
+  // that using assignment is faster that <memcpy> for one element,
+  // but for several elements <memcpy> should be more efficient, it
   // could be interesting to find the break even point and optimize
   // for that case, but that would be too platform dependent.
 

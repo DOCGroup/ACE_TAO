@@ -290,7 +290,7 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
-  ACE_Future_Rep<T> *get_rep ();
+  ACE_Future_Rep<T> *get_rep (void);
   // Get the underlying <ACE_Future_Rep>*. Note that this method should
   // rarely, if ever, be used and that modifying the undlerlying <ACE_Future_Rep>*
   // should be done with extreme caution.

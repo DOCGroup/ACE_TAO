@@ -400,7 +400,7 @@ class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Reactor_Notify
   //     This implementation is necessary for cases where the
   //     <ACE_WFMO_Reactor> is run in a multi-threaded program.  In
   //     this case, we need to be able to unblock
-  //     WaitForMultipleObjects() when updates occur other than in the
+  //     <WaitForMultipleObjects> when updates occur other than in the
   //     main <ACE_WFMO_Reactor> thread.  To do this, we signal an
   //     auto-reset event the <ACE_WFMO_Reactor> is listening on.  If
   //     an <ACE_Event_Handler> and <ACE_Reactor_Mask> is passed to
@@ -510,9 +510,10 @@ class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
   //     handle_close on the handler when it is finally removed and
   //     not when remove_handler is called.  If the handler is not
   //     going to be around when the WFMO_Reactor calls
-  //     handler->handle_close(), use the DONT_CALL flag with
-  //     remove_handler().  Or else, dynamically allocate the handler,
-  //     and then call "delete this" inside handler->handle_close().
+  //     <ACE_Event_Handler::handle_close>, use the DONT_CALL flag
+  //     with <remove_handler>.  Or else, dynamically allocate the
+  //     handler, and then call "delete this" inside
+  //     <ACE_Event_Handler::handle_close>.
 public:
   friend class ACE_WFMO_Reactor_Handler_Repository;
   friend class ACE_WFMO_Reactor_Test;
@@ -728,7 +729,7 @@ public:
 
   virtual int suspend_handler (ACE_Event_Handler *event_handler);
   // Suspend <event_handler> temporarily.  Use
-  // <event_handler->get_handle()> to get the handle.
+  // <ACE_Event_Handler::get_handle> to get the handle.
 
   virtual int suspend_handler (ACE_HANDLE handle);
   // Suspend <handle> temporarily.
@@ -740,8 +741,8 @@ public:
   // Suspend all <handles> temporarily.
 
   virtual int resume_handler (ACE_Event_Handler *event_handler);
-  // Resume <event_handler>. Use <event_handler->get_handle()> to get
-  // the handle.
+  // Resume <event_handler>. Use <ACE_Event_Handler::get_handle> to
+  // get the handle.
 
   virtual int resume_handler (ACE_HANDLE handle);
   // Resume <handle>.
@@ -945,7 +946,7 @@ protected:
 
   virtual int ok_to_wait (ACE_Time_Value *max_wait_time,
                           int alertable);
-  // Check to see if it is ok to enter ::WaitForMultipleObjects().
+  // Check to see if it is ok to enter <::WaitForMultipleObjects>.
 
   virtual int wait_for_multiple_events (int timeout,
                                         int alertable);

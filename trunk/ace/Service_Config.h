@@ -185,26 +185,26 @@ public:
   // Run the event loop until the <ACE_Reactor::handle_events> method
   // returns -1 or the <end_reactor_event_loop> method is invoked.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Reactor::run_event_loop() instead.
+  // Use <ACE_Reactor::run_event_loop> instead.
 
   static int run_reactor_event_loop (ACE_Time_Value &tv);
   // Run the event loop until the <ACE_Reactor::handle_events> method
   // returns -1, the <end_reactor_event_loop> method is invoked, or the
   // <ACE_Time_Value> expires.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Reactor::run_event_loop() instead.
+  // <Use ACE_Reactor::run_event_loop> instead.
 
   static int end_reactor_event_loop (void);
   // Instruct the <ACE_Service_Config> to terminate its event loop and
   // notifies the <ACE_Reactor::instance> so that it can wake up
   // and close down gracefully.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Reactor::end_event_loop() instead.
+  // Use <ACE_Reactor::end_event_loop> instead.
 
   static int reactor_event_loop_done (void);
   // Report if the Reactor's event loop is finished.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Reactor::event_loop_done() instead.
+  // Use <ACE_Reactor::event_loop_done> instead.
 
   static int reconfig_occurred (void);
   // True if reconfiguration occurred.
@@ -228,46 +228,46 @@ public:
   static ACE_Reactor *reactor (void);
   // Get pointer to a process-wide <ACE_Reactor>.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Reactor::instance() instead.
+  // Use <ACE_Reactor::instance> instead.
 
   static ACE_Reactor *reactor (ACE_Reactor *);
   // Set pointer to a process-wide <ACE_Reactor> and return existing
   // pointer.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Reactor::instance() instead.
+  // Use <ACE_Reactor::instance> instead.
 
   static ACE_Service_Repository *svc_rep (void);
   // Get pointer to a process-wide <ACE_Service_Repository>.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Service_Repository::instance() instead.
+  // Use <ACE_Service_Repository::instance> instead.
 
   static ACE_Service_Repository *svc_rep (ACE_Service_Repository *);
   // Set pointer to a process-wide <ACE_Service_Repository> and return
   // existing pointer.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Service_Repository::instance() instead.
+  // Use <ACE_Service_Repository::instance> instead.
 
   static ACE_Thread_Manager *thr_mgr (void);
   // Get pointer to a process-wide <ACE_Thread_Manager>.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Thread_Manager::instance() instead.
+  // Use <ACE_Thread_Manager::instance> instead.
 
   static ACE_Thread_Manager *thr_mgr (ACE_Thread_Manager *);
   // Set pointer to a process-wide <ACE_Thread_Manager> and return
   // existing pointer.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Thread_Manager::instance() instead.
+  // Use <ACE_Thread_Manager::instance> instead.
 
   static ACE_Allocator *alloc (void);
   // Get pointer to a default <ACE_Allocator>.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Allocator::instance() instead.
+  // Use <ACE_Allocator::instance> instead.
 
   static ACE_Allocator *alloc (ACE_Allocator *);
   // Set pointer to a process-wide <ACE_Allocator> and return existing
   // pointer.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Allocator::instance() instead.
+  // Use <ACE_Allocator::instance> instead.
 
   // = Utility methods.
   static int initialize (const ACE_Service_Type *,
@@ -285,11 +285,11 @@ public:
 
   static int suspend (const ASYS_TCHAR svc_name[]);
   // Suspend <svc_name>.  Note that this will not unlink the service
-  // from the daemon if it was dynamically linked, it will mark it
-  // as being suspended in the Service Repository and call the
-  // suspend() member function on the appropriate ACE_Service_Object.
-  // A service can be resumed later on by calling the RESUME()
-  // member function...
+  // from the daemon if it was dynamically linked, it will mark it as
+  // being suspended in the Service Repository and call the <suspend>
+  // member function on the appropriate <ACE_Service_Object>.  A
+  // service can be resumed later on by calling the <RESUME> member
+  // function...
 
   static int remove (const ASYS_TCHAR svc_name[]);
   // Totally remove <svc_name> from the daemon by removing it

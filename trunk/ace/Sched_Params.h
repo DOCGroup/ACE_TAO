@@ -32,44 +32,45 @@ class ACE_Export ACE_Sched_Params
   //    Container for scheduling-related parameters.
   //
   // = DESCRIPTION
-  //    ACE_Sched_Params are passed via
-  //    ACE_OS::sched_params () to the OS to specify scheduling
-  //    parameters.  These parameters include scheduling policy,
-  //    such as FIFO, round-robin, or an implementation-defined
-  //    "OTHER" (to which many systems default); priority; and
-  //    a time-slice quantum for round-robin scheduling.
-  //    A "scope" parameter specifies whether the ACE_Sched_Params
+  //    ACE_Sched_Params are passed via <ACE_OS::sched_params> to the
+  //    OS to specify scheduling parameters.  These parameters include
+  //    scheduling policy, such as FIFO (ACE_SCHED_FIFO), round-robin
+  //    (ACE_SCHED_RR), or an implementation-defined "OTHER"
+  //    (ACE_SCHED_OTHER), to which many systems default; priority;
+  //    and a time-slice quantum for round-robin scheduling.  A
+  //    "scope" parameter specifies whether the ACE_Sched_Params
   //    applies to the current process, current lightweight process
   //    (LWP) (on Solaris), or current thread.  Please see the "NOTE"
-  //    below about not all combinations of parameters being legal
-  //    on a particular platform.
+  //    below about not all combinations of parameters being legal on
+  //    a particular platform.
   //
   //    For the case of thread priorities, it is intended that
-  //    ACE_OS::sched_params () usually be called from main () before
-  //    any threads have been spawned.
-  //    If spawned threads inherit their parent's priority (I think
-  //    that's the default behavior for all of our platforms), then
-  //    this sets the default base priority.  Individual thread priorities
-  //    can be adjusted as usual using ACE_OS::thr_prio () or via the
-  //    ACE_Thread interface.  See the parameter descriptions in the
-  //    private: section below.
+  //    <ACE_OS::sched_params> usually be called from <main> before
+  //    any threads have been spawned.  If spawned threads inherit
+  //    their parent's priority (I think that's the default behavior
+  //    for all of our platforms), then this sets the default base
+  //    priority.  Individual thread priorities can be adjusted as
+  //    usual using <ACE_OS::thr_prio> or via the ACE_Thread
+  //    interface.  See the parameter descriptions in the private:
+  //    section below.
   //
-  //    NOTE:  this class does not do any checking of parameters.
-  //    It is just a container class.  If it is constructed with values
+  //    NOTE: this class does not do any checking of parameters.  It
+  //    is just a container class.  If it is constructed with values
   //    that are not supported on a platform, the call to
-  //    ACE_OS::sched_params () will fail by returning -1 with EINVAL
-  //    (available through ACE_OS::last_error ()).
+  //    <ACE_OS::sched_params> will fail by returning -1 with EINVAL
+  //    (available through <ACE_OS::last_error>).
 
-  //    NOTE:  Solaris 2.5.x threads in the RT class must set the
+  //    NOTE: Solaris 2.5.x threads in the RT class must set the
   //    priority of their LWP.  The only way to do that through ACE is
-  //    for the RT thread itself to call ACE_OS::thr_setprio () with
+  //    for the RT thread itself to call <ACE_OS::thr_setprio> with
   //    it's own priority.
 
-  //    OS Scheduling parameters are complicated and often confusing.  Many
-  //    thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for his
-  //    careful review of this class design, thoughtful comments, and
-  //    assistance with implementation, especially for PTHREADS platforms.
-  //    Please send any comments or corrections to the ACE developers.
+  //    OS Scheduling parameters are complicated and often confusing.
+  //    Many thanks to Thilo Kielmann
+  //    <kielmann@informatik.uni-siegen.de> for his careful review of
+  //    this class design, thoughtful comments, and assistance with
+  //    implementation, especially for PTHREADS platforms.  Please
+  //    send any comments or corrections to the ACE developers.
 public:
   typedef int Policy;
 

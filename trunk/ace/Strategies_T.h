@@ -129,6 +129,9 @@ public:
 protected:
   SVC_HANDLER *svc_handler_;
   // Pointer to the Singleton svc_handler.
+
+  int delete_svc_handler_;
+  // Keep track of whether we need to delete the <SVC_HANDLER>.
 };
 
 template <class SVC_HANDLER>
@@ -196,7 +199,7 @@ class ACE_Concurrency_Strategy
   //
   // = DESCRIPTION
   //     Default behavior is to activate the SVC_HANDLER by calling
-  //     its open() method (which allows the SVC_HANDLER to define its
+  //     its <open> method (which allows the SVC_HANDLER to define its
   //     own concurrency strategy).  However, subclasses can override
   //     this default strategy to do more sophisticated concurrency
   //     activations (such as creating the SVC_HANDLER as an active
@@ -210,7 +213,7 @@ public:
                                     void *arg = 0);
   // Activate the <svc_handler> with an appropriate concurrency
   // strategy.  The default behavior of this method is to activate the
-  // SVC_HANDLER by calling its open() method (which allows the
+  // SVC_HANDLER by calling its <open> method (which allows the
   // SVC_HANDLER to define its own concurrency strategy).
 
   virtual ~ACE_Concurrency_Strategy (void);
@@ -316,7 +319,7 @@ public:
                                     void *arg = 0);
   // Activate the <svc_handler> with an appropriate concurrency
   // strategy.  This method activates the SVC_HANDLER by first calling
-  // its open() method and then calling its activate() method to turn
+  // its <open> method and then calling its <activate> method to turn
   // it into an active object.
 
   void dump (void) const;
@@ -332,7 +335,7 @@ protected:
   // Thread manager for this class (must be provided).
 
   long thr_flags_;
-  // Flags to pass into the SVC_HANDLER::activate() method.
+  // Flags to pass into the <SVC_HANDLER::activate> method.
 
   size_t n_threads_;
   // Number of threads to spawn.
@@ -375,7 +378,7 @@ public:
                                     void *arg = 0);
   // Activate the <svc_handler> with an appropriate concurrency
   // strategy.  This method activates the SVC_HANDLER by first forking
-  // and then calling the open() method of the SVC_HANDLER in the
+  // and then calling the <open> method of the SVC_HANDLER in the
   // child.
 
   void dump (void) const;

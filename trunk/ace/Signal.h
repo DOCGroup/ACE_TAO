@@ -247,7 +247,7 @@ public:
 
   static void dispatch (int, siginfo_t *, ucontext_t *);
   // Callback routine registered with sigaction(2) that dispatches the
-  // handle_signal() method of the appropriate pre-registered
+  // <handle_signal> method of the appropriate pre-registered
   // ACE_Event_Handler.
 
   void dump (void) const;
@@ -362,7 +362,7 @@ public:
 
   static void dispatch (int signum, siginfo_t *, ucontext_t *);
   // Callback routine registered with sigaction(2) that dispatches the
-  // handle_signal() method of all the pre-registered
+  // <handle_signal> method of all the pre-registered
   // ACE_Event_Handlers for <signum>
 
   void dump (void) const;

@@ -23,7 +23,7 @@ ACE_Pipe::dump (void) const
 }
 
 int
-ACE_Pipe::open (void)
+ACE_Pipe::open (int buffer_size)
 {
   ACE_TRACE ("ACE_Pipe::open");
 #if defined (ACE_WIN32) || defined (ACE_LACKS_SOCKETPAIR)
@@ -64,20 +64,34 @@ ACE_Pipe::open (void)
   // Make sure that the TCP stack doesn't try to buffer small writes.
   // Since this communication is purely local to the host it doesn't
   // affect network performance.
-# if defined (ACE_HAS_PHARLAP_RT)
-  int level = SOL_SOCKET;
-# else
-  int level = IPPROTO_TCP;
-# endif /* ACE_HAS_PHARLAP_RT */
-  if (writer.set_option (level, TCP_NODELAY,
-                         &one, sizeof one) == -1)
+
+  if (writer.set_option (ACE_IPPROTO_TCP,
+                         TCP_NODELAY,
+                         &one,
+                         sizeof one) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
+
+#if !defined (ACE_LACKS_SOCKET_BUFSIZ)
+  if (reader.set_option (SOL_SOCKET,
+                         SO_SNDBUF,
+                         ACE_reinterpret_cast (void *, &buffer_size),
+                         sizeof (buffer_size)) == -1
+      && errno != ENOTSUP)
+    return -1;
+  else if (writer.set_option (SOL_SOCKET,
+                              SO_RCVBUF,
+                              ACE_reinterpret_cast (void *, &buffer_size),
+                              sizeof (buffer_size)) == -1
+           && errno != ENOTSUP)
+    return -1;
+#endif /* !ACE_LACKS_SOCKET_BUFSIZ */
 
   this->handles_[0] = reader.get_handle ();
   this->handles_[1] = writer.get_handle ();
 
 #elif defined (ACE_HAS_STREAM_PIPES)
+  ACE_UNUSED_ARG (buffer_size);
   if (ACE_OS::pipe (this->handles_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
@@ -87,8 +101,12 @@ ACE_Pipe::open (void)
 
   // Enable "msg no discard" mode, which ensures that record
   // boundaries are maintained when messages are sent and received.
-  if (ACE_OS::ioctl (this->handles_[0], I_SRDOPT, (void *) arg) == -1
-      || ACE_OS::ioctl (this->handles_[1], I_SRDOPT, (void *) arg) == -1)
+  if (ACE_OS::ioctl (this->handles_[0],
+                     I_SRDOPT,
+                     (void *) arg) == -1
+      || ACE_OS::ioctl (this->handles_[1],
+                        I_SRDOPT,
+                        (void *) arg) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("ioctl")), -1);
@@ -101,6 +119,22 @@ ACE_Pipe::open (void)
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("socketpair")),
                       -1);
+#if !defined (ACE_LACKS_SOCKET_BUFSIZ)
+  if (ACE_OS::setsockopt (this->handles_[0],
+                          SOL_SOCKET,
+                          SO_RCVBUF,
+                          ACE_reinterpret_cast (void *, &buffer_size),
+                          sizeof (buffer_size)) == -1
+      && errno != ENOTSUP)
+    return -1;
+  if (ACE_OS::setsockopt (this->handles_[1],
+                          SOL_SOCKET,
+                          SO_SNDBUF,
+                          ACE_reinterpret_cast (void *, &buffer_size),
+                          sizeof (buffer_size)) == -1
+      && errno != ENOTSUP)
+    return -1;
+#endif /* !ACE_LACKS_SOCKET_BUFSIZ */
 #endif /* ACE_WIN32 */
   // Point both the read and write HANDLES to the appropriate socket
   // HANDLEs.

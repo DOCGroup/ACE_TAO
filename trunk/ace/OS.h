@@ -26,6 +26,12 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+# if defined (ACE_HAS_PHARLAP_RT)
+#define ACE_IPPROTO_TCP SOL_SOCKET
+# else
+#define ACE_IPPROTO_TCP IPPROTO_TCP;
+# endif /* ACE_HAS_PHARLAP_RT */
+
 #if !defined (ACE_MALLOC_ALIGN)
 #define ACE_MALLOC_ALIGN ((int) sizeof (long))
 #endif /* ACE_MALLOC_ALIGN */
@@ -316,7 +322,7 @@ enum ACE_Recyclable_State
 #   define ACE_DEFAULT_THR_PORT 10004
 # endif /* ACE_DEFAULT_THR_PORT */
 
-// Used for SOCK_Connect::connect() tests
+// Used for <SOCK_Connect::connect> tests
 # if !defined (ACE_DEFAULT_LOCAL_PORT)
 #   define ACE_DEFAULT_LOCAL_PORT 10005
 # endif /* ACE_DEFAULT_LOCAL_PORT */
