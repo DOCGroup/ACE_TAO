@@ -1,8 +1,8 @@
 Fri May 22 16:00:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/MT_SOCK_Test.cpp (spawn): We must check for !defined
- 	  (ACE_LACKS_FORK) rather test for VxWorks or Win32.  Thanks to
- 	  Steven Coy for reporting this.
+        * tests/MT_SOCK_Test.cpp (spawn): We must check for !defined
+          (ACE_LACKS_FORK) rather test for VxWorks or Win32.  Thanks to
+          Steven Coy for reporting this.
 
 Fri May 22 20:01:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -50,6 +50,12 @@ Fri May 22 07:53:03 1998  David L. Levine  <levine@cs.wustl.edu>
           for both compilers from now on.  The old files have been
           retained for backward compatibility.  The just #include
           config-sunos5.5.h.
+
+        * ace/config-sunos5.6.h: #include config-sunos5.5.h instead
+          of the separate Sun C++ and g++ configs.
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          updated comment to reflect change to config-sunos5.5.h.
 
 Fri May 22 07:30:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
