@@ -1,3 +1,9 @@
+Mon Sep 15 09:40:57 1997  Carlos O'Ryan  <coryan@polka.cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  Enabled the shared_libs_only flags to speed up compilations (and
+	  reduce disk space usage).
+
 Sun Sep 14 22:36:17 1997    <irfan@TWOSTEP>
 
 	* ace/Select_Reactor.h: Added a no-op constructor for

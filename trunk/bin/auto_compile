@@ -144,7 +144,7 @@ $ENV{'ACE_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD;
 foreach $i (@BUILD_LIST) {
     $date = localtime;
     print LOG "$CMD: make for $i started at ", $date, "\n";
-    open(MAKE, "make -k -C $i 2>&1 |")
+    open(MAKE, "make -k shared_libs_only=1 -C $i 2>&1 |")
 	|| mydie "cannot start make for $i";
     $make_errors = 0;
     while (<MAKE>) {
