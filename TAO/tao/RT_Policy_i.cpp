@@ -166,7 +166,8 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy
 
 TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy
 (const TAO_PriorityBandedConnectionPolicy &rhs)
-  : priority_bands_ (rhs.priority_bands_)
+  : RTCORBA::PriorityBandedConnectionPolicy (),
+    priority_bands_ (rhs.priority_bands_)
 {
 }
 
@@ -315,7 +316,8 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
 
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
                                                     TAO_ServerProtocolPolicy &rhs)
-  : protocols_ (rhs.protocols_)
+  : RTCORBA::ServerProtocolPolicy (),
+    protocols_ (rhs.protocols_)
 {
 }
 
@@ -372,7 +374,8 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const
 
 TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const
                                                     TAO_ClientProtocolPolicy &rhs)
-  : protocols_ (rhs.protocols_)
+  : RTCORBA::ClientProtocolPolicy (),
+    protocols_ (rhs.protocols_)
 {
 }
 
