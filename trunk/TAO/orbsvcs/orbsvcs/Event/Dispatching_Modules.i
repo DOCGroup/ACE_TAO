@@ -219,9 +219,10 @@ ACE_ES_ReactorEx_NS::open (void)
 ACE_INLINE void
 ACE_ES_ReactorEx_NS::shutdown (void)
 {
-  this->timer_module_->remove_handler (0, 
-				       eh_,
-				       ACE_Event_Handler::DONT_CALL);
+// @@ TODO: Fix this.
+//  this->timer_module_->remove_handler (0, 
+//				       eh_,
+//				       ACE_Event_Handler::DONT_CALL);
 }
 
 ACE_INLINE int 
