@@ -206,11 +206,14 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
 
           return -1;
 
+        case SSL_ERROR_SYSCALL:
+          // On some platforms (e.g. MS Windows) OpenSSL does not
+          // store the last error in errno so explicitly do so.
+          ACE_OS::set_errno_to_last_error ();
+
         default:
 
-#ifndef ACE_NDEBUG
-          //ERR_print_errors_fp (stderr);
-#endif  /* ACE_NDEBUG */
+          ACE_SSL_Context::report_error ();
 
           (void) this->reactor_->remove_handler (&eh, reactor_mask);
           (void) this->reactor_->owner (old_owner);
