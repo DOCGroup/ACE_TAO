@@ -1,3 +1,40 @@
+Wed Jan  1 10:28:27 2003  Ossama Othman  <ossama@uci.edu>
+
+	* configure.ac:
+
+	  Ported old `configure.in' file to the latest Autoconf
+	  `configure.ac' syntax.
+
+	  Initialize Automake with the new AM_INIT_AUTOMAKE macro format.
+
+	* bin/bootstrap:
+
+	  Updated `autoheader' invocation to latest command line format.
+
+	  Commented out documentation generation shell script code.  At
+	  this early stage in the new autotool effort, we need not deal
+	  with documentation generation.
+
+	  Commented out ACE workspace/release configuration shell script
+	  code.  It may be re-enabled in the future when it is clearer how
+	  releases will be performed.
+
+	* m4/ace.m4:
+	* m4/acinclude.m4:
+	* m4/compiler.m4:
+	* m4/features.m4:
+	* m4/platform.m4:
+	* m4/subsets.m4:
+	* m4/threads.m4:
+
+	  Updated all macros to the latest Autoconf 2.57 syntax.
+
+	* acconfig.h:
+	* m4/config_h.m4:
+
+	  Replaced old `config.h' header template (acconfig.h) with the
+	  latest "AH_TEMPLATE" form of the configuration header template.
+
 Tue Dec 31 21:21:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/generate_topinfo_charts.sh:

@@ -22,16 +22,15 @@ dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 dnl Check for thread related libraries and compiler flags
 dnl Usage: ACE_CHECK_SUBSETS
-AC_DEFUN(ACE_CHECK_SUBSETS, dnl
+AC_DEFUN([ACE_CHECK_SUBSETS],
 [
-
 dnl Begin ACE_CHECK_SUBSETS
 
 dnl Assume all subsets will be built, including the full ACE library.
 dnl If any of the components is explicitly enabled or disabled by the user
 dnl then do NOT build the full ACE library.
-AC_ARG_ENABLE(lib-all,
-              [  --enable-lib-all        build all ACE components        [default=no]],
+AC_ARG_ENABLE([lib-all],
+     AC_HELP_STRING([--enable-lib-all],[build all ACE components [[no]]]),
               [
                case "${enableval}" in
                 yes)
@@ -41,7 +40,7 @@ AC_ARG_ENABLE(lib-all,
                   ace_user_enable_lib_all=no
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-all)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-all])
                   ;;
                esac
               ],
@@ -49,8 +48,8 @@ AC_ARG_ENABLE(lib-all,
                ace_user_enable_lib_all=no
               ])
 
-AC_ARG_ENABLE(lib-full,
-              [  --enable-lib-full       build the full ACE library      [default=yes]],
+AC_ARG_ENABLE([lib-full],
+     AC_HELP_STRING([--enable-lib-full],[build the full ACE library [[yes]]]),
               [
                case "${enableval}" in
                 yes)
@@ -60,7 +59,7 @@ AC_ARG_ENABLE(lib-full,
                   ace_user_enable_lib_full=no
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-full)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-full])
                   ;;
                esac
               ],
@@ -68,8 +67,8 @@ AC_ARG_ENABLE(lib-full,
                ace_user_enable_lib_full=yes
               ])
 
-AC_ARG_ENABLE(lib-os,
-              [  --enable-lib-os         build libACE_OS library         ],
+AC_ARG_ENABLE([lib-os],
+     AC_HELP_STRING([--enable-lib-os],[build ACE_OS library]),
               [
                case "${enableval}" in
                 yes)
@@ -79,7 +78,7 @@ AC_ARG_ENABLE(lib-os,
                   ace_user_enable_lib_os=no
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-os)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-os])
                   ;;
                esac
 
@@ -87,8 +86,8 @@ AC_ARG_ENABLE(lib-os,
                ace_user_enable_lib_full=no
               ],)
 
-AC_ARG_ENABLE(lib-utils,
-              [  --enable-lib-utils      build libACE_Utils library      ],
+AC_ARG_ENABLE([lib-utils],
+     AC_HELP_STRING([--enable-lib-utils],[build ACE_Utils library]),
               [
                case "${enableval}" in
                 yes)
@@ -98,7 +97,7 @@ AC_ARG_ENABLE(lib-utils,
                   ace_user_enable_lib_utils=no
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-utils)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-utils])
                   ;;
                esac
 
@@ -106,8 +105,8 @@ AC_ARG_ENABLE(lib-utils,
                ace_user_enable_lib_full=no
               ],)
 
-AC_ARG_ENABLE(lib-logging,
-              [  --enable-lib-logging    build libACE_Logging library    ],
+AC_ARG_ENABLE([lib-logging],
+     AC_HELP_STRING([--enable-lib-logging],[build ACE_Logging library]),
               [
                case "${enableval}" in
                 yes)
@@ -117,7 +116,7 @@ AC_ARG_ENABLE(lib-logging,
                   ace_user_enable_lib_logging=no
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-logging)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-logging])
                   ;;
                esac
 
@@ -125,8 +124,8 @@ AC_ARG_ENABLE(lib-logging,
                ace_user_enable_lib_full=no
               ],)
 
-AC_ARG_ENABLE(lib-threads,
-              [  --enable-lib-threads    build libACE_Threads library    ],
+AC_ARG_ENABLE([lib-threads],
+     AC_HELP_STRING([--enable-lib-threads],[build ACE_Threads library]),
               [
                case "${enableval}" in
                 yes)
@@ -136,7 +135,7 @@ AC_ARG_ENABLE(lib-threads,
                   ace_user_enable_lib_threads=no
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-threads)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-threads])
                   ;;
                esac
 
@@ -144,8 +143,8 @@ AC_ARG_ENABLE(lib-threads,
                ace_user_enable_lib_full=no
               ],)
 
-AC_ARG_ENABLE(lib-demux,
-              [  --enable-lib-demux      build libACE_Demux library      ],
+AC_ARG_ENABLE([lib-demux],
+     AC_HELP_STRING([--enable-lib-demux],[build ACE_Demux library]),
               [
                case "${enableval}" in
                 yes)
@@ -155,7 +154,7 @@ AC_ARG_ENABLE(lib-demux,
                   ace_user_enable_lib_demux=no
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-demux)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-demux])
                   ;;
                esac
 
@@ -163,8 +162,8 @@ AC_ARG_ENABLE(lib-demux,
                ace_user_enable_lib_full=no
               ],)
 
-AC_ARG_ENABLE(lib-connection,
-              [  --enable-lib-connection build libACE_Connection library ],
+AC_ARG_ENABLE([lib-connection],
+     AC_HELP_STRING([--enable-lib-connection],[build ACE_Connection library ]),
               [
                case "${enableval}" in
                 yes)
@@ -174,7 +173,7 @@ AC_ARG_ENABLE(lib-connection,
                   ace_user_enable_lib_connection=no
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-connection)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-connection])
                   ;;
                esac
 
@@ -182,8 +181,8 @@ AC_ARG_ENABLE(lib-connection,
                ace_user_enable_lib_full=no
               ],)
 
-AC_ARG_ENABLE(lib-sockets,
-              [  --enable-lib-sockets    build libACE_Sockets library    ],
+AC_ARG_ENABLE([lib-sockets],
+     AC_HELP_STRING([--enable-lib-sockets],[build ACE_Sockets library]),
               [
                case "${enableval}" in
                 yes)
@@ -193,7 +192,7 @@ AC_ARG_ENABLE(lib-sockets,
                   ace_user_enable_lib_sockets=no
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-sockets)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-sockets])
                   ;;
                esac
 
@@ -201,8 +200,8 @@ AC_ARG_ENABLE(lib-sockets,
                ace_user_enable_lib_full=no
               ],)
 
-AC_ARG_ENABLE(lib-ipc,
-              [  --enable-lib-ipc        build libACE_IPC library        ],
+AC_ARG_ENABLE([lib-ipc],
+     AC_HELP_STRING([--enable-lib-ipc],[build ACE_IPC library]),
               [
                case "${enableval}" in
                 yes)
@@ -212,7 +211,7 @@ AC_ARG_ENABLE(lib-ipc,
                   ace_user_enable_lib_ipc=no
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-ipc)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-ipc])
                   ;;
                esac
 
@@ -220,8 +219,8 @@ AC_ARG_ENABLE(lib-ipc,
                ace_user_enable_lib_full=no
               ],)
 
-AC_ARG_ENABLE(lib-svcconf,
-              [  --enable-lib-svcconf    build libACE_Svcconf library    ],
+AC_ARG_ENABLE([lib-svcconf],
+     AC_HELP_STRING([--enable-lib-svcconf],[build ACE_Svcconf library]),
               [
                case "${enableval}" in
                 yes)
@@ -229,10 +228,10 @@ AC_ARG_ENABLE(lib-svcconf,
                   ;;
                 no)
                   ace_user_enable_lib_svcconf=no
-                  AC_DEFINE(ACE_LACKS_ACE_SVCCONF)
+                  AC_DEFINE([ACE_LACKS_ACE_SVCCONF])
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-svcconf)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-svcconf])
                   ;;
                esac
 
@@ -240,8 +239,8 @@ AC_ARG_ENABLE(lib-svcconf,
                ace_user_enable_lib_full=no
               ],)
 
-AC_ARG_ENABLE(lib-streams,
-              [  --enable-lib-streams    build libACE_Streams library    ],
+AC_ARG_ENABLE([lib-streams],
+     AC_HELP_STRING([--enable-lib-streams],[build ACE_Streams library]),
               [
                case "${enableval}" in
                 yes)
@@ -251,7 +250,7 @@ AC_ARG_ENABLE(lib-streams,
                   ace_user_enable_lib_streams=no
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-streams)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-streams])
                   ;;
                esac
 
@@ -259,8 +258,8 @@ AC_ARG_ENABLE(lib-streams,
                ace_user_enable_lib_full=no
               ],)
 
-AC_ARG_ENABLE(lib-memory,
-              [  --enable-lib-memory     build libACE_Memory library     ],
+AC_ARG_ENABLE([lib-memory],
+     AC_HELP_STRING([--enable-lib-memory],[build ACE_Memory library]),
               [
                case "${enableval}" in
                 yes)
@@ -270,7 +269,7 @@ AC_ARG_ENABLE(lib-memory,
                   ace_user_enable_lib_memory=no
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-memory)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-memory])
                   ;;
                esac
 
@@ -279,8 +278,8 @@ AC_ARG_ENABLE(lib-memory,
               ],)
 
 
-AC_ARG_ENABLE(lib-timer,
-              [  --enable-lib-timer     build libACE_Timer library     ],
+AC_ARG_ENABLE([lib-timer],
+     AC_HELP_STRING([--enable-lib-timer],[build ACE_Timer library]),
               [
                case "${enableval}" in
                 yes)
@@ -290,7 +289,7 @@ AC_ARG_ENABLE(lib-timer,
                   ace_user_enable_lib_timer=no
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-timer)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-timer])
                   ;;
                esac
 
@@ -298,8 +297,8 @@ AC_ARG_ENABLE(lib-timer,
                ace_user_enable_lib_full=no
               ],)
 
-AC_ARG_ENABLE(lib-token,
-              [  --enable-lib-token      build libACE_Token library      ],
+AC_ARG_ENABLE([lib-token],
+     AC_HELP_STRING([--enable-lib-token],[build ACE_Token library]),
               [
                case "${enableval}" in
                 yes)
@@ -307,10 +306,10 @@ AC_ARG_ENABLE(lib-token,
                   ;;
                 no)
                   ace_user_enable_lib_token=no
-                  AC_DEFINE(ACE_LACKS_ACE_TOKEN)
+                  AC_DEFINE([ACE_LACKS_ACE_TOKEN])
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-token)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-token])
                   ;;
                esac
 
@@ -318,8 +317,8 @@ AC_ARG_ENABLE(lib-token,
                ace_user_enable_lib_full=no
               ],)
 
-AC_ARG_ENABLE(lib-other,
-              [  --enable-lib-other      build libACE_Other library      ],
+AC_ARG_ENABLE([lib-other],
+     AC_HELP_STRING([--enable-lib-other],[build ACE_Other library]),
               [
                case "${enableval}" in
                 yes)
@@ -327,10 +326,10 @@ AC_ARG_ENABLE(lib-other,
                   ;;
                 no)
                   ace_user_enable_lib_other=no
-                  AC_DEFINE(ACE_LACKS_ACE_OTHER)
+                  AC_DEFINE([ACE_LACKS_ACE_OTHER])
                   ;;
                 *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-other)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-other])
                   ;;
                esac
 
@@ -368,69 +367,69 @@ if test $ace_user_enable_lib_full = no &&
    test $ace_user_enable_lib_other = no; then
 
   dnl If we get here then no ACE libraries will be built!
-  AC_MSG_ERROR(No ACE components will be built.  Specify which components to build)
+  AC_MSG_ERROR([No ACE components will be built.  Specify which components to build.])
 
 fi  dnl No components will be built!
 
 dnl Set which ACE subsets to build
-AM_CONDITIONAL(BUILD_OS_FILES,
-               test X$ace_user_enable_lib_os = Xyes)
+dnl AM_CONDITIONAL(BUILD_OS_FILES,
+dnl                test X$ace_user_enable_lib_os = Xyes)
 
-AM_CONDITIONAL(BUILD_UTILS_FILES,
-               test X$ace_user_enable_lib_utils = Xyes)
+dnl AM_CONDITIONAL(BUILD_UTILS_FILES,
+dnl                test X$ace_user_enable_lib_utils = Xyes)
 
-AM_CONDITIONAL(BUILD_LOGGING_FILES,
-               test X$ace_user_enable_lib_logging = Xyes)
+dnl AM_CONDITIONAL(BUILD_LOGGING_FILES,
+dnl                test X$ace_user_enable_lib_logging = Xyes)
 
-AM_CONDITIONAL(BUILD_THREADS_FILES,
-               test X$ace_user_enable_lib_threads = Xyes)
+dnl AM_CONDITIONAL(BUILD_THREADS_FILES,
+dnl                test X$ace_user_enable_lib_threads = Xyes)
 
-AM_CONDITIONAL(BUILD_DEMUX_FILES,
-               test X$ace_user_enable_lib_demux = Xyes)
+dnl AM_CONDITIONAL(BUILD_DEMUX_FILES,
+dnl                test X$ace_user_enable_lib_demux = Xyes)
 
-AM_CONDITIONAL(BUILD_CONNECTION_FILES,
-               test X$ace_user_enable_lib_connection = Xyes)
+dnl AM_CONDITIONAL(BUILD_CONNECTION_FILES,
+dnl                test X$ace_user_enable_lib_connection = Xyes)
 
-AM_CONDITIONAL(BUILD_SOCKETS_FILES,
-               test X$ace_user_enable_lib_sockets = Xyes)
+dnl AM_CONDITIONAL(BUILD_SOCKETS_FILES,
+dnl                test X$ace_user_enable_lib_sockets = Xyes)
 
-AM_CONDITIONAL(BUILD_IPC_FILES,
-               test X$ace_user_enable_lib_ipc = Xyes)
+dnl AM_CONDITIONAL(BUILD_IPC_FILES,
+dnl                test X$ace_user_enable_lib_ipc = Xyes)
 
-AM_CONDITIONAL(BUILD_SVCCONF_FILES,
-               test X$ace_user_enable_lib_svcconf = Xyes)
+dnl AM_CONDITIONAL(BUILD_SVCCONF_FILES,
+dnl                test X$ace_user_enable_lib_svcconf = Xyes)
 
-AM_CONDITIONAL(BUILD_STREAMS_FILES,
-               test X$ace_user_enable_lib_streams = Xyes)
+dnl AM_CONDITIONAL(BUILD_STREAMS_FILES,
+dnl                test X$ace_user_enable_lib_streams = Xyes)
 
-AM_CONDITIONAL(BUILD_MEMORY_FILES,
-               test X$ace_user_enable_lib_memory = Xyes)
+dnl AM_CONDITIONAL(BUILD_MEMORY_FILES,
+dnl                test X$ace_user_enable_lib_memory = Xyes)
 
-AM_CONDITIONAL(BUILD_TIMER_FILES,
-               test X$ace_user_enable_lib_timer = Xyes)
+dnl AM_CONDITIONAL(BUILD_TIMER_FILES,
+dnl                test X$ace_user_enable_lib_timer = Xyes)
 
-AM_CONDITIONAL(BUILD_TOKEN_FILES,
-               test X$ace_user_enable_lib_token = Xyes)
+dnl AM_CONDITIONAL(BUILD_TOKEN_FILES,
+dnl                test X$ace_user_enable_lib_token = Xyes)
 
-AM_CONDITIONAL(BUILD_OTHER_FILES,
-               test X$ace_user_enable_lib_other = Xyes)
+dnl AM_CONDITIONAL(BUILD_OTHER_FILES,
+dnl                test X$ace_user_enable_lib_other = Xyes)
 
-AM_CONDITIONAL(BUILD_FULL_LIBRARY,
-               test X$ace_user_enable_lib_full = Xyes)
+dnl AM_CONDITIONAL(BUILD_FULL_LIBRARY,
+dnl                test X$ace_user_enable_lib_full = Xyes)
 
 dnl End ACE_CHECK_SUBSETS
 ])
 
 dnl Set the component dependencies for the libACE_OS library
 dnl Usage: ACE_CREATE_LIBACE_OS
-AC_DEFUN(ACE_CREATE_LIBACE_OS,
+AC_DEFUN([ACE_CREATE_LIBACE_OS],
 [
  ace_user_enable_lib_os=yes
 ])
 
 dnl Set the component dependencies for the libACE_Utils library
 dnl Usage: ACE_CREATE_LIBACE_UTILS
-AC_DEFUN(ACE_CREATE_LIBACE_UTILS,
+AC_DEFUN([ACE_CREATE_LIBACE_UTILS],
 [
  ace_user_enable_lib_utils=yes
 
@@ -440,7 +439,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_UTILS,
 
 dnl Set the component dependencies for the libACE_Logging library
 dnl Usage: ACE_CREATE_LIBACE_Logging
-AC_DEFUN(ACE_CREATE_LIBACE_LOGGING,
+AC_DEFUN([ACE_CREATE_LIBACE_LOGGING],
 [
  ace_user_enable_lib_logging=yes
 
@@ -450,7 +449,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_LOGGING,
 
 dnl Set the component dependencies for the libACE_Threads library
 dnl Usage: ACE_CREATE_LIBACE_THREADS
-AC_DEFUN(ACE_CREATE_LIBACE_THREADS,
+AC_DEFUN([ACE_CREATE_LIBACE_THREADS],
 [
  ace_user_enable_lib_threads=yes
 
@@ -460,7 +459,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_THREADS,
 
 dnl Set the component dependencies for the libACE_Demux library
 dnl Usage: ACE_CREATE_LIBACE_DEMUX
-AC_DEFUN(ACE_CREATE_LIBACE_DEMUX,
+AC_DEFUN([ACE_CREATE_LIBACE_DEMUX],
 [
  ace_user_enable_lib_demux=yes
 
@@ -471,7 +470,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_DEMUX,
 
 dnl Set the component dependencies for the libACE_Connection library
 dnl Usage: ACE_CREATE_LIBACE_CONNECTION
-AC_DEFUN(ACE_CREATE_LIBACE_CONNECTION,
+AC_DEFUN([ACE_CREATE_LIBACE_CONNECTION],
 [
  ace_user_enable_lib_connection=yes
 
@@ -483,7 +482,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_CONNECTION,
 
 dnl Set the component dependencies for the libACE_Sockets library
 dnl Usage: ACE_CREATE_LIBACE_SOCKETS
-AC_DEFUN(ACE_CREATE_LIBACE_SOCKETS,
+AC_DEFUN([ACE_CREATE_LIBACE_SOCKETS],
 [
  ace_user_enable_lib_sockets=yes
 
@@ -493,7 +492,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_SOCKETS,
 
 dnl Set the component dependencies for the libACE_IPC library
 dnl Usage: ACE_CREATE_LIBACE_IPC
-AC_DEFUN(ACE_CREATE_LIBACE_IPC,
+AC_DEFUN([ACE_CREATE_LIBACE_IPC],
 [
  ace_user_enable_lib_ipc=yes
 
@@ -504,7 +503,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_IPC,
 
 dnl Set the component dependencies for the libACE_Svcconf library
 dnl Usage: ACE_CREATE_LIBACE_SVCCONF
-AC_DEFUN(ACE_CREATE_LIBACE_SVCCONF,
+AC_DEFUN([ACE_CREATE_LIBACE_SVCCONF],
 [
  ace_user_enable_lib_svcconf=yes
 
@@ -517,7 +516,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_SVCCONF,
 
 dnl Set the component dependencies for the libACE_Streams library
 dnl Usage: ACE_CREATE_LIBACE_STREAMS
-AC_DEFUN(ACE_CREATE_LIBACE_STREAMS,
+AC_DEFUN([ACE_CREATE_LIBACE_STREAMS],
 [
  ace_user_enable_lib_streams=yes
 
@@ -529,7 +528,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_STREAMS,
 
 dnl Set the component dependencies for the libACE_Memory library
 dnl Usage: ACE_CREATE_LIBACE_MEMORY
-AC_DEFUN(ACE_CREATE_LIBACE_MEMORY,
+AC_DEFUN([ACE_CREATE_LIBACE_MEMORY],
 [
  ace_user_enable_lib_memory=yes
 
@@ -539,7 +538,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_MEMORY,
 
 dnl Set the component dependencies for the libACE_Timer library
 dnl Usage: ACE_CREATE_LIBACE_TIMER
-AC_DEFUN(ACE_CREATE_LIBACE_TIMER,
+AC_DEFUN([ACE_CREATE_LIBACE_TIMER],
 [
  ace_user_enable_lib_timer=yes
 
@@ -549,7 +548,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_TIMER,
 
 dnl Set the component dependencies for the libACE_Token library
 dnl Usage: ACE_CREATE_LIBACE_TOKEN
-AC_DEFUN(ACE_CREATE_LIBACE_TOKEN,
+AC_DEFUN([ACE_CREATE_LIBACE_TOKEN],
 [
  ace_user_enable_lib_token=yes
 
@@ -570,7 +569,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_TOKEN,
 
 dnl Set the component dependencies for the libACE_Utils library
 dnl Usage: ACE_CREATE_LIBACE_OTHER
-AC_DEFUN(ACE_CREATE_LIBACE_OTHER,
+AC_DEFUN([ACE_CREATE_LIBACE_OTHER],
 [
  ace_user_enable_lib_other=yes
 
@@ -591,7 +590,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_OTHER,
 
 dnl Build all ACE component libraries
 dnl Usage: ACE_CREATE_ALL_COMPONENTS
-AC_DEFUN(ACE_CREATE_ALL_COMPONENTS,
+AC_DEFUN([ACE_CREATE_ALL_COMPONENTS],
 [
  ace_user_enable_lib_os=yes
  ace_user_enable_lib_utils=yes
@@ -611,7 +610,7 @@ AC_DEFUN(ACE_CREATE_ALL_COMPONENTS,
 
 dnl Disable all ACE component libraries
 dnl Usage: ACE_CREATE_ALL_COMPONENTS
-AC_DEFUN(ACE_DISABLE_ALL_COMPONENTS,
+AC_DEFUN([ACE_DISABLE_ALL_COMPONENTS],
 [
  ace_user_enable_lib_os=no
  ace_user_enable_lib_utils=no

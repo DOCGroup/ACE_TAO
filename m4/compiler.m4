@@ -25,14 +25,15 @@ dnl The flags set here are generally only useful for _KNOWN_ compilers.
 
 dnl ACE_SET_COMPILER_FLAGS
 dnl Usage: ACE_SET_COMPILER_FLAGS
-AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
+AC_DEFUN([ACE_SET_COMPILER_FLAGS],
 [
- AC_BEFORE([$0], [AM_PROG_LIBTOOL]) dnl
+dnl  AC_BEFORE([$0], [AM_PROG_LIBTOOL])
 
  dnl Make sure we know what C++ compiler and preprocessor we have!
  AC_REQUIRE([AC_PROG_CXX])
  AC_REQUIRE([AC_PROG_CXXCPP])
- AC_REQUIRE([AC_LANG_CPLUSPLUS])
+ AC_LANG([C++])
+ AC_REQUIRE([AC_LANG])
 
  AC_REQUIRE([ACE_COMPILATION_OPTIONS])
 
@@ -43,8 +44,8 @@ changequote(, )dnl
 changequote([, ])dnl
      :  # Do nothing
    else
-     AC_DEFINE(ACE_HAS_GNUG_PRE_2_8)dnl
-     AC_DEFINE(ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS)dnl
+     AC_DEFINE([ACE_HAS_GNUG_PRE_2_8])
+     AC_DEFINE([ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS])
    fi
 
    case `$CXX --version` in
@@ -101,7 +102,7 @@ changequote([, ])dnl
          dnl preprocessor defining __xlC__ to the proper version
          dnl number of the compiler.
 
-         AC_EGREP_CPP(0x0306,
+         AC_EGREP_CPP([0x0306],
            [
             __xlC__
            ],
@@ -276,11 +277,11 @@ changequote([, ])dnl
 
            dnl Inlining appears to cause link problems with early
            dnl releases of CC 5.0.
-	   AC_DEFINE(ACE_LACKS_INLINE_FUNCTIONS)
+	   AC_DEFINE([ACE_LACKS_INLINE_FUNCTIONS])
 
            if test "$ace_user_enable_exceptions" != yes; then
              dnl See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h.
-             AC_DEFINE(_RWSTD_NO_EXCEPTIONS)
+             AC_DEFINE([_RWSTD_NO_EXCEPTIONS])
            fi
          fi
 
@@ -308,9 +309,9 @@ changequote([, ])dnl
  dnl Additional flags
  if test -n "$GXX"; then
    ACE_CXXFLAGS="$ACE_CXXFLAGS -W -Wall -Wpointer-arith"
-   if test "$ace_user_enable_repo" = no; then
-     ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-implicit-templates"
-   fi
+dnl    if test "$ace_user_enable_repo" = no; then
+dnl      ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-implicit-templates"
+dnl    fi
  fi
 
  if test -n "$GCC"; then
