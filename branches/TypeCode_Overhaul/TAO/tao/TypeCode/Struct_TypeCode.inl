@@ -2,7 +2,10 @@
 //
 // $Id$
 
-template <typename StringType, class FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 ACE_INLINE
 TAO::TypeCode::Struct<StringType, FieldArrayType, RefCountPolicy>::Struct (
   char const * id,
@@ -15,7 +18,10 @@ TAO::TypeCode::Struct<StringType, FieldArrayType, RefCountPolicy>::Struct (
 {
 }
 
-template <typename StringType, typename FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 ACE_INLINE TAO::TypeCode::Field<StringType> const *
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType>::fields (void) const

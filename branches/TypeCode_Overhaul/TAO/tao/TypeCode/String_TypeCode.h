@@ -39,8 +39,9 @@ namespace TAO
      * types, including @c wstring.
      */
     template <class RefCountPolicy>
-    class String : public CORBA::TypeCode
-      : private RefCountPolicy
+    class String
+      : public CORBA::TypeCode,
+        private RefCountPolicy
     {
     public:
 

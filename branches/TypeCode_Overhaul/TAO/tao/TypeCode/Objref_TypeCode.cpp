@@ -10,7 +10,7 @@
 #endif  /* !__ACE_INLINE__ */
 
 
-template <typename StringType, class RefCountPolicy>
+template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 bool
 TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_marshal (
   TAO_OutputCDR &) const
@@ -27,21 +27,21 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_marshal (
     && (cdr << this->attributes_.name ());
 }
 
-template <typename StringType, class RefCountPolicy>
+template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 void
 TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_duplicate (void)
 {
   this->RefCountPolicy::add_ref (void);
 }
 
-template <typename StringType, class RefCountPolicy>
+template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 void
 TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_release (void)
 {
   this->RefCountPolicy::remove_ref (void);
 }
 
-template <typename StringType, class RefCountPolicy>
+template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Objref<StringType, RefCountPolicy>::equal_i (
   CORBA::TypeCode_ptr /* tc */
@@ -53,7 +53,7 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::equal_i (
   return 1;
 }
 
-template <typename StringType, class RefCountPolicy>
+template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Objref<StringType, RefCountPolicy>::equivalent_i (
   CORBA::TypeCode_ptr tc
@@ -90,15 +90,15 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::equivalent_i (
   return 1;
 }
 
-template <typename StringType, class RefCountPolicy>
+template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 CORBA::TCKind
 TAO::TypeCode::Objref<StringType, RefCountPolicy>::kind_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  return CORBA::tk_objref;
+  return Objref_Traits<Kind>::kind;
 }
 
-template <typename StringType, class RefCountPolicy>
+template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Objref<StringType, RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL) const
@@ -114,9 +114,10 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::get_compact_typecode_i (
                         CORBA::TypeCode::_nil ());
     }
 
-  return adapter->create_interface_tc (this->attributes_.id (),
-                                       ""  /* empty name */
-                                       ACE_ENV_ARG_PARAMETER);
+  return
+    Objref_Traits<Kind>::create_compact_typecode (this->attributes_.id (),
+                                                  ""  /* empty name */
+                                                  ACE_ENV_ARG_PARAMETER);
 }
 
 #endif  /*  TAO_OBJREF_TYPECODE_CPP */

@@ -23,9 +23,12 @@ namespace TAO
   /**
    * @class be_visitor_objref_typecode
    *
-   * @brief Object reference TypeCode generation visitor.
+   * @brief TypeCode generation visitor for types with a TypeCode
+   *        format similar to an object reference / interface
+   *        TypeCode.
    *
-   * Object reference TypeCode generation visitor.
+   * TypeCode generation visitor for types with a TypeCode format
+   * similar to an object reference / interface TypeCode.
    */
   class be_visitor_objref_typecode
     : public be_visitor_typecode_defn
@@ -44,6 +47,21 @@ namespace TAO
      *       updated accordingly.
      */
     virtual int visit_interface (be_interface * node);
+
+    /// Visit a native.
+    /**
+     * @see visit_interface
+     */
+    virtual int visit_native (be_native * node);
+
+  private:
+
+    /// Generate TypeCode instance.
+    int visit_i (char const * kind,
+                 char const * flat_name,
+                 char const * repository_id,
+                 char const * original_local_name,
+                 be_type * node);
 
   };
 
