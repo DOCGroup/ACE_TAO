@@ -1,0 +1,111 @@
+#----------------------------------------------------------------------------
+#       GNU Makefile
+#----------------------------------------------------------------------------
+MAKEFILE        = Makefile.Metrics
+DEPENDENCY_FILE = .depend.Makefile.Metrics
+LIB_UNCHECKED   = libTAO_Metrics.a
+SHLIB_UNCHECKED = libTAO_Metrics.$(SOEXT)
+
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
+IDL_FILES = Metrics
+IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
+
+
+
+Metrics = \
+  MetricsC \
+  MetricsS \
+  Metrics/Metrics_FrameManager \
+  Metrics/Metrics_LocalCache \
+  Metrics/Metrics_Logger \
+  Metrics/Metrics_UpcallMonitor \
+  Metrics/Metrics_Utils
+
+ifndef ORBSVCS_COMPONENTS
+  ORBSVCS_COMPONENTS = \
+    Metrics
+endif # ORBSVCS_COMPONENTS
+
+ifneq (,$(findstring Metrics, $(ORBSVCS_COMPONENTS)))
+  FILES += $(Metrics)
+endif # Metrics
+
+VPATH = .:Metrics
+
+ifeq (,$(TAO_ORBSVCS))
+LIB   = $(LIB_UNCHECKED)
+SHLIB = $(SHLIB_UNCHECKED)
+else
+  ifeq (Metrics, $(findstring Metrics, $(TAO_ORBSVCS)))
+    LIB   = $(LIB_UNCHECKED)
+    SHLIB = $(SHLIB_UNCHECKED)
+  endif
+endif
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
+LSRC   = $(addsuffix .cpp, $(FILES))
+ifeq (,$(TAO_ORBSVCS))
+BUILD += ORBSVCS_COMPONENTS
+else
+  ifeq (Metrics, $(findstring Metrics, $(TAO_ORBSVCS)))
+    BUILD += ORBSVCS_COMPONENTS
+  endif
+endif
+ACELIB = -lACE
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(TAO_ROOT)/taoconfig.mk
+
+CPPFLAGS     += -I../../orbsvcs -I../.. -I../../tao -I../../..
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DTAO_METRICS_BUILD_DLL
+endif
+endif
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS     += -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+endif
+endif
+
+
+LDFLAGS      += -L../../orbsvcs/orbsvcs -L../../tao -L../../../ace
+TAO_IDLFLAGS += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Metrics_Export -Wb,export_include=Metrics/metrics_export.h -I../.. -I$(TAO_ROOT)/orbsvcs -Ge 1 -Sc
+
+ACE_SHLIBS = -lTAO_PortableServer -lTAO $(ACELIB)
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+.PHONY: ORBSVCS_COMPONENTS
+ORBSVCS_COMPONENTS:
+	@sh ../../../bin/ace_components --orbsvcs --append '$(ORBSVCS_COMPONENTS)'
+
+compclean:
+	@sh $(ACE_ROOT)/bin/ace_components --orbsvcs --remove
+
+ADDITIONAL_IDL_TARGETS =
+
+# IDL File Directory: .
+
+idl_stubs: $(ADDITIONAL_IDL_TARGETS)
+
+all: idl_stubs
+
+.PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
+
+realclean: clean compclean
+	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
+
