@@ -1,25 +1,35 @@
+Sat Feb 26 19:52:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/CDR_Stream.cpp:
+          The grow() function was re-allocating the buffer even when there
+          was just enough memory, i.e. this was an off-by-one error, in
+          the form of a < instead of <= comparison.
+          When it finally decided to grow the buffer it was using the
+          global heap instead of the allocators in the message block, that
+          have to potential of beign more efficient.
+
 Sat Feb 26 19:47:05 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Local_Tokens.cpp (ACE_TPQ_Entry):
+        * ace/Local_Tokens.cpp (ACE_TPQ_Entry):
 
-	  Needed to go a step further.  Taking the jackhammer approach by
-	  switching to a C style cast until a better solution presents
-	  itself.
+          Needed to go a step further.  Taking the jackhammer approach by
+          switching to a C style cast until a better solution presents
+          itself.
 
 Sat Feb 26 13:40:57 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Local_Tokens.cpp (ACE_TPQ_Entry):
+        * ace/Local_Tokens.cpp (ACE_TPQ_Entry):
 
-	  Compaq C++ doesn't like the static cast from ACE_thread_t to
-	  long unsigned int.  Take the sledgehammer approach and use a
-	  reinterpret cast instead.
+          Compaq C++ doesn't like the static cast from ACE_thread_t to
+          long unsigned int.  Take the sledgehammer approach and use a
+          reinterpret cast instead.
 
 Sat Feb 26 13:20:13 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.h (INADDR_LOOPBACK):
+        * ace/OS.h (INADDR_LOOPBACK):
 
-	  Define this macro to hexidecimal value of the loopback address
-	  127.0.0.1 (0x7f000001).  LynxOS doesn't define this constant.
+          Define this macro to hexidecimal value of the loopback address
+          127.0.0.1 (0x7f000001).  LynxOS doesn't define this constant.
 
 Fri Feb 25 16:50:37 2000  Steve Huston  <shuston@riverace.com>
 
