@@ -1,3 +1,13 @@
+Thu May 27 13:03:02 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+
+          Added the get_plan_info () method, that parses the plan
+          according to the individual nodes on which the plan needs to be
+          deployed. Also changed internal tables to use ACE_Vector to
+          store plan related information.
+
 Thu May 27 11:02:47 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:

@@ -17,6 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
+#include "ace/Vector_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,7 +50,7 @@ namespace CIAO
   {
   public:
     /// Define the type which contains a pair of NodeApplication object
-    /// reference and Connections_var type variable. 
+    /// reference and Connections_var type variable.
     typedef struct _node_application_para
     {
       ::Deployment::NodeApplication_var node_application_;
@@ -208,7 +209,7 @@ namespace CIAO
 
     /// Cached deployment plan for the particular domain.
     /// The plan will be initialized when init is called.
-    const Deployment::DeploymentPlan & plan_;
+    const Deployment::DeploymentPlan &plan_;
 
     /// Cached child plans.
     //Deployment::DeploymentPlan * child_plan_;
@@ -218,7 +219,7 @@ namespace CIAO
 
     /// The list of node manager names, each of them
     /// corresponds to one child plan.
-    ACE_CString * node_manager_names_;
+    ACE_Vector <ACE_CString> node_manager_names_;
 
     /// Cached child plans in a map.
     /// Key: NodeManager name.
@@ -239,14 +240,14 @@ namespace CIAO
     CORBA::String_var uuid_;
 
     /// Maintain a list of NodeApplicationManager references, each of which
-    /// is returned by calling the preparePlan() method on the corresponding
-    /// NodeManager object.
-    Object_Set<::Deployment::NodeApplicationManager, 
-               ::Deployment::NodeApplicationManager_var>
+    /// is returned by calling the preparePlan() method on the
+    /// corresponding NodeManager object.
+    Object_Set<Deployment::NodeApplicationManager,
+               Deployment::NodeApplicationManager_var>
       node_application_manager_set_;
 
     /// Maintain a list of NodeApplication references paired with the
-    /// Deployment::Connections_var type variable. 
+    /// Deployment::Connections_var type variable.
     /// Each pair is obtained by calling the startLaunch () method on
     /// the corresponding NodeApplicationManager object.
     ACE_Vector<Node_Application_Para> node_application_vec_;
