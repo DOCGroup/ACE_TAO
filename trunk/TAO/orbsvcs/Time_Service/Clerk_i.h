@@ -21,7 +21,7 @@
 #include "ace/Log_Msg.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/Naming_Server.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
 
 class Clerk_i
@@ -78,9 +78,8 @@ private:
   FILE *ior_output_file_;
   // File where the IOR of the Clerk object is stored.
 
-  int init_naming_service (int argc,
-                           char* argv[]);
-  // Initialises the name server and registers the <TimeService> Clerk
+  int init_naming_service ();
+  // Initialises the name client and registers the <TimeService> Clerk
   // object with it.
 
   int create_clerk (void);
@@ -88,9 +87,6 @@ private:
 
   int register_clerk (void);
   // Bind the clerk in the appropriate context in the Naming Service.
-
-  int if_first_clerk (CosNaming::Name clerk_context_name);
-  // Check if this is the first clerk.
 
   int init_IR (void);
   // Initialise the Interface Repository and register the clerk
@@ -105,7 +101,7 @@ private:
   // Iterate over the given server context to get the rest of the
   // server IORs.
 
-  TAO_Naming_Server my_name_server_;
+  TAO_Naming_Client naming_client_;
   // An instance of the name server used for registering the
   // <TimeService Clerk> object. The same instance is used by the
   // Clerk to periodically iterate through the Server Naming Context
