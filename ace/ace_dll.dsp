@@ -4741,14 +4741,6 @@ SOURCE=.\Naming_Context.cpp
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
 
 DEP_CPP_NAMIN=\
-	"..\STL\algobase.h"\
-	"..\STL\bool.h"\
-	"..\STL\bstring.h"\
-	"..\STL\defalloc.h"\
-	"..\STL\function.h"\
-	"..\STL\iterator.h"\
-	"..\STL\pair.h"\
-	"..\STL\vector.h"\
 	".\ACE.h"\
 	".\ACE.i"\
 	".\Addr.h"\
@@ -4855,6 +4847,14 @@ DEP_CPP_NAMIN=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_NAMIN=\
+	"..\STL\algobase.h"\
+	"..\STL\bool.h"\
+	"..\STL\bstring.h"\
+	"..\STL\defalloc.h"\
+	"..\STL\function.h"\
+	"..\STL\iterator.h"\
+	"..\STL\pair.h"\
+	"..\STL\vector.h"\
 	".\config.h"\
 	".\stdcpp.h"\
 	
@@ -6073,14 +6073,6 @@ SOURCE=.\Registry.cpp
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
 
 DEP_CPP_REGIS=\
-	"..\STL\algobase.h"\
-	"..\STL\bool.h"\
-	"..\STL\bstring.h"\
-	"..\STL\defalloc.h"\
-	"..\STL\function.h"\
-	"..\STL\iterator.h"\
-	"..\STL\pair.h"\
-	"..\STL\vector.h"\
 	".\ACE.h"\
 	".\ACE.i"\
 	".\Auto_Ptr.cpp"\
@@ -6108,6 +6100,14 @@ DEP_CPP_REGIS=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_REGIS=\
+	"..\STL\algobase.h"\
+	"..\STL\bool.h"\
+	"..\STL\bstring.h"\
+	"..\STL\defalloc.h"\
+	"..\STL\function.h"\
+	"..\STL\iterator.h"\
+	"..\STL\pair.h"\
+	"..\STL\vector.h"\
 	".\config.h"\
 	".\stdcpp.h"\
 	
@@ -6136,14 +6136,6 @@ SOURCE=.\Registry_Name_Space.cpp
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
 
 DEP_CPP_REGIST=\
-	"..\STL\algobase.h"\
-	"..\STL\bool.h"\
-	"..\STL\bstring.h"\
-	"..\STL\defalloc.h"\
-	"..\STL\function.h"\
-	"..\STL\iterator.h"\
-	"..\STL\pair.h"\
-	"..\STL\vector.h"\
 	".\ACE.h"\
 	".\ACE.i"\
 	".\Addr.h"\
@@ -6239,6 +6231,14 @@ DEP_CPP_REGIST=\
 	".\ws2tcpip.h"\
 	
 NODEP_CPP_REGIST=\
+	"..\STL\algobase.h"\
+	"..\STL\bool.h"\
+	"..\STL\bstring.h"\
+	"..\STL\defalloc.h"\
+	"..\STL\function.h"\
+	"..\STL\iterator.h"\
+	"..\STL\pair.h"\
+	"..\STL\vector.h"\
 	".\config.h"\
 	".\stdcpp.h"\
 	
@@ -12254,6 +12254,10 @@ SOURCE=.\Addr.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Arg_Shifter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ARGV.h
 # End Source File
 # Begin Source File
@@ -12271,6 +12275,10 @@ SOURCE=.\Asynch_IO.h
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Types.h
 # End Source File
 # Begin Source File
 
@@ -12406,6 +12414,10 @@ SOURCE=.\High_Res_Timer.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\inc_user_config.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\INET_Addr.h
 # End Source File
 # Begin Source File
@@ -12482,7 +12494,15 @@ SOURCE=.\Malloc.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Malloc_Base.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Malloc_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Managed_Object.h
 # End Source File
 # Begin Source File
 
@@ -12503,6 +12523,10 @@ SOURCE=.\Message_Block.h
 # Begin Source File
 
 SOURCE=.\Message_Queue.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Queue_T.h
 # End Source File
 # Begin Source File
 
@@ -12586,6 +12610,10 @@ SOURCE=.\Reactor.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Reactor_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ReactorEx.h
 # End Source File
 # Begin Source File
@@ -12614,6 +12642,10 @@ SOURCE=.\Sched_Params.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Select_Reactor.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Service_Config.h
 # End Source File
 # Begin Source File
@@ -12631,6 +12663,10 @@ SOURCE=.\Service_Record.h
 # Begin Source File
 
 SOURCE=.\Service_Repository.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Service_Types.h
 # End Source File
 # Begin Source File
 
@@ -12718,6 +12754,10 @@ SOURCE=.\SString.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Stats.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\stdcpp.h
 # End Source File
 # Begin Source File
@@ -12735,6 +12775,10 @@ SOURCE=.\Stream.h
 # Begin Source File
 
 SOURCE=.\Stream_Modules.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\streams.h
 # End Source File
 # Begin Source File
 
@@ -12838,6 +12882,10 @@ SOURCE=.\Timer_Queue.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Timer_Queue_Adapters.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Timer_Queue_T.h
 # End Source File
 # Begin Source File
@@ -12898,6 +12946,10 @@ SOURCE=.\Typed_SV_Message.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Typed_SV_Message_Queue.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\UNIX_Addr.h
 # End Source File
 # Begin Source File
@@ -12918,6 +12970,14 @@ SOURCE=.\UPIPE_Stream.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Version.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\WFMO_Reactor.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ws2tcpip.h
 # End Source File
 # Begin Source File
@@ -12935,6 +12995,10 @@ SOURCE=.\Acceptor.i
 # Begin Source File
 
 SOURCE=.\ACE.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Activation_Queue.i
 # End Source File
 # Begin Source File
 
@@ -12963,6 +13027,10 @@ SOURCE=.\Atomic_Op.i
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Types.i
 # End Source File
 # Begin Source File
 
@@ -13118,6 +13186,10 @@ SOURCE=.\Malloc_T.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Managed_Object.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Map_Manager.i
 # End Source File
 # Begin Source File
@@ -13138,6 +13210,10 @@ SOURCE=.\Message_Queue.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Message_Queue_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Module.i
 # End Source File
 # Begin Source File
@@ -13151,6 +13227,10 @@ SOURCE=.\Multiplexor.i
 # Begin Source File
 
 SOURCE=.\Object_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Obstack.i
 # End Source File
 # Begin Source File
 
@@ -13210,6 +13290,10 @@ SOURCE=.\Sched_Params.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Select_Reactor.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Service_Config.i
 # End Source File
 # Begin Source File
@@ -13227,6 +13311,10 @@ SOURCE=.\Service_Record.i
 # Begin Source File
 
 SOURCE=.\Service_Repository.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Service_Types.i
 # End Source File
 # Begin Source File
 
@@ -13306,6 +13394,18 @@ SOURCE=.\SString.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Stats.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Strategies.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Strategies_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Stream.i
 # End Source File
 # Begin Source File
@@ -13342,6 +13442,10 @@ SOURCE=.\Synch.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Synch_Options.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Synch_T.i
 # End Source File
 # Begin Source File
@@ -13359,6 +13463,10 @@ SOURCE=.\Thread.i
 # Begin Source File
 
 SOURCE=.\Thread_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Timer_Queue_Adapters.i
 # End Source File
 # Begin Source File
 
@@ -13428,6 +13536,10 @@ SOURCE=.\UPIPE_Connector.i
 
 SOURCE=.\UPIPE_Stream.i
 # End Source File
+# Begin Source File
+
+SOURCE=.\WFMO_Reactor.i
+# End Source File
 # End Group
 # Begin Group "Template Files"
 
@@ -13487,6 +13599,31 @@ SOURCE=.\Malloc_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Managed_Object.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Map_Manager.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -13496,6 +13633,31 @@ SOURCE=.\Map_Manager.cpp
 SOURCE=.\Message_Queue.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Queue_T.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
