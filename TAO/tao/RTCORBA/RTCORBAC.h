@@ -45,7 +45,7 @@ class TAO_Network_Priority_Mapping_Manager_out;
 class TAO_Network_Priority_Mapping;
 
 #if !defined(TAO_RTCORBA_SAFE_INCLUDE) && \
-    !defined(TAO_INSTANTIATING_TEMPLATES)
+    !defined(ACE_VACPP_INSTANTIATING_TEMPLATES)
 #error "You should not include RTCORBAC.h directly, use RTCORBA.h"
 #endif /* !TAO_RTCORBA_SAFE_INCLUDE */
 
