@@ -1,3 +1,8 @@
+Thu May 22 12:52:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Added define ACE_LACKS_NATIVE_STRPTIME
+
 Thu May 22 07:35:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
