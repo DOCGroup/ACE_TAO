@@ -1,3 +1,10 @@
+Fri Mar 25 07:49:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Basic_Types.h:
+
+	  Fix typo -- missing trailing semicolon when defining
+	  ACE_{,U}INT64 from ACE_{U,}INT64_TYPE.
+
 Fri Mar 25 07:10:35 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-unixware-7.1.0.h:
