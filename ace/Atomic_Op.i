@@ -1,3 +1,5 @@
+// $Id$
+
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator++ (void)
 {
@@ -144,7 +146,7 @@ inline void
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const long &i)
 {
   ::InterlockedExchange (&this->value_,
-			 i);
+                         i);
 }
 
 inline void
@@ -153,7 +155,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const ACE_Atomic_Op<ACE_Thread
   // This will call ACE_Atomic_Op::TYPE(), which will ensure the value
   // of <rhs> is acquired atomically.
   ::InterlockedExchange (&this->value_,
-			 rhs);
+                         rhs);
 }
 
 #if defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
@@ -173,4 +175,3 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-= (const long &i)
 #endif /* ACE_HAS_INTERLOCKED_EXCHANGEADD */
 
 #endif /* ACE_WIN32 */
-
