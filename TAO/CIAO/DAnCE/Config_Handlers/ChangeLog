@@ -1,3 +1,42 @@
+Wed Sep  8 17:19:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/Any_Handler.h:
+	* DAnCE/Config_Handlers/Basic_Handler.h:
+	* DAnCE/Config_Handlers/CAD_Handler.h:
+	* DAnCE/Config_Handlers/CEPE_Handler.h:
+	* DAnCE/Config_Handlers/CPK_Handler.h:
+	* DAnCE/Config_Handlers/CPR_Handler.h:
+	* DAnCE/Config_Handlers/Cap_Handler.h:
+	* DAnCE/Config_Handlers/CompImplDesc_Handler.h:
+	* DAnCE/Config_Handlers/CompIntrDesc_Handler.h:
+	* DAnCE/Config_Handlers/CompPkgDesc_Handler.h:
+	* DAnCE/Config_Handlers/Config_Error_Handler.h:
+	* DAnCE/Config_Handlers/DT_Handler.h:
+	* DAnCE/Config_Handlers/DnC_Dump.h:
+	* DAnCE/Config_Handlers/Domain_Handler.h:
+	* DAnCE/Config_Handlers/ERE_Handler.h:
+	* DAnCE/Config_Handlers/IAD_Handler.h:
+	* DAnCE/Config_Handlers/ID_Handler.h:
+	* DAnCE/Config_Handlers/IR_Handler.h:
+	* DAnCE/Config_Handlers/MID_Handler.h:
+	* DAnCE/Config_Handlers/NIA_Handler.h:
+	* DAnCE/Config_Handlers/PCI_Handler.h:
+	* DAnCE/Config_Handlers/PC_Handler.h:
+	* DAnCE/Config_Handlers/Plan_Handler.h:
+	* DAnCE/Config_Handlers/Process_Element.h:
+	* DAnCE/Config_Handlers/Property_Handler.h:
+	* DAnCE/Config_Handlers/RS_Handler.h:
+	* DAnCE/Config_Handlers/RUK_Handler.h:
+	* DAnCE/Config_Handlers/Requirement_Handler.h:
+	* DAnCE/Config_Handlers/SPK_Handler.h:
+	* DAnCE/Config_Handlers/SP_Handler.h:
+	* DAnCE/Config_Handlers/TPD_Handler.h:
+	* DAnCE/Config_Handlers/Utils.h:
+	* DAnCE/Config_Handlers/XercesString.h:
+	  
+  	  Removed all the old files from this branch. This is simply
+	  confusing to see what is usable and what is not. 	  
+
 Wed Sep  8 17:09:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/Config_Handlers/Any_Handler.cpp:
