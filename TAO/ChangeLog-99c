@@ -1,3 +1,7 @@
+Mon Jan 11 16:55:57 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * IIOP: removed entire directory tree.
+
 Mon Jan 11 16:36:08 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
         * TAO/docs/releasenotes/index.html:
@@ -5,254 +9,254 @@ Mon Jan 11 16:36:08 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
 Mon Jan 11 13:15:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/GIOP.cpp: Changed the implementation to use the new
- 	  sendv_n() method on SOCK_Stream.  This enabled me to be able to
- 	  remove the adhoc use of writev_n() in this file.
+        * tao/GIOP.cpp: Changed the implementation to use the new
+          sendv_n() method on SOCK_Stream.  This enabled me to be able to
+          remove the adhoc use of writev_n() in this file.
 
 Mon Jan 11 12:37:23 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Dereferenced the _var pointers in the following.
-	* orbsvcs/Time_Service/Server_i.cpp (init_IR):
-	* orbsvcs/Time_Service/Server_i.cpp (create_server):
+        Dereferenced the _var pointers in the following.
+        * orbsvcs/Time_Service/Server_i.cpp (init_IR):
+        * orbsvcs/Time_Service/Server_i.cpp (create_server):
 
 Mon Jan 11 02:10:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/try_macros.h (TAO_THROW_ENV_RETURN): Forgot to removed
-	  duplicate definition.
+        * tao/try_macros.h (TAO_THROW_ENV_RETURN): Forgot to removed
+          duplicate definition.
 
-	* tao/try_macros.h (TAO_CATCHALL): For compilers without c++
-	  exceptions, simply make it identical to TAO_CATCHANY.  Thanks,
-	  to Irfan for suggesting the change.
+        * tao/try_macros.h (TAO_CATCHALL): For compilers without c++
+          exceptions, simply make it identical to TAO_CATCHANY.  Thanks,
+          to Irfan for suggesting the change.
 
 Sun Jan 10 22:43:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* Active_Object_Map.h:
-	* Active_Object_Map.i:
-	* Any.h:
-	* Any.i:
-	* CDR.h:
-	* CDR.i:
-	* Connect.cpp:
-	* Connect.h:
-	* DynAnyC.h:
-	* DynAny_i.h:
-	* DynArray_i.h:
-	* DynEnum_i.h:
-	* DynSequence_i.h:
-	* DynStruct_i.h:
-	* DynUnion_i.h:
-	* Environment.h:
-	* Exception.cpp:
-	* IIOP_Object.h:
-	* Invocation.cpp:
-	* Invocation.i:
-	* Marshal.i:
-	* ORB.h:
-	* ORB_Core.h:
-	* ORB_Core.i:
-	* Object.i:
-	* POA_CORBA.h:
-	* Server_Request.h:
-	* Stub.h:
-	* TAO.h: Standardized the name of CORBA_Environment argument in
-	  functions.  This is an effort trying to simplify the use of TAO
-	  try macros.
+        * Active_Object_Map.h:
+        * Active_Object_Map.i:
+        * Any.h:
+        * Any.i:
+        * CDR.h:
+        * CDR.i:
+        * Connect.cpp:
+        * Connect.h:
+        * DynAnyC.h:
+        * DynAny_i.h:
+        * DynArray_i.h:
+        * DynEnum_i.h:
+        * DynSequence_i.h:
+        * DynStruct_i.h:
+        * DynUnion_i.h:
+        * Environment.h:
+        * Exception.cpp:
+        * IIOP_Object.h:
+        * Invocation.cpp:
+        * Invocation.i:
+        * Marshal.i:
+        * ORB.h:
+        * ORB_Core.h:
+        * ORB_Core.i:
+        * Object.i:
+        * POA_CORBA.h:
+        * Server_Request.h:
+        * Stub.h:
+        * TAO.h: Standardized the name of CORBA_Environment argument in
+          functions.  This is an effort trying to simplify the use of TAO
+          try macros.
 
-	* tao/try_macros.h: Removed TAO_THROW_ENV_RETURN_VOID.  It's
-	  identical to TAO_THROW_ENV.
-	  Changed to use TAO_CHECK_ENV_RETURN and
-	  TAO_CHECK_ENV_RETURN_VOID to define TAO_CHECK_RETURN and
-	  TAO_CHECK_RETURN_VOID.
+        * tao/try_macros.h: Removed TAO_THROW_ENV_RETURN_VOID.  It's
+          identical to TAO_THROW_ENV.
+          Changed to use TAO_CHECK_ENV_RETURN and
+          TAO_CHECK_ENV_RETURN_VOID to define TAO_CHECK_RETURN and
+          TAO_CHECK_RETURN_VOID.
 
-	* docs/exceptions.html: Added a section "In a nutshell" which
-	  covers 99% of the use case of TAO try macros.
+        * docs/exceptions.html: Added a section "In a nutshell" which
+          covers 99% of the use case of TAO try macros.
 
 Sun Jan 10 16:36:24 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Added the following to the Time Service.
+        Added the following to the Time Service.
 
-	* orbsvcs/Time_Service/README:
-	* orbsvcs/tests/Time/README:
+        * orbsvcs/Time_Service/README:
+        * orbsvcs/tests/Time/README:
 
 Sun Jan 10 15:36:44 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/Time_Service/Makefile: Added the following rule to make
-	sure the ImplRepo_Service is uptodate.
-	include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
+        * orbsvcs/Time_Service/Makefile: Added the following rule to make
+        sure the ImplRepo_Service is uptodate.
+        include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 
-	There would be no need for this once the files in the
-	ImplRepo_Service are moved to the proper directories.
+        There would be no need for this once the files in the
+        ImplRepo_Service are moved to the proper directories.
 
 Sun Jan 10 02:57:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/DSI/Database_i.cpp: Fixed template instantiation
- 	  problems and member re-ordereding problems.
+        * examples/POA/DSI/Database_i.cpp: Fixed template instantiation
+          problems and member re-ordereding problems.
 
 Sat Jan  9 22:50:35 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/Time_Service/Server_i.cpp : Added the Implementation
-	repository related functions. Made changes to incorporate the
-	additional functionality required by the IR.
+        * orbsvcs/Time_Service/Server_i.cpp : Added the Implementation
+        repository related functions. Made changes to incorporate the
+        additional functionality required by the IR.
 
-	* orbsvcs/Time_Service/Server_i.h : Addded member variables and
-	functions required by the IR.
+        * orbsvcs/Time_Service/Server_i.h : Addded member variables and
+        functions required by the IR.
 
-	The following files are required by the server. These files
-	would have to be removed from here once the IR stabilizes and
-	these files are put in a particular directory.
+        The following files are required by the server. These files
+        would have to be removed from here once the IR stabilizes and
+        these files are put in a particular directory.
 
-	* orbsvcs/Time_Service/IR_Helper.cpp
-	* orbsvcs/Time_Service/IR_Helper.h
-	* orbsvcs/Time_Service/implrepo.conf
+        * orbsvcs/Time_Service/IR_Helper.cpp
+        * orbsvcs/Time_Service/IR_Helper.h
+        * orbsvcs/Time_Service/implrepo.conf
 
-	* orbsvcs/Time_Service/Makefile : Changed the Makefile to link
-	in the IR_Helper and other objects required by the Implementation
-	Repository.
+        * orbsvcs/Time_Service/Makefile : Changed the Makefile to link
+        in the IR_Helper and other objects required by the Implementation
+        Repository.
 
 Sat Jan  9 22:06:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
-	  Changed to generate code using TAO_IN_ENV instead of _env.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+          Changed to generate code using TAO_IN_ENV instead of _env.
 
-	* orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
-	* orbsvcs/LifeCycle_Service/Life_Cycle_Service_i.cpp:
-	* orbsvcs/Trading_Service/Trading_Service.cpp:
-	* orbsvcs/orbsvcs/Channel_Clients_T.cpp:
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp:
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp:
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp:
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Time/TAO_TIO.cpp:
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
-	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
-	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_T.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
-	* orbsvcs/tests/Concurrency/CC_command.cpp:
-	* orbsvcs/tests/Concurrency/CC_naming_service.cpp:
-	* orbsvcs/tests/EC_Basic/EC_Basic.cpp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
-	* orbsvcs/tests/ImplRepo/IR_Helper.cpp:
-	* orbsvcs/tests/ImplRepo/airplane_i.cpp:
-	* orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
-	* orbsvcs/tests/Simple_Naming/client.cpp:
-	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
-	* orbsvcs/tests/Trading/Offer_Importer.cpp:
-	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
-	* orbsvcs/tests/Trading/Simple_Dynamic.cpp:
-	* tests/Param_Test/except.cpp:
-	* examples/Callback_Quoter/Consumer_Input_Handler.cpp:
-	* examples/Callback_Quoter/Notifier_i.cpp:
-	* examples/Quoter/Factory_Finder_i.cpp:
-	* examples/Quoter/Generic_Factory_i.cpp:
-	* examples/Quoter/Quoter_i.cpp:
-	* examples/Simple/bank/AccountManager_i.cpp:
-	* examples/Simple/grid/Grid_i.cpp:
-	* Any.h:
-	* CDR.h:
-	* Connect.h:
-	* CurrentC.h:
-	* CurrentS.cpp:
-	* DynAnyS.cpp:
-	* DynAny_i.cpp:
-	* DynArray_i.cpp:
-	* DynEnum_i.cpp:
-	* DynSequence_i.cpp:
-	* DynStruct_i.cpp:
-	* DynUnion_i.cpp:
-	* Exception.h:
-	* Forwarding_Servant.h:
-	* GIOP.h:
-	* IIOP_Interpreter.h:
-	* IIOP_ORB.h:
-	* IIOP_Object.h:
-	* Invocation.h:
-	* Marshal.h:
-	* NVList.h:
-	* ORB.cpp:
-	* ORB.h:
-	* Object.h:
-	* POA.h:
-	* POAC.h:
-	* POAS.cpp:
-	* POAS.h:
-	* POA_CORBA.h:
-	* PolicyC.h:
-	* PolicyS.cpp:
-	* Sequence.h:
-	* Sequence_T.h:
-	* Servant_Base.h:
-	* Server_Request.h:
-	* Stub.h:
-	* TAO.h:
-	* Typecode.h:
-	* corba.h:
-	* poa_T.h:
-	* varout.h: Replaced all occurances of <_env> with TAO_IN_ENV.
+        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/LifeCycle_Service/Life_Cycle_Service_i.cpp:
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+        * orbsvcs/orbsvcs/Channel_Clients_T.cpp:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp:
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_TIO.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.cpp:
+        * orbsvcs/tests/Concurrency/CC_naming_service.cpp:
+        * orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+        * orbsvcs/tests/ImplRepo/IR_Helper.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+        * orbsvcs/tests/Trading/Offer_Importer.cpp:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+        * orbsvcs/tests/Trading/Simple_Dynamic.cpp:
+        * tests/Param_Test/except.cpp:
+        * examples/Callback_Quoter/Consumer_Input_Handler.cpp:
+        * examples/Callback_Quoter/Notifier_i.cpp:
+        * examples/Quoter/Factory_Finder_i.cpp:
+        * examples/Quoter/Generic_Factory_i.cpp:
+        * examples/Quoter/Quoter_i.cpp:
+        * examples/Simple/bank/AccountManager_i.cpp:
+        * examples/Simple/grid/Grid_i.cpp:
+        * Any.h:
+        * CDR.h:
+        * Connect.h:
+        * CurrentC.h:
+        * CurrentS.cpp:
+        * DynAnyS.cpp:
+        * DynAny_i.cpp:
+        * DynArray_i.cpp:
+        * DynEnum_i.cpp:
+        * DynSequence_i.cpp:
+        * DynStruct_i.cpp:
+        * DynUnion_i.cpp:
+        * Exception.h:
+        * Forwarding_Servant.h:
+        * GIOP.h:
+        * IIOP_Interpreter.h:
+        * IIOP_ORB.h:
+        * IIOP_Object.h:
+        * Invocation.h:
+        * Marshal.h:
+        * NVList.h:
+        * ORB.cpp:
+        * ORB.h:
+        * Object.h:
+        * POA.h:
+        * POAC.h:
+        * POAS.cpp:
+        * POAS.h:
+        * POA_CORBA.h:
+        * PolicyC.h:
+        * PolicyS.cpp:
+        * Sequence.h:
+        * Sequence_T.h:
+        * Servant_Base.h:
+        * Server_Request.h:
+        * Stub.h:
+        * TAO.h:
+        * Typecode.h:
+        * corba.h:
+        * poa_T.h:
+        * varout.h: Replaced all occurances of <_env> with TAO_IN_ENV.
 
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp
-	  (connect_push_supplier): Changed to use TAO_IN_ENV.
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp
+          (connect_push_supplier): Changed to use TAO_IN_ENV.
 
-	* tao/try_macros.h: Added a new macro definition TAO_IN_ENV which
-	  maps to _env.  The purpose of adding this macro is to make the
-	  use of TAO try macros more readable.  From now on, we should
-	  always use TAO_IN_ENV to name the CORBA environment passed in
-	  from function arguments.  TAO_TRY_ENV should only be used within
-	  TAO_TRY block.
+        * tao/try_macros.h: Added a new macro definition TAO_IN_ENV which
+          maps to _env.  The purpose of adding this macro is to make the
+          use of TAO try macros more readable.  From now on, we should
+          always use TAO_IN_ENV to name the CORBA environment passed in
+          from function arguments.  TAO_TRY_ENV should only be used within
+          TAO_TRY block.
 
 Sat Jan  9 14:53:15 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp:
-	  dereferenced uses of _var with .in ()
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp:
+          dereferenced uses of _var with .in ()
 
 Fri Jan  8 18:06:11 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent:
-	  These changes are across all the files in this directory...
-	  1. prefixed each class name with TAO_CosEC_
-	  2. changed all member *_ptr to *_var, removed calls to <release>.
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
-	  1. <push> now uses an <EventSet> that does not own the buffer.
-	  2. ACE_NEW replaced with ACE_NEW_THROW.
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
-	  ACE_NEW replaced with ACE_NEW_THROW.
-	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.h:
-	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
-	  Changed EventChannel_i to TAO_CosEC_EventChannel_i.
+        * orbsvcs/orbsvcs/CosEvent:
+          These changes are across all the files in this directory...
+          1. prefixed each class name with TAO_CosEC_
+          2. changed all member *_ptr to *_var, removed calls to <release>.
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+          1. <push> now uses an <EventSet> that does not own the buffer.
+          2. ACE_NEW replaced with ACE_NEW_THROW.
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
+          ACE_NEW replaced with ACE_NEW_THROW.
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.h:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.h:
+          Changed EventChannel_i to TAO_CosEC_EventChannel_i.
 
 Fri Jan  8 15:05:08 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -263,55 +267,55 @@ Fri Jan  8 15:05:08 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
 Fri Jan  8 13:49:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp (run): Changed to
-	  use TAO_CATCHANY and TAO_CATCHALL.
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp (run): Changed to
+          use TAO_CATCHANY and TAO_CATCHALL.
 
 Fri Jan 08 13:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* orbsvcs/tests/Simulator/DOVEMIB/clnt.cpp: added .out () to
-	  TAO_String_Manager idl structure fields that are being passed to
+        * orbsvcs/tests/Simulator/DOVEMIB/clnt.cpp: added .out () to
+          TAO_String_Manager idl structure fields that are being passed to
           strcpy calls.
 
 Thu Jan  7 21:24:43 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp
-	  1. The parse_args method accepts Event and Source Ids from
-	     the command line.
-	  2. The scheduler has an option of being local or remote.
-	     (specifying remote does not work very well yet).
-	  3. added methods init_SupplierQOS  and init_ConsumerQOS.
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp
+          1. The parse_args method accepts Event and Source Ids from
+             the command line.
+          2. The scheduler has an option of being local or remote.
+             (specifying remote does not work very well yet).
+          3. added methods init_SupplierQOS  and init_ConsumerQOS.
 
-	created the CosEC_Multiple test, added all these files:
-	* orbsvcs/tests/CosEvent_Multiple.h
-	* orbsvcs/tests/CosEvent_Multiple.cpp
-	  Base class for test consumer and supplier implementation.
-	* orbsvcs/tests/CosECConsumer.h
-	* orbsvcs/tests/CosECConsumer.cpp
-	* orbsvcs/tests/CosECSupplier.h
-	* orbsvcs/tests/CosECSupplier.cpp
-	* orbsvcs/tests/Makefile
-	* orbsvcs/tests/README
+        created the CosEC_Multiple test, added all these files:
+        * orbsvcs/tests/CosEvent_Multiple.h
+        * orbsvcs/tests/CosEvent_Multiple.cpp
+          Base class for test consumer and supplier implementation.
+        * orbsvcs/tests/CosECConsumer.h
+        * orbsvcs/tests/CosECConsumer.cpp
+        * orbsvcs/tests/CosECSupplier.h
+        * orbsvcs/tests/CosECSupplier.cpp
+        * orbsvcs/tests/Makefile
+        * orbsvcs/tests/README
 
 Thu Jan  7 19:07:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/try_macros.h (TAO_CATCHANY):  Don't treat the macro
-	  differently in either cases.  Simply reuse TAO_CATCH to catch
-	  CORBA_Exception.
+        * tao/try_macros.h (TAO_CATCHANY):  Don't treat the macro
+          differently in either cases.  Simply reuse TAO_CATCH to catch
+          CORBA_Exception.
 
 Thu Jan 07 14:34:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/try_macros.h (TAO_CATCHANY,TAO_CATCHALL): Changed
-	  TAO_CATCHANY to catch CORBA_Exception or its subclasses only.
-	  Another macro TAO_CATCHALL was added to facilitate the use of
-	  "catch (...)".  TAO_CATCHALL translates to a no-op on platforms
-	  without native exception support.
+        * tao/try_macros.h (TAO_CATCHANY,TAO_CATCHALL): Changed
+          TAO_CATCHANY to catch CORBA_Exception or its subclasses only.
+          Another macro TAO_CATCHALL was added to facilitate the use of
+          "catch (...)".  TAO_CATCHALL translates to a no-op on platforms
+          without native exception support.
 
-	  This change is aim to unify the error handling behavior of TAO
-	  programs on platforms with or without native exceptions.  "catch
-	  (...)" is evil anyway.
+          This change is aim to unify the error handling behavior of TAO
+          programs on platforms with or without native exceptions.  "catch
+          (...)" is evil anyway.
 
-	* tao/Connect.cpp (handle_input): Changed to use TAO_CATCHANY and
-	  TAO_CATCHALL.
+        * tao/Connect.cpp (handle_input): Changed to use TAO_CATCHANY and
+          TAO_CATCHALL.
 
 Thu Jan 07 07:16:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
