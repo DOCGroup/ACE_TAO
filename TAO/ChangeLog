@@ -1,3 +1,12 @@
+Wed Nov 24 14:35:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Removed generation of all ACE and TAO file includes in the
+          skeleton source file if there is no non-local interface seen
+          in the IDL file. Thanks once again to Johnny Willemsen
+          <jwillemsen@remedy.nl> for making the suggestion.
+
 Wed Nov 24 13:44:00 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.h:

@@ -1623,6 +1623,13 @@ TAO_CodeGen::gen_stub_src_includes (void)
 void
 TAO_CodeGen::gen_skel_src_includes (void)
 {
+  // Only non-local interfaces generate anything in the skeleton.
+  if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                        idl_global->decls_seen_masks.non_local_iface_seen_))
+    {
+      return;
+    }
+    
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/Object_Adapter.h");
   this->gen_standard_include (this->server_skeletons_,
@@ -1651,8 +1658,6 @@ TAO_CodeGen::gen_skel_src_includes (void)
     {
       this->gen_arg_file_includes (this->server_skeletons_);
     }
-
-
 
   // The following header must always be included.
   this->gen_standard_include (this->server_skeletons_,
@@ -1686,9 +1691,6 @@ TAO_CodeGen::gen_skel_src_includes (void)
   // For Static_Allocator_Base
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Malloc_Allocator.h");
-  // To get ACE_UNUSED_ARGS
-//  this->gen_standard_include (this->server_skeletons_,
-//                              "ace/config-all.h");
 }
 
 void
