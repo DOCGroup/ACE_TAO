@@ -93,7 +93,7 @@ Peer_Handler<ROUTER, KEY>::svc (void)
 	  hb->wr_ptr (sizeof (long));
 	  if (this->router_task_->reply (hb) == -1)
 	    {
-	      cout << "Peer_Handler.svc : router_task->reply failed" << endl ;
+              ACE_DEBUG ((LM_DEBUG, "Peer_Handler.svc : router_task->reply failed\n"));
 	      return -1;
 	    }
        
