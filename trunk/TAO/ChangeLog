@@ -1,3 +1,10 @@
+Thu Jan  1 17:07:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/Secure_Inovcation/Foo_i.h:
+	* orbsvcs/tests/Security/Secure_Inovcation/server.cpp:
+	 
+	  Fixed a memory managemnt problem with servants. 
+
 Thu Jan  1 16:42:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/EC_MT_MCast/MCast.cpp:
