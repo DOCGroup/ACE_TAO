@@ -1,7 +1,8 @@
 // $Id$
 
-// IDL schema definition for Web server interface.
 module Web_Server
+// = TITLE
+// IDL schema definition for Web server interface.
 {
   typedef sequence<octet> Chunk_Type;
 

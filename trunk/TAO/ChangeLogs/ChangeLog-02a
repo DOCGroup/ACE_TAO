@@ -1,3 +1,7 @@
+Mon Jun 19 18:38:00 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Content_Server/AMI_Iterator: Made some minor formatting changes.
+
 Mon Jun 19 15:56:18 2000  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:

@@ -62,8 +62,9 @@ The example can be run as follows:
 
 This example can service multiple file requests.
 
+----------------------------------------
 
-Server output should look like the following:
+The server output should look like the following:
 
 $ ./server -ORBInitRef NameService=file:///tmp/ns.ior
 Bound <Iterator_Factory> to <IOR:010000002400000049444c3a57653625f5365727665722f4974657261746f725f466163746f72793a312e300001000000000000007c000000010102001400000076616c696e6f12722e6563652e7563692e65647500f39600001b00000014010f00525354bd9d4e39a6ac03000000000001000000010000000003000000000000000800000001000000004f4154010000001400000001ad85e4001000100000000000901010000000000004f41540400000001ac0000> in Name Service.
@@ -84,8 +85,9 @@ Sending chunk 5 at offset <32768> of size <6997>
 Notice that requests for chunks of data from two separate files occur
 in the above run.
 
+----------------------------------------
 
-Client output should look similar to:
+The client output should look similar to:
 
 $ ./client -ORBInitRef NameService=file:///tmp/ns.ior ~/foo.jpg ~/bar.jpg
 Wrote retrieved data to file </tmp/ace-file-nBqLM2>
