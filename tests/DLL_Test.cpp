@@ -87,7 +87,16 @@ main (int argc, char *argv[])
 		       dll.error ()),
                       -1);
 
-  TC f = (TC) dll.symbol ("get_hello");
+  // Just becos the ANSI C++ spec says you can no longer cast a void* to a
+  // function pointer. Doesnt allow:TC f = (TC) dll.symbol ("get_hello"); 
+  void * foo;
+
+  foo = dll.symbol ("get_hello");
+
+  // Cast the void* to long first.
+  long tmp = ACE_reinterpret_cast (long, foo);  
+
+  TC f = ACE_reinterpret_cast (Hello * (*)(void), tmp);
 
   if (f == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
