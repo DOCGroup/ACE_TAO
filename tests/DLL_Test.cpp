@@ -17,6 +17,7 @@
 // ============================================================================
 
 #define ACE_BUILD_SVC_DLL
+#define ACE_HAS_SVR4_DYNAMIC_LINKING
 
 #include "test_config.h" 
 #include "ace/DLL.h"
