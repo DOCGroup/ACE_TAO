@@ -1,3 +1,11 @@
+Thu Oct 12 00:07:36 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/MProfile.cpp:
+
+	  Fixed problem with double checked locking. Thanks to Marina
+	  for noting that.
+
+
 Wed Oct 11 23:12:03 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
