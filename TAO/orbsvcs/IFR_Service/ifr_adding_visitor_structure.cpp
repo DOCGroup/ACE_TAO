@@ -160,6 +160,39 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
 
       if (CORBA::is_nil (prev_def.in ()))
         {
+          CORBA::StructDef_var    struct_def;
+          CORBA::StructMemberSeq  dummyMembers( 0 );
+          dummyMembers.length( 0 );
+
+          CORBA::Container_ptr current_scope= CORBA::Container::_nil ();
+          if (this->is_nested_)
+            {
+              current_scope= be_global->holding_scope ();
+            }
+          else if (be_global->ifr_scopes ().top (current_scope) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
+                  ACE_TEXT ("visit_structure -")
+                  ACE_TEXT (" scope stack is empty\n")
+                ),
+                -1
+              );
+            }
+
+          // First create the named structure without any members
+          struct_def=
+            current_scope->create_struct (
+                node->repoID (),
+                node->local_name ()->get_string (),
+                node->version (),
+                dummyMembers
+                ACE_ENV_ARG_PARAMETER
+              );
+          ACE_TRY_CHECK;
+
+          // Then recurse into the real structure members (which corrupts ir_current_)
           if (this->visit_scope (node) == -1)
             {
               ACE_ERROR_RETURN ((
@@ -172,43 +205,9 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
               );
             }
 
-          if (this->is_nested_)
-            {
-              this->ir_current_ =
-                be_global->holding_scope ()->create_struct (
-                    node->repoID (),
-                    node->local_name ()->get_string (),
-                    node->version (),
-                    this->members_
-                    ACE_ENV_ARG_PARAMETER
-                  );
-            }
-          else
-            {
-              CORBA::Container_ptr current_scope =
-                CORBA::Container::_nil ();
-
-              if (be_global->ifr_scopes ().top (current_scope) != 0)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
-                      ACE_TEXT ("visit_structure -")
-                      ACE_TEXT (" scope stack is empty\n")
-                    ),
-                    -1
-                  );
-                }
-
-              this->ir_current_ =
-                current_scope->create_struct (
-                                   node->repoID (),
-                                   node->local_name ()->get_string (),
-                                   node->version (),
-                                   this->members_
-                                   ACE_ENV_ARG_PARAMETER
-                                );
-            }
+          // Correct ir_current_ and move the real structure members into the struct
+          this->ir_current_= CORBA::StructDef::_duplicate( struct_def );
+          struct_def->members( this->members_ );
 
           ACE_TRY_CHECK;
 
