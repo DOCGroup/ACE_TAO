@@ -37,9 +37,9 @@ Fri Oct 18 23:32:11 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	* examples/AMH/Sink_Server/Timer_Handler.cpp (handle_timeout):
 
 	  Changed the ResponseHandler to a _var instead of a _ptr. This
-	not only takes care of deleting the pointer in exceptional
-	circumstances but the code is also much cleaner.  Thanks to Ossama
-	Othman <ossama.ece.uci.edu> for the tip and code-review.
+ 	  not only takes care of deleting the pointer in exceptional
+ 	  circumstances but the code is also much cleaner.  Thanks to
+ 	  Ossama Othman <ossama.ece.uci.edu> for the tip and code-review.
 
 Fri Oct 18 22:23:53 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
