@@ -41,10 +41,165 @@ private:
 class ACE_Export ACE_ReactorEx_Handler_Repository
   // = TITLE
   //     Used to map <ACE_HANDLE>s onto the appropriate
-  //     <ACE_Event_Handler> *. 
+  //     <ACE_Event_Handler> * and other information. 
   // 
 {
+  friend class ACE_ReactorEx;
+
 public:
+
+  struct Common_Info
+    // = TITLE
+    //     This struct contains the necessary information for every
+    //     <Event_Handler> entry. The reason the event is not in this
+    //     structure is because we need to pass an event array into
+    //     WaitForMultipleObjects and therefore keeping the events
+    //     seperate makes sense.
+  {
+    int io_entry_;
+    // This indicates whether this entry is for I/O or for a regular
+    // event
+
+    ACE_Event_Handler *event_handler_;
+    // The assosiated <Event_Handler>
+
+    ACE_HANDLE io_handle_;
+    // The I/O handle related to the <Event_Handler>. 
+    // This entry is only valid if the <io_entry_> flag is true.
+    
+    long network_events_;
+    // This is the set of events that the <Event_Handler> is interested in
+    // This entry is only valid if the <io_entry_> flag is true.
+
+    int delete_event_;    
+    // This flag indicates that <ReactorEx> created the event on
+    // behalf of the user. Therefore we need to clean this up when the
+    // <Event_Handler> removes itself from <ReactorEx>.
+    // This entry is only valid if the <io_entry_> flag is true.    
+
+    Common_Info (void);
+    // Constructor used for initializing the structure
+    
+    void reset (void);
+    // Reset the state of the structure
+
+    void set (int io_entry,
+	      ACE_Event_Handler *event_handler,
+	      ACE_HANDLE io_handle,
+	      long network_events,
+	      int delete_event);
+    // Set the structure to these new values
+
+    void set (Common_Info &common_info);
+    // Set the structure to these new values
+  };
+  
+  struct Current_Info : public Common_Info
+    // = TITLE
+    //     This structure inherits from the common structure to add
+    //     information for current entries.
+  {
+    int delete_entry_;
+    // This is set when the entry needed to be deleted.
+    
+    ACE_Reactor_Mask close_masks_;
+    // These are the masks related to <handle_close> for the <Event_Handler>.
+    
+    int suspend_entry_;
+    // This is set when the entry needed to be suspended.
+
+    Current_Info (void);
+    // Default constructor
+
+    void reset (void);
+    // Reset the state of the structure
+
+    void set (int io_entry,
+	      ACE_Event_Handler *event_handler,
+	      ACE_HANDLE io_handle,
+	      long network_events,
+	      int delete_event,
+	      int delete_entry = 0,
+	      ACE_Reactor_Mask close_masks = 0,
+	      int suspend_entry = 0);
+    // Set the structure to these new values
+
+    void set (Common_Info &common_info,
+	      int delete_entry = 0,
+	      ACE_Reactor_Mask close_masks = 0,
+	      int suspend_entry = 0);
+    // Set the structure to these new values
+  };
+
+  struct To_Be_Added_Info : public Common_Info
+    // = TITLE
+    //     This structure inherits from the common structure to add
+    //     information for <to_be_added> entries.
+  {
+    ACE_HANDLE event_handle_;
+    // Handle for the event
+
+    To_Be_Added_Info (void);
+    // Default constructor
+
+    void reset (void);
+    // Reset the state of the structure
+
+    void set (ACE_HANDLE event_handle,
+	      int io_entry,
+	      ACE_Event_Handler *event_handler,
+	      ACE_HANDLE io_handle,
+	      long network_events,
+	      int delete_event);
+    // Set the structure to these new values    
+
+    void set (ACE_HANDLE event_handle,
+	      Common_Info &common_info);
+    // Set the structure to these new values    
+  };
+  
+  struct Suspended_Info : public Common_Info
+    // = TITLE
+    //     This structure inherits from the common structure to add
+    //     information for suspended entries.
+  {
+    ACE_HANDLE event_handle_;
+    // Handle for the event
+
+    int delete_entry_;
+    // This is set when the entry needed to be deleted.
+    
+    ACE_Reactor_Mask close_masks_;
+    // These are the masks related to <handle_close> for the <Event_Handler>.
+    
+    int resume_entry_;
+    // This is set when the entry needed to be resumed.
+
+    Suspended_Info (void);
+    // Constructor used for initializing the structure
+
+    void reset (void);
+    // Reset the state of the structure
+
+    void set (ACE_HANDLE event_handle,
+	      int io_entry,
+	      ACE_Event_Handler *event_handler,
+	      ACE_HANDLE io_handle,
+	      long network_events,
+	      int delete_event,
+	      int resume = 0,
+	      int delete_entry = 0,
+	      ACE_Reactor_Mask close_masks = 0);
+    // Set the structure to these new values    
+
+    void set (ACE_HANDLE event_handle,
+	      Common_Info &common_info,
+	      int resume = 0,
+	      int delete_entry = 0,
+	      ACE_Reactor_Mask close_masks = 0);
+    // Set the structure to these new values    
+  };
+
   ACE_ReactorEx_Handler_Repository (ACE_ReactorEx &reactorEx);
   // Constructor.
 
@@ -60,10 +215,23 @@ public:
   // = Search structure operations.
 
   int bind (ACE_HANDLE, ACE_Event_Handler *);
-  // Bind the <ACE_Event_Handler *> to the <ACE_HANDLE>.
+  // Bind the <ACE_Event_Handler *> to the <ACE_HANDLE>. This is for
+  // the simple event entry.
+
+  int bind_i (int io_entry,
+	      ACE_Event_Handler *event_handler,
+	      long network_events,
+	      ACE_HANDLE io_handle,
+	      ACE_HANDLE event_handle, 
+	      int delete_event);
+  // Insert I/O <Event_Handler> entry into the system. This method
+  // assumes that the lock are head *before* this method is invoked.
 
   int unbind (ACE_HANDLE, ACE_Reactor_Mask mask);
   // Remove the binding of <ACE_HANDLE> in accordance with the <mask>.
+
+  int unbind_i (ACE_HANDLE, ACE_Reactor_Mask mask, int &changes_required);
+  // Non-lock-grabbing version of <unbind>
 
   void unbind_all (void);
   // Remove all bindings of <ACE_HANDLE, ACE_Event_Handler> tuples.
@@ -78,10 +246,9 @@ public:
   // Maximum ACE_HANDLE value, plus 1.
 
   ACE_HANDLE *handles (void) const;
-  // Pointer to the beginning of the current array of <ACE_HANDLE>
-  // *'s.
+  // Pointer to the beginning of the current array of <ACE_HANDLE> *'s.
 
-  ACE_Event_Handler **event_handlers (void) const;
+  Current_Info *current_info (void) const;
   // Pointer to the beginning of the current array of
   // <ACE_Event_Handler> *'s.
 
@@ -94,53 +261,84 @@ public:
   int scheduled_for_deletion (int index) const;
   // Check to see if <index> has been scheduled for deletion
 
-  void dump (void) const;
-  // Dump the state of an object.
-
-private:
-  ACE_ReactorEx &reactorEx_;
-  // Reference to our <ReactorEx>.
+  int add_network_events_i (ACE_Reactor_Mask mask,
+			    ACE_HANDLE io_handle,
+			    long &new_mask,
+			    ACE_HANDLE &event_handle,
+			    int &delete_event);
+  // This method is used to calculate the network mask after a
+  // register request to <ReactorEx>. Note that because the
+  // <Event_Handler> may already be in the handler repository, we may
+  // have to find the old event and the old network events
   
+  long remove_network_events_i (long existing_masks,
+				ACE_Reactor_Mask to_be_removed_masks);
+  // This method is used to calculate the network mask left (if any)
+  // after a remove request to <ReactorEx>
+
+  int suspend_handler_i (ACE_HANDLE handle,
+			 int &changes_required);
+  // Temporarily suspend entry
+
+  int resume_handler_i (ACE_HANDLE handle,
+			int &changes_required);
+  // Resume suspended entry
+
   int handle_deletions (void);
-  // Add handles to the handle set
+  // Remove handles from the handle set
 
   int handle_additions (void);
-  // Remove handles from the handle set
+  // Add handles to the handle set
 
   int remove_handler_i (size_t index,
 			ACE_Reactor_Mask mask = 0);
   // Removes the <ACE_Event_Handler> at <index> from the table.
 
+  int remove_suspended_handler_i (size_t index,
+				  ACE_Reactor_Mask mask = 0);
+  // Removes the <ACE_Event_Handler> at <index> from the table.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+protected:
+  ACE_ReactorEx &reactorEx_;
+  // Reference to our <ReactorEx>.
+  
   size_t max_size_;
   // Maximum number of handles.
 
   size_t max_handlep1_;
-  // The highest currently active handle, plus 1.  Since this ranges
-  // between 0 and <max_size_> it also is a count of the number of
-  // active handles.
+  // A count of the number of active handles.
 
   ACE_HANDLE *current_handles_;
-  // Array of <ACE_HANDLEs> passed to <WaitForMultipleObjects>.
+  // Array of <ACE_HANDLEs> passed to <WaitForMultipleObjects>.  This
+  // is not part of the structure as the handle array needs to be
+  // passed directly to <WaitForMultipleObjects>.
 
-  ACE_Event_Handler **current_event_handlers_;
-  // Array of <ACE_Event_Handler> pointers that store the event
-  // handlers to dispatch when the corresponding <handles_[i]> entry
-  // becomes signaled.
+  Current_Info *current_info_;
+  // Array of current entries in the table
 
-  ACE_HANDLE *to_be_added_handles_;
-  // These handles are going to be added to the <current_set_>
+  To_Be_Added_Info *to_be_added_info_;
+  // Information for entries to be added 
 
-  ACE_Event_Handler **to_be_added_event_handlers_;
-  // Corresponding Event Handler to the above
+  Suspended_Info *current_suspended_info_;
+  // Currently suspended handles
+  
+  int suspended_handles_;
+  // Number of currently suspended handles
+  
+  int handles_to_be_suspended_;
+  // Number of records to be suspended
+  
+  int handles_to_be_resumed_;
+  // Number of records to be resumed
+
+  int handles_to_be_deleted_;
+  // Number of records to be deleted
 
   int handles_to_be_added_;
-  // A count of the number of records to be added
-  
-  int *to_be_deleted_set_;
-  // These are going to be deleted from the <current_handles_>
-  
-  int handles_to_be_deleted_;
-  // A count of the number of records to be deleted
+  // Number of records to be added
 };
 
 class ACE_Export ACE_ReactorEx_Notify : public ACE_Event_Handler
@@ -241,6 +439,7 @@ class ACE_Export ACE_ReactorEx
   //     semaphores, threads, etc.) and timer events.
 {
   friend class ACE_ReactorEx_Handler_Repository;
+  friend class ACE_ReactorEx_Test;
 public:
   enum 
   {
@@ -281,8 +480,8 @@ public:
   
   // = Event loop drivers.  
 
-  virtual int handle_events (ACE_Time_Value *max_wait_time = 0,
-			     int alertable = 0);
+  virtual int handle_events (ACE_Time_Value *max_wait_time = 0);
+  virtual int alertable_handle_events (ACE_Time_Value *max_wait_time = 0);
   // This event loop driver blocks for up to <max_wait_time> before
   // returning.  It will return earlier if timer events, I/O events,
   // or signal events occur.  Note that <max_wait_time> can be 0, in
@@ -295,45 +494,124 @@ public:
   // application wishes to handle events for some fixed amount of
   // time.
   // 
-  // WaitForMultipleObjectsEx> is used as the demultiplexing call
+  // <WaitForMultipleObjectsEx> is used as the demultiplexing call
   // 
   // Returns the total number of <ACE_Event_Handler>s that were
   // dispatched, 0 if the <max_wait_time> elapsed without dispatching
   // any handlers, or -1 if an error occurs.
+  //
+  // The only difference between <alertable_handle_events> and
+  // <handle_events> is that in the alertable case, TRUE is passed to
+  // <WaitForMultipleObjectsEx> for the <bAlertable> option.
 
-  virtual int handle_events (ACE_Time_Value &max_wait_time,
-			     int alertable = 0);
+  virtual int handle_events (ACE_Time_Value &max_wait_time);
+  virtual int alertable_handle_events (ACE_Time_Value &max_wait_time);
   // This method is just like the one above, except the
   // <max_wait_time> value is a reference and can therefore never be
   // NULL.
+  //
+  // The only difference between <alertable_handle_events> and
+  // <handle_events> is that in the alertable case, TRUE is passed to
+  // <WaitForMultipleObjectsEx> for the <bAlertable> option.
+
 
   // = Register and remove Handlers. 
 
   virtual int register_handler (ACE_Event_Handler *eh, 
-				ACE_HANDLE handle = ACE_INVALID_HANDLE);
-  // Register an <ACE_Event_Handler> <eh>.  If <handle> ==
-  // <ACE_INVALID_HANDLE> the <ACE_ReactorEx> will call the
-  // <get_handle> method of <eh> to extract the underlying I/O handle.
+				ACE_HANDLE event_handle = ACE_INVALID_HANDLE);
+  // Register an <ACE_Event_Handler> <eh>.  Since no Event Mask is
+  // passed through this interface, it is assumed that the <handle>
+  // being passed in is an event handle and when the event becomes
+  // signaled, <ReactorEx> will call handle_signal on <eh>.  If
+  // <handle> == <ACE_INVALID_HANDLE> the <ACE_ReactorEx> will call
+  // the <get_handle> method of <eh> to extract the underlying event
+  // handle.
  
+  virtual int register_handler (ACE_HANDLE event_handle,
+				ACE_HANDLE io_handle,
+				ACE_Event_Handler *eh, 
+				ACE_Reactor_Mask mask);
+  // Register an <ACE_Event_Handler> <eh>.  <mask> specifies the
+  // network events that the <eh> is interested in.  If <io_handle> ==
+  // <ACE_INVALID_HANDLE> the <ACE_ReactorEx> will call the
+  // <get_handle> method of <eh> to extract the underlying I/O
+  // handle. If the <event_handle> == <ACE_INVALID_HANDLE>, ReactorEx
+  // will create an event for associating it with the I/O handle. When
+  // the <event_handle> is signalled, the appropriate <handle_*>
+  // callback will be invoked on the <Event_Handler>
+
+  virtual int register_handler (ACE_HANDLE io_handle, 
+				ACE_Event_Handler *eh,
+				ACE_Reactor_Mask mask); 
+  // This is a simple version of the above <register_handler> method
+  // where the I/O handle is passed in and the event handle will
+  // always be created by <ReactorEx>
+
+  virtual int register_handler (ACE_Event_Handler *eh,
+				ACE_Reactor_Mask mask);
+  // This is a simple version of the above <register_handler> method
+  // where the I/O handle will always come from <get_handle> on the
+  // <Event_Handler> and the event handle will always be created by
+  // <ReactorEx>
+ 
+  virtual int register_handler (const ACE_Handle_Set &handles,
+				ACE_Event_Handler *eh,
+				ACE_Reactor_Mask mask); 
+  // Register <eh> with all the <handles> in the <Handle_Set>.
+
   virtual int remove_handler (ACE_Event_Handler *eh,
 			      ACE_Reactor_Mask mask = 0);
   // Removes <eh> from the <ACE_ReactorEx>.  Note that the
   // <ACE_ReactorEx> will call the <get_handle> method of <eh> to
-  // extract the underlying I/O handle.  If <mask> ==
+  // extract the underlying handle.  If <mask> ==
   // <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
-  // the <eh> is not invoked.
+  // the <eh> is not invoked. Note that the <handle> can either be the
+  // <event_handle> or the <io_handle>
 
   virtual int remove_handler (ACE_HANDLE handle, 
 			      ACE_Reactor_Mask mask = 0);
   // Removes <handle> from the <ACE_ReactorEx>.  If <mask> ==
   // <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
-  // the <eh> is not invoked.
+  // the <eh> is not invoked. Note that the <handle> can either be the
+  // <event_handle> or the <io_handle>
+  // 
+  // For the case of I/O entries, this removes the <mask> binding of
+  // <Event_Handler> whose handle is <handle> from <ReactorEx>.  If
+  // there are no more bindings for this <eh> then it is removed from
+  // the Reactor.  For simple event entries, mask is mostly ignored
+  // and the <Event_Handler> is always removed from <ReactorEx> =
 
-  // Removes the <mask> bind of <Event_Handler> whose handle is
-  // <handle> from the Reactor.  If there are no more bindings for
-  // this <eh> then it is removed from the Reactor.
+  virtual int remove_handler (const ACE_Handle_Set &handle_set,
+			      ACE_Reactor_Mask);
+  // Removes all the <mask> bindings for handles in the <handle_set>
+  // bind of <Event_Handler>.  If there are no more bindings for any
+  // of these handlers then they are removed from ReactorEx.
 
-  // = Timer management. 
+  virtual int suspend_handler (ACE_Event_Handler *eh);
+  // Suspend <eh> temporarily. Use <eh->get_handle()> to get the handle.
+
+  virtual int suspend_handler (ACE_HANDLE handle);
+  // Suspend <handle> temporarily. 
+
+  virtual int suspend_handler (const ACE_Handle_Set &handles);
+  // Suspend all <handles> in handle set temporarily. 
+
+  virtual int suspend_all (void);
+  // Suspend all <handles> temporarily. 
+
+  virtual int resume_handler (ACE_Event_Handler *eh);
+  // Resume <eh>. Use <eh->get_handle()> to get the handle.
+
+  virtual int resume_handler (ACE_HANDLE handle);
+  // Resume <handle>. 
+
+  virtual int resume_handler (const ACE_Handle_Set &handles);
+  // Resume all <handles> in handle set. 
+
+  virtual int resume_all (void);
+  // Resume all <handles>. 
+
+  // Timer management.
 
   virtual int schedule_timer (ACE_Event_Handler *eh,
 			      const void *arg,
@@ -353,11 +631,14 @@ public:
   // timer.  Returns -1 on failure (which is guaranteed never to be a
   // valid <timer_id>.
 
-  virtual int cancel_timer (ACE_Event_Handler *event_handler);
+  virtual int cancel_timer (ACE_Event_Handler *event_handler,
+			    int dont_call_handle_close = 1);
   // Cancel all Event_Handlers that match the address of
   // <event_handler>.  Returns number of handler's cancelled.
 
-  virtual int cancel_timer (int timer_id, const void **arg = 0);
+  virtual int cancel_timer (int timer_id, 
+			    const void **arg = 0,
+			    int dont_call_handle_close = 1);
   // Cancel the single Event_Handler that matches the <timer_id> value
   // (which was returned from the schedule method).  If arg is
   // non-NULL then it will be set to point to the ``magic cookie''
@@ -395,10 +676,10 @@ public:
   // notify queue before breaking out of its
   // <ACE_Message_Queue::dequeue> loop.
 
-  virtual ACE_thread_t owner (void);
+  virtual int owner (ACE_thread_t *owner);
   // Return the ID of the "owner" thread.
 
-  virtual void owner (ACE_thread_t new_owner);
+  virtual int owner (ACE_thread_t new_owner, ACE_thread_t *old_owner = 0);
   // Transfers ownership of the ReactorEx to the <new_owner>. The
   // transfer will not complete until all threads are ready (just like
   // the handle set).
@@ -414,6 +695,16 @@ public:
   // Dump the state of an object.
 
 protected:
+  virtual int register_handler_i (ACE_HANDLE event_handle,
+				  ACE_HANDLE io_handle,
+				  ACE_Event_Handler *event_handler,
+				  ACE_Reactor_Mask mask);
+  // Registration workhorse
+
+  virtual int event_handling (ACE_Time_Value *max_wait_time = 0,
+			      int alertable = 0);
+  // Event handling workhorse
+
   virtual ACE_thread_t owner_i (void);
   // Return the ID of the "owner" thread. Does not do any locking.
 
@@ -428,6 +719,10 @@ protected:
   virtual int dispatch (int wait_status);
   // Dispatches the timers and I/O handlers.
 
+  int safe_dispatch (int wait_status);
+  // Protect against structured exceptions caused by user code when
+  // dispatching handles
+
   virtual int dispatch_handles (size_t index);
   // Dispatches any active handles from handles_[<index>] to
   // handles_[active_handles_] using <WaitForMultipleObjects> to poll
@@ -437,6 +732,21 @@ protected:
   // Dispatches a single handler.  Returns 0 on success, -1 if the
   // handler was removed.
 
+  virtual int simple_dispatch_handler (int index,
+				       ACE_HANDLE event_handle);
+  // Dispatches a single handler.  Returns 0 on success, -1 if the
+  // handler was removed.
+
+  virtual int complex_dispatch_handler (int index,
+					ACE_HANDLE event_handle);
+  // Dispatches a single handler.  Returns 0 on success, -1 if the
+  // handler was removed.
+
+  virtual int upcall (ACE_Event_Handler *event_handler,
+		      ACE_HANDLE io_handle, 
+		      ACE_HANDLE event_handle, 
+		      long interested_events);
+  
   virtual int calculate_timeout (ACE_Time_Value *time);
   // Used to caluculate the next timeout
 

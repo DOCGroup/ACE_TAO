@@ -58,9 +58,12 @@ public:
     | EXCEPT_MASK
 #endif /* ACE_WIN32 */
     ,
-    TIMER_MASK = 0x12,
-    ALL_EVENTS_MASK = READ_MASK | WRITE_MASK | EXCEPT_MASK | ACCEPT_MASK,
-    RWE_MASK = ALL_EVENTS_MASK,
+    TIMER_MASK = 0x10,
+    QOS_MASK = 0x20,
+    GROUP_QOS_MASK = 0x40,
+    CLOSE_MASK = 0x80,
+    ALL_EVENTS_MASK = READ_MASK | WRITE_MASK | EXCEPT_MASK | ACCEPT_MASK | QOS_MASK | GROUP_QOS_MASK | CLOSE_MASK,
+    RWE_MASK = READ_MASK | WRITE_MASK | EXCEPT_MASK,
     DONT_CALL = 0x100
   };
 
@@ -102,6 +105,9 @@ public:
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Called when object is signaled by OS (either via UNIX signals or
   // when a Win32 object becomes signaled).
+
+  virtual int handle_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
+  virtual int handle_group_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
 
   // = Accessors to set/get the various event demultiplexors.
   virtual void reactor (ACE_Reactor *reactor);

@@ -435,7 +435,7 @@ class ACE_Export ACE_Process_Mutex
   //     processes).
 {
 public:
-  ACE_Process_Mutex (LPCTSTR name = ACE_DEFAULT_MUTEX, 
+  ACE_Process_Mutex (LPCTSTR name = 0, 
 		     void *arg = 0);
   // Create a Process_Mutex, passing in the optional <name>.
 
@@ -477,9 +477,9 @@ public:
   // Declare the dynamic allocation hooks.
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
-  ACE_Mutex lock_;
+  ACE_Mutex *lock_;
 #else
-  ACE_SV_Semaphore_Complex lock_;
+  ACE_SV_Semaphore_Complex *lock_;
   // We need this to get the right semantics...
 #endif /* ACE_WIN32 */
 };
@@ -489,7 +489,7 @@ class ACE_Export ACE_RW_Process_Mutex : public ACE_Process_Mutex
   //     Wrapper for readers/writer locks that exist across processes.
 {
 public:
-  ACE_RW_Process_Mutex (LPCTSTR name = ACE_DEFAULT_MUTEX,
+  ACE_RW_Process_Mutex (LPCTSTR name = 0,
 			void *arg = 0);
 
   void dump (void) const;
