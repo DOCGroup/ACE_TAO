@@ -4,13 +4,15 @@
 
 NAME = Time_Date
 
+TARGET = $(BINDIR)\$(NAME).dll
+
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 
 OBJFILES = \
 	$(OBJDIR)\Time_DateS.obj \
 	$(OBJDIR)\Time_Date.obj \
 	$(OBJDIR)\Time_Date_i.obj \
-	$(OBJDIR)\Time_DateC.obj 
+	$(OBJDIR)\Time_DateC.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
@@ -26,7 +28,7 @@ LIBFILES = \
 	$(TAO_COSNAMING_LIB) \
 	$(TAO_SVCUTILS_LIB) \
 	$(TAO_IORTABLE_LIB) \
-	$(TAO_PORTABLESERVER_LIB) 
+	$(TAO_PORTABLESERVER_LIB)
 
 IDLFILES = \
         $(IDLDIR)\Time_Date.idl
@@ -43,3 +45,4 @@ IDLDIR = .
 
 $(IDLDIR)\Time_DateC.cpp $(IDLDIR)\Time_DateS.cpp: $(IDLDIR)\Time_Date.idl
 	$(TAO_IDL) $**
+
