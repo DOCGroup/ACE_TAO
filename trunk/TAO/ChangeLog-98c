@@ -1,3 +1,25 @@
+Mon Nov 09 18:12:48 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/RtecScheduler.idl
+          orbsvcs/orbsvcs/Runtime_Scheduler.{cpp, h}
+          orbsvcs/orbsvcs/Scheduler_Factory.{cpp, h}
+          orbsvcs/orbsvcs/Sched/Config_Scheduler.{cpp, h}
+          orbsvcs/orbsvcs/Sched/DynSched.{cpp, h}
+          orbsvcs/orbsvcs/Sched/SchedEntry.{cpp, h, i}
+          orbsvcs/orbsvcs/Sched/Scheduler.h
+          orbsvcs/orbsvcs/Sched/Scheduler_Generic.{cpp, h}
+          orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{cpp, h}:
+          Implemented anomaly recording in the strategized
+	  scheduler so all warning and error level scheduling anomalies 
+	  can be propagated to generated runtime header file without
+	  halting the scheduler except for a fatal anomaly.
+
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.{cpp, dsw}
+          orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.{cpp, dsp}
+          orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies_Runtime.h
+          orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.h:
+	  modified tests to validate anomaly logging and scheduler.
+
 Mon Nov 09 14:12:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/client.cpp (init): 
