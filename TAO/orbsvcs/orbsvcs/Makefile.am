@@ -3773,7 +3773,6 @@ nobase_include_HEADERS += \
   FaultTolerance/FT_Invocation_Endpoint_Selectors.h \
   FaultTolerance/FT_Service_Callbacks.h \
   FaultTolerance/FT_ClientPolicy_i.inl \
-  FaultTolerance/FT_Invocation_Endpoint_Selectors.inl \
   FaultTolerance/FT_Service_Callbacks.i
 
 endif !BUILD_MINIMUM_CORBA
