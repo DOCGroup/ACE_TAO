@@ -286,12 +286,9 @@ main (int argc, char **argv)
                                                     ACE_TRY_ENV);
               ACE_TRY_CHECK;
 
-              if (TAO_debug_level > 0)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              "client: Iteration %d @ %T\n",
-                              i));
-                }
+              ACE_DEBUG ((LM_DEBUG,
+                          "client: Iteration %d @ %T\n",
+                          i));
 
               // Invoke the oneway method.
               test_object->method (i,
@@ -306,12 +303,9 @@ main (int argc, char **argv)
             }
           else
             {
-              if (TAO_debug_level > 0)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              "client: Iteration %d @ %T\n",
-                              i));
-                }
+              ACE_DEBUG ((LM_DEBUG,
+                          "client: Iteration %d @ %T\n",
+                          i));
 
               // Invoke the oneway method.
               test_object->method (i,

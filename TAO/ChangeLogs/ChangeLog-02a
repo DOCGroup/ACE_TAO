@@ -1,3 +1,29 @@
+Tue May 30 22:47:16 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Buffered_Oneways/client.cpp
+	* examples/Buffered_Oneways/test_i.cpp
+	* examples/POA/Default_Servant/server.cpp
+	* tests/POA/Identity/Identity.cpp
+	* tests/Timed_Buffered_Oneways/client.cpp
+	* tests/Timed_Buffered_Oneways/test_i.cpp
+
+	  Using <TAO_debug_level> to control the application level
+	  debugging output is not a good idea since turning on
+	  <TAO_debug_level> results in the TAO library also producing
+	  unnecessary debugging output.
+
+	  As far as the auto compile output being too noisy is concerned,
+	  note that the auto compile output is immaterial in determining
+	  the success of an execution.  Execution success is determined by
+	  a script that looks for process crashes, exceptions, etc.
+	  Actually it is useful to have the execution output since
+	  execution might be OS/compiler/host-load specific which might be
+	  hard to reproduce specially for MT programs.
+
+	  Owners of other tests and examples may want to revert Carlos's
+	  changes if application level debugging output is important to
+	  them.
+
 Tue May 30 20:58:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
@@ -15,7 +41,7 @@ Tue May 30 20:58:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  type, else there would have been a compile-time
 	  error. And the Any extractor checks for typecode
 	  equivalency before proceeding with the extration.
-	  Thanks to Francois Bernier <fbernier@gel.ulaval.ca> 
+	  Thanks to Francois Bernier <fbernier@gel.ulaval.ca>
 	  for pointing out this use case.
 
 Tue May 30 11:14:51 2000  Chad Elliott  <elliott_c@ociweb.com>
