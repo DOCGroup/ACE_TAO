@@ -9076,7 +9076,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   const wchar_t *symbolname = sname;
 #elif defined (ACE_HAS_CHARPTR_DL)
   char *symbolname = ACE_const_cast (char *, sname);
-#elif !defined (ACE_WIN32) && !defined (ACE_USES_WCHAR)
+#elif defined (ACE_WIN32) && !defined (ACE_USES_WCHAR)
   const char *symbolname = sname;
 #endif /* ACE_HAS_CHARPTR_DL */
 
