@@ -40,7 +40,7 @@ include $(TAO_ROOT)/taoconfig.mk
 
 LDFLAGS += -L$(TAO_ROOT)/tao
 
-IFR_Test: $(addprefix $(VDIR),$(IDL3_TEST_OBJS))
+IDL_Test: $(addprefix $(VDIR),$(IDL3_TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
