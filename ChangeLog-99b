@@ -1,3 +1,8 @@
+Wed Jun 30 15:16:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Future_Set_Test.cpp: Added missing template instantiation
+	  for ACE_Hash_Map_Reverse_Iterator_Ex.
+
 Wed Jun 30 12:09:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_bcc.ide:
