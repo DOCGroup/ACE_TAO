@@ -1406,7 +1406,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
         if (ACE_BIT_ENABLED (revents, POLLOUT))
 #endif /* ACE_HAS_EVENT_POLL */
           {
-            int status =
+            const int status =
               this->upcall (eh, &ACE_Event_Handler::handle_output, handle);
 
             if (status < 0)
@@ -1427,7 +1427,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
         if (ACE_BIT_ENABLED (revents, POLLPRI))
 #endif /* ACE_HAS_EVENT_POLL */
           {
-            int status =
+            const int status =
               this->upcall (eh, &ACE_Event_Handler::handle_exception, handle);
 
             if (status < 0)
@@ -1448,7 +1448,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
         if (ACE_BIT_ENABLED (revents, POLLIN))
 #endif /* ACE_HAS_EVENT_POLL */
           {
-            int status =
+            const int status =
               this->upcall (eh, &ACE_Event_Handler::handle_input, handle);
 
             if (status < 0)
@@ -1539,36 +1539,49 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
   ACE_TRACE ("ACE_Dev_Poll_Reactor::register_handler_i");
 
   if (handle == ACE_INVALID_HANDLE
-      || mask == ACE_Event_Handler::NULL_MASK
-      || this->handler_rep_.find (handle) != 0)
+      || mask == ACE_Event_Handler::NULL_MASK)
     {
       errno = EINVAL;
       return -1;
     }
 
-  // Add the event handler to the repository.
-  if (this->handler_rep_.bind (handle, event_handler, mask) != 0)
-    return -1;
+ if (this->handler_rep_.find (handle) == 0)
+   {
+     // Handler not present in the repository.  Bind it.
+     if (this->handler_rep_.bind (handle, event_handler, mask) != 0)
+       return -1;
 
 #if defined (ACE_HAS_EVENT_POLL)
 
-  struct epoll_event epev;
-  int op = 0;
-  int status = 0;
+     struct epoll_event epev;
 
-  op           = EPOLL_CTL_ADD;
-  epev.events  = this->reactor_mask_to_poll_event (mask);
-  epev.data.fd = handle;
+     static const int op = EPOLL_CTL_ADD;
 
-  status = ::epoll_ctl (this->poll_fd_, op, handle, &epev);
+     epev.events  = this->reactor_mask_to_poll_event (mask);
+     epev.data.fd = handle;
 
-  if (status == -1)
-    {
-      (void) this->handler_rep_.unbind (handle);
-      return -1;
-    }
+     if (::epoll_ctl (this->poll_fd_, op, handle, &epev) == -1)
+       {
+         (void) this->handler_rep_.unbind (handle);
+         return -1;
+       }
 
-#else
+#endif /* ACE_HAS_EVENT_POLL */
+   }
+ else
+   {
+     // Handler is already present in the repository, so register it
+     // again, possibly for different event.  Add new mask to the
+     // current one.
+     if (this->mask_ops_i (handle, mask, ACE_Reactor::ADD_MASK) == -1)
+       {
+         (void) this->handler_rep_.unbind (handle);
+         return -1;
+       }
+   }
+
+#ifndef  ACE_HAS_EVENT_POLL
+
   struct pollfd pfd;
 
   pfd.fd      = handle;
@@ -1859,20 +1872,23 @@ ACE_Dev_Poll_Reactor::suspend_handler_i (ACE_HANDLE handle)
   if (this->handler_rep_.suspended (handle))
     return 0;  // Already suspended.  @@ Should this be an error?
 
+  // Remove the handle from the "interest set."
+  //
+  // Note that the associated event handler is still in the handler
+  // repository, but no events will be polled on the given handle thus
+  // no event will be dispatched to the event handler.
+
 #if defined (ACE_HAS_EVENT_POLL)
 
   struct epoll_event epev;
-  int op     = 0,
-      status = 0;
 
-  op           = EPOLL_CTL_DEL;
+  static const int op = EPOLL_CTL_DEL;
+
   epev.events  = 0;
   epev.data.fd = handle;
 
-  status = ::epoll_ctl (this->poll_fd_, op, handle, &epev);
-
-  if(status == -1)
-   return -1;
+  if (::epoll_ctl (this->poll_fd_, op, handle, &epev) == -1)
+    return -1;
 
 #else
 
@@ -1882,11 +1898,6 @@ ACE_Dev_Poll_Reactor::suspend_handler_i (ACE_HANDLE handle)
   pfd[0].events  = POLLREMOVE;
   pfd[0].revents = 0;
 
-  // Remove the handle from the "interest set."
-  //
-  // Note that the associated event handler is still in the handler
-  // repository, but no events will be polled on the given handle thus
-  // no event will be dispatched to the event handler.
   if (ACE_OS::write (this->poll_fd_, pfd, sizeof (pfd)) != sizeof (pfd))
     return -1;
 
@@ -1973,19 +1984,21 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
   if (mask == ACE_Event_Handler::NULL_MASK)
     return -1;
 
+  // Place the handle back in to the "interest set."
+  //
+  // Events for the given handle will once again be polled.
+
 #if defined (ACE_HAS_EVENT_POLL)
 
   struct epoll_event epev;
-  int op     = 0,
-      status = 0;
 
-  op           = EPOLL_CTL_ADD;
+  static const int op = EPOLL_CTL_ADD;
+
   epev.events  = this->reactor_mask_to_poll_event (mask);
   epev.data.fd = handle;
 
-  status = ::epoll_ctl (this->poll_fd_, op, handle, &epev);
-  if(status == -1)
-   return -1;
+  if (::epoll_ctl (this->poll_fd_, op, handle, &epev) == -1)
+    return -1;
 
 #else
 
@@ -1995,9 +2008,6 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
   pfd[0].events  = this->reactor_mask_to_poll_event (mask);
   pfd[0].revents = 0;
 
-  // Place the handle back in to the "interest set."
-  //
-  // Events for the given handle will once again be polled.
   if (ACE_OS::write (this->poll_fd_, pfd, sizeof (pfd)) != sizeof (pfd))
     return -1;
 
@@ -2417,27 +2427,25 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
 #elif defined (ACE_HAS_EVENT_POLL)
 
       struct epoll_event epev;
-      int op     = 0,
-          status = 0;
+
+      int op;
 
       // ACE_Event_Handler::NULL_MASK ???
-      if(new_mask == 0)
+      if (new_mask == 0)
         {
-          op           = EPOLL_CTL_DEL;
-          epev.events  = 0;
-          epev.data.fd = handle;
+          op          = EPOLL_CTL_DEL;
+          epev.events = 0;
         }
       else
         {
-          op           = EPOLL_CTL_MOD;
-          epev.events  = events;
-          epev.data.fd = handle;
+          op          = EPOLL_CTL_MOD;
+          epev.events = events;
         }
 
-      status = ::epoll_ctl (this->poll_fd_, op, handle, &epev);
+      epev.data.fd = handle;
 
-      if(status == -1)
-       return -1;
+      if (::epoll_ctl (this->poll_fd_, op, handle, &epev) == -1)
+        return -1;
 
 #else
       pollfd pfd[1];
