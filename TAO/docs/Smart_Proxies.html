@@ -339,9 +339,16 @@ explicitly had to call the constructor of the base class of the other
 proxy. To get over this issue, implementation inheritance was applied
 by <a href="mailto:brian.wallis@ot.com.au">Brian Wallis</a> where
 there is a higher level Smart_Proxy_Base which stores the
-<pre> <base_proxy_> </pre> member. This implementation was influenced
+<CODE> base_proxy_ </CODE> member. This implementation was influenced
 by a similar implementation in Orbix. Thanks to Brian Wallis for this
 wonderful contribution to Smart Proxies in TAO.
+
+<p>This design was modified slightly and now every interface smart
+proxy base class holds a <CODE> proxy_ </CODE> member which is the
+narrowed version of the <CODE> base_proxy_ </CODE>. This way every call
+neednt have to go through the narrowing process as the
+<CODE>base_proxy_</CODE> is stored as a CORBA_Object_var while we need
+the interface pointer to make the desired invocations.
 
 <Hr><P>
 <h3><a name="Implementation Issues">Implementation Issues</a></h3>
@@ -358,9 +365,16 @@ many interfaces?
 TAO_Smart_Proxy_Base (every default smart proxy is for an interface) and
 then have a new smart proxy inheriting from the previously created
 smart proxies. But remember: the SmartProxyFactory should create the
-final smart proxy thru its create_proxy () method.
-</UL>
+final smart proxy thru its create_proxy () method.</p>
 
+<LI> Do I need to create a Smart Proxy Factory every time I use a
+smart proxy?
+<p> Yes, you do. Once the Smart Proxy Factory is created, it is
+automatically used to create the proxy and thus a smart proxy is
+obtained instead of the default one. When the smart proxy makes its
+first invocation, this factory is unregistered. So all the proxies
+created from then on will be the default one.     
+</UL> 
 <Hr><P>
 <h3><a name="Acknowledgements">Acknowledgements</a></h3>
 
@@ -381,7 +395,7 @@ contributing the implementation inheritance feature.
 <Hr><P>
 <p><h3>Last Update</h3></3>
 
-<p> Date: 21thSept99</p>
+<p> Date: 31Mar2000</p>
 <p> By: <a href="mailto:kirthika@cs.wustl.edu">Kirthika Parameswaran</a></p>
 
 </BODY>
