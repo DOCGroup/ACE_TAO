@@ -1,3 +1,21 @@
+Thu Dec  3 11:59:23 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/ast/ast_operation.cpp:
+
+	  Ensured that a oneway operation can never have a "raises"
+	  clause. Thanks to Tom Ziomek (tomz@cc.comm.mot.com) for
+	  reporting this. 
+
+	* TAO_IDL/util/utl_error.cpp:
+
+	  Improved the error message for EIDL_ILLEGAL_RAISES error code.
+
+	* TAO_IDL/fe/(idl.yy, y.tab.cpp, y.tab.h}:
+
+	  Ensured that discriminant of type octet inside a union
+	  declaration is flagged as an error. The OMG spec does not allow
+	  discriminants of type octets.
+
 Thu Dec  3 10:31:12 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp
