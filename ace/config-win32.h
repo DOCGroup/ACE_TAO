@@ -35,12 +35,6 @@
   #endif
 #endif
 
-// Make sure we don't use recvmsg and sendmsg on Win95
-#if (ACE_HAS_WINNT4 == 0)
-  #define ACE_LACKS_RECVMSG
-  #define ACE_LACKS_SENDMSG
-#endif /* ACE_HAS_WINNT4 */
-
 // Define ACE_HAS_MFC to 1, if you want ACE to use CWinThread. This should
 // be defined, if your application uses MFC.
 //  Setting applies to  : building ACE
