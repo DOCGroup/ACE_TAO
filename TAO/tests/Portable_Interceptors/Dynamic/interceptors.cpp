@@ -228,7 +228,7 @@ Echo_Server_Request_Interceptor::send_reply (
   if (ACE_OS::strcmp (ri->operation (), "calculate") == 0)
     {
       Dynamic::ParameterList paramlist = *(ri->arguments ());
-      CORBA::Long param1, param2, result;
+      CORBA::Long param1, param2, result = 0;
       (paramlist)[0].argument >>= param1;
       (paramlist)[1].argument >>= param2;
 
@@ -257,7 +257,7 @@ Echo_Server_Request_Interceptor::send_exception (
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Client_Request_Interceptor::received_exception "
+              "Echo_Server_Request_Interceptor::send_exception "
               "from \"%s\"\n",
               operation.in ()));
 
