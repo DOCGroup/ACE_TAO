@@ -14,7 +14,7 @@
 #include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/Module_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Basic_Factory.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_ConsumerAdmin.h"
 #include "ECT_Throughput.h"
 
@@ -23,6 +23,9 @@ ACE_RCSID(EC_Throughput, ECT_Throughput, "$Id$")
 int
 main (int argc, char *argv [])
 {
+  ACE_Service_Config::static_svcs ()->
+    insert (&ace_svc_desc_TAO_EC_Default_Factory);
+
   ECT_Throughput driver;
   return driver.run (argc, argv);
 }
@@ -88,7 +91,7 @@ ECT_Throughput::run (int argc, char* argv[])
                   "  burst count = <%d>\n"
                   "  burst size = <%d>\n"
                   "  event size = <%d>\n"
-                  "  burst size = <%d>\n"
+                  "  burst pause = <%d>\n"
                   "  consumer type start = <%d>\n"
                   "  consumer type count = <%d>\n"
                   "  consumer type shift = <%d>\n"
@@ -200,7 +203,6 @@ ECT_Throughput::run (int argc, char* argv[])
       // The factories must be destroyed *after* the EC, hence the
       // auto_ptr declarations must go first....
       auto_ptr<TAO_Module_Factory> module_factory;
-      auto_ptr<TAO_EC_Factory> ec_factory;
 
       auto_ptr<POA_RtecEventChannelAdmin::EventChannel> ec_impl;
       if (this->new_ec_ == 0)
@@ -227,14 +229,14 @@ ECT_Throughput::run (int argc, char* argv[])
         }
       else
         {
-          auto_ptr<TAO_EC_Factory> auto_ec_factory (new TAO_EC_Basic_Factory (root_poa.in ()));
-          ec_factory = auto_ec_factory;
-
           TAO_EC_Event_Channel *ec =
-            new TAO_EC_Event_Channel (ec_factory.get ());
+            new TAO_EC_Event_Channel;
+          ec->supplier_poa (root_poa.in ());
+          ec->consumer_poa (root_poa.in ());
+          ec->consumer_admin ()->busy_hwm (this->ec_concurrency_hwm_);
+
           ec->activate (TAO_TRY_ENV);
           TAO_CHECK_ENV;
-          ec->consumer_admin ()->busy_hwm (this->ec_concurrency_hwm_);
 
           auto_ptr<POA_RtecEventChannelAdmin::EventChannel> auto_ec_impl (ec);
           ec_impl = auto_ec_impl;
@@ -564,6 +566,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       "[ORB options] "
+                      "-r -d -x "
                       "-c <n_consumers> "
                       "-s <n_suppliers> "
                       "-u <burst count> "

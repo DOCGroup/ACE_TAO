@@ -49,8 +49,12 @@ class TAO_ORBSVCS_Export TAO_EC_Event_Channel : public POA_RtecEventChannelAdmin
   //   interface to the EC_Factory.
   //
 public:
-  TAO_EC_Event_Channel (TAO_EC_Factory* factory);
+  TAO_EC_Event_Channel (TAO_EC_Factory* factory = 0,
+                        int own_factory = 0);
   // constructor
+  // If <own_factory> is not 0 it assumes ownership of the factory.
+  // If the factory is <nil> it uses the Service_Configurator to load
+  // the Factory, if not found it uses TAO_EC_Default_Resource_Factory 
 
   virtual ~TAO_EC_Event_Channel (void);
   // destructor
@@ -95,6 +99,8 @@ public:
 
   PortableServer::POA_ptr supplier_poa (CORBA::Environment&);
   PortableServer::POA_ptr consumer_poa (CORBA::Environment&);
+  int supplier_poa (PortableServer::POA_ptr);
+  int consumer_poa (PortableServer::POA_ptr);
   // Access the supplier and consumer POAs from the factory.
 
   ACE_Lock* create_consumer_lock (void);
@@ -150,6 +156,9 @@ private:
   // This is the abstract factory that creates all the objects that
   // compose an event channel, the event channel simply acts as a
   // Mediator among them.
+
+  int own_factory_;
+  // Flag that indicates if we own the factory.
 
   TAO_EC_Dispatching *dispatching_;
   // The dispatching "module"

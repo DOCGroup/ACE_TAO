@@ -18,7 +18,8 @@ $NS = Process::Create ("..".$DIR_SEPARATOR.
 
 sleep $sleeptime;
 
-$T = Process::Create ($EXEPREFIX."ECT_Throughput".$Process::EXE_EXT);
+$T = Process::Create ($EXEPREFIX."ECT_Throughput".$Process::EXE_EXT
+		     . " -ORBsvcconf ec.conf -m new -n 1000 ");
 
 sleep $sleeptime;
 

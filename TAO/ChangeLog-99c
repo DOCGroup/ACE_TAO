@@ -1,3 +1,54 @@
+Fri Apr 23 10:15:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Factory.cpp:
+	  The factory is a service object now.
+	  Some factories will require the user to set the POA objects.
+
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	  Added new EC_Factory that uses the command line arguments to
+	  control which strategies and objects are created, it is not very 
+	  efficient, but is very useful for experimentation.
+
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	  Added new methods to set the POAs in the factory, they should be 
+	  used for factories that require them.
+	  Added support for controlling ownership of the factory
+	  class.
+	  If the user does not specify any factories explicitly we try to
+	  dynamically load the abstract factory. If that fails we fall
+	  back of the EC_Default_Factory.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	  The proxy was not reporting its destruction to the EC, thus it
+	  wasn't removed from all the data structures.
+
+	* orbsvcs/Event_Service/Event_Service.h:
+	* orbsvcs/Event_Service/Event_Service.cpp:
+	* orbsvcs/Event_Service/svc.conf:
+	  The new Event Service is configured using the EC_Default_Factory 
+	  and the svc.conf file.
+
+	* orbsvcs/tests/EC_Throughput/run_test.pl: 
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	* orbsvcs/tests/EC_Throughput/ec.conf:
+	  Added support for the new "dynamically loadable"
+	  EC_Default_Factory.
+	  The ec.conf file contains the proper configuration for this
+	  test.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+	  Added option to disable EC shutdown on program exit.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+	  Minor fixes in debugging messages.
+
 Fri Apr 23 000:39:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Marshal.{h,i}:
