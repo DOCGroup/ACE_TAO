@@ -5,6 +5,7 @@ pch_defines        = ACE_USING_PCH
 configuration_type = 1
 subsystem          = 1
 ssl_libs           = libeay32 ssleay32
+pdb                = 1
 
 Release {
   defines          = NDEBUG
@@ -17,10 +18,10 @@ Debug {
   optimization     = 0
   debug            = 1
   defines          = _DEBUG
+  output_dir       = .
   intermediate_dir = Debug
   lib_modifier     = d
   runtime_library  = 3
-  pdb              = 1
 }
 
 Static Release {

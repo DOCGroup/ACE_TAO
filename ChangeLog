@@ -1,3 +1,17 @@
+Wed Mar 12 12:19:23 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc6dspdll.mpt:
+        * bin/MakeProjectCreator/templates/vc6dspdllexe.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsplibexe.mpt:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+        * bin/MakeProjectCreator/templates/vc7dll.mpt:
+        * bin/MakeProjectCreator/templates/vc7exe.mpt:
+
+          Fixed output directories for executables.  Executables of
+          different configurations now go into different directories.
+          Also, we need to always generate pdb information for executables.
+
 Wed Mar 12 08:59:18 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Log_Msg.cpp (log_hexdump):
