@@ -1,3 +1,9 @@
+Wed Dec 04 06:59:27 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1020_Regression/Bug_1020_Regression.dsw (Project): 
+	* tests/Bug_1020_Regression/client.dsp:
+	* tests/Bug_1020_Regression/server.dsp: Added MSVC files for the test.
+
 Tue Dec  3 21:38:02 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IIOP_Connector.cpp:

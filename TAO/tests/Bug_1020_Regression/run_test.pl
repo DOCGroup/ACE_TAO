@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
+$SV = new PerlACE::Process ("server", "-o $iorfile -ORBdotteddecimaladdresses 1");
 $CL1 = new PerlACE::Process ("client", "-k file://$iorfile");
 $CL2 = new PerlACE::Process ("client", "-k file://$iorfile");
 $CL3 = new PerlACE::Process ("client", "-k file://$iorfile");
@@ -25,7 +25,7 @@ if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
 }
 
 local $start_time = time();
-local $max_running_time = 300; # 5 minutes
+local $max_running_time = 600; # 5 minutes
 local $elapsed = time() - $start_time;
 
 while($elapsed < $max_running_time) {
