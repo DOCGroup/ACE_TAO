@@ -24,9 +24,9 @@
 Initiator_Server::Initiator_Server (void)
   : object_A_key_ (0),
     object_B_key_ (0),
-    initiator_Impl_ptr_ (0),
     object_A_var_ (0),
-    object_B_var_ (0)
+    object_B_var_ (0),
+    initiator_Impl_ptr_ (0)
 {
 }
 
