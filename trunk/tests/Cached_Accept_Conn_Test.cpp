@@ -27,16 +27,16 @@
 
 #include "test_config.h"
 
+#if defined(__GNUC__) && __GNUC__ == 2 && __GNUC_MINOR__ < 8
+#define ACE_HAS_BROKEN_EXTENDED_TEMPLATES
+#endif /* __GNUC__ */
+
 // IBM C Set++ just can't grok the templates in here for auto template
 // instantiation. It ends up overwriting a tempinc/*.C file and mashes
 // its contents.
 #if !defined (__xlC__) || (__xlC__ > 0x0301)
 
 #include "Cached_Accept_Conn_Test.h"
-
-#if defined(__GNUC__) && __GNUC__ == 2 && __GNUC_MINOR__ < 8
-#define ACE_HAS_BROKEN_EXTENDED_TEMPLATES
-#endif /* __GNUC__ */
 
 #include "ace/Get_Opt.h"
 
@@ -50,6 +50,97 @@ ACE_RCSID(tests, Cached_Accept_Conn_Test, "$Id$")
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
+//
+// Note: To keep both sunCC5.0 without debugging symbols and gcc2.7.3
+// happy, it was necessary to have the definitions of the methods of 
+// the Accept_Strategy before the instantiations.
+//
+
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
+Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy)
+  : caching_connect_strategy_ (caching_connect_strategy)
+{
+}
+
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
+Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+                                                         int restart)
+{
+  int result = ACCEPT_STRATEGY_BASE::open (local_addr,
+                                           restart);
+
+  if (result == 0)
+    return result;
+
+  // If the error occured due to the fact that the file descriptor
+  // limit was exhausted, then purge the connection cache of some
+  // entries.
+  result = this->out_of_sockets_handler ();
+  if (result == -1)
+    return -1;
+
+  // If we are able to purge, try again.
+  return ACCEPT_STRATEGY_BASE::open (local_addr, restart);
+}
+
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
+Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDLER *svc_handler)
+{
+  // Stop the event loop.
+  connection_accepted = 1;
+
+  // Try to find out if the implementation of the reactor that we are
+  // using requires us to reset the event association for the newly
+  // created handle. This is because the newly created handle will
+  // inherit the properties of the listen handle, including its event
+  // associations.
+  int reset_new_handle = this->reactor_->uses_event_associations ();
+
+  int result = this->acceptor_.accept (svc_handler->peer (), // stream
+                                   0, // remote address
+                                   0, // timeout
+                                   1, // restart
+                                   reset_new_handle  // reset new handler
+                                   );
+  if (result == 0)
+    {
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("Accept succeeded with handle %d\n"),
+                    svc_handler->get_handle ()));
+      return result;
+    }
+
+  // If the error occured due to teh fact that the file descriptor
+  // limit was exhausted, then purge the connection cache of some
+  // entries.
+  result = this->out_of_sockets_handler ();
+  ACE_ASSERT (result == 0);
+
+  // Close down handler to avoid memory leaks.
+  svc_handler->close (0);
+  return -1;
+}
+
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
+Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_handler (void)
+{
+  if (ACE::out_of_handles (errno))
+    {
+      // Close connections which are cached by explicitly purging the
+      // connection cache maintained by the connector.
+      ACE_DEBUG ((LM_DEBUG,
+                  "Purging connections from Connection Cache...\n"));
+
+      return this->caching_connect_strategy_.purge_connections ();
+    }
+
+  return -1;
+}
+
+typedef Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
+        ACCEPT_STRATEGY;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
@@ -244,8 +335,6 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* CACHED_CONNECT_TEST */
-
 // For some strange reason this must *not* be static since otherwise
 // certain versions of SunC++ will not link properly.
 int debug = 0;
@@ -322,90 +411,6 @@ static int iterations = 2000;
 static int iterations = 200;
 #endif /* ACE_WIN32 */
 
-template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
-Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy)
-  : caching_connect_strategy_ (caching_connect_strategy)
-{
-}
-
-template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                                                         int restart)
-{
-  int result = ACCEPT_STRATEGY_BASE::open (local_addr,
-                                           restart);
-
-  if (result == 0)
-    return result;
-
-  // If the error occured due to the fact that the file descriptor
-  // limit was exhausted, then purge the connection cache of some
-  // entries.
-  result = this->out_of_sockets_handler ();
-  if (result == -1)
-    return -1;
-
-  // If we are able to purge, try again.
-  return ACCEPT_STRATEGY_BASE::open (local_addr, restart);
-}
-
-template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDLER *svc_handler)
-{
-  // Stop the event loop.
-  connection_accepted = 1;
-
-  // Try to find out if the implementation of the reactor that we are
-  // using requires us to reset the event association for the newly
-  // created handle. This is because the newly created handle will
-  // inherit the properties of the listen handle, including its event
-  // associations.
-  int reset_new_handle = this->reactor_->uses_event_associations ();
-
-  int result = this->acceptor_.accept (svc_handler->peer (), // stream
-                                   0, // remote address
-                                   0, // timeout
-                                   1, // restart
-                                   reset_new_handle  // reset new handler
-                                   );
-  if (result == 0)
-    {
-      if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("Accept succeeded with handle %d\n"),
-                    svc_handler->get_handle ()));
-      return result;
-    }
-
-  // If the error occured due to teh fact that the file descriptor
-  // limit was exhausted, then purge the connection cache of some
-  // entries.
-  result = this->out_of_sockets_handler ();
-  ACE_ASSERT (result == 0);
-
-  // Close down handler to avoid memory leaks.
-  svc_handler->close (0);
-  return -1;
-}
-
-template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_handler (void)
-{
-  if (ACE::out_of_handles (errno))
-    {
-      // Close connections which are cached by explicitly purging the
-      // connection cache maintained by the connector.
-      ACE_DEBUG ((LM_DEBUG,
-                  "Purging connections from Connection Cache...\n"));
-
-      return this->caching_connect_strategy_.purge_connections ();
-    }
-
-  return -1;
-}
-
-typedef Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
-        ACCEPT_STRATEGY;
 
 static int
 cached_connect (STRATEGY_CONNECTOR &con,
@@ -727,3 +732,6 @@ main (int argc,
   ACE_END_TEST;
   return 0;
 }
+
+
+#endif /* CACHED_ACCEPT_CONNECTION_TEST */
