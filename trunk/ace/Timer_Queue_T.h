@@ -309,6 +309,38 @@ private:
   void operator= (const ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK> &);
 };
 
+template <class LOCK>
+class ACE_Event_Handler_Handle_Timeout_Upcall
+  // = TITLE 
+  //      Functor for Timer_Queues.
+  //
+  // = DESCRIPTION
+  //      This class implements the functor required by the Timer
+  //      Queue to call <handle_timeout> on ACE_Event_Handlers.
+{
+public:
+  typedef ACE_Timer_Queue_T<ACE_Event_Handler *, 
+                            ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>, 
+                            LOCK>
+          TIMER_QUEUE;
+  
+  int timeout (TIMER_QUEUE &timer_queue,
+	       ACE_Event_Handler *handler,
+	       const void *arg,
+	       const ACE_Time_Value &cur_time);
+  // This method is called when the timer expires
+  
+  int cancellation (TIMER_QUEUE &timer_queue,
+		    ACE_Event_Handler *handler);
+  // This method is called when the timer is canceled
+
+  int deletion (TIMER_QUEUE &timer_queue,
+                ACE_Event_Handler *handler,
+                const void *arg);
+  // This method is called when the timer queue is destroyed and
+  // the timer is still contained in it
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/Timer_Queue_T.i"
 #endif /* __ACE_INLINE__ */

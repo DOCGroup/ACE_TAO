@@ -34,11 +34,12 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::ACE_Timer_Hash_Upcall (ACE_Timer_Que
   // Nothing
 }
 
-
 // Calls up to timer_hash's upcall functor
 
 template <class TYPE, class FUNCTOR, class LOCK> int
-ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::timeout (TIMER_QUEUE &timer_queue,
+ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::timeout (ACE_Timer_Queue_T<ACE_Event_Handler *, 
+						     ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>, 
+						     ACE_Null_Mutex> &timer_queue,
                                                      ACE_Event_Handler *handler,
                                                      const void *arg,
                                                      const ACE_Time_Value &cur_time)
@@ -59,7 +60,9 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::timeout (TIMER_QUEUE &timer_queue,
 // Calls up to timer_hash's upcall functor
 
 template <class TYPE, class FUNCTOR, class LOCK> int
-ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::cancellation (TIMER_QUEUE &timer_queue,
+ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::cancellation (ACE_Timer_Queue_T<ACE_Event_Handler *, 
+							  ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>, 
+							  ACE_Null_Mutex> &timer_queue,
                                                           ACE_Event_Handler *handler)
 {
   ACE_UNUSED_ARG (timer_queue);
@@ -71,7 +74,9 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::cancellation (TIMER_QUEUE &timer_que
 // Calls up to timer_hash's upcall functor
 
 template <class TYPE, class FUNCTOR, class LOCK> int
-ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::deletion (TIMER_QUEUE &timer_queue,
+ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::deletion (ACE_Timer_Queue_T<ACE_Event_Handler *, 
+						      ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>, 
+						      ACE_Null_Mutex> &timer_queue,
                                                       ACE_Event_Handler *handler,
                                                       const void *arg)
 {
