@@ -856,7 +856,47 @@ SOURCE=.\be_include\be_visitor_args.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_visitor_attribute.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_constant.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_context.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_decl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_enum.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_exception.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_field.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_visitor_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_interface_fwd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_module.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_operation.h
 # End Source File
 # Begin Source File
 
@@ -864,7 +904,27 @@ SOURCE=.\be_include\be_visitor_root.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_visitor_scope.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_visitor_sequence.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_structure.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_typedef.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_union.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_union_branch.h
 # End Source File
 # Begin Source File
 
@@ -929,6 +989,10 @@ SOURCE=.\include\idl_narrow.h
 # Begin Source File
 
 SOURCE=.\include\intlmacros.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\nr_extern.h
 # End Source File
 # Begin Source File
 
