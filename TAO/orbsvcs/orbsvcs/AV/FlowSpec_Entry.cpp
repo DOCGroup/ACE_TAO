@@ -14,14 +14,14 @@
 // constructor.
 TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (void)
   :address_ (0),
-   address_str_ (CORBA::string_dup ("")),
-   format_ (CORBA::string_dup ("")),
+   address_str_ (),
+   format_ (),
    direction_ (TAO_AV_INVALID),
    protocol_ (TAO_AV_Core::TAO_AV_NOPROTOCOL),
-   carrier_protocol_ (CORBA::string_dup ("")),
-   flow_protocol_ (CORBA::string_dup ("")),
+   carrier_protocol_ (),
+   flow_protocol_ (),
    use_flow_protocol_ (0),
-   entry_ (0),
+   entry_ (),
    is_multicast_ (0),
    peer_addr_ (0),
    local_addr_ (0),
@@ -40,14 +40,14 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
                                         const char *carrier_protocol,
                                         ACE_Addr *address)
   :address_ (address),
-   address_str_ (0),
-   format_ (CORBA::string_dup (format_name)),
-   direction_str_ (CORBA::string_dup (direction)),
-   flowname_ (CORBA::string_dup (flowname)),
-   carrier_protocol_ (CORBA::string_dup (carrier_protocol)),
-   flow_protocol_ (CORBA::string_dup (flow_protocol)),
+   address_str_ (),
+   format_ (format_name),
+   direction_str_ (direction ),
+   flowname_ ( flowname ),
+   carrier_protocol_ ( carrier_protocol ),
+   flow_protocol_ ( flow_protocol ),
    use_flow_protocol_ (0),
-   entry_ (0),
+   entry_ (),
    is_multicast_ (0),
    peer_addr_ (0),
    local_addr_ (0),
@@ -57,8 +57,8 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    role_ (TAO_AV_INVALID_ROLE)
 {
   this->set_protocol ();
-  this->set_direction (this->direction_str_);
-  this->parse_flow_protocol_string (this->flow_protocol_);
+  this->set_direction (this->direction_str_.c_str());
+  this->parse_flow_protocol_string (this->flow_protocol_.c_str() );
 }
 
 TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
@@ -67,14 +67,14 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
                                         const char *flow_protocol,
                                         const char *address)
   :address_ (0),
-   address_str_ (CORBA::string_dup (address)),
-   format_ (CORBA::string_dup (format_name)),
-   direction_str_ (CORBA::string_dup (direction)),
-   flowname_ (CORBA::string_dup (flowname)),
-   carrier_protocol_ (0),
-   flow_protocol_ (CORBA::string_dup (flow_protocol)),
+   address_str_ ( address ),
+   format_ ( format_name ),
+   direction_str_ ( direction ),
+   flowname_ ( flowname ),
+   carrier_protocol_ (),
+   flow_protocol_ ( flow_protocol ),
    use_flow_protocol_ (0),
-   entry_ (0),
+   entry_ (),
    is_multicast_ (0),
    peer_addr_ (0),
    local_addr_ (0),
@@ -83,23 +83,19 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    protocol_object_ (0),
    role_ (TAO_AV_INVALID_ROLE)
 {
-  ACE_CString cstring(this->address_str_,0,0);
+  ACE_CString cstring(this->address_str_);
   int colon_pos = cstring.find (':');
   if (colon_pos != cstring.npos)
     cstring[colon_pos] = ';';
-  this->address_str_ = cstring.rep ();
-  this->parse_flow_protocol_string (this->flow_protocol_);
-  this->parse_address (this->address_str_);
-  this->set_direction (this->direction_str_);
+  this->address_str_ = cstring;
+  this->parse_flow_protocol_string (this->flow_protocol_.c_str() );
+  this->parse_address (this->address_str_.c_str() );
+  this->set_direction (this->direction_str_.c_str() );
 }
 
 // Destructor.
 TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry (void)
 {
-  CORBA::string_free (this->format_);
-  CORBA::string_free (this->direction_str_);
-  CORBA::string_free (this->flowname_);
-  CORBA::string_free (this->carrier_protocol_);
 }
 
 int
@@ -107,21 +103,21 @@ TAO_FlowSpec_Entry::set_protocol (void)
 {
   if (!this->use_flow_protocol_)
     {
-      if (ACE_OS::strcasecmp (this->carrier_protocol_,"TCP") == 0)
+      if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"TCP") == 0)
         this->protocol_ = TAO_AV_Core::TAO_AV_TCP;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_,"UDP") == 0)
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"UDP") == 0)
           this->protocol_ = TAO_AV_Core::TAO_AV_UDP;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_,"AAL5") == 0)
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"AAL5") == 0)
         this->protocol_ = TAO_AV_Core::TAO_AV_AAL5;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_,"AAL3_4") == 0)
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"AAL3_4") == 0)
         this->protocol_ = TAO_AV_Core::TAO_AV_AAL3_4;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_,"AAL1") == 0)
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"AAL1") == 0)
         this->protocol_ = TAO_AV_Core::TAO_AV_AAL1;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_,"RTP/UDP") == 0)
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/UDP") == 0)
         this->protocol_ = TAO_AV_Core::TAO_AV_RTP_UDP;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_,"RTP/AAL5") == 0)
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/AAL5") == 0)
         this->protocol_ = TAO_AV_Core::TAO_AV_RTP_AAL5;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_,"IPX") == 0)
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"IPX") == 0)
         this->protocol_ = TAO_AV_Core::TAO_AV_IPX;
       else
         {
@@ -131,7 +127,7 @@ TAO_FlowSpec_Entry::set_protocol (void)
     }
   else
     {
-      if (ACE_OS::strcasecmp (this->carrier_protocol_,"UDP") == 0)
+      if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"UDP") == 0)
         {
           this->protocol_ = TAO_AV_Core::TAO_AV_SFP_UDP;
         }
@@ -176,9 +172,8 @@ TAO_FlowSpec_Entry::set_protocol (void)
 }
 
 int
-TAO_FlowSpec_Entry::parse_address (char *address)
+TAO_FlowSpec_Entry::parse_address (const char *address)
 {
-	
   if (address == 0)
     return 0;
   if (ACE_OS::strcmp (address,"") == 0)
@@ -193,9 +188,13 @@ TAO_FlowSpec_Entry::parse_address (char *address)
   if (protocol_tokenizer [1] != 0)
     {
       TAO_Tokenizer address_tokenizer (protocol_tokenizer[1],';');
-      char addr[BUFSIZ];
+
+      ACE_CString addr;
       // convert to the ACE_Addr format.
-      ACE_OS::sprintf (addr,"%s:%s",address_tokenizer[0],address_tokenizer[1]);
+      addr  = address_tokenizer[0];
+      addr += ":";
+      addr += address_tokenizer[1];
+
       switch (this->protocol_)
         {
         case TAO_AV_Core::TAO_AV_SFP_UDP:
@@ -203,10 +202,10 @@ TAO_FlowSpec_Entry::parse_address (char *address)
         case TAO_AV_Core::TAO_AV_TCP:
         case TAO_AV_Core::TAO_AV_UDP:
           {
-            this->address_str_ = CORBA::string_dup (addr);
+            this->address_str_ = addr;
             ACE_INET_Addr *inet_addr;
             ACE_NEW_RETURN (inet_addr,
-                            ACE_INET_Addr (addr),
+                            ACE_INET_Addr (addr.c_str() ),
                             -1);
             this->address_ = inet_addr;
             if (TAO_debug_level > 0)
@@ -255,10 +254,11 @@ TAO_FlowSpec_Entry::get_local_addr_str (void)
         char *buf;
         ACE_NEW_RETURN (buf,
                         char [BUFSIZ],
-                        0);
+                        0); 
+   
         ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr *,this->local_addr_);
         inet_addr->addr_to_string (buf,BUFSIZ);
-        ACE_CString cstring (buf,0,0);
+        ACE_CString cstring (buf, 0, 0);
         int colon_pos = cstring.find (':');
         if (colon_pos != cstring.npos)
           cstring[colon_pos] = ';';
@@ -351,10 +351,10 @@ TAO_Forward_FlowSpec_Entry::role (void)
     }
 }
 
-char *
+const char *
 TAO_Forward_FlowSpec_Entry::entry_to_string (void)
 {
-  if (this->flowname_ == 0)
+  if (this->flowname_.length() == 0)
     return 0;
 
   ACE_NEW_RETURN (this->entry_,
@@ -362,7 +362,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
                   0);
 
   char address [BUFSIZ];
-  char address_str [BUFSIZ];
+  ACE_CString address_str;
   if (this->address_ != 0)
     {
       switch (this->protocol_)
@@ -388,23 +388,27 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         cstring[colon_pos] = ';';
 
 
-      ACE_OS::sprintf (address_str,"%s=%s",
-                       this->carrier_protocol_,
-                       cstring.c_str ());
+      address_str = this->carrier_protocol_;
+      address_str += "=";
+      address_str += cstring;
 
     }
-  else
-    ACE_OS::strcpy (address_str,this->carrier_protocol_);
-  ACE_OS::sprintf (this->entry_,
-                   "%s\\%s\\%s\\%s\\%s",
-                   this->flowname_,
-                   this->direction_str_,
-                   this->format_,
-                   this->flow_protocol_,
-                   address_str);
+  else{
+    address_str = this->carrier_protocol_;
+  }
+              
+  this->entry_  = this->flowname_;
+  this->entry_ += "\\";
+  this->entry_ += this->direction_str_;
+  this->entry_ += "\\";
+  this->entry_ += this->format_;
+  this->entry_ += "\\";
+  this->entry_ += this->flow_protocol_;
+  this->entry_ += "\\";
+  this->entry_ += address_str;
 
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"entry_to_string: entry = %s\n",this->entry_));
-  return this->entry_;
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"entry_to_string: entry = %s\n",this->entry_.c_str()));
+  return this->entry_.c_str();
 }
 
 //------------------------------------------------------------
@@ -488,10 +492,10 @@ TAO_Reverse_FlowSpec_Entry::parse (const char *flowSpec_entry)
 }
 
 
-char *
+const char *
 TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
 {
-  if (this->flowname_ == 0)
+  if (this->flowname_.length() == 0)
     return 0;
 
   ACE_NEW_RETURN (this->entry_,
@@ -500,7 +504,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
 
 
   char address [BUFSIZ];
-  char address_str [BUFSIZ];
+  ACE_CString address_str;
   if (this->address_ != 0)
     {
 
@@ -524,20 +528,25 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
       if (colon_pos != cstring.npos)
         cstring[colon_pos] = ';';
 
-      ACE_OS::sprintf (address_str,"%s=%s",
-                       this->carrier_protocol_,
-                       cstring.c_str ());
+      address_str = this->carrier_protocol_;
+      address_str += "=";
+      address_str += cstring;
 
     }
-  else
-    ACE_OS::strcpy (address_str,"");
-  ACE_OS::sprintf (this->entry_,
-                   "%s\\%s\\%s\\%s\\%s",
-                   this->flowname_,
-                   address_str,
-                   this->flow_protocol_,
-                   this->direction_str_,
-                   this->format_);
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"entry_to_string: entry = %s\n",this->entry_));
-  return this->entry_;
+  else{
+    address_str = "";
+  }
+
+  this->entry_ = this->flowname_;
+  this->entry_ += "\\"; 
+  this->entry_ += address_str; 
+  this->entry_ += "\\"; 
+  this->entry_ += this->flow_protocol_; 
+  this->entry_ += "\\"; 
+  this->entry_ += this->direction_str_;
+  this->entry_ += "\\"; 
+  this->entry_ += format_;
+
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"entry_to_string: entry = %s\n",this->entry_.c_str() ));
+  return this->entry_.c_str();
 }

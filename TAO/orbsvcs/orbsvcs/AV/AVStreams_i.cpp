@@ -490,7 +490,7 @@ TAO_StreamCtrl::TAO_StreamCtrl (void)
       this->streamctrl_ = this->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       char buf [BUFSIZ];
-      int result = gethostname (buf, BUFSIZ);
+      int result = ACE_OS::hostname (buf, BUFSIZ);
       unsigned long ipaddr = 0;
       if (result == 0)
         ipaddr = ACE_OS::inet_addr (buf);
