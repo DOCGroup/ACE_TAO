@@ -38,7 +38,7 @@ struct DeviceState {                // State for a device
     string          location;
     short           nominal_temp;   // For thermostats only
 };
-typedef map<unsigned long, DeviceState> StateMap;
+typedef std::map<unsigned long, DeviceState> StateMap;
 
 //----------------------------------------------------------------
 
@@ -193,20 +193,33 @@ actual_temp(const StateMap::iterator & pos)
 {
     long sum = 0;
     long count = 0;
-    StateMap::iterator where = find_if(
+    StateMap::iterator where = std::find_if(
                                     dstate.begin(), dstate.end(),
                                     ThermostatInSameRoom(pos)
                                );
     while (where != dstate.end()) {
         count++;
         sum += where->second.nominal_temp;
-        where = find_if(
+        where = std::find_if(
                     ++where, dstate.end(),
                     ThermostatInSameRoom(pos)
                 );
     }
     return vary_temp(count == 0 ? DFLT_TEMP : sum / count);
 }
+
+//---------------------------------------------------------------
+
+
+#if (_MSC_VER >= 1200) && (_MSC_VER < 1300)
+namespace std
+{
+    size_t min (const size_t len1, const size_t len2)
+    {
+        return ( len1 < len2 ? len1:len2 );
+    }
+}
+#endif/*_MSC_VER*/
 
 //----------------------------------------------------------------
 
@@ -259,11 +272,11 @@ ICP_get(
         );
     } else if (strcmp(attr, "temperature") == 0) {
         short temp = actual_temp(pos);
-        memcpy(value, &temp, min(len, sizeof(temp)));
+        memcpy(value, &temp, std::min(len, sizeof(temp)));
     } else if (strcmp(attr, "MIN_TEMP") == 0) {
-        memcpy(value, &MIN_TEMP, min(len, sizeof(MIN_TEMP)));
+        memcpy(value, &MIN_TEMP, std::min(len, sizeof(MIN_TEMP)));
     } else if (strcmp(attr, "MAX_TEMP") == 0) {
-        memcpy(value, &MAX_TEMP, min(len, sizeof(MAX_TEMP)));
+        memcpy(value, &MAX_TEMP, std::min(len, sizeof(MAX_TEMP)));
     } else {
         return -1;                          // No such attribute
     }
