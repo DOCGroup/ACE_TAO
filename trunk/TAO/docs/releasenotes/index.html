@@ -441,20 +441,11 @@ requests to servants. <P>
 TAO supports the POA spec. This section will carry updates as available.</li>
 </ul>
 Known issues:
+
 <ul>
 
-<li>The synchronization in the POA is not optimal. For example, the
-locks are held across the invocation on the servant. The locks are
-also held across the invocation on the AdapterActivator. This forces
-the use of recursive locks inside the POA. However, the problem with
-recursive locks is that multiple threads cannot dispatch requests on
-the same POA simultaneous.</li><P>
-
-<li>We need to add the new RefCountServantBase class to TAO. This
-reference counted base class was added to the CORBA specification to
-avoid race conditions for servant deletion in threaded servers. <a
-href="ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf">ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf</a>
-contains the relevant text.</li><P>
+<li> ORB::shutdown needs to deactive the POA Managers. We need to fix
+this. </li><P>
 
 </UL>
 
@@ -474,8 +465,25 @@ Recently completed work:<P>
 
 <ul>
 
-<li> Support for collocation should be much better now because the POA
-can tell if we created the object reference.</li><P>
+<li> TAO's POA now properly supports both the threading policies:
+SINGLE_THREAD_MODEL and ORB_CTRL_MODEL. </li><P>
+
+<li>The synchronization in the POA is now very optimal. For example,
+the locks are not held across the invocation on the servant. The locks
+are also not held across the invocation on the AdapterActivator and
+ServantManagers. This allows us to use regular locks instead of
+recursive locks inside the POA. This also allows multiple threads to
+dispatch requests on the same POA simultaneous.</li><P>
+
+<li>TAO now supports reference counting between POA and servants,
+including the new RefCountServantBase and ServantBase_var
+classes. RefCountServantBase is a reference counted base class that
+was added to the CORBA specification to avoid race conditions for
+servant deletion in threaded servers. <a
+href="ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf">ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf</a>
+contains the relevant text. Check <a
+href="../poa_migration.html#Reference counting Servants">here</a> on
+some hints to avoid trouble.</li><P>
 
 <li> The POA now supports active demultiplexing of servants in the
 SYSTEM_ID and the USER_ID policy. This should make the POA faster and
@@ -546,6 +554,9 @@ removed. </li> <P>
 
 <li> New examples have been added to show how servants can be
 dynamically loaded from DLLs on demand. </li> <P>
+
+<li> Support for collocation should be much better now because the POA
+can tell if we created the object reference.</li><P>
 
 </UL>
 <hr>
