@@ -251,18 +251,23 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                   {
                     if (entry->handler () != 0)
                       {
+							
                         //Yamuna:PLEASE CHECK THIS LATER
 #if defined ACE_HAS_RAPI || defined (ACE_HAS_WINSOCK2_GQOS)
                         // For IN flows on the A side we should remove the handlers from the reactor.
                         ACE_Event_Handler *event_handler = entry->handler ()->event_handler ();
-                        result = event_handler->reactor ()->remove_handler (event_handler,
-                                                                            ACE_Event_Handler::READ_MASK);
-                        if (result < 0)
-                            if (TAO_debug_level > 0)
-                              ACE_DEBUG ((LM_DEBUG,
-                                          "TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
-#endif /*ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 
+			if (event_handler->reactor () != 0)
+			  {
+			    result = event_handler->reactor ()->remove_handler (event_handler,
+										ACE_Event_Handler::READ_MASK);
+			    
+			    if (result < 0)
+			      if (TAO_debug_level > 0)
+				ACE_DEBUG ((LM_DEBUG,
+					    "TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
+			  }
+#endif //ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS 
                       }
                   }
                 default:
