@@ -168,18 +168,37 @@ for help with this port. <P>
      Steve Huston &lt<A HREF="mailto:shuston@ultranet.com">shuston@ultranet.com</A>&gt
 	has ported ACE to work with UnixWare 2.01 and
 	  its standard C++ compiler.
-</DL> 
 
 <DT><B>VxWorks</B> <P>
 <DD>
-     <A HREF="http://www.cs.wustl.edu/~levine/">David Levine</A> &lt<A HREF="mailto:levine@cs.wustl.edu">levine@cs.wustl.edu</A>&gt has ported ACE to VxWorks 5.2 using the GreenHills 1.8.7 compiler.
-</DL> 
+     <A HREF="http://www.cs.wustl.edu/~levine/">David Levine</A> &lt<A HREF="mailto:levine@cs.wustl.edu">levine@cs.wustl.edu</A>&gt has ported ACE to VxWorks 5.2 using the GreenHills 1.8.7 compiler. <P>
 
 <DT><B>MVS OpenEdition</B> <P>
+
 <DD>
-   Chuck Gehr &lt<A HREF="mailto:gehr@sweng.stortek.com">gehr@sweng.stortek.com</A>&gt
-   has ported ACE to IBM MVS.
-</DL> 
+All of ACE has been ported to OpenEdition by Chuck Gehr &lt<A
+HREF="mailto:gehr@sweng.stortek.com">gehr@sweng.stortek.com</A>&gt.
+The ACE library, all the tests and most of the examples and apps build
+clean.  There are still some problems that need to be ironed out: <P>
+
+   MVS does not support the dynamic linking dl...() calls that the Service
+   Configurator uses to dynmically link services at run time. As a result, all
+   the examples and apps that use a svc.conf file (for dynamically configuring
+   service objects) do not work, however, most of these apps can be built/run
+   statically.  Also, the Svc_Conf_l.cpp and Svc_Conf_y.cpp files are generated
+   using flex and yacc on a ascii (not ebcdic) machine and as a result they don't
+   work very well with ebcdic svc.conf files.  We should be able to regenerate 
+   these files on MVS but MVS doesn't have flex.  This is something that needs
+   to be done. <P>
+
+   Some of the tests do not execute properly.  This is a minority and over time
+   the goal is to get to 100%. <P>
+
+   The make scheme for some of the apps still doesn't work perfectly on MVS. 
+   This is mainly due to the way shared libraries are handled on MVS.  See
+   <A HREF="#mvs">additional build tips for MVS</A> for more on
+   this. <P>
+</DL>
 
 <HR>
 <H4>Compiling ACE with GNU C++</H4>
@@ -652,6 +671,7 @@ When it's done, you should have a static or dynamic library
 <UL>
 <LI><A HREF="#cloning">Cloning the Source Tree</A>
 <LI><A HREF="#corba">Building CORBA Versions of ACE</A>
+<LI><A HREF="#mvs">Additional Build Tips for MVS</A>
 <LI><A HREF="http://www.cs.wustl.edu/~levine/CVS.html">Version Control</A>
 <LI><A HREF="http://www.cs.wustl.edu/~cleeland/ace/makefile-hints.html">ACE Makefile hints</a>
 </UL>
@@ -702,7 +722,7 @@ original tree, make sure to remove all ".obj", ".shobj" and (any other
 files or directories) in all subdirectories before starting the build
 on your cloned tree. <P>
 
-<P><HR><P>
+<HR><P>
 <A NAME="corba">
 <H4>Building CORBA Versions of ACE</H4>
 
@@ -716,6 +736,43 @@ ORBeline, make sure that you set the symbolic links for
 $ACE_ROOT/include/makeinclude/platform_macros.GNU and
 $ACE_ROOT/ace/config.h to point to the the config* and platform*
 files that have "-orbix" in them!
+
+<P><HR><P>
+<A NAME="mvs">
+<H4>Additional Build Tips for MVS</H4>
+
+For all intents and purpose, MVS OpenEdition (OE) is another flavor of
+UNIX, therefore, the instructions under <A HREF="#aceinstall">Building
+and Installing ACE on Unix</A> can be used along with the following
+additional tips: <P>
+
+   You can get a copy of GNU make that has been ported to MVS OpenEdition from
+   the <A HREF="http://www.s390.ibm.com/products/oe/index.html">IBM OpenEdition web site</A>.
+   ACE's make scheme generates compile commands that have options and
+   operands interspersed.  By default, the c89/cc/c++ compiler expects all options to
+   precede all operands.  To get around this, you must set a special
+   compiler environment variable (_CXX_CCMODE) to 1 which tells the compiler
+   to allow options and operands to be interspersed. <P>
+
+   Note that the environment variable LD_LIBRARY_PATH is called LIBPATH
+   on MVS. <P>
+
+   Shared objects are built a little different on MVS than on
+   other UNIX implementations.  This has been accounted for in the makefiles
+   that come with ACE   When the linker (via the cxx command) builds the 
+   libACE.so file it will also create a file called libACE.x.  This is a 
+   side-deck file and it must be included in subsequent link edits with 
+   application code.  For more information on this see the C/C++ MVS 
+   Programming Guide.  If you want to build your application statically, 
+   i.e., using libACE.a instead of libACE.so, you can set ACELIB to 
+   ACELIB_STATIC in platform_mvs.GNU. <P>
+
+   When the libACE.so file is built (via the MVS pre-linker and binder), you
+   will get a rc=4 from the pre-linker.  This is ok.  This is due to some
+   warnings about unresolved references which should get resolved during the
+   link step.  Note, however, there shouldn't be any unresolved references
+   from the binder (linkage editor).   You can get pre-link and link maps by
+   uncommenting the PMAP and LMAP lines in the platform_mvs.GNU file. <P>
 
 <P><HR><P>
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">

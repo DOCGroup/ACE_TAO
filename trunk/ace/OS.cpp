@@ -185,18 +185,14 @@ ACE_Countdown_Time::~ACE_Countdown_Time (void)
 
 #if ! defined (ACE_WIN32) && ! defined (ACE_HAS_LONGLONG_T)
 void
-ACE_U_LongLong::dump (FILE *file) const
+ACE_U_LongLong::output (FILE *file) const
 {
   if (hi_ > 0)
-    {
-      ACE_OS::fprintf (file, "0x%lx%0*lx", hi_, 2 * sizeof lo_, lo_);
-    }
+    ACE_OS::fprintf (file, "0x%lx%0*lx", hi_, 2 * sizeof lo_, lo_);
   else
-    {
-      ACE_OS::fprintf (file, "0x%lx", lo_);
-    }
+    ACE_OS::fprintf (file, "0x%lx", lo_);
 }
-#endif /* ! ACE_WIN32 && ! ACE_HAS_LONGLONG_T */
+#endif /* !ACE_WIN32 && ! ACE_HAS_LONGLONG_T */
 
 #if defined (ACE_HAS_PENTIUM) && defined (__GNUC__)
 ACE_hrtime_t 

@@ -2426,7 +2426,7 @@ public:
   ACE_U_LongLong (u_long lo = 0x0, u_long hi = 0x0);
   ACE_U_LongLong (const ACE_U_LongLong &);
   ACE_U_LongLong &operator= (const ACE_U_LongLong &);
-  ~ACE_U_LongLong (void) {}
+  ~ACE_U_LongLong (void);
 
   // = Overloaded relation operators.
   int operator== (const ACE_U_LongLong &) const;
@@ -2443,14 +2443,14 @@ public:
   ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
 
   // = Helper methods.
-  void dump (FILE * = stdout) const;
+  void output (FILE * = stdout) const;
   // Outputs the value to the FILE, in hex.
 
-  u_long hi (void) const { return hi_; }
-  u_long lo (void) const { return lo_; }
+  u_long hi (void) const;
+  u_long lo (void) const;
 
-  void hi (u_long hi) { hi_ = hi; }
-  void lo (u_long lo) { lo_ = lo; }
+  void hi (u_long hi);
+  void lo (u_long lo);
 
   ACE_ALLOC_HOOK_DECLARE;
 

@@ -6512,6 +6512,35 @@ ACE_U_LongLong::ACE_U_LongLong (u_long lo, u_long hi)
 {
 }
 
+ACE_INLINE u_long 
+ACE_U_LongLong::hi (void) const 
+{ 
+  return hi_; 
+}
+
+ACE_INLINE u_long 
+ACE_U_LongLong::lo (void) const 
+{ 
+  return lo_; 
+}
+
+ACE_INLINE void 
+ACE_U_LongLong::hi (u_long hi) 
+{ 
+  hi_ = hi; 
+}
+
+ACE_INLINE void
+ACE_U_LongLong::lo (u_long lo) 
+{ 
+  lo_ = lo; 
+}
+
+ACE_INLINE 
+ACE_U_LongLong::~ACE_U_LongLong (void)
+{
+}
+
 ACE_INLINE int
 ACE_U_LongLong::operator== (const ACE_U_LongLong &ll) const
 {
