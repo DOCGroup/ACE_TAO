@@ -5,19 +5,23 @@ Mon Oct 19 21:40:56 1998  David L. Levine  <levine@cs.wustl.edu>
           an ace/ header.  It can only be done after ace/config.h
           is included, becase some platforms don't allow #pragma once.
 
+        * tests/Param_Test/Makefile: don't build with g++ versions prior
+          to 2.8, becase they can't handle nested classes.  Thanks to
+          JM Strauss <jms97@club-internet.fr> for confirming this.
+
 Mon Oct 19 15:37:53 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (create_B): Fixed a
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (create_B): Fixed a
           warning for using TAO_TRY_ENV with no TAO_CHECK_ENV.Thanks to
-	  David for reporting this.
+          David for reporting this.
 
 Mon Oct 19 15:37:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.dsp
           orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.dsp:
           Modified custom build step for NavWeap.idl to look for
-	  the TAO IDL compiler in the $ACE_ROOT/bin directory.
-	
+          the TAO IDL compiler in the $ACE_ROOT/bin directory.
+
 Mon Oct 19 14:28:30 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
         * examples/POA/NewPOA/run_test.pl: Runs the test. Not exactly a
