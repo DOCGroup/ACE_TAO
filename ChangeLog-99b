@@ -1,3 +1,8 @@
+Fri Sep 17 15:34:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc.cpp (dump):
+	* ace/Malloc_T.cpp (dump): Enriched various dump methods a bit.
+
 Thu Sep 16 17:53:57 CDT 1999  Loren Rittle  <rittle@rsch.comm.mot.com>
 
 	* bin/update-ace+tao.sh: Added force option.
