@@ -1,3 +1,12 @@
+Thu May  2 15:22:36 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Dev_Poll_Reactor.h (work_pending_i):
+	* ace/Dev_Poll_Reactor.cpp (work_pending_i):
+
+	  Accept a pointer to ACE_Time_Value instead of a reference.
+
+	  Corrected the logic for the test for pending timers.
+
 Thu May 02 14:38:53 2002  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Reactor/Misc/pingpong.cpp:
