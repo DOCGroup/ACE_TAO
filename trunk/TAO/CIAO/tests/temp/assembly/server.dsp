@@ -6,21 +6,20 @@
 
 CFG=server EXE - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
-!MESSAGE run the tool that generated this project file and specify the
-!MESSAGE nmake output type.  You can then use the following command:
-!MESSAGE
+!MESSAGE use the Export Makefile command and run
+!MESSAGE 
 !MESSAGE NMAKE /f "server.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "server.mak" CFG="server EXE - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "server EXE - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "server EXE - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -36,13 +35,15 @@ RSC=rc.exe
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
-# ADD CPP /nologo /W3 /GX /O2 /MD /GR /I "..\..\..\..\orbsvcs\orbsvcs" /I "..\..\..\..\CIAO" /I "..\..\..\..\CIAO\ciao" /I "..\..\..\.." /I "..\..\..\..\tao" /I "..\..\..\..\.." /D NDEBUG=1 /D WIN32=1 /D _CONSOLE=1 /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\..\orbsvcs\orbsvcs" /I "..\..\..\..\CIAO" /I "..\..\..\..\CIAO\ciao" /I "..\..\..\.." /I "..\..\..\..\tao" /I "..\..\..\..\.." /D NDEBUG=1 /D WIN32=1 /D _CONSOLE=1 /FD /c
 # SUBTRACT CPP /YX
-# ADD RSC /l 0x409 /d NDEBUG=1 /i "..\..\..\..\orbsvcs\orbsvcs" /i "..\..\..\..\CIAO" /i "..\..\..\..\CIAO\ciao" /i "..\..\..\.." /i "..\..\..\..\tao" /i "..\..\..\..\.."
+# ADD BASE RSC /l 0x809
+# ADD RSC /l 0x409 /i "..\..\..\..\orbsvcs\orbsvcs" /i "..\..\..\..\CIAO" /i "..\..\..\..\CIAO\ciao" /i "..\..\..\.." /i "..\..\..\..\tao" /i "..\..\..\..\.." /d NDEBUG=1
 BSC32=bscmake.exe
-# ADD BSC32 /nologo 
+# ADD BSC32 /nologo
 LINK32=link.exe
-# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO CIAO_Server.lib TAO_PortableServer.lib TAO_Security.lib CIAO_Container.lib TAO.lib TAO_IFR_Client.lib CIAO_Client.lib ACE.lib /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\CIAO\ciao" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /nologo /version:1.3 /subsystem:console  /machine:I386 /out:"server.exe"
+# ADD BASE LINK32 /machine:IX86
+# ADD LINK32 advapi32.lib user32.lib CIAO_Server.lib TAO_PortableServer.lib TAO_Security.lib CIAO_Container.lib TAO.lib TAO_IFR_Client.lib CIAO_Client.lib ACE.lib /nologo /version:1.3 /subsystem:console /machine:I386 /out:"server.exe" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\CIAO\ciao" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "server EXE - Win32 Debug"
 
@@ -51,15 +52,17 @@ LINK32=link.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
-# ADD CPP /nologo /W3 /Gm /GX /Zi /Od /MDd /GR /Gy /I "..\..\..\..\orbsvcs\orbsvcs" /I "..\..\..\..\CIAO" /I "..\..\..\..\CIAO\ciao" /I "..\..\..\.." /I "..\..\..\..\tao" /I "..\..\..\..\.." /D _DEBUG=1 /D WIN32=1 /D _CONSOLE=1 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /Gy /I "..\..\..\..\orbsvcs\orbsvcs" /I "..\..\..\..\CIAO" /I "..\..\..\..\CIAO\ciao" /I "..\..\..\.." /I "..\..\..\..\tao" /I "..\..\..\..\.." /D _DEBUG=1 /D WIN32=1 /D _CONSOLE=1 /FD /c
 # SUBTRACT CPP /YX
-# ADD RSC /l 0x409 /d _DEBUG=1 /i "..\..\..\..\orbsvcs\orbsvcs" /i "..\..\..\..\CIAO" /i "..\..\..\..\CIAO\ciao" /i "..\..\..\.." /i "..\..\..\..\tao" /i "..\..\..\..\.."
+# ADD BASE RSC /l 0x809
+# ADD RSC /l 0x409 /i "..\..\..\..\orbsvcs\orbsvcs" /i "..\..\..\..\CIAO" /i "..\..\..\..\CIAO\ciao" /i "..\..\..\.." /i "..\..\..\..\tao" /i "..\..\..\..\.." /d _DEBUG=1
 BSC32=bscmake.exe
-# ADD BSC32 /nologo 
+# ADD BSC32 /nologo
 LINK32=link.exe
-# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO CIAO_Serverd.lib TAO_PortableServerd.lib TAO_Securityd.lib CIAO_Containerd.lib TAOd.lib TAO_IFR_Clientd.lib CIAO_Clientd.lib ACEd.lib /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\CIAO\ciao" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /nologo /version:1.3 /subsystem:console /debug /machine:I386 /out:"server.exe"
+# ADD BASE LINK32 /machine:IX86
+# ADD LINK32 advapi32.lib user32.lib CIAO_Serverd.lib TAO_PortableServerd.lib TAO_Securityd.lib CIAO_Containerd.lib TAOd.lib TAO_IFR_Clientd.lib CIAO_Clientd.lib ACEd.lib /nologo /version:1.3 /subsystem:console /incremental:no /debug /machine:I386 /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\CIAO\ciao" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -124,13 +127,12 @@ SOURCE=.\control.idl
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+OutDir=.\Release
 InputPath=.\control.idl
 InputName=control
-InputDir=.
-OutDir=.
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -o $(OutDir) -I..\..\..\.. -I..\..\..\ciao -I..\..\..\.. -Ge 1 -Sc $(InputPath)
+	..\..\..\..\..\bin\Release\tao_idl -o $(OutDir) -I..\..\..\.. -I..\..\..\ciao -I..\..\..\.. -Ge 1 -Sc $(InputPath)
 
 "$(OutDir)\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -149,17 +151,15 @@ BuildCmds= \
 
 "$(OutDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
-
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "server EXE - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+OutDir=.
 InputPath=.\control.idl
 InputName=control
-InputDir=.
-OutDir=.
 
 BuildCmds= \
 	..\..\..\..\..\bin\tao_idl -o $(OutDir) -I..\..\..\.. -I..\..\..\ciao -I..\..\..\.. -Ge 1 -Sc $(InputPath)
@@ -181,10 +181,9 @@ BuildCmds= \
 
 "$(OutDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
-
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group
