@@ -95,7 +95,7 @@ TAO_Server_Connection_Handler::open (void*)
       addr.addr_to_string (client, sizeof (client));
     }
 
-  if (ACE_Service_Config::debug ())
+  if (TAO_orbdebug)
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) connection from client %s\n",
                 client));
@@ -106,7 +106,7 @@ int
 TAO_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
                                              ACE_Reactor_Mask rm)
 {
-  if (ACE_Service_Config::debug ())
+  if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
                  "(%P|%t) TAO_Server_Connection_Handler::handle_close (%d, %d)\n",
                  handle,
@@ -123,7 +123,7 @@ TAO_Server_Connection_Handler::svc (void)
   // thread with this method as the "worker function".
   int result = 0;
 
-  if (ACE_Service_Config::debug ())
+  if (TAO_orbdebug)
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) TAO_Server_Connection_Handler::svc begin\n"));
 
@@ -134,7 +134,7 @@ TAO_Server_Connection_Handler::svc (void)
   while ((result = handle_input ()) >= 0)
     continue;
 
-  if (ACE_Service_Config::debug ())
+  if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
                  "(%P|%t) TAO_Server_Connection_Handler::svc end\n"));
 
@@ -496,7 +496,7 @@ int
 TAO_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
                                              ACE_Reactor_Mask rm)
 {
-  if (ACE_Service_Config::debug ())
+  if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
                  "(%P|%t) TAO_Client_Connection_Handler::handle_close (%d, %d)\n",
                  handle,
