@@ -54,10 +54,9 @@ Sun Jan 04 19:45:47 1998  David L. Levine  <levine@cs.wustl.edu>
           Thanks to Jack Erickson <JErickson@exchange.ml.com> for
           verifying that it _should_ return (unsigned long) -10.
 
-        * ace/Env_Value_Test.i (ACE_Convert, from u_long): on Linux/Alpha,
-          use ::strtol instead of ::strtoul and cast the result to
-          an unsigned long.  Its ::strtoul always seems to return 0 for
-          a negative number.
+        * ace/OS.i (strtoul): on Linux/Alpha, use ::strtol instead of
+          ::strtoul and cast the result to an unsigned long.  Its
+          ::strtoul always seems to return 0 for a negative number.
 
         * ace/config-linux-common.h: factored out
           ACE_LACKS_SOME_POSIX_PROTOTYPES from glibc and non-glibc
