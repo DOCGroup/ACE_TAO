@@ -1,3 +1,21 @@
+Thu Jan 10 11:53:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOPC.h:
+	* tao/GIOPC.cpp:
+	* tao/GIOPC.i (Version_var): Added GIOP::Version_var to the
+	  generated code.  
+
+	* tao/diffs/GIOPC.cpp.diff:
+	* tao/diffs/GIOPC.h.diff:
+	* tao/diffs/GIOPC.i.diff:
+	* tao/diffs/GIOPS.cpp.diff:
+	* tao/diffs/GIOPS.h.diff:
+	* tao/diffs/GIOPS.i.diff:
+	* tao/diffs/GIOPS_T.cpp.diff:
+	* tao/diffs/GIOPS_T.h.diff:
+	* tao/diffs/GIOPS_T.i.diff: Added diffs to the generated code.
+
+
 Wed Jan  9 18:07:55 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TO_IDL/fe/fe_init.cpp (populate_global_scope):
