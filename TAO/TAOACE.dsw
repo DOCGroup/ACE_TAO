@@ -417,6 +417,9 @@ Package=<4>
     Project_Dep_Name CosNaming
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Messaging
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name RTEvent
     End Project Dependency
     Begin Project Dependency
@@ -638,6 +641,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
