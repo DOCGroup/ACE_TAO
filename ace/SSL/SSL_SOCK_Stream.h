@@ -60,8 +60,15 @@ class ACE_SSL_Export ACE_SSL_SOCK_Stream : public ACE_SSL_SOCK
 public:
 
   /// Constructor
+  /**
+   * @param context Pointer to @c ACE_SSL_Context instance containing
+   *                the OpenSSL @c SSL data structure to be associated
+   *                with this @c ACE_SSL_SOCK_Stream.  The @c SSL data
+   *                structure will be copied to make it at least
+   *                logically independent of the supplied @a context.
+   */
   ACE_SSL_SOCK_Stream (ACE_SSL_Context *context =
-                         ACE_SSL_Context::instance ());
+                       ACE_SSL_Context::instance ());
 
   /// Destructor
   ~ACE_SSL_SOCK_Stream (void);
@@ -150,7 +157,7 @@ public:
   /**
    * Wait up to timeout amount of time to receive up to n bytes
    * into buf (uses the recv() call).  If recv() times
-   * out a -1 is returned with errno == ETIME.  If it succeeds the
+   * out a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes received is returned.
    */
   ssize_t recv (void *buf,

@@ -71,8 +71,14 @@ public:
       ST_SERVER = 0x0002
     };
 
-
   /// The constructor.
+  /**
+   * @param context Pointer to @c ACE_SSL_Context instance containing
+   *                the OpenSSL @c SSL data structure to be associated
+   *                with this @c ACE_SSL_SOCK_Stream.  The @c SSL data
+   *                structure will be copied to make it at least
+   *                logically independent of the supplied @a context.
+   */
   ACE_SSL_Asynch_Stream (Stream_Type s_type = ST_SERVER,
                          ACE_SSL_Context * context = 0);
 
