@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ORT_test_IORInterceptor.h"
 
 ACE_RCSID (ORT,
@@ -7,11 +5,10 @@ ACE_RCSID (ORT,
            "$Id$")
 
 
-ORT_test_IORInterceptor::ORT_test_IORInterceptor ()
+ORT_test_IORInterceptor::ORT_test_IORInterceptor (void)
   : establish_count_ (0),
     components_establish_count_ (0)
 {
-  /// Constructor
 }
 
 char *
@@ -30,7 +27,7 @@ ORT_test_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 ORT_test_IORInterceptor::establish_components (
     PortableInterceptor::IORInfo_ptr /* info */
-    ACE_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++this->establish_count_;
@@ -41,8 +38,9 @@ ORT_test_IORInterceptor::establish_components (
 }
 
 void
-ORT_test_IORInterceptor::
-components_established (PortableInterceptor::IORInfo_ptr /* ior_info */)
+ORT_test_IORInterceptor::components_established (
+    PortableInterceptor::IORInfo_ptr /* info */
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++this->components_establish_count_;
@@ -54,23 +52,20 @@ components_established (PortableInterceptor::IORInfo_ptr /* ior_info */)
 
 void
 ORT_test_IORInterceptor::adapter_manager_state_changed (
-    PortableInterceptor::AdapterManagerId ,
-    PortableInterceptor::AdapterState)
+    PortableInterceptor::AdapterManagerId,
+    PortableInterceptor::AdapterState
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "The adapter_manager state has changed. \n"));
-
-  // @@ Priyanka, why do you need the below "return" statement?
-  return;
 }
 
 void
 ORT_test_IORInterceptor:: adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
-    PortableInterceptor::AdapterState)
+    PortableInterceptor::AdapterState
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ Priyanka, why do you need the below "return" statement?
-  return;
 }
