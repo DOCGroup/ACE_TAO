@@ -617,7 +617,8 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
 
   ACE_NEW_RETURN (impl, ACE_TP_Reactor ((ACE_Sig_Handler*)0,
                                         (ACE_Timer_Queue*)0,
-                                        this->reactor_mask_signals_),
+                                        this->reactor_mask_signals_,
+                                        ACE_Select_Reactor_Token::LIFO),
                   0);
   return impl;
 }
