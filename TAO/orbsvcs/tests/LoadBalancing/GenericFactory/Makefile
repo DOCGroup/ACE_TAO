@@ -28,7 +28,14 @@ CLNT_TEST_OBJS = client.o TestC.o
 
 SVR_TEST_OBJS = TestC.o TestS.o server.o LB_server.o Basic.o
 
-BIN = client server
+BIN2 = client server
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (CosLoadBalancing,$(findstring CosLoadBalancing,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # CosLoadBalancing
 
 TAO_IDLFLAGS += -Ge 1
 

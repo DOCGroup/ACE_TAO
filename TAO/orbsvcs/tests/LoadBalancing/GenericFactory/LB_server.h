@@ -1,22 +1,16 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests
-//
-// = FILENAME
-//    server.h
-//
-// = DESCRIPTION
-//      This class facilitates the testing of Load Balancer.
-//
-// = AUTHORS
-//      Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
-//      Ossama Othman <ossama@doc.ece.uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   LB_server.h
+ *
+ *  $Id$
+ *
+ *  @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
+ *  @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #include "orbsvcs/orbsvcs/CosLoadBalancingC.h"
 #include "orbsvcs/orbsvcs/PortableGroupC.h"
@@ -26,59 +20,68 @@
 // by the server.
 class Basic;
 
+// @@ Jai, the class is called LB_Basic_Test yet the filename is
+//    LB_server.*.  Can you please correct the names so that they
+//    match.
+
+/**
+ * @class LB_Basic_Test
+ *
+ * @brief Encapsulate the test in class.
+ *
+ * This is a class used to retrieve the LoadManager reference and
+ * create the Object Group.  Servants add themselves to the object
+ * group and the object group reference is published to the clients.
+ * Clients then invoke the "servant operations" on the LoadManager
+ * itself.  At this point the Load Balancing cycle starts.
+ */
 class LB_Basic_Test
 {
-  // This is a class used to retrieve the LoadManager reference
-  // and create the Object Group.
-  // Servants add themselves to the object group and the object group
-  // reference is published to the clients.
-  // Clients then invoke the "servant operations" on the LoadManager itself.
-  // At this point the Load Balancing cycle starts.
 public:
 
+  /// Constructor
   LB_Basic_Test (int argc, char **argv);
-  // Constructor
 
+  /// destroys LoadManager, ORB and POA.
   int destroy (void);
-  // destroys LoadManager, ORB and POA.
 
+  /// start the ORB.
   int start_orb_and_poa (void);
-  // start the ORB.
 
+  /// Get the LoadManager Interface.
   int init (int argc, char **argv);
-  // Get the LoadManager Interface.
 
+  /// Create the Object Group using the Load Manager Reference.
   int create_object_group (void);
-  // Create the Object Group using the Load Manager Reference.
 
+  /// register the servants with the object group.
   int register_servant (Basic *servant, const char *loc);
-  // register the servants with the object group.
 
+  /// for servants to register to the initialised ORB.
   CORBA::ORB_ptr orb (void);
-  // for servants to register to the initialised ORB.
 
+  /// for servants to get the reference for object_group.
   CORBA::Object_ptr object_group (void);
-  // for servants to get the reference for object_group.
 
+  /// for servants to get the reference for object_group.
   CosLoadBalancing::LoadManager_ptr load_manager (void);
-  // for servants to get the reference for object_group.
 
 private:
 
+  /// Load Manager
   CosLoadBalancing::LoadManager_var lm_;
-  // Load Manager
 
+  /// Object Group.
   CORBA::Object_var object_group_;
-  // Object Group.
 
+  /// factory id for the object group.
   PortableGroup::GenericFactory::FactoryCreationId_var fcid_;
-  // factory id for the object group.
 
+  /// Used to force the creation of the object group only once.
   static int called_once_;
-  // Used to force the creation of the object group only once.
 
+  /// write the IOR to a file so that it can be read later.
   int write_ior_to_file (const char *);
-  // write the IOR to a file so that it can be read later.
 
   CORBA::ORB_var orb_;
   int argc_;

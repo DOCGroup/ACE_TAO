@@ -23,7 +23,7 @@ main (int argc, char *argv[])
 
       Basic basic_servant1 (basic_test.object_group (),
                             basic_test.load_manager (),
-                            basic_test.orb (), 
+                            basic_test.orb (),
                             loc1);
 
       Basic basic_servant2 (basic_test.object_group (),
@@ -41,9 +41,15 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
-     
-      basic_test.destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK; 
+
+      // @@ Jai, this destroy() call doesn't match the signature of
+      //    your LB_Basic_Test::destroy() method.  You're also
+      //    ignoring the return value of that method.  You need to
+      //    decide whether this method will report errors through
+      //    CORBA exceptions or through a return value.  If you decide
+      //    to use a return value, make sure you check it!
+      basic_test.destroy ();
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

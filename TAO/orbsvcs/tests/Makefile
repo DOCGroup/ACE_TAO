@@ -50,6 +50,7 @@ DIRS += Concurrency \
   tests_svc_loader \
   Security \
   Miop \
+  LoadBalancing \
   Log
 
 #----------------------------------------------------------------------------
