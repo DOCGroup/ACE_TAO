@@ -7,6 +7,9 @@ Sat Oct 18 09:13:29 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Sat Oct 18 07:43:29 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* Makefile (release): oops, removed "echo" that was used to
+	  disable CVS commit, for testing.
+
 	* include/makeinclude/rules.local.GNU: added $(TEMPLATE_REPOSITORY)
 	  to OBJDIRS, so that individual platforms can add template
 	  repository directories for creation.
