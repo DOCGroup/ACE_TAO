@@ -1,29 +1,45 @@
+Mon Feb  2 07:41:25 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/va4icc.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Removed the ssl and defaultlibs keyword.  These were unncessary
+          and should have been removed long ago.
+
 Mon Feb  2 07:16:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS_NS_unistd.h:
-	* ace/OS_NS_unistd.inl:
+        * ace/OS_NS_unistd.h:
+        * ace/OS_NS_unistd.inl:
 
-	  Changed the parameters to void * instead of char * since most of
-	  the platforms take a void *.
+          Changed the parameters to void * instead of char * since most of
+          the platforms take a void *.
 
 Mon Feb  2 06:56:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Makefile.ace:
+        * ace/Makefile.ace:
 
-	  Building applications which use ACE library fail because
-	  LynxOS's linker is unable to find dlopen() which is used in
-	  DLL_Manager.o and implemented in OS_NS_dlfcn.o. 
+          Building applications which use ACE library fail because
+          LynxOS's linker is unable to find dlopen() which is used in
+          DLL_Manager.o and implemented in OS_NS_dlfcn.o.
 
           To fix this, OS_NS_dlfcn.o must be placed after DLL_Manager.o
-	  when creating libACE.a with ar. Thanks to Olli Savia for the
-	  patch. 
-	  
+          when creating libACE.a with ar. Thanks to Olli Savia for the
+          patch.
+
 Sun Feb  1 19:09:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/config-borland-common.h:
-	* ace/config-win32-borland.h:
-	  Kylix doesn't have swab, CBuilder has a non-const swab, CBuilderX
-	  has the normal swab
+        * ace/config-borland-common.h:
+        * ace/config-win32-borland.h:
+          Kylix doesn't have swab, CBuilder has a non-const swab, CBuilderX
+          has the normal swab
 
 Sun Feb  1 17:06:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -43,33 +59,33 @@ Sun Feb  1 15:15:44 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Feb  1 12:36:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* include/makeinclude/build_lib.bor:
-	  Added support for using the CBX ar with the -M commandline option
-	  to pass it a script. This fixes the too long commandline.
+        * include/makeinclude/build_lib.bor:
+          Added support for using the CBX ar with the -M commandline option
+          to pass it a script. This fixes the too long commandline.
 
 Sat Jan 31 11:01:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS_NS_unistd.h:
-	* ace/OS_NS_unistd.inl:
+        * ace/OS_NS_unistd.h:
+        * ace/OS_NS_unistd.inl:
 
-	  Thanks to Olli Savia, we now have a ACE_OS::swab (). This calls
-	  the platform specific swab () function. There is a emulation
-	  which could be used on platforms that don't support ::swab
-	  (). The emulation can be used by defining ACE_LACKS_SWAB.
+          Thanks to Olli Savia, we now have a ACE_OS::swab (). This calls
+          the platform specific swab () function. There is a emulation
+          which could be used on platforms that don't support ::swab
+          (). The emulation can be used by defining ACE_LACKS_SWAB.
 
-	  I haven't added ACE_LACKS_SWAB in any config file. We will do it
-	  as and when things showup in our daily builds.
+          I haven't added ACE_LACKS_SWAB in any config file. We will do it
+          as and when things showup in our daily builds.
 
 Sat Jan 31 08:52:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/config/smart_proxies.mpb:
-	  Removed requires smart_proxies, there is no need for this and
-	  only prevents the smart_proxies tests from compiling
+        * bin/MakeProjectCreator/config/smart_proxies.mpb:
+          Removed requires smart_proxies, there is no need for this and
+          only prevents the smart_proxies tests from compiling
 
 Fri Jan 30 19:33:49 UTC 2004  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* include/makeinclude/platform_linux.GNU: Allow user to override
-	  OCFLAGS in platform_macros.GNU file.
+        * include/makeinclude/platform_linux.GNU: Allow user to override
+          OCFLAGS in platform_macros.GNU file.
 
 Fri Jan 30 10:30:26 2004  Chad Elliott  <elliott_c@ociweb.com>
 
