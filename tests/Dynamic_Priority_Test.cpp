@@ -53,6 +53,10 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 
+#if defined (VXWORKS)
+# include "ace/OS_NS_string.h"
+#endif /* VXWORKS */
+
 ACE_RCSID(tests, Dynamic_Priority_Test, "$Id$")
 
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
