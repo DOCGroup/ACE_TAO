@@ -23,6 +23,10 @@
 
 #include "tao/corbafwd.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // These are global to simplify is use by other code, very much in
 // particular by getopt and related argument-parsing code
 //

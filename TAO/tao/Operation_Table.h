@@ -18,6 +18,11 @@
 #define TAO_OPTABLE_H
 
 #include "ace/Hash_Map_Manager.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
 #include "tao/corbafwd.h"

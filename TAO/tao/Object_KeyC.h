@@ -14,6 +14,11 @@
 #define TAO_IDL_OBJECT_KEYC_H
 
 #include "tao/corbafwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/Sequence.h"
 
 class TAO_Export TAO_ObjectKey : public TAO_Unbounded_Sequence<CORBA::Octet>

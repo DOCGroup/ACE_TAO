@@ -18,6 +18,11 @@
 #define TAO_SERVANT_BASE_H
 
 #include "tao/corbafwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/POAC.h"
 
 class TAO_Operation_Table;

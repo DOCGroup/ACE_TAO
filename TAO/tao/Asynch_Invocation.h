@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //   Carlos O'Ryan <coryan@cs.wustl.edu> and Alexander Babu Arulanthu
-//   <alex@cs.wustl.edu> 
+//   <alex@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -22,6 +22,10 @@
 #define TAO_ASYNCH_INVOCATION_H
 
 #include "tao/Invocation.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
 #include "tao/MessagingC.h"
@@ -68,7 +72,7 @@ public:
 
   //   TAO_InputCDR &inp_stream (void);
   //   // Return the underlying input stream.
-  // 
+  //
   //   void get_value (CORBA::TypeCode_ptr tc,
   //                   void *value,
   //                   CORBA_Environment &TAO_IN_ENV =

@@ -21,6 +21,11 @@
 #define TAO_ACCEPTOR_REGISTRY_H
 
 #include "tao/Pluggable.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/corbafwd.h"
 #include "tao/Typecode.h"
 #include "tao/Resource_Factory.h"

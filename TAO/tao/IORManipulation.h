@@ -21,6 +21,11 @@
 #define TAO_IOR_MANIPULATION_H
 
 #include "tao/Object.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/IORS.h"
 
 class TAO_IOR_Manipulation_impl : public POA_TAO_IOP::TAO_IOR_Manipulation

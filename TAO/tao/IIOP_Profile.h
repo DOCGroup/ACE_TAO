@@ -21,6 +21,11 @@
 #define TAO_IIOP_PROFILE_H
 
 #include "tao/ORB.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/Pluggable.h"
 #include "tao/Object_KeyC.h"
 #include "tao/GIOP.h"

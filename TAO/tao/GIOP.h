@@ -36,6 +36,11 @@
 #define TAO_GIOP_H
 
 #include "tao/corbafwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/Sequence.h"
 #include "tao/CDR.h"
 

@@ -21,6 +21,11 @@
 #define TAO_PLUGGABLE_H
 
 #include "tao/corbafwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/Sequence.h"
 #include "tao/Typecode.h"
 
@@ -184,15 +189,15 @@ public:
 
   // = Setting the Transport object in Idle state. Theese methods are
   //   routed the TMS object. The TMS starategies implement the
-  //   methods accordingly. 
-  
+  //   methods accordingly.
+
   virtual int idle_after_send (void);
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
-  
+
   virtual int idle_after_reply (void);
   // Request is sent and the reply is received. Idle the transport
-  // now. 
+  // now.
 
   virtual int reply_received (const CORBA::ULong request_id);
   // Check with the TMS whether the reply has been receieved for the

@@ -21,6 +21,11 @@
 #define TAO_ORB_H
 
 #include "tao/corbafwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/Exception.h"
 #include "tao/IOR_LookupTable.h"
 #include "tao/Services.h"

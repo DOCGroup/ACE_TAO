@@ -22,6 +22,10 @@
 
 #include "tao/corbafwd.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class TAO_ORB_Core;
 class TAO_Transport;
 class TAO_Transport_Mux_Strategy;

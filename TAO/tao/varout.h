@@ -22,6 +22,10 @@
 
 #include "tao/Object.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template<class T, class T_var> class TAO_Object_Manager;
 
 template <class T, class T_var>
@@ -49,7 +53,7 @@ public:
 
   TAO_Object_Field_T (const T_var &);
   // constructor from a var
- 
+
   TAO_Object_Field_T (const TAO_Object_Field_T<T,T_var> &);
   // copy constructor
 
