@@ -31,7 +31,10 @@
 
 #include "ForwardRequestC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
 
@@ -172,72 +175,9 @@ PortableServer::ForwardRequest::ForwardRequest (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::ForwardRequest::_type (void) const
+CORBA::TypeCode_ptr PortableServer::ForwardRequest::_tao_type (void) const
 {
   return ::PortableServer::_tc_ForwardRequest;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_PortableServer_ForwardRequest[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  46,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f46), 
-  ACE_NTOHL (0x6f727761), 
-  ACE_NTOHL (0x72645265), 
-  ACE_NTOHL (0x71756573), 
-  ACE_NTOHL (0x743a322e), 
-  ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/ForwardRequest:2.3
-    15,
-  ACE_NTOHL (0x466f7277), 
-  ACE_NTOHL (0x61726452), 
-  ACE_NTOHL (0x65717565), 
-  ACE_NTOHL (0x73740000),  // name = ForwardRequest
-  1, // member count
-    18,
-  ACE_NTOHL (0x666f7277), 
-  ACE_NTOHL (0x6172645f), 
-  ACE_NTOHL (0x72656665), 
-  ACE_NTOHL (0x72656e63), 
-  ACE_NTOHL (0x65000000),  // name = forward_reference
-    CORBA::tk_objref,
-  52, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    29,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4f62), 
-    ACE_NTOHL (0x6a656374), 
-    ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
-        7,
-    ACE_NTOHL (0x4f626a65), 
-    ACE_NTOHL (0x63740000),  // name = Object
-    
-};
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_ForwardRequest (
-    CORBA::tk_except,
-    sizeof (_oc_PortableServer_ForwardRequest),
-    (char *) &_oc_PortableServer_ForwardRequest,
-    0,
-    0
-  );
-
-namespace PortableServer
-{
-  ::CORBA::TypeCode_ptr const _tc_ForwardRequest =
-    &_tc_TAO_tc_PortableServer_ForwardRequest;
 }
 
 // TAO_IDL - Generated from
@@ -274,7 +214,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
