@@ -59,10 +59,11 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
                     | Security::NoProtection
                     | Security::NoDelegation);
 
-      // Initialize the default SSL port to the IANA assigned IIOP
-      // over SSL port.  We usually only get here if we're creating a
-      // profile on the client side.
-      this->ssl_component_.port = 684;
+      // Initialize the default SSL port to zero, not the IANA
+      // assigned IIOP over SSL port (684).  We usually only get here
+      // if we're creating a profile on the client side using an IOR
+      // that does not contain an SSLIOP tagged component.
+      this->ssl_component_.port = 0;
     }
 }
 
