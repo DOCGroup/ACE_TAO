@@ -216,8 +216,12 @@ ACE_INET_Addr::set (u_short port_number,
         }
       else
         {
-          (void) ACE_OS::memcpy ((void *) &addr, hp->h_addr, hp->h_length);
-          return this->set (port_number, encode ? ntohl (addr) : addr, encode);
+          (void) ACE_OS::memcpy ((void *) &addr,
+                                 hp->h_addr,
+                                 hp->h_length);
+          return this->set (port_number,
+                            encode ? ntohl (addr) : addr,
+                            encode);
         }
     }
 }
@@ -240,7 +244,9 @@ ACE_INET_Addr::set (const char port_name[],
   ACE_SERVENT_DATA buf;
 
   servent *sp = ACE_OS::getservbyname_r ((char *) port_name,
-                                         "tcp", &sentry, buf);
+                                         "tcp",
+                                         &sentry,
+                                         buf);
   if (sp == 0)
     return -1;
   else
@@ -266,7 +272,9 @@ ACE_INET_Addr::set (const char port_name[],
   ACE_SERVENT_DATA buf;
 
   servent *sp = ACE_OS::getservbyname_r ((char *) port_name,
-                                         "tcp", &sentry, buf);
+                                         "tcp",
+                                         &sentry,
+                                         buf);
   if (sp == 0)
     return -1;
   else
@@ -283,7 +291,9 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number, host_name) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_INET_Addr::ACE_INET_Addr: %p\n", host_name));
+    ACE_ERROR ((LM_ERROR,
+                "ACE_INET_Addr::ACE_INET_Addr: %p\n",
+                host_name == 0 ? "<unknown>" : host_name));
 }
 
 // Creates a ACE_INET_Addr from a sockaddr_in structure.
@@ -326,7 +336,8 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number, inet_address) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_INET_Addr::ACE_INET_Addr"));
+    ACE_ERROR ((LM_ERROR,
+                "ACE_INET_Addr::ACE_INET_Addr"));
 }
 
 // Creates a ACE_INET_Addr from a PORT_NAME and the remote
@@ -337,18 +348,20 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name, host_name) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_INET_Addr::ACE_INET_Addr"));
+    ACE_ERROR ((LM_ERROR, 
+                "ACE_INET_Addr::ACE_INET_Addr"));
 }
 
 // Creates a ACE_INET_Addr from a PORT_NAME and an Internet address.
 
 
-ACE_INET_Addr::ACE_INET_Addr (const char* port_name,
+ACE_INET_Addr::ACE_INET_Addr (const char *port_name,
                               ACE_UINT32 inet_address)
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name, inet_address) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_INET_Addr::ACE_INET_Addr"));
+    ACE_ERROR ((LM_ERROR,
+                "ACE_INET_Addr::ACE_INET_Addr"));
 }
 
 int
@@ -383,8 +396,8 @@ ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
 
 #if defined (CHORUS)
       hostent *hp = ACE_OS::gethostbyaddr ((char *) &this->inet_addr_.sin_addr,
-                                             a_len,
-                                             this->addr_type_);
+                                           a_len,
+                                           this->addr_type_);
 #else
       ACE_HOSTENT_DATA buf;
       hostent *hp = ACE_OS::gethostbyaddr_r ((char *) &this->inet_addr_.sin_addr,
@@ -443,7 +456,8 @@ ACE_INET_Addr::get_host_name (void) const
       int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
 
       hostent *hp = ACE_OS::gethostbyaddr ((char *) &this->inet_addr_.sin_addr,
-                                           a_len, this->addr_type_);
+                                           a_len,
+                                           this->addr_type_);
 
       if (hp == 0)
         return 0;

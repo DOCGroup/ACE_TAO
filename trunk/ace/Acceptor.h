@@ -373,20 +373,20 @@ public:
 		      const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
 		      int restart = 1,
                       int reset_new_handle = 0);
-  // Create a SVC_HANDLER, accept the connection into the SVC_HANDLER,
-  // and activate the SVC_HANDLER.
+  // Create a <SVC_HANDLER>, accept the connection into the <SVC_HANDLER>,
+  // and activate the <SVC_HANDLER>.
   
   virtual int cancel (void);
   // Cancel a oneshot acceptor that was started asynchronously.
 
   virtual operator ACE_PEER_ACCEPTOR &() const;
-  // Return the underlying PEER_ACCEPTOR object.
+  // Return the underlying <PEER_ACCEPTOR> object.
 
   virtual ACE_PEER_ACCEPTOR &acceptor (void) const;
-  // Return the underlying PEER_ACCEPTOR object.
+  // Return the underlying <PEER_ACCEPTOR> object.
 
   virtual int close (void);
-  // Close down the Acceptor
+  // Close down the <Oneshot_Acceptor>.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -398,9 +398,9 @@ protected:
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
   // Bridge method for activating a <svc_handler> with the appropriate
   // concurrency strategy.  Default behavior is to activate the
-  // SVC_HANDLER as a "passive object."  However, subclasses can
+  // <SVC_HANDLER> as a "passive object."  However, subclasses can
   // override this strategy to do more sophisticated concurrency
-  // activations (such as creating the SVC_HANDLER as an "active
+  // activations (such as creating the <SVC_HANDLER> as an "active
   // object" via multi-threading or multi-processing).
 
   int shared_accept (SVC_HANDLER *svc_handler,

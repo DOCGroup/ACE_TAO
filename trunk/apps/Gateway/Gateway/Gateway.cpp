@@ -199,7 +199,7 @@ Gateway::parse_connection_config_file (void)
       // First time in check.
       if (previous_connection_id == 0)
         {
-          previous_connection_id == 1;
+          previous_connection_id = 1;
 
           if (pci.connection_id_ != 1)
             ACE_DEBUG ((LM_DEBUG,

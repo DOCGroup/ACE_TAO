@@ -873,6 +873,11 @@ ACE_Log_Msg::log (const char *format_str,
 
   ACE_OS::free (ACE_MALLOC_T (save_p));
 
+  // Copy the message from thread-specific storage into the transfer
+  // buffer (this can be optimized away by changing other code...).
+  log_record.msg_data (this->msg ());
+
+
   // Write the <log_record> to the appropriate location.
   ssize_t result = this->log (log_record, abort_prog);
  
@@ -898,10 +903,6 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
   if (ACE_BIT_DISABLED (ACE_Log_Msg::flags_,
                         ACE_Log_Msg::SILENT))
     {
-      // Copy the message from thread-specific storage into the
-      // transfer buffer (this can be optimized away by changing other
-      // code...).
-      log_record.msg_data (this->msg ());
       this->stop_tracing ();
 
 #if !defined (ACE_WIN32)

@@ -1,5 +1,19 @@
 Sun Jan 11 00:00:26 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* apps/Gateway/Gateway/Gateway.cpp (parse_connection_config_file):
+ 	  Fixed a typo, == should be =.  Thanks to David Levine for
+ 	  reporting this.
+
+	* apps/Gateway/Peer/Peer.cpp (recv),
+	  apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (recv):
+ 	  Added a cast to remove a GCC warning about signed/unsigned
+ 	  comparisons.  Thanks to David Levine for reporting this.
+
+	* ace/Log_Msg.cpp (log): Made a minor change to move where the
+ 	  message is copied from thread-specific storage into the transfer
+ 	  buffer.  Thanks to Patrick J. McNerthney <pat@thememedia.com>
+ 	  for reporting this.
+
 	* apps/Gateway/Peer/Peer: Added new logic to transmit subscription
  	  requests to the Gateway.
 
