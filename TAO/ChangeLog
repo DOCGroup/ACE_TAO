@@ -1,10 +1,19 @@
+Sat Jan 17 19:28:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.{h,cpp}:
+	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/export.h:
+	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/AVStream_Pluggable_Flow_Protocol.mpc:
+	  This test buils an own shared library but used the AV export macro's.
+	  Gave this test its own macro so that it exports just it own symbols
+	  instead of all AV symbols.
+
 Sat Jan 17 11:26:03 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
-        * orbsvcs/orbsvcs/FtRtEvent/Fault_Detector_Loader.cpp:
-          orbsvcs/orbsvcs/FtRtEvent/SCTP_Fault_Detector.h:
-          orbsvcs/orbsvcs/FtRtEvent/SCTP_Fault_Detector.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.cpp:
           Changed the class name "STCP_Fault_Detector" to
-          "STCP_Fault_Detector"
+          "SCTP_Fault_Detector"
 
 Fri Jan 16 22:23:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
