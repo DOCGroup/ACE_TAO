@@ -78,6 +78,10 @@ typedef char TCHAR;
 
 
 // Define the unicode/wchar related macros correctly
+#if defined ACE_HAS_WCHAR
+# define ACE_TEXT_CHAR_TO_WCHAR(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
+# define ACE_TEXT_WCHAR_TO_CHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
+#endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_USES_WCHAR)
 typedef wchar_t ACE_TCHAR;
