@@ -57,8 +57,7 @@ class TAO_LB_ObjectReferenceFactory
     const CORBA::StringSeq & repository_ids,
     const char * location,
     CORBA::ORB_ptr orb,
-    CosLoadBalancing::LoadManager_ptr lm,
-    CosLoadBalancing::LoadAlert_ptr la);
+    CosLoadBalancing::LoadManager_ptr lm);
 
   /**
    * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -154,9 +153,6 @@ private:
 
   /// Reference to the LoadManager object.
   CosLoadBalancing::LoadManager_var lm_;
-
-  /// Reference to the LoadAlert object for this location.
-  CosLoadBalancing::LoadAlert_var load_alert_;
 
   /// Array of flags that denotes whether or not an object group
   /// member of a given RepositoryId has been registered with the

@@ -60,16 +60,16 @@ TAO_LB_Pull_Handler::handle_timeout (
                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-//               ACE_DEBUG ((LM_DEBUG,
-//                           "LOCATION = %s\tLOAD = %f\n",
-//                           (*i).ext_id_[0].id.in (),
-//                           location->load_list[0].value));
+//           ACE_DEBUG ((LM_DEBUG,
+//                       "LOCATION = %s\tLOAD = %f\n",
+//                       location[0].id.in (),
+//                       load_list[0].value));
         }
     }
   ACE_CATCHANY
     {
       // Catch the exception and ignore it.
-      
+
       if (TAO_debug_level > 0)
         ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                              "(%P|%t) PullHandler::handle_timeout()\n");

@@ -396,6 +396,25 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLoadBalancingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlertMap.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlertInfo.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.inl \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Location_Equal_To.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Operators.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Location_Equal_To.inl \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_MonitorMap.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_LoadListMap.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Factory_Map.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Factory_Set.h \
+ $(ACE_ROOT)/ace/Array_Base.h \
+ $(ACE_ROOT)/ace/Array_Base.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair_T.h \
@@ -413,25 +432,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_MonitorMap.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Location_Equal_To.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Operators.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Location_Equal_To.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_LoadListMap.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Factory_Map.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Factory_Set.h \
- $(ACE_ROOT)/ace/Array_Base.h \
- $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/PG_Location_Map.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \

@@ -16,13 +16,11 @@
 
 #include "ace/pre.h"
 
-#include "LoadBalancing_export.h"
+#include "LB_LoadAlert.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "LB_LoadAlert.h"
 
 #include "tao/LocalObject.h"
 #include "tao/PortableInterceptorC.h"

@@ -29,8 +29,8 @@
 /**
  * @class TAO_LB_Component
  *
- * @brief Implementation of the PortableInterceptor::Component
- *        interface.
+ * @brief Service_Object that can be used to add load balancer support
+ *        to a CORBA-base server.
  *
  * Servers wishing to transparently add load balancing/management
  * support load this object via the ACE_Service_Configurator (e.g. by

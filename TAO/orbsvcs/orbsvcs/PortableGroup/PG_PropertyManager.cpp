@@ -116,7 +116,7 @@ TAO_PG_PropertyManager::set_type_properties (
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
-  ACE_Hash_Map_Entry<const char *, PortableGroup::Properties> * entry;
+  Type_Prop_Table::ENTRY * entry;
   if (this->type_properties_.find (type_id, entry) != 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
@@ -133,14 +133,16 @@ TAO_PG_PropertyManager::get_type_properties (
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
-  ACE_Hash_Map_Entry<const char *, PortableGroup::Properties> * entry;
-  if (this->type_properties_.find (type_id, entry) != 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
-  PortableGroup::Properties & type_properties = entry->int_id_;
+  Type_Prop_Table::ENTRY * entry;
+  PortableGroup::Properties * type_properties = 0;
+
+  if (this->type_properties_.find (type_id, entry) == 0)
+    type_properties = &entry->int_id_;
 
   const CORBA::ULong def_props_len = this->default_properties_.length ();
-  const CORBA::ULong type_props_len = type_properties.length ();
+  const CORBA::ULong type_props_len =
+    (type_properties == 0 ? 0 : type_properties->length ());
   const CORBA::ULong props_len =
     (def_props_len > type_props_len ? def_props_len : type_props_len);
 
@@ -163,7 +165,9 @@ TAO_PG_PropertyManager::get_type_properties (
   properties->length (props_len);
 
   *tmp_properties = this->default_properties_;
-  TAO_PG::override_properties (type_properties, *tmp_properties);
+
+  if (type_properties != 0 && type_props_len > 0)
+    TAO_PG::override_properties (*type_properties, *tmp_properties);
 
   return properties._retn ();
 }
@@ -183,7 +187,7 @@ TAO_PG_PropertyManager::remove_type_properties (
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
-  ACE_Hash_Map_Entry<const char *, PortableGroup::Properties> * entry;
+  Type_Prop_Table::ENTRY * entry;
   if (this->type_properties_.find (type_id, entry) != 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
@@ -248,11 +252,11 @@ TAO_PG_PropertyManager::get_properties (
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, property_map_guard, this->lock_, 0);
 
   // @@ Race condition here!
-  PortableGroup::Properties_var dynamic_properties = 
+  PortableGroup::Properties_var dynamic_properties =
     this->object_group_manager_.get_properties (object_group
                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::ULong dyn_props_len = dynamic_properties->length ();
   if (dyn_props_len > properties_len)
     properties_len = dyn_props_len;
@@ -264,7 +268,7 @@ TAO_PG_PropertyManager::get_properties (
 
   CORBA::ULong type_props_len = 0;
   PortableGroup::Properties * type_properties = 0;
-  ACE_Hash_Map_Entry<const char *, PortableGroup::Properties> * type_entry;
+  Type_Prop_Table::ENTRY * type_entry;
   if (this->type_properties_.find (type_id.in (), type_entry) == 0)
     {
       type_properties = &type_entry->int_id_;
@@ -273,7 +277,7 @@ TAO_PG_PropertyManager::get_properties (
       if (type_props_len > properties_len)
         properties_len = type_props_len;
     }
-    
+
   CORBA::ULong def_props_len = this->default_properties_.length ();
   if (def_props_len > properties_len)
     properties_len = def_props_len;
@@ -359,19 +363,19 @@ TAO_PG_PropertyManager::remove_properties (
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 // Type-specific property hash map template instantiations
-template class ACE_Hash_Map_Entry<const char *, PortableGroup::Properties>;
-template class ACE_Hash_Map_Manager_Ex<const char *, PortableGroup::Properties, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<const char *, PortableGroup::Properties, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<const char *, PortableGroup::Properties, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, PortableGroup::Properties, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_CString, PortableGroup::Properties>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 // Type-specific property hash map template instantiations
-#pragma instantiate ACE_Hash_Map_Entry<const char *, PortableGroup::Properties>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, PortableGroup::Properties, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, PortableGroup::Properties, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, PortableGroup::Properties, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, PortableGroup::Properties, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, PortableGroup::Properties>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
