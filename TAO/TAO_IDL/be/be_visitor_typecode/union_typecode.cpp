@@ -66,12 +66,12 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
     << "static TAO::TypeCode::Union<char const *," << be_nl
     << "                            " << case_array_type.c_str ()
     << " const *," << be_nl
-    << "                            TAO::Null_RefCount_Policy> const"
+    << "                            TAO::Null_RefCount_Policy>"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
     << "\"" << node->repoID () << "\"," << be_nl
     << "\"" << node->original_local_name () << "\"," << be_nl
-    << discriminant_type->tc_name () << "," << be_nl
+    << "&" << discriminant_type->tc_name () << "," << be_nl
     << "_tao_cases_" << node->flat_name () << "," << be_nl
     << node->nfields () << ","
     << node->default_index () << "," << be_nl;
