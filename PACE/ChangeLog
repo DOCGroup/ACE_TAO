@@ -1,3 +1,18 @@
+Wed Jul 5 13:38:11 2000 John Heitmann <jwh1@cs.wustl.edu>
+
+	* pace/types.h:
+	  Added #include <pthread.h> to expose types on LynxOS.
+
+	* pace/time.inl:
+	  Casted away const for LynxOS.
+
+	* pace/posix/termios.*:
+	  Fixed a typedef and removed tc*pgrp which didn't seem to
+	  take from the last commit.
+
+	* ../ace/OS.i:
+	  Updated corresponding functions to those newly added in PACE.
+
 Wed Jul  5 17:15:26 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/Makefile:

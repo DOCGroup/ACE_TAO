@@ -40,7 +40,7 @@ typedef tcflag_t pace_tcflag_t;
 
 #ifndef PACE_TERMIOS
 #define PACE_TERMIOS
-typedef structtermios pace_termios;
+typedef struct termios pace_termios;
 #endif /* PACE_TERMIOS */
 
 
@@ -66,7 +66,6 @@ typedef structtermios pace_termios;
                                   int optional_actions,
                                   const pace_termios * termios_p);
 
-  PACE_INLINE int pace_tcsetpgrp (int fildes, pace_pid_t pgrp_id);
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
