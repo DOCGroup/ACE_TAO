@@ -80,8 +80,16 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
           << "{" << be_nl << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
 
       if (idl_global->gen_thru_poa_collocation ())
-        *os << "return new " << node->full_coll_name (be_interface::THRU_POA)
-            << " (stub);" << be_uidt_nl;
+        *os << "{" << be_nl
+            << node->full_name () << "_ptr retval = 0;" << be_nl
+            << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+            << "retval," << be_nl
+            << node->full_coll_name (be_interface::THRU_POA)
+            << " (stub)," << be_nl
+            << "0" << be_uidt_nl
+            << ");" << be_uidt_nl
+            << "return retval;" << be_nl
+            << "}" << be_uidt_nl;
       else
         *os << "break;" << be_uidt_nl;
 
@@ -94,8 +102,15 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
             << node->full_skel_name () << "*, obj->_servant ()->_downcast (\""
             << node->repoID () << "\"));" << be_nl
             << "if (servant != 0)" << be_idt_nl
-            << "return new " << node->full_coll_name (be_interface::DIRECT)
-            << " (servant, stub);" << be_uidt << be_uidt_nl
+            << "{" << be_idt_nl
+            << node->full_skel_name () << "*retval = 0;" << be_nl
+            << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+            << "retval," << be_nl
+            << node->full_coll_name (be_interface::DIRECT)
+            << " (servant, stub)," << be_nl
+            << "0" << be_uidt_nl
+            << ");" << be_uidt_nl
+            << "return retval;" << be_nl
             << "}" << be_uidt_nl;
 
       *os << "break;" << be_uidt_nl
@@ -327,9 +342,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       *os << "{" << be_idt_nl;
       *os << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));" << be_nl;
       *os << "ACE_THROW (CORBA_BAD_OPERATION ());"
-        //<< "ACE_TRY_ENV);" << be_uidt_nl;
           << be_uidt_nl;
-      //  *os << "env.exception (new CORBA_BAD_OPERATION ());" << be_nl;
       *os << "}" << be_nl;
       *os << "else" << be_idt_nl;
       *os << "skel (req, this, context, ACE_TRY_ENV);" << be_uidt << be_uidt_nl;
@@ -354,9 +367,15 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // The _this operation is much more simpler for locality constraint
   // interface.
   if (idl_global->gen_locality_constraint ())
-    *os << "return new "
-        << node->full_coll_name (be_interface::DIRECT) << " (this, stub);"
-        << be_uidt_nl << "}\n\n";
+    *os << node->full_name () << " *retval = 0;" << be_nl
+        << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+        << "retval," << be_nl
+        << node->full_coll_name (be_interface::DIRECT) 
+        << " (this, stub)," << be_nl
+        << "0" << be_uidt_nl
+        << ");" << be_uidt_nl
+        << "return retval;" << be_uidt_nl
+        << "}\n\n";
   else
     {
       *os << "if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())" << be_idt_nl
@@ -366,16 +385,30 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
       // Thru POA stub
       if (idl_global->gen_thru_poa_collocation ())
-        *os << "return new "
-            << node->full_coll_name (be_interface::THRU_POA) << " (stub);" << be_uidt_nl;
+        *os << "{" << be_idt_nl
+            << node->full_name () << "_ptr retval = 0;" << be_nl
+            << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+            << "retval," << be_nl
+            << node->full_coll_name (be_interface::THRU_POA) << " (stub)," << be_nl
+            << "0" << be_uidt_nl
+            << ");" << be_uidt_nl
+            << "return retval;" << be_uidt_nl
+            << "}" << be_uidt_nl;
       else
         *os << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl;
 
       // Direct stub
       *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
       if (idl_global->gen_direct_collocation ())
-        *os << "return new "
-            << node->full_coll_name (be_interface::DIRECT) << " (this, stub);" << be_uidt_nl;
+        *os << "{" << be_idt_nl
+            << node->full_name () << "_ptr retval = 0;" << be_nl
+            << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+            << "retval," << be_nl
+            << node->full_coll_name (be_interface::DIRECT) << " (this, stub)," << be_nl
+            << "0" << be_uidt_nl
+            << ");" << be_uidt_nl
+            << "return retval;" << be_uidt_nl
+            << "}" << be_uidt_nl;
       else
         *os << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl;
 
@@ -385,7 +418,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
           << "else" << be_idt_nl
           << "{" << be_idt_nl
           << "// stub->_incr_refcnt ();" << be_nl
-          << "CORBA::Object_var obj = new CORBA::Object (stub);" << be_nl
+          << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
+          << "ACE_NEW_RETURN (tmp, CORBA::Object (stub), 0);" << be_nl
+          << "CORBA::Object_var obj = tmp;" << be_nl
           << "return " << node->full_name ()
           << "::_unchecked_narrow (obj.in ());" << be_uidt_nl
           << "}" << be_uidt << be_uidt_nl

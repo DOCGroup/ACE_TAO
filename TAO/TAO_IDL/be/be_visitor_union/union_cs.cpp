@@ -115,6 +115,9 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
       this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
 
+      // So we know we are generating the copy constructor
+      this->ctx_->sub_state (TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR);
+
       *os << "// copy constructor" << be_nl;
       *os << node->name () << "::" << node->local_name ()
           << " (const " << node->name () << " &u)" << be_nl
@@ -152,6 +155,9 @@ int be_visitor_union_cs::visit_union (be_union *node)
       *os << "}\n\n";
 
       this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
+
+      // Reset this for generating the assignment operator.
+      this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
 
       // assignment operator
       os->indent ();
