@@ -1,3 +1,16 @@
+Fri Oct 16 17:00:47 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+		     be_visitor_enum/cdr_op_cs.cpp:
+		     be_visitor_exception/cdr_op_cs.cpp:
+		     be_visitor_interface/cdr_op_cs.cpp:
+		     be_visitor_sequence/cdr_op_cs.cpp:
+		     be_visitor_structure/cdr_op_cs.cpp:
+		     be_visitor_union/cdr_op_cs.cpp:
+
+	  The generated <<, >> operators now have the C++ "inline" keyword
+	  before them. Thanks to Chris Cleeland for suggesting this.
+
 Fri Oct 16 04:16:19 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Object_Table and POA: Changed the object table and POA/TAO
