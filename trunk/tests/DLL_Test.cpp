@@ -88,15 +88,15 @@ Hello *get_hello (void)
 
 typedef Hello *(*TC) (void);
 
-// Protection against this test being run individually.
-#if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
-    defined (__hpux)
-
 int
 main (int argc, char *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
+
+// Protection against this test being run on platforms not supporting Dlls.
+#if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
+    defined (__hpux) 
 
   ACE_START_TEST ("DLL_Test");
 
@@ -123,10 +123,15 @@ main (int argc, char *argv[])
   my_hello->say_hello ();
   my_hello->say_next ();
 
+#else
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("Dynamically Linkable Libraries not supported on this platform\n")));
+#endif /* ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux */
+
   ACE_END_TEST;
   return 0;
 }
-#endif /* ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux */
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class auto_ptr <Hello>;
