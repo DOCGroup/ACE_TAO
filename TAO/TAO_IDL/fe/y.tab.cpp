@@ -541,7 +541,7 @@ short tao_yycheck[] = {                                      10,
 #endif
 #define TAO_YYMAXTOKEN 309
 #if TAO_YYDEBUG
-char *tao_yyname[] = {
+const char *tao_yyname[] = {
 "end-of-file",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,"'%'","'&'",0,"'('","')'","'*'","'+'","','","'-'",0,"'/'",0,0,0,0,0,0,0,0,
 0,0,"':'","';'","'<'","'='","'>'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -562,7 +562,7 @@ char *tao_yyname[] = {
 "IDL_TRUETOK","IDL_FALSETOK","IDL_SCOPE_DELIMITOR","IDL_LEFT_SHIFT",
 "IDL_RIGHT_SHIFT",
 };
-char *tao_yyrule[] = {
+const char *tao_yyrule[] = {
 "$accept : start",
 "start : definitions",
 "definitions : definition definitions",
@@ -959,7 +959,7 @@ int tao_yyindent;
 #endif /* TAO_YYDEBUG_INDENT */
 #ifndef TAO_YYDEBUG_REDUCE
 #ifdef __cplusplus
-void TAO_YYDEBUG_REDUCE(int tao_yynew_state, int tao_yyrule_num, char *tao_yyrule_string, int tao_yynew_indent, int tao_yyrhs_count)
+void TAO_YYDEBUG_REDUCE(int tao_yynew_state, int tao_yyrule_num, const char *tao_yyrule_string, int tao_yynew_indent, int tao_yyrhs_count)
 #else
 TAO_YYDEBUG_REDUCE(tao_yynew_state, tao_yyrule_num, tao_yyrule_string, tao_yynew_indent, tao_yyrhs_count)
 int tao_yynew_state;
@@ -989,7 +989,7 @@ int tao_yyrhs_count;
 #endif /* TAO_YYDEBUG_REDUCE */
 #ifndef TAO_YYDEBUG_SHIFT_LEXEME
 #ifdef __cplusplus
-void TAO_YYDEBUG_SHIFT_LEXEME(int tao_yyold_state, int tao_yynew_state, char *tao_yytoken_string, int tao_yynew_indent)
+void TAO_YYDEBUG_SHIFT_LEXEME(int tao_yyold_state, int tao_yynew_state, const char *tao_yytoken_string, int tao_yynew_indent)
 #else
 TAO_YYDEBUG_SHIFT_LEXEME(tao_yyold_state, tao_yynew_state, tao_yytoken_string, tao_yynew_indent)
 int tao_yyold_state;
@@ -1004,7 +1004,7 @@ int tao_yynew_indent;
 #endif /*  TAO_YYDEBUG_SHIFT_LEXEME */
 #ifndef TAO_YYDEBUG_LOOK_AHEAD
 #ifdef __cplusplus
-void TAO_YYDEBUG_LOOK_AHEAD(int tao_yynew_state, int tao_yytoken_num, char *tao_yytoken_string, int tao_yyindent)
+void TAO_YYDEBUG_LOOK_AHEAD(int tao_yynew_state, int tao_yytoken_num, const char *tao_yytoken_string, int tao_yyindent)
 #else
 TAO_YYDEBUG_LOOK_AHEAD(tao_yynew_state, tao_yytoken_num, tao_yytoken_string, tao_yyindent)
 int tao_yynew_state;
@@ -1049,7 +1049,7 @@ int tao_yyindent;
 #endif /* TAO_YYDEBUG_DISCARD_STATE */
 #ifndef TAO_YYDEBUG_DISCARD_TOKEN
 #ifdef __cplusplus
-void TAO_YYDEBUG_DISCARD_TOKEN(int tao_yynew_state, int tao_yytoken_num, char *tao_yytoken_string, int tao_yyindent)
+void TAO_YYDEBUG_DISCARD_TOKEN(int tao_yynew_state, int tao_yytoken_num, const char *tao_yytoken_string, int tao_yyindent)
 #else
 TAO_YYDEBUG_DISCARD_TOKEN(tao_yynew_state, tao_yytoken_num, tao_yytoken_string, tao_yyindent)
 int tao_yynew_state;
@@ -1085,7 +1085,7 @@ tao_yyparse()
 {
     register int tao_yym, tao_yyn, tao_yystate;
 #if TAO_YYDEBUG
-    register char *tao_yys;
+    register const char *tao_yys;
 #ifndef __cplusplus
     extern char *ace_foo();
 #endif

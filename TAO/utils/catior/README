@@ -1,7 +1,7 @@
 $Id$
 
-CatIOR is a small utility that takes in a stringified IOR and decode
-it, printing out the information contained in it.
+CatIOR is a utility that takes in a stringified IOR and decodes it,
+printing out the information contained in it.
 
 Usage
 -----
