@@ -61,19 +61,6 @@ public:
 
 private:
 
-  // @@ Priyanka: do you really need this (see next comment)?  BTW, in
-  // general we put private data members *after* private methods.
-  /// ORB
-  CORBA::ORB_var orb_;
-
-  // @@ Priyanka: this makes the class non-reentrant, only one thread
-  //    can parse a string at a time.  The "Right Thing"[tm] is to
-  //    pass the MProfile to whatever helper methods you have, so they
-  //    can add stuff to it.  That way there is no resource
-  //    contention.
-  /// One big mprofile which consists the profiles of all the endpoints.
-  TAO_MProfile mprofile_;
-
   /// Checks the prefix to see if it is RIR.
   virtual int check_prefix (const char *endpoint);
 
@@ -93,6 +80,8 @@ private:
    */
   virtual void
     parse_string_mprofile_helper (CORBA::String_var end_point,
+                                  CORBA::ORB_ptr orb,
+                                  TAO_MProfile &mprofile,
                                   CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -102,12 +91,15 @@ private:
    * reference which is sent to the application.
    */
   virtual CORBA::Object_ptr
-    make_stub_from_mprofile (CORBA::Environment &)
+    make_stub_from_mprofile (CORBA::ORB_ptr orb,
+                             TAO_MProfile &mprofile,
+                             CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Gets the pointer to the key_string when the protocol used is RIR
   virtual CORBA::Object_ptr
     parse_string_rir_helper (const char * &corbaloc_name,
+                             CORBA::ORB_ptr orb,
                              CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -116,6 +108,8 @@ private:
   virtual void parse_string_assign_helper (CORBA::ULong &addr_list_length,
                                            ACE_CString &key_string,
                                            ACE_CString &cloc_name,
+                                           CORBA::ORB_ptr orb_var,
+                                           TAO_MProfile &mprofile,
                                            CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -128,6 +122,8 @@ private:
     assign_key_string(char * &cloc_name_ptr,
                       ACE_CString &key_string,
                       CORBA::ULong &addr_list_length,
+                      CORBA::ORB_ptr orb,
+                      TAO_MProfile &mprofile,
                       CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
