@@ -1,20 +1,33 @@
+Wed Aug 25 15:55:05 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,cpp},Object_Manager.*,Signal.i (default_mask): moved
+          the default_mask () static method from ACE_Object_Manager
+          to ACE_OS_Object_Manager, so that it can be used by
+          Log_Msg.cpp without layer inversion.  (Left a deprecated,
+          inline ACE_Object_Manager::default_mask (), for backward
+          compatibility.)  default_mask () now returns a sigset_t *
+          instead of an ACE_Sig_Set *, again to avoid layer inversion.
+
+        * ace/Log_Msg.cpp (log): replaced use of ACE_Sig_Guard
+          with a bare-bones ACE_Log_Msg_Sig_Guard. [Bug 262]
+
 Wed Aug 25 14:53:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/run_all.pl:
-	* bin/auto_compile:
-	  The script did not start with the canonical trick to run perl
-	  from [t]csh, [ba]sh or perl itself.
+        * bin/run_all.pl:
+        * bin/auto_compile:
+          The script did not start with the canonical trick to run perl
+          from [t]csh, [ba]sh or perl itself.
 
 Wed Aug 25 14:45:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tests/Process_Manager_Test.cpp:
+        * tests/Process_Manager_Test.cpp:
 
-	  Explicitly include "ace/Signal.h" to make declaration of
-	  ACE_Sig_Set class visible.
+          Explicitly include "ace/Signal.h" to make declaration of
+          ACE_Sig_Set class visible.
 
-	  return statement at end of multiple_children_sig_handler()
-	  function is never reached.  It was commented out to prevent
-	  compiler warnings.
+          return statement at end of multiple_children_sig_handler()
+          function is never reached.  It was commented out to prevent
+          compiler warnings.
 
 Wed Aug 25 13:34:07 1999  Narendra Ravi  <naren@cs.ualberta.ca>
 
@@ -483,7 +496,7 @@ Wed Aug 18 19:08:08 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.{h,cpp},Object_Manager.{h,cpp},Log_Msg.cpp:
           moved ACE_LOG_MSG_INSTANCE_LOCK from ACE_Object_Manager
           to ACE_OS_Object_Manager, so that Log_Msg.cpp needn't
-          depend on Object_Manager for it.
+          to depend on Object_Manager for it.
 
 Wed Aug 18 18:20:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
