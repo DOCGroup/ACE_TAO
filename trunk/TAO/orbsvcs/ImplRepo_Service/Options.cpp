@@ -42,8 +42,8 @@ Options::parse_args (int argc, ASYS_TCHAR *argv[])
           ACE_Configuration_Heap* heap = new ACE_Configuration_Heap;
           if(heap->open(get_opts.optarg))
           {
-            ACE_ERROR_RETURN((LM_ERROR, 
-                              "Error:: Opening persistent heap file '%s'\n", 
+            ACE_ERROR_RETURN((LM_ERROR,
+                              "Error:: Opening persistent heap file '%s'\n",
                               get_opts.optarg), -2);
           }
           config_ = heap;
@@ -109,7 +109,7 @@ Options::startup_timeout (void) const
 }
 
 
-ACE_Configuration * 
+ACE_Configuration *
 Options::config () const
 {
   return this->config_;
@@ -121,3 +121,16 @@ template class ACE_Singleton <Options, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <Options, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+
+
+
+
+
+
+
+
+
+
+
+

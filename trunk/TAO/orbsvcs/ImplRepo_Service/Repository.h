@@ -17,8 +17,12 @@
 //
 // ============================================================================
 
+
 #ifndef REPOSITORY_H
 #define REPOSITORY_H
+
+#include "tao/corba.h"
+#include "tao/ImplRepoC.h"
 
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager.h"
@@ -42,6 +46,8 @@ public:
   Server_Info (const ACE_TString POA_name,
                const ACE_TString logical_server_name,
                const ACE_TString startup_command,
+               const ImplementationRepository::EnvironmentList
+                     environment_vars,
                const ACE_TString working_dir,
                const ActivationMode activation);
   // Initialize the command_line and working_dir.
@@ -58,6 +64,8 @@ public:
 
   void get_startup_info (ACE_TString &logical_server_name,
                          ACE_TString &startup_command,
+                         ImplementationRepository::EnvironmentList
+                            &environment_vars,
                          ACE_TString &working_dir,
                          ActivationMode &activation);
   // Returns startup information.
@@ -89,6 +97,9 @@ private:
 
   ACE_TString startup_command_;
   // The command line startup command (program and arguments).
+
+  ImplementationRepository::EnvironmentList environment_vars_;
+  // Environment Variables.
 
   ACE_TString working_dir_;
   // The working directory.
@@ -145,6 +156,8 @@ public:
   int add (const ACE_TString POA_name,
            const ACE_TString logical_server_name,
            const ACE_TString startup_command,
+           const ImplementationRepository::EnvironmentList
+                 environment_vars,
            const ACE_TString working_dir,
            const Server_Info::ActivationMode activation);
   // Add a new server to the Repository
@@ -157,6 +170,8 @@ public:
   int get_startup_info (const ACE_TString POA_name,
                         ACE_TString &logical_server_name,
                         ACE_TString &startup_command,
+                        ImplementationRepository::EnvironmentList
+                           &environment_vars,
                         ACE_TString &working_dir,
                         Server_Info::ActivationMode &activation);
   // Returns information related to startup.
@@ -190,3 +205,27 @@ private:
 
 
 #endif /* REPOSITORY_H */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
