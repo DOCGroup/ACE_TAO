@@ -1,3 +1,12 @@
+Mon Jul  9 11:16:36 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/IFR_Client/TAO_IFR_Client.dsp:
+        * tao/TypeCodeFactory/TypeCodeFactory.dsp:
+
+          Added MFC debug and release versions to these projects.
+          Thanks to Francois Bernier <fbernier@gel.ulaval.ca> for
+          sending them in.
+
 Mon Jul  9 10:13:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp:
