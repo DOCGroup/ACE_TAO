@@ -90,7 +90,7 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
                   ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::bind_i")
                   ACE_TEXT (" unable to bind \n")));
     }
-  cout <<"Size of map 0 " <<this->cache_map_.current_size () <<endl;
+
   return retval;
 }
 
