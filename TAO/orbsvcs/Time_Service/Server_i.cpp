@@ -7,8 +7,7 @@ ACE_RCSID(Time_Service, Server_i, "$Id$")
 
 // Constructor.
 Server_i::Server_i (void)
-  : ior_output_file_ (0),
-    use_ir_ (0)
+  : ior_output_file_ (0)
 {
   // no-op.
 }
@@ -25,7 +24,7 @@ Server_i::~Server_i (void)
 int
 Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:i");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -43,9 +42,6 @@ Server_i::parse_args (void)
                              "[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
         break;
-      case 'i': // Use the Implementation Repository.
-        this->use_ir_ = 1;
-        break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -53,7 +49,6 @@ Server_i::parse_args (void)
                            "usage:  %s"
                            " [-d]"
                            " [-o] <ior_output_file>"
-                           " [-i] <Use the Implementation Repository>"
                            "\n",
                            argv_ [0]),
                           1);
@@ -103,60 +98,6 @@ Server_i::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
   return 0;
 }
 
-// Initialize the Implementation Repository.
-
-int
-Server_i::init_IR (void)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      if (this->use_ir_ == 1)
-        {
-          ACE_NEW_RETURN (this->ir_helper_,
-                          IR_Helper ("time_server",
-                                     this->orb_manager_.child_poa (),
-                                     this->orb_manager_.orb (),
-                                     TAO_debug_level),
-                          -1);
-
-          this->ir_helper_->change_object (this->time_service_server_.in (),
-                                           ACE_TRY_ENV);
-        }
-
-      ACE_TRY_CHECK;
-
-      // Convert the IR server reference to a string.
-      CORBA::String_var objref_server =
-        this->orb_manager_.orb ()->object_to_string (this->time_service_server_.in (),
-                                                     ACE_TRY_ENV);
-
-      ACE_TRY_CHECK;
-
-      // Print the IR server IOR on the console.
-      ACE_DEBUG ((LM_DEBUG,
-                  "[SERVER] Process/Thread : (%P/%t) The Time Service IREPO SERVER IOR is: <%s>\n",
-                  objref_server.in ()));
-
-      if (this->ior_output_file_)
-        {
-                // Write the IOR to the file.
-                ACE_OS::fprintf (this->ior_output_file_,
-                                 "%s\n",
-                                 objref_server.in ());
-                ACE_OS::fclose (this->ior_output_file_);
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
-      return -1;
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}
-
 // Create a new time server object and register it with the child POA.
 // Print the IOR of the registered server on the console and in a file.
 
@@ -169,7 +110,7 @@ Server_i::create_server (void)
 
       // Create a new server object.
       ACE_NEW_RETURN (this->time_service_server_impl_,
-                      TAO_Time_Service_Server(this->use_ir_),
+                      TAO_Time_Service_Server,
                       0);
 
       // Register a servant with the child poa.
@@ -204,14 +145,12 @@ Server_i::create_server (void)
       // Print the server IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
                   "[SERVER] Process/Thread Id : (%P/%t) The Time Service "
-                  "SERVER IOR without Implementation Repository is: <%s>\n",
+                  "SERVER IOR: <%s>\n",
                    objref_server.in ()));
 
-      // Print the IOR to a file if we are not using the Implementation Repository.
-      // If we are using the implementation repository then the 'changed IOR' is
-      // written to a file inside the init_IR ().
+      // Print the IOR to a file.
 
-      if ((this->ior_output_file_) && (this->use_ir_ == 0))
+      if (this->ior_output_file_)
         {
           // Write the IOR to the file.
           ACE_OS::fprintf (this->ior_output_file_,
@@ -361,21 +300,15 @@ Server_i::init (int argc,
       this->orb_ = this->orb_manager_.orb ();
 
       // Use the Naming Service Register the above implementation with the Naming Service.
-      if (this->use_ir_ == 0)
-        this->init_naming_service (ACE_TRY_ENV);
+      this->init_naming_service (ACE_TRY_ENV);
 
       ACE_TRY_CHECK;
 
       // Create the server object.
       this->create_server ();
 
-      // Initialize the IR.
-      if (this->use_ir_ == 1)
-        this->init_IR ();
-
       // Register the server object with the Naming Service.
-      if (this->use_ir_ == 0)
-        this->register_server ();
+      this->register_server ();
 
     }
   ACE_CATCHANY
@@ -396,23 +329,10 @@ Server_i::run (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
-
-      if (this->use_ir_ == 1)
-        {
-          this->ir_helper_->notify_startup (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-
       if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "[SERVER] Process/Thread Id : (%P/%t) Server_i::run"),
                           -1);
-
-      if (this->use_ir_ == 1)
-        {
-          this->ir_helper_->notify_shutdown (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
     }
   ACE_CATCHANY
     {

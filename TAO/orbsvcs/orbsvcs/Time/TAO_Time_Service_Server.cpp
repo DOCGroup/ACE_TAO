@@ -6,8 +6,7 @@
 #include "TAO_Time_Service_Server.h"
 
 // Constructor.
-TAO_Time_Service_Server::TAO_Time_Service_Server (int shutdown)
-  : shutdown_ (shutdown)
+TAO_Time_Service_Server::TAO_Time_Service_Server (void)
 {
 }
 
