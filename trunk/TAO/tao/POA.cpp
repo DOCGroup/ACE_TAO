@@ -1249,10 +1249,13 @@ TAO_POA::create_reference_i (const char *intf,
     {
       // Otherwise, it is the NON_RETAIN policy.  Therefore, any ol'
       // object id will do (even an empty one).
-      ACE_NEW_THROW_EX (system_id,
+      PortableServer::ObjectId *sys_id;
+      ACE_NEW_THROW_EX (sys_id,
                         PortableServer::ObjectId,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+      system_id = sys_id;
     }
 
   // Create object key.
@@ -1319,10 +1322,13 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
     {
       // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
       // is the same as system id.
-      ACE_NEW_THROW_EX (system_id,
+      PortableServer::ObjectId *sys_id;
+      ACE_NEW_THROW_EX (sys_id,
                         PortableServer::ObjectId (user_id),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+      system_id = sys_id;
     }
 
   // Create object key.
