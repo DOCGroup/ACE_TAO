@@ -13,10 +13,10 @@ namespace ACE_RMCast
   Socket (Address const& a, bool loop)
       : loop_ (loop), sn_ (1), cond_ (mutex_)
   {
-    acknowledge_ = auto_ptr<Acknowledge> (new Acknowledge ());
-    retransmit_ = auto_ptr<Retransmit> (new Retransmit ());
-    simulator_ = auto_ptr<Simulator> (new Simulator ());
-    link_ = auto_ptr<Link> (new Link (a));
+    acknowledge_.reset (new Acknowledge ());
+    retransmit_.reset (new Retransmit ());
+    simulator_.reset (new Simulator ());
+    link_.reset (new Link (a));
 
     // Start IN stack from top to bottom.
     //
