@@ -1,3 +1,10 @@
+Mon Jun 26 12:09:33 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-lynxos.h: use _POSIX_VERSION to detect the
+          LynxOS version, instead of trying to rely on the g++
+          version.  Thanks to Chad Elliott <elliott_c@ociweb.com>
+          for this suggestion.
+
 Mon Jun 26 12:01:17 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/run_tests.sh
@@ -40,21 +47,21 @@ Thu Jun 22 15:16:31 2000  Steve Huston  <shuston@riverace.com>
 
 Thu Jun 22 14:03:53 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* netsvcs/servers/svc.conf: Changed the library name where the
-	  Logging_Strategy could be found.
+        * netsvcs/servers/svc.conf: Changed the library name where the
+          Logging_Strategy could be found.
 
-	* netsvcs/lib/netsvcs.dsp: Removed Logging_Strategy.* from the
-	  project file.
+        * netsvcs/lib/netsvcs.dsp: Removed Logging_Strategy.* from the
+          project file.
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp: Added Logging_Strategy.*.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Added Logging_Strategy.*.
 
-	* ace/Logging_Strategy.h: Removed ACE_SVC_BUILD_DLL.  It's now
-	  under ACE.  Changed ACE_SVC_FACTORY_DECLARE to
-	  ACE_FACTORY_DECLARE.
+        * ace/Logging_Strategy.h: Removed ACE_SVC_BUILD_DLL.  It's now
+          under ACE.  Changed ACE_SVC_FACTORY_DECLARE to
+          ACE_FACTORY_DECLARE.
 
-	* ace/Logging_Strategy.cpp: Changed ACE_SVC_FACTORY_DEFINE to
-	  ACE_FACTORY_DEFINE.
+        * ace/Logging_Strategy.cpp: Changed ACE_SVC_FACTORY_DEFINE to
+          ACE_FACTORY_DEFINE.
 
 Thu Jun 22 13:59:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -68,12 +75,12 @@ Thu Jun 22 14:11:26 2000  Steve Huston  <shuston@riverace.com>
 
 Thu Jun 22 12:46:43 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace: Added Logging_Strategy.{h,cpp} to ACE and the Makefile.
+        * ace: Added Logging_Strategy.{h,cpp} to ACE and the Makefile.
 
-	* netsvcs/lib: Zapped the Logging_Strategy.{h,cpp}
-	  files from netsvcs and moved them into ACE, where they can be
- 	  reused more readily.  Thanks to Martin Krumpolec
- 	  <krumpo@pobox.sk> for this suggestion.
+        * netsvcs/lib: Zapped the Logging_Strategy.{h,cpp}
+          files from netsvcs and moved them into ACE, where they can be
+          reused more readily.  Thanks to Martin Krumpolec
+          <krumpo@pobox.sk> for this suggestion.
 
 Thu Jun 22 13:29:22 2000  Steve Huston  <shuston@riverace.com>
 
@@ -95,8 +102,8 @@ Thu Jun 22 08:28:48 2000  Steve Huston  <shuston@riverace.com>
 
 Wed Jun 21 14:40:15 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/OS.i:
-	  Removed unused arg warnings in ACE_OS::rename()
+        * ace/OS.i:
+          Removed unused arg warnings in ACE_OS::rename()
 
 Wed Jun 21 13:41:27 2000  Steve Huston  <shuston@riverace.com>
 
@@ -132,22 +139,22 @@ Wed Jun 21 03:02:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Wed Jun 21 01:12:59 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/ACE.cpp: Changed all the timed versions of the "_n_i()"
-	  methods so that they are more optimistic.  Previously, these
-	  methods would check with select() before issuing the data
-	  transfer call.  There was really no need to do this since the
-	  socket is already in non-blocking mode and will therefore not
-	  block in transferring the data.  This change should make these
-	  methods faster in the case when there is no blocking since
-	  select() will not be called.
+        * ace/ACE.cpp: Changed all the timed versions of the "_n_i()"
+          methods so that they are more optimistic.  Previously, these
+          methods would check with select() before issuing the data
+          transfer call.  There was really no need to do this since the
+          socket is already in non-blocking mode and will therefore not
+          block in transferring the data.  This change should make these
+          methods faster in the case when there is no blocking since
+          select() will not be called.
 
-	  As a side effect of this change, checking for EWOULDBLOCK now
-	  happens after the call to send()/recv().  This automatically
-	  fixed bug 594 though I am still not sure why send()/recv() would
-	  EWOULDBLOCK right after select() indicated that the socket was
-	  ready.  Either way, thanks to Viatcheslav A. Batenine
-	  <slavikb@iname.com> for reporting the bug and providing an
-	  example illustrating the bug.
+          As a side effect of this change, checking for EWOULDBLOCK now
+          happens after the call to send()/recv().  This automatically
+          fixed bug 594 though I am still not sure why send()/recv() would
+          EWOULDBLOCK right after select() indicated that the socket was
+          ready.  Either way, thanks to Viatcheslav A. Batenine
+          <slavikb@iname.com> for reporting the bug and providing an
+          example illustrating the bug.
 
 Tue Jun 20 19:37:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
