@@ -259,8 +259,7 @@ run_test (ACE_THR_FUNC worker)
 #endif /* ACE_HAS_THREADS */
 }
 
-// This function runs the parent process in a separate worker thread
-// for the <ACE_TEST_ONE_CHILDR> test.
+// This function runs the parent process in a separate worker thread.
 
 static void *
 worker_parent (void *)
@@ -281,12 +280,10 @@ worker_parent (void *)
 
   // Perform a <wait> until our child process has exited.
   
-  sigset_t s;
-  ACE_OS::sigemptyset (&s);
   while (shut_down == 0)
     {
       // Wait for a signal to arrive.
-      if (ACE_OS::sigsuspend (&s) == -1)
+      if (ACE_OS::sigsuspend (0) == -1)
         ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT ("(%P|%t) %p\n"),
                     ASYS_TEXT ("sigsuspend")));
