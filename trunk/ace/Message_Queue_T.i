@@ -1,6 +1,14 @@
 /* -*- C++ -*- */
 // $Id$
 
+template <ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue<ACE_SYNCH_USE>::dequeue (ACE_Message_Block *&first_item,
+                                           ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::notification_strategy");
+  return this->dequeue (first_item, timeout);
+}
+
 template <ACE_SYNCH_DECL> ACE_INLINE ACE_Notification_Strategy *
 ACE_Message_Queue<ACE_SYNCH_USE>::notification_strategy (void)
 {
@@ -142,5 +150,3 @@ ACE_Message_Queue<ACE_SYNCH_USE>::deactivated (void)
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Reverse_Iterator)
-
-

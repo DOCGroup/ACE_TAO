@@ -27,6 +27,10 @@
 class ACE_Message_Queue_Vx;
 #endif /* defined (VXWORKS) */
 
+#if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+class ACE_Message_Queue_NT;
+#endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
+
 template <ACE_SYNCH_DECL>
 class ACE_Message_Queue : public ACE_Message_Queue_Base
 {
@@ -131,6 +135,10 @@ public:
   // Enqueue an <ACE_Message_Block *> at the head of the queue.
   // Returns -1 on failure, else the number of items still on the
   // queue.
+
+  virtual int dequeue (ACE_Message_Block *&first_item,
+                       ACE_Time_Value *timeout = 0);
+  // Same as the following.
 
   virtual int dequeue_head (ACE_Message_Block *&first_item,
                             ACE_Time_Value *timeout = 0);
@@ -626,6 +634,14 @@ public:
   // factory method for a wrapped VxWorks message queue
 
 #endif /* defined (VXWORKS) */
+
+#if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+
+  static ACE_Message_Queue_NT *
+  create_NT_message_queue (size_t max_threads);
+  // factory method for a NT message queue.
+
+#endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
 };
 
 #if defined (__ACE_INLINE__)

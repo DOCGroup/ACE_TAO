@@ -1,6 +1,16 @@
 /* -*- C++ -*- */
 // $Id$
 
+ACE_INLINE
+ACE_Message_Queue_Base::ACE_Message_Queue_Base (void)
+{
+}
+
+ACE_INLINE
+ACE_Message_Queue_Base::~ACE_Message_Queue_Base (void)
+{
+}
+
 #if defined (VXWORKS)
 // Specialization to use native VxWorks Message Queues.
 
@@ -81,3 +91,60 @@ ACE_Message_Queue_Vx::message_count (void)
 }
 
 #endif /* VXWORKS */
+
+#if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+ACE_INLINE int
+ACE_Message_Queue_NT::is_full (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::is_full");
+  return 0; // Always not full.
+}
+
+ACE_INLINE int
+ACE_Message_Queue_NT::is_empty (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::is_empty");
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0);
+
+  return (this->cur_bytes_ > 0 && this->cur_count_ > 0 ? 1 : 0);
+}
+
+ACE_INLINE size_t
+ACE_Message_Queue_NT::message_bytes (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::message_bytes");
+  // Accessing to size_t must be atomic.
+  return this->cur_bytes_;
+}
+
+ACE_INLINE size_t
+ACE_Message_Queue_NT::message_count (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::message_count");
+  // Accessing to size_t must be atomic.
+  return this->cur_count_;
+}
+
+ACE_INLINE size_t
+ACE_Message_Queue_NT::max_threads (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::max_threads");
+  return this->max_cthrs_;
+}
+
+ACE_INLINE int
+ACE_Message_Queue_NT::deactivated (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::ceactivated");
+  // Accessing to int must be atomic.
+  return this->deactivated_;
+}
+
+ACE_INLINE ACE_HANDLE
+ACE_Message_Queue_NT::completion_port (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::completion_port");
+  return this->completion_port_;
+}
+
+#endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
