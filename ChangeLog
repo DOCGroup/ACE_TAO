@@ -1,3 +1,9 @@
+Mon Jan 19 15:59:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Tests.bor:
+	  Added missing FIFO_Test. Thanks to Peter Bekiesch
+          <peter.bekiesch@dtmgmbh.de>for reporting this.
+
 Mon Jan 19 08:07:02 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
