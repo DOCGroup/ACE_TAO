@@ -1,3 +1,8 @@
+Mon Aug 30 16:24:51 2004  Steve Huston  <shuston@riverace.com>
+
+	* NEWS: Noted that the wide-char stuff is done and autoconf is in
+	  progress.
+
 Mon Aug 30 11:54:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/security.mpb:
