@@ -1,3 +1,14 @@
+Fri May 30 14:04:44 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* include/makeinclude/platform_irix6.4_sgic++.GNU: added to make
+	  things compile on latest SGI machines.  Removed +pp and -woff...
+	  flags from the CCFLAGS variable.  Added new -woff flags to hide
+	  other warnings.
+
+	* ace/config-irix6.4-sgic++*.h: copied corresponding configs from
+	  irix6.2 and removed ACE_HAS_SVR4_TIME, since this seems to be no
+	  longer true of irix6.4.
+
 Fri May 30 02:39:39 1997    <irfan@TWOSTEP>
 
 	* ace/Connector.cpp 
