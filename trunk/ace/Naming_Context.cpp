@@ -40,7 +40,7 @@ ACE_Naming_Context::info (ACE_TCHAR **strp,
   ACE_UNUSED_ARG (length);
   ACE_TCHAR buf[BUFSIZ];
 
-  ACE_OS::sprintf (buf, 
+  ACE_OS::sprintf (buf,
                    ACE_LIB_TEXT ("%s\t#%s\n"),
                    ACE_LIB_TEXT ("ACE_Naming_Context"),
                    ACE_LIB_TEXT ("Proxy for making calls to a Name Server"));
@@ -172,8 +172,8 @@ ACE_Naming_Context::name_options (void)
 }
 
 int
-ACE_Naming_Context::bind (const ACE_WString &name_in,
-                          const ACE_WString &value_in,
+ACE_Naming_Context::bind (const ACE_NS_WString &name_in,
+                          const ACE_NS_WString &value_in,
                           const char *type_in)
 {
   ACE_TRACE ("ACE_Naming_Context::bind");
@@ -186,14 +186,14 @@ ACE_Naming_Context::bind (const char *name_in,
                           const char *type_in)
 {
   ACE_TRACE ("ACE_Naming_Context::bind");
-  return this->bind (ACE_WString (name_in),
-                     ACE_WString (value_in),
+  return this->bind (ACE_NS_WString (name_in),
+                     ACE_NS_WString (value_in),
                      type_in);
 }
 
 int
-ACE_Naming_Context::rebind (const ACE_WString &name_in,
-                            const ACE_WString &value_in,
+ACE_Naming_Context::rebind (const ACE_NS_WString &name_in,
+                            const ACE_NS_WString &value_in,
                             const char *type_in)
 {
   ACE_TRACE ("ACE_Naming_Context::rebind");
@@ -208,14 +208,14 @@ ACE_Naming_Context::rebind (const char *name_in,
                             const char *type_in)
 {
   ACE_TRACE ("ACE_Naming_Context::rebind");
-  return rebind (ACE_WString (name_in),
-                 ACE_WString (value_in),
+  return rebind (ACE_NS_WString (name_in),
+                 ACE_NS_WString (value_in),
                  type_in);
 }
 
 int
-ACE_Naming_Context::resolve (const ACE_WString &name_in,
-                             ACE_WString &value_out,
+ACE_Naming_Context::resolve (const ACE_NS_WString &name_in,
+                             ACE_NS_WString &value_out,
                              char *&type_out)
 {
   ACE_TRACE ("ACE_Naming_Context::resolve");
@@ -226,11 +226,11 @@ ACE_Naming_Context::resolve (const ACE_WString &name_in,
 
 int
 ACE_Naming_Context::resolve (const char *name_in,
-                             ACE_WString &value_out,
+                             ACE_NS_WString &value_out,
                              char *&type_out)
 {
   ACE_TRACE ("ACE_Naming_Context::resolve");
-  return this->resolve (ACE_WString (name_in),
+  return this->resolve (ACE_NS_WString (name_in),
                         value_out,
                         type_out);
 }
@@ -241,9 +241,9 @@ ACE_Naming_Context::resolve (const char *name_in,
                              char *&type_out)
 {
   ACE_TRACE ("ACE_Naming_Context::resolve");
-  ACE_WString val_str;
+  ACE_NS_WString val_str;
 
-  if (this->resolve (ACE_WString (name_in),
+  if (this->resolve (ACE_NS_WString (name_in),
                      val_str,
                      type_out) == -1)
     return -1;
@@ -256,7 +256,7 @@ ACE_Naming_Context::resolve (const char *name_in,
 }
 
 int
-ACE_Naming_Context::unbind (const ACE_WString &name_in)
+ACE_Naming_Context::unbind (const ACE_NS_WString &name_in)
 {
   ACE_TRACE ("ACE_Naming_Context::unbind");
   return this->name_space_->unbind (name_in);
@@ -266,12 +266,12 @@ int
 ACE_Naming_Context::unbind (const char *name_in)
 {
   ACE_TRACE ("ACE_Naming_Context::unbind");
-  return this->unbind (ACE_WString (name_in));
+  return this->unbind (ACE_NS_WString (name_in));
 }
 
 int
 ACE_Naming_Context::list_names (ACE_PWSTRING_SET &set_out,
-                                const ACE_WString &pattern_in)
+                                const ACE_NS_WString &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_names");
   return this->name_space_->list_names (set_out,
@@ -284,12 +284,12 @@ ACE_Naming_Context::list_names (ACE_PWSTRING_SET &set_out,
 {
   ACE_TRACE ("ACE_Naming_Context::list_names");
   return this->list_names (set_out,
-                           ACE_WString (pattern_in));
+                           ACE_NS_WString (pattern_in));
 }
 
 int
 ACE_Naming_Context::list_values (ACE_PWSTRING_SET &set_out,
-                                 const ACE_WString &pattern_in)
+                                 const ACE_NS_WString &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_values");
   return this->name_space_->list_values (set_out,
@@ -302,12 +302,12 @@ ACE_Naming_Context::list_values (ACE_PWSTRING_SET &set_out,
 {
   ACE_TRACE ("ACE_Naming_Context::list_values");
   return this->list_values (set_out,
-                            ACE_WString (pattern_in));
+                            ACE_NS_WString (pattern_in));
 }
 
 int
 ACE_Naming_Context::list_types (ACE_PWSTRING_SET &set_out,
-                                 const ACE_WString &pattern_in)
+                                 const ACE_NS_WString &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_types");
   return this->name_space_->list_types (set_out,
@@ -320,12 +320,12 @@ ACE_Naming_Context::list_types (ACE_PWSTRING_SET &set_out,
 {
   ACE_TRACE ("ACE_Naming_Context::list_types");
   return this->list_types (set_out,
-                           ACE_WString (pattern_in));
+                           ACE_NS_WString (pattern_in));
 }
 
 int
 ACE_Naming_Context::list_name_entries (ACE_BINDING_SET &set_out,
-                                       const ACE_WString &pattern_in)
+                                       const ACE_NS_WString &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_name_entries");
   return this->name_space_->list_name_entries (set_out,
@@ -338,12 +338,12 @@ ACE_Naming_Context::list_name_entries (ACE_BINDING_SET &set_out,
 {
   ACE_TRACE ("ACE_Naming_Context::list_name_entries");
   return this->list_name_entries (set_out,
-                                  ACE_WString (pattern_in));
+                                  ACE_NS_WString (pattern_in));
 }
 
 int
 ACE_Naming_Context::list_value_entries (ACE_BINDING_SET &set_out,
-                                        const ACE_WString &pattern_in)
+                                        const ACE_NS_WString &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_value_entries");
   return this->name_space_->list_value_entries (set_out,
@@ -356,12 +356,12 @@ ACE_Naming_Context::list_value_entries (ACE_BINDING_SET &set_out,
 {
   ACE_TRACE ("ACE_Naming_Context::list_value_entries");
   return this->list_value_entries (set_out,
-                                   ACE_WString (pattern_in));
+                                   ACE_NS_WString (pattern_in));
 }
 
 int
 ACE_Naming_Context::list_type_entries (ACE_BINDING_SET &set_out,
-                                       const ACE_WString &pattern_in)
+                                       const ACE_NS_WString &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_type_entries");
   return this->name_space_->list_type_entries (set_out,
@@ -374,7 +374,7 @@ ACE_Naming_Context::list_type_entries (ACE_BINDING_SET &set_out,
 {
   ACE_TRACE ("ACE_Naming_Context::list_type_entries");
   return this->list_type_entries (set_out,
-                                  ACE_WString (pattern_in));
+                                  ACE_NS_WString (pattern_in));
 }
 
 ACE_Naming_Context::~ACE_Naming_Context (void)

@@ -41,11 +41,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SString.h"
 #include "ace/Message_Block.h"
 
 class ACE_Char_Codeset_Translator;
 class ACE_WChar_Codeset_Translator;
-class ACE_CString;
 
 class ACE_InputCDR;
 
@@ -89,7 +89,7 @@ public:
                    ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Build a CDR stream with an initial buffer, it will *not* remove
-  /// <data>, since it did not allocated it.  It's important to be careful 
+  /// <data>, since it did not allocated it.  It's important to be careful
   /// with the alignment of <data>.
   /**
    * Create an output stream from an arbitrary buffer, care must be
@@ -97,7 +97,7 @@ public:
    * needed.  In this case <data> will not point to the start off the
    * output stream. begin()->rd_prt() points to the start off the
    * output stream.  See ACE_ptr_align_binary() to properly align a
-   * pointer and use ACE_CDR::MAX_ALIGNMENT for the correct alignment.  
+   * pointer and use ACE_CDR::MAX_ALIGNMENT for the correct alignment.
   */
   ACE_OutputCDR (char *data,
                  size_t size,

@@ -1938,6 +1938,10 @@ SOURCE=.\streams.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\String_Base.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SV_Message.h
 # End Source File
 # Begin Source File
@@ -2866,6 +2870,10 @@ SOURCE=.\Stream_Modules.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\String_Base.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\SV_Message.i
 # End Source File
 # Begin Source File
@@ -3186,6 +3194,11 @@ SOURCE=.\Stream.cpp
 # Begin Source File
 
 SOURCE=.\Stream_Modules.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\String_Base.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
