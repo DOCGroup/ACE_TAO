@@ -18,9 +18,7 @@
 //      3) a test/usage example of ACE_Message_Queue_Vx.
 //
 // = AUTHORS
-//    Irfan Pyarali <irfan@cs.wustl.edu>,
-//    Michael Vitlo <mvitalo@sprynet.com>, and
-//    David L. Levine <levine@cs.wustl.edu>
+//    Irfan Pyarali <irfan@cs.wustl.edu> and David L. Levine <levine@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -35,13 +33,12 @@ ACE_RCSID(tests, Message_Queue_Test, "$Id$")
 const ACE_TCHAR usage[] = ACE_TEXT ("usage: Message_Queue_Test <number of messages>\n");
 
 typedef ACE_Message_Queue<ACE_NULL_SYNCH> QUEUE;
-typedef ACE_Message_Queue_Ex<ACE_Message_Block, ACE_NULL_SYNCH> QUEUE_EXy;
 typedef ACE_Message_Queue_Iterator<ACE_NULL_SYNCH> ITERATOR;
 typedef ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH> REVERSE_ITERATOR;
 
 static const int MAX_MESSAGES = 10000;
 static const int MAX_MESSAGE_SIZE = 32;
-static const char test_message[] = "ACE_Message_Queue_Test Message";
+static const char test_message[] = "ACE_Message_Queue Test Message";
 
 static int max_messages = MAX_MESSAGES;
 
@@ -50,7 +47,6 @@ static ACE_High_Res_Timer *timer = 0;
 
 #if defined (ACE_HAS_THREADS)
 typedef ACE_Message_Queue<ACE_SYNCH> SYNCH_QUEUE;
-typedef ACE_Message_Queue_Ex<ACE_Message_Block, ACE_SYNCH> SYNCH_QUEUE_EX;
 
 struct Queue_Wrapper
 {
@@ -180,7 +176,7 @@ static int
 single_thread_performance_test (int queue_type = 0)
 {
   const char test_message[] =
-    "ACE_Message_Queue_Test Message";
+    "ACE_Message_Queue Test Message";
   const ACE_TCHAR *message =
     ACE_TEXT ("ACE_Message_Queue<ACE_NULL_SYNCH>, single thread");
   int i;
@@ -445,39 +441,44 @@ performance_test (int queue_type = 0)
 }
 #endif /* ACE_HAS_THREADS */
 
-static int
-test_message_queue (void)
+int
+main (int argc, ACE_TCHAR *argv[])
 {
+  ACE_START_TEST (ACE_TEXT ("Message_Queue_Test"));
+
   int status = 0;
+
+  if (argc == 2)
+    if (! ACE_OS::strcmp (argv[1], ACE_TEXT ("-?")))
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%s/n"),
+                  usage));
+    else
+      max_messages = ACE_OS::atoi (argv[1]);
 
   // Be sure that the a timed out get sets the error code properly.
   ACE_Message_Queue<ACE_SYNCH> q1;
-  if (!q1.is_empty ()) 
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("New queue is not empty!\n")));
+  if (!q1.is_empty ()) {
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("New queue is not empty!\n")));
+    status = 1;
+  }
+  else {
+    ACE_Message_Block *b;
+    ACE_Time_Value tv (ACE_OS::gettimeofday());   // Now
+    if (q1.dequeue_head (b, &tv) != -1) {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Dequeued from empty queue!\n")));
       status = 1;
     }
-  else
-    {
-      ACE_Message_Block *b;
-      ACE_Time_Value tv (ACE_OS::gettimeofday ());   // Now
-      if (q1.dequeue_head (b, &tv) != -1) 
-        {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Dequeued from empty queue!\n")));
-          status = 1;
-        }
-      else if (errno != EWOULDBLOCK) 
-        {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("Dequeue timeout should be EWOULDBLOCK, got")));
-          status = 1;
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Timed dequeue test: OK\n")));
-          status = 0;     // All is well
-        }
+    else if (errno != EWOULDBLOCK) {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Dequeue timeout should be EWOULDBLOCK, got")));
+      status = 1;
     }
+    else {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Timed dequeue test: OK\n")));
+      status = 0;     // All is well
+    }
+  }
 
 #if !defined (VXWORKS)
   // The iterator test occasionally causes a page fault or a hang on
@@ -516,28 +517,6 @@ test_message_queue (void)
                 ACE_TEXT ("test failed")));
   delete timer;
   timer = 0;
-  return status;
-}
-
-int
-main (int argc, ACE_TCHAR *argv[])
-{
-  ACE_START_TEST (ACE_TEXT ("Message_Queue_Test"));
-
-  if (argc == 2)
-    if (! ACE_OS::strcmp (argv[1], ACE_TEXT ("-?")))
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%s/n"),
-                  usage));
-    else
-      max_messages = ACE_OS::atoi (argv[1]);
-
-  int status = 0;
-
-  if (test_message_queue () != 0)
-    status = 1;
-  else if (test_message_queue_ex () != 0)
-    status = 1;
 
   ACE_END_TEST;
   return status;

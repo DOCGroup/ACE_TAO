@@ -202,11 +202,11 @@ ACE_OS_String::strcpy (char *s, const char *t)
 ACE_INLINE wchar_t *
 ACE_OS_String::strcpy (wchar_t *s, const wchar_t *t)
 {
-#  if defined (ACE_LACKS_WCSCMP)
+#  if defined (ACE_LACKS_WCSCPY)
   return ACE_OS_String::wcscpy_emulation (s, t);
-#  else /* ACE_LACKS_WCSCMP */
+#  else /* ACE_LACKS_WCSCPY */
   return ::wcscpy (s, t);
-#  endif /* ACE_LACKS_WCSCMP */
+#  endif /* ACE_LACKS_WCSCPY */
 }
 #endif /* ACE_HAS_WCHAR */
 
