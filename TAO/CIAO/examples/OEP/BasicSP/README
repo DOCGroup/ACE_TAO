@@ -11,6 +11,22 @@ projects/workspaces/solutions or makefiles - we are still
 working on getting the execution of the CIDL compiler
 integrated into MPC. The CIDL compiler execution has
 been added to MSVC projects, which for now are checked
-into the CVS repository.
+into the CVS repository. CIDL compiler execution is not yet
+integrated with makefiles. The CIDL compiler can be executed by
+hand before starting the build for either this example or the
+example in ACE_ROOT/TAO/CIAO/examples/OEP/Display.
+
+        Compilation of the CIDL compiler source code requires the
+Boost library, which is not included in this distribution of
+ACE+TAO+CIAO. The Boost library is available at
+
+http://www.boost.org
+
+        Alternatively, a binary executable of the CIAO
+CIDL compiler can be downloaded from
+
+http://www.dre.vanderbilt.edu/CIAO/CIDL.html
+
+Versions are available at the above site for Linux and Windows.
 
 */
