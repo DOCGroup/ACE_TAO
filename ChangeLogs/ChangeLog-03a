@@ -1,3 +1,14 @@
+Sat Feb 24 14:07:11 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Thread_Pool_Reactor_Test.cpp:
+
+          Did a careful study of what this test was doing in regards to
+          sending wide-character strings, and made it consistent.  The
+          most troublesome aspect was the fact that the length is encoded
+          in the shutdown string ("\011shutdown") which meant that I had
+          to send the length in characters, not in bytes.  This should
+          really fix [Bug 537].
+
 Sat Feb 24 14:37:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * ace/config-g++-common.h
