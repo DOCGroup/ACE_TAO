@@ -11,6 +11,7 @@
 #include "tao/DynamicAny/DynEnum_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/CDR.h"
 
 TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor (void)
   : implicit_id_ (TAO_Notify_Constraint_Visitor::EMPTY)
