@@ -139,6 +139,7 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) IIOP connection from client <%s> on %d\n",
                 client, this->peer ().get_handle ()));
+
   return 0;
 }
 
