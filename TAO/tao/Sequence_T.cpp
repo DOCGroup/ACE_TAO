@@ -766,7 +766,7 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::operator=
     }
   else
     this->buffer_ =
-      TAO_Bounded_Pseudo_Sequence<T, MAX>::allocbuf (rhs.maximum_);
+      TAO_Bounded_Pseudo_Sequence<T, T_var, MAX>::allocbuf (rhs.maximum_);
 
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
@@ -821,7 +821,7 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::_deallocate_buffer (void)
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
   T **tmp = ACE_reinterpret_cast (T **, this->buffer_);
-  TAO_Bounded_Pseudo_Sequence<T, MAX>::freebuf (tmp);
+  TAO_Bounded_Pseudo_Sequence<T, T_var, MAX>::freebuf (tmp);
   this->buffer_ = 0;
 }
 
