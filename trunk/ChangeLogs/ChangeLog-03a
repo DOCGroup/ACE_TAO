@@ -1,3 +1,8 @@
+Tue Nov 21 19:55:49 200	0  Pradeep Gore  <pradeep@cs.wustl.edu>	
+
+	* ace/IPC_SAP.cpp:
+	  Casting param1 to SOCKET did the trick. Thanks Doug! 
+	  
 Tue Nov 21 19:21:10 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* ace/IPC_SAP.cpp:
