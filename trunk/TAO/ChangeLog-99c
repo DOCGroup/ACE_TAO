@@ -1,4 +1,10 @@
-Thu Jun 10 12:12:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Thu Jun 10 13:03:14 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/IIOP_Connect.cpp (handle_input): Must return from
+	  handle_input if TAO_GIOP::handle_input() returns -1.
+
+	* tao/ORB_Core.cpp: Added inclusion of POA.h since I removed it
+	  from default_resources.h.
 
 	* tao/default_resource.cpp (init): Removed the -ORBPOA option.
 	  Code for parsing this option was still there but this option has
