@@ -366,6 +366,7 @@ template class ACE_Hash_Map_Manager<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null
 template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *>;
 template class ACE_Hash<ACE_INET_Addr>;
+template class ACE_Node<ACE_INET_Addr>;
 template class ACE_Equal_To<ACE_INET_Addr>;
 template class ACE_Unbounded_Set<ACE_INET_Addr>;
 template class ACE_Array_Base<ACE_SOCK_Dgram_Mcast *>;
@@ -382,6 +383,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mc
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *>
 #pragma instantiate ACE_Hash<ACE_INET_Addr>
+#pragma instantiate ACE_Node<ACE_INET_Addr>;
 #pragma instantiate ACE_Equal_To<ACE_INET_Addr>
 #pragma instantiate ACE_Unbounded_Set<ACE_INET_Addr>
 #pragma instantiate ACE_Array_Base<ACE_SOCK_Dgram_Mcast *>
