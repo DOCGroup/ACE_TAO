@@ -293,11 +293,11 @@
      } while (0); \
    do \
      if (ACE_TRY_ENV.exception () != 0 && ACE_EXCEPTION_NOT_CAUGHT && \
-       TYPE::_narrow(ACE_TRY_ENV.exception ()) != 0) \
+       TYPE::_downcast(ACE_TRY_ENV.exception ()) != 0) \
        { \
          CORBA::Environment ACE_CAUGHT_ENV = ACE_TRY_ENV;\
          ACE_EXCEPTION_NOT_CAUGHT = 0; \
-         TYPE &VAR = *TYPE::_narrow (ACE_CAUGHT_ENV.exception ()); \
+         TYPE &VAR = *TYPE::_downcast (ACE_CAUGHT_ENV.exception ()); \
          ACE_UNUSED_ARG (VAR); \
          ACE_TRY_ENV.clear ();
 
