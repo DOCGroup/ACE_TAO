@@ -155,7 +155,7 @@ HTML_Body_Validation_Strategy::execute (void)
         }
       else 
         url.set (&url[7], 1);
-      // Double slash at the end works!e.g seista.cs.wustl.edu/~kirthika//
+      // Double slash at the end works!e.g www.cs.wustl.edu/~kirthika//
       if (url.find (".html") < 0) 
         url = url + "/";          
       
