@@ -423,15 +423,7 @@ CORBA_ORB::create_list (CORBA::Long count,
 //
 // XXX it's server-side so should be OA-specific and not in this module
 
-#if 0
-CORBA::ORB_ptr
-_orb (void)
-{
-  return TAO_ORB::instance ();
-}
-#endif
-
-CORBA::BOA_ptr 
+CORBA::POA_ptr 
 CORBA_ORB::BOA_init (int &argc,
 		     char **argv,
 		     const char *boa_identifier)
@@ -441,8 +433,7 @@ CORBA_ORB::BOA_init (int &argc,
   // list and decrement argc appropriately.
 
   TAO_ORB_Core *oc = TAO_ORB_Core_instance();
-  TAO_OA_Parameters *params = TAO_ORB_Core_instance()->oa_params();
-  CORBA::BOA_ptr rp;
+  CORBA::POA_ptr rp;
   CORBA::String_var id = boa_identifier;
   CORBA::String_var demux = CORBA::string_dup ("dynamic_hash"); // default, at least for now
   CORBA::ULong tablesize = 0; // default table size for lookup tables
@@ -473,7 +464,7 @@ CORBA_ORB::BOA_init (int &argc,
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAtablesize") == 0)
 	{
-          // @@ Specify the table size used for ????
+          // Specify the size of the table used for object demultiplexing
 	  if (i + 1 < argc)
 	    tablesize = ACE_OS::atoi (argv[i+1]);
 
@@ -495,23 +486,11 @@ CORBA_ORB::BOA_init (int &argc,
       return 0;
     }
 
-  // set all parameters
-#if 0
-  // subsumed by abstract factory impls?
-  params->using_threads (use_threads);
-  params->demux_strategy (demux);
-  // Moved to different place (on the ORB now)
-  params->addr (rendezvous);
-  // Doesn't exist any longer
-  params->upcall (CORBA::BOA::dispatch);
-  params->tablesize (tablesize);
-#endif /* 0 */
-
 #if defined (ROA_NEEDS_REQ_KEY)
   (void) ACE_Thread::keycreate (&req_key_);
 #endif /* ROA_NEEDS_REQ_KEY */
     
-  ACE_NEW_RETURN (rp, CORBA::BOA (this, env), 0);
+  ACE_NEW_RETURN (rp, CORBA::POA (this, env), 0);
   oc->root_poa (rp);
 
   return rp;
