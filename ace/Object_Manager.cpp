@@ -98,6 +98,9 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 
   // Allocate the preallocated (hard-coded) object instances.
   ACE_PREALLOCATE_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
+#if defined (ACE_HAS_THREADS)
+  ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex, ACE_STATIC_OBJECT_LOCK)
+#endif /* ACE_HAS_THREADS */
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_LOG_MSG_INSTANCE_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_MT_CORBA_HANDLER_LOCK)
@@ -121,7 +124,7 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
   // Open the main thread's ACE_Log_Msg.
-  (void *) ACE_LOG_MSG;
+  (void) ACE_LOG_MSG;
 }
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
@@ -170,11 +173,6 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // Close the ACE_Allocator.
   ACE_Allocator::close_singleton ();
 
-# if defined (ACE_HAS_THREADS)
-  // Close ACE_Static_Object_Lock.
-  ACE_Static_Object_Lock::close_singleton ();
-# endif /* ACE_HAS_THREADS */
-
 #if defined (ACE_HAS_TSS_EMULATION)
   // Close the thread's local TS storage.
   ACE_TSS_Emulation::tss_close (ts_storage_);
@@ -191,6 +189,10 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
 
   // Cleanup the dynamically preallocated objects.
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
+#if defined (ACE_HAS_THREADS)
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
+                                  ACE_STATIC_OBJECT_LOCK)
+#endif /* ACE_HAS_THREADS */
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_LOG_MSG_INSTANCE_LOCK)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_MT_CORBA_HANDLER_LOCK)
@@ -288,6 +290,15 @@ ACE_Object_Manager_Destroyer::~ACE_Object_Manager_Destroyer (void)
 
 static ACE_Object_Manager_Destroyer ACE_Object_Manager_Destroyer_internal;
 #endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+
+#if defined (ACE_HAS_THREADS)
+  ACE_Recursive_Thread_Mutex *
+  ACE_Static_Object_Lock::instance (void)
+  {
+    return ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::
+      get_preallocated_object(ACE_Object_Manager::ACE_STATIC_OBJECT_LOCK);
+  }
+#endif /* ACE_HAS_THREADS */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
