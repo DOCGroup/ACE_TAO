@@ -5,8 +5,8 @@
 #define ACE_LOCAL_NAME_SPACE_C
 
 #include "ace/ACE.h"
-#include "ace/Local_Name_Space.h"
-#include "ace/RW_Process_Mutex.h"
+#include "ace/Other/Local_Name_Space.h"
+#include "ace/Threads/RW_Process_Mutex.h"
 
 ACE_RCSID(ace, Local_Name_Space, "$Id$")
 

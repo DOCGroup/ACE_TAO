@@ -1,11 +1,15 @@
 // Name_Proxy.cpp
 // $Id$
 
-#include "ace/Name_Proxy.h"
-#include "ace/Log_Msg.h"
+#include "ace/Other/Name_Proxy.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace, Name_Proxy, "$Id$")
 
+#ifdef ACE_SUBSET_0
 void
 ACE_Name_Proxy::dump (void) const
 {
@@ -17,6 +21,7 @@ ACE_Name_Proxy::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("reactor_ = %x"), this->reactor_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 // Default constructor.
 

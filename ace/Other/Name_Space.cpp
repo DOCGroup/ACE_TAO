@@ -1,7 +1,7 @@
 // Name_Space.cpp
 // $Id$
 
-#include "ace/Name_Space.h"
+#include "ace/Other/Name_Space.h"
 
 ACE_RCSID(ace, Name_Space, "$Id$")
 

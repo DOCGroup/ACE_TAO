@@ -15,7 +15,7 @@
 #define ACE_REGISTRY_NAME_SPACE_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,9 +24,9 @@
 #if (defined (ACE_WIN32) && defined (UNICODE))
 // This only works on Win32 platforms when UNICODE is turned on
 
-#include "ace/Registry.h"
-#include "ace/Naming_Context.h"
-#include "ace/Name_Space.h"
+#include "ace/Other/Registry.h"
+#include "ace/Other/Naming_Context.h"
+#include "ace/Other/Name_Space.h"
 
 /**
  * @class ACE_Registry_Name_Space

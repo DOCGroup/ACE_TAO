@@ -21,9 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
-#include "ace/Unbounded_Set.h"
-#include "ace/Name_Proxy.h"
+#include "ace/Utils/SString.h"
+#include "ace/Utils/Unbounded_Set.h"
+#include "ace/Other/Name_Proxy.h"
 
 typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
 

@@ -1,7 +1,10 @@
 // $Id$
 
-#include "ace/Name_Request_Reply.h"
-#include "ace/Log_Msg.h"
+#include "ace/Other/Name_Request_Reply.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace, Name_Request_Reply, "$Id$")
 

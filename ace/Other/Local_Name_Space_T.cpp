@@ -4,13 +4,13 @@
 #define ACE_LOCAL_NAME_SPACE_T_C
 
 #include "ace/ACE.h"
-#include "ace/Auto_Ptr.h"
+#include "ace/Utils/Templates/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Local_Name_Space.h"
+#include "ace/Other/Local_Name_Space.h"
 
 ACE_RCSID(ace, Local_Name_Space_T, "$Id$")
 

@@ -1,12 +1,13 @@
 // $Id$
 
-#include "ace/Get_Opt.h"
-#include "ace/Naming_Context.h"
-#include "ace/Remote_Name_Space.h"
-#include "ace/Local_Name_Space_T.h"
-#include "ace/Registry_Name_Space.h"
-#include "ace/Memory_Pool.h"
-#include "ace/RW_Process_Mutex.h"
+#include "ace/Utils/Get_Opt.h"
+#include "ace/Other/Naming_Context.h"
+#include "ace/Other/Remote_Name_Space.h"
+#include "ace/Other/Local_Name_Space_T.h"
+#include "ace/Other/Registry_Name_Space.h"
+#include "ace/Memory/Memory_Pool.h"
+#include "ace/Threads/RW_Process_Mutex.h"
+#include "ace/Logging/Trace.h"
 
 ACE_RCSID(ace, Naming_Context, "$Id$")
 
