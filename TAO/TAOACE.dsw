@@ -15,6 +15,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ACE_SSL"=..\ace\SSL\ACE_SSL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "AV"=.\orbsvcs\orbsvcs\AV.dsp - Package Owner=<4>
 
 Package=<5>
@@ -594,6 +609,24 @@ Package=<4>
 
 ###############################################################################
 
+Project: "SSLIOP"=.\orbsvcs\orbsvcs\SSLIOP.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE_SSL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Security
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Scheduling_Service"=.\orbsvcs\Scheduling_Service\Scheduling_Service.dsp - Package Owner=<4>
 
 Package=<5>
@@ -607,6 +640,27 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RTSched
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Security"=.\orbsvcs\orbsvcs\Security.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
     End Project Dependency
 }}}
 
