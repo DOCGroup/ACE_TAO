@@ -54,7 +54,7 @@ public:
                                   TAO_default_environment ());
   virtual CORBA::Boolean _is_equivalent (CORBA_Object_ptr other_obj,
                                          CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC (());
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   virtual CORBA::Boolean _non_existent (CORBA_Environment &ACE_TRY_ENV =
                                           TAO_default_environment ());
