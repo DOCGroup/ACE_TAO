@@ -3,6 +3,9 @@ Thu Jul 15 09:15:11 1999  Steve Huston  <shuston@riverace.com>
         * ace/config-aix-4.x.h: Corrected template settings for IBM C/C++
           3.6 compiler. It does not get ACE_HAS_STD_TEMPLATE_SPECIALIZATION.
 
+        * include/makeinclude/platform_aix4_cset++.GNU: Delete the
+          testAIXCompilerVersion.cpp file after getting the compiler version.
+
 Thu Jul 15 07:33:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-tru64.h,config-osf1.h,config-osf1-4.0.h,
