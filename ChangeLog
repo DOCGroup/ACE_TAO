@@ -1,7 +1,12 @@
+Mon Oct  4 14:22:03 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_stdlib.cpp:
+          Fixed incorrect include ('OS_fcntl.h' -> OS_NS_fcntl.h').
+
 Sun Oct  3 18:45:03 2004  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdlib.cpp: (realpath)
-          Removed extra "}". 
+          Removed extra "}".
 
 Fri Oct  1 23:41:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
