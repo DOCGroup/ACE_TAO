@@ -13,8 +13,9 @@ $(call include, $(UTILITY_BUILD_RULES)/Object.pre.rules)
 # Factory.cpp
 
 cxx_translation_units := Attribute.cpp  \
-                         Exception.cpp  \
+                         Enum.cpp       \
                          Elements.cpp   \
+                         Exception.cpp  \
                          Factory.cpp    \
                          Include.cpp    \
                          Interface.cpp  \

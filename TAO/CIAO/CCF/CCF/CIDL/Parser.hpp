@@ -65,7 +65,7 @@ namespace CCF
 
     protected:
       void
-      act_composition_begin_core (Iterator begin, Iterator end) const
+      act_composition_begin_core (Iterator begin, Iterator) const
       {
         SemanticAction::Composition::Category::Value c;
 

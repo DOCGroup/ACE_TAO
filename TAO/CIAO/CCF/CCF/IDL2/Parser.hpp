@@ -242,7 +242,7 @@ namespace CCF
       struct RootErrorHandler
       {
         RecoveryStatus
-        operator() (Parsing::Scanner const& s, Parsing::Error&) const
+        operator() (Parsing::Scanner const&, Parsing::Error&) const
         {
           return RecoveryStatus (RecoveryStatus::fail);
         }
@@ -274,7 +274,7 @@ namespace CCF
         }
 
         RecoveryStatus
-        operator() (Parsing::Scanner const& s, Parsing::Error e) const
+        operator() (Parsing::Scanner const&, Parsing::Error e) const
         {
           assert (
             e.descriptor->diagnostic_ == Parsing::DiagnosticType::NONE &&
@@ -612,8 +612,7 @@ namespace CCF
       act_operation_name;
 
       void
-      act_operation_parameter_core (Iterator begin,
-                                    Iterator end) const
+      act_operation_parameter_core (Iterator begin, Iterator) const
       {
         SemanticAction::Operation::Direction::Value d;
 

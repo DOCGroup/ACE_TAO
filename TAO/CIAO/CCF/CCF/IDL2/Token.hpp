@@ -121,7 +121,7 @@ namespace CCF
     ReferenceCounting::StrictPtr<Punctuation>
     PunctuationPtr;
 
-    
+
     //
     //
     //
@@ -140,7 +140,7 @@ namespace CCF
     typedef
     ReferenceCounting::StrictPtr<Operator>
     OperatorPtr;
-    
+
 
     //
     //
