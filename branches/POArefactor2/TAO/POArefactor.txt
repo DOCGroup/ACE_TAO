@@ -1,3 +1,12 @@
+Fri Nov  5 15:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*
+          Splitted all strategy interfaces and implementation to separate
+          files, added strategy factory interfaces and implementations. I have
+          to cleanup a lot of includes/forward declarations and update class
+          names, but the files/classes are now there and splitted making it
+          easier to review things
+
 Fri Nov  5 07:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Activation_Strategy.{h,cpp}:
