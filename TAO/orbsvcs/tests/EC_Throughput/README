@@ -1,4 +1,0 @@
-# $Id$
-
-Just run the Naming Service, the Event Service then ECT_Consumer and
-finally ECT_Supplier.
