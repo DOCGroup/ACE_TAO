@@ -410,6 +410,13 @@ public:
   void print_values (void);
   // print all the values
 
+protected:
+  CORBA::Boolean compare (const Param_Test::StructSeq &s1,
+                          const Param_Test::StructSeq &s2);
+  // compare
+
+  void print_sequence (const Param_Test::StructSeq &s);
+  // print individual sequence
 private:
   char *opname_;
   // operation name
