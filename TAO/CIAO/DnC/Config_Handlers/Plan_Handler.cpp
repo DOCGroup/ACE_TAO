@@ -10,6 +10,9 @@
 #include "Requirement_Handler.h"
 #include "Any_Handler.h"
 
+#include "Process_Basic_Type.h"
+#include "Process_Element.h"
+
 #include <iostream>
 #include "string.h"
 
@@ -59,12 +62,10 @@ namespace CIAO
                (ACE_TEXT ("Deployment:DeploymentPlan")))
             {
             }
-          else if (node_name == XStr (ACE_TEXT ("label")))
-            {
-              node = this->iter_->nextNode();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_label (text->getNodeValue(), plan);
-            }
+          else if
+            (process_string(this->iter_, node_name, "label", plan.label));
+          
+
           else if (node_name == XStr (ACE_TEXT ("realizes")))
             {
               this->process_ccd_element (node, this->doc_,

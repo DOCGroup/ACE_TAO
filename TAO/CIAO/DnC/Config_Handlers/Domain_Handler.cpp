@@ -144,47 +144,17 @@ namespace CIAO
            node = iter->nextNode ())
         {
           XStr node_name (node->getNodeName());
-          if (node_name == XStr (ACE_TEXT ("name")))
-            {
-              node = iter->nextNode();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              domain_resource.name = XMLString::transcode 
-                 (text->getNodeValue ());
-            }
-          else if (node_name == XStr (ACE_TEXT ("resourceType")))
-            {
-              node = iter->nextNode();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              CORBA::ULong resource_type_length =
-                domain_resource.resourceType.length ();
-              domain_resource.resourceType.length (resource_type_length + 1);
-              domain_resource.resourceType[resource_type_length] =
-                 XMLString::transcode (text->getNodeValue ());
-            }
-          else if (node_name == XStr (ACE_TEXT ("property")))
-            {
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  CORBA::ULong sp_length 
-                     (domain_resource.property.length ());
-                  domain_resource.property.length (sp_length + 1);
-                  if (length == 1)
-                    {
-                      SP_Handler::process_SatisfierProperty
-                        (iter,
-                         domain_resource.property[sp_length]);
-                    }
-                  else if (length > 1)
-                    {
-                      this->process_attributes_for_satisfier_property 
-                        (named_node_map, node->getOwnerDocument(),
-                         iter, sp_length,
-                         domain_resource.property[sp_length]);
-                    }
-                }
-            }
+
+          if (false);
+          else if
+            (process_string(iter, node_name, "name", domain_resource.name));
+          else if
+            (process_string_seq(iter, node_name, "resourceType", domain_resource.resourceType));
+          else if
+            (process_sequence<Deployment::SatisfierProperty>(node->getOwnerDocument(), iter, node,
+                                                             node_name, "property", domain_resource.property,
+                                                             &SP_Handler::process_SatisfierProperty,
+                                                             this->id_map_));
           else
             {
               node = iter->previousNode ();
@@ -270,73 +240,27 @@ namespace CIAO
            node = iter->nextNode ())
         {
           XStr node_name (node->getNodeName());
-          if (node_name == XStr (ACE_TEXT ("name")))
-            {
-              node = iter->nextNode ();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_sr_name (text->getNodeValue (), domain_sr);
-            }
-          else if (node_name == XStr (ACE_TEXT ("resourceType")))
-            {
-              node = iter->nextNode ();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_sr_resource_type 
-                  (text->getNodeValue (), domain_sr);
-            }
-          else if (node_name == XStr (ACE_TEXT ("node")))
-            {
-              CORBA::ULong node_ref_length = (domain_sr.nodeRef.length ());
-              domain_sr.nodeRef.length (node_ref_length + 1);
-              domain_sr.nodeRef[node_ref_length] = 0;
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  this->process_refs (named_node_map);
-                }
-            }
-          else if (node_name == XStr (ACE_TEXT ("property")))
-            {
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  CORBA::ULong sp_length 
-                     (domain_sr.property.length ());
-                  domain_sr.property.length (sp_length + 1);
-                  if (length == 1)
-                    {
-                      SP_Handler::process_SatisfierProperty
-                        (iter,
-                         domain_sr.property[sp_length]);
-                    }
-                  else if (length > 1)
-                    {
-                      this->process_attributes_for_satisfier_property 
-                        (named_node_map, node->getOwnerDocument(),
-                         iter, sp_length,
-                         domain_sr.property[sp_length]);
-                    }
-                }
-            }
+          
+          if (false);
+          else if
+            (process_string(iter, node_name, "name", domain_sr.name));
+          else if
+            (process_string_seq(iter, node_name, "resourceType", domain_sr.resourceType));
+          else if
+            (process_reference(node, node_name, "node",
+                               domain_sr.nodeRef,
+                               this->index_, this->idref_map_));
+          else if
+            (process_sequence<Deployment::SatisfierProperty>(node->getOwnerDocument(), iter, node,
+                                                             node_name, "property", domain_sr.property,
+                                                             &SP_Handler::process_SatisfierProperty,
+                                                             this->id_map_));
+          // TODO: What about "any SatisfierProperty::value"
           else
             {
               iter->previousNode();
               return;
             }
-        }
-    }
-
-    ////////////////////////////////
-
-    void Domain_Handler::process_sr_resource_type 
-         (const XMLCh* resource_type,
-          Deployment::SharedResource& domain_sr)
-    {
-      if (resource_type)
-        {
-          CORBA::ULong i (domain_sr.resourceType.length ());
-          domain_sr.resourceType.length (i + 1);
-          domain_sr.resourceType[i] = XMLString::transcode (resource_type);
         }
     }
 
