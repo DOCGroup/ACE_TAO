@@ -48,7 +48,7 @@ USELIB("..\ace\aced.lib");
 #include <X11/Xatom.h>
 #include <X11/Shell.h>
 
-#if !defined (ACE_LACKS_MOTIF)
+#if defined (ACE_HAS_MOTIF)
 
 #include <Xm/Xm.h>
 #include <Xm/Label.h>
@@ -93,7 +93,7 @@ static Widget create_box(Widget parent, const char * name)
 {
     return XtCreateWidget( (char*) name, boxWidgetClass, parent, NULL, 0);
 }
-#endif
+#endif /* ACE_HAS_MOTIF */
 
 // Port we listen on.
 static const u_short SERV_TCP_PORT = 6670;
@@ -165,11 +165,6 @@ sock_callback (XtPointer , int * , XtInputId *)
 }
 
 // Callback for "Press Me" button.
-
-#ifdef ACE_HAS_MOTIF
-#else
-
-#endif
 
 static void
 inc_count (Widget, XtPointer client_data, XtPointer)
