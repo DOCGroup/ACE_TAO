@@ -61,9 +61,10 @@ LFLAGS	= -t
 
 # Create the parser and lexer
 y.tab.h y.tab.cpp: idl.yy
-	@-$(RM) $@
-	$(YACC) $(YFLAGS) idl.yy
-	mv -f y.tab.c y.tab.cpp
+	@-$(RM) -f $@
+	@$(YACC) $(YFLAGS) idl.yy
+	@mv -f y.tab.c y.tab.cpp
+	@patch < y.tab.cpp.diff
 
 lex.yy.cpp: idl.ll y.tab.h
 	$(LEX) $(LFLAGS) idl.ll > $@
