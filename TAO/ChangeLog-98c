@@ -4,6 +4,11 @@ Thu Jan 07 07:16:29 1999  David L. Levine  <levine@cs.wustl.edu>
           "priority" to 0 to avoid warning about uninitialized use
           from DEC cxx with DCE threads.
 
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (shutdown): fixed
+          if (_env.exception () == 0) test to be
+          if (_env.exception () != 0).  Thanks to Russ Noseworthy
+          <rnosewor@objectsciences.com> for providing the fix.
+
 Thu Jan 07 05:07:33 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.48 released.
