@@ -52,6 +52,7 @@ public:
   //   following methods.
   virtual ACE_Lock* create_profile_lock (void);
   virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
+  virtual int reply_dispatcher_table_size (void) const;
   virtual int allow_callback (void);
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
   virtual TAO_Connect_Strategy *create_connect_strategy (TAO_ORB_Core *);
@@ -99,6 +100,9 @@ private:
 
   /// The connection initiation strategy.
   Connect_Strategy connect_strategy_;
+
+  /// Size of the reply dispatcher table
+  int rd_table_size_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -180,7 +180,6 @@ SOURCE=.\Adapter.cpp
 # Begin Source File
 
 SOURCE=.\Any.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -221,7 +220,6 @@ SOURCE=.\Blocked_Connect_Strategy.cpp
 # Begin Source File
 
 SOURCE=.\BoundsC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -269,14 +267,6 @@ SOURCE=.\CodecFactory_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Codeset_Manager.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Codeset_Translator_Factory.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Collocation_Resolver.cpp
 # End Source File
 # Begin Source File
@@ -298,7 +288,6 @@ SOURCE=.\Connector_Registry.cpp
 # Begin Source File
 
 SOURCE=.\CONV_FRAMEC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -319,7 +308,6 @@ SOURCE=.\CORBANAME_Parser.cpp
 # Begin Source File
 
 SOURCE=.\CurrentC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -368,7 +356,6 @@ SOURCE=.\DLL_Parser.cpp
 # Begin Source File
 
 SOURCE=.\DomainC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -377,7 +364,6 @@ SOURCE=.\Dynamic_Adapter.cpp
 # Begin Source File
 
 SOURCE=.\DynamicC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -398,7 +384,6 @@ SOURCE=.\Environment.cpp
 # Begin Source File
 
 SOURCE=.\Exception.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -463,11 +448,14 @@ SOURCE=.\GIOP_Utils.cpp
 # Begin Source File
 
 SOURCE=.\GIOPC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\IFR_Client_Adapter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_TypeCodes.cpp
 # End Source File
 # Begin Source File
 
@@ -508,7 +496,6 @@ SOURCE=.\IIOP_Transport.cpp
 # Begin Source File
 
 SOURCE=.\IIOPC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -528,8 +515,15 @@ SOURCE=.\Invocation_Endpoint_Selectors.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOP_CodecC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOP_IORC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOPC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -610,7 +604,6 @@ SOURCE=.\MCAST_Parser.cpp
 # Begin Source File
 
 SOURCE=.\Messaging_PolicyValueC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -639,7 +632,6 @@ SOURCE=.\Object.cpp
 # Begin Source File
 
 SOURCE=.\Object_KeyC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -659,18 +651,15 @@ SOURCE=.\Object_Ref_Table.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectIdListC.cpp
-# ADD CPP /GR
+SOURCE=.\ObjectIDList.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\ObjectReferenceTemplateC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\OctetSeqC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -727,7 +716,6 @@ SOURCE=.\Pluggable_Messaging_Utils.cpp
 # Begin Source File
 
 SOURCE=.\Policy_ForwardC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -744,7 +732,6 @@ SOURCE=.\Policy_Validator.cpp
 # Begin Source File
 
 SOURCE=.\PolicyC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -753,12 +740,10 @@ SOURCE=.\PolicyFactory_Registry.cpp
 # Begin Source File
 
 SOURCE=.\PollableC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\PortableInterceptorC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -834,12 +819,11 @@ SOURCE=.\Service_Context.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services_Activate.cpp
+SOURCE=.\Services.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ServicesC.cpp
-# ADD CPP /GR
+SOURCE=.\Services_Activate.cpp
 # End Source File
 # Begin Source File
 
@@ -848,7 +832,6 @@ SOURCE=.\skip.cpp
 # Begin Source File
 
 SOURCE=.\StringSeqC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -897,7 +880,6 @@ SOURCE=.\TAO_Singleton_Manager.cpp
 # Begin Source File
 
 SOURCE=.\TAOC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -914,7 +896,6 @@ SOURCE=.\Thread_Lane_Resources_Manager.cpp
 # Begin Source File
 
 SOURCE=.\TimeBaseC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -987,7 +968,6 @@ SOURCE=.\Wait_Strategy.cpp
 # Begin Source File
 
 SOURCE=.\WrongTransactionC.cpp
-# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -1016,10 +996,6 @@ SOURCE=.\Adapter.h
 # Begin Source File
 
 SOURCE=.\any.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Any_T.h
 # End Source File
 # Begin Source File
 
@@ -1104,14 +1080,6 @@ SOURCE=.\CodecFactory.h
 # Begin Source File
 
 SOURCE=.\CodecFactory_ORBInitializer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Codeset_Manager.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Codeset_Translator_Factory.h
 # End Source File
 # Begin Source File
 
@@ -1375,6 +1343,14 @@ SOURCE=.\Invocation_Endpoint_Selectors.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOP_CodecC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOP_IORC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOPC.h
 # End Source File
 # Begin Source File
@@ -1519,7 +1495,7 @@ SOURCE=.\objectid.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectIdListC.h
+SOURCE=.\ObjectIDList.h
 # End Source File
 # Begin Source File
 
@@ -1683,10 +1659,6 @@ SOURCE=.\sequence.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Sequence_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Server_Strategy_Factory.h
 # End Source File
 # Begin Source File
@@ -1699,11 +1671,11 @@ SOURCE=.\Service_Context.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services_Activate.h
+SOURCE=.\Services.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ServicesC.h
+SOURCE=.\Services_Activate.h
 # End Source File
 # Begin Source File
 
@@ -1884,10 +1856,6 @@ SOURCE=.\Adapter.i
 # Begin Source File
 
 SOURCE=.\any.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Any_T.inl
 # End Source File
 # Begin Source File
 
@@ -2127,6 +2095,14 @@ SOURCE=.\Invocation_Endpoint_Selectors.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOP_CodecC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOP_IORC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOPC.i
 # End Source File
 # Begin Source File
@@ -2219,7 +2195,7 @@ SOURCE=.\Object_Loader.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectIdListC.i
+SOURCE=.\ObjectIDList.i
 # End Source File
 # Begin Source File
 
@@ -2323,10 +2299,6 @@ SOURCE=.\sequence.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Sequence_T.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Service_Callbacks.i
 # End Source File
 # Begin Source File
@@ -2335,7 +2307,7 @@ SOURCE=.\Service_Context.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\ServicesC.i
+SOURCE=.\Services.i
 # End Source File
 # Begin Source File
 
@@ -2436,25 +2408,6 @@ SOURCE=.\ValueFactory_Map.i
 # Begin Source File
 
 SOURCE=.\tao.rc
-# End Source File
-# End Group
-# Begin Group "Template Files"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\Any_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\Codeset_Translator_Factory_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\Sequence_T.cpp
-# PROP Exclude_From_Build 1
 # End Source File
 # End Group
 # End Target

@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/Adapter.h"
 #include "tao/Object.h"
 #include "tao/Object_KeyC.h"
@@ -170,6 +169,21 @@ TAO_Adapter_Registry::create_collocated_object (TAO_Stub *stub,
                                                       mprofile);
       if (x != 0)
         return x;
+    }
+  return 0;
+}
+
+CORBA::Long
+TAO_Adapter_Registry::initialize_collocated_object (TAO_Stub *stub,
+                                                    CORBA::Object_ptr obj)
+{
+  for (size_t i = 0; i != this->adapters_count_; ++i)
+    {
+      int retval =
+        this->adapters_[i]->initialize_collocated_object (stub,
+                                                          obj);
+      if (retval != 0)
+        return retval;
     }
   return 0;
 }
