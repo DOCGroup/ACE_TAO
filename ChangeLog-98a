@@ -1,6 +1,6 @@
 Mon Dec  1 14:01:02 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * ace/Log_Msg.cpp, ace/Log_Msg.h, ace/Log_Record.cpp, 
+        * ace/Log_Msg.cpp, ace/Log_Msg.h, ace/Log_Record.cpp,
           ace/Log_Record.h ace/OS.h, ace/stdcpp.h, tests/test_config.h:
 
 	  Changed use of ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION in stdcpp.h
@@ -15,7 +15,7 @@ Mon Dec 01 12:15:00 1997    <irfan@TWOSTEP>
 
         * ace/OS.h: Changed the definition of ACE_UNIMPLEMENTED_FUNC so
           that it just evaporates on platform that have
-          ACE_REQUIRES_FUNC_DEFINITIONS defined.  
+          ACE_REQUIRES_FUNC_DEFINITIONS defined.
 
           ACE_UNIMPLEMENTED_FUNC is only required for template classes and
           not for a normal class.  When the template is explicitly
@@ -61,6 +61,9 @@ Mon Dec 01 07:56:02 1997  David L. Levine  <levine@cs.wustl.edu>
         * examples/Shared_Malloc/Malloc.cpp: removed
           ACE_Guard<ACE_Process_Mutex> instantiation because it's in
           ace/Synch.cpp.
+
+        * ace/config-lynxos.h: added ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS.
+          Without it, the Thread_Manager went recursively ballistic.
 
 Sun Nov 30 22:44:50 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
