@@ -4551,6 +4551,22 @@ ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
                        ACE_HANDLE,
                        ACE_INVALID_HANDLE);
 #  else
+#    if defined (ACE_HAS_BROKEN_ACCEPT_ADDR)
+  // Apparently some platforms like VxWorks can't correctly deal with
+  // a NULL addr.
+
+   sockaddr_in fake_addr;
+   int fake_addrlen;
+ 
+   if (addrlen == 0)
+     addrlen = &fake_addrlen;
+ 
+   if (addr == 0)
+     {
+       addr = (sockaddr *) &fake_addr;
+       *addrlen = sizeof fake_addr;
+     }
+#    endif /* VXWORKS */
   ACE_HANDLE ace_result = ::accept ((ACE_SOCKET) handle,
                                     addr,
                                     (ACE_SOCKET_LEN *) addrlen) ;
