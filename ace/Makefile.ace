@@ -81,6 +81,7 @@ UTILS_FILES = \
   Flag_Manip \
   Framework_Component \
   Functor \
+  Functor_String \
   Get_Opt \
   Hash_Map_Manager \
   Connection_Recycling_Strategy \
