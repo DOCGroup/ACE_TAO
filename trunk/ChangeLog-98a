@@ -1,4 +1,39 @@
-Thu Dec  4 13:49:58 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Thu Dec  4 19:45:04 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Object_Manager.cpp (ACE_Object_Manager_Destroyer): Fixed a
+ 	  bug in the
+ 	  ACE_Object_Manager_Destroyer::~ACE_Object_Manager_Destroyer
+ 	  thread comparison routine.  Thanks to Steven Coy for this.  Also
+ 	  renamed _saved_main_thread_id to saved_main_thread_id_, which is
+ 	  proper ACE style.
+
+        * Updated the ACE-INSTALL.html file to explain why you don't need
+ 	  to build everything all the time.  Thanks to Dustin Laurence
+ 	  <laurence@alice.wonderland.caltech.edu> for suggesting this.
+
+	* tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking):
+ 	  Added a check for ENETUNREACH.  Thanks to Dustin Laurence
+ 	  <laurence@alice.wonderland.caltech.edu> for reporting this.
+
+	* ace/Asynch_Acceptor.cpp (open): Changed the local variable named
+ 	  sap_any to sa to avoid conflicts with the new sap_any macro.
+
+	* ace/Asynch_IO: Made the ACE_Service_Hanlder::open() method
+ 	  non-virtual to work around bugs with Borland C++.  Thanks to
+ 	  Valik Solorzano Barboza <valik@geodan.nl> for suggesting this.
+
+	* ace/ACE.cpp (COMPUTE): Put parens around elements the COMPUTE
+ 	  macros so that it will work on Borland C++.  Thanks to Valik
+ 	  Solorzano Barboza <valik@geodan.nl> for suggesting this.
+
+	* ace/config-win32-common.h: Added ACE_HAS_BROKEN_SAP_ANY to deal
+ 	  with Borland C++ bugs.  Thanks to Valik Solorzano Barboza
+ 	  <valik@geodan.nl> for suggesting this.
+
+	* ace/Addr: Added a workaround for the Borland C++ problems.  This
+ 	  introduces a new global macro called sap_any.  However, this is
+ 	  only used for Borland, so it should be ok.  Thanks to Valik
+ 	  Solorzano Barboza <valik@geodan.nl> for suggesting this.
 
 	* ace/LSOCK.cpp (recv_handle): Make the code smarter if we've got
  	  both STREAMS and 4_4BSD_SENDMSG_RECVMSG.

@@ -742,12 +742,12 @@ public:
   ~ACE_Object_Manager_Destroyer (void);
 
 private:
-  ACE_thread_t _saved_main_thread_id;
+  ACE_thread_t saved_main_thread_id_;
   // Save the main thread ID, so that destruction can be suppressed.
 };
 
 ACE_Object_Manager_Destroyer::ACE_Object_Manager_Destroyer (void)
-  : _saved_main_thread_id (ACE_OS::thr_self())
+  : saved_main_thread_id_ (ACE_OS::thr_self ())
 {
   // Ensure that the Object_Manager gets initialized before any
   // application threads have been spawned.  Because this will be called
@@ -758,13 +758,14 @@ ACE_Object_Manager_Destroyer::ACE_Object_Manager_Destroyer (void)
 
 ACE_Object_Manager_Destroyer::~ACE_Object_Manager_Destroyer (void)
 {
-  if (ACE_OS::thr_self() == _saved_main_thread_id)
+  if (ACE_OS::thr_equal (ACE_OS::thr_self (),
+                         saved_main_thread_id_))
     {
       delete ACE_Object_Manager::instance_;
       ACE_Object_Manager::instance_ = 0;
     }
-  // else if this destructor is not called by the main thread, then
-  // do not delete the ACE_Object_Manager.  That causes problems, on
+  // else if this destructor is not called by the main thread, then do
+  // not delete the ACE_Object_Manager.  That causes problems, on
   // WIN32 at least.
 }
 

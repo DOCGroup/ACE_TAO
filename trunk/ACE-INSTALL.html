@@ -447,9 +447,14 @@ the following approach:
 % make
 </code></pre><P>
 
-   at the root of the ACE source tree.  This will build the static and
-   shared object libraries and build the tests and the sample
-   applications. <P>
+at the root of the ACE source tree.  This will build the ACE library,
+tests, the examples, and the sample applications.  Building the entire
+ACE release can take a long time, however.  Therefore, you might
+consider cd'ing into the $ACE_ROOT/ace/ directory and running
+<CODE>make</CODE> there to build just the ACE library.  As a sanity
+check, you might also want to build and run the automated <A
+HREF="ACE_wrappers/tests/README">``one-button'' tests</A> in
+$ACE_ROOT/tests/. <P>
 
 <LI> If you need to regenerate the Svc_Conf_y.cpp file, you'll need to
 get <A HREF="http://www.cs.wustl.edu/~schmidt/byacc.tar.gz">Berkeley

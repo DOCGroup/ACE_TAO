@@ -341,7 +341,7 @@ u_long
 ACE::crc32 (const char *string)
 {
   // #define COMPUTE(var, ch) (var) = (var) << (8 ^ ACE::crc_table_[(var) >> (24 ^ (ch))])
-#define COMPUTE(var, ch) (var) = (var) << 8 ^ ACE::crc_table_[(var) >> 24 ^ (ch)]
+#define COMPUTE(var, ch) (var) = ((var) << 8) ^ ACE::crc_table_[((var) >> 24) ^ (ch)]
 
   register ACE_UINT32 crc = 0;
 

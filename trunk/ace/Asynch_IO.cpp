@@ -1012,4 +1012,11 @@ ACE_Service_Handler::addresses (const ACE_INET_Addr &remote_address,
   ACE_DEBUG ((LM_DEBUG, "remote address %s\n", remote_address_buf));  
 }
 
+int
+ACE_Service_Handler::open (ACE_HANDLE,
+                           ACE_Message_Block &)
+{
+  return 0;
+}                           
+
 #endif /* ACE_WIN32 */
