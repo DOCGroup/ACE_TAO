@@ -3,6 +3,8 @@
 // $Id$
 //
 
+#include <orb.idl>
+
 module DynAnyTests
 {
   struct enclosed_struct {
@@ -31,7 +33,7 @@ module DynAnyTests
   union test_union switch (test_enum)
     {
       case TE_SECOND:
-        long l;//TypeCode tc;
+        CORBA::TypeCode tc;
       case TE_FIRST:
         short s;
       case TE_THIRD:
