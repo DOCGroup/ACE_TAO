@@ -84,15 +84,13 @@ TAO_ORB_Manager::run (CORBA::Environment &env)
 {
   this->poa_manager_->activate (env);
 
-  // @@ Sumedh, why do you sometimes return -1 and sometimes return 1
-  // @@ here?  Is this intended? 
   TAO_CHECK_ENV_RETURN (env, 1);
 
   if (this->orb_->run () == -1)
     ACE_ERROR_RETURN ( (LM_ERROR,
                        "%p\n",
                        "run"),
-                       -1);
+                       1);
 
   // @@ Sumedh, should the destroy() be done here, or in the
   // destructor?  Doesn't this make it impossible to call run()
