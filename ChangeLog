@@ -1,3 +1,14 @@
+Tue Feb  3 16:21:49 2004  Steve Huston  <shuston@riverace.com>
+
+	* m4/compiler.m4: If --disable-rtti is specified on AIX, add
+	  -DACE_LACKS_RTTI to CXXFLAGS.
+
+	* netsvcs/clients/Naming/Client/Makefile.am:
+	* netsvcs/clients/Naming/Dump_Restore/Makefile.am: Removed the
+	  extraneous path prefix for the required same-directory libraries in
+	  main_LDADD to allow the Makefile to see the library and build it
+	  first at make time.
+
 Tue Feb  3 14:35:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/config-win32-msvc-6.h:
@@ -53,6 +64,7 @@ Mon Feb  2 13:48:23 2004  Chad Elliott  <elliott_c@ociweb.com>
           that the custom build rules are processed before source files are
           compiled.
 
+>>>>>>> 4.6400
 Mon Feb 02 10:00:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * ace/config-win32-msvc-6.h:
