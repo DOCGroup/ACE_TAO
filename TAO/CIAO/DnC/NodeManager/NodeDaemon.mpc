@@ -1,12 +1,13 @@
 // -*- MPC -*-
 // $Id$
 
-project (NodeDaemon_stub): ciao_deployment_stub {
+project (NodeDaemon_stub): ciao_deployment_stub, ciao_server_dnc {
   requires += dnc
   sharedname = NodeDaemon_stub
   idlflags += -Wb,stub_export_macro=NodeDaemon_stub_Export -Wb,stub_export_include=NodeDaemon_stub_export.h
   dynamicflags = NODEDAEMON_STUB_BUILD_DLL
-                                                                                                                                                        
+                                                                
+  libs += TAO_IFR_Client                                                                                       
   IDL_Files {
    NodeDaemon.idl
   }
@@ -19,7 +20,7 @@ project (NodeDaemon_stub): ciao_deployment_stub {
 project(Node_Daemon): ciao_deployment_svnt, ciao_deployment_stub, iortable, naming {
   requires += dnc
   after += NodeApplicationManager NodeDaemon_stub
-  libs += NodeApplicationManager NodeDaemon_stub CIAO_Server
+  libs += NodeApplicationManager NodeDaemon_stub TAO_IFR_Client CIAO_Server
   exename = Node_Daemon
 
   IDL_Files {

@@ -65,19 +65,19 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
 
           DOMDocument* href_doc;
 
-          std::auto_ptr<DOMBuilder> parser;
+          std::auto_ptr<DOMBuilder> parser (CIAO::Config_Handler::Utils::create_parser  ());
+		  
           if (xml_url.isRelative ())
             {
-              parser.reset (CIAO::Config_Handler::Utils::create_parser ());
+			  
               href_doc = parser->parseURI (final_url.c_str ());
             }
           else
             {
-              parser.reset (CIAO::Config_Handler::Utils::create_parser ());
               href_doc = parser->parseURI (url_string.c_str ());
             }
 
-          DOMDocumentTraversal* traverse (href_doc);
+          DOMDocumentTraversal* traverse = href_doc;
           DOMNode* root = (href_doc->getDocumentElement ());
           unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
             DOMNodeFilter::SHOW_TEXT;

@@ -112,7 +112,7 @@ namespace Deployment
 
       static void dump(const Deployment::ResourceUsageKind &ruk);
 
-      static void dump(const Deployment::DeploymentPlan &plan);
+      static void dump(const Deployment::DeploymentPlan &plan) {}
 
       static void dump(const Deployment::MonolithicDeploymentDescription &mdd);
 
