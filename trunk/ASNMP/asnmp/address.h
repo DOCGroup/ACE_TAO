@@ -46,9 +46,11 @@ enum address_lengths {
    UDPIPV4LEN=6,
    IPV6LEN=16,
    UDPIPV6LEN=18,
-   NETBIOSLEN=16,
    IPXLEN=10,
    IPXSOCKLEN=12, 
+   NETBIOSLEN=16,
+   APPLETKLEN=3,
+   DECNETLEN=2,
    MACLEN=6,
    HASH0=19,
    HASH1=13, 
@@ -64,6 +66,8 @@ enum addr_type {
   type_ipxsock,
   type_mac,
   type_nb,
+  type_atk,
+  type_decnet,
   type_e164,
   type_sip, // IPv6
   type_invalid
@@ -139,6 +143,9 @@ public:
 
   virtual int valid() const;            
   // verify the is the address object constructed ok
+
+  virtual void to_octet(OctetStr& octet) const = 0; 
+  // return a suitable buffer to contain the address 
 
   virtual SmiUINT32 get_syntax() = 0;
   // (pure virtual) syntax type
@@ -244,7 +251,7 @@ public:
   int is_private() const;
   // per RFC 1597,  private addresses are:: 10, 172.16, and 192.168.0 
 
-  void to_octet(OctetStr& octet) const;
+  virtual void to_octet(OctetStr& octet) const;
   // convert address into octet string format in network byte order
 
 protected:
@@ -394,6 +401,8 @@ public:
   unsigned int hashFunction() const;
   // return a hash key
 
+  virtual void to_octet(OctetStr& octet) const;
+  // return byte array of the mac address 
 
 protected:
   char output_buffer[MAX_DISPLAY_SZ];           
@@ -452,6 +461,9 @@ public:
    SnmpSyntax *clone() const; 
    // create a new instance of this Value
 
+   virtual void to_octet(OctetStr& octet) const;
+   // output byte buffer containing netbios name 
+
 protected:
   void InitNBAddr(const char *inaddr);
   char output_buffer[MAX_DISPLAY_SZ];           
@@ -460,6 +472,110 @@ protected:
   // output buffer to hold string representation
   virtual int parse_address( const char  *inaddr);
   virtual addr_type get_type() const;
+};
+
+//------------------------------------------------------------------------
+//---------[ DecNet Address Class ]---------------------------------------
+//------------------------------------------------------------------------
+class  ACE_Export DecNetAddress : public Address 
+  // = TITLE
+  //     Defines the member functions for the concrete class DecNetAddress.
+  //     DecNet Phase ? address consists of two octets (CISCO-TC.my)
+{
+  public:
+   DecNetAddress( const char *inaddr = "");
+   // default constructor with string arg
+ 
+   DecNetAddress( const DecNetAddress& decaddr);
+   // copy constructor
+ 
+   DecNetAddress( const GenAddress& genaddr);
+   // construct with a GenAddress
+ 
+   ~DecNetAddress();
+ 
+   virtual char *to_string();
+ 
+   DecNetAddress& operator=( const DecNetAddress &decaddr);
+
+   virtual void to_octet(OctetStr& octet) const;
+   // convert address into octet string format 2 bytes of decnet address 
+ 
+   virtual operator const char *() const;
+   // const char * operator overloaded for streaming output
+ 
+   virtual SmiUINT32 get_syntax();
+   // syntax type
+ 
+   SnmpSyntax& operator=( SnmpSyntax &val);
+   // copy an instance of this Value
+ 
+   SnmpSyntax *clone() const;
+   // create a new instance of this Value
+
+   protected:  
+   virtual int parse_address( const char *inaddr);
+   virtual addr_type get_type() const;
+   virtual void format_output();
+   char output_buffer[MAX_DISPLAY_SZ];           
+};
+
+//------------------------------------------------------------------------
+//---------[ AppleTalk Address Class ]------------------------------------
+//------------------------------------------------------------------------
+class  ACE_Export AppleTalkAddress :  public Address 
+  // = TITLE
+  //     Defines the member functions for the concrete class DecNetAddress.
+  //     DecNet Phase ? address consists of two octets (CISCO-TC.my)
+{
+  public:
+  AppleTalkAddress( const char *inaddr = "");
+   // default constructor with string arg
+ 
+   AppleTalkAddress( const AppleTalkAddress& atkaddr);
+   // copy constructor
+ 
+   AppleTalkAddress( const GenAddress& genaddr);
+   // construct with a GenAddress
+ 
+   ~AppleTalkAddress();
+ 
+   virtual char *to_string();
+ 
+   AppleTalkAddress& operator=( const AppleTalkAddress &atkaddr);
+ 
+   virtual void to_octet(OctetStr& octet) const;
+   // convert address into octet string format 3 bytes of atk address 
+
+   char get_host_address() const;
+   // get the host part of the address
+
+   void set_host_address(const char);
+   // set the host part of the address
+
+   short get_net_address() const;
+   // get the 2 byte atk network address
+
+   void set_net_address(const short atknet);
+   // set the host 2 byte atk  network address
+   
+   virtual operator const char *() const;
+   // const char * operator overloaded for streaming output
+ 
+   virtual SmiUINT32 get_syntax();
+   // syntax type
+ 
+   SnmpSyntax& operator=( SnmpSyntax &val);
+   // copy an instance of this Value
+ 
+   SnmpSyntax *clone() const;
+   // create a new instance of this Value
+ 
+   private:
+   virtual int parse_address( const char *inaddr);
+   virtual addr_type get_type() const;
+   virtual void format_output();
+   char output_buffer[MAX_DISPLAY_SZ];           
 };
 
 //------------------------------------------------------------------------
@@ -506,6 +622,9 @@ public:
 
   virtual addr_type get_type() const;
   // return the type
+
+  virtual void to_octet(OctetStr& octet) const;
+  // return byte sequence containing ipx address 
 
 protected:
   char separator;
@@ -630,6 +749,9 @@ public:
   virtual addr_type get_type() const;
   // return the type
 
+  virtual void to_octet(OctetStr& octet) const;
+  // return the address as a octet sequence
+ 
 protected:
   Address *address;
   // pointer to a a concrete address
@@ -642,6 +764,9 @@ protected:
 
   virtual void format_output();
   // format output for a generic address
+
+  void init_smi();
+  // initialize smi data structure
 };
 
 #endif  //_ADDRESS
