@@ -144,7 +144,7 @@ public:
 	      int suspend_entry = 0);
     // Set the structure to these new values
 
-    void dump (HANDLE event_handle) const;
+    void dump (ACE_HANDLE event_handle) const;
     // Dump the state of an object.
   };
 
