@@ -1,3 +1,18 @@
+Sat Oct 26 09:45:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Heap_T.h:
+          Doxygen documentation fix
+
+        * ace/OS.h:
+          The BCB4 header files don't define ENOTEMPTY, so define this when
+          detecting the BCB4 compiler. Thanks to Mike Curtis <mcurtis@wt.net>
+          for reporting this.
+
+        * examples/Reactor/Proactor/test_proactor2.cpp:
+          Removed not needed return. Fixes a BCB4 build error
+
+        * THANKS: Added Mike Curtis
+
 Wed Oct 23 16:37:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* THANKS: Added Sandeep to the Hall of Fame.
@@ -10,11 +25,11 @@ Wed Oct 23 17:20:18 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	  propagated.
 
 	* ace/Service_Repository.cpp (suspend, resume, fini):
-	  Changed to propagate the return value from the 
+	  Changed to propagate the return value from the
 	  ACE_Service_Type instead of always 0.
 
 Tue Oct 22 16:26:56 2002  Rich Seibel  <seibel_r@ociweb.com>
-	
+
         * ace/Basic_Types.h:
           Added a test for _BYTE_ORDER, same as BYTE_ORDER and
           __BYTE_ORDER.  VxWorks defines this.  Also note, compilers
