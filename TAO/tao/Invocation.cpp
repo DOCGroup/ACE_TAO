@@ -687,9 +687,8 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                                                 CORBA::COMPLETED_YES),
                               TAO_INVOKE_EXCEPTION);
 
-          this->inp_stream ().decode (exception->_type (),
-                                      exception, 0,
-                                      ACE_TRY_ENV);
+          exception->_tao_decode (this->inp_stream (),
+                                  ACE_TRY_ENV);
           ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
           if (TAO_debug_level > 5)

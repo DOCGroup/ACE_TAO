@@ -87,18 +87,10 @@ operator<< (TAO_OutputCDR &strm,
     return 0;
 }
 
-CORBA::Boolean operator>> (TAO_InputCDR &strm,
-                           CORBA::ORB::InvalidName &_tao_aggregate)
+CORBA::Boolean operator>> (TAO_InputCDR &,
+                           CORBA::ORB::InvalidName &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 CORBA_ORB::InvalidName::InvalidName (void)
@@ -133,10 +125,25 @@ CORBA_ORB::InvalidName::_narrow (CORBA_Exception *ex)
     return 0;
 }
 
-void
-CORBA_ORB::InvalidName::_raise (void)
+void CORBA_ORB::InvalidName::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void CORBA_ORB::InvalidName::_tao_encode (TAO_OutputCDR &cdr,
+                                          CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_ORB::InvalidName::_tao_decode (TAO_InputCDR &cdr,
+                                          CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // TAO extension - the _alloc method
@@ -147,7 +154,7 @@ CORBA::ORB::InvalidName::_alloc (void)
   ACE_NEW_RETURN (retval,
                   CORBA::ORB::InvalidName,
                   0);
-  return retval; 
+  return retval;
 }
 
 CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)

@@ -1422,9 +1422,6 @@ TAO_GIOP::send_reply_exception (const TAO_GIOP_Version &version,
       // Write the request ID
       output.write_ulong (request_id);
 
-      // Write the exception
-      CORBA::TypeCode_ptr except_tc = x->_type ();
-
       CORBA::exception_type extype =
         CORBA::USER_EXCEPTION;
 
@@ -1434,12 +1431,7 @@ TAO_GIOP::send_reply_exception (const TAO_GIOP_Version &version,
       // write the reply_status
       output.write_ulong (TAO_GIOP::convert_CORBA_to_GIOP_exception (extype));
 
-      // @@ Any way to implement this without interpretive
-      //    marshaling???
-      output.encode (except_tc,
-                     x,
-                     0,
-                     ACE_TRY_ENV);
+      x->_tao_encode (output, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA_Exception, ex)

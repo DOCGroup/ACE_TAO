@@ -457,9 +457,25 @@ CORBA_PollableSet::NoPossiblePollable::_narrow (CORBA::Exception *exc)
 }
 
 
-void CORBA_PollableSet::NoPossiblePollable::_raise ()
+void CORBA_PollableSet::NoPossiblePollable::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void CORBA_PollableSet::NoPossiblePollable::_tao_encode (TAO_OutputCDR &cdr,
+                                                         CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_PollableSet::NoPossiblePollable::_tao_decode (TAO_InputCDR &cdr,
+                                                         CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // TAO extension - the _alloc method
@@ -521,9 +537,25 @@ CORBA_PollableSet::UnknownPollable::_narrow (CORBA::Exception *exc)
 }
 
 
-void CORBA_PollableSet::UnknownPollable::_raise ()
+void CORBA_PollableSet::UnknownPollable::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void CORBA_PollableSet::UnknownPollable::_tao_encode (TAO_OutputCDR &cdr,
+                                                      CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_PollableSet::UnknownPollable::_tao_decode (TAO_InputCDR &cdr,
+                                                      CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // TAO extension - the _alloc method

@@ -338,7 +338,7 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
 
   if (info->is_roundtrip)
     {
-      TAO_GIOP_Twoway_Invocation call (this, 
+      TAO_GIOP_Twoway_Invocation call (this,
                                        info->opname,
                                        ACE_OS::strlen (info->opname),
                                        this->orb_core_);
@@ -485,7 +485,7 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
     } // if (two way)
   else
     {
-      TAO_GIOP_Oneway_Invocation call (this, 
+      TAO_GIOP_Oneway_Invocation call (this,
                                        info->opname,
                                        ACE_OS::strlen (info->opname),
                                        this->orb_core_);

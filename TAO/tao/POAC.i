@@ -3089,6 +3089,52 @@ PortableServer::Current_out::operator-> (void)
   return this->ptr_;
 }
 
+// ****************************************************************
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::ForwardRequest &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+  {
+    // now marshal the members (if any)
+    if (
+      (strm << _tao_aggregate.forward_reference.in ())
+    )
+      return 1;
+    else
+      return 0;
+  }
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,PortableServer::ForwardRequest &_tao_aggregate)
+{
+  // now marshal the members
+  if (
+    (strm >> _tao_aggregate.forward_reference.out ())
+  )
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POAManager::AdapterInactive &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,PortableServer::POAManager::AdapterInactive)
+{
+  return 1;
+}
+
+// ****************************************************************
+
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::ThreadPolicyValue &_tao_enumval)
 {
   return strm.write_ulong ((CORBA::ULong) _tao_enumval);
@@ -3569,17 +3615,9 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::AdapterAlreadyExists &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::POA::AdapterAlreadyExists &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -3593,17 +3631,9 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::AdapterInactive &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::POA::AdapterInactive &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -3617,17 +3647,9 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::AdapterNonExistent &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::POA::AdapterNonExistent &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::InvalidPolicy &_tao_aggregate)
@@ -3647,19 +3669,10 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::InvalidPolicy &_tao_aggregate)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    // now marshal the members
-    if ((strm >> _tao_aggregate.index))
-      return 1;
-    else
-      return 0;
-  }
-  else
-    return 0;
+  // now marshal the members
+  if ((strm >> _tao_aggregate.index))
+    return 1;
+  return 0;
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -3673,17 +3686,9 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::NoServant &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::POA::NoServant &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -3697,17 +3702,9 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::ObjectAlreadyActive &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::POA::ObjectAlreadyActive &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::ObjectNotActive &_tao_aggregate)
@@ -3719,17 +3716,9 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::ObjectNotActive &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::POA::ObjectNotActive &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::ServantAlreadyActive &_tao_aggregate)
@@ -3741,17 +3730,9 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::ServantAlreadyActive &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::POA::ServantAlreadyActive &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::ServantNotActive &_tao_aggregate)
@@ -3763,17 +3744,9 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::ServantNotActive &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::POA::ServantNotActive &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::WrongAdapter &_tao_aggregate)
@@ -3785,17 +3758,9 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::WrongAdapter &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::POA::WrongAdapter &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::POA::WrongPolicy &_tao_aggregate)
@@ -3807,17 +3772,9 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::WrongPolicy &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::POA::WrongPolicy &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 
@@ -3841,17 +3798,9 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Current::NoContext &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::Current::NoContext &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 ACE_INLINE CORBA::Boolean

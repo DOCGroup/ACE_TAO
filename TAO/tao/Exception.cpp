@@ -278,6 +278,35 @@ CORBA_SystemException::_raise (void)
   TAO_RAISE (*this);
 }
 
+void
+CORBA_SystemException::_tao_encode (TAO_OutputCDR &cdr,
+                                    CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr.write_string (this->_id ())
+      && cdr.write_ulong (this->minor ())
+      && cdr.write_ulong (this->completed ()))
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void
+CORBA_SystemException::_tao_decode (TAO_InputCDR &cdr,
+                                    CORBA::Environment &ACE_TRY_ENV)
+{
+  // The string is read by the caller, to determine the exact type of
+  // the exception.  We just decode the fields...
+  // cdr.read_string (this->id ());
+  CORBA::ULong tmp;
+
+  if (cdr.read_ulong (this->minor_)
+      && cdr.read_ulong (tmp))
+    {
+      this->completed_ = CORBA::CompletionStatus (tmp);
+      return;
+    }
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 CORBA::ULong
 CORBA_SystemException::_tao_errno (int errno_value)
 {
@@ -584,6 +613,20 @@ void
 CORBA_UnknownUserException::_raise (void)
 {
   TAO_RAISE (*this);
+}
+
+void
+CORBA_UnknownUserException::_tao_encode (TAO_OutputCDR &,
+                                         CORBA::Environment &ACE_TRY_ENV) const
+{
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void
+CORBA_UnknownUserException::_tao_decode (TAO_InputCDR &,
+                                         CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // Note that "buffer" holds the (unscoped) name originally, and is

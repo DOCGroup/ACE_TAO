@@ -107,6 +107,22 @@ void PortableServer::ForwardRequest::_raise (void)
   TAO_RAISE(*this);
 }
 
+void PortableServer::ForwardRequest::_tao_encode (TAO_OutputCDR &cdr,
+                                                  CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::ForwardRequest::_tao_decode (TAO_InputCDR &cdr,
+                                                  CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 // narrow
 PortableServer::ForwardRequest_ptr
 PortableServer::ForwardRequest::_narrow (CORBA::Exception *exc)
@@ -1476,6 +1492,22 @@ void PortableServer::POAManager::AdapterInactive::_raise (void)
   TAO_RAISE(*this);
 }
 
+void PortableServer::POAManager::AdapterInactive::_tao_encode (TAO_OutputCDR &cdr,
+                                                               CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::POAManager::AdapterInactive::_tao_decode (TAO_InputCDR &cdr,
+                                                               CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 // narrow
 PortableServer::POAManager::AdapterInactive_ptr
 PortableServer::POAManager::AdapterInactive::_narrow (CORBA::Exception *exc)
@@ -1980,6 +2012,22 @@ void PortableServer::POA::AdapterAlreadyExists::_raise (void)
   TAO_RAISE(*this);
 }
 
+void PortableServer::POA::AdapterAlreadyExists::_tao_encode (TAO_OutputCDR &cdr,
+                                                             CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::POA::AdapterAlreadyExists::_tao_decode (TAO_InputCDR &cdr,
+                                                             CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 // narrow
 PortableServer::POA::AdapterAlreadyExists_ptr
 PortableServer::POA::AdapterAlreadyExists::_narrow (CORBA::Exception *exc)
@@ -2115,6 +2163,22 @@ void PortableServer::POA::AdapterInactive::_raise (void)
   TAO_RAISE(*this);
 }
 
+void PortableServer::POA::AdapterInactive::_tao_encode (TAO_OutputCDR &cdr,
+                                                        CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::POA::AdapterInactive::_tao_decode (TAO_InputCDR &cdr,
+                                                        CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 // narrow
 PortableServer::POA::AdapterInactive_ptr
 PortableServer::POA::AdapterInactive::_narrow (CORBA::Exception *exc)
@@ -2248,6 +2312,22 @@ PortableServer::POA::AdapterNonExistent::operator= (const PortableServer::POA::A
 void PortableServer::POA::AdapterNonExistent::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void PortableServer::POA::AdapterNonExistent::_tao_encode (TAO_OutputCDR &cdr,
+                                                           CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::POA::AdapterNonExistent::_tao_decode (TAO_InputCDR &cdr,
+                                                           CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // narrow
@@ -2392,6 +2472,22 @@ void PortableServer::POA::InvalidPolicy::_raise (void)
   TAO_RAISE(*this);
 }
 
+void PortableServer::POA::InvalidPolicy::_tao_encode (TAO_OutputCDR &cdr,
+                                                      CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::POA::InvalidPolicy::_tao_decode (TAO_InputCDR &cdr,
+                                                      CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 // narrow
 PortableServer::POA::InvalidPolicy_ptr
 PortableServer::POA::InvalidPolicy::_narrow (CORBA::Exception *exc)
@@ -2528,6 +2624,22 @@ PortableServer::POA::NoServant::operator= (const PortableServer::POA::NoServant 
 void PortableServer::POA::NoServant::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void PortableServer::POA::NoServant::_tao_encode (TAO_OutputCDR &cdr,
+                                                  CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::POA::NoServant::_tao_decode (TAO_InputCDR &cdr,
+                                                  CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // narrow
@@ -2667,6 +2779,22 @@ void PortableServer::POA::ObjectAlreadyActive::_raise (void)
   TAO_RAISE(*this);
 }
 
+void PortableServer::POA::ObjectAlreadyActive::_tao_encode (TAO_OutputCDR &cdr,
+                                                            CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::POA::ObjectAlreadyActive::_tao_decode (TAO_InputCDR &cdr,
+                                                            CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 // narrow
 PortableServer::POA::ObjectAlreadyActive_ptr
 PortableServer::POA::ObjectAlreadyActive::_narrow (CORBA::Exception *exc)
@@ -2798,6 +2926,22 @@ PortableServer::POA::ObjectNotActive::operator= (const PortableServer::POA::Obje
 void PortableServer::POA::ObjectNotActive::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void PortableServer::POA::ObjectNotActive::_tao_encode (TAO_OutputCDR &cdr,
+                                                        CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::POA::ObjectNotActive::_tao_decode (TAO_InputCDR &cdr,
+                                                        CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // narrow
@@ -2933,6 +3077,22 @@ void PortableServer::POA::ServantAlreadyActive::_raise (void)
   TAO_RAISE(*this);
 }
 
+void PortableServer::POA::ServantAlreadyActive::_tao_encode (TAO_OutputCDR &cdr,
+                                                             CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::POA::ServantAlreadyActive::_tao_decode (TAO_InputCDR &cdr,
+                                                             CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 // narrow
 PortableServer::POA::ServantAlreadyActive_ptr
 PortableServer::POA::ServantAlreadyActive::_narrow (CORBA::Exception *exc)
@@ -3064,6 +3224,22 @@ PortableServer::POA::ServantNotActive::operator= (const PortableServer::POA::Ser
 void PortableServer::POA::ServantNotActive::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void PortableServer::POA::ServantNotActive::_tao_encode (TAO_OutputCDR &cdr,
+                                                         CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::POA::ServantNotActive::_tao_decode (TAO_InputCDR &cdr,
+                                                         CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // narrow
@@ -3199,6 +3375,22 @@ void PortableServer::POA::WrongAdapter::_raise (void)
   TAO_RAISE(*this);
 }
 
+void PortableServer::POA::WrongAdapter::_tao_encode (TAO_OutputCDR &cdr,
+                                                     CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::POA::WrongAdapter::_tao_decode (TAO_InputCDR &cdr,
+                                                     CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 // narrow
 PortableServer::POA::WrongAdapter_ptr
 PortableServer::POA::WrongAdapter::_narrow (CORBA::Exception *exc)
@@ -3330,6 +3522,22 @@ PortableServer::POA::WrongPolicy::operator= (const PortableServer::POA::WrongPol
 void PortableServer::POA::WrongPolicy::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void PortableServer::POA::WrongPolicy::_tao_encode (TAO_OutputCDR &cdr,
+                                                    CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::POA::WrongPolicy::_tao_decode (TAO_InputCDR &cdr,
+                                                    CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // narrow
@@ -3536,6 +3744,22 @@ PortableServer::Current::NoContext::operator= (const PortableServer::Current::No
 void PortableServer::Current::NoContext::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void PortableServer::Current::NoContext::_tao_encode (TAO_OutputCDR &cdr,
+                                                      CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::Current::NoContext::_tao_decode (TAO_InputCDR &cdr,
+                                                      CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // narrow

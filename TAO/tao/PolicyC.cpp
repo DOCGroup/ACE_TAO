@@ -84,9 +84,25 @@ CORBA_PolicyError::_narrow (CORBA::Exception *exc)
     return 0;
 }
 
-void CORBA_PolicyError::_raise ()
+void CORBA_PolicyError::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void CORBA_PolicyError::_tao_encode (TAO_OutputCDR &cdr,
+                                     CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_PolicyError::_tao_decode (TAO_InputCDR &cdr,
+                                     CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // TAO extension - the _alloc method
@@ -148,9 +164,25 @@ CORBA_InvalidPolicies::_narrow (CORBA::Exception *exc)
     return 0;
 }
 
-void CORBA_InvalidPolicies::_raise ()
+void CORBA_InvalidPolicies::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void CORBA_InvalidPolicies::_tao_encode (TAO_OutputCDR &cdr,
+                                         CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_InvalidPolicies::_tao_decode (TAO_InputCDR &cdr,
+                                         CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // TAO extension - the _alloc method

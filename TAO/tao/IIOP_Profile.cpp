@@ -23,7 +23,7 @@ static const char prefix_[] = "iiop";
 
 const char TAO_IIOP_Profile::object_key_delimiter_ = '/';
 
-char 
+char
 TAO_IIOP_Profile::object_key_delimiter (void) const
 {
   return TAO_IIOP_Profile::object_key_delimiter_;
@@ -150,7 +150,7 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
   // profiles whose versions we don't understand.
   //
   CORBA::Octet major, minor;
-  
+
   if (!(cdr.read_octet (major)
         && (major == TAO_DEF_GIOP_MAJOR)
         && cdr.read_octet (minor)))
@@ -166,7 +166,7 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
   }
 
   this->version_.major = major;
-  
+
   if (minor <= TAO_DEF_GIOP_MINOR)
     this->version_.minor = minor;
 

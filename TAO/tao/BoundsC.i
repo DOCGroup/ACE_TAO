@@ -20,16 +20,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::Bounds &
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::Bounds &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Bounds &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
-

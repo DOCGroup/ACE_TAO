@@ -612,17 +612,9 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_PollableS
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_PollableSet::NoPossiblePollable &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_PollableSet::NoPossiblePollable &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_PollableSet::UnknownPollable &_tao_aggregate)
@@ -634,15 +626,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_PollableS
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_PollableSet::UnknownPollable &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_PollableSet::UnknownPollable &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }

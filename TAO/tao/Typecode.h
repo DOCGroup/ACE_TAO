@@ -72,6 +72,12 @@ public:
     Bounds (void);
 
     virtual void _raise (void);
+
+    virtual void _tao_encode (TAO_OutputCDR &cdr,
+                              CORBA::Environment &) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr,
+                              CORBA::Environment &);
+
     static Bounds* _narrow (CORBA_Exception *ex);
     virtual int _is_a (const char* interface_id) const;
   };
@@ -82,6 +88,12 @@ public:
     BadKind (void);
 
     virtual void _raise (void);
+
+    virtual void _tao_encode (TAO_OutputCDR &cdr,
+                              CORBA::Environment &) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr,
+                              CORBA::Environment &);
+
     static BadKind* _narrow (CORBA_Exception *ex);
     virtual int _is_a (const char* interface_id) const;
   };

@@ -148,6 +148,11 @@ TAO_NAMESPACE  TAO_IOP
 
       virtual void _raise (void);
 
+      virtual void _tao_encode (TAO_OutputCDR &cdr,
+                                CORBA::Environment &) const;
+      virtual void _tao_decode (TAO_InputCDR &cdr,
+                                CORBA::Environment &);
+
       static EmptyProfileList *_narrow (CORBA::Exception *);
 
 
@@ -185,6 +190,11 @@ TAO_NAMESPACE  TAO_IOP
 
 
       virtual void _raise (void);
+
+      virtual void _tao_encode (TAO_OutputCDR &cdr,
+                                CORBA::Environment &) const;
+      virtual void _tao_decode (TAO_InputCDR &cdr,
+                                CORBA::Environment &);
 
       static NotFound *_narrow (CORBA::Exception *);
 
@@ -224,6 +234,11 @@ TAO_NAMESPACE  TAO_IOP
 
       virtual void _raise (void);
 
+      virtual void _tao_encode (TAO_OutputCDR &cdr,
+                                CORBA::Environment &) const;
+      virtual void _tao_decode (TAO_InputCDR &cdr,
+                                CORBA::Environment &);
+
       static Duplicate *_narrow (CORBA::Exception *);
 
 
@@ -261,6 +276,11 @@ TAO_NAMESPACE  TAO_IOP
 
 
       virtual void _raise (void);
+
+      virtual void _tao_encode (TAO_OutputCDR &cdr,
+                                CORBA::Environment &) const;
+      virtual void _tao_decode (TAO_InputCDR &cdr,
+                                CORBA::Environment &);
 
       static Invalid_IOR *_narrow (CORBA::Exception *);
 
