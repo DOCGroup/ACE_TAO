@@ -113,8 +113,8 @@ TAO_SHMIOP_Connector::close (void)
 }
 
 int
-TAO_SHMIOP_Connector::make_connect (TAO_GIOP_Invocation *invocation,
-                                    TAO_Transport_Descriptor_Interface *desc)
+TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
+                                       TAO_Transport_Descriptor_Interface *desc)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,

@@ -93,8 +93,8 @@ TAO_DIOP_Connector::close (void)
 }
 
 int
-TAO_DIOP_Connector::make_connect (TAO_GIOP_Invocation *invocation,
-                                  TAO_Transport_Descriptor_Interface *desc)
+TAO_DIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
+                                     TAO_Transport_Descriptor_Interface *desc)
 {
   TAO_Transport *&transport = invocation->transport ();
 

@@ -116,7 +116,7 @@ TAO_IIOP_SSL_Connector::close (void)
 }
 
 int
-TAO_IIOP_SSL_Connector::make_connect (
+TAO_IIOP_SSL_Connector::make_connection (
   TAO_GIOP_Invocation *invocation,
   TAO_Transport_Descriptor_Interface *desc)
 {

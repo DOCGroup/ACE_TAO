@@ -65,8 +65,8 @@ public:
 protected:
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
-  int make_connect (TAO_GIOP_Invocation *invocation,
-                    TAO_Transport_Descriptor_Interface *desc);
+  int make_connection (TAO_GIOP_Invocation *invocation,
+                       TAO_Transport_Descriptor_Interface *desc);
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h

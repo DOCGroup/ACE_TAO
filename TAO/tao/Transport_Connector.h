@@ -103,8 +103,8 @@ protected:
 
   /// Do an actual connect using the underlying transport to make a
   /// connection
-  virtual int make_connect (TAO_GIOP_Invocation *invocation,
-                            TAO_Transport_Descriptor_Interface *desc) = 0;
+  virtual int make_connection (TAO_GIOP_Invocation *invocation,
+                               TAO_Transport_Descriptor_Interface *desc) = 0;
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);
