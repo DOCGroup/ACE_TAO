@@ -1,3 +1,20 @@
+Mon Nov 24 20:02:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/Trading/ttest_export.h:
+        
+          New file containing export macro definitions for Trading_Lib_Test.
+          
+        * orbsvcs/tests/Trading/Offer_Exporter.h:
+        * orbsvcs/tests/Trading/Offer_Importer.h:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.h:
+        * orbsvcs/tests/Trading/TT_Info.h:
+        
+          Added include of the new export header file above.
+          
+        * orbsvcs/tests/Trading/Trading.mpc:
+        
+          Updated to generate and use the export macro.
+
 Mon Nov 24 20:05:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Kokyu_dsrt_schedulers/Makefile.Kokyu_DSRT_Schedulers:
