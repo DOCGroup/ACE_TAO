@@ -1,3 +1,8 @@
+Sat Dec 20 14:57:30 1997    <nw1@CHA-CHA>
+
+	* All MSVC 5.0 project files: Removed unnecessary library
+ 	  inclusions.  Most of them are not necessary.
+
 Tue Nov 25 20:49:24 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tao/orbobj.h: 
