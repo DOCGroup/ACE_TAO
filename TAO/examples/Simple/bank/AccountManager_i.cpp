@@ -1,4 +1,3 @@
-
 // $Id$
 
 #include "AccountManager_i.h"
@@ -47,7 +46,7 @@ AccountManager_i::open (const char *name,
 			CORBA::Float initial_balance,
 			CORBA::Environment &_env)
 {
-  Bank::Account_ptr result = 0;
+  Account_i* result = 0;
 
   // If name is already in the map, <find> will assign <result> to the
   // appropriate value.
@@ -85,6 +84,7 @@ AccountManager_i::open (const char *name,
       // Generate an IOR for the result object and register it with
       // the POA.  In case the object already exists then the
       // previously generated IOR is returned.
+
       return result->_this ();
     }
   TAO_CATCHANY
