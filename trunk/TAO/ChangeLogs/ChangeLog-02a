@@ -1,3 +1,19 @@
+Wed Jul 18 23:58:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+
+         Add #include "tao/Strategies/advanced_resource.h"
+         so that the ace_static_svc_TAO_Advanced_Resource_Factory
+         symbol is defined in each binary, and the TAO_Strategies 
+         library is actually linked in during static builds.
+         Fixes failures of this test with static builds.
+
+        * orbsvcs/tests/AVStreams/Component_Switching/components_svc.conf:
+          Fix syntax so Service Configurator file can be used
+          for static and dynamic builds.         
+
 Wed Jul 18 19:22:48 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Leader_Follower.i (set/reset_client_leader_thread): Fixed a

@@ -6,6 +6,8 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Event_Handler.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 typedef ACE_Singleton<Sender, ACE_Null_Mutex> SENDER;
 /// Create a singleton instance of the Sender.
 
