@@ -32,7 +32,7 @@ LIBS="ace/libACE.a \
     TAO/tao/IORInterceptor/libTAO_IORInterceptor.a \
     TAO/tao/Messaging/libTAO_Messaging.a \
     TAO/tao/ObjRefTemplate/libTAO_ObjRefTemplate.a \
-    TAO/tao/ValueType/libTAO_Valuetype.a \
+    TAO/tao/Valuetype/libTAO_Valuetype.a \
     TAO/tao/RTScheduling/libTAO_RTScheduler.a \
     TAO/tao/RTPortableServer/libTAO_RTPortableServer.a"
 
