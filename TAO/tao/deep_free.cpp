@@ -290,7 +290,6 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode_ptr discrim_tc;
   CORBA::TypeCode_ptr member_tc;
   CORBA::Any_ptr member_label;
-  CORBA::ULong discrim_size_with_pad;
   const void *discrim_val;
   CORBA::ULong member_count;
   CORBA::Long  default_index;
@@ -300,26 +299,22 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
   TAO_Base_Union *base_union;
   void *member_val;
 
+  // Get a base pointer so we can use the union's virtual functions.
   base_union = ACE_reinterpret_cast (TAO_Base_Union *,
                                      ACE_const_cast (void *, 
                                                      data));
 
   discrim_tc = tc->discriminator_type (env);
-  // get the discriminator type
+  // Get the discriminator type
   // @@EXC@@ Why are we changing the exception thrown here?
   //  if (env.exception ()) TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
   TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
-  discrim_size_with_pad = tc->TAO_discrim_pad_size (env);
-  // @@EXC@@ Why are we changing the exception thrown here?
-  // if (env.exception ()) TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), env,  CORBA::TypeCode::TRAVERSE_STOP);
-  TAO_CHECK_ENV_RETURN (env,  CORBA::TypeCode::TRAVERSE_STOP);
-
   discrim_val = base_union->_discriminant ();
-  // get a pointer to the discriminator value
+  // Get a pointer to the discriminator value.
 
   member_val = base_union->_access (0);
-  // get a pointer to the member, but don't allocate any storage
+  // Get a pointer to the member, but don't allocate new storage.
 
   default_index = tc->default_index (env);
   // now get ready to marshal the actual union value
