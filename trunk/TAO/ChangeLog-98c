@@ -1,3 +1,12 @@
+Thu Dec 31 12:39:24 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/Time_Service/Server_i.cpp (parse_args): Changed
+	  the _env to TAO_TRY_ENV.
+
+	* orbsvcs/Time_Service/Server_i.cpp (parse_args): Changed
+	  the _env to TAO_TRY_ENV. Checked for invalid filename while
+	  reading from the IOR file. Removed the unreferenced variables.
+
 Thu Dec 31 12:28:31 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): Changed
