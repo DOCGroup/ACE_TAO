@@ -1,16 +1,57 @@
+Wed Mar 28 16:39:13 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Messaging.h:
+          We continue to add explicity headers for each CORBA namespace,
+          until recently the "tao/corba.h" file automagically #included
+          everything in CORBA, resulting in long compilation times,
+          polluted namespaces and excessive coupling.
+          Long ago we moved PortableServer to its own header file, and
+          more recently RT_CORBA, this is another step.
+          Notice that this is only relevant for platforms that define
+          TAO_HAS_INTERCEPTORS=0, otherwise some other magic kicks in and
+          re-introduces the magic header files.
+
+        * examples/Buffered_AMI/client.cpp:
+        * examples/Buffered_Oneways/client.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/tests/Event/Performance/Latency.cpp:
+        * orbsvcs/tests/Event/Performance/Latency_Server.cpp:
+        * performance-tests/Callback/client.cpp:
+        * performance-tests/Callback/server.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+        * tests/AMI_Timeouts/timeout_client.cpp:
+        * tests/Crashed_Callback/client.cpp:
+        * tests/Crashed_Callback/server.cpp:
+        * tests/Policies/Manipulation.cpp:
+        * tests/Timed_Buffered_Oneways/client.cpp:
+        * tests/Timeout/client.cpp:
+          Add missing #include "tao/Messaging.h", this fixes compilation
+          problems on configurations compiled with interceptors disabled.
+
+        * orbsvcs/examples/Security/Send_File/Makefile:
+          Regenerate dependencies
+
+        * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+          Cosmetic fixes
+
 Wed Mar 28 17:35:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Time/TAO_TIO.cpp (overlaps): Fixed a warning in
-	  Core builds. 
+        * orbsvcs/orbsvcs/Time/TAO_TIO.cpp (overlaps): Fixed a warning in
+          Core builds.
 
 Wed Mar 28 17:05:03 2001  Sharath Cholleti  <sharath@cs.wustl.edu>
 
-	* tao/Stub.cpp: Use all the profiles instead of <profile_in_use_>
-	  to calculate the hash. This should fix bug id #671 in the
-	  Bugzilla.
-	
-	* tao/MProfile.cpp: Using mod instead of average to calculate the
-	  hash value over multiple profiles.
+        * tao/Stub.cpp: Use all the profiles instead of <profile_in_use_>
+          to calculate the hash. This should fix bug id #671 in the
+          Bugzilla.
+
+        * tao/MProfile.cpp: Using mod instead of average to calculate the
+          hash value over multiple profiles.
 
 Wed Mar 28 17:53:35 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -19,36 +60,36 @@ Wed Mar 28 17:53:35 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Wed Mar 28 16:48:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/NestedUpcall/Triangle_Test/server_A.cpp (main): 
-	* tests/NestedUpcall/Triangle_Test/server_B.cpp:
-	* tests/NestedUpcall/Triangle_Test/initiator.cpp: Fixed fuzz
-	  warnings. 
+        * tests/NestedUpcall/Triangle_Test/server_A.cpp (main):
+        * tests/NestedUpcall/Triangle_Test/server_B.cpp:
+        * tests/NestedUpcall/Triangle_Test/initiator.cpp: Fixed fuzz
+          warnings.
 
 Wed Mar 28 16:27:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/Time/Client_i.cpp:
-	* orbsvcs/Time_Serive/Client_i.cpp:
-	* orbsvcs/Time_Serive/Server_i.cpp: Fixed fuzz warnings.
+        * orbsvcs/tests/Time/Client_i.cpp:
+        * orbsvcs/Time_Serive/Client_i.cpp:
+        * orbsvcs/Time_Serive/Server_i.cpp: Fixed fuzz warnings.
 
 Wed Mar 28 16:10:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
-	* orbsvcs/orbsvcs/Time/TAO_UTO.h:
-	* orbsvcs/orbsvcs/Time/TAO_TIO.cpp:
-	* orbsvcs/orbsvcs/Time/TAO_TIO.h:
-	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp: Fixed more fuzz warnings.
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_UTO.h:
+        * orbsvcs/orbsvcs/Time/TAO_TIO.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_TIO.h:
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp: Fixed more fuzz warnings.
 
 Wed Mar 28 15:25:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
-	* tao/GIOP_Message_Generator_Parser_10.cpp:
-	* tao/IORManipulation/IORC.cpp: Fixed fuzz warnings. 
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/IORManipulation/IORC.cpp: Fixed fuzz warnings.
 
 Wed Mar 28 14:45:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Forwarding/client.cpp (run_test): 
-	* tests/MProfile_Forwarding/client.cpp:
-	* tests/MProfile/client.cpp: Fixed fuzz warnings.
+        * tests/Forwarding/client.cpp (run_test):
+        * tests/MProfile_Forwarding/client.cpp:
+        * tests/MProfile/client.cpp: Fixed fuzz warnings.
 
 Wed Mar 28 14:42:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 

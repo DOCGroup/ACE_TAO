@@ -6,6 +6,7 @@
 #include "CEC_SupplierAdmin.h"
 #include "CEC_ConsumerAdmin.h"
 
+#include "tao/Messaging.h"
 #include "tao/ORB_Core.h"
 
 #if ! defined (__ACE_INLINE__)
