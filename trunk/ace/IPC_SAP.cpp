@@ -78,7 +78,7 @@ ACE_IPC_SAP::enable (int value) const
 #if defined (F_SETOWN) && defined (FASYNC)
       if (ACE_OS::fcntl (this->handle_,
                          F_SETOWN,
-                         ACE_IPC_SAP::pid_) == -1 
+                         ACE_IPC_SAP::pid_) == -1
           || ACE_Flag_Manip::set_flags (this->handle_,
                                         FASYNC) == -1)
         return -1;
@@ -93,7 +93,7 @@ ACE_IPC_SAP::enable (int value) const
       if (ACE_OS::fcntl (this->handle_,
                          F_SETFD,
                          1) == -1)
-	return -1;
+        return -1;
       break;
 #endif /* F_SETFD */
     case ACE_NONBLOCK:
@@ -114,7 +114,7 @@ int
 ACE_IPC_SAP::disable (int value) const
 {
   ACE_TRACE ("ACE_IPC_SAP::disable");
-  
+
 #if defined (ACE_WIN32) || defined (VXWORKS)
   switch (value)
     {
@@ -123,6 +123,9 @@ ACE_IPC_SAP::disable (int value) const
       // blocking:            (0)
       {
         u_long nonblock = 0;
+#if defined (ACE_WIN32)
+        ::WSAEventSelect(this->handle_, 0, 0);
+#endif /* ACE_WIN32 */
         return ACE_OS::ioctl (this->handle_,
                               FIONBIO,
                               &nonblock);
@@ -150,7 +153,7 @@ ACE_IPC_SAP::disable (int value) const
 #if defined (F_SETOWN) && defined (FASYNC)
       if (ACE_OS::fcntl (this->handle_,
                          F_SETOWN,
-                         0) == -1 
+                         0) == -1
           || ACE_Flag_Manip::clr_flags (this->handle_,
                                         FASYNC) == -1)
         return -1;
@@ -165,7 +168,7 @@ ACE_IPC_SAP::disable (int value) const
       if (ACE_OS::fcntl (this->handle_,
                          F_SETFD,
                          0) == -1)
-	return -1;
+        return -1;
       break;
 #endif /* F_SETFD */
     case ACE_NONBLOCK:
