@@ -23,4 +23,10 @@ project(RTOLDEvent) : orbsvcslib, core {
       Event/Module_Factory.cpp
     }
   }
+
+  // Since the resource file for RTOLDEvent does
+  // not match the project name, we must explicitly list it.
+  Resource_Files {
+    RTOldEvent.rc
+  }
 }
