@@ -1,3 +1,7 @@
+Sat Jun 27 07:07:43 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.17 released.
+
 Fri Jun 26 14:52:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/test_config.h: Don't close the ofstream before opening the
