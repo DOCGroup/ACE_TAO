@@ -70,7 +70,7 @@ ifeq ($(rapi),1)
 	      AV/QoS_UDP
 endif # rapi
 
-ifeq ($(sctp),)
+ifneq ($(sctp),)
   CPP_SRCS += AV/SCTP_SEQ
 endif # sctp
 
