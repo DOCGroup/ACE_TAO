@@ -31,7 +31,7 @@ Mon May 31 19:32:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tests/NestedUpcall/Triangle_Test/README:
 	  Removed all references to the -ORBhost or -ORBport options,
 	  first because the default values work in most cases and second
-	  because the options are obsolete (-ORBenpoint replaces both).
+	  because the options are obsolete (-ORBendpoint replaces both).
 
 Mon May 31 19:21:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 
