@@ -35,9 +35,13 @@ TAO_LF_Event::state_changed (int new_state)
 
       ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, leader_follower.lock ());
 
-      this->state_changed_i (new_state);
+      if (is_state_final ()== 0 &&
+          this->follower_ != 0)
+        {
+          this->state_changed_i (new_state);
 
-      this->follower_->signal ();
+          this->follower_->signal ();
+        }
     }
 }
 
