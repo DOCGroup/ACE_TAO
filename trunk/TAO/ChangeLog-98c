@@ -1,3 +1,11 @@
+Sat Jul 18 14:19:48 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* tao/orbconf.h:
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/CosTrading.idl:
+	Moved the definition of TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG into
+	orbconf.h and CosTrading.idl, and out of the orbsvcs Makefile.
+
 Sat Jul 18 14:12:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/svc.conf: Added the 
