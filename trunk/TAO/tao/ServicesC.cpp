@@ -46,7 +46,7 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
@@ -55,18 +55,18 @@ static const CORBA::Long _oc_CORBA_ServiceType[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5365), 
-  ACE_NTOHL (0x72766963), 
-  ACE_NTOHL (0x65547970), 
-  ACE_NTOHL (0x653a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f5365),
+  ACE_NTOHL (0x72766963),
+  ACE_NTOHL (0x65547970),
+  ACE_NTOHL (0x653a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/ServiceType:1.0
     12,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x69636554), 
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x69636554),
   ACE_NTOHL (0x79706500),  // name = ServiceType
     CORBA::tk_ushort,
 
@@ -93,19 +93,19 @@ static const CORBA::Long _oc_CORBA_ServiceOption[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   36,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5365), 
-  ACE_NTOHL (0x72766963), 
-  ACE_NTOHL (0x654f7074), 
-  ACE_NTOHL (0x696f6e3a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f5365),
+  ACE_NTOHL (0x72766963),
+  ACE_NTOHL (0x654f7074),
+  ACE_NTOHL (0x696f6e3a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ServiceOption:1.0
     14,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x6963654f), 
-  ACE_NTOHL (0x7074696f), 
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x6963654f),
+  ACE_NTOHL (0x7074696f),
   ACE_NTOHL (0x6e000000),  // name = ServiceOption
     CORBA::tk_ulong,
 
@@ -132,21 +132,21 @@ static const CORBA::Long _oc_CORBA_ServiceDetailType[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5365), 
-  ACE_NTOHL (0x72766963), 
-  ACE_NTOHL (0x65446574), 
-  ACE_NTOHL (0x61696c54), 
-  ACE_NTOHL (0x7970653a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f5365),
+  ACE_NTOHL (0x72766963),
+  ACE_NTOHL (0x65446574),
+  ACE_NTOHL (0x61696c54),
+  ACE_NTOHL (0x7970653a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ServiceDetailType:1.0
     18,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x69636544), 
-  ACE_NTOHL (0x65746169), 
-  ACE_NTOHL (0x6c547970), 
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x69636544),
+  ACE_NTOHL (0x65746169),
+  ACE_NTOHL (0x6c547970),
   ACE_NTOHL (0x65000000),  // name = ServiceDetailType
     CORBA::tk_ulong,
 
@@ -173,26 +173,26 @@ static const CORBA::Long _oc_CORBA_ServiceDetail[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   36,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5365), 
-  ACE_NTOHL (0x72766963), 
-  ACE_NTOHL (0x65446574), 
-  ACE_NTOHL (0x61696c3a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f5365),
+  ACE_NTOHL (0x72766963),
+  ACE_NTOHL (0x65446574),
+  ACE_NTOHL (0x61696c3a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ServiceDetail:1.0
     14,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x69636544), 
-  ACE_NTOHL (0x65746169), 
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x69636544),
+  ACE_NTOHL (0x65746169),
   ACE_NTOHL (0x6c000000),  // name = ServiceDetail
   2, // member count
     20,
-  ACE_NTOHL (0x73657276), 
-  ACE_NTOHL (0x6963655f), 
-  ACE_NTOHL (0x64657461), 
-  ACE_NTOHL (0x696c5f74), 
+  ACE_NTOHL (0x73657276),
+  ACE_NTOHL (0x6963655f),
+  ACE_NTOHL (0x64657461),
+  ACE_NTOHL (0x696c5f74),
   ACE_NTOHL (0x79706500),  // name = service_detail_type
     CORBA::tk_alias, // typecode kind for typedefs
   76, // encapsulation length

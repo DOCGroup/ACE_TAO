@@ -47,7 +47,7 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
@@ -56,46 +56,46 @@ static const CORBA::Long _oc_Messaging_PolicyValue[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x56616c75), 
-  ACE_NTOHL (0x653a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x56616c75),
+  ACE_NTOHL (0x653a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/PolicyValue:1.0
     12,
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63795661), 
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63795661),
   ACE_NTOHL (0x6c756500),  // name = PolicyValue
   2, // member count
     6,
-  ACE_NTOHL (0x70747970), 
+  ACE_NTOHL (0x70747970),
   ACE_NTOHL (0x65000000),  // name = ptype
     CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     33,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c696379), 
-    ACE_NTOHL (0x54797065), 
-    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c696379),
+    ACE_NTOHL (0x54797065),
+    ACE_NTOHL (0x3a312e30),
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/PolicyType:1.0
         11,
-    ACE_NTOHL (0x506f6c69), 
-    ACE_NTOHL (0x63795479), 
+    ACE_NTOHL (0x506f6c69),
+    ACE_NTOHL (0x63795479),
     ACE_NTOHL (0x70650000),  // name = PolicyType
         CORBA::tk_ulong,
 
 
   7,
-  ACE_NTOHL (0x7076616c), 
+  ACE_NTOHL (0x7076616c),
   ACE_NTOHL (0x75650000),  // name = pvalue
     CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
@@ -120,10 +120,10 @@ namespace Messaging
     &_tc_TAO_tc_Messaging_PolicyValue;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 Messaging::PolicyValue::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -133,7 +133,7 @@ Messaging::PolicyValue::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_MESSAGING_POLICYVALUE__TAO_SEQ_CORBA_OCTET__CS_)
@@ -186,7 +186,7 @@ void Messaging::PolicyValue::_tao_seq_CORBA_Octet_::_tao_any_destructor (
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_MESSAGING_POLICYVALUESEQ_CS_)

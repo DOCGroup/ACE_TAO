@@ -46,14 +46,14 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::Pollable.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Pollable_ptr
 TAO::Objref_Traits<CORBA::Pollable>::tao_duplicate (
     CORBA::Pollable_ptr p
@@ -62,7 +62,7 @@ TAO::Objref_Traits<CORBA::Pollable>::tao_duplicate (
   return CORBA::Pollable::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::Pollable>::tao_release (
     CORBA::Pollable_ptr p
@@ -71,14 +71,14 @@ TAO::Objref_Traits<CORBA::Pollable>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Pollable_ptr
 TAO::Objref_Traits<CORBA::Pollable>::tao_nil (void)
 {
   return CORBA::Pollable::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::Pollable>::tao_marshal (
     CORBA::Pollable_ptr p,
@@ -89,7 +89,7 @@ TAO::Objref_Traits<CORBA::Pollable>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_Pollable_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -110,10 +110,10 @@ CORBA::Pollable::_narrow (
     {
       return Pollable::_nil ();
     }
-  
+
   Pollable_ptr proxy =
     dynamic_cast<Pollable_ptr> (_tao_objref);
-  
+
   return Pollable::_duplicate (proxy);
 }
 
@@ -124,7 +124,7 @@ CORBA::Pollable::_duplicate (Pollable_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -173,7 +173,7 @@ CORBA::Pollable::marshal (TAO_OutputCDR &)
 
 // Traits specializations for CORBA::DIIPollable.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::DIIPollable_ptr
 TAO::Objref_Traits<CORBA::DIIPollable>::tao_duplicate (
     CORBA::DIIPollable_ptr p
@@ -182,7 +182,7 @@ TAO::Objref_Traits<CORBA::DIIPollable>::tao_duplicate (
   return CORBA::DIIPollable::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::DIIPollable>::tao_release (
     CORBA::DIIPollable_ptr p
@@ -191,7 +191,7 @@ TAO::Objref_Traits<CORBA::DIIPollable>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::DIIPollable_ptr
 TAO::Objref_Traits<CORBA::DIIPollable>::tao_nil (void)
 {

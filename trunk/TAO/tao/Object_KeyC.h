@@ -156,7 +156,7 @@ namespace TAO
 // Traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48

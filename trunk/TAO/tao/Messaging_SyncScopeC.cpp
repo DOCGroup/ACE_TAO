@@ -45,5 +45,5 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 

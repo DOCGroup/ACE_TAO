@@ -587,7 +587,7 @@ namespace TAO
         TAO_OutputCDR & cdr
       );
   };
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_ch.cpp:52

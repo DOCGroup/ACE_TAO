@@ -93,7 +93,7 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
 #define _CORBA_POLICY__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_Export Arg_Traits<CORBA::Policy>
     : public
@@ -110,7 +110,7 @@ namespace TAO
 
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_Export Arg_Traits<CORBA::InterfaceDef>
     : public
@@ -124,14 +124,14 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::DomainManager.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::DomainManager_ptr
 TAO::Objref_Traits<CORBA::DomainManager>::tao_duplicate (
     CORBA::DomainManager_ptr p
@@ -140,7 +140,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::tao_duplicate (
   return CORBA::DomainManager::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::DomainManager>::tao_release (
     CORBA::DomainManager_ptr p
@@ -149,14 +149,14 @@ TAO::Objref_Traits<CORBA::DomainManager>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::DomainManager_ptr
 TAO::Objref_Traits<CORBA::DomainManager>::tao_nil (void)
 {
   return CORBA::DomainManager::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::DomainManager>::tao_marshal (
     CORBA::DomainManager_ptr p,
@@ -167,7 +167,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -187,17 +187,17 @@ TAO::Collocation_Proxy_Broker *
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_DomainManager_Proxy_Broker_ == 0)
     {
       CORBA_DomainManager_setup_collocation (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
+
   TAO::Arg_Traits<CORBA::Policy>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::PolicyType>::in_arg_val _tao_policy_type (policy_type);
-  
+
   TAO::Argument *_tao_signature [] =
     {
       &_tao_retval,

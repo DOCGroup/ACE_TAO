@@ -55,7 +55,7 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
 #define _CORBA_POLICY__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_Export Arg_Traits<CORBA::Policy>
     : public
@@ -69,7 +69,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
@@ -78,20 +78,20 @@ static const CORBA::Long _oc_CORBA_PolicyErrorCode[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x4572726f), 
-  ACE_NTOHL (0x72436f64), 
-  ACE_NTOHL (0x653a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x4572726f),
+  ACE_NTOHL (0x72436f64),
+  ACE_NTOHL (0x653a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/PolicyErrorCode:1.0
     16,
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63794572), 
-  ACE_NTOHL (0x726f7243), 
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63794572),
+  ACE_NTOHL (0x726f7243),
   ACE_NTOHL (0x6f646500),  // name = PolicyErrorCode
     CORBA::tk_short,
 
@@ -111,7 +111,7 @@ namespace CORBA
     &_tc_TAO_tc_CORBA_PolicyErrorCode;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PolicyError::PolicyError (void)
@@ -196,7 +196,7 @@ void CORBA::PolicyError::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 

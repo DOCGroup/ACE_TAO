@@ -2084,7 +2084,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 
 // TAO_IDL - Generated from
