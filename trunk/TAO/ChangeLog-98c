@@ -1,3 +1,7 @@
+Wed Jul 22 15:58:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 0.1.41 released.
+
 Wed Jul 22 14:16:53 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* Makefile: Removed the reference to "client.h" which was
