@@ -1,3 +1,8 @@
+Mon Jul 19 08:12:30 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_tru64_cxx.GNU: added support
+          for DU 4.0E and D.
+
 Mon Jul 19 08:08:25 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-(10 11).x-hpc++.h: In the aC++ section, if __HP_aCC
