@@ -13,6 +13,7 @@
  *
  * ============================================================================= */
 
+/* FUZZ: disable check_for_math_include */
 #include <math.h>
 
 #if (PACE_HAS_POSIX_CLS_UOF)
