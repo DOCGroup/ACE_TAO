@@ -1,3 +1,22 @@
+1998-09-22  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp :
+          Fixed the stats.sample to just pass the
+	  latency as it in microseconds and also removed the 0.5 addition
+	  since it caused an floating point exception on chorus.
+	  Also fixed the (1/frequency) error while calculating sleep_time
+	  for a thread which caused the high priority to keep running in
+	  chorus.
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
+	  Fixed the pccTimerInit macro for chorus.
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Timer.cpp:
+	  performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+	  Fixed chorus compile errors.
+
+	* performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+
 Tue Sep 22 23:04:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test:
