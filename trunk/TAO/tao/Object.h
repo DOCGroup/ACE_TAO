@@ -103,8 +103,6 @@ public:
         TAO_default_environment ()
     );
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
   // Interface repository related operations.
 
   // DII operations to create a request.
@@ -141,6 +139,8 @@ public:
   virtual CORBA::Request_ptr _request (const char *operation,
                                        CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ());
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
