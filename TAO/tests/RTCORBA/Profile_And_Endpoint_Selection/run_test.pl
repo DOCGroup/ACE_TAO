@@ -7,6 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib '../../../../bin';
 use PerlACE::Run_Test;
+use English;
 
 $status = 0;
 $iorfile = "ior_2";
@@ -20,6 +21,17 @@ $shmiop = 1;
 $extra_client_args = "-k file://$iorfile -ORBdebuglevel $client_debuglevel -d $client_debug -x";
 $extra_server_args = "-ORBdebuglevel $server_debuglevel -d $server_debug";
 
+if ($OSNAME eq "solaris") {
+    $lanes = "lanes_r";
+    $bands = "bands_r";
+    $inv_prio = "invocation_priorities_r";
+}
+else {
+    $lanes = "lanes";
+    $bands = "bands";
+    $inv_prio = "invocation_priorities";
+}
+
 sub setup_configurations_2
 {
     my $server_args = shift;
@@ -31,9 +43,9 @@ sub setup_configurations_2
     if ($iiop)   { $server_args .= "-ORBendpoint iiop:// "; };
     if ($shmiop) { $server_args .= "-ORBendpoint shmiop:// "; };
 
-                           $configurations[$server_config]->{server} = "$server_args";         
-                   $j = 0; $configurations[$server_config]->{clients}[$j] = "$client_args " ."-p iiop_shmiop";                                 
-                   $j++;   $configurations[$server_config]->{clients}[$j] = "$client_args " ."-p shmiop_iiop";    
+                           $configurations[$server_config]->{server} = "$server_args";
+                   $j = 0; $configurations[$server_config]->{clients}[$j] = "$client_args " ."-p iiop_shmiop";
+                   $j++;   $configurations[$server_config]->{clients}[$j] = "$client_args " ."-p shmiop_iiop";
     if ($iiop)   { $j++;   $configurations[$server_config]->{clients}[$j] = "$client_args " ."-p iiop"; }
     if ($shmiop) { $j++;   $configurations[$server_config]->{clients}[$j] = "$client_args " ."-p shmiop"; }
 }
@@ -44,11 +56,11 @@ sub setup_configurations_1
     my $shmiop = shift;
 
     $server_config++;    setup_configurations_2 ("", "", $iiop, $shmiop, $server_config);
-    $server_config++;    setup_configurations_2 ("", "-t invocation_priorities ", $iiop, $shmiop, $server_config);
-    $server_config++;    setup_configurations_2 ("", "-b bands -t invocation_priorities ", $iiop, $shmiop, $server_config);
-    $server_config++;    setup_configurations_2 ("-b bands ", "-t invocation_priorities ", $iiop, $shmiop, $server_config);
-    $server_config++;    setup_configurations_2 ("-l lanes ", "-b bands -t invocation_priorities ", $iiop, $shmiop, $server_config);
-    $server_config++;    setup_configurations_2 ("-b bands -l lanes ", "-t invocation_priorities ", $iiop, $shmiop, $server_config);
+    $server_config++;    setup_configurations_2 ("", "-t $inv_prio ", $iiop, $shmiop, $server_config);
+    $server_config++;    setup_configurations_2 ("", "-b $bands -t $inv_prio ", $iiop, $shmiop, $server_config);
+    $server_config++;    setup_configurations_2 ("-b $bands ", "-t $inv_prio ", $iiop, $shmiop, $server_config);
+    $server_config++;    setup_configurations_2 ("-l $lanes ", "-b $bands -t $inv_prio ", $iiop, $shmiop, $server_config);
+    $server_config++;    setup_configurations_2 ("-b $bands -l $lanes ", "-t $inv_prio ", $iiop, $shmiop, $server_config);
 }
 
 $server_config = -1;
@@ -66,10 +78,10 @@ sub run_client
     $CL = new PerlACE::Process ("client", "$client_args");
 
     $CL->Spawn ();
-    
+
     $client = $CL->WaitKill (120);
 
-    if ($client != 0) 
+    if ($client != 0)
     {
         print STDERR "ERROR: client returned $client\n";
         $status = 1;
@@ -77,7 +89,7 @@ sub run_client
     }
 }
 
-sub run_server 
+sub run_server
 {
     my $server_args = "@_" . " $extra_server_args";
 
@@ -98,8 +110,8 @@ sub run_server
 sub zap_server
 {
     $server = $SV->WaitKill (5);
-    
-    if ($server != 0) 
+
+    if ($server != 0)
     {
         print STDERR "ERROR: server returned $server\n";
         $status = 1;

@@ -1,3 +1,14 @@
+Tue Dec 31 14:03:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/lanes_r:
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/bands_r:
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/invocation_priorities_r:
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:
+	  Changed to run the tests with reduced numbered priority lanes on
+	  Solaris to avoid exhausting the limited SysV semaphores and
+	  causing unnecessary warnings.  Thanks to Irfan for the new set
+	  of configuration files.
+
 Mon Dec 30 12:10:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
  	* examples/AMH/Sink_Server/st_server.dsp:
@@ -15,12 +26,12 @@ Mon Dec 30 08:49:31 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Dec 30 06:12:53 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* examples/AMH/Sink_Server/st_server.dsp (USERDEP__TEST_): 
+	* examples/AMH/Sink_Server/st_server.dsp (USERDEP__TEST_):
 	* examples/AMH/Sink_Server/client.dsp:
 	* examples/AMH/Sink_Server/mt_server.dsp: Changed the path to the
 	  tao_idl in the external_dependencies section. This should fix
 	  the warnings in the daily builds.
-	
+
 Sun Dec 29 11:29:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/AMH/Sink_Server/AMH_Sink_Server.dsw:
@@ -60,20 +71,20 @@ Sun Dec 29 08:44:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* TAO_IDL/be/be_visitor_union_branch.cpp:
 	* TAO_IDL/be/be_visitor_valuetype_fwd.cpp: #include'd
 	  ace/Log_Msg.h  to all the above files. This helps compilation to
-	  go smooth on AIX. 
-	
-	* TAO_IDL/include/ast_module.h: #include'd ace/Unbounded_Set.h. 
+	  go smooth on AIX.
+
+	* TAO_IDL/include/ast_module.h: #include'd ace/Unbounded_Set.h.
 
 	* tao/Condition.h: #include'd tao/orbconf.h and forward declared
           ACE_Time_Value
 
 	* tao/FILE_Parser.cpp:
-	* tao/Typecode.cpp: #include'd ace/Malloc_Base.h. 
+	* tao/Typecode.cpp: #include'd ace/Malloc_Base.h.
 
 	  All the above changes help compilation on AIX. Thanks to Jon
-	  Wackley <jonw@mountaincable.net> for providing these patches. 
-	
-	* tao/Muxed_TMS.cpp: 
+	  Wackley <jonw@mountaincable.net> for providing these patches.
+
+	* tao/Muxed_TMS.cpp:
 	* tao/Muxed_TMS.h: Use recursive mutex instead of a simple
 	  mutex. This prevents deadlock that might occur, when a thread
 	  tries to send a request during reply dispatching.
