@@ -300,7 +300,7 @@ ifeq ($(findstring g++,$(CXX)),g++)
 endif # g++
 
 ifndef OBJDIRS
-  OBJDIRS = $(basename $(VDIR)) $(basename $(VSHDIR))
+  OBJDIRS = .obj .shobj # .obj_debug .obj_profile .obj_optimize
 endif # OBJDIRS
 
 ifndef OBJEXT
@@ -578,7 +578,7 @@ ifdef shared_libs
       LIB           =
 #      OBJEXT        = so
       ifndef VXWORKS
-        VDIR        = $VSHDIR
+        VDIR        = $(basename $(VSHDIR))
         ifeq ($(BIN),)
           #### No executables are being built, so don't create .obj/.
           OBJDIRS     = $(VSHDIR)

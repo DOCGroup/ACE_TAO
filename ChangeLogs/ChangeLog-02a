@@ -1,3 +1,15 @@
+Wed Aug 15 07:54:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: Unravelled the mystery a
+	  bit. The patch that was applied to remove the hard coding of
+	  OBJDIRS seems to be the problem. The OBJDIRS has been hardcoded
+	  again. This should fix the problems that we have been seeing in
+	  the builds.  If at all we need to remove hardcoding the OBJDIRS
+	  we either need to put the value of VDIR or VSHDIR. If we put
+	  both we are going to end up duplicate targets. Now the killer,
+	  what do we add to the OBJDIRS? Me thinks it is VDIR. I have test
+	  that out before breaking builds again.
+
 Wed Aug 15 07:30:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU: Reverted the change "Tue
