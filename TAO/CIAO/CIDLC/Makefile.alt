@@ -11,10 +11,10 @@ $(call include, $(root)/Config.rules)
 $(call include, $(UTILITY_ROOT)/BuildRules/Executable.pre.rules)
 
 
+# RepositoryIdGenerator.cpp    \
 
 cxx_translation_units := ExecutorMappingGenerator.cpp \
-                         DescriptorGenerator.cpp      \
-                         RepositoryIdGenerator.cpp    \
+                         DescriptorGenerator.cpp      \                        
                          SizeTypeCalculator.cpp       \
                          ServantGenerator.cpp         \
                          ServantHeaderGenerator.cpp   \
