@@ -1,3 +1,10 @@
+Wed May 12 12:59:21 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Domain_Handler.cpp:
+        * DnC/Config_Handlers/Domain_Handler.h:
+
+          Added dump functions for the structures.
+
 Wed May 12 12:44:40 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Domain_Handler.cpp:

@@ -154,6 +154,18 @@ namespace CIAO
       /// dump the XML descriptors
       void dump (Deployment::Domain& domain);
 
+      /// dump the nodes
+      void dump_nodes (Deployment::Domain& domain);
+
+      /// dump the interconnects
+      void dump_ics (Deployment::Domain& domain);
+
+      /// dump the bridges
+      void dump_bridges (Deployment::Domain& domain);
+
+      /// dump the shared resources
+      void dump_srs (Deployment::Domain& domain);
+
       /// create a document
       DOMDocument* create_document (const char *url);
 
