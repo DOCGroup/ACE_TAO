@@ -578,7 +578,34 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
   
   this->streamctrl_ = the_ctrl;
   this->peer_ = the_peer_dev;
-  return CORBA::B_TRUE;
+
+  CORBA::Any_ptr anyptr;
+  CORBA::String media_ctrl_ior;
+  anyptr = this->peer_->get_property_value ("Related_MediaCtrl",
+                                            env);
+  TAO_CHECK_ENV_RETURN (env,CORBA::B_TRUE);
+
+  if (anyptr != 0)
+    {
+      *anyptr >>= media_ctrl_ior;
+      ACE_DEBUG ((LM_DEBUG,"The Media Control IOR is %s\n",
+                  media_ctrl_ior));
+    }
+  CORBA::Object_ptr media_ctrl_obj =
+    this->orb_manager_.orb ()->string_to_object
+    (media_ctrl_ior,env);
+  TAO_CHECK_ENV_RETURN (env, CORBA::B_FALSE);
+
+  CORBA::Boolean result =
+    this->set_media_ctrl (media_ctrl_obj,env);
+  TAO_CHECK_ENV_RETURN (env,CORBA::B_FALSE);
+  
+  return result;
+}
+
+void
+TAO_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl)
+{
 }
 
 // @@ Need to throw not-supported exception here
