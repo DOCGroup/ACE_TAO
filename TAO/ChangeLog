@@ -1,3 +1,26 @@
+Sun Sep 15 13:39:51 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Time/Timer_Helper.h:
+
+	  Corrected inclusion of `ace/pre.h'.  It was included between the
+	  #ifndef/#define header include guards.  It should have been
+	  included after the include guard.
+
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (Timer_Helper):
+
+	  Initialize the clerk_ member.  Do not leave it uninitialized.
+
+	  (~Timer_Helper):
+
+	  Removed "delete this" code.  This code made no sense since it
+	  was called inside a destructor!
+
+	  (handle_timeout):
+
+	  Only print debugging statements if TAO_debug_level is greater
+	  than zero.  Previously, debugging statements were always
+	  printed.  [Bug 1302]
+
 Sun Sep 15 13:04:49 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/IORInfo.h:
