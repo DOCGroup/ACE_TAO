@@ -1259,17 +1259,10 @@ typedef tid_t ACE_hthread_t;
 
 // Make it easier to write portable thread code.
 typedef pthread_t ACE_thread_t;
-typedef pthread_cond_t ACE_cond_t;
-typedef pthread_mutex_t ACE_mutex_t;
-typedef pthread_mutex_t ACE_thread_mutex_t;
 typedef pthread_key_t ACE_thread_key_t;
-#if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
-# define ACE_KEY_INDEX(OBJ,KEY) \
-  u_int OBJ; \
-  ACE_OS::memcpy (&OBJ, &KEY, sizeof (u_int));
-#else
-# define ACE_KEY_INDEX(OBJ,KEY) u_int OBJ = KEY;
-#endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
+typedef pthread_mutex_t ACE_mutex_t;
+typedef pthread_cond_t ACE_cond_t;
+typedef pthread_mutex_t ACE_thread_mutex_t;
 
 #    if !defined (PTHREAD_CANCEL_DISABLE)
 #      define PTHREAD_CANCEL_DISABLE      0
@@ -4358,11 +4351,22 @@ private:
 #endif /* ! VXWORKS */
 };
 
+// Support non-scalar thread keys, such as with some POSIX
+// implementations, e.g., MVS.
+#if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
+# define ACE_KEY_INDEX(OBJ,KEY) \
+  u_int OBJ; \
+  ACE_OS::memcpy (&OBJ, &KEY, sizeof (u_int))
+#else
+# define ACE_KEY_INDEX(OBJ,KEY) u_int OBJ = KEY
+#endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
+
 #else   /* ! ACE_HAS_TSS_EMULATION */
 # if defined (TLS_MINIMUM_AVAILABLE)
     // WIN32 platforms define TLS_MINIMUM_AVAILABLE natively.
 #   define ACE_DEFAULT_THREAD_KEYS TLS_MINIMUM_AVAILABLE
 # endif /* TSL_MINIMUM_AVAILABLE */
+
 #endif /* ACE_HAS_TSS_EMULATION */
 
 // A useful abstraction for expressions involving operator new since
