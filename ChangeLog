@@ -1,3 +1,9 @@
+Tue Nov 18 16:14:29 2003  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/platform_hpux_aCC.GNU: Add preprocessor defs
+	  for threads ability to CPPFLAGS, not CCFLAGS. Thanks to Ossama
+	  Othman <ossama@dre.vanderbilt.edu> for this suggestion.
+
 Tue Nov 18 16:03:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         Thanks to Olli Savia <ops@iki.fi> for the following patches:
