@@ -1,3 +1,10 @@
+Tue Sep 28 19:45:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynStruct_i.cpp:
+	  Modified the constructors so the typecode check will
+	  work for exceptions as well as ordinary structs.
+	  Patch sent in by Philippe Merle <Philippe.Merle@lifl.fr>.
+
 Tue Sep 28 14:50:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/DSI/Database.idl (Database): Renamed <flags> to
