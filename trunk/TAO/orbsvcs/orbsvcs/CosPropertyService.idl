@@ -65,11 +65,8 @@ module CosPropertyService
   typedef sequence<Property> Properties;  
   typedef sequence<PropertyDef> PropertyDefs;  
   typedef sequence<PropertyMode> PropertyModes;  
-  
-  // @@ sequences of typecodes breaks the TAO IDL Compiler!!!
-  //typedef sequence<TypeCode> PropertyTypes;
-  typedef sequence<string> PropertyTypes;
-  
+  typedef sequence<TypeCode> PropertyTypes;
+
   interface PropertyNamesIterator;
   interface PropertiesIterator;
   interface PropertySetFactory;
