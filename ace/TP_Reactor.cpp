@@ -40,7 +40,7 @@ ACE_TP_Reactor::owner (ACE_thread_t, ACE_thread_t *o_id)
     *o_id = ACE_Thread::self ();
 
   return 0;
-  
+
 }
 
 int
@@ -50,7 +50,7 @@ ACE_TP_Reactor::owner (ACE_thread_t *t_id)
   *t_id = ACE_Thread::self ();
 
   return 0;
-  
+
 }
 
 
@@ -205,9 +205,19 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
       // I don't understand...) the mask will have all of its bits clear,
       // yet have a size_ > 0. This is an attempt to remedy the affect,
       // without knowing why it happens.
+
+# if !(defined (__SUNPRO_CC) && (__SUNPRO_CC > 0x500))
+      // SunCC seems to be having problems with this piece of code
+      // here. I am  not sure why though. This works fine with other
+      // compilers. As we dont seem to understand when this piece of
+      // code is needed and as it creates problems for SunCC we will
+      // not compile this. Most of the tests in TAO seem to be happy
+      // without this in SunCC.
       this->ready_set_.rd_mask_.sync (this->ready_set_.rd_mask_.max_set ());
       this->ready_set_.wr_mask_.sync (this->ready_set_.wr_mask_.max_set ());
       this->ready_set_.ex_mask_.sync (this->ready_set_.ex_mask_.max_set ());
+# endif /* ! __SUNPRO_CC */
+
     }
 
   int active_handle_count = this->wait_for_multiple_events (this->ready_set_,
