@@ -56,9 +56,14 @@
 # define ACE_SIZEOF_CHAR 1
 
 // Unfortunately, there isn't a portable way to determine the size of a wchar.
-// But we do not support the case where wchar == char, so this should work.
+// So we just define them on a platform basis.
 # if defined (ACE_HAS_WCHAR)
-#   define ACE_SIZEOF_WCHAR sizeof (wchar_t)
+#   if defined (ACE_WIN32)
+#     define ACE_SIZEOF_WCHAR 2
+#   else /* ACE_WIN32 */
+// 0 so the Basic_Types test will catch this.
+#     define ACE_SIZEOF_WCHAR 0 
+#   endif /* ACE_WIN32 */
 # endif /* ACE_HAS_WCHAR */
 
 // The number of bytes in a short.

@@ -4348,7 +4348,9 @@ ACE::strndup (const wchar_t *str, size_t n)
 
   wchar_t *s;
   ACE_ALLOCATOR_RETURN (s,
-                        (wchar_t *) ACE_OS::malloc ((len + 1) * sizeof wchar_t),
+                        ACE_static_cast (wchar_t *, 
+                                         ACE_OS::malloc ((len + 1) 
+                                                         * sizeof (wchar_t))),
                         0);
   s[len] = L'\0';
   return ACE_OS::strncpy (s, str, len);

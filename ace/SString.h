@@ -235,6 +235,14 @@ public:
                ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory.
 
+#if defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
+  ACE_WString (const ACE_USHORT16 *s,
+               size_t len,
+               ACE_Allocator *alloc = 0);
+  // Constructor that takes in a ushort16 string (mainly used by the
+  // ACE Name_Space classes)
+#endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
+
   ACE_WString (const ACE_WSTRING_TYPE *s,
                size_t len,
                ACE_Allocator *alloc = 0);
@@ -294,6 +302,11 @@ public:
 
   char *char_rep (void) const;
   // Transform into a copy of the ASCII character representation.
+  // (caller must delete)
+
+  ACE_USHORT16 *ushort_rep (void) const;
+  // Transform into a copy of a USHORT16 representation (caller must
+  // delete).  Note, behavior is undefined when sizeof (wchar_t) != 2.
 
   const ACE_WSTRING_TYPE *fast_rep (void) const;
   // Get at the underlying representation directly!
