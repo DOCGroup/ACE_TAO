@@ -128,11 +128,19 @@ SOURCE=.\FileCharStream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\HttpCharStream.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\InputSource.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\LocatorImpl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Mem_Map_Stream.cpp
 # End Source File
 # Begin Source File
 
@@ -149,6 +157,10 @@ SOURCE=.\StrCharStream.cpp
 # Begin Source File
 
 SOURCE=.\Transcode.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\URL_Addr.cpp
 # End Source File
 # Begin Source File
 
@@ -228,6 +240,10 @@ SOURCE=.\FileCharStream.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\HttpCharStream.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\InputSource.h
 # End Source File
 # Begin Source File
@@ -237,6 +253,10 @@ SOURCE=.\Locator.h
 # Begin Source File
 
 SOURCE=.\LocatorImpl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Mem_Map_Stream.h
 # End Source File
 # Begin Source File
 
@@ -253,6 +273,10 @@ SOURCE=.\StrCharStream.h
 # Begin Source File
 
 SOURCE=.\Transcode.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\URL_Addr.h
 # End Source File
 # Begin Source File
 
