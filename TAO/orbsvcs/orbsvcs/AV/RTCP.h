@@ -185,11 +185,15 @@ public:
                            TAO_AV_RTCP_Callback *callback);
 
   static ACE_UINT32 alloc_srcid (ACE_UINT32 addr);
+
+protected:  
+  static double fmod (double dividend, double divisor);
 };
 
 class TAO_AV_Callback;
 
-class TAO_AV_Export TAO_AV_RTCP_Object : public TAO_AV_Protocol_Object
+class TAO_AV_Export TAO_AV_RTCP_Object 
+  : public TAO_AV_Protocol_Object
 {
 public:
   TAO_AV_RTCP_Object (TAO_AV_Callback *callback,
