@@ -97,6 +97,7 @@ sub write_comps {
 sub post_workspace {
   my($self) = shift;
   my($fh)   = shift;
+  my($crlf) = $self->crlf();
 
   print $fh "###############################################################################$crlf" .
             "$crlf" .
