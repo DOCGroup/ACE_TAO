@@ -1,3 +1,10 @@
+Sun Feb  7 15:30:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/IIOP_Profile.cpp:
+          Changed a line in is_equivalent(). The lhs of a ==
+          operator comparing two Versions was actually a
+          pointer to a Version.
+
 Sun Feb  7 14:32:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* TAO/orbsvcs/tests/Simulator/DOVEBrowser/DOVEBrowser.java
