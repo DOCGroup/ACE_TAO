@@ -98,7 +98,7 @@
 # define ACE_HAS_SIGWAIT
 
 # define ACE_HAS_SIGTIMEDWAIT
-# define ACE_HAS_SIGPAUSE
+# define ACE_HAS_SIGSUSPEND
 
 #if !defined (ACE_DEFAULT_BASE_ADDR)
 # define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
