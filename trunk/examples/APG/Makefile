@@ -13,7 +13,6 @@ DIRS  =	Active_Objects \
 	Containers \
 	Logging \
 	Misc_IPC \
-	Naming \
 	Proactor \
 	Processes \
 	Reactor \
@@ -33,8 +32,14 @@ DIRS  =	Active_Objects \
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
+
+# The Naming examples use std::list, so don't attempt it with explicit
+# templates turned on.
+ifeq ($(templates),implicit)
+DIRS += Naming
+endif
+
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU

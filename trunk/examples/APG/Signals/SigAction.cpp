@@ -4,8 +4,7 @@
 // Listing 1 code/ch11
 #include "ace/Signal.h"
 
-// Forward declarations.
-static void my_sighandler (int signo);
+// Forward declaration.
 static void register_actions ();
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
@@ -32,6 +31,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 // Listing 1
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C"
+#endif
 // Listing 3 code/ch11
 static void my_sighandler (int signo)
 {

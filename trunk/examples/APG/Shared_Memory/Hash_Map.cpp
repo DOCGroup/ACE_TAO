@@ -241,13 +241,25 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 // Listing 3
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Allocator_Adapter<ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,ACE_Process_Mutex,ACE_Control_Block> >;
+template class ACE_Hash_Map_Entry<int,Record>;
+template class ACE_Hash_Map_Manager_Ex<int,Record,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<int,Record,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Null_Mutex>;
+template class ACE_Hash_Map_With_Allocator<int,Record>;
 // The following instantiation is in ace/System_Time.cpp:
 // template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,ACE_Process_Mutex,ACE_Control_Block>;
 template class ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 template class ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 template class ACE_Malloc_FIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
 template class ACE_Malloc_LIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,ACE_Process_Mutex,ACE_Control_Block> >
+#pragma instantiate ACE_Hash_Map_Entry<int,Record>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<int,Record,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int,Record,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_With_Allocator<int,Record>
+#pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,ACE_Process_Mutex,ACE_Control_Block>
 // The following instantiation is in ace/System_Time.cpp:
 // #pragma instantiate ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
 #pragma instantiate ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>

@@ -1,10 +1,10 @@
 // $Id$
 
-#include "ace/Containers_T.h"
 #include "ace/Malloc.h"
 #include "ace/PI_Malloc.h"
 #include "ace/Process_Mutex.h"
 #include "ace/Process.h"
+#include "ace/Unbounded_Queue.h"
 
 #define BACKING_STORE "queue.dat"
 #define QUEUE_NAME "queue.db"
@@ -253,17 +253,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-// The following instantiation is in ace/System_Time.cpp:
-// template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Malloc_FIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
-template class ACE_Malloc_LIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
+template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> >;
+template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>;
+template class ACE_Node<Record>;
+template class ACE_Unbounded_Queue<Record>;
+template class ACE_Unbounded_Queue_Iterator<Record>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-// The following instantiation is in ace/System_Time.cpp:
-// #pragma instantiate ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Malloc_FIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>
-#pragma instantiate ACE_Malloc_LIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>
+#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> >
+#pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>
+#pragma instantiate ACE_Node<Record>
+#pragma instantiate ACE_Unbounded_Queue<Record>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<Record>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
