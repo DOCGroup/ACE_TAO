@@ -2845,7 +2845,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   switch (::WaitForSingleObject (*s, msec_timeout))
     {
     case WAIT_OBJECT_0:
-      tv = ACE_OS::gettimeofday ();	// Update time to when acquired
+      tv = ACE_OS::gettimeofday ();     // Update time to when acquired
       return 0;
     case WAIT_TIMEOUT:
       errno = ETIME;
@@ -2892,10 +2892,10 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
           // Only return when we successfully get the semaphore.
           if (result == 0)
-	    {
-	      tv = ACE_OS::gettimeofday ();	// Update to time acquired
-	      return 0;
-	    }
+            {
+              tv = ACE_OS::gettimeofday ();     // Update to time acquired
+              return 0;
+            }
           break;
 
           // We have timed out.
@@ -2920,19 +2920,38 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   return -1;
 #   endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 # elif defined (VXWORKS)
+  // Note that we must convert between absolute time (which is
+  // passed as a parameter) and relative time (which is what
+  // the system call expects).
+  ACE_Time_Value relative_time (tv - ACE_OS::gettimeofday ());
+
   int ticks_per_sec = ::sysClkRateGet ();
-  int ticks = tv.sec() * ticks_per_sec +
-              tv.usec () * ticks_per_sec / ACE_ONE_SECOND_IN_USECS;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, ticks), ace_result_), int, -1);
+  int ticks = relative_time.sec() * ticks_per_sec +
+              relative_time.usec () * ticks_per_sec / ACE_ONE_SECOND_IN_USECS;
+  if (::semTake (s->sema_, ticks) == ERROR)
+    {
+      if (errno == S_objLib_OBJ_TIMEOUT)
+        // Convert the VxWorks errno to one that's common for to ACE
+        // platforms.
+        errno = ETIME;
+      return -1;
+    }
+  else
+    {
+      return 0;
+    }
 # endif /* ACE_HAS_STHREADS */
 #elif defined (ACE_PSOS)
   /* TBD - move this into threaded section with mutithreaded port */
-  int result;
-  u_long ticks = tv.sec() * KC_TICKS2SEC +
-                 tv.usec () * KC_TICKS2SEC / ACE_ONE_SECOND_IN_USECS;
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_p (s->sema_, SM_WAIT, ticks), result),
-                                int, -1, result);
-  return result;
+  // Note that we must convert between absolute time (which is
+  // passed as a parameter) and relative time (which is what
+  // the system call expects).
+  ACE_Time_Value relative_time (tv - ACE_OS::gettimeofday ());
+
+  u_long ticks = relative_time.sec() * KC_TICKS2SEC +
+                 relative_time.usec () * KC_TICKS2SEC /
+                   ACE_ONE_SECOND_IN_USECS;
+  ACE_OSCALL_RETURN (::sm_p (s->sema_, SM_WAIT, ticks), int, -1);
 #else
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (tv);
