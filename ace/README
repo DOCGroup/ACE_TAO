@@ -230,6 +230,7 @@ ACE_LACKS_CONST_STRBUF_PTR              Platform uses struct strbuf * rather tha
 ACE_LACKS_CONST_TIMESPEC_PTR            Platform forgot const in cond_timewait (e.g., HP/UX).
 ACE_LACKS_COND_T                        Platform lacks condition variables (e.g., Win32 and VxWorks)
 ACE_LACKS_CONDATTR_PSHARED              Platform has no implementation of pthread_condattr_setpshared(), even though it supports pthreads!
+ACE_LACKS_DIFFTIME                      Platform lacks difftime() implementation
 ACE_LACKS_EXEC                          Platform lacks the exec() family of system calls (e.g., Win32, VxWorks, Chorus)
 ACE_LACKS_FILELOCKS                     Platform lacks file locking mechanism
 ACE_LACKS_FLOATING_POINT                Platform does not support floating point operations

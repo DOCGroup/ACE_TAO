@@ -7389,6 +7389,7 @@ ACE_OS::shm_open (const char *filename,
 }
 #endif /* ! ACE_HAS_MOSTLY_UNICODE_APIS */
 
+#if !defined (ACE_LACKS_DIFFTIME)
 ACE_INLINE double
 ACE_OS::difftime (time_t t1, time_t t0)
 {
@@ -7398,6 +7399,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
   return ::difftime (t1, t0);
 #endif /* ACE_DIFFTIME */
 }
+#endif /* ! ACE_LACKS_DIFFTIME */
 
 #if !defined (ACE_HAS_WINCE)
 ACE_INLINE char *
