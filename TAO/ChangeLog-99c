@@ -1,3 +1,9 @@
+Wed Feb 24 23:21:53 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/tests/CosEC_Multiple/CosECConsumer.cpp:
+	* orbsvcs/tests/CosEC_Multiple/CosECSupplier.cpp:
+	  added #include <ace/Get_Opt.h>
+
 Wed Feb 24 22:54:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAO_Internal.i (_svc_conf): This new function allows user to

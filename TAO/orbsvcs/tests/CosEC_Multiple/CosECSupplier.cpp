@@ -2,6 +2,7 @@
 // $Id$
 
 #include "CosECSupplier.h"
+#include <ace/Get_Opt.h>
 
 CosECSupplier::CosECSupplier ()
   : event_count_ (1)
