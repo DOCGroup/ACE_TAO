@@ -41,7 +41,7 @@ module CosNotifyComm
    */
   exception InvalidEventType {
     /// Type of invalid event
-    CosNotification::EventType type;
+    CosNotification::_EventType type;
   };
 
   /**

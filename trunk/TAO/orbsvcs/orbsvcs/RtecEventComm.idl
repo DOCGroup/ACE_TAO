@@ -39,7 +39,7 @@ module RtecEventComm
   typedef TimeBase::TimeT Time;
 
   typedef long EventSourceID;
-  typedef long EventType;
+  typedef long _EventType;
 
   /**
    * @struct EventHeader
@@ -66,7 +66,7 @@ module RtecEventComm
      * it is up to the application to define (or not) its relation to
      * the contents of the event.
      */
-    EventType type;
+    _EventType type;
 
     /// Some way to identify the supplier.
     EventSourceID source;

@@ -50,9 +50,9 @@ TAO_IFR_Server::~TAO_IFR_Server (void)
 
 int
 TAO_IFR_Server::init_with_orb (int argc,
-                            ACE_TCHAR *argv [],
-                            CORBA::ORB_ptr orb,
-                            int use_multicast_server)
+                               ACE_TCHAR *argv [],
+                               CORBA::ORB_ptr orb,
+                               int use_multicast_server)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
