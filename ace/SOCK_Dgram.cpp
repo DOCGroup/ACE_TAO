@@ -140,6 +140,7 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
   : ACE_SOCK (SOCK_DGRAM, protocol_family, protocol, reuse_addr)
 {
   ACE_UNUSED_ARG (qos_params);
+  ACE_UNUSED_ARG (local);
 }
 
 int

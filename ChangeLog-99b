@@ -1,5 +1,8 @@
 Wed Jun 23 00:03:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/SOCK_Dgram.cpp (ACE_SOCK_Dgram): Fixed an unused args
+	  warning.  Thanks to David for reporting this.
+
 	* ace/Service_Config.h (ACE_Service_Config): Moved the
 	  documentation for the open() method's "argv" parameters *to* the
  	  open() method.  Also clarified that by default we don't install
