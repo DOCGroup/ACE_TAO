@@ -1,3 +1,18 @@
+Thu Aug 30 09:30:19 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Log_Msg_Test.cpp:
+
+          Fix for VxWorks when ace_main() is called with argc == 0.
+
+        * tests/run_test.lst:
+
+          Update the list of tests that run on VxWorks.
+
+        * tests/Makefile:
+        * tests/run_test.pl:
+
+          Update the script to output VxWorks commands to a file.
+
 Thu Aug 30 09:58:38 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/High_Res_Timer.i (elapsed_microseconds): For Win32, isolate the
