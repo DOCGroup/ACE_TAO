@@ -1,3 +1,10 @@
+Thu Mar 24 13:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Containers/Hash_Map_Hash.h:
+        * examples/APG/Containers/Map_Manager_Specialization.cpp:
+        * examples/APG/Containers/RB_Tree_Functors.h:
+          Use template<> instead of ACE_TEMPLATE_SPECIALIZATION
+
 Wed Mar 23 16:51:00 2005  Gary Maxey <gary.maxey@hp.com>
 
         * ace/README
@@ -31,7 +38,7 @@ Wed Mar 23 16:51:00 2005  Gary Maxey <gary.maxey@hp.com>
 
           Define ACE_LACKS_UNSIGNEDLONGLONG_T
 
-        
+
 Wed Mar 23 10:11:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Time_Value.h:
