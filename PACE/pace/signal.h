@@ -48,8 +48,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 3.3.4.
    */
   PACE_INLINE int pace_sigaction (int sig,
-                                  const pace_s_sigaction * act,
-                                  pace_s_sigaction * oact);
+                                  const pace_sigaction_s * act,
+                                  pace_sigaction_s * oact);
 
   /**
      PACE's implementation of the POSIX function sigaddset.
