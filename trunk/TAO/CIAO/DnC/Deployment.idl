@@ -1,6 +1,7 @@
 // $Id$
 #include <orb.idl>
 #include "tao/ULongSeq.pidl"
+#include "Property.idl"
 
 module Deployment {
 
@@ -66,13 +67,6 @@ module Deployment {
   };
 
   typedef sequence < Bridge > Bridges;
-
-  struct Property {
-    string name;
-    any value;
-  };
-
-  typedef sequence < Property > Properties;
 
   struct Domain {
     string UUID;
