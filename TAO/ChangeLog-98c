@@ -1,57 +1,67 @@
+Wed Nov 11 14:47:41 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.cpp,Cubit_Client.cpp:
+          commented out shutdown on VxWorks, until we figure out what causes
+          the memPartFree error.
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+          removed second (redundant) -ORBreactorlock null from
+          Resource_Factory_Service_Object.
+
 Wed Nov 11 13:56:15 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
 
-	  Added code so that for octet sequences, we will now be able to
-	  use the special optimizations that Carlos has developed. We
-	  generate this code enclosed in #if defined (TAO_NO_COPY_SEQUENCES)  
-	  macros.
-	 
+          Added code so that for octet sequences, we will now be able to
+          use the special optimizations that Carlos has developed. We
+          generate this code enclosed in #if defined (TAO_NO_COPY_SEQUENCES)
+          macros.
+
 Tue Nov 10 22:37:55 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.40 released.
 
 Tue Nov 10 17:53:42 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/Logger_i.h 
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp
-	* orbsvcs/orbsvcs/Logger.idl
-	  Added new methods log2() and logv2(). They are twoway versions
-	  of the preexisting log() and logv() methods.  Thanks to Sigg
- 	  Pascal <pascal.sigg@zkb.ch> for reporting this.
-	
+        * orbsvcs/orbsvcs/Log/Logger_i.h
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp
+        * orbsvcs/orbsvcs/Logger.idl
+          Added new methods log2() and logv2(). They are twoway versions
+          of the preexisting log() and logv() methods.  Thanks to Sigg
+          Pascal <pascal.sigg@zkb.ch> for reporting this.
+
 Tue Nov 10 13:12:48 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/Dump_Schedule/Dump_Schedule.cpp
           orbsvcs/orbsvcs/Scheduler_Factory.cpp
           orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp
           orbsvcs/orbsvcs/Sched/DynSched.cpp
-          orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: Fixed compilation errors 
+          orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: Fixed compilation errors
           and warnings from g++, Sun C++ for scheduling anomaly features.
 
 Mon Nov  9 23:47:02 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Callback_Quoter/Notifier_i.cpp
-	examples/Callback_Quoter/Notifier_i.h
-	examples/Callback_Quoter/Notifier_Input_Handler.cpp
-	examples/Callback_Quoter/Notifier_Input_Handler.h		
-	examples/Callback_Quoter/Consumer_Input_Handler.cpp
-	examples/Callback_Quoter/Consumer_Input_Handler.h
-	examples/Callback_Quoter/Consumer_Signal_Handler.cpp
-	examples/Callback_Quoter/Consumer_Signal_Handler.h
-	examples/Callback_Quoter/Consumer_Handler.cpp
-	examples/Callback_Quoter/Consumer_Handler.h
-	examples/Callback_Quoter/Supplier_Signal_Handler.cpp
-	examples/Callback_Quoter/Supplier_Signal_Handler.h
-	examples/Callback_Quoter/Supplier_i.cpp
-	examples/Callback_Quoter/Supplier_i.h
-	examples/Callback_Quoter/supplier.cpp
-	examples/Callback_Quoter/consumer.cpp
-	examples/Callback_Quoter/notifier.cpp
-	examples/Callback_Quoter/README
+        * examples/Callback_Quoter/Notifier_i.cpp
+        examples/Callback_Quoter/Notifier_i.h
+        examples/Callback_Quoter/Notifier_Input_Handler.cpp
+        examples/Callback_Quoter/Notifier_Input_Handler.h
+        examples/Callback_Quoter/Consumer_Input_Handler.cpp
+        examples/Callback_Quoter/Consumer_Input_Handler.h
+        examples/Callback_Quoter/Consumer_Signal_Handler.cpp
+        examples/Callback_Quoter/Consumer_Signal_Handler.h
+        examples/Callback_Quoter/Consumer_Handler.cpp
+        examples/Callback_Quoter/Consumer_Handler.h
+        examples/Callback_Quoter/Supplier_Signal_Handler.cpp
+        examples/Callback_Quoter/Supplier_Signal_Handler.h
+        examples/Callback_Quoter/Supplier_i.cpp
+        examples/Callback_Quoter/Supplier_i.h
+        examples/Callback_Quoter/supplier.cpp
+        examples/Callback_Quoter/consumer.cpp
+        examples/Callback_Quoter/notifier.cpp
+        examples/Callback_Quoter/README
 
-	 All the above files are added.
-	 This version is a working Callback_Quoter example.
+         All the above files are added.
+         This version is a working Callback_Quoter example.
 
 Mon Nov 09 23:06:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -85,7 +95,7 @@ Mon Nov 09 18:12:48 1998  Chris Gill  <cdgill@cs.wustl.edu>
           Implemented anomaly recording in the strategized
           scheduler so all warning and error level scheduling anomalies
           can be propagated to generated runtime header file without
-          halting the scheduler (except for a fatal anomaly).  Thanks to 
+          halting the scheduler (except for a fatal anomaly).  Thanks to
           Tom Venturella <thomas.e.venturella@boeing.com> for suggesting this.
 
         * orbsvcs/tests/Sched_Conf/Sched_Conf.{cpp, dsw}
