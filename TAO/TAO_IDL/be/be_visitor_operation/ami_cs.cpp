@@ -459,8 +459,8 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
   *os << "ACE_CHECK;" << be_nl;
 
   // Prepare the request header
-  *os << "CORBA::Octet flag = " << be_idt_nl
-      << "ACE_static_cast (CORBA::Octet, ";
+  *os << "const CORBA::Octet flag = " << be_idt_nl
+      << "ACE_static_cast (const CORBA::Octet, ";
 
   switch (node->flags ())
     {
