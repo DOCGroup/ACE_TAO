@@ -64,6 +64,21 @@ AST_Home::base_home (void) const
   return this->pd_base_home;
 }
 
+// These next two look ugly, but it is to keep from having to
+// create separate visitors for homes in the back end.
+
+AST_Interface **
+AST_Home::supports (void) const
+{
+  return this->pd_base_home ? this->inherits () + 1 : this->inherits ();
+}
+
+long 
+AST_Home::n_supports (void) const
+{
+  return this->pd_base_home ? this->n_inherits () - 1 : this->n_inherits ();
+}
+
 AST_Component *
 AST_Home::managed_component (void) const
 {

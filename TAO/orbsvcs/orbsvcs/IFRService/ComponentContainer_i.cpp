@@ -258,13 +258,11 @@ TAO_ComponentContainer_i::create_home_i (
         }
     }
 
-  char *primary_key_path = 0;
-
   if (! CORBA::is_nil (primary_key))
     {
-      primary_key_path = 
+      char *primary_key_path = 
         TAO_IFR_Service_Utils::reference_to_path (primary_key);
-        this->repo_->config ()->set_string_value (this->section_key_,
+        this->repo_->config ()->set_string_value (new_key,
                                                   "primary_key",
                                                   primary_key_path);
     }
