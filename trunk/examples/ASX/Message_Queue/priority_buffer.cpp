@@ -95,7 +95,8 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 	  ACE_NEW_RETURN (mb, ACE_Message_Block (rb.size (),
 						 ACE_Message_Block::MB_DATA,
 						 0,
-						 buffer));
+						 buffer),
+			  0);
           mb->msg_priority (rb.size ());
           mb->wr_ptr (rb.size ());
 
