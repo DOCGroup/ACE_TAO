@@ -23,6 +23,9 @@ Thu Jan 13 13:50:26 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
             which does a check for null reference. Most of these
             replacements had been done some time ago, these were
             evidently overlooked. This fix closes [BUGID:2027].
+            Thanks to Jiang Wei <jiangwei_1976@yahoo.com.cn> for
+            reporting the marshaling failure of empty object
+            references in a sequence.
             
           - Made generated CORBA::Boolean values more consistent about
             assigning or returniong 'true' or 'false' rather than
