@@ -1,3 +1,21 @@
+Fri Nov  1 19:06:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Utils/Auto_Functor.cpp:
+	* tao/Utils/Auto_Functor.h:
+	* tao/Utils/Auto_Functor.inl:
+	* tao/Utils/Implicit_Deactivator.cpp:
+	* tao/Utils/Implicit_Deactivator.h:
+	* tao/Utils/ORB_Destroyer.cpp:
+	* tao/Utils/ORB_Destroyer.h:
+	* tao/Utils/PolicyList_Destroyer.cpp:
+	* tao/Utils/PolicyList_Destroyer.h:
+	* tao/Utils/PolicyList_Destroyer.inl:
+	* tao/Utils/RIR_Narrow.cpp:
+	* tao/Utils/RIR_Narrow.h:
+	* tao/Utils/Servant_Var.cpp:
+	* tao/Utils/Servant_Var.h: ACE'ified code. Made them exception
+	  safe even if native exceptions have been turned off. 
+
 Fri Nov 01 14:38:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/Logging_Service/Logging_Service.dsw:
