@@ -73,11 +73,16 @@ public:
   // are non null, it computes and returns a tc name. Else, it also
   // stores the result in a member variable.
 
-
   virtual const char *nested_type_name (be_decl *d,
                                         const char *suffix = 0,
                                         const char *prefix = 0);
   // type name of a node used when generating declarations
+
+  virtual const char *nested_sp_type_name (be_decl *use_scope, 
+                                           const char *suffix = 0, 
+                                           const char *prefix = 0);
+  // type name of a node used when generating declarations for smart
+  // proxies.
 
   virtual AST_Decl::NodeType base_node_type (void) const;
   // Typedefs are tricky to handle, in many points their mapping
@@ -104,6 +109,13 @@ protected:
   virtual UTL_ScopedName * compute_tc_name (const char *prefix,
                                             const char *suffix);
   // Compute and return the value.
+
+  virtual const char *nested_name (const char* local_name,
+                                   const char* full_name,
+                                   be_decl *use_scope, 
+                                   const char *suffix, 
+                                   const char *prefix);
+  // type name of a node used when generating declarations
 
   UTL_ScopedName *tc_name_;
   // typecode name
