@@ -1,14 +1,14 @@
 //==================================================================
 /**
- *  @file  DP_Handler.h
+ *  @file  RDD_Handler.h
  *
  *  $Id$
  *
  *  @author Aniruddha S. Gokhale <gokhale@dre.vanderbilt.edu>
  */
 //=====================================================================
-#ifndef DP_HANDLER_H
-#define DP_HANDLER_H
+#ifndef RDD_HANDLER_H
+#define RDD_HANDLER_H
 #include /**/ "ace/pre.h"
 
 #include "DeploymentC.h"
@@ -47,9 +47,9 @@ namespace CIAO
   namespace Config_Handler
   {
     /**
-     * @class DP_Handler
+     * @class RDD_Handler
      *
-     * @brief Handler class for <DeploymentPlanning> type 
+     * @brief Handler class for <ResourceDeploymentDescriptor> type 
      *
      * This class is within the Execution Data Model subpackage of the
      * Deployment & Configuration package.
@@ -59,27 +59,27 @@ namespace CIAO
      * element is returned.
      */
 
-    class Config_Handler_Export DP_Handler
+    class Config_Handler_Export RDD_Handler
     {
     public:
 
       /// constructor
-      DP_Handler (DOMDocument* doc, unsigned long filter_);
+      RDD_Handler (DOMDocument* doc, unsigned long filter_);
 
       /// constructor
-      DP_Handler (DOMNodeIterator* iter, bool release = false);
+      RDD_Handler (DOMNodeIterator* iter, bool release = false);
 
       /// destructor
-      ~DP_Handler(void);
+      ~RDD_Handler(void);
 
-      /// Process the deployment plan
-      void process_DeploymentPlan (::Deployment::DeploymentPlan &dp);
+      /// Process the resource deployment description
+      void process_ResourceDeploymentDescription (::Deployment::ResourceDeploymentDescription &rdd);
 
-      /// Process the label attribute
-      void process_label (const XMLCh* name, ::Deployment::DeploymentPlan &dp);
+      /// Process the requirement name attribute
+      void process_requirementName (const XMLCh* name, ::Deployment::ResourceDeploymentDescription &rdd);
 
-      /// Process the UUID attribute
-      void process_UUID (const XMLCh* name, ::Deployment::DeploymentPlan &dp);
+      /// Process the resource name attribute
+      void process_resourceName (const XMLCh* name, ::Deployment::ResourceDeploymentDescription &rdd);
 
     private:
 
@@ -99,4 +99,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* DP_HANDLER_H */
+#endif /* RDD_HANDLER_H */

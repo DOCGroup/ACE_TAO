@@ -1,3 +1,57 @@
+Fri Apr 23 04:40:12 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
+
+	* DnC/Deployment.idl:
+	  struct DeploymentPlan: Added a field called infoProperty of type
+	  Properties (Issue 5967)
+
+	  struct ArtifactDeploymentDescription: Added a field called
+	  deployedResource of type ResourceDeploymentDescriptions
+	  (Issue 6392) 
+
+	  struct ArtifactDeploymentDescription: Changed the field type for
+	  location from string to CORBA::StringSeq (Issue 5957, 6053).
+
+	  struct ArtifactDeploymentDescription: Moved it around to
+	  overcome forward declarations.
+
+	  struct MonolithicDeploymentDescription: Changed the field name
+	  from artifactRef to artifact and changed its type from
+	  CORBA::ULongSeq to ArtifactDeploymentDescriptions (Issue 5957)
+
+	  struct ResourceDeploymentDescription: Added a new struct and
+	  corresponding unbounded sequence (Issue 6392).
+
+	  enum ResourceUsageKind: Added a new enum (Issue 6392).
+
+	  struct InstanceResourceDeploymentDescription: Added a new struct
+	  and corresponding unbounded sequence (Issue 6392).
+
+	* DnC/Config_Handler/DP_Handler.h:
+	* DnC/Config_Handler/DP_Handler.cpp:
+	  Added handling of "infoProperty" (Issue 5967)
+	  Other cosmetic changes, such as fixed usage of an undefined
+	  variable 
+
+	* DnC/Config_Handler/ADD_Handler.h:
+	* DnC/Config_Handler/ADD_Handler.cpp:
+	  XML handlers for the ArtifactDeploymentDescription artifact of
+	  the Execution Model.  
+
+	* DnC/Config_Handler/MDD_Handler.h:
+	* DnC/Config_Handler/MDD_Handler.cpp:
+	  XML handlers for the MonolithicDeploymentDescription artifact of
+	  the Execution Model.  
+
+	* DnC/Config_Handler/RDD_Handler.h:
+	* DnC/Config_Handler/RDD_Handler.cpp:
+	  XML handlers for the ResourceDeploymentDescription artifact of
+	  the Execution Model.  
+
+	* DnC/Config_Handler/Config_Handlers.mpc:
+	  Added ADD_Handler.cpp
+	  Added MDD_Handler.cpp
+	  Added RDD_Handler.cpp
+
 Thu Apr 22 22:18:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/CCM_Component.idl:
@@ -10,14 +64,14 @@ Thu Apr 22 22:18:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Apr 22 21:32:39 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
 	* DnC/Deployment.idl:
-	  Added a "string UUID;" field to the DeploymentPlan
+	  Added a "string UUID;" field (Issue 6047) to the DeploymentPlan
 	  structure. The spec shows UUID as an attribute, which serves as
 	  the unique identfier of a plan. However, the spec does not
 	  include it in the IDL nor the schema. I decided to add it for now.
 
 	* DnC/Config_Handler/DP_Handler.h:
 	* DnC/Config_Handler/DP_Handler.cpp:
-	  XML handlers for the deployment plan artifact of the Execution Model. 
+	  XML handlers for the DeploymentPlan artifact of the Execution Model. 
 
 	* DnC/Config_Handler/Config_Handlers.mpc:
 	  Added DP_Handler.cpp

@@ -135,15 +135,56 @@ module Deployment {
 
   typedef sequence < Requirement > Requirements;
 
+  // @@Issue 6392@@ Newly added
+  struct ResourceDeploymentDescription {
+    string requirementName;
+    string resourceName;
+    any resourceValue;
+  };
+
+  typedef sequence < ResourceDeploymentDescription > ResourceDeploymentDescriptions;
+
+  struct ArtifactDeploymentDescription {
+    string name;
+    ::CORBA::StringSeq location;
+    string node;
+    ::CORBA::StringSeq source;
+    Properties execParameter;
+    Requirements deployRequirement;
+    ResourceDeploymentDescriptions deployedResource; // Issue 6392
+  };
+
+  typedef sequence < ArtifactDeploymentDescription > ArtifactDeploymentDescriptions;
+
   struct MonolithicDeploymentDescription {
     string name;
     ::CORBA::StringSeq source;
-    ::CORBA::ULongSeq artifactRef;
+    // @@Issue 5957@@ changed the following 
+    ArtifactDeploymentDescriptions artifact;
     Properties execParameter;
     Requirements deployRequirement;
   };
 
   typedef sequence < MonolithicDeploymentDescription > MonolithicDeploymentDescriptions;
+
+  // @@Issue 6392@@ added new
+  enum ResourceUsageKind {
+    None,
+    InstanceUsesResource,
+    ResourceUsesInstance,
+    PortUsesResource,
+    ResourceUsesPort
+  };
+
+  // @@Issue 6392@@ added new
+  struct InstanceResourceDeploymentDescription {
+    ResourceUsageKind resourceUsage;
+    string requirementName;
+    string resourceName;
+    any resourceValue;
+  };
+
+  typedef sequence < InstanceResourceDeploymentDescription > InstanceResourceDeploymentDescriptions;
 
   struct InstanceDeploymentDescription {
     string name;
@@ -209,20 +250,9 @@ module Deployment {
 
   typedef sequence < ImplementationDependency > ImplementationDependencies;
 
-  struct ArtifactDeploymentDescription {
-    string name;
-    string location;
-    string node;
-    ::CORBA::StringSeq source;
-    Properties execParameter;
-    Requirements deployRequirement;
-  };
-
-  typedef sequence < ArtifactDeploymentDescription > ArtifactDeploymentDescriptions;
-
   struct DeploymentPlan {
     string label;
-    string UUID;
+    string UUID;    // Issue 6047
     ComponentInterfaceDescription realizes;
     MonolithicDeploymentDescriptions implementation;
     InstanceDeploymentDescriptions instance;
@@ -230,6 +260,7 @@ module Deployment {
     PlanPropertyMappings externalProperty;
     ImplementationDependencies dependsOn;
     ArtifactDeploymentDescriptions artifact;
+    Properties infoProperty;    // Issue 5967
   };
 
   exception ResourceNotAvailable {
