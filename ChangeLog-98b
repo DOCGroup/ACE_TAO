@@ -1,3 +1,9 @@
+Fri Jul 17 13:53:54 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/TTY_IO.cpp (control): Added entries for 300 baud.  Thanks to
+ 	  the ever vigilant Arturo Montes <mitosys@colomsat.com.co> for
+ 	  reporting this.
+
 Fri Jul 17 14:51:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Makefile (CONTROLLED_FILES): Added CE-status to distribution.
