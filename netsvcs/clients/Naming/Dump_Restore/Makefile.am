@@ -8,17 +8,12 @@
 ##  Process this file with automake to create Makefile.in
 ##
 
-## The number in AUTOMAKE_OPTIONS is the minimum required version automake
-## needed to process this file.
-AUTOMAKE_OPTIONS = 1.4
-
-INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
 
 noinst_LIBRARIES = \
          libDump_Restore.a
 
 libDump_Restore_a_SOURCES = Dump_Restore.cpp Dump_Restore.h
-
 
 noinst_PROGRAMS = \
          main
@@ -30,4 +25,3 @@ main_LDADD = \
 
 ## ACE currently doesn't build this so we don't build it with automake either.
 EXTRA_DIST = createfile.cpp
-
