@@ -26,11 +26,11 @@ ACE_ES_Dispatch_Request::make_copy (RtecEventComm::EventSet &dest) const
       dest.length (event_set_.length ());
 
       for (CORBA::ULong index=0; index < event_set_.length (); index++)
-	{
-	  RtecEventComm::Event &dest_event = dest[index];
-	  ACE_ES_Event_Container_var &source_event_var = ((ACE_ES_Event_Container_var &) event_set_[index]);
-	  dest_event = *(source_event_var.operator->());
-	}
+        {
+          RtecEventComm::Event &dest_event = dest[index];
+          ACE_ES_Event_Container_var &source_event_var = ((ACE_ES_Event_Container_var &) event_set_[index]);
+          dest_event = *(source_event_var.operator->());
+        }
     }
 }
 
@@ -49,14 +49,14 @@ ACE_ES_Dispatch_Request::operator new (size_t nbytes)
   if (nbytes > sizeof (ACE_ES_Dispatch_Request))
     {
       ACE_ERROR ((LM_ERROR, "nbytes = %d, sizeof (ACE_ES_Dispatch_Request_Chunk) = %d.\n",
-		  sizeof (ACE_ES_Dispatch_Request)));
+                  sizeof (ACE_ES_Dispatch_Request)));
       ACE_ASSERT (nbytes <= sizeof (ACE_ES_Dispatch_Request));
     }
 
   return ACE_ES_Memory_Pools::new_Dispatch_Request ();
 }
 
-void 
+void
 ACE_ES_Dispatch_Request::operator delete (void *mem)
 {
   ACE_ES_Memory_Pools::delete_Dispatch_Request (mem);
@@ -66,7 +66,7 @@ ACE_ES_Dispatch_Request::operator delete (void *mem)
 // ************************************************************
 
 ACE_ES_Priority_Dispatching::ACE_ES_Priority_Dispatching (ACE_EventChannel *channel,
-							  int threads_per_queue)
+                                                          int threads_per_queue)
   : ACE_ES_Dispatching_Base (channel),
     notification_strategy_ (this),
     highest_priority_ (0),
@@ -101,20 +101,22 @@ ACE_ES_Priority_Dispatching::initialize_queues (void)
 {
   for (int x=0; x < ACE_Scheduler_MAX_PRIORITIES; x++)
     {
-      // @@ Apparently Period is measured in a different unit that the
-      // time, beats me.
-      ACE_hrtime_t nanosecs;
-      ORBSVCS_Time::TimeT_to_hrtime (nanosecs, ACE_Scheduler_Rates[x]);
+      // Convert ACE_Scheduler_Rate (it's really a period, not a rate!)
+      // to a form we can easily work with.
+      ACE_Time_Value period_tv;
+      ORBSVCS_Time::TimeT_to_Time_Value (period_tv, ACE_Scheduler_Rates[x]);
 
-      RtecScheduler::Period period = nanosecs;
-		  
-      queues_[x] = new ACE_ES_Dispatch_Queue (this, &notification_strategy_); 
+      RtecScheduler::Period period = period_tv.sec () * 10000000 +
+                                     period_tv.usec () * 10;
+
+      queues_[x] = new ACE_ES_Dispatch_Queue (this, &notification_strategy_);
       if (queues_[x] == 0 ||
-	  queues_[x]->open_queue (period, threads_per_queue_) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_ES_Priority_Dispatching::initialize_queues"));
-	  return;
-	}
+          queues_[x]->open_queue (period,
+                                  threads_per_queue_) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_ES_Priority_Dispatching::initialize_queues"));
+          return;
+        }
 
       queue_count_[x] = 1;
     }
@@ -122,9 +124,9 @@ ACE_ES_Priority_Dispatching::initialize_queues (void)
   highest_priority_ = ACE_Scheduler_MAX_PRIORITIES - 1;
 }
 
-void 
-ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer, 
-					CORBA::Environment &_env)
+void
+ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
+                                        CORBA::Environment &_env)
 {
   down_->connected (consumer, _env);
 
@@ -139,47 +141,47 @@ ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
   // qos will take effect when we get the dispatch priority.
   down_->connected (consumer, _env);
 
-  RtecScheduler::OS_Priority priority = 
+  RtecScheduler::OS_Priority priority =
     ACE_Scheduler::instance ().preemption_priority (consumer->qos ().rt_info_);
 
   {
     ACE_ES_GUARD ace_mon (lock_);
-  
+
     // If a queue has not been created for the consumer's priority,
     // create one.
     if (queues_[priority] == 0)
       {
-	// Allocate a new dispatch queue.
-	queues_[priority] = new ACE_ES_Dispatch_Queue (this, &notification_strategy_);
-	if (queues_[priority] == 0)
-	  TAO_THROW (CORBA::NO_MEMORY (0, CORBA::COMPLETED_NO, 
-					  "ACE_ES_Priority_Dispatching::connected"));
+        // Allocate a new dispatch queue.
+        queues_[priority] = new ACE_ES_Dispatch_Queue (this, &notification_strategy_);
+        if (queues_[priority] == 0)
+          TAO_THROW (CORBA::NO_MEMORY (0, CORBA::COMPLETED_NO,
+                                          "ACE_ES_Priority_Dispatching::connected"));
 
-	// Initialize the dispatch queue corresponding to the
-	// consumer's priority.  With a full implementation of the
-	// run-time scheduler, the dispatch queue can find it's
-	// scheduling qos online.  However, we pass the rate in case
-	// one is not found.  The rate can be used to obtain the
-	// proper priority.  If threads_per_queue_ == 0, then these
-	// queues will be passive.  Otherwise, they will be active.
-	// This switches us between MT_ORB and ST_ORB.  If we're
-	// single-threaded, this registers us with the ReactorEx using
-	// our notification_strategy_.  If we're multi-threaded, this
-	// spawns the threads.
-	if (queues_[priority]->open_queue (priority,
-					   threads_per_queue_) == -1)
-	  TAO_THROW (DISPATCH_ERROR (0, CORBA::COMPLETED_NO,
-				     "ACE_ES_Priority_Dispatching::connected:"
-				     "queue open failed.\n"));
+        // Initialize the dispatch queue corresponding to the
+        // consumer's priority.  With a full implementation of the
+        // run-time scheduler, the dispatch queue can find it's
+        // scheduling qos online.  However, we pass the rate in case
+        // one is not found.  The rate can be used to obtain the
+        // proper priority.  If threads_per_queue_ == 0, then these
+        // queues will be passive.  Otherwise, they will be active.
+        // This switches us between MT_ORB and ST_ORB.  If we're
+        // single-threaded, this registers us with the ReactorEx using
+        // our notification_strategy_.  If we're multi-threaded, this
+        // spawns the threads.
+        if (queues_[priority]->open_queue (priority,
+                                           threads_per_queue_) == -1)
+          TAO_THROW (DISPATCH_ERROR (0, CORBA::COMPLETED_NO,
+                                     "ACE_ES_Priority_Dispatching::connected:"
+                                     "queue open failed.\n"));
 
-	// When this goes down to 0, we will shutdown the queue.
-	queue_count_[priority] = 1;
+        // When this goes down to 0, we will shutdown the queue.
+        queue_count_[priority] = 1;
 
-	// Keep track of this to optimize handle_signal.
-	if (priority > highest_priority_)
-	  highest_priority_ = priority;
+        // Keep track of this to optimize handle_signal.
+        if (priority > highest_priority_)
+          highest_priority_ = priority;
 
-	ACE_DEBUG ((LM_DEBUG, "Created queue priority = %d.\n", priority));
+        ACE_DEBUG ((LM_DEBUG, "Created queue priority = %d.\n", priority));
       }
     else
       queue_count_[priority]++;
@@ -187,14 +189,14 @@ ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
 #endif
 }
 
-void 
+void
 ACE_ES_Priority_Dispatching::disconnected (ACE_Push_Consumer_Proxy *consumer)
 {
   // We'll not dynamically close down queues.
   ACE_UNUSED_ARG (consumer);
 
 #if 0
-  RtecScheduler::OS_Priority priority = 
+  RtecScheduler::OS_Priority priority =
     ACE_Scheduler::instance ().preemption_priority (consumer->qos ().rt_info_);
 
   {
@@ -204,11 +206,11 @@ ACE_ES_Priority_Dispatching::disconnected (ACE_Push_Consumer_Proxy *consumer)
     // it down.  However, we will not.
     if (--queue_count_[priority] <= 0)
       {
-	ACE_DEBUG ((LM_DEBUG, "(%t) unused dispatch queue priority = %d, "
-		    "is_empty = %d.\n",
-		    priority, queues_[priority]->msg_queue ()->is_empty ()));
-      
-	queues_[priority]->shutdown_task ();
+        ACE_DEBUG ((LM_DEBUG, "(%t) unused dispatch queue priority = %d, "
+                    "is_empty = %d.\n",
+                    priority, queues_[priority]->msg_queue ()->is_empty ()));
+
+        queues_[priority]->shutdown_task ();
       }
   }
 #endif
@@ -218,7 +220,7 @@ ACE_ES_Priority_Dispatching::disconnected (ACE_Push_Consumer_Proxy *consumer)
 // <request> has been dynamically allocated by the filtering module.
 void
 ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
-				   CORBA::Environment &_env)
+                                   CORBA::Environment &_env)
 {
   ACE_TIMEPROBE ("  push_source_type: Correlation Module");
 
@@ -231,26 +233,26 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
       // @@ TODO use TAO_TRY&friends
       ACE_TIMEPROBE ("  Priority_Dispatching::push - priority requested");
       ACE_Scheduler_Factory::server ()->priority
-	(request->rt_info (),
-	 thread_priority,
-	 subpriority,
-	 preemption_priority,
-	 _env);
+        (request->rt_info (),
+         thread_priority,
+         subpriority,
+         preemption_priority,
+         _env);
       ACE_TIMEPROBE ("  Priority_Dispatching::push - priority obtained");
       if (_env.exception ())
-	{
-	  return;
-	}
+        {
+          return;
+        }
     }
   else
     {
       thread_priority =
-	ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-					ACE_SCOPE_PROCESS);
+        ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                        ACE_SCOPE_PROCESS);
       subpriority = ACE_Scheduler_MIN_SUB_PRIORITY;
       preemption_priority = ACE_Scheduler_MIN_PREEMPTION_PRIORITY;
     }
-  
+
   // If it's a request to forward an event, it needs a reference to us
   // to call dispatch_event.
   request->set (this, preemption_priority, subpriority);
@@ -272,21 +274,21 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
   if (queues_[preemption_priority]->try_put (request) == -1)
     {
       if (ACE_ES_Dispatch_Request::release (request) != 0)
-	ACE_ERROR ((LM_ERROR, "ACE_ES_Priority_Dispatching::push"
-		    " release failed.\n"));
+        ACE_ERROR ((LM_ERROR, "ACE_ES_Priority_Dispatching::push"
+                    " release failed.\n"));
       if (errno != EPIPE)
-	{
-	  TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-	  // @@ Orbix parameters
-	  // 0, CORBA::COMPLETED_NO, 
-	  // "ACE_ES_Priority_Dispatching::push enqueue failed"));
-	}
+        {
+          TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+          // @@ Orbix parameters
+          // 0, CORBA::COMPLETED_NO,
+          // "ACE_ES_Priority_Dispatching::push enqueue failed"));
+        }
       else
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Request rejected from closed queue %d.\n",
-		      preemption_priority));
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Request rejected from closed queue %d.\n",
+                      preemption_priority));
+        }
     }
 }
 
@@ -294,7 +296,7 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
 // continuing to lowest priority queue.  If an event is ever found,
 // dispatch it and then start back at the highest priority queue
 // again.
-int 
+int
 ACE_ES_Priority_Dispatching::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   int done;
@@ -303,22 +305,22 @@ ACE_ES_Priority_Dispatching::handle_signal (int, siginfo_t *, ucontext_t *)
     {
       done = 1;
       for (int x = 0; x <= highest_priority_; x++)
-	{
-	  // If the queue is not empty, dispatch the request and then
-	  // start the for loop from the beginning.
-	  if ((queues_[x] != 0) && (!queues_[x]->msg_queue ()->is_empty ()))
-	    {
-	      // Dequeue and service the request.
-	      queues_[x]->svc_one ();
+        {
+          // If the queue is not empty, dispatch the request and then
+          // start the for loop from the beginning.
+          if ((queues_[x] != 0) && (!queues_[x]->msg_queue ()->is_empty ()))
+            {
+              // Dequeue and service the request.
+              queues_[x]->svc_one ();
 
-	      // Exit the for loop and start over.
-	      done = 0;
-	      break;
-	    }
+              // Exit the for loop and start over.
+              done = 0;
+              break;
+            }
 
-	  // If we get through the whole for loop without dispatching
-	  // anything, then we're done.
-	}
+          // If we get through the whole for loop without dispatching
+          // anything, then we're done.
+        }
     }
   while (!done);
 
@@ -327,7 +329,7 @@ ACE_ES_Priority_Dispatching::handle_signal (int, siginfo_t *, ucontext_t *)
 }
 
 // This is only for the non-win32 single-threaded implementation.
-int 
+int
 ACE_ES_Priority_Dispatching::handle_input (ACE_HANDLE)
 {
   return this->handle_signal (0, 0, 0);
@@ -341,10 +343,10 @@ ACE_ES_Priority_Dispatching::shutdown (void)
 {
   if (shutdown_)
     return;
- 
+
   ACE_DEBUG ((LM_DEBUG, "(%t) ACE_ES_Priority_Dispatching "
-	      "module shutting down.\n"));
- 
+              "module shutting down.\n"));
+
   shutdown_ = 1;
 
   // If we're single threaded, then we need to shut down the
@@ -356,8 +358,8 @@ ACE_ES_Priority_Dispatching::shutdown (void)
   for (int x = 0; x <= highest_priority_; x++)
     if (queues_[x] != 0)
       {
-	ACE_DEBUG ((LM_DEBUG, "shutting down dispatch queue %d.\n", x));
-	queues_[x]->shutdown_task ();
+        ACE_DEBUG ((LM_DEBUG, "shutting down dispatch queue %d.\n", x));
+        queues_[x]->shutdown_task ();
       }
 }
 
@@ -374,35 +376,35 @@ ACE_ES_Priority_Dispatching::dispatch_queue_closed (ACE_ES_Dispatch_Queue *queue
   for (int x = 0; x <= highest_priority_; x++)
     {
       if (queues_[x] == queue)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "(%t) Dispatch queue %d is closed.\n", x));
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%t) Dispatch queue %d is closed.\n", x));
 
-	  // Store the queue for deleting in this object's destructor.
-	  delete_me_queues_[x] = queues_[x];
-	  queues_[x] = 0;
+          // Store the queue for deleting in this object's destructor.
+          delete_me_queues_[x] = queues_[x];
+          queues_[x] = 0;
 
-	  // Reset highest_priority_.
-	  if (x == highest_priority_)
-	    {
-	      while ((--highest_priority_ >= 0) &&
-		     (queues_[highest_priority_] == 0));
+          // Reset highest_priority_.
+          if (x == highest_priority_)
+            {
+              while ((--highest_priority_ >= 0) &&
+                     (queues_[highest_priority_] == 0));
 
-	      if (highest_priority_ < 0)
-		{
-		  ACE_DEBUG ((LM_DEBUG, "Dispatching module shut down.\n"));
-		  up_->shutdown ();
-		  return;
-		}
-	    }
+              if (highest_priority_ < 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "Dispatching module shut down.\n"));
+                  up_->shutdown ();
+                  return;
+                }
+            }
 
-	  // If we found the queue, we can exit the for loop.
-	  break;
-	}
+          // If we found the queue, we can exit the for loop.
+          break;
+        }
     }
 }
 
 /*
-ACE_HANDLE  
+ACE_HANDLE
 ACE_ES_Priority_Dispatching::get_handle (void) const
 {
   ACE_ES_Priority_Dispatching *fake_this = (ACE_ES_Priority_Dispatching *) this;
@@ -413,7 +415,7 @@ ACE_ES_Priority_Dispatching::get_handle (void) const
 // ************************************************************
 
 ACE_ES_Dispatch_Queue::ACE_ES_Dispatch_Queue (ACE_ES_Dispatching_Base *dispatching_module,
-					      ACE_ES_Notification_Strategy *notification_strategy)
+                                              ACE_ES_Notification_Strategy *notification_strategy)
   : dispatching_module_ (dispatching_module),
     notification_strategy_ (notification_strategy)
 {
@@ -421,7 +423,7 @@ ACE_ES_Dispatch_Queue::ACE_ES_Dispatch_Queue (ACE_ES_Dispatching_Base *dispatchi
 
 int
 ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
-				   int threads)
+                                   int threads)
 {
   // First set up the correct message queue according to whether the
   // dispatch queue will be active or not.
@@ -434,33 +436,34 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
       // arrive via the msg_queue call.  If that succeeds, set the
       // notification strategy in our message queue via the open call.
       if (this->msg_queue () == 0 ||
-	  this->msg_queue ()->open (ACE_ES_QUEUE::DEFAULT_HWM,
-				    ACE_ES_QUEUE::DEFAULT_LWM,
-				    notification_strategy_) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p msg_queue.open failed.\n",
-			   "ACE_ES_Dispatch_Queue::open_queue"), -1);
+          this->msg_queue ()->open (ACE_ES_QUEUE::DEFAULT_HWM,
+                                    ACE_ES_QUEUE::DEFAULT_LWM,
+                                    notification_strategy_) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p msg_queue.open failed.\n",
+                           "ACE_ES_Dispatch_Queue::open_queue"), -1);
     }
   else
     {
       // Allocate a message queue that does not notify.
       ACE_ES_MQ *mq = new ACE_ES_MQ;
       if (mq == 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
-			   "ACE_ES_Dispatch_Queue::open_queue"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
+                           "ACE_ES_Dispatch_Queue::open_queue"), -1);
       else
-	{
-	  // This deletes previous message queue.
-	  this->msg_queue (mq);
-	  // Set this so that the destructor of ACE_Task deletes our
-	  // message queue.  Note, this must be after the call to
-	  // msg_queue.
-	  delete_msg_queue_ = 1;
-	}
+        {
+          // This deletes previous message queue.
+          this->msg_queue (mq);
+          // Set this so that the destructor of ACE_Task deletes our
+          // message queue.  Note, this must be after the call to
+          // msg_queue.
+          delete_msg_queue_ = 1;
+        }
     }
 
-  // Create a name for ourselves using the priority.
+  // Create a name for ourselves using the period.  The period is
+  // in 100 ns units; first convert to usec by dividing by 10.
   char temp[64];
-  ACE_OS::sprintf (temp, "ACE_ES_Dispatch_Queue-%u", period);
+  ACE_OS::sprintf (temp, "ACE_ES_Dispatch_Queue-%u.us", period / 10);
 
   // Open the task.  This will query the scheduler for our qos
   // structure.  It will also synch_threads if it succeeds.
@@ -471,25 +474,25 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
     case -1:
       // Error.
       ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
- 			 "ACE_ES_Dispatch_Queue::open_queue"), -1);
+                         "ACE_ES_Dispatch_Queue::open_queue"), -1);
     case 0:
       TAO_TRY
-	{// @@ TODO: Handle exceptions...
-	  ACE_Scheduler_Factory::server()->set (rt_info_,
-						ORBSVCS_Time::zero,
-						ORBSVCS_Time::zero,
-						ORBSVCS_Time::zero,
-						0,
-						RtecScheduler::VERY_LOW,
-						ORBSVCS_Time::zero,
-						1, TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	}
+        {// @@ TODO: Handle exceptions...
+          ACE_Scheduler_Factory::server()->set (rt_info_,
+                                                ORBSVCS_Time::zero,
+                                                ORBSVCS_Time::zero,
+                                                ORBSVCS_Time::zero,
+                                                0,
+                                                RtecScheduler::VERY_LOW,
+                                                ORBSVCS_Time::zero,
+                                                1, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
       TAO_CATCHANY
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "ACE_ES_Display_Queue::exception"), -1);
-	}
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ACE_ES_Display_Queue::exception"), -1);
+        }
       TAO_ENDTRY;
     case 1:
       // Found.
@@ -518,7 +521,7 @@ ACE_ES_EFD_Dispatching::ACE_ES_EFD_Dispatching (ACE_EventChannel *channel)
 
 void
 ACE_ES_EFD_Dispatching::push (ACE_ES_Dispatch_Request *request,
-			      CORBA::Environment &)
+                              CORBA::Environment &)
 {
   // If it's a request to forward an event, it needs a reference to us
   // to call dispatch_event.
@@ -535,8 +538,8 @@ ACE_ES_EFD_Dispatching::push (ACE_ES_Dispatch_Request *request,
     case ACE_RT_Task_Command::RELEASE:
       // Free the request.
       if (ACE_ES_Dispatch_Request::release (request) != 0)
-	ACE_ERROR ((LM_ERROR, "ACE_ES_EFD_Dispatching::push"
-		    " release failed.\n"));
+        ACE_ERROR ((LM_ERROR, "ACE_ES_EFD_Dispatching::push"
+                    " release failed.\n"));
       break;
 
     default:
@@ -552,9 +555,9 @@ ACE_ES_RTU_Dispatching::ACE_ES_RTU_Dispatching (ACE_EventChannel *channel)
 }
 
 // We're called from a dispatch queue, so we can not release the request.
-int 
+int
 ACE_ES_RTU_Dispatching::dispatch_event (ACE_ES_Dispatch_Request *request,
-					u_long &command_action)
+                                        u_long &command_action)
 {
   // Store the priority of the task currently running.
   channel_->rtu_manager ()->priority (request->priority ());
@@ -587,7 +590,7 @@ ACE_ES_RTU_Dispatching::dispatch_event (ACE_ES_Dispatch_Request *request,
 
 void
 ACE_ES_RTU_Dispatching::push (ACE_ES_Dispatch_Request *request,
-			      CORBA::Environment &_env)
+                              CORBA::Environment &_env)
 {
   // First enqueue the message in the proper queue.
   ACE_ES_Priority_Dispatching::push (request, _env);
