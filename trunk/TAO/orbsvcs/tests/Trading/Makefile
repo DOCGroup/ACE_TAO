@@ -66,7 +66,9 @@ TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Trader,$(findstring Trader,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
   LIB = $(LIB2)
-  SHLIB = $(SHLIB2)
+  ifneq (1,$(aix_build))
+    SHLIB = $(SHLIB2)
+  endif
 endif # Trader
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
