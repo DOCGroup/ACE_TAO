@@ -4345,11 +4345,19 @@ typedef void *(*ACE_THR_C_FUNC)(void *);
 #   define MAP_FAILED ((void *) -1L)
 # endif /* !MAP_FAILED || ACE_HAS_BROKEN_MAP_FAILED */
 
-# if defined (ACE_HAS_CHARPTR_DL)
-typedef char * ACE_DL_TYPE;
+# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+#   if defined (ACE_HAS_CHARPTR_DL)
+typedef ASYS_TCHAR * ACE_DL_TYPE;
+#   else
+typedef const ASYS_TCHAR * ACE_DL_TYPE;
+#   endif /* ACE_HAS_CHARPTR_DL */
 # else
+#   if defined (ACE_HAS_CHARPTR_DL)
+typedef char * ACE_DL_TYPE;
+#   else
 typedef const char * ACE_DL_TYPE;
-# endif /* ACE_HAS_CHARPTR_DL */
+#   endif /* ACE_HAS_CHARPTR_DL */
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
 # if !defined (ACE_HAS_SIGINFO_T)
 struct ACE_Export siginfo_t

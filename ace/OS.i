@@ -8121,7 +8121,13 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_TRACE ("ACE_OS::dlsym");
 
   // Get the correct OS type.
-  ACE_DL_TYPE symbolname = ACE_const_cast (ACE_DL_TYPE, sname);
+#   if defined (ACE_HAS_CHARPTR_DL)
+typedef char * ACE_DL_SYM_TYPE;
+#   else
+typedef const char * ACE_DL_SYM_TYPE;
+#   endif /* ACE_HAS_CHARPTR_DL */
+
+  ACE_DL_SYM_TYPE symbolname = ACE_const_cast (ACE_DL_SYM_TYPE, sname);
 
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 #   if defined (ACE_LACKS_POSIX_PROTOTYPES)
@@ -8151,7 +8157,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_WIN32CALL_RETURN (::GetProcAddress (handle,
                                           symbolname),
                         void *, 0);
-#   else /* ACE_HAS_WINCE */
+#   else  /* ACE_HAS_WINCE */
   ACE_WIN32CALL_RETURN (::GetProcAddress (handle,
                                           ACE_WIDE_STRING (symbolname)),
                         void *, 0);
