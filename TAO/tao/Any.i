@@ -80,8 +80,8 @@ CORBA_Any::operator<<= (const CORBA_Any& a)
 
 // implementing the special types
 ACE_INLINE
-CORBA_Any::to_object::to_object (CORBA::Object_ptr &obj)
-  : ref_ (obj)
+CORBA_Any::to_object::to_object (CORBA_Object_out obj)
+  : ref_ (obj.ptr ())
 {
 }
 
