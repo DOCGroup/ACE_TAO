@@ -75,10 +75,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"intlmacros.h"		// Define macros for intl'ion
 
 #include	<stdlib.h>		// POSIX standard defns
-#include	<string.h>		// POSIX string funcs
 #include	<ctype.h>		// External functions
 
-#include	<iostream.h>		// Standard IO library
+#include	"ace/stdcpp.h"		// Standard IO library
 
 #include	<sys/types.h>		// POSIX standard types
 

@@ -78,7 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-#include	<iostream.h>
+#include	"ace/stdcpp.h"
 #include	"idl_fwd.h"
 #include	"idl_narrow.h"
 #include	"idl_bool.h"

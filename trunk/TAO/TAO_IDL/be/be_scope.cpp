@@ -5,8 +5,6 @@
 #include	"idl_extern.h"
 #include	"be.h"
 
-#include <iostream.h>
-
 // Default Constructor
 be_scope::be_scope (void)
 {
