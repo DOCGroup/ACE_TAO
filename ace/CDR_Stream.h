@@ -292,6 +292,21 @@ public:
    */
   size_t current_alignment (void) const;
 
+  /**
+   * Returns (in <buf>) the next position in the buffer aligned to
+   * <size>, it advances the Message_Block wr_ptr past the data
+   * (i.e. <buf> + <size>). If necessary it grows the Message_Block
+   * buffer.  Sets the good_bit to 0 and returns a -1 on failure.
+   */
+  int adjust (size_t size,
+              char *&buf);
+
+  /// As above, but now the size and alignment requirements may be
+  /// different.
+  int adjust (size_t size,
+              size_t align,
+              char *&buf);
+
 private:
   /// disallow copying...
   ACE_OutputCDR (const ACE_OutputCDR& rhs);
@@ -319,21 +334,6 @@ private:
                                 size_t size,
                                 size_t align,
                                 ACE_CDR::ULong length);
-
-  /**
-   * Returns (in <buf>) the next position in the buffer aligned to
-   * <size>, it advances the Message_Block wr_ptr past the data
-   * (i.e. <buf> + <size>). If necessary it grows the Message_Block
-   * buffer.  Sets the good_bit to 0 and returns a -1 on failure.
-   */
-  int adjust (size_t size,
-              char *&buf);
-
-  /// As above, but now the size and alignment requirements may be
-  /// different.
-  int adjust (size_t size,
-              size_t align,
-              char *&buf);
 
   /**
    * Grow the CDR stream. When it returns <buf> contains a pointer to
@@ -685,6 +685,20 @@ public:
   ACE_Char_Codeset_Translator *char_translator (void) const;
   ACE_WChar_Codeset_Translator *wchar_translator (void) const;
 
+  /**
+   * Returns (in <buf>) the next position in the buffer aligned to
+   * <size>, it advances the Message_Block rd_ptr past the data
+   * (i.e. <buf> + <size>).  Sets the good_bit to 0 and returns a -1
+   * on failure.
+   */
+  int adjust (size_t size,
+              char *&buf);
+
+  /// As above, but now the size and alignment requirements may be
+  /// different.
+  int adjust (size_t size,
+              size_t align,
+              char *&buf);
 protected:
   /// The start of the chain of message blocks, even though in the
   /// current version the chain always has length 1.
@@ -737,21 +751,6 @@ private:
 
   /// Points to the continuation field of the current message block.
   char* end (void);
-
-  /**
-   * Returns (in <buf>) the next position in the buffer aligned to
-   * <size>, it advances the Message_Block rd_ptr past the data
-   * (i.e. <buf> + <size>).  Sets the good_bit to 0 and returns a -1
-   * on failure.
-   */
-  int adjust (size_t size,
-              char *&buf);
-
-  /// As above, but now the size and alignment requirements may be
-  /// different.
-  int adjust (size_t size,
-              size_t align,
-              char *&buf);
 };
 
 // ****************************************************************
