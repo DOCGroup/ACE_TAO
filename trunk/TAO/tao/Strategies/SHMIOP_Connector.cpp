@@ -199,7 +199,9 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   // increment to the handler is done in make_svc_handler (). Now
   // that we dont need the reference to it anymore we can decrement
   // the refcount whether the connection is successful ot not.
-  svc_handler->decr_refcount ();
+  long refcount = svc_handler->decr_refcount ();
+
+  ACE_ASSERT (refcount >= 0);
 
   // = We dont do a wait since we know that we are doing a blocking
   // connect
