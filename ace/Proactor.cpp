@@ -166,7 +166,7 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
   if (this->proactor_->post_completion (asynch_timer) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("Failure in dealing with timers: ")
-                       ASYS_TEXT ("PostQueuedCompletionStatus failed\n"),
+                       ASYS_TEXT ("PostQueuedCompletionStatus failed\n")),
                        -1);
   return 0;
 }
