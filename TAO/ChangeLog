@@ -52,7 +52,6 @@ Fri Nov 29 11:16:28 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/LF_CH_Event.h:
 	* tao/LF_CH_Event.cpp: Added a new temporary state in the path
 	  from LFS_SUCCESS to LFS_CONNECTION_CLOSED.
-	   
 
 Fri Nov 29 09:56:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
