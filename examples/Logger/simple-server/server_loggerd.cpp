@@ -28,6 +28,7 @@ main (int argc, char *argv[])
 {
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_UNUSED_ARG (sa);
 
   Logging_Acceptor peer_acceptor;
   ACE_INET_Addr addr (PORT);
