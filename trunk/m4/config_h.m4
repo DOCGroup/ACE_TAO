@@ -45,14 +45,6 @@ AH_BOTTOM([
 ])
 
 
-AH_VERBATIM([_POSIX_PTHREAD_SEMANTICS],
-[/* Some platforms need _POSIX_PTHREAD_SEMANTICS to make some functions work */
-#undef _POSIX_PTHREAD_SEMANTICS
-#ifndef _POSIX_PTHREAD_SEMANTICS
-# undef _POSIX_PTHREAD_SEMANTICS
-#endif
-])
-
 dnl ACE currently doesn't use these; however the configure script does
 AH_TEMPLATE([ACE_LACKS_SYSTIMES_H],[The `sys/times.h' header is unavailable])
 AH_TEMPLATE([ACE_LACKS_UNBUFFERED_STREAMBUF],[])
@@ -93,43 +85,9 @@ dnl /* results from checks for system services */
 
 dnl AIX specific configuration parameters
 AH_TEMPLATE([AIX],[Configure for use on AIX])
-AH_TEMPLATE([_BSD],[])
-AH_TEMPLATE([_BSD_INCLUDES],[])
-
-dnl /* Cray specific configuration parameters */
-dnl /*
-dnl  *  The following predefined macros are used within ACE ifdefs.
-dnl  *  These are defined when using the Cray compilers.  _CRAYMPP
-dnl  *  is defined, for example, if you are running on a Cray T3E
-dnl  *  massively parallel machine.  Moreover, in the case of the T3E,
-dnl  *  _CRAYT3E will be defined.  This is used to determine the
-dnl  *  ACE_SIZEOF defines for primitive types.
-dnl  *
-dnl  *  _UNICOS is defined as either the major version of UNICOS being run,
-dnl  *  e.g. 9 or 10 on the vector machines (e.g. C90, T90, J90, YMP, ...)
-dnl  *  or the major+minor+level UNICOS/mk version, e.g. 2.0.3 => 203,
-dnl  *  being run on an MPP machine.
-dnl  *
-dnl  *  Summary:
-dnl  *
-dnl  *  _CRAYMPP  (defined only if running on MPP machine, e.g. T3E, UNICOS/mk)
-dnl  *  _CRAYT3E  (defined specifically if compiling on a Cray T3E)
-dnl  *  _UNICOS   (defined if running UNICOS or UNICOS/mk)
-dnl  *
-dnl  *  Tested on UNICOS 10.0.0.2, UNICOS/mk 2.0.3.10
-dnl  *
-dnl  *  Contributed by Doug Anderson <doug "at" clark.net>
-dnl  */
-AH_TEMPLATE([_CRAYMPP],
-[defined only if running on MPP machine, e.g. T3E, UNICOS/mk])
-AH_TEMPLATE([_CRAYT3E],[defined specifically if compiling on a Cray T3E])
-AH_TEMPLATE([_UNICOS],[defined if running UNICOS or UNICOS/mk])
 
 dnl DG/UX specific configuration parameters
 AH_TEMPLATE([ACE_DGUX],[])
-AH_TEMPLATE([_DGUX_SOURCE],[])
-AH_TEMPLATE([_POSIX4A_DRAFT10_SOURCE],[])
-AH_TEMPLATE([_POSIX4_DRAFT_SOURCE],[])
 
 dnl FreeBSD specific configuration parameters
 dnl Nothing yet
@@ -138,16 +96,12 @@ dnl HP/UX specific configuration parameters
 AH_TEMPLATE([HPUX],[Configure for use on HP-UX])
 AH_TEMPLATE([HPUX_10],[Configure for use on HP-UX 10])
 AH_TEMPLATE([HPUX_11],[Configure for use on HP-UX 11])
-AH_TEMPLATE([_HPUX_SOURCE],[Enable HP-UX specific features in platform headers])
 AH_TEMPLATE([ACE_HAS_BROKEN_HPUX_TEMPLATES],
 [Earlier versions of HP/UX C++ are damned...])
 
 dnl Irix specific configuration parameters
 AH_TEMPLATE([IRIX5],[Configure for use on Irix 5])
 AH_TEMPLATE([IRIX6],[Configure for use on Irix 6])
-AH_TEMPLATE([_BSD_TYPES],[])
-AH_TEMPLATE([_SGI_MP_SOURCE],[])
-AH_TEMPLATE([_MODERN_C_],[Enable modern features in SGI C++ compiler])
 AH_TEMPLATE([ACE_HAS_IRIX62_THREADS],
 [Platform supports the very odd IRIX 6.2 threads...])
 
@@ -156,7 +110,6 @@ dnl Nothing yet */
 
 dnl LynxOS specific configuration parameters
 AH_TEMPLATE([__NO_INCLUDE_WARN__],[])
-AH_TEMPLATE([_POSIX_THREADS_CALLS],[])
 
 dnl M88K specific configuration parameters
 AH_TEMPLATE([m88k],[])
@@ -179,10 +132,6 @@ AH_TEMPLATE([ACE_PSOSTBD],[])
 
 dnl SCO specific configuration parameters
 AH_TEMPLATE([SCO],[])
-AH_TEMPLATE([_SVID3],[])
-
-dnl SunOS / Solaris specific configuration parameters
-AH_TEMPLATE([_RWSTD_NO_EXCEPTIONS],[])
 
 dnl Tandem specific configuration parameters
 dnl Nothing yet
@@ -191,6 +140,8 @@ dnl UnixWare specific configuration parameters
 AH_TEMPLATE([UNIXWARE],[Configure for use on UnixWare])
 AH_TEMPLATE([UNIXWARE_2_0],[])
 AH_TEMPLATE([UNIXWARE_2_1],[])
+AH_TEMPLATE([UNIXWARE_7_1],[])
+AH_TEMPLATE([__IOCTL_VERSIONED__],[])
 
 dnl VXWorks specific configuration parameters
 AH_TEMPLATE([VXWORKS],[Configure for use on VxWorks])
