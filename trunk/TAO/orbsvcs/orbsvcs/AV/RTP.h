@@ -34,21 +34,17 @@
  * SUCH DAMAGE.
  */
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS AVStreams
-//
-// = FILENAME
-//   RTP.h
-//
-// = AUTHOR
-//    Nagarajan Surendran <naga@cs.wustl.edu>
-//
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   RTP.h
+ *
+ *  $Id$
+ *
+ *  @author Nagarajan Surendran <naga@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_AV_RTP_H
 #define TAO_AV_RTP_H
@@ -141,7 +137,10 @@ class TAO_AV_RTP_State;
 // TAO_AV_RTP
 //------------------------------------------------------------
 
-
+/**
+ * @class TAO_AV_RTP
+ * @brief Encapsulate the Real Time Protocol (RTP) header format.
+ */
 class TAO_AV_RTP
 {
 public:
@@ -246,7 +245,10 @@ public:
 
 };
 
-
+/**
+ * @class TAO_AV_Protocol_Object
+ * @brief TAO_AV_Protocol_object for the RTP protocol
+ */
 class TAO_AV_RTP_Object : public TAO_AV_Protocol_Object
 {
 public:
@@ -278,17 +280,21 @@ protected:
   CORBA::ULong ssrc_;
   TAO_AV_Protocol_Object *control_object_;
 
+  /// Pre-allocated memory to receive the data...
   ACE_Message_Block frame_;
-  // Pre-allocated memory to receive the data...
 };
 
+/**
+ * @class TAO_AV_RTP_Flow_Factory
+ * @brief
+ */
 class TAO_AV_Export TAO_AV_RTP_Flow_Factory : public TAO_AV_Flow_Protocol_Factory
 {
 public:
+  /// Initialization hook.
   TAO_AV_RTP_Flow_Factory (void);
   virtual ~TAO_AV_RTP_Flow_Factory (void);
   virtual int init (int argc, char *argv[]);
-  // Initialization hook.
   virtual int match_protocol (const char *flow_string);
   virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                         TAO_Base_StreamEndPoint *endpoint,

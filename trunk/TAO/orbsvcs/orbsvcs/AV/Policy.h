@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS AVStreams
-//
-// = FILENAME
-//   Policy.h
-//
-// = AUTHOR
-//    Nagarajan Surendran <naga@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Policy.h
+ *
+ *  $Id$
+ *
+ *  @author Nagarajan Surendran <naga@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_AV_POLICY_H
 #define TAO_AV_POLICY_H
@@ -100,27 +97,30 @@ class TAO_AV_Protocol_Object;
 class TAO_AV_Transport;
 class TAO_AV_Flow_Handler;
 
+/**
+ * @class TAO_AV_Callback
+ *
+ * @brief Callback class that the user will be implementing for receiving
+ * frames from the network and also for timer events.
+ */
 class TAO_AV_Export TAO_AV_Callback
 {
-  // = TITLE
-  //     Callback class that the user will be implementing for receiving
-  //     frames from the network and also for timer events.
 public:
   TAO_AV_Callback (void);
   virtual ~TAO_AV_Callback (void);
 
+  /// Called for opening the callback.
   int open (TAO_AV_Protocol_Object *object,
             TAO_AV_Flow_Handler *handler);
-  // Called for opening the callback.
 
+  /// Called during Streamctrl->start.
   virtual int handle_start (void);
-  // Called during Streamctrl->start.
 
+  /// Called during Streamctrl->stop.
   virtual int handle_stop (void);
-  // Called during Streamctrl->stop.
 
+  /// Called during timeout for Flow Producers.
   virtual int handle_timeout (void *arg);
-  // Called during timeout for Flow Producers.
 
   virtual int schedule_timer (void);
 
@@ -130,24 +130,26 @@ public:
 
   // Called when a frame arrives for a FlowConsumer.
 
+  /// address from which the frame was received.
   virtual int receive_control_frame (ACE_Message_Block *frame,
                                      const ACE_Addr &address = ACE_Addr::sap_any);
-  // address from which the frame was received.
 
+  /// Called during Streamctrl->destroy i.e tear_down  of the stream
   virtual int handle_destroy (void);
-  // Called during Streamctrl->destroy i.e tear_down  of the stream
 
+  /**
+   * Called to get the timeout. If tv is 0 then the framework stop
+   * calling this. This will be called during the start of the frame
+   * and also if schedule_timer is called to get the timeout.
+   */
   virtual void get_timeout (ACE_Time_Value *&tv,
                             void *&arg);
-  // Called to get the timeout. If tv is 0 then the framework stop
-  // calling this. This will be called during the start of the frame
-  // and also if schedule_timer is called to get the timeout.
 
+  /// Accessor to protocol object.
   TAO_AV_Protocol_Object *protocol_object (void);
-  // Accessor to protocol object.
 
+  /// get the policies for the protocol object.
   virtual TAO_AV_PolicyList get_policies (void);
-  // get the policies for the protocol object.
 protected:
   TAO_AV_Protocol_Object *protocol_object_;
   TAO_AV_Flow_Handler *handler_;
