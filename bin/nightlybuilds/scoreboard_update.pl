@@ -204,6 +204,11 @@ sub load_web_dir ($)
     ### Request the web dir page
 
     my $ua = LWP::UserAgent->new;
+
+    ### We are impatient, so don't wait more than 10 seconds for a
+    ### response (the default was 180 seconds)
+    $ua->timeout(10);
+
     my $request = HTTP::Request->new('GET', $address);
     my $response = $ua->request($request);
 
@@ -307,6 +312,12 @@ sub update_cache ($)
     }
 
     foreach my $build (@builds) {
+        ### Check to see if we had problems.  If there is no latest time,
+        ### we had problems downloading.
+        if (!defined $build_latest_time{$build}) {
+            next;
+        }
+
         my $time = $build_latest_time{$build};
         my $oldtime = '';
         my $address = $build_list{$build} . "/" 
@@ -532,61 +543,76 @@ sub update_html ($$)
                      "<TH>Tests\n";
 
     foreach my $build (@builds) {
-        my $time = $build_latest_time{$build};
-
         mkpath "$dir/$build/pretty";
 
         print "    Looking at $build\n";
 
-        my $log = $dir . '/' . $build . '/' . $build . '_' . $time . ".txt";
+        if (defined $build_latest_time{$build}) {
+            my $time = $build_latest_time{$build};
 
-        my $webfile = "$build/pretty/$build" . "_$time";
-        my $newfile = "$dir/$webfile";
+            my $log = $dir . '/' . $build . '/' . $build . '_' . $time . ".txt";
 
-        $newfile =~ s/\//\\/g;
-        $log =~ s/\//\\/g;
+            my $webfile = "$build/pretty/$build" . "_$time";
+            my $newfile = "$dir/$webfile";
 
-        if (!-e $newfile.'.html') {
-            print "        Creating HTML for $time\n";
+            $newfile =~ s/\//\\/g;
+            $log =~ s/\//\\/g;
 
-            my $command = 'perl '.$script.' -c makefile < '.$log.' > '.
-                          $newfile.'.html';
+            if (!-e $newfile.'.html') {
+                print "        Creating HTML for $time\n";
 
-            system ($command);
+                my $command = 'perl '.$script.' -c makefile < '.$log.' > '.
+                              $newfile.'.html';
+
+                system ($command);
+            }
+
+            if (!-e $newfile.'_Brief.html') {
+                print "        Creating HTML Brief for $time\n";
+    
+                my $command = 'perl '.$script.' -b -c '
+                              .determine_type ($log).
+                              ' < '.$log.' > '.
+                              $newfile.'_Brief.html';
+
+                system ($command);
+            }
+
+            print $indexhtml '<TR><TD>';
+            print $indexhtml "<A HREF=\"".$build_web{$build} ."\">$build</A> ";
+            print $indexhtml '<TD bgcolor=';
+            print $indexhtml timestamp_color ($time);
+            print $indexhtml '>',decode_timestamp ($time);
+            print $indexhtml '<TD bgcolor=';
+            print $indexhtml get_color ($newfile.'_Brief.html', 'cvs');
+            print $indexhtml '>';
+            print $indexhtml "<A HREF=\"".$webfile.".html#cvs\">[Full]</A> ";
+            print $indexhtml "<A HREF=\"".$webfile."_Brief.html#cvs\">[Brief]</A>";
+            print $indexhtml '<TD bgcolor=';
+            print $indexhtml get_color ($newfile.'_Brief.html', 'compiler');
+            print $indexhtml '>';
+            print $indexhtml "<A HREF=\"".$webfile.".html#compiler\">[Full]</A> ";
+            print $indexhtml "<A HREF=\"".$webfile."_Brief.html#compiler\">[Brief]</A>";
+            print $indexhtml '<TD bgcolor=';
+            print $indexhtml get_color ($newfile.'_Brief.html', 'tests');
+            print $indexhtml '>';
+            print $indexhtml "<A HREF=\"".$webfile.".html#tests\">[Full]</A> ";
+            print $indexhtml "<A HREF=\"".$webfile."_Brief.html#tests\">[Brief]</A>";
+            print $indexhtml "\n";
+
         }
-
-        if (!-e $newfile.'_Brief.html') {
-            print "        Creating HTML Brief for $time\n";
-
-            my $command = 'perl '.$script.' -b -c '
-                          .determine_type ($log).
-                          ' < '.$log.' > '.
-                          $newfile.'_Brief.html';
-
-            system ($command);
+        else {
+            print $indexhtml '<TR><TD>';
+            print $indexhtml "<A HREF=\"".$build_web{$build} ."\">$build</A> ";
+            print $indexhtml '<TD bgcolor=gray>';
+            print $indexhtml '<TD bgcolor=gray>';
+            print $indexhtml "[Full] [Brief]";
+            print $indexhtml '<TD bgcolor=gray>';
+            print $indexhtml "[Full] [Brief]";
+            print $indexhtml '<TD bgcolor=gray>';
+            print $indexhtml "[Full] [Brief]";
+            print $indexhtml "\n";
         }
-
-        print $indexhtml '<TR><TD>';
-        print $indexhtml "<A HREF=\"".$build_web{$build} ."\">$build</A> ";
-        print $indexhtml '<TD bgcolor=';
-        print $indexhtml timestamp_color ($time);
-        print $indexhtml '>',decode_timestamp ($time);
-        print $indexhtml '<TD bgcolor=';
-        print $indexhtml get_color ($newfile.'_Brief.html', 'cvs');
-        print $indexhtml '>';
-        print $indexhtml "<A HREF=\"".$webfile.".html#cvs\">[Full]</A> ";
-        print $indexhtml "<A HREF=\"".$webfile."_Brief.html#cvs\">[Brief]</A>";
-        print $indexhtml '<TD bgcolor=';
-        print $indexhtml get_color ($newfile.'_Brief.html', 'compiler');
-        print $indexhtml '>';
-        print $indexhtml "<A HREF=\"".$webfile.".html#compiler\">[Full]</A> ";
-        print $indexhtml "<A HREF=\"".$webfile."_Brief.html#compiler\">[Brief]</A>";
-        print $indexhtml '<TD bgcolor=';
-        print $indexhtml get_color ($newfile.'_Brief.html', 'tests');
-        print $indexhtml '>';
-        print $indexhtml "<A HREF=\"".$webfile.".html#tests\">[Full]</A> ";
-        print $indexhtml "<A HREF=\"".$webfile."_Brief.html#tests\">[Brief]</A>";
-        print $indexhtml "\n";
 
         my @existing = glob ($dir . '/' . $build . '/pretty/' . $build . '_*.html');
 
