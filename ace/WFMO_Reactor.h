@@ -29,6 +29,7 @@
 #include "ace/Synch.h"
 #include "ace/Reactor_Impl.h"
 #include "ace/Message_Queue.h"
+#include "ace/Process_Mutex.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 // If we don't have WinSOCK2, we need these defined
@@ -614,7 +615,7 @@ public:
   virtual int timer_queue (ACE_Timer_Queue *tq);
   // Set a user-specified timer queue.
   virtual ACE_Timer_Queue *timer_queue (void) const;
-  // Return the current <ACE_Timer_Queue>. 
+  // Return the current <ACE_Timer_Queue>.
 
   virtual int close (void);
   // Close down the WFMO_Reactor and release all of its resources.

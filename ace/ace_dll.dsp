@@ -1095,6 +1095,25 @@ SOURCE=.\FILE_IO.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\File_Lock.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Filecache.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -2178,6 +2197,44 @@ SOURCE=.\Process_Manager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Process_Mutex.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Process_Semaphore.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Profile_Timer.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -2369,6 +2426,25 @@ SOURCE=.\Remote_Name_Space.cpp
 # Begin Source File
 
 SOURCE=.\Remote_Tokens.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RW_Process_Mutex.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
@@ -4179,6 +4255,10 @@ SOURCE=.\FILE_IO.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\File_Lock.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Filecache.h
 # End Source File
 # Begin Source File
@@ -4495,6 +4575,14 @@ SOURCE=.\Process_Manager.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Process_Mutex.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Process_Semaphore.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Profile_Timer.h
 # End Source File
 # Begin Source File
@@ -4552,6 +4640,10 @@ SOURCE=.\Remote_Name_Space.h
 # Begin Source File
 
 SOURCE=.\Remote_Tokens.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RW_Process_Mutex.h
 # End Source File
 # Begin Source File
 
@@ -5155,6 +5247,10 @@ SOURCE=.\FILE_IO.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\File_Lock.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Free_List.i
 # End Source File
 # Begin Source File
@@ -5387,6 +5483,14 @@ SOURCE=.\Process_Manager.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Process_Mutex.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Process_Semaphore.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Profile_Timer.i
 # End Source File
 # Begin Source File
@@ -5412,6 +5516,10 @@ SOURCE=.\Read_Buffer.i
 # Begin Source File
 
 SOURCE=.\Remote_Tokens.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RW_Process_Mutex.inl
 # End Source File
 # Begin Source File
 
