@@ -174,7 +174,7 @@ ACE_Mutex::dump (void) const
 
 ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name, ACE_mutexattr_t *arg)
   :
-#if defined (CHORUS)
+#if defined (CHORUS) || defined(ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
     process_lock_ (0),
     lockname_ (0),
 #endif /* CHORUS */
@@ -182,7 +182,8 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name, ACE_mutexattr_t *arg)
 {
   // ACE_TRACE ("ACE_Mutex::ACE_Mutex");
 
-#if defined(CHORUS)
+  // These platforms need process-wide mutex to be in shared memory.
+#if defined(CHORUS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_STHREADS)
   if (type == USYNC_PROCESS)
     {
       // Let's see if the shared memory entity already exists.

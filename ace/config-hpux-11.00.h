@@ -265,6 +265,9 @@
 // in the future (problem ID P64).
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 
+// Platform has shm_open
+#define ACE_HAS_SHM_OPEN
+
 // Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T
 

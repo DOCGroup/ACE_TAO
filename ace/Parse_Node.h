@@ -16,6 +16,7 @@
 #include "ace/pre.h"
 
 #include "ace/Service_Types.h"
+#include "ace/DLL.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -199,8 +200,7 @@ public:
   ACE_Location_Node (void);
   virtual void *symbol (ACE_Service_Object_Exterminator * = 0) = 0;
   virtual void set_symbol (void *h);
-  ACE_SHLIB_HANDLE handle (void) const;
-  void handle (const ACE_SHLIB_HANDLE h);
+  ACE_SHLIB_HANDLE handle (void);
   const ACE_TCHAR *pathname (void) const;
   void pathname (const ACE_TCHAR *h);
   int dispose (void) const;
@@ -214,7 +214,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  ACE_SHLIB_HANDLE open_handle (void);
+  int open_dll (void);
 
   /// Pathname to the shared library we are working on.
   const ACE_TCHAR *pathname_;
@@ -226,8 +226,8 @@ protected:
    */
   int must_delete_;
 
-  /// Handle to the open shared library.
-  ACE_SHLIB_HANDLE handle_;
+  /// The open shared library.
+  ACE_DLL dll_;
 
   /// Symbol that we've obtained from the shared library.
   void *symbol_;

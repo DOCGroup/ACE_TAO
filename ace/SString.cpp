@@ -378,7 +378,7 @@ ACE_CString::substring (size_t offset,
   else if (length == 0)
     return nil;
   // Get all remaining bytes.
-  else if (length == -1)
+  else if (length == -1 || count > (this->len_ - offset))
     count = this->len_ - offset;
 
   return ACE_CString (&this->rep_[offset],
