@@ -1,6 +1,6 @@
 /* C code produced by gperf version 2.5 (GNU C++ version) */
 /* Command-line: ../src/gperf -p -j1 -g -o -t -N is_reserved_word -k1,3,$  */
-/* Command-line: gperf -a -p -j1 -i 1 -g -o -t -N is_reserved_word -k1,3,$ c-parse.gperf  */ 
+/* Command-line: gperf -p -j1 -i 1 -g -o -t -N is_reserved_word -k1,3,$ c-parse.gperf  */ 
 struct resword { char *name; short token; enum rid rid; };
 
 #define TOTAL_KEYWORDS 51
@@ -10,11 +10,10 @@ struct resword { char *name; short token; enum rid rid; };
 #define MAX_HASH_VALUE 82
 /* maximum key range = 75, duplicates = 0 */
 
-#ifdef __GNUC__
-inline
-#endif
 static unsigned int
-hash (char *str, unsigned int len)
+hash (str, len)
+     char *str;
+     int unsigned len;
 {
   static unsigned char asso_values[] =
     {
@@ -47,11 +46,10 @@ hash (char *str, unsigned int len)
   return hval + asso_values[str[len - 1]];
 }
 
-#ifdef __GNUC__
-inline
-#endif
 struct resword *
-is_reserved_word (char *str, unsigned int len)
+is_reserved_word (str, len)
+     char *str;
+     unsigned int len;
 {
   static struct resword wordlist[] =
     {
