@@ -1,3 +1,10 @@
+Mon Jun 14 21:41:40 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ace/Connector.h: Added a comment to clarify that if
+ 	  Connector::connect() fails the close() hook of the Svc_Handler
+ 	  is called to prevent resource leaks.  Thanks to V. Lakshmanan
+ 	  <lakshman@doplight.nssl.noaa.gov> for motivating this.
+
 Mon Jun 14 20:54:09 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Synch.cpp: Declared template definitions for
