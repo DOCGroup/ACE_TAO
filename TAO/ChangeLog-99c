@@ -1,6 +1,12 @@
+Mon Sep  6 16:41:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp: Also
+	  removed a redundant template instantiation for
+	  TAO_Bindings_Iterator<BLAH,BLAH,BLAH,<.....>>.
+
 Mon Sep  6 15:06:52 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
 	Fixed warnings on HP-UX
 
 Mon Sep  6 13:32:30 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
