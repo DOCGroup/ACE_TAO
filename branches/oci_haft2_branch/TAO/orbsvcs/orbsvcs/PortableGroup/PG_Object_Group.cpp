@@ -20,8 +20,8 @@ TAO::PG_Object_Group::MemberInfo::MemberInfo (
     CORBA::Object_ptr member,
     const PortableGroup::Location & location)
   : member_ (CORBA::Object::_duplicate (member))
-  , location_ (location)
   , factory_(PortableGroup::GenericFactory::_nil())
+  , location_ (location)
   , is_primary_ (0)
 {
 }
@@ -41,7 +41,7 @@ TAO::PG_Object_Group::MemberInfo::MemberInfo (
 
 TAO::PG_Object_Group::MemberInfo::~MemberInfo ()
 {
-  if( ! CORBA::is_nil (factory_))
+  if( ! CORBA::is_nil (factory_.in()))
   {
     ACE_TRY_NEW_ENV
     {
@@ -56,17 +56,6 @@ TAO::PG_Object_Group::MemberInfo::~MemberInfo ()
   }
 }
 
-/*
-TAO::PG_Object_Group::PG_Object_Group ()
-    : role_ ("")
-    , type_id_ ("")
-    , group_id_( 0)
-    , reference_ (0)
-    , primary_location_(0)
-    , properties_ (0)
-{
-}
-*/
 
 TAO::PG_Object_Group::PG_Object_Group (
   CORBA::ORB_ptr orb,
@@ -134,7 +123,7 @@ void TAO::PG_Object_Group::set_reference (
       // TAO_Perfect_Hash_OpTable:find for operation 'tao_update_object_group' (length=23) failed
       // back to using _narrow
       PortableGroup::TAO_UpdateObjectGroup_var uog = PortableGroup::TAO_UpdateObjectGroup::_narrow ( info->member_);
-      if (! CORBA::is_nil (uog) )
+      if (! CORBA::is_nil (uog.in ()) )
       {
         ACE_TRY_NEW_ENV
         {
@@ -342,8 +331,8 @@ void TAO::PG_Object_Group::set_properties_dynamically (
                    PortableGroup::UnsupportedProperty))
 {
   this->properties_ = overrides;
-  int todo_parse_properties_for_special_value;
-  int todo_override_rather_than_replace_question;
+  //@@  int todo_parse_properties_for_special_value;
+  //@@ int todo_override_rather_than_replace_question;
 }
 
 void TAO::PG_Object_Group::get_properties (PortableGroup::Properties_var & result) const

@@ -29,7 +29,7 @@ namespace TAO_PG
     ~Properties_Decoder ();
 
     // general purpose method
-    int find (const ACE_CString & key, PortableGroup::Value *& pValue)const;
+    int find (const ACE_CString & key, const PortableGroup::Value *& pValue)const;
 
     // if templated methods were available:
     // template <typename TYPE >
