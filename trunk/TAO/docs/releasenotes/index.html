@@ -949,7 +949,7 @@ encounter an object whose interface was not known when the program was
 compiled, yet, be able to determine what operations are valid on the
 object and make invocations on it using the DII.
 
-<p>Current Status (as of August 27, 2000):
+<p>Current Status (as of February 19, 2001):
 <ul>
 
 <LI><P>First pass implementing the new Dynamic Any interfaces.
@@ -970,6 +970,18 @@ resolve_initial_references ("InterfaceRespository") completed.</li><p>
 <li> Read/write locking option added.</li><p>
 
 <li> Persistent IFR tested.</li><p>
+
+<li> tao_ifr executable implemented, which will process IDL files, either
+adding or subtracting their contents from the IFR. Test for this capability
+also added.</li><p>
+
+<li> Build of IFR and associated tests disabled for GCC compilers before version
+2.8, SunCC compiler version 4.2 and for all builds on Lynx OS. We currently have
+two builds on Lynx OS. One uses the Intel 86386 chip, and the compiler is GCC 2.7.2,
+so the build is disabled for the reason given above for older versions of GCC. The
+other Lynx OS build is on a PowerPC chip, and uses GCC version 2.9-gnupro-98r2. There 
+are currently configuration problems with this build, and ACE_HAS_USING_KEYWORD, which
+is necessary for namespace recognition by the preprocessor, is not defined.</li><p>
 
 </ul>
 
@@ -1021,6 +1033,14 @@ chooses the thread-per-request threading model.</li><p>
 
 <li> A test of the persistence option for the IFR added in the directory
 ACE_wrappers/TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test.</li><p>
+
+<li> Executable to add or subtract the contents of an IDL file to/from the
+IFR, has been added. This executable uses the TAO IDL compiler front end library,
+with a new back end library and top level executable. An application-style test has
+also been added wherein a server is started, the IFR started, the contents of the IDL
+file added to the IFR, a client started, which discovers information about a desired
+operation by searching the IFR, and a DII request constructed from this information.
+</li><p>
 
 </ul>
 
