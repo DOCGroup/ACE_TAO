@@ -141,7 +141,7 @@ main (int argc, char *argv[])
 
       if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
         {
-          ACE_ERROR ((LM_ERROR, "Error activating server task\n"));
+          ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
         }
 
       ACE_Thread_Manager::instance ()->wait ();

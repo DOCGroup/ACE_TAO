@@ -136,7 +136,7 @@ main (int argc, char *argv[])
         }
       else
         ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+                    "client (%P|%t): sched_params failed\n"));
     }
 
   ACE_TRY_NEW_ENV
