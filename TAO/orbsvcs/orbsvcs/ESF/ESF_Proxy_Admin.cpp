@@ -13,40 +13,40 @@
 
 ACE_RCSID(ESF, ESF_Proxy_Admin, "$Id$")
 
-template<class EC, class P>
-TAO_ESF_Proxy_Admin<EC,P>::TAO_ESF_Proxy_Admin (EC *ec)
+template<class EC, class P,class I>
+TAO_ESF_Proxy_Admin<EC,P,I>::TAO_ESF_Proxy_Admin (EC *ec)
   :  event_channel_ (ec)
 {
   this->event_channel_->create_proxy_collection (this->collection_);
 }
 
-template<class EC, class P>
-TAO_ESF_Proxy_Admin<EC,P>::~TAO_ESF_Proxy_Admin (void)
+template<class EC, class P,class I>
+TAO_ESF_Proxy_Admin<EC,P,I>::~TAO_ESF_Proxy_Admin (void)
 {
   this->event_channel_->destroy_proxy_collection (this->collection_);
 }
 
-template<class EC, class PROXY> ACE_TYPENAME PROXY::_ptr_type
-TAO_ESF_Proxy_Admin<EC,PROXY>::obtain (CORBA::Environment &ACE_TRY_ENV)
+template<class EC, class P,class I> I*
+TAO_ESF_Proxy_Admin<EC,P,I>::obtain (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
-  PROXY* proxy;
+  P* proxy;
   this->event_channel_->create_proxy (proxy);
 
   PortableServer::ServantBase_var holder = proxy;
 
-  ACE_TYPENAME PROXY::_var_type result =
+  ACE_TYPENAME P::_var_type result =
     proxy->activate (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PROXY::Interface::_nil ());
+  ACE_CHECK_RETURN (I::_nil ());
 
   this->collection_->connected (proxy, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PROXY::Interface::_nil ());
+  ACE_CHECK_RETURN (I::_nil ());
 
   return result._retn ();
 }
 
-template<class EC, class P> void
-TAO_ESF_Proxy_Admin<EC,P>::shutdown (CORBA::Environment &ACE_TRY_ENV)
+template<class EC, class P,class I> void
+TAO_ESF_Proxy_Admin<EC,P,I>::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
   TAO_ESF_Shutdown_Proxy<P> worker;
@@ -57,23 +57,23 @@ TAO_ESF_Proxy_Admin<EC,P>::shutdown (CORBA::Environment &ACE_TRY_ENV)
   this->collection_->shutdown (ACE_TRY_ENV);
 }
 
-template<class EC, class P> void
-TAO_ESF_Proxy_Admin<EC,P>::connected (P *,
+template<class EC, class P,class I> void
+TAO_ESF_Proxy_Admin<EC,P,I>::connected (P *,
                                       CORBA::Environment &)
   ACE_THROW_SPEC (())
 {
 }
 
-template<class EC, class P> void
-TAO_ESF_Proxy_Admin<EC,P>::reconnected (P *proxy,
+template<class EC, class P,class I> void
+TAO_ESF_Proxy_Admin<EC,P,I>::reconnected (P *proxy,
                                         CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
   this->collection_->reconnected (proxy, ACE_TRY_ENV);
 }
 
-template<class EC, class P> void
-TAO_ESF_Proxy_Admin<EC,P>::disconnected (P *proxy,
+template<class EC, class P,class I> void
+TAO_ESF_Proxy_Admin<EC,P,I>::disconnected (P *proxy,
                                          CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {

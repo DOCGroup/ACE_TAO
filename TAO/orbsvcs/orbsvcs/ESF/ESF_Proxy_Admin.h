@@ -27,7 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template<class EVENT_CHANNEL, class PROXY>
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE>
 class TAO_ESF_Proxy_Admin
 {
   // = TITLE
@@ -74,7 +74,12 @@ public:
       ACE_THROW_SPEC (());
   // Iterate over its internal collection.
 
-  virtual ACE_TYPENAME PROXY::_ptr_type
+  // @@ We should use INTERFACE::_ptr_type or PROXY::_ptr_type, but
+  // the MSVC compiler (v6.0) gets confused when we do so.  So we have
+  // to choose for the lesser evil.  The code works because TAO uses
+  // pointers to implement the _ptr types, and that is OK because this
+  // code is supposed to run under TAO only.
+  virtual INTERFACE*
       obtain (CORBA::Environment &)
           ACE_THROW_SPEC (());
   // Create a new PROXY and activate it.

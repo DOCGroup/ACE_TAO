@@ -6,7 +6,7 @@
 #include "ESF_Delayed_Changes.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ESF_Proxy_Collection.i"
+#include "ESF_Delayed_Changes.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ESF_Defaults.h"

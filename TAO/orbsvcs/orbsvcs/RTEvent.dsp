@@ -43,7 +43,8 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RTEvent_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_RTEVENT_BUILD_DLL" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_RTEVENT_BUILD_DLL" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -69,7 +70,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RTEvent_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_RTEVENT_BUILD_DLL" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_RTEVENT_BUILD_DLL" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -117,14 +119,6 @@ SOURCE=.\Event\EC_Bitmask_Filter.cpp
 # Begin Source File
 
 SOURCE=.\Event\EC_Busy_Lock.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Command.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Concrete_Proxy_Set.cpp
 # End Source File
 # Begin Source File
 
@@ -220,10 +214,6 @@ SOURCE=.\Event\EC_Priority_Scheduling.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Proxy_Collection.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_ProxyConsumer.cpp
 # End Source File
 # Begin Source File
@@ -293,10 +283,6 @@ SOURCE=.\Event\EC_Type_Filter.cpp
 # Begin Source File
 
 SOURCE=.\Event\EC_UDP_Admin.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Worker.cpp
 # End Source File
 # Begin Source File
 
@@ -408,14 +394,6 @@ SOURCE=.\Event\EC_Busy_Lock.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Command.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Concrete_Proxy_Set.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_Conjunction_Filter.h
 # End Source File
 # Begin Source File
@@ -512,10 +490,6 @@ SOURCE=.\Event\EC_Priority_Scheduling.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Proxy_Collection.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_ProxyConsumer.h
 # End Source File
 # Begin Source File
@@ -585,10 +559,6 @@ SOURCE=.\Event\EC_Type_Filter.h
 # Begin Source File
 
 SOURCE=.\Event\EC_UDP_Admin.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Worker.h
 # End Source File
 # Begin Source File
 
@@ -1060,14 +1030,6 @@ SOURCE=.\Event\EC_Busy_Lock.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Command.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Concrete_Proxy_Set.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_Conjunction_Filter.i
 # End Source File
 # Begin Source File
@@ -1156,10 +1118,6 @@ SOURCE=.\Event\EC_Priority_Scheduling.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Proxy_Collection.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_ProxyConsumer.i
 # End Source File
 # Begin Source File
@@ -1225,10 +1183,6 @@ SOURCE=.\Event\EC_Trivial_Supplier_Filter.i
 # Begin Source File
 
 SOURCE=.\Event\EC_Type_Filter.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Worker.i
 # End Source File
 # Begin Source File
 

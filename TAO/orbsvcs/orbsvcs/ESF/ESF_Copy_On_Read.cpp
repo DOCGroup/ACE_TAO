@@ -6,7 +6,7 @@
 #include "ESF_Copy_On_Read.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ESF_Proxy_Collection.i"
+#include "ESF_Copy_On_Read.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ESF_Worker.h"
@@ -79,4 +79,3 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
 }
 
 #endif /* TAO_ESF_COPY_ON_READ_CPP */
-

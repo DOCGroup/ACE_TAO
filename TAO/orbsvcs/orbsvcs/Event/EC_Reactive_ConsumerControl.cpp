@@ -4,6 +4,7 @@
 #include "EC_Event_Channel.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_ProxySupplier.h"
+#include "EC_ProxyConsumer.h" // @@ MSVC 6 bug
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Reactive_ConsumerControl.i"

@@ -61,7 +61,7 @@ class TAO_RTEvent_Export TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelA
   //   externally.
   //
 public:
-  typedef RtecEventChannelAdmin::ProxyPushConsumer_ptr _ptr_type;
+  typedef RtecEventChannelAdmin::ProxyPushConsumer Interface;
   typedef RtecEventChannelAdmin::ProxyPushConsumer_var _var_type;
 
   TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel* event_channel);

@@ -106,21 +106,21 @@ TAO_CEC_SupplierAdmin::obtain_pull_consumer (CORBA::Environment &ACE_TRY_ENV)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushConsumer>;
+template class TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushConsumer,CosEventChannelAdmin::ProxyPushConsumer>;
 template class TAO_ESF_Shutdown_Proxy<TAO_CEC_ProxyPushConsumer>;
 template class TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer>;
 
-template class TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullConsumer>;
+template class TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullConsumer,CosEventChannelAdmin::ProxyPullConsumer>;
 template class TAO_ESF_Shutdown_Proxy<TAO_CEC_ProxyPullConsumer>;
 template class TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushConsumer>
+#pragma instantiate TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushConsumer,CosEventChannelAdmin::ProxyPushConsumer>
 #pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_CEC_ProxyPushConsumer>
 #pragma instantiate TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer>
 
-#pragma instantiate TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullConsumer>
+#pragma instantiate TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullConsumer,CosEventChannelAdmin::ProxyPullConsumer>
 #pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_CEC_ProxyPullConsumer>
 #pragma instantiate TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer>
 

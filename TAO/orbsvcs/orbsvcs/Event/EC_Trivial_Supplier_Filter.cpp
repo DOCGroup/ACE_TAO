@@ -5,6 +5,7 @@
 #include "EC_ConsumerAdmin.h"
 #include "EC_ProxySupplier.h"
 #include "EC_QOS_Info.h"
+#include "EC_ProxyConsumer.h" // @@ MSVC 6 bug
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Trivial_Supplier_Filter.i"
