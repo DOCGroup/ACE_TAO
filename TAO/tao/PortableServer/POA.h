@@ -244,27 +244,27 @@ public:
 
   /// Call the establish components.
   void tao_establish_components (TAO_ENV_SINGLE_ARG_DECL);
-  
+
   /// Give each registered IOR interceptor the opportunity to add
   /// tagged components to profiles of each created servant.
   void establish_components (PortableInterceptor::IORInfo *info
                              TAO_ENV_ARG_DECL);
-  
+
   /// TAO_IORInfo requests these members.
   CORBA::PolicyList *get_policy_list ();
-  
+
   TAO_MProfile *get_mprofile ();
 
   void
   save_ior_component (const IOP::TaggedComponent &component
                       TAO_ENV_ARG_DECL);
 
-  void 
+  void
   save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
                                      IOP::ProfileId profile_id
                                      TAO_ENV_ARG_DECL);
 
-  
+
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::AdapterActivator_ptr the_activator (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -366,7 +366,9 @@ public:
   CORBA::OctetSeq *id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   // Methods added by the MIOP specification.
+
   virtual PortableServer::ObjectId * create_id_for_reference (
       CORBA::Object_ptr the_ref
       TAO_ENV_ARG_DECL_WITH_DEFAULTS
@@ -407,6 +409,7 @@ public:
     ));
 
   // End methods added by MIOP.
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 
   /// Accessor for POA policies.
@@ -554,7 +557,7 @@ protected:
   void adapter_state_changed (
    const PortableInterceptor::ObjectReferenceTemplateSeq *seq_obj_ref_template,
    PortableInterceptor::AdapterState state);
-  
+
   void set_policy_list (CORBA::PolicyList *policy_list);
   void set_mprofile (TAO_MProfile *mp);
 
@@ -819,9 +822,9 @@ protected:
   CORBA::PolicyList *policy_list_;
 
   TAO_MProfile *mprofile_;
-  
+
   IOP::TaggedComponent tagged_component_;
-  
+
   IOP::ProfileId profile_id_;
 
   CORBA::Boolean add_component_support_;
@@ -894,7 +897,7 @@ protected:
   TAO_SYNCH_CONDITION outstanding_requests_condition_;
 
   CORBA::Boolean wait_for_completion_pending_;
-  
+
   CORBA::Boolean waiting_destruction_;
 
   TAO_SYNCH_CONDITION servant_deactivation_condition_;
@@ -904,7 +907,7 @@ protected:
   TAO_SYNCH_RECURSIVE_MUTEX *single_threaded_lock_;
 
   CORBA::ULong caller_key_to_object_;
-  
+
   PortableServer::Servant servant_for_key_to_object_;
 };
 

@@ -36,8 +36,7 @@ ifndef TAO_ORBSVCS
                 Concurrency \
 		Trader \
 		Log \
-		AV \
-		PortableGroup
+		AV
 
   ifeq ($(minimum_corba),0)
 
@@ -58,6 +57,10 @@ ifndef TAO_ORBSVCS
     # The Load Balancer requires POA ServantLocator support, which
     # Minimum CORBA disables.
     TAO_ORBSVCS += LoadBalancing
+
+    # The PortableGroup library requires several methods on the POA,
+    # which are disabled by Minimum CORBA.
+    TAO_ORBSVCS += PortableGroup
 
   endif # minimum_corba
 

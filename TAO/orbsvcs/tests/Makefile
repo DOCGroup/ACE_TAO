@@ -30,7 +30,8 @@ DIRS = \
   LoadBalancing \
   ior_corbaname \
   tests_svc_loader \
-  Security
+  Security \
+  Miop
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

@@ -4036,6 +4036,8 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa
         CORBA::COMPLETED_NO));
 }
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 PortableServer::ObjectId *
 TAO_POA::create_id_for_reference (CORBA::Object_ptr the_ref
                                   TAO_ENV_ARG_DECL)
@@ -4116,6 +4118,8 @@ TAO_POA::disassociate_reference_with_id (CORBA::Object_ptr ref,
   hooks->disassociate_reference_with_id (*this, ref, oid TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

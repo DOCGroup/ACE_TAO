@@ -37,6 +37,8 @@ public:
   /// Destructor.
   virtual ~TAO_POA_PortableGroup_Hooks (void);
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
   virtual PortableServer::ObjectId * create_id_for_reference (
       TAO_POA &the_poa,
       CORBA::Object_ptr the_ref
@@ -78,6 +80,8 @@ public:
       CORBA::SystemException,
       PortableServer::NotAGroupObject
     )) = 0;
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 };
 
 

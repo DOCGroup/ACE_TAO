@@ -76,39 +76,39 @@ TAO_NAMESPACE  PortableServer
   typedef TAO_DynamicImplementation DynamicImplementation;
 
   class POA;
-  
+
 #if !defined (_PORTABLESERVER_POA___PTR_CH_)
 #define _PORTABLESERVER_POA___PTR_CH_
-  
+
   typedef POA *POA_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_POA___VAR_CH_)
 #define _PORTABLESERVER_POA___VAR_CH_
-  
+
   class TAO_PortableServer_Export POA_var : public TAO_Base_var
   {
   public:
     POA_var (void); // default constructor
-    POA_var (POA_ptr p) : ptr_ (p) {} 
+    POA_var (POA_ptr p) : ptr_ (p) {}
     POA_var (const POA_var &); // copy constructor
     ~POA_var (void); // destructor
-    
+
     POA_var &operator= (POA_ptr);
     POA_var &operator= (const POA_var &);
     POA_ptr operator-> (void) const;
-    
+
     operator const POA_ptr &() const;
     operator POA_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     POA_ptr in (void) const;
     POA_ptr &inout (void);
     POA_ptr &out (void);
     POA_ptr _retn (void);
     POA_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static POA_ptr tao_duplicate (POA_ptr);
@@ -119,7 +119,7 @@ TAO_NAMESPACE  PortableServer
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     POA_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -129,11 +129,11 @@ TAO_NAMESPACE  PortableServer
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_POA___OUT_CH_)
 #define _PORTABLESERVER_POA___OUT_CH_
-  
+
   class TAO_PortableServer_Export POA_out
   {
   public:
@@ -146,20 +146,20 @@ TAO_NAMESPACE  PortableServer
     operator POA_ptr &();
     POA_ptr &ptr (void);
     POA_ptr operator-> (void);
-  
+
   private:
     POA_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_PORTABLESERVER_POALIST_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_PORTABLESERVER_POALIST_CH_
-  
+
   class TAO_EXPORT_MACRO _TAO_Unbounded_Object_Sequence_PortableServer_POAList
     : public TAO_Unbounded_Base_Sequence
   {
@@ -180,14 +180,14 @@ TAO_NAMESPACE  PortableServer
         const _TAO_Unbounded_Object_Sequence_PortableServer_POAList &rhs
       );
     virtual ~_TAO_Unbounded_Object_Sequence_PortableServer_POAList (void);
-    
+
     // = Accessors.
     TAO_Object_Manager<PortableServer::POA,PortableServer::POA_var> operator[] (CORBA::ULong index) const;
-    
+
     // = Static operations.
     static POA **allocbuf (CORBA::ULong nelems);
     static void freebuf (POA **buffer);
-    
+
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
@@ -197,7 +197,7 @@ TAO_NAMESPACE  PortableServer
         CORBA::ULong nl,
         CORBA::ULong ol
       );
-    
+
     virtual void _downcast (
         void* target,
         CORBA_Object *src
@@ -205,59 +205,59 @@ TAO_NAMESPACE  PortableServer
       );
     virtual CORBA_Object* _upcast (void *src) const;
   };
-  
+
 #endif /* end #if !defined */
-  
-  
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
 #if !defined (_PORTABLESERVER_POALIST_CH_)
 #define _PORTABLESERVER_POALIST_CH_
-  
+
   class POAList;
   class POAList_var;
-  
+
   // *************************************************************
   // POAList
   // *************************************************************
-  
-  class TAO_PortableServer_Export POAList : public 
+
+  class TAO_PortableServer_Export POAList : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_PortableServer_POAList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<POA,POA_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     POAList (void); // default ctor
     POAList (CORBA::ULong max); // uses max size
     POAList (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        POA_ptr *buffer, 
+        CORBA::ULong max,
+        CORBA::ULong length,
+        POA_ptr *buffer,
         CORBA::Boolean release = 0
       );
     POAList (const POAList &); // copy ctor
     ~POAList (void);
     static void _tao_any_destructor (void*);
-    
+
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef POAList_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    
+
+
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_POALIST___VAR_CH_)
 #define _PORTABLESERVER_POALIST___VAR_CH_
-  
+
   // *************************************************************
   // class PortableServer::POAList_var
   // *************************************************************
-  
+
   class TAO_PortableServer_Export POAList_var
   {
   public:
@@ -265,37 +265,37 @@ TAO_NAMESPACE  PortableServer
     POAList_var (POAList *);
     POAList_var (const POAList_var &);
     ~POAList_var (void);
-    
+
     POAList_var &operator= (POAList *);
     POAList_var &operator= (const POAList_var &);
     POAList *operator-> (void);
     const POAList *operator-> (void) const;
-    
+
     operator const POAList &() const;
     operator POAList &();
     operator POAList &() const;
     operator POAList *&(); // variable-size base types only
-    
+
     TAO_Object_Manager<POA, POA_var> operator[] (CORBA::ULong index);
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const POAList &in (void) const;
     POAList &inout (void);
     POAList *&out (void);
     POAList *_retn (void);
     POAList *ptr (void) const;
-  
+
   private:
     POAList *ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_POALIST___OUT_CH_)
 #define _PORTABLESERVER_POALIST___OUT_CH_
-  
+
   class TAO_PortableServer_Export POAList_out
   {
   public:
@@ -308,52 +308,52 @@ TAO_NAMESPACE  PortableServer
     POAList *&ptr (void);
     POAList *operator-> (void);
     TAO_Object_Manager<POA, POA_var> operator[] (CORBA::ULong index);
-  
+
   private:
     POAList *&ptr_;
     // Assignment from T_var not allowed.
     void operator= (const POAList_var &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_OBJECTID_CH_)
 #define _PORTABLESERVER_OBJECTID_CH_
-  
+
   class ObjectId;
   class ObjectId_var;
-  
+
   // *************************************************************
   // ObjectId
   // *************************************************************
-  
-  class TAO_PortableServer_Export ObjectId : public 
+
+  class TAO_PortableServer_Export ObjectId : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     ObjectId (void); // default ctor
     ObjectId (CORBA::ULong max); // uses max size
     ObjectId (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        CORBA::Octet *buffer, 
+        CORBA::ULong max,
+        CORBA::ULong length,
+        CORBA::Octet *buffer,
         CORBA::Boolean release = 0
       );
     ObjectId (const ObjectId &); // copy ctor
     ~ObjectId (void);
     static void _tao_any_destructor (void*);
-    
+
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef ObjectId_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    
+
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     ObjectId (
         CORBA::ULong length,
@@ -361,19 +361,19 @@ TAO_NAMESPACE  PortableServer
       )
       : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
-    
+
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_OBJECTID___VAR_CH_)
 #define _PORTABLESERVER_OBJECTID___VAR_CH_
-  
+
   // *************************************************************
   // class PortableServer::ObjectId_var
   // *************************************************************
-  
+
   class TAO_PortableServer_Export ObjectId_var
   {
   public:
@@ -383,39 +383,39 @@ TAO_NAMESPACE  PortableServer
     // Fixed-size base types only.
     ObjectId_var (const ObjectId &);
     ~ObjectId_var (void);
-    
+
     ObjectId_var &operator= (ObjectId *);
     ObjectId_var &operator= (const ObjectId_var &);
     // Fixed-size base types only.
     ObjectId_var &operator= (const ObjectId &);
     ObjectId *operator-> (void);
     const ObjectId *operator-> (void) const;
-    
+
     operator const ObjectId &() const;
     operator ObjectId &();
     operator ObjectId &() const;
-    
+
     CORBA::Octet & operator[] (CORBA::ULong index);
     const CORBA::Octet & operator[] (CORBA::ULong index) const;
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const ObjectId &in (void) const;
     ObjectId &inout (void);
     ObjectId *&out (void);
     ObjectId *_retn (void);
     ObjectId *ptr (void) const;
-  
+
   private:
     ObjectId *ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_OBJECTID___OUT_CH_)
 #define _PORTABLESERVER_OBJECTID___OUT_CH_
-  
+
   class TAO_PortableServer_Export ObjectId_out
   {
   public:
@@ -428,102 +428,105 @@ TAO_NAMESPACE  PortableServer
     ObjectId *&ptr (void);
     ObjectId *operator-> (void);
     CORBA::Octet & operator[] (CORBA::ULong index);
-  
+
   private:
     ObjectId *&ptr_;
     // Assignment from T_var not allowed.
     void operator= (const ObjectId_var &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectId;
-  
+
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  
+
 #if !defined (_PORTABLESERVER_FORWARDREQUEST_CH_)
 #define _PORTABLESERVER_FORWARDREQUEST_CH_
-  
+
   class TAO_PortableServer_Export ForwardRequest : public CORBA::UserException
   {
   public:
     CORBA::Object_var forward_reference;
-    
+
     ForwardRequest (void);
     // Default constructor.
-    
+
     ForwardRequest (const ForwardRequest &);
     // Copy constructor.
-    
+
     ~ForwardRequest (void);
     // Destructor.
-    
+
     static void _tao_any_destructor (void*);
-    
+
     ForwardRequest &operator= (const ForwardRequest &);
-    
+
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &
         TAO_ENV_ARG_DECL_NOT_USED
       ) const;
-    
+
     virtual void _tao_decode (
         TAO_InputCDR &
         TAO_ENV_ARG_DECL_NOT_USED
       );
-    
+
     static ForwardRequest *_downcast (CORBA::Exception *);
 
     ForwardRequest (
         const CORBA::Object_ptr  _tao_forward_reference
       );
-    
+
     // = TAO extension.
     static CORBA::Exception *_alloc (void);
     virtual CORBA::TypeCode_ptr _type (void) const;
   }; // Exception PortableServer::ForwardRequest.
 
 TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ForwardRequest;
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 #if !defined (_PORTABLESERVER_NOTAGROUPOBJECT_CH_)
 #define _PORTABLESERVER_NOTAGROUPOBJECT_CH_
-  
+
   class TAO_PortableServer_Export NotAGroupObject : public CORBA::UserException
   {
   public:
-    
+
     NotAGroupObject (void);
     // Default constructor.
-    
+
     NotAGroupObject (const NotAGroupObject &);
     // Copy constructor.
-    
+
     ~NotAGroupObject (void);
     // Destructor.
-    
+
     static void _tao_any_destructor (void*);
-    
+
     NotAGroupObject &operator= (const NotAGroupObject &);
-    
+
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &
         TAO_ENV_ARG_DECL_NOT_USED
       ) const;
-    
+
     virtual void _tao_decode (
         TAO_InputCDR &
         TAO_ENV_ARG_DECL_NOT_USED
       );
-    
+
     static NotAGroupObject *_downcast (CORBA::Exception *);
 
 
@@ -533,23 +536,23 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ForwardRequest;
   }; // Exception PortableServer::NotAGroupObject.
 
 TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_PORTABLESERVER_IDS_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_PORTABLESERVER_IDS_CH_
-  
+
   class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_PortableServer_IDs
     : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
     _TAO_Unbounded_Sequence_PortableServer_IDs (void);
-    _TAO_Unbounded_Sequence_PortableServer_IDs (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_PortableServer_IDs (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_PortableServer_IDs (
         CORBA::ULong maximum,
         CORBA::ULong length,
@@ -563,15 +566,15 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         const _TAO_Unbounded_Sequence_PortableServer_IDs &rhs
       );
     virtual ~_TAO_Unbounded_Sequence_PortableServer_IDs (void);
-    
+
     // = Accessors.
     ObjectId &operator[] (CORBA::ULong i);
     const ObjectId &operator[] (CORBA::ULong i) const;
-    
+
     // = Static operations.
     static ObjectId *allocbuf (CORBA::ULong size);
     static void freebuf (ObjectId *buffer);
-    
+
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
@@ -584,59 +587,59 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::Boolean release
       );
   };
-  
+
 #endif /* end #if !defined */
-  
-  
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
 #if !defined (_PORTABLESERVER_IDS_CH_)
 #define _PORTABLESERVER_IDS_CH_
-  
+
   class IDs;
   class IDs_var;
-  
+
   // *************************************************************
   // IDs
   // *************************************************************
-  
-  class TAO_PortableServer_Export IDs : public 
+
+  class TAO_PortableServer_Export IDs : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_PortableServer_IDs
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<ObjectId>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     IDs (void); // default ctor
     IDs (CORBA::ULong max); // uses max size
     IDs (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        ObjectId *buffer, 
+        CORBA::ULong max,
+        CORBA::ULong length,
+        ObjectId *buffer,
         CORBA::Boolean release = 0
       );
     IDs (const IDs &); // copy ctor
     ~IDs (void);
     static void _tao_any_destructor (void*);
-    
+
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef IDs_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    
+
+
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IDS___VAR_CH_)
 #define _PORTABLESERVER_IDS___VAR_CH_
-  
+
   // *************************************************************
   // class PortableServer::IDs_var
   // *************************************************************
-  
+
   class TAO_PortableServer_Export IDs_var
   {
   public:
@@ -644,38 +647,38 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     IDs_var (IDs *);
     IDs_var (const IDs_var &);
     ~IDs_var (void);
-    
+
     IDs_var &operator= (IDs *);
     IDs_var &operator= (const IDs_var &);
     IDs *operator-> (void);
     const IDs *operator-> (void) const;
-    
+
     operator const IDs &() const;
     operator IDs &();
     operator IDs &() const;
     operator IDs *&(); // variable-size base types only
-    
+
     ObjectId & operator[] (CORBA::ULong index);
     const ObjectId & operator[] (CORBA::ULong index) const;
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const IDs &in (void) const;
     IDs &inout (void);
     IDs *&out (void);
     IDs *_retn (void);
     IDs *ptr (void) const;
-  
+
   private:
     IDs *ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IDS___OUT_CH_)
 #define _PORTABLESERVER_IDS___OUT_CH_
-  
+
   class TAO_PortableServer_Export IDs_out
   {
   public:
@@ -688,79 +691,79 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     IDs *&ptr (void);
     IDs *operator-> (void);
     ObjectId & operator[] (CORBA::ULong index);
-  
+
   private:
     IDs *&ptr_;
     // Assignment from T_var not allowed.
     void operator= (const IDs_var &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IDs;
-  
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong THREAD_POLICY_ID;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong LIFESPAN_POLICY_ID;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong ID_UNIQUENESS_POLICY_ID;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong ID_ASSIGNMENT_POLICY_ID;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong IMPLICIT_ACTIVATION_POLICY_ID;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong SERVANT_RETENTION_POLICY_ID;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REQUEST_PROCESSING_POLICY_ID;
-  
+
   enum ThreadPolicyValue
   {
     ORB_CTRL_MODEL,
     SINGLE_THREAD_MODEL
   };
-  
+
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   typedef ThreadPolicyValue &ThreadPolicyValue_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadPolicyValue;
-  
-  
+
+
 #if !defined (_PORTABLESERVER_THREADPOLICY___PTR_CH_)
 #define _PORTABLESERVER_THREADPOLICY___PTR_CH_
-  
+
   class ThreadPolicy;
   typedef ThreadPolicy *ThreadPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_THREADPOLICY___VAR_CH_)
 #define _PORTABLESERVER_THREADPOLICY___VAR_CH_
-  
+
   class TAO_PortableServer_Export ThreadPolicy_var : public TAO_Base_var
   {
   public:
     ThreadPolicy_var (void); // default constructor
-    ThreadPolicy_var (ThreadPolicy_ptr p) : ptr_ (p) {} 
+    ThreadPolicy_var (ThreadPolicy_ptr p) : ptr_ (p) {}
     ThreadPolicy_var (const ThreadPolicy_var &); // copy constructor
     ~ThreadPolicy_var (void); // destructor
-    
+
     ThreadPolicy_var &operator= (ThreadPolicy_ptr);
     ThreadPolicy_var &operator= (const ThreadPolicy_var &);
     ThreadPolicy_ptr operator-> (void) const;
-    
+
     operator const ThreadPolicy_ptr &() const;
     operator ThreadPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     ThreadPolicy_ptr in (void) const;
     ThreadPolicy_ptr &inout (void);
     ThreadPolicy_ptr &out (void);
     ThreadPolicy_ptr _retn (void);
     ThreadPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static ThreadPolicy_ptr tao_duplicate (ThreadPolicy_ptr);
@@ -771,7 +774,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     ThreadPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -781,11 +784,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_THREADPOLICY___OUT_CH_)
 #define _PORTABLESERVER_THREADPOLICY___OUT_CH_
-  
+
   class TAO_PortableServer_Export ThreadPolicy_out
   {
   public:
@@ -798,18 +801,18 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator ThreadPolicy_ptr &();
     ThreadPolicy_ptr &ptr (void);
     ThreadPolicy_ptr operator-> (void);
-  
+
   private:
     ThreadPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_THREADPOLICY_CH_)
 #define _PORTABLESERVER_THREADPOLICY_CH_
-  
+
   class TAO_PortableServer_Export ThreadPolicy
     : public virtual CORBA::Policy
   {
@@ -820,94 +823,94 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static ThreadPolicy_ptr _duplicate (ThreadPolicy_ptr obj);
-    
+
     static ThreadPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ThreadPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ThreadPolicy_ptr _nil (void)
       {
         return (ThreadPolicy_ptr)0;
       }
-    
+
     virtual ::PortableServer::ThreadPolicyValue value (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     ThreadPolicy (void);
-    
+
     virtual ~ThreadPolicy (void);
-  
+
   private:
     ThreadPolicy (const ThreadPolicy &);
     void operator= (const ThreadPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-  
+
   enum LifespanPolicyValue
   {
     TRANSIENT,
     PERSISTENT
   };
-  
+
   typedef LifespanPolicyValue &LifespanPolicyValue_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_LifespanPolicyValue;
-  
-  
+
+
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY___PTR_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY___PTR_CH_
-  
+
   class LifespanPolicy;
   typedef LifespanPolicy *LifespanPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY___VAR_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY___VAR_CH_
-  
+
   class TAO_PortableServer_Export LifespanPolicy_var : public TAO_Base_var
   {
   public:
     LifespanPolicy_var (void); // default constructor
-    LifespanPolicy_var (LifespanPolicy_ptr p) : ptr_ (p) {} 
+    LifespanPolicy_var (LifespanPolicy_ptr p) : ptr_ (p) {}
     LifespanPolicy_var (const LifespanPolicy_var &); // copy constructor
     ~LifespanPolicy_var (void); // destructor
-    
+
     LifespanPolicy_var &operator= (LifespanPolicy_ptr);
     LifespanPolicy_var &operator= (const LifespanPolicy_var &);
     LifespanPolicy_ptr operator-> (void) const;
-    
+
     operator const LifespanPolicy_ptr &() const;
     operator LifespanPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     LifespanPolicy_ptr in (void) const;
     LifespanPolicy_ptr &inout (void);
     LifespanPolicy_ptr &out (void);
     LifespanPolicy_ptr _retn (void);
     LifespanPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static LifespanPolicy_ptr tao_duplicate (LifespanPolicy_ptr);
@@ -918,7 +921,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     LifespanPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -928,11 +931,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY___OUT_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY___OUT_CH_
-  
+
   class TAO_PortableServer_Export LifespanPolicy_out
   {
   public:
@@ -945,18 +948,18 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator LifespanPolicy_ptr &();
     LifespanPolicy_ptr &ptr (void);
     LifespanPolicy_ptr operator-> (void);
-  
+
   private:
     LifespanPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY_CH_
-  
+
   class TAO_PortableServer_Export LifespanPolicy
     : public virtual CORBA::Policy
   {
@@ -967,92 +970,92 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static LifespanPolicy_ptr _duplicate (LifespanPolicy_ptr obj);
-    
+
     static LifespanPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static LifespanPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static LifespanPolicy_ptr _nil (void)
       {
         return (LifespanPolicy_ptr)0;
       }
-    
+
     virtual ::PortableServer::LifespanPolicyValue value (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     LifespanPolicy (void);
-    
+
     virtual ~LifespanPolicy (void);
-  
+
   private:
     LifespanPolicy (const LifespanPolicy &);
     void operator= (const LifespanPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   enum IdUniquenessPolicyValue
   {
     UNIQUE_ID,
     MULTIPLE_ID
   };
-  
+
   typedef IdUniquenessPolicyValue &IdUniquenessPolicyValue_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IdUniquenessPolicyValue;
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY___PTR_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY___PTR_CH_
-  
+
   class IdUniquenessPolicy;
   typedef IdUniquenessPolicy *IdUniquenessPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY___VAR_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY___VAR_CH_
-  
+
   class TAO_PortableServer_Export IdUniquenessPolicy_var : public TAO_Base_var
   {
   public:
     IdUniquenessPolicy_var (void); // default constructor
-    IdUniquenessPolicy_var (IdUniquenessPolicy_ptr p) : ptr_ (p) {} 
+    IdUniquenessPolicy_var (IdUniquenessPolicy_ptr p) : ptr_ (p) {}
     IdUniquenessPolicy_var (const IdUniquenessPolicy_var &); // copy constructor
     ~IdUniquenessPolicy_var (void); // destructor
-    
+
     IdUniquenessPolicy_var &operator= (IdUniquenessPolicy_ptr);
     IdUniquenessPolicy_var &operator= (const IdUniquenessPolicy_var &);
     IdUniquenessPolicy_ptr operator-> (void) const;
-    
+
     operator const IdUniquenessPolicy_ptr &() const;
     operator IdUniquenessPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     IdUniquenessPolicy_ptr in (void) const;
     IdUniquenessPolicy_ptr &inout (void);
     IdUniquenessPolicy_ptr &out (void);
     IdUniquenessPolicy_ptr _retn (void);
     IdUniquenessPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static IdUniquenessPolicy_ptr tao_duplicate (IdUniquenessPolicy_ptr);
@@ -1063,7 +1066,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     IdUniquenessPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1073,11 +1076,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY___OUT_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY___OUT_CH_
-  
+
   class TAO_PortableServer_Export IdUniquenessPolicy_out
   {
   public:
@@ -1090,18 +1093,18 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator IdUniquenessPolicy_ptr &();
     IdUniquenessPolicy_ptr &ptr (void);
     IdUniquenessPolicy_ptr operator-> (void);
-  
+
   private:
     IdUniquenessPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY_CH_
-  
+
   class TAO_PortableServer_Export IdUniquenessPolicy
     : public virtual CORBA::Policy
   {
@@ -1112,92 +1115,92 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static IdUniquenessPolicy_ptr _duplicate (IdUniquenessPolicy_ptr obj);
-    
+
     static IdUniquenessPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static IdUniquenessPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static IdUniquenessPolicy_ptr _nil (void)
       {
         return (IdUniquenessPolicy_ptr)0;
       }
-    
+
     virtual ::PortableServer::IdUniquenessPolicyValue value (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     IdUniquenessPolicy (void);
-    
+
     virtual ~IdUniquenessPolicy (void);
-  
+
   private:
     IdUniquenessPolicy (const IdUniquenessPolicy &);
     void operator= (const IdUniquenessPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   enum IdAssignmentPolicyValue
   {
     USER_ID,
     SYSTEM_ID
   };
-  
+
   typedef IdAssignmentPolicyValue &IdAssignmentPolicyValue_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IdAssignmentPolicyValue;
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY___PTR_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY___PTR_CH_
-  
+
   class IdAssignmentPolicy;
   typedef IdAssignmentPolicy *IdAssignmentPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY___VAR_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY___VAR_CH_
-  
+
   class TAO_PortableServer_Export IdAssignmentPolicy_var : public TAO_Base_var
   {
   public:
     IdAssignmentPolicy_var (void); // default constructor
-    IdAssignmentPolicy_var (IdAssignmentPolicy_ptr p) : ptr_ (p) {} 
+    IdAssignmentPolicy_var (IdAssignmentPolicy_ptr p) : ptr_ (p) {}
     IdAssignmentPolicy_var (const IdAssignmentPolicy_var &); // copy constructor
     ~IdAssignmentPolicy_var (void); // destructor
-    
+
     IdAssignmentPolicy_var &operator= (IdAssignmentPolicy_ptr);
     IdAssignmentPolicy_var &operator= (const IdAssignmentPolicy_var &);
     IdAssignmentPolicy_ptr operator-> (void) const;
-    
+
     operator const IdAssignmentPolicy_ptr &() const;
     operator IdAssignmentPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     IdAssignmentPolicy_ptr in (void) const;
     IdAssignmentPolicy_ptr &inout (void);
     IdAssignmentPolicy_ptr &out (void);
     IdAssignmentPolicy_ptr _retn (void);
     IdAssignmentPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static IdAssignmentPolicy_ptr tao_duplicate (IdAssignmentPolicy_ptr);
@@ -1208,7 +1211,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     IdAssignmentPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1218,11 +1221,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY___OUT_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY___OUT_CH_
-  
+
   class TAO_PortableServer_Export IdAssignmentPolicy_out
   {
   public:
@@ -1235,18 +1238,18 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator IdAssignmentPolicy_ptr &();
     IdAssignmentPolicy_ptr &ptr (void);
     IdAssignmentPolicy_ptr operator-> (void);
-  
+
   private:
     IdAssignmentPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY_CH_
-  
+
   class TAO_PortableServer_Export IdAssignmentPolicy
     : public virtual CORBA::Policy
   {
@@ -1257,94 +1260,94 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static IdAssignmentPolicy_ptr _duplicate (IdAssignmentPolicy_ptr obj);
-    
+
     static IdAssignmentPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static IdAssignmentPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static IdAssignmentPolicy_ptr _nil (void)
       {
         return (IdAssignmentPolicy_ptr)0;
       }
-    
+
     virtual ::PortableServer::IdAssignmentPolicyValue value (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     IdAssignmentPolicy (void);
-    
+
     virtual ~IdAssignmentPolicy (void);
-  
+
   private:
     IdAssignmentPolicy (const IdAssignmentPolicy &);
     void operator= (const IdAssignmentPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   enum ImplicitActivationPolicyValue
   {
     IMPLICIT_ACTIVATION,
     NO_IMPLICIT_ACTIVATION
   };
-  
+
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   typedef ImplicitActivationPolicyValue &ImplicitActivationPolicyValue_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ImplicitActivationPolicyValue;
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___PTR_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY___PTR_CH_
-  
+
   class ImplicitActivationPolicy;
   typedef ImplicitActivationPolicy *ImplicitActivationPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___VAR_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY___VAR_CH_
-  
+
   class TAO_PortableServer_Export ImplicitActivationPolicy_var : public TAO_Base_var
   {
   public:
     ImplicitActivationPolicy_var (void); // default constructor
-    ImplicitActivationPolicy_var (ImplicitActivationPolicy_ptr p) : ptr_ (p) {} 
+    ImplicitActivationPolicy_var (ImplicitActivationPolicy_ptr p) : ptr_ (p) {}
     ImplicitActivationPolicy_var (const ImplicitActivationPolicy_var &); // copy constructor
     ~ImplicitActivationPolicy_var (void); // destructor
-    
+
     ImplicitActivationPolicy_var &operator= (ImplicitActivationPolicy_ptr);
     ImplicitActivationPolicy_var &operator= (const ImplicitActivationPolicy_var &);
     ImplicitActivationPolicy_ptr operator-> (void) const;
-    
+
     operator const ImplicitActivationPolicy_ptr &() const;
     operator ImplicitActivationPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     ImplicitActivationPolicy_ptr in (void) const;
     ImplicitActivationPolicy_ptr &inout (void);
     ImplicitActivationPolicy_ptr &out (void);
     ImplicitActivationPolicy_ptr _retn (void);
     ImplicitActivationPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static ImplicitActivationPolicy_ptr tao_duplicate (ImplicitActivationPolicy_ptr);
@@ -1355,7 +1358,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     ImplicitActivationPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1365,11 +1368,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___OUT_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY___OUT_CH_
-  
+
   class TAO_PortableServer_Export ImplicitActivationPolicy_out
   {
   public:
@@ -1382,18 +1385,18 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator ImplicitActivationPolicy_ptr &();
     ImplicitActivationPolicy_ptr &ptr (void);
     ImplicitActivationPolicy_ptr operator-> (void);
-  
+
   private:
     ImplicitActivationPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY_CH_
-  
+
   class TAO_PortableServer_Export ImplicitActivationPolicy
     : public virtual CORBA::Policy
   {
@@ -1404,49 +1407,49 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static ImplicitActivationPolicy_ptr _duplicate (ImplicitActivationPolicy_ptr obj);
-    
+
     static ImplicitActivationPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ImplicitActivationPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ImplicitActivationPolicy_ptr _nil (void)
       {
         return (ImplicitActivationPolicy_ptr)0;
       }
-    
+
     virtual ::PortableServer::ImplicitActivationPolicyValue value (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     ImplicitActivationPolicy (void);
-    
+
     virtual ~ImplicitActivationPolicy (void);
-  
+
   private:
     ImplicitActivationPolicy (const ImplicitActivationPolicy &);
     void operator= (const ImplicitActivationPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   enum ServantRetentionPolicyValue
@@ -1454,46 +1457,46 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     RETAIN,
     NON_RETAIN
   };
-  
+
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   typedef ServantRetentionPolicyValue &ServantRetentionPolicyValue_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServantRetentionPolicyValue;
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY___PTR_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY___PTR_CH_
-  
+
   class ServantRetentionPolicy;
   typedef ServantRetentionPolicy *ServantRetentionPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY___VAR_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY___VAR_CH_
-  
+
   class TAO_PortableServer_Export ServantRetentionPolicy_var : public TAO_Base_var
   {
   public:
     ServantRetentionPolicy_var (void); // default constructor
-    ServantRetentionPolicy_var (ServantRetentionPolicy_ptr p) : ptr_ (p) {} 
+    ServantRetentionPolicy_var (ServantRetentionPolicy_ptr p) : ptr_ (p) {}
     ServantRetentionPolicy_var (const ServantRetentionPolicy_var &); // copy constructor
     ~ServantRetentionPolicy_var (void); // destructor
-    
+
     ServantRetentionPolicy_var &operator= (ServantRetentionPolicy_ptr);
     ServantRetentionPolicy_var &operator= (const ServantRetentionPolicy_var &);
     ServantRetentionPolicy_ptr operator-> (void) const;
-    
+
     operator const ServantRetentionPolicy_ptr &() const;
     operator ServantRetentionPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     ServantRetentionPolicy_ptr in (void) const;
     ServantRetentionPolicy_ptr &inout (void);
     ServantRetentionPolicy_ptr &out (void);
     ServantRetentionPolicy_ptr _retn (void);
     ServantRetentionPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static ServantRetentionPolicy_ptr tao_duplicate (ServantRetentionPolicy_ptr);
@@ -1504,7 +1507,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     ServantRetentionPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1514,11 +1517,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY___OUT_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY___OUT_CH_
-  
+
   class TAO_PortableServer_Export ServantRetentionPolicy_out
   {
   public:
@@ -1531,18 +1534,18 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator ServantRetentionPolicy_ptr &();
     ServantRetentionPolicy_ptr &ptr (void);
     ServantRetentionPolicy_ptr operator-> (void);
-  
+
   private:
     ServantRetentionPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY_CH_
-  
+
   class TAO_PortableServer_Export ServantRetentionPolicy
     : public virtual CORBA::Policy
   {
@@ -1553,49 +1556,49 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static ServantRetentionPolicy_ptr _duplicate (ServantRetentionPolicy_ptr obj);
-    
+
     static ServantRetentionPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ServantRetentionPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ServantRetentionPolicy_ptr _nil (void)
       {
         return (ServantRetentionPolicy_ptr)0;
       }
-    
+
     virtual ::PortableServer::ServantRetentionPolicyValue value (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     ServantRetentionPolicy (void);
-    
+
     virtual ~ServantRetentionPolicy (void);
-  
+
   private:
     ServantRetentionPolicy (const ServantRetentionPolicy &);
     void operator= (const ServantRetentionPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   enum RequestProcessingPolicyValue
@@ -1604,46 +1607,46 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     USE_DEFAULT_SERVANT,
     USE_SERVANT_MANAGER
   };
-  
+
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   typedef RequestProcessingPolicyValue &RequestProcessingPolicyValue_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RequestProcessingPolicyValue;
-  
-  
+
+
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___PTR_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY___PTR_CH_
-  
+
   class RequestProcessingPolicy;
   typedef RequestProcessingPolicy *RequestProcessingPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___VAR_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY___VAR_CH_
-  
+
   class TAO_PortableServer_Export RequestProcessingPolicy_var : public TAO_Base_var
   {
   public:
     RequestProcessingPolicy_var (void); // default constructor
-    RequestProcessingPolicy_var (RequestProcessingPolicy_ptr p) : ptr_ (p) {} 
+    RequestProcessingPolicy_var (RequestProcessingPolicy_ptr p) : ptr_ (p) {}
     RequestProcessingPolicy_var (const RequestProcessingPolicy_var &); // copy constructor
     ~RequestProcessingPolicy_var (void); // destructor
-    
+
     RequestProcessingPolicy_var &operator= (RequestProcessingPolicy_ptr);
     RequestProcessingPolicy_var &operator= (const RequestProcessingPolicy_var &);
     RequestProcessingPolicy_ptr operator-> (void) const;
-    
+
     operator const RequestProcessingPolicy_ptr &() const;
     operator RequestProcessingPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     RequestProcessingPolicy_ptr in (void) const;
     RequestProcessingPolicy_ptr &inout (void);
     RequestProcessingPolicy_ptr &out (void);
     RequestProcessingPolicy_ptr _retn (void);
     RequestProcessingPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static RequestProcessingPolicy_ptr tao_duplicate (RequestProcessingPolicy_ptr);
@@ -1654,7 +1657,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     RequestProcessingPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1664,11 +1667,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___OUT_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY___OUT_CH_
-  
+
   class TAO_PortableServer_Export RequestProcessingPolicy_out
   {
   public:
@@ -1681,18 +1684,18 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator RequestProcessingPolicy_ptr &();
     RequestProcessingPolicy_ptr &ptr (void);
     RequestProcessingPolicy_ptr operator-> (void);
-  
+
   private:
     RequestProcessingPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY_CH_
-  
+
   class TAO_PortableServer_Export RequestProcessingPolicy
     : public virtual CORBA::Policy
   {
@@ -1703,84 +1706,84 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static RequestProcessingPolicy_ptr _duplicate (RequestProcessingPolicy_ptr obj);
-    
+
     static RequestProcessingPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RequestProcessingPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RequestProcessingPolicy_ptr _nil (void)
       {
         return (RequestProcessingPolicy_ptr)0;
       }
-    
+
     virtual ::PortableServer::RequestProcessingPolicyValue value (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     RequestProcessingPolicy (void);
-    
+
     virtual ~RequestProcessingPolicy (void);
-  
+
   private:
     RequestProcessingPolicy (const RequestProcessingPolicy &);
     void operator= (const RequestProcessingPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-  
+
 #if !defined (_PORTABLESERVER_POAMANAGER___PTR_CH_)
 #define _PORTABLESERVER_POAMANAGER___PTR_CH_
-  
+
   class POAManager;
   typedef POAManager *POAManager_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_POAMANAGER___VAR_CH_)
 #define _PORTABLESERVER_POAMANAGER___VAR_CH_
-  
+
   class TAO_PortableServer_Export POAManager_var : public TAO_Base_var
   {
   public:
     POAManager_var (void); // default constructor
-    POAManager_var (POAManager_ptr p) : ptr_ (p) {} 
+    POAManager_var (POAManager_ptr p) : ptr_ (p) {}
     POAManager_var (const POAManager_var &); // copy constructor
     ~POAManager_var (void); // destructor
-    
+
     POAManager_var &operator= (POAManager_ptr);
     POAManager_var &operator= (const POAManager_var &);
     POAManager_ptr operator-> (void) const;
-    
+
     operator const POAManager_ptr &() const;
     operator POAManager_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     POAManager_ptr in (void) const;
     POAManager_ptr &inout (void);
     POAManager_ptr &out (void);
     POAManager_ptr _retn (void);
     POAManager_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static POAManager_ptr tao_duplicate (POAManager_ptr);
@@ -1791,7 +1794,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     POAManager_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1801,11 +1804,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_POAMANAGER___OUT_CH_)
 #define _PORTABLESERVER_POAMANAGER___OUT_CH_
-  
+
   class TAO_PortableServer_Export POAManager_out
   {
   public:
@@ -1818,18 +1821,18 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator POAManager_ptr &();
     POAManager_ptr &ptr (void);
     POAManager_ptr operator-> (void);
-  
+
   private:
     POAManager_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_POAMANAGER_CH_)
 #define _PORTABLESERVER_POAMANAGER_CH_
-  
+
   class TAO_PortableServer_Export POAManager
     : public virtual CORBA_Object
   {
@@ -1840,56 +1843,56 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static POAManager_ptr _duplicate (POAManager_ptr obj);
-    
+
     static POAManager_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static POAManager_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static POAManager_ptr _nil (void)
       {
         return (POAManager_ptr)0;
       }
-    
-    
+
+
 #if !defined (_PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_)
 #define _PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_
-    
+
     class TAO_PortableServer_Export AdapterInactive : public CORBA::UserException
     {
     public:
-      
+
       AdapterInactive (void);
       // Default constructor.
-      
+
       AdapterInactive (const AdapterInactive &);
       // Copy constructor.
-      
+
       ~AdapterInactive (void);
       // Destructor.
-      
+
       AdapterInactive &operator= (const AdapterInactive &);
-      
+
       virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         ) const;
-      
+
       virtual void _tao_decode (
           TAO_InputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         );
-      
+
       static AdapterInactive *_downcast (CORBA::Exception *);
 
 
@@ -1899,7 +1902,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-    
+
     enum State
     {
       HOLDING,
@@ -1907,7 +1910,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       DISCARDING,
       INACTIVE
     };
-    
+
     typedef State &State_out;
     virtual void activate (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -1918,7 +1921,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-    
+
     virtual void hold_requests (
         CORBA::Boolean wait_for_completion TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -1926,7 +1929,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::POAManager::AdapterInactive
       )) = 0;
-    
+
     virtual void discard_requests (
         CORBA::Boolean wait_for_completion TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -1934,7 +1937,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::POAManager::AdapterInactive
       )) = 0;
-    
+
     virtual void deactivate (
         CORBA::Boolean etherealize_objects,
         CORBA::Boolean wait_for_completion TAO_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1943,7 +1946,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::POAManager::AdapterInactive
       )) = 0;
-    
+
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual ::PortableServer::POAManager::State get_state (
@@ -1952,59 +1955,59 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     POAManager (void);
-    
+
     virtual ~POAManager (void);
-  
+
   private:
     POAManager (const POAManager &);
     void operator= (const POAManager &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
 #if (TAO_HAS_MINIMUM_POA == 0)
-  
+
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___PTR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___PTR_CH_
-  
+
   class AdapterActivator;
   typedef AdapterActivator *AdapterActivator_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___VAR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___VAR_CH_
-  
+
   class TAO_PortableServer_Export AdapterActivator_var : public TAO_Base_var
   {
   public:
     AdapterActivator_var (void); // default constructor
-    AdapterActivator_var (AdapterActivator_ptr p) : ptr_ (p) {} 
+    AdapterActivator_var (AdapterActivator_ptr p) : ptr_ (p) {}
     AdapterActivator_var (const AdapterActivator_var &); // copy constructor
     ~AdapterActivator_var (void); // destructor
-    
+
     AdapterActivator_var &operator= (AdapterActivator_ptr);
     AdapterActivator_var &operator= (const AdapterActivator_var &);
     AdapterActivator_ptr operator-> (void) const;
-    
+
     operator const AdapterActivator_ptr &() const;
     operator AdapterActivator_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     AdapterActivator_ptr in (void) const;
     AdapterActivator_ptr &inout (void);
     AdapterActivator_ptr &out (void);
     AdapterActivator_ptr _retn (void);
     AdapterActivator_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static AdapterActivator_ptr tao_duplicate (AdapterActivator_ptr);
@@ -2015,7 +2018,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     AdapterActivator_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2025,11 +2028,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___OUT_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___OUT_CH_
-  
+
   class TAO_PortableServer_Export AdapterActivator_out
   {
   public:
@@ -2042,18 +2045,18 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator AdapterActivator_ptr &();
     AdapterActivator_ptr &ptr (void);
     AdapterActivator_ptr operator-> (void);
-  
+
   private:
     AdapterActivator_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR_CH_
-  
+
   class TAO_PortableServer_Export AdapterActivator
     : public virtual CORBA_Object
   {
@@ -2064,25 +2067,25 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static AdapterActivator_ptr _duplicate (AdapterActivator_ptr obj);
-    
+
     static AdapterActivator_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static AdapterActivator_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static AdapterActivator_ptr _nil (void)
       {
         return (AdapterActivator_ptr)0;
       }
-    
+
     virtual CORBA::Boolean unknown_adapter (
         PortableServer::POA_ptr parent,
         const char * name TAO_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2090,58 +2093,58 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     AdapterActivator (void);
-    
+
     virtual ~AdapterActivator (void);
-  
+
   private:
     AdapterActivator (const AdapterActivator &);
     void operator= (const AdapterActivator &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTMANAGER___PTR_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER___PTR_CH_
-  
+
   class ServantManager;
   typedef ServantManager *ServantManager_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTMANAGER___VAR_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER___VAR_CH_
-  
+
   class TAO_PortableServer_Export ServantManager_var : public TAO_Base_var
   {
   public:
     ServantManager_var (void); // default constructor
-    ServantManager_var (ServantManager_ptr p) : ptr_ (p) {} 
+    ServantManager_var (ServantManager_ptr p) : ptr_ (p) {}
     ServantManager_var (const ServantManager_var &); // copy constructor
     ~ServantManager_var (void); // destructor
-    
+
     ServantManager_var &operator= (ServantManager_ptr);
     ServantManager_var &operator= (const ServantManager_var &);
     ServantManager_ptr operator-> (void) const;
-    
+
     operator const ServantManager_ptr &() const;
     operator ServantManager_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     ServantManager_ptr in (void) const;
     ServantManager_ptr &inout (void);
     ServantManager_ptr &out (void);
     ServantManager_ptr _retn (void);
     ServantManager_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static ServantManager_ptr tao_duplicate (ServantManager_ptr);
@@ -2152,7 +2155,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     ServantManager_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2162,11 +2165,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTMANAGER___OUT_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER___OUT_CH_
-  
+
   class TAO_PortableServer_Export ServantManager_out
   {
   public:
@@ -2179,18 +2182,18 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator ServantManager_ptr &();
     ServantManager_ptr &ptr (void);
     ServantManager_ptr operator-> (void);
-  
+
   private:
     ServantManager_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTMANAGER_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER_CH_
-  
+
   class TAO_PortableServer_Export ServantManager
     : public virtual CORBA_Object
   {
@@ -2201,76 +2204,76 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static ServantManager_ptr _duplicate (ServantManager_ptr obj);
-    
+
     static ServantManager_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ServantManager_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ServantManager_ptr _nil (void)
       {
         return (ServantManager_ptr)0;
       }
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     ServantManager (void);
-    
+
     virtual ~ServantManager (void);
-  
+
   private:
     ServantManager (const ServantManager &);
     void operator= (const ServantManager &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR___PTR_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR___PTR_CH_
-  
+
   class ServantActivator;
   typedef ServantActivator *ServantActivator_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR___VAR_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR___VAR_CH_
-  
+
   class TAO_PortableServer_Export ServantActivator_var : public TAO_Base_var
   {
   public:
     ServantActivator_var (void); // default constructor
-    ServantActivator_var (ServantActivator_ptr p) : ptr_ (p) {} 
+    ServantActivator_var (ServantActivator_ptr p) : ptr_ (p) {}
     ServantActivator_var (const ServantActivator_var &); // copy constructor
     ~ServantActivator_var (void); // destructor
-    
+
     ServantActivator_var &operator= (ServantActivator_ptr);
     ServantActivator_var &operator= (const ServantActivator_var &);
     ServantActivator_ptr operator-> (void) const;
-    
+
     operator const ServantActivator_ptr &() const;
     operator ServantActivator_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     ServantActivator_ptr in (void) const;
     ServantActivator_ptr &inout (void);
     ServantActivator_ptr &out (void);
     ServantActivator_ptr _retn (void);
     ServantActivator_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static ServantActivator_ptr tao_duplicate (ServantActivator_ptr);
@@ -2281,7 +2284,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     ServantActivator_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2291,11 +2294,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR___OUT_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR___OUT_CH_
-  
+
   class TAO_PortableServer_Export ServantActivator_out
   {
   public:
@@ -2308,18 +2311,18 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator ServantActivator_ptr &();
     ServantActivator_ptr &ptr (void);
     ServantActivator_ptr operator-> (void);
-  
+
   private:
     ServantActivator_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR_CH_
-  
+
   class TAO_PortableServer_Export ServantActivator
     : public virtual PortableServer::ServantManager
   {
@@ -2330,25 +2333,25 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static ServantActivator_ptr _duplicate (ServantActivator_ptr obj);
-    
+
     static ServantActivator_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ServantActivator_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ServantActivator_ptr _nil (void)
       {
         return (ServantActivator_ptr)0;
       }
-    
+
     virtual ::PortableServer::Servant incarnate (
         const PortableServer::ObjectId & oid,
         PortableServer::POA_ptr adapter TAO_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2363,7 +2366,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException
       )) = 0;
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-    
+
     virtual void etherealize (
         const PortableServer::ObjectId & oid,
         PortableServer::POA_ptr adapter,
@@ -2374,58 +2377,58 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     ServantActivator (void);
-    
+
     virtual ~ServantActivator (void);
-  
+
   private:
     ServantActivator (const ServantActivator &);
     void operator= (const ServantActivator &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR___PTR_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR___PTR_CH_
-  
+
   class ServantLocator;
   typedef ServantLocator *ServantLocator_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR___VAR_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR___VAR_CH_
-  
+
   class TAO_PortableServer_Export ServantLocator_var : public TAO_Base_var
   {
   public:
     ServantLocator_var (void); // default constructor
-    ServantLocator_var (ServantLocator_ptr p) : ptr_ (p) {} 
+    ServantLocator_var (ServantLocator_ptr p) : ptr_ (p) {}
     ServantLocator_var (const ServantLocator_var &); // copy constructor
     ~ServantLocator_var (void); // destructor
-    
+
     ServantLocator_var &operator= (ServantLocator_ptr);
     ServantLocator_var &operator= (const ServantLocator_var &);
     ServantLocator_ptr operator-> (void) const;
-    
+
     operator const ServantLocator_ptr &() const;
     operator ServantLocator_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     ServantLocator_ptr in (void) const;
     ServantLocator_ptr &inout (void);
     ServantLocator_ptr &out (void);
     ServantLocator_ptr _retn (void);
     ServantLocator_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static ServantLocator_ptr tao_duplicate (ServantLocator_ptr);
@@ -2436,7 +2439,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     ServantLocator_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2446,11 +2449,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR___OUT_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR___OUT_CH_
-  
+
   class TAO_PortableServer_Export ServantLocator_out
   {
   public:
@@ -2463,18 +2466,18 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator ServantLocator_ptr &();
     ServantLocator_ptr &ptr (void);
     ServantLocator_ptr operator-> (void);
-  
+
   private:
     ServantLocator_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR_CH_
-  
+
   class TAO_PortableServer_Export ServantLocator
     : public virtual PortableServer::ServantManager
   {
@@ -2488,25 +2491,25 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static ServantLocator_ptr _duplicate (ServantLocator_ptr obj);
-    
+
     static ServantLocator_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ServantLocator_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ServantLocator_ptr _nil (void)
       {
         return (ServantLocator_ptr)0;
       }
-    
+
     virtual ::PortableServer::Servant preinvoke (
         const PortableServer::ObjectId & oid,
         PortableServer::POA_ptr adapter,
@@ -2522,7 +2525,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */    
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
     virtual void postinvoke (
         const PortableServer::ObjectId & oid,
@@ -2534,58 +2537,58 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     ServantLocator (void);
-    
+
     virtual ~ServantLocator (void);
-  
+
   private:
     ServantLocator (const ServantLocator &);
     void operator= (const ServantLocator &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_POA___PTR_CH_)
 #define _PORTABLESERVER_POA___PTR_CH_
-  
+
   class POA;
   typedef POA *POA_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_POA___VAR_CH_)
 #define _PORTABLESERVER_POA___VAR_CH_
-  
+
   class TAO_PortableServer_Export POA_var : public TAO_Base_var
   {
   public:
     POA_var (void); // default constructor
-    POA_var (POA_ptr p) : ptr_ (p) {} 
+    POA_var (POA_ptr p) : ptr_ (p) {}
     POA_var (const POA_var &); // copy constructor
     ~POA_var (void); // destructor
-    
+
     POA_var &operator= (POA_ptr);
     POA_var &operator= (const POA_var &);
     POA_ptr operator-> (void) const;
-    
+
     operator const POA_ptr &() const;
     operator POA_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     POA_ptr in (void) const;
     POA_ptr &inout (void);
     POA_ptr &out (void);
     POA_ptr _retn (void);
     POA_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static POA_ptr tao_duplicate (POA_ptr);
@@ -2596,7 +2599,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     POA_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2606,11 +2609,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_POA___OUT_CH_)
 #define _PORTABLESERVER_POA___OUT_CH_
-  
+
   class TAO_PortableServer_Export POA_out
   {
   public:
@@ -2623,19 +2626,19 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator POA_ptr &();
     POA_ptr &ptr (void);
     POA_ptr operator-> (void);
-  
+
   private:
     POA_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-  
+
 #if !defined (_PORTABLESERVER_POA_CH_)
 #define _PORTABLESERVER_POA_CH_
-  
+
   class TAO_PortableServer_Export POA
     : public virtual CORBA_Object
   {
@@ -2646,60 +2649,60 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static POA_ptr _duplicate (POA_ptr obj);
-    
+
     static POA_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static POA_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static POA_ptr _nil (void)
       {
         return (POA_ptr)0;
       }
-    
-    virtual TAO_POA* _tao_poa_downcast(void) 
-      { 
-        return 0; 
+
+    virtual TAO_POA* _tao_poa_downcast(void)
+      {
+        return 0;
       }
-    
+
 #if !defined (_PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_)
 #define _PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_
-    
+
     class TAO_PortableServer_Export AdapterAlreadyExists : public CORBA::UserException
     {
     public:
-      
+
       AdapterAlreadyExists (void);
       // Default constructor.
-      
+
       AdapterAlreadyExists (const AdapterAlreadyExists &);
       // Copy constructor.
-      
+
       ~AdapterAlreadyExists (void);
       // Destructor.
-      
+
       AdapterAlreadyExists &operator= (const AdapterAlreadyExists &);
-      
+
       virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         ) const;
-      
+
       virtual void _tao_decode (
           TAO_InputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         );
-      
+
       static AdapterAlreadyExists *_downcast (CORBA::Exception *);
 
 
@@ -2709,38 +2712,38 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-    
-    
+
+
 #if !defined (_PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_)
 #define _PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_
-    
+
     class TAO_PortableServer_Export AdapterNonExistent : public CORBA::UserException
     {
     public:
-      
+
       AdapterNonExistent (void);
       // Default constructor.
-      
+
       AdapterNonExistent (const AdapterNonExistent &);
       // Copy constructor.
-      
+
       ~AdapterNonExistent (void);
       // Destructor.
-      
+
       AdapterNonExistent &operator= (const AdapterNonExistent &);
-      
+
       virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         ) const;
-      
+
       virtual void _tao_decode (
           TAO_InputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         );
-      
+
       static AdapterNonExistent *_downcast (CORBA::Exception *);
 
 
@@ -2750,84 +2753,84 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-    
-    
+
+
 #if !defined (_PORTABLESERVER_POA_INVALIDPOLICY_CH_)
 #define _PORTABLESERVER_POA_INVALIDPOLICY_CH_
-    
+
     class TAO_PortableServer_Export InvalidPolicy : public CORBA::UserException
     {
     public:
       CORBA::UShort index;
-      
+
       InvalidPolicy (void);
       // Default constructor.
-      
+
       InvalidPolicy (const InvalidPolicy &);
       // Copy constructor.
-      
+
       ~InvalidPolicy (void);
       // Destructor.
-      
+
       InvalidPolicy &operator= (const InvalidPolicy &);
-      
+
       virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         ) const;
-      
+
       virtual void _tao_decode (
           TAO_InputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         );
-      
+
       static InvalidPolicy *_downcast (CORBA::Exception *);
 
       InvalidPolicy (
           CORBA::UShort _tao_index
         );
-      
+
       // = TAO extension.
       static CORBA::Exception *_alloc (void);
     }; // Exception PortableServer::POA::InvalidPolicy.
 
 
 #endif /* end #if !defined */
-    
+
 #if (TAO_HAS_MINIMUM_POA == 0)
-    
+
 #if !defined (_PORTABLESERVER_POA_NOSERVANT_CH_)
 #define _PORTABLESERVER_POA_NOSERVANT_CH_
-    
+
     class TAO_PortableServer_Export NoServant : public CORBA::UserException
     {
     public:
-      
+
       NoServant (void);
       // Default constructor.
-      
+
       NoServant (const NoServant &);
       // Copy constructor.
-      
+
       ~NoServant (void);
       // Destructor.
-      
+
       NoServant &operator= (const NoServant &);
-      
+
       virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         ) const;
-      
+
       virtual void _tao_decode (
           TAO_InputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         );
-      
+
       static NoServant *_downcast (CORBA::Exception *);
 
 
@@ -2837,39 +2840,39 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-    
+
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-    
+
 #if !defined (_PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_)
 #define _PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_
-    
+
     class TAO_PortableServer_Export ObjectAlreadyActive : public CORBA::UserException
     {
     public:
-      
+
       ObjectAlreadyActive (void);
       // Default constructor.
-      
+
       ObjectAlreadyActive (const ObjectAlreadyActive &);
       // Copy constructor.
-      
+
       ~ObjectAlreadyActive (void);
       // Destructor.
-      
+
       ObjectAlreadyActive &operator= (const ObjectAlreadyActive &);
-      
+
       virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         ) const;
-      
+
       virtual void _tao_decode (
           TAO_InputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         );
-      
+
       static ObjectAlreadyActive *_downcast (CORBA::Exception *);
 
 
@@ -2879,38 +2882,38 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-    
-    
+
+
 #if !defined (_PORTABLESERVER_POA_OBJECTNOTACTIVE_CH_)
 #define _PORTABLESERVER_POA_OBJECTNOTACTIVE_CH_
-    
+
     class TAO_PortableServer_Export ObjectNotActive : public CORBA::UserException
     {
     public:
-      
+
       ObjectNotActive (void);
       // Default constructor.
-      
+
       ObjectNotActive (const ObjectNotActive &);
       // Copy constructor.
-      
+
       ~ObjectNotActive (void);
       // Destructor.
-      
+
       ObjectNotActive &operator= (const ObjectNotActive &);
-      
+
       virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         ) const;
-      
+
       virtual void _tao_decode (
           TAO_InputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         );
-      
+
       static ObjectNotActive *_downcast (CORBA::Exception *);
 
 
@@ -2920,38 +2923,38 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-    
-    
+
+
 #if !defined (_PORTABLESERVER_POA_SERVANTALREADYACTIVE_CH_)
 #define _PORTABLESERVER_POA_SERVANTALREADYACTIVE_CH_
-    
+
     class TAO_PortableServer_Export ServantAlreadyActive : public CORBA::UserException
     {
     public:
-      
+
       ServantAlreadyActive (void);
       // Default constructor.
-      
+
       ServantAlreadyActive (const ServantAlreadyActive &);
       // Copy constructor.
-      
+
       ~ServantAlreadyActive (void);
       // Destructor.
-      
+
       ServantAlreadyActive &operator= (const ServantAlreadyActive &);
-      
+
       virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         ) const;
-      
+
       virtual void _tao_decode (
           TAO_InputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         );
-      
+
       static ServantAlreadyActive *_downcast (CORBA::Exception *);
 
 
@@ -2961,38 +2964,38 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-    
-    
+
+
 #if !defined (_PORTABLESERVER_POA_SERVANTNOTACTIVE_CH_)
 #define _PORTABLESERVER_POA_SERVANTNOTACTIVE_CH_
-    
+
     class TAO_PortableServer_Export ServantNotActive : public CORBA::UserException
     {
     public:
-      
+
       ServantNotActive (void);
       // Default constructor.
-      
+
       ServantNotActive (const ServantNotActive &);
       // Copy constructor.
-      
+
       ~ServantNotActive (void);
       // Destructor.
-      
+
       ServantNotActive &operator= (const ServantNotActive &);
-      
+
       virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         ) const;
-      
+
       virtual void _tao_decode (
           TAO_InputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         );
-      
+
       static ServantNotActive *_downcast (CORBA::Exception *);
 
 
@@ -3002,38 +3005,38 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-    
-    
+
+
 #if !defined (_PORTABLESERVER_POA_WRONGADAPTER_CH_)
 #define _PORTABLESERVER_POA_WRONGADAPTER_CH_
-    
+
     class TAO_PortableServer_Export WrongAdapter : public CORBA::UserException
     {
     public:
-      
+
       WrongAdapter (void);
       // Default constructor.
-      
+
       WrongAdapter (const WrongAdapter &);
       // Copy constructor.
-      
+
       ~WrongAdapter (void);
       // Destructor.
-      
+
       WrongAdapter &operator= (const WrongAdapter &);
-      
+
       virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         ) const;
-      
+
       virtual void _tao_decode (
           TAO_InputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         );
-      
+
       static WrongAdapter *_downcast (CORBA::Exception *);
 
 
@@ -3043,38 +3046,38 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-    
-    
+
+
 #if !defined (_PORTABLESERVER_POA_WRONGPOLICY_CH_)
 #define _PORTABLESERVER_POA_WRONGPOLICY_CH_
-    
+
     class TAO_PortableServer_Export WrongPolicy : public CORBA::UserException
     {
     public:
-      
+
       WrongPolicy (void);
       // Default constructor.
-      
+
       WrongPolicy (const WrongPolicy &);
       // Copy constructor.
-      
+
       ~WrongPolicy (void);
       // Destructor.
-      
+
       WrongPolicy &operator= (const WrongPolicy &);
-      
+
       virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         ) const;
-      
+
       virtual void _tao_decode (
           TAO_InputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         );
-      
+
       static WrongPolicy *_downcast (CORBA::Exception *);
 
 
@@ -3084,7 +3087,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-    
+
     virtual ::PortableServer::POA_ptr create_POA (
         const char * adapter_name,
         PortableServer::POAManager_ptr a_POAManager,
@@ -3095,7 +3098,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         PortableServer::POA::AdapterAlreadyExists,
         PortableServer::POA::InvalidPolicy
       )) = 0;
-    
+
     virtual ::PortableServer::POA_ptr find_POA (
         const char * adapter_name,
         CORBA::Boolean activate_it TAO_ENV_ARG_DECL_WITH_DEFAULTS
@@ -3104,7 +3107,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::POA::AdapterNonExistent
       )) = 0;
-    
+
     virtual void destroy (
         CORBA::Boolean etherealize_objects,
         CORBA::Boolean wait_for_completion TAO_ENV_ARG_DECL_WITH_DEFAULTS
@@ -3114,14 +3117,14 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       )) = 0;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-    
+
     virtual ::PortableServer::ThreadPolicy_ptr create_thread_policy (
         PortableServer::ThreadPolicyValue value TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual ::PortableServer::LifespanPolicy_ptr create_lifespan_policy (
@@ -3130,21 +3133,21 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual ::PortableServer::IdUniquenessPolicy_ptr create_id_uniqueness_policy (
         PortableServer::IdUniquenessPolicyValue value TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual ::PortableServer::IdAssignmentPolicy_ptr create_id_assignment_policy (
         PortableServer::IdAssignmentPolicyValue value TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ::PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (
@@ -3153,21 +3156,21 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual ::PortableServer::ServantRetentionPolicy_ptr create_servant_retention_policy (
         PortableServer::ServantRetentionPolicyValue value TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual ::PortableServer::RequestProcessingPolicy_ptr create_request_processing_policy (
         PortableServer::RequestProcessingPolicyValue value TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual char * the_name (
@@ -3176,28 +3179,28 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual ::PortableServer::POA_ptr the_parent (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual ::PortableServer::POAList * the_children (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual ::PortableServer::POAManager_ptr the_POAManager (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ::PortableServer::AdapterActivator_ptr the_activator (
@@ -3206,14 +3209,14 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void the_activator (
         PortableServer::AdapterActivator_ptr the_activator TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual ::PortableServer::ServantManager_ptr get_servant_manager (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
@@ -3221,7 +3224,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual void set_servant_manager (
         PortableServer::ServantManager_ptr imgr TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -3229,7 +3232,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual ::PortableServer::Servant get_servant (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
@@ -3238,7 +3241,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         PortableServer::POA::NoServant,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual void set_servant (
         PortableServer::Servant p_servant TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -3246,7 +3249,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual ::PortableServer::ObjectId * activate_object (
@@ -3257,7 +3260,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         PortableServer::POA::ServantAlreadyActive,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual void activate_object_with_id (
         const PortableServer::ObjectId & id,
         PortableServer::Servant p_servant TAO_ENV_ARG_DECL_WITH_DEFAULTS
@@ -3268,7 +3271,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         PortableServer::POA::ObjectAlreadyActive,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual void deactivate_object (
         const PortableServer::ObjectId & oid TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -3277,7 +3280,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         PortableServer::POA::ObjectNotActive,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual CORBA::Object_ptr create_reference (
         const char * intf TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -3285,7 +3288,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual CORBA::Object_ptr create_reference_with_id (
         const PortableServer::ObjectId & oid,
         const char * intf TAO_ENV_ARG_DECL_WITH_DEFAULTS
@@ -3294,7 +3297,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual ::PortableServer::ObjectId * servant_to_id (
         PortableServer::Servant p_servant TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -3303,7 +3306,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         PortableServer::POA::ServantNotActive,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual CORBA::Object_ptr servant_to_reference (
         PortableServer::Servant p_servant TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -3312,7 +3315,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         PortableServer::POA::ServantNotActive,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual ::PortableServer::Servant reference_to_servant (
         CORBA::Object_ptr reference TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -3322,7 +3325,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         PortableServer::POA::WrongAdapter,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual ::PortableServer::ObjectId * reference_to_id (
         CORBA::Object_ptr reference TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -3331,7 +3334,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         PortableServer::POA::WrongAdapter,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual ::PortableServer::Servant id_to_servant (
         const PortableServer::ObjectId & oid TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -3340,7 +3343,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         PortableServer::POA::ObjectNotActive,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual CORBA::Object_ptr id_to_reference (
         const PortableServer::ObjectId & oid TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -3349,14 +3352,16 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         PortableServer::POA::ObjectNotActive,
         PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     virtual ::CORBA::OctetSeq * id (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+
     virtual ::PortableServer::ObjectId * create_id_for_reference (
         CORBA::Object_ptr the_ref TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -3364,7 +3369,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::NotAGroupObject
       )) = 0;
-    
+
     virtual ::PortableServer::IDs * reference_to_ids (
         CORBA::Object_ptr the_ref TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -3372,7 +3377,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::NotAGroupObject
       )) = 0;
-    
+
     virtual void associate_reference_with_id (
         CORBA::Object_ptr ref,
         const PortableServer::ObjectId & oid TAO_ENV_ARG_DECL_WITH_DEFAULTS
@@ -3381,7 +3386,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::NotAGroupObject
       )) = 0;
-    
+
     virtual void disassociate_reference_with_id (
         CORBA::Object_ptr ref,
         const PortableServer::ObjectId & oid TAO_ENV_ARG_DECL_WITH_DEFAULTS
@@ -3390,58 +3395,60 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::NotAGroupObject
       )) = 0;
-    
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     POA (void);
-    
+
     virtual ~POA (void);
-  
+
   private:
     POA (const POA &);
     void operator= (const POA &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_CURRENT___PTR_CH_)
 #define _PORTABLESERVER_CURRENT___PTR_CH_
-  
+
   class Current;
   typedef Current *Current_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_CURRENT___VAR_CH_)
 #define _PORTABLESERVER_CURRENT___VAR_CH_
-  
+
   class TAO_PortableServer_Export Current_var : public TAO_Base_var
   {
   public:
     Current_var (void); // default constructor
-    Current_var (Current_ptr p) : ptr_ (p) {} 
+    Current_var (Current_ptr p) : ptr_ (p) {}
     Current_var (const Current_var &); // copy constructor
     ~Current_var (void); // destructor
-    
+
     Current_var &operator= (Current_ptr);
     Current_var &operator= (const Current_var &);
     Current_ptr operator-> (void) const;
-    
+
     operator const Current_ptr &() const;
     operator Current_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     Current_ptr in (void) const;
     Current_ptr &inout (void);
     Current_ptr &out (void);
     Current_ptr _retn (void);
     Current_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static Current_ptr tao_duplicate (Current_ptr);
@@ -3452,7 +3459,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         TAO_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     Current_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -3462,11 +3469,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_CURRENT___OUT_CH_)
 #define _PORTABLESERVER_CURRENT___OUT_CH_
-  
+
   class TAO_PortableServer_Export Current_out
   {
   public:
@@ -3479,18 +3486,18 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
     operator Current_ptr &();
     Current_ptr &ptr (void);
     Current_ptr operator-> (void);
-  
+
   private:
     Current_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_PORTABLESERVER_CURRENT_CH_)
 #define _PORTABLESERVER_CURRENT_CH_
-  
+
   class TAO_PortableServer_Export Current
     : public virtual CORBA::Current
   {
@@ -3501,56 +3508,56 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static Current_ptr _duplicate (Current_ptr obj);
-    
+
     static Current_ptr _narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static Current_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         TAO_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static Current_ptr _nil (void)
       {
         return (Current_ptr)0;
       }
-    
-    
+
+
 #if !defined (_PORTABLESERVER_CURRENT_NOCONTEXT_CH_)
 #define _PORTABLESERVER_CURRENT_NOCONTEXT_CH_
-    
+
     class TAO_PortableServer_Export NoContext : public CORBA::UserException
     {
     public:
-      
+
       NoContext (void);
       // Default constructor.
-      
+
       NoContext (const NoContext &);
       // Copy constructor.
-      
+
       ~NoContext (void);
       // Destructor.
-      
+
       NoContext &operator= (const NoContext &);
-      
+
       virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         ) const;
-      
+
       virtual void _tao_decode (
           TAO_InputCDR &
           TAO_ENV_ARG_DECL_NOT_USED
         );
-      
+
       static NoContext *_downcast (CORBA::Exception *);
 
 
@@ -3560,7 +3567,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 
 
 #endif /* end #if !defined */
-    
+
     virtual ::PortableServer::POA_ptr get_POA (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
@@ -3568,7 +3575,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::Current::NoContext
       )) = 0;
-    
+
     virtual ::PortableServer::ObjectId * get_object_id (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
@@ -3576,29 +3583,29 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
         CORBA::SystemException,
         PortableServer::Current::NoContext
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     Current (void);
-    
+
     virtual ~Current (void);
-  
+
   private:
     Current (const Current &);
     void operator= (const Current &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS char *ObjectId_to_string (const PortableServer::ObjectId &id);
   TAO_NAMESPACE_STORAGE_CLASS CORBA::WChar *ObjectId_to_wstring (const PortableServer::ObjectId &id);
   TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId *string_to_ObjectId (const char *id);
   TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId *wstring_to_ObjectId (const CORBA::WChar *id);
-  
+
 }
 TAO_NAMESPACE_CLOSE // module PortableServer
 
@@ -3616,6 +3623,8 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, const PortableServer::NotAGroupObject &); // copying version
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::NotAGroupObject*); // noncopying version
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::NotAGroupObject *&); // deprecated
@@ -3624,9 +3633,6 @@ TAO_PortableServer_Export void operator<<= (CORBA::Any &, const PortableServer::
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::IDs*); // noncopying version
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::IDs *&); // deprecated
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableServer::IDs *&);
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ThreadPolicyValue);
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ThreadPolicyValue &);
 
@@ -3674,9 +3680,10 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableSer
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::NotAGroupObject &);
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::NotAGroupObject &);
-
 
 #if !defined _TAO_CDR_OP_PortableServer_IDs_H_
 #define _TAO_CDR_OP_PortableServer_IDs_H_
@@ -3692,27 +3699,25 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_PortableServer_IDs_H_ */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ThreadPolicyValue &); // 
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ThreadPolicyValue &); //
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ThreadPolicyValue &);
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::LifespanPolicyValue &); // 
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::LifespanPolicyValue &); //
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::LifespanPolicyValue &);
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::IdUniquenessPolicyValue &); // 
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::IdUniquenessPolicyValue &); //
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::IdUniquenessPolicyValue &);
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::IdAssignmentPolicyValue &); // 
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::IdAssignmentPolicyValue &); //
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::IdAssignmentPolicyValue &);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ImplicitActivationPolicyValue &); // 
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ImplicitActivationPolicyValue &); //
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ImplicitActivationPolicyValue &);
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ServantRetentionPolicyValue &); // 
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ServantRetentionPolicyValue &); //
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ServantRetentionPolicyValue &);
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::RequestProcessingPolicyValue &); // 
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::RequestProcessingPolicyValue &); //
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::RequestProcessingPolicyValue &);
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

@@ -430,7 +430,7 @@ TAO_UIPMC_Profile::endpoint_count (void)
 }
 
 char *
-TAO_UIPMC_Profile::to_string (TAO_ENV_ARG_DECL_NOT_USED)
+TAO_UIPMC_Profile::to_string (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // @@ Frank: Update to pull out GroupID information...
 

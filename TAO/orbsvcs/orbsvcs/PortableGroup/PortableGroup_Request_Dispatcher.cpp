@@ -18,7 +18,7 @@ void
 PortableGroup_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
                                             TAO_ServerRequest &request,
                                             CORBA::Object_out forward_to
-                                            TAO_ENV_ARG_PARAMETER)
+                                            TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check if the request contains a tagged profile
@@ -36,10 +36,10 @@ PortableGroup_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
         {
           // Got a group.  Dispatch based on the group ID
           this->group_map_.dispatch (&group,
-                                  orb_core,
-                                  request,
-                                  forward_to
-                                  TAO_ENV_ARG_PARAMETER);
+                                     orb_core,
+                                     request,
+                                     forward_to
+                                     TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           return;
@@ -55,4 +55,3 @@ PortableGroup_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
                                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
-
