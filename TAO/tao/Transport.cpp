@@ -782,8 +782,8 @@ TAO_Transport::generate_request_header (
 
 int
 TAO_Transport::handle_input_i (ACE_HANDLE h,
-                               ACE_Time_Value *max_wait_time,
-                               int block)
+                               ACE_Time_Value * max_wait_time,
+                               int /*block*/)
 {
   // The buffer on the stack which will be used to hold the input
   // messages
@@ -806,7 +806,8 @@ TAO_Transport::handle_input_i (ACE_HANDLE h,
   // the stack.
   ssize_t n =
     this->recv (message_block.rd_ptr (),
-                message_block.space ());
+                message_block.space (),
+                max_wait_time);
 
   // Now the message has been read
   if (n == -1 && TAO_debug_level > 0)

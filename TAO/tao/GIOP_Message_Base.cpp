@@ -18,7 +18,7 @@
 ACE_RCSID (tao, GIOP_Message_Base, "$Id$")
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
-                                              size_t input_cdr_size)
+                                              size_t /*input_cdr_size*/)
   : message_state_ (orb_core,
                     this),
     output_ (0),
@@ -59,7 +59,7 @@ TAO_GIOP_Message_Base::init (CORBA::Octet major,
 
 
 void
-TAO_GIOP_Message_Base::reset (int reset_flag)
+TAO_GIOP_Message_Base::reset (int /*reset_flag*/)
 {
   // Reset the message state
   //  this->message_handler_.reset (reset_flag);
@@ -181,7 +181,7 @@ TAO_GIOP_Message_Base::generate_reply_header (
 
 
 int
-TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
+TAO_GIOP_Message_Base::read_message (TAO_Transport * /*transport*/,
                                      int /*block */,
                                      ACE_Time_Value * /*max_wait_time*/)
 {
@@ -436,7 +436,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   char *ptr = incoming.rd_ptr ();
 
   this->dump_msg ("recv",
-                  ACE_reinterpret_cast (u_char *, data),
+                  ACE_reinterpret_cast (u_char *, ptr),
                   incoming.length ());
   // Create a input CDR stream.
   // NOTE: We use the same data block in which we read the message and

@@ -80,8 +80,9 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
   if (this->more_fragments_)
     {
       // Parse the
-      int retval = this->parse_fragment_header (buf,
-                                                incoming.length ());
+      /*int retval = */
+      this->parse_fragment_header (buf,
+                                   incoming.length ());
     }
 
   // The GIOP header has been parsed. Set the status to wait for
