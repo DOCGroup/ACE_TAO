@@ -206,7 +206,8 @@ ORB_CORE_FILES = \
   BoundsC \
   TAOC \
   TAOS \
-  Object_Loader
+  Object_Loader \
+  FT_CORBAC
 
 DYNAMIC_ANY_FILES =
 

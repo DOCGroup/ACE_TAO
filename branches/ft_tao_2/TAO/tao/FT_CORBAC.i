@@ -1365,6 +1365,9 @@ FT_HeartbeatEnabledPolicy_out::operator-> (void)
   return this->ptr_;
 }
 
+//***************************************************
+// Insertion and extraction operators
+//***************************************************
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::TagFTGroupTaggedComponent &_tao_aggregate)
 {
   if (
