@@ -140,19 +140,22 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "_ =" << be_idt_nl
           << "::" << node->full_remote_proxy_broker_name () << "::"
           << "the" << node->remote_proxy_broker_name ()
-          << " ();" << be_uidt << be_uidt << be_nl << be_nl;
+          << " ();" << be_uidt << be_uidt;
 
       // Now we setup the immediate parents.
       int n_parents = node->n_inherits ();
 
       if (n_parents > 0)
         {
+          *os << be_nl;
+
           for (int i = 0; i < n_parents; i++)
             {
               be_interface *inherited =
                 be_interface::narrow_from_decl (node->inherits ()[i]);
 
-              *os << "this->" << inherited->flat_name ()
+              *os << be_nl
+                  << "this->" << inherited->flat_name ()
                   << "_setup_collocation" << " (collocated);";
 
               if (i == n_parents - 1)
@@ -164,6 +167,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                   *os << be_nl;
                 }
             }
+        }
+      else
+        {
+          *os << be_uidt_nl;
         }
 
       *os << "}" << be_nl << be_nl;

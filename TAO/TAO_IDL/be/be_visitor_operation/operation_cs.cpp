@@ -147,7 +147,17 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
   if (!this->void_return_type (bt))
     {
-      *os << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
+      *os << "ACE_CHECK_RETURN (";
+
+      AST_Type *rt = node->return_type ();
+      bt = be_type::narrow_from_decl (rt);
+
+      if (bt->base_node_type () == AST_Decl::NT_enum)
+        {
+          *os << "(" << bt->name () << ")";
+        }
+      
+      *os << "0);" << be_nl << be_nl
           << "return ";
     }
   else
