@@ -43,11 +43,11 @@ public:
     ACE_FLUSHDATA  = 02,
     /// Flush all messages in the Queue.
     ACE_FLUSHALL   = 04,
-    /// flush read queue
+    /// Flush read queue
     ACE_FLUSHR     = 010,
-    /// flush write queue
+    /// Flush write queue
     ACE_FLUSHW     = 020,
-    /// flush both queues
+    /// Flush both queues
     ACE_FLUSHRW    = 030
   };
 };
@@ -83,7 +83,7 @@ public:
 
   /**
    * Hook called from <ACE_Thread_Exit> when during thread exit and from
-   * the default implemenation of <module_closed>.  In general, this
+   * the default implementation of <module_closed>.  In general, this
    * method shouldn't be called directly by an application,
    * particularly if the <Task> is running as an Active Object.
    * Instead, a special message should be passed into the <Task> via
@@ -155,7 +155,7 @@ public:
    * handles being spawned.  Returns -1 on failure (<errno> will
    * explain...), otherwise returns the group id of the threads.
    *
-   * Assigning <task> allows you to associate the newly spwaned
+   * Assigning <task> allows you to associate the newly spawned
    * threads with an instance of ACE_Task_Base.  If <task> == 0, then
    * the new threads are associated automatically with <this>
    * ACE_Task_Base.  Setting the <task> argument to value other than
@@ -199,7 +199,7 @@ public:
   /// Set the current group id.
   void grp_id (int);
 
-  /// Gets the thread manager associated with this Task.
+  /// Get the thread manager associated with this Task.
   ACE_Thread_Manager *thr_mgr (void) const;
 
   /// Set the thread manager associated with this Task.
