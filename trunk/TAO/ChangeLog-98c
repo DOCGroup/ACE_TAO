@@ -1,3 +1,9 @@
+Thu Mar  5 19:54:27 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: bind_context, rebind,
+ 	and bind were fixed to handle errors more carefully.  Thanks to
+ 	Mark Boriack for pointing this out.
+	
 Thu Mar  5 18:15:32 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/giop.cpp: Removed crufty unused code.
