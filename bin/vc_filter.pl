@@ -21,6 +21,7 @@ $in_sin_e = "</FONT>";
 
 $new_build_b = "<P>";
 $new_build_e = "";
+$line_break = "<BR>";
 
 while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ )
 {
@@ -36,6 +37,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ )
 
         $new_build_b = "\n\n";
         $new_build_e = "";
+        $line_break = "";
     }
     else
     {
@@ -53,22 +55,22 @@ print $header ;
 
 restart: while ($line = <fp>)
 {
-    print "$new_build_b $line $new_build_e<BR>" if ($line =~/^--------------------Configuration:/);
+    print "$new_build_b $line $new_build_e $line_break" if ($line =~/^--------------------Configuration:/);
 
     if ($line =~ /(^[A-Z_a-z0-9.]+ - [0-9]+ error\(s\), +[0-9]+ warning\(s\))|(LNK4089)/)
     {
         if ($line =~ /(0 error\(s\), 0 warning\(s\))|(LNK4089)/)
         {
-            print "$kosher_b $line $kosher_e<BR>";
+            print "$kosher_b $line $kosher_e $line_break";
         }
         else
         {
-            print "$in_sin_b $line $in_sin_e<BR>";
+            print "$in_sin_b $line $in_sin_e $line_break";
         }
         next restart;
     }
 
-    print "$in_sin_b $line $in_sin_e<BR>"
+    print "$in_sin_b $line $in_sin_e $line_break"
         if ($line =~/^[-A-Z_a-z0-9.\/\\:]+\([0-9]+\) : / ||
             $line =~/^[-A-Z_a-z0-9.\/\\:]+.*, line [0-9]+: / ||
             $line =~/^[-A-Z_a-z0-9.\\:]+\.obj : / ||
