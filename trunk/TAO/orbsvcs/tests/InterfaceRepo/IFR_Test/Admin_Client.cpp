@@ -3073,7 +3073,7 @@ Admin_Client::module_test (CORBA::Environment &ACE_TRY_ENV)
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("\nInterfaceDef::move (into outer module\n")));
+                ACE_TEXT ("\nInterfaceDef::move (into outer module)\n")));
 
   cseq = this->repo_->lookup_name ("op", 
                                    -1, 
