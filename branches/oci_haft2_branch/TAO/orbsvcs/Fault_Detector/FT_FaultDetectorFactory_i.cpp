@@ -311,7 +311,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "ReplicaFactory: Exception resolving ReplicationManager, and no -f option was given.  Factory will not be registered.\n" );
+        "ReplicaFactory: Exception resolving ReplicationManager.  Factory will not be registered.\n" );
     }
     ACE_ENDTRY;
   }
@@ -524,7 +524,6 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   int missingParameter = 0;
   const char * missingParameterName = 0;
 
-#if 1 // PG_FIND
   FT::FaultNotifier_ptr notifier;
   if (! ::TAO_PG::find (decoder, ::FT::FT_NOTIFIER, notifier) )
   {
@@ -595,7 +594,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   }
   else
   {
-    object_type = "unknown";
+    object_type = ACE_const_cast (char *, "unknown");
     // Not required: missingParameter = 1;
     ACE_DEBUG ((LM_DEBUG, "Object type not given.\n"));
   }
@@ -605,103 +604,6 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   {
     // Not required: missingParameter = 1;
   }
-#else // PG_FIND
-
-  PortableGroup::Value * any;
-
-  FT::FaultNotifier_ptr notifier (0);
-  if ( decoder.find (FT::FT_NOTIFIER, any))
-  {
-    if ((*any) >>= notifier)
-    {
-      if (! CORBA::is_nil (this->notifier_.in ()))
-      {
-        notifier = FT::FaultNotifier::_duplicate (this->notifier_.in ());
-      }
-      else
-      {
-        ACE_ERROR ((LM_ERROR,
-          "FaultDetectorFactory::create_object: Nil parameter %s\n",
-          ::FT::FT_NOTIFIER
-          ));
-        missingParameter = 1;
-        missingParameterName = ::FT::FT_NOTIFIER;
-      }
-    }
-    else
-    {
-      ACE_ERROR ((LM_ERROR,
-        "FaultDetectorFactory::create_object: Wrong type parameter %s\n",
-        ::FT::FT_NOTIFIER
-        ));
-      missingParameter = 1;
-      missingParameterName = ::FT::FT_NOTIFIER;
-    }
-  }
-  else
-  {
-    ACE_ERROR ((LM_ERROR,
-      "FaultDetectorFactory::create_object: Missing parameter %s\n",
-      ::FT::FT_NOTIFIER
-      ));
-    missingParameter = 1;
-    missingParameterName = ::FT::FT_NOTIFIER;
-  }
-
-  FT::PullMonitorable_ptr monitorable (0);
-  if ( decoder.find (FT::FT_MONITORABLE, any))
-  {
-    if (! ((*any) >>= monitorable))
-    {
-      ACE_ERROR ((LM_ERROR,
-        "FaultDetectorFactory::create_object: Wrong type parameter %s\n",
-        ::FT::FT_MONITORABLE
-        ));
-      missingParameter = 1;
-      missingParameterName = ::FT::FT_MONITORABLE;
-    }
-  }
-  else
-  {
-    ACE_ERROR ((LM_ERROR,
-      "FaultDetectorFactory::create_object: Missing parameter %s\n",
-      ::FT::FT_MONITORABLE
-      ));
-    missingParameter = 1;
-    missingParameterName = ::FT::FT_MONITORABLE;
-  }
-
-  FT::FTDomainId domain_id = this->domain_;
-  if ( decoder.find (FT::FT_DOMAIN_ID, any))
-  {
-    if (! ((*any) >>= domain_id))
-    {
-      ACE_ERROR ((LM_ERROR,
-        "FaultDetectorFactory::create_object: Wrong type parameter %s\n",
-        ::FT::FT_DOMAIN_ID
-        ));
-    }
-  }
-
-  FT::Location * object_location = & this->location_;
-  if ( decoder.find (FT::FT_LOCATION, any))
-  {
-    (*any) >>= object_location;
-  }
-
-  FT::TypeId object_type = "unknown";
-  if ( decoder.find (FT::FT_LOCATION, any))
-  {
-    (*any) >>= object_type;
-  }
-
-  FT::ObjectGroupId group_id = 0;
-  if ( decoder.find (FT::FT_GROUP_ID, any))
-  {
-    (*any) >>= group_id;
-  }
-#endif // PG_FIND
-
 
   if (missingParameter)
   {
