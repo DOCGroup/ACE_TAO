@@ -91,6 +91,7 @@ OBJFILES = \
    $(OBJDIR)\Framework_Component.obj \
    $(OBJDIR)\Free_List.obj \
    $(OBJDIR)\Functor.obj \
+   $(OBJDIR)\Functor_String.obj \
    $(OBJDIR)\Future.obj \
    $(OBJDIR)\Future_Set.obj \
    $(OBJDIR)\Get_Opt.obj \
