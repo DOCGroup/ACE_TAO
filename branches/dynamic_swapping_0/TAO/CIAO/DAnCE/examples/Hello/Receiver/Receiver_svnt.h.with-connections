@@ -32,6 +32,7 @@
 #include "ciao/Container_Base.h"
 #include "ciao/Swapping_Container.h"
 #include "ciao/Servant_Impl_T.h"
+#include "ciao/Home_Servant_Impl_Base.h"
 #include "ciao/Context_Impl_T.h"
 #include "ciao/Home_Servant_Impl_T.h"
 #include "ciao/Swapping_Servant_Home_Impl_T.h"
@@ -67,7 +68,7 @@ namespace Receiver_Impl
 
       Receiver_Context (
       ::Components::CCMHome_ptr home,
-      ::CIAO::Swapping_Container *c,
+      ::CIAO::Session_Container *c,
       Receiver_Servant *sv);
 
       virtual ~Receiver_Context (void);
@@ -135,7 +136,8 @@ namespace Receiver_Impl
       Receiver_Servant (
       ::Hello::CCM_Receiver_ptr executor,
       ::Components::CCMHome_ptr home,
-      ::CIAO::Swapping_Container *c);
+      ::CIAO::Home_Servant_Impl_Base *home_servant,
+      ::CIAO::Session_Container *c);
 
       virtual ~Receiver_Servant (void);
 
@@ -331,7 +333,7 @@ namespace Receiver_Impl
 
       ReceiverHome_Servant (
       ::Hello::CCM_ReceiverHome_ptr exe,
-      ::CIAO::Swapping_Container *c);
+      ::CIAO::Session_Container *c);
 
       virtual ~ReceiverHome_Servant (void);
 
@@ -345,7 +347,7 @@ namespace Receiver_Impl
     extern "C" RECEIVER_SVNT_Export ::PortableServer::Servant
     createReceiverHome_Servant (
     ::Components::HomeExecutorBase_ptr p,
-    CIAO::Swapping_Container *c
+    CIAO::Session_Container *c
     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   }
 }

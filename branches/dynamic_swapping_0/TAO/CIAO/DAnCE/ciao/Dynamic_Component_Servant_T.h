@@ -44,12 +44,21 @@ namespace CIAO
 
     virtual ~Dynamic_Component_Servant (void);
 
-    virtual PortableServer::Servant create (void);
+    virtual PortableServer::Servant 
+      create (PortableServer::ObjectId &oid);
+
+    virtual void destroy (PortableServer::ObjectId &oid);
 
   protected:
     Components::EnterpriseComponent_var executor_;
     Home_Servant_Impl_Base *home_servant_;
     Components::CCMHome_var home_;
+    ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
+                            COMP_SVNT *,
+                            TAO_ObjectId_Hash,
+                            ACE_Equal_To<PortableServer::ObjectId>,
+                            ACE_SYNCH_MUTEX>
+      servant_map_;
   };
 }
 

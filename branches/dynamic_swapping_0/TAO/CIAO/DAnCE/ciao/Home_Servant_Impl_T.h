@@ -105,7 +105,7 @@ namespace CIAO
                             TAO_ObjectId_Hash,
                             ACE_Equal_To<PortableServer::ObjectId>,
                             ACE_SYNCH_MUTEX> OBJREF_MAP;
-    typedef OBJREF_MAP::iterator obj_iterator;
+    typedef OBJREF_MAP::iterator OBJ_ITERATOR;
     OBJREF_MAP objref_map_;
   };
 }

@@ -49,11 +49,10 @@ namespace CIAO
                     COMP_EXEC_VAR,
                     COMP_SVNT>::~Home_Servant_Impl (void)
   {
-    // @@ JAI if you have tyedefed something, please use all CAPS.
-    const obj_iterator end =
+    const OBJ_ITERATOR end =
       this->objref_map_.end ();
 
-    for (obj_iterator iter =
+    for (OBJ_ITERATOR iter =
            this->objref_map_.begin ();
          iter != end; ++iter)
       {
