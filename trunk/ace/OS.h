@@ -658,7 +658,7 @@ typedef int key_t;
 //      typedef unsigned char wchar_t;
     #endif
 
-    #include <ace/sys_conf.h> /* system configuration file */
+    #include /**/ <ace/sys_conf.h> /* system configuration file */
     #include /**/ <configs.h>   /* includes all pSOS headers */
 //    #include /**/ <psos.h>    /* pSOS system calls */
     #include /**/ <pna.h>      /* pNA+ TCP/IP Network Manager calls */
