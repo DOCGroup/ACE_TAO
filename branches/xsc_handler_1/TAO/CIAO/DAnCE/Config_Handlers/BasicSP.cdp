@@ -107,9 +107,9 @@
   <implementation id="BasicSP-BMClosedED-mdd">
     <name>BasicSP-BMClosedED-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
-    <artifact>BasicSP-BMClosedED_svnt</artifact>
-    <artifact>BasicSP-BMClosedED_stub</artifact>
-    <artifact>BasicSP-BMClosedED_exec</artifact>
+    <artifact>BasicSP-BMClosedED_DnC_svnt</artifact>
+    <artifact>BasicSP-BMClosedED_DnC_stub</artifact>
+    <artifact>BasicSP-BMClosedED_DnC_exec</artifact>
     <!--
     <execParameter></execParameter>
     <deployRequirement></deployRequirement>
@@ -120,9 +120,9 @@
     <name>BasicSP-BMDevice-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
     
-    <artifact>BasicSP-BMDevice_exec</artifact>
-    <artifact>BasicSP-BMDevice_stub</artifact>
-    <artifact>BasicSP-BMDevice_svnt</artifact>
+    <artifact>BasicSP-BMDevice_DnC_exec</artifact>
+    <artifact>BasicSP-BMDevice_DnC_stub</artifact>
+    <artifact>BasicSP-BMDevice_DnC_svnt</artifact>
     <!--
     <execParameter></execParameter>
     <deployRequirement></deployRequirement>
@@ -132,9 +132,9 @@
   <implementation id="BasicSP-BMDisplay-mdd">
     <name>BasicSP-BMDisplay-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
-    <artifact>BasicSP-BMDisplay_exec</artifact>
-    <artifact>BasicSP-BMDisplay_svnt</artifact>
-    <artifact>BasicSP-BMDisplay_stub</artifact>
+    <artifact>BasicSP-BMDisplay_DnC_exec</artifact>
+    <artifact>BasicSP-BMDisplay_DnC_svnt</artifact>
+    <artifact>BasicSP-BMDisplay_DnC_stub</artifact>
     
     <!--
       <execParameter></execParameter>
@@ -146,9 +146,9 @@
     <name>BasicSP-EC-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
     
-    <artifact>BasicSP-EC_stub</artifact>
-    <artifact>BasicSP-EC_svnt</artifact>
-    <artifact>BasicSP-EC_exec</artifact>
+    <artifact>BasicSP-EC_DnC_stub</artifact>
+    <artifact>BasicSP-EC_DnC_svnt</artifact>
+    <artifact>BasicSP-EC_DnC_exec</artifact>
     
     <!--
       <execParameter></execParameter>
@@ -298,11 +298,11 @@
     </internalEndpoint>
   </connection>
 
-  <artifact id="BasicSP-BMClosedED_exec">
-    <name>BMClosedED_exec</name>
+  <artifact id="BasicSP-BMClosedED_DnC_exec">
+    <name>BMClosedED_DnC_exec</name>
     <source><!-- @@ Not sure about this--></source>
     <node><!-- blank --></node>
-    <location>BMClosedED_exec</location>
+    <location>BMClosedED_DnC_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -318,11 +318,11 @@
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
   
-  <artifact id="BasicSP-BMClosedED_svnt">
-    <name>BMClosedED_svnt</name>
+  <artifact id="BasicSP-BMClosedED_DnC_svnt">
+    <name>BMClosedED_DnC_svnt</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>BMClosedED_svnt</location>
+    <location>BMClosedED_DnC_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -337,20 +337,20 @@
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
   
-  <artifact id="BasicSP-BMClosedED_stub">
-    <name>BMClosedED_stub</name>
+  <artifact id="BasicSP-BMClosedED_DnC_stub">
+    <name>BMClosedED_DnC_stub</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>BMClosedED_stub</location>
+    <location>BMClosedED_DnC_stub</location>
     
      <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
   
-  <artifact id="BasicSP-BMDevice_exec">
-    <name>BMDevice_exec</name>
+  <artifact id="BasicSP-BMDevice_DnC_exec">
+    <name>BMDevice_DnC_exec</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>BMDevice_exec</location>
+    <location>BMDevice_DnC_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -365,19 +365,19 @@
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
   
-  <artifact id="BasicSP-BMDevice_stub">
-    <name>BMDevice_stub</name>
+  <artifact id="BasicSP-BMDevice_DnC_stub">
+    <name>BMDevice_DnC_stub</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>BMDevice_stub</location>
+    <location>BMDevice_DnC_stub</location>
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
   
-  <artifact id="BasicSP-BMDevice_svnt">
-    <name>BMDevice_svnt</name>
+  <artifact id="BasicSP-BMDevice_DnC_svnt">
+    <name>BMDevice_DnC_svnt</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>BMDevice_svnt</location>
+    <location>BMDevice_DnC_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -392,11 +392,11 @@
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
   
-  <artifact id="BasicSP-BMDisplay_exec">
-    <name>BMDisplay_exec</name>
+  <artifact id="BasicSP-BMDisplay_DnC_exec">
+    <name>BMDisplay_DnC_exec</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>BMDisplay_exec</location>
+    <location>BMDisplay_DnC_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -411,11 +411,11 @@
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
   
-  <artifact id="BasicSP-BMDisplay_svnt">
-    <name>BMDisplay_svnt</name>
+  <artifact id="BasicSP-BMDisplay_DnC_svnt">
+    <name>BMDisplay_DnC_svnt</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>BMDisplay_svnt</location>
+    <location>BMDisplay_DnC_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -430,29 +430,29 @@
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
   
-  <artifact id="BasicSP-BMDisplay_stub">
-    <name>BMDisplay_stub</name>
+  <artifact id="BasicSP-BMDisplay_DnC_stub">
+    <name>BMDisplay_DnC_stub</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>BMDisplay_stub</location>
+    <location>BMDisplay_DnC_stub</location>
     
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
   
-  <artifact id="BasicSP-EC_stub">
-    <name>EC_stub</name>
+  <artifact id="BasicSP-EC_DnC_stub">
+    <name>EC_DnC_stub</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>EC_stub</location>
+    <location>EC_DnC_stub</location>
     
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
   
-  <artifact id="BasicSP-EC_svnt">
-    <name>EC_svnt</name>
+  <artifact id="BasicSP-EC_DnC_svnt">
+    <name>EC_DnC_svnt</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>EC_svnt</location>
+    <location>EC_DnC_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -467,11 +467,11 @@
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
   
-  <artifact id="BasicSP-EC_exec">
-    <name>EC_exec</name>
+  <artifact id="BasicSP-EC_DnC_exec">
+    <name>EC_DnC_exec</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>EC_exec</location>
+    <location>EC_DnC_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
