@@ -34,7 +34,7 @@ void
 Payload_Receiver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown ();
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
 
