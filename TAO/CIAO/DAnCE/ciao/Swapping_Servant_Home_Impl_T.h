@@ -32,6 +32,7 @@ namespace CIAO
 {
   class Session_Container;
 
+
   /**
    * @class Swapping_Servant_Impl
    *
