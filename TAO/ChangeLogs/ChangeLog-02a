@@ -1,18 +1,28 @@
+Wed Nov  8 16:15:39 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ORB.cpp:
+          Moved registration of the RTCORBA and Messaging Policy Factories
+          to the init_orb_globals() method.  This is something that should
+          happen only once.
+
+        * orbsvcs/IFR_Service/Makefile.IFR_Service:
+          Add TypeCodeFactory_DLL to the LDLIBS.
+
 Wed Nov  8 17:49:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Accept_State.cpp :
-	* tao/GIOP_Message_Connectors.cpp:
-	* tao/TAO_Server_Request.h:
-	* tao/TAO_Server_Request.i: Made the following minor changes in
-	  accordance with the CORBA 2.4 spec. 
-	  
-	  (1) The CORBA::Principal in the GIOP 1.0 & GIOP 1.1 request
-	  header is now changed to CORBA::OctetSeq in the CORBA 2.4
-	  spec. This change has been incorporated.
+        * tao/GIOP_Message_Accept_State.cpp :
+        * tao/GIOP_Message_Connectors.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.i: Made the following minor changes in
+          accordance with the CORBA 2.4 spec.
 
-	  (2) Finally, the response_flags field in the request header has
-	  been well defined for the Sync Scope in the Messaging spec. The
-	  changes have also been incorporated.
+          (1) The CORBA::Principal in the GIOP 1.0 & GIOP 1.1 request
+          header is now changed to CORBA::OctetSeq in the CORBA 2.4
+          spec. This change has been incorporated.
+
+          (2) Finally, the response_flags field in the request header has
+          been well defined for the Sync Scope in the Messaging spec. The
+          changes have also been incorporated.
 
 Wed Nov  8 11:05:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -60,7 +70,7 @@ Wed Nov  8 11:05:37 2000  Darrell Brunsch <brunsch@uci.edu>
         * tests/DSI_Gateway/DSI_Gateway_Service.dsp:
 
           Disabled Precompiled headers and fixed library paths.
-          
+
 Wed Nov  8 11:02:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/LifeCycle_Service/Makefile:
