@@ -48,7 +48,9 @@ return ( (errno = ENOTSUP), FAILVALUE)
 
 /* Should later be made to work on non win32 platforms! */
 #if defined (PACE_WIN32)
+
 #include <windows.h>
+
 // Perform a mapping of Win32 error numbers into POSIX errnos.
 # define PACE_FAIL_RETURN(RESULT) do { \
   switch (GetLastError ()) { \
@@ -59,6 +61,17 @@ return ( (errno = ENOTSUP), FAILVALUE)
   } \
   return RESULT; } while (0)
 
-#endif
+// The "null" device on Win32.
+# define PACE_DEV_NULL "nul"
+
+// Define the pathname separator characters for Win32 (ugh).
+# define PACE_DIRECTORY_SEPARATOR_STR "\\"
+# define PACE_DIRECTORY_SEPARATOR_CHAR '\\'
+# define PACE_LD_SEARCH_PATH "PATH"
+# define PACE_LD_SEARCH_PATH_SEPARATOR_STR ";"
+# define PACE_DLL_SUFFIX ".dll"
+# define PACE_DLL_PREFIX ""
+
+#endif /* PACE_WIN32 */
 
 #endif /* PACE_CONFIG_UTILITY_H */
