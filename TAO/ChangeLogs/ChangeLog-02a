@@ -1,3 +1,9 @@
+Wed Mar  1 09:59:46 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	  Removed redundant generation of an ACE_CHECK statement,
+	  found as a byproduct of looking for another bug.
+
 Tue Feb 29 16:44:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/CDR/Makefile:
