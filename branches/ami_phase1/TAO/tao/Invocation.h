@@ -31,7 +31,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/GIOP.h"
 #include "tao/Any.h"
-#include "tao/IIOP_Reply_Dispatcher.h"
+#include "tao/Reply_Dispatcher.h"
 
 struct TAO_Exception_Data;
 class TAO_Profile;
