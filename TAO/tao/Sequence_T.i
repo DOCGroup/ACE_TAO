@@ -149,7 +149,7 @@ TAO_Bounded_Sequence<T, MAX>::replace (CORBA::ULong max,
   this->maximum_ = max;
   this->length_ = length;
   if (this->buffer_ && this->release_ == CORBA::B_TRUE)
-    TAO_Bounded_Sequence<T, MAX>::freebuf (this->buffer_);
+    TAO_Bounded_Sequence<T, MAX>::freebuf ((T *) this->buffer_);
   this->buffer_ = data;
   this->release_ = release;
 }
@@ -271,18 +271,18 @@ TAO_Bounded_Object_Sequence<T,MAX>::~TAO_Bounded_Object_Sequence (void)
 template <class T, CORBA::ULong MAX> ACE_INLINE
 TAO_Bounded_Object_Sequence<T,MAX>::
 TAO_Bounded_Object_Sequence (CORBA::ULong length,
-                             T* *value,
+                             T **value,
                              CORBA::Boolean release)
   : TAO_Bounded_Base_Sequence (MAX, length, value, release)
 {
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE TAO_Object_Manager<T>
-TAO_Bounded_Object_Sequence<T,MAX>::operator[] (CORBA::ULong index) const
+TAO_Bounded_Object_Sequence<T, MAX>::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
-  T** const tmp = ACE_reinterpret_cast (T** const, this->buffer_);
-  return Manager(tmp + index, this->release_);
+  T **const tmp = ACE_reinterpret_cast (T **const, this->buffer_);
+  return Manager (tmp + index, this->release_);
 }
 
 // *************************************************************
@@ -298,7 +298,7 @@ TAO_Bounded_String_Sequence<MAX>::~TAO_Bounded_String_Sequence (void)
 template<CORBA::ULong MAX> ACE_INLINE
 TAO_Bounded_String_Sequence<MAX>::
 TAO_Bounded_String_Sequence (CORBA::ULong length,
-                             char* *value,
+                             char **value,
                              CORBA::Boolean release)
   : TAO_Bounded_Base_Sequence (MAX, length, value, release)
 {
@@ -308,6 +308,6 @@ template<CORBA::ULong MAX> ACE_INLINE TAO_String_Manager
 TAO_Bounded_String_Sequence<MAX>::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
-  char** const tmp = ACE_reinterpret_cast (char** const, this->buffer_);
-  return Manager(tmp + index, this->release_);
+  char **const tmp = ACE_reinterpret_cast (char **const, this->buffer_);
+  return Manager (tmp + index, this->release_);
 }

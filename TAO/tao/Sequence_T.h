@@ -28,6 +28,7 @@ class TAO_Unbounded_Sequence : public TAO_Unbounded_Base_Sequence
   //   for the unbounded case.
 public:
   // = Initialization and termination methods.
+  typedef TAO_Object_Manager<T> Manager;
 
   TAO_Unbounded_Sequence (void);
   // Default constructor.
@@ -126,6 +127,8 @@ class TAO_Bounded_Sequence : public TAO_Bounded_Base_Sequence
   //   This class completes the implementation for TAO_Base_Sequence
   //   for the bounded case.
 public:
+  typedef TAO_Object_Manager<T> Manager;
+
   // = Initialization and termination methods.
   TAO_Bounded_Sequence (void);
   // Default constructor.
@@ -255,13 +258,13 @@ public:
   //    class TAO_Bounded_Object_Sequence<T,MAX>;
 
   // = Initialization and termination methods.
-  TAO_Object_Manager(const TAO_Object_Manager<T> &rhs);
+  TAO_Object_Manager (const TAO_Object_Manager<T> &rhs);
   // Copy constructor, the semantics are non-trivial:
   //   + The referenced element is duplicated or not according to the
   //   release value on the <rhs>.
   //   + In any case a new reference to the same object is created.
 
-  TAO_Object_Manager(T**, CORBA::Boolean release);
+  TAO_Object_Manager (T **, CORBA::Boolean release);
   // Constructor from address of an element, it should be private and
   // only TAO_*_Object_Sequence would use it, but we have some
   // problems with friendship and templates.
@@ -313,8 +316,6 @@ class TAO_Unbounded_Object_Sequence : public TAO_Unbounded_Base_Sequence
   // constructor, an assignment operator, and a destructor.
   //
 public:
-  typedef TAO_Object_Manager<T> Manager;
-
   // = Initialization and termination methods.
 
   TAO_Unbounded_Object_Sequence (void);
@@ -426,8 +427,6 @@ class TAO_Bounded_Object_Sequence : public TAO_Bounded_Base_Sequence
   //   class, in charge of handling the object lifetime, examples are
   //   pseudo objects, object references and strings.
 public:
-  typedef TAO_Object_Manager<T> Manager;
-
   // = Initialization and termination methods.
 
   TAO_Bounded_Object_Sequence (void);
@@ -506,7 +505,7 @@ public:
   // using the sequence  allocbuf function, and the sequence will pass
   // it to freebuf when finished with it. 
 
-  TAO_Bounded_String_Sequence(const TAO_Bounded_String_Sequence<MAX> &);
+  TAO_Bounded_String_Sequence (const TAO_Bounded_String_Sequence<MAX> &);
   // {SPEC}
   // Management Functions'' on page 16. The copy constructor creates a
   // new sequence with the same maximum and length as the given
@@ -528,7 +527,7 @@ public:
   TAO_String_Manager operator[] (CORBA::ULong index) const;
   // read-write accessor
 
-  static char* *allocbuf (CORBA::ULong length);
+  static char **allocbuf (CORBA::ULong length);
   // {SPEC}
   // The allocbuf function allocates a vector of T elements that can
   // be passed to the T *data constructor. The length of the vector is
