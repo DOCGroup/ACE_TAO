@@ -78,11 +78,6 @@ ifeq (1,$(stdcpplib))
 #  exceptions = 1
 endif
 
-ifeq (05,$(CXXMAJORVERS))
-  # Warnings about binary incompatiblity
-  CCFLAGS += +W1016,1031
-endif
-
 # Set the appropriate preprocessor defs for threading based on OS version
 # and specified compiler options.
 ifeq ($(threads),1)
@@ -115,18 +110,26 @@ endif
 ifeq (03,$(CXXMAJORVERS))
   # Suppress Warning 302 ((...) parameter list is a non-portable feature)
   CCFLAGS                += +W302
-endif
-CPPFLAGS	+= $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE
 
-ifeq (03,$(CXXMAJORVERS))
   ifeq (57,$(CXXMINORVERS))
     # aCC 3.57 has a bug. When a class has private constructors
     # and is trying to be created from a friend class we end up with
     # a compile error. We disable array optimization in the compiler
-    # by setting this environment variable.
+    # by setting this environment variable. HP CR JAGaf43094
+    export aCC_ARRAY_OPT=OFF
+  endif
+  ifeq (60,$(CXXMINORVERS))
+    # Same bug as above
     export aCC_ARRAY_OPT=OFF
   endif
 endif
+
+ifeq (05,$(CXXMAJORVERS))
+  # Warnings about binary incompatiblity
+  CCFLAGS += +W1016,1031
+endif
+
+CPPFLAGS        += $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE
 
 # If exception support is explicitly disabled, tell the compiler.
 # This is not recommended since the run-time library can throw exceptions.
