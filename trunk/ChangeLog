@@ -1,3 +1,26 @@
+Fri Feb 25 13:49:27 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/POSIX_Asynch_IO.{h cpp}: Added 'const' to all the handler_proxy
+	  references on Result-type constructors.
+	  Removed the ACE_LIB_TEXT around strings to ACE_TRACE.
+	  ACE_TRACE adds the ACE_LIB_TEXT.
+	  (Asynch_Accept::handle_close()): This can be called if the
+	  listen handle gets closed in addition to when the pseudo task
+	  is being destroyed. Mark the handle invalid.
+
+	* ace/WIN32_Asynch_IO.{h cpp}: Added 'const' to all the handler_proxy
+	  references on Result-type constructors.
+	  (accept): Corrected function name in message.
+	  (ACE_WIN32_Asynch_Accept_Result::complete): If the accept failed,
+	  be sure to close the accept handle created in accept().
+
+	* ace/Asynch_Pseudo_Task.cpp: Removed return value -2 to signify
+	  task shutting down, and return -1/errno = ESHUTDOWN instead.
+	  Secret values like -2 make maintenance harder.
+	  Also removed some of the ACE_ERROR() statements in favor of
+	  setting a reasonable errno value. Lets callers know what's going
+	  on in the code, not just show it in diagnostic output.
+
 Fri Feb 25 07:08:35 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/SOCK_Dgram_Bcast.cpp:
