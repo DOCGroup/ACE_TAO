@@ -24,8 +24,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
 #include "Cubit_Client.h"
 #include "Cubit_i.h"
 
@@ -59,33 +57,15 @@ private:
   int parse_args (void);
   // Parses the commandline arguments.
 
-  int init_naming_service (CORBA::Environment &env);
-  // Initialises the name server and registers cubit factory with the
-  // name server.
-
-  int use_naming_service_;
-  //Flag to tell server not to use the TAO Naming Service to register
-  //the cubit factory.
-
   FILE* ior_output_file_;
   // File to output the cubit factory IOR.
 
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
 
-  TAO_Naming_Server my_name_server_;
-  // An instance of the name server used for registering the factory
-  // objects.
-
   Cubit_Factory_i *factory_impl_;
   // Implementation object of the cubit factory.
        
-  CosNaming::NamingContext_var cubit_context_;
-  // Naming context for the cubit_factory.
-
-  CosNaming::NamingContext_var naming_context_;
-  // Naming context for the Naming Service.
-
   int argc_;
   // Number of commandline arguments.
 
