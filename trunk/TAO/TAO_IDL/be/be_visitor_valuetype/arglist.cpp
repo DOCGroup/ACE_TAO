@@ -93,29 +93,52 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
+  int amh_valuetype = is_amh_exception_holder (node);
+
   // Generate the ACE_ENV_ARG_DECL parameter for the alternative mapping.
   if (!be_global->exception_support ())
     {
       // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
       // whether the operation node has parameters.
-      const char *env_decl = (node->argument_count () > 0 ?
-                              " ACE_ENV_ARG_DECL" : "ACE_ENV_SINGLE_ARG_DECL");
-
-      switch (this->ctx_->state ())
+      const char *env_decl;
+      /********************************************************************/
+      // If it is an AMH raise operation, we do not need the Environment 
+      // variable.
+      if (amh_valuetype)
         {
-        case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
-        case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OBV_CH:
-        case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
-          // Last argument - is always ACE_ENV_ARG_DECL.
-          *os << env_decl << "_WITH_DEFAULTS" << be_uidt_nl;
-          break;
-        case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
-          // Last argument - is always ACE_ENV_ARG_DECL.
-          *os << env_decl << be_uidt_nl;
-          break;
-        default:
-          *os << env_decl << be_uidt_nl;
-          break;
+          if (node->argument_count () > 0)
+            env_decl = "ACE_ENV_ARG_DECL_NOT_USED";
+          else
+            env_decl = "ACE_ENV_SINGLE_ARG_DECL_NOT_USED";
+        }
+      /********************************************************************/
+      else
+        {
+          if (node->argument_count () > 0)
+            env_decl = "ACE_ENV_ARG_DECL";
+          else
+            env_decl = "ACE_ENV_SINGLE_ARG_DECL";
+        }
+      *os << env_decl;
+
+      if (!amh_valuetype)
+        {
+          switch (this->ctx_->state ())
+            {
+            case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
+            case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OBV_CH:
+            case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
+              // Last argument - is always ACE_ENV_ARG_DECL.
+              *os << "_WITH_DEFAULTS" << be_uidt_nl;
+              break;
+            case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
+              // Last argument - is always ACE_ENV_ARG_DECL.
+              *os << be_uidt_nl;
+              break;
+            default:
+              *os << be_uidt_nl;
+              break;
+            }
         }
     }
   else
@@ -141,10 +164,12 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
       // Each method is pure virtual in the Valuetype class.
       // BUT, not if it is an AMH ExceptionHolder!
       /***********************************************************/
-      if (is_amh_exception_holder (node))
+      if (amh_valuetype)
         {
-          *os << "{ this->exception->_raise (); }" 
-              << be_uidt_nl;
+          *os << be_uidt_nl
+              << "{ this->exception->_raise (); }" 
+              << be_uidt_nl 
+              << be_nl;
         }
       /***********************************************************/
       else
