@@ -66,13 +66,11 @@ endif
 #----------------------------------------------------------------------------
 
 ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
-  ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
 
 all: Schedule
 
 Schedule: $(addprefix $(VDIR),Schedule.o)
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_RTSched $(VLDLIBS) $(POSTLINK)
-  endif # ACE_HAS_GNUG_PRE_2_8
 
 endif # RTEvent
 

@@ -84,16 +84,6 @@ BIN_UNCHECKED = server client anyop
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
-
-  # Since older g++ cannot handle nested classes properly, this test
-  # will not build on g++ prior to 2.8.0.
-  all clean realclean:
-	@echo tests/Param_Test is not built with older versions of g++
-
-else # ! ACE_HAS_GNUG_PRE_2_8
-
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
@@ -123,8 +113,6 @@ anyop: $(addprefix $(VDIR),$(PARAM_TEST_ANYOP_OBJS))
 
 realclean: clean
 	-$(RM) param_testC.* param_testS.* param_testS_T.*
-
-endif # ! ACE_HAS_GNUG_PRE_2_8
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
