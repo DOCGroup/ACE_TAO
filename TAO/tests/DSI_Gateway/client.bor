@@ -18,6 +18,9 @@ LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB)
 
+IDLFILES = \
+        $(IDLDIR)\test.idl
+
 CPPDIR = .
 
 IDLDIR = .
