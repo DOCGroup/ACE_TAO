@@ -71,7 +71,7 @@ typedef Hello *(*TC)(void);
 int 
 main (void)
 { 
-  ACE_START_TEST (ASYS_TEXT ("DLL_Wrapper_Test"));
+  ACE_START_TEST (ASYS_TEXT ("DLL_Test"));
 
   // @@ Kirthika, it turns out that with Windows NT you can't pass a 0
   // in and have it default to the symbols in the executable.
@@ -84,7 +84,7 @@ main (void)
   ACE_DEBUG ((LM_DEBUG,
               "before opening\n"));
 
-  if (0 != open (".obj/DLL_Wrapper_Test.o", 0))
+  if (0 != open ("", 0))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cant open the library\n"),
                        -1);
