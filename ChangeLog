@@ -1,3 +1,13 @@
+Sun Jan 16 22:14:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/os_include/os_pthread.h:
+
+	  #include <pthread_np.h> if ACE_HAS_PTHREAD_NP_H is defined.
+
+	* ace/README:
+
+	  Document new feature test macro ACE_HAS_PTHREAD_NP_H.
+
 Sun Jan 16 18:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Stream.{h,cpp}:
