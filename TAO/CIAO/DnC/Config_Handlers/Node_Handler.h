@@ -1,14 +1,14 @@
 //==================================================================
 /**
- *  @file  Domain_Handler.h
+ *  @file  Node_Handler.h
  *
  *  $Id$
  *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  */
 //=====================================================================
-#ifndef DOMAIN_HANDLER_H
-#define DOMAIN_HANDLER_H
+#ifndef NODE_HANDLER_H
+#define NODE_HANDLER_H
 #include /**/ "ace/pre.h"
 
 #include "DeploymentC.h"
@@ -47,9 +47,9 @@ namespace CIAO
   namespace Config_Handler
   {
     /**
-     * @class Domain_Handler
+     * @class Node_Handler
      *
-     * @brief Handler class for <Domain> type 
+     * @brief Handler class for <Node> type 
      *
      * This class is within the Target Data Model subpackage of the
      * Deployment & Configuration package.
@@ -59,27 +59,36 @@ namespace CIAO
      * element is returned.
      */
 
-    class Config_Handler_Export Domain_Handler
+    class Config_Handler_Export Node_Handler
     {
     public:
 
       /// constructor
-      Domain_Handler (DOMDocument* doc, unsigned long filter_);
+      Node_Handler (DOMDocument* doc, unsigned long filter_);
 
       /// constructor
-      Domain_Handler (DOMNodeIterator* iter, bool release = false);
+      Node_Handler (DOMNodeIterator* iter, bool release = false);
 
       /// destructor
-      ~Domain_Handler(void);
+      ~Node_Handler(void);
 
-      /// Process the Domain type
-      void process_domain (::Deployment::Domain &domain);
+      /// Process the Node type
+      void process_node (::Deployment::Node &node);
 
-      /// Process the UUID attribute
-      void process_uuid (const XMLCh* uuid, ::Deployment::Domain &domain);
+      /// Process the name attribute
+      void process_name (const XMLCh* name, ::Deployment::Node &node);
 
       /// Process the label attribute
-      void process_label (const XMLCh* label, ::Deployment::Domain &domain);
+      void process_label (const XMLCh* label,
+                          ::Deployment::Node &node);
+
+      /// Process the sharedResourceRef attribute
+      void process_shared_resource_ref (const XMLCh* shared_resource_ref,
+                                        ::Deployment::Node &node);
+
+      /// Process the connectionRef attribute
+      void process_connection_ref (const XMLCh* connection_ref,
+                                   ::Deployment::Node &node);
 
     private:
 
@@ -99,4 +108,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* DOMAIN_HANDLER_H */
+#endif /* NODE_HANDLER_H */
