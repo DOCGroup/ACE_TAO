@@ -1,20 +1,21 @@
 // $Id$
 
 #include "EC_Default_Factory.h"
+#include "EC_Reactive_Dispatching.h"
 #include "EC_MT_Dispatching.h"
 #include "EC_Basic_Filter_Builder.h"
 #include "EC_Prefix_Filter_Builder.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
-#include "EC_ProxyConsumer.h"
-#include "EC_ProxySupplier.h"
+#include "EC_Default_ProxyConsumer.h"
+#include "EC_Default_ProxySupplier.h"
 #include "EC_Trivial_Supplier_Filter.h"
 #include "EC_Per_Supplier_Filter.h"
 #include "EC_ObserverStrategy.h"
 #include "EC_Null_Scheduling.h"
 #include "EC_Group_Scheduling.h"
 #include "EC_Reactive_Timeout_Generator.h"
-#include "EC_Event_Channel.h"
+#include "EC_Event_Channel_Base.h"
 #include "EC_Reactive_ConsumerControl.h"
 #include "EC_Reactive_SupplierControl.h"
 
@@ -48,6 +49,18 @@ TAO_EC_Default_Factory::init_svcs (void)
     insert (&ace_svc_desc_TAO_EC_Default_Factory);
 }
 
+void
+TAO_EC_Default_Factory::unsupported_option_value (const char * option_name,
+                                                  const char * option_value)
+{
+  ACE_ERROR ((LM_ERROR,
+              "EC_Default_Factory -"
+              "Unsupported <%s> option value: <%s>. "
+              "Ignoring this option - using defaults instead.",
+              option_name,
+              option_value));
+}
+
 int
 TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 {
@@ -75,10 +88,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("mt")) == 0)
                 this->dispatching_ = 1;
               else
-                ACE_ERROR ((LM_ERROR,
-                            "EC_Default_Factory - "
-                            "unsupported dispatching <%s>\n",
-                            opt));
+                  this->unsupported_option_value ("-ECDispatching", opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -109,10 +119,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("prefix")) == 0)
                 this->filtering_ = 2;
               else
-                ACE_ERROR ((LM_ERROR,
-                            "EC_Default_Factory - "
-                            "unsupported filtering <%s>\n",
-                            opt));
+                  this->unsupported_option_value ("-ECFiltering", opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -131,10 +138,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("per-supplier")) == 0)
                 this->supplier_filtering_ = 1;
               else
-                ACE_ERROR ((LM_ERROR,
-                            "EC_Default_Factory - "
-                            "unsupported supplier filtering <%s>\n",
-                            opt));
+                  this->unsupported_option_value ("-ECSupplierFilter", opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -149,10 +153,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
                 this->timeout_ = 0;
               else
-                ACE_ERROR ((LM_ERROR,
-                            "EC_Default_Factory - "
-                            "unsupported timeout <%s>\n",
-                            opt));
+                  this->unsupported_option_value ("-ECTimeout", opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -169,10 +170,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("basic")) == 0)
                 this->observer_ = 1;
               else
-                ACE_ERROR ((LM_ERROR,
-                            "EC_Default_Factory - "
-                            "unsupported observer <%s>\n",
-                            opt));
+                  this->unsupported_option_value ("-ECObserver", opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -189,10 +187,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("group")) == 0)
                 this->scheduling_ = 1;
               else
-                ACE_ERROR ((LM_ERROR,
-                            ACE_LIB_TEXT("EC_Default_Factory - ")
-                            ACE_LIB_TEXT("unsupported scheduling <%s>\n"),
-                            opt));
+                  this->unsupported_option_value ("-ECScheduling", opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -233,8 +228,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                   else
                     ACE_ERROR ((LM_ERROR,
                                 "EC_Default_Factory - "
-                                "unknown collection modifier <%s>\n",
-                                arg));
+                                "Unknown consumer collection modifier <%s>.\n", arg));
                 }
               ACE_OS::free (opt);
               this->consumer_collection_ =
@@ -279,8 +273,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                   else
                     ACE_ERROR ((LM_ERROR,
                                 "EC_Default_Factory - "
-                                "unknown collection modifier <%s>\n",
-                                arg));
+                                "Unknown supplier collection modifier <%s>.\n", arg));
                 }
               ACE_OS::free(opt);
               this->supplier_collection_ =
@@ -303,10 +296,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("recursive")) == 0)
                 this->consumer_lock_ = 2;
               else
-                ACE_ERROR ((LM_ERROR,
-                            "EC_Default_Factory - "
-                            "unsupported consumer lock <%s>\n",
-                            opt));
+                this->unsupported_option_value ("-ECProxyConsumerLock", opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -325,10 +315,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("recursive")) == 0)
                 this->supplier_lock_ = 2;
               else
-                ACE_ERROR ((LM_ERROR,
-                            "EC_Default_Factory - "
-                            "unsupported supplier lock <%s>\n",
-                            opt));
+                this->unsupported_option_value ("-ECProxySupplierLock", opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -357,10 +344,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
                 this->consumer_control_ = 1;
               else
-                ACE_ERROR ((LM_ERROR,
-                            "EC_Default_Factory - "
-                            "unsupported consumer control <%s>\n",
-                            opt));
+                this->unsupported_option_value ("-ECConsumerControl", opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -377,10 +361,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
                 this->supplier_control_ = 1;
               else
-                ACE_ERROR ((LM_ERROR,
-                            "EC_Default_Factory - "
-                            "unsupported supplier control <%s>\n",
-                            opt));
+                this->unsupported_option_value ("-ECSupplierControl", opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -500,7 +481,7 @@ TAO_EC_Default_Factory::fini (void)
 // ****************************************************************
 
 TAO_EC_Dispatching*
-TAO_EC_Default_Factory::create_dispatching (TAO_EC_Event_Channel *)
+TAO_EC_Default_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
 {
   if (this->dispatching_ == 0)
     return new TAO_EC_Reactive_Dispatching ();
@@ -519,7 +500,7 @@ TAO_EC_Default_Factory::destroy_dispatching (TAO_EC_Dispatching *x)
 }
 
 TAO_EC_Filter_Builder*
-TAO_EC_Default_Factory::create_filter_builder (TAO_EC_Event_Channel *ec)
+TAO_EC_Default_Factory::create_filter_builder (TAO_EC_Event_Channel_Base *ec)
 {
   if (this->filtering_ == 0)
     return new TAO_EC_Null_Filter_Builder ();
@@ -537,7 +518,7 @@ TAO_EC_Default_Factory::destroy_filter_builder (TAO_EC_Filter_Builder *x)
 }
 
 TAO_EC_Supplier_Filter_Builder*
-TAO_EC_Default_Factory::create_supplier_filter_builder (TAO_EC_Event_Channel *ec)
+TAO_EC_Default_Factory::create_supplier_filter_builder (TAO_EC_Event_Channel_Base *ec)
 {
   if (this->supplier_filtering_ == 0)
     return new TAO_EC_Trivial_Supplier_Filter_Builder (ec);
@@ -553,7 +534,7 @@ TAO_EC_Default_Factory::destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_
 }
 
 TAO_EC_ConsumerAdmin*
-TAO_EC_Default_Factory::create_consumer_admin (TAO_EC_Event_Channel *ec)
+TAO_EC_Default_Factory::create_consumer_admin (TAO_EC_Event_Channel_Base *ec)
 {
   return new TAO_EC_ConsumerAdmin (ec);
 }
@@ -565,7 +546,7 @@ TAO_EC_Default_Factory::destroy_consumer_admin (TAO_EC_ConsumerAdmin *x)
 }
 
 TAO_EC_SupplierAdmin*
-TAO_EC_Default_Factory::create_supplier_admin (TAO_EC_Event_Channel *ec)
+TAO_EC_Default_Factory::create_supplier_admin (TAO_EC_Event_Channel_Base *ec)
 {
   return new TAO_EC_SupplierAdmin (ec);
 }
@@ -577,9 +558,9 @@ TAO_EC_Default_Factory::destroy_supplier_admin (TAO_EC_SupplierAdmin *x)
 }
 
 TAO_EC_ProxyPushSupplier*
-TAO_EC_Default_Factory::create_proxy_push_supplier (TAO_EC_Event_Channel *ec)
+TAO_EC_Default_Factory::create_proxy_push_supplier (TAO_EC_Event_Channel_Base *ec)
 {
-  return new TAO_EC_ProxyPushSupplier (ec, consumer_validate_connection_);
+  return new TAO_EC_Default_ProxyPushSupplier (ec, consumer_validate_connection_);
 }
 
 void
@@ -589,9 +570,9 @@ TAO_EC_Default_Factory::destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier *x
 }
 
 TAO_EC_ProxyPushConsumer*
-TAO_EC_Default_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel *ec)
+TAO_EC_Default_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel_Base *ec)
 {
-  return new TAO_EC_ProxyPushConsumer (ec);
+  return new TAO_EC_Default_ProxyPushConsumer (ec);
 }
 
 void
@@ -601,7 +582,7 @@ TAO_EC_Default_Factory::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer *x
 }
 
 TAO_EC_Timeout_Generator*
-TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel *)
+TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
 {
   if (this->timeout_ == 0)
     {
@@ -628,14 +609,14 @@ TAO_EC_Default_Factory::destroy_timeout_generator (TAO_EC_Timeout_Generator *x)
 }
 
 TAO_EC_ObserverStrategy*
-TAO_EC_Default_Factory::create_observer_strategy (TAO_EC_Event_Channel *ec)
+TAO_EC_Default_Factory::create_observer_strategy (TAO_EC_Event_Channel_Base *ec)
 {
   if (this->observer_ == 0)
     return new TAO_EC_Null_ObserverStrategy;
   else if (this->observer_ == 1)
     {
       // @@ The lock should also be under control of the user...
-      ACE_Lock* lock;
+      ACE_Lock* lock = 0;
       ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, 0);
       return new TAO_EC_Basic_ObserverStrategy (ec, lock);
     }
@@ -649,7 +630,7 @@ TAO_EC_Default_Factory::destroy_observer_strategy (TAO_EC_ObserverStrategy *x)
 }
 
 TAO_EC_Scheduling_Strategy*
-TAO_EC_Default_Factory::create_scheduling_strategy (TAO_EC_Event_Channel*)
+TAO_EC_Default_Factory::create_scheduling_strategy (TAO_EC_Event_Channel_Base*)
 {
   if (this->scheduling_ == 0)
     return new TAO_EC_Null_Scheduling;
@@ -680,7 +661,7 @@ typedef
 
 
 TAO_EC_ProxyPushConsumer_Collection*
-TAO_EC_Default_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Channel *)
+TAO_EC_Default_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Channel_Base *)
 {
   if (this->consumer_collection_ == 0x000)
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushConsumer,
@@ -773,7 +754,7 @@ TAO_EC_Default_Factory::destroy_proxy_push_consumer_collection (TAO_EC_ProxyPush
 }
 
 TAO_EC_ProxyPushSupplier_Collection*
-TAO_EC_Default_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Channel *)
+TAO_EC_Default_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Channel_Base *)
 {
   if (this->supplier_collection_ == 0x000)
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushSupplier,
@@ -902,7 +883,7 @@ TAO_EC_Default_Factory::destroy_supplier_lock (ACE_Lock* x)
 }
 
 TAO_EC_ConsumerControl*
-TAO_EC_Default_Factory::create_consumer_control (TAO_EC_Event_Channel* ec)
+TAO_EC_Default_Factory::create_consumer_control (TAO_EC_Event_Channel_Base* ec)
 {
   if (this->consumer_control_ == 0)
     return new TAO_EC_ConsumerControl ();
@@ -926,7 +907,7 @@ TAO_EC_Default_Factory::destroy_consumer_control (TAO_EC_ConsumerControl* x)
 }
 
 TAO_EC_SupplierControl*
-TAO_EC_Default_Factory::create_supplier_control (TAO_EC_Event_Channel* ec)
+TAO_EC_Default_Factory::create_supplier_control (TAO_EC_Event_Channel_Base* ec)
 {
   if (this->supplier_control_ == 0)
     return new TAO_EC_SupplierControl ();

@@ -27,7 +27,7 @@
 
 class ACE_Lock;
 
-class TAO_EC_Event_Channel;
+class TAO_EC_Event_Channel_Base;
 
 class TAO_EC_Dispatching;
 class TAO_EC_Filter_Builder;
@@ -67,73 +67,73 @@ public:
 
   /// Create and destroy the dispatching module.
   virtual TAO_EC_Dispatching*
-      create_dispatching (TAO_EC_Event_Channel*) = 0;
+      create_dispatching (TAO_EC_Event_Channel_Base*) = 0;
   virtual void
       destroy_dispatching (TAO_EC_Dispatching*)  = 0;
 
   /// Create and destroy the filter builder.
   virtual TAO_EC_Filter_Builder*
-      create_filter_builder (TAO_EC_Event_Channel*)   = 0;
+      create_filter_builder (TAO_EC_Event_Channel_Base*)   = 0;
   virtual void
       destroy_filter_builder (TAO_EC_Filter_Builder*) = 0;
 
   /// Create and destroy the filter builder.
   virtual TAO_EC_Supplier_Filter_Builder*
-      create_supplier_filter_builder (TAO_EC_Event_Channel*)   = 0;
+      create_supplier_filter_builder (TAO_EC_Event_Channel_Base*)   = 0;
   virtual void
       destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder*) = 0;
 
   /// Create and destroy the consumer admin implementation.
   virtual TAO_EC_ConsumerAdmin*
-      create_consumer_admin (TAO_EC_Event_Channel*)  = 0;
+      create_consumer_admin (TAO_EC_Event_Channel_Base*)  = 0;
   virtual void
       destroy_consumer_admin (TAO_EC_ConsumerAdmin*) = 0;
 
   /// Create and destroy the supplier admin implementation.
   virtual TAO_EC_SupplierAdmin*
-      create_supplier_admin (TAO_EC_Event_Channel*)  = 0;
+      create_supplier_admin (TAO_EC_Event_Channel_Base*)  = 0;
   virtual void
       destroy_supplier_admin (TAO_EC_SupplierAdmin*) = 0;
 
   /// Create and destroy a ProxyPushSupplier
   virtual TAO_EC_ProxyPushSupplier*
-      create_proxy_push_supplier (TAO_EC_Event_Channel*) = 0;
+      create_proxy_push_supplier (TAO_EC_Event_Channel_Base*) = 0;
   virtual void
       destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier*) = 0;
 
   /// Create and destroy a ProxyPushConsumer
   virtual TAO_EC_ProxyPushConsumer*
-      create_proxy_push_consumer (TAO_EC_Event_Channel*) = 0;
+      create_proxy_push_consumer (TAO_EC_Event_Channel_Base*) = 0;
   virtual void
       destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*) = 0;
 
   /// Create and destroy the timer module.
   virtual TAO_EC_Timeout_Generator*
-      create_timeout_generator (TAO_EC_Event_Channel*)  = 0;
+      create_timeout_generator (TAO_EC_Event_Channel_Base*)  = 0;
   virtual void
       destroy_timeout_generator (TAO_EC_Timeout_Generator*) = 0;
 
   /// Create and destroy the observer strategy.
   virtual TAO_EC_ObserverStrategy*
-      create_observer_strategy (TAO_EC_Event_Channel*) = 0;
+      create_observer_strategy (TAO_EC_Event_Channel_Base*) = 0;
   virtual void
       destroy_observer_strategy (TAO_EC_ObserverStrategy*) = 0;
 
   /// Create and destroy the observer strategy.
   virtual TAO_EC_Scheduling_Strategy*
-      create_scheduling_strategy (TAO_EC_Event_Channel*) = 0;
+      create_scheduling_strategy (TAO_EC_Event_Channel_Base*) = 0;
   virtual void
       destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy*) = 0;
 
   /// Create and destroy a collection of TAO_EC_ProxyPushConsumers
   virtual TAO_EC_ProxyPushConsumer_Collection*
-      create_proxy_push_consumer_collection (TAO_EC_Event_Channel*) = 0;
+      create_proxy_push_consumer_collection (TAO_EC_Event_Channel_Base*) = 0;
   virtual void
       destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection*) = 0;
 
   /// Create and destroy a collection of TAO_EC_ProxyPushSuppliers
   virtual TAO_EC_ProxyPushSupplier_Collection*
-      create_proxy_push_supplier_collection (TAO_EC_Event_Channel*) = 0;
+      create_proxy_push_supplier_collection (TAO_EC_Event_Channel_Base*) = 0;
   virtual void
       destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*) = 0;
 
@@ -147,11 +147,11 @@ public:
   /// The ConsumerControl and SupplierControl strategies are used to
   /// discard non-existent consumers and suppliers
   virtual TAO_EC_ConsumerControl*
-      create_consumer_control (TAO_EC_Event_Channel*) = 0;
+      create_consumer_control (TAO_EC_Event_Channel_Base*) = 0;
   virtual void
       destroy_consumer_control (TAO_EC_ConsumerControl*) = 0;
   virtual TAO_EC_SupplierControl*
-      create_supplier_control (TAO_EC_Event_Channel*) = 0;
+      create_supplier_control (TAO_EC_Event_Channel_Base*) = 0;
   virtual void
       destroy_supplier_control (TAO_EC_SupplierControl*) = 0;
 };

@@ -59,7 +59,7 @@ public:
   /// Become the parent of <child>
   void adopt_child (TAO_EC_Filter* child);
 
-  /// matches two event headers.
+  /// Matches two event headers.
   /// @todo Should we strategize the algorithm used to match headers?
   static int matches (const RtecEventComm::EventHeader& rhs,
                       const RtecEventComm::EventHeader& lhs);
@@ -83,6 +83,12 @@ public:
    * otherwise.
    * Notice that there are two versions of the method, if the event is
    * not const then filter can take ownership of the event.
+   *
+   * @attention There seems to be a disparity in interfaces: Supplier
+   * always push event sets of size 1 to the EC_ProxyPushSupplier, and
+   * EC_Filters do not implement handling of sets of more than 1
+   * event.  Then, why is this not enforced by the interface by having
+   * EC_ProxyPushSupplier take an event rather than a set?
    */
   virtual int filter (const RtecEventComm::EventSet& event,
                       TAO_EC_QOS_Info& qos_info
@@ -168,7 +174,7 @@ private:
 class TAO_RTEvent_Export TAO_EC_Null_Filter : public TAO_EC_Filter
 {
 public:
-  /// constructor.
+  /// Constructor.
   TAO_EC_Null_Filter (void);
 
   // = The TAO_EC_Filter methods, please check the documentation in

@@ -132,6 +132,20 @@ private:
 };
 
 // ****************************************************************
+template <class COUNTED>
+class TAO_ESF_RefCountedRef
+{
+public:
+  TAO_ESF_RefCountedRef (COUNTED *counted);
+  ~TAO_ESF_RefCountedRef ();
+private:
+  TAO_ESF_RefCountedRef (TAO_ESF_RefCountedRef<COUNTED> const & );
+  TAO_ESF_RefCountedRef& operator= (TAO_ESF_RefCountedRef<COUNTED> const & );
+
+  COUNTED *counted_;
+};
+
+// ****************************************************************
 
 #if defined (__ACE_INLINE__)
 #include "ESF_Proxy_Admin.i"

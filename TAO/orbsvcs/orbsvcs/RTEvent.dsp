@@ -7,21 +7,21 @@
 CFG=RTEvent - Win32 MFC Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "RTEvent.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "RTEvent.mak" CFG="RTEvent - Win32 MFC Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "RTEvent - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "RTEvent - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "RTEvent - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "RTEvent - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -143,7 +143,7 @@ LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib TAO_Svc_Utils.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_RTEvent.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # ADD LINK32 acemfc.lib TAOmfc.lib TAO_Svc_Utilsmfc.lib TAO_PortableServermfc.lib TAO_Messagingmfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_RTEventmfc.dll" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -200,11 +200,19 @@ SOURCE=.\Event\EC_Dispatching.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Reactive_Dispatching.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Dispatching_Task.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Event_Channel.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Event_Channel_Base.cpp
 # End Source File
 # Begin Source File
 
@@ -225,6 +233,10 @@ SOURCE=.\Event\EC_Gateway.cpp
 # Begin Source File
 
 SOURCE=.\Event\EC_Gateway_UDP.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Out_Endpoint.cpp
 # End Source File
 # Begin Source File
 
@@ -269,6 +281,14 @@ SOURCE=.\Event\EC_ProxyConsumer.cpp
 # Begin Source File
 
 SOURCE=.\Event\EC_ProxySupplier.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Default_ProxyConsumer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Default_ProxySupplier.cpp
 # End Source File
 # Begin Source File
 
@@ -429,11 +449,19 @@ SOURCE=.\Event\EC_Dispatching.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Reactive_Dispatching.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Dispatching_Task.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Event_Channel.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Event_Channel_Base.h
 # End Source File
 # Begin Source File
 
@@ -450,6 +478,10 @@ SOURCE=.\Event\EC_Filter_Builder.h
 # Begin Source File
 
 SOURCE=.\Event\EC_Gateway.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Out_Endpoint.h
 # End Source File
 # Begin Source File
 
@@ -502,6 +534,14 @@ SOURCE=.\Event\EC_ProxyConsumer.h
 # Begin Source File
 
 SOURCE=.\Event\EC_ProxySupplier.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Default_ProxyConsumer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Default_ProxySupplier.h
 # End Source File
 # Begin Source File
 
@@ -646,7 +686,7 @@ SOURCE=.\RtecDefaultEventData.idl
 !IF  "$(CFG)" == "RTEvent - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECD="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__RTECD="..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecDefaultEventData.idl
 InputName=RtecDefaultEventData
@@ -685,7 +725,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "RTEvent - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECD="..\..\..\bin\tao_idl.exe"	
+USERDEP__RTECD="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecDefaultEventData.idl
 InputName=RtecDefaultEventData
@@ -799,7 +839,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -809,7 +849,7 @@ SOURCE=.\RtecEventChannelAdmin.idl
 !IF  "$(CFG)" == "RTEvent - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECE="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__RTECE="..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
@@ -848,7 +888,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "RTEvent - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECE="..\..\..\bin\tao_idl.exe"	
+USERDEP__RTECE="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
@@ -962,7 +1002,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -972,7 +1012,7 @@ SOURCE=.\RtecEventComm.idl
 !IF  "$(CFG)" == "RTEvent - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEV="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__RTECEV="..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
@@ -1011,7 +1051,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "RTEvent - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEV="..\..\..\bin\tao_idl.exe"	
+USERDEP__RTECEV="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
@@ -1125,7 +1165,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1135,7 +1175,7 @@ SOURCE=.\RtecUDPAdmin.idl
 !IF  "$(CFG)" == "RTEvent - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECU="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__RTECU="..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
@@ -1174,7 +1214,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "RTEvent - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECU="..\..\..\bin\tao_idl.exe"	
+USERDEP__RTECU="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
@@ -1288,7 +1328,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group
@@ -1341,11 +1381,19 @@ SOURCE=.\Event\EC_Dispatching.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Reactive_Dispatching.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Dispatching_Task.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Event_Channel.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Event_Channel_Base.i
 # End Source File
 # Begin Source File
 
@@ -1362,6 +1410,10 @@ SOURCE=.\Event\EC_Filter_Builder.i
 # Begin Source File
 
 SOURCE=.\Event\EC_Gateway_UDP.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Out_Endpoint.i
 # End Source File
 # Begin Source File
 
@@ -1402,6 +1454,14 @@ SOURCE=.\Event\EC_ProxyConsumer.i
 # Begin Source File
 
 SOURCE=.\Event\EC_ProxySupplier.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Default_ProxyConsumer.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Default_ProxySupplier.i
 # End Source File
 # Begin Source File
 
@@ -1537,7 +1597,7 @@ SOURCE=.\RtecDefaultEventDataS_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1562,7 +1622,7 @@ SOURCE=.\RtecEventChannelAdminS_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1587,7 +1647,7 @@ SOURCE=.\RtecEventCommS_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1612,7 +1672,7 @@ SOURCE=.\RtecUDPAdminS_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group

@@ -13,7 +13,7 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$conf_file = PerlACE::LocalFile ('exhaustive$PerlACE::svcconf_ext');
+$conf_file = PerlACE::LocalFile ("exhaustive$PerlACE::svcconf_ext");
 
 @dispatching_configs   = ("-ECDispatching reactive",
                           "-ECDispatching mt -ECDispatchingThreads 4");

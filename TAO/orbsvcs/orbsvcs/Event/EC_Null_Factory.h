@@ -44,51 +44,51 @@ public:
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*
-      create_dispatching (TAO_EC_Event_Channel*);
+      create_dispatching (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_dispatching (TAO_EC_Dispatching*);
   virtual TAO_EC_Filter_Builder*
-      create_filter_builder (TAO_EC_Event_Channel*);
+      create_filter_builder (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_filter_builder (TAO_EC_Filter_Builder*);
   virtual TAO_EC_Supplier_Filter_Builder*
-      create_supplier_filter_builder (TAO_EC_Event_Channel*);
+      create_supplier_filter_builder (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder*);
   virtual TAO_EC_ConsumerAdmin*
-      create_consumer_admin (TAO_EC_Event_Channel*);
+      create_consumer_admin (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_consumer_admin (TAO_EC_ConsumerAdmin*);
   virtual TAO_EC_SupplierAdmin*
-      create_supplier_admin (TAO_EC_Event_Channel*);
+      create_supplier_admin (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_supplier_admin (TAO_EC_SupplierAdmin*);
   virtual TAO_EC_ProxyPushSupplier*
-      create_proxy_push_supplier (TAO_EC_Event_Channel*);
+      create_proxy_push_supplier (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier*);
   virtual TAO_EC_ProxyPushConsumer*
-      create_proxy_push_consumer (TAO_EC_Event_Channel*);
+      create_proxy_push_consumer (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*);
   virtual TAO_EC_Timeout_Generator*
-      create_timeout_generator (TAO_EC_Event_Channel*);
+      create_timeout_generator (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_timeout_generator (TAO_EC_Timeout_Generator*);
   virtual TAO_EC_ObserverStrategy*
-      create_observer_strategy (TAO_EC_Event_Channel*);
+      create_observer_strategy (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_observer_strategy (TAO_EC_ObserverStrategy*);
   virtual TAO_EC_Scheduling_Strategy*
-      create_scheduling_strategy (TAO_EC_Event_Channel*);
+      create_scheduling_strategy (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy*);
   virtual TAO_EC_ProxyPushConsumer_Collection*
-      create_proxy_push_consumer_collection (TAO_EC_Event_Channel*);
+      create_proxy_push_consumer_collection (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection*);
   virtual TAO_EC_ProxyPushSupplier_Collection*
-    create_proxy_push_supplier_collection (TAO_EC_Event_Channel*);
+    create_proxy_push_supplier_collection (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*);
 
@@ -98,11 +98,11 @@ public:
   virtual void destroy_supplier_lock (ACE_Lock*);
 
   virtual TAO_EC_ConsumerControl*
-      create_consumer_control (TAO_EC_Event_Channel*);
+      create_consumer_control (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_consumer_control (TAO_EC_ConsumerControl*);
   virtual TAO_EC_SupplierControl*
-      create_supplier_control (TAO_EC_Event_Channel*);
+      create_supplier_control (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_supplier_control (TAO_EC_SupplierControl*);
 };

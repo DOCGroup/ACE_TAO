@@ -68,8 +68,6 @@ public:
                                 const TAO_EC_QOS_Info &qos_info
                                 ACE_ENV_ARG_DECL);
 
-  typedef unsigned int Word;
-
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_And_Filter
                               (const TAO_EC_And_Filter&))

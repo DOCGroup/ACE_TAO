@@ -23,7 +23,7 @@
 
 #include "tao/corba.h"
 
-class TAO_EC_Event_Channel;
+class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushSupplier;
 
 /**
@@ -41,7 +41,7 @@ public:
   /// parameter.
   TAO_EC_ConsumerControl (void);
 
-  /// destructor...
+  /// Destructor...
   virtual ~TAO_EC_ConsumerControl (void);
 
   /// Activate any internal threads or timers used to poll the state of
@@ -58,7 +58,8 @@ public:
   virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy
                                    ACE_ENV_ARG_DECL_NOT_USED);
 
-  /// Some system exception was rasied while trying to push an event.
+  /// Some system exception was raised while trying to contact the
+  /// consumer
   virtual void system_exception (TAO_EC_ProxyPushSupplier *proxy,
                                  CORBA::SystemException &
                                  ACE_ENV_ARG_DECL_NOT_USED);

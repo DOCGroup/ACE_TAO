@@ -24,6 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushSupplier_Set;
 
 // ****************************************************************
@@ -42,7 +43,7 @@ class TAO_RTEvent_Export TAO_EC_Trivial_Supplier_Filter : public TAO_EC_Supplier
 {
 public:
   /// Constructor
-  TAO_EC_Trivial_Supplier_Filter (TAO_EC_Event_Channel* ec);
+  TAO_EC_Trivial_Supplier_Filter (TAO_EC_Event_Channel_Base* ec);
 
   // = The TAO_EC_Supplier_Filter methods.
   virtual void bind (TAO_EC_ProxyPushConsumer* consumer);
@@ -65,7 +66,7 @@ public:
 
 private:
   /// The event channel, used to locate the set of consumers.
-  TAO_EC_Event_Channel *event_channel_;
+  TAO_EC_Event_Channel_Base *event_channel_;
 };
 
 // ****************************************************************
@@ -83,7 +84,7 @@ class TAO_RTEvent_Export TAO_EC_Trivial_Supplier_Filter_Builder : public TAO_EC_
 {
 public:
   /// constructor....
-  TAO_EC_Trivial_Supplier_Filter_Builder (TAO_EC_Event_Channel* ec);
+  TAO_EC_Trivial_Supplier_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
   // = The TAO_EC_Supplier_Filter_Builder methods...
   virtual TAO_EC_Supplier_Filter*

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "EC_Trivial_Supplier_Filter.h"
-#include "EC_Event_Channel.h"
+#include "EC_Event_Channel_Base.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_ProxySupplier.h"
 #include "EC_QOS_Info.h"
@@ -17,7 +17,7 @@ ACE_RCSID(Event, EC_Trivial_Supplier_Filter, "$Id$")
 // ****************************************************************
 
 TAO_EC_Trivial_Supplier_Filter::
-    TAO_EC_Trivial_Supplier_Filter (TAO_EC_Event_Channel* ec)
+    TAO_EC_Trivial_Supplier_Filter (TAO_EC_Event_Channel_Base* ec)
   :  event_channel_ (ec)
 {
 }
@@ -74,8 +74,8 @@ TAO_EC_Trivial_Supplier_Filter::push_scheduled_event (RtecEventComm::EventSet &e
                                                       ACE_ENV_ARG_DECL)
 {
   TAO_EC_Filter_Worker worker (event, event_info);
-  this->event_channel_->consumer_admin ()->for_each (&worker
-                                                     ACE_ENV_ARG_PARAMETER);
+  this->event_channel_->for_each_consumer (&worker
+                                           ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::ULong
@@ -93,7 +93,7 @@ TAO_EC_Trivial_Supplier_Filter::_decr_refcnt (void)
 // ****************************************************************
 
 TAO_EC_Trivial_Supplier_Filter_Builder::
-  TAO_EC_Trivial_Supplier_Filter_Builder (TAO_EC_Event_Channel *ec)
+  TAO_EC_Trivial_Supplier_Filter_Builder (TAO_EC_Event_Channel_Base *ec)
   :  filter_ (ec)
 {
 }

@@ -31,8 +31,10 @@ TAO_CEC_ProxyPushSupplier::~TAO_CEC_ProxyPushSupplier (void)
   this->event_channel_->destroy_supplier_lock (this->lock_);
 }
 
-CosEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_CEC_ProxyPushSupplier::activate (ACE_ENV_SINGLE_ARG_DECL)
+void
+TAO_CEC_ProxyPushSupplier::activate (
+    CosEventChannelAdmin::ProxyPushSupplier_ptr &activated_proxy
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventChannelAdmin::ProxyPushSupplier_var result;
@@ -43,10 +45,10 @@ TAO_CEC_ProxyPushSupplier::activate (ACE_ENV_SINGLE_ARG_DECL)
     }
   ACE_CATCHANY
     {
-      return CosEventChannelAdmin::ProxyPushSupplier::_nil ();
+      result = CosEventChannelAdmin::ProxyPushSupplier::_nil ();
     }
   ACE_ENDTRY;
-  return result._retn ();
+  activated_proxy = result._retn ();
 }
 
 void

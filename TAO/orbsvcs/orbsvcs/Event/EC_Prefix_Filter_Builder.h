@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_EC_Filter;
-class TAO_EC_Event_Channel;
+class TAO_EC_Event_Channel_Base;
 
 /**
  * @class TAO_EC_Prefix_Filter_Builder
@@ -38,7 +38,7 @@ class TAO_RTEvent_Export TAO_EC_Prefix_Filter_Builder : public TAO_EC_Filter_Bui
 {
 public:
   /// constructor.
-  TAO_EC_Prefix_Filter_Builder (TAO_EC_Event_Channel* ec);
+  TAO_EC_Prefix_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
   /// destructor...
   virtual ~TAO_EC_Prefix_Filter_Builder (void);
@@ -56,7 +56,7 @@ private:
 
 private:
   /// The event channel.
-  TAO_EC_Event_Channel* event_channel_;
+  TAO_EC_Event_Channel_Base* event_channel_;
 };
 
 #if defined (__ACE_INLINE__)

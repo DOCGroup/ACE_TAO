@@ -26,3 +26,27 @@ TAO_EC_Default_Factory::TAO_EC_Default_Factory (void)
      consumer_validate_connection_ (TAO_EC_DEFAULT_CONSUMER_VALIDATE_CONNECTION)
 {
 }
+
+ACE_INLINE int
+TAO_EC_Default_Factory::consumer_collection (void) const
+{
+  return this->consumer_collection_;
+}
+
+ACE_INLINE int
+TAO_EC_Default_Factory::supplier_collection (void) const
+{
+  return this->supplier_collection_;
+}
+
+ACE_INLINE int
+TAO_EC_Default_Factory::supplier_filtering (void) const
+{
+  return this->supplier_filtering_;
+}
+
+ACE_INLINE const ACE_CString&
+TAO_EC_Default_Factory::orb_id (void) const
+{
+  return this->orbid_;
+}

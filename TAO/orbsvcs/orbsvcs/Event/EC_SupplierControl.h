@@ -24,7 +24,6 @@
 
 #include "tao/corba.h"
 
-class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushConsumer;
 
 /**
@@ -57,6 +56,12 @@ public:
    */
   virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy
                                    ACE_ENV_ARG_DECL_NOT_USED);
+
+  /// Some system exception was raised while trying to contact the
+  /// supplier
+  virtual void system_exception (TAO_EC_ProxyPushConsumer * proxy,
+                                 CORBA::SystemException &
+                                 ACE_ENV_ARG_DECL_NOT_USED);
 };
 
 #if defined (__ACE_INLINE__)

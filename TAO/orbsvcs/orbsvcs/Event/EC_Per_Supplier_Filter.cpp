@@ -1,7 +1,7 @@
 // $Id$
 
 #include "EC_Per_Supplier_Filter.h"
-#include "EC_Event_Channel.h"
+#include "EC_Event_Channel_Base.h"
 #include "EC_ProxySupplier.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_Scheduling_Strategy.h"
@@ -18,7 +18,7 @@
 ACE_RCSID(Event, EC_Per_Supplier_Filter, "$Id$")
 
 TAO_EC_Per_Supplier_Filter::
-    TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel* ec)
+    TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel_Base* ec)
   :  event_channel_ (ec),
      consumer_ (0),
      refcnt_ (1)

@@ -60,6 +60,7 @@
 #include "orbsvcs/Event/EC_UDP_Admin.h"
 #include "orbsvcs/Event/ECG_Mcast_EH.h"
 #include "orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 
 class ECM_Driver;
 

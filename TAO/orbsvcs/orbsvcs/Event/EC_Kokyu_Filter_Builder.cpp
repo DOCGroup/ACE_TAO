@@ -7,7 +7,7 @@
 #include "EC_Conjunction_Filter.h"
 #include "EC_Disjunction_Filter.h"
 #include "EC_Timeout_Filter.h"
-#include "EC_Event_Channel.h"
+#include "EC_Event_Channel_Base.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Kokyu_Filter_Builder.i"

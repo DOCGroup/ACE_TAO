@@ -17,13 +17,12 @@
 #include "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
-#include "orbsvcs/Event/EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_EC_Event_Channel;
+class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushSupplier;
 class TAO_EC_Supplier_Filter;
 
@@ -49,23 +48,31 @@ class TAO_EC_Supplier_Filter;
  * No provisions for locking, access must be serialized
  * externally.
  */
-class TAO_RTEvent_Export TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelAdmin::ProxyPushConsumer
+class TAO_RTEvent_Export TAO_EC_ProxyPushConsumer
 {
 public:
   typedef RtecEventChannelAdmin::ProxyPushConsumer Interface;
   typedef RtecEventChannelAdmin::ProxyPushConsumer_var _var_type;
+  typedef RtecEventChannelAdmin::ProxyPushConsumer_ptr _ptr_type;
 
   /// constructor...
-  TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel* event_channel);
+  TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
   virtual ~TAO_EC_ProxyPushConsumer (void);
 
   /// Activate in the POA
-  virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr activate (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void activate (
+          RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy
+          ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Disconnect this from
+  virtual void disconnect_push_consumer (
+            ACE_ENV_SINGLE_ARG_DECL) = 0;
 
   /// Return 0 if no supplier is connected...
   CORBA::Boolean is_connected (void) const;
@@ -114,23 +121,6 @@ public:
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
-  // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
-  virtual void connect_push_supplier (
-                RtecEventComm::PushSupplier_ptr push_supplier,
-                const RtecEventChannelAdmin::SupplierQOS& qos
-                ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       RtecEventChannelAdmin::AlreadyConnected));
-  virtual void push (const RtecEventComm::EventSet& event
-                     ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-  // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 protected:
   /// Set the supplier, used by some implementations to change the
@@ -150,9 +140,8 @@ protected:
   /// Release the filter and the supplier
   void cleanup_i (void);
 
-private:
   /// The supplier admin, used for activation and memory managment.
-  TAO_EC_Event_Channel* event_channel_;
+  TAO_EC_Event_Channel_Base* event_channel_;
 
   /// The locking strategy.
   ACE_Lock* lock_;
@@ -175,6 +164,15 @@ private:
 
   /// The strategy to do filtering close to the supplier
   TAO_EC_Supplier_Filter* filter_;
+
+private:
+  /// Template method hooks.
+  virtual void shutdown_hook (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void refcount_zero_hook (void);
+
+  virtual PortableServer::ObjectId
+            object_id (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
 // ****************************************************************
@@ -195,7 +193,7 @@ public:
   /// Constructor
   TAO_EC_ProxyPushConsumer_Guard (ACE_Lock *lock,
                                   CORBA::ULong &refcount,
-                                  TAO_EC_Event_Channel *ec,
+                                  TAO_EC_Event_Channel_Base *ec,
                                   TAO_EC_ProxyPushConsumer *proxy);
 
   /// Destructor
@@ -214,7 +212,7 @@ private:
   CORBA::ULong &refcount_;
 
   /// The event channel used to destroy the proxy
-  TAO_EC_Event_Channel *event_channel_;
+  TAO_EC_Event_Channel_Base *event_channel_;
 
   /// The proxy whose lifetime is controlled by the reference count
   TAO_EC_ProxyPushConsumer *proxy_;

@@ -26,7 +26,6 @@
 #include "EC_Dispatching_Task.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
-class TAO_EC_Event_Channel;
 
 /**
  * @class TAO_EC_RTCORBA_Dispatching

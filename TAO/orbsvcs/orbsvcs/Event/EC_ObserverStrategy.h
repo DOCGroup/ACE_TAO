@@ -28,7 +28,7 @@
 #include "event_export.h"
 
 class ACE_Lock;
-class TAO_EC_Event_Channel;
+class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
 
@@ -143,11 +143,12 @@ public:
  * It assumes ownership of the <lock>, but not of the
  * Event_Channel.
  */
-class TAO_RTEvent_Export TAO_EC_Basic_ObserverStrategy : public TAO_EC_ObserverStrategy
+class TAO_RTEvent_Export TAO_EC_Basic_ObserverStrategy :
+  public TAO_EC_ObserverStrategy
 {
 public:
   /// Constructor
-  TAO_EC_Basic_ObserverStrategy (TAO_EC_Event_Channel* ec,
+  TAO_EC_Basic_ObserverStrategy (TAO_EC_Event_Channel_Base* ec,
                                  ACE_Lock* lock);
 
   /// Destructor
@@ -177,21 +178,20 @@ public:
   virtual void disconnected (TAO_EC_ProxyPushSupplier*
                              ACE_ENV_ARG_DECL_NOT_USED);
 
-
+  /**
+   * @struct Observer_Entry
+   *
+   * @brief  The data kept for each observer.
+   *
+   * The observer and its handle are kept in a simple structure.
+   * In the future this structure could contain QoS information,
+   * such as:
+   * + how often do we update the observer?
+   * + When was the last update.
+   * + Does it want to receive all changes?
+   */
   struct Observer_Entry
   {
-    // = TITLE
-    //   The data kept for each observer.
-    //
-    // = DESCRIPTION
-    //   The observer and its handle are kept in a simple structure.
-    //   In the future this structure could contain QoS information,
-    //   such as:
-    //   + how often do we update the observer?
-    //   + When was the last update.
-    //   + Does it want to receive all changes?
-    //
-
     // The ACE_INLINE macros here are to keep g++ 2.7.X happy,
     // otherwise it thinks they are used as inline functions before
     // beign used as such.... Apparently in the template code for the
@@ -200,11 +200,11 @@ public:
     ACE_INLINE Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
                                RtecEventChannelAdmin::Observer_ptr o);
 
+    /// The handle
     RtecEventChannelAdmin::Observer_Handle handle;
-    // The handle
 
+    /// The observer
     RtecEventChannelAdmin::Observer_var observer;
-    // The observer
   };
 
   struct Header_Compare
@@ -221,15 +221,32 @@ public:
   typedef ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> HeadersIterator;
 
 protected:
-  /// Helper functions to compute the consumer and supplier QOS.
+  /// Helpers.
+  //@{
+  /// Recompute EC consumer subscriptions and send them out to all observers.
+  void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier
+                            ACE_ENV_ARG_DECL);
+
+  /// Recompute EC supplier publications and send them out to all observers.
+  void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer
+                            ACE_ENV_ARG_DECL);
+
+  /// Compute consumer QOS.
   void fill_qos (RtecEventChannelAdmin::ConsumerQOS &qos
                  ACE_ENV_ARG_DECL);
+  /// Compute supplier QOS.
   void fill_qos (RtecEventChannelAdmin::SupplierQOS &qos
                  ACE_ENV_ARG_DECL);
 
+  /// Copies all current observers into an array and passes it
+  /// back to the caller through <lst>.  Returns the size of the array.
+  int create_observer_list (RtecEventChannelAdmin::Observer_var *&lst
+                            ACE_ENV_ARG_DECL);
+  //@}
+
 protected:
   /// The event channel.
-  TAO_EC_Event_Channel* event_channel_;
+  TAO_EC_Event_Channel_Base* event_channel_;
 
   /// The lock
   ACE_Lock* lock_;
@@ -244,7 +261,8 @@ protected:
 
 // ****************************************************************
 
-class TAO_EC_Accumulate_Supplier_Headers : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
+class TAO_EC_Accumulate_Supplier_Headers :
+  public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 {
 public:
   /// Constructor
@@ -259,7 +277,8 @@ private:
 
 // ****************************************************************
 
-class TAO_EC_Accumulate_Consumer_Headers : public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
+class TAO_EC_Accumulate_Consumer_Headers :
+  public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 {
 public:
   /// Constructor
