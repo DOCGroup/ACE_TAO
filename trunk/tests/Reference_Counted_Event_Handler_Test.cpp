@@ -731,34 +731,34 @@ void
 closed_in_upcall_event_handler (ACE_Reactor *reactor)
 {
   int events = 0;
-  int result = 0;
+  int handle_events_result = 0;
 
   if (test_io)
     {
-      Closed_In_Upcall_Event_Handler *handler =
-        new Closed_In_Upcall_Event_Handler (events);
+      Closed_In_Upcall_Event_Handler *handler = 0;
+      ACE_NEW (handler, Closed_In_Upcall_Event_Handler (events));
 
       ACE_Event_Handler_var safe_handler (handler);
 
-      ssize_t result =
+      ssize_t send_n_result =
         ACE::send_n (handler->pipe_.write_handle (),
                      message,
                      message_size);
 
-      ACE_ASSERT (result == message_size);
+      ACE_ASSERT (send_n_result == message_size);
 
-      result =
+      int register_handler_result =
         reactor->register_handler (handler->pipe_.read_handle (),
                                    handler,
                                    ACE_Event_Handler::READ_MASK);
-      ACE_ASSERT (result == 0);
+      ACE_ASSERT (register_handler_result == 0);
 
       events += 1;
     }
 
   while (events > 0)
     {
-      result =
+      handle_events_result =
         reactor->handle_events ();
     }
 }
