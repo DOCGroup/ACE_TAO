@@ -1,3 +1,12 @@
+Tue Jul  3 20:09:58 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* examples/PluggableUDP/tests/Basic/Makefile:
+	* examples/PluggableUDP/tests/Performance/Makefile:
+	* examples/PluggableUDP/tests/SimplePerformance/Makefile:
+	* tao/Strategies/Makefile:
+
+	  Updated dependencies.
+
 Tue Jul  3 18:25:41 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * examples/PluggableUDP/DIOP/*:
@@ -75,7 +84,7 @@ Tue Jul  3 18:25:41 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
           Added DIOP files.
 
         * tao/Strategies/TAO_Strategies_Internal.cpp:
-        * tao/Strategies/advanced_resource.cpp:          
+        * tao/Strategies/advanced_resource.cpp:
 
           Added service configurator hooks for DIOP.
 
@@ -102,7 +111,7 @@ Tue Jul  3 11:27:03 2001  Jeff Parsons <parsons@cs.wustl.edu>
           TIE class basis, conditionally, if the original
           interface is defined inside a module. TIE class
           code will compile for interfaces declared at global
-          scope, even on platforms that do not support 
+          scope, even on platforms that do not support
           namespaces. This enhancement was requested by
           Marco Kranawetter <Marco.Kranawetter@icn.siemens.de>.
 
