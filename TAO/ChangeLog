@@ -1,34 +1,47 @@
+Tue Apr 27 06:55:46 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/mfc/client.mpc:
+        * examples/mfc/client.cpp:
+
+          Added #include of ace/streams.h and set the Resource_Files to
+          empty.
+
+        * tests/Param_Test/Param_Test.mpc:
+
+          I missed one of the A.cpp files in my change from Mon Apr 26
+          06:22:03 2004.
+
 Mon Apr 26 13:52:49 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* Fixes for:
-	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1779
+        * Fixes for:
+            http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1779
 
-	* tao/params.i:
-	  The sock_{snd,rcv}buf_size were silently truncated to
-	  ACE_DEFAULT_MAX_SOCKET_BUFSIZ.  Silent truncation is generally
-	  evil, but in this case it is worse:  the compile-time value
-	  stored in ACE_DEFAULT_MAX_SOCKET_BUFSIZ may have no relationship
-	  with the run-time maximum in the socket.  In some platforms (I
-	  am thinking Linux) you can also change the maximum socket buffer
-	  sizes while the kernel is running, so even an startup-time value
-	  would be wrong.  Better to move that policy decision to the
-	  application.
-	  Removed code in #if 0/#endif blocks, that's what CVS is for.
+        * tao/params.i:
+          The sock_{snd,rcv}buf_size were silently truncated to
+          ACE_DEFAULT_MAX_SOCKET_BUFSIZ.  Silent truncation is generally
+          evil, but in this case it is worse:  the compile-time value
+          stored in ACE_DEFAULT_MAX_SOCKET_BUFSIZ may have no relationship
+          with the run-time maximum in the socket.  In some platforms (I
+          am thinking Linux) you can also change the maximum socket buffer
+          sizes while the kernel is running, so even an startup-time value
+          would be wrong.  Better to move that policy decision to the
+          application.
+          Removed code in #if 0/#endif blocks, that's what CVS is for.
 
-	* tao/Connection_Handler.cpp:
-	  Do not change the socket buffer size(s) if the application sets
-	  them to 0.  In some platforms, notably Linux, the kernel
-	  adaptively grows the size of the buffer according to the demands
-	  of the application, but *only* if the application does not set
-	  the buffer size explicitly.
+        * tao/Connection_Handler.cpp:
+          Do not change the socket buffer size(s) if the application sets
+          them to 0.  In some platforms, notably Linux, the kernel
+          adaptively grows the size of the buffer according to the demands
+          of the application, but *only* if the application does not set
+          the buffer size explicitly.
 
 Mon Apr 26 09:08:09 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Strategies/SHMIOP_Connector.cpp (TAO_SHMIOP_Connector):
+        * tao/Strategies/SHMIOP_Connector.cpp (TAO_SHMIOP_Connector):
 
-	  Corrected constructor argument type from CORBA::Octet to
-	  CORBA::Boolean to match the one in the header.  These two types
-	  are now distinct.
+          Corrected constructor argument type from CORBA::Octet to
+          CORBA::Boolean to match the one in the header.  These two types
+          are now distinct.
 
 Mon Apr 26 10:06:12 2004  Chad Elliott  <elliott_c@ociweb.com>
 
