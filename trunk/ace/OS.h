@@ -1126,7 +1126,9 @@ private:
 // This needs to go here *first* to avoid problems with AIX.
 # if defined (ACE_HAS_PTHREADS)
 extern "C" {
-#   include /**/ <signal.h>
+#   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
+#     include /**/ <signal.h>
+#   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #   include /**/ <pthread.h>
 #   if defined (DIGITAL_UNIX)
 #     define pthread_self __pthread_self
@@ -2583,7 +2585,9 @@ typedef unsigned int size_t;
 #   include /**/ <new.h>
 
 #   if !defined (ACE_PSOS_DIAB_MIPS)  &&  !defined (VXWORKS)
+#   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #     include /**/ <signal.h>
+#   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #   endif /* ! ACE_PSOS_DIAB_MIPS && ! VXWORKS */
 
 #   include /**/ <errno.h>
