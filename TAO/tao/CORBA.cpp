@@ -110,6 +110,18 @@ CORBA::ORB_init (int &argc,
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
                             *ACE_Static_Object_Lock::instance (), 0));
 
+  // @@ We need to make sure it's ok for the following 3
+  // initialization routines to be called multiple times.  Or better
+  // yet, ensure that we just call them the first time, e.g., by
+  // putting them in some type of TAO_Object_Manager, along with the
+  // Typecode_Constants...
+
+  // Put these initializations here so that exceptions are enabled
+  // immediately.
+  TAO_Exceptions::init_standard_exceptions (env);
+  TAO_IIOP_Interpreter::init_table ();
+  TAO_Marshal::initialize ();
+
   env.clear ();
 
   // Verify some of the basic implementation requirements.  This test
@@ -144,12 +156,6 @@ CORBA::ORB_init (int &argc,
 
   // Initialize the ORB Core instance.
   TAO_ORB_Core_instance ()->init (argc, (char **)argv);
-
-  // @@ Andy, can you please make sure it's ok for the following 3
-  // initialization routines to be called multiple times?!
-  TAO_IIOP_Interpreter::init_table ();
-  TAO_Marshal::initialize ();
-  TAO_Exceptions::init_standard_exceptions (env);
 
   if (env.exception () != 0)
     return 0;
