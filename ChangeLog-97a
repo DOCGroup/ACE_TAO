@@ -1,3 +1,15 @@
+Tue Apr 29 00:33:46 1997    <irfan@TWOSTEP>
+
+	* examples/Reactor/Proactor/test_proactor.mak: Added wsock32.lib
+	  to the link line. I am not sure why we have to do this again
+	  since ace.lib already includes it. Without this library in the
+	  link line, GetAcceptExSockaddr is not defined. Go figure!
+
+	* apps/JAWS/server/jaws.mak: Same as above.
+
+	* ace/ace.{mak,mdp}: Fixed the generation of the release version
+	  of ace.dll such that wsock32.lib is automatically included.
+
 Tue Apr 29 00:16:27 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* JAWS: Changes to support CGI scripts
