@@ -1,3 +1,22 @@
+Mon May 17 19:41:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tao/POA_CORBA.h:
+	* tao/Typecode_Constants.cpp:
+	* tao/DynAnyC.{h,i,cpp}:
+	* tao/dynAnyS.cpp:
+	* tao/DynArray_i.{h,cpp}:
+	* tao/DynSequence_i.{h,cpp}:
+	* tao/DynStruct_i.{h,cpp}:
+	  Moved AnySeq, FieldName, NameValuePair, and 
+	  NameValuePairSeq to the CORBA namespace. They
+	  had previously been in the global namespace.
+	  Generated new typecodes for these, to reflect the
+	  new scoping, and moved the typecodes to 
+	  Typecode_Constants.cpp. Thanks to Serge Du <du@lal.in2p3.fr>
+	  for pointing out a namespace clash with AnySeq in his
+	  application that led to all this.
+
 Mon May 17 18:17:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/UIOP_Transport.cpp,
