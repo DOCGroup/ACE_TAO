@@ -9,9 +9,8 @@
 //     Servant_Activator.h
 //
 // = DESCRIPTION
-//     Defines a Dir_Service_Activator class which is an
-//     Servant_Manager interface which activates a servant by loading
-//     it and associates it with an object on demand.
+//     Defines a Dir_Service_Activator class, an Servant_Manager interface which 
+//     activates a servant by loading it and associates it with an object on demand.
 //
 // = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
@@ -34,7 +33,7 @@ class Dir_Service_Activator : public POA_PortableServer::ServantActivator
 public:
 
   typedef PortableServer::Servant (*Servant_Creator_Prototype) (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
-  // This typedef is used to typecast the void* obtained on finding a
+  // This typedef is used to typecast the void* obtained on finding a 
   // symbol in the library.
 
   Dir_Service_Activator (CORBA::ORB_ptr orb);
@@ -44,7 +43,7 @@ public:
                                              PortableServer::POA_ptr poa,
                                              CORBA::Environment &env);
   // This method is invoked by a POA with USE_SERVANT_MANAGER and
-  // RETAIN policies , whenever it receives a request for a MyFoo
+  // RETAIN policies, whenever it receives a request for a Dir_Service
   // object that is not currently active.
 
   virtual void etherealize (const PortableServer::ObjectId &oid,
@@ -64,7 +63,7 @@ private:
   // and getting the servant object.
 
   void deactivate_servant (PortableServer::Servant servant);
-  // The servant is killed and take is taken to close the library
+  // The servant is killed and care is taken to close the library
   // loaded.
 
   void parse_string (const char* s);
@@ -75,12 +74,12 @@ private:
   // A reference to the ORB.
 
   CORBA::String_var dllname_;
-  // the name of the library containing the servant.
+  // The name of the library containing the servant.
 
   CORBA::String_var create_symbol_;
   // The symbol which on getting invoked will give us the servant
   // pointer.
 
   ACE_DLL dll_;
-  // the library object.
+  // The library object.
 };

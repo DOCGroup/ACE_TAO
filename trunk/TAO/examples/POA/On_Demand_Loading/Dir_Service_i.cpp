@@ -99,7 +99,7 @@ extern "C" ACE_Svc_Export PortableServer::Servant create_dir_service (CORBA::ORB
                                                                        PortableServer::POA_ptr poa);
 
 // The servant pointer is returned which will be of Base class
-// type. The binding to Dir_Service servant will happen at run-time.
+// type. The binding to the Dir_Service servant will happen at run-time.
 
 PortableServer::Servant
 create_dir_service (CORBA::ORB_ptr orb,

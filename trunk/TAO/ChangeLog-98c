@@ -1,3 +1,13 @@
+Wed Dec  9 02:34:33 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading/server.cpp : 
+	* examples/POA/On_Demand_Loading/client.cpp :
+	  Replaced env.exception () checks with the TAO_TRY,TAO_CHECK
+	  macros. 
+
+	* examples/POA/On_Demand_Loading/Servant_Activator.cpp (incarnate):
+	  Added TAO_THROW macro for OBJECT_NOT_EXIST exception.
+
 Tue Dec 08 21:39:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.0.GNU,ACE-INSTALL.html:

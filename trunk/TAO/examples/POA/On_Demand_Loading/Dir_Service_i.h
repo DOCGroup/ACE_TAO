@@ -7,7 +7,7 @@
 //
 // = DESCRIPTION
 //     This is a customised servant-- a dynamic linked library which 
-//     provides directory information.
+//     provides telephone directory information.
 //
 // = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
@@ -25,7 +25,7 @@ class GENERIC_SERVANT_Export Dir_Service_i : public POA_Dir_Service
   //   Directory Service object.
   //
   //=  DESCRIPTION
-  //   Provides directory assistance.
+  //   Provides telephone directory assistance.
  public:
   
   Dir_Service_i (CORBA::ORB_ptr orb,
