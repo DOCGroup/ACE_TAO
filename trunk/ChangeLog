@@ -1,3 +1,8 @@
+Tue Apr  4 23:50:02 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE.cpp (sock_error): Changed "int error" to "ssize_t error"
+	  to be consistent...
+
 Mon Apr  3 11:09:26 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/QoS_Manager.cpp: Added the #if defined 
