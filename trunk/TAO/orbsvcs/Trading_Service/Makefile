@@ -2,43 +2,6 @@
 # $Id$
 # Build the TAO Trading Service
 #--------------------------------------------------------------------------
-
-#---------------
-#   STL (start)
-#---------------
-
-ifndef STL_ROOT
-STL_ROOT=/project/doc/irfan/ObjectSpace/SC4.0
-endif
-
-STD=$(STL_ROOT)/ospace/std
-STL=$(STL_ROOT)/stl
-
-include $(STL_ROOT)/config/local.cfg
-
-CC_INCLUDES += -I$(STD)
-CC_INCLUDES += -pta
-
-CPPFLAGS += \
-	-I$(TOOLKIT) \
-	$(CC_INCLUDES) \
-	$(CC_FLAGS) \
-	$(CC_DEFINES) \
-	$(CC_EH) \
-	$(CC_MT)
-
-ifndef exceptions
-CPPFLAGS += -DOS_NO_EXCEPTION_SPECIFIER
-else
-CPPFLAGS += -DOS_STL_ASSERT
-endif
-
-LDFLAGS += -L$(STL_ROOT)/lib
-
-#---------------
-#   STL (end)
-#---------------
-
 #--------------------------------------------------------------------------
 #	Local macros
 #--------------------------------------------------------------------------
@@ -47,7 +10,7 @@ BIN 	= trader
 
 SVR_SRCS= trader.cpp
 
-LDLIBS  = -lorbsvcs -lTAO -lospace
+LDLIBS  = -lorbsvcs -lTAO 
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
