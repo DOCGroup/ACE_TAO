@@ -154,3 +154,50 @@ TAO_Connection_Handler::transport (TAO_Transport* transport)
 
   this->transport_ = TAO_Transport::_duplicate (transport);
 }
+
+int
+TAO_Connection_Handler::incr_refcount (void)
+{
+  ACE_GUARD_RETURN (ACE_Lock,
+                    ace_mon,
+                    *this->pending_upcall_lock_, -1);
+
+  return ++this->reference_count_;
+}
+
+void
+TAO_Connection_Handler::decr_refcount (void)
+{
+  {
+    ACE_GUARD (ACE_Lock,
+               ace_mon,
+               *this->pending_upcall_lock_);
+
+    --this->reference_count_;
+  }
+
+  if (this->reference_count_ == 0)
+    this->handle_close_i ();
+}
+
+int
+TAO_Connection_Handler::incr_pending_upcalls (void)
+{
+  ACE_GUARD_RETURN (ACE_Lock,
+                    ace_mon,
+                    *this->pending_upcall_lock_, -1);
+
+  return ++this->pending_upcalls_;
+
+
+}
+
+int
+TAO_Connection_Handler::decr_pending_upcalls (void)
+{
+  ACE_GUARD_RETURN (ACE_Lock,
+                    ace_mon,
+                    *this->pending_upcall_lock_, -1);
+
+  return --this->pending_upcalls_;
+}
