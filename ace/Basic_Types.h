@@ -633,14 +633,6 @@ typedef ptrdiff_t ptr_arith_t;
 #define ACE_FLT_MAX 3.402823466e+38F
 #define ACE_DBL_MAX 1.7976931348623158e+308
 
-#if !defined (ACE_HAS_SSIZE_T)
-#  if defined (ACE_WIN64)
-  typedef SSIZE_T ssize_t;
-#  else
-  typedef int ssize_t;
-#  endif /* ACE_WIN64 */
-#endif /* ACE_HAS_SSIZE_T */
-
 # if defined (__ACE_INLINE__)
 #   include "ace/Basic_Types.i"
 # endif /* __ACE_INLINE__ */

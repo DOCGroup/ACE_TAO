@@ -3,7 +3,7 @@
 #include "ace/os_include/os_errno.h"
 
 #if !defined (ACE_NDEBUG)
-#  include "ace/Log_Message.h"  // for ACE_ASSERT
+#  include "ace/Log_Msg.h"  // for ACE_ASSERT
 #else
 #  if !defined (ACE_ASSERT)
 #    define ACE_ASSERT(X)

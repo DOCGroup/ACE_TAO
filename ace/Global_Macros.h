@@ -642,6 +642,7 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 # define ACE_SVC_FACTORY_DEFINE(X) ACE_FACTORY_DEFINE (ACE_Svc, X)
 //@}
 
+#if !defined (ACE_WIN32)
 // Add some typedefs and macros to enhance Win32 conformance...
 #   if !defined (LPSECURITY_ATTRIBUTES)
 #     define LPSECURITY_ATTRIBUTES int
@@ -688,6 +689,7 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 #   if !defined(PIPE_TYPE_MESSAGE)
 #     define PIPE_TYPE_MESSAGE 0
 #   endif /* !defined PIPE_TYPE_MESSAGE */
+#endif /* !ACE_WIN32 */
 
 // Some useful abstrations for expressions involving
 // ACE_Allocator.malloc ().  The difference between ACE_NEW_MALLOC*

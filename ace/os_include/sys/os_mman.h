@@ -80,6 +80,10 @@ PAGE_NOCACHE  */
 #  define PROT_RDWR (PROT_READ|PROT_WRITE)
 #endif /* PROT_RDWR */
 
+# if !defined (MS_SYNC)
+#   define MS_SYNC 0x0
+# endif /* !MS_SYNC */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

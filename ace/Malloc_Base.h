@@ -23,6 +23,7 @@
 
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/sys/os_mman.h"
+#include "ace/os_include/sys/os_types.h"
 
 // The definition of this class is located in Malloc.cpp.
 
