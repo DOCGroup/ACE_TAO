@@ -1,3 +1,10 @@
+Sun Aug 29 16:53:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * ace/config-linux-common.h:
+
+        Added '__GLIBC_MINOR__ < 2' test for setting ACE_POLL_IS_BROKEN
+        on Alpha platform.
+
 Sat Aug 28 11:15:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Message_Queue_T.inl: Changed the implementation of
@@ -10,7 +17,7 @@ Fri Aug 27 11:40:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/ftrtevent.mpb:
 	* bin/MakeProjectCreator/portablegroup.mpb:
-	
+
 	  Changed to inherit from messaging.mpb.
 
 	* bin/MakeProjectCreator/rtsched.mpb:
