@@ -10,6 +10,9 @@ Sat Jul 13 13:22:19 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  cleaned up when program exits, else the test could fill up the
 	  file system and prevent other tests from running. 
 
+	* tests/Makefile:
+	* tests/Makefile.bor: Added the new test to the daily builds. 
+
 Sat Jul 13 09:26:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Stack_Recursion/client.cpp:
