@@ -38,6 +38,7 @@ void
 Test_i::test_method (CORBA::Environment& /* ACE_TRY_ENV */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG ((LM_DEBUG, "test_method invoked\n"));
 }
 
 void
@@ -180,15 +181,12 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      /*
       // Start ORB event loop.
       // @@ Currently we are using Reactor per priority to emulate
       // threadpool with lanes.  Once POA threadpools are implemented,
       // this code should be replaced with standard threadpool apis.
       TAO_Pool_Per_Endpoint pool (orb.in ());
       pool.run (ACE_TRY_ENV);
-      */
-      orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));

@@ -1,3 +1,24 @@
+Thu Dec  7 03:04:51 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/MT_Client_Protocol_Priority/README
+	* tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp
+	* tests/RTCORBA/MT_Client_Protocol_Priority/process-output.pl
+	* tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl
+	* tests/RTCORBA/MT_Client_Protocol_Priority/server.conf
+	* tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp
+	* tests/RTCORBA/README:
+
+	  Added perl script which processes test output and reports
+	  any errors to the user.  Other fixes and enhancements, e.g.,
+	  number of iterations can be specified on the command-line, etc.
+
+	* tao/IIOP_Connect.cpp
+	* tao/Strategies/SHMIOP_Connect.cpp
+	* tao/Strategies/UIOP_Connect.cpp
+	* tao/PortableServer/Object_Adapter.cpp:
+
+	  Debug messages.
+
 Wed Dec  6 23:52:48 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
@@ -9,11 +30,11 @@ Wed Dec  6 23:52:48 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	* orbsvcs/Notify_Service/README:
 	  Updated the usage section to show how the "-Notify_TPReactor"option.
 	* orbsvcs/orbsvcs/Notify/README:
-	  Updated with some explaination of the various MT options for the 
+	  Updated with some explaination of the various MT options for the
 	  Notify.
 	  Thanks to Sarabjeet Duhra <sarabjeet_duhra@hp.com> for
 	  reporting the problem with the -MTListenerEval option
-	
+
 Wed Dec  6 16:20:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Faults/Faults.dsw:
@@ -68,7 +89,7 @@ Wed Dec  6 17:06:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  or a return type. We were adding '_ptr' to the scoped
 	  name. This fix also involved adding
 	  'typedef TCKind &TCKind_out' to corbafwd.h, the same
-	  as would be generated for an IDL enum.  
+	  as would be generated for an IDL enum.
 
 Wed Dec  6 14:32:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -107,13 +128,13 @@ Wed Dec  6 14:32:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/RT_ORBInitializer.h
 
-	  Added #if TAO_HAS_RT_CORBA == 1 guard to this file 
+	  Added #if TAO_HAS_RT_CORBA == 1 guard to this file
 	  to correspond with a similar guard in the .cpp file.
 
 	* tao/Messaging_Policy_i.cpp
 
 	  Added #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-	  guard to this file to correspond with a similar guard in 
+	  guard to this file to correspond with a similar guard in
 	  the .h file.
 
 Wed Dec  6 14:13:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -121,7 +142,7 @@ Wed Dec  6 14:13:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/DynamicAny/DynEnum_i.cpp:
 
 	  Fixed init() method, which tried to make a call on
-	  the DynEnum's typecode member before it had been 
+	  the DynEnum's typecode member before it had been
 	  initialized.
 
 	* tao/DynamicAny/DynArray_i.cpp:

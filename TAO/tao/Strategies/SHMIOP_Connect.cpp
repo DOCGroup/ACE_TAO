@@ -249,6 +249,13 @@ int
 TAO_SHMIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
                                                       ACE_Time_Value *max_wait_time)
 {
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - ")
+                  ACE_TEXT ("SHMIOP_Server_Connection_Handler::handle_input\n")));
+    }
+
   this->refcount_++;
 
   int result = this->acceptor_factory_->handle_input (this->transport (),
