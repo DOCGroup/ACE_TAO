@@ -7,6 +7,7 @@ Sun Jun  8 18:50:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* performance-tests/Makefile:
 	* performance-tests/Makefile.bor: Added the new test directory
 
+	* performance-tests/Sequence_Latency/Makefile.bor:
 	* performance-tests/Sequence_Latency/Makefile: New makefile for
 	  recursing into every test.
 
