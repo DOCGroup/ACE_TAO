@@ -94,7 +94,7 @@ class ACE_Export ACE_Thread_Timer_Queue_Adapter : public ACE_Task_Base
 public:
   typedef TQ TIMER_QUEUE;
 
-  ACE_Thread_Timer_Queue_Adapter (void);
+  ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Manager * = ACE_Thread_Manager::instance ());
   // Creates the timer queue.  Activation of the task is the user's
   // responsibility.  
 
@@ -121,6 +121,20 @@ public:
   TQ &timer_queue (void);
   // Access the implementation queue, useful for iteration.
 
+  ACE_thread_t thr_id (void);
+  // Return the thread id of our active object.
+
+  virtual int activate (long flags = THR_NEW_LWP, 
+			int n_threads = 1, 
+			int force_active = 0,
+			long priority = ACE_DEFAULT_THREAD_PRIORITY,
+			int grp_id = -1,
+			ACE_Task_Base *task = 0,
+			ACE_hthread_t thread_handles[] = 0);
+  // We override the default <activate> method so that we can ensure
+  // that only a single thread is ever spawned.  Otherwise, too many
+  // weird things can happen...
+
 private:
   TQ timer_queue_;
   // The underlying Timer_Queue.
@@ -135,8 +149,11 @@ private:
   // <condition_>.
 
   int active_;
-  // When deactive is called this variable turns to false and the
+  // When deactivate is called this variable turns to false and the
   // dispatching thread is signalled, to terminate its main loop.
+
+  ACE_thread_t thr_id_;
+  // Thread id of our active object task.
 };
 
 #if defined (__ACE_INLINE__)

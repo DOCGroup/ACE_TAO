@@ -159,9 +159,12 @@ Input_Task::shutdown_timer (void *argument)
   ACE_UNUSED_ARG (argument);
 
 #if !defined (ACE_LACKS_PTHREAD_CANCEL)
-  // Cancel the thread timer queue task.	
-  this->queue_->thr_mgr ()->cancel_task (this->queue_);
-#endif
+  // Cancel the thread timer queue task "preemptively."
+  ACE_Thread::cancel (this->queue_->thr_id ());
+#else
+  // Cancel the thread timer queue task "voluntarily."
+  this->queue_->deactivate ();
+#endif /* ACE_LACKS_PTHREAD_CANCEL */
   
   // -1 indicates we are shutting down the application.
   return -1;
@@ -185,8 +188,9 @@ Input_Task::dump (void)
 // constructor
 
 Thread_Timer_Queue_Test_Driver::Thread_Timer_Queue_Test_Driver (void)
-    : input_task_ (&timer_queue_, *this)
-    {}
+  : input_task_ (&timer_queue_, *this)
+{
+}
 
 int 
 Thread_Timer_Queue_Test_Driver::run_test (void)
@@ -233,10 +237,10 @@ Thread_Timer_Queue_Test_Driver::init (void)
 		  COMMAND (input_task_, &Input_Task::shutdown_timer),
 		  -1);
 
-  if (input_task_.activate () == -1)
+  if (this->input_task_.activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "cannot activate input task"), -1);
   
-  if (timer_queue_.activate () == -1)
+  if (this->timer_queue_.activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "cannot activate timer queue"), -1);
   
   if (ACE_Thread_Manager::instance ()->wait () == -1)

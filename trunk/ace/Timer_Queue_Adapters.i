@@ -2,17 +2,28 @@
 
 // $Id$
 
-template<class TQ> ACE_INLINE
-ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (void)
-  : ACE_Task_Base (ACE_Thread_Manager::instance ()),
-    condition_ (lock_)
-{
-  // Assume that we start in active mode.
-  this->active_ = 1;
-}
-
 template<class TQ> ACE_INLINE TQ &
 ACE_Thread_Timer_Queue_Adapter<TQ>::timer_queue (void)
 {
-  return timer_queue_;
+  return this->timer_queue_;
+}
+
+template<class TQ> ACE_INLINE ACE_thread_t
+ACE_Thread_Timer_Queue_Adapter<TQ>::thr_id (void)
+{
+  return this->thr_id_;
+}
+
+template<class TQ> ACE_INLINE int
+ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
+					      int n_threads,
+					      int force_active,
+					      long priority,
+					      int grp_id,
+					      ACE_Task_Base *task,
+					      ACE_hthread_t thread_handles[])
+{
+  // Make sure that we only allow a single thread to be spawned for
+  // our adapter.  Otherwise, too many weird things can happen.
+  return ACE_Task_Base::activate (flags, 1, 0, priority, grp_id, task, 0);
 }

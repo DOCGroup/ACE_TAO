@@ -139,6 +139,15 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
     }
 }
 
+template<class TQ> 
+ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Manager *tm)
+  : ACE_Task_Base (tm),
+    condition_ (lock_),
+    active_ (1), // Assume that we start in active mode.
+    thr_id_ (ACE_OS::NULL_thread)
+{
+}
+
 template<class TQ> ACE_SYNCH_MUTEX &
 ACE_Thread_Timer_Queue_Adapter<TQ>::lock (void)
 {
@@ -169,7 +178,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
   condition_.signal ();
   return result;
 }
-
+ 
 template<class TQ> void 
 ACE_Thread_Timer_Queue_Adapter<TQ>::deactivate (void)
 {
@@ -184,12 +193,14 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
-   // Thread cancellation point, if ACE supports it.
+  this->thr_id_ = ACE_Thread::self ();
+  
+  // Thread cancellation point, if ACE supports it.
 #if !defined (ACE_LACKS_PTHREAD_CANCEL)
   ACE_PTHREAD_CLEANUP_PUSH (&this->condition_.mutex ());
 #endif /* ACE_LACKS_PTHREAD_CANCEL */
 
- while (this->active_)
+  while (this->active_)
     {
       // If the queue is empty, sleep until there is a change on it.
       if (this->timer_queue_.is_empty ())
