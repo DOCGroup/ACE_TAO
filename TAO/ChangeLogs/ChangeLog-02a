@@ -1,3 +1,16 @@
+Mon Jan 28 11:50:27 2002  Ossama Othman  <ossama@uci.edu>
+
+	* performance-tests/Latency/AMH/Single_Threaded/run_test.pl:
+	* performance-tests/Latency/AMI/run_test.pl:
+	* performance-tests/Latency/DII/run_test.pl:
+	* performance-tests/Latency/Deferred/run_test.pl:
+	* performance-tests/Latency/Single_Threaded/run_test.pl:
+	* performance-tests/Latency/Thread_Per_Connection/run_test.pl:
+	* performance-tests/Latency/Thread_Pool/run_test.pl:
+
+	  Corrected Perl include path.  Thanks to Carlos for pointing out
+	  the problem.
+
 Mon Jan 28 11:38:22 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
