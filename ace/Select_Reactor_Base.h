@@ -117,8 +117,10 @@ public:
 class ACE_Export ACE_Select_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
-  /// Default dtor.
+  /// Constructor.
   ACE_Select_Reactor_Notify (void);
+
+  /// Destructor.
   ~ACE_Select_Reactor_Notify (void);
 
   // = Initialization and termination methods.
@@ -275,7 +277,7 @@ public:
   /// Default "do-nothing" constructor.
   ACE_Select_Reactor_Handler_Repository (ACE_Select_Reactor_Impl &);
 
-  /// dtor.
+  /// Destructor.
   ~ACE_Select_Reactor_Handler_Repository (void);
 
   /// Initialize a repository of the appropriate <size>.

@@ -84,53 +84,76 @@ public:
                     | ACE_FLAG_MULTIPOINT_D_ROOT, // connector by default
                   int reuse_addr = 0);
 
+  /// Destructor.
   ~ACE_ATM_Params ();
 
-  /// Get/set protocol family.
+  /// Get protocol family.
   int get_protocol_family (void) const;
+
+  /// Set protocol family.
   void set_protocol_family (int);
 
-  /// Get/set protocol.
+  /// Get protocol.
   int get_protocol (void) const;
+
+  /// Set protocol.
   void set_protocol (int);
 
-  /// Get/set type.
+  /// Get type.
   int get_type (void) const;
+
+  /// Set type.
   void set_type (int);
 
-  /// Get/set protocol info.
+  /// Get protocol info.
   ACE_Protocol_Info *get_protocol_info( void );
+
+  /// Set protocol info.
   void set_protocol_info( ACE_Protocol_Info *);
 
-  /// Get/set socket group.
+  /// Get socket group.
   ACE_SOCK_GROUP get_sock_group( void );
+
+  /// Set socket group.
   void set_sock_group( ACE_SOCK_GROUP );
 
-  /// Get/set socket flags.
+  /// Get socket flags.
   u_long get_flags( void );
+
+  /// Set socket flags.
   void set_flags( u_long );
 
-  /// Get/set reuse_addr flag.
+  /// Get reuse_addr flag.
   int get_reuse_addr (void) const;
+
+  /// Set reuse_addr flag.
   void set_reuse_addr (int);
 
   /// Get device.
   const char* get_device (void) const;
 
-  /// Get/set info.
+  /// Get info.
   Param_Info* get_info (void) const;
+
+  /// Set info.
   void set_info (Param_Info *);
 
-  /// Get/set r/w flag.
+  /// Get r/w flag.
   int get_rw_flag (void) const;
+
+  /// Set r/w flag.
   void set_rw_flag (int);
 
-  /// Get/set user data.
+  /// Get user data.
   Param_Udata* get_user_data (void) const;
+
+  /// Set user data.
   void set_user_data (Param_Udata*);
 
-  /// /set open flag.
+  /// Get open flag.
   int get_oflag (void) const;
+
+  /// Set open flag.
   void set_oflag (int);
 
   /// Dump the state of an object.

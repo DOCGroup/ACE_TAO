@@ -420,7 +420,7 @@ protected:
 
 public:
 /**
- * @class
+ * @class Result
  *
  * @brief This is that class which will be passed back to the
  * <handler> when the asynchronous write completes. This class
@@ -453,7 +453,7 @@ public:
     ACE_Asynch_Write_Stream_Result_Impl *implementation (void) const;
 
   protected:
-    /// Constrcutor.
+    /// Constructor.
     Result (ACE_Asynch_Write_Stream_Result_Impl *implementation);
 
     /// Destructor.
@@ -861,7 +861,7 @@ public:
             ACE_Proactor *proactor = 0);
 
   /**
-   * This starts off an asynchronous Connect. 
+   * This starts off an asynchronous Connect.
    */
   int connect (ACE_HANDLE connect_handle,
                const ACE_Addr & remote_sap,
@@ -1089,20 +1089,28 @@ public:
                              ACE_Message_Block *trailer = 0,
                              u_long trailer_bytes = 0);
 
-    /// Header which goes before the file data.
+    /// Get header which goes before the file data.
     ACE_Message_Block *header (void) const;
+
+    /// Set header which goes before the file data.
     void header (ACE_Message_Block *message_block);
 
-    /// Size of the header data.
+    /// Get size of the header data.
     u_long header_bytes (void) const;
+
+    /// Set size of the header data.
     void header_bytes (u_long bytes);
 
-    /// Trailer which goes after the file data.
+    /// Get trailer which goes after the file data.
     ACE_Message_Block *trailer (void) const;
+
+    /// Set trailer which goes after the file data.
     void trailer (ACE_Message_Block *message_block);
 
-    /// Size of the trailer data.
+    /// Get size of the trailer data.
     u_long trailer_bytes (void) const;
+
+    /// Set size of the trailer data.
     void trailer_bytes (u_long bytes);
 
     /// Conversion routine.
@@ -1177,10 +1185,10 @@ public:
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto 
+   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto
    * <message_block->size()> bytes will be read into each <message block> for
    * a total of <message_block->total_size()> bytes.  All <message_block>'s
-   * <wr_ptr>'s will be updated to reflect the added bytes for each 
+   * <wr_ptr>'s will be updated to reflect the added bytes for each
    * <message_block>
    *
    * Priority of the operation is specified by <priority>. On POSIX4-Unix,
@@ -1302,7 +1310,7 @@ public:
             ACE_Proactor *proactor = 0);
 
   /** This starts off an asynchronous send.  Upto
-   * <message_block->total_length()> will be sent.  <message_block>'s 
+   * <message_block->total_length()> will be sent.  <message_block>'s
    * <rd_ptr> will be updated to reflect the sent bytes if the send operation
    * is successfully completed.
    * Return code of 1 means immediate success and <number_of_bytes_sent>
@@ -1312,7 +1320,7 @@ public:
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto 
+   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto
    * <message_block->length()> bytes will be sent from each <message block>
    * for a total of <message_block->total_length()> bytes.  All
    * <message_block>'s <rd_ptr>'s will be updated to reflect the bytes sent
@@ -1384,7 +1392,7 @@ public:
     ACE_Asynch_Write_Dgram_Result_Impl *implementation (void) const;
 
   protected:
-    /// Constrcutor.
+    /// Constructor.
     Result (ACE_Asynch_Write_Dgram_Result_Impl *implementation);
 
     /// Destructor.

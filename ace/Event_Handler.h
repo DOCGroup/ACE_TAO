@@ -140,7 +140,10 @@ public:
   virtual int handle_group_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
 
   // = Accessors to set/get the various event demultiplexors.
+  /// Set the event demultiplexors.
   virtual void reactor (ACE_Reactor *reactor);
+
+  /// Get the event demultiplexors.
   virtual ACE_Reactor *reactor (void) const;
 
 #if !defined (ACE_HAS_WINCE)
@@ -181,7 +184,7 @@ private:
   /// Priority of this Event_Handler.
   int priority_;
 
-  // = Pointers to the various event demultiplexors.
+  /// Pointer to the various event demultiplexors.
   ACE_Reactor *reactor_;
 };
 
