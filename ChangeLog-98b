@@ -1,8 +1,5 @@
 Mon Jun 29 14:48:58 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Process_Strategy_Test.cpp (handle_input): Removed an extra
-	  argument from ACE_DEBUG.
-
 	* ace/OS.cpp (invoke): Added a return at the end to keep AIX
  	  happy.  Thanks to CLahey@cccis.com for reporting this.
 
