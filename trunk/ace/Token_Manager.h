@@ -25,7 +25,7 @@
 class ACE_Local_Mutex;
 class ACE_Mutex_Token;
 
-class ACE_Export ACE_Token_Manager : ACE_Cleanup
+class ACE_Export ACE_Token_Manager : public ACE_Cleanup
 // = TITLE
 //   Manages all tokens in a process space.
 //
