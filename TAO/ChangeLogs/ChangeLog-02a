@@ -1,3 +1,21 @@
+Fri Jun 29 16:57:47 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/Reliable_Oneways/client.cpp:
+        * tests/Reliable_Oneways/run_test.pl:
+        * tests/Reliable_Oneways/run_sync_with_server.pl:
+        * tests/Reliable_Oneways/run_sync_with_target.pl:
+        * tests/Reliable_Oneways/run_sync_with_transport.pl:
+
+          Reduced the number of default iterations in the client, and
+          lengthened the client timeout in the above perl scripts.
+          When the number of iterations reaches 2/3 of the total,
+          the test shuts down the server ORB. While the server ORB
+          shuts down, the client makes a few more iterations. At that
+          point, the client starts trying to establish a connection
+          at each iteration. On Win32 platforms, it takes about a
+          second for the (unsuccessful) attempt, and the perl scripts
+          were timing out the client.
+
 Fri Jun 29 11:41:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Reply/client.cpp:
