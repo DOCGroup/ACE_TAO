@@ -834,7 +834,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
 				else
 				  {
 				    continue_encoding = continue_encoding &&
-				      stream->write_octet_array_mb (oseq->mb_);
+				      stream->write_octet_array_mb (oseq->mb ());
 				  }
 			      }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
