@@ -305,7 +305,7 @@ project {
     automatic         = 0;
     command           =  $(CIAO_ROOT)/bin/cidlc
     commandflags      = -I$(TAO_ROOT)/tao -I$(TAO_ROOT)/orbsvcs/orbsvcs --
-    inputext          = cidl
+    inputext          = .cidl
     source_outputext  = _svnt.cpp
     generic_outputext = E.idl
 
