@@ -1,7 +1,15 @@
+Fri Aug 27 08:18:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/footprint.sh:
+
+	  Fixed the path to the libraries. Thanks to Johnny for spotting
+	  the error in the scoreboard.
+
 Fri Aug 27 10:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/security.mpb:
-          Security library uses valuetype, so added valuetype as base project
+          Security library uses valuetype, so added valuetype as base
+	  project.
 
 Fri Aug 27 09:48:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
