@@ -1,3 +1,25 @@
+Thu May 20 19:52:49 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
+	  Changed TAO_StreamEndPoint from a template to non-template and
+	  added MSVC dominance warning disabling pragma and moved it from
+	  AVStreams_i_T.{h,cpp} to these files. Also Added a flowspec
+	  class to parse the flowSpec string into different components.
+	
+	* orbsvcs/orbsvcs/AV/AVStreams_i_T.{h,cpp}:
+	  Removed the AVStreams_i_T.{h,cpp} as they're no longer needed.
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.{h,cpp}:
+	  Changed TAO_PropertySet from a template to non-template and
+	  added MSVC dominance warning disabling pragma and moved it from
+	  CosPropertyService_i_T.{h,cpp} to these files. 
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i_T.{h,cpp}:
+	  Removed these files as they're no longer needed.
+
+	* orbsvcs/orbsvcs/Makefile:
+	  Updated dependencies.
+		
 Thu May 20 18:46:44 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/examples/CosEC/Factory/Makefile:
