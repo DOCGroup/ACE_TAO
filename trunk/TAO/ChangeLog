@@ -1,3 +1,9 @@
+Sun Aug  1 23:41:50 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+	  Update after last change.  Fixes "make install" failure due to
+	  bad dependencies.
+
 Mon Aug  2 06:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/AMH_Response_Handler.{h,cpp}:
