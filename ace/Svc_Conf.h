@@ -50,21 +50,23 @@ ACE_YY_DECL;
 
 extern FILE *ace_yyin;
 // Name of input stream
-
+// note: if using wide charcaters (unicode) for interactive or string
+// based input it may be worth checking this all works fine getc is
+// not portable in wide char versions, needs more work
 #define ACE_YY_INPUT(buf,result,max_size) \
   if (ace_yydirective != 0) \
   { \
     int c = *ace_yydirective++; \
     result = c == '\0' ? 0 : 1; \
-    buf[0] = (char) c; \
+    buf[0] = (ACE_TCHAR) c; \
   } \
   else if ( ace_yy_current_buffer->ace_yy_is_interactive ) \
   { \
     int c = getc( ace_yyin ); \
     result = c == EOF ? 0 : 1; \
-    buf[0] = (char) c; \
+    buf[0] = (ACE_TCHAR) c; \
   } \
-  else if ( ((result = fread( buf, 1, max_size, ace_yyin )) == 0) \
+  else if ( ((result = fread( buf, sizeof (ACE_TCHAR), max_size, ace_yyin )) == 0) \
     && ferror( ace_yyin ) ) \
     ACE_YY_FATAL_ERROR( ACE_LIB_TEXT ("input in flex scanner failed") );
 
@@ -87,7 +89,7 @@ extern ACE_TCHAR *ace_yytext;
 extern int ace_yyleng;
 // Holds the length of the lexeme for the current token
 
-extern ACE_Obstack *ace_obstack;
+extern ACE_Obstack_T<ACE_TCHAR> *ace_obstack;
 // Efficient memory allocation technique
 
 extern ACE_Service_Type_Impl *

@@ -1,5 +1,5 @@
 #ifndef lint
-char ace_yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
+char ace_yysccsid[] = "@(#)yaccpar      1.4 (Berkeley) 02/25/90 \n\
  Modified 5/2/90 by J. Roskind to support graphic debugging modes";
 #endif
 #line 2 "Svc_Conf.y"
@@ -23,7 +23,7 @@ static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
 /* #define ACE_YYDEBUG 1*/
 
 /* Efficient memory allocation technique.*/
-ACE_Obstack *ace_obstack;
+ACE_Obstack_T<ACE_TCHAR> *ace_obstack;
 
 #line 30 "Svc_Conf_y.cpp"
 #define ACE_DYNAMIC 257
@@ -386,7 +386,7 @@ int
 main (int argc, char *argv[])
 {
   ace_yyin = stdin;
-  ace_obstack = new ACE_Obstack;
+  ace_obstack = new ACE_Obstack_T<ACE_TCHAR>;
 
   // Try to reopen any filename argument to use ACE_YYIN.
   if (argc > 1 && (ace_yyin = freopen (argv[1], "r", stdin)) == 0)

@@ -135,7 +135,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /I "../PACE" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /I "../PACE" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FR /FD /c
 # SUBTRACT CPP /YX /Yc /Yu
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
@@ -563,6 +563,10 @@ SOURCE=.\Naming_Context.cpp
 # Begin Source File
 
 SOURCE=.\NT_Service.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Obchunk.cpp
 # End Source File
 # Begin Source File
 
@@ -1566,11 +1570,19 @@ SOURCE=.\NT_Service.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Obchunk.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Object_Manager.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Obstack.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Obstack_T.h
 # End Source File
 # Begin Source File
 
@@ -2538,7 +2550,7 @@ SOURCE=.\Object_Manager.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Obstack.i
+SOURCE=.\Obstack_T.i
 # End Source File
 # Begin Source File
 
@@ -3074,6 +3086,11 @@ SOURCE=.\Message_Queue_T.cpp
 # Begin Source File
 
 SOURCE=.\Module.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Obstack_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
