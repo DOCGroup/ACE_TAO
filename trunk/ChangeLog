@@ -1,3 +1,14 @@
+Tue Sep 28 09:13:57 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+
+          Borland Make has a maximum line length of roughly 32767.  The
+          'all' target could exceed that length given a large amount of
+          projects within a single workspace.  In that case, we have to
+          create an 'all' target that specifically lists the target commands
+          and thereby creating a larger workspace makefile, but working
+          around the Borland Make limitation.
+
 Tue Sep 28 11:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-g++-common.h:
@@ -6,63 +17,63 @@ Tue Sep 28 11:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Sep 27 18:53:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/script.mpb:
-	* bin/MakeProjectCreator/config/man.mpb:
+        * bin/MakeProjectCreator/config/script.mpb:
+        * bin/MakeProjectCreator/config/man.mpb:
 
-	  New files to support scripts and manpages.  Inherit from these
-	  files, add the list of scripts or manapages to Script_Files or
-	  Man_Files, and MPC templates with script/manpage support will
-	  do the right thing.
+          New files to support scripts and manpages.  Inherit from these
+          files, add the list of scripts or manapages to Script_Files or
+          Man_Files, and MPC templates with script/manpage support will
+          do the right thing.
 
 Mon Sep 27 21:16:24 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* bin/fuzz.pl:
-	  Do not complain about @file directives without a filename.
-	  Doxygen assumes the current file as the filename, so it cannot
-	  possibly be inconsistent.
+        * bin/fuzz.pl:
+          Do not complain about @file directives without a filename.
+          Doxygen assumes the current file as the filename, so it cannot
+          possibly be inconsistent.
 
 Mon Sep 27 17:44:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/orbsvcslib.mpb:
+        * bin/MakeProjectCreator/config/orbsvcslib.mpb:
 
-	  Changed to add $(TAO_BUILDDIR)/orbsvcs to include path for
-	  automake builds.
+          Changed to add $(TAO_BUILDDIR)/orbsvcs to include path for
+          automake builds.
 
 Mon Sep 27 17:04:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* Makefile.am:
-	* ace/Makefile.am:
-	* ace/QoS/Makefile.am:
-	* ace/RMCast/Makefile.am:
-	* ace/SSL/Makefile.am:
-	* ace/TMCast/Makefile.am:
-	* ACEXML/Makefile.am:
-	* ACEXML/common/Makefile.am:
-	* ACEXML/parser/Makefile.am:
-	* ACEXML/parser/parser/Makefile.am:
-	* ACEXML/examples/Makefile.am:
-	* ACEXML/examples/SAXPrint/Makefile.am:
-	* ACEXML/apps/Makefile.am:
-	* ACEXML/apps/svcconf/Makefile.am:
-	* ACEXML/tests/Makefile.am:
-	* apps/Makefile.am:
-	* apps/gperf/Makefile.am:
-	* apps/gperf/src/Makefile.am:
-	* apps/gperf/tests/Makefile.am:
-	* netsvcs/Makefile.am:
-	* netsvcs/lib/Makefile.am:
-	* netsvcs/clients/Makefile.am:
-	* netsvcs/clients/Logger/Makefile.am:
-	* netsvcs/clients/Naming/Makefile.am:
-	* netsvcs/clients/Naming/Client/Makefile.am:
-	* netsvcs/clients/Naming/Dump_Restore/Makefile.am:
-	* tests/Makefile.am:
-	* tests/SSL/Makefile.am:
-	* tests/RMCast/Makefile.am:
-	  MPC-generated automake files, tweaked to work correctly. The rest of
-	  the automake files will be checked in in the coming days. This set
-	  replaces older ones that pre-dated the MPC-usage effort and were
-	  largely out of date as they were.
+        * Makefile.am:
+        * ace/Makefile.am:
+        * ace/QoS/Makefile.am:
+        * ace/RMCast/Makefile.am:
+        * ace/SSL/Makefile.am:
+        * ace/TMCast/Makefile.am:
+        * ACEXML/Makefile.am:
+        * ACEXML/common/Makefile.am:
+        * ACEXML/parser/Makefile.am:
+        * ACEXML/parser/parser/Makefile.am:
+        * ACEXML/examples/Makefile.am:
+        * ACEXML/examples/SAXPrint/Makefile.am:
+        * ACEXML/apps/Makefile.am:
+        * ACEXML/apps/svcconf/Makefile.am:
+        * ACEXML/tests/Makefile.am:
+        * apps/Makefile.am:
+        * apps/gperf/Makefile.am:
+        * apps/gperf/src/Makefile.am:
+        * apps/gperf/tests/Makefile.am:
+        * netsvcs/Makefile.am:
+        * netsvcs/lib/Makefile.am:
+        * netsvcs/clients/Makefile.am:
+        * netsvcs/clients/Logger/Makefile.am:
+        * netsvcs/clients/Naming/Makefile.am:
+        * netsvcs/clients/Naming/Client/Makefile.am:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile.am:
+        * tests/Makefile.am:
+        * tests/SSL/Makefile.am:
+        * tests/RMCast/Makefile.am:
+          MPC-generated automake files, tweaked to work correctly. The rest of
+          the automake files will be checked in in the coming days. This set
+          replaces older ones that pre-dated the MPC-usage effort and were
+          largely out of date as they were.
 
 Mon Sep 27 14:10:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
