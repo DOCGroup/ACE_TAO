@@ -4682,6 +4682,13 @@ public:
                           const wchar_t *t);
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
+  // The following WChar typedef and functions are used by TAO.  TAO
+  // does not use wchar_t because the size of wchar_t is
+  // platform-dependent.
+  typedef ACE_UINT32 WChar;
+  static u_int wslen (const WChar *);
+  static WChar *wscpy (WChar *, const WChar *);
+
 #if defined (ACE_HAS_UNICODE)
   // = A set of wrappers for UNICODE string operations.
   static int atoi (const wchar_t *s);
