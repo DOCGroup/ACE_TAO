@@ -314,6 +314,8 @@ ACE_HAS_THR_MINSTACK                    Platform calls thr_minstack()
                                         (e.g., Tandem).
 ACE_HAS_LIMITED_RUSAGE_T                The rusage_t structure has
                                         only two fields.
+ACE_HAS_LIMITED_SELECT                  The select is unable to deal with
+                                        large file descriptors.
 ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as
                                         a long constant.
 ACE_HAS_MALLOC_STATS                    Enabled malloc statistics
