@@ -629,17 +629,11 @@ be_structure::in_recursion (be_type *node)
         {
           be_field *field = be_field::narrow_from_decl (si->item ());
           if (!field)
+          // This will be an enum value or other legitimate non-field
+          // member - in any case, no recursion.
             {
               si->next ();
               continue;
-#if 0
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("(%N:%l) be_structure::")
-                                 ASYS_TEXT ("in_recursion - ")
-                                 ASYS_TEXT ("bad field node\n")),
-                                0);
-#endif // 0
             }
           be_type *type = be_type::narrow_from_decl (field->field_type ());
           if (!type)
