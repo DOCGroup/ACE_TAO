@@ -49,7 +49,7 @@ public:
   // 0 on success, non-zero on failure: -1 if virtual memory is
   // exhausted or 1 if the object had already been registered.
 
-  void delete_array_at_exit (void *);
+  static int delete_array_at_exit (void *);
   // Register an array for deletion at program termination.  Returns 0
   // on success, non-zero on failure: -1 if virtual memory is
   // exhausted or 1 if the object had already been registered.  Note
