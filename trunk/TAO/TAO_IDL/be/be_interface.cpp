@@ -1679,14 +1679,15 @@ be_interface::gen_gperf_lookup_methods (void)
       if (process.spawn (process_options) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Error:%p:Couldnt spawn a process for gperf program\n"));
+                      "Error:%p:Couldnt spawn a process for gperf program\n",
+                      "process.spawn"));
           result = -1;
         }
       // Wait for gperf to complete.
       else if (process.wait () == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Error:%p:Error on wait'ing for completion of gperf program.\n",
+                      "Error:%p:Error on waiting for completion of gperf program.\n",
                       "process.wait"));
           result = -1;
         }
