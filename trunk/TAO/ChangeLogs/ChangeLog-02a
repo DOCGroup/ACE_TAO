@@ -1,3 +1,11 @@
+Tue Jan 18 11:37:31 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/MT_Client/client.cpp (parse_args): Only shutdown server
+	  when specified by the user.
+
+	* tests/MT_Client/run_test.pl: Added explicit shutdown of the
+	  server.
+
 Tue Jan 18 08:56:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
