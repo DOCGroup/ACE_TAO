@@ -59,6 +59,7 @@
 # if defined (__STANDARD_CXX)
     // Green Hills 1.8.9, but not 1.8.8.
 #   define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#   define ACE_LACKS_CHAR_RIGHT_SHIFTS
 #   define ACE_LACKS_UNBUFFERED_STREAMBUF
 # endif /* __STANDARD_CXX */
 
