@@ -1,3 +1,40 @@
+Sat Sep 11 03:22:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h:
+	* ciao/Container_Base.inl:
+	* DAnCE/ciao/Container_Base.cpp:
+	* DAnCE/ciao/Container_Base.h:
+	* DAnCE/ciao/Container_Base.inl:
+
+	  Made a few changes. They are 
+
+	  . Added a second POA into the container. One of the POA's will
+	    host the component and the other POA will host the facet and
+	    consumer servants. Obviously the two POA's have different sets
+	    of policies. The new POA is primarily targeted to activate
+	    facet and consumer servants on demand. 
+
+	  . Renamed the accessor to the ORB and POA. Made them const
+            methods 
+
+	  . Improved documentation and a number of costeic changes. 
+	  
+	  
+ 	* DAnCE/RepositoryManager/Repository_Manager.cpp:
+	* DAnCE/RepositoryManager/Update_Plan.cpp:
+	* DAnCE/RepositoryManager/Update_Plan.h:
+
+	  BUnch of cosmetic changes to be conformant with ACE+TAI coding
+	  guidelines. 
+	
+	* DAnCE/ciao/Servant_Impl_Base.cpp:
+	* DAnCE/ciao/Servant_Impl_T.cpp:
+	* ciao/Servant_Impl_Base.cpp:
+	* ciao/Servant_Impl_T.cpp:
+
+	  Fixed simple compilation errors and warnings.
+	
 Thu Sep  9 17:07:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL3/Events/Abstract/Abstract.idl:
