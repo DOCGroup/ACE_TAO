@@ -37,7 +37,7 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:73
+// be\be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_objref,
@@ -55,7 +55,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:73
+// be\be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_objref,
@@ -73,12 +73,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be\be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -112,7 +112,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -121,7 +121,7 @@ TAO::Any_Impl_T<CORBA::DomainManager>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -167,7 +167,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -176,7 +176,7 @@ TAO::Any_Impl_T<CORBA::ConstructionPolicy>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -222,7 +222,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (

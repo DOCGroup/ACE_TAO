@@ -53,13 +53,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
-#if defined (TAO_EXPORT_NESTED_CLASSES)
-#  if defined (TAO_EXPORT_NESTED_MACRO)
-#    undef TAO_EXPORT_NESTED_MACRO
-#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -108,7 +101,7 @@ namespace IIOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ListenPoint;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ListenPoint;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -161,7 +154,7 @@ namespace IIOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ListenPointList;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ListenPointList;
   
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
@@ -195,7 +188,7 @@ namespace IIOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_BiDirIIOPServiceContext;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_BiDirIIOPServiceContext;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -264,7 +257,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IIOP::BiDirIIOPServ
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IIOP::BiDirIIOPServiceContext &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:969
+// be\be_codegen.cpp:947
 
 #if defined (__ACE_INLINE__)
 #include "IIOPC.inl"

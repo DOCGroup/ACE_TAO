@@ -67,22 +67,22 @@
 
 namespace PortableServer
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_PORTABLESERVER_SERVANTMANAGER__VAR_OUT_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER__VAR_OUT_CH_
-
+  
   class ServantManager;
   typedef ServantManager *ServantManager_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ServantManager
       >
     ServantManager_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ServantManager
@@ -90,71 +90,71 @@ namespace PortableServer
     ServantManager_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLESERVER_SERVANTMANAGER_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER_CH_
-
+  
   class TAO_PortableServer_Export ServantManager
     : public virtual CORBA::Object
   {
   public:
     typedef ServantManager_ptr _ptr_type;
     typedef ServantManager_var _var_type;
-
+    
     // The static operations.
     static ServantManager_ptr _duplicate (ServantManager_ptr obj);
-
+    
     static void _tao_release (ServantManager_ptr obj);
-
+    
     static ServantManager_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServantManager_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServantManager_ptr _nil (void)
     {
       return static_cast<ServantManager_ptr> (0);
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     ServantManager (void);
-
+    
     virtual ~ServantManager (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     ServantManager (const ServantManager &);
-
+    
     void operator= (const ServantManager &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_ServantManager;
 
 // TAO_IDL - Generated from
@@ -171,7 +171,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_SERVANTMANAGER__TRAITS_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER__TRAITS_CH_
-
+  
   template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::ServantManager>
   {

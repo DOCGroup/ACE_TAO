@@ -56,13 +56,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
-#if defined (TAO_EXPORT_NESTED_CLASSES)
-#  if defined (TAO_EXPORT_NESTED_MACRO)
-#    undef TAO_EXPORT_NESTED_MACRO
-#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -111,7 +104,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PolicyValue;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_PolicyValue;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -164,7 +157,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PolicyValueSeq;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_PolicyValueSeq;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -229,7 +222,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_Messaging_PolicyValueSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:969
+// be\be_codegen.cpp:947
 
 #if defined (__ACE_INLINE__)
 #include "Messaging_PolicyValueC.inl"

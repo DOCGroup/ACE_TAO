@@ -370,7 +370,7 @@ TAO::Any_Impl_T<Messaging::RebindPolicy>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -497,7 +497,7 @@ TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -566,7 +566,7 @@ TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -635,7 +635,7 @@ TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -704,7 +704,7 @@ TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -773,7 +773,7 @@ TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -842,7 +842,7 @@ TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -911,7 +911,7 @@ TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -1038,7 +1038,7 @@ TAO::Any_Impl_T<Messaging::RoutingPolicy>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -1107,7 +1107,7 @@ TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -1176,7 +1176,7 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
