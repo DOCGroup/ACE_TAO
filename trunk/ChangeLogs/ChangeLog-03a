@@ -1,9 +1,14 @@
+Thu Jan 13 20:11:55 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Select_Reactor_T.cpp (work_pending): The handle set must be
+	  copied before calling select().
+
 Thu Jan 13 16:06:19 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_compile: 
+	* bin/auto_compile:
 	* bin/run_all.pl:
 	* bin/run_all_list.pm: Added an AMI test case for testing in the
-	  nightly builds. 
+	  nightly builds.
 
 Wed Jan 12 23:46:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
