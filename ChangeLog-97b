@@ -1,3 +1,14 @@
+Sat Oct 25 17:41:57 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: 
+	* examples/Timer_Queue/Async_Timer_Queue_Test.cpp: 
+	* examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp: 
+	* examples/Timer_Queue/main_async.cpp: 
+	* examples/Timer_Queue/main_reactor.cpp: 
+	* examples/Timer_Queue/main_thread.cpp: 
+	Added "#pragma instantiate" for template instantiations on 
+	platforms that use pragmas instead, like SGI.
+
 Sat Oct 25 15:18:34 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO/tests/IDL_Cubit/Makefile: Enhanced the "realclean" target to
