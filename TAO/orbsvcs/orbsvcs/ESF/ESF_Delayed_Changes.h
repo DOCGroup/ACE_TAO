@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file   ESF_Proxy_Collection.h
+ *  @file   ESF_Delayed_Changes.h
  *
  *  $Id$
  *
