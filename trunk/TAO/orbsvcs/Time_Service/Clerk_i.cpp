@@ -44,19 +44,18 @@ Clerk_i::read_ior (const char *filename)
   ACE_Read_Buffer ior_buffer (f_handle);
 
   char *data = ior_buffer.read (EOF,'\n','\n');
-  char *str = data;
-
-  int result = 0;
-
   if (data == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n"),
                       -1);
+
+  int result = 0;
+
   TAO_TRY
     {
-      for (str = ACE_OS::strtok (data,"\n");
+      for (char *str = ACE_OS::strtok (data, "\n");
            str != 0 ;
-           str = ACE_OS::strtok (0,"\n"))
+           str = ACE_OS::strtok (0, "\n"))
         {
           ACE_DEBUG ((LM_DEBUG,
                       "iors -> |%s|\n",
