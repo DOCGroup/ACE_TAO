@@ -38,9 +38,10 @@ RSC=rc.exe
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /W3 /GX /O2 /I "include" /I "be_include" /I "..\.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /YX /FD /D CPP_LOCATION="\"\\Program Files\\DevStudio\\Vc\\bin\\Cl\"" /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -48,7 +49,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
+# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386 /libpath:"../../ace"
 
 !ELSEIF  "$(CFG)" == "tao_idl - Win32 Debug"
 
@@ -83,7 +84,7 @@ LINK32=link.exe
 # Name "tao_idl - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "*.cpp"
+# PROP Default_Filter ".cpp"
 # Begin Source File
 
 SOURCE=.\ast\ast_argument.cpp
@@ -459,7 +460,7 @@ SOURCE=.\fe\y.tab.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "*.h"
+# PROP Default_Filter ".h"
 # Begin Source File
 
 SOURCE=.\include\ast.h
@@ -770,10 +771,6 @@ SOURCE=.\include\intlmacros.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\include\nr_extern.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\include\util.h
 # End Source File
 # Begin Source File
@@ -836,14 +833,10 @@ SOURCE=.\include\utl_string.h
 
 SOURCE=.\include\utl_strlist.h
 # End Source File
-# End Group
-# Begin Group "Inline Files"
+# Begin Source File
 
-# PROP Default_Filter ""
-# End Group
-# Begin Group "Template Files"
-
-# PROP Default_Filter ""
+SOURCE=.\fe\y.tab.h
+# End Source File
 # End Group
 # End Target
 # End Project
