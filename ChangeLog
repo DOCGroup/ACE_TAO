@@ -1,3 +1,9 @@
+Wed Feb 13 12:45:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Configuration.cpp: 
+	* tests/Config_Test.cpp (iniCompare): Fixed memory leaks. Thanks
+	  to Johnny willemson for providing the patches. 
+	
 Wed Feb 13 11:46:54 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* XML/parser/parser/Makefile: Added a library (-lACEXML) to link
