@@ -13,6 +13,7 @@
 //
 // = AUTHOR
 //     Carlos O'Ryan
+//     enhanced Nov 6, 2002 Paul Caffrey <denginere@hotmail.com>
 //
 // ================================================================
 
@@ -39,7 +40,7 @@ main (int argc, char *argv[])
       int rebind = 0;
       while (argc > 0)
         {
-          if (strcmp(*argv, "--ior") == 0)
+          if (strcmp (*argv, "--ior") == 0)
             {
               if (argc == 1)
                 {
@@ -51,7 +52,7 @@ main (int argc, char *argv[])
               argv++;
               ior = *argv;
             }
-          else if (strcmp(*argv, "--name") == 0)
+          else if (strcmp (*argv, "--name") == 0)
             {
               if (argc == 1)
                 {
@@ -63,11 +64,11 @@ main (int argc, char *argv[])
               argv++;
               name = *argv;
             }
-          else if (strcmp(*argv, "--rebind") == 0)
+          else if (strcmp (*argv, "--rebind") == 0)
             {
               rebind = 1;
             }
-          else if (strncmp(*argv, "--", 2) == 0)
+          else if (strncmp (*argv, "--", 2) == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "Usage: %s --name <name> "
@@ -102,10 +103,39 @@ main (int argc, char *argv[])
                       "Error: nil naming context\n"));
           return 1;
         }
+      //printf (" make a copy\n");
+      char buf[BUFSIZ];
+      strcpy (buf, name);
+      char *bp = &buf[0];
+      char *cp = 0;
+      int ntoks = 0;
+      char *toks[20];
+      while ((cp = strtok (bp, "/")) != 0)
+	{
+          toks[ntoks] = cp;
+          ntoks++;
+          if (cp == 0)
+            break;
+          bp = 0; // way strtok works
+	}
 
-      CosNaming::Name the_name (1);
-      the_name.length (1);
-      the_name[0].id = CORBA::string_dup (name);
+      // now assign name = toks[ntoks]
+      char lastname[BUFSIZ];
+      strcpy (lastname, toks[ntoks-1]);
+      // search for '.' in name; if exists then the part after '.' is the kind
+      char *kind = strchr (lastname, '.');
+      if (kind != 0)
+	{
+          *kind = 0;
+          kind++;
+	}
+          
+      ACE_TRY_CHECK;
+      CosNaming::Name the_name (ntoks);
+      the_name.length (ntoks);
+      for (i=0; i<ntoks; i++)
+        the_name[i].id = CORBA::string_dup (toks[i]);
+
       if (rebind)
         {
           root_nc->rebind (the_name, obj.in () ACE_ENV_ARG_PARAMETER);
@@ -127,3 +157,5 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+
