@@ -22,12 +22,12 @@ TAO_ComponentRepository_i::~TAO_ComponentRepository_i (void)
 
 IR::ComponentDef_ptr 
 TAO_ComponentRepository_i::create_component (
-    const char *id,
-    const char *name,
-    const char *version,
-    IR::ComponentDef_ptr base_component,
-    const IR::InterfaceDefSeq & supports_interfaces,
-    CORBA::Environment &ACE_TRY_ENV
+    const char * /* id */,
+    const char * /* name */,
+    const char * /* version */,
+    IR::ComponentDef_ptr /* base_component */,
+    const IR::InterfaceDefSeq & /* supports_interfaces */,
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -37,13 +37,13 @@ TAO_ComponentRepository_i::create_component (
 
 IR::HomeDef_ptr 
 TAO_ComponentRepository_i::create_home (
-    const char *id,
-    const char *name,
-    const char *version,
-    IR::HomeDef_ptr base_home,
-    IR::ComponentDef_ptr managed_component,
-    IR::ValueDef_ptr primary_key,
-    CORBA::Environment &ACE_TRY_ENV
+    const char * /* id */,
+    const char * /* name */,
+    const char * /* version */,
+    IR::HomeDef_ptr /* base_component */,
+    IR::ComponentDef_ptr /* managed_component */,
+    IR::ValueDef_ptr /* primary_key */,
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

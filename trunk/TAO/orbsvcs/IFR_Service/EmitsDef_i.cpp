@@ -26,14 +26,14 @@ TAO_EmitsDef_i::def_kind (CORBA::Environment &)
 }
 
 void 
-TAO_EmitsDef_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_EmitsDef_i::destroy (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 IR::Contained::Description *
-TAO_EmitsDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
+TAO_EmitsDef_i::describe (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
