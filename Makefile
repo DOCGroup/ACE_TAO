@@ -219,3 +219,6 @@ show_release_lib_files:
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@
+
+# Optional TAO targets.
+-include $(ACE_ROOT)/TAO/tao_targets.GNU
