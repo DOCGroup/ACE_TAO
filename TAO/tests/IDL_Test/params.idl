@@ -26,7 +26,7 @@
 
 module foo 
 {
-  struct date 
+  struct theDate 
     {
       short year;
       short month;
@@ -35,16 +35,16 @@ module foo
   
   module bar 
     {
-      struct date 
+      struct theDate 
         {
           short x;
         };
               
       interface fooBar 
         {
-          foo::date getDate (in foo::date a,
-                             inout foo::date b,
-                             out foo::date c);
+          foo::theDate getDate (in foo::theDate a,
+                                inout foo::theDate b,
+                                out foo::theDate c);
         };
     };
 };
