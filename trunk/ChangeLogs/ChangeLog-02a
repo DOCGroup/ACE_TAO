@@ -1,3 +1,9 @@
+Thu Jul 19 15:25:11 2001  Paul Calabrese  <calabrese_p@ociweb.com>
+
+	* ace/MEM_Acceptor.i (mmap_prefix):
+
+	  Fix case where a null pointer is passed in.
+
 Thu Jul 19 06:55:07 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Connector.cpp (connect_svc_handler): Missed one change...
