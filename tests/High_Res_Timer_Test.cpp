@@ -58,6 +58,8 @@ check_micro_nano (ACE_hrtime_t microinterval, ACE_hrtime_t nanointerval)
                                       microinterval - nanointerval  :
                                       nanointerval - microinterval    );
   const u_int difference = ACE_U64_TO_U32 (hr_difference);
+  if (nanointerval == 0)
+    nanointerval = 1;      // Prevent divide-by-zero
   const u_int promille_difference = difference * 1000 /
                                             ACE_U64_TO_U32(nanointerval);
 
