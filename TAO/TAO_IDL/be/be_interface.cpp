@@ -1204,7 +1204,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << "ACE_INLINE void" << be_nl
       << (direct ? derived->full_direct_proxy_impl_name ()
                  : derived->full_thru_poa_proxy_impl_name ())
-      << prefix << "::" << d->local_name () << " (" << be_idt << be_idt_nl
+      << "::" << prefix << d->local_name () << " (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj, " << be_nl
       << "CORBA::Object_out obj_forward," << be_nl
       << "TAO::Argument ** args," << be_nl
@@ -1218,7 +1218,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << "{" << be_idt_nl
       << (direct ? ancestor->full_direct_proxy_impl_name ()
                  : ancestor->full_thru_poa_proxy_impl_name ())
-      << "::" << d->local_name () << " (" << be_idt << be_idt_nl
+      << "::" << prefix << d->local_name () << " (" << be_idt << be_idt_nl
       << "obj," << be_nl
       << "obj_forward," << be_nl
       << "args," << be_nl

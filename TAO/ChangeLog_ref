@@ -1,3 +1,15 @@
+Wed Aug 27 15:34:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_attribute.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+
+          Fixed various errors in code generation caught by IDL_Test.
+
 Tue Aug 26 17:44:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Strategies/DIOP_Connector.cpp:

@@ -689,16 +689,8 @@ be_visitor_operation::gen_arg_template_param_name (AST_Type *bt,
 {
   AST_Decl::NodeType nt = bt->node_type ();
 
-  if (nt == AST_Decl::NT_typedef)
-    {
-      be_typedef *td = be_typedef::narrow_from_decl (bt);
-      this->ctx_->alias (td);
-      this->gen_arg_template_param_name (td->primitive_base_type (),
-                                         os);
-      this->ctx_->alias (0);
-      return;
-    }
-
+  // If we're here, we must have a bounded string, if unbounded, it
+  // would be a predefined type.
   if (nt == AST_Decl::NT_string)
     {
       AST_String *s = AST_String::narrow_from_decl (bt);
@@ -712,6 +704,8 @@ be_visitor_operation::gen_arg_template_param_name (AST_Type *bt,
         }
     }
 
+  // For the four predefined types below, we use the helper struct
+  // type, in order to disambiguate the template parameter.
   if (nt == AST_Decl::NT_pre_defined)
     {
       AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (bt);
