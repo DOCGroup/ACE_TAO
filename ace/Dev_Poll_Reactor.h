@@ -545,6 +545,7 @@ public:
   /// Set a user-specified timer queue.
   virtual int timer_queue (ACE_Timer_Queue *tq);
 
+  /// Get the timer queue
   /// @return The current @c ACE_Timer_Queue.
   virtual ACE_Timer_Queue *timer_queue (void) const;
 

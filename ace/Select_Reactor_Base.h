@@ -102,17 +102,17 @@ public:
 /**
  * @class ACE_Select_Reactor_Notify
  *
- * @brief Unblock the <ACE_Select_Reactor> from its event loop.
+ * @brief Unblock the ACE_Select_Reactor from its event loop.
  *
  * This implementation is necessary for cases where the
- * <ACE_Select_Reactor> is run in a multi-threaded program.  In
- * this case, we need to be able to unblock <select> or <poll>
+ * ACE_Select_Reactor is run in a multi-threaded program.  In
+ * this case, we need to be able to unblock @c select or @c poll
  * when updates occur other than in the main
- * <ACE_Select_Reactor> thread.  To do this, we signal an
- * auto-reset event the <ACE_Select_Reactor> is listening on.
- * If an <ACE_Event_Handler> and <ACE_Select_Reactor_Mask> is
- * passed to <notify>, the appropriate <handle_*> method is
- * dispatched in the context of the <ACE_Select_Reactor> thread.
+ * ACE_Select_Reactor thread.  To do this, we signal an
+ * auto-reset event the ACE_Select_Reactor is listening on.
+ * If an ACE_Event_Handler and ACE_Select_Reactor_Mask is
+ * passed to @c notify, the appropriate @c handle_* method is
+ * dispatched in the context of the ACE_Select_Reactor thread.
  */
 class ACE_Export ACE_Select_Reactor_Notify : public ACE_Reactor_Notify
 {
@@ -134,21 +134,21 @@ public:
 
   /**
    * Called by a thread when it wants to unblock the
-   * <ACE_Select_Reactor>.  This wakeups the <ACE_Select_Reactor> if
-   * currently blocked in <select>/<poll>.  Pass over both the
-   * <Event_Handler> *and* the <mask> to allow the caller to dictate
-   * which <Event_Handler> method the <ACE_Select_Reactor> will
-   * invoke.  The <ACE_Time_Value> indicates how long to blocking
-   * trying to notify the <ACE_Select_Reactor>.  If <timeout> == 0,
+   * ACE_Select_Reactor.  This wakeups the ACE_Select_Reactor if
+   * currently blocked in @c select/poll.  Pass over both the
+   * @c Event_Handler *and* the @c mask to allow the caller to dictate
+   * which @c Event_Handler method the ACE_Select_Reactor will
+   * invoke.  The ACE_Time_Value indicates how long to blocking
+   * trying to notify the ACE_Select_Reactor.  If @a timeout == 0,
    * the caller will block until action is possible, else will wait
-   * until the relative time specified in *<timeout> elapses).
+   * until the relative time specified in @c *timeout elapses).
    */
   virtual int notify (ACE_Event_Handler * = 0,
                       ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
-                      ACE_Time_Value * = 0);
+                      ACE_Time_Value * timeout = 0);
 
   /// Handles pending threads (if any) that are waiting to unblock the
-  /// <ACE_Select_Reactor>.
+  /// ACE_Select_Reactor.
   virtual int dispatch_notifications (int &number_of_active_handles,
                                       ACE_Handle_Set &rd_mask);
 
@@ -157,7 +157,7 @@ public:
   /// the Select_Reactor
   virtual ACE_HANDLE notify_handle (void);
 
-  /// Handle one of the notify call on the <handle>. This could be
+  /// Handle one of the notify call on the @c handle. This could be
   /// because of a thread trying to unblock the <Reactor_Impl>
   virtual int dispatch_notify (ACE_Notification_Buffer &buffer);
 

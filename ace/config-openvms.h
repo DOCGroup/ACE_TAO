@@ -139,21 +139,7 @@
 #include <string.h>
 #undef clearerr
 
-//#include <timers.h>
-//#include <pthread.h>
-//#include <sys/uio.h>
-
 #define ACE_DEFAULT_BASE_ADDR ((char*)(0x30000000))
-
-//#define __ACE_INLINE__ 1
-//#define ACE_HAS_WCHAR 1
-//#define ACE_LACKS_THREAD_STACK_ADDR 1
-//#define ACE_HAS_STD_TEMPLATE_SPECIALIZATION 1
-//#define ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION 1
-//#define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 1
-//#define ACE_HAS_TYPENAME_KEYWORD 1
-
-//#define ACE_LACKS_POLL_H 1
 
 #define ACE_HAS_STDCPP_STL_INCLUDES 1
 

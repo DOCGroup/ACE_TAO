@@ -9,7 +9,8 @@
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *  @This one is split from the famous OS.h
+ *
+ *  This one is split from the famous OS.h
  */
 //=============================================================================
 

@@ -731,7 +731,7 @@ ACE_Object_Manager::fini (void)
 /**
  * @class ACE_Object_Manager_Manager
  *
- * @brief Ensure that the <ACE_Object_Manager> gets initialized at program
+ * @brief Ensure that the ACE_Object_Manager gets initialized at program
  * startup, and destroyed at program termination.
  *
  * Without ACE_HAS_NONSTATIC_OBJECT_MANAGER, a static instance of this
