@@ -19,8 +19,23 @@ Thu Aug  6 14:30:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Thu Aug 06 14:11:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Message_Queue_T.i (is_empty_i): Reverted the changes of
-	  r4.3.  '&&' is the right condition.
+        * ace/Message_Queue_T.cpp: Make sure to check if the cur_bytes_ is
+ 	  <= to the low_water_mark before signaling threads trying to
+ 	  enqueue a Message_Block.
+	
+	* ace/Message_Queue_T.cpp: Fixed a bunch of code to use the
+          ACE_NEW_RETURN macro to ensure that errno is set correctly.
+
+
+	* ace/Message_Queue.h: Changed the DEFAULT_LWM to be the same as
+ 	  the DEFAULT_HWM since that's the "Right Way"[TM] to handle
+ 	  this...  Thanks to Umar Syyid <usyyid@hns.com> for helping to
+ 	  track this down.
+
+	* ace/Message_Queue_T.i (is_empty_i): Removed the low water mark
+	  logic entirely because this isn't the right place to put it.
+	  Also reverted back to using && rather than || since we need
+	  to handle "0-sized" messages.
 
 Thu Aug  6 09:41:22 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
