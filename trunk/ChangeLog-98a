@@ -23,6 +23,11 @@ Fri Dec 12 07:49:01 1997  David L. Levine  <levine@cs.wustl.edu>
           reporting this.  This "fix" is temporary, maybe, until we
           figure out the proper fix.
 
+        * ace/OS.h: cast the 1 in ACE_MSB_MASK to an fd_mask, to support
+          64-bit fd_masks.  I suspect that with this change, the
+          ACE_HAS_BROKEN_BITSHIFT used in config-tandem.h is no longer
+          necessary.
+
         Added Basic_Types:
         * ace/Basic_Types.*,Makefile: Basic_Types defines the
           following preprocessor macros:
