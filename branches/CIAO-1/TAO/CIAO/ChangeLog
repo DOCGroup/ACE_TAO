@@ -1,3 +1,9 @@
+Wed Mar 12 00:03:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/HUDisplay_svnt.h:
+	* examples/handcrafted/Display/HUDisplay_svnt.cpp: Added forgotten
+	  _get_component implementation.
+
 Tue Mar 11 22:47:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/HUDisplayE.idl: Removed redundant
