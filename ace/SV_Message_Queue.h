@@ -14,8 +14,8 @@
 //
 // ============================================================================
 
-#ifndef ACE_MESSAGE_QUEUE_H
-#define ACE_MESSAGE_QUEUE_H
+#ifndef ACE_SV_MESSAGE_QUEUE_H
+#define ACE_SV_MESSAGE_QUEUE_H
 
 #include "ace/ACE.h"
 
@@ -91,4 +91,4 @@ protected:
 #include "ace/SV_Message_Queue.i"
 #endif
 
-#endif /* ACE_MESSAGE_QUEUE_H */
+#endif /* ACE_SV_MESSAGE_QUEUE_H */
