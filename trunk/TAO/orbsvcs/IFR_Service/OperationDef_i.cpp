@@ -362,7 +362,7 @@ IR_OperationMode
 TAO_OperationDef_i::mode (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR_OP_NORMAL);
+  TAO_IFR_READ_GUARD_RETURN (OP_NORMAL);
 
   return this->mode_i (ACE_TRY_ENV);
 }
