@@ -7,6 +7,9 @@ Thu May  8 18:04:14 1997  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* ace/Containers (ACE_Unbounded_Stack<T>::delete_all_nodes):
 	  Fixed subtle bug in delete_all_nodes.
 
+	* ace/OS.cpp (ACE_TSS_Cleanup::exit): Changed because of
+	  return value changes. 
+
 Thu May  8 18:04:14 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* include/makeinclude/platform_irix6.2_sgic++.GNU:  Moved SGI C++
