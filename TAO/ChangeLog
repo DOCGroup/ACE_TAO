@@ -1,3 +1,8 @@
+Mon May  5 16:53:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Replaced Services.cpp with ServicesC.spp
+
 Mon May  5 10:54:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/Makefile.BE:
@@ -10,18 +15,18 @@ Mon May  5 08:52:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h: #included
 	  IORInterceptorC.h.
-	
+
 	* orbsvcs/examples/ORT/ObjectReferenceFactory.idl: Fixed a path to
 	  included idl file.
 
 	* orbsvcs/*/Makefile*: Updated dependencies.
-	
+
 Mon May  5 08:37:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbvcs/orbsvcs/*Makefile.*: Updated dependencies.
 
 	* orbsvcs/orbsvcs/LB_ORT.idl: Fixed the path to the included pidl
-	  file. 
+	  file.
 
 Mon May  5 08:32:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
