@@ -78,10 +78,10 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Message_Generator_Parser_11.obj \
 	$(OBJDIR)\GIOP_Message_Generator_Parser_12.obj \
 	$(OBJDIR)\GIOP_Message_Generator_Parser_Impl.obj \
-	$(OBJDIR)\GIOP_Message_Handler.obj \
 	$(OBJDIR)\GIOP_Message_Lite.obj \
 	$(OBJDIR)\GIOP_Message_Locate_Header.obj \
-	$(OBJDIR)\GIOP_Message_State.obj \
+        $(OBJDIR)\GIOP_Message_Reactive_Handler.obj \
+        $(OBJDIR)\GIOP_Message_State.obj \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\GIOPC.obj \
 	$(OBJDIR)\IFR_TypeCodes.obj \
