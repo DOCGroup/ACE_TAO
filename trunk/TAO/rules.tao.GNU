@@ -40,19 +40,7 @@ endif # COMSPEC
 TAO_BASE_LIBS=-lTAO $(ACELIB) $(LIBS)
 TAO_SRVR_LIBS=-lTAO_PortableServer $(TAO_BASE_LIBS)
 TAO_CLNT_LIBS= $(TAO_BASE_LIBS)
-#
-# The following simbols has been defined to overcome a
-# problem with the current QNX RTP linker. In fact for
-# that platform the relative platform macro file takes
-# care of adding a number of additional library that are
-# not usually needed on other platforms.
-#
-TAO_DYNAMIC_LIBS+=-lTAO_DynamicInterface
-TAO_COS_NAMING_LIBS+=-lTAO_CosNaming
-TAO_COS_NOTIFICATION_LIBS+=-lTAO_CosNotification
-TAO_RT_SCHED_LIBS+=-lTAO_RTSched
-TAO_FAULT_TOLERANCE_LIBS+=-lTAO_FaultTolerance
-TAO_COS_TRADING_LIBS+=-lTAO_CosTrading
+TAO_DYNAMIC_LIBS=-lTAO_DynamicInterface
 
 ####
 #### Macro customization.
@@ -185,25 +173,32 @@ CPPFLAGS += \
 ####
 #### Build rules.
 ####
-IDL_EXT_MINUS=C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp
-IDL_EXT=C.h $(IDL_EXT_MINUS)
+IDL_EXT_MINUS=$(IDL_CLIENT_INL_EXT) $(IDL_CLIENT_SRC_EXT) \
+	$(IDL_SERVER_HDR_EXT) $(IDL_SERVER_INL_EXT) \
+	$(IDL_SERVER_SRC_EXT) $(IDL_SERVER_THDR_EXT) \
+	$(IDL_SERVER_TINL_EXT) $(IDL_SERVER_TSRC_EXT)
+IDL_EXT=$(IDL_CLIENT_HDR_EXT) $(IDL_EXT_MINUS)
 IDL_EXT2_MINUS=Cli.i Cli.cpp Ser.h Ser.i Ser.cpp Ser_T.h Ser_T.i Ser_T.cpp
 IDL_EXT2=Cli.h $(IDL_EXT2_MINUS)
 
 .SUFFIXES: $(IDL_EXT)
 
 ifneq ($(use_flick),1)
-$(foreach ext, $(IDL_EXT_MINUS), %$(ext)): %C.h
+$(foreach ext, $(IDL_EXT_MINUS), %$(ext)): %$(IDL_CLIENT_HDR_EXT)
 	@
 
+ifneq ($(tao_dont_use_idl_make_rule),1)
 %C.h: %.idl $(TAO_IDL)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
+endif
 
 $(foreach ext, $(IDL_EXT2_MINUS), %$(ext)): %Cli.h
 	@
 
+ifneq ($(tao_dont_use_idl_make_rule),1)
 %Cli.h: %.idl $(TAO_IDL)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
+endif
 
 else
 #### You can redefine the following in your platform_macros.GNU
@@ -221,17 +216,19 @@ CORBA_FE=$(FLICK_OBJDIR)/bin/flick-fe-newcorba
 CORBA_PG=$(FLICK_OBJDIR)/bin/flick-c-pfe-corbaxx
 CORBA_BE=$(FLICK_OBJDIR)/bin/flick-c-pbe-iiopxx
 
+ifneq ($(tao_dont_use_idl_make_rule),1)
 $(foreach ext, $(IDL_EXT) $(IDL_EXT2), %$(ext)): %.idl
 	$(CORBA_FE) $< && \
 	$(CORBA_PG) -c -o $*-client.prc $*.aoi && \
-	$(CORBA_BE) $*-client.prc -o $*C.cpp -h $*C.h -f $*S.h --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
-	echo > $*C.i
+	$(CORBA_BE) $*-client.prc -o $*$(IDL_CLIENT_SRC_EXT) -h $*$(IDL_CLIENT_HDR_EXT) -f $*$(IDL_SERVER_HDR_EXT) --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
+	echo > $*$(IDL_CLIENT_INL_EXT)
 	$(CORBA_FE) $< && \
 	$(CORBA_PG) -s -o $*-server.prc $*.aoi && \
-	$(CORBA_BE) $*-server.prc --no_mu_stubs -o $*S.cpp -h $*S.h -F $*C.h --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
-	echo > $*S.i && \
-        echo > $*S_T.h && \
-        echo > $*S_T.i && \
-        echo > $*S_T.cpp
+	$(CORBA_BE) $*-server.prc --no_mu_stubs -o $*$(IDL_SERVER_SRC_EXT) -h $*$(IDL_SERVER_HDR_EXT) -F $*$(IDL_CLIENT_HDR_EXT) --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
+	echo > $*$(IDL_SERVER_INL_EXT) && \
+        echo > $*$(IDL_SERVER_THDR_EXT) && \
+        echo > $*$(IDL_SERVER_TINL_EXT) && \
+        echo > $*$(IDL_SERVER_TSRC_EXT)
+endif # tao_dont_use_idl_make_rule
 
-endif
+endif # use_flick = 1
