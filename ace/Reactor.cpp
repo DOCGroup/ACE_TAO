@@ -425,8 +425,10 @@ ACE_Reactor::any_ready (ACE_Reactor_Handle_Set &wait_set)
 {
   ACE_TRACE ("ACE_Reactor::fill_in_ready");
 
+#if !defined (ACE_WIN32)
   // Make this call signal safe.
   ACE_Sig_Guard sb;
+#endif /* ACE_WIN32 */
 
   int number_ready = this->ready_set_.rd_mask_.num_set () 
     + this->ready_set_.wr_mask_.num_set ()
@@ -1146,7 +1148,9 @@ ACE_Reactor::bit_ops (ACE_HANDLE handle,
   if (this->handler_rep_.handle_in_range (handle) == 0)
     return -1;
 
+#if !defined (ACE_WIN32)
   ACE_Sig_Guard sb; // Block out all signals until method returns. 
+#endif /* ACE_WIN32 */
 
   ACE_FDS_PTMF ptmf  = &ACE_Handle_Set::set_bit;
   u_long omask = ACE_Event_Handler::NULL_MASK;
