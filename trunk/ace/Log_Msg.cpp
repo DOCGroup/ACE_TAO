@@ -529,9 +529,9 @@ ACE_Log_Msg::log (const char *format_str,
 			// our purposes.
 			if (lpMsgBuf == 0)
 			  {
-			    lpMsgBuf = ACE::sock_error (errno);
+			    const char *message = ACE::sock_error (errno);
 			    ACE_OS::sprintf (bp, "%s: %s", 
-					     va_arg (argp, char *), lpMsgBuf);
+					     va_arg (argp, const char *), message);
 			  }
 			else
 			  {
