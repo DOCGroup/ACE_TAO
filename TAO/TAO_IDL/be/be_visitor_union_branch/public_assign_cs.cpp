@@ -366,18 +366,36 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (be_predefined_t
       break;
     case AST_PredefinedType::PT_any:
       if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
-        *os << "ACE_NEW (" << be_idt << be_idt_nl
-            << "this->u_." << ub->local_name () << "_," << be_nl
-            << bt->name () << " (*u.u_."
-            << ub->local_name () << "_)" << be_uidt_nl
-            << ");" << be_uidt << be_uidt_nl;
+        {
+          *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+              << "}" << be_uidt_nl
+              << "else" << be_idt_nl
+              << "{" << be_idt_nl
+              << "ACE_NEW (" << be_idt << be_idt_nl
+              << "this->u_." << ub->local_name () << "_," << be_nl
+              << bt->name () << " (*u.u_."
+              << ub->local_name () << "_)" << be_uidt_nl
+              << ");" << be_uidt << be_uidt_nl
+              << "}" << be_uidt << be_uidt_nl;
+        }
       else
-        *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-            << "this->u_." << ub->local_name () << "_," << be_nl
-            << bt->name () << " (*u.u_."
-            << ub->local_name () << "_)," << be_nl
-            << "*this" << be_uidt_nl
-            << ");" << be_uidt << be_uidt_nl;
+        {
+          *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+              << "}" << be_uidt_nl
+              << "else" << be_idt_nl
+              << "{" << be_idt_nl
+              << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+              << "this->u_." << ub->local_name () << "_," << be_nl
+              << bt->name () << " (*u.u_."
+              << ub->local_name () << "_)," << be_nl
+              << "*this" << be_uidt_nl
+              << ");" << be_uidt << be_uidt_nl
+              << "}" << be_uidt << be_uidt_nl;
+        }
       break;
     case AST_PredefinedType::PT_void:
       break;
@@ -421,33 +439,34 @@ be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
     {
-      *os << "ACE_NEW (" << be_idt << be_idt_nl
+      *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+          << "}" << be_uidt_nl
+          << "else" << be_idt_nl
+          << "{" << be_idt_nl
+          << "ACE_NEW (" << be_idt << be_idt_nl
           << "this->u_." << ub->local_name () << "_," << be_nl
           << bt->name () << " (*u.u_."
           << ub->local_name () << "_)" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl;
+          << ");" << be_uidt << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl;
     }
   else
     {
-      // If we are initializing a recursive union, we don't want to
-      // do anything with a non-existent anonymous sequence member.
-      if (bt->in_recursion (bu))
-        {
-          *os << "if (u.u_." << ub->local_name () << "_ != 0)" << be_idt_nl
-              << "{" << be_idt_nl;
-        }
-
-      *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+      *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+          << "}" << be_uidt_nl
+          << "else" << be_idt_nl
+          << "{" << be_idt_nl
+          << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
           << "this->u_." << ub->local_name () << "_," << be_nl
           << bt->name () << " (*u.u_."
           << ub->local_name () << "_)," << be_nl
           << "*this" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl;
-
-      if (bt->in_recursion (bu))
-        {
-          *os << "}" << be_uidt << be_uidt_nl;
-        }
+          << ");" << be_uidt << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl;
     }
 
   return 0;
@@ -517,24 +536,40 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
     }
   os = this->ctx_->stream ();
 
-  os->indent (); // start from current indentation
-  // set the discriminant to the appropriate label
-  if (bt->size_type () == be_type::VARIABLE
-      || node->has_constructor ())
+  os->indent ();
+  if (bt->size_type () == be_type::VARIABLE || node->has_constructor ())
     {
       if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
-        *os << "ACE_NEW (" << be_idt << be_idt_nl
-            << "this->u_." << ub->local_name () << "_," << be_nl
-            << bt->name () << " (*u.u_."
-            << ub->local_name () << "_)" << be_uidt_nl
-            << ");" << be_uidt << be_uidt_nl;
+        {
+          *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+              << "}" << be_uidt_nl
+              << "else" << be_idt_nl
+              << "{" << be_idt_nl
+              << "ACE_NEW (" << be_idt << be_idt_nl
+              << "this->u_." << ub->local_name () << "_," << be_nl
+              << bt->name () << " (*u.u_."
+              << ub->local_name () << "_)" << be_uidt_nl
+              << ");" << be_uidt << be_uidt_nl
+              << "}" << be_uidt << be_uidt_nl;
+        }
       else
-        *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-            << "this->u_." << ub->local_name () << "_," << be_nl
-            << bt->name () << " (*u.u_."
-            << ub->local_name () << "_)," << be_nl
-            << "*this" << be_uidt_nl
-            << ");" << be_uidt << be_uidt_nl;
+        {
+          *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+              << "}" << be_uidt_nl
+              << "else" << be_idt_nl
+              << "{" << be_idt_nl
+              << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+              << "this->u_." << ub->local_name () << "_," << be_nl
+              << bt->name () << " (*u.u_."
+              << ub->local_name () << "_)," << be_nl
+              << "*this" << be_uidt_nl
+              << ");" << be_uidt << be_uidt_nl
+              << "}" << be_uidt << be_uidt_nl;
+        }
     }
   else
     {
@@ -595,18 +630,36 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
   os->indent (); // start from current indentation
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
-    *os << "ACE_NEW (" << be_idt << be_idt_nl
-        << "this->u_." << ub->local_name () << "_," << be_nl
-        << bt->name () << " (*u.u_."
-        << ub->local_name () << "_)" << be_uidt_nl
-        << ");" << be_uidt << be_uidt_nl;
+    {
+      *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+          << "}" << be_uidt_nl
+          << "else" << be_idt_nl
+          << "{" << be_idt_nl
+          << "ACE_NEW (" << be_idt << be_idt_nl
+          << "this->u_." << ub->local_name () << "_," << be_nl
+          << bt->name () << " (*u.u_."
+          << ub->local_name () << "_)" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl;
+    }
   else
-    *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-        << "this->u_." << ub->local_name () << "_," << be_nl
-        << bt->name () << " (*u.u_."
-        << ub->local_name () << "_)," << be_nl
-        << "*this" << be_uidt_nl
-        << ");" << be_uidt << be_uidt_nl;
+    {
+      *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+          << "}" << be_uidt_nl
+          << "else" << be_idt_nl
+          << "{" << be_idt_nl
+          << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+          << "this->u_." << ub->local_name () << "_," << be_nl
+          << bt->name () << " (*u.u_."
+          << ub->local_name () << "_)," << be_nl
+          << "*this" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl;
+    }
 
   return 0;
 }
