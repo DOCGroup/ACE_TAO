@@ -164,7 +164,7 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   IOP::ServiceContext_var service_context;
-  FT::ObjectGroupRefVersion version;
+  FT::ObjectGroupRefVersion version=0;
 
   ACE_TRY_EX(block1)
   {
