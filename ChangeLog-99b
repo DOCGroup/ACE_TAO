@@ -1,3 +1,11 @@
+Tue Mar  2 10:54:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Cache_{Hash,Heap}_T.{h,cpp}:
+	* Cache_Manager[_T].{h,cpp}:
+	* Cache_Object.cpp:
+	* Hash_Bucket_T.{h,cpp}: Fixed erroneous include directives.
+	  Thanks to Christian.Destor@alcatel.fr for reporting this.
+
 Tue Mar  2 10:33:47 1999  James CE Johnson  <jcej@lads.com>
 
 	* ace/IOStream_T.{cpp|h|i}: Christopher Healey
