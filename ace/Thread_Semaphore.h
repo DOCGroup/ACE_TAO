@@ -45,6 +45,12 @@ public:
                         void * = 0,
                         int max = 0x7FFFFFFF);
 
+  /// Initialize the semaphore, with an initial value of 1,
+  /// maximum value of <max>, and unlocked by default.
+  ACE_Thread_Semaphore (const ACE_TCHAR *name = 0,
+                        void * = 0,
+                        int max = 0x7FFFFFFF);
+
   /// Default dtor.
   ~ACE_Thread_Semaphore (void);
 

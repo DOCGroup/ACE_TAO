@@ -25,6 +25,20 @@ Mon Dec 15 11:35:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           ACE_OS::strcasecmp. This fixes a compile error when ACE_NTRACE has
           been defined to 0
 
+Sun Dec 14 15:26:46 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Thread_Semaphore.{h,cpp}: Added support for an ACE_Thread_Semaphore
+	  that takes a first param that's an ACE_TCHAR * so that things
+ 	  will work properly if ACE_Thread_Semaphore is used with
+ 	  ACE_Malloc<>.  Thanks to John Glynn <jglynn@bjc.org> for
+ 	  motivating this.
+  
+	* ace/Process_Semaphore.{h,cpp}: Added support for an ACE_Process_Semaphore
+	  that takes a first param that's an ACE_TCHAR * so that things
+ 	  will work properly if ACE_Process_Semaphore is used with
+ 	  ACE_Malloc<>.  Thanks to John Glynn <jglynn@bjc.org> for
+ 	  motivating this.
+
 Sat Dec 13 23:29:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * bin/tao_orb_tests.lst:

@@ -9,11 +9,9 @@
  *   Wrapper for Dijkstra style general semaphores that work
  *   across processes.
  *
- *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_PROCESS_SEMAPHORE_H
 #define ACE_PROCESS_SEMAPHORE_H
@@ -44,6 +42,12 @@ public:
   /// maximum value of <max>.
   ACE_Process_Semaphore (u_int count = 1, // By default make this unlocked.
                          const ACE_TCHAR *name = 0,
+                         void * = 0,
+                         int max = 0x7FFFFFFF);
+
+  /// Initialize the semaphore, with an initial value of 1 and a
+  /// maximum value of <max>.
+  ACE_Process_Semaphore (const ACE_TCHAR *name,
                          void * = 0,
                          int max = 0x7FFFFFFF);
 
