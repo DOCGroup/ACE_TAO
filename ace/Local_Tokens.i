@@ -13,22 +13,22 @@ ACE_Token_Proxy::type (void) const
 
 ACE_INLINE int
 ACE_Token_Proxy::acquire_read (int notify,
-			       void (*sleep_hook)(void *),
-			       ACE_Synch_Options &options)
+                               void (*sleep_hook)(void *),
+                               ACE_Synch_Options &options)
 {
   return this->acquire (notify,
-			sleep_hook,
-			options);
+                        sleep_hook,
+                        options);
 }
 
 ACE_INLINE int
 ACE_Token_Proxy::acquire_write (int notify,
-				void (*sleep_hook)(void *),
-				ACE_Synch_Options &options)
+                                void (*sleep_hook)(void *),
+                                ACE_Synch_Options &options)
 {
   return this->acquire (notify,
-			sleep_hook,
-			options);
+                        sleep_hook,
+                        options);
 }
 
 ACE_INLINE int
@@ -124,7 +124,7 @@ ACE_Tokens::dec_reference (void)
       ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("dec_reference already zero")));
       return 0;
     }
-    
+
   return --this->reference_count_;
 }
 
@@ -289,8 +289,8 @@ ACE_TPQ_Entry::equal_client_id (const ASYS_TCHAR *id)
 
 ACE_INLINE
 ACE_Local_Mutex::ACE_Local_Mutex (const ASYS_TCHAR *token_name,
-				  int ignore_deadlock,
-				  int debug)
+                                  int ignore_deadlock,
+                                  int debug)
 {
   ACE_TRACE ("ACE_Local_Mutex::ACE_Local_Mutex");
   this->open (token_name, ignore_deadlock, debug);
@@ -322,25 +322,15 @@ ACE_Token_Name::name (void) const
 ACE_INLINE ACE_Token_Proxy *
 ACE_Local_Mutex::clone (void) const
 {
-  return new ACE_Local_Mutex (token_->name (), 
-			      ignore_deadlock_,
-			      debug_);
+  return new ACE_Local_Mutex (token_->name (),
+                              ignore_deadlock_,
+                              debug_);
 }
 
 ACE_INLINE ACE_Tokens *
 ACE_Local_Mutex::create_token (const ASYS_TCHAR *name)
 {
   return new ACE_Mutex_Token (name);
-}
-
-ACE_INLINE
-ACE_Null_Token::ACE_Null_Token (void)
-{
-}
-
-ACE_INLINE
-ACE_Null_Token::~ACE_Null_Token (void)
-{
 }
 
 ACE_INLINE
@@ -352,8 +342,8 @@ ACE_Local_Mutex::~ACE_Local_Mutex (void)
 
 ACE_INLINE
 ACE_Local_RLock::ACE_Local_RLock (const ASYS_TCHAR *token_name,
-				  int ignore_deadlock,
-				  int debug)
+                                  int ignore_deadlock,
+                                  int debug)
 {
   ACE_TRACE ("ACE_Local_RLock::ACE_Local_RLock");
   this->open (token_name, ignore_deadlock, debug);
@@ -379,17 +369,17 @@ ACE_Local_RLock::type (void) const
 ACE_INLINE ACE_Token_Proxy *
 ACE_Local_RLock::clone (void) const
 {
-  return new ACE_Local_RLock (token_->name (), 
-			      ignore_deadlock_,
-			      debug_);
+  return new ACE_Local_RLock (token_->name (),
+                              ignore_deadlock_,
+                              debug_);
 }
 
 // ************************************************************
 
 ACE_INLINE
 ACE_Local_WLock::ACE_Local_WLock (const ASYS_TCHAR *token_name,
-				  int ignore_deadlock,
-				  int debug)
+                                  int ignore_deadlock,
+                                  int debug)
 {
   ACE_TRACE ("ACE_Local_WLock::ACE_Local_WLock");
   this->open (token_name, ignore_deadlock, debug);
@@ -415,15 +405,15 @@ ACE_Local_WLock::type (void) const
 ACE_INLINE ACE_Token_Proxy *
 ACE_Local_WLock::clone (void) const
 {
-  return new ACE_Local_WLock (token_->name (), 
-			      ignore_deadlock_,
-			      debug_);
+  return new ACE_Local_WLock (token_->name (),
+                              ignore_deadlock_,
+                              debug_);
 }
 
 // ************************************************************
 
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Token_Name::operator= (const ACE_Token_Name &rhs)
 {
   ACE_TRACE ("ACE_Token_Name::operator=");
