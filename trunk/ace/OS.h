@@ -3897,12 +3897,15 @@ public:
   static int hostname (char *name,
                        size_t maxnamelen);
 
+  // WinCE only supports UNICODE, so we don't need these functions.
+#if !defined (ACE_HAS_WINCE)
   // = A set of wrappers for explicit dynamic linking.
   static int dlclose (ACE_SHLIB_HANDLE handle);
   static char *dlerror (void);
   static ACE_SHLIB_HANDLE dlopen (ACE_DL_TYPE filename,
                                   int mode = ACE_DEFAULT_SHLIB_MODE);
   static void *dlsym (ACE_SHLIB_HANDLE handle, ACE_DL_TYPE symbol);
+#endif /* ! ACE_HAS_WINCE */
 
   // = A set of wrappers for stdio file operations.
   static int last_error (void);
