@@ -1,3 +1,32 @@
+Thu Feb 10 13:25:07 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO/tao/SHMIOP_Acceptor.h:
+	* TAO/tao/SHMIOP_Acceptor.i:
+	* TAO/tao/SHMIOP_Acceptor.cpp:
+	* TAO/tao/SHMIOP_Connect.h:
+	* TAO/tao/SHMIOP_Connect.i:
+	* TAO/tao/SHMIOP_Connect.cpp:
+	* TAO/tao/SHMIOP_Connector.h:
+	* TAO/tao/SHMIOP_Connector.cpp:
+	* TAO/tao/SHMIOP_Factory.h:
+	* TAO/tao/SHMIOP_Factory.cpp:
+	* TAO/tao/SHMIOP_Profile.h:
+	* TAO/tao/SHMIOP_Profile.i:
+	* TAO/tao/SHMIOP_Profile.cpp:
+	* TAO/tao/SHMIOP_Transport.h:
+	* TAO/tao/SHMIOP_Transport.cpp: Added shmiop:// pluggable protocol.
+
+	* TAO/tao/corbafwd.h: Uncommented TAO_TAG_SHMEM_PROFILE.
+
+	* TAO/tao/default_resource.cpp: Added SHMIOP in
+	  <init_protocol_factories> to be loaded by default if SHMIOP is
+	  enable on this platform.
+
+	* TAO/tao/orbconf.h: Added macro definition to enable SHMIOP by
+	  default.
+
+	* TAO/tao/Makefile: Added SHMIOP_* files and updated file dependencies.
+
 Wed Feb 09 12:30:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI/ami_test.idl,

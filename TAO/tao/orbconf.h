@@ -379,6 +379,10 @@ enum MCAST_SERVICEID
 #  endif  /* TAO_HAS_MINIMUM_CORBA */
 #endif  /* !TAO_HAS_UIOP */
 
+#if !defined (TAO_HAS_SHMIOP)
+# define TAO_HAS_SHMIOP 1
+#endif /* TAO_HAS_SHMIOP */
+
 // RT_CORBA support is enabled by default if TAO is not configured for
 // minimum CORBA.  If TAO is configured for minimum CORBA, then
 // RT_CORBA will be disabled by default.
