@@ -1,3 +1,13 @@
+Tue Nov 26 21:06:13 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/Pipe.cpp (open): This change relates to Win32 code only.
+  	  Removed the reuse_addr flag to acceptor.open() so that we don't
+ 	  try to reuse the acceptor socket immediately. Apparently, this
+ 	  causes no end of trouble on Win32 as the following connect()
+ 	  call fails (randomly).  Now it should be possible to create
+ 	  multiple ACE_Pipes in one process and hence create multiple
+	  Reactors also without any problems.
+
 Tue Nov 26 11:27:33 1996  David L. Levine  <levine@cs.wustl.edu>
 	* tests/{CPP_Test,Mutex_Test,Shared_Memory_MM_Test,SPIPE_Test}.cpp:
  	  added VXWORKS support for these tests by spawning a new thread
