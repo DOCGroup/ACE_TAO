@@ -69,8 +69,11 @@ be_exception::be_exception (UTL_ScopedName *n,
   // Always the case.
   this->size_type (AST_Type::VARIABLE);
 
-  ACE_SET_BITS (idl_global->decls_seen_info_,
-                idl_global->decls_seen_masks.aggregate_seen_);
+  if (!this->imported ())
+    {
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.exception_seen_);
+    }
 }
 
 void

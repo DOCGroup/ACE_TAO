@@ -147,10 +147,11 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       this->begin_public ();
 
       // Default constructor and destructor are public if OBV class is concrete
-      if (!be_visitor_valuetype::have_operation (node))
+      if (!node->have_operation ())
         {
 
           *os << be_nl;
+
           if (! node->is_nested ())
             {
               *os << "OBV_";
@@ -190,7 +191,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << "virtual void _remove_ref (void);";
         }
 
-      if (be_visitor_valuetype::have_operation (node))
+      if (node->have_operation ())
         {
            // Default constructor and destructor are protected if OBV class is abstract
           *os << be_nl << be_uidt_nl << "protected:" << be_idt;

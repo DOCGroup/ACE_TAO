@@ -1,3 +1,78 @@
+Mon Sep 22 20:26:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_exception.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/be_include/be_visitor_arg_traits.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_valuetype.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+	  Extensions and changes to the IDL compiler's bookkeeping
+	  of the IDL declarations it has seen, and changes to
+	  generated #include files to correspond with the changes
+	  to TAO's include structure in this morning's checkin.
+	  Also moved generation of virtual to_object() and
+          (de)marshal_value() methods for interfaces to come
+	  before the generation of its Any operators, so the
+	  template specialization can be seen before the
+	  instantiation. Also uninlined the generation of the
+	  corresponding to_value() method for valuetypes.
+
+        * tao/Any.h:
+        * tao/Any_Array_Impl_T.cpp:
+        * tao/Any_Basic_Impl_T.cpp:
+        * tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Impl_T.cpp:
+        * tao/Any_Special_Impl_T.cpp:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_SArgument_T.cpp:
+        * tao/Basic_SArgument_T.cpp:
+        * tao/Collocation_Proxy_Broker.h:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_SArgument_T.cpp:
+        * tao/Fixed_Size_SArgument_T.cpp:
+        * tao/IOP_CodecC.cpp:
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_SArgument_T.cpp:
+        * tao/PolicyC.cpp:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_SArgument_T.cpp:
+        * tao/UB_String_SArgument_T.cpp:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_SArgument_T.cpp:
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/Var_Size_SArgument_T.cpp:
+
+	  Changes to file #includes resulting from the above
+	  changes to the IDL compiler, and from debugging
+	  with Param_Test and IDL_Test.
+
 Mon Sep 22 18:32:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Any_Basic_Impl_T.cpp:

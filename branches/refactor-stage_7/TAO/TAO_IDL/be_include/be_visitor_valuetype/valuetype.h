@@ -102,43 +102,11 @@ public:
   // generate the _init implementation
 
 protected:
-
-  // There are three possible situations.
-  // (1) If there is no initializers but at least one operation.
-  //     In this case we don't need to bother about factory.
-  //
-  // (2) There are no (operations or initializers) (i.e. only state
-  //     members) then we need a concrete type-specific factory
-  //     class whose create_for_unmarshal creates OBV_ class.
-  //
-  // (3) There is at least one operation and at least one initializer.
-  //     In this case we need to generate abstract factory class.
-  //
-  // Here I reflect these situations.
-
-  enum FactoryStyle
-  {
-    FS_UNKNOWN,
-    FS_NO_FACTORY,
-    FS_CONCRETE_FACTORY,
-    FS_ABSTRACT_FACTORY
-  };
-
-  static FactoryStyle determine_factory_style (be_valuetype* node);
-  // determine what kind of factory needed
-
-  static idl_bool have_operation(be_valuetype* node);
-  // recurse down the inheritance tree to determine
-  // if valuetype has at least one operation/attribute.
-
-	static idl_bool have_supported_op (be_interface* node);
-  // check if VT supports an interface with at least 1 operation
-
-  static idl_bool obv_need_ref_counter(be_valuetype* node);
+  static idl_bool obv_need_ref_counter (be_valuetype* node);
   // check is VT needs a RefCounter mix-in in OBV_ class
   // suppose that we are deciding for this node
 
-  static idl_bool obv_have_ref_counter(be_valuetype* node);
+  static idl_bool obv_have_ref_counter (be_valuetype* node);
   // recurse down the inheritance tree to see
   // if node or one of its OBV_ base class already has RefCounter
 };

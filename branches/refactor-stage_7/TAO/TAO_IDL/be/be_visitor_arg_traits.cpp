@@ -22,6 +22,7 @@
 #include "be_eventtype_fwd.h"
 #include "be_array.h"
 #include "be_enum.h"
+#include "be_predefined_type.h"
 #include "be_sequence.h"
 #include "be_string.h"
 #include "be_structure.h"
@@ -133,7 +134,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
                         -1);
     }
 
-//  this->generated (node, I_TRUE);
+  this->generated (node, I_TRUE);
   return 0;
 }
 
@@ -158,7 +159,7 @@ be_visitor_arg_traits::visit_interface_fwd (be_interface_fwd *node)
                         -1);
     }
 
-//  this->generated (node, I_TRUE);
+  this->generated (node, I_TRUE);
   return 0;
 }
 
@@ -204,7 +205,7 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-//  this->generated (node, I_TRUE);
+  this->generated (node, I_TRUE);
   return 0;
 }
 
@@ -231,7 +232,7 @@ be_visitor_arg_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
                         -1);
     }
 
-//  this->generated (node, I_TRUE);
+  this->generated (node, I_TRUE);
   return 0;
 }
 
@@ -329,7 +330,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
 
   os->gen_endif ();
 
-//  this->generated (node, I_TRUE);
+  this->generated (node, I_TRUE);
   return 0;
 }
 
@@ -372,7 +373,7 @@ be_visitor_arg_traits::visit_array (be_array *node)
 
   os->gen_endif ();
 
-//  this->generated (node, I_TRUE);
+  this->generated (node, I_TRUE);
   return 0;
 }
 
@@ -408,7 +409,50 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
 
   os->gen_endif ();
 
-//  this->generated (node, I_TRUE);
+  this->generated (node, I_TRUE);
+  return 0;
+}
+
+int
+be_visitor_arg_traits::visit_predefined_type (be_predefined_type *node)
+{
+  if (this->generated (node) || !node->seen_in_operation ())
+    {
+      return 0;
+    }
+
+  // Only for an Any used in an operation.
+  if (node->pt () != AST_PredefinedType::PT_any)
+    {
+      this->generated (node, I_TRUE);
+      return 0;
+    }
+
+  // This should be generated even for imported nodes. The ifdef guard prevents
+  // multiple declarations.
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  os->gen_ifdef_macro ("corba_any", "arg_traits");
+
+  *os << be_nl << be_nl
+      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "class " << be_global->stub_export_macro () << " "
+      << this->S_ << "Arg_Traits<CORBA::Any>" << be_idt_nl
+      << ": public" << be_idt << be_idt_nl
+      << "Var_Size_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
+      << "CORBA::Any," << be_nl
+      << "CORBA::Any_var," << be_nl
+      << "CORBA::Any_out" << be_uidt_nl
+      << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
+      << "{" << be_nl
+      << "};";
+
+  os->gen_endif ();
+
+  this->generated (node, I_TRUE);
   return 0;
 }
 
@@ -462,7 +506,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
                         -1);
     }
 
-//  this->generated (node, I_TRUE);
+  this->generated (node, I_TRUE);
   return 0;
 }
 
@@ -499,8 +543,8 @@ be_visitor_arg_traits::visit_field (be_field *node)
                         -1);
     }
 
-//  this->generated (node, I_TRUE);
-//  this->generated (bt, I_TRUE);
+  this->generated (node, I_TRUE);
+  this->generated (bt, I_TRUE);
   return 0;
 }
 
@@ -556,7 +600,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
                         -1);
     }
 
-//  this->generated (node, I_TRUE);
+  this->generated (node, I_TRUE);
   return 0;
 }
 
@@ -583,7 +627,7 @@ be_visitor_arg_traits::visit_union_branch (be_union_branch *node)
                         -1);
     }
 
-//  this->generated (node, I_TRUE);
+  this->generated (node, I_TRUE);
   return 0;
 }
 
@@ -605,6 +649,7 @@ be_visitor_arg_traits::visit_typedef (be_typedef *node)
     }
 
   this->ctx_->alias (0);
+  this->generated (node, I_TRUE);
   return 0;
 }
 

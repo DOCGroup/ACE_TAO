@@ -4,6 +4,7 @@
 #define TAO_FIXED_SIZE_SARGUMENT_T_C
 
 #include "tao/Fixed_Size_SArgument_T.h"
+#include "tao/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Fixed_Size_SArgument_T.inl"

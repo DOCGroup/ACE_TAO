@@ -19,7 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Var_Size_Argument_T.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Arg_Traits_T.h"
 
@@ -266,18 +265,6 @@ namespace CORBA
   private:
     /// Instance.
     Any *&ptr_;
-  };
-};
-
-namespace TAO
-{
-  /// Used in generated code if CORBA::Any is an argument or return type.
-  template<>
-  class TAO_Export Arg_Traits<CORBA::Any>
-    : public Var_Size_Arg_Traits_T<CORBA::Any,
-                                   CORBA::Any_var,
-                                   CORBA::Any_out>
-  {
   };
 };
 

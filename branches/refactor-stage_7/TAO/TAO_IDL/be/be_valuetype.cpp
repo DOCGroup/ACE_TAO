@@ -140,11 +140,21 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
         }
     }
 
+  if (this->imported ())
+    {
+      return;
+    }
+
   // Set the flag that says we have a valuetype in this IDL file.
   if (this->is_defined ())
     {
       ACE_SET_BITS (idl_global->decls_seen_info_,
                     idl_global->decls_seen_masks.valuetype_seen_);
+    }
+  else
+    {
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.fwd_valuetype_seen_);
     }
 }
 
@@ -192,6 +202,223 @@ const char *
 be_valuetype::fwd_helper_name (void) const
 {
   return this->fwd_helper_name_.fast_rep ();
+}
+
+be_valuetype::FactoryStyle
+be_valuetype::determine_factory_style (void)
+{
+  FactoryStyle factory_style = FS_UNKNOWN;
+
+
+  if (this->is_abstract ())
+    {
+      return FS_NO_FACTORY;
+    }
+
+  // Check whether we have at least one operation or not.
+  idl_bool have_operation = this->have_operation ();
+  idl_bool have_factory = 0;
+
+  // Try only our own scope.
+  if (this->nmembers () > 0)
+    {
+      // Initialize an iterator to iterate thru our scope
+      // Continue until each element is visited.
+      for (UTL_ScopeActiveIterator si (this,
+                                       UTL_Scope::IK_decls); 
+           !si.is_done (); 
+           si.next())
+        {
+          AST_Decl *d = si.item ();
+
+          if (!d)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_valuetype::"
+                                 "determine_factory_style"
+                                 "bad node in this scope\n"),
+                                factory_style);
+
+            }
+
+          AST_Decl::NodeType node_type = d->node_type ();
+
+          if (node_type == AST_Decl::NT_factory)
+            {
+              have_factory = 1;
+              break;
+            }
+
+        } // end of for loop
+    } // end of if
+
+  if (!have_operation && !have_factory)
+    {
+      factory_style = FS_CONCRETE_FACTORY;
+    }
+  else if (have_operation && !have_factory)
+    {
+      factory_style = FS_NO_FACTORY;
+    }
+  else
+    {
+      factory_style = FS_ABSTRACT_FACTORY;
+    }
+
+  return factory_style;
+}
+
+idl_bool
+be_valuetype::have_operation (void)
+{
+  // Check whatever scope we get for operations/attributes.
+
+  idl_bool have_operation = I_FALSE;
+
+  // Operations are either operations or attributes of:
+  // -its own
+  // -derived (abstract VT | VT | abstract iface | iface)
+  //
+
+  // First try our own scope.
+  if (this->nmembers () > 0)
+    {
+      // Initialize an iterator to iterate thru our scope
+      // Continue until each element is checked.
+      for (UTL_ScopeActiveIterator si (this,
+                                       UTL_Scope::IK_decls); 
+           !si.is_done (); 
+           si.next())
+        {
+          AST_Decl *d = si.item ();
+
+          if (!d)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_valuetype::"
+                                 "has_operation"
+                                 "bad node in this scope\n"),
+                                0);
+
+            }
+
+          AST_Decl::NodeType nt = d->node_type();
+
+          if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
+            {
+              have_operation = I_TRUE;
+              break;
+            }
+        } // end of for loop
+    } // end of if
+
+  if (! have_operation)
+    {
+      // Now traverse inheritance tree.
+      long i;  // loop index
+      long n_inherits = this->n_inherits ();
+      AST_Interface **inherits = this->inherits ();
+
+      for (i = 0; i < n_inherits; ++i)
+        {
+          be_valuetype *vt = be_valuetype::narrow_from_decl (inherits[i]);
+
+          if (vt != 0 && vt->have_operation ())
+            {
+              have_operation = I_TRUE;
+              break;
+            }
+        }
+    }
+
+  if (! have_operation)
+    {
+      // Check for operations on supported interfaces
+      AST_Interface * supported = this->supports_concrete ();
+
+      if (supported != 0)
+        {
+          be_interface *intf = be_interface::narrow_from_decl (supported);
+
+          if (intf != 0)
+            {
+	            have_operation = be_valuetype::have_supported_op (intf);
+            }
+        }
+    }
+
+  return have_operation;
+}
+
+idl_bool
+be_valuetype::have_supported_op (be_interface * node)
+{
+
+	idl_bool have_supported_op = 0;
+
+  if (node->nmembers () == 0)
+    {
+      return I_FALSE;
+    }
+
+	// Initialize an iterator for supported interface elements
+	for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls); 
+       si.is_done ();
+       si.next())
+		{
+			AST_Decl *d = si.item ();
+
+			if (!d)
+				{
+					ACE_ERROR_RETURN ((LM_ERROR,
+						                 "(%N:%l) be_valuetype::"
+							               "have_supported_op"
+								             "bad node in this scope\n"),
+										          0);
+
+				}
+
+			AST_Decl::NodeType nt = d->node_type ();
+
+      // Check the type of each element in the supported interface
+			if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
+				{
+					have_supported_op = 1;
+					break;
+				}
+		} // end for loop
+
+  if (! have_supported_op)
+    {
+      // Now traverse inheritance tree.
+      long i;  // loop index
+      long n_inherits = node->n_inherits ();
+      AST_Interface **inherits = node->inherits ();
+      for (i = 0; i < n_inherits; ++i)
+        {
+          be_interface * intf = be_interface::narrow_from_decl (inherits[i]);
+
+          if (intf != 0)
+            {
+              have_supported_op = be_valuetype::have_supported_op (intf);
+
+              if (have_supported_op)
+                {
+                  break;
+                }
+            }
+        }
+    }
+
+  return have_supported_op;
+}
+
+idl_bool
+be_valuetype::will_have_factory (void)
+{
+  FactoryStyle fs = this->determine_factory_style ();
+
+  return (fs == FS_ABSTRACT_FACTORY || fs == FS_CONCRETE_FACTORY);
 }
 
 int

@@ -24,15 +24,20 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/Collocation_Strategy.h"
+#include "tao/Pseudo_VarOut_T.h"
 
 namespace CORBA
 {
   class Object;
   typedef Object *Object_ptr;
+  typedef TAO_Pseudo_Var_T<Object> Object_var;
+  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
 }
 
 namespace TAO
 {
+  class Argument;
+
   /**
    * @class Collocation_Proxy_Broker
    */

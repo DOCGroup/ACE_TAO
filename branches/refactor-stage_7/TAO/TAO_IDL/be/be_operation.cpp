@@ -64,7 +64,15 @@ be_operation::be_operation (AST_Type *rt,
   ACE_NEW (this->strategy_,
            be_operation_default_strategy (this));
 
-  if (!this->imported () && !this->is_local ())
+  if (this->imported ())
+    {
+      return;
+    }
+    
+  ACE_SET_BITS (idl_global->decls_seen_info_,
+                idl_global->decls_seen_masks.operation_seen_);
+
+  if (!this->is_local ())
     {
       be_type *bt = be_type::narrow_from_decl (rt);
       bt->seen_in_operation (I_TRUE);

@@ -162,14 +162,15 @@ TAO_CodeGen::start_client_header (const char *fname)
 
       if (be_global->pre_include () != 0)
         {
-          *this->client_header_ << "#include /**/ \""
+          *this->client_header_ << "\n#include /**/ \""
                                 << be_global->pre_include ()
                                 << "\"\n";
         }
 
-      // Including standard files.
+      // This one is almost always needed so we generate it above
+      // the #pragma once.
       this->gen_standard_include (this->client_header_,
-                                  "tao/corba.h");
+                                  "tao/CDR.h");
 
       // Some compilers don't optimize the #ifndef header include
       // protection, but do optimize based on #pragma once.
@@ -178,6 +179,9 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
 
       // Other include files.
+
+      this->gen_standard_include (this->client_header_,
+                                  "tao/Environment.h");
 
       if (be_global->stub_export_include () != 0)
         {
@@ -941,7 +945,7 @@ TAO_CodeGen::end_client_header (void)
     {
       *this->client_header_ << "#include /**/ \""
                             << be_global->post_include ()
-                            << "\"\n";
+                            << "\"\n\n";
     }
 
   *this->client_header_ << "#endif /* ifndef */" << be_nl << be_nl;
@@ -1273,20 +1277,20 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
 void
 TAO_CodeGen::gen_stub_hdr_includes (void)
 {
-  // Include the Messaging files if AMI is enabled.
-  if (be_global->ami_call_back () == I_TRUE)
-    {
-      // Include Messaging skeleton file.
-      this->gen_standard_include (this->client_header_,
-                                  "tao/Messaging/Messaging.h");
-    }
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.non_local_iface_seen_
+      | idl_global->decls_seen_masks.local_iface_seen_
+      | idl_global->decls_seen_masks.base_object_seen_,
+      "tao/Object.h",
+      this->client_header_
+    );
 
-  // Include the smart proxy base class if smart proxies are enabled.
-  if (be_global->gen_smart_proxies () == I_TRUE)
-    {
-      this->gen_standard_include (this->client_header_,
-                                  "tao/SmartProxies/Smart_Proxies.h");
-    }
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.operation_seen_
+      | idl_global->decls_seen_masks.exception_seen_,
+      "tao/Exception.h",
+      this->client_header_
+    );
 
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        idl_global->decls_seen_masks.abstract_iface_seen_))
@@ -1309,13 +1313,40 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/Valuetype_Adapter_Impl.h");
 
-      // @@@@ (JP) These can be logically separated later
-      // with additional checks.
-      this->gen_standard_include (this->client_header_,
-                                  "tao/Valuetype/ValueFactory.h");
+      this->gen_cond_file_include (
+          idl_global->decls_seen_masks.valuefactory_seen_,
+          "tao/Valuetype/ValueFactory.h",
+          this->client_header_
+        );
+    }
 
+  // This is true if we have a typecode or TCKind in the IDL file,
+  // no need to check for typecode support.
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.typecode_seen_,
+      "tao/Typecode.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.any_seen_,
+      "tao/Any.h",
+      this->client_header_
+    );
+
+  // Include the Messaging files if AMI is enabled.
+  if (be_global->ami_call_back () == I_TRUE)
+    {
+      // Include Messaging skeleton file.
       this->gen_standard_include (this->client_header_,
-                                  "tao/Any_Impl_T.h");
+                                  "tao/Messaging/Messaging.h");
+    }
+
+  // Include the smart proxy base class if smart proxies are enabled.
+  if (be_global->gen_smart_proxies () == I_TRUE)
+    {
+      this->gen_standard_include (this->client_header_,
+                                  "tao/SmartProxies/Smart_Proxies.h");
     }
 
   this->gen_seq_file_includes ();
@@ -1379,15 +1410,25 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "tao/ORB_Core.h");
     }
 
-  if (be_global->gen_amh_classes () == I_TRUE)
+  // We generate this include if we have typecode support and have not
+  // already included it in the header file.
+  if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                        idl_global->decls_seen_masks.typecode_seen_)
+      && be_global->tc_support ())
     {
-      // Necessary for the AIX compiler.
       this->gen_standard_include (this->client_stubs_,
-                                  "ace/Auto_Ptr.h");
+                                  "tao/Typecode.h");
     }
 
   this->gen_any_file_includes ();
   this->gen_arg_file_includes (this->client_stubs_);
+
+  if (be_global->gen_amh_classes () == I_TRUE)
+    {
+      // Necessary for the AIX compiler.
+      this->gen_standard_include (this->client_stubs_,
+                                  "\nace/Auto_Ptr.h");
+    }
 }
 
 void
@@ -1409,6 +1450,10 @@ TAO_CodeGen::gen_skel_src_includes (void)
                               "tao/IFR_Client_Adapter.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/Object_T.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/Typecode.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/DynamicC.h");
 
   if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())
@@ -1471,7 +1516,9 @@ TAO_CodeGen::gen_any_file_includes (void)
         );
 
       this->gen_cond_file_include (
-          idl_global->decls_seen_masks.aggregate_seen_,
+          idl_global->decls_seen_masks.aggregate_seen_
+          | idl_global->decls_seen_masks.seq_seen_
+          | idl_global->decls_seen_masks.exception_seen_,
           "tao/Any_Dual_Impl_T.h",
           this->client_stubs_
         );
@@ -1494,13 +1541,15 @@ void
 TAO_CodeGen::gen_var_file_includes (void)
 {
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.interface_seen_,
+      idl_global->decls_seen_masks.interface_seen_
+      | idl_global->decls_seen_masks.fwd_iface_seen_,
       "tao/Objref_VarOut_T.h",
       this->client_header_
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.valuetype_seen_,
+      idl_global->decls_seen_masks.valuetype_seen_
+      | idl_global->decls_seen_masks.fwd_valuetype_seen_,
       "tao/Valuetype/Value_VarOut_T.h",
       this->client_header_
     );

@@ -276,13 +276,22 @@ public:
     ACE_UINT64 abstract_iface_seen_;
     ACE_UINT64 local_iface_seen_;
     ACE_UINT64 non_local_iface_seen_;
+    ACE_UINT64 fwd_iface_seen_;
+    ACE_UINT64 fwd_valuetype_seen_;
     ACE_UINT64 basic_type_seen_;
     ACE_UINT64 ambiguous_type_seen_;
     ACE_UINT64 enum_seen_;
     ACE_UINT64 string_seen_;
     ACE_UINT64 array_seen_;
     ACE_UINT64 aggregate_seen_;
+    ACE_UINT64 exception_seen_;
+    ACE_UINT64 operation_seen_;
     ACE_UINT64 non_local_op_seen_;
+    ACE_UINT64 typecode_seen_;
+    ACE_UINT64 any_seen_;
+    ACE_UINT64 corba_module_seen_;
+    ACE_UINT64 base_object_seen_;
+    ACE_UINT64 valuefactory_seen_;
 
     ACE_UINT64 seq_seen_;
     ACE_UINT64 iface_seq_seen_;

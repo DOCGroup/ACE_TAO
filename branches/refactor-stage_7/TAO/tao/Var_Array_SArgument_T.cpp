@@ -4,6 +4,7 @@
 #define TAO_VAR_ARRAY_SARGUMENT_T_C
 
 #include "tao/Var_Array_SArgument_T.h"
+#include "tao/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Var_Array_SArgument_T.inl"

@@ -198,9 +198,14 @@ be_generator::create_module (UTL_Scope *s,
 
   // If we are opening module CORBA, we must add the predefined
   // types TypeCode, TCKind and maybe ValueBase.
-  if (!ACE_OS::strcmp (retval->local_name ()->get_string (), "CORBA"))
+  if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                        idl_global->decls_seen_masks.corba_module_seen_)
+      && !ACE_OS::strcmp (retval->local_name ()->get_string (), "CORBA"))
     {
       retval->add_CORBA_members ();
+
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.corba_module_seen_);
     }
 
   return retval;

@@ -4,6 +4,7 @@
 #define TAO_BD_STRING_SARGUMENT_T_C
 
 #include "tao/BD_String_SArgument_T.h"
+#include "tao/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/BD_String_SArgument_T.inl"
