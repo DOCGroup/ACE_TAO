@@ -1,3 +1,8 @@
+Thu Sep 13 22:43:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Added the new Cache_Growth_Test to the
+	  daily tests.
+
 Thu Sep 13 20:38:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.h (ACE_Thread_Manager): Changed the default
