@@ -1,10 +1,17 @@
+Thu Jan  8 17:52:38 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/FtRtEvent/Utils/ftrtevent_export.h:
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_export.h:
+          Added check for TAO_AS_STATIC_LIBS for setting the export flags for
+          proper building of static libraries.
+
 Thu Jan  8 11:11:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
 
           Removed an unnecessary 'const' qualifier in the body of the
-          Any inserting operator for arrays that was causing a problem
-          with BCB. Thanks to Johnny Willemsen <jwillemsen@remedy.nl> 
+          Any inserting operator for arrays that was causing a warning
+          with Tru64. Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
           for reporting the problem.
 
 Thu Jan  8 17:11:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
