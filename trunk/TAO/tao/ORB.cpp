@@ -910,51 +910,30 @@ CORBA_ORB::resolve_initial_references (const char *name,
       // Check if a DefaultInitRef was specified.
       if (ACE_OS::strlen (default_init_ref) != 0)
         {
-          // @@ This parsing code should be merged with or use the
-          //    parsing code used during MProfile creation in the
-          //    TAO_Connector base class.
-          //            -Ossama
-
-          ACE_CString list_of_profiles;
-
-          // Used by the strtok_r.
-          char *lasts = 0;
-
-          // Append the given object ID to all the end-points of
-          // Default Init Ref.
-          for (char *str = ACE_OS::strtok_r (default_init_ref,
-                                             ",",
-                                             &lasts);
-               str != 0 ;
-               str = ACE_OS::strtok_r (0,
-                                       ",",
-                                       &lasts))
-            {
-              list_of_profiles += ACE_CString (str);
-
-              // Make sure that default initial reference doesn't
-              //    end with the object key delimiter character.
-
-              const char object_key_delimiter =
-                this->orb_core_->connector_registry ()->object_key_delimiter (str);
-
-              if (list_of_profiles[list_of_profiles.length() - 1] !=
-                  object_key_delimiter)
-                list_of_profiles += ACE_CString (object_key_delimiter);
-              list_of_profiles += object_id;
-              list_of_profiles += ACE_CString (",");
-            }
+          ACE_CString list_of_profiles (default_init_ref);
 
           // Clean up.
           delete [] default_init_ref;
 
-          // Replace the last extra comma with a null.
-          list_of_profiles[list_of_profiles.length () - 1] = '\0';
+          // Obtain the appropriate object key delimiter for the
+          // specified protocol.
+          const char object_key_delimiter =
+            this->orb_core_->connector_registry ()->object_key_delimiter (
+                                                  list_of_profiles.c_str ());
+
+          // Make sure that the default initial reference doesn't end
+          // with the object key delimiter character.
+          if (list_of_profiles[list_of_profiles.length() - 1] !=
+              object_key_delimiter)
+            list_of_profiles += ACE_CString (object_key_delimiter);
+
+          list_of_profiles += object_id;
 
           return this->string_to_object (list_of_profiles.c_str (),
                                          ACE_TRY_ENV);
         }
 
+      // Clean up.
       delete [] default_init_ref;
     }
 
