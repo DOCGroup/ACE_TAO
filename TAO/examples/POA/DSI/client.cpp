@@ -153,7 +153,7 @@ main (int argc, char **argv)
       Database::NamedValue &second =
         employee_attributes[1];
 
-      char *name = "irfan";
+      const char *name = "irfan";
       CORBA::Long id = 555;
 
       first.name = CORBA::string_dup ("name");
@@ -161,7 +161,8 @@ main (int argc, char **argv)
       second.name = CORBA::string_dup ("id");
       second.value <<= id;
 
-      ACE_OS::strcpy (str,"Database::Agent::create_entry");
+      ACE_OS::strcpy (str,
+                      "Database::Agent::create_entry");
 
       // Create an employee
       Database::Entry_var entry =
