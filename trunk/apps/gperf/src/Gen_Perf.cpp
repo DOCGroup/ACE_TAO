@@ -263,15 +263,11 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
 int
 Gen_Perf::generate (void)
 {
-#if defined (LARGE_STACK_ARRAYS)
-  STORAGE_TYPE buffer[max_hash_value + 1];
-#else
   // Note: we don't use new, because that invokes a custom operator new.
   STORAGE_TYPE *buffer
     = (STORAGE_TYPE*) malloc (sizeof(STORAGE_TYPE) * (max_hash_value + 1));
   if (buffer == NULL)
     abort ();
-#endif /* LARGE_STACK_ARRAYS */
 
   this->char_search.init (buffer, max_hash_value + 1);
   
