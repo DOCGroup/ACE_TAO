@@ -40,7 +40,7 @@ public:
   /* Opening the thread pool causes one or more threads to be
     activated.  When activated, they all execute the svc() method
     declared below.  */
-  int open (int pool_size = default_pool_size);
+  int open (int pool_size = default_pool_size_);
 
   /* Some compilers will complain that our open() above attempts to
     override a virtual function in the baseclass.  We have no

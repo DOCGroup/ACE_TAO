@@ -62,7 +62,7 @@ UNSHAR : #
 	sh combine.shar
 
 CLEAN : realclean
-	rm -f hdr bodies *.pre *.pst
+	rm -f hdr bodies *.pre *.pst .depend
 
 .depend : #
 	touch .depend
