@@ -1,3 +1,12 @@
+Tue Nov 23 19:48:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/GIOP.cpp:
+	* tao/Invocation.cpp:
+	* tao/TAOC.h:
+	* tao/TAOC.cpp:
+	  Changes to deal with the TAO SyncScope extension
+	  SYNC_FLUSH correctly.
+
 Tue Nov 23 17:44:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DomainC.cpp:
