@@ -2,17 +2,17 @@
 # $Id$
 #
 
-BIN = Server_Manager server
+BIN = server
 
 MYFILES = Servant_Manager Servant_Activator Servant_Locator 
 
 SRC = $(addsuffix .cpp,$(MYFILES)) $(addsuffix .cpp, $(BIN))
 OBJ = $(addsuffix .o,$(MYFILES))
 
-CPPFLAGS += -I$(TAO_ROOT) -I../Generic_Servant
+CPPFLAGS += -I$(TAO_ROOT)
 
-LDLIBS     =  -lTAO
-LDFLAGS += -L$(TAO_ROOT)/tao -L../Generic_Servant
+LDLIBS = -lTAO
+LDFLAGS += -L$(TAO_ROOT)/tao
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 

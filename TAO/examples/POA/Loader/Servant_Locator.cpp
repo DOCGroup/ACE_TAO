@@ -18,7 +18,6 @@
 // ============================================================================
 
 #include "Servant_Locator.h"
-#include "MyFooServant.h"
 
 ACE_RCSID(Loader, Servant_Locator, "$Id$")
 

@@ -129,6 +129,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "POA Loader Server"=.\POA\Loader\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "POA Locking"=.\POA\locking\locking.dsp - Package Owner=<4>
 
 Package=<5>
@@ -153,7 +165,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "POA On_Demand Server"=.\POA\On_Demand_Activation\server.dsp - Package Owner=<4>
+Project: "POA On Demand Activation Server"=.\POA\On_Demand_Activation\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -161,9 +173,18 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name POA Generic Servant DLL
-    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "POA On Demand Loading Server"=.\POA\On_Demand_Loading\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
