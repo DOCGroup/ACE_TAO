@@ -43,25 +43,28 @@ public:
                  const void * = 0,
                  long timer_id = -1);
 
-  // = Get SVC_HANDLER.
+  /// Get SVC_HANDLER.
   SVC_HANDLER *svc_handler (void);
 
   // = Get/set handle.
   /// Get handle.
-  /// Set handle.
   ACE_HANDLE handle (void);
+
+  /// Set handle.
   void handle (ACE_HANDLE);
 
   // = Get/set argument.
   /// Get argument.
-  /// Set argument.
   const void *arg (void);
+
+  /// Set argument.
   void arg (const void *);
 
   // = Set/get timer cancellation handle.
   /// Get cancellation id.
-  /// Set cancellation id.
   long cancellation_id (void);
+
+  /// Set cancellation id.
   void cancellation_id (long timer_id);
 
   /// Dump the state of an object.
