@@ -187,8 +187,12 @@ bgcolor="#ffffff">
 
     <li>Always insert a <strong><code>/**/</code></strong> between an
         <strong><code>#include</code></strong> and
-        <strong><code>filename</code></strong>, as shown in the above
-        example.  This avoids dependency problems with Visual C++.<p>
+        <strong><code>filename</code></strong>, for system headers and
+        <strong><code>ace/pre.h</code></strong> and 
+        <strong><code>ace/post.h</code></strong> as 
+        shown in the above example.  This avoids dependency problems 
+        with Visual C++ and prevents Doxygen from including the
+        headers in the file reference trees.  <p>
 
     <li>Be very careful with names of macros, enum values, and variables
         It's always best to prefix them with something like <code>ACE_</code>

@@ -7,7 +7,7 @@
 
 #ifndef ACE_GHS_COMMON_H
 #define ACE_GHS_COMMON_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_CONFIG_INCLUDE_GHS_COMMON)
 # error ace/config-ghs-common.h: ACE configuration error!  Do not #include this file directly!
@@ -40,5 +40,5 @@
 # error ace/config-ghs-common.h can only be used with Green Hills compilers!
 #endif /* ! ghs */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_GHS_COMMON_H */

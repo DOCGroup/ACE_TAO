@@ -12,7 +12,7 @@
 
 #ifndef ACE_RMCAST_IO_UDP_H
 #define ACE_RMCAST_IO_UDP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RMCast_Module.h"
 #include "ace/SOCK_Dgram_Mcast.h"
@@ -134,5 +134,5 @@ private:
 #include "RMCast_IO_UDP.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_IO_UDP_H */

@@ -16,7 +16,7 @@
 #ifndef ACE_OS_INCLUDE_OS_ERRNO_H
 #define ACE_OS_INCLUDE_OS_ERRNO_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -178,5 +178,5 @@ extern int t_errno;
 }
 #endif /* __cplusplus */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_OS_INCLUDE_OS_ERRNO_H */

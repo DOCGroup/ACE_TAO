@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if defined (ACE_HAS_THREADS)
 #include /**/ <pthread.h>
@@ -239,5 +239,5 @@
 // has compile errors.
 //#define ACE_HAS_IPV6
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

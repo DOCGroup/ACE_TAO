@@ -13,7 +13,7 @@
 #ifndef _ACEXML_ENV_H_
 #define _ACEXML_ENV_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ACEXML/common/ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -67,6 +67,6 @@ private:
 # include "ACEXML/common/Env.i"
 #endif /* __ACEXML_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* _ACEXML_ENV_H_ */

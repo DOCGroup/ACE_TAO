@@ -13,7 +13,7 @@
 #ifndef ACE_MESSAGE_BLOCK_H
 #define ACE_MESSAGE_BLOCK_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -1034,6 +1034,6 @@ public:
 
 #include "ace/Message_Block_T.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_MESSAGE_BLOCK_H */

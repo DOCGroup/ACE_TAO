@@ -15,7 +15,7 @@
 
 #ifndef ACE_ARRAY_H
 #define ACE_ARRAY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Containers_T.h"
 
@@ -23,5 +23,5 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_ARRAY_H */

@@ -13,7 +13,7 @@
 
 #ifndef ACE_SOCK_DGRAM_H
 #define ACE_SOCK_DGRAM_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SOCK.h"
 #include "ace/INET_Addr.h"
@@ -213,5 +213,5 @@ private:
 #include "ace/SOCK_Dgram.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SOCK_DGRAM_H */

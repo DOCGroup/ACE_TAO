@@ -12,7 +12,7 @@
 
 #ifndef ACE_MESSAGE_QUEUE_H
 #define ACE_MESSAGE_QUEUE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Message_Block.h"
 
@@ -600,5 +600,5 @@ private:
 #include "ace/Message_Queue.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_MESSAGE_QUEUE_H */

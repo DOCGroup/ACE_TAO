@@ -12,7 +12,7 @@
 
 #ifndef ACE_THREAD_MANAGER_H
 #define ACE_THREAD_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Thread.h"
 #include "ace/Thread_Adapter.h"
@@ -1096,5 +1096,5 @@ typedef ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX> ACE_THREAD_MANAGER_SI
 #include "ace/Thread_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_THREAD_MANAGER_H */

@@ -13,7 +13,7 @@
 #ifndef ACE_COPY_DISABLED_H
 #define ACE_COPY_DISABLED_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -55,6 +55,6 @@ private:
   ACE_Copy_Disabled &operator= (const ACE_Copy_Disabled &);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_COPY_DISABLED_H */

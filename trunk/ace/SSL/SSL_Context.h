@@ -14,7 +14,7 @@
 #ifndef ACE_SSL_CONTEXT_H
 #define ACE_SSL_CONTEXT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "SSL_Export.h"
 
@@ -355,6 +355,6 @@ private:
 #include "SSL_Context.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* ACE_SSL_CONTEXT_H */

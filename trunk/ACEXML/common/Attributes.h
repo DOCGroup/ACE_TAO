@@ -12,7 +12,7 @@
 
 #ifndef _ACEXML_ATTRIBUTES_H_
 #define _ACEXML_ATTRIBUTES_H_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ACEXML/common/ACEXML_Export.h"
 
@@ -121,6 +121,6 @@ public:
                                        const ACEXML_Char *localPart) = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* _ACEXML_ ATTRIBUTES_H_ */

@@ -20,7 +20,7 @@
 // cannot use ACE_CONFIG_H here.
 #ifndef ACE_CONFIG_IRIX6X_NTHR_H
 #define ACE_CONFIG_IRIX6X_NTHR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // Include this file to set the _MIPS_SIM*ABI* macros.
 #include /**/ <sgidefs.h>
@@ -91,5 +91,5 @@
 # define ACE_CC_BETA_VERSION  (0)
 #endif /* _COMPILER_VERSION */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_IRIX6X_NTHR_H */

@@ -13,7 +13,7 @@
 #ifndef SERVICE_CONFIG_DLL_H
 #define SERVICE_CONFIG_DLL_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Service_Config_DLL_Export.h"
 
@@ -63,6 +63,6 @@ private:
 
 ACE_FACTORY_DECLARE (Service_Config_DLL, Service_Config_DLL)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* SERVICE_CONFIG_DLL_H */

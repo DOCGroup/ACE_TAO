@@ -18,7 +18,7 @@
 
 #ifndef ACE_TOKEN_INVARIANTS_H
 #define ACE_TOKEN_INVARIANTS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Synch.h"
 
@@ -236,5 +236,5 @@ protected:
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TOKEN_INVARIANTS_H */

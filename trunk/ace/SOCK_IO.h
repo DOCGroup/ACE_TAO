@@ -13,7 +13,7 @@
 #ifndef ACE_SOCK_IO_H
 #define ACE_SOCK_IO_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SOCK.h"
 
@@ -142,6 +142,6 @@ public:
 #include "ace/SOCK_IO.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SOCK_IO_H */

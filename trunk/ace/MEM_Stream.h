@@ -13,7 +13,7 @@
 
 #ifndef ACE_MEM_STREAM_H
 #define ACE_MEM_STREAM_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/MEM_IO.h"
 
@@ -145,5 +145,5 @@ public:
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_MEM_STREAM_H */

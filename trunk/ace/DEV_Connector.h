@@ -12,7 +12,7 @@
 
 #ifndef ACE_DEV_CONNECTOR_H
 #define ACE_DEV_CONNECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/DEV_IO.h"
 #include "ace/Log_Msg.h"
@@ -100,5 +100,5 @@ public:
 #include "ace/DEV_Connector.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_DEV_CONNECTOR_H */

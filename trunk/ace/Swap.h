@@ -9,7 +9,7 @@
 
 #ifndef ACE_SWAP_H
 #define ACE_SWAP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -42,5 +42,5 @@ public:
 #pragma implementation ("Swap.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_FUNCTOR_H */

@@ -1,3 +1,13 @@
+Sat Jul 19 18:38:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ACEXML/apps/svcconf/Svcconf.h:
+        * ACEXML/common/*.h:
+        * ACEXML/parser/*.h:
+        * ACEXML/parser/parser/*.h:
+          Added "/**/" between the #include and filename for pre.h and
+          post.h so Doxygen won't include them in the file reference tree
+          graphs.
+
 Fri Jul 18 10:29:55 2003  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * tests/NamespaceSupport_Test.cpp (ACE_TMAIN): Added

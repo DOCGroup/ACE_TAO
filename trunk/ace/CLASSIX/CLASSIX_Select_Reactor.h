@@ -17,7 +17,7 @@
 */
 
 #ifndef ACE_CLASSIX_REACTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #define ACE_CLASSIX_REACTOR_H
 
 /* ------------------------------------------------------------------------- */
@@ -205,5 +205,5 @@ class ACE_CLASSIX_Select_Reactor : public ACE_Select_Reactor
 #include "ace/CLASSIX/CLASSIX_Select_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CLASSIX_REACTOR_H */

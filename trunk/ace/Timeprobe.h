@@ -37,7 +37,7 @@
 
 #ifndef ACE_TIMEPROBE_H
 #define ACE_TIMEPROBE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/ACE_export.h"
 #include "ace/OS.h"
 #include "ace/Malloc_Allocator.h"
@@ -177,5 +177,5 @@ static int ace_timeprobe_##descriptions##_return = \
 #  define ACE_FUNCTION_TIMEPROBE(X)
 
 #endif /* ACE_ENABLE_TIMEPROBES && ACE_COMPILE_TIMEPROBES */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TIMEPROBE_H */

@@ -12,7 +12,7 @@
 
 #ifndef ACE_ATOMIC_OP_H
 #define ACE_ATOMIC_OP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -159,5 +159,5 @@ private:
 #include "ace/Atomic_Op.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*ACE_ATOMIC_OP_H*/

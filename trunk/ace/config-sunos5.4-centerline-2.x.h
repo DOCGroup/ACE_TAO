@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
@@ -158,5 +158,5 @@
 #define ACE_HAS_IDTYPE_T
 #define ACE_HAS_DIRENT
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

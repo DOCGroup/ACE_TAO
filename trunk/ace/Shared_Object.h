@@ -13,7 +13,7 @@
 #ifndef ACE_SHARED_OBJECT_H
 #define ACE_SHARED_OBJECT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -50,6 +50,6 @@ public:
 #include "ace/Shared_Object.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SHARED_OBJECT_H */

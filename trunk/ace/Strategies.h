@@ -12,7 +12,7 @@
 
 #ifndef ACE_STRATEGIES_H
 #define ACE_STRATEGIES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 

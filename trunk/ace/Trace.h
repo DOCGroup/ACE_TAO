@@ -13,7 +13,7 @@
 #ifndef ACE_TRACE_H
 #define ACE_TRACE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -89,6 +89,6 @@ private:
   };
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_TRACE_H */

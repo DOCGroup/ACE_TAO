@@ -12,7 +12,7 @@
 
 #ifndef ACE_THREAD_CONTROL_H
 #define ACE_THREAD_CONTROL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -97,5 +97,5 @@ private:
 #   include "ace/Thread_Control.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_THREAD_CONTROL_H */

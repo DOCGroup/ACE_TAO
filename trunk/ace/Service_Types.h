@@ -13,7 +13,7 @@
 #ifndef ACE_SERVICE_TYPE_H
 #define ACE_SERVICE_TYPE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Service_Object.h"
 
@@ -196,6 +196,6 @@ private:
 #include "ace/Service_Types.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* _SERVICE_TYPE_H */

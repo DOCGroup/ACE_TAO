@@ -12,7 +12,7 @@
 #ifndef _ACEXML_ELEMENT_DEF_BUILDER_H_
 #define _ACEXML_ELEMENT_DEF_BUILDER_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ACEXML/common/ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -128,6 +128,6 @@ public:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* _ACEXML_ELEMENT_DEF_BUILDER_H_ */

@@ -12,7 +12,7 @@
 
 #ifndef ACE_SELECT_REACTOR_BASE_H
 #define ACE_SELECT_REACTOR_BASE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Signal.h"
 
@@ -545,5 +545,5 @@ private:
 #include "ace/Select_Reactor_Base.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SELECT_REACTOR_BASE_H */

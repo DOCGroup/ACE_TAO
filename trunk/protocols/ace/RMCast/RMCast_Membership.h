@@ -16,7 +16,7 @@
 
 #ifndef ACE_RMCAST_MEMBERSHIP_H
 #define ACE_RMCAST_MEMBERSHIP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RMCast_Module.h"
 #include "ace/Containers.h"
@@ -99,5 +99,5 @@ protected:
 #include "RMCast_Membership.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_MEMBERSHIP_H */

@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-kcc-common.h"
 
@@ -64,5 +64,5 @@
 // So just use the library version instead.
 #define ACE_HAS_MEMCHR
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

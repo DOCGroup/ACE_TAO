@@ -13,7 +13,7 @@
 
 #ifndef ACE_TLI_H
 #define ACE_TLI_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/IPC_SAP.h"
 
@@ -104,5 +104,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TLI_H */

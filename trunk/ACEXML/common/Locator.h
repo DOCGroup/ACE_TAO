@@ -12,7 +12,7 @@
 
 #ifndef _ACEXML_LOCATOR_H_
 #define _ACEXML_LOCATOR_H_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ACEXML/common/XML_Types.h"
 
@@ -65,6 +65,6 @@ public:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* _ACEXML_LOCATOR_H_ */

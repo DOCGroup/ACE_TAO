@@ -12,7 +12,7 @@
 
 #ifndef ACE_ASYNCH_CONNECTOR_H
 #define ACE_ASYNCH_CONNECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -165,5 +165,5 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_ASYNCH_CONNECTOR_H */

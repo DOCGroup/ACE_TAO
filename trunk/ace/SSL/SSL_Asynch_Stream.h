@@ -14,7 +14,7 @@
 #ifndef ACE_SSL_ASYNCH_STREAM_H
 #define ACE_SSL_ASYNCH_STREAM_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "SSL_Context.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -237,6 +237,6 @@ protected:
 #endif  /* OPENSSL_VERSION_NUMBER > 0x0090581fL && (ACE_WIN32 ||
            ACE_HAS_AIO_CALLS) */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* ACE_SSL_ASYNCH_STREAM_H */

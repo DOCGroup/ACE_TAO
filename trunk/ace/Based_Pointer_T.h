@@ -14,7 +14,7 @@
 #ifndef ACE_BASED_POINTER_T_H
 #define ACE_BASED_POINTER_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 #include "ace/Trace.h"
@@ -196,6 +196,6 @@ public:
 #pragma implementation ("Based_Pointer_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_BASED_POINTER_T_H */

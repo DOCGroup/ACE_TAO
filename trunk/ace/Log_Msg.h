@@ -12,7 +12,7 @@
 
 #ifndef ACE_LOG_MSG_H
 #define ACE_LOG_MSG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // This stuff must come first to avoid problems with circular
 // headers...
@@ -718,5 +718,5 @@ ACE_TSS_cleanup (void *ptr);
 #include "ace/Log_Msg_Callback.h"
 #endif /* ACE_LEGACY_MODE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_LOG_MSG_H */

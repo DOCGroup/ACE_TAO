@@ -14,7 +14,7 @@
 #ifndef ACE_SVC_CONF_H
 #define ACE_SVC_CONF_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // Globally visible macros, type decls, and extern var decls for
 // Service Configurator utility.
@@ -200,6 +200,6 @@ ace_create_service_type (const ACE_TCHAR *,
                          ACE_Service_Object_Exterminator = 0);
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SVC_CONF_H */

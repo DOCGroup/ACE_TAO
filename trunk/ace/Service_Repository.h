@@ -13,7 +13,7 @@
 #ifndef ACE_SERVICE_REPOSITORY_H
 #define ACE_SERVICE_REPOSITORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -206,6 +206,6 @@ private:
 #include "ace/Service_Repository.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* _SERVICE_REPOSITORY_H */

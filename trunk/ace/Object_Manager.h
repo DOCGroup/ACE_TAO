@@ -14,7 +14,7 @@
 
 #ifndef ACE_OBJECT_MANAGER_H
 #define ACE_OBJECT_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 
@@ -476,5 +476,5 @@ static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock = 0;
 
 #endif /* ACE_HAS_THREADS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_OBJECT_MANAGER_H */

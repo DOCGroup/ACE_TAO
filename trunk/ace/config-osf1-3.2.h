@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #define ACE_LACKS_SETSCHED
 #define ACE_LACKS_RWLOCK_T
@@ -184,5 +184,5 @@ extern "C" pid_t getpgid (pid_t);
 #define ACE_PAGE_SIZE 8192
 #define ACE_HAS_GETPAGESIZE
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

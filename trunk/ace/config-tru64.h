@@ -7,7 +7,7 @@
 
 #ifndef ACE_CONFIG_TRU64_H
 #define ACE_CONFIG_TRU64_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if defined (DIGITAL_UNIX)
 # include "ace/config-osf1-4.0.h"
@@ -27,5 +27,5 @@
 # include "ace/config-osf1-3.2.h"
 #endif /* ! DIGITAL_UNIX */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_TRU64_H */

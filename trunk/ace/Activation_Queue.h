@@ -13,7 +13,7 @@
 
 #ifndef ACE_ACTIVATION_QUEUE_H
 #define ACE_ACTIVATION_QUEUE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Synch_T.h"
 
@@ -157,6 +157,6 @@ private:
 #include "ace/Activation_Queue.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_ACTIVATION_QUEUE_H */
 

@@ -3,7 +3,7 @@
 
 #ifndef ACE_RMCAST_COPY_ON_WRITE_H
 #define ACE_RMCAST_COPY_ON_WRITE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RMCast_Worker.h"
 #include "ace/Synch.h"
@@ -208,5 +208,5 @@ public:
 #pragma implementation ("RMCast_Copy_On_Write.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_COPY_ON_WRITE_H */

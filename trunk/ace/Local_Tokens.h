@@ -43,7 +43,7 @@
 
 #ifndef ACE_LOCAL_MUTEX_H
 #define ACE_LOCAL_MUTEX_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -1110,5 +1110,5 @@ protected:
 #if defined (__ACE_INLINE__)
 #include "ace/Local_Tokens.i"
 #endif /* __ACE_INLINE__ */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_LOCAL_MUTEX_H */

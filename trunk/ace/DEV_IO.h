@@ -14,7 +14,7 @@
 
 #ifndef ACE_DEV_IO_H
 #define ACE_DEV_IO_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/DEV.h"
 
@@ -131,5 +131,5 @@ private:
 #include "ace/DEV_IO.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_DEV_IO_H */

@@ -12,7 +12,7 @@
 
 #ifndef ACE_LOG_MSG_NT_EVENT_LOG_H
 #define ACE_LOG_MSG_NT_EVENT_LOG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -64,5 +64,5 @@ private:
 
 #endif /* ACE_HAS_LOG_MSG_NT_EVENT_LOG */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_LOG_MSG_NT_EVENT_LOG_H */

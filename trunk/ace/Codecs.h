@@ -16,7 +16,7 @@
 
 #ifndef ACE_CODECS_H
 #define ACE_CODECS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Basic_Types.h"
 #include "ace/Global_Macros.h"
@@ -107,5 +107,5 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CODECS_H */

@@ -14,7 +14,7 @@
 //=============================================================================
 #ifndef PERF_TEST_RT_CORBA_LEADER_FOLLOWER_H
 #define PERF_TEST_RT_CORBA_LEADER_FOLLOWER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/Task.h"
 
 
@@ -105,5 +105,5 @@ private:
 
 #endif /*ACE_HAS_THREADS*/
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*PERF_TEST_RT_CORBA_LEADER_FOLLOWER*/

@@ -7,7 +7,7 @@
 
 #ifndef ACE_CONFIG_LINUX_H
 #define ACE_CONFIG_LINUX_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-linux-common.h"
 
@@ -54,6 +54,6 @@
 #endif  /* ACE_MT_SAFE */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_LINUX_H */

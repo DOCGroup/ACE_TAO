@@ -12,7 +12,7 @@
 
 #ifndef ACE_TOKEN_MANAGER_H
 #define ACE_TOKEN_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Synch.h"
 
@@ -140,5 +140,5 @@ private:
 #include "ace/Token_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TOKEN_MANAGER_H */

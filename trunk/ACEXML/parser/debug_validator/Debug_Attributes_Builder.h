@@ -12,7 +12,7 @@
 #ifndef _ACEXML_DEBUG_ATTRIBUTES_BUILDER_H_
 #define _ACEXML_DEBUG_ATTRIBUTES_BUILDER_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ACEXML/parser/debug_validator/Debug_DTD_Manager_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -165,6 +165,6 @@ protected:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* _ACEXML_DEBUG_ATTRIBUTES_BUILDER_H_ */

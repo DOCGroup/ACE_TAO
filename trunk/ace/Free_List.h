@@ -12,7 +12,7 @@
 
 #ifndef ACE_FREE_LIST_H
 #define ACE_FREE_LIST_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -144,5 +144,5 @@ private:
 #pragma implementation ("Free_List.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_FREE_LIST_H */

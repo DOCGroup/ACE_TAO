@@ -13,7 +13,7 @@
 
 #ifndef ACE_OS_LOG_MSG_ATTRIBUTES_H
 #define ACE_OS_LOG_MSG_ATTRIBUTES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -75,5 +75,5 @@ protected:
 #   include "ace/OS_Log_Msg_Attributes.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_OS_LOG_MSG_ATTRIBUTES_H */

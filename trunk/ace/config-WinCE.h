@@ -9,7 +9,7 @@
 #ifndef ACE_CONFIG_WINCE_H
 #define ACE_CONFIG_WINCE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 # error Use config-win32.h in config.h instead of this header
@@ -259,6 +259,6 @@ typedef long off_t;
 
 #define ACE_HAS_TSS_EMULATION
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  // ACE_CONFIG_WINCE_H

@@ -50,7 +50,7 @@
 
 #ifndef ACE_DUMP_H
 #define ACE_DUMP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Synch.h"
 
@@ -164,5 +164,5 @@ private:
 // Include the templates classes at this point.
 #include "ace/Dump_T.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_DUMP_H */

@@ -17,7 +17,7 @@
 #ifndef ACE_SOCK_SEQPACK_ASSOCIATION_H
 #define ACE_SOCK_SEQPACK_ASSOCIATION_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/config.h"
 #include "ace/ACE_export.h"
 
@@ -187,6 +187,6 @@ public:
 #include "ace/SOCK_SEQPACK_Association.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SOCK_SEQPACK_ASSOCIATION_H */

@@ -23,7 +23,7 @@
 #ifndef ACE_IOSFWD_H
 #define ACE_IOSFWD_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -84,6 +84,6 @@
 
 # endif /* ! ACE_HAS_STANDARD_CPP_LIBRARY */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_IOSFWD_H */

@@ -13,7 +13,7 @@
 #ifndef ACE_ACCEPTOR_H
 #define ACE_ACCEPTOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Service_Object.h"
 
@@ -652,6 +652,6 @@ private:
 #pragma implementation ("Acceptor.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_ACCEPTOR_H */

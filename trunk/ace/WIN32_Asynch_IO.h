@@ -24,7 +24,7 @@
 
 #ifndef ACE_WIN32_ASYNCH_IO_H
 #define ACE_WIN32_ASYNCH_IO_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -1941,5 +1941,5 @@ protected:
 };
 
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_WIN32_ASYNCH_IO_H */

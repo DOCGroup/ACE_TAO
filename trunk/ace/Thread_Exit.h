@@ -12,7 +12,7 @@
 
 #ifndef ACE_THREAD_EXIT_H
 #define ACE_THREAD_EXIT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -102,5 +102,5 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_THREAD_EXIT_H */

@@ -28,7 +28,7 @@
 #ifndef ACE_CDR_BASE_H
 #define ACE_CDR_BASE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -293,6 +293,6 @@ public:
 #endif  /* __ACE_INLINE__ */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_CDR_BASE_H */

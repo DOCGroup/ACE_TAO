@@ -13,7 +13,7 @@
 
 #ifndef ACE_MEM_ADDR_H
 #define ACE_MEM_ADDR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -149,5 +149,5 @@ private:
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_MEM_ADDR_H */

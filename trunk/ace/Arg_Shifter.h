@@ -13,7 +13,7 @@
 #ifndef ACE_ARG_SHIFTER_H
 #define ACE_ARG_SHIFTER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -199,6 +199,6 @@ private:
   int front_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_ARG_SHIFTER_H */

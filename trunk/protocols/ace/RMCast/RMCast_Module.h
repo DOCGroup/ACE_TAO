@@ -16,7 +16,7 @@
 
 #ifndef ACE_RMCAST_MODULE_H
 #define ACE_RMCAST_MODULE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RMCast.h"
 
@@ -84,5 +84,5 @@ private:
 #include "RMCast_Module.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_MODULE_H */

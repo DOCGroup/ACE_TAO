@@ -14,7 +14,7 @@
 #ifndef ACE_IO_CNTL_MSG_H
 #define ACE_IO_CNTL_MSG_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -100,6 +100,6 @@ private:
   int rval_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_IO_CNTL_MSG_H */

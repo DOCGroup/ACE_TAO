@@ -15,7 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_CLASSIX_STREAM_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #define ACE_CLASSIX_STREAM_H
 
 /* ------------------------------------------------------------------------- */
@@ -268,5 +268,5 @@ class ACE_CLASSIX_Stream
 #include "ace/CLASSIX/CLASSIX_Stream.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CLASSIX_Stream_H */

@@ -18,7 +18,7 @@
 
 #ifndef ACE_MULTIPLEXOR_H
 #define ACE_MULTIPLEXOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Module.h"
 
@@ -77,5 +77,5 @@ public:
 #endif /* 0 */
 
 #endif /* ACE_HAS_THREADS */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_MULTIPLEXOR_H */
