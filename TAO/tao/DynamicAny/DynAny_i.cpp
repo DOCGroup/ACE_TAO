@@ -287,7 +287,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
       return 0;
     }
 
-  CORBA::Boolean equiv = this->type_->equivalent (rhs_n->type_, 
+  CORBA::Boolean equiv = this->type_->equivalent (rhs_n->type_.in (), 
                                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 

@@ -36,7 +36,7 @@ TAO_DynCommon::type (CORBA::Environment &ACE_TRY_ENV)
                         CORBA::TypeCode::_nil ());
     }
 
-  return CORBA::TypeCode::_duplicate (this->type_);
+  return CORBA::TypeCode::_duplicate (this->type_.in ());
 }
 
 void
@@ -1051,6 +1051,7 @@ TAO_DynCommon::get_string (CORBA::Environment &ACE_TRY_ENV)
       char *retval;
 
       CORBA::ULong bound = this->type_->length (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
       
       (void) (this->any_ >>= CORBA::Any::to_string (retval,
                                                     bound));
@@ -1281,6 +1282,7 @@ TAO_DynCommon::get_wstring (CORBA::Environment &ACE_TRY_ENV)
       CORBA::WChar *retval;
 
       CORBA::ULong bound = this->type_->length (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
       
       (void) (this->any_ >>= CORBA::Any::to_wstring (retval,
                                                      bound));
@@ -1631,7 +1633,7 @@ TAO_DynCommon::check_component (CORBA::Environment &ACE_TRY_ENV)
   CORBA::TypeCode_var tc = cc->type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (DynamicAny::DynAny::_nil ());
 
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc,
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in (),
                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (DynamicAny::DynAny::_nil ());
 
