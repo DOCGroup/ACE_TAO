@@ -1938,7 +1938,7 @@ sequence_type_spec
 	  } else {
  	    AST_Type *tp = AST_Type::narrow_from_decl($1);
 	    if (tp == NULL)
-	      $$ = NULL;
+	      ; // Error will be caught in FE_Declarator.
 	    else {
 	      $$ = idl_global->gen()->create_sequence($4, tp);
 	      /*
@@ -1966,7 +1966,7 @@ sequence_type_spec
 	  else {
 	    AST_Type *tp = AST_Type::narrow_from_decl($1);
 	    if (tp == NULL)
-	      $$ = NULL;
+	      ; // Error will be caught in FE_Declarator.
             else {
 	      $$ =
 	        idl_global->gen()->create_sequence(
