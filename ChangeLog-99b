@@ -1,3 +1,14 @@
+Thu Nov 11 20:46:29 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* examples/Configuration/Makefile:
+
+	  Added a Makefile for this example.
+	
+	* examples/Configuration/config_test.cpp:
+
+	  ACEified this example, and corrected several errors and
+	  warnings.
+
 Thu Nov 11 20:28:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Local_Tokens.cpp:
