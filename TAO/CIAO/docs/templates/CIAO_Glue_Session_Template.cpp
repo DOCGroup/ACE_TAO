@@ -357,7 +357,7 @@ CORBA::Object_ptr
                                                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      [facet type]_var fo = [facet type]::_narrow (obj
+      [facet type]_var fo = [facet type]::_narrow (obj.in ()
                                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 

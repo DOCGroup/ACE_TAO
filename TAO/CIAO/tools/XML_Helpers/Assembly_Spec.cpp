@@ -11,7 +11,7 @@
 
 int
 CIAO::Assembly_Placement::Node::accept
-(CIAO::Assembly_Placement::Visitor &visitor
+(CIAO::Assembly_Placement::Visitor &
  ACE_ENV_ARG_DECL)
 {
   // This should have never gotten called.

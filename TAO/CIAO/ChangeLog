@@ -1,3 +1,72 @@
+Wed Apr 16 22:56:32 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  The followings are fixes to make CIAO to compile and work on
+	  Linux. 
+	
+	* bin/generate_component_mpc.pl:
+	* examples/handcrafted/Display/HUDisplay.mpc:
+	* examples/handcrafted/Display/GPS/GPS.mpc:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+	* examples/handcrafted/Display/RateGen/RateGen.mpc:
+	* examples/handcrafted/Hello/hello.mpc:
+	* tools/Assembly_Deployer/Assembly_Deployer.mpc: Reordered the
+	  source file listing so that IDL files will always be compiled
+	  before other files to avoid non-existing generated file
+	  problem.  Also added missing library dependencies to some MPC
+	  files. 
+
+	* examples/handcrafted/Display/HUDisplay_svnt.cpp:
+	* examples/handcrafted/Display/HUDisplay_svnt.inl:
+	* examples/handcrafted/Display/GPS/GPSE.idl:
+	* examples/handcrafted/Display/GPS/GPS_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_exec.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+	* examples/handcrafted/Display/RateGen/RateGenE.idl:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	* examples/handcrafted/Display/RateGen/client.cpp:
+	* examples/handcrafted/Display/RateGen/controller.cpp:
+	* examples/handcrafted/Hello/client.cpp:
+	* examples/handcrafted/Hello/helloE.idl:
+	* examples/handcrafted/Hello/hello_servants.cpp:
+	* tools/Assembly_Deployer/Assembly_Impl.cpp:
+	* tools/Assembly_Deployer/Assembly_Manager.cpp:
+	* tools/Assembly_Deployer/Assembly_Visitors.h:
+	* tools/Assembly_Deployer/Assembly_Visitors.inl:
+	* tools/ComponentServer/ComponentServer.cpp:
+	* tools/ComponentServer/ComponentServer_test_client.cpp:
+	* tools/Daemon/controller_i.cpp:
+	* tools/Daemon/controller_i.h:
+	* tools/ServerActivator/ServerActivator_test_client.cpp:
+	* tools/XML_Helpers/Assembly_Handlers.cpp:
+	* tools/XML_Helpers/Assembly_Spec.cpp:
+	* tools/XML_Helpers/Assembly_Spec.inl:
+	* tools/XML_Helpers/Cascadable_DocHandler.cpp:
+	* tools/XML_Helpers/Softpkg_Handlers.cpp: Fixed compilation errors
+	  and warnings.  They include 
+
+	  Using a _var in places where a _ptr is expected.
+
+	  Incorrect Capitalization of file names.
+
+	  Unused variables warnings.
+
+	  Exception throw specification mis-matches.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp: Propagated
+	  previous fixes into the tempate code.
+
+	* ciao/Container_Base.cpp: Removed a redundant ACE_INLINE decl. 
+	
 Tue Apr 15 17:07:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/XML_Helpers/Assembly_Spec.h:

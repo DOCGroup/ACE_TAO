@@ -55,6 +55,9 @@ CIAO::Softpkg_Handler::startElement (const ACEXML_Char *namespaceURI,
                                      ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_UNUSED_ARG (namespaceURI);
+  ACE_UNUSED_ARG (localName);
+
   switch (this->state_)
     {
     case ROOT:

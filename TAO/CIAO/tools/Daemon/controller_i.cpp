@@ -102,7 +102,7 @@ CIAO::Daemon_i::controller::init (int argc,
                                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  this->daemon_ = CIAO::Daemon::_narrow (obj
+  this->daemon_ = CIAO::Daemon::_narrow (obj.in ()
                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 

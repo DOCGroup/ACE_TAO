@@ -29,8 +29,8 @@ project(HUDisplay_svnt) : ciao_server {
   }
 
   Source_Files {
-    HUDisplay_svnt.cpp
-    HUDisplayS.cpp
     HUDisplayEC.cpp
+    HUDisplayS.cpp
+    HUDisplay_svnt.cpp
   }
 }

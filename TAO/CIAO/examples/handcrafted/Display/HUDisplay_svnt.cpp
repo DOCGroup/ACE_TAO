@@ -19,14 +19,14 @@ CORBA::Object_ptr
 CIAO_GLUE_HUDisplay::position_Servant::_get_component (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ::Components::SessionContext_var sc =
-      ::Components::SessionContext::_narrow (this->ctx_);
+  Components::SessionContext_var sc =
+    Components::SessionContext::_narrow (this->ctx_.in ());
 
   if (! CORBA::is_nil(sc.in ()))
     return sc->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   ::Components::EntityContext_var ec =
-      ::Components::EntityContext::_narrow (this->ctx_);
+      ::Components::EntityContext::_narrow (this->ctx_.in ());
 
   if (! CORBA::is_nil(ec.in ()))
     return ec->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);

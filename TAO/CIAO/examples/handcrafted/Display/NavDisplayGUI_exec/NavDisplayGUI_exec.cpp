@@ -169,7 +169,7 @@ MyImpl::NavDisplayGUIHome_exec_impl::~NavDisplayGUIHome_exec_impl ()
 ::Components::EnterpriseComponent_ptr
 MyImpl::NavDisplayGUIHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CreateFailure))
+                   Components::CCMException))
 {
   ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUIHome_exec_impl::create()\n"));
   return new MyImpl::NavDisplayGUI_exec_impl;

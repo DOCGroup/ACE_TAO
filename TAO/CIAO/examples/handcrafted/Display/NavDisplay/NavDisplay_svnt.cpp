@@ -166,7 +166,7 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::get_consumer_Refresh (ACE_ENV_SINGLE_AR
   if (CORBA::is_nil (this->consumes_Refresh_.in ()))
     {
       CIAO_GLUE_HUDisplay::NavDisplay_Servant::tickConsumer_Refresh_Servant *svt =
-        new CIAO_GLUE_HUDisplay::NavDisplay_Servant::tickConsumer_Refresh_Servant (this->executor_,
+        new CIAO_GLUE_HUDisplay::NavDisplay_Servant::tickConsumer_Refresh_Servant (this->executor_.in (),
                                                                                    this->context_);
       PortableServer::ServantBase_var safe_servant (svt);
 
@@ -175,7 +175,7 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::get_consumer_Refresh (ACE_ENV_SINGLE_AR
       ACE_CHECK_RETURN (0);
 
       HUDisplay::tickConsumer_var eco
-        = HUDisplay::tickConsumer::_narrow (obj
+        = HUDisplay::tickConsumer::_narrow (obj.in ()
                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
@@ -192,6 +192,7 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::provide_facet (const char * name
   ACE_THROW_SPEC ((CORBA::SystemException ,
                    Components::InvalidName))
 {
+  ACE_UNUSED_ARG (name);
   ACE_THROW_RETURN (::Components::InvalidName (), 0);
 }
 
@@ -213,6 +214,7 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::get_named_facets (const Components::Nam
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
 {
+  ACE_UNUSED_ARG (names);
   ACE_THROW_RETURN (::Components::InvalidName (), 0);
 }
 
@@ -277,6 +279,7 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::disconnect (const char * name,
                    Components::CookieRequired,
                    Components::NoConnection))
 {
+  ACE_UNUSED_ARG (ck);
   // @@ We can omit this if clause if there's no receptacle in this component.
   if (name == 0)
     ACE_THROW_RETURN (Components::InvalidName (), 0);
@@ -525,6 +528,7 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::get_named_publishers (const Components:
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
 {
+  ACE_UNUSED_ARG (names);
   // @@ to-do
 
   // Need to add interfaces in the Context class to gather the information.

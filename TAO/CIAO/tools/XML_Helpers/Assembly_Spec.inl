@@ -33,8 +33,8 @@ CIAO::Assembly_Placement::Node::id () const
 ACE_INLINE
 CIAO::Assembly_Placement::Container::Container (const char *id,
                                                 unsigned long cardinality)
-  : cardinality_ (cardinality),
-    CIAO::Assembly_Placement::Node (id)
+  : CIAO::Assembly_Placement::Node (id),
+    cardinality_ (cardinality)
 {
 }
 

@@ -140,7 +140,8 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
 
           CORBA::String_var hior =
-            orb->object_to_string (home ACE_ENV_ARG_PARAMETER);
+            orb->object_to_string (home.in ()
+                                   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           write_IOR (hior.in ());
@@ -151,7 +152,7 @@ main (int argc, char *argv[])
             }
 
           ACE_DEBUG ((LM_DEBUG, "Try removing a ComponentServer\n"));
-          comserv->remove_container (container
+          comserv->remove_container (container.in ()
                                      ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }

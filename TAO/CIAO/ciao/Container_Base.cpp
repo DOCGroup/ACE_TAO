@@ -87,7 +87,7 @@ CIAO::Session_Container::init (const char *name
    return 0;
 }
 
-ACE_INLINE CORBA::Object_ptr
+CORBA::Object_ptr
 CIAO::Session_Container::install_servant (PortableServer::Servant p
                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))

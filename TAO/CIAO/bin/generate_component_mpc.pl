@@ -138,9 +138,9 @@ project('."$com_name".'_svnt) : ciao_server {
   }
 
   Source_Files {
-    '."$com_name".'_svnt.cpp
-    '."$com_name".'S.cpp
     '."$com_name".'EC.cpp
+    '."$com_name".'S.cpp
+    '."$com_name".'_svnt.cpp
   }
 }
 '."

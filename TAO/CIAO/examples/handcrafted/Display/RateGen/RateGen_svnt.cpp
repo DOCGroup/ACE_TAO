@@ -236,8 +236,8 @@ CIAO_GLUE_HUDisplay::RateGen_Servant::same_component (CORBA::Object_ptr object_r
 
 // Operations for Receptacles interface
 ::Components::Cookie_ptr
-CIAO_GLUE_HUDisplay::RateGen_Servant::connect (const char * name,
-                                               CORBA::Object_ptr connection
+CIAO_GLUE_HUDisplay::RateGen_Servant::connect (const char *,
+                                               CORBA::Object_ptr
                                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
@@ -257,8 +257,8 @@ CIAO_GLUE_HUDisplay::RateGen_Servant::connect (const char * name,
 */
 
 CORBA::Object_ptr
-CIAO_GLUE_HUDisplay::RateGen_Servant::disconnect (const char * name,
-                                                  Components::Cookie_ptr ck
+CIAO_GLUE_HUDisplay::RateGen_Servant::disconnect (const char *,
+                                                  Components::Cookie_ptr
                                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
@@ -270,7 +270,7 @@ CIAO_GLUE_HUDisplay::RateGen_Servant::disconnect (const char * name,
 }
 
 ::Components::ConnectionDescriptions *
-CIAO_GLUE_HUDisplay::RateGen_Servant::get_connections (const char * name
+CIAO_GLUE_HUDisplay::RateGen_Servant::get_connections (const char *
                                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
@@ -307,7 +307,7 @@ CIAO_GLUE_HUDisplay::RateGen_Servant::get_named_receptacles (const Components::N
 
 // Operations for Events interface
 ::Components::EventConsumerBase_ptr
-CIAO_GLUE_HUDisplay::RateGen_Servant::get_consumer (const char * sink_name
+CIAO_GLUE_HUDisplay::RateGen_Servant::get_consumer (const char *
                                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
@@ -367,8 +367,8 @@ CIAO_GLUE_HUDisplay::RateGen_Servant::unsubscribe (const char * publisher_name,
 }
 
 void
-CIAO_GLUE_HUDisplay::RateGen_Servant::connect_consumer (const char * emitter_name,
-                                                        Components::EventConsumerBase_ptr consumer
+CIAO_GLUE_HUDisplay::RateGen_Servant::connect_consumer (const char *,
+                                                        Components::EventConsumerBase_ptr
                                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
@@ -379,8 +379,8 @@ CIAO_GLUE_HUDisplay::RateGen_Servant::connect_consumer (const char * emitter_nam
 }
 
 ::Components::EventConsumerBase_ptr
-CIAO_GLUE_HUDisplay::RateGen_Servant::disconnect_consumer (const char * source_name
-                                                                   ACE_ENV_ARG_DECL)
+CIAO_GLUE_HUDisplay::RateGen_Servant::disconnect_consumer (const char *
+                                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
                    Components::NoConnection))
@@ -454,7 +454,7 @@ CIAO_GLUE_HUDisplay::RateGen_Servant::get_all_publishers (ACE_ENV_SINGLE_ARG_DEC
 }
 
 ::Components::PublisherDescriptions *
-CIAO_GLUE_HUDisplay::RateGen_Servant::get_named_publishers (const Components::NameList & names
+CIAO_GLUE_HUDisplay::RateGen_Servant::get_named_publishers (const Components::NameList &
                                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
@@ -561,6 +561,7 @@ CIAO_GLUE_HUDisplay::RateGen_Servant::_get_component (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 CIAO_GLUE_HUDisplay::RateGen_Servant::_ciao_activate (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Components::SessionComponent_var temp =
     Components::SessionComponent::_narrow (this->executor_.in ()
@@ -573,6 +574,7 @@ CIAO_GLUE_HUDisplay::RateGen_Servant::_ciao_activate (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 CIAO_GLUE_HUDisplay::RateGen_Servant::_ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Components::SessionComponent_var temp =
     Components::SessionComponent::_narrow (this->executor_.in ()

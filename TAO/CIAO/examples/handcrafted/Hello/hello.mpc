@@ -26,9 +26,9 @@ project(hello_servants) : ciao_server {
   }
 
   Source_Files {
-    hello_servants.cpp
-    helloS.cpp
     helloEC.cpp
+    helloS.cpp
+    hello_servants.cpp
   }
 }
 
@@ -49,6 +49,7 @@ project(hello_executors) : ciao_server {
 project (client) : ciao_client {
   exename = client
   depends += hello_stub
+  libs += hello_stub
 
   IDL_Files {
   }

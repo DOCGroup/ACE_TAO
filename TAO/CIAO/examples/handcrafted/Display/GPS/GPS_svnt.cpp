@@ -178,7 +178,7 @@ CIAO_GLUE_HUDisplay::GPS_Servant::provide_MyLocation (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK_RETURN (0);
 
       HUDisplay::position_var fo
-        = HUDisplay::position::_narrow (obj
+        = HUDisplay::position::_narrow (obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
@@ -218,7 +218,7 @@ CIAO_GLUE_HUDisplay::GPS_Servant::get_consumer_Refresh (ACE_ENV_SINGLE_ARG_DECL)
   if (CORBA::is_nil (this->consumes_Refresh_.in ()))
     {
       CIAO_GLUE_HUDisplay::GPS_Servant::tickConsumer_Refresh_Servant *svt =
-        new CIAO_GLUE_HUDisplay::GPS_Servant::tickConsumer_Refresh_Servant (this->executor_,
+        new CIAO_GLUE_HUDisplay::GPS_Servant::tickConsumer_Refresh_Servant (this->executor_.in (),
                                                                             this->context_);
       PortableServer::ServantBase_var safe_servant (svt);
 
@@ -227,7 +227,7 @@ CIAO_GLUE_HUDisplay::GPS_Servant::get_consumer_Refresh (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK_RETURN (0);
 
       HUDisplay::tickConsumer_var eco
-        = HUDisplay::tickConsumer::_narrow (obj
+        = HUDisplay::tickConsumer::_narrow (obj.in ()
                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
@@ -584,7 +584,7 @@ CIAO_GLUE_HUDisplay::GPS_Servant::get_all_publishers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 ::Components::PublisherDescriptions *
-CIAO_GLUE_HUDisplay::GPS_Servant::get_named_publishers (const Components::NameList & names
+CIAO_GLUE_HUDisplay::GPS_Servant::get_named_publishers (const Components::NameList &
                                                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))

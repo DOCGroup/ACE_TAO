@@ -19,7 +19,7 @@ project(RateGen_stub): ciao_client {
 project(RateGen_svnt) : ciao_server {
   depends += HUDisplay_svnt RateGen_stub
   sharedname  = RateGen_svnt
-  libs    += RateGen_stub HUDisplay_stub
+  libs    += RateGen_stub HUDisplay_stub HUDisplay_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=RATEGEN_SVNT_Export -Wb,export_include=RateGen_svnt_export.h
   dllflags = RATEGEN_SVNT_BUILD_DLL
@@ -29,9 +29,9 @@ project(RateGen_svnt) : ciao_server {
   }
 
   Source_Files {
-    RateGen_svnt.cpp
-    RateGenS.cpp
     RateGenEC.cpp
+    RateGenS.cpp
+    RateGen_svnt.cpp
   }
 }
 
@@ -59,6 +59,7 @@ project(RateGen_exec) : ciao_server {
 project (RateGen_client) : ciao_client {
   exename = client
   depends += RateGen_stub
+  libs += RateGen_stub HUDisplay_stub
 
   IDL_Files {
   }
@@ -72,6 +73,7 @@ project (RateGen_client) : ciao_client {
 project (controller) : ciao_client {
   exename = controller
   depends += RateGen_stub
+  libs += RateGen_stub HUDisplay_stub
 
   IDL_Files {
   }

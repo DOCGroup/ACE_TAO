@@ -87,8 +87,8 @@ MyImpl::Pulse_Handler::handle_close (ACE_HANDLE handle,
 }
 
 int
-MyImpl::Pulse_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                       const void *arg)
+MyImpl::Pulse_Handler::handle_timeout (const ACE_Time_Value &,
+                                       const void *)
 {
   this->pulse_callback_->pulse ();
 
@@ -258,7 +258,7 @@ MyImpl::RateGenHome_exec_i::~RateGenHome_exec_i ()
 MyImpl::RateGenHome_exec_i::new_RateGen (CORBA::Long hertz
                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CreateFailure))
+                   Components::CCMException))
 {
   return new MyImpl::RateGen_exec_i (hertz);
 }
@@ -266,7 +266,7 @@ MyImpl::RateGenHome_exec_i::new_RateGen (CORBA::Long hertz
 ::Components::EnterpriseComponent_ptr
 MyImpl::RateGenHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CreateFailure))
+                   Components::CCMException))
 {
   return new MyImpl::RateGen_exec_i ();
 }

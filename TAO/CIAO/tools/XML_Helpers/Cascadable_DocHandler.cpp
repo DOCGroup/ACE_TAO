@@ -112,14 +112,14 @@ CIAO::XMLHelpers::Skip_DocHandler::Skip_DocHandler (ACEXML_XMLReader *parser,
                                                     ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
   // The exception stuff will not work for platform without native exception.
-    : element_count_ (0),
-      Cascadable_DocHandler (parser,
+    : Cascadable_DocHandler (parser,
                              parent,
                              namespaceURI,
                              localName,
                              qName,
                              attrs
-                             ACEXML_ENV_ARG_PARAMETER)
+                             ACEXML_ENV_ARG_PARAMETER),
+      element_count_ (0)
 {
 }
 
@@ -148,10 +148,10 @@ CIAO::XMLHelpers::Skip_DocHandler::endElement (const ACEXML_Char *namespaceURI,
 }
 
 void
-CIAO::XMLHelpers::Skip_DocHandler::startElement (const ACEXML_Char *namespaceURI,
-                                                 const ACEXML_Char *localName,
-                                                 const ACEXML_Char *qName,
-                                                 ACEXML_Attributes *atts
+CIAO::XMLHelpers::Skip_DocHandler::startElement (const ACEXML_Char *,
+                                                 const ACEXML_Char *,
+                                                 const ACEXML_Char *,
+                                                 ACEXML_Attributes *
                                                  ACEXML_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {

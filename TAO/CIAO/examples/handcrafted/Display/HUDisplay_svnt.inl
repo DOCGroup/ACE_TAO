@@ -11,7 +11,7 @@ ACE_INLINE
 CIAO_GLUE_HUDisplay::position_Servant::position_Servant (HUDisplay::CCM_position_ptr executor,
                                                          Components::CCMContext_ptr c)
   : executor_ (HUDisplay::CCM_position::_duplicate (executor)),
-    ctx_ (c)
+    ctx_ (Components::CCMContext::_duplicate (c))
 {
 }
 
@@ -26,6 +26,7 @@ CIAO_GLUE_HUDisplay::position_Servant::~position_Servant ()
 
 ACE_INLINE CORBA::Long
 CIAO_GLUE_HUDisplay::position_Servant::posx (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Simply relay to executor.  May not need to return the result...
   return this->executor_->posx (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -33,6 +34,7 @@ CIAO_GLUE_HUDisplay::position_Servant::posx (ACE_ENV_SINGLE_ARG_DECL)
 
 ACE_INLINE CORBA::Long
 CIAO_GLUE_HUDisplay::position_Servant::posy (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Simply relay to executor.  May not need to return the result...
   return this->executor_->posy (ACE_ENV_SINGLE_ARG_PARAMETER);

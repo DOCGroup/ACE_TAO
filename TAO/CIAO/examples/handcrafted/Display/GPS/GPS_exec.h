@@ -114,7 +114,7 @@ namespace MyImpl
     virtual ::Components::EnterpriseComponent_ptr
     create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CreateFailure));
+                       Components::CCMException));
   };
 
 }
