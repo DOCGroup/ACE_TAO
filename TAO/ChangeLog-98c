@@ -27,7 +27,8 @@ Thu Aug 20 11:41:03 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/Simulator/DOVEMIB/Node.cpp: added explicit
           template instantiations.
 
-        * orbsvcs/tests/Simulator/{DOVEMIB,Event_Supplier}/Makefile:
+        * orbsvcs/tests/Simulator/{DOVEMIB,Event_Supplier}/Makefile,
+          orbsvcs/tests/Simulator/README:
           added rules to copy .idl files, so that it doesn't have
           to be done manually.  And, added the .idl and generated
           files to the realclean target.
