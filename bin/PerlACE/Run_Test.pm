@@ -73,6 +73,22 @@ sub waitforfile_timed
   return -1;
 }
 
+sub check_n_cleanup_files
+{
+  my $file = shift;
+  my @flist = glob ($file);
+
+  my $cntr = 0;
+  my $nfile = scalar(@flist);
+
+  if ($nfile != 0) {
+    for (; $cntr < $nfile; $cntr++) {
+      print STDERR "ERROR: File <$flist[$cntr]> exists but should be cleaned up\n";
+    }
+    unlink @flist;
+  }
+}
+
 $sleeptime = 5;
 
 1;
