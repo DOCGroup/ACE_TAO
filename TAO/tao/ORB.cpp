@@ -140,7 +140,8 @@ CORBA_ORB::InvalidName::_raise (void)
 }
 
 // TAO extension - the _alloc method
-CORBA::Exception *CORBA::ORB::InvalidName::_alloc (void)
+CORBA::Exception *
+CORBA::ORB::InvalidName::_alloc (void)
 {
   CORBA::ORB::InvalidName *retval = 0;
   ACE_NEW_RETURN (retval,
