@@ -2,7 +2,7 @@
 // $Id$
 
 // The following configuration file is designed to work
-// for the SGI Indigo2EX running Irix 5.3 platform using 
+// for the SGI Indigo2EX running Irix 5.3 platform using
 // the SGI C++ Compiler.
 
 #ifndef ACE_CONFIG_H
@@ -26,7 +26,7 @@
 #define ACE_HAS_SIGWAIT
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Platform requires void * for mmap().
 #define ACE_HAS_VOIDPTR_MMAP
@@ -38,7 +38,7 @@
 #define ACE_HAS_SYSCALL_H
 
 // Compiler/platform supports alloca()
-#define ACE_HAS_ALLOCA 
+#define ACE_HAS_ALLOCA
 
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H
@@ -50,64 +50,63 @@
 #define ACE_HAS_GETRUSAGE
 
 // Platform supports POSIX O_NONBLOCK semantics.
-#define ACE_HAS_POSIX_NONBLOCK 
+#define ACE_HAS_POSIX_NONBLOCK
 
 // Platform supports POSIX timers via timestruc_t.
-#define ACE_HAS_POSIX_TIME 
-#define ACE_HAS_SVR4_TIME
+#define ACE_HAS_POSIX_TIME
 
 // Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS 
+#define ACE_HAS_CPLUSPLUS_HEADERS
 
 // Platform contains <poll.h>.
-#define ACE_HAS_POLL 
+#define ACE_HAS_POLL
 
-// No multi-threading so use poll() call 
-// - for easier debugging, if nothing else 
+// No multi-threading so use poll() call
+// - for easier debugging, if nothing else
 // #define ACE_USE_POLL
 
 // Platform supports the /proc file system.
-// #define ACE_HAS_PROC_FS 
+// #define ACE_HAS_PROC_FS
 
 // Compiler/platform defines the sig_atomic_t typedef.
-#define ACE_HAS_SIG_ATOMIC_T 
+#define ACE_HAS_SIG_ATOMIC_T
 
 // Platform supports SVR4 extended signals.
-#define ACE_HAS_SIGINFO_T 
-// #define ACE_HAS_UCONTEXT_T 
+#define ACE_HAS_SIGINFO_T
+// #define ACE_HAS_UCONTEXT_T
 #define ACE_LACKS_UCONTEXT_H
 
 // Compiler supports the ssize_t typedef.
-#define ACE_HAS_SSIZE_T 
+#define ACE_HAS_SSIZE_T
 
 // Platform supports STREAMS.
-#define ACE_HAS_STREAMS 
+#define ACE_HAS_STREAMS
 
 // Platform supports STREAM pipes (note that this is disabled by
 // default, see the manual page on pipe(2) to find out how to enable
-// it). 
-// #define ACE_HAS_STREAM_PIPES 
+// it).
+// #define ACE_HAS_STREAM_PIPES
 
 // Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR 
+#define ACE_HAS_STRERROR
 
 // Compiler/platform supports struct strbuf.
-#define ACE_HAS_STRBUF_T 
+#define ACE_HAS_STRBUF_T
 
 // Compiler/platform supports SVR4 dynamic linking semantics.
-#define ACE_HAS_SVR4_DYNAMIC_LINKING 
+#define ACE_HAS_SVR4_DYNAMIC_LINKING
 
 // Compiler/platform supports SVR4 signal typedef.
-#define ACE_HAS_IRIX_53_SIGNALS 
+#define ACE_HAS_IRIX_53_SIGNALS
 
 // Compiler/platform supports sys_siglist array.
-// #define ACE_HAS_SYS_SIGLIST 
+// #define ACE_HAS_SYS_SIGLIST
 
 // Platform provides <sys/filio.h> header.
-#define ACE_HAS_SYS_FILIO_H 
+#define ACE_HAS_SYS_FILIO_H
 
 // Compiler/platform defines a union semun for SysV shared memory.
-#define ACE_HAS_SEMUN 
+#define ACE_HAS_SEMUN
 
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
@@ -116,8 +115,7 @@
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
-
 
 #endif /* ACE_CONFIG_H */

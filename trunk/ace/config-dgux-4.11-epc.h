@@ -7,6 +7,8 @@
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
+#define ACE_DGUX
+
 // Platform requires (struct sockaddr *) for msg_name field of struct
 // msghdr.
 #define ACE_HAS_SOCKADDR_MSG_NAME
@@ -15,7 +17,7 @@
 #define ACE_LACKS_STRCASECMP
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
@@ -53,7 +55,7 @@
 #define ACE_HAS_IP_MULTICAST
 
 // Compiler/platform supports alloca()
-// #define ACE_HAS_ALLOCA 
+// #define ACE_HAS_ALLOCA
 
 // Compiler/platform has <alloca.h>
 // #define ACE_HAS_ALLOCA_H
@@ -63,7 +65,6 @@
 
 // Platform supports POSIX timers via timestruc_t.
 #define ACE_HAS_POSIX_TIME
-#define ACE_HAS_SVR4_TIME
 
 // Platform supports the /proc file system.
 #define ACE_HAS_PROC_FS
@@ -120,7 +121,7 @@
 /* Turn off the following four defines if you want to disable threading. */
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 0
+# define ACE_MT_SAFE 0
 #endif
 
 // Platform supports threads.
@@ -131,7 +132,7 @@
 // #define ACE_HAS_PTHREADS
 #define ACE_HAS_SIGWAIT
 // If ACE doesn't compile due to the lack of these methods, please
-// send email to schmidt@cs.wustl.edu reporting this. 
+// send email to schmidt@cs.wustl.edu reporting this.
 // #define ACE_LACKS_CONDATTR_PSHARED
 // #define ACE_LACKS_MUTEXATTR_PSHARED
 
@@ -159,7 +160,7 @@
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
 // Defines the page size of the system.
@@ -175,11 +176,11 @@
 #define ACE_LACKS_MADVISE
 
 #if !defined (IP_ADD_MEMBERSHIP)
-#define IP_ADD_MEMBERSHIP 0x13
+# define IP_ADD_MEMBERSHIP 0x13
 #endif
 
 #if !defined (IP_DROP_MEMBERSHIP)
-#define IP_DROP_MEMBERSHIP 0x14
+# define IP_DROP_MEMBERSHIP 0x14
 #endif
 
 // Header files lack t_errno for ACE_TLI.
@@ -188,5 +189,5 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_IDTYPE_T
-#define ACE_DGUX
+
 #endif /* ACE_CONFIG_H */

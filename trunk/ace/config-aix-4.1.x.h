@@ -50,10 +50,9 @@
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_CHARPTR_DL
 #define ACE_HAS_POSIX_TIME
-#define ACE_HAS_SVR4_TIME
 #define ACE_HAS_THREADS
 #if !defined (ACE_MT_SAFE)
-        #define ACE_MT_SAFE 1
+# define ACE_MT_SAFE 1
 #endif
 #define ACE_HAS_UTIME
 #define ACE_HAS_SELECT_H
@@ -138,5 +137,7 @@
 #undef msg_controllen
 #define msg_accrightslen msg_controllen
 #endif /* msg_accrightslen */
+
 #define ACE_HAS_UALARM
+
 #endif /* ACE_CONFIG_H */

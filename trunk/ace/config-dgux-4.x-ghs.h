@@ -7,6 +7,8 @@
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
+#define ACE_DGUX
+
 // Static objects do not get initialized correctly, so this is needed.
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 
@@ -63,7 +65,6 @@
 
 // Platform supports POSIX timers via timestruc_t.
 #define ACE_HAS_POSIX_TIME
-#define ACE_HAS_SVR4_TIME
 
 // Platform supports the /proc file system.
 #define ACE_HAS_PROC_FS
@@ -128,7 +129,7 @@
 /* Turn off the following four defines if you want to disable threading. */
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
-#define ACE_MT_SAFE 1
+# define ACE_MT_SAFE 1
 #endif
 
 // Platform supports threads.
@@ -207,7 +208,7 @@
 #endif
 
 #if !defined (IP_DROP_MEMBERSHIP)
-#define IP_DROP_MEMBERSHIP 0x14
+# define IP_DROP_MEMBERSHIP 0x14
 #endif
 
 // Header files lack t_errno for ACE_TLI.
@@ -216,5 +217,4 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
-#define ACE_DGUX
 #endif /* ACE_CONFIG_H */

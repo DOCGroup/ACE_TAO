@@ -61,7 +61,6 @@
 
 // Platform supports POSIX timers via timestruc_t.
 #define ACE_HAS_POSIX_TIME
-#define ACE_HAS_SVR4_TIME
 
 // Platform supports the /proc file system.
 #define ACE_HAS_PROC_FS
@@ -154,16 +153,17 @@
 
 // 10 millisecond fudge factor to account for Solaris timers...
 #if !defined (ACE_TIMER_SKEW)
-#define ACE_TIMER_SKEW 1000 * 10
+# define ACE_TIMER_SKEW 1000 * 10
 #endif /* ACE_TIMER_SKEW */
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 #define ACE_HAS_IDTYPE_T
 #define ACE_HAS_DIRENT
+
 #endif /* ACE_CONFIG_H */

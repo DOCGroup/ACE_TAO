@@ -19,7 +19,7 @@
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)
-#define __ACE_INLINE__
+# define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
 #define ACE_HAS_IDTYPE_T
@@ -85,7 +85,6 @@
 // Platform supports the POSIX struct timespec type
 #define ACE_HAS_POSIX_TIME   // As i understand it, but i'm in deep water
 //Platform supports the SVR4 timestruc_t type
-#define ACE_HAS_SVR4_TIME
 
 //ACE_HAS_PROC_FS                       Platform supports the /proc file system
 
@@ -447,12 +446,10 @@
 //ACE_USE_POLL                          Use the poll() event demultiplexor
 //rather than select().
 
-
-
 // Turns off the tracing feature.
 // #define ACE_NTRACE 0
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
 // Defines the page size of the system.

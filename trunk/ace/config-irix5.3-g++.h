@@ -54,7 +54,6 @@
 
 // Platform supports POSIX timers via timestruc_t.
 #define ACE_HAS_POSIX_TIME
-#define ACE_HAS_SVR4_TIME
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
@@ -109,7 +108,7 @@
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
 #endif /* ACE_CONFIG_H */
