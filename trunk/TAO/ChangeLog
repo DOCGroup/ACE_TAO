@@ -1,3 +1,19 @@
+Thu Apr 15 12:16:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/examples/Buffered_AMI/Makefile:
+        * tao/examples/Buffered_Oneways/Makefile:
+        * tao/tests/AMI_Buffering/Makefile:
+        * tao/tests/Oneway_Buffering/Makefile:
+        * tao/tests/Policies/Makefile:
+        * tao/tests/Timed_Buffered_Oneways/Makefile:
+        * performance-tests/RTCorba/Oneways/Reliable/Makefile:
+          Removed tao/TAOA.h from the dependencies by hand. Regenerating
+          everything would be the best but we are removing these files
+          soon, so by this we can now build without problems.
+
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+          Removed include of tao/TAOA.h
+
 Thu Apr 15 12:06:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/Log/Notify/Notify_Supplier.{h,cpp}:
