@@ -418,11 +418,10 @@ typedef unsigned __int64 ACE_UINT64;
 #endif /* !defined (_INC_WINDOWS) */
 
 // Always use WS2 when available
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
-# if !defined(ACE_HAS_WINSOCK2)
-#  define ACE_HAS_WINSOCK2 1
-# endif /* !defined(ACE_HAS_WINSOCK2) */
-#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
+#if !defined(ACE_HAS_WINSOCK2)
+# define ACE_HAS_WINSOCK2 1
+#endif /* !defined(ACE_HAS_WINSOCK2) */
+
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 # if !defined (_WINSOCK2API_)
