@@ -1429,7 +1429,7 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
       if (TAO_debug_level > 4)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Trasport[%d]::consolidate_message, "
+                      "TAO (%P|%t) - Transport[%d]::consolidate_message, "
                       "error while trying to consolidate\n",
                       this->id ()));
         }
