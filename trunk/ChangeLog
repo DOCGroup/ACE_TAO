@@ -1,3 +1,8 @@
+Fri May 25 20:51:33 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * netsvcs/build.bor:
+          Changed contents of file back to its original state.
+
 Fri May 25 13:38:21 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Message_Block.h: Added a better explanation of what "crunch()" does. 
