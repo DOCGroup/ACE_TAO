@@ -1,3 +1,7 @@
+Thu Jul 08 18:47:23 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Cache_Map_Manager_Test.cpp: Simplified code and output.
+
 Thu Jul 08 14:56:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.{h,i} (ACE_U_LongLong): added operators
