@@ -1,3 +1,9 @@
+Mon Oct  7 17:07:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tao/PortableServer/Servant_Base.cpp:
+	  Remove explicit template instantiations for ACE_Atomic_Op.
+	  They are now being instantiated in ACE.
+ 
 Mon Oct  7 17:45:02 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile: 
