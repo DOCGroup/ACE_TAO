@@ -139,7 +139,7 @@ TAO_Marshal_Primitive::decode (CORBA_TypeCode_ptr  tc,
       continue_decoding = stream->get_longdouble (*(CORBA_LongDouble *) data);
       break;
     case tk_wchar:
-      continue_decoding = stream->get_wchar (*(wchar_t *) data);
+      continue_decoding = stream->get_wchar (*(CORBA_WChar *) data);
       break;
     default:
       retval = CORBA_TypeCode::TRAVERSE_STOP;
@@ -213,7 +213,7 @@ TAO_Marshal_Any::decode (CORBA_TypeCode_ptr,
               continue_decoding = stream->get_longdouble (*(CORBA_LongDouble *) value);
               break;
             case tk_wchar:
-              continue_decoding = stream->get_wchar (*(wchar_t *) value);
+              continue_decoding = stream->get_wchar (*(CORBA_WChar *) value);
               break;
             case tk_any:
             case tk_TypeCode:
@@ -726,7 +726,7 @@ TAO_Marshal_Struct::decode (CORBA_TypeCode_ptr  tc,
 			  continue_decoding = stream->get_longdouble (*(CORBA_LongDouble *) data);
 			  break;
 			case tk_wchar:
-			  continue_decoding = stream->get_wchar (*(wchar_t *) data);
+			  continue_decoding = stream->get_wchar (*(CORBA_WChar *) data);
 			  break;
 			case tk_any:
 			case tk_TypeCode:
@@ -1368,7 +1368,7 @@ TAO_Marshal_Alias::decode (CORBA_TypeCode_ptr  tc,
         continue_decoding = stream->get_longdouble (*(CORBA_LongDouble *) value);
         break;
       case tk_wchar:
-        continue_decoding = stream->get_wchar (*(wchar_t *) value);
+        continue_decoding = stream->get_wchar (*(CORBA_WChar *) value);
         break;
       case tk_any:
       case tk_TypeCode:
@@ -1472,7 +1472,7 @@ TAO_Marshal_Except::decode (CORBA_TypeCode_ptr  tc,
 			  continue_decoding = stream->get_longdouble (*(CORBA_LongDouble *) data);
 			  break;
 			case tk_wchar:
-			  continue_decoding = stream->get_wchar (*(wchar_t *) data);
+			  continue_decoding = stream->get_wchar (*(CORBA_WChar *) data);
 			  break;
 			case tk_any:
 			case tk_TypeCode:
