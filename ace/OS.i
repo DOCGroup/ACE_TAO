@@ -6730,7 +6730,7 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   if (sig == 0)
     sig = &local_sig;
 #if defined (ACE_HAS_THREADS)
-# if (__FreeBSD__ < 3) || defined (CHORUS) || defined (ACE_PSOS)
+# if (defined (__FreeBSD__) && (__FreeBSD__ < 3)) || defined (CHORUS) || defined (ACE_PSOS)
     ACE_UNUSED_ARG (set);
     ACE_NOTSUP_RETURN (-1);
 # elif (defined (ACE_HAS_STHREADS) && !defined (_POSIX_PTHREAD_SEMANTICS))

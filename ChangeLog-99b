@@ -1,3 +1,19 @@
+Tue Jul  6 15:04:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS.i (sigwait): Fixed a problem with macro-itis and GCC.  The 
+	  following macro	
+  
+	  # if (__FreeBSD__ < 3) || defined (CHORUS) || defined (ACE_PSOS)
+  
+          was always evaluating to true, even when we're not on FreeBSD!.
+  	  The following macro works around this:
+	
+	  # if (defined (__FreeBSD__) && (__FreeBSD__ < 3)) || 
+            defined (CHORUS) || defined (ACE_PSOS)
+	
+          Thanks to Elias Sreih <sealstd1@nortelnetworks.com> for
+ 	  reporting this and Carlos for suggesting the workaround.
+
 Tue Jul  6 11:39:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i: Updated the comment for ACE_ADAPT_RETVAL to
