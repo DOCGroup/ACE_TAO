@@ -123,7 +123,7 @@
 #else /* ACE_HAS_EXCEPTIONS && TAO_IDL_COMPILES_HAS_EXCEPTIONS */
 
 // Define a local enviroment variable...
-#define TAO_TRY_ENV __env
+#define TAO_TRY_ENV _tao_try_environment
 
 #define TAO_TRY_VAR(X) \
 do { CORBA_Environment &TAO_TRY_ENV = X; \
