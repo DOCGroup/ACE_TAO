@@ -191,6 +191,11 @@ public:
   pid_t getgroup (void) const;
   pid_t setgroup (pid_t pgrp);
 
+  /// Default is TRUE.
+  /// Allows disabling of handle inheritence.
+  int handle_inheritence (void);
+  void handle_inheritence (int);
+
 #if defined (ACE_WIN32)
   // = Non-portable accessors for when you "just have to use them."
 
@@ -213,10 +218,6 @@ public:
   /// CreateProcess.
   LPSECURITY_ATTRIBUTES set_thread_attributes (void);
 
-  /// Default is TRUE.
-  /// Allows disabling of handle inheritence.
-  int handle_inheritence (void);
-  void handle_inheritence (int);
 #else /* All things not WIN32 */
 
   /// argv-style array of environment settings.

@@ -99,6 +99,27 @@ ACE_Process_Options::setgroup (pid_t pgrp)
   return old;
 }
 
+ACE_INLINE int
+ACE_Process_Options::handle_inheritence (void)
+{
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+  return handle_inheritence_;
+#else
+  ACE_NOTSUP_RETURN (0);  // This is a benign error. 
+#endif /* ACE_WIN32 && ! ACE_HAS_WINCE */
+}
+
+ACE_INLINE void
+ACE_Process_Options::handle_inheritence (int hi)
+{
+#if defined (ACE_WIN32) &&  !defined (ACE_HAS_WINCE)
+  handle_inheritence_ = hi;
+#else
+  ACE_UNUSED_ARG (hi);
+  ACE_NOTSUP;
+#endif /* !ACE_HAS_WINCE */
+}
+
 #if defined (ACE_WIN32)
 
 ACE_INLINE ACE_TEXT_STARTUPINFO *
@@ -150,27 +171,6 @@ ACE_Process_Options::set_thread_attributes (void)
   return thread_attributes_;
 #else
   return 0;
-#endif /* !ACE_HAS_WINCE */
-}
-
-
-ACE_INLINE int
-ACE_Process_Options::handle_inheritence (void)
-{
-#if !defined (ACE_HAS_WINCE)
-  return handle_inheritence_;
-#else
-  return FALSE;
-#endif /* !ACE_HAS_WINCE */
-}
-
-ACE_INLINE void
-ACE_Process_Options::handle_inheritence (int hi)
-{
-#if !defined (ACE_HAS_WINCE)
-  handle_inheritence_ = hi;
-#else
-  ACE_UNUSED_ARG (hi);
 #endif /* !ACE_HAS_WINCE */
 }
 
