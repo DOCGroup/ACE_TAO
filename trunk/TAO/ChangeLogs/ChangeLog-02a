@@ -1,19 +1,29 @@
+Thu Nov  9 09:49:02 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/PortableInterceptorC.cpp:
+          The header file lacked a TAO_HAS_INTERCEPTORS protection, but
+          the .cpp file did, this resulted in compilation problems under
+          minimum CORBA builds.  I removed the protections in the .cpp
+          file, but probably the correct fix would be to add them into the
+          .h file and figure out what is using PortableInterceptors even
+          when they are supposedly disabled.
+
 Wed Nov  8 20:01:40 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* tao/ORB.cpp: init_orb_globals() returns void, changed to
-	  ACE_CHECK instead of ACE_CHECK_RETURN.
-	
+        * tao/ORB.cpp: init_orb_globals() returns void, changed to
+          ACE_CHECK instead of ACE_CHECK_RETURN.
+
 Wed Nov  8 17:49:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Connection_Cache_Manager.cpp (close_i): Fixed a problem on
-	  NT. Thanks to Darrel for reporting this.
+        * tao/Connection_Cache_Manager.cpp (close_i): Fixed a problem on
+          NT. Thanks to Darrel for reporting this.
 
 Wed Nov  8 18:47:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/Param_Test/anyop.dsp:
+        * tests/Param_Test/anyop.dsp:
 
-	  Put back the project settings for param_test.idl in this project.
-	  They got lost somehow.
+          Put back the project settings for param_test.idl in this project.
+          They got lost somehow.
 
 Wed Nov  8 16:15:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
