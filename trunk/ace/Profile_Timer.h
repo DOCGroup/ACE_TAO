@@ -107,15 +107,6 @@ private:
 
   timeval last_time_;
   // Keep track of the last time for incremental timing.
-#elif defined (ACE_WIN32)
-  ACE_Time_Value begin_time_;
-  // Keep track of the beginning time.
-
-  ACE_Time_Value end_time_;
-  // Keep track of the ending time.
-
-  ACE_Time_Value last_time_;
-  // Keep track of the last time for incremental timing.
 #else
   ACE_High_Res_Timer timer_;
 #endif /* ACE_HAS_PRUSAGE_T */
