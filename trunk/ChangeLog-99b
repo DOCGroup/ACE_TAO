@@ -1,15 +1,20 @@
+Wed Mar 10 11:05:39 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Thread.h,ace/Thread_Manager.h (exit): added comment
+          that exit () should not be called by main thread.
+
 Wed Mar 10 10:57:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Basic_Types.h: 
-	  Fixed minor problem that would show up if sizeof(int)==2; thanks 
-	  to Cristian Ferretti <cfs@mat.puc.cl> for reporting this
-	  problem.
+        * ace/Basic_Types.h:
+          Fixed minor problem that would show up if sizeof(int)==2; thanks
+          to Cristian Ferretti <cfs@mat.puc.cl> for reporting this
+          problem.
 
 Wed Mar 10 10:13:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Message_Block.i (reference_count): Made sure the inline
-	  function is defined before used.  Thanks to David for noticing
-	  this.
+        * ace/Message_Block.i (reference_count): Made sure the inline
+          function is defined before used.  Thanks to David for noticing
+          this.
 
 Wed Mar 10 08:52:59 1999  David L. Levine  <levine@cs.wustl.edu>
 
