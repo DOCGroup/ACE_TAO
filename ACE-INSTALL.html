@@ -38,17 +38,17 @@ HREF="ACE.FAQ.html">FAQ</A> before building and installing ACE.
 
 The ADAPTIVE Communication Environment has been ported and tested
 extensively on a wide range of C++ compilers and uni-processor and
-multi-processor OS platforms including Win32 (i.e., WinNT/i386,
-WinNT/Alpha, and Win95), most versions of UNIX (e.g., SunOS 4.x and
+multi-processor OS platforms including Win32, i.e., WinNT/i386,
+WinNT/Alpha, and Win95; most versions of UNIX, e.g., SunOS 4.x and
 5.x, SGI IRIX, DG/UX, HP-UX, OSF/1 a.k.a. DEC UNIX, AIX 4.x, Linux,
-SCO, UnixWare, and <A HREF="http://www.freebsd.org/">FreeBSD</A>), <A
-HREF="http://www.wrs.com">VxWorks</A>, and <A
+SCO, UnixWare, <A HREF="http://www.freebsd.org/">FreeBSD</A>, <A
 HREF="http://www.s390.ibm.com/products/oe/index.html">MVS
-OpenEdition</A>.  If you have a problem compiling the ACE wrappers on
-the platforms shown below please send email to either <A
-HREF="news:comp.soft-sys.ace">ACE Newsgroup</A> or the <A
-HREF="mailto:ace-users@cs.wustl.edu">ACE mailing list</A> and we'll
-try to fix it for you.
+OpenEdition</A>, and <A HREF="http://www.lynx.com/">LynxOS</A>; <A
+HREF="http://www.wrs.com">VxWorks</A>; and PSoS.  If you have a
+problem compiling the ACE wrappers on the platforms shown below please
+send email to either <A HREF="news:comp.soft-sys.ace">ACE
+Newsgroup</A> or the <A HREF="mailto:ace-users@cs.wustl.edu">ACE
+mailing list</A> and we'll try to fix it for you.
 
 <DL>
 <DT> <B>Win32 (Windows NT/i386, NT/Alpha and Windows '95) </B><BR><BR>
@@ -59,14 +59,14 @@ try to fix it for you.
 	  (the 2.0 compiler may also work, but we haven't tested it
 	  recently).  ACE can be built as both a static and dynamic
 	  library, using the Win32 installation process described
-	  below. <P>
+	  below.<P>
 
 <DT> <B> Sun OS 5.x/4.x (a.k.a. Solaris 2.x/1.x) using Sun CC 3.0.1, Sun
      C++ 4.0.x, Centerline C++ 2.x, and GNU gcc 2.7.x. </B> <BR><BR>
 
 <DD> All the source code and tests should build and run without
 	  any problems on the Solaris and SunOS platforms using the
-	  Sun C++ compilers. <P>
+	  Sun C++ compilers.<P>
 
 <DT> <B> Sun OS 4.1.x using Centerline C++ 2.x, Sun CC 3.x, and Lucid
   Energize 3.2. </B> <BR><BR>
@@ -80,29 +80,29 @@ try to fix it for you.
 	  that these functions are called!  In particular, this means
 	  that the tests in the directory
 	  $(ACE_ROOT)/tests/Service_Configurator/IPC-tests/server/
-	  will not work for statically linked services... <P>
+	  will not work for statically linked services...<P>
 
 	  Some versions of SunOS 4.1.x do not contain the
 	  /usr/lib/libnsl.a library.  This library seems to be
 	  optional since System V Transport Layer Interface (TLI)
 	  support is optional on SunOS 4.1.x (in contrast, it's the
-	  "preferred" transport interface on Solaris). <P>
+	  "preferred" transport interface on Solaris).<P>
 
 	  The best work-around for now is probably to either add a
 	  dummy libnsl.a in /lib (which may not be feasible) or simply
-	  comment out the line: <P>
+	  comment out the line:<P>
 
-	  LIBS += -lnsl <P>
+	  LIBS += -lnsl<P>
 
 	  in the <CODE>$ACE_ROOT/include/makeinclude/wrapper_macros.GNU</CODE>
-	  file.  Naturally, any programs (e.g., the TLI_SAP tests)
-	  that use the TLI wrappers aren't going to work! <P>
+	  file.  Naturally, any programs, e.g., the TLI_SAP tests,
+	  that use the TLI wrappers aren't going to work!<P>
 
 	  Note that on SunOS 4.x you may get warnings from the linker
 	  that "archive has no table of contents; add one using
-	  ranlib(1)" for certain libraries (e.g., libASX.a,
-	  libThreads.a, and libSPIPE.a).  This occurs since SunOS 4.x
-	  does not support these features. <P>
+	  ranlib(1)" for certain libraries, e.g., libASX.a,
+	  libThreads.a, and libSPIPE.a.  This occurs since SunOS 4.x
+	  does not support these features.<P>
 
 <DT> <B> AIX </B> <BR><BR>
 
@@ -111,20 +111,20 @@ try to fix it for you.
 	  has created a separate product (free to AIX licensees)
 	  called shared library hookable symbols (or slhs/6000).  If
 	  you don't have this patch, the sv* commands for compiling
-	  and linking will not be present on the system. <P>
+	  and linking will not be present on the system.<P>
 
 	  If you are using AIX 4.2.1 or later, there is no patch needed;
 	  the dynamic library APIs are included in the base operating
-	  system. <P>
+	  system.<P>
 
 	  BTW, here's a technique from Rob Jordan &lt<A
      HREF="mailto:jordan@hursley.ibm.com">jordan@hursley.ibm.com</A>&gt
      that can reduce the size of the ACE libraries by
 	  about one third, and can also be applied to applications.  It works
 	  by optimising the sharing of template functions, which are created in an
-	  ``unusual'' way under AIX. It also speeds up compilation. <P>
+	  ``unusual'' way under AIX. It also speeds up compilation.<P>
 
-	  Here's how to optimise the ACE library generation: <P>
+	  Here's how to optimise the ACE library generation:<P>
 
 	  Look at the <A
 HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/Makefile">Makefile</a>
@@ -135,7 +135,7 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/Makefile">Makefile</a>
 	  file called <CODE>ACE_All_Tmp.h</CODE>
 	  and add a line to #include each of the .h files listed under
 	  <CODE>TEMPLATE_FILES=</CODE> in the Makefile. Now update the Makefile so that
-	  <CODE>FILES=ACE_All_Src</CODE> and <CODE>TEMPLATE_FILES=ACE_All_Tmp</CODE>. <P>
+	  <CODE>FILES=ACE_All_Src</CODE> and <CODE>TEMPLATE_FILES=ACE_All_Tmp</CODE>.<P>
 
 <DT><B>Linux</B><BR><BR>
 
@@ -365,10 +365,10 @@ for help with this port.<P>
 <DT><B> UnixWare </B> <BR><BR>
 <DD>
      Steve Huston &lt<A HREF="mailto:shuston@riverace.com">shuston@riverace.com</A>&gt
-	has ported ACE to work with UnixWare 2.01 and g++. <P>
+	has ported ACE to work with UnixWare 2.01 and g++.<P>
 
 	Ganesh Pai &lt<A HREF="mailto:gpai@voicetek.com">gpai@voicetek.com</A>&gt
-	subsequently did the port for version 2.1.2, also with g++. <P>
+	subsequently did the port for version 2.1.2, also with g++.<P>
 
 <DT><B>Chorus</B> <BR><BR>
 <DD>
@@ -378,9 +378,89 @@ for help with this port.<P>
 
 <DT><B>LynxOS</B> <BR><BR>
 <DD>
-
      Dave Mayerhoefer &lt<A HREF="mailto:davem@lynx.com">davem@lynx.com</A>&gt
 	has ported ACE to LynxOS 2.5 using GNU g++ 2.7.2.<P>
+
+     With LynxOS 2.5.0-FCS version: 012797-G, you'll need to apply this
+     patch:<p>
+     <pre>ftp://ftp.lynx.com/pub/patches/v2.5-patches/v2.5-on-x86/000134-00.tar.Z
+     </pre><p>
+
+     And, you'll need to apply the following four patches:
+     <ol>
+     <li><code>Patch /usr/include/netinet/in.h</code>:<p>
+<pre>
+--- in.h.ORIGINAL	Sat Feb  8 09:58:28 1997
++++ in.h	Wed Nov 26 15:41:04 1997
+@@ -278,8 +278,7 @@
+ 	compiler, the macros are not defined:  Functions must be used.
+ */
+ static __inline__ unsigned short
+-htons(arg)
+-unsigned short arg;
++htons(unsigned short arg)
+ {
+ 	unsigned short retval;
+
+@@ -292,8 +291,7 @@
+ }
+
+ static __inline__ unsigned long
+-htonl(arg)
+-unsigned long arg;
++htonl(unsigned long arg)
+ {
+	unsigned long retval;
+</pre><p>
+
+     <li><code>Patch /usr/include/name.h</code>:<p>
+<pre>
+--- name.h.ORIGINAL	Sat Feb  8 11:57:36 1997
++++ name.h	Wed Dec 24 11:00:57 1997
+@@ -112,7 +112,11 @@
+ static __inline__ int _name_fchmod(int nsid, mode_t mode)
+ { return _name_server(_NS_FCHMOD, nsid, mode); }
+ 
++#if defined __cplusplus
++static __inline__ int _name_fchown(int /* nsid */, uid_t owner, gid_t group)
++#else
+ static __inline__ int _name_fchown(int nsid, uid_t owner, gid_t group)
++#endif /* __cplusplus */
+ { return _name_server(_NS_FCHOWN, owner, group); }
+ 
+ static __inline__ int _name_close(int nsid)
+</pre>
+
+     <li><code>Patch /usr/include/scsi.h</code>:<p>
+<pre>
+--- scsi.h.ORIGINAL	Sat Feb  8 09:57:43 1997
++++ scsi.h	Mon Dec  1 09:13:13 1997
+@@ -166,7 +166,7 @@
+ ------------------------------------------------------------------------------
+ */
+ #define GET_DATA_BUFFER_STATUS          0x34	/* O     14.2.1 */
+-#define GET WINDOW                      0x25	/* O     14.2.2 */
++#define GET_WINDOW                      0x25	/* O     14.2.2 */
+ #define OBJECT_POSITION                 0x31	/* O     14.2.3 */
+ #define SCAN                            0x1B	/* O     14.2.5 */
+ #define SET_WINDOW                      0x24	/* M     14.2.6 */
+</pre>
+
+     <li><code>Patch /usr/include/netdb.h</code>:<p>
+<pre>
+--- netdb.h.ORIGINAL	Sat Feb  8 09:57:36 1997
++++ netdb.h	Mon Dec  1 10:57:15 1997
+@@ -95,6 +95,8 @@
+ extern struct protoent	*getprotobyname	_AP((char *));
+ extern struct protoent  *getprotobynumber _AP((int));
+ extern struct protoent  *getprotoent	_AP((void));
++int sethostent _AP((int));
++int endhostent _AP((void));
+
+ /*
+  * Error return codes from gethostbyname() and gethostbyaddr()
+</pre>
+     </ol>
 
 <DT><STRONG>VxWorks</STRONG> <BR><BR>
 <DD>
@@ -446,7 +526,7 @@ and then <code>cplusCtors</code> between runs.<P>
 All of ACE has been ported to OpenEdition by Chuck Gehr &lt<A
 HREF="mailto:gehr@sweng.stortek.com">gehr@sweng.stortek.com</A>&gt.
 The ACE library, all the tests and most of the examples and apps build
-clean.  There are still some problems that need to be ironed out: <P>
+clean.  There are still some problems that need to be ironed out:<P>
 
    MVS does not support the dynamic linking dl...() calls that the Service
    Configurator uses to dynamically link services at run time. As a result, all
@@ -456,21 +536,21 @@ clean.  There are still some problems that need to be ironed out: <P>
    using flex and yacc on a ascii (not ebcdic) machine and as a result they don't
    work very well with ebcdic svc.conf files.  We should be able to regenerate
    these files on MVS but MVS doesn't have flex.  This is something that needs
-   to be done. <P>
+   to be done.<P>
 
    Some of the tests do not execute properly.  This is a minority and over time
-   the goal is to get to 100%. <P>
+   the goal is to get to 100%.<P>
 
    The make scheme for some of the apps still doesn't work perfectly on MVS.
    This is mainly due to the way shared libraries are handled on MVS.  See
    <A HREF="#mvs">additional build tips for MVS</A> for more on
-   this. <P>
+   this.<P>
 </DL>
 
 <HR>
 <H4><A NAME="g++">Compiling ACE with GNU g++</A></H4>
 
-If you use the GNU GCC g++ compiler please note the following: <P>
+If you use the GNU GCC g++ compiler please note the following:<P>
 
 <UL>
         <LI>ACE transparently supports egcs.  Please use the appropriate
@@ -496,7 +576,7 @@ If you use the GNU GCC g++ compiler please note the following: <P>
 
  	<LI>Earlier (prior to 2.7.2) versions of g++ may not compile
         certain parts of ACE correctly due to compiler bugs.  Please
-        upgrade to g++ 2.7.2 or greater. <P>
+        upgrade to g++ 2.7.2 or greater.<P>
 
 	<LI>Make sure to update your gcc <code>config.status</code>
         file.  This file is produced when installing gcc; it specifies
@@ -519,7 +599,7 @@ If you use the GNU GCC g++ compiler please note the following: <P>
 
          <LI>Don't get too confused about contradictory statements in
              the gcc documentation. It was written by different
-             people... <P>
+             people...<P>
 
         <LI>Make sure that the linker invoked by gcc produces code
 	  that initializes static objects.  Please see gcc's
@@ -584,24 +664,24 @@ HREF="#unixsvcs">UNIX</A> and <A HREF="#win32svcs">Win32</A>.
 
 Building and installing ACE on UNIX is relatively simple (the <A
 HREF="#win32">process</A> for Win32 is different).  Here's what you
-need to do: <P>
+need to do:<P>
 
 <OL>
 <LI> Install GNU make 3.7 or greater on your system (available via
-   anonymous ftp from prep.ai.mit.edu in the pub/gnu directory). <P>
+   anonymous ftp from prep.ai.mit.edu in the pub/gnu directory).<P>
 
 <LI> Add an environment variable called ACE_ROOT that contains the
    name of the root of the directory where you keep the ACE wrapper
    source tree.  The ACE recursive Makefile scheme needs this information.
    There are several ways to set the ACE_ROOT variable.  For
-     instance, in my .login file I have the following entry: <P>
+     instance, in my .login file I have the following entry:<P>
 
 <pre><code>
 % setenv ACE_ROOT /home/cs/faculty/schmidt/ACE_wrappers
 </code></pre><P>
 
-However, if you're building a number of versions of ACE (e.g., for
-different OS platforms or for different releases of ACE) you might use
+However, if you're building a number of versions of ACE, e.g., for
+different OS platforms or for different releases of ACE, you might use
 the following approach:
 
 <pre><code>
@@ -610,7 +690,7 @@ the following approach:
 
 <LI> Edit the $ACE_ROOT/ace/OS.h file to update things like default
    hostname and port numbers you'd like the programs in the
-   $ACE_ROOT/{apps,tests} directories to use by default. <P>
+   $ACE_ROOT/{apps,tests} directories to use by default.<P>
 
 <LI> Set the $ACE_ROOT/ace/config.h file to point to the appropriate
    platform/compiler-specific header configurations (such as
@@ -618,23 +698,23 @@ the following approach:
    are used throughout ACE to indicate which features your system
    supports (see the $ACE_ROOT/ace/OS.h file for many
    examples of how the ACE build configuration is affected by these
-   macro settings). <P>
+   macro settings).<P>
 
    There are config files for most versions of UNIX.  If there isn't a
    version of this file that matches your platform/compiler, you'll
    need to make one.  Please send me email if you get it working so I
-   can add it to the master ACE release. <P>
+   can add it to the master ACE release.<P>
 
 <LI> Set the $ACE_ROOT/include/makeinclude/platform_macros.GNU file
    to point to the appropriate platform/compiler-specific Makefile
-   configurations (e.g., platform_sunos5_sunc++.GNU).  This file
+   configurations, e.g., platform_sunos5_sunc++.GNU.  This file
    contains the compiler and Makefile directives that are
-   platform/compiler-specific <P>
+   platform/compiler-specific<P>
 
 <LI> Note that since ACE builds shared libraries, you'll need to set
    LD_LIBRARY_PATH to whereever you put the binary version of the
    ACE library.  For example, you probably want to do something like
-   the following <P>
+   the following<P>
 
 <pre><code>
 % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$LD_LIBRARY_PATH
@@ -653,11 +733,11 @@ consider cd'ing into the $ACE_ROOT/ace/ directory and running
 <CODE>make</CODE> there to build just the ACE library.  As a sanity
 check, you might also want to build and run the automated <A
 HREF="ACE_wrappers/tests/README">``one-button'' tests</A> in
-$ACE_ROOT/tests/. <P>
+$ACE_ROOT/tests/.<P>
 
 <LI> If you need to regenerate the Svc_Conf_y.cpp file, you'll need to
 get <A HREF="http://www.cs.wustl.edu/~schmidt/byacc.tar.gz">Berkeley
-YACC</A>.  However, you should rarely, if ever, need to do this. <P>
+YACC</A>.  However, you should rarely, if ever, need to do this.<P>
 
 </OL>
 
@@ -670,7 +750,7 @@ Visual C++5.0 Service Pack 3 is broken and we don't recommend using
 it.<P>
 
 <OL>
-<LI> Create a directory (e.g., C:\ACE) and copy all of the ACE
+<LI> Create a directory, e.g., C:\ACE, and copy all of the ACE
      distribution into it.  This directory will be referred to as
      ACE_ROOT in the rest of this discussion.<BR><BR>
 <LI> Create a file called config.h in the ACE_ROOT\ace directory
@@ -724,7 +804,7 @@ it.<P>
      executables.)<BR><BR>
 </Ol>
 
-<B>ACE TESTS</B> <P>
+<B>ACE TESTS</B><P>
 
 The tests are located in ACE_ROOT\tests.  There are two corresponding
 project files in that directory also (tests.mdp and tests.dsp).<P>
@@ -737,7 +817,7 @@ tests.<P>
 
 You may want to run ACE on a non-networked machine. To do so, you must
 install TCP/IP and configure it to ignore the absence of a network
-card.  This is one method: <P>
+card.  This is one method:<P>
 
 <OL>
         <LI>  Run Control Panel
@@ -908,7 +988,7 @@ HREF="#unixsvcs">UNIX</A> and <A HREF="#win32svcs">Win32</A>.
 
 Building and installing ACE Network Services on UNIX is relatively
 simple (the <A HREF="#win32svcs">process</A> for Win32 is different).
-Here's what you need to do: <P>
+Here's what you need to do:<P>
 
 <OL>
 
@@ -923,7 +1003,7 @@ $ACE_ROOT/netsvcs/servers/main.cpp</A> should also be compiled and ready to run.
 
 <LI> Set your LD_LIBRARY_PATH environment variable to where the binary
      version of the ACE netsvcs library.  For example, you probably
-     want to do something like the following <P>
+     want to do something like the following<P>
 
 <pre><code>
 % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$LD_LIBRARY_PATH
@@ -942,10 +1022,10 @@ $ACE_ROOT/netsvcs/servers/svc.conf</A> file.  During your editing,
      how the services are dynamically linked and executed.  In
      addition, refer to the <A HREF="ACE-netsvcs.html">Network
      Services</A> documentation to learn more about how to configure
-     each network service. <P>
+     each network service.<P>
 
 <LI> If you only want to link the services statically, simply remove
-     or rename the svc.conf file. <P>
+     or rename the svc.conf file.<P>
 
 </OL>
 
@@ -976,7 +1056,7 @@ in your PATH.<P>
 On UNIX platforms, I typically like to support multiple platform
 builds using the same ACE source tree.  This idiom is supported by ACE
 using the $(ACE_ROOT)/bin/clone.c program.  To build clone,
-perform the following steps: <P>
+perform the following steps:<P>
 
 <pre>
 % cd $ACE_ROOT/bin
@@ -985,9 +1065,9 @@ perform the following steps: <P>
 % rehash
 </pre><P>
 
-Then create a ./build subdirectory someplace (e.g., under
-$ACE_ROOT), and then invoke the top-level Makefile with the
-"clone" target, e.g.: <P>
+Then create a ./build subdirectory someplace, e.g., under
+$ACE_ROOT, and then invoke the top-level Makefile with the
+``clone'' target, e.g.:<P>
 
 <pre>
 % cd $ACE_ROOT
@@ -1003,16 +1083,16 @@ $ACE_ROOT), and then invoke the top-level Makefile with the
 This will establish a complete tree of links.  Note that you must to
 build a config.h and platform_macros.GNU in cloned directory.  In
 addition, make sure you set your LD_LIBRARY_PATH to
-$ACE_ROOT/ace:$LD_LIBRARY_PATH on SVR4 UNIX platforms. <P>
+$ACE_ROOT/ace:$LD_LIBRARY_PATH on SVR4 UNIX platforms.<P>
 
 When you do a make in the $ACE_ROOT directory you will be producing
 object code that is not stored in the same place as the original
 source tree.  This way, you can easily build another platform in a
-parallel tree structure. <P>
+parallel tree structure.<P>
 
-<B> VERY IMPORTANT! </B> <P>
+<B> VERY IMPORTANT! </B><P>
 
-If you use the "clone trick" discussed above, make sure that the
+If you use the ``clone trick'' discussed above, make sure that the
 symbolic links are correctly in place before starting the build.  In
 particular, if you plan to clone the tree, it is preferable to do so
 before you start a build procedure on the original tree.  This is
@@ -1022,7 +1102,7 @@ You would end up with links pointing to object files of another
 platform.  If you clone the tree after you've done a build on the
 original tree, make sure to remove all ".obj", ".shobj" and (any other
 files or directories) in all subdirectories before starting the build
-on your cloned tree. <P>
+on your cloned tree.<P>
 
 Alternatively, the perl script
 <code>ACE_wrappers/bin/create_ace_build</code> can be used to create
@@ -1051,7 +1131,7 @@ files that have "-orbix" in them!
 For all intents and purpose, MVS OpenEdition (OE) is another flavor of
 UNIX, therefore, the instructions under <A HREF="#aceinstall">Building
 and Installing ACE on Unix</A> can be used along with the following
-additional tips: <P>
+additional tips:<P>
 
    You can get a copy of GNU make that has been ported to MVS OpenEdition from
    the <A HREF="http://www.s390.ibm.com/products/oe/index.html">IBM OpenEdition web site</A>.
@@ -1059,10 +1139,10 @@ additional tips: <P>
    operands interspersed.  By default, the c89/cc/c++ compiler expects all options to
    precede all operands.  To get around this, you must set a special
    compiler environment variable (_CXX_CCMODE) to 1 which tells the compiler
-   to allow options and operands to be interspersed. <P>
+   to allow options and operands to be interspersed.<P>
 
    Note that the environment variable LD_LIBRARY_PATH is called LIBPATH
-   on MVS. <P>
+   on MVS.<P>
 
    Shared objects are built a little different on MVS than on
    other UNIX implementations.  This has been accounted for in the makefiles
@@ -1072,7 +1152,7 @@ additional tips: <P>
    application code.  For more information on this see the C/C++ MVS
    Programming Guide.  If you want to build your application statically,
    i.e., using libACE.a instead of libACE.so, you can set ACELIB to
-   ACELIB_STATIC in platform_mvs.GNU. <P>
+   ACELIB_STATIC in platform_mvs.GNU.<P>
 
    When the libACE.so file is built (via the MVS pre-linker and binder), you
    will get a rc=4 from the pre-linker.  This is ok.  This is due to some
