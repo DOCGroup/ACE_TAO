@@ -1,9 +1,25 @@
+Fri Apr 30 02:06:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Parse_Node.cpp (symbol): According to the new ANSI C++
+	  specification, casting a void* pointer to a function pointer is
+	  not allowed.  However, casting a void* pointer to an integer
+	  type that is large enough to hold the pointer value is legal.  I
+	  chose to cast the return value to long since it should be large
+	  enough to hold the void* pointer's value on most platforms. I am
+	  not sure if casting a long value to a function pointer is legal
+	  or not (can't find a good explanation in spec) but it prevent
+	  SunC++ 5.0 compilers from complaining about illegal pointer
+	  conversion.
+
+	* ace/OS.h: Removed ACE_non_function_ptr_to_function_ptr_cast,
+	  it is no longer needed.
+
 Fri Apr 30 00:36:23 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 
-	* ace/Get_Opt.cpp: 
+	* ace/Get_Opt.cpp:
 	* ace/TLI_Acceptor.cpp:
-	* ace/TLI_Connector.cpp:  
+	* ace/TLI_Connector.cpp:
 
 	  Cast away const from string literals using ACE_const_cast to make
 	  Sun C++ 5.0 happier.
@@ -16,7 +32,7 @@ Thu Apr 29 18:32:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Thu Apr 29 19:48:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.{h,i} (ACE_OS): 
+	* ace/OS.{h,i} (ACE_OS):
 
 	  More IPv6 support.  Added support for the new IPv4/IPv6
 	  inet_ntop() and inet_pton() calls.  If ACE_HAS_IP6 is not
@@ -33,8 +49,8 @@ Thu Apr 29 19:48:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 Thu Apr 29 18:32:43 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/README:
-	* ace/OS.h (ACE_OS): 
-	* ace/OS.i (gethostbyname2): 
+	* ace/OS.h (ACE_OS):
+	* ace/OS.i (gethostbyname2):
 
 	  Added support for the gethostbyname2() system call.  It is only
 	  enabled if ACE_HAS_IP6 is defined.  When I have time, I'll add
