@@ -1,3 +1,14 @@
+Thu Jul 24 13:48:33 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* orbsvcs\examples\Notify\ThreadPool\Supplier.cpp
+	  (subscription_change): 
+
+	  string_var needed .in() accessor.
+
+	* orbsvcs\examples\Notify\ThreadPool\run_test.pl: 
+
+	  Fixed typo.
+
 Thu Jul 24 13:36:48 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\RTScheduling\Scheduler.cpp: 
