@@ -1,3 +1,13 @@
+Thu Jul 20 23:21:11 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/IFR_Service/IFR_Service.dsp:
+        * orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
+        * orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+
+          Fixed up the dsp files to have the correct include paths,
+          output directories, and idl file generation commands.
+
 Thu Jul 20 19:49:06 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
