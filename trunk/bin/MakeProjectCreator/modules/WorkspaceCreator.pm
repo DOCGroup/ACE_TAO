@@ -841,38 +841,6 @@ sub generate_project_files {
           $gen = $creator->get_files_written();
           $gpi = $creator->get_project_info();
 
-          ## If we need to generate a workspace file per project
-          ## then we generate a temporary project info and projects
-          ## array and call write_project().
-          if ($dir ne '.' && defined $$gen[0] &&
-              $self->workspace_per_project() && !$self->get_hierarchy()) {
-            my(%perpi)       = ();
-            my(@perprojects) = ();
-            $self->save_project_info($gen, $gpi, '.', \@perprojects, \%perpi);
-
-            ## Set our per project information
-            $self->{'projects'}     = \@perprojects;
-            $self->{'project_info'} = \%perpi;
-
-            ## Add implict project dependencies based on source files
-            ## that have been used by multiple projects
-            if ($genimpdep) {
-              $self->add_implicit_project_dependencies($creator,
-                                                       $self->getcwd());
-            }
-
-            ## Write our per project workspace
-            my($error) = undef;
-            ($status, $error) = $self->write_workspace($creator);
-            if (!$status) {
-              $self->error($error);
-            }
-
-            ## Reset our project information to empty
-            $self->{'projects'}     = [];
-            $self->{'project_info'} = {};
-          }
-
           if ($self->{'cacheok'}) {
             $allprojects{$prkey} = $gen;
             $allprinfo{$prkey}   = $gpi;
@@ -914,7 +882,7 @@ sub generate_project_files {
   }
 
   ## If we are generating the hierarchical workspaces, then do so
-  if ($self->get_hierarchy()) {
+  if ($self->get_hierarchy() || $self->workspace_per_project()) {
     my($orig) = $self->{'workspace_name'};
     $self->generate_hierarchy($creator, \@projects, \%pi);
     $self->{'workspace_name'} = $orig;

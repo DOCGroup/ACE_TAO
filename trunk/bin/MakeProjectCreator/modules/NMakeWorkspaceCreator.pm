@@ -30,6 +30,12 @@ sub crlf {
 }
 
 
+sub workspace_per_project {
+  #my($self) = shift;
+  return 1;
+}
+
+
 sub workspace_file_name {
   my($self) = shift;
   if ($self->make_coexistence()) {
