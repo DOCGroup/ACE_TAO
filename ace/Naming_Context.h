@@ -254,7 +254,8 @@ public:
   ACE_Name_Options (void);
   ~ACE_Name_Options (void);
 
-  void parse_args (int argc, char *argv[]);
+  void parse_args (int argc,
+                   const char *argv[]);
   // Parse arguments
 
   // = Set/Get port number
