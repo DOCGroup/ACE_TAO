@@ -227,7 +227,7 @@ private:
     return (shutdown_ == 1);
   }
 
-  int thread_id (Worker *worker)
+  ACE_thread_t thread_id (Worker *worker)
   {
     return worker->thread_id ();
   }
@@ -256,7 +256,7 @@ Manager::shut_down (void)
 
       Exit* req;
       ACE_NEW_RETURN (req, Exit(), -1);
-      
+
       // Send the hangup message
       worker->perform(req);
 
@@ -266,7 +266,7 @@ Manager::shut_down (void)
       ACE_DEBUG ((LM_DEBUG,
                  "(%t) Worker %d shut down.\n",
                  thread_id(worker)));
-      
+
       delete worker;
 
     }
@@ -285,7 +285,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_Time_Value tv;
   tv.msec (100);
-  
+
   // Wait for a few seconds every time you send a message.
   CompletionCallBack cb;
   LongWork workArray[OUTSTANDING_REQUESTS];

@@ -121,6 +121,8 @@ public:
 
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
+
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
 #if defined (ACE_LACKS_FORK)
@@ -150,3 +152,15 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   return 0;
 }
+
+#else
+
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "This example does not work on this platform.\n"));
+  return 1;
+}
+
+#endif /* !ACE_LACKS_UNIX_SIGNALS */

@@ -101,7 +101,7 @@ public:
         ACE_Message_Block *mb = NULL;
         ACE_Time_Value tv ((long)MAX_TIMEOUT);
         tv += ACE_OS::time (0);
-          
+
         // Get a message request.
         if (this->getq (mb, &tv) < 0)
           {
@@ -130,7 +130,7 @@ public:
 
   int shut_down (void);
 
-  int thread_id (Worker *worker);
+  ACE_thread_t thread_id (Worker *worker);
 
   virtual int return_to_work (Worker *worker)
   {
@@ -218,7 +218,7 @@ Manager::shut_down (void)
   return 0;
 }
 
-int
+ACE_thread_t
 Manager::thread_id (Worker *worker)
 {
   return worker->thread_id ();
