@@ -80,6 +80,7 @@
 
 // Platform contains <poll.h>.
 #define ACE_HAS_POLL
+#define ACE_POLL_IS_BROKEN
 
 // Platform supports POSIX timers via timestruc_t.
 #define ACE_HAS_POSIX_TIME
