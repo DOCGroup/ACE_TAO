@@ -1,3 +1,17 @@
+Tue Mar 16 09:36:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any_Unknown_IDL_Type.cpp (_tao_decode):
+
+	  Update the byte order from the incoming CDR stream.
+
+	* tao/CORBA_String.cpp:
+
+	  Applied patches from Oliver Kellog and Paolo Carlini
+	  <pcarlini@suse.de> which helps TAO to get compiling with 
+	  g++ 3.4 (prerelease). Paolo mentions that this should make things
+	  more portable. It compiles fine with g++ atleast. We need to see how
+	  things go on other platforms.
+
 Tue Mar 16 09:40:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_decl.cpp:
