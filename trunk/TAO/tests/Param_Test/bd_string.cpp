@@ -25,7 +25,7 @@
 // ************************************************************************
 
 Test_Bounded_String::Test_Bounded_String (void)
-  : opname_ (CORBA::string_dup ("test_bounded_string")),
+  : opname_ (CORBA::string_dup ("test_unbounded_string")),
     in_ (0),
     inout_ (0),
     out_ (0),
@@ -103,22 +103,61 @@ Test_Bounded_String::add_args (CORBA::NVList_ptr param_list,
 			       CORBA::NVList_ptr retval,
 			       CORBA::Environment &env)
 {
-  CORBA::Any in_arg (CORBA::_tc_string, &this->in_, 0);
-  CORBA::Any inout_arg (CORBA::_tc_string, &this->inout_, 0);
-  CORBA::Any out_arg (CORBA::_tc_string, &this->out_, 0);
+  // create the parameters
+  CORBA::Any in_arg (CORBA::_tc_string,
+                     &this->in_,
+                     CORBA::B_FALSE);
+
+  CORBA::Any inout_arg (CORBA::_tc_string,
+                        &this->inout_,
+                        CORBA::B_FALSE);
+
+  CORBA::Any out_arg (CORBA::_tc_string,
+                      &this->out_,
+                      CORBA::B_FALSE);
 
   // add parameters
-  (void)param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  (void)param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  (void)param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("s2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("s3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
 
   // add return value
-  (void)retval->item (0, env)->value ()->replace (CORBA::_tc_string,
-                                                  0, // ORB will allocate
-                                                  0, // does not own
-                                                  env);
+  retval->item (0, env)->value ()->replace (CORBA::_tc_string,
+                                            &this->ret_,
+                                            CORBA::B_FALSE, // does not own
+                                            env);
   return 0;
 }
+
+// Implementation coming soon
+/*
+int 
+Test_Bounded_String::add_args (CORBA::Request_ptr &req,
+                               CORBA::Environment &env)
+{
+  *req << this->in_ 
+       << CORBA::ARG_INOUT << this->inout_ 
+       << CORBA::ARG_OUT << this->out_;
+
+  req->result ()->value ()->replace (CORBA::_tc_string, 
+                                     &this->ret_, 
+                                     CORBA::B_TRUE, 
+                                     env);
+
+  return 0;
+}
+*/
 
 CORBA::Boolean
 Test_Bounded_String::check_validity (void)
@@ -139,9 +178,8 @@ CORBA::Boolean
 Test_Bounded_String::check_validity (CORBA::Request_ptr req)
 {
   CORBA::Environment env;
-  // only retrieve the return value. No need to retrieve the out and inout
-  // because we had provided the memory and we own it.
-  *req->result ()->value () >>= this->ret_;
+  //No need to retrieve anything because for all the args and
+  // the return, we provided the memory and we own it.
   return this->check_validity ();
 }
 
