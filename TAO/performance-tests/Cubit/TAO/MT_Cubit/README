@@ -3,7 +3,7 @@
 The MT-Cubit example
 --------------------
 
-Compiling
+COMPILING
 ---------
 
 Makefile is provided.  Use make to compile.  Except, see below for
@@ -13,7 +13,7 @@ You can either run the server in the background in the same window as
 the client or open a separate window for the client and server.
 
 
-Options
+OPTIONS
 -------
 Options are case sensitive, e.g., "-U" has a different meaning than "-u".
 
@@ -194,7 +194,7 @@ To run the server and client on a single target:
   -> spa server, "-s", "-f", "ior.txt", "-t", "2"
   -> spa client, "-s", "-f", "ior.txt", "-t", "2", "-n", "1000"
 
-Results
+RESULTS
 -------
 
 The client prints the latency observed by the high priority client,
