@@ -1,3 +1,37 @@
+Tue Sep 16 16:56:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL//be/be_visitor_interface/smart_proxy_cs.cpp: The smart
+	  proxies used the old _unchecked_narroow function. Replaced the
+	  usage of those calls. 
+
+	* tao/IOPS.h: Removed absolete headers
+
+	* tao/DynamicInterface/DII_Invocation.h: Removed unused classes
+	  and code. 
+
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp: Removed inclusion
+	  of tao/Invocation.h
+
+	* tests/Big_Oneways/Session.cpp:
+	* tests/Big_Twoways/Session.cpp:
+	* tests/DynAny_Test/analyzer.h:
+	* tests/Exposed_Policies/RT_Properties.cpp:
+	* tests/IDL_Test/namespace_check.cpp:
+	* tests/Policies/Manipulation.cpp:
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+	* tests/Portable_Interceptors/Dynamic/test_i.h:
+	* tests/RTScheduling/Scheduler.cpp:
+	* tests/RTScheduling/Scheduler.h:
+	* tests/RTScheduling/Current/Thread_Task.h:
+	* tests/RTScheduling/DT_Spawn/test.cpp:
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.h:
+	* tests/RTScheduling/VoidData/test.h:
+	* tests/RTScheduling/VoidData/testC.cpp:
+	* tests/RTScheduling/VoidData/testC.h:
+	* tests/RTScheduling/VoidData/testC.i: Fixed simple compile errors
+	  that arose due to the severe subsetting that have gone into the
+	  ORB. 
+
 Mon Sep 15 22:54:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:

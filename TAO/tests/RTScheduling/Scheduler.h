@@ -4,6 +4,7 @@
 #define SCHEDULER_H
 
 #include "tao/RTScheduling/RTScheduler.h"
+#include "tao/LocalObject.h"
 
 class TAO_Scheduler:
 public RTScheduling::Scheduler,

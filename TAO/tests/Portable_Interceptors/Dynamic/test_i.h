@@ -23,10 +23,11 @@ public:
 
   virtual CORBA::Long calculate (CORBA::Long one,
                                  CORBA::Long two
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
   void normal (CORBA::Long arg,
                CORBA::String_out msg
-               ACE_ENV_ARG_DECL_NOT_USED)
+               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Test_Interceptors::Visual::VarLenStruct * the_structure (

@@ -1,6 +1,7 @@
 //$Id$
 
 #include "RT_Properties.h"
+#include "ace/OS.h"
 
 ACE_RCSID (ExposedPolicies, RT_Properties, "$Id$")
 
