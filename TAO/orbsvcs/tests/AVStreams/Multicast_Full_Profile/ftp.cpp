@@ -182,13 +182,19 @@ FTP_Client_Callback::handle_timeout (void *)
           this->count_++;
           if (this->count_ == 2)
             {
-              ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
-              AVStreams::flowSpec stop_spec (1);
-              ACE_DECLARE_NEW_CORBA_ENV;
-              CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
-              ACE_CHECK_RETURN (-1);
-              CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
-              TAO_AV_CORE::instance ()->stop_run ();
+              ACE_TRY_NEW_ENV
+                {
+                  ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
+                  AVStreams::flowSpec stop_spec (1);
+                  ACE_DECLARE_NEW_CORBA_ENV;
+                  CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
+                  ACE_CHECK_RETURN (-1);
+                  CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
+                  //TAO_AV_CORE::instance ()->stop_run ();
+                  TAO_AV_CORE::instance ()->orb_manager ()->fini (ACE_TRY_ENV);
+                  return 0;
+                }
+              ACE_ENDTRY;
             }
           else
             return 0;
@@ -313,7 +319,8 @@ Client::Client (void)
    client_mmdevice_ (&endpoint_strategy_),
    fdev_ (0),
    fp_ (0),
-   protocol_ (ACE_OS::strdup ("UDP"))
+   protocol_ (ACE_OS::strdup ("UDP")),
+   address_ ("224.9.9.2:10002")
 {
 }
 
@@ -463,6 +470,8 @@ Client::run (void)
                                      flow_spec,
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      if (result == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for client_mmdevice failed\n"),-1);
       if (this->bind_to_server ("Server_MMDevice1") == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error binding to the naming service\n"),
@@ -472,6 +481,8 @@ Client::run (void)
                                             the_qos.inout (),
                                             flow_spec,
                                             ACE_TRY_ENV);
+      if (result == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for mmdevice 1 failed\n"),-1);
       ACE_TRY_CHECK;
       if (this->bind_to_server ("Server_MMDevice2") == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -483,16 +494,22 @@ Client::run (void)
                                             flow_spec,
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
       if (result == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs failed\n"),-1);
+        ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for mmdevice 2 failed\n"),-1);
       AVStreams::flowSpec start_spec (1);
       start_spec.length (1);
       start_spec [0] = CORBA::string_dup (this->flowname_);
       this->streamctrl_.start (start_spec,ACE_TRY_ENV);
       ACE_TRY_CHECK;
       // Schedule a timer for the for the flow handler.
-      TAO_AV_CORE::instance ()->run ();
+      //TAO_AV_CORE::instance ()->run ();
+
+      ACE_Time_Value tv (10000,0);
+      if (TAO_AV_CORE::instance ()->orb_manager ()->run (tv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+      
+      ACE_DEBUG ((LM_DEBUG, "Exited the TAO_AV_Core::run\n"));
     }
   ACE_CATCHANY
     {
