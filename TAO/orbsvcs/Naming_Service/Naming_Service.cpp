@@ -22,9 +22,9 @@ ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
 
   // Default Constructor.
 
-  TAO_Naming_Service::TAO_Naming_Service (void)
-    : ior_output_file_ (0),
-      pid_file_name_ (0)
+TAO_Naming_Service::TAO_Naming_Service (void)
+  : ior_output_file_ (0),
+    pid_file_name_ (0)
 {
 }
 
@@ -98,7 +98,9 @@ TAO_Naming_Service::init (int argc,
       child_poa = this->orb_manager_.child_poa ();
       
       result = this->my_naming_server_.init (orb.in (),
-                                             child_poa.in ());
+                                             child_poa.in (),
+                                             0,
+                                             0);
       TAO_CHECK_ENV;
       if (result == -1)
         return result;
