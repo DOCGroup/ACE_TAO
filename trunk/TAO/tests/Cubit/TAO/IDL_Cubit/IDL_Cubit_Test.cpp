@@ -17,7 +17,7 @@
 //    to run the test.
 //
 // = AUTHOR
-//    Nagarajan Surendran
+//    Nagarajan Surendran (naga@cs.wustl.edu)
 // 
 // ============================================================================
 
@@ -28,13 +28,6 @@ int
 main (int, char *[])
 {
   ACE_START_TEST ("IDL_Cubit_Test:");
-
-  // Make sure that the backing store is not there. We need to make
-  // sure because this test kills the Time Clerk and on some platforms
-  // the Clerk is not allowed to do a graceful shutdown. By cleaning
-  // the backing store here, we are sure that we get a fresh start and
-  // no garbage data from a possible aborted run
-  ACE_OS::unlink (ACE_DEFAULT_BACKING_STORE);
 
   ACE_Process_Options server_options;
   server_options.command_line ("./server -ORBport 0 -ORBobjrefstyle url");
@@ -52,11 +45,12 @@ main (int, char *[])
 
   ACE_OS::sleep (5);
 
-  ACE_Process_Options clerk_options;
-  clerk_options.command_line ("./client -ORBport 0 -ORBobjrefstyle url");
-  ACE_Process clerk;
+  // create a client that will shutdown the server after the tests.
+  ACE_Process_Options client_options;
+  client_options.command_line ("./client -ORBport 0 -ORBobjrefstyle url -x");
+  ACE_Process client;
 
-  if (clerk.spawn (clerk_options) == -1)
+  if (client.spawn (client_options) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "%p.\n",
                        "Client spawn failed"),
@@ -64,25 +58,12 @@ main (int, char *[])
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Client forked with pid = %d.\n",
-                clerk.getpid ()));
+                client.getpid ()));
 
-  ACE_DEBUG ((LM_DEBUG, "Sleeping...\n"));
-  ACE_OS::sleep (10);
-
-  if (clerk.terminate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Terminate failed for clerk.\n"),
-                      -1);
-
-  if (server.terminate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Terminate failed for server.\n"),
-                      -1);
-
-  // Since we kill the clerk process, on Win32 it may not do a
-  // graceful shutdown and the backing store file is left behind.
-  if (clerk.wait () != 0)
-    ACE_OS::unlink (ACE_DEFAULT_BACKING_STORE);
+  if (server.wait () != 0)
+    ACE_DEBUG ((LM_DEBUG,"(%P|%t) Wait on server failed\n"));
+  if (client.wait () != 0)
+    ACE_DEBUG ((LM_DEBUG,"(%P|%t) Wait on client failed\n"));
 
   ACE_END_TEST;
   return 0;
