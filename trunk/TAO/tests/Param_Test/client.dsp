@@ -155,6 +155,10 @@ SOURCE=.\helper.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\multdim_array.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\nested_struct.cpp
 # End Source File
 # Begin Source File
@@ -324,6 +328,10 @@ SOURCE=.\helper.h
 # Begin Source File
 
 SOURCE=.\longlong.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\multdim_array.h
 # End Source File
 # Begin Source File
 

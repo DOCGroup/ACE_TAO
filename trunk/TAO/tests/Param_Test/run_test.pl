@@ -61,7 +61,7 @@ sub run_test
           "ub_strseq", "bd_strseq", "ub_wstrseq", "bd_wstrseq",
           "var_struct", "nested_struct", "recursive_struct",
           "ub_struct_seq", "bd_struct_seq",
-          "ub_array_seq", "bd_array_seq",
+          "ub_array_seq", "bd_array_seq", "multdim_array",
           "any", "objref", "objref_sequence", "objref_struct",
           "any_sequence",
           "ub_short_sequence", "ub_long_sequence",

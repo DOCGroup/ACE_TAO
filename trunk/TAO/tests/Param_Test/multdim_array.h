@@ -22,7 +22,7 @@
 #include "param_testCli.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test fixed arrays
+//                        test fixed size multidimensional arrays
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 class Test_Multdim_Array
 {
@@ -75,17 +75,17 @@ private:
   char *opname_;
   // operation name
 
-  Param_Test::Multdim_Array in_;
+  Param_Test::Multdim_Array_var in_;
   // in parameter
 
-  Param_Test::Multdim_Array inout_;
+  Param_Test::Multdim_Array_var inout_;
   // inout parameter
 
-  Param_Test::Multdim_Array out_;
+  Param_Test::Multdim_Array_var out_;
   // out parameter
 
   Param_Test::Multdim_Array_var ret_;
   // return value
 };
 
-#endif /* PARAM_TEST_FIXED_ARRAY_H */
+#endif /* PARAM_TEST_MULTDIM_ARRAY_H */

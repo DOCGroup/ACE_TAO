@@ -13,7 +13,7 @@
 //      Bala
 //
 // ============================================================================
-# if 0
+
 #include "helper.h"
 #include "multdim_array.h"
 
@@ -26,6 +26,9 @@ ACE_RCSID(Param_Test, fixed_array, "$Id$")
 
 Test_Multdim_Array::Test_Multdim_Array (void)
   : opname_ (CORBA::string_dup ("test_multdim_array")),
+    in_ (new Param_Test::Multdim_Array),
+    inout_ (new Param_Test::Multdim_Array),
+    out_ (new Param_Test::Multdim_Array),
     ret_ (new Param_Test::Multdim_Array)
 {
 }
@@ -71,6 +74,14 @@ Test_Multdim_Array::init_parameters (Param_Test_ptr /*objref*/,
 int
 Test_Multdim_Array::reset_parameters (void)
 {
+  // free the in value array
+  Param_Test::Multdim_Array_free (this->in_._retn ());
+  // needed for repeated DII calls
+  this->in_ = new Param_Test::Multdim_Array;
+  // free the inout value array
+  Param_Test::Multdim_Array_free (this->inout_._retn ());
+  // needed for repeated DII calls
+  this->inout_ = new Param_Test::Multdim_Array;
 
   for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
     {
@@ -83,6 +94,10 @@ Test_Multdim_Array::reset_parameters (void)
             }
         }
     }
+  // free the out value array
+  Param_Test::Multdim_Array_free (this->out_._retn ());
+  // needed for repeated DII calls
+  this->out_ = new Param_Test::Multdim_Array;
   // free the return value array
   Param_Test::Multdim_Array_free (this->ret_._retn ());
   // needed for repeated DII calls
@@ -94,9 +109,9 @@ int
 Test_Multdim_Array::run_sii_test (Param_Test_ptr objref,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
-  this->ret_ = objref->test_multdim_array (this->in_,
-                                           this->inout_,
-                                           this->out_,
+  this->ret_ = objref->test_multdim_array (this->in_.in (),
+                                           this->inout_.inout (),
+                                           this->out_.inout (),
                                            ACE_TRY_ENV);
   return (ACE_TRY_ENV.exception () ? -1:0);
 }
@@ -109,15 +124,15 @@ Test_Multdim_Array::add_args (CORBA::NVList_ptr param_list,
   // We provide the top level memory
   // the Any does not own any of these
   CORBA::Any in_arg (Param_Test::_tc_Multdim_Array,
-                     this->in_,
+                     this->in_.inout (),
                      0);
 
   CORBA::Any inout_arg (Param_Test::_tc_Multdim_Array,
-                        this->inout_,
+                        this->inout_.inout (),
                         0);
 
   CORBA::Any out_arg (Param_Test::_tc_Multdim_Array,
-                      this->out_,
+                      this->out_.inout (),
                       0);
 
   // add parameters
@@ -147,9 +162,12 @@ Test_Multdim_Array::add_args (CORBA::NVList_ptr param_list,
 CORBA::Boolean
 Test_Multdim_Array::check_validity (void)
 {
-  if (this->compare (this->in_, this->inout_) &&
-      this->compare (this->in_, this->out_) &&
-      this->compare (this->in_, this->ret_.in ()))
+  if (this->compare (this->in_.in (), 
+                     this->inout_.in ()) &&
+      this->compare (this->in_.in (), 
+                     this->out_.in ()) &&
+      this->compare (this->in_.in (), 
+                     this->ret_.in ()))
     return 1;
   else
     return 0;
@@ -184,11 +202,11 @@ void
 Test_Multdim_Array::print_values (void)
 {
   ACE_DEBUG ((LM_DEBUG, "IN array\n"));
-  this->print (this->in_);
+  this->print (this->in_.in ());
   ACE_DEBUG ((LM_DEBUG, "INOUT array\n"));
-  this->print (this->inout_);
+  this->print (this->inout_.in ());
   ACE_DEBUG ((LM_DEBUG, "OUT array\n"));
-  this->print (this->out_);
+  this->print (this->out_.in ());
   ACE_DEBUG ((LM_DEBUG, "RET array\n"));
   this->print (this->ret_.in ());
 }
@@ -208,4 +226,3 @@ Test_Multdim_Array::print (const Param_Test::Multdim_Array_slice *a)
     }
 }
 
-#endif 
