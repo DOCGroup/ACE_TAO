@@ -24,12 +24,17 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
   else
     priority_mask = thread_priority_mask_;
 
+  ACE_TCHAR *strtokp;
+
   // Parse string and alternate priority mask.
 
-  for (ACE_TCHAR *priority = ACE_OS::strtok (priority_string,
-                                             ACE_LIB_TEXT ("|"));
+  for (ACE_TCHAR *priority = ACE_OS_String::strtok_r (priority_string,
+                                                      ACE_LIB_TEXT ("|"),
+                                                      &strtokp);
        priority != 0;
-       priority = ACE_OS::strtok (0, ACE_LIB_TEXT ("|")))
+       priority = ACE_OS_String::strtok_r (0,
+                                           ACE_LIB_TEXT ("|"),
+                                           &strtokp))
     {
       if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("TRACE")) == 0)
         ACE_SET_BITS (priority_mask, LM_TRACE);
@@ -83,10 +88,13 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
 void
 ACE_Logging_Strategy::tokenize (ACE_TCHAR *flag_string)
 {
-  for (ACE_TCHAR *flag = ACE_OS::strtok (flag_string,
-                                         ACE_LIB_TEXT ("|"));
+  ACE_TCHAR *strtokp;
+
+  for (ACE_TCHAR *flag = ACE_OS::strtok_r (flag_string,
+                                           ACE_LIB_TEXT ("|"),
+                                           &strtokp);
        flag != 0;
-       flag = ACE_OS::strtok (0, ACE_LIB_TEXT ("|")))
+       flag = ACE_OS::strtok_r (0, ACE_LIB_TEXT ("|"), &strtokp))
     {
       if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("STDERR")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::STDERR);

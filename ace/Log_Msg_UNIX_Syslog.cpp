@@ -81,10 +81,15 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
 
   ACE_TCHAR message[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
   ACE_OS::strcpy (message, log_record.msg_data ());
+  ACE_TCHAR *strtokp;
 
-  for (ACE_TCHAR *line = ACE_OS::strtok (message, ACE_LIB_TEXT ("\n"));
+  for (ACE_TCHAR *line = ACE_OS_String::strtok_r (message,
+                                                  ACE_LIB_TEXT ("\n"),
+                                                  &strtokp);
        line != 0;
-       line = ACE_OS::strtok (0, ACE_LIB_TEXT ("\n")))
+       line = ACE_OS_String::strtok_r (0,
+                                       ACE_LIB_TEXT ("\n"),
+                                       &strtokp))
     {
       // Format the message line.  Note that the processing for
       // VERBOSE is the same as for VERBOSE_LITE, since syslog()
