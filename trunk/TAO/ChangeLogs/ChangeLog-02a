@@ -1,3 +1,41 @@
+Wed Jun 21 15:51:10 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.h:
+	* examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
+	* examples/Content_Server/SMI_Iterator/Iterator_Factory_i.h:
+	* examples/Content_Server/SMI_Iterator/Web_Server.idl:
+	* examples/Content_Server/SMI_Iterator/client.cpp:
+	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.h:
+	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
+	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.h:
+	* examples/Content_Server/AMI_Iterator/Iterator_Handler.h:
+	* examples/Content_Server/AMI_Iterator/client.cpp:
+	* examples/Content_Server/AMI_Iterator/server.cpp:
+	* examples/Content_Server/AMI_Observer/Callback.cpp:
+	* examples/Content_Server/AMI_Observer/Callback.h:
+	* examples/Content_Server/AMI_Observer/Callback_Handler.cpp:
+	* examples/Content_Server/AMI_Observer/Callback_Handler.h:
+	* examples/Content_Server/AMI_Observer/Callback_i.cpp:
+	* examples/Content_Server/AMI_Observer/Callback_i.h:
+	* examples/Content_Server/AMI_Observer/Makefile:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.h:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.cpp:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.h:
+	* examples/Content_Server/AMI_Observer/client.cpp:
+	* examples/Content_Server/AMI_Observer/server.cpp:
+
+	  Further changes to make the examples conform to the ACE/TAO
+	  style guidelines.  Thanks to Doug for providing lots of useful
+	  feedback!
+
+	* examples/Content_Server/AMI_Observer/README:
+
+	  Added description of how the AMI_Observer example is designed,
+	  and how it works.
+
 Wed Jun 21 13:19:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll:
