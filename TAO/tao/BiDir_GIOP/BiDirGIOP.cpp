@@ -15,7 +15,6 @@ TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr,
                                 int,
                                 char *[],
                                 CORBA::Environment &ACE_TRY_ENV)
-
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_DEF_GIOP_MINOR >= 2)
@@ -48,6 +47,7 @@ int
 TAO_BiDirGIOP_Loader::parse_policy (TAO_ORB_Core *orb_core,
                                     CORBA::Policy_ptr policy,
                                     CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   BiDirPolicy::BidirectionalPolicy_var bidir_policy

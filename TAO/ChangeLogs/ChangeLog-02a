@@ -1,3 +1,9 @@
+Fri Mar 30 18:16:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/BiDir_GIOP/BiDirGIOP.cpp (parse_policy): Fixed a compile
+	  problem in builds with exceptions on. Thanks to Craig Rodrigues
+	  for reporting this.
+
 Fri Mar 30 17:09:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/*/Makefile: Updated dependencies.
