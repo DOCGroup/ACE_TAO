@@ -130,7 +130,12 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   delete visitor;
 
   *os << "{" << be_idt_nl;
-  *os << this->gen_environment_var () << be_nl << be_nl;
+  *os << this->gen_environment_var ();
+
+  if (be_global->exception_support ())
+    {
+      *os << be_nl << be_nl;
+    }
 
   // Generate code that retrieves the proper proxy implementation
   // using the proxy broker available, and perform the call
