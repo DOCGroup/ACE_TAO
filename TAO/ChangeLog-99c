@@ -4,15 +4,15 @@ Sun May 23 10:06:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/tests/Event/Basic/README:
 	* orbsvcs/tests/Event/Basic/run_test.pl:
 	* orbsvcs/tests/Event/Performance/README:
-	* orbsvcs/tests/Event/Performance/run_test.pl:
-	  Added some README files explaining the purpose of each test and
-	  how to run it. Also added some simple run_test scripts to
-	  execute the tests.
+	* orbsvcs/tests/Event/Performance/run_test.pl: Added some README
+ 	  files explaining the purpose of each test and how to run
+ 	  it. Also added some simple run_test scripts to execute the
+ 	  tests.
 
 Sat May 22 22:16:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	  The busy_hwm should be set in the attributes now.
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: The busy_hwm
+ 	  should be set in the attributes now.
 
 Sat May 22 18:43:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -35,8 +35,8 @@ Sat May 22 18:43:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/tests/Event/Performance/Connect.dsp:
 	* orbsvcs/tests/Event/Performance/ECPerformance.dsw:
 	* orbsvcs/tests/Event/Performance/Throughput.dsp:
-	* orbsvcs/tests/Event/lib/ECTest.dsp:
-	  Added project files for several new tests and examples.
+	* orbsvcs/tests/Event/lib/ECTest.dsp: Added project files for
+ 	  several new tests and examples.
 
 Sat May 22 17:50:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -47,57 +47,55 @@ Sat May 22 17:50:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
 	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
 	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
-	  The EC attributes include parameters that control the level of
-	  concurrency in the proxy supplier sets.
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp: The EC
+ 	  attributes include parameters that control the level of
+ 	  concurrency in the proxy supplier sets.
 
 	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
 	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
 	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
 	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
-	  Added reference counting: several threads could be pushing on
-	  one consumer proxy and another thread decides to disconnect from 
-	  it.  The corresponging supplier set must be deleted only once
-	  all the threads finish using it.
-	  In many cases the implementation is trivial because there is a
-	  clear owner (ex: the ConsumerAdmin), and in others the locking
-	  is shared with the consumer proxy (Per_Supplier).
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp: Added
+ 	  reference counting: several threads could be pushing on one
+ 	  consumer proxy and another thread decides to disconnect from it.
+  	  The corresponging supplier set must be deleted only once all the
+ 	  threads finish using it.  In many cases the implementation is
+ 	  trivial because there is a clear owner (ex: the ConsumerAdmin),
+ 	  and in others the locking is shared with the consumer proxy
+ 	  (Per_Supplier).
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway.h:
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
-	  The gateway was not properly synchronized. The locking in the
-	  push() method is interesting: we don't hold the lock during the
-	  complete dispatch, instead we keep track of the number of
-	  threads pushing to the gateway.
-	  If we receive an update_consumer() call during a push we post
-	  the change until all the push() call finish. Only the last
-	  update_consumer() is kept because they overwrite each other.
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: The gateway was not
+ 	  properly synchronized. The locking in the push() method is
+ 	  interesting: we don't hold the lock during the complete
+ 	  dispatch, instead we keep track of the number of threads pushing
+ 	  to the gateway.  If we receive an update_consumer() call during
+ 	  a push we post the change until all the push() call finish. Only
+ 	  the last update_consumer() is kept because they overwrite each
+ 	  other.
 
 	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
 	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	  We needed an unprotected accessor to the publications, to avoid
-	  dead-locks during connect_push_consumer call.
-	  Use the new reference counting on the EC_SupplierFiltering
-	  class.
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp: We needed an
+ 	  unprotected accessor to the publications, to avoid dead-locks
+ 	  during connect_push_consumer call.  Use the new reference
+ 	  counting on the EC_SupplierFiltering class.
 
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
-	  We were holding locks during upcalls to the gateways and not
-	  setting the QoS parameters correctly.
-	  The update_consumer/update_supplier messages were backwards.
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp: We were holding
+ 	  locks during upcalls to the gateways and not setting the QoS
+ 	  parameters correctly.  The update_consumer/update_supplier
+ 	  messages were backwards.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	  Fixed several race conditions related to connect/disconnect
-	  calls during pushes.
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: Fixed several race
+ 	  conditions related to connect/disconnect calls during pushes.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp:
-	  Removed debug messages.
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp: Removed
+ 	  debug messages.
 
 	* orbsvcs/tests/Event/Basic/Observer.h:
 	* orbsvcs/tests/Event/Basic/Observer.cpp:
-	* orbsvcs/tests/Event/Basic/svc.conf:
-	  Fixed minor problems with the test itself.
+	* orbsvcs/tests/Event/Basic/svc.conf: Fixed minor problems with
+ 	  the test itself.
 
 Sat May 22 17:10:11 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -105,14 +103,15 @@ Sat May 22 17:10:11 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Sat May 22 14:07:57 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp} (TAO_Forward_FlowSpec_Entry): 
-	  Prefixed the enumerations with TAO_AV to avoid name
-	  clash. Thanks to David Levine for reporting this error.
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}
+ 	  (TAO_Forward_FlowSpec_Entry): Prefixed the enumerations with
+ 	  TAO_AV to avoid name clash. Thanks to David Levine for reporting
+ 	  this error.
 	
 Fri May 21 22:09:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao: Modified the following files to make minimum CORBA work
-	  again.
+ 	  again.
 
           - Connect.cpp
           - DomainC.cpp
@@ -138,17 +137,17 @@ Fri May 21 22:09:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tao/ORB_Core.cpp (inherit_from_parent_thread):
 
 	  Redid (with the help of Carlos) these methods in view of the new
-	  architecture.  ORB_Core is no longer TSS, only
-	  TAO_ORB_Core_TSS_Resources is.  This will fix a bug in all
-	  applications using the new architecture, TSS resources and
-	  thread per connection (like the ImplRepo).
+ 	  architecture.  ORB_Core is no longer TSS, only
+ 	  TAO_ORB_Core_TSS_Resources is.  This will fix a bug in all
+ 	  applications using the new architecture, TSS resources and
+ 	  thread per connection (like the ImplRepo).
 
 	* tao/Connect.cpp (handle_message): Changed the length of the INS
-	  lookup string from <TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE> to
-	  <request.object_key ().length ()>.  Since Vishal always tested
-	  with the "bank" string, he got lucky with this since
-	  <TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE> is 4 and strlen ("bank") is
-	  also 4.
+ 	  lookup string from <TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE> to
+ 	  <request.object_key ().length ()>.  Since Vishal always tested
+ 	  with the "bank" string, he got lucky with this since
+ 	  <TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE> is 4 and strlen ("bank") is
+ 	  also 4.
 
 	  Thanks to Vyacheslav A. Batenin <slavikb@iname.com> for
 	  reporting this.
