@@ -120,7 +120,9 @@ private:
   void set_rwflag (int);
 };
 
+#if defined (__ACE_INLINE__)
 #include "ace/TLI_Stream.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */
 #include "ace/post.h"

@@ -8,6 +8,10 @@ ACE_RCSID(ace, TLI_Connector, "$Id$")
 
 #if defined (ACE_HAS_TLI)
 
+#if !defined (__ACE_INLINE__)
+#include "ace/TLI_Connector.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Connector)
 
 void
