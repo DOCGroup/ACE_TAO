@@ -1,3 +1,9 @@
+Wed Jul 28 13:53:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/OctetSeq/OctetSeq.cpp:
+	  The test was mistakenly not using the octet sequence
+	  optimizations.
+
 Wed Jul 28 13:44:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/Makefile:
