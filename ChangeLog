@@ -1,3 +1,16 @@
+Fri Apr 16 12:34:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/ace.icp:
+	* tests/tests.icp: Removed these left-over Visual Age C++ projects.
+
+	* ace/ace_dll64.mak:
+	* ace/ace_lib64.mak:
+	* apps/JAWS/clients/WebSTONE/src/client/webclient.mak:
+	* apps/JAWS/clients/WebSTONE/src/gendata/genrand.mak:
+	* apps/JAWS/clients/WebSTONE/src/master/webmaster.mak:
+	* examples/C++NPv1/Process_Per_Connection_Logging_Server.mak:
+	  Removed these MSVC make files. These are all now generatable via MPC.
+
 Fri Apr 16 09:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Default_Constants.h:
