@@ -1,3 +1,11 @@
+Wed Dec 26 14:33:33 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Makefile.bor:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Add new TAO_AMH_Response_Handler.{h,cpp} to the MSVC project
+	  files and Borland makefiles.
+
 Wed Dec 26 14:30:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Makefile:

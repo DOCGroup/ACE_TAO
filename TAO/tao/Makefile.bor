@@ -176,6 +176,7 @@ OBJFILES = \
 	$(OBJDIR)\Synch_Reply_Dispatcher.obj \
 	$(OBJDIR)\TAOC.obj \
 	$(OBJDIR)\TAO_Internal.obj \
+	$(OBJDIR)\TAO_AMH_Response_Handler.obj \
 	$(OBJDIR)\TAO_Server_Request.obj \
 	$(OBJDIR)\TAO_Singleton_Manager.obj \
 	$(OBJDIR)\Tagged_Components.obj \
