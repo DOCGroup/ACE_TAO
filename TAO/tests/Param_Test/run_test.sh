@@ -1,7 +1,7 @@
 #!/bin/sh
 # $Id$
 
-PORT=20001
+PORT=30001
 IORFILE=theior
 INVOCATION=sii
 start_server()
