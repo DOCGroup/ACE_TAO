@@ -73,6 +73,7 @@ Naming_Test: OTHER !chorus !LynxOS !Unicos !VxWorks
 New_Fail_Test: ALL !DISABLED
 Notify_Performance_Test
 Object_Manager_Test
+Obstack_Test
 OrdMultiSet_Test
 OS_Test
 Pipe_Test: !chorus !VxWorks
