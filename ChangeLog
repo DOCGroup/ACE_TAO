@@ -1,3 +1,9 @@
+Fri Apr 12 19:15:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Asynch_Acceptor.cpp (parse_address): Set the entire address
+          (address and port) instead of just the IP address part.
+          Thanks to Alex Libman <AlexL@rumblegroup.com> for this fix.
+
 Fri Apr 12 18:00:41 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/Log_Msg.h:  Added missing includes.
