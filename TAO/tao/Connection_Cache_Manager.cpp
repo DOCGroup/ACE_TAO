@@ -1,4 +1,5 @@
 #include "tao/Connection_Cache_Manager.h"
+#include "tao/Connection_Handler.h"
 
 
 
@@ -10,77 +11,186 @@
 ACE_RCSID(tao, Connection_Cache_Hash_Manager, "$Id$")
 
 
-TAO_Connection_Cache_Manager::~TAO_Connection_Cache_Hash_Manager (void)
+TAO_Connection_Cache_Manager::
+    TAO_Connection_Cache_Manager (void)
+      : cache_map_ ()
 {
+  ACE_NEW (this->cache_lock_,
+           ACE_Lock_Adapter<ACE_SYNCH_MUTEX>);
+}
+
+TAO_Connection_Cache_Manager::~TAO_Connection_Cache_Manager (void)
+{
+  delete this->cache_lock_;
+
   // Close the HASH MAP and release resources
-  HASH_MAP.close ();
+  this->cache_map_.close ();
 }
 
-
 int
-TAO_Connection_Cache_Manager::bind (const TAO_Cache_ExtId &ext_id,
-                                         const TAO_Cache_IntId &int_id)
+TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
+                                      TAO_Cache_IntId &int_id)
 {
-  return HASH_MAP.bind (ext_id,
-                        int_id);
+  // First call duplicate on the ext_id ie. make a copy of the
+  // contents
+  ext_id.duplicate ();
+
+  // Get the entry too
+  HASH_MAP_ENTRY *entry = 0;
+  int retval = this->cache_map_.bind (ext_id,
+                              int_id,
+                              entry);
+  if (retval == 0)
+    {
+      // The entry has been added to cache succesfully
+      // Add the cache_map_entry to the handler
+      int_id.handler () ->cache_map_entry (entry);
+    }
+  else if (retval == 1)
+    {
+      // There was an entry like this before, so let us do some
+      // minor adjustments
+      retval = get_last_index_bind (ext_id,
+                                    int_id,
+                                    entry);
+      int_id.handler ()->cache_map_entry (entry);
+    }
+
+  return retval;
 }
 
 
 int
-TAO_Connection_Cache_Manager::find (const TAO_Cache_ExtId &key,
-                                         TAO_Cache_IntId &value)
+TAO_Connection_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
+                                      TAO_Cache_IntId &value)
 {
-  return HASH_MAP.find (key,
-                        value);
+  HASH_MAP_ENTRY *entry = 0;
+  // Get the entry from the Hash Map
+  int retval = this->cache_map_.find (key,
+                              entry);
+  if (retval == 0)
+    {
+      retval = this->get_idle_handler (key,
+                                       entry);
+
+      if (entry)
+        value = entry->int_id_;
+    }
+
+  return retval;
 }
 
 int
-TAO_Connection_Cache_Manager::rebind (const TAO_Cache_ExtId &key,
+TAO_Connection_Cache_Manager::rebind_i (const TAO_Cache_ExtId &key,
                                            const TAO_Cache_IntId &value)
 {
-  return HASH_MAP.rebind (key,
+  return this->cache_map_.rebind (key,
                           value);
 }
 
 int
-TAO_Connection_Cache_Manager::trybind (const TAO_Cache_ExtId &key,
-                                            TAO_Cache_IntId &value)
+TAO_Connection_Cache_Manager::trybind_i (const TAO_Cache_ExtId &key,
+                                         TAO_Cache_IntId &value)
 {
-  return HASH_MAP.trybind (key, value);
+  return this->cache_map_.trybind (key, value);
 }
 
 int
-TAO_Connection_Cache_Manager::unbind (const TAO_Cache_ExtId &key)
+TAO_Connection_Cache_Manager::unbind_i (const TAO_Cache_ExtId &key)
 {
-  return HASH_MAP.unbind (key);
+  return this->cache_map_.unbind (key);
 }
 
 int
-TAO_Connection_Cache_Manager::unbind (const TAO_Cache_ExtId &key,
-                                           TAO_Cache_IntId &value)
+TAO_Connection_Cache_Manager::unbind_i (const TAO_Cache_ExtId &key,
+                                        TAO_Cache_IntId &value)
 {
-  return HASH_MAP.unbind (key,
+  return this->cache_map_.unbind (key,
                           value);
 }
 
+int
+TAO_Connection_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
+{
+  // First get the entry again (if at all things had changed in the
+  // cache map in the mean time)
+  HASH_MAP_ENTRY *new_entry = 0;
+  int retval = this->cache_map_.find (entry->ext_id_,
+                                      new_entry);
+  if (retval == 0)
+    {
+      new_entry->int_id_.handler ()->
+        recycle_state (ACE_RECYCLABLE_IDLE_AND_PURGABLE);
+
+      entry = new_entry;
+    }
+
+  return retval;
+}
 
 int
-TAO_Connection_Cache_Manager::purge (void)
+TAO_Connection_Cache_Manager::
+    get_last_index_bind (TAO_Cache_ExtId &key,
+                         TAO_Cache_IntId &val,
+                         HASH_MAP_ENTRY *&entry)
 {
+  CORBA::ULong ctr = entry->ext_id_.index ();
+
+  // Start looking at the succesive elements
+  while (entry->next_->ext_id_.index () != 0)
+    {
+      ctr++;
+
+      // Change the entry
+      entry = entry->next_;
+    }
+
+  // Set the index
+  key.index (ctr + 1);
+
+  // Now do a bind again with the new index
+  return  this->cache_map_.bind (key,
+                                 val,
+                                 entry);
 }
 
-size_t
-TAO_Connection_Cache_Manager::current_size (void) const
-{
-  return HASH_MAP.current_size ();
-}
 
-size_t
-TAO_Connection_Cache_Manager::total_size (void) const
+int
+TAO_Connection_Cache_Manager::
+    get_idle_handler (const TAO_Cache_ExtId &ext_id,
+                      HASH_MAP_ENTRY *&entry)
 {
-  return HASH_MAP.total_size ();
-}
+  // We are sure that we have an entry
+  do
+    {
+      // Found the entry, so check whether it is busy
+      if (entry->int_id_.handler ()->recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
+          entry->int_id_.handler ()->recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE)
+        {
+          // Save that in the handler
+          entry->int_id_.handler ()->cache_map_entry (entry);
 
+          // Mark the connection as busy
+          entry->int_id_.handler ()->recycle_state (ACE_RECYCLABLE_BUSY);
+
+          return 0;
+        }
+      else
+        {
+          entry = entry->next_;
+        }
+    }
+  // This would prevent us from moving to the next ext_id..
+  while (entry->next_->ext_id_.index () != 0);
+
+  // @@ There is a subtle assumption that I have made, ie. the
+  // elements with higher indexes of ext_id will be placed
+  // continously. That could be *bad*
+
+  // We havent got a connection, so set the pointer to null.
+  entry = 0;
+  return -1;
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

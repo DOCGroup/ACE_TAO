@@ -31,6 +31,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+class TAO_Connection_Handler;
 
 class TAO_Export TAO_Cache_IntId
 {
@@ -50,25 +51,28 @@ public:
   TAO_Cache_IntId (void);
   // Constructor.
 
-  TAO_Cache_IntId (ACE_HANDLE &handle,
-                   TAO_Connection_Handler *handler);
+  TAO_Cache_IntId (TAO_Connection_Handler *handler);
   // Constructor.
 
-  TAO_Cache_IntId (const TAO_IntId & rhs);
+  TAO_Cache_IntId (const TAO_Cache_IntId & rhs);
   // Copy constructor.
 
   ~TAO_Cache_IntId (void);
   // Destructor.
 
-private:
-  ACE_HANDLE handle_;
-  // <handle> in the cache
+  TAO_Connection_Handler *handler (void);
+  // Return the underlying handler
 
+  const TAO_Connection_Handler *handler (void) const;
+  // Return the underlying handler
+
+  //Do we need a = operator? Lert me decide??
+private:
   TAO_Connection_Handler *handler_;
   // The connection handler that needs to be cached.
 
   // @@ Need to add properties that need to be associated with this
-  // connection
+  // connection when I get to purging....
 };
 
 
@@ -111,8 +115,16 @@ public:
   // <hash> function is required in order for this class to be usable by
   // ACE_Hash_Map_Manager.
 
+  void duplicate (void);
+  // Make a deep copy of the underlying pointer
+
+  CORBA::ULong index (void);
+  // Return the index value
+
+  void index (CORBA::ULong index);
+  // Set the index value
+
   // = Accessors
-  // @@ Need to add
 
 private:
   // = Data members.
@@ -120,6 +132,11 @@ private:
   TAO_Base_Connection_Property *connection_property_;
   // A property object that we represent.
 
+  CORBA::Boolean is_delete_;
+  // Do we need to delete connection_propert_?
+
+  CORBA::ULong index_;
+  // This is a supplementary index
 };
 
 

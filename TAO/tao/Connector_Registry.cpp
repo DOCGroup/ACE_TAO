@@ -7,6 +7,7 @@
 #include "tao/Endpoint.h"
 #include "tao/Environment.h"
 #include "tao/debug.h"
+#include "tao/Base_Connection_Property.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.i"
@@ -278,7 +279,10 @@ TAO_Connector_Registry::connect (TAO_Endpoint *endpoint,
   if (connector == 0)
       return -1;
 
-  return connector->connect (endpoint,
+  // Compose the Base connection property object
+  TAO_Base_Connection_Property conn_property (endpoint);
+
+  return connector->connect (&conn_property,
                              transport,
                              max_wait_time,
                              ACE_TRY_ENV);
@@ -419,25 +423,6 @@ TAO_Connector_Registry::object_key_delimiter (const char *ior)
   // against the provided string.
   return 0;
 }
-
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-int
-TAO_Connector_Registry::purge_connections (void)
-{
-  TAO_ConnectorSetIterator end = this->end ();
-  TAO_ConnectorSetIterator iterator = this->begin ();
-
-  for (;
-       iterator != end ;
-       iterator++)
-    {
-      if ((*iterator)->purge_connections () == -1)
-        return -1;
-    }
-
-  return 0;
-}
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

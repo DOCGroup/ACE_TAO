@@ -58,6 +58,12 @@ TAO_ORB_Core::remove_handle (ACE_HANDLE handle)
 }
 
 
+ACE_INLINE TAO_Connection_Cache_Manager &
+TAO_ORB_Core::connection_cache (void)
+{
+  return this->connection_cache_;
+}
+
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::service_profile_selection (TAO_MProfile &mprofile,
                                          TAO_Profile  *&profile)

@@ -9,6 +9,7 @@
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/RT_Policy_i.h"
+#include "tao/Base_Connection_Property.h"
 
 ACE_RCSID(tao, IIOP_Connector, "$Id$")
 
@@ -44,8 +45,6 @@ TAO_IIOP_Connect_Creation_Strategy::make_svc_handler
 
 TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_IIOP_PROFILE),
-
-    orb_core_ (0),
     base_connector_ (),
     lite_flag_ (flag)
 {
@@ -54,7 +53,7 @@ TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
 int
 TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
-  this->orb_core_ = orb_core;
+  this->orb_core (orb_core);
 
   if (this->init_tcp_properties () != 0)
     return -1;
@@ -63,13 +62,13 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_IIOP_Connect_Creation_Strategy
-                  (this->orb_core_->thr_mgr (),
-                   this->orb_core_,
+                  (this->orb_core ()->thr_mgr (),
+                   this->orb_core (),
                    &(this->tcp_properties_),
                    this->lite_flag_),
                   -1);
 
-  return this->base_connector_.open (this->orb_core_->reactor (),
+  return this->base_connector_.open (this->orb_core ()->reactor (),
                                      connect_creation_strategy,
                                      &this->connect_strategy_,
                                      &this->null_activation_strategy_);
@@ -80,13 +79,13 @@ TAO_IIOP_Connector::close (void)
 {
   this->base_connector_.close ();
 
-  delete this->cached_connect_strategy_->creation_strategy ();
+  delete this->base_connector_.creation_strategy ();
 
   return 0;
 }
 
 int
-TAO_IIOP_Connector::connect (TAO_Endpoint *endpoint,
+TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                              TAO_Transport *&transport,
                              ACE_Time_Value *max_wait_time,
                              CORBA::Environment &)
@@ -96,12 +95,14 @@ TAO_IIOP_Connector::connect (TAO_Endpoint *endpoint,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for IIOP connection.\n")));
 
-  if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
+  if (prop->endpoint ()->tag () != TAO_TAG_IIOP_PROFILE)
     return -1;
+
+  const TAO_Endpoint *endpoint = prop->endpoint ();
 
   TAO_IIOP_Endpoint *iiop_endpoint =
     ACE_dynamic_cast (TAO_IIOP_Endpoint *,
-                      endpoint);
+                      endpoint );
   if (iiop_endpoint == 0)
     return -1;
 
@@ -125,34 +126,48 @@ TAO_IIOP_Connector::connect (TAO_Endpoint *endpoint,
       return -1;
     }
 
-  TAO_IIOP_Client_Connection_Handler *svc_handler = 0;
   int result = 0;
+  TAO_IIOP_Client_Connection_Handler *svc_handler = 0;
+  TAO_Connection_Handler *conn_handler = 0;
 
-  // At this point look in to the MAP
-
-  if (max_wait_time != 0)
+  // Check the Cache first for connections
+  if (this->find_handler (prop, conn_handler) == 0)
     {
-      ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
-                                       *max_wait_time);
+      // We have found a connection and a handler
+      svc_handler =
+        ACE_dynamic_cast (TAO_IIOP_Client_Connection_Handler *,
+                          conn_handler);
 
-      // The connect call will set the hint () stored in the Endpoint
-      // object; but we obtain the transport in the <svc_handler>
-      // variable. Other threads may modify the hint, but we are not
-      // affected.
-      result = this->base_connector_.connect (iiop_endpoint->hint (),
-                                              svc_handler,
-                                              remote_address,
-                                              synch_options);
     }
   else
     {
-      // The connect call will set the hint () stored in the Endpoint
-      // object; but we obtain the transport in the <svc_handler>
-      // variable. Other threads may modify the hint, but we are not
-      // affected.
-      result = this->base_connector_.connect (iiop_endpoint->hint (),
-                                              svc_handler,
-                                              remote_address);
+      // @@ This needs to change in the next round when we implement a
+      // policy that will not allow new connections when a connection
+      // is busy.
+      if (max_wait_time != 0)
+        {
+          ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
+                                           *max_wait_time);
+
+          // We obtain the transport in the <svc_handler> variable. As
+          // we know now that the connection is not available in Cache
+          // we can make a new connection
+          result = this->base_connector_.connect (svc_handler,
+                                                  remote_address,
+                                                  synch_options);
+        }
+      else
+        {
+          // We obtain the transport in the <svc_handler> variable. As
+          // we know now that the connection is not available in Cache
+          // we can make a new connection
+          result = this->base_connector_.connect (svc_handler,
+                                                  remote_address);
+        }
+
+      // Add the handler to Cache
+      int retval = this->add_handler (prop,
+                                      svc_handler);
     }
 
   if (result == -1)
@@ -171,6 +186,8 @@ TAO_IIOP_Connector::connect (TAO_Endpoint *endpoint,
         }
       return -1;
     }
+  // Make the handler ready for use
+  svc_handler->make_idle ();
 
   transport = svc_handler->transport ();
   return 0;
@@ -333,7 +350,7 @@ TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
   TAO_Profile *pfile;
   ACE_NEW_RETURN (pfile,
-                  TAO_IIOP_Profile (this->orb_core_),
+                  TAO_IIOP_Profile (this->orb_core ()),
                   0);
 
   int r = pfile->decode (cdr);
@@ -358,7 +375,7 @@ TAO_IIOP_Connector::make_profile (const char *endpoint,
 
   ACE_NEW_THROW_EX (profile,
                     TAO_IIOP_Profile (endpoint,
-                                      this->orb_core_,
+                                      this->orb_core (),
                                       ACE_TRY_ENV),
                     CORBA::NO_MEMORY ());
 
@@ -418,7 +435,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
 
   // Check ORB-level override for tcp properties.
   TAO_ClientProtocolPolicy *client_protocols =
-    this->orb_core_->policy_manager ()->client_protocol ();
+    this->orb_core ()->policy_manager ()->client_protocol ();
   CORBA::Object_var auto_release = client_protocols;
   RTCORBA::TCPProtocolProperties_var tcp_properties =
     RTCORBA::TCPProtocolProperties::_nil ();
@@ -444,7 +461,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
       // No tcp properties in ORB-level override.  Use ORB defaults.
       // Orb defaults should never be null - they were initialized by
       // the ORB_Core.
-      client_protocols = this->orb_core_->default_client_protocol ();
+      client_protocols = this->orb_core ()->default_client_protocol ();
       auto_release = client_protocols;
       RTCORBA::ProtocolList & protocols = client_protocols->protocols_rep ();
       for (CORBA::ULong j = 0; j < protocols.length (); ++j)
@@ -472,11 +489,11 @@ TAO_IIOP_Connector::init_tcp_properties (void)
   // Without RTCORBA, protocol configuration properties come from ORB
   // options.
   this->tcp_properties_.send_buffer_size =
-    this->orb_core_->orb_params ()->sock_sndbuf_size ();
+    this->orb_core ()->orb_params ()->sock_sndbuf_size ();
   this->tcp_properties_.recv_buffer_size =
-    this->orb_core_->orb_params ()->sock_rcvbuf_size ();
+    this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
   this->tcp_properties_.no_delay =
-    this->orb_core_->orb_params ()->nodelay ();
+    this->orb_core ()->orb_params ()->nodelay ();
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 

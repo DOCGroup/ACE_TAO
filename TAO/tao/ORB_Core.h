@@ -36,7 +36,7 @@
 #include "tao/Parser_Registry.h"
 #include "tao/Fault_Tolerance_Service.h"
 
-#include "ace/Hash_Map_Manager.h"
+#include "tao/Connection_Cache_Manager.h"
 
 // Forward declarations
 class TAO_Acceptor;
@@ -625,6 +625,9 @@ public:
   // delegate to the service to see what the service has to do for
   // this case.
 
+  TAO_Connection_Cache_Manager &connection_cache (void);
+  // Return the underlying connection cache
+
 protected:
 
   ~TAO_ORB_Core (void);
@@ -914,6 +917,9 @@ protected:
 
   TAO_Parser_Registry parser_registry_;
   // The IOR parser registry
+
+  TAO_Connection_Cache_Manager connection_cache_;
+  // The connection cache for TAO
 };
 
 // ****************************************************************

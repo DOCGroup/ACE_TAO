@@ -8,9 +8,9 @@ TAO_Base_Connection_Property::TAO_Base_Connection_Property (void)
 }
 
 ACE_INLINE
-TAO_Base_Connection_Property::TAO_Base_Connection_Property (
-    TAO_Endpoint *endpoint,
-    CORBA::Boolean flag)
+TAO_Base_Connection_Property::
+    TAO_Base_Connection_Property (TAO_Endpoint *endpoint,
+                                  CORBA::Boolean flag)
   : endpoint_ (endpoint),
     endpoint_flag_ (flag)
 {
@@ -21,6 +21,13 @@ TAO_Base_Connection_Property::~TAO_Base_Connection_Property (void)
 {
   if (endpoint_flag_)
     delete this->endpoint_;
+}
+
+
+ACE_INLINE TAO_Endpoint *
+TAO_Base_Connection_Property::endpoint (void)
+{
+  return this->endpoint_;
 }
 
 

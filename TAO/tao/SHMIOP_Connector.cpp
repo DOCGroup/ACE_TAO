@@ -437,7 +437,7 @@ TAO_SHMIOP_Connector::close (void)
 }
 
 int
-TAO_SHMIOP_Connector::connect (TAO_Endpoint *endpoint,
+TAO_SHMIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                                TAO_Transport *&transport,
                                ACE_Time_Value *max_wait_time,
                                CORBA::Environment &)
@@ -446,6 +446,8 @@ TAO_SHMIOP_Connector::connect (TAO_Endpoint *endpoint,
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for SHMIOP connection.\n")));
+
+  TAO_Endpoint *endpoint = prop->endpoint ();
 
   if (endpoint->tag () != TAO_TAG_SHMEM_PROFILE)
     return -1;
@@ -511,7 +513,7 @@ TAO_SHMIOP_Connector::connect (TAO_Endpoint *endpoint,
         {
           char buffer [MAXNAMELEN * 2];
           endpoint->addr_to_string (buffer,
-                                   (MAXNAMELEN * 2) - 1);
+                                    (MAXNAMELEN * 2) - 1);
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %s:%u, connection to ")
                       ACE_TEXT ("%s failed (%p)\n"),
