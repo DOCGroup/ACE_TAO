@@ -3334,6 +3334,8 @@ TAO_POA::client_exposed_policies (CORBA::Short object_priority,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
+  CORBA::PolicyList_var policies = client_exposed_policies;
+
   // Add in all of the client exposed policies.
   this->policies_.add_client_exposed_fixed_policies (client_exposed_policies,
                                                      ACE_TRY_ENV);
@@ -3341,7 +3343,7 @@ TAO_POA::client_exposed_policies (CORBA::Short object_priority,
 
   ACE_UNUSED_ARG (object_priority);
 
-  return client_exposed_policies;
+  return policies._retn ();
 }
 
 //

@@ -40,7 +40,7 @@ TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component,
 
 void
 TAO_Profile::policies (CORBA::PolicyList *policy_list,
-                       CORBA::Environment &)
+                       CORBA::Environment &ACE_TRY_ENV)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -62,10 +62,12 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list,
 
   // This loop iterates through CORBA::PolicyList to convert
   // each CORBA::Policy into a CORBA::PolicyValue
-  for (size_t i = 0; i < policy_list->length (); i++)
+  for (size_t i = 0; i < policy_list->length (); ++i)
     {
       TAO_OutputCDR out_CDR;
-      policy_value_seq[i].ptype = (*policy_list)[i]->policy_type ();
+      policy_value_seq[i].ptype =
+        (*policy_list)[i]->policy_type (ACE_TRY_ENV);
+      ACE_CHECK;
 
       out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
       (*policy_list)[i]->_tao_encode (out_CDR);
@@ -84,8 +86,6 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list,
           ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
           buf += iterator->length ();
         }
-
-
     }
 
   TAO_OutputCDR out_cdr;
