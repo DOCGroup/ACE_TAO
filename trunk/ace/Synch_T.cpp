@@ -199,11 +199,11 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
 
       this->process_cond_ = 
         (ACE_cond_t *) ACE_OS::mmap (0,
-                                      sizeof (ACE_cond_t),
-                                      PROT_RDWR,
-                                      MAP_SHARED,
-                                      fd,
-                                      0);
+                                     sizeof (ACE_cond_t),
+                                     PROT_RDWR,
+                                     MAP_SHARED,
+                                     fd,
+                                     0);
       ACE_OS::close (fd);
       if (this->process_cond_ == MAP_FAILED)
         return;
