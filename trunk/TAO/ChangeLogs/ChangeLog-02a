@@ -1,3 +1,11 @@
+Thu Aug 10 10:51:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/DynAny_Test/test_dynunion.cpp:
+
+	  Missed adding an .in() when a _ptr was changed to a _var
+	  on a previous checkin. Thanks to Johnny Willemsen
+	  <johnny.willemsen@meco.nl> for reporting the bug.
+
 Thu Aug 10 10:42:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile:
