@@ -114,9 +114,10 @@ run_main (int, ACE_TCHAR *[])
     {
       // wait according to the number of threads...
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT (" %d in first section, %d in second section\n"),
+                  ACE_TEXT (" %d in first section, %d in second section, %d total\n"),
                   current_threads_in_first_section.value (),
-                  current_threads_in_second_section.value ()));
+                  current_threads_in_second_section.value (),
+                  ACE_Thread_Manager::instance ()->count_threads ()));
 
       ACE_Time_Value pause (1, 0);
       ACE_OS::sleep (pause);
