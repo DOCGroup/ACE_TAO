@@ -86,6 +86,7 @@ TAO_NAMESPACE  GIOP
     typedef IORAddressingInfo_ptr _ptr_type;
     typedef IORAddressingInfo_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+    static void _tao_any_destructor (void*);
 
     CORBA::ULong selected_profile_index;
     IOP::IOR ior;
@@ -161,6 +162,7 @@ TAO_NAMESPACE  GIOP
     typedef TargetAddress_ptr _ptr_type;
     typedef TargetAddress_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+    static void _tao_any_destructor (void*);
 
 #if !defined (_GIOP_TARGETADDRESS__TAO_SEQ_OCTET_CH_)
 #define _GIOP_TARGETADDRESS__TAO_SEQ_OCTET_CH_
