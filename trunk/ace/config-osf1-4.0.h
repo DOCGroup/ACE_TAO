@@ -57,7 +57,9 @@
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 #   define ACE_HAS_TYPENAME_KEYWORD
-# endif /* __DECCXX_VER >= 60090010 */
+# else  /* __DECCXX_VER < 60090010 */
+#   define ACE_LACKS_PRAGMA_ONCE
+# endif /* __DECCXX_VER < 60090010 */
 #elif defined (__rational__)
 # define ACE_HAS_REENTRANT_FUNCTIONS
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
