@@ -326,7 +326,11 @@ public:
   // debugging.
 
   static u_long hash_pjw (const char *str);
-  // Computes the hash value of <str> using the ``Hash PJW'' routine...
+  // Computes the hash value of <str> using the ``Hash PJW'' routine.
+
+  static u_long hash_pjw (const ACE_USHORT16 *str);
+  // Computes the hash value of <str> using the ``Hash PJW'' routine
+  // (works for UNICODE strings).
 
   static int map_errno (int error);
   // Map troublesome win32 errno values to values that standard C

@@ -95,6 +95,27 @@ ACE::hash_pjw (const char *str)
   return hash;
 }
 
+u_long
+ACE::hash_pjw (const ACE_USHORT16 *str)
+{
+  u_long hash = 0;
+   
+  for (const ACE_USHORT16 *temp = str; *temp != 0; temp++)
+    {
+      hash = (hash << 4) + (*temp * 13);
+
+      u_long g = hash & 0xf0000000;
+
+      if (g)
+        {
+          hash ^= (g >> 24);
+          hash ^= g;
+        }
+    }
+
+  return hash;
+}
+
 size_t
 ACE::strrepl (char *s, char search, char replace)
 {
