@@ -74,6 +74,7 @@ TAO_default_environment ()
 // ****************************************************************
 
 TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::timeout_hook_ = 0;
+TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::connection_timeout_hook_ = 0;
 TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
 
 ACE_CString TAO_ORB_Core::endpoint_selector_factory_name_ =
@@ -2688,6 +2689,65 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1
           && TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+  return result._retn ();
+}
+
+
+void
+TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
+                                  int &has_timeout,
+                                  ACE_Time_Value &time_value)
+{
+  if (TAO_ORB_Core::connection_timeout_hook_ == 0)
+    {
+      has_timeout = 0;
+      return;
+    }
+  (*TAO_ORB_Core::connection_timeout_hook_) (this, stub, has_timeout, time_value);
+}
+
+void
+TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
+{
+  // Saving the hook pointer so that we can use it later when needed.
+  TAO_ORB_Core::connection_timeout_hook_ = hook;
+
+  return;
+}
+
+CORBA::Policy_ptr
+TAO_ORB_Core::stubless_connection_timeout (void)
+{
+  CORBA::Policy_var result;
+
+#if (TAO_HAS_CORBA_MESSAGING == 1 \
+     && TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
+
+  // No need to lock, the object is in TSS storage....
+  TAO_Policy_Current &policy_current =
+    this->policy_current ();
+  result = policy_current.get_cached_policy (
+             TAO_CACHED_POLICY_CONNECTION_TIMEOUT);
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  if (CORBA::is_nil (result.in ()))
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->policy_manager ();
+      if (policy_manager != 0)
+        result = policy_manager->get_cached_policy (
+          TAO_CACHED_POLICY_CONNECTION_TIMEOUT);
+    }
+
+  if (CORBA::is_nil (result.in ()))
+    result = this->default_policies_->get_cached_policy (
+               TAO_CACHED_POLICY_CONNECTION_TIMEOUT);
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1
+          && TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
 
   return result._retn ();
 }

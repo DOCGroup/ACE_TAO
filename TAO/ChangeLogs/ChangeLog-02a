@@ -1,3 +1,48 @@
+Tue Apr 30 13:50:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+	
+	* tao/IIOP_Connector.cpp: Checked to see if the connection timeout
+	  policy is set. 
+	
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h: Added new hook connection_timeout_hook () and
+	  methods connection_timeout () and stubless_connection_timeout
+	  (). They are used for setting the connection timeout hook and
+	  for querying the timeout values on the ORB and thread levels.
+	
+	* tao/Stub.cpp:
+	* tao/Stub.h: Added a new method connection_timeout () that
+	  queries the policy list at the object level. 
+	
+	* tao/orbconf.h: 
+	  Removed TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY since it has
+	  no meaning now. Added a new #define
+	  TAO_HAS_CONNECTION_TIMEOUT_POLICY that can be configured into
+	  the ORB. Added TAO_CACHED_POLICY_CONNECTION_TIMEOUT to the list
+	  of cached policies in the ORB.  
+
+	* tao/Messaging/Connection_Timeout_Policy_i.cpp:
+	* tao/Messaging/Connection_Timeout_Policy_i.h: New files
+	  containing the implementation of the new proprietary policy. 
+
+	* tao/Messaging/TAO_Messaging.dsp:
+	* tao/Messaging/Makefile: Added the new file. 
+	
+	* tao/Messaging/Messaging.h: #included TAO_ExtC.h
+	
+	* tao/Messaging/Messaging_ORBInitializer.cpp: Initialized the hook
+	  for the connection timeout.
+	
+	* tao/Messaging/Messaging_PolicyFactory.cpp: Added a call to
+	  create the connection timeout policy.
+	
+	* tao/Messaging/Messaging_Policy_i.cpp: Moved the inline inclusion
+	  to the global scope. The inline inclusion was within the #if
+	  defined of RELATIVE_RT_TIMEOUT_POLICY and it doesnt sound
+	  right. 
+	
+	* tao/Messaging/Messaging_Policy_i.h: Doxygenized the
+	  documentation of the classes. 
+
 Tue Apr 30 09:36:37 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): Removed a stray

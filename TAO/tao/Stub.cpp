@@ -716,6 +716,54 @@ TAO_Stub::sync_scope (void)
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
+
+
+CORBA::Policy_ptr
+TAO_Stub::connection_timeout (void)
+{
+  CORBA::Policy_var p;
+
+#if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
+
+  // No need to lock, the stub only changes its policies at
+  // construction time...
+  if (this->policies_ != 0)
+    p = this->policies_->get_cached_policy (
+          TAO_CACHED_POLICY_CONNECTION_TIMEOUT);
+
+  // No need to lock, the object is in TSS storage....
+  if (CORBA::is_nil (p.in ()))
+    {
+      TAO_Policy_Current &policy_current =
+        this->orb_core_->policy_current ();
+      p = policy_current.get_cached_policy (
+            TAO_CACHED_POLICY_CONNECTION_TIMEOUT);
+    }
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  if (CORBA::is_nil (p.in ()))
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->orb_core_->policy_manager ();
+      if (policy_manager != 0)
+        p = policy_manager->get_cached_policy (
+              TAO_CACHED_POLICY_CONNECTION_TIMEOUT);
+    }
+
+  if (CORBA::is_nil (p.in ()))
+    p = this->orb_core_->get_default_policies ()->get_cached_policy (
+          TAO_CACHED_POLICY_CONNECTION_TIMEOUT);
+
+#endif /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
+
+  return p._retn ();
+}
+
+
+
+
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 CORBA::Policy_ptr

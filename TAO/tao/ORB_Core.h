@@ -557,14 +557,39 @@ public:
 
   static void set_timeout_hook (Timeout_Hook hook);
 
+
   /// Access to the RoundtripTimeoutPolicy policy set on the thread or
   /// on the ORB.  In this method, we do not consider the stub since
   /// we do not have access to it.
   CORBA::Policy_ptr stubless_relative_roundtrip_timeout (void);
 
+  /// Invoke the timeout hook if present.
+  /**
+   * The timeout hook is used to determine if the timeout policy is
+   * set and with what value.  If the ORB is compiled without support
+   * for Messaging this feature does not take effect
+   * \param has_timeout returns 0 if there is no timeout policy set.
+   * \param time_value returns the timeout value in effect for the object,
+   * thread and current ORB.
+   */
+  void connection_timeout (TAO_Stub *stub,
+                           int &has_timeout,
+                           ACE_Time_Value &time_value);
+
+  /// Define the Timeout_Hook signature
+  static void connection_timeout_hook (Timeout_Hook hook);
+
+
+  /// Access to the connection timeout policy set on the thread or
+  /// on the ORB.  In this method, we do not consider the stub since
+  /// we do not have access to it.
+  CORBA::Policy_ptr stubless_connection_timeout (void);
+
+
   void call_sync_scope_hook (TAO_Stub *stub,
                              int &has_synchronization,
                              Messaging::SyncScope &scope);
+
   TAO_Sync_Strategy &get_sync_strategy (TAO_Stub *stub,
                                         Messaging::SyncScope &scope);
   typedef void (*Sync_Scope_Hook) (TAO_ORB_Core *,
@@ -968,6 +993,9 @@ private:
 
   /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
   static Timeout_Hook timeout_hook_;
+
+  /// The hook to be set for the ConnectionTimeoutPolicy
+  static Timeout_Hook connection_timeout_hook_;
 
 protected:
 
