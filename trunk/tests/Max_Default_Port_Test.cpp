@@ -26,12 +26,12 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Thread_Manager.h"
 
 #include "Max_Default_Port_Test.h"
-#include "test_config.h"
 
 My_Accept_Handler::My_Accept_Handler (ACE_INET_Addr &addr)
   : addr_ (addr)
