@@ -1,3 +1,9 @@
+Fri Aug 17 10:59:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/tests/Makefile.bor
+        * tao/tests/DLL_Orb/*.bor
+          Added BCB makefiles for this test
+
 Thu Aug 16 10:40:56 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORBInitInfo.h (TAO_ORBInitInfo):
@@ -30,7 +36,7 @@ Thu Aug 16 11:38:02 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * tao/TAO.dsw:
 
           Removed unnecessary "_Static" substring from static
-          release and debug library names. Also fixed path for 
+          release and debug library names. Also fixed path for
           TypeCodeFactory_Static.dsp in the workspace. Thanks to
           Frank Wolf <fwolf@gum.de> for pointing these out.
 
@@ -67,12 +73,12 @@ Wed Aug 15 11:37:24 2001  Ossama Othman  <ossama@uci.edu>
 
 	  Fixed improper emulated exception code.  It unnecessarily
 	  introduced a TSS access by using TAO_default_environment().
-	
+
 Wed Aug 15 14:26:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Single_Threaded_Latency/svc.conf: Add the
 	  exclusive Transport_Mux_Strategy to this test.
-	
+
 Wed Aug 15 12:11:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/IDL_Test/constants.idl:
@@ -95,7 +101,7 @@ Wed Aug 15 12:06:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Wed Aug 15 11:35:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp: Added a debugging statement that is going to
-	  create noise if TAO receives a ERROR message on a connection. 
+	  create noise if TAO receives a ERROR message on a connection.
 
 	* tao/GIOP_Message_Base.cpp:
 	* tao/GIOP_Message_State.cpp: Added debugging statments to inform
