@@ -7,6 +7,7 @@ DIRS = \
         Dynamic \
         Service_Context_Manipulation \
         IORInterceptor \
-	ForwardRequest
+	ForwardRequest \
+	Request_Interceptor_Flow
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
