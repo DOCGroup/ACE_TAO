@@ -1,4 +1,3 @@
-// TLI.cpp
 // $Id$
 
 // Defines the member functions for the base class of the ACE_TLI
@@ -91,18 +90,19 @@ ACE_TLI::get_local_addr (ACE_Addr &sa) const
 
   name.maxlen = sa.get_size ();
   name.buf    = (char *) sa.get_addr ();
-  
-  if (ACE_OS::ioctl (this->get_handle (), TI_GETMYNAME, &name) == -1) 
+
+  if (ACE_OS::ioctl (this->get_handle (), TI_GETMYNAME, &name) == -1)
 /*  if (ACE_OS::t_getname (this->get_handle (), &name, LOCALNAME) == -1) */
-#else /* SunOS4 sucks... */
-  if (0)
-#endif /* ACE_HAS_SVR4_TLI */
     return -1;
   else
     return 0;
+#else /* SunOS4 sucks... */
+  ACE_UNUSED_ARG (sa);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_SVR4_TLI */
 }
 
-int 
+int
 ACE_TLI::close (void)
 {
   ACE_TRACE ("ACE_TLI::close");
@@ -116,7 +116,7 @@ ACE_TLI::close (void)
   return result;
 }
 
-int 
+int
 ACE_TLI::set_option (int level, int option, void *optval, int optlen)
 {
   ACE_TRACE ("ACE_TLI::set_option");
@@ -130,10 +130,10 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
 
   if (this->so_opt_req.opt.len > this->so_opt_req.opt.maxlen)
     {
-#if !defined (ACE_HAS_SET_T_ERRNO) 
+#if !defined (ACE_HAS_SET_T_ERRNO)
       t_errno = TBUFOVFLW;
-#else                              
-      set_t_errno (TBUFOVFLW);     
+#else
+      set_t_errno (TBUFOVFLW);
 #endif /* ACE_HAS_SET_T_ERRNO */
       return -1;
     }
@@ -146,11 +146,15 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
 
   return ACE_OS::t_optmgmt (this->get_handle (), &this->so_opt_req, &this->so_opt_ret);
 #else
+  ACE_UNUSED_ARG (level);
+  ACE_UNUSED_ARG (option);
+  ACE_UNUSED_ARG (optval);
+  ACE_UNUSED_ARG (optlen);
   return -1;
 #endif /* ACE_HAS_SVR4_TLI */
 }
 
-int 
+int
 ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
 {
   ACE_TRACE ("ACE_TLI::get_option");
@@ -162,10 +166,10 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
 
   if (this->so_opt_ret.opt.len > this->so_opt_ret.opt.maxlen)
     {
-#if !defined (ACE_HAS_SET_T_ERRNO) 
+#if !defined (ACE_HAS_SET_T_ERRNO)
       t_errno = TBUFOVFLW;
-#else                              
-      set_t_errno (TBUFOVFLW);     
+#else
+      set_t_errno (TBUFOVFLW);
 #endif /* ACE_HAS_SET_T_ERRNO */
       return -1;
     }
@@ -182,6 +186,10 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
       return 0;
     }
 #else
+  ACE_UNUSED_ARG (level);
+  ACE_UNUSED_ARG (option);
+  ACE_UNUSED_ARG (optval);
+  ACE_UNUSED_ARG (optlen);
   return -1;
 #endif /* ACE_HAS_SVR4_TLI */
 }
