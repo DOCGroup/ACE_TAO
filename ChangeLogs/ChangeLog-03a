@@ -1,3 +1,24 @@
+Mon Sep  2 14:07:12 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/Exception_Macros.h:
+
+          New file which holds the exception macros previously present in
+          CORBA_macros.h. This file also makes the macros a bit generic so
+          that they can be used in other modules than TAO.
+
+        * ace/CORBA_macros.h:
+
+          Include only the definitions needed for TAO/CORBA. This file can
+          be placed under $TAO_ROOT now. Leaving it for compatibility
+          reasons.
+
+        * ace/OS.i:
+
+          Changed the definition of ctime_buf_size to const so that gcc
+          doesn't complain about using variable-sized array which is
+          non-ISO C++.
+
+
 Mon Sep  2 10:00:40 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* ace/Timer_List_T.cpp (get_first_i): Fixes fuzz errors.
@@ -6,7 +27,7 @@ Sun Sep 01 08:18:37 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/Task.cpp (svc_run):
           The latest version of the Borland compiler doesn't like the
-          static cast, so only do the static cast when the compiler 
+          static cast, so only do the static cast when the compiler
           version is smaller than 0x570
 
 	* ace/Handle_Set.cpp:
@@ -34,7 +55,7 @@ Sat Aug 31 14:57:53 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	  fame.
 
 Sat Aug 31 13:55:52 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
-  
+
 	* ace/OS.i (ctime_r): This fixes a problem on Linux for the call
 	  to ::ctime_r where the pointer returned (result) is the same as
 	  the pointer (buf) passed in, causing the buffer to get clobbed

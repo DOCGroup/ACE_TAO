@@ -8472,7 +8472,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
 #endif /* ! ACE_LACKS_DIFFTIME */
 
 // Magic number declaration and definition for ctime and ctime_r ()
-static int ctime_buf_size = 26;
+static const int ctime_buf_size = 26;
 
 ACE_INLINE ACE_TCHAR *
 ACE_OS::ctime (const time_t *t)
