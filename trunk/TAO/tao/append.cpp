@@ -26,8 +26,8 @@
 #include "tao/ValueBase.h"
 #include "tao/debug.h"
 
-ACE_RCSID (tao, 
-           append, 
+ACE_RCSID (tao,
+           append,
            "$Id$")
 
 // Encode instances of arbitrary data types based only on typecode.
@@ -540,7 +540,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
 
         case CORBA::tk_enum:
           {
-            const CORBA::ULong *d = 
+            const CORBA::ULong *d =
               ACE_reinterpret_cast (const CORBA::ULong *,
                                     any->value ());
             if (*d == enum_v)
@@ -633,7 +633,7 @@ TAO_Marshal_String::append (CORBA::TypeCode_ptr,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO_Marshal_TypeCode::append detected error")));
+                ACE_TEXT ("TAO_Marshal_TypeCode::append detected error\n")));
 
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
@@ -1043,7 +1043,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
   // error exit
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO_Marshal_Sequence::append detected error")));
+                ACE_TEXT ("TAO_Marshal_Sequence::append detected error\n")));
 
   ACE_THROW_RETURN (CORBA::MARSHAL (),
                     CORBA::TypeCode::TRAVERSE_STOP);

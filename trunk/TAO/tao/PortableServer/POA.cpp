@@ -354,12 +354,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   // descrease it upon destruction.
   CORBA::add_ref (this->ort_template_.in ());
   this->obj_ref_factory_ = this->ort_template_;
-
-  // Iterate over the registered IOR interceptors so that they may be
-  // given the opportunity to add tagged components to the profiles
-  // for this servant.
-  this->establish_components (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 TAO_POA::~TAO_POA (void)
@@ -576,6 +570,12 @@ TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         0);
     }
+
+  // Iterate over the registered IOR interceptors so that they may be
+  // given the opportunity to add tagged components to the profiles
+  // for this servant.
+  poa->establish_components (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   // Note: Creating a POA using a POA manager that is in the active
   // state can lead to race conditions if the POA supports preexisting
@@ -1007,16 +1007,17 @@ TAO_POA::add_ior_component_to_profile (
 }
 
 void
-TAO_POA::adapter_state_changed (const PortableInterceptor::ObjectReferenceTemplateSeq &seq_obj_ref_template,
-                                PortableInterceptor::AdapterState state
-                                ACE_ENV_ARG_DECL)
+TAO_POA::adapter_state_changed (
+   const PortableInterceptor::ObjectReferenceTemplateSeq &seq_obj_ref_template,
+   PortableInterceptor::AdapterState state
+   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /// First get a list of all the interceptors.
   TAO_IORInterceptor_List::TYPE &interceptors =
     this->orb_core_.ior_interceptors ();
 
-  size_t interceptor_count = interceptors.size ();
+  const size_t interceptor_count = interceptors.size ();
 
   if (interceptor_count == 0)
     return;
@@ -2437,21 +2438,23 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
   PortableServer::ObjectId_var system_id;
   PortableServer::Servant servant;
   CORBA::Short priority;
-  if (this->active_object_map ().find_servant_and_system_id_using_user_id (id,
-                                                                           servant,
-                                                                           system_id.out (),
-                                                                           priority) == 0)
+  if (this->active_object_map ().find_servant_and_system_id_using_user_id (
+        id,
+        servant,
+        system_id.out (),
+        priority) == 0)
     {
-      // Create object key.
-      TAO::ObjectKey_var key = this->create_object_key (system_id.in ());
-
-      // Ask the ORB to create you a reference
-      return this->key_to_object (key.in (),
-                                  servant->_interface_repository_id (),
-                                  servant,
-                                  1,
-                                  priority
-                                  ACE_ENV_ARG_PARAMETER);
+      // Ask the ORT to create a reference
+      PortableInterceptor::ObjectId oid (id.length (),
+                                         id.length (),
+                                         ACE_const_cast (CORBA::Octet *,
+                                                         id.get_buffer ()),
+                                         0);
+      return
+        this->obj_ref_factory_->make_object(
+          servant->_interface_repository_id (),
+          oid
+          ACE_ENV_ARG_PARAMETER);
     }
   else
     // If the Object Id value is not active in the POA, an
@@ -3614,6 +3617,17 @@ TAO_POA::key_to_stub_i (const TAO::ObjectKey &key,
 void
 TAO_POA::establish_components (ACE_ENV_SINGLE_ARG_DECL)
 {
+  // Iterate over the registered IOR interceptors so that they may be
+  // given the opportunity to add tagged components to the profiles
+  // for this servant.
+  TAO_IORInterceptor_List::TYPE &interceptors =
+    this->orb_core_.ior_interceptors ();
+
+  const size_t interceptor_count = interceptors.size ();
+
+  if (interceptor_count == 0)
+    return;
+
   TAO_IORInfo * tao_info;
   ACE_NEW_THROW_EX (tao_info,
                     TAO_IORInfo (this),
@@ -3626,15 +3640,8 @@ TAO_POA::establish_components (ACE_ENV_SINGLE_ARG_DECL)
 
   PortableInterceptor::IORInfo_var info = tao_info;
 
-  // Iterate over the registered IOR interceptors so that they may be
-  // given the opportunity to add tagged components to the profiles
-  // for this servant.
-  TAO_IORInterceptor_List::TYPE &interceptors =
-    this->orb_core_.ior_interceptors ();
-
-  size_t interceptor_count = interceptors.size ();
-  if (interceptor_count == 0)
-    return;
+  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
+  ACE_UNUSED_ARG (non_servant_upcall);
 
   for (size_t i = 0; i < interceptor_count; ++i)
     {
@@ -3696,9 +3703,7 @@ TAO_POA::components_established (PortableInterceptor::IORInfo_ptr info
   TAO_IORInterceptor_List::TYPE &interceptors =
     this->orb_core_.ior_interceptors ();
 
-  size_t interceptor_count = interceptors.size ();
-  if (interceptor_count == 0)
-    return;
+  const size_t interceptor_count = interceptors.size ();
 
   // All the establish_components() interception points have been
   // invoked. Now call the components_established() interception point
@@ -3726,13 +3731,10 @@ void
 TAO_POA::save_ior_component (const IOP::TaggedComponent &component
                              ACE_ENV_ARG_DECL_NOT_USED)
 {
-  CORBA::ULong present_length = this->tagged_component_.length ();
+  const CORBA::ULong old_len = this->tagged_component_.length ();
 
-  CORBA::ULong new_length = present_length + 1;
-
-  this->tagged_component_.length (new_length);
-
-  this->tagged_component_ [present_length] = component;
+  this->tagged_component_.length (old_len + 1);
+  this->tagged_component_[old_len] = component;
 }
 
 void
@@ -3747,15 +3749,15 @@ save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
   // this->tagged_component_id_ is increased, we need to increase the
   // size of this->profile_id_array_ also.
 
-  const CORBA::ULong present_length = this->tagged_component_id_.length ();
+  const CORBA::ULong old_len = this->tagged_component_id_.length ();
 
-  const CORBA::ULong new_length = present_length + 1;
+  const CORBA::ULong new_len = old_len + 1;
 
-  this->tagged_component_id_.length (new_length);
-  this->tagged_component_id_ [present_length]= component;
+  this->tagged_component_id_.length (new_len);
+  this->tagged_component_id_[old_len] = component;
 
-  this->profile_id_array_.size (new_length);
-  this->profile_id_array_ [present_length] = profile_id;
+  this->profile_id_array_.size (new_len);
+  this->profile_id_array_[old_len] = profile_id;
 }
 
 TAO_Stub *
@@ -3880,7 +3882,7 @@ void
 TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notifying IMR of startup\n"));
+    ACE_DEBUG ((LM_DEBUG, "Notifying ImR of startup\n"));
 
   CORBA::Object_var imr = this->orb_core ().implrepo_service ();
 
@@ -3953,13 +3955,13 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
   if (imr_locator.in () == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Couldnt narrow down the ImR interface\n"));
+                  "Couldn't narrow down the ImR interface\n"));
       return;
     }
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "Informing IMR that we are running at: %s\n",
+                "Informing ImR that we are running at: %s\n",
                 curr_addr.in ()));
 
   ACE_TRY
@@ -3986,14 +3988,14 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Successfully notified IMR of Startup\n"));
+    ACE_DEBUG ((LM_DEBUG, "Successfully notified ImR of Startup\n"));
 }
 
 void
 TAO_POA::imr_notify_shutdown (void)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Shutdown\n"));
+    ACE_DEBUG ((LM_DEBUG, "Notifing ImR of Shutdown\n"));
 
   // Notify the Implementation Repository about shutting down.
   CORBA::Object_var imr = this->orb_core ().implrepo_service ();

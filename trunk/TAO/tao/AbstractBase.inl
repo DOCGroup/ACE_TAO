@@ -2,14 +2,14 @@
 //
 // $Id$
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_nil (void)
 {
   return 0;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_duplicate (CORBA::AbstractBase_ptr obj)
 {
@@ -22,7 +22,7 @@ CORBA::AbstractBase::_duplicate (CORBA::AbstractBase_ptr obj)
 }
 
 /// Just call _duplicate and let it decide what to do.
-ACE_INLINE 
+ACE_INLINE
 CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_narrow (CORBA::AbstractBase_ptr obj
                               ACE_ENV_ARG_DECL_NOT_USED)
@@ -31,21 +31,12 @@ CORBA::AbstractBase::_narrow (CORBA::AbstractBase_ptr obj
 }
 
 /// Same for this one.
-ACE_INLINE 
+ACE_INLINE
 CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_unchecked_narrow (CORBA::AbstractBase_ptr obj
                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
   return CORBA::AbstractBase::_duplicate (obj);
-}
-
-ACE_INLINE
-CORBA::Boolean
-CORBA::AbstractBase::_is_a (const char *type_id
-                            ACE_ENV_ARG_DECL_NOT_USED)
-{
-  return ! ACE_OS::strcmp (type_id,
-                           "IDL:omg.org/CORBA/AbstractBase:1.0");
 }
 
 ACE_INLINE
@@ -107,7 +98,7 @@ CORBA::AbstractBase::_is_local (void) const
 // ************************************************************
 // These are in CORBA namespace
 
-ACE_INLINE 
+ACE_INLINE
 void
 CORBA::release (CORBA::AbstractBase_ptr obj)
 {
@@ -117,7 +108,7 @@ CORBA::release (CORBA::AbstractBase_ptr obj)
     }
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::Boolean
 CORBA::is_nil (CORBA::AbstractBase_ptr obj)
 {
