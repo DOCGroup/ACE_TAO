@@ -24,8 +24,6 @@
   // TAO_Lookup
   // *************************************************************
 
-const int RANDOM_PREFIX_LENGTH = 4;
-
 template <class TRADER, class TRADER_LOCK_TYPE>
 TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::TAO_Lookup (TRADER &trader)
   : trader_ (trader),
@@ -627,8 +625,6 @@ federated_query (const CosTrading::LinkNameSeq& links,
   // admin interface. 
   CosTrading::Link_ptr link_interface
     = this->trader_.trading_components ().link_if ();
-  CosTrading::Admin_ptr admin_interface
-    = this->trader_.trading_components ().admin_if ();
 
   // Begin collecting all the various offer_iterators into a
   // collection. The end result is a distributed tree of offer
@@ -1150,9 +1146,15 @@ TAO_Admin<TRADER,TRADER_LOCK_TYPE>::TAO_Admin (TRADER &trader)
   // A random 4-bytes will prefix the sequence number space for each
   // trader, making it extremely unlikely that the sequence spaces for 
   // two traders will over lap. 
+  const int RANDOM_PREFIX_LENGTH = 4;
   
   size_t time_value = ACE_OS::time ();
-  ACE_RANDR_TYPE seed = &time_value;
+# if defined (ACE_HAS_BROKEN_RANDR)
+  ACE_RANDR_TYPE seed = ACE_static_cast (ACE_RANDR_TYPE, time_value);
+# else
+  ACE_RANDR_TYPE seed = ACE_static_cast (ACE_RANDR_TYPE, &time_value);
+# endif /* ACE_HAS_BROKEN_RANDR */ 
+
   CORBA::ULong length = RANDOM_PREFIX_LENGTH + sizeof (CORBA::ULong);
   this->stem_id_.length (length);
 

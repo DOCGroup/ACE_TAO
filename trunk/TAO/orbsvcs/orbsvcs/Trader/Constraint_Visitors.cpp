@@ -523,7 +523,7 @@ visit_property(TAO_Property_Constraint* literal)
 
 
 CORBA::Boolean
-TAO_find_string (TAO_Sequences::StringSeq& sequence, const char* element)
+TAO_find_string (CosTradingSequences::StringSeq& sequence, const char* element)
 {
  int length = sequence.length(),
     return_value = 0;
@@ -571,56 +571,56 @@ sequence_does_contain(CORBA::Any* sequence,
     {
     case CORBA::tk_short:
       {
-	TAO_Sequences::ShortSeq* short_seq;
+	CosTradingSequences::ShortSeq* short_seq;
 	if ((*sequence) >>= short_seq)
 	  return_value = ::TAO_find (*short_seq, (CORBA::Long)element);
       }
     break;
     case CORBA::tk_ushort:
       {
-	TAO_Sequences::UShortSeq* ushort_seq;
+	CosTradingSequences::UShortSeq* ushort_seq;
 	if ((*sequence) >>= ushort_seq)
 	  return_value = ::TAO_find (*ushort_seq, (CORBA::ULong)element);
       }
       break;
     case CORBA::tk_long:
       {
-	TAO_Sequences::LongSeq* long_seq;
+	CosTradingSequences::LongSeq* long_seq;
 	if ((*sequence) >>= long_seq)
 	  return_value = ::TAO_find (*long_seq, (CORBA::Long)element);
       }
       break;
     case CORBA::tk_ulong:
       {
-	TAO_Sequences::ULongSeq* ulong_seq;
+	CosTradingSequences::ULongSeq* ulong_seq;
 	if ((*sequence) >>= ulong_seq)
 	  return_value = ::TAO_find (*ulong_seq, (CORBA::ULong)element);
       }
       break;
     case CORBA::tk_float:
       {
-	TAO_Sequences::FloatSeq* float_seq;
+	CosTradingSequences::FloatSeq* float_seq;
 	if ((*sequence) >>= float_seq)
 	  return_value = ::TAO_find (*float_seq, (CORBA::Double)element);
       }
       break;
     case CORBA::tk_double:
       {
-	TAO_Sequences::DoubleSeq* double_seq;
+	CosTradingSequences::DoubleSeq* double_seq;
 	if ((*sequence) >>= double_seq)
 	  return_value = ::TAO_find (*double_seq, (CORBA::Double)element);
       }
       break;
     case CORBA::tk_boolean:
       {
-	TAO_Sequences::BooleanSeq* bool_seq;
+	CosTradingSequences::BooleanSeq* bool_seq;
 	if ((*sequence) >>= bool_seq)
 	  return_value = ::TAO_find (*bool_seq, (CORBA::ULong)element);
       }
       break;
     case CORBA::tk_string:
       {
-	TAO_Sequences::StringSeq* string_seq;
+	CosTradingSequences::StringSeq* string_seq;
 	if ((*sequence) >>= string_seq)
 	  return_value = ::TAO_find_string (*string_seq, (const char*) element);
 	break;
@@ -911,17 +911,17 @@ visit_in (TAO_Binary_Constraint* binary_in)
       if (this->expr_returns_number (left_type))
 	{
 	  types_match =
-	    prop_type->equal (TAO_Sequences::_tc_ShortSeq, env) ||
-	    prop_type->equal (TAO_Sequences::_tc_UShortSeq, env) ||
-	    prop_type->equal (TAO_Sequences::_tc_LongSeq, env) ||
-	    prop_type->equal (TAO_Sequences::_tc_ULongSeq, env) ||
-	    prop_type->equal (TAO_Sequences::_tc_DoubleSeq, env) ||
-	    prop_type->equal (TAO_Sequences::_tc_FloatSeq, env);
+	    prop_type->equal (CosTradingSequences::_tc_ShortSeq, env) ||
+	    prop_type->equal (CosTradingSequences::_tc_UShortSeq, env) ||
+	    prop_type->equal (CosTradingSequences::_tc_LongSeq, env) ||
+	    prop_type->equal (CosTradingSequences::_tc_ULongSeq, env) ||
+	    prop_type->equal (CosTradingSequences::_tc_DoubleSeq, env) ||
+	    prop_type->equal (CosTradingSequences::_tc_FloatSeq, env);
 	}
       else if (this->expr_returns_boolean (left_type))
-	types_match = prop_type->equal (TAO_Sequences::_tc_BooleanSeq, env);
+	types_match = prop_type->equal (CosTradingSequences::_tc_BooleanSeq, env);
       else if (this->expr_returns_string (left_type))
-	types_match = prop_type->equal (TAO_Sequences::_tc_StringSeq, env);
+	types_match = prop_type->equal (CosTradingSequences::_tc_StringSeq, env);
       
       if (types_match)
 	return_value = left->accept(this);

@@ -752,7 +752,8 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
         link_info.def_pass_on_follow_rule : trader_max_follow_policy;
     }
 
-  for (int i = 0; i < policy_seq.length (); i++)
+  int i = 0;
+  for (i = 0; i < policy_seq.length (); i++)
     {
       if (ACE_OS::strcmp (policy_seq[i].name,
                           POLICY_NAMES[LINK_FOLLOW_RULE]) == 0)
@@ -841,27 +842,22 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
 	  // Copy in the existing policies.
 	  if (i == STARTING_TRADER)
 	    {
-	      TAO_TRY
-		{
-		  // Eliminate the first link of the trader name.
-		  CORBA::ULong length = trader_name->length ();
-
-                  if (length > 1)
-                    {
-                      // Only pass on the property if the sequence
-                      // contains more links after us. 
-                      for (CORBA::ULong j = 1; j < length; j++)
-                        (*trader_name)[j - 1] = (*trader_name)[j];  
+              // Eliminate the first link of the trader name.
+              CORBA::ULong length = trader_name->length ();
+              
+              if (length > 1)
+                {
+                  // Only pass on the property if the sequence
+                  // contains more links after us. 
+                  for (CORBA::ULong j = 1; j < length; j++)
+                    (*trader_name)[j - 1] = (*trader_name)[j];  
                       
-                      trader_name->length (length - 1);
-                      new_policy.name = this->policies_[i]->name;
-                      new_policy.value <<= trader_name;
-                      counter++;
-                    }
-		}
-	      TAO_CATCHANY {}
-	      TAO_ENDTRY;	      
-	    }
+                  trader_name->length (length - 1);
+                  new_policy.name = this->policies_[i]->name;
+                  new_policy.value <<= trader_name;
+                  counter++;
+                }
+            }
 	  else
 	    {
               new_policy.name = this->policies_[i]->name;
@@ -964,10 +960,11 @@ merge_properties (const CosTrading::PropertySeq& modifies,
 		   CosTrading::DuplicatePropertyName,
 		   CosTrading::Register::ReadonlyProperty))
 {
+  int i = 0, length = 0;
   Prop_Names modify_me;
   // Ensure that the proposed changes aren't to readonly properties or
   // otherwise invalid.
-  for (int i = 0, length = modifies.length (); i < length; i++)
+  for (i = 0, length = modifies.length (); i < length; i++)
     {
       const char*  mname =(const char *) modifies[i].name;
       if (! TAO_Trader_Base::is_valid_identifier_name (mname))

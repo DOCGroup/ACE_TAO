@@ -130,6 +130,8 @@ TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection (void)
       TAO_TRY
         {
           offer_iter->destroy (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+          
           CORBA::release (offer_iter);
         }
       TAO_CATCHANY {}
