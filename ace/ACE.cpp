@@ -529,7 +529,7 @@ ACE::read_n (ACE_HANDLE handle,
 // Modifications by Todd Montgomery.
 
 int 
-ACE::format_hexdump (char *buffer, int size, char *obuf, int obuf_sz)
+ACE::format_hexdump (const char *buffer, int size, char *obuf, int obuf_sz)
 {
   ACE_TRACE ("ACE::format_hexdump");
 
