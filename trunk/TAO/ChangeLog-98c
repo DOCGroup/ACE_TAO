@@ -1,3 +1,46 @@
+Fri Jan  1 23:31:48 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.h:
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp:
+          corrections to comments after code review.
+	
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp:
+       	  using ACE_NEW now.  
+
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp:
+  	  using ACE_NEW now.
+
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
+	  uses ACE_NEW now, added a <connected> method, 
+	  connect_push_consumer method throws AlreadyConnected and
+	  BAD_PARAM exceptions.
+	
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+          uses ACE_NEW now.
+
+	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.h:
+	  changed method names to init,run and shutdown. 
+	  corrections to comments after code review.
+	
+	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+	  added checks for return errors. 
+
+	* orbsvcs/tests/CosEC_Basic/CosECSupplier.h: 
+	* orbsvcs/tests/CosEC_Basic/CosECSupplier.cpp:
+	  corrections to comments after code review.
+	  <disconnect_push_supplier> method now deactivates 
+	  the Supplier object.
+
+	* orbsvcs/tests/CosEC_Basic/CosECConsumer.h: 
+	* orbsvcs/tests/CosEC_Basic/CosECConsumer.cpp:
+	  corrections to comments after code review.
+	  <disconnect_push_consumer> method now deactivates 
+	  the Comsumer object.
+	
 Fri Jan  1 18:11:07 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
         * orbsvcs/Time_Service/Clerk_i.cpp : Used _duplicate ()
