@@ -1007,6 +1007,17 @@ ACE_InputCDR::reset (const ACE_Message_Block* data,
     }
 }
 
+void
+ACE_InputCDR::steal_from (ACE_InputCDR &cdr)
+{
+  this->do_byte_swap_ = cdr.do_byte_swap_;
+  this->start_.data_block (cdr.start_.data_block ()->duplicate ());
+  this->start_.rd_ptr (cdr.start_.rd_ptr ());
+  this->start_.wr_ptr (cdr.start_.wr_ptr ());
+
+  cdr.reset_contents ();
+}
+
 ACE_Message_Block*
 ACE_InputCDR::steal_contents (void)
 {
