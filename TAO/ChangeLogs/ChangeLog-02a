@@ -1,3 +1,11 @@
+Sun Aug 06 17:14:52 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.cpp (ORB_init, init_orb_globals):
+
+	  Placed ORB initialization count back in
+	  CORBA::ORB::init_orb_globals() since the count variable is
+	  private within the context of CORBA::ORB_init().
+
 Sun Aug 06 17:01:53 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Static.dsp:
