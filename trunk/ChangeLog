@@ -1,3 +1,8 @@
+Tue Feb 8 20:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Improved VxWorks description, committed on behalf of Martin Corino
+
 Tue Feb 8 05:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
