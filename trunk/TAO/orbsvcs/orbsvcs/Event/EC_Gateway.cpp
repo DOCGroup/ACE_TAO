@@ -186,20 +186,7 @@ TAO_EC_Gateway_IIOP::update_supplier (RtecEventChannelAdmin::ConsumerQOS& sub,
 				      RtecEventChannelAdmin::SupplierQOS& pub,
 				      CORBA::Environment& env)
 {
-  this->close (env);
-  if (env.exception () != 0) return;
-
-  for (CORBA::ULong i = 0; i < sub.dependencies.length (); ++i)
-    {
-      sub.dependencies[i].rt_info = this->rmt_info_;
-    }
-
-  for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
-    {
-      pub.publications[j].dependency_info.rt_info = this->lcl_info_;
-    }
-
-  this->open (sub, pub, env);
+  // Do nothing...
 }
 
 void

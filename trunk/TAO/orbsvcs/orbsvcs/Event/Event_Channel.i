@@ -48,6 +48,12 @@ ACE_Push_Supplier_Proxy::source_id (void)
   return source_id_;
 }
 
+ACE_INLINE const RtecEventChannelAdmin::SupplierQOS&
+ACE_Push_Supplier_Proxy::qos (void) const
+{
+  return this->qos_;
+}
+
 // **************************************************
 
 ACE_INLINE RtecEventChannelAdmin::ProxyPushSupplier_ptr

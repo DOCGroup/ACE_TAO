@@ -237,8 +237,8 @@ public:
   void report_disconnect_i (u_long);
   // Consumer or supplier disconnected.
 
-  void add_gateway (TAO_EC_Gateway* gw);
-  void del_gateway (TAO_EC_Gateway* gw);
+  void add_gateway (TAO_EC_Gateway* gw, CORBA::Environment& _env);
+  void del_gateway (TAO_EC_Gateway* gw, CORBA::Environment& _env);
   // Add and remove gateways from the EC.
 
   void update_consumer_gwys (CORBA::Environment& _env);
@@ -893,8 +893,8 @@ public:
 
   void fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
 		 RtecEventChannelAdmin::SupplierQOS& s_qos);
-  // Fill the QoS factories with the disjuction off all the
-  // subscriptions in this EC.
+  // Fill the QoS with the disjuction off all the subscriptions in
+  // this EC. 
   // It leaves the gateways out of the list.
 
 private:
@@ -1163,6 +1163,12 @@ public:
   void shutdown (void);
   // Actively disconnect from all suppliers.
 
+  void fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
+		 RtecEventChannelAdmin::SupplierQOS& s_qos);
+  // Fill the QoS with the disjuction off all the publications in
+  // this EC. 
+  // It leaves the gateways out of the list.
+
 private:
   typedef ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *> Supplier_Iterator;
   typedef ACE_Unbounded_Set<ACE_Push_Supplier_Proxy *> Suppliers;
@@ -1241,6 +1247,9 @@ public:
 
   RtecEventComm::EventSourceID source_id (void);
   // Returns underlying supplier object ref.
+
+  const RtecEventChannelAdmin::SupplierQOS& qos (void) const;
+  // The QoS for this supplier
 
 private:
   RtecEventChannelAdmin::SupplierQOS qos_;

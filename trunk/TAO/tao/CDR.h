@@ -319,6 +319,10 @@ private:
   // could be interesting to find the break even point and optimize
   // for that case, but that would be too platform dependent.
 
+  int do_byte_swap (void) const;
+  // If non-zero then this stream is writing in non-native byte order,
+  // this is only meaningful if TAO_ENABLE_SWAP_ON_WRITE is defined.
+
 private:
   ACE_Message_Block start_;
   // The start of the chain of message blocks.
