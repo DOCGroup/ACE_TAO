@@ -1,3 +1,12 @@
+Thu Dec 16 15:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+          Removed defines for VxWorks <= 0x540, these are not usable anymore
+
+        * tests/log/Makefile.am:
+          Removed this file, checked it with J.T. Conklin, we don't need this
+          file anymore
+
 Thu Dec 16 14:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/arpa/os_inet.h:
