@@ -24,132 +24,160 @@ endif
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
 override TAO_IDLFLAGS += \
-	-Wb,export_macro=TAO_ORBSVCS_Export \
-	-Wb,export_include=orbsvcs_export.h \
-	$(TAO_LACKS_EVENT_CHANNEL_ANY)
+        -Wb,export_macro=TAO_ORBSVCS_Export \
+        -Wb,export_include=orbsvcs_export.h \
+        $(TAO_LACKS_EVENT_CHANNEL_ANY)
 
-IDL_SRCS= \
-	CosConcurrencyControl \
-	CosNaming \
-	CosTimeBase \
-	TimeService \
-	CosLifeCycle \
-	CosPropertyService \
-	Logger \
-	RtecEventComm \
-	RtecScheduler \
-	RtecEventChannelAdmin \
-	RtecUDPAdmin \
-	LifeCycleService \
-	CosTrading \
-	AVStreams \
-	Null_MediaCtrl \
-	CosEventComm \
-	CosEventChannelAdmin \
-	sfp \
-	ImplRepo \
-	Ping
+VPATH=.:Naming:Time:Log:Concurrency:Property:Trader:Sched:Event:CosEvent:AV:
 
-IDL_FILES = \
-	$(addsuffix S, $(IDL_SRCS)) \
-	$(addsuffix C, $(IDL_SRCS))
+LIBS    += -lTAO -lACE
 
-FILES= $(IDL_FILES) \
-	Event_Utilities \
-	Scheduler_Factory \
-	Runtime_Scheduler \
-	Scheduler_Utilities \
-	Time_Utilities \
-	IOR_Multicast \
-	\
-	Naming/CosNaming_i \
-	Naming/Entries \
-	Naming/Naming_Utils \
-	\
-	Time/TAO_Time_Service_Server \
-	Time/TAO_Time_Service_Clerk \
-	Time/TAO_UTO \
-	Time/TAO_TIO \
-	Time/Timer_Helper \
-	\
-	Event/BCU \
-	Event/Dispatching_Modules \
-	Event/Event_Channel \
-	Event/Event_Manip \
-	Event/Local_ESTypes \
-	Event/Memory_Pools \
-	Event/RT_Task \
-	Event/ReactorTask \
-	Event/Timer_Module \
-	Event/EC_Gateway \
-	Event/EC_Gateway_UDP \
-	Event/EC_UDP_Admin \
-	Event/Module_Factory \
-	\
-	CosEvent/ConsumerAdmin_i \
-	CosEvent/SupplierAdmin_i \
-	CosEvent/EventChannel_i \
-	CosEvent/ProxyPushConsumer_i \
-	CosEvent/ProxyPushSupplier_i \
-	\
-	Sched/Config_Scheduler \
-	Sched/DynSched \
-	Sched/SchedEntry \
-	Sched/Scheduler \
-	Sched/Scheduler_Generic \
-	\
-	Concurrency/CC_Lock \
-	Concurrency/CC_LockSet \
-	Concurrency/CC_LockSetFactory \
-	Concurrency/Concurrency_Utils \
-	\
-	Sched/Strategy_Scheduler \
-	\
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
+
+####
+#### TAO_ORBSVCS support.
+####
+ifneq (,$(findstring Naming,$(TAO_ORBSVCS)))
+  IDL_SRCS += CosNaming
+  TAO_ORBSVCS_SRCS += \
+        IOR_Multicast \
+        Naming/CosNaming_i \
+        Naming/Entries \
+        Naming/Naming_Utils
+endif # Naming
+
+ifneq (,$(findstring Time,$(TAO_ORBSVCS)))
+  IDL_SRCS += CosTimeBase TimeService
+  TAO_ORBSVCS_SRCS += \
+        Time_Utilities \
+        Time/TAO_Time_Service_Server \
+        Time/TAO_Time_Service_Clerk \
+        Time/TAO_UTO \
+        Time/TAO_TIO \
+        Time/Timer_Helper
+endif # Time
+
+ifneq (,$(findstring Log,$(TAO_ORBSVCS)))
+  IDL_SRCS += Logger
+  TAO_ORBSVCS_SRCS += \
+        Log/Logger_i
+endif # Log
+
+ifneq (,$(findstring Concurrency,$(TAO_ORBSVCS)))
+  IDL_SRCS += CosConcurrencyControl
+  TAO_ORBSVCS_SRCS += \
+        Concurrency/CC_Lock \
+        Concurrency/CC_LockSet \
+        Concurrency/CC_LockSetFactory \
+        Concurrency/Concurrency_Utils
+endif # Concurrency
+
+ifneq (,$(findstring LifeCycle,$(TAO_ORBSVCS)))
+  IDL_SRCS += CosLifeCycle LifeCycleService
+  TAO_ORBSVCS_SRCS +=
+endif # LifeCycle
+
+ifneq (,$(findstring ImplRepo,$(TAO_ORBSVCS)))
+  IDL_SRCS += Ping ImplRepo
+  TAO_ORBSVCS_SRCS +=
+endif # ImplRepo
+
+ifneq (,$(findstring Property,$(TAO_ORBSVCS)))
+  IDL_SRCS += CosPropertyService
+  TAO_ORBSVCS_SRCS += \
+        Property/CosPropertyService_i
+endif # Property
+
+ifneq (,$(findstring Trader,$(TAO_ORBSVCS)))
+  IDL_SRCS += CosTrading
+  TAO_ORBSVCS_SRCS += \
         Trader/Constraint_Interpreter \
         Trader/Constraint_Nodes \
-	Trader/Constraint_Visitors \
-	Trader/Constraint_l \
-	Trader/Constraint_y \
-	Trader/Offer_Database \
+        Trader/Constraint_Visitors \
+        Trader/Constraint_l \
+        Trader/Constraint_y \
+        Trader/Offer_Database \
         Trader/Offer_Iterators \
         Trader/Offer_Iterators_T \
         Trader/Service_Type_Repository \
         Trader/Trader \
-	Trader/Trader_Interfaces \
+        Trader/Trader_Interfaces \
         Trader/Trader_T \
-	Trader/Trader_Utils \
-	\
-	Property/CosPropertyService_i \
-	\
-	Log/Logger_i \
-	\
-	tmplinst-orbsvcs \
-	AV/AVStreams_i \
-	AV/Endpoint_Strategy \
-	AV/Endpoint_Strategy_T
+        Trader/Trader_Utils
+endif # Trader
 
-VPATH=.:Naming:Time:Event:CosEvent:Sched:AV:Property:Trader:Concurrency:Log:
+ifneq (,$(findstring Sched,$(TAO_ORBSVCS)))
+  IDL_SRCS += RtecScheduler
+  TAO_ORBSVCS_SRCS += \
+        Scheduler_Factory \
+        Runtime_Scheduler \
+        Scheduler_Utilities \
+        Sched/Config_Scheduler \
+        Sched/DynSched \
+        Sched/SchedEntry \
+        Sched/Scheduler \
+        Sched/Scheduler_Generic \
+        Sched/Strategy_Scheduler
+endif # Sched
 
-DEFS    = $(addsuffix .h,$(FILES))
-LSRC	= $(addsuffix .cpp,$(FILES))
+ifneq (,$(findstring Event,$(TAO_ORBSVCS)))
+  IDL_SRCS += RtecEventComm RtecEventChannelAdmin RtecUDPAdmin
+  TAO_ORBSVCS_SRCS += \
+        Event_Utilities \
+        Event/BCU \
+        Event/Dispatching_Modules \
+        Event/Event_Channel \
+        Event/Event_Manip \
+        Event/Local_ESTypes \
+        Event/Memory_Pools \
+        Event/RT_Task \
+        Event/ReactorTask \
+        Event/Timer_Module \
+        Event/EC_Gateway \
+        Event/EC_Gateway_UDP \
+        Event/EC_UDP_Admin \
+        Event/Module_Factory
+endif # Event
 
-LIBS 	+= -lTAO -lACE
+ifneq (,$(findstring CosEvent,$(TAO_ORBSVCS)))
+  IDL_SRCS += CosEventComm CosEventChannelAdmin
+  TAO_ORBSVCS_SRCS += \
+        CosEvent/ConsumerAdmin_i \
+        CosEvent/SupplierAdmin_i \
+        CosEvent/EventChannel_i \
+        CosEvent/ProxyPushConsumer_i \
+        CosEvent/ProxyPushSupplier_i
+endif # CosEvent
+
+ifneq (,$(findstring AV,$(TAO_ORBSVCS)))
+  IDL_SRCS += AVStreams Null_MediaCtrl sfp
+  TAO_ORBSVCS_SRCS += \
+        AV/AVStreams_i \
+        AV/Endpoint_Strategy \
+        AV/Endpoint_Strategy_T
+endif # AV
+
+IDL_FILES = \
+        $(addsuffix S, $(IDL_SRCS)) \
+        $(addsuffix C, $(IDL_SRCS))
+FILES = $(IDL_FILES) $(TAO_ORBSVCS_SRCS) tmplinst-orbsvcs
+DEFS  = $(addsuffix .h,$(FILES))
+LSRC  = $(addsuffix .cpp,$(FILES))
+
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
-#----------------------------------------------------------------------------
-
-include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
-
-#----------------------------------------------------------------------------
-#	Local targets (and local hacks)
+#       Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/tao
