@@ -1,0 +1,14 @@
+Fri Dec 14 07:01:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Merged with the main trunk and moved things to a new branch.
+	  The following changes below have already been merged into the
+	  main trunk. 
+
+Tue Nov 27 21:30:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Cache_Entries.h:
+	* tao/DLL_ORB.h: 
+	* tao/Transport.h: Added additional #includes to fix compilation
+	  errors.  
+	
+	* tao/*/Makefile: Updated dependencies.
