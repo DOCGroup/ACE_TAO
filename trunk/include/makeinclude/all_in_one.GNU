@@ -51,7 +51,7 @@ endif # COMPILE_COMPONENT
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 
 ifdef BIN
   include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU

@@ -1,3 +1,12 @@
+Tue Nov 25 05:25:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/Makefile:
+          Added missing dependency target for CosNaming to cause Svc_Util
+          to be built.  This should fix a build error occurring when only
+          CosNaming is Specified in TAO_ORBSVCS.  Also, fixed a typo in
+          one of the dependency lists and added comments on how it how all
+          works.
+
 Mon Nov 24 20:02:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/Trading/ttest_export.h:
