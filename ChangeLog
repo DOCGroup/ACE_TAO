@@ -1,3 +1,10 @@
+Thu Sep 12 08:39:46 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Synch.h (class ACE_recursive_mutex_state): Changed "HANDLE" to
+	  "ACE_HANDLE" to avoid problems with VxWorks.  Thanks to Rob
+ 	  Andzik <andzik@rtlogic.com> and Don Hinton <dhinton@ieee.org>
+ 	  for reporting this.
+
 Thu Sep 12 17:36:36 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* include/makeinclude/wrapper_macros.GNU: Use awk instead of
@@ -7,6 +14,11 @@ Thu Sep 12 12:02:31 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/TSS_Test.cpp: Pass iteration count to worker() as a pointer
           to int, not an int cast to a pointer and back.
+
+Wed Sep 11 08:44:28 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* Our thoughts and prayers go out to the victims of 9/11/01 on the
+	  anniversary of this terrible tragedy.
 
 Wed Sep 11 13:03:48 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
@@ -22,15 +34,15 @@ Tue Sep 10 14:06:02 2002  Krishnakumar B  <kitty@cs.wustl.edu>
         * ace/Obstack_T.h:
 
           Obstack is no longer restricted to fixed-size chunks. Chunk size
-          is increased by a power of two if we run out of memory in a
-          chunk. Added implementation of unwind operations. Stack can be
-          unwound by giving the address of an object on the stack. Fixed a
-          couple of bugs in the existing implementation when used with
-          WCHAR. We were incrementing the pointers by sizeof (CHAR) as
-          well as multiplying by sizeof (CHAR) to get the number of bytes
-          to be copied. This improvement doesn't deal with the alignment
-          issues as it requires a change in Obchunk which is postponed
-          till ACE 5.2.3 is released.
+ 	  is increased by a power of two if we run out of memory in a
+ 	  chunk. Added implementation of unwind operations. Stack can be
+ 	  unwound by giving the address of an object on the stack. Fixed a
+ 	  couple of bugs in the existing implementation when used with
+ 	  WCHAR. We were incrementing the pointers by sizeof (CHAR) as
+ 	  well as multiplying by sizeof (CHAR) to get the number of bytes
+ 	  to be copied. This improvement doesn't deal with the alignment
+ 	  issues as it requires a change in Obchunk which is postponed
+ 	  till ACE 5.2.3 is released.
 
         * tests/Obstack_Test.cpp:
 
@@ -53,7 +65,7 @@ Tue Sep 10 12:28:41 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 Mon Sep  9 16:44:00 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
-	* THANKS: Suprirse of surprise, Gautam Thakers name was not there
+	* THANKS: Surprise, surprise, Gautam Thaker'ss name was not there
 	  in the THANKS file. So added it.
 
 Mon Sep  9 16:57:41 2002  Steve Huston  <shuston@riverace.com>
@@ -108,6 +120,10 @@ Thu Sep  5 12:13:51 2002  Steve Huston  <shuston@riverace.com>
 
         * ACEXML/common/URL_Addr.inl: Removed ACE_RCSID - it's in URL_Addr.cpp.
 
+Wed Sep  4 16:31:29 2002  Douglas C. Schmidt <schmidt@cs.wustl.edu>
+  
+        * Kelly Clarkson wins "American Idol."  Go Kelly!!
+  
 Wed Sep  4 17:50:27 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.pl: Change run time limit from 300 to 400 seconds.

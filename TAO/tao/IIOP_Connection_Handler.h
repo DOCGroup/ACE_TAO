@@ -158,9 +158,10 @@ protected:
 private:
   /// TCP configuration for this connection.
   TAO_IIOP_Properties tcp_properties_;
+
+  /// Stores the type of service value.
   int dscp_codepoint_;
 };
-
 
 #if defined (__ACE_INLINE__)
 #include "tao/IIOP_Connection_Handler.i"

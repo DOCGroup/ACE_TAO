@@ -1,3 +1,9 @@
+Thu Sep 12 08:08:35 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.cpp (TAO_IIOP_Connection_Handler): 
+	  Initialize the dscp_codepoint_ value.  Thanks to Martin Johnson
+ 	  <mjohnson@quickcut.com.au> for reporting this.
+
 Thu Sep 12 11:31:13 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/Bug_1269_Regression/Echo.cpp:
