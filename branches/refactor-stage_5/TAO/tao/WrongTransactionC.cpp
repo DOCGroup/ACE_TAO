@@ -26,7 +26,6 @@
 #include "WrongTransactionC.h"
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"
@@ -47,7 +46,7 @@
 #include "WrongTransactionC.i"
 #endif /* !defined INLINE */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::WrongTransaction::WrongTransaction (void)
@@ -129,7 +128,7 @@ void CORBA::WrongTransaction::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -142,7 +141,7 @@ void CORBA::WrongTransaction::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -159,21 +158,21 @@ static const CORBA::Long _oc_CORBA_WrongTransaction[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5772), 
-  ACE_NTOHL (0x6f6e6754), 
-  ACE_NTOHL (0x72616e73), 
-  ACE_NTOHL (0x61637469), 
-  ACE_NTOHL (0x6f6e3a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f5772),
+  ACE_NTOHL (0x6f6e6754),
+  ACE_NTOHL (0x72616e73),
+  ACE_NTOHL (0x61637469),
+  ACE_NTOHL (0x6f6e3a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/WrongTransaction:1.0
     17,
-  ACE_NTOHL (0x57726f6e), 
-  ACE_NTOHL (0x67547261), 
-  ACE_NTOHL (0x6e736163), 
-  ACE_NTOHL (0x74696f6e), 
+  ACE_NTOHL (0x57726f6e),
+  ACE_NTOHL (0x67547261),
+  ACE_NTOHL (0x6e736163),
+  ACE_NTOHL (0x74696f6e),
   ACE_NTOHL (0x0),  // name = WrongTransaction
   0, // member count
   };
@@ -195,7 +194,7 @@ TAO_NAMESPACE_DEFINE (
   )
 TAO_NAMESPACE_END
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_cs.cpp:54
 
 // Copying insertion.

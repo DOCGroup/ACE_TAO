@@ -1025,7 +1025,7 @@ TAO_GIOP_Oneway_Invocation::TAO_GIOP_Oneway_Invocation (
                                byte_order),
     sync_scope_ (Messaging::SYNC_WITH_TRANSPORT)
 {
-  int has_synchronization = 0;
+  bool has_synchronization = 0;
   this->orb_core_->call_sync_scope_hook (this->stub_,
                                          has_synchronization,
                                          this->sync_scope_);

@@ -1,6 +1,7 @@
 //$Id$
 #include "Synch_Invocation.h"
 #include "Profile_Transport_Resolver.h"
+#include "Profile.h"
 #include "Synch_Reply_Dispatcher.h"
 #include "Transport.h"
 #include "Stub.h"
@@ -10,6 +11,7 @@
 #include "Wait_Strategy.h"
 #include "Messaging_SyncScopeC.h"
 #include "TAOC.h"
+#include <iostream>
 
 ACE_RCSID (tao,
            Synch_Invocation,
@@ -27,6 +29,7 @@ namespace TAO
   Invocation_Status
   Synch_Twoway_Invocation::remote_twoway (ACE_Time_Value *max_wait_time
                                           ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::Exception))
   {
     ACE_Countdown_Time countdown (max_wait_time);
 
@@ -39,83 +42,157 @@ namespace TAO
                                               &rd,
                                               this->resolver_.transport ()->tms ());
 
+
     if (dispatch_guard.status () != 0)
       {
-        // @@ What is the right way to handle this error?
-        // this->close_connection ();
-
+        // @@ What is the right way to handle this error? Do we need
+        // to call the interceptors in this case?
         ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
                                            CORBA::COMPLETED_NO),
                           TAO_INVOKE_FAILURE);
       }
 
+
     TAO_Target_Specification tspec;
     this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
+    Invocation_Status s = TAO_INVOKE_FAILURE;
+
+#if TAO_HAS_INTERCEPTORS == 1
+    s =
+      this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    if (s != TAO_INVOKE_SUCCESS)
+      return s;
+#endif /*TAO_HAS_INTERCEPTORS */
 
     TAO_OutputCDR &cdr =
       this->resolver_.transport ()->messaging_object ()->out_stream ();
 
-    this->write_header (tspec,
-                        cdr
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
-    this->marshal_data (cdr
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
-
-    countdown.update ();
-
-    Invocation_Status s =
-      this->send_message (cdr,
-                          TAO_Transport::TAO_TWOWAY_REQUEST,
-                          max_wait_time
-                          ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (s);
-
-    if (s != TAO_INVOKE_SUCCESS)
-      return s;
-
-    countdown.update ();
-
-    // @@ In all MT environments, there's a cancellation point lurking
-    // here; need to investigate.  Client threads would frequently be
-    // canceled sometime during recv_request ... the correct action to
-    // take on being canceled is to issue a CancelRequest message to the
-    // server and then imediately let other client-side cancellation
-    // handlers do their jobs.
-    //
-    // In C++, that basically means to unwind the stack using almost
-    // normal procedures: all destructors should fire, and some "catch"
-    // blocks should probably be able to handle things like releasing
-    // pointers. (Without unwinding the C++ stack, resources that must
-    // be freed by thread cancellation won't be freed, and the process
-    // won't continue to function correctly.)  The tricky part is that
-    // according to POSIX, all C stack frames must also have their
-    // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
-    // environment.
-
-    s =
-      this->wait_for_reply (max_wait_time,
-                            rd,
-                            dispatch_guard
+    // We have started the interception flow. We need to call the
+    // ending interception flow if things go wrong. The purpose of the
+    // try block is to do just this.
+    ACE_TRY
+      {
+        this->write_header (tspec,
+                            cdr
                             ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        this->marshal_data (cdr
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+
+        countdown.update ();
+
+        s =
+          this->send_message (cdr,
+                              TAO_Transport::TAO_TWOWAY_REQUEST,
+                              max_wait_time
+                              ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        if (s != TAO_INVOKE_SUCCESS)
+          return s;
+
+        countdown.update ();
+
+        // @@ In all MT environments, there's a cancellation point lurking
+        // here; need to investigate.  Client threads would frequently be
+        // canceled sometime during recv_request ... the correct action to
+        // take on being canceled is to issue a CancelRequest message to the
+        // server and then imediately let other client-side cancellation
+        // handlers do their jobs.
+        //
+        // In C++, that basically means to unwind the stack using almost
+        // normal procedures: all destructors should fire, and some "catch"
+        // blocks should probably be able to handle things like releasing
+        // pointers. (Without unwinding the C++ stack, resources that must
+        // be freed by thread cancellation won't be freed, and the process
+        // won't continue to function correctly.)  The tricky part is that
+        // according to POSIX, all C stack frames must also have their
+        // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
+        // environment.
+
+        s =
+          this->wait_for_reply (max_wait_time,
+                                rd,
+                                dispatch_guard
+                                ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+
+        s = this->check_reply_status (rd
+                                      ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+#if TAO_HAS_INTERCEPTORS == 1
+        if (s == TAO_INVOKE_SUCCESS)
+          {
+            s =
+              this->receive_reply_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
+        else if (s == TAO_INVOKE_RESTART)
+          {
+            s =
+              this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
+#endif /*TAO_HAS_INTERCEPTORS */
+      }
+    ACE_CATCHANY
+      {
+#if TAO_HAS_INTERCEPTORS == 1
+        PortableInterceptor::ReplyStatus status =
+          this->handle_any_exception (&ACE_ANY_EXCEPTION
+                                      ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        if (status == PortableInterceptor::LOCATION_FORWARD ||
+            status == PortableInterceptor::TRANSPORT_RETRY)
+          s = TAO_INVOKE_RESTART;
+        else if (status == PortableInterceptor::SYSTEM_EXCEPTION
+            || status == PortableInterceptor::USER_EXCEPTION)
+#endif /*TAO_HAS_INTERCEPTORS*/
+	  std::cout << "Here " << std::endl;
+          ACE_RE_THROW;
+      }
+# if defined (ACE_HAS_EXCEPTIONS) \
+     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
+    ACE_CATCHALL
+      {
+#if TAO_HAS_INTERCEPTORS == 1
+        PortableInterceptor::ReplyStatus st =
+          this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        if (st == PortableInterceptor::LOCATION_FORWARD ||
+            st == PortableInterceptor::TRANSPORT_RETRY)
+          s = TAO_INVOKE_RESTART;
+        else
+#endif /*TAO_HAS_INTERCEPTORS == 1*/
+	  std::cout << "Any chances " << std::endl;
+          ACE_RE_THROW;
+      }
+# endif  /* ACE_HAS_EXCEPTIONS &&
+            ACE_HAS_BROKEN_UNEXPECTED_EXCEPTION*/
+    ACE_ENDTRY;
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-
-    return this->check_reply_status (rd
-                                     ACE_ENV_ARG_PARAMETER);
+	  std::cout << "Here ????" << std::endl;
+    return s;
   }
-
 
   Invocation_Status
   Synch_Twoway_Invocation::wait_for_reply (ACE_Time_Value *max_wait_time,
                                            TAO_Synch_Reply_Dispatcher &rd,
                                            TAO_Bind_Dispatcher_Guard &bd
                                            ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     int reply_error =
       this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time,
@@ -184,7 +261,6 @@ namespace TAO
   Synch_Twoway_Invocation::check_reply_status (TAO_Synch_Reply_Dispatcher &rd
                                                ACE_ENV_ARG_DECL)
   {
-    // Grab the reply CDR
     TAO_InputCDR &cdr =
       rd.reply_cdr ();
 
@@ -199,105 +275,60 @@ namespace TAO
     switch (rd.reply_status ())
       {
       case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
-        if (this->details_.demarshal_args (rd.reply_cdr ()) == false)
-          ACE_THROW_RETURN (CORBA::MARSHAL (),
-                            TAO_INVOKE_FAILURE);
+        {
+          Reply_Guard mon (this,
+                           TAO_INVOKE_FAILURE);
+          if (this->details_.demarshal_args (cdr) == false)
+            {
+              this->reply_received (TAO_INVOKE_FAILURE);
+
+              ACE_THROW_RETURN (CORBA::MARSHAL (),
+                                TAO_INVOKE_FAILURE);
+            }
+
+          mon.set_status (TAO_INVOKE_SUCCESS);
+        }
         break;
       case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
-        // Handle the forwarding and return so the stub restarts the
-        // request!
         return this->location_forward (cdr
                                        ACE_ENV_ARG_PARAMETER);
       case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
         return this->handle_user_exception (cdr
                                             ACE_ENV_ARG_PARAMETER);
       case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
-        // return this->handle_system_exception (ACE_ENV_SINGLE_ARG_PARAMETER)
-        break;
-#if 0
+        return this->handle_system_exception (cdr
+                                              ACE_ENV_ARG_PARAMETER);
+
+      case TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE:
         {
-        // @@ Add the location macros for this exceptions...
+          Reply_Guard mon (this,
+                           TAO_INVOKE_FAILURE);
+          // We have received a message with a request to change the
+          // addressing mode. First let us read the mode that the
+          // server/agent asks for.
+          CORBA::Short addr_mode = 0;
 
-        CORBA::String_var type_id;
-
-        if ((this->inp_stream () >> type_id.inout ()) == 0)
-          {
-            // Could not demarshal the exception id, raise an local
-            // CORBA::MARSHAL
+          if (cdr.read_short (addr_mode) == 0)
+            {
+              // Could not demarshal the addressing disposition, raise an local
+              // CORBA::MARSHAL
             ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                               CORBA::COMPLETED_MAYBE),
-                              TAO_INVOKE_OK);
-          }
+                              TAO_INVOKE_FAILURE);
+            }
 
-        CORBA::ULong minor = 0;
-        CORBA::ULong completion = 0;
+          // Now set this addressing mode in the profile, so that
+          // the next invocation need not go through this.
+          this->resolver_.profile ()->addressing_mode (addr_mode
+                                                       ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-        if ((this->inp_stream () >> minor) == 0
-            || (this->inp_stream () >> completion) == 0)
-          {
-            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                              CORBA::COMPLETED_MAYBE),
-                              TAO_INVOKE_OK);
-          }
+          mon.set_status (TAO_INVOKE_RESTART);
 
-        CORBA::SystemException *ex =
-          TAO_Exceptions::create_system_exception (type_id.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_OK);
-
-        if (ex == 0)
-          {
-            // @@ We should raise a CORBA::NO_MEMORY, but we ran out
-            //    of memory already. We need a pre-allocated, TSS,
-            //    CORBA::NO_MEMORY instance
-            ACE_NEW_RETURN (ex,
-                            CORBA::UNKNOWN,
-                            TAO_INVOKE_EXCEPTION);
-          }
-
-        ex->minor (minor);
-        ex->completed (CORBA::CompletionStatus (completion));
-
-#if defined (TAO_HAS_EXCEPTIONS)
-        // Without this, the call to create_system_exception() above
-        // causes a memory leak. On platforms without native exceptions,
-        // the CORBA::Environment class manages the memory.
-        auto_ptr<CORBA::SystemException> safety (ex);
-#endif
-
-        // Raise the exception.
-        ACE_ENV_RAISE (ex);
-
-        return TAO_INVOKE_OK;
-      }
-      // NOTREACHED.
-    case TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE:
-      {
-        // We have received an exception with a request to change the
-        // addressing mode. First let us read the mode that the
-        // server/agent asks for.
-        CORBA::Short addr_mode = 0;
-        if (this->inp_stream ().read_short (addr_mode) == 0)
-          {
-            // Could not demarshal the addressing disposition, raise an local
-            // CORBA::MARSHAL
-            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                              CORBA::COMPLETED_MAYBE),
-                              TAO_INVOKE_OK);
-          }
-
-        // Now set this addressing mode in the profile, so that
-        // the next invocation need not go through this.
-        this->profile_->addressing_mode (addr_mode
-                                         ACE_ENV_ARG_PARAMETER);
-
-        // Now restart the invocation
-        return TAO_INVOKE_RESTART;
-      }
-#endif
-
+          // Now restart the invocation
+          return TAO_INVOKE_RESTART;
+        }
     }
-
     return TAO_INVOKE_SUCCESS;
   }
 
@@ -306,9 +337,23 @@ namespace TAO
                                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    Reply_Guard mon (this,
+                     TAO_INVOKE_FAILURE);
+
+    if (TAO_debug_level > 3)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::location_forward ")
+                    ACE_TEXT ("being handled \n")));
+      }
+
     if ((inp_stream >> this->forwarded_to_.out ()) == 0)
       {
-        ACE_THROW_RETURN (CORBA::MARSHAL (),
+        ACE_THROW_RETURN (CORBA::MARSHAL (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+              errno),
+            CORBA::COMPLETED_NO),
                           TAO_INVOKE_FAILURE);
       }
 
@@ -318,29 +363,41 @@ namespace TAO
       this->forwarded_to_->_stubobj ();
 
     if (stubobj == 0)
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
+      ACE_THROW_RETURN (CORBA::INTERNAL (
+          CORBA::SystemException::_tao_minor_code (
+            TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+            errno),
+          CORBA::COMPLETED_NO),
                         TAO_INVOKE_FAILURE);
 
     // Reset the profile in the stubs
     this->resolver_.stub ()->add_forward_profiles (stubobj->base_profiles ());
 
-    // Is this check needed?
-    /*
     if (this->resolver_.stub ()->next_profile () == 0)
       ACE_THROW (CORBA::TRANSIENT (
         CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
           errno),
         CORBA::COMPLETED_NO));
-    */
+
+    mon.set_status (TAO_INVOKE_RESTART);
+
     return TAO_INVOKE_RESTART;
   }
 
   Invocation_Status
   Synch_Twoway_Invocation::handle_user_exception (TAO_InputCDR &cdr
                                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+    ACE_THROW_SPEC ((CORBA::Exception))
   {
+    Reply_Guard mon (this,
+                     TAO_INVOKE_FAILURE);
+
+    if (TAO_debug_level > 3)
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Synch_Twoway_Invocation::"
+                  "handle_user_exception \n"));
+
     // Pull the exception from the stream.
     CORBA::String_var buf;
 
@@ -365,13 +422,12 @@ namespace TAO
     if (TAO_debug_level > 5)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t) Synch_Twoway_Invocation::handle_user_exception - ")
-                    ACE_TEXT ("raising exception %s\n"),
+                    "TAO (%P|%t) - Synch_Twoway_Invocation::"
+                    "handle_user_exception - "
+                    "raising exception %s\n",
                     buf.in ()));
       }
 
-    // @@ Think about a better way to raise the exception here,
-    //    maybe we need some more macros?
 #if defined (TAO_HAS_EXCEPTIONS)
     // If we have native exceptions, we must manage the memory allocated
     // by the call above to alloc(). Otherwise the Environment class
@@ -385,9 +441,81 @@ namespace TAO
     ACE_TRY_ENV.exception (exception);
 #endif
 
-    return TAO_INVOKE_SUCCESS;
+    mon.set_status (TAO_INVOKE_USER_EXCEPTION);
+
+    return TAO_INVOKE_USER_EXCEPTION;
   }
 
+  Invocation_Status
+  Synch_Twoway_Invocation::handle_system_exception (TAO_InputCDR &cdr
+                                                    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    Reply_Guard mon (this,
+                     TAO_INVOKE_FAILURE);
+
+    // if (TAO_debug_level > 3)
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Synch_Twoway_Invocation::"
+                  "handle_system_exception \n"));
+
+    CORBA::String_var type_id;
+
+    if ((cdr >> type_id.inout ()) == 0)
+      {
+        // Could not demarshal the exception id, raise an local
+        // CORBA::MARSHAL
+        ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_MAYBE),
+                          TAO_INVOKE_FAILURE);
+      }
+
+    CORBA::ULong minor = 0;
+    CORBA::ULong completion = 0;
+
+    if ((cdr >> minor) == 0
+        || (cdr >> completion) == 0)
+      {
+        ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_MAYBE),
+                          TAO_INVOKE_FAILURE);
+      }
+
+    CORBA::SystemException *ex =
+      TAO_Exceptions::create_system_exception (type_id.in ()
+                                               ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    if (ex == 0)
+      {
+        // @@ We should raise a CORBA::NO_MEMORY, but we ran out
+        //    of memory already. We need a pre-allocated, TSS,
+        //    CORBA::NO_MEMORY instance
+        ACE_NEW_RETURN (ex,
+                        CORBA::UNKNOWN,
+                        TAO_INVOKE_FAILURE);
+      }
+
+    ex->minor (minor);
+    ex->completed (CORBA::CompletionStatus (completion));
+
+#if defined (TAO_HAS_EXCEPTIONS)
+    // Without this, the call to create_system_exception() above
+    // causes a memory leak. On platforms without native exceptions,
+    // the CORBA::Environment class manages the memory.
+    auto_ptr<CORBA::SystemException> safety (ex);
+#endif
+   ACE_DEBUG ((LM_DEBUG,
+              "TAO (%P|%t) - Synch_Twoway_Invocation::"
+               "handle_system_exception  about to raise\n"));
+
+    mon.set_status (TAO_INVOKE_SYSTEM_EXCEPTION);
+
+    // Raise the exception.
+    ACE_ENV_RAISE (ex);
+
+    return TAO_INVOKE_SYSTEM_EXCEPTION;
+  }
 /*================================================================================*/
 
   Synch_Oneway_Invocation::Synch_Oneway_Invocation (Profile_Transport_Resolver &r,
@@ -401,6 +529,7 @@ namespace TAO
   Invocation_Status
   Synch_Oneway_Invocation::remote_oneway (ACE_Time_Value *max_wait_time
                                           ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::Exception))
   {
     ACE_Countdown_Time countdown (max_wait_time);
 
@@ -417,32 +546,112 @@ namespace TAO
     this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
+    Invocation_Status s = TAO_INVOKE_FAILURE;
+
+#if TAO_HAS_INTERCEPTORS == 1
+    s = this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    if (s != TAO_INVOKE_SUCCESS)
+      return s;
+#endif /*TAO_HAS_INTERCEPTORS */
+
     TAO_OutputCDR &cdr =
       this->resolver_.transport ()->messaging_object ()->out_stream ();
 
-    this->write_header (tspec,
-                        cdr
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
-    this->marshal_data (cdr
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
-    countdown.update ();
-
-    if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT))
+    ACE_TRY
       {
-        return this->send_message (cdr,
-                                   TAO_Transport::TAO_TWOWAY_REQUEST,
-                                   max_wait_time
-                                   ACE_ENV_ARG_PARAMETER);
-      }
+        this->write_header (tspec,
+                            cdr
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
-    return this->send_message (cdr,
-                               TAO_Transport::TAO_ONEWAY_REQUEST,
-                               max_wait_time
-                               ACE_ENV_ARG_PARAMETER);
+        this->marshal_data (cdr
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        countdown.update ();
+
+        if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT))
+          {
+            s = this->send_message (cdr,
+                                    TAO_Transport::TAO_TWOWAY_REQUEST,
+                                    max_wait_time
+                                    ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
+        else
+          {
+            s = this->send_message (cdr,
+                                    TAO_Transport::TAO_ONEWAY_REQUEST,
+                                    max_wait_time
+                                    ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
+
+#if TAO_HAS_INTERCEPTORS == 1
+        s =
+          this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+#endif /*TAO_HAS_INTERCEPTORS */
+      }
+    ACE_CATCHANY
+      {
+#if TAO_HAS_INTERCEPTORS == 1
+        PortableInterceptor::ReplyStatus status =
+          this->handle_any_exception (&ACE_ANY_EXCEPTION
+                                      ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        if (status == PortableInterceptor::LOCATION_FORWARD ||
+            status == PortableInterceptor::TRANSPORT_RETRY)
+          s = TAO_INVOKE_RESTART;
+        else if (status == PortableInterceptor::SYSTEM_EXCEPTION
+            || status == PortableInterceptor::USER_EXCEPTION)
+#endif /*TAO_HAS_INTERCEPTORS*/
+          ACE_RE_THROW;
+      }
+# if defined (ACE_HAS_EXCEPTIONS) \
+     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
+    ACE_CATCHALL
+      {
+#if TAO_HAS_INTERCEPTORS == 1
+        PortableInterceptor::ReplyStatus st =
+          this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        if (st == PortableInterceptor::LOCATION_FORWARD ||
+            st == PortableInterceptor::TRANSPORT_RETRY)
+          s = TAO_INVOKE_RESTART;
+        else
+#endif /*TAO_HAS_INTERCEPTORS == 1*/
+          ACE_RE_THROW;
+      }
+# endif  /* ACE_HAS_EXCEPTIONS &&
+            ACE_HAS_BROKEN_UNEXPECTED_EXCEPTION*/
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    return s;
   }
 
+  /*================================================================================*/
+
+  Reply_Guard::Reply_Guard (Invocation_Base *b,
+                            Invocation_Status s)
+    : invocation_ (b)
+    , status_ (s)
+  {
+  }
+
+  Reply_Guard::~Reply_Guard (void)
+  {
+    this->invocation_->reply_received (this->status_);
+  }
+
+  void
+  Reply_Guard::set_status (Invocation_Status s)
+  {
+    this->status_ = s;
+  }
 }

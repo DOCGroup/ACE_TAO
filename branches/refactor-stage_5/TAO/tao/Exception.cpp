@@ -11,9 +11,9 @@
 #include "ORB.h"
 #include "ORB_Core.h"
 #include "Any_SystemException.h"
-
 #include "ace/streams.h"
 #include "ace/Malloc.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Exception.i"
@@ -1218,6 +1218,7 @@ STANDARD_EXCEPTION_LIST
 void \
 CORBA::name ::_raise (void) \
 { \
+  std::cout << "Here " << std::endl; \
   TAO_RAISE (*this); \
 }
 
@@ -1282,7 +1283,7 @@ STANDARD_EXCEPTION_LIST
 CORBA::SystemException * \
 CORBA::name ::_tao_create (void) \
 { \
-  CORBA::SystemException *result; \
+  CORBA::name *result; \
   ACE_NEW_RETURN (result, CORBA::name (), 0); \
   return result; \
 }

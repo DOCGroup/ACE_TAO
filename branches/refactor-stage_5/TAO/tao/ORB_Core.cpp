@@ -2543,7 +2543,7 @@ TAO_ORB_Core::implrepo_service (void)
 
 void
 TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
-                                    int &has_synchronization,
+                                    bool &has_synchronization,
                                     Messaging::SyncScope &scope)
 {
   Sync_Scope_Hook sync_scope_hook =
@@ -2551,7 +2551,7 @@ TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
 
   if (sync_scope_hook == 0)
     {
-      has_synchronization = 0;
+      has_synchronization = false;
       return;
     }
 

@@ -2,6 +2,7 @@
 #include "operation_details.h"
 #include "Stub.h"
 #include "Argument.h"
+#include <iostream>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/operation_details.i"
@@ -16,7 +17,7 @@ TAO_Operation_Details::corba_exception (const char *id
                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  for (CORBA::ULong i = 0; i < this->ex_count_; ++i)
+  for (CORBA::ULong i = 0; i != this->ex_count_; ++i)
     {
       if (ACE_OS::strcmp (id,
                           this->ex_data_[i].id) != 0)
@@ -34,8 +35,12 @@ TAO_Operation_Details::corba_exception (const char *id
                                               CORBA::COMPLETED_YES),
                             0);
         }
+
+      // Return the exception object that we just created.
+      return exception;
     }
 
+  // If there are no matches return an unknown exception.
   ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_YES),
                     0);
@@ -67,29 +72,42 @@ TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
 }
 
 bool
-TAO_Operation_Details::parameter_list (Dynamic::ParameterList &list)
+TAO_Operation_Details::parameter_list (Dynamic::ParameterList &param_list)
 {
-  list.length (this->num_args_);
+  param_list.length (this->num_args_);
 
    for (CORBA::ULong i = 0; i != this->num_args_; ++i)
-     (*this->args_[i]).interceptor_param (list[i]);
+     this->args_[i]->interceptor_param (param_list[i]);
 
    return true;
 }
 
 
 bool
-TAO_Operation_Details::exception_list (Dynamic::ExceptionList &)
+TAO_Operation_Details::exception_list (Dynamic::ExceptionList &exception_list)
 {
-  /*if (this->ex_count_)
+  if (this->ex_count_)
     {
-      list.length (this->ex_count_);
+      exception_list.length (this->ex_count_);
 
-      for (int i = 0; i != this->ex_count_; ++i)
+      for (CORBA::ULong i = 0;
+           i != this->ex_count_;
+           ++i)
         {
-          if (!((*this->args_[i]).interceptor_param (list[i])))
-            return false;
+          CORBA::TypeCode_ptr tcp = this->ex_data_[i].tc_ptr;
+          TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
+          exception_list[i] = tcp_object;
         }
-        }*/
+    }
+  return true;
+}
+
+
+bool
+TAO_Operation_Details::result (CORBA::Any *any)
+{
+  for (CORBA::ULong i = 0; i != this->num_args_; ++i)
+    (*this->args_[i]).interceptor_result (any);
+
   return true;
 }

@@ -16,7 +16,7 @@ namespace TAO
 {
   Remote_Invocation::Remote_Invocation (Profile_Transport_Resolver &resolver,
                                         TAO_Operation_Details &detail)
-    : Invocation_Base (resolver.stub (), detail)
+    : Invocation_Base (resolver.object (), detail)
     , resolver_ (resolver)
   {
   }

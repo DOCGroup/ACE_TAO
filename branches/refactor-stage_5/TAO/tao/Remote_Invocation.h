@@ -22,7 +22,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Invocation_Base.h"
+
+
+
 #include "ace/CORBA_macros.h"
+
 
 
 class TAO_Operation_Details;
@@ -72,6 +76,7 @@ namespace TAO
 
   protected:
     Profile_Transport_Resolver &resolver_;
+
   };
 }
 

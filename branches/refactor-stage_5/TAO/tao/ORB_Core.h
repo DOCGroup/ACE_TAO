@@ -621,14 +621,14 @@ public:
 
 
   void call_sync_scope_hook (TAO_Stub *stub,
-                             int &has_synchronization,
+                             bool &has_synchronization,
                              Messaging::SyncScope &scope);
 
   TAO_Sync_Strategy &get_sync_strategy (TAO_Stub *stub,
                                         Messaging::SyncScope &scope);
   typedef void (*Sync_Scope_Hook) (TAO_ORB_Core *,
                                    TAO_Stub *,
-                                   int &,
+                                   bool &,
                                    Messaging::SyncScope &);
   static void set_sync_scope_hook (Sync_Scope_Hook hook);
 

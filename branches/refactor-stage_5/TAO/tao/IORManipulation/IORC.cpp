@@ -1178,8 +1178,7 @@ TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (void)
 
 TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (CORBA::ULong max)
   : TAO_Unbounded_Pseudo_Sequence<
-        CORBA::Object,
-        CORBA::Object_var
+        CORBA::Object
       >
     (max)
 {}
@@ -1191,16 +1190,14 @@ TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Pseudo_Sequence<
-        CORBA::Object,
-        CORBA::Object_var
+        CORBA::Object
       >
     (max, length, buffer, release)
 {}
 
 TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (const IORList &seq)
   : TAO_Unbounded_Pseudo_Sequence<
-        CORBA::Object,
-        CORBA::Object_var
+        CORBA::Object
       >
     (seq)
 {}
@@ -1263,7 +1260,7 @@ template class
 #pragma instantiate TAO_Pseudo_Object_Manager< \
           CORBA::Object, \
           CORBA::Object_var \
-        > 
+        >
 # pragma instantiate \
   TAO_Seq_Var_Base_T< \
       TAO_IOP::TAO_IOR_Manipulation::IORList, \

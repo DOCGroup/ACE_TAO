@@ -15,9 +15,8 @@
 
 #ifndef TAO_EXCEPTION_H
 #define TAO_EXCEPTION_H
-
 #include "ace/pre.h"
-#include "tao/TAO_Export.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,9 +27,8 @@
 #define TAO_RAISE(EXCEPTION) throw EXCEPTION
 #else
 #define TAO_RAISE(EXCEPTION)
-#endif /* TAO_HAS_EXCEPTIONS */
+#endif /* ACE_HAS_EXCEPTIONS */
 
-#include "tao/Basic_Types.h"
 
 #include "ace/CORBA_macros.h"
 #include "ace/SStringfwd.h"
@@ -304,7 +302,7 @@ namespace CORBA
     /// Overridden base class method to help compilers that use
     /// explicit template instantiations going
     virtual CORBA::Exception *_tao_duplicate (void) const {return 0;}
-    virtual void _raise (void) {}
+    //  virtual void _raise (void) {}
 
   protected:
 
