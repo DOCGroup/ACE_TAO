@@ -1,3 +1,9 @@
+Wed Apr 16 16:55:47 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/SString.{h,cpp}: Modified CString to not allocate 1 byte for
+	  a 0 length string.  Instead, set the internal representation to
+	  the address of static class character null_string_.
+
 Wed Apr 16 11:47:35 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/Map_Manager.cpp (free_search_structure): Added the loop
