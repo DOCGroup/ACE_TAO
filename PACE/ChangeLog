@@ -1,3 +1,10 @@
+Sat Jun 24 7:10 2000 <jwh1@cs.wustl.edu>
+
+        * pace/pace/posix/unistd.inl
+        * pace/pace/posix/signal.inl
+
+          Added PACE_UNUSED_ARG where needed.
+
 Wed Jun 21 18:50:04 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* in.h, inet.h, netdb.h, socket.h, strings.h, thread.h
