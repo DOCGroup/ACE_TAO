@@ -1,3 +1,8 @@
+Tue Jan 15 12:33:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.cpp: 
+	  Removed stray characters put in by mistake.
+
 Tue Jan 15 12:28:21 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/PortableInterceptorC.i: 
