@@ -440,7 +440,11 @@ main (int argc, char *argv[])
   if (ACE_OS::sched_params (
         ACE_Sched_Params (
           ACE_SCHED_FIFO,
+#if defined (__Lynx__)
+          30,
+#else  /* ! __Lynx__ */
           ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
+#endif /* ! __Lynx__ */
           ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
