@@ -3,6 +3,8 @@
 
 #include "mmap.h"
 
+#include "ace/Log_Msg.h"
+
 int main (int, char *[])
 {
     ACE_Shared_Memory_MM shm_client (SHM_KEY, SHMSZ);

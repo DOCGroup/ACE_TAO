@@ -40,8 +40,6 @@ run_test (int iterations,
       ACE_OS::sprintf (message->wr_ptr (), "This is message %d.", i);
       message->wr_ptr (strlen (message->rd_ptr ()));
 
-      *(message->wr_ptr ()) = 0;  // Null-terminate the string we just wrote
-
       message->wr_ptr (1);        // Move beyond the NULL
 
       /* To copy arbitrary data into a message block, we use the

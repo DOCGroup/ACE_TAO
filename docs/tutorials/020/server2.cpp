@@ -3,6 +3,8 @@
 
 #include "mmap.h"
 
+#include "ace/Log_Msg.h"
+
 int
 main (int, char *[])
 {
@@ -28,4 +30,3 @@ main (int, char *[])
 
     return 0;
 }
-

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Log_Msg.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 

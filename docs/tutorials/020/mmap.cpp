@@ -3,6 +3,8 @@
 
 #include "mmap.h"
 
+#include "ace/Log_Msg.h"
+
 SharedData::SharedData(int _initialize)
     : available_(0)
 {
