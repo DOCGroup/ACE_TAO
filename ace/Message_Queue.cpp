@@ -252,7 +252,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::signal_enqueue_waiters (void)
   if (this->enqueue_waiters_ > 0)
     {
       --this->enqueue_waiters_;
-      this->not_full_cond_.release ();
+      return this->not_full_cond_.release ();
     }
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
   return 0;
@@ -269,7 +269,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::signal_dequeue_waiters (void)
   if (this->dequeue_waiters_ > 0)
     {
       --this->dequeue_waiters_;
-      this->not_empty_cond_.release ();
+      return this->not_empty_cond_.release ();
     }
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
   return 0;
