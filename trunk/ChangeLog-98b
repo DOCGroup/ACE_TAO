@@ -23,7 +23,12 @@ Mon May 11 12:31:41 1998  Steve Huston  <shuston@riverace.com>
 Mon May 11 12:27:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/ACE.cpp (send_n): retry if ACE::send () fails due to
-          EWOULDBLOCK.
+          EWOULDBLOCK.  Thanks to Dave Brackman <dbrackma@OhioEE.com>
+          for reporting this.
+
+        * tests/Env_Value_Test.cpp (main): check return values of
+          options.setenv () calls.  Thanks to Bob Laferriere
+          <laferrie@gsao.med.ge.com> for recommending this.
 
         * include/makeinclude/platform_vxworks5.x_ghs.GNU: instead of
           using GNU ranlib386 after using GHS ax for i386 targets, just
