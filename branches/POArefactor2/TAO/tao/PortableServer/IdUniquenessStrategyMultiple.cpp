@@ -30,7 +30,7 @@ namespace TAO
     bool
     IdUniquenessStrategyMultiple::is_servant_activation_allowed (
       PortableServer::Servant /*servant*/,
-      int &/*wait_occurred_restart_call*/)
+      int & /*wait_occurred_restart_call*/)
     {
       // With the multiple id strategy we can always activate the servant
       // another time
@@ -54,11 +54,10 @@ namespace TAO
         0
       )
 
-    #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
     template class ACE_Dynamic_Service<IdUniquenessStrategyMultiple>;
-    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-    #pragma instantiate ACE_Dynamic_Service<IdUniquenessStrategyMultiple>
-    #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Dynamic_Service<IdUniquenessStrategyMultiple>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
 }
-

@@ -40,8 +40,8 @@ namespace TAO
        * @retval false This servant may not be activated
        */
       virtual bool is_servant_activation_allowed (
-        PortableServer::Servant servant,
-        int &wait_occurred_restart_call) = 0;
+        PortableServer::Servant s,
+        int &w) = 0;
 
       virtual bool allow_multiple_activations (void) const = 0;
     };

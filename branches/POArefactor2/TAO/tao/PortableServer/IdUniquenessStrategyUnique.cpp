@@ -20,6 +20,7 @@ namespace TAO
     {
     }
 
+    // @@ Johnny, I suspect a
     void
     IdUniquenessStrategyUnique::strategy_init (
       TAO_Root_POA *poa
@@ -29,7 +30,7 @@ namespace TAO
     }
 
     void
-    IdUniquenessStrategyUnique::strategy_cleanup(
+    IdUniquenessStrategyUnique::strategy_cleanup (
       ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
       poa_ = 0;
@@ -73,11 +74,10 @@ namespace TAO
         0
       )
 
-    #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-    template class ACE_Dynamic_Service<IdUniquenessStrategyUnique>;
-    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-    #pragma instantiate ACE_Dynamic_Service<IdUniquenessStrategyUnique>
-    #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+      template class ACE_Dynamic_Service<IdUniquenessStrategyUnique>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Dynamic_Service<IdUniquenessStrategyUnique>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
 }
-

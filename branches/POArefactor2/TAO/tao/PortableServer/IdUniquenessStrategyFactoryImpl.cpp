@@ -43,6 +43,9 @@ namespace TAO
         }
         case ::PortableServer::UNIQUE_ID :
         {
+          // @@Johnny, why is there a difference between these
+          // multiple and unique.
+
 /*          strategy =
             ACE_Dynamic_Service<IdUniquenessStrategy>::instance ("IdUniquenessStrategyUnique");
 
@@ -81,4 +84,3 @@ namespace TAO
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
 }
-

@@ -30,15 +30,14 @@ namespace TAO
         0
       )
 
-    #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-    template class ACE_Dynamic_Service<IdUniquenessPolicyValueMultiple>;
+      template class ACE_Dynamic_Service<IdUniquenessPolicyValueMultiple>;
 
-    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-    #pragma instantiate ACE_Dynamic_Service<IdUniquenessPolicyValueMultiple>
+#pragma instantiate ACE_Dynamic_Service<IdUniquenessPolicyValueMultiple>
 
-    #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
 }
-

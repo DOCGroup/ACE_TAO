@@ -41,9 +41,11 @@ namespace TAO
     {
       ImplicitActivationPolicy* policy = 0;
 
-      ACE_NEW_RETURN (policy,
-                      ImplicitActivationPolicy,
-                      ::PortableServer::ImplicitActivationPolicy::_nil ());
+      ACE_NEW_THROW_EX (policy,
+                        ImplicitActivationPolicy,
+                        CORBA::NO_MEMORY ());
+
+      ACE_CHECK_RETURN (::PortableServer::ImplicitActivationPolicy::_nil ());
 
       (void) policy->init (value ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::PortableServer::ImplicitActivationPolicy::_nil ());
@@ -75,4 +77,3 @@ namespace TAO
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-

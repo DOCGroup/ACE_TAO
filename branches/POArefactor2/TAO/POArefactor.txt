@@ -1,3 +1,24 @@
+Mon Jan 24 17:30:06 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/PortableServer/Active_Policy_Strategies.cpp:
+	* tao/PortableServer/IdUniquenessPolicyValue.cpp:
+	* tao/PortableServer/IdUniquenessPolicyValueMultiple.cpp:
+	* tao/PortableServer/IdUniquenessPolicyValueUnique.cpp:
+	* tao/PortableServer/IdUniquenessStrategy.h:
+	* tao/PortableServer/IdUniquenessStrategyFactoryImpl.cpp:
+	* tao/PortableServer/IdUniquenessStrategyMultiple.cpp:
+	* tao/PortableServer/IdUniquenessStrategyMultiple.h:
+	* tao/PortableServer/IdUniquenessStrategyUnique.cpp:
+	* tao/PortableServer/IdUniquenessStrategyUnique.h:
+	* tao/PortableServer/ImplicitActivationPolicyFactory.h:
+	* tao/PortableServer/ImplicitActivationPolicyFactoryImpl.cpp:
+	* tao/PortableServer/ImplicitActivationPolicyValue.cpp:
+	* tao/PortableServer/ImplicitActivationPolicyValueExplicit.cpp:
+	* tao/PortableServer/ImplicitActivationPolicyValueImplicit.cpp:
+
+	  Cosmetic fixes and @@ comments for Johnny. Looks like there is a
+	  race condition that Johnny may have to address. 
+
 Mon Jan 24 11:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/IdAssignmentPolicyValueSystem.h:

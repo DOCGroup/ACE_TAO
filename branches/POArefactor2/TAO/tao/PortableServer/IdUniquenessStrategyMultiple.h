@@ -32,13 +32,13 @@ namespace TAO
     public:
       virtual ~IdUniquenessStrategyMultiple (void);
 
-      virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL);
+      virtual void strategy_init (TAO_Root_POA *poa ACE_ENV_ARG_DECL);
 
-      virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
+      virtual void strategy_cleanup (ACE_ENV_SINGLE_ARG_DECL);
 
       virtual bool is_servant_activation_allowed (
         PortableServer::Servant servant,
-        int &wait_occurred_restart_call);
+        int &w);
 
       virtual bool allow_multiple_activations (void) const;
     };

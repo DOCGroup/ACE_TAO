@@ -39,6 +39,8 @@ namespace TAO
        * change this to a CORBA::Policy_ptr create() call, which is defined
        * as pure virtual in the base. This is something for the future.
        */
+      // @@Johnny, just a thought -- could you may be pass
+      // ACE_ENV_ARG_DECL in both the calls or just none of 'em?
       virtual ::PortableServer::ImplicitActivationPolicy_ptr create (
         ::PortableServer::ImplicitActivationPolicyValue value) = 0;
 

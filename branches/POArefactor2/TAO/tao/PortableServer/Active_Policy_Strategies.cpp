@@ -175,6 +175,8 @@ namespace TAO
 
 // @todo, check if all pointers are != 0
 
+      // @@Johnny Race here too. Please see below for why there is a
+      // race.
       if (lifespan_strategy_ != 0)
         {
           lifespan_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
@@ -221,6 +223,14 @@ namespace TAO
     void
     Active_Policy_Strategies::cleanup (ACE_ENV_SINGLE_ARG_DECL)
     {
+
+      // @@Johnny, I see a race condition or misbehaviour
+      // here. Imagine this. In one thread a POA is being shutdown and
+      // in another thread a POA is being created. Based on how things
+      // go the strategy_cleanup calls could set the POA to be zero on
+      // singleton instances of strategies. This I believe is going to
+      // mess things up. There are NO tests to catch this race
+      // conditiion. Thoughts?
       if (lifespan_strategy_ != 0)
         {
           lifespan_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
