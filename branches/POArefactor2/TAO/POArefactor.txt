@@ -1,3 +1,10 @@
+Mon Nov 29 18:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer.cpp:
+        * tao/PortableServer/ThreadStrategy*.{h,cpp}:
+          Made the different thread strategy implementations loadable with
+          service config.
+
 Mon Nov 29 15:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ImplRepo.pidl:
