@@ -45,6 +45,8 @@ be_visitor_interface_fwd_ci::~be_visitor_interface_fwd_ci (void)
 int
 be_visitor_interface_fwd_ci::visit_interface_fwd (be_interface_fwd *node)
 {
+  TAO_OutStream *os = this->ctx_->stream ();
+
   if (!node->cli_inline_gen () && !node->imported ())
     {
 #if 0
@@ -61,4 +63,4 @@ be_visitor_interface_fwd_ci::visit_interface_fwd (be_interface_fwd *node)
       node->cli_inline_gen (I_TRUE);
     }
   return 0;
-}
+ }
