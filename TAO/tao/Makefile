@@ -200,6 +200,7 @@ ORB_CORE_FILES = \
   CONV_FRAMES \
   Tagged_Components \
   GIOPC \
+  GIOPS \
   BoundsC \
   TAOC \
   TAOS \
