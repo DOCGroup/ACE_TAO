@@ -520,7 +520,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << ")" << be_nl
           << ": ";
 
-      if (this->has_mixed_parentage_ && ! this->is_abstract ())
+      if (this->has_mixed_parentage_)
         {
           *os << "ACE_NESTED_CLASS (CORBA, AbstractBase) ("
               << be_idt << be_idt << be_idt_nl
@@ -553,19 +553,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           *os << be_idt;
         }
 
-      if (is_abstract_)
-        {
-          if (this->pd_n_inherits == 0)
-            {
-              *os << "ACE_NESTED_CLASS (CORBA, AbstractBase) ("
-                  << be_idt << be_idt_nl
-                  << "objref," << be_nl
-                  << "_tao_collocated," << be_nl
-                  << "servant" << be_uidt_nl
-                  << ")" << be_uidt;
-            }
-        }
-      else
+      if (!is_abstract_)
         {
           *os << "ACE_NESTED_CLASS (CORBA, Object) ("
               << be_idt << be_idt_nl
