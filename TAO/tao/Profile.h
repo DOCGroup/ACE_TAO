@@ -29,9 +29,9 @@ class TAO_Endpoint;
 class TAO_ORB_Core;
 
 
-/// Forward declaration of PolicyList
 namespace CORBA
 {
+  /// Forward declaration of PolicyList
   class PolicyList;
 }
 
@@ -72,7 +72,7 @@ public:
   /// maintains ownership.
   const TAO_GIOP_Message_Version &version (void) const;
 
-  /// Get a pointer to the <TAO_ORB_Core>.
+  /// Get a pointer to the TAO_ORB_Core.
   TAO_ORB_Core *orb_core (void) const;
 
   /// Increase the reference count by one on this object.
