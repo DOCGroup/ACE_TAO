@@ -86,10 +86,6 @@ Object_A_Server::init (int argc,
                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "The IOR is: <%s>\n",
-              str.in ()));
-
   if (this->ior_output_file_)
     {
       ACE_OS::fprintf (this->ior_output_file_,

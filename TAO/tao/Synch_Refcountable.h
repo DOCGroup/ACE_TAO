@@ -12,18 +12,20 @@
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================
+
 #ifndef TAO_SYNCH_REFCOUNTABLE_H
 #define TAO_SYNCH_REFCOUNTABLE_H
-#include /**/ "ace/pre.h"
 
+#include /**/ "ace/pre.h"
 #include "ace/Refcountable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
 #include "ace/Synch.h"
+
+#include "TAO_Export.h"
 
 class ACE_Lock;
 
@@ -54,4 +56,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /*TAO_SYNCH_REFCOUNTABLE*/

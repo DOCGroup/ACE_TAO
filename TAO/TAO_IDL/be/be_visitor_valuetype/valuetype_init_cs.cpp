@@ -54,9 +54,10 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
   // (3) There is at least one operation and at least one initializer.
   //     In this case we need to generate abstract factory class.
 
-  FactoryStyle factory_style = determine_factory_style (node);
+  be_valuetype::FactoryStyle factory_style = 
+    node->determine_factory_style ();
 
-  if (factory_style == FS_NO_FACTORY)
+  if (factory_style == be_valuetype::FS_NO_FACTORY)
     {
       return 0;
     }
@@ -102,7 +103,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
       << be_uidt_nl << "}";
 
 
-  if (factory_style == FS_CONCRETE_FACTORY)
+  if (factory_style == be_valuetype::FS_CONCRETE_FACTORY)
     {
       // generate create_for_unmarshal()
       *os << be_nl << be_nl

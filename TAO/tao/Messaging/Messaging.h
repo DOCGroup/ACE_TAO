@@ -78,7 +78,10 @@ typedef void (*TAO_Reply_Handler_Skeleton)(
     ACE_ENV_ARG_DECL_NOT_USED
     );
 
-struct TAO_Exception_Data;
+namespace TAO
+{
+  struct Exception_Data;
+}
 
 /**
  * @namespace TAO_Messaging_Helper
@@ -91,7 +94,7 @@ namespace TAO_Messaging_Helper
   /// Implement the code shared by all the ExceptionHolder::raise_*()
   /// operations
   void TAO_Messaging_Export exception_holder_raise (
-           TAO_Exception_Data *exception_data,
+           TAO::Exception_Data *exception_data,
            CORBA::ULong exception_count,
            CORBA::Octet *marshaled_data,
            CORBA::ULong marshaled_data_length,

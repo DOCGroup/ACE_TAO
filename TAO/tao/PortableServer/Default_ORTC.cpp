@@ -26,11 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:314
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
 
 
 #include "Default_ORTC.h"
 #include "tao/Any_Impl_T.h"
+#include "tao/Typecode.h"
 #include "tao/Valuetype/ValueFactory.h"
 
 #if defined (__BORLANDC__)
@@ -42,7 +43,15 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
+
+// Arg traits specializations.
+namespace TAO
+{
+};
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_TAO_Default_ORT_ObjectReferenceTemplate[] =
 {
@@ -81,20 +90,17 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_Default_ORT_ObjectReferenceTemplate (
     sizeof (TAO_Default_ORT::ObjectReferenceTemplate)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (TAO_Default_ORT)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_ObjectReferenceTemplate,
-    &_tc_TAO_tc_TAO_Default_ORT_ObjectReferenceTemplate
-  )
-TAO_NAMESPACE_END
+namespace TAO_Default_ORT
+{
+  ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplate =
+    &_tc_TAO_tc_TAO_Default_ORT_ObjectReferenceTemplate;
+}
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/valuetype_cs.cpp:94
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:94
 
 void
-TAO_Default_ORT::tao_ObjectReferenceTemplate_life::tao_add_ref (
+TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::tao_add_ref (
     TAO_Default_ORT::ObjectReferenceTemplate * p
   )
 {
@@ -102,36 +108,12 @@ TAO_Default_ORT::tao_ObjectReferenceTemplate_life::tao_add_ref (
 }
 
 void
-TAO_Default_ORT::tao_ObjectReferenceTemplate_life::tao_remove_ref (
+TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::tao_remove_ref (
     TAO_Default_ORT::ObjectReferenceTemplate * p
   )
 {
   CORBA::remove_ref (p);
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class
-    TAO_Value_Var_T<
-        TAO_Default_ORT::ObjectReferenceTemplate,
-        TAO_Default_ORT::tao_ObjectReferenceTemplate_life
-      >;
-  template class
-    TAO_Value_Out_T<
-        TAO_Default_ORT::ObjectReferenceTemplate,
-        TAO_Default_ORT::tao_ObjectReferenceTemplate_life
-      >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate \
-    TAO_Value_Var_T< \
-        TAO_Default_ORT::ObjectReferenceTemplate, \
-        TAO_Default_ORT::tao_ObjectReferenceTemplate_life \
-      >
-# pragma instantiate \
-    TAO_Value_Out_T< \
-        TAO_Default_ORT::ObjectReferenceTemplate, \
-        TAO_Default_ORT::tao_ObjectReferenceTemplate_life \
-      >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 TAO_Default_ORT::ObjectReferenceTemplate *
 TAO_Default_ORT::ObjectReferenceTemplate::_downcast (CORBA::ValueBase *v)
@@ -140,8 +122,8 @@ TAO_Default_ORT::ObjectReferenceTemplate::_downcast (CORBA::ValueBase *v)
     {
       return 0;
     }
-  
-  return (ObjectReferenceTemplate *) v->_tao_obv_narrow ((ptrdiff_t) &_downcast);
+
+  return dynamic_cast<TAO_Default_ORT::ObjectReferenceTemplate *> (v);
 }
 
 const char *
@@ -150,49 +132,15 @@ TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_repository_id (void) const
   return this->_tao_obv_static_repository_id ();
 }
 
-void *
-#if defined (_MSC_VER)
-TAO_Default_ORT::ObjectReferenceTemplate::TAO_Default_ORT_ObjectReferenceTemplate_tao_obv_narrow (ptrdiff_t type_id)
-#else
-TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_narrow (ptrdiff_t type_id)
-#endif /* _MSC_VER */
-{
-  if (type_id == (ptrdiff_t) &_downcast)
-    {
-      return this;
-    }
-
-  void *rval = 0;
-
-  if (rval == 0)
-    {
-#if defined (_MSC_VER)
-      rval = this->PortableInterceptor_ObjectReferenceTemplate_tao_obv_narrow (type_id);
-#else
-      rval = this->PortableInterceptor::ObjectReferenceTemplate::_tao_obv_narrow (type_id);
-#endif /* _MSC_VER */
-    }
-
-  return rval;
-}
-
-#if defined (_MSC_VER)
-void *
-TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_narrow (ptrdiff_t type_id)
-{
-  return this->TAO_Default_ORT_ObjectReferenceTemplate_tao_obv_narrow (type_id);
-}
-#endif /* _MSC_VER */
-
 void
 TAO_Default_ORT::ObjectReferenceTemplate::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ObjectReferenceTemplate *tmp =
+  ObjectReferenceTemplate *_tao_tmp_pointer =
     ACE_static_cast (
         ObjectReferenceTemplate *,
         _tao_void_pointer
       );
-  delete tmp;
+  CORBA::remove_ref (_tao_tmp_pointer);
 }
 
 CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_marshal_v (TAO_OutputCDR & strm)
@@ -249,7 +197,10 @@ CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/valuetype_obv_cs.cpp:58
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_obv_cs.cpp:58
+
+OBV_TAO_Default_ORT::ObjectReferenceTemplate::ObjectReferenceTemplate (void)
+{}
 
 OBV_TAO_Default_ORT::ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
 {}
@@ -267,7 +218,7 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal__TAO_Default_ORT_Ob
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/any_op_cs.cpp:57
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/any_op_cs.cpp:57
 
 // Copying insertion.
 void
@@ -310,15 +261,21 @@ operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Impl_T<TAO_Default_ORT::ObjectReferenceTemplate>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO::Any_Impl_T<TAO_Default_ORT::ObjectReferenceTemplate>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<TAO_Default_ORT::ObjectReferenceTemplate>::to_value (
+    CORBA::ValueBase *&_tao_elem
+  ) const
+{
+  CORBA::add_ref (this->value_);
+  _tao_elem = this->value_;
+  return 1;
+}
+
+
 
 // TAO_IDL - Generated from
-// be/be_valuetype.cpp:245
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:263
 
 void
 CORBA::add_ref (TAO_Default_ORT::ObjectReferenceTemplate * vt)
@@ -339,7 +296,7 @@ CORBA::remove_ref (TAO_Default_ORT::ObjectReferenceTemplate * vt)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/cdr_op_cs.cpp:73
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_cs.cpp:73
 
 CORBA::Boolean
 operator<< (
@@ -368,7 +325,7 @@ operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/marshal_cs.cpp:44
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/marshal_cs.cpp:44
 
 CORBA::Boolean
 OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_marshal_state (TAO_OutputCDR &)
@@ -399,3 +356,50 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal_state (TAO_InputCDR
       return 0;
     }
 }
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>;
+
+  template class
+    TAO_Value_Var_T<
+        TAO_Default_ORT::ObjectReferenceTemplate
+
+      >;
+
+  template class
+    TAO_Value_Out_T<
+        TAO_Default_ORT::ObjectReferenceTemplate
+
+      >;
+
+  template class
+    TAO::Any_Impl_T<
+        TAO_Default_ORT::ObjectReferenceTemplate
+      >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>
+
+# pragma instantiate \
+    TAO_Value_Var_T< \
+        TAO_Default_ORT::ObjectReferenceTemplate \
+
+      >
+
+# pragma instantiate \
+    TAO_Value_Out_T< \
+        TAO_Default_ORT::ObjectReferenceTemplate \
+
+      >
+
+# pragma instantiate \
+    TAO::Any_Impl_T< \
+        TAO_Default_ORT::ObjectReferenceTemplate \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

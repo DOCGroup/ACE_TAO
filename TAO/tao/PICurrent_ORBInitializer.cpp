@@ -1,18 +1,13 @@
 #include "PICurrent_ORBInitializer.h"
 
-
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "ORB_Core.h"
-
-#include "PICurrent.h"
 #include "ORBInitInfo.h"
-
 
 ACE_RCSID (TAO,
            PICurrent_ORBInitializer,
            "$Id$")
-
 
 void
 TAO_PICurrent_ORBInitializer::pre_init (

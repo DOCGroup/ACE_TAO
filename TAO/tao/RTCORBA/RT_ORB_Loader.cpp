@@ -5,7 +5,8 @@
 #include "RT_ORBInitializer.h"
 
 #include "tao/debug.h"
-
+#include "tao/ORB_Constants.h"
+#include "tao/ORBInitializer_Registry.h"
 
 ACE_RCSID (RTCORBA,
            RT_ORB_Loader,

@@ -107,7 +107,7 @@ Test_i::test_method (CORBA::Boolean client_propagated,
 
       if (index == -1)
         ACE_DEBUG ((LM_DEBUG,
-                    "ERROR: object and thread priorities do not"
+                    "ERROR: object and thread priorities do not "
                     "match the same band.\n"));
       else
         ACE_DEBUG ((LM_DEBUG,

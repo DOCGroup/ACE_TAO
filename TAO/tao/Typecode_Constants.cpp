@@ -26,16 +26,11 @@
 //
 // ============================================================================
 
+#include "tao/Typecode_Constants.h"
 #include "tao/Typecode.h"
-#include "tao/Object.h"
-#include "tao/Object_KeyC.h"
-#include "tao/PolicyC.h"
-#include "tao/CurrentC.h"
-#include "tao/DomainC.h"
-#include "tao/WrongTransactionC.h"
 #include "tao/NVList.h"
-#include "tao/BoundsC.h"
-#include "tao/CORBA_String.h"
+#include "ORB.h"
+#include "tao/Object.h"
 
 #if (TAO_HAS_AMI_POLLER == 1)
 #include "tao/PollableC.h"
@@ -179,426 +174,405 @@ TAO_NAMESPACE_END
 CORBA::TypeCode_ptr TC_opaque = 0;
 CORBA::TypeCode_ptr TC_completion_status = 0;
 
-// Flag that denotes that the TAO TypeCode constants have been
-// initialized.
-int TAO_TypeCodes::initialized_ = 0;
-
-// Initialize all the ORB owned TypeCode constants. This routine will
-// be invoked by the ORB_init method.
-void
-TAO_TypeCodes::init (void)
+namespace TAO
 {
-  // Initialize all the standard typecodes owned by the ORB
+  // Flag that denotes that the TAO TypeCode constants have been
+  // initialized.
+  int TypeCode_Constants::initialized_ = 0;
 
-  // Not thread safe.  Caller must provide synchronization.
-
-  // Do not execute code after this point more than once.
-  if (initialized_ != 0)
-    return;
-
-  initialized_ = 1;
-
-  // Null and void
-  CORBA::_tc_null = new CORBA::TypeCode (CORBA::tk_null);
-
-  CORBA::_tc_void = new CORBA::TypeCode (CORBA::tk_void);
-
-  // Basic numeric types:  short, long, longlong, and unsigned variants
-  CORBA::_tc_short = new CORBA::TypeCode (CORBA::tk_short);
-
-  CORBA::_tc_long = new CORBA::TypeCode (CORBA::tk_long);
-
-  CORBA::_tc_longlong = new CORBA::TypeCode (CORBA::tk_longlong);
-
-  CORBA::_tc_ushort = new CORBA::TypeCode (CORBA::tk_ushort);
-
-  CORBA::_tc_ulong = new CORBA::TypeCode (CORBA::tk_ulong);
-
-  CORBA::_tc_ulonglong = new CORBA::TypeCode (CORBA::tk_ulonglong);
-
-  // Floating point types: single, double, quad precision
-  CORBA::_tc_float = new CORBA::TypeCode (CORBA::tk_float);
-
-  CORBA::_tc_double = new CORBA::TypeCode (CORBA::tk_double);
-
-  CORBA::_tc_longdouble = new CORBA::TypeCode (CORBA::tk_longdouble);
-
-  // Various simple quantities.
-  CORBA::_tc_boolean = new CORBA::TypeCode (CORBA::tk_boolean);
-
-  CORBA::_tc_octet = new CORBA::TypeCode (CORBA::tk_octet);
-
-  // Internationalization-related data types: ISO Latin/1 and "wide"
-  // characters, and strings of each.  "wchar" is probably Unicode 1.1,
-  // "wstring" being null-terminated sets thereof.
-  CORBA::_tc_char = new CORBA::TypeCode (CORBA::tk_char);
-
-  CORBA::_tc_wchar = new CORBA::TypeCode (CORBA::tk_wchar);
-
-  // a string/wstring have a simple parameter list that indicates the length
-  static const CORBA::Long _oc_string [] =
+  // Initialize all the ORB owned TypeCode constants. This routine will
+  // be invoked by the ORB_init method.
+  void
+  TypeCode_Constants::init (void)
   {
-    // CDR typecode octets
-    TAO_ENCAP_BYTE_ORDER, // native endian + padding; "tricky"
-    0                     // ... unbounded string
-  };
-  CORBA::_tc_string = new CORBA::TypeCode (CORBA::tk_string,
-                                           sizeof _oc_string,
-                                           (char*)&_oc_string,
-                                           1,
-                                           sizeof (CORBA::String_var));
+    // Initialize all the standard typecodes owned by the ORB
 
-  static const CORBA::Long _oc_wstring [] =
-  {
-    // CDR typecode octets
-    TAO_ENCAP_BYTE_ORDER,       // native endian + padding; "tricky"
-    0                     // ... unbounded string
-  };
-  CORBA::_tc_wstring = new CORBA::TypeCode (CORBA::tk_wstring,
-                                            sizeof _oc_wstring,
-                                            (char *) &_oc_wstring,
-                                            1,
-                                            sizeof (CORBA::WChar*));
+    // Not thread safe.  Caller must provide synchronization.
 
-  //
-  // Various things that can be passed as "general" parameters:
-  // Any, TypeCode_ptr, Principal_ptr, Object_ptr
-  //
-  CORBA::_tc_any = new CORBA::TypeCode (CORBA::tk_any);
+    // Do not execute code after this point more than once.
+    if (initialized_ != 0)
+      {
+        return;
+      }
 
-  CORBA::_tc_TypeCode = new CORBA::TypeCode (CORBA::tk_TypeCode);
+    initialized_ = 1;
 
-  CORBA::_tc_Principal = new CORBA::TypeCode (CORBA::tk_Principal);
+    // Null and void.
+    ACE_NEW (CORBA::_tc_null,
+             CORBA::TypeCode (CORBA::tk_null));
 
-  // typecode for objref is complex, has two string parameters
-  //
-  // NOTE:  Must be four-byte aligned
+    ACE_NEW (CORBA::_tc_void,
+             CORBA::TypeCode (CORBA::tk_void));
 
-  static const CORBA::Long _oc_CORBA_Object[] =
-  {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    29,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f4f62),
-    ACE_NTOHL (0x6a656374),
-    ACE_NTOHL (0x3a312e30),
-    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
-    7,
-    ACE_NTOHL (0x4f626a65),
-    ACE_NTOHL (0x63740000),  // name = Object
-  };
+    // Basic numeric types:  short, long, longlong, and unsigned variants.
+    ACE_NEW (CORBA::_tc_short,
+             CORBA::TypeCode (CORBA::tk_short));
 
-  CORBA::_tc_Object = new CORBA::TypeCode (CORBA::tk_objref,
-                                           sizeof (_oc_CORBA_Object),
-                                           (char *) &_oc_CORBA_Object,
-                                           1,
-                                           sizeof (CORBA::Object));
+    ACE_NEW (CORBA::_tc_long,
+             CORBA::TypeCode (CORBA::tk_long));
 
-  // Static initialization of the two user-defined exceptions that
-  // are part of the ORB.
+    ACE_NEW (CORBA::_tc_longlong,
+             CORBA::TypeCode (CORBA::tk_longlong));
 
-  static const CORBA::Long _oc_CORBA_TypeCode_Bounds[] =
-  {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    38,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f5479),
-    ACE_NTOHL (0x7065436f),
-    ACE_NTOHL (0x64652f42),
-    ACE_NTOHL (0x6f756e64),
-    ACE_NTOHL (0x733a312e),
-    ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/TypeCode/Bounds:1.0
-    7,
-    ACE_NTOHL (0x426f756e),
-    ACE_NTOHL (0x64730000),  // name = Bounds
-    0, // member count
-  };
+    ACE_NEW (CORBA::_tc_ushort,
+             CORBA::TypeCode (CORBA::tk_ushort));
 
-  CORBA::TypeCode::_tc_Bounds =
-    new CORBA::TypeCode (CORBA::tk_except,
-                         sizeof (_oc_CORBA_TypeCode_Bounds),
-                         (char*) &_oc_CORBA_TypeCode_Bounds,
-                         1,
-                         sizeof (CORBA::TypeCode::Bounds));
+    ACE_NEW (CORBA::_tc_ulong,
+             CORBA::TypeCode (CORBA::tk_ulong));
 
+    ACE_NEW (CORBA::_tc_ulonglong,
+             CORBA::TypeCode (CORBA::tk_ulonglong));
 
-  static const CORBA::Long _oc_CORBA_TypeCode_BadKind[] =
-  {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    39,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f5479),
-    ACE_NTOHL (0x7065436f),
-    ACE_NTOHL (0x64652f42),
-    ACE_NTOHL (0x61644b69),
-    ACE_NTOHL (0x6e643a31),
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/TypeCode/BadKind:1.0
-    8,
-    ACE_NTOHL (0x4261644b),
-    ACE_NTOHL (0x696e6400),  // name = BadKind
-    0, // member count
-  };
-  CORBA::TypeCode::_tc_BadKind =
-    new CORBA::TypeCode (CORBA::tk_except,
-                         sizeof (_oc_CORBA_TypeCode_BadKind),
-                         (char*) &_oc_CORBA_TypeCode_BadKind,
-                         1,
-                         sizeof (CORBA::TypeCode::BadKind));
+    // Floating point types: single, double, quad precision.
+    ACE_NEW (CORBA::_tc_float,
+             CORBA::TypeCode (CORBA::tk_float));
 
-  static const CORBA::Long _oc_CORBA_ORBid[] =
-  {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    28, ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f4f52),
-    ACE_NTOHL (0x4269643a),
-    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ORBid:1.0
-    6,
-    ACE_NTOHL (0x4f524269),
-    ACE_NTOHL (0x64000000),  // name = ORBid
-    CORBA::tk_string,
-    0, // string length
-  };
-  CORBA::_tc_ORBid = new CORBA::TypeCode (CORBA::tk_alias,
-                                          sizeof (_oc_CORBA_ORBid),
-                                          (char *) &_oc_CORBA_ORBid,
-                                          0,
-                                          sizeof (CORBA::ORBid));
+    ACE_NEW (CORBA::_tc_double,
+             CORBA::TypeCode (CORBA::tk_double));
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+    ACE_NEW (CORBA::_tc_longdouble,
+             CORBA::TypeCode (CORBA::tk_longdouble));
 
-  static const CORBA::Long _oc_corba_NamedValue[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    33,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x636f7262),
-    ACE_NTOHL (0x612f4e61),
-    ACE_NTOHL (0x6d656456),
-    ACE_NTOHL (0x616c7565),
-    ACE_NTOHL (0x3a312e30),
-    ACE_NTOHL (0x0),          // repository ID =
-                              //   IDL:omg.org/corba/NamedValue:1.0
-    11,
-    ACE_NTOHL (0x4e616d65),
-    ACE_NTOHL (0x6456616c),
-    ACE_NTOHL (0x75650000),  // name = NamedValue,
-  };
+    // Various simple quantities.
+    ACE_NEW (CORBA::_tc_boolean,
+             CORBA::TypeCode (CORBA::tk_boolean));
 
-  CORBA::_tc_NamedValue =
-    new CORBA::TypeCode (CORBA::tk_objref,
-                         sizeof (_oc_corba_NamedValue),
-                         (char *) &_oc_corba_NamedValue,
-                         0,
-                         sizeof (CORBA::NamedValue));
+    ACE_NEW (CORBA::_tc_octet,
+             CORBA::TypeCode (CORBA::tk_octet));
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+    // Internationalization-related data types: ISO Latin/1 and "wide"
+    // characters, and strings of each.  "wchar" is probably Unicode 1.1,
+    // "wstring" being null-terminated sets thereof.
+    ACE_NEW (CORBA::_tc_char,
+             CORBA::TypeCode (CORBA::tk_char));
 
- // ****************************************************************
+    ACE_NEW (CORBA::_tc_wchar,
+             CORBA::TypeCode (CORBA::tk_wchar));
 
- // The following are internal to the TAO ORB
+    // A string/wstring have a simple parameter list that 
+    // indicates the length.
+    static const CORBA::Long _oc_string [] =
+    {
+      // CDR typecode octets
+      TAO_ENCAP_BYTE_ORDER, // native endian + padding; "tricky"
+      0                     // ... unbounded string
+    };
 
-  // Octet codes for the parameters of the "Opaque" (sequence of octet)
-  // data type used various places internally ... a CDR encapsulation
-  // holding two parameters (like all sequence TypeCodes).
-  //
-  // NOTE: this **MUST** be longword aligned, which is why it's coded as
-  // a longword array not an octet array.  Just sticking a long in for
-  // padding won't work with compilers that optimize unused data out of
-  // existence.
+    ACE_NEW (CORBA::_tc_string,
+             CORBA::TypeCode (CORBA::tk_string,
+                              sizeof _oc_string,
+                              (char*)&_oc_string,
+                              1,
+                              sizeof (CORBA::String_var)));
 
-  // CDR typecode octets.
+    static const CORBA::Long _oc_wstring [] =
+    {
+      // CDR typecode octets
+      TAO_ENCAP_BYTE_ORDER, // native endian + padding; "tricky"
+      0                     // ... unbounded string
+    };
 
-  static const CORBA::Long _oc_opaque [] =
-  {
-
-    TAO_ENCAP_BYTE_ORDER,    // native endian + padding; "tricky"
-    10,                      // ... (sequence of) octets
-    0                        // ... unbounded
-  };
-
-  TC_opaque = new CORBA::TypeCode (CORBA::tk_sequence,
-                                   sizeof _oc_opaque,
-                                   (char *) &_oc_opaque,
-                                   1,
-                                   sizeof (TAO_opaque));
-
-  // Octet codes for the parameters of the ServiceContextList TypeCode
-  // ...  this is a CDR encapsulation holding two parameters (like all
-  // sequences): a TypeCode, and the bounds of the sequence (zero in
-  // this case).
-  //
-  // This is complicated since the Typecode for the data type for the
-  // sequence members is complex, a structure that nests two further
-  // typecodes (one is a sequence).
-  //
-  // NOTE:  this must be longword aligned!
-
-#if 0
-  static const CORBA::Long _oc_svc_ctx_list [] =
-  {
-    // START bytes of encapsulation 0
-    TAO_ENCAP_BYTE_ORDER, // native endian + padding; "tricky"
+    ACE_NEW (CORBA::_tc_wstring,
+             CORBA::TypeCode (CORBA::tk_wstring,
+                              sizeof _oc_wstring,
+                              (char *) &_oc_wstring,
+                              1,
+                              sizeof (CORBA::WChar*)));
 
     //
-    // FIRST sequence param:  typecode for struct is complex,
-    // and so uses a nested encapsulation.
+    // Various things that can be passed as "general" parameters:
+    // Any, TypeCode_ptr, Principal_ptr, Object_ptr
     //
-    CORBA::tk_struct,
-    72, // length of encapsulation 1
+    ACE_NEW (CORBA::_tc_any,
+             CORBA::TypeCode (CORBA::tk_any));
 
-    // START bytes of encapsulation 1 (struct params)
-    1, // native endian + padding; "tricky"
-    1, 0, // type ID omitted:  null string
-    1, 0, // name omitted "ServiceContext"
+    ACE_NEW (CORBA::_tc_TypeCode,
+             CORBA::TypeCode (CORBA::tk_TypeCode));
 
-    2, // two struct elements
+    ACE_NEW (CORBA::_tc_Principal,
+             CORBA::TypeCode (CORBA::tk_Principal));
 
-    // First structure element:  name, typecode for ULong
+    // typecode for objref is complex, has two string parameters
     //
-    // NOTE:  to be more strictly correct this could be a CORBA::tk_alias
-    // typecode ...
+    // NOTE:  Must be four-byte aligned
 
-    1, 0, // name omitted:  "context_id"
-    CORBA::tk_long,
+    static const CORBA::Long _oc_CORBA_Object[] =
+    {
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      29,
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x434f5242),
+      ACE_NTOHL (0x412f4f62),
+      ACE_NTOHL (0x6a656374),
+      ACE_NTOHL (0x3a312e30),
+      ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
+      7,
+      ACE_NTOHL (0x4f626a65),
+      ACE_NTOHL (0x63740000),  // name = Object
+    };
 
-    // Second structure element: name, typecode for sequence of octet;
-    // the typecode for sequence of octet is complex, there's a second
-    // level of nested encapuslation here.
+    ACE_NEW (CORBA::_tc_Object,
+             CORBA::TypeCode (CORBA::tk_objref,
+                              sizeof (_oc_CORBA_Object),
+                              (char *) &_oc_CORBA_Object,
+                              1,
+                              sizeof (CORBA::Object)));
+ 
+    // Static initialization of the two user-defined exceptions that
+    // are part of the ORB.
 
-    1, 0, // name omitted:  "context_data"
-    CORBA::tk_sequence,   // sequence typecode
-    16, // length of encapsulation 2
+    static const CORBA::Long _oc_CORBA_TypeCode_Bounds[] =
+    {
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      38,
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x434f5242),
+      ACE_NTOHL (0x412f5479),
+      ACE_NTOHL (0x7065436f),
+      ACE_NTOHL (0x64652f42),
+      ACE_NTOHL (0x6f756e64),
+      ACE_NTOHL (0x733a312e),
+      ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/TypeCode/Bounds:1.0
+      7,
+      ACE_NTOHL (0x426f756e),
+      ACE_NTOHL (0x64730000),  // name = Bounds
+      0, // member count
+    };
 
-    // START bytes of encapsulation 2 (sequence params)
-    1, // native endian + padding; "tricky"
-    1, 0, // type ID omitted:  null string
-    CORBA::tk_octet, // (sequence of) octet
-    0, // ... unbounded length
-    // END bytes of encapsulation 2 (sequence params)
+    ACE_NEW (CORBA::TypeCode::_tc_Bounds,
+             CORBA::TypeCode (CORBA::tk_except,
+                              sizeof (_oc_CORBA_TypeCode_Bounds),
+                              (char*) &_oc_CORBA_TypeCode_Bounds,
+                              1,
+                              sizeof (CORBA::TypeCode::Bounds)));
 
-    // END bytes of encapsulation 1 (struct params)
 
-    // SECOND sequence param:  bound of sequence (none)
-    0 // unbounded seq of ServiceContext
-    // END bytes of encapsulation 0 (sequence params)
-  };
+    static const CORBA::Long _oc_CORBA_TypeCode_BadKind[] =
+    {
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      39,
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x434f5242),
+      ACE_NTOHL (0x412f5479),
+      ACE_NTOHL (0x7065436f),
+      ACE_NTOHL (0x64652f42),
+      ACE_NTOHL (0x61644b69),
+      ACE_NTOHL (0x6e643a31),
+      ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/TypeCode/BadKind:1.0
+      8,
+      ACE_NTOHL (0x4261644b),
+      ACE_NTOHL (0x696e6400),  // name = BadKind
+      0, // member count
+    };
 
-  TC_ServiceContextList =
-    new CORBA::TypeCode (CORBA::tk_sequence,
-                         sizeof _oc_svc_ctx_list,
-                         (char *) &_oc_svc_ctx_list,
-                         1,
-                         sizeof (TAO_GIOP_ServiceContextList));
-#endif /* 0 */
+    ACE_NEW (CORBA::TypeCode::_tc_BadKind,
+             CORBA::TypeCode (CORBA::tk_except,
+                              sizeof (_oc_CORBA_TypeCode_BadKind),
+                              (char*) &_oc_CORBA_TypeCode_BadKind,
+                              1,
+                              sizeof (CORBA::TypeCode::BadKind)));
 
-  static const CORBA::ULong oc_completion_status [] =
+    static const CORBA::Long _oc_CORBA_ORBid[] =
+    {
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      28, ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x434f5242),
+      ACE_NTOHL (0x412f4f52),
+      ACE_NTOHL (0x4269643a),
+      ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ORBid:1.0
+      6,
+      ACE_NTOHL (0x4f524269),
+      ACE_NTOHL (0x64000000),  // name = ORBid
+      CORBA::tk_string,
+      0, // string length
+    };
+
+    ACE_NEW (CORBA::_tc_ORBid,
+             CORBA::TypeCode (CORBA::tk_alias,
+                              sizeof (_oc_CORBA_ORBid),
+                              (char *) &_oc_CORBA_ORBid,
+                              0,
+                              sizeof (CORBA::ORBid)));
+
+  #if (TAO_HAS_MINIMUM_CORBA == 0)
+
+    static const CORBA::Long _oc_corba_NamedValue[] =
+    {
+      TAO_ENCAP_BYTE_ORDER,     // byte order
+      33,
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x636f7262),
+      ACE_NTOHL (0x612f4e61),
+      ACE_NTOHL (0x6d656456),
+      ACE_NTOHL (0x616c7565),
+      ACE_NTOHL (0x3a312e30),
+      ACE_NTOHL (0x0),          // repository ID =
+                                //   IDL:omg.org/corba/NamedValue:1.0
+      11,
+      ACE_NTOHL (0x4e616d65),
+      ACE_NTOHL (0x6456616c),
+      ACE_NTOHL (0x75650000),  // name = NamedValue,
+    };
+
+    ACE_NEW (CORBA::_tc_NamedValue,
+             CORBA::TypeCode (CORBA::tk_objref,
+                              sizeof (_oc_corba_NamedValue),
+                              (char *) &_oc_corba_NamedValue,
+                              0,
+                              sizeof (CORBA::NamedValue)));
+
+  #endif /* TAO_HAS_MINIMUM_CORBA */
+
+   // ****************************************************************
+
+   // The following are internal to the TAO ORB
+
+    // Octet codes for the parameters of the "Opaque" (sequence of octet)
+    // data type used various places internally ... a CDR encapsulation
+    // holding two parameters (like all sequence TypeCodes).
+    //
+    // NOTE: this **MUST** be longword aligned, which is why it's coded as
+    // a longword array not an octet array.  Just sticking a long in for
+    // padding won't work with compilers that optimize unused data out of
+    // existence.
+
+    // CDR typecode octets.
+
+    typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
+
+    static const CORBA::Long _oc_opaque [] =
+    {
+
+      TAO_ENCAP_BYTE_ORDER,    // native endian + padding; "tricky"
+      10,                      // ... (sequence of) octets
+      0                        // ... unbounded
+    };
+
+    ACE_NEW (TC_opaque,
+             CORBA::TypeCode (CORBA::tk_sequence,
+                              sizeof _oc_opaque,
+                              (char *) &_oc_opaque,
+                              1,
+                              sizeof (TAO_opaque)));
+
+    // Octet codes for the parameters of the ServiceContextList TypeCode
+    // ...  this is a CDR encapsulation holding two parameters (like all
+    // sequences): a TypeCode, and the bounds of the sequence (zero in
+    // this case).
+    //
+    // This is complicated since the Typecode for the data type for the
+    // sequence members is complex, a structure that nests two further
+    // typecodes (one is a sequence).
+    //
+    // NOTE:  this must be longword aligned!
+
+    static const CORBA::ULong oc_completion_status [] =
+    {
+      TAO_ENCAP_BYTE_ORDER, // byte order flag, tricky
+      0, 0,                 // type ID omitted
+      3,                    // three members
+      0, 0,                 // ... whose names are all omitted
+      0, 0,
+      0, 0
+    };
+
+    ACE_NEW (TC_completion_status,
+             CORBA::TypeCode (CORBA::tk_enum,
+                              sizeof oc_completion_status,
+                              (char *) &oc_completion_status,
+                              1,
+                              sizeof (CORBA::CompletionStatus)));
+  }
+
+  // Destroy all the typecodes owned by the ORB.
+  void
+  TypeCode_Constants::fini (void)
   {
-    TAO_ENCAP_BYTE_ORDER, // byte order flag, tricky
-    0, 0,                 // type ID omitted
-    3,                    // three members
-    0, 0,                 // ... whose names are all omitted
-    0, 0,
-    0, 0
-  };
+    // Release all the standard typecodes owned by the ORB.
 
-  TC_completion_status =
-    new CORBA::TypeCode (CORBA::tk_enum,
-                         sizeof oc_completion_status,
-                         (char *) &oc_completion_status,
-                         1,
-                         sizeof (CORBA::CompletionStatus));
-}
+    // Null and void.
+    CORBA::release (CORBA::_tc_null);
 
-// destroy all the typecodes owned by the ORB
-void
-TAO_TypeCodes::fini (void)
-{
-  // Release all the standard typecodes owned by the ORB.
+    CORBA::release (CORBA::_tc_void);
 
-  // Null and void
-  CORBA::release (CORBA::_tc_null);
+    // Basic numeric types:  short, long, longlong, and unsigned variants
+    CORBA::release (CORBA::_tc_short);
 
-  CORBA::release (CORBA::_tc_void);
+    CORBA::release (CORBA::_tc_long);
 
-  // Basic numeric types:  short, long, longlong, and unsigned variants
-  CORBA::release (CORBA::_tc_short);
+    CORBA::release (CORBA::_tc_longlong);
 
-  CORBA::release (CORBA::_tc_long);
+    CORBA::release (CORBA::_tc_ushort);
 
-  CORBA::release (CORBA::_tc_longlong);
+    CORBA::release (CORBA::_tc_ulong);
 
-  CORBA::release (CORBA::_tc_ushort);
+    CORBA::release (CORBA::_tc_ulonglong);
 
-  CORBA::release (CORBA::_tc_ulong);
+    // Floating point types: single, double, quad precision
+    CORBA::release (CORBA::_tc_float);
 
-  CORBA::release (CORBA::_tc_ulonglong);
+    CORBA::release (CORBA::_tc_double);
 
-  // Floating point types: single, double, quad precision
-  CORBA::release (CORBA::_tc_float);
+    CORBA::release (CORBA::_tc_longdouble);
 
-  CORBA::release (CORBA::_tc_double);
+    // Various simple quantities.
+    CORBA::release (CORBA::_tc_boolean);
 
-  CORBA::release (CORBA::_tc_longdouble);
+    CORBA::release (CORBA::_tc_octet);
 
-  // Various simple quantities.
-  CORBA::release (CORBA::_tc_boolean);
+    // Internationalization-related data types: ISO Latin/1 and "wide"
+    // characters, and strings of each.  "wchar" is probably Unicode 1.1,
+    // "wstring" being null-terminated sets thereof.
+    CORBA::release (CORBA::_tc_char);
 
-  CORBA::release (CORBA::_tc_octet);
+    CORBA::release (CORBA::_tc_wchar);
 
-  // Internationalization-related data types: ISO Latin/1 and "wide"
-  // characters, and strings of each.  "wchar" is probably Unicode 1.1,
-  // "wstring" being null-terminated sets thereof.
-  CORBA::release (CORBA::_tc_char);
+    // A string/wstring have a simple parameter list that 
+    // indicates the length.
+    CORBA::release (CORBA::_tc_string);
 
-  CORBA::release (CORBA::_tc_wchar);
+    CORBA::release (CORBA::_tc_wstring);
 
-  // a string/wstring have a simple parameter list that indicates the length
-  CORBA::release (CORBA::_tc_string);
+    //
+    // Various things that can be passed as "general" parameters:
+    // Any, TypeCode_ptr, Principal_ptr, Object_ptr
+    //
+    CORBA::release (CORBA::_tc_any);
 
-  CORBA::release (CORBA::_tc_wstring);
+    CORBA::release (CORBA::_tc_TypeCode);
 
-  //
-  // Various things that can be passed as "general" parameters:
-  // Any, TypeCode_ptr, Principal_ptr, Object_ptr
-  //
-  CORBA::release (CORBA::_tc_any);
+    CORBA::release (CORBA::_tc_Principal);
 
-  CORBA::release (CORBA::_tc_TypeCode);
+    // typecode for objref is complex, has two string parameters
+    //
+    CORBA::release (CORBA::_tc_Object);
 
-  CORBA::release (CORBA::_tc_Principal);
+    // other ORB owned typecodes
+    CORBA::release (CORBA::TypeCode::_tc_Bounds);
 
-  // typecode for objref is complex, has two string parameters
-  //
-  CORBA::release (CORBA::_tc_Object);
+    CORBA::release (CORBA::TypeCode::_tc_BadKind);
 
-  // other ORB owned typecodes
-  CORBA::release (CORBA::TypeCode::_tc_Bounds);
+    CORBA::release (CORBA::_tc_ORBid);
 
-  CORBA::release (CORBA::TypeCode::_tc_BadKind);
+  #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-  CORBA::release (CORBA::_tc_ORBid);
+    CORBA::release (CORBA::_tc_NamedValue);
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-  CORBA::release (CORBA::_tc_NamedValue);
+  #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+    // TAO specific
+    CORBA::release (TC_opaque);
 
-  // TAO specific
-  CORBA::release (TC_opaque);
-
-  CORBA::release (TC_completion_status);
-}
+    CORBA::release (TC_completion_status);
+  }
+} // end namespace TAO

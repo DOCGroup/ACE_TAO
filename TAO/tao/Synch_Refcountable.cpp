@@ -1,6 +1,5 @@
 #include "Synch_Refcountable.h"
 
-
 #if !defined (__ACE_INLINE__)
 # include "Synch_Refcountable.inl"
 #endif /* __ACE_INLINE__ */

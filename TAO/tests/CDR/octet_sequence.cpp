@@ -18,7 +18,8 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "ace/Log_Msg.h"
+
 #include "tao/CDR.h"
 
 ACE_Message_Block * m1;

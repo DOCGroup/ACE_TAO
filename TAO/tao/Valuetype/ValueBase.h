@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_VALUEBASE_H
 #define TAO_VALUEBASE_H
 
@@ -23,8 +22,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
 #include "Value_VarOut_T.h"
+
+#include "tao/Object_Argument_T.h"
+#include "tao/Arg_Traits_T.h"
 
 #include "ace/Basic_Types.h"
 #include "ace/Synch_T.h"
@@ -37,20 +38,16 @@
 
 namespace CORBA
 {
+  class ValueFactoryBase;
+  typedef ValueFactoryBase *ValueFactory;
+
   class ValueBase;
-  struct tao_ValueBase_life;
 
   extern TAO_Valuetype_Export void add_ref (ValueBase *);
   extern TAO_Valuetype_Export void remove_ref (ValueBase *);
 
-  typedef TAO_Value_Var_T<ValueBase, tao_ValueBase_life> ValueBase_var;
-  typedef TAO_Value_Out_T<ValueBase, tao_ValueBase_life> ValueBase_out;
-
-  struct TAO_Valuetype_Export tao_ValueBase_life
-  {
-    static void tao_add_ref (ValueBase *);
-    static void tao_remove_ref (ValueBase *);
-  };
+  typedef TAO_Value_Var_T<ValueBase> ValueBase_var;
+  typedef TAO_Value_Out_T<ValueBase> ValueBase_out;
 
   /**
    * @class ValueBase
@@ -107,7 +104,8 @@ namespace CORBA
 
   public:  // otherwise these cannot be called from a static function
 
-    virtual void *_tao_obv_narrow (ptrdiff_t) = 0;
+    // @@@ (JP) TODO - remove this.
+    virtual void *_tao_obv_narrow (ptrdiff_t) {return 0;}
 
     /// during marshal jump to the most derived part
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) = 0;
@@ -213,6 +211,31 @@ operator<< (TAO_OutputCDR&, const CORBA::ValueBase *);
 
 TAO_Valuetype_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA::ValueBase *&);
+
+/// Used in generated code if CORBA::ValueBase is an argument or return type.
+namespace TAO
+{
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_Valuetype_Export Arg_Traits<CORBA::ValueBase>
+    : public Object_Arg_Traits_T<CORBA::ValueBase *,
+                                 CORBA::ValueBase_var,
+                                 CORBA::ValueBase_out,
+                                 TAO::Value_Traits<CORBA::ValueBase> >
+  {
+  };
+
+
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Valuetype_Export Value_Traits<CORBA::ValueBase>
+  {
+    static void tao_add_ref (CORBA::ValueBase *);
+    static void tao_remove_ref (CORBA::ValueBase *);
+
+    // For INOUT value type arguments, so they can use the same set
+    // of arg classes as interfaces.
+    static void tao_release (CORBA::ValueBase *);
+  };
+};
 
 #if defined (__ACE_INLINE__)
 # include "ValueBase.inl"

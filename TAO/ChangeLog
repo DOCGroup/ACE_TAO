@@ -1,3 +1,41 @@
+Tue Oct 28 12:02:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	This checkin is the revamping of the invocation code path
+	including the generated code. The design is outlined in the
+        bugzilla. Please see 
+
+	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1369
+
+	This checkin only concentrates on the stub path. During the work
+	we tried addressing the following problems
+
+	- Header inclusions. Now IDL compiler generates just enough
+	  headers for the applications. There is no need to include
+	  corba.h or corbafwd.h anymore. 
+
+	- Wide range of problems with PortableInterceptors. Please see the
+	  dependencies in the above bug list. 
+
+	- We have tried reducing the inter-header dependencies quite a
+	  bit within the TAO library. Other libraries need more
+	  work. There are more places in TAO where this can be done
+	  effectively. We will address all of them with time. 
+
+	- We have changed most of the tests and examples including the ORB
+	  services to include thelight weight headers.
+
+	- The generated code has gone down by more than 50%
+	  everywhere. This work also clearly demarcates the responsibility
+	  of the IDL compiler from the ORB. More work is needed on the
+	  skeleton side. 
+
+	More gory details of the changes can be found in
+	$TAO_ROOT/ChangeLogs/ChangeLog-03d. The doucmentation for all the
+	new interfaces are not complete yet. We will do them as we
+	cleanup the scoreboard.
+
+        * ChangeLogs/ChangeLog-03d: New changelog entry for the changes. 
+	
 Tue Oct 28 12:01:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ChangeLogs/ChangeLog-03c: Moved a bunch of ChangeLog entries

@@ -1,7 +1,7 @@
 #include "Blocked_Connect_Strategy.h"
 #include "Connection_Handler.h"
-#include "ace/Synch_Options.h"
 
+#include "ace/Synch_Options.h"
 
 ACE_RCSID(tao,
           Blocked_Connect_Strategy,

@@ -151,10 +151,12 @@ MT_Client::run (void)
     {
       for (unsigned long i = 0; i < this->iterations_; i++)
         {
+#if 0
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) MT_Client::run: %d of %d\n",
                       i,
                       this->iterations_));
+#endif /*if 0*/
 
           // call the recursive object MT_Object for nested upcalls
           // testing

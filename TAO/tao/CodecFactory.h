@@ -15,13 +15,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "IOP_CodecC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IOP_CodecC.h"
 #include "LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.

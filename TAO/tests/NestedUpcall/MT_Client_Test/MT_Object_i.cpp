@@ -17,8 +17,9 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
 #include "MT_Object_i.h"
+
+#include "tao/Exception.h"
 
 ACE_RCSID(MT_Client_Test, MT_Object_i, "$Id$")
 
@@ -41,9 +42,11 @@ MT_Object_i::yadda (CORBA::Long hop_count,
                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) MT_Object_i::yadda () hop count = %d\n",
               hop_count));
+#endif /*if 0*/
 
   if (hop_count < MAX_HOP_COUNT)
   {
@@ -55,4 +58,3 @@ MT_Object_i::yadda (CORBA::Long hop_count,
 
   return 0;
 }
-

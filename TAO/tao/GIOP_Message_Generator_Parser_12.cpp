@@ -1,15 +1,12 @@
 #include "GIOP_Message_Generator_Parser_12.h"
+#include "GIOPC.h"
 #include "GIOP_Utils.h"
-#include "GIOP_Message_State.h"
 #include "GIOP_Message_Locate_Header.h"
 #include "operation_details.h"
-#include "CDR.h"
-#include "Any.h"
 #include "debug.h"
 #include "Pluggable_Messaging_Utils.h"
 #include "TAO_Server_Request.h"
 #include "TAOC.h"
-#include "Service_Context.h"
 #include "ORB_Core.h"
 #include "Transport.h"
 
@@ -20,7 +17,6 @@
 ACE_RCSID (tao,
            GIOP_Message_Gen_Parser_12,
            "$Id$")
-
 
 // This is used by GIOP1.2. This is to align the message body on a
 // 8-octet boundary. This is declared static so that it is in file

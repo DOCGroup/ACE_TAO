@@ -2,8 +2,8 @@
 // $Id$
 //
 
-ACE_RCSID (be_visitor_interface, 
-           direct_proxy_impl_sh, 
+ACE_RCSID (be_visitor_interface,
+           direct_proxy_impl_sh,
            "$Id$")
 
 be_visitor_interface_direct_proxy_impl_sh::
@@ -26,42 +26,56 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->decr_indent (0);
+  *os << be_nl << be_nl
+      << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl
-      << "///////////////////////////////////////////////////////////////////////" 
+  *os << be_nl << be_nl
+      << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//                    Direct  Impl. Declaration" << be_nl
       << "//" << be_nl << be_nl;
+
   // Generate Class Declaration.
   *os << "class " << be_global->skel_export_macro ()
       << " " << node->direct_proxy_impl_name ();
-  *os << " : " << be_idt_nl << "public virtual " 
-      << node->full_base_proxy_impl_name ()
-      << "," << be_nl << "public virtual " << "TAO_Direct_Object_Proxy_Impl";
+
+  idl_bool first_concrete = I_TRUE;
 
   if (node->n_inherits () > 0)
     {
-      *os << "," << be_nl;
+      AST_Interface *parent = 0;
 
-      for (int i = 0; i < node->n_inherits (); i++)
+      for (int i = 0; i < node->n_inherits (); ++i)
         {
-          be_interface *inherited =
-            be_interface::narrow_from_decl (node->inherits ()[i]);
+          parent = node->inherits ()[i];
 
-          *os << "public virtual ";
-          *os << inherited->full_direct_proxy_impl_name ();
-
-          if (i < node->n_inherits () - 1)
+          if (parent->is_abstract ())
             {
-              *os << ", ";
+              continue;
             }
 
-          *os << be_nl;
+          be_interface *inherited =
+            be_interface::narrow_from_decl (parent);
+
+          if (first_concrete)
+            {
+              *os << be_nl << "  : " << be_idt << be_idt;
+            }
+          else
+            {
+	            *os << "," << be_nl;
+            }
+
+          first_concrete = I_FALSE;
+
+          *os << "public virtual ::" 
+              << inherited->full_direct_proxy_impl_name ();
         }
     }
 
-  *os << be_uidt_nl;
+  *os << be_uidt << be_uidt_nl;
+
   *os << "{" << be_nl << "public:" << be_idt_nl;
 
   // Ctor
@@ -75,12 +89,29 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) direct_proxy_impl_sh::"
                          "visit_interface - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
-  *os << "};" << be_uidt << be_nl << be_nl;
-  *os << be_nl
+  // Generate static collocated operations for operations of our base
+  // classes.
+  int status =
+    node->traverse_inheritance_graph (
+              be_interface::gen_colloc_op_decl_helper,
+              os
+            );
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_direct_proxy_impl_sh::"
+                         "visit_interface - "
+                         "inheritance graph traversal failed\n"),
+                        -1);
+    }
+
+  *os << be_uidt << be_uidt_nl
+      << "};" << be_nl << be_nl
       << "//" << be_nl
       << "//                Direct  Proxy Impl. Declaration" << be_nl
       << "///////////////////////////////////////////////////////////////////////"
@@ -89,7 +120,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
   return 0;
 }
 
-int 
+int
 be_visitor_interface_direct_proxy_impl_sh::gen_abstract_ops_helper (
     be_interface *node,
     be_interface *base,
@@ -148,4 +179,3 @@ int be_visitor_interface_direct_proxy_impl_sh::visit_component (
 {
   return this->visit_interface (node);
 }
-

@@ -18,13 +18,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "corbafwd.h"
+#include "Transport_Cache_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Transport_Cache_Manager.h"
 #include "Transport_Timer.h"
 #include "Incoming_Message_Queue.h"
 
@@ -378,11 +377,11 @@ public:
 
   /// Request has been just sent, but the reply is not received. Idle
   /// the transport now.
-  virtual int idle_after_send (void);
+  bool idle_after_send (void);
 
   /// Request is sent and the reply is received. Idle the transport
   /// now.
-  virtual int idle_after_reply (void);
+  bool idle_after_reply (void);
 
   /// Call the implementation method after obtaining the lock.
   virtual void close_connection (void);
@@ -416,6 +415,10 @@ public:
   ACE_Event_Handler::Reference_Count add_reference (void);
   ACE_Event_Handler::Reference_Count remove_reference (void);
 
+  /// Return the messaging object that is used to format the data that
+  /// needs to be sent.
+  virtual TAO_Pluggable_Messaging * messaging_object (void) = 0;
+
   /** @name Template methods
    *
    * The Transport class uses the Template Method Pattern to implement
@@ -445,10 +448,6 @@ public:
 protected:
 
   virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
-
-  /// Return the messaging object that is used to format the data that
-  /// needs to be sent.
-  virtual TAO_Pluggable_Messaging * messaging_object (void) = 0;
 
 public:
 

@@ -12,29 +12,39 @@
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================
+
 #ifndef TAO_CONNECTOR_H
 #define TAO_CONNECTOR_H
-#include /**/ "ace/pre.h"
 
-#include "corbafwd.h"
+#include /**/ "ace/pre.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
-
+#include "TAO_Export.h"
+#include "Basic_Types.h"
 
 class ACE_Time_Value;
 class TAO_Transport_Descriptor_Interface;
 class TAO_InputCDR;
 class TAO_Endpoint;
-class TAO_GIOP_Invocation;
 class TAO_Profile;
 class TAO_MProfile;
 class TAO_ORB_Core;
 class TAO_Connect_Strategy;
+class TAO_Transport;
 
+namespace TAO
+{
+  class Profile_Transport_Resolver;
+}
+
+namespace CORBA
+{
+  class Environment;
+}
 /**
  * @class TAO_Connector
  *
@@ -80,17 +90,10 @@ public:
    * connect ()  method so it can be called from the invocation code
    * independent of the actual transport protocol in use.
    */
-  virtual int connect (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc
-                       ACE_ENV_ARG_DECL);
-
-  /**
-   * Call is very similar to the previous one but with a timeout.
-   */
-  virtual int connect (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc,
-                       ACE_Time_Value *timeout
-                       ACE_ENV_ARG_DECL);
+  virtual TAO_Transport* connect (TAO::Profile_Transport_Resolver *r,
+                                  TAO_Transport_Descriptor_Interface *desc,
+                                  ACE_Time_Value *timeout
+                                  ACE_ENV_ARG_DECL);
 
   /// Create a profile for this protocol and initialize it based on the
   /// encapsulation in <cdr>
@@ -112,11 +115,9 @@ protected:
   /// remote *_Addr's which have not been done during IOR decode.
   virtual int set_validate_endpoint (TAO_Endpoint *endpoint) = 0;
 
-  /// Do an actual connect using the underlying transport to make a
-  /// connection
-  virtual int make_connection (TAO_GIOP_Invocation *invocation,
-                               TAO_Transport_Descriptor_Interface *desc,
-                               ACE_Time_Value *timeout) = 0;
+  virtual TAO_Transport* make_connection (TAO::Profile_Transport_Resolver *r,
+                                          TAO_Transport_Descriptor_Interface &desc,
+                                          ACE_Time_Value *timeout) = 0;
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);

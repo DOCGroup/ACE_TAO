@@ -33,13 +33,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "OctetSeqC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "OctetSeqC.h"
 #include "StringSeqC.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -68,7 +67,7 @@
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
 
-TAO_NAMESPACE  PortableInterceptor
+namespace PortableInterceptor
 {
   
   // TAO_IDL - Generated from
@@ -120,10 +119,17 @@ TAO_NAMESPACE  PortableInterceptor
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectId;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
 
-}
-TAO_NAMESPACE_CLOSE // module PortableInterceptor
+} // module PortableInterceptor
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+
+// Traits specializations.
+namespace TAO
+{
+};
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
@@ -136,7 +142,7 @@ TAO_NAMESPACE_CLOSE // module PortableInterceptor
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "PI_ForwardC.i"

@@ -38,7 +38,7 @@ CORBA::ServerRequest::operation (void) const
 }
 
 ACE_INLINE void
-CORBA::ServerRequest::_tao_lazy_evaluation (int lazy_evaluation)
+CORBA::ServerRequest::_tao_lazy_evaluation (bool lazy_evaluation)
 {
   this->lazy_evaluation_ = lazy_evaluation;
 }

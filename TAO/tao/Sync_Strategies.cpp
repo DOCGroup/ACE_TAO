@@ -1,19 +1,19 @@
 // $Id$
 
-#include "tao/Sync_Strategies.h"
-#include "tao/Buffering_Constraint_Policy.h"
-#include "tao/Stub.h"
-#include "tao/debug.h"
+#include "Sync_Strategies.h"
+#include "Buffering_Constraint_Policy.h"
+#include "Stub.h"
+#include "debug.h"
+
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Sync_Strategies.i"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            Sync_Strategies,
            "$Id$")
-
 
 TAO_Sync_Strategy::~TAO_Sync_Strategy (void)
 {
@@ -22,21 +22,20 @@ TAO_Sync_Strategy::~TAO_Sync_Strategy (void)
 // ****************************************************************
 
 int
-TAO_Transport_Sync_Strategy::
-    must_queue (int)
+TAO_Transport_Sync_Strategy::must_queue (int)
 {
   return 0;
 }
 
 int
-TAO_Transport_Sync_Strategy::
-    buffering_constraints_reached (TAO_Stub *,
-                                   size_t ,
-                                   size_t ,
-                                   int &must_flush,
-                                   const ACE_Time_Value &,
-                                   int &set_timer,
-                                   ACE_Time_Value &)
+TAO_Transport_Sync_Strategy::buffering_constraints_reached (
+  TAO_Stub *,
+  size_t ,
+  size_t ,
+  int &must_flush,
+  const ACE_Time_Value &,
+  int &set_timer,
+  ACE_Time_Value &)
 {
   set_timer = 0;
   must_flush = 1;
@@ -48,21 +47,20 @@ TAO_Transport_Sync_Strategy::
 // ****************************************************************
 
 int
-TAO_Eager_Buffering_Sync_Strategy::
-    must_queue (int)
+TAO_Eager_Buffering_Sync_Strategy::must_queue (int)
 {
   return 1;
 }
 
 int
-TAO_Eager_Buffering_Sync_Strategy::
-    buffering_constraints_reached (TAO_Stub *stub,
-                                   size_t msg_count,
-                                   size_t total_bytes,
-                                   int &must_flush,
-                                   const ACE_Time_Value &current_deadline,
-                                   int &set_timer,
-                                   ACE_Time_Value &new_deadline)
+TAO_Eager_Buffering_Sync_Strategy::buffering_constraints_reached (
+  TAO_Stub *stub,
+  size_t msg_count,
+  size_t total_bytes,
+  int &must_flush,
+  const ACE_Time_Value &current_deadline,
+  int &set_timer,
+  ACE_Time_Value &new_deadline)
 {
   must_flush = 0;
   set_timer = 0;
@@ -75,7 +73,9 @@ TAO_Eager_Buffering_Sync_Strategy::
     ACE_dynamic_cast (TAO_Buffering_Constraint_Policy *, bcp.in ());
 
   if (buffering_constraint_policy == 0)
-    return 1;
+    {
+      return 1;
+    }
 
   TAO::BufferingConstraint buffering_constraint;
   buffering_constraint_policy->get_buffering_constraint (buffering_constraint);
@@ -87,33 +87,41 @@ TAO_Eager_Buffering_Sync_Strategy::
     }
 
   int constraints_reached = 0;
+
   if (ACE_BIT_ENABLED (buffering_constraint.mode,
                        TAO::BUFFER_MESSAGE_COUNT)
       && msg_count >= buffering_constraint.message_count)
-    constraints_reached = 1;
+    {
+      constraints_reached = 1;
+    }
 
   if (ACE_BIT_ENABLED (buffering_constraint.mode,
                        TAO::BUFFER_MESSAGE_BYTES)
       && total_bytes >= buffering_constraint.message_bytes)
-    constraints_reached = 1;
+    {
+      constraints_reached = 1;
+    }
 
   if (this->timer_check (buffering_constraint,
                          current_deadline,
                          set_timer,
                          new_deadline) != 0)
-    constraints_reached = 1;
+    {
+      constraints_reached = 1;
+    }
 
   return constraints_reached;
 }
 
 int
-TAO_Eager_Buffering_Sync_Strategy::
-    timer_check (const TAO::BufferingConstraint &buffering_constraint,
-                 const ACE_Time_Value &current_deadline,
-                 int &set_timer,
-                 ACE_Time_Value &new_deadline)
+TAO_Eager_Buffering_Sync_Strategy::timer_check (
+  const TAO::BufferingConstraint &buffering_constraint,
+  const ACE_Time_Value &current_deadline,
+  int &set_timer,
+  ACE_Time_Value &new_deadline)
 {
   set_timer = 0;
+
   if (!ACE_BIT_ENABLED (buffering_constraint.mode,
                         TAO::BUFFER_TIMEOUT))
     {
@@ -157,8 +165,8 @@ TAO_Eager_Buffering_Sync_Strategy::
 }
 
 ACE_Time_Value
-TAO_Eager_Buffering_Sync_Strategy::
-    time_conversion (const TimeBase::TimeT &time)
+TAO_Eager_Buffering_Sync_Strategy::time_conversion (
+  const TimeBase::TimeT &time)
 {
   TimeBase::TimeT seconds = time / 10000000u;
   TimeBase::TimeT microseconds = (time % 10000000u) / 10;
@@ -169,8 +177,7 @@ TAO_Eager_Buffering_Sync_Strategy::
 // ****************************************************************
 
 int
-TAO_Delayed_Buffering_Sync_Strategy::
-    must_queue (int queue_empty)
+TAO_Delayed_Buffering_Sync_Strategy::must_queue (int queue_empty)
 {
   // If the queue is empty we want to send immediately
   return !queue_empty;

@@ -9,8 +9,10 @@
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
+
 #ifndef TAO_LF_CH_EVENT_H
 #define TAO_LF_CH_EVENT_H
+
 #include /**/ "ace/pre.h"
 
 #include "LF_Event.h"
@@ -108,4 +110,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_LF_CH_EVENT_H */

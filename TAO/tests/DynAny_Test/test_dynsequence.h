@@ -15,7 +15,7 @@
 #if !defined (TEST_DYNSEQUENCE_H)
 #define TEST_DYNSEQUENCE_H
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 
 class Test_DynSequence
 {

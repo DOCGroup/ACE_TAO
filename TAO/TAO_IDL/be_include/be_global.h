@@ -368,6 +368,12 @@ public:
   idl_bool gen_inline_constants (void) const;
   // Return the flag.
 
+  void gen_tmplinst (idl_bool value);
+  // Set the flag.
+
+  idl_bool gen_tmplinst (void) const;
+  // Return the flag.
+
   void lookup_strategy (LOOKUP_STRATEGY s);
   // Set the lookup strategy.
 
@@ -512,6 +518,10 @@ private:
   idl_bool gen_inline_constants_;
   // Flag to indicate whether we are using an inline form of constant
   // generation that pleases the C++ compiler better on some platforms.
+
+  idl_bool gen_tmplinst_;
+  // Flag to indicate if we are generating explicit template instantiations
+  // or not.
 
   LOOKUP_STRATEGY lookup_strategy_;
   // The enumerated value indicating the lookup strategy.

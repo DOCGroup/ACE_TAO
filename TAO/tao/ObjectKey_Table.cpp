@@ -4,25 +4,29 @@
 #include "ORB_Core.h"
 #include "Refcounted_ObjectKey.h"
 
-
 ACE_RCSID(tao,
           ObjectKey_Table,
           "$Id$")
-
 
 int
 TAO::Less_Than_ObjectKey::operator () (const TAO::ObjectKey &lhs,
                                        const TAO::ObjectKey &rhs) const
 {
   if (lhs.length () < rhs.length ())
-    return 1;
+    {
+      return 1;
+    }
   else if (lhs.length () > rhs.length ())
-    return 0;
+    {
+      return 0;
+    }
 
   for (CORBA::ULong i = 0; i < rhs.length (); ++i)
     {
       if (lhs[i] < rhs[i])
-        return 1;
+        {
+          return 1;
+        }
     }
 
   return 0;
@@ -60,6 +64,7 @@ TAO::ObjectKey_Table::bind (const TAO::ObjectKey &key,
   key_new = 0;
 
   int retval = 0;
+
   {
     ACE_GUARD_RETURN (ACE_Lock,
                       ace_mon,
@@ -75,8 +80,10 @@ TAO::ObjectKey_Table::bind (const TAO::ObjectKey &key,
                                 key_new);
 
     if (retval == -1)
-      return this->bind_i (key,
-                           key_new);
+      {
+        return this->bind_i (key,
+                             key_new);
+      }
 
     (void) key_new->incr_refcount ();
   }
@@ -96,7 +103,9 @@ TAO::ObjectKey_Table::unbind (TAO::Refcounted_ObjectKey *&key_new)
   // If the refcount has dropped to 1, just go ahead and unbind it
   // from the table.
   if (key_new && key_new->decr_refcount () == 1)
-    return this->unbind_i (key_new);
+    {
+      return this->unbind_i (key_new);
+    }
 
   return 0;
 }
@@ -140,9 +149,13 @@ TAO::ObjectKey_Table::bind_i (const TAO::ObjectKey &key,
                                    key_new);
 
   if (retval != -1)
-    key_new->incr_refcount ();
+    {
+      key_new->incr_refcount ();
+    }
   else
-    key_new->decr_refcount ();
+    {
+      key_new->decr_refcount ();
+    }
 
   return retval;
 }

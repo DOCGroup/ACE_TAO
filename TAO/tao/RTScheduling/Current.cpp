@@ -7,8 +7,6 @@
 #include "tao/TSS_Resources.h"
 #include "ace/ACE.h"
 
-//#include "ThreadAction.h"
-
 
 ACE_RCSID (RTScheduling,
            Current,
@@ -958,32 +956,13 @@ TAO_RTScheduler_Current_var::upcast (void *src)
 
 TAO_RTScheduler_Current_ptr TAO_RTScheduler_Current::_narrow (
     CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL
-  )
-{
-  return TAO_RTScheduler_Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-TAO_RTScheduler_Current_ptr TAO_RTScheduler_Current::_unchecked_narrow (
-    CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (obj))
-    return TAO_RTScheduler_Current::_nil ();
   return
-      ACE_reinterpret_cast
-        (
-          TAO_RTScheduler_Current_ptr,
-            obj->_tao_QueryInterface
-              (
-                ACE_reinterpret_cast
-                  (
-                    ptrdiff_t,
-                    &TAO_RTScheduler_Current::_narrow
-                  )
-              )
-        );
+    TAO_RTScheduler_Current::_duplicate (
+        dynamic_cast<TAO_RTScheduler_Current *> (obj)
+      );
 }
 
 TAO_RTScheduler_Current_ptr
@@ -992,81 +971,6 @@ TAO_RTScheduler_Current::_duplicate (TAO_RTScheduler_Current_ptr obj)
   if (!CORBA::is_nil (obj))
     obj->_add_ref ();
   return obj;
-}
-
-void *TAO_RTScheduler_Current::_tao_QueryInterface (ptrdiff_t type)
-{
-  void *retv = 0;
-  if (type == ACE_reinterpret_cast
-      (ptrdiff_t,
-       &TAO_RTScheduler_Current::_narrow))
-    retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (
-                                         ptrdiff_t,
-                                         &ACE_NESTED_CLASS (::RTScheduling, Current)::_tao_class_id)
-           )
-    {
-      retv = ACE_reinterpret_cast (void*, this);
-    }
-  else if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &::RTCORBA::Current::_tao_class_id)
-            )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (
-                RTCORBA::Current_ptr,
-                this
-              )
-          );
-    }
-  else if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &::CORBA::Current::_tao_class_id)
-            )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (
-                CORBA::Current_ptr,
-                this
-              )
-          );
-    }
-  else if (type == ACE_reinterpret_cast (
-               ptrdiff_t,
-               &CORBA::Object::_tao_class_id)
-             )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
-    }
-
-//   else if (type == ACE_reinterpret_cast
-//     (ptrdiff_t,
-//       &::RTScheduling::Current::_narrow))
-//     retv = ACE_reinterpret_cast
-//       (
-//         void *,
-//         ACE_static_cast
-//           (
-//             RTScheduling::Current_ptr,
-//             this
-//           )
-//       );
-//   else if (type == ACE_reinterpret_cast (ptrdiff_t, &CORBA::Object::_narrow))
-//     retv = ACE_reinterpret_cast (void *,
-//       ACE_static_cast (CORBA::Object_ptr, this));
-
-  if (retv)
-    this->_add_ref ();
-  return retv;
 }
 
 const char* TAO_RTScheduler_Current::_interface_repository_id (void) const

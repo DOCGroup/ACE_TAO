@@ -19,7 +19,9 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-ACE_RCSID (RTPortableServer, RTPortableServer, "$Id$")
+ACE_RCSID (RTPortableServer, 
+           RTPortableServer, 
+           "$Id$")
 
 TAO_RTPortableServer_Initializer::TAO_RTPortableServer_Initializer (void)
 {

@@ -13,7 +13,6 @@
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
 #include "tao/Transport_Cache_Manager.h"
-#include "tao/Invocation.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Blocked_Connect_Strategy.h"
 
@@ -148,9 +147,9 @@ TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 
 }
 
-int
-TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
-                                       TAO_Transport_Descriptor_Interface *desc,
+TAO_Transport *
+TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
+                                       TAO_Transport_Descriptor_Interface &desc,
                                        ACE_Time_Value *max_wait_time)
 {
   if (TAO_debug_level > 0)
@@ -159,10 +158,10 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                   ACE_TEXT ("looking for SHMIOP connection.\n")));
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
-    this->remote_endpoint (desc->endpoint ());
+    this->remote_endpoint (desc.endpoint ());
 
   if (shmiop_endpoint == 0)
-    return -1;
+    return 0;
 
   const ACE_INET_Addr &remote_address =
     shmiop_endpoint->object_addr ();
@@ -212,7 +211,7 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                       ACE_TEXT ("errno")));
         }
 
-      return -1;
+      return 0;
     }
 
   // At this point, the connection has be successfully connected.
@@ -229,7 +228,7 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 
   // Add the handler to Cache
   int retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
                                                                              transport);
 
   // Failure in adding to cache.
@@ -245,7 +244,7 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                       "could not add the new connection to cache\n"));
         }
 
-      return -1;
+      return 0;
     }
 
   // If the wait strategy wants us to be registered with the reactor
@@ -269,15 +268,10 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                       "could not register the new connection in the reactor\n"));
         }
 
-      return -1;
+      return 0;
     }
 
-  // Handover the transport pointer to the Invocation class.
-  TAO_Transport *&invocation_transport =
-    invocation->transport ();
-  invocation_transport = transport;
-
-  return 0;
+  return transport;
 }
 
 TAO_Profile *

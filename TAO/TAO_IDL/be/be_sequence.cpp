@@ -27,13 +27,16 @@
 #include "be_field.h"
 #include "be_visitor.h"
 #include "be_helper.h"
+
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
+#include "global_extern.h"
+
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be, 
-           be_sequence, 
+ACE_RCSID (be,
+           be_sequence,
            "$Id$")
 
 
@@ -84,6 +87,73 @@ be_sequence::be_sequence (AST_Expression *v,
 {
   // Always the case.
   this->has_constructor (I_TRUE);
+
+  // Don't want to set any bits below for imported nodes.
+  if (this->imported ())
+    {
+      return;
+    }
+
+  // This one gets set for all sequences, in addition to any specialized
+  // one that may get set below.
+  ACE_SET_BITS (idl_global->decls_seen_info_,
+                idl_global->decls_seen_masks.seq_seen_);
+
+  // Don't need the return value - just set the member.
+  (void) this->managed_type ();
+
+  switch (this->mt_)
+    {
+      case MNG_OBJREF:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.iface_seq_seen_);
+        break;
+      case MNG_PSEUDO:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.pseudo_seq_seen_);
+        break;
+      case MNG_VALUE:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.vt_seq_seen_);
+        break;
+      case MNG_STRING:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.string_seq_seen_);
+        break;
+      case MNG_WSTRING:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.wstring_seq_seen_);
+        break;
+      default:
+        break;
+    }
+
+  AST_Decl::NodeType nt = t->node_type ();
+  AST_Typedef *td = 0;
+  AST_Type *pbt = 0;
+
+  if (nt == AST_Decl::NT_typedef)
+    {
+      td = AST_Typedef::narrow_from_decl (t);
+      pbt = td->primitive_base_type ();
+      nt = pbt->node_type ();
+    }
+
+  if (nt == AST_Decl::NT_pre_defined)
+    {
+      AST_PredefinedType *pdt = 
+        AST_PredefinedType::narrow_from_decl (pbt ? pbt : t);
+
+      switch (pdt->pt ())
+        {
+          case AST_PredefinedType::PT_octet:
+            ACE_SET_BITS (idl_global->decls_seen_info_,
+                          idl_global->decls_seen_masks.octet_seq_seen_);
+            break;
+          default:
+            break;
+        }
+    }
 }
 
 // Helper to create_name.
@@ -148,9 +218,8 @@ be_sequence::gen_name (void)
   else
     {
       ACE_OS::sprintf (namebuf,
-                       "_tao_seq_%s_%s",
-                       bt->local_name ()->get_string (),
-                       fn ? fn->local_name ()->get_string () : "");
+                       "_tao_seq_%s_",
+                       bt->flat_name ());
     }
 
   // Append the size (if any).
@@ -160,7 +229,7 @@ be_sequence::gen_name (void)
       ACE_OS::sprintf (ulval_str,
                        "_%lu",
                        this->max_size ()->ev ()->u.ulval);
-      ACE_OS::strcat (namebuf, 
+      ACE_OS::strcat (namebuf,
                       ulval_str);
     }
 
@@ -254,16 +323,6 @@ be_sequence::managed_type (void)
       switch (prim_type->node_type ())
         {
         case AST_Decl::NT_interface:
-          if (prim_type->is_abstract ())
-            {
-              this->mt_ = be_sequence::MNG_ABSTRACT;
-            }
-          else
-            {
-              this->mt_ = be_sequence::MNG_OBJREF;
-            }
-
-          break;
         case AST_Decl::NT_interface_fwd:
           this->mt_ = be_sequence::MNG_OBJREF;
           break;
@@ -388,22 +447,6 @@ be_sequence::instance_name ()
         }
 
       break;
-    case be_sequence::MNG_ABSTRACT:
-      if (this->unbounded ())
-        {
-          ACE_OS::sprintf (namebuf,
-                           "_TAO_Unbounded_Abstract_Sequence_%s",
-                           prim_type->local_name ()->get_string ());
-        }
-      else
-        {
-          ACE_OS::sprintf (namebuf,
-                           "_TAO_Bounded_Abstract_Sequence_%s_%lu",
-                           prim_type->local_name ()->get_string (),
-                           this->max_size ()->ev ()->u.ulval);
-        }
-
-      break;
     case be_sequence::MNG_VALUE:
       if (this->unbounded ())
         {
@@ -485,6 +528,7 @@ be_sequence::instance_name ()
 
 int
 be_sequence::gen_base_class_name (TAO_OutStream *os,
+                                  char * linebreak,
                                   AST_Decl *ctx_scope)
 {
   be_type *elem = be_type::narrow_from_decl (this->base_type ());
@@ -495,47 +539,22 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     case be_sequence::MNG_OBJREF:
       if (this->unbounded ())
         {
-          *os << "TAO_Unbounded_Object_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl;
-          *os << elem->nested_type_name (ctx_scope, "_var") << "," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_life," << be_nl;
-          *os << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_cast" << be_uidt_nl
+          *os << "TAO_Unbounded_Object_Sequence<" << linebreak
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << "," << linebreak
+              << be_nl;
+          *os << elem->nested_type_name (ctx_scope, "_var") << linebreak
+              << be_uidt_nl
               << ">" << be_uidt;
         }
       else
         {
-          *os << "TAO_Bounded_Object_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl;
-          *os << elem->nested_type_name (ctx_scope, "_var") << "," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_life," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_cast," << be_nl
-              << this->max_size ()->ev ()->u.ulval << be_uidt_nl
-              << ">" << be_uidt;
-        }
-
-      break;
-    case be_sequence::MNG_ABSTRACT:
-      if (this->unbounded ())
-        {
-          *os << "TAO_Unbounded_Abstract_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl;
-          *os << elem->nested_type_name (ctx_scope, "_var") << "," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_life" << be_uidt_nl
-              << ">" << be_uidt;
-        }
-      else
-        {
-          *os << "TAO_Bounded_Abstract_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl;
-          *os << elem->nested_type_name (ctx_scope, "_var") << "," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_life," << be_nl
-              << this->max_size ()->ev ()->u.ulval << be_uidt_nl
+          *os << "TAO_Bounded_Object_Sequence<" << linebreak
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << "," << linebreak << be_nl;
+          *os << elem->nested_type_name (ctx_scope, "_var") << ","
+              << linebreak << be_nl;
+          *os << this->max_size ()->ev ()->u.ulval << linebreak << be_uidt_nl
               << ">" << be_uidt;
         }
 
@@ -543,17 +562,18 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     case be_sequence::MNG_PSEUDO:
       if (this->unbounded ())
         {
-          *os << "TAO_Unbounded_Pseudo_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl
-              << elem->name () << "_var" << be_uidt_nl
+          *os << "TAO_Unbounded_Pseudo_Sequence<" << linebreak
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << linebreak << be_uidt_nl
               << ">" << be_uidt;
         }
       else
         {
-          *os << "TAO_Bounded_Pseudo_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl
-              << elem->name () << "_var," << be_nl
-              << this->max_size ()->ev ()->u.ulval << be_uidt_nl
+          *os << "TAO_Bounded_Pseudo_Sequence<" << linebreak
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << linebreak << be_nl
+              << this->max_size ()->ev ()->u.ulval << linebreak
+              << be_uidt_nl
               << ">" << be_uidt;
         }
 
@@ -561,21 +581,23 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     case be_sequence::MNG_VALUE:
       if (this->unbounded ())
         {
-          *os << "TAO_Unbounded_Valuetype_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl;
-          *os << elem->nested_type_name (ctx_scope, "_var") << "," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_life" << be_uidt_nl
+          *os << "TAO_Unbounded_Valuetype_Sequence<" << linebreak
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << "," << linebreak
+              << be_nl;
+          *os << elem->nested_type_name (ctx_scope, "_var") << linebreak
+              << be_uidt_nl
               << ">" << be_uidt;
         }
       else
         {
-          *os << "TAO_Bounded_Valuetype_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl;
-          *os << elem->nested_type_name (ctx_scope, "_var") << "," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_life," << be_nl
-              << this->max_size ()->ev ()->u.ulval << be_uidt_nl
+          *os << "TAO_Bounded_Valuetype_Sequence<" << linebreak
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << "," << linebreak
+              << be_nl;
+          *os << elem->nested_type_name (ctx_scope, "_var") << ","
+              << linebreak << be_nl
+              << this->max_size ()->ev ()->u.ulval << linebreak << be_uidt_nl
               << ">" << be_uidt;
         }
 
@@ -610,21 +632,24 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
           case AST_Decl::NT_array:
             if (this->unbounded ())
               {
-                *os << "TAO_Unbounded_Array_Sequence<"
+                *os << "TAO_Unbounded_Array_Sequence<" << linebreak
                     << be_idt << be_idt_nl
-                    << elem->nested_type_name (ctx_scope) << "," << be_nl
-                    << this->smart_fwd_helper_name (ctx_scope, elem) 
-                    << "_life" << be_uidt_nl
+                    << elem->nested_type_name (ctx_scope) << "," << linebreak
+                    << be_nl;
+                *os << elem->nested_type_name (ctx_scope) << "_slice"
+                    << linebreak << be_uidt_nl
                     << ">" << be_uidt;
               }
             else
               {
-                *os << "TAO_Bounded_Array_Sequence<"
+                *os << "TAO_Bounded_Array_Sequence<" << linebreak
                     << be_idt << be_idt_nl
-                    << elem->nested_type_name (ctx_scope) << "," << be_nl
-                    << this->smart_fwd_helper_name (ctx_scope, elem) 
-                    << "_life," << be_nl
-                    << this->max_size ()->ev ()->u.ulval << be_uidt_nl
+                    << elem->nested_type_name (ctx_scope) << "," << linebreak
+                    << be_nl;
+                *os << elem->nested_type_name (ctx_scope) << "_slice,"
+                    << linebreak << be_nl
+                    << this->max_size ()->ev ()->u.ulval << linebreak
+                    << be_uidt_nl
                     << ">" << be_uidt;
               }
 
@@ -632,22 +657,27 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
           default:
             if (this->unbounded ())
               {
-                *os << "TAO_Unbounded_Sequence<" << be_idt << be_idt_nl
-                    << elem->nested_type_name (ctx_scope) << be_uidt_nl
+                *os << "TAO_Unbounded_Sequence<" << linebreak
+                    << be_idt << be_idt_nl
+                    << elem->nested_type_name (ctx_scope) << linebreak
+                    << be_uidt_nl
                     << ">" << be_uidt;
               }
             else
               {
-                *os << "TAO_Bounded_Sequence<" << be_idt << be_idt_nl
-                    << elem->nested_type_name (ctx_scope) << "," << be_nl
-                    << this->max_size ()->ev ()->u.ulval << be_uidt_nl
+                *os << "TAO_Bounded_Sequence<" << linebreak
+                    << be_idt << be_idt_nl
+                    << elem->nested_type_name (ctx_scope) << "," << linebreak
+                    << be_nl
+                    << this->max_size ()->ev ()->u.ulval << linebreak
+                    << be_uidt_nl
                     << ">" << be_uidt;
               }
 
             break;
         }
 
-      break;      
+      break;
   }
 
   return 0;

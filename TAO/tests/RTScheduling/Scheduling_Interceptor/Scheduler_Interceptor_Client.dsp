@@ -39,6 +39,7 @@ RSC=rc.exe
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GR /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../../../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
@@ -74,7 +75,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib TAO_RTCORBAd.lib TAO_PortableServerd.lib TAO_RTSchedulerd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"$(ACE_ROOT)\ace" /libpath:"../../../../ace" /libpath:"../../../tao" /libpath:"../../../tao/RTCORBA" /libpath:"../../../tao/PortableServer" /libpath:"../../../tao/RTScheduling"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib aced.lib taod.lib TAO_RTCORBAd.lib TAO_RTSchedulerd.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"../../../../ace" /libpath:"../../../tao" /libpath:"../../../tao/RTCORBA" /libpath:"../../../tao/PortableServer" /libpath:"../../../tao/RTScheduling"
 
 !ENDIF 
 
@@ -123,43 +124,19 @@ SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "Scheduler_Interceptor_Client - Win32 Release"
 
+USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\test.idl
 InputName=test
 
-BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Sc  -Ge 1  $(InputName).idl
-
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
+	..\..\..\..\bin\Release\tao_idl -Sc -Ge 1 $(InputName).idl
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "Scheduler_Interceptor_Client - Win32 Debug"
 
+USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\test.idl
 InputName=test

@@ -15,13 +15,19 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -29,17 +35,9 @@ CORBA::Boolean operator<< (
     const CORBA::ServiceDetail &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << _tao_aggregate.service_detail_type) &&
-    (strm << _tao_aggregate.service_detail)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << _tao_aggregate.service_detail);
 }
 
 ACE_INLINE
@@ -48,57 +46,49 @@ CORBA::Boolean operator>> (
     CORBA::ServiceDetail &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> _tao_aggregate.service_detail_type) &&
-    (strm >> _tao_aggregate.service_detail)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> _tao_aggregate.service_detail);
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
 
-#if !defined _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_ServiceOption_I_
-#define _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_ServiceOption_I_
+#if !defined _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceOption__I_
+#define _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceOption__I_
 
 CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA::ServiceInformation::_tao_seq_ServiceOption &
+    const CORBA::ServiceInformation::_tao_seq_CORBA_ServiceOption_ &
   );
 
 CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA::ServiceInformation::_tao_seq_ServiceOption &
+    CORBA::ServiceInformation::_tao_seq_CORBA_ServiceOption_ &
   );
 
-#endif /* _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_ServiceOption_I_ */
+#endif /* _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceOption__I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
 
-#if !defined _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_ServiceDetail_I_
-#define _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_ServiceDetail_I_
+#if !defined _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceDetail__I_
+#define _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceDetail__I_
 
 CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA::ServiceInformation::_tao_seq_ServiceDetail &
+    const CORBA::ServiceInformation::_tao_seq_CORBA_ServiceDetail_ &
   );
 
 CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA::ServiceInformation::_tao_seq_ServiceDetail &
+    CORBA::ServiceInformation::_tao_seq_CORBA_ServiceDetail_ &
   );
 
-#endif /* _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_ServiceDetail_I_ */
+#endif /* _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceDetail__I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -106,17 +96,9 @@ CORBA::Boolean operator<< (
     const CORBA::ServiceInformation &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << _tao_aggregate.service_options) &&
-    (strm << _tao_aggregate.service_details)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << _tao_aggregate.service_details);
 }
 
 ACE_INLINE
@@ -125,16 +107,8 @@ CORBA::Boolean operator>> (
     CORBA::ServiceInformation &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> _tao_aggregate.service_options) &&
-    (strm >> _tao_aggregate.service_details)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> _tao_aggregate.service_details);
 }
 

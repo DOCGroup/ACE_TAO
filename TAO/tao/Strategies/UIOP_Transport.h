@@ -14,9 +14,10 @@
 
 #ifndef TAO_UIOP_TRANSPORT_H
 #define TAO_UIOP_TRANSPORT_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -119,4 +120,5 @@ private:
 # endif  /* TAO_HAS_UIOP == 1 */
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_UIOP_TRANSPORT_H */

@@ -5,8 +5,11 @@
 #include "Messaging_ORBInitializer.h"
 
 #include "ace/Auto_Ptr.h"
-#include "tao/Stub.h"
+// #include "tao/Stub.h"
+#include "tao/Exception_Data.h"
 #include "tao/debug.h"
+#include "tao/ORB_Constants.h"
+#include "tao/ORBInitializer_Registry.h"
 
 ACE_RCSID (tao,
            Messaging,
@@ -34,8 +37,8 @@ TAO_Messaging_Initializer::init (void)
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_Messaging_ORBInitializer,
                         CORBA::NO_MEMORY (
-		          CORBA::SystemException::_tao_minor_code (
-			    TAO_DEFAULT_MINOR_CODE,
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_TRY_CHECK;
@@ -64,7 +67,7 @@ TAO_Messaging_Initializer::init (void)
 #if (TAO_HAS_AMI_CALLBACK == 1)
 
 void TAO_Messaging_Helper::
-exception_holder_raise (TAO_Exception_Data *exception_data,
+exception_holder_raise (TAO::Exception_Data *exception_data,
                         CORBA::ULong exception_count,
                         CORBA::Octet *marshaled_data,
                         CORBA::ULong marshaled_data_length,

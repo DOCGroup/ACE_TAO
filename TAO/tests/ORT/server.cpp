@@ -1,6 +1,8 @@
 #include "ORT_test_i.h"
 #include "ServerORBInitializer.h"
 
+#include "tao/ORBInitializer_Registry.h"
+
 #include "ace/Get_Opt.h"
 
 

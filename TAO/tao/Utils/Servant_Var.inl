@@ -6,10 +6,20 @@ template <class T>
 ACE_INLINE T * TAO::Utils::Servant_Var<T>::
 _duplicate(T * p)
 {
-  if (p != 0)
-  {
-    p->_add_ref();
-  }
+  ACE_TRY_NEW_ENV
+    {
+      if (p != 0)
+        {
+          p->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHALL
+    {
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+
   return p;
 }
 
@@ -58,23 +68,23 @@ template <class T> ACE_INLINE
 TAO::Utils::Servant_Var<T>::~Servant_Var ()
   ACE_THROW_SPEC (())
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   // Unfortunately, there is no throw spec on _remove_ref, so we
   // can't assume that it will not throw.  If it does, then we are in
   // trouble.  In any event, we can't let the exception escape our
   // destructor.
-  if (ptr_ != 0)
-  {
-    ACE_TRY
-      {
-        ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-      }
-    ACE_CATCHALL
-      {
-      }
-    ACE_ENDTRY;
-  }
+  ACE_TRY_NEW_ENV
+    {
+      if (ptr_ != 0)
+        {
+          ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHALL
+    {
+      // Forget the exception..
+    }
+  ACE_ENDTRY;
 }
 
 #if !defined(ACE_LACKS_MEMBER_TEMPLATES)

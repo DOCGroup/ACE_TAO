@@ -15,24 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "IOP_CodecC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IOP_CodecC.h"
 #include "LocalObject.h"
-
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 
 /**
  * @class TAO_CDR_Encaps_Codec
@@ -131,10 +120,6 @@ private:
   TAO_ORB_Core * orb_core_;
 
 };
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 

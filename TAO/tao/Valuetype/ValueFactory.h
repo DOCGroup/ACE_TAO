@@ -10,40 +10,41 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_VALUEFACTORY_H
 #define TAO_VALUEFACTORY_H
+
 #include /**/ "ace/pre.h"
 
 #include "valuetype_export.h"
-#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Value_VarOut_T.h"
+
+#include "tao/Basic_Types.h"
+#include "tao/orbconf.h"
+
 #include "ace/Synch_T.h"
 
 namespace CORBA
 {
+  class AbstractBase;
+  typedef AbstractBase *AbstractBase_ptr;
+
+  class ValueBase;
+
   class ValueFactoryBase;
-  struct tao_ValueFactoryBase_life;
 
   extern TAO_Valuetype_Export void add_ref (ValueFactoryBase *);
   extern TAO_Valuetype_Export void remove_ref (ValueFactoryBase *);
 
-  typedef TAO_Value_Var_T<ValueFactoryBase, 
-                          tao_ValueFactoryBase_life> 
+  typedef TAO_Value_Var_T<ValueFactoryBase>
     ValueFactoryBase_var;
 
   typedef ValueFactoryBase_var ValueFactory_var;
 
-  struct TAO_Valuetype_Export tao_ValueFactoryBase_life
-  {
-    static void tao_add_ref (ValueFactoryBase *);
-    static void tao_remove_ref (ValueFactoryBase *);
-  };
 
   class TAO_Valuetype_Export ValueFactoryBase
   {
@@ -62,7 +63,7 @@ namespace CORBA
 
     // Not pure virtual because this will be overridden only by valuetypes
     // that support an abstract interface.
-    virtual CORBA::AbstractBase * create_for_unmarshal_abstract (void);
+    virtual CORBA::AbstractBase_ptr create_for_unmarshal_abstract (void);
 
   private:
     CORBA::ULong _tao_reference_count_;
@@ -71,6 +72,25 @@ namespace CORBA
 
 }  // End CORBA namespace
 
+namespace TAO
+{
+  /**
+   * @brief Specializations needed for using with Value_Var_T
+   */
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Valuetype_Export Value_Traits<CORBA::ValueFactoryBase>
+  {
+    static void tao_add_ref (
+        CORBA::ValueFactoryBase *);
+    static void tao_remove_ref (
+        CORBA::ValueFactoryBase *);
+
+    // For INOUT value type arguments, so they can use the same set
+    // of arg classes as interfaces.
+    static void tao_release (
+        CORBA::ValueFactoryBase *);
+  };
+}
 // Use this macro for writing code that is independend from
 // the compiler support of covariant return types of pointers to
 // virtual inherited classes.

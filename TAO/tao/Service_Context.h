@@ -14,6 +14,7 @@
 
 #ifndef TAO_SERVICE_CONTEXT_H
 #define TAO_SERVICE_CONTEXT_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/IOPC.h"
@@ -21,7 +22,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 /**
  * @class TAO_Service_Context
@@ -119,7 +119,6 @@ public:
   // addition info done through this interface
 
 private:
-
   /// Helper methods to implement set_context()
   void set_context_i (const IOP::ServiceContext &context);
   void set_context_i (IOP::ServiceContext &context);
@@ -132,8 +131,7 @@ private:
   int get_context_i (IOP::ServiceContext &context) const;
 
 private:
-
-  /// The ServiceContextList info
+  /// The ServiceContextList info.
   IOP::ServiceContextList service_context_;
 };
 
@@ -141,6 +139,6 @@ private:
 # include "tao/Service_Context.inl"
 #endif /* ! __ACE_INLINE__ */
 
-
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_SERVICE_CONTEXT_H */

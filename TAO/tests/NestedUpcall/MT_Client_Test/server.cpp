@@ -86,9 +86,11 @@ MT_Object_Server::init (int argc,
                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               str.in ()));
+#endif /*if 0*/
 
   if (this->ior_output_file_)
     {

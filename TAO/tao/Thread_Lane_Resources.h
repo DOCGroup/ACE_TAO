@@ -14,20 +14,18 @@
 #define TAO_THREAD_LANE_RESOURCES_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Thread_Mutex.h"
+
+#include "tao/TAO_Export.h"
 #include "tao/orbconf.h"
 
-#include "ace/Thread_Mutex.h"
-#include "ace/CORBA_macros.h"
-
 class ACE_Allocator;
-
 class TAO_ORB_Core;
 class TAO_Acceptor_Registry;
 class TAO_Transport_Cache_Manager;
@@ -36,6 +34,11 @@ class TAO_MProfile;
 class TAO_New_Leader_Generator;
 class TAO_Connector_Registry;
 class TAO_Resource_Factory;
+
+namespace CORBA
+{
+  class Environment;
+}
 
 /**
  * @class TAO_Thread_Lane_Resources
@@ -49,8 +52,9 @@ class TAO_Export TAO_Thread_Lane_Resources
 {
 public:
   /// Constructor.
-  TAO_Thread_Lane_Resources (TAO_ORB_Core &orb_core,
-                             TAO_New_Leader_Generator *new_leader_generator = 0);
+  TAO_Thread_Lane_Resources (
+      TAO_ORB_Core &orb_core,
+      TAO_New_Leader_Generator *new_leader_generator = 0);
 
   /// Destructor.
   ~TAO_Thread_Lane_Resources (void);
@@ -102,6 +106,22 @@ public:
    * Transport object. This allocator has locks.
    */
   ACE_Allocator *transport_message_buffer_allocator (void);
+
+  /* Allocator is intended for allocating the ACE_Data_Blocks used in
+   * outgoing CDR streams.  This allocator has locks.
+   */
+  ACE_Allocator *output_cdr_dblock_allocator (void);
+
+  /* Allocator is intended for allocating the buffers in the outgoing
+   * CDR streams.  This allocator has locks.
+   */
+  ACE_Allocator *output_cdr_buffer_allocator (void);
+
+  /* Allocator is intended for allocating the ACE_Message_Blocks used
+   * in the outgoing CDR streams.  This allocator is global, and has
+   * locks.
+   */
+  ACE_Allocator *output_cdr_msgblock_allocator (void);
   // @}
 
 private:
@@ -146,6 +166,13 @@ private:
   /// The allocators for the buffering messages in the transport.
   //@{
   ACE_Allocator *transport_message_buffer_allocator_;
+  //@}
+
+  /// The allocators for the output CDR streams.
+  //@{
+  ACE_Allocator *output_cdr_dblock_allocator_;
+  ACE_Allocator *output_cdr_buffer_allocator_;
+  ACE_Allocator *output_cdr_msgblock_allocator_;
   //@}
 };
 

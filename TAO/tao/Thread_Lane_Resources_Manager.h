@@ -14,20 +14,25 @@
 #define TAO_THREAD_LANE_RESOURCES_MANAGER_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
 #include "ace/Service_Object.h"
+
+#include "tao/TAO_Export.h"
 
 class TAO_ORB_Core;
 class TAO_Thread_Lane_Resources;
 class TAO_LF_Strategy;
 class TAO_MProfile;
+
+namespace CORBA
+{
+  class Environment;
+}
 
 /**
  * @class TAO_Thread_Lane_Resources_Manager
@@ -95,7 +100,9 @@ public:
   virtual ~TAO_Thread_Lane_Resources_Manager_Factory (void);
 
   /// Factory method.
-  virtual TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (TAO_ORB_Core &core) = 0;
+  virtual
+  TAO_Thread_Lane_Resources_Manager *
+  create_thread_lane_resources_manager (TAO_ORB_Core &core) = 0;
 
 };
 

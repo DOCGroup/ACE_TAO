@@ -13,15 +13,15 @@
 
 #ifndef TAO_IIOP_FACTORY_H
 #define TAO_IIOP_FACTORY_H
-#include /**/ "ace/pre.h"
 
-#include "tao/Protocol_Factory.h"
+#include /**/ "ace/pre.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Config.h"
+#include "tao/Protocol_Factory.h"
 
 class TAO_Acceptor;
 class TAO_Connector;

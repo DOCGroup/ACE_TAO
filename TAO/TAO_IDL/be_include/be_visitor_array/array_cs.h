@@ -43,11 +43,6 @@ public:
 
   virtual int visit_array (be_array *node);
   // visit the array node
-
-private:
-  void gen_tmplinst (be_array *node,
-                     char *fname);
-  // Generated the explicit template instantiations.
 };
 
 #endif /* _BE_VISITOR_ARRAY_CS_H_ */

@@ -16,11 +16,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Any.h"
+#include "tao/Any_Impl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+namespace CORBA
+{
+  class Any;
+  class Environment;
+}
 
 namespace TAO
 {
@@ -31,7 +37,7 @@ namespace TAO
    *
    * Used for interfaces and typecodes
    */
-  template<typename T> 
+  template<typename T>
   class Any_Impl_T : public Any_Impl
   {
   public:
@@ -40,7 +46,7 @@ namespace TAO
                 T * const);
     virtual ~Any_Impl_T (void);
 
-    static void insert (CORBA::Any &, 
+    static void insert (CORBA::Any &,
                         _tao_destructor destructor,
                         CORBA::TypeCode_ptr,
                         T * const);
@@ -55,9 +61,7 @@ namespace TAO
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
-    virtual void _tao_decode (TAO_InputCDR &
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+    virtual void _tao_decode (TAO_InputCDR &  ACE_ENV_ARG_DECL);
     virtual const void *value (void) const;
     virtual void free_value (void);
 
@@ -86,5 +90,3 @@ namespace TAO
 #include /**/ "ace/post.h"
 
 #endif /* TAO_ANY_IMPL_T_H */
-
-

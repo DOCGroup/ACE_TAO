@@ -13,25 +13,34 @@
  */
 //=============================================================================
 
-//
 #ifndef TAO_PLUGGABLE_MESSAGING_H
 #define TAO_PLUGGABLE_MESSAGING_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/Exception.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Basic_Types.h"
+
+namespace CORBA
+{
+  class Exception;
+}
+
 class TAO_Target_Specification;
 class TAO_Pluggable_Reply_Params;
+class TAO_Pluggable_Reply_Params_Base;
 class TAO_Transport;
 class TAO_Operation_Details;
 class TAO_Target_Specification;
 class TAO_OutputCDR;
 class TAO_Queued_Data;
+
+class ACE_Time_Value;
 
 // @@ The more I think I about this class, I feel that this class need
 // not be a ABC as it is now. Instead we have these options
@@ -56,7 +65,6 @@ class TAO_Queued_Data;
  */
 class TAO_Export TAO_Pluggable_Messaging
 {
-
 public:
   /// Dtor
   virtual ~TAO_Pluggable_Messaging (void);
@@ -166,6 +174,9 @@ public:
 
   /// Header length
   virtual size_t header_length (void) const = 0;
+
+  /// Accessor for the output CDR stream
+  virtual TAO_OutputCDR &out_stream (void) = 0;
 };
 
 #if defined (__ACE_INLINE__)
@@ -173,4 +184,5 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /*TAO_PLUGGABLE_MESSAGING_H*/

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
-#include "tao/corba.h"
+#include "tao/ORB.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
 ACE_RCSID(Destroy_Thread_Pools, Destroy_Thread_Pools, "$Id$")
