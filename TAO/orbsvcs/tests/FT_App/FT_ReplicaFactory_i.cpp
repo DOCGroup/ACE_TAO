@@ -52,7 +52,7 @@ FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
   : identity_ ("")
   , orb_ (0)
   , poa_ (0)
-  , object_id (0)
+  , object_id_ (0)
 //  ,ior_()
   , ior_output_file_ (0)
   , have_replication_manager_ (0)
@@ -285,7 +285,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   // ugly but effective
   TAO_debug_level++;
 
-  this->orb_ = CORBA::ORB::_duplicate (orb.in ());
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
@@ -633,6 +633,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   int missingParameter = 0;
   const char * missingParameterName = 0;
 
+#if 0 // PG_FIND
   CORBA::Long initialValue = 0;
   if (! ::TAO_PG::find (decoder, criterion_initial_value, initialValue) )
   {
@@ -651,6 +652,51 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     // missingParameter = 1;
     // missingParameterName = PortableGroup::role_criterion;
   }
+#else // PG_FIND
+  CORBA::Long initialValue = 0;
+  PortableGroup::Value * any;
+  if (decoder.find (criterion_initial_value, any))
+  {
+    if (! ((*any) >>= initialValue))
+    {
+      // not required.  Otherwise:
+      // missingParameter = 1;
+      // missingParameterName = criterion_initial_value;
+    }
+  }
+  else
+  {
+    // not required.  Otherwise:
+    // missingParameter = 1;
+    // missingParameterName = criterion_initial_value;
+  }
+
+  const char * role = "replica";
+  if (decoder.find (PortableGroup::role_criterion, any) )
+  {
+    if ( ! ((*any) >>= role))
+    {
+
+      ACE_ERROR((LM_INFO,
+        "Property \"%s\" not found?\n", PortableGroup::role_criterion
+        ));
+      // not required.  Otherwise:
+      // missingParameter = 1;
+      // missingParameterName = PortableGroup::role_criterion;
+    }
+  }
+  else
+  {
+
+    ACE_ERROR((LM_INFO,
+      "Property \"%s\" not found?\n", PortableGroup::role_criterion
+      ));
+    // not required.  Otherwise:
+    // missingParameter = 1;
+    // missingParameterName = PortableGroup::role_criterion;
+  }
+
+#endif
 
   if (missingParameter)
   {

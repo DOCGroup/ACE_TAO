@@ -462,6 +462,8 @@ void TAO::FT_FaultDetectorFactory_i::change_properties (
 
   ::TAO_PG::Properties_Decoder decoder(property_set);
 
+#if 0 // PG_FIND
+
   TimeBase::TimeT value = 0;
   if( TAO_PG::find (decoder, FT::FT_FAULT_MONITORING_INTERVAL, value) )
   {
@@ -483,6 +485,46 @@ void TAO::FT_FaultDetectorFactory_i::change_properties (
     ex.nam[0].id = CORBA::string_dup(FT::FT_FAULT_MONITORING_INTERVAL);
     ACE_THROW (ex);
   }
+#else // PG_FIND
+  TimeBase::TimeT value = 0;
+  PortableGroup::Value * any;
+  if ( decoder.find (FT::FT_FAULT_MONITORING_INTERVAL, any))
+  {
+    if ((*any) >>= value)
+    {
+      //@@ utility method to do this conversion?
+      // note: these should be unsigned long, but
+      // ACE_Time_Value wants longs.
+      long uSec = ACE_static_cast (long, (value / timeT_per_uSec) % uSec_per_sec);
+      long sec = ACE_static_cast (long, (value / timeT_per_uSec) / uSec_per_sec);
+      ACE_Time_Value atv(sec, uSec);
+      TAO::Fault_Detector_i::set_time_for_all_detectors(atv);
+    }
+    else
+    {
+      ACE_ERROR ((LM_ERROR,
+        "Throwing Invalid Property type: %s\n",
+        FT::FT_FAULT_MONITORING_INTERVAL
+        ));
+      ::PortableGroup::InvalidProperty ex;
+      ex.nam.length(1);
+      ex.nam[0].id = CORBA::string_dup(FT::FT_FAULT_MONITORING_INTERVAL);
+      ACE_THROW (ex);
+    }
+  }
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+      "Throwing Missing Property: %s\n",
+      FT::FT_FAULT_MONITORING_INTERVAL
+      ));
+    ::PortableGroup::InvalidProperty ex;
+    ex.nam.length(1);
+    ex.nam[0].id = CORBA::string_dup(FT::FT_FAULT_MONITORING_INTERVAL);
+    ACE_THROW (ex);
+  }
+#endif //PG_FIND
+
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::change_properties);
 }
 
@@ -524,6 +566,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   int missingParameter = 0;
   const char * missingParameterName = 0;
 
+#if 0 // PG_FIND
   FT::FaultNotifier_ptr notifier;
   if (! ::TAO_PG::find (decoder, ::FT::FT_NOTIFIER, notifier) )
   {
@@ -596,6 +639,103 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   {
     // Not required: missingParameter = 1;
   }
+#else // PG_FIND
+
+  PortableGroup::Value * any;
+
+  FT::FaultNotifier_ptr notifier (0);
+  if ( decoder.find (FT::FT_NOTIFIER, any))
+  {
+    if ((*any) >>= notifier)
+    {
+      if (! CORBA::is_nil (this->notifier_.in ()))
+      {
+        notifier = FT::FaultNotifier::_duplicate (this->notifier_.in ());
+      }
+      else
+      {
+        ACE_ERROR ((LM_ERROR,
+          "FaultDetectorFactory::create_object: Nil parameter %s\n",
+          ::FT::FT_NOTIFIER
+          ));
+        missingParameter = 1;
+        missingParameterName = ::FT::FT_NOTIFIER;
+      }
+    }
+    else
+    {
+      ACE_ERROR ((LM_ERROR,
+        "FaultDetectorFactory::create_object: Wrong type parameter %s\n",
+        ::FT::FT_NOTIFIER
+        ));
+      missingParameter = 1;
+      missingParameterName = ::FT::FT_NOTIFIER;
+    }
+  }
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+      "FaultDetectorFactory::create_object: Missing parameter %s\n",
+      ::FT::FT_NOTIFIER
+      ));
+    missingParameter = 1;
+    missingParameterName = ::FT::FT_NOTIFIER;
+  }
+
+  FT::PullMonitorable_ptr monitorable (0);
+  if ( decoder.find (FT::FT_MONITORABLE, any))
+  {
+    if (! ((*any) >>= monitorable))
+    {
+      ACE_ERROR ((LM_ERROR,
+        "FaultDetectorFactory::create_object: Wrong type parameter %s\n",
+        ::FT::FT_MONITORABLE
+        ));
+      missingParameter = 1;
+      missingParameterName = ::FT::FT_MONITORABLE;
+    }
+  }
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+      "FaultDetectorFactory::create_object: Missing parameter %s\n",
+      ::FT::FT_MONITORABLE
+      ));
+    missingParameter = 1;
+    missingParameterName = ::FT::FT_MONITORABLE;
+  }
+
+  FT::FTDomainId domain_id = this->domain_;
+  if ( decoder.find (FT::FT_DOMAIN_ID, any))
+  {
+    if (! ((*any) >>= domain_id))
+    {
+      ACE_ERROR ((LM_ERROR,
+        "FaultDetectorFactory::create_object: Wrong type parameter %s\n",
+        ::FT::FT_DOMAIN_ID
+        ));
+    }
+  }
+
+  FT::Location * object_location = & this->location_;
+  if ( decoder.find (FT::FT_LOCATION, any))
+  {
+    (*any) >>= object_location;
+  }
+
+  FT::TypeId object_type = "unknown";
+  if ( decoder.find (FT::FT_LOCATION, any))
+  {
+    (*any) >>= object_type;
+  }
+
+  FT::ObjectGroupId group_id = 0;
+  if ( decoder.find (FT::FT_GROUP_ID, any))
+  {
+    (*any) >>= group_id;
+  }
+#endif // PG_FIND
+
 
   if (missingParameter)
   {
