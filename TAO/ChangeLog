@@ -1,3 +1,14 @@
+﻿Wed Dec 10 09:13:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/OBV/TC_Alignment/client.dsp:
+	* tests/OBV/TC_Alignment/server.dsp:
+	* tests/Bug_1330_Regression/Bug_1330_Client.dsp:
+	* tests/Bug_1330_Regression/Bug_1330_Server.dsp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/client.dsp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.dsp:
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
+          Fixed release configuration
+
 Tue Dec  9 22:15:55 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/IFR_Client/IFR_ExtendedC.cpp:
