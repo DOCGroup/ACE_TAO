@@ -216,7 +216,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
           << "CORBA::TypeCode_ptr tcp = exceptions_data[i].tc;" << be_nl;
 
       *os << "const char *except_id = tcp->id (ACE_TRY_ENV);" << be_nl
-          << "ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);" << be_nl
+          << "ACE_CHECK;" << be_nl
 
           << "if (ACE_OS::strcmp (type_id.in (), except_id) != 0)" << be_idt_nl
           << "continue;" << be_uidt_nl << be_nl
