@@ -146,7 +146,7 @@ template <class PEER_STREAM, ACE_SYNCH_DECL> int
 ACE_Buffered_Task<PEER_STREAM, ACE_SYNCH_USE>::flush (void)
 {
 #if 0
-  iovec iov[ACE_DEFAULT_WRITEV_MAX];
+  iovec iov[IOV_MAX];
   size_t i = 0;
 
   ACE_Message_Queue_Iterator<ACE_NULL_SYNCH> iterator (queue);
@@ -167,7 +167,7 @@ ACE_Buffered_Task<PEER_STREAM, ACE_SYNCH_USE>::flush (void)
           iov[i].iov_buf = entry->rd_ptr ();
 
           i++;
-          if (i == ACE_DEFAULT_WRITEV_MAX)
+          if (i == IOV_MAX)
             {
               // Send off the data.
               if (this->stream_.sendv_n (iov,
