@@ -2,7 +2,7 @@
 
 // ============================================================================
 /**
- *  @file Proactor_Test2.cpp
+ *  @file Proactor_Test.cpp
  *
  *  $Id$
  *
@@ -854,7 +854,7 @@ Connector::start( const ACE_INET_Addr & addr, int num)
 
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_, 0);
 
-  
+
   if (num > MAX_SENDERS)
     num = MAX_SENDERS;
 
@@ -939,7 +939,7 @@ void
 Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
 {
   this->handle_ = handle;
-  
+
   // Open ACE_Asynch_Write_Stream
   if (this->ws_.open (*this, this->handle_) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -1296,7 +1296,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Proactor_Test2"));
 

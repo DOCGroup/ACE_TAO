@@ -4,6 +4,7 @@
 
 #include "Newsweek.h"
 #include "ace/Log_Msg.h"
+#include "ace/svc_export.h"
 
 // Implementation of the abstract class method which describes
 // the magazine.
