@@ -17,7 +17,7 @@
 #ifndef TAO_CONSTRAINT_VISITOR_H
 #define TAO_CONSTRAINT_VISITOR_H
 
-#include "Trader_T.h"
+#include "Trader.h"
 
   // *************************************************************
   // TAO_Constraint_Visitor
@@ -362,6 +362,11 @@ private:
   // *************************************************************
   // Utilities
   // *************************************************************
+
+#include "tao/DynSequence_i.h"
+
+// Forward declaration
+template <class ELEMENT_TYPE> class TAO_Element_Equal;
 
 class TAO_Element_Equal<CORBA::Short>
 {
