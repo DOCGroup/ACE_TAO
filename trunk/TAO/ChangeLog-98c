@@ -1,3 +1,9 @@
+Fri Feb 13 19:37:01 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/orbobj.cpp (resolve_name_service): Changed char buf[BUFSIZ]
+ 	  to char buf[ACE_MAX_DGRAM_SIZE] to make sure we don't overflow
+ 	  the buffer!
+
 Fri Feb 13 18:18:54 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* tests/Makefile: 

@@ -10,13 +10,11 @@
 ACE_Timeprobe *ACE_Timeprobe::instance_ = 0;
 
 ACE_Timeprobe &
-ACE_Timeprobe::instance ()
+ACE_Timeprobe::instance (void)
 {
   if (instance_ == 0)
-    {
-      // if this allocation fails, we're in big trouble . . .
-      ACE_NEW_RETURN (instance_, ACE_Timeprobe (), *instance_);
-    }
+    // if this allocation fails, we're in big trouble . . .
+    ACE_NEW_RETURN (instance_, ACE_Timeprobe (), *instance_);
 
   return *instance_;
 }
@@ -35,17 +33,18 @@ ACE_Timeprobe::timeprobe (const char *id)
 }
 
 void
-ACE_Timeprobe::print_times () const
+ACE_Timeprobe::print_times (void) const
 {
   ACE_OS::printf ("\nACE_Timeprobe; %u timeprobes were recorded:\n",
-                  current_slot_ > 1  ?  current_slot_ - 1 :  0);
+                  current_slot_ > 1 ? current_slot_ - 1 : 0);
 
   if (current_slot_ <= 0)
     {
       return;
     }
 
-  ACE_OS::printf ("%-52.52s  %8.8s %10.10s\n", "NAME", "thread", "usec");
+  ACE_OS::printf ("%-52.52s  %8.8s %10.10s\n",
+                  "NAME", "thread", "usec");
   ACE_OS::printf ("\"%-50s\" %8.8x %10.10s\n",
                   timeprobes[0].id_, timeprobes[0].thread_, "START");
   for (u_int i = 1; i < current_slot_; ++i)
