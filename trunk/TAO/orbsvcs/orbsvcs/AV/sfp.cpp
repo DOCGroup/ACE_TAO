@@ -27,7 +27,7 @@ SFP_Encoder::SFP_Encoder ()
     }
   TAO_ENDTRY;
   ACE_NEW (encoder_,
-           CDR ());
+           TAO_OutputCDR ());
   
 }
 
@@ -202,9 +202,6 @@ SFP_Encoder::create_message_block (void)
 
 SFP_Decoder::SFP_Decoder ()
 {
-  ACE_NEW (decoder_,
-           CDR ());
-  
 }
 
 // Attempts to decode the message as an SFP start message
@@ -213,8 +210,6 @@ int
 SFP_Decoder::decode_start_message (ACE_Message_Block *message)
 {
 
-  this->decoder_->reset ();
-
   SFP::start_message start;
 
   TAO_TRY
@@ -222,7 +217,7 @@ SFP_Decoder::decode_start_message (ACE_Message_Block *message)
       this->create_cdr_buffer (message->rd_ptr (),
                                message->length ());
 
-      decoder_->decode (SFP::_tc_start_message,
+      decoder_.decode (SFP::_tc_start_message,
 			&start,
 			0,
 			TAO_TRY_ENV);
@@ -253,8 +248,6 @@ int
 SFP_Decoder::decode_simple_frame (ACE_Message_Block *message)
 {
 
-  this->decoder_->reset ();
-
   if (message->length () < TAO_SFP_FRAME_HEADER_LEN)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) SFP_Decoder::decode_simple_frame: "
@@ -268,7 +261,7 @@ SFP_Decoder::decode_simple_frame (ACE_Message_Block *message)
       this->create_cdr_buffer (message->rd_ptr (),
                                TAO_SFP_FRAME_HEADER_LEN);
 
-      decoder_->decode (SFP::_tc_frame_header,
+      decoder_.decode (SFP::_tc_frame_header,
 			&header,
 			0,
 			TAO_TRY_ENV);
@@ -304,8 +297,6 @@ int
 SFP_Decoder::decode_start_reply_message (ACE_Message_Block *message)
 {
 
-  this->decoder_->reset ();
-
   SFP::start_reply start_reply_message;
 
   TAO_TRY
@@ -313,10 +304,10 @@ SFP_Decoder::decode_start_reply_message (ACE_Message_Block *message)
       this->create_cdr_buffer (message->rd_ptr (),
                                message->length ());
       
-      decoder_->decode (SFP::_tc_start_reply,
-			&start_reply_message,
-			0,
-			TAO_TRY_ENV);
+      decoder_.decode (SFP::_tc_start_reply,
+                       &start_reply_message,
+                       0,
+                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
     }
@@ -341,6 +332,7 @@ int
 SFP_Decoder::create_cdr_buffer (char *message,
                                 size_t length)
 {
+
   this->decoder_->grow (length);
   
   char *bufptr = this->decoder_->buffer ();
