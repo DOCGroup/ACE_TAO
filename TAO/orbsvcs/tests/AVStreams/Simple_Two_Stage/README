@@ -24,19 +24,24 @@ receiver -f <output_filename>
 sender
 ------
 
-sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-d] 
-
+sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-l <local_address>] [-a <peer_address>] [-d] 
 
 -f filename --> The file to be streamed to the receiver (defaults to
                 "input"). 
 
--p protocol --> The protocol string could be UDP or TCP (defaults to
+-p protocol --> The protocol string could be UDP, TCP, RTP/UDP or SCTP_SEQ (defaults to
                 UDP). But with the multicast address it should be UDP.
 
 -r framerate--> The rate at which tha data frames need to be sent
                 (defaults to 30 frames per second).
 
--d          --> Increament the TAO_debug_level for debug messages.
+-l address  --> Local address in the format host:port. If protocol is SCTP_SEQ then specify "," 
+		separated secondary addresses.eg. primary_addr:port,sec_addr1,sec_addr2
+
+-a address  --> Destination address in the format host:port. If protocol is SCTP_SEQ then specify "," 
+		separated secondary addresses.eg. primary_addr:port,sec_addr1,sec_addr2
+
+-d          --> Increment the TAO_debug_level for debug messages.
 
 
 The test must be run with the naming service.  Check the run_test.pl

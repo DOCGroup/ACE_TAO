@@ -1,3 +1,18 @@
+Thu Nov 6 14:54:42 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+	
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README: 
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.h: 
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp: 
+
+	  Added command line arguments to specify local and peer
+	  addresses. In case of SCTP_SEQ protocol added command line
+	  arguments to specify secondary addresses.
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README: 	
+
+	  Updated to include info about command line arguments to specify
+	  local and peer addresses.
+	
 Thu Nov  6 13:17:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Synch_Invocation.cpp: 
