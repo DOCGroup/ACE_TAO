@@ -1,3 +1,9 @@
+Mon Dec 27 19:09:09 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/compiler.html: Updated the documentation for the compiler
+	  flag '-Y'. Thanks to Erik Johannes <ejohannes@oresis.com> for
+	  reporting this discrepancy.
+
 Mon Dec 27 17:36:29 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Makefile: The Timeout test requires CORBA messaging.
