@@ -1,26 +1,32 @@
+Wed Apr  6 19:36:31 2005  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Set static_libs_only=1 on LynxOS 3.x which does not support
+          shared libraries. 
+        
 Tue Apr  5 13:41:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Removed ACE_SUBST for ACE_LIBDIR, ACE_LIBS, ACE_INCLUDEDIR,
-	  TAO_LIBDIR, TAO_LIBS, and TAO_INCLUDEDIR since we're using
-	  pkg-config now.
+          Removed ACE_SUBST for ACE_LIBDIR, ACE_LIBS, ACE_INCLUDEDIR,
+          TAO_LIBDIR, TAO_LIBS, and TAO_INCLUDEDIR since we're using
+          pkg-config now.
 
 Tue Apr  5 13:30:21 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Pipe.cpp:
+        * ace/Pipe.cpp:
 
-	  Removed defined(ACE_WIN32) from preprocessor conditional which
-	  selects whether socketpair() is used, as config-win32-common.h
-	  already defines the ACE_LACKS_SOCKETPAIR feature test macro.
+          Removed defined(ACE_WIN32) from preprocessor conditional which
+          selects whether socketpair() is used, as config-win32-common.h
+          already defines the ACE_LACKS_SOCKETPAIR feature test macro.
 
 Mon Apr  4 11:20:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/Process.pm:
-	* bin/Process_Unix.pm:
-	* bin/Process_Win32.pm:
+        * bin/Process.pm:
+        * bin/Process_Unix.pm:
+        * bin/Process_Win32.pm:
 
-	  Removed.  Stale versions of files now in bin/PerlACE.
+          Removed.  Stale versions of files now in bin/PerlACE.
 
 Mon Apr  4 19:41:44 2005  Olli Savia  <ops@iki.fi>
 

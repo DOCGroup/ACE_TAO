@@ -15,19 +15,6 @@
 #### Similarly, the default VERSION and HOST_OS settings (see below)
 #### can be overridden for your particular platform.
 
-ifeq ($(shared_libs_only),1)
-  shared_libs = 1
-  static_libs =
-endif
-ifeq ($(static_libs_only),1)
-  shared_libs =
-  static_libs = 1
-endif
-
-optimize ?= 1
-debug ?= 1
-pipes ?= 1
-
 ifeq ($(shell uname -s),LynxOS)
   export VERSION=$(shell uname -r)
 else
@@ -73,13 +60,32 @@ else
   endif # ENV_PREFIX
 
   ifeq (,$(findstring $(ENV_PREFIX),$(PATH)))
-    export PATH:=\
-$(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/bin:$(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/usr/bin:$(PATH)
+    export PATH:=$(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/bin:$(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/usr/bin:$(PATH)
   endif # PATH
 endif # ! LynxOS
 
 LYNXOS_MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1;}')
 LYNXOS_MINOR = $(shell echo $(VERSION) | awk -F. '{print $$2;}')
+
+# LynxOS 3.x does not support shared libraries
+ifeq ($(LYNXOS_MAJOR),3)
+  shared_libs_only =
+  static_libs_only = 1
+endif
+
+ifeq ($(shared_libs_only),1)
+  shared_libs = 1
+  static_libs =
+endif
+ifeq ($(static_libs_only),1)
+  shared_libs =
+  static_libs = 1
+endif
+
+optimize ?= 1
+debug ?= 1
+pipes ?= 1
+threads ?= 1
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXm -lXt
