@@ -1,3 +1,10 @@
+Wed Apr  7 15:52:06 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* Makefile.am:
+
+	  Added `clean-local' targets to all Makefile.am files.  Minor
+	  updates to the top-level TAO Makefile.am.
+
 Wed Apr 07 15:17:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/POA_CORBA.h:
