@@ -1,3 +1,10 @@
+Mon Mar 29 17:02:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.h:
+	  Include Functor_T.h instead of Functor.h because of Bala changes of
+	  yesterday. This fixes the compile problems in the daily builds with
+	  this example
+
 Mon Mar 29 08:03:08 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
