@@ -1,3 +1,26 @@
+Fri Apr 26 21:56:33 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
+
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/DynamicInterface/Unknown_User_Exception.cpp:
+	* tao/IORManipulation/IORC.cpp:
+	* tao/IORManipulation/IORC.i:
+	* tao/IORTable/IORTableC.cpp:
+	* tao/IORTable/IORTableC.i:
+	* tao/Messaging/Messaging.h:
+	* tao/Messaging/Messaging_ORBInitializer.cpp:
+	* tao/Messaging/Messaging_PolicyFactory.cpp:
+	* tao/Messaging/Messaging_Policy_i.cpp:
+	* tao/Messaging/Messaging_Policy_i.h:
+	* tao/PortableServer/Active_Object_Map.cpp:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImplRepoC.i:
+	* tao/PortableServer/Object_Adapter.cpp:
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/PortableServerC.cpp:
+	* tao/PortableServer/PortableServerC.i:
+	* tao/RTCORBA/RTCORBAC.cpp: Yet another merge with the main trunk.
+
+
 Fri Apr 26 18:24:02 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
 
 	* tao/BoundsC.cpp:

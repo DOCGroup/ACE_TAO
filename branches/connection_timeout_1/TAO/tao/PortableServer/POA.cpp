@@ -1,6 +1,8 @@
-// @(#) $Id$
-
 #include "tao/PortableServer/POA.h"
+
+ACE_RCSID (TAO_PortableServer,
+           POA,
+           "$Id$")
 
 //
 // ImplRepo related.
@@ -39,8 +41,6 @@
 #if !defined (__ACE_INLINE__)
 # include "POA.i"
 #endif /* ! __ACE_INLINE__ */
-
-ACE_RCSID(tao, POA, "$Id$")
 
 // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
 // It's an array of octets representing ^t^a^o/0 in octal.
@@ -4139,8 +4139,6 @@ TAO_POA::disassociate_reference_with_id (CORBA::Object_ptr ref,
 
 template class ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *>;
 
-//template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>;
-template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>;
 template class ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>;
 template class ACE_Hash_Map_Entry<ACE_CString, TAO_POA *>;
 template class ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
@@ -4156,14 +4154,20 @@ template class ACE_Array_Base <IOP::ProfileId>;
 
 //template class auto_ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class auto_ptr<TAO_Active_Object_Map>;
+
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+//template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>;
+template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
+
 template class ACE_Node<TAO_POA *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *>
 
-//#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>
 #pragma instantiate ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_POA *>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
@@ -4178,6 +4182,14 @@ template class ACE_Node<TAO_POA *>;
 
 //#pragma instantiate auto_ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate auto_ptr<TAO_Active_Object_Map>
+
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+//#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>
+#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>
+#  endif  /* ACE_LACKS_AUTO_PTR */
+
 #pragma instantiate ACE_Node<TAO_POA *>
 #pragma instantiate ACE_Array_Base <IOP::ProfileId>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

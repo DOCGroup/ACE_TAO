@@ -2,13 +2,13 @@
 
 #include "Messaging_ORBInitializer.h"
 
-
-
 #include "Messaging_Policy_i.h"
 #include "Messaging_PolicyFactory.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (Messaging, Messaging_ORBInitializer, "$Id$")
+ACE_RCSID (Messaging,
+           Messaging_ORBInitializer,
+           "$Id$")
 
 void
 TAO_Messaging_ORBInitializer::pre_init (
@@ -33,7 +33,7 @@ TAO_Messaging_ORBInitializer::post_init (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info
-                                    ACE_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -66,27 +66,48 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
   // the different types of Messaging policies.
 
   CORBA::PolicyType type[] = {
-    TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE
-    , TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE
+#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
+    Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+#endif  /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+    Messaging::SYNC_SCOPE_POLICY_TYPE,
+#endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-    , TAO_BUFFERING_CONSTRAINT_POLICY_TYPE
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-    , TAO_MESSAGING_REBIND_POLICY_TYPE
-    , TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE
-    , TAO_MESSAGING_REPLY_PRIORITY_POLICY_TYPE
-    , TAO_MESSAGING_REQUEST_START_TIME_POLICY_TYPE
-    , TAO_MESSAGING_REQUEST_END_TIME_POLICY_TYPE
-    , TAO_MESSAGING_REPLY_START_TIME_POLICY_TYPE
-    , TAO_MESSAGING_REPLY_END_TIME_POLICY_TYPE
-    , TAO_MESSAGING_RELATIVE_REQ_TIMEOUT_POLICY_TYPE
-    , TAO_MESSAGING_ROUTING_POLICY_TYPE
-    , TAO_MESSAGING_MAX_HOPS_POLICY_TYPE
-    , TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE
+    TAO_BUFFERING_CONSTRAINT_POLICY_TYPE,
+#endif  /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+#if (TAO_HAS_REBIND_POLICY == 1)
+    Messaging::REBIND_POLICY_TYPE,
+#endif  /* TAO_HAS_REBIND_POLICY == 1 */
+#if (TAO_HAS_PRIORITY_POLICIES == 1)
+    Messaging::REQUEST_PRIORITY_POLICY_TYPE,
+    Messaging::REPLY_PRIORITY_POLICY_TYPE,
+#endif  /* TAO_HAS_PRIORITY_POLICIES == 1 */
+#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
+    Messaging::REQUEST_START_TIME_POLICY_TYPE,
+#endif  /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
+#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
+    Messaging::REQUEST_END_TIME_POLICY_TYPE,
+#endif  /*TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
+#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
+    Messaging::REPLY_START_TIME_POLICY_TYPE,
+#endif  /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
+#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
+    Messaging::REPLY_END_TIME_POLICY_TYPE,
+#endif  /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
+#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
+    Messaging::RELATIVE_REQ_TIMEOUT_POLICY_TYPE,
+#endif  /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
+#if (TAO_HAS_ROUTING_POLICY == 1)
+    Messaging::ROUTING_POLICY_TYPE,
+#endif  /* TAO_HAS_ROUTING_POLICY == 1 */
+#if (TAO_HAS_MAX_HOPS_POLICY == 1)
+    Messaging::MAX_HOPS_POLICY_TYPE,
+#endif  /* TAO_HAS_MAX_HOPS_POLICY == 1 */
+    Messaging::QUEUE_ORDER_POLICY_TYPE
   };
 
-  for (CORBA::PolicyType *i = type;
-       i != type + sizeof(type)/sizeof(type[0]);
-       ++i)
+  const CORBA::PolicyType *end = type + sizeof (type) / sizeof (type[0]);
+  for (CORBA::PolicyType *i = type; i != end; ++i)
     {
       ACE_TRY
         {
@@ -116,5 +137,3 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
       ACE_CHECK;
     }
 }
-
-
