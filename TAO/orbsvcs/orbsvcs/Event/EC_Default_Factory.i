@@ -13,9 +13,14 @@ TAO_EC_Default_Factory::TAO_EC_Default_Factory (void)
      supplier_lock_ (TAO_EC_DEFAULT_SUPPLIER_LOCK),
      consumer_admin_lock_ (TAO_EC_DEFAULT_CONSUMER_ADMIN_LOCK),
      supplier_admin_lock_ (TAO_EC_DEFAULT_SUPPLIER_ADMIN_LOCK),
-     dispatching_threads_ (1),
-     dispatching_threads_flags_ (THR_NEW_LWP|THR_SCHED_FIFO),
-     dispatching_threads_priority_ (0),
-     dispatching_threads_force_active_ (1)
+     dispatching_threads_ (TAO_EC_DEFAULT_DISPATCHING_THREADS),
+     dispatching_threads_flags_ (TAO_EC_DEFAULT_DISPATCHING_THREADS_FLAGS),
+     dispatching_threads_priority_ (TAO_EC_DEFAULT_DISPATCHING_THREADS_PRIORITY),
+     dispatching_threads_force_active_ (TAO_EC_DEFAULT_DISPATCHING_THREADS_FORCE_ACTIVE),
+     orbid_ (TAO_EC_DEFAULT_ORB_ID),
+     consumer_control_ (TAO_EC_DEFAULT_CONSUMER_CONTROL),
+     supplier_control_ (TAO_EC_DEFAULT_SUPPLIER_CONTROL),
+     consumer_control_period_ (TAO_EC_DEFAULT_CONSUMER_CONTROL_PERIOD),
+     supplier_control_period_ (TAO_EC_DEFAULT_SUPPLIER_CONTROL_PERIOD)
 {
 }

@@ -96,6 +96,10 @@ public:
   ConsumerSetIterator end (void);
   // Iterators over the set of ProxyPushConsumers
 
+  typedef ACE_Lock Busy_Lock;
+  Busy_Lock &busy_lock (void);
+  // Get the lock
+
 private:
   TAO_EC_Event_Channel *event_channel_;
   // The Event Channel we belong to

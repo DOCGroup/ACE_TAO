@@ -17,6 +17,8 @@
 #include "EC_ProxyPushSupplier_Set_T.h"
 #include "EC_Reactive_Timeout_Generator.h"
 #include "EC_Event_Channel.h"
+#include "EC_Reactive_ConsumerControl.h"
+#include "EC_Reactive_SupplierControl.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"
 
@@ -380,6 +382,94 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
+      else if (ACE_OS::strcasecmp (arg, "-ECUseORBId") == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              // Save argument for later use
+              this->orbid_ = arg_shifter.get_current ();
+              arg_shifter.consume_arg ();
+            }
+        }
+
+      else if (ACE_OS::strcasecmp (arg, "-ECConsumerControl") == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              char* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, "null") == 0)
+                {
+                  this->consumer_control_ = 0;
+                }
+              else if (ACE_OS::strcasecmp (opt, "reactive") == 0)
+                {
+                  this->consumer_control_ = 1;
+                }
+              else
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "EC_Default_Factory - "
+                              "unsupported consumer control <%s>\n",
+                              opt));
+                }
+              arg_shifter.consume_arg ();
+            }
+        }
+
+      else if (ACE_OS::strcasecmp (arg, "-ECSupplierControl") == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              char* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, "null") == 0)
+                {
+                  this->supplier_control_ = 0;
+                }
+              else if (ACE_OS::strcasecmp (opt, "reactive") == 0)
+                {
+                  this->supplier_control_ = 1;
+                }
+              else
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "EC_Default_Factory - "
+                              "unsupported supplier control <%s>\n",
+                              opt));
+                }
+              arg_shifter.consume_arg ();
+            }
+        }
+
+      else if (ACE_OS::strcasecmp (arg, "-ECConsumerControlPeriod") == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              char* opt = arg_shifter.get_current ();
+              this->consumer_control_period_ = ACE_OS::atoi (opt);
+              arg_shifter.consume_arg ();
+            }
+        }
+
+      else if (ACE_OS::strcasecmp (arg, "-ECSupplierControlPeriod") == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              char* opt = arg_shifter.get_current ();
+              this->supplier_control_period_ = ACE_OS::atoi (opt);
+              arg_shifter.consume_arg ();
+            }
+        }
+
       else if (ACE_OS::strncmp (arg, "-EC", 3) == 0)
         {
           arg_shifter.consume_arg ();
@@ -508,9 +598,13 @@ TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel *)
 {
   if (this->timeout_ == 0)
     {
-      // @@ TODO fixme
-      TAO_ORB_Core* orb_core = TAO_ORB_Core_instance ();
-      return new TAO_EC_Reactive_Timeout_Generator (orb_core->reactor ());
+      int argc = 0;
+      char **argv = 0;
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv,
+                         this->orbid_);
+      ACE_Reactor *reactor = orb->orb_core ()->reactor ();
+      return new TAO_EC_Reactive_Timeout_Generator (reactor);
     }
 #if 0
   else if (this->timeout_ == 1)
@@ -652,6 +746,54 @@ TAO_EC_Default_Factory::create_supplier_admin_lock (void)
 
 void
 TAO_EC_Default_Factory::destroy_supplier_admin_lock (ACE_Lock* x)
+{
+  delete x;
+}
+
+TAO_EC_ConsumerControl*
+TAO_EC_Default_Factory::create_consumer_control (TAO_EC_Event_Channel* ec)
+{
+  if (this->consumer_control_ == 0)
+    return new TAO_EC_ConsumerControl ();
+  else if (this->consumer_control_ == 1)
+    {
+      int argc = 0;
+      char **argv = 0;
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, this->orbid_);
+
+      ACE_Time_Value rate (0, this->consumer_control_period_);
+      return new TAO_EC_Reactive_ConsumerControl (rate, ec, orb.in ());
+    }
+  return 0;
+}
+
+void
+TAO_EC_Default_Factory::destroy_consumer_control (TAO_EC_ConsumerControl* x)
+{
+  delete x;
+}
+
+TAO_EC_SupplierControl*
+TAO_EC_Default_Factory::create_supplier_control (TAO_EC_Event_Channel* ec)
+{
+  if (this->supplier_control_ == 0)
+    return new TAO_EC_SupplierControl ();
+  else if (this->supplier_control_ == 1)
+    {
+      int argc = 0;
+      char **argv = 0;
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, this->orbid_);
+
+      ACE_Time_Value rate (0, this->consumer_control_period_);
+      return new TAO_EC_Reactive_SupplierControl (rate, ec, orb.in ());
+    }
+  return 0;
+}
+
+void
+TAO_EC_Default_Factory::destroy_supplier_control (TAO_EC_SupplierControl* x)
 {
   delete x;
 }

@@ -13,6 +13,8 @@
 #include "EC_Null_Scheduling.h"
 #include "EC_ProxyPushSupplier_Set_T.h"
 #include "EC_Reactive_Timeout_Generator.h"
+#include "EC_Reactive_ConsumerControl.h"
+#include "EC_Reactive_SupplierControl.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Basic_Factory.i"
@@ -111,9 +113,12 @@ TAO_EC_Basic_Factory::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer *x)
 TAO_EC_Timeout_Generator*
 TAO_EC_Basic_Factory::create_timeout_generator (TAO_EC_Event_Channel *)
 {
-  // @@ TODO fixme
-  TAO_ORB_Core* orb_core = TAO_ORB_Core_instance ();
-  return new TAO_EC_Reactive_Timeout_Generator (orb_core->reactor ());
+  int argc = 0;
+  char **argv = 0;
+  CORBA::ORB_var orb =
+    CORBA::ORB_init (argc, argv, "");
+  ACE_Reactor *reactor = orb->orb_core ()->reactor ();
+  return new TAO_EC_Reactive_Timeout_Generator (reactor);
 }
 
 void
@@ -204,6 +209,42 @@ TAO_EC_Basic_Factory::create_supplier_admin_lock (void)
 
 void
 TAO_EC_Basic_Factory::destroy_supplier_admin_lock (ACE_Lock* x)
+{
+  delete x;
+}
+
+TAO_EC_ConsumerControl*
+TAO_EC_Basic_Factory::create_consumer_control (TAO_EC_Event_Channel* ec)
+{
+  int argc = 0;
+  char **argv = 0;
+  CORBA::ORB_var orb =
+    CORBA::ORB_init (argc, argv, "");
+  // Hard-coded rate to 10 times a second
+  ACE_Time_Value rate (0, 100000);
+  return new TAO_EC_Reactive_ConsumerControl (rate, ec, orb.in ());
+}
+
+void
+TAO_EC_Basic_Factory::destroy_consumer_control (TAO_EC_ConsumerControl* x)
+{
+  delete x;
+}
+
+TAO_EC_SupplierControl*
+TAO_EC_Basic_Factory::create_supplier_control (TAO_EC_Event_Channel* ec)
+{
+  int argc = 0;
+  char **argv = 0;
+  CORBA::ORB_var orb =
+    CORBA::ORB_init (argc, argv, "");
+  // Hard-coded rate to 10 times a second
+  ACE_Time_Value rate (0, 100000);
+  return new TAO_EC_Reactive_SupplierControl (rate, ec, orb.in ());
+}
+
+void
+TAO_EC_Basic_Factory::destroy_supplier_control (TAO_EC_SupplierControl* x)
 {
   delete x;
 }
