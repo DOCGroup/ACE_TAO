@@ -794,7 +794,9 @@ UTL_Scope::look_in_inherited(UTL_ScopedName *e, idl_bool treat_as_ref)
  * Look up a String * in local scope only
  */
 AST_Decl *
-UTL_Scope::lookup_by_name_local(Identifier *e, idl_bool)
+UTL_Scope::lookup_by_name_local(Identifier *e, 
+                                idl_bool treat_as_ref,
+                                long index)
 {
   UTL_ScopeActiveIterator *i = new UTL_ScopeActiveIterator(this,
                                                            UTL_Scope::IK_both);
@@ -807,19 +809,24 @@ UTL_Scope::lookup_by_name_local(Identifier *e, idl_bool)
   while (!(i->is_done())) {
     d = i->item();
     if (d->local_name() != NULL && d->local_name()->compare(e)) {
-      delete i;
-      /*
-       * Special case for forward declared interfaces. Look through the
-       * forward declaration and retrieve the full definition
-       */
-      if (d->node_type() == AST_Decl::NT_interface_fwd) {
-        fwd = AST_InterfaceFwd::narrow_from_decl(d);
-        if (fwd == NULL)
-          d = NULL;
-        else
-          d = fwd->full_definition();
+      if (index == 0) {
+        delete i;
+        /*
+        * Special case for forward declared interfaces. Look through the
+        * forward declaration and retrieve the full definition
+        */
+        if (d->node_type() == AST_Decl::NT_interface_fwd) {
+          fwd = AST_InterfaceFwd::narrow_from_decl(d);
+          if (fwd == NULL)
+            d = NULL;
+          else
+            d = fwd->full_definition();
+        }
+        return d;
       }
-      return d;
+      else {
+        index--;
+      }
     }
     i->next();
   }
@@ -888,27 +895,45 @@ UTL_Scope::lookup_by_name(UTL_ScopedName *e, idl_bool treat_as_ref)
    *
    * Is name defined here?
    */
-  d = lookup_by_name_local(e->head(), treat_as_ref);
-  if (d == NULL) {
-    /*
-     * OK, not found. Go down parent scope chain.
-     */
-    d = ScopeAsDecl(this);
-    if (d != NULL) {
-      t = d->defined_in();
-      if (t == NULL)
-        d = NULL;
-      else
-        d = t->lookup_by_name(e, treat_as_ref);
+   long index = 0 ;
+   while (true) {
+     d = lookup_by_name_local(e->head(), treat_as_ref, index);
+     if (d == NULL) {
+       /*
+        * OK, not found. Go down parent scope chain.
+        */
+       d = ScopeAsDecl(this);
+       if (d != NULL) {
+         t = d->defined_in();
+         if (t == NULL)
+           d = NULL;
+         else
+           d = t->lookup_by_name(e, treat_as_ref);
+       }
+       /*
+        * Special case for scope which is an interface. We have to look
+        * in the inherited interfaces as well..
+        */
+       if (d == NULL) {
+         if (pd_scope_node_type == AST_Decl::NT_interface)
+           d = look_in_inherited(e, treat_as_ref);
+       }
+       /*
+        * If treat_as_ref is true and d is not NULL, add d to
+        * set of nodes referenced here
+        */
+       if (treat_as_ref && d != NULL)
+         add_to_referenced(d, I_FALSE);
+       /*
+        * OK, now return whatever we found
+        */
+       return d;
     }
     /*
-     * Special case for scope which is an interface. We have to look
-     * in the inherited interfaces as well..
+     * OK, start of name is defined. Now loop doing local lookups
+     * of subsequent elements of the name
      */
-    if (d == NULL) {
-      if (pd_scope_node_type == AST_Decl::NT_interface)
-        d = look_in_inherited(e, treat_as_ref);
-    }
+    d = iter_lookup_by_name_local(d, e, treat_as_ref);
     /*
      * If treat_as_ref is true and d is not NULL, add d to
      * set of nodes referenced here
@@ -916,25 +941,11 @@ UTL_Scope::lookup_by_name(UTL_ScopedName *e, idl_bool treat_as_ref)
     if (treat_as_ref && d != NULL)
       add_to_referenced(d, I_FALSE);
     /*
-     * OK, now return whatever we found
+     * All OK, name fully resolved
      */
-    return d;
+    if ( d != NULL ) return d;
+    else index++ ;
   }
-  /*
-   * OK, start of name is defined. Now loop doing local lookups
-   * of subsequent elements of the name
-   */
-  d = iter_lookup_by_name_local(d, e, treat_as_ref);
-  /*
-   * If treat_as_ref is true and d is not NULL, add d to set
-   * of nodes referenced here.
-   */
-  if (treat_as_ref && d != NULL)
-    add_to_referenced(d, I_FALSE);
-  /*
-   * All OK, name fully resolved
-   */
-  return d;
 }
 
 // Add a node to set of nodes referenced in this scope
