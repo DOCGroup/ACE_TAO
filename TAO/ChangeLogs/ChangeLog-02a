@@ -1,4 +1,12 @@
-Wed May 16 03:15:42 2001  Darrell Brunsch <brunsch@uci.edu>
+Thu May 17 04:13:54 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO_IDL/be/be_interface_strategy.cpp:
+        * TAO_IDL/be/be_operation_strategy.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+
+          Fixed some warnings on g++ (mostly unused args).
+
+Thu May 17 03:15:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO_IDL/Makefile.BE:
         * TAO_IDL/TAO_IDL_BE.bor:
