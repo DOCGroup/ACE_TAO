@@ -314,6 +314,9 @@ private:
   // The context in which the naming database will be created.
 };
 
+// We can't use the ACE_SVC_FACTORY_DECLARE macro here because this
+// needs to be in the ACE_Export context rather than the
+// ACE_Svc_Export context.
 extern "C" ACE_Export ACE_Service_Object *_make_ACE_Naming_Context (void);
 
 #endif /* ACE_NAMING_CONTEXT_H */

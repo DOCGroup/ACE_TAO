@@ -29,6 +29,7 @@
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 
 // Platform has non-POSIX setkind and other functions.
+#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_HAS_SETKIND_NP
 #define ACE_HAS_PTHREAD_T
 
@@ -96,6 +97,7 @@
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
 
+#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 // ACE supports POSIX Pthreads.
 #define ACE_HAS_DCETHREADS
 

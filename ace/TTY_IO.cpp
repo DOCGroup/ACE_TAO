@@ -200,6 +200,8 @@ ACE_TTY_IO::control (Control_Mode cmd,
 
     } // arg switch
 #else
+  cmd = cmd;
+  arg = arg;
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_TERM_IOCTLS */
 }

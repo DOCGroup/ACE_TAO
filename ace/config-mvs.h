@@ -143,6 +143,9 @@
 // Platform doesn't have <sys/param.h>
 #define ACE_LACKS_PARAM_H
 
+// Platform lacks pthread_sigaction
+#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
+
 // Platform doesn't have pthread_setsched() and friends.
 #define ACE_LACKS_SETSCHED
 

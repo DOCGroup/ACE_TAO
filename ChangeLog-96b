@@ -1,3 +1,25 @@
+Tue Nov 26 00:36:16 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Singleton.h: Modified the use of the ACE_NEW_RETURN macro so
+ 	  we not only check if new has failed, but also check that the
+ 	  constructor has succeeded.  If it hasn't, we bail out...  Thanks
+ 	  to Luca for this suggestion.
+
+	* ace/Log_Msg: Added a 4th parameter to log_hexdump() in order to
+ 	  print out a comment.  Thanks to Luca for this.
+
+	* ace/ACE.cpp (ldfind): Changed the implementation to look for
+ 	  ACE_DLL_SUFFIX rather than '.' since '.' might exist in the
+ 	  pathname already...
+
+	* Removed all the NT-specific svc.conf files and updated the other
+ 	  files to use the new "auto-dll-suffix" feature in ACE.
+
+	* ace/Synch_T.cpp (ts_get): Fixed a nasty bug introduced by recent
+ 	  changes to ACE_TSS<>::ts_get().  The ACE_Mutex should be
+ 	  ACE_Thread_Mutex.  This should fix lots of nasty run-time bugs
+ 	  seen with recent versions of the ACE 0.33 beta...
+
 Tue Nov 26 03:15:22 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* tests: Added Map_Manager_Test and Message_Queue_Test to
@@ -6,10 +28,62 @@ Tue Nov 26 03:15:22 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 	* tests: (Barrier_Test.cpp Buffer_Stream_Test.cpp Mutex_Test.cpp
  	  Priority_Buffer_Test.cpp Recursive_Mutex_Test.cpp
  	  Shared_Memory_MM_Test.cpp) Fixed typos mainly and other small
- 	  changes. Also fixed logging file problems so to make logging of
- 	  tests more accurate.
+ 	  changes. Also fixed logging file problems so to make logging
+	  of tests more accurate.
 
 Mon Nov 25 00:23:40 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* performance-tests/Synch-Benchmarks/Options.cpp (Options):
+ 	  Reordered the initialization of data members to keep G++ from
+ 	  complaining.
+
+	* performance-tests/Synch-Benchmarks/pipe_thr_test.cpp: Changed
+ 	  some types so that we don't get warnings.
+
+	* tests/Mutex_Test.cpp (test): Added a "return 0".  Thanks to
+ 	  David Levine for reporting this.
+
+	* ace/TTY_IO.cpp: Rearranged some definitions so that we don't get
+ 	  "unused variable" warnings from g++.
+
+	* ace/SOCK_Dgram.cpp (recv): Rearranged some definitions so that
+ 	  we don't get "unused variable" warnings from g++.
+
+	* tests/Priority_Buffer_Test.cpp (consumer): Fixed a typo -- I was
+ 	  missing a *...  Thanks to David Levine for reporting this.
+
+	* ace/OS.h (ACE_SVC_FACTORY_DECLARE): Changed the macro so that it
+ 	  defines a function with `extern "C"' linkage in order to be
+ 	  consistent.
+
+	* ace/OS.cpp (thr_create): Moved the conditional compilation test
+ 	  for ACE_HAS_THR_C_FUNC outside of ACE_HAS_SETKIND_NP since MVS
+ 	  doesn't have this!  Thanks to Chuck Gehr for this info.
+
+	* ace/OS.i (thr_sigsetmask): Replaced the tests for
+ 	  ACE_HAS_DCETHREADS and ACE_HAS_SETKIND_NP with
+ 	  ACE_LACKS_PTHREAD_THR_SIGSETMASK, which is more appropriate.
+	  
+	* ace/OS.cpp (ace_mutex_lock_cleanup_adapter): Changed the
+ 	  signature so that it returns "void" rather than "void *".
+  	  Thanks to Chuck Gehr for this.
+
+	* ace/OS.h: Removed #include <sys/param.h> to avoid problems on
+ 	  MVS.  Thanks to Chuck Gehr for this.
+
+	* ace/config-sunos5.5-sunc++-4.1.h: It looks like SunC++ 4.1 still
+ 	  doesn't fix their template typedefs bugs.  So I've commented
+ 	  this out in the config file.  Thanks to Fred LaBar
+ 	  <flabar@fallschurch.esys.com> for reporting this.
+
+	* ace/ACE.cpp (ldfind): Added support for a new feature that will
+ 	  append the default suffix (e.g., ".dll" or ".so") for a shared
+ 	  library on the current platform to the name of the file if it
+ 	  cannot find an suffix.  It will also check that a provided
+ 	  suffix will match the default suffix for that platform and if it
+ 	  doesn't it will produce a log entry with a warning.  This change
+ 	  will allow unified svc.conf-files for both UNIX and WinNT.
+  	  Thanks to Tilo Christ <christ@swl.fh-heilbronn.de> for this.
 
 	* ace/OS.cpp (thr_create): Came up with a remarkably clever scheme
  	  that should make it possible to utilize the ACE library *without

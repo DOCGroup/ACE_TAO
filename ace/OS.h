@@ -152,6 +152,12 @@
 // depending on whether ANSI/ISO exception handling semantics are
 // being used). 
 
+#if 0
+     else if (ACE_LOG_MSG->op_status () == -1) { \
+     errno = ACE_LOG_MSG->errnum (); \
+     delete POINTER; POINTER = 0; return;
+#endif /* 0 */
+
 #define ACE_NEW(POINTER,CONSTRUCTOR) \
    do { POINTER = new CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return; }} while (0)
@@ -328,7 +334,7 @@ static ACE_Static_Svc_##X ace_static_svc_##X;
 #define ACE_SVC_FACTORY_DECLARE(X) extern "C" ACE_Svc_Export ACE_Service_Object *_make_##X (void);
 #define ACE_SVC_INVOKE(X) _make_##X ()
 #define ACE_SVC_NAME(X) _make_##X
-#define ACE_SVC_FACTORY_DEFINE(X) ACE_Service_Object *_make_##X () { ACE_TRACE (#X); return new X; }
+#define ACE_SVC_FACTORY_DEFINE(X) extern "C" ACE_Service_Object *_make_##X () { ACE_TRACE (#X); return new X; }
 
 #if !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
 #define ACE_TSS_TYPE(T) T
@@ -994,6 +1000,8 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define ACE_LD_SEARCH_PATH "PATH"
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ";"
 #define ACE_LOGGER_KEY "\\temp\\server_daemon"
+#define ACE_DLL_SUFFIX ".dll"
+
 // This will help until we figure out everything:
 #define NFDBITS 32 // only used in unused functions...
 // These two may be used for internal flags soon:
@@ -1299,6 +1307,7 @@ typedef char TCHAR;
 #define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
 #define ACE_LOGGER_KEY "/tmp/server_daemon"
+#define ACE_DLL_SUFFIX ".so"
 
 // Wrapper for NT events on UNIX.
 struct ACE_event_t
@@ -1357,7 +1366,6 @@ extern "C" {
 #if defined (VXWORKS)
 #include /**/ <sys/times.h>
 #else
-#include /**/ <sys/param.h>
 #include /**/ <sys/uio.h>
 #include /**/ <sys/ipc.h>
 #include /**/ <sys/shm.h>

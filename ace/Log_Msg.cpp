@@ -654,7 +654,8 @@ ACE_Log_Msg::log (const char *format_str,
 int 
 ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority, 
 			  char *buffer, 
-			  int size)
+			  int size,
+			  char *text)
 {
   char buf[ACE_Log_Record::MAXLOGMSGLEN - ACE_Log_Record::VERBOSE_LEN - 58];
   // 58 for the HEXDUMP header;
@@ -665,7 +666,13 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
 
   int len = ACE::format_hexdump (buffer, size, buf, sizeof buf);
 
-  int sz = ::sprintf (msg_buf, "HEXDUMP %d bytes", size);
+  int sz = 0;
+
+  if (text)
+    sz = ::sprintf (msg_buf, "%s - ", text);
+
+  sz += ::sprintf (msg_buf + sz, "HEXDUMP %d bytes", size);
+
   if (len < size)
     ::sprintf (msg_buf + sz, " (showing first %d bytes)", len);
 

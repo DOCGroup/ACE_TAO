@@ -15,7 +15,7 @@ public:
   virtual int svc (void);
 
 private:
-  int pipe_fds[2];
+  ACE_HANDLE pipe_handles[2];
 
   static void *reader (Pipe_Thr_Test *);
 };
@@ -25,13 +25,14 @@ Pipe_Thr_Test::reader (Pipe_Thr_Test *t)
 {
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
 
-  int fd = t->pipe_fds[0];
-  int  ni     = t->thr_id ();
-  int  length = options.msg_size ();
-  char *to    = new char[length];
-  int  n;
+  ACE_HANDLE handle = t->pipe_handles[0];
+  int ni = t->thr_id ();
+  size_t length = options.msg_size ();
+  ssize_t n;
+  char *to; 
+  ACE_NEW_RETURN (to, char[length], 0);
 
-  while ((n = ACE_OS::read (fd, to, length)) > 0)
+  while ((n = ACE_OS::read (handle, to, length)) > 0)
     options.thr_work_count[ni]++;
 
   return 0;
@@ -42,7 +43,7 @@ Pipe_Thr_Test::init (int, char **)
 {
   synch_count = 1;
 
-  if (ACE_OS::pipe (this->pipe_fds) == -1)
+  if (ACE_OS::pipe (this->pipe_handles) == -1)
     ACE_OS::perror ("pipe"), ACE_OS::exit (1);
 
   if (ACE_Service_Config::thr_mgr ()->spawn 
@@ -57,15 +58,16 @@ int
 Pipe_Thr_Test::svc (void)
 {
   size_t length = options.msg_size ();
-  char	 *from  = new char[length];
-  int	 fd     = this->pipe_fds[1];
+  ACE_HANDLE handle = this->pipe_handles[1];
+  char *from;
+  ACE_NEW_RETURN (from, char[length], -1);
 
   while (!this->done ())
-    if (ACE_OS::write (fd, from, length) != length)
+    if (ACE_OS::write (handle, from, length) != length)
       ACE_OS::perror ("write");
 
-  ACE_OS::close (this->pipe_fds[0]);
-  ACE_OS::close (this->pipe_fds[1]);
+  ACE_OS::close (this->pipe_handles[0]);
+  ACE_OS::close (this->pipe_handles[1]);
 
   return 0;
 }
