@@ -1,3 +1,9 @@
+Sun Sep 26 14:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/UIOP_Profile.cpp:
+          Added include of os_ctype.h for isdigit to fix link errors on Tru64.
+          Replaced all ACE cast macro's with their C++ versions.
+
 Sun Sep 26 14:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
