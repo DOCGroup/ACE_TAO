@@ -54,13 +54,7 @@ extern "C" {
 
   PACE_INLINE FILE * pace_fopen (const char * filename, const char * mode);
 
-  #define pace_fprintf(X) fprintf X
-  /* int fprintf (FILE *stream, const char *format, (*//* args *//*) ... );
-   *
-   * PLEASE PAY SPECIAL ATTENTION HERE!
-   * This is a macro and requires an additional set of parenthesis
-   * surrounding the arguments.
-   */
+  int pace_fprintf (FILE *stream, const char *format, ...);
 
   PACE_INLINE int pace_fputc (int c, FILE * stream);
 
@@ -75,14 +69,13 @@ extern "C" {
                                    const char * mode,
                                    FILE * stream);
 
-  #define pace_fscanf(X) fscanf X
-  /* int fscanf (FILE*stream, const char *format, ... );
-   *
-   * PLEASE PAY SPECIAL ATTENTION HERE!
-   * This is a macro and requires an additional set of parenthesis
-   * surrounding the arguments.
-   */
-
+  #define pace_fscanf (X) fscanf X
+  /* int pace_scanf (const char *format, ... );
+  *
+  * PLEASE PAY SPECIAL ATTENTION HERE!
+  * This is a macro and requires an additional set of parenthesis
+  * surrounding the arguments.
+  */
   PACE_INLINE int pace_fseek (FILE * stream, long offset, int whence);
 
   PACE_INLINE long pace_ftell (FILE * stream);
@@ -107,13 +100,7 @@ extern "C" {
 
   PACE_INLINE void pace_perror (const char * s);
 
-  #define pace_printf(X) printf X
-  /* int printf (const char *format, (*//* args*//*) ... );
-   *
-   * PLEASE PAY SPECIAL ATTENTION HERE!
-   * This is a macro and requires an additional set of parenthesis
-   * surrounding the arguments.
-   */
+  int pace_printf (const char* format, ...);
 
   PACE_INLINE int pace_putc (int c, FILE * stream);
 
@@ -134,39 +121,29 @@ extern "C" {
 
   PACE_INLINE void pace_rewind (FILE * stream);
 
-  #define pace_sprintf(X) sprintf X
-  /* int sprintf (char *s, const char *format, (*//* args*//*) ... );
-   *
-   * PLEASE PAY SPECIAL ATTENTION HERE!
-   * This is a macro and requires an additional set of parenthesis
-   * surrounding the arguments.
-   */
+  int pace_sprintf (char* s, const char* format, ...);
 
-  #define pace_scanf(X) scanf X
-  /* int scanf (const char *format, ... );
-   *
-   * PLEASE PAY SPECIAL ATTENTION HERE!
-   * This is a macro and requires an additional set of parenthesis
-   * surrounding the arguments.
-   */
+  #define pace_scanf (X) scanf X
+  /* int pace_scanf (const char *format, ... );
+  *
+  * PLEASE PAY SPECIAL ATTENTION HERE!
+  * This is a macro and requires an additional set of parenthesis
+  * surrounding the arguments.
+  */
+
 
   PACE_INLINE void pace_setbuf (FILE * stream, char * buf);
 
-  #define pace_sscanf(X) sscanf X
-  /* int sscanf (const char *s, const char *format, ... );
-   *
-   * PLEASE PAY SPECIAL ATTENTION HERE!
-   * This is a macro and requires an additional set of parenthesis
-   * surrounding the arguments.
-   */
+  #define pace_sscanf (X) sscanf X
+  /* int pace_sscanf (const char *s, const char *format, ... );
+  *
+  * PLEASE PAY SPECIAL ATTENTION HERE!
+  * This is a macro and requires an additional set of parenthesis
+  * surrounding the arguments.
+  */
 
-  #define pace_snprintf(X) snprintf X
-  /* int snprintf (char *s, size_t  n, const char *format, (*//* args*//*) ... );
-   *
-   * PLEASE PAY SPECIAL ATTENTION HERE!
-   * This is a macro and requires an additional set of parenthesis
-   * surrounding the arguments.
-   */
+
+  int snprintf (char *s, size_t  n, const char *format, ...);
 
   PACE_INLINE FILE * pace_tmpfile ();
 
