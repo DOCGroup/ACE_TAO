@@ -13,7 +13,7 @@
 #include "ace/Based_Pointer_T.i"
 #endif /* __ACE_INLINE__ */
 
-template <class CONCRETE> ACE_INLINE
+template <class CONCRETE> 
 ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (void)
 {
   ACE_TRACE ("ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer");
