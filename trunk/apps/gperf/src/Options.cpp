@@ -318,8 +318,8 @@ Options::parse_args (int argc, char *argv[])
           {
             ACE_OS::fprintf (stderr,
                              "-a\tGenerate ANSI standard C output code, i.e., function prototypes.\n"
+			     "-b\tGenerate code for Linear Search.\n"
                              "-B\tGenerate code for Binary Search.\n"
-
                              "-c\tGenerate comparison code using strncmp rather than strcmp.\n"
                              "-C\tMake the contents of generated lookup tables constant, i.e., readonly.\n"
                              "-d\tEnables the debugging option (produces verbose output to the standard error).\n"
