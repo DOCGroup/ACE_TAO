@@ -168,7 +168,7 @@ AST_PredefinedType *AST_Module::fe_add_predefined_type(AST_PredefinedType *t)
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
       return NULL;
     }
-    if (referenced(d)) {
+    if (referenced(d, t->local_name ())) {
       idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
       return NULL;
     }
@@ -184,7 +184,7 @@ AST_PredefinedType *AST_Module::fe_add_predefined_type(AST_PredefinedType *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE);
+  add_to_referenced(t, I_FALSE, t->local_name ());
 
   return t;
 }
@@ -209,7 +209,7 @@ AST_Module *AST_Module::fe_add_module(AST_Module *t)
     // as an error
 
 #ifndef ACE_HAS_USING_KEYWORD
-    if (referenced(d)
+    if (referenced(d, t->local_name ())
         && !ACE_BIT_ENABLED (idl_global->compile_flags (), IDL_CF_NOWARNINGS))
       {
         UTL_String *s = t->file_name ();
@@ -235,7 +235,7 @@ AST_Module *AST_Module::fe_add_module(AST_Module *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE);
+  add_to_referenced(t, I_FALSE, t->local_name ());
 
   return t;
 }
@@ -272,14 +272,14 @@ AST_Interface *AST_Module::fe_add_interface(AST_Interface *t)
        * OK, not illegal redef of forward declaration. Now check whether
        * it has been referenced already
        */
-      else if (referenced(predef)) {
+      else if (referenced(predef, t->local_name ())) {
         idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, predef);
         return NULL;
       }
     } else if (!can_be_redefined(predef)) {
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, predef);
       return NULL;
-    } else if (referenced(predef)) {
+    } else if (referenced(predef, t->local_name ())) {
       idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, predef);
       return NULL;
     } else if (t->has_ancestor(predef)) {
@@ -294,7 +294,7 @@ AST_Interface *AST_Module::fe_add_interface(AST_Interface *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE);
+  add_to_referenced(t, I_FALSE, t->local_name ());
 
   return t;
 }
@@ -326,7 +326,7 @@ AST_InterfaceFwd *AST_Module::fe_add_interface_fwd(AST_InterfaceFwd *i)
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, i, this, d);
       return NULL;
     }
-    if (referenced(d)) {
+    if (referenced(d, i->local_name ())) {
       idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, i, this, d);
       return NULL;
     }
@@ -342,7 +342,7 @@ AST_InterfaceFwd *AST_Module::fe_add_interface_fwd(AST_InterfaceFwd *i)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(i, I_FALSE);
+  add_to_referenced(i, I_FALSE, i->local_name ());
 
   return i;
 }
@@ -362,7 +362,7 @@ AST_Constant *AST_Module::fe_add_constant(AST_Constant *t)
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
       return NULL;
     }
-    if (referenced(d)) {
+    if (referenced(d, t->local_name ())) {
       idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
       return NULL;
     }
@@ -378,7 +378,7 @@ AST_Constant *AST_Module::fe_add_constant(AST_Constant *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE);
+  add_to_referenced(t, I_FALSE, t->local_name ());
 
   return t;
 }
@@ -398,7 +398,7 @@ AST_Exception *AST_Module::fe_add_exception(AST_Exception *t)
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
       return NULL;
     }
-    if (referenced(d)) {
+    if (referenced(d, t->local_name ())) {
       idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
       return NULL;
     }
@@ -414,7 +414,7 @@ AST_Exception *AST_Module::fe_add_exception(AST_Exception *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE);
+  add_to_referenced(t, I_FALSE, t->local_name ());
 
   return t;
 }
@@ -434,7 +434,7 @@ AST_Union *AST_Module::fe_add_union(AST_Union *t)
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
       return NULL;
     }
-    if (referenced(d)) {
+    if (referenced(d, t->local_name ())) {
       idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
       return NULL;
     }
@@ -450,7 +450,7 @@ AST_Union *AST_Module::fe_add_union(AST_Union *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE);
+  add_to_referenced(t, I_FALSE, t->local_name ());
 
   return t;
 }
@@ -470,7 +470,7 @@ AST_Structure *AST_Module::fe_add_structure(AST_Structure *t)
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
       return NULL;
     }
-    if (referenced(d)) {
+    if (referenced(d, t->local_name ())) {
       idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
       return NULL;
     }
@@ -486,7 +486,7 @@ AST_Structure *AST_Module::fe_add_structure(AST_Structure *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE);
+  add_to_referenced(t, I_FALSE, t->local_name ());
 
   return t;
 }
@@ -506,7 +506,7 @@ AST_Enum *AST_Module::fe_add_enum(AST_Enum *t)
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
       return NULL;
     }
-    if (referenced(d)) {
+    if (referenced(d, t->local_name ())) {
       idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
       return NULL;
     }
@@ -522,7 +522,7 @@ AST_Enum *AST_Module::fe_add_enum(AST_Enum *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE);
+  add_to_referenced(t, I_FALSE, t->local_name ());
 
   return t;
 }
@@ -545,7 +545,7 @@ AST_EnumVal *AST_Module::fe_add_enum_val(AST_EnumVal *t)
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
       return NULL;
     }
-    if (referenced(d)) {
+    if (referenced(d, t->local_name ())) {
       idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
       return NULL;
     }
@@ -561,7 +561,7 @@ AST_EnumVal *AST_Module::fe_add_enum_val(AST_EnumVal *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE);
+  add_to_referenced(t, I_FALSE, t->local_name ());
 
   return t;
 }
@@ -581,7 +581,7 @@ AST_Typedef *AST_Module::fe_add_typedef(AST_Typedef *t)
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
       return NULL;
     }
-    if (referenced(d)) {
+    if (referenced(d, t->local_name ())) {
       idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
       return NULL;
     }
@@ -597,7 +597,7 @@ AST_Typedef *AST_Module::fe_add_typedef(AST_Typedef *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE);
+  add_to_referenced(t, I_FALSE, t->local_name ());
 
   return t;
 }
@@ -617,7 +617,7 @@ AST_Native *AST_Module::fe_add_native (AST_Native *t)
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
       return NULL;
     }
-    if (referenced(d)) {
+    if (referenced(d, t->local_name ())) {
       idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
       return NULL;
     }
@@ -633,7 +633,7 @@ AST_Native *AST_Module::fe_add_native (AST_Native *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE);
+  add_to_referenced(t, I_FALSE, t->local_name ());
 
   return t;
 }
@@ -685,7 +685,7 @@ AST_Module::be_add_interface (AST_Interface *i, AST_Interface *ix)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(i, I_FALSE, ix);
+  add_to_referenced(i, I_FALSE, ix->local_name (), ix);
 
   return 0;
 }

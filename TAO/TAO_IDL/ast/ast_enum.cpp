@@ -198,7 +198,7 @@ AST_EnumVal *AST_Enum::fe_add_enum_val(AST_EnumVal *t)
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
       return NULL;
     }
-    if (referenced(d)) {
+    if (referenced(d, t->local_name ())) {
       idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
       return NULL;
     }
@@ -214,7 +214,7 @@ AST_EnumVal *AST_Enum::fe_add_enum_val(AST_EnumVal *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE);
+  add_to_referenced(t, I_FALSE, t->local_name ());
   /*
    * Add it to enclosing scope
    */
