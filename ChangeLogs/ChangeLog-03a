@@ -1,3 +1,19 @@
+Sun Dec 17 20:11:08 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MEM_Stream_Test.cpp:
+	* tests/MEM_Stream_Test.dsp:
+	* tests/Makefile:
+	* tests/Makefile.am:
+	* tests/Makefile.bor:
+	* tests/run_test.lst:
+	* tests/run_tests.bat:
+	* tests/run_tests.lst:
+	* tests/run_tests.psosim:
+	* tests/tests.dsw:
+	* tests/version_tests/MEM_Stream_Test.dsp:
+	* tests/version_tests/version_tests.dsw: Added a new
+	  MEM_Stream_Test.
+
 Sun Dec 17 19:32:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc_T.cpp (shared_malloc): After a win32 structural

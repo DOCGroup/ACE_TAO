@@ -116,6 +116,7 @@ call %run_cmd% %dopure% %platform% Lazy_Map_Manager_Test
 call %run_cmd% %dopure% %platform% Map_Manager_Test
 call %run_cmd% %dopure% %platform% Map_Test
 call %run_cmd% %dopure% %platform% Mem_Map_Test
+call %run_cmd% %dopure% %platform% MEM_Stream_Test
 call %run_cmd% %dopure% %platform% Message_Block_Test
 call %run_cmd% %dopure% %platform% Message_Queue_Notifications_Test
 call %run_cmd% %dopure% %platform% Message_Queue_Test

@@ -59,6 +59,8 @@ run OrdMultiSet_Test
 #Mem_Map_Test: mmap: Operation not applicable
 #run Mem_Map_Test                        # uses Mem_Map
 
+run MEM_Stream_Test
+
 #SV_Shared_Memory_Test: SYSV IPC is not supported on this platform
 #run SV_Shared_Memory_Test               # uses SV_Shared_Memory, fork
 

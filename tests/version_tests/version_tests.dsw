@@ -375,6 +375,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "MEM_Stream_Test.dsp"=.\MEM_Stream_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Message_Block_Test.dsp"=.\Message_Block_Test.dsp - Package Owner=<4>
 
 Package=<5>
