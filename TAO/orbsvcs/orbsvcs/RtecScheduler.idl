@@ -202,6 +202,18 @@ module RtecScheduler
 
   typedef sequence<Scheduling_Anomaly> Scheduling_Anomaly_Set;
 
+  exception CYCLIC_DEPENDENCIES {};
+  // There are cycles in the registered dependencies.
+
+  exception UNRESOLVED_LOCAL_DEPENDENCIES {};
+  // There are unresolved local dependencies: one
+  // or more nodes that are not declared as having
+  // unresolved remote dependencies has no threads,
+  // period, or dependencies on another node.
+
+  exception THREAD_SPECIFICATION {};
+  // A node that specifies threads does not specify a period.
+
   exception DUPLICATE_NAME {};
   // The application is trying to register the same task again.
 
@@ -215,7 +227,7 @@ module RtecScheduler
   exception UTILIZATION_BOUND_EXCEEDED {};
   exception INSUFFICIENT_THREAD_PRIORITY_LEVELS {};
   exception TASK_COUNT_MISMATCH {};
-  // Problems while computing off-line scheduling.
+  // Problems while computing scheduling.
 
   exception UNKNOWN_PRIORITY_LEVEL {};
   // Problems obtaining run-time dispatch queue info.

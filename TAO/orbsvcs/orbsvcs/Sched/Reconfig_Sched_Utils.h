@@ -233,7 +233,8 @@ protected:
                                   TAO_Reconfig_Scheduler_Entry &successor,
                                   const RtecScheduler::Dependency_Info &di);
   // Performs an action on a successor entry prior to visiting
-  // it.  Returns 0 on success and -1 on error.
+  // it.  Returns 0 if the successor should be visited recursively,
+  // 1 if the successor should not be visited, and -1 on error.
 
   virtual int postfix_action (TAO_Reconfig_Scheduler_Entry &rse);
   // Performs an action on the entry after visiting all of
@@ -451,8 +452,8 @@ protected:
                                   TAO_Reconfig_Scheduler_Entry &successor,
                                   const RtecScheduler::Dependency_Info &di);
   // Propagates effective period and execution time multiplier from
-  // entry to successor prior to visiting successor.  Returns 0 on
-  // success and -1 on error.
+  // entry to successor prior to visiting successor.  Returns 1 on
+  // success (to prevent recursion on the successor), and -1 on error.
 
 private:
 
@@ -470,16 +471,7 @@ CDG - TBD - create classes to sort an array of entry pointers, add arrays
             of entry pointers to the scheduler, can fill in these arrays in the
             create method of the scheduler, expanding arrays as needed (see note in scheduler)
 
-CDG - TBD - Scheduling Strategy classes (MUF, RMS, EDF, MLF)
-
-idea about these strategies: if these can be composed from orthogonal components, reuse
-can be achieved by templatized adapters that compose orthogonal portions of the strategy,
-i.e., priority and subpriority decisions, propagation decisions, conjunction/disjunction,
-thread to general priority and subpriority mapping, etc.
-
-*Then*, (after old gcc goes away ;-) can define particular parameterizations as traits
-of a scheduler class, and as long as they have default construction behavior, that is all
-you need to do.
+CDG - TBD - Scheduling Strategy classes (Base and MUF for now: RMS, EDF, MLF later)
 
 GENERAL (adapter)
 
@@ -487,17 +479,15 @@ GENERAL (adapter)
        This should be able to just cast the void * args to RtecScheduer::RT_Info * args
        and return the result of a call to the priority_comp method
 
-    b. RT_Info array[] sort method
+    b. sched entry pointer array[] sort method
 
 PRIO
 
-    c. priority comparison method
+    c. static priority comparison method
 
     d. static subpriority comparison method
 
-    e. dynamic subpriority comparison method
-
-    f. whether or not an RT_Info change will affect priorities or subpriorities
+    f. whether or not an RT_Info change will affect static priority or subpriority
        int RECONFIG_SCHED_STRATEGY::priority_comp (const RtecScheduler::RT_Info &s,
                                                    const RtecScheduler::RT_Info &t)
 			// returns -1 if s < t in <priority, subpriority>,
@@ -513,10 +503,6 @@ CHARACTERISTICS
       int RECONFIG_SCHED_STRATEGY::needs_propagation (const RtecScheduler::RT_Info &s,
                                                       const RtecScheduler::RT_Info &t)
 			// returns 1 if s differs from t in propagation values, 0 if same.
-
-    j. method to propagate operation characteristics from one RT_info to another
-      int RECONFIG_SCHED_STRATEGY::propagate_characteristics (const RtecScheduler::RT_Info &from,
-                                                              const RtecScheduler::RT_Info &to)
 
 
 #if defined (__ACE_INLINE__)
