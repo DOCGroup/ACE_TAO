@@ -228,7 +228,7 @@ ACE_Countdown_Time::stop (void)
         {
           // Used all of timeout.
           *this->max_wait_time_ = ACE_Time_Value::zero;
-          errno = ETIME;
+          // errno = ETIME;
         }
       this->stopped_ = 1;
     }
