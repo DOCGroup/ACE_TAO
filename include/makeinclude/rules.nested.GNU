@@ -1,13 +1,14 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Nested directory targets makefile definitions
+#       Nested directory targets makefile definitions
 #----------------------------------------------------------------------------
 
 $(TARGETS_NESTED):
 ifneq ($(DIRS),)
-	@for dir in $(DIRS) ;\
-	do \
-		 $(MAKE) -C $$dir $(@:.nested=); \
-	done
+ifeq (Windows,$(findstring Windows,$(OS)))
+	@FOR /D %i IN ($(DIRS)) DO $(MAKE) -C %i $(@:.nested=)
+else  # ! Windows
+	@for dir in $(DIRS); do $(MAKE) -C $$dir $(@:.nested=); done
+endif # ! Windows
 endif # DIRS
