@@ -1,3 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
+// $Id$
 /*
 
 COPYRIGHT
@@ -105,7 +107,7 @@ private:
   unsigned long			pd_enum_counter;	// Value for next
 							// enumerator
   // Scope management
-  friend int yyparse();
+  friend int tao_yyparse();
   virtual AST_EnumVal		*fe_add_enum_val(AST_EnumVal	*v);
 
 };

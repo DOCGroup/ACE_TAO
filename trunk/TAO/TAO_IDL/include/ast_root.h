@@ -1,3 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
+// $Id$
 /*
 
 COPYRIGHT
@@ -93,7 +95,7 @@ public:
 
 private:
   friend class FE_Declarator;
-  friend int yyparse();
+  friend int tao_yyparse();
   // Add protocol
 
   virtual AST_Sequence		*fe_add_sequence(AST_Sequence		*s);

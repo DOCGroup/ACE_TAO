@@ -1,3 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
+// $Id$
 /*
 
 COPYRIGHT
@@ -127,7 +129,7 @@ private:
   long				pd_n_inherits;	// How many of them?
 
   // Scope Management Protocol
-  friend int yyparse();
+  friend int tao_yyparse();
 
   virtual AST_Constant		*fe_add_constant(AST_Constant	*c);
   virtual AST_Exception		*fe_add_exception(AST_Exception	*e);

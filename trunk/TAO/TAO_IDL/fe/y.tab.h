@@ -1,7 +1,7 @@
-
+// $Id$
 typedef union
 #ifdef __cplusplus
-	YYSTYPE
+	TAO_YYSTYPE
 #endif
  {
   AST_Decl		*dcval;		/* Decl value		*/
@@ -28,8 +28,8 @@ typedef union
   char			*strval;	/* char * value		*/
   Identifier		*idval;		/* Identifier		*/
   UTL_IdList		*idlist;	/* Identifier list	*/
-} YYSTYPE;
-extern YYSTYPE yylval;
+} TAO_YYSTYPE;
+extern TAO_YYSTYPE tao_yylval;
 # define IDENTIFIER 257
 # define IDL_CONST 258
 # define IDL_MODULE 259

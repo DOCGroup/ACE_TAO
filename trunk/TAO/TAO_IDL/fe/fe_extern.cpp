@@ -1,3 +1,6 @@
+// This may look like C, but it's really -*- C++ -*-
+// $Id$
+
 /*
 
 COPYRIGHT
@@ -79,13 +82,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * yacc parser interface
  */
 
-extern int yyparse();
-extern FILE * yyin;
+extern int tao_yyparse();
+extern FILE * tao_yyin;
 
 int
 FE_yyparse()
 {
-  int result = yyparse();
+  int result = tao_yyparse();
   if (idl_global->err_count() == 0) {
     idl_global->root()->call_add();
   }
@@ -95,7 +98,7 @@ FE_yyparse()
 void
 FE_set_yyin(File * f)
 {
-  yyin = (FILE*)f;
+  tao_yyin = (FILE*)f;
 }
 
 /*

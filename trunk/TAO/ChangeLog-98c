@@ -1,5 +1,20 @@
 Thu Apr 23 18:50:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+        * TAO_IDL/ast_enum.h,
+	  TAO_IDL/ast_exception.h,
+	  TAO_IDL/ast_interface.h,
+	  TAO_IDL/ast_module.h,
+	  TAO_IDL/ast_operation.h,
+	  TAO_IDL/ast_root.h,
+	  TAO_IDL/ast_structure.h,
+	  TAO_IDL/ast_union.h,
+	  TAO_IDL/utl_scope.h: Changed 'friend int yyparse()' to 
+	  'friend int tao_yyparse()' to reflect new changes.
+
+        * The following changes will hopefully provide a framework
+	  for getting rid of all the nasty problems with statics
+	  in TAO!
+
 	* tao/ORB: Added a new static method called init_orb_globals()
  	  that initializes the globals when necessary.
 

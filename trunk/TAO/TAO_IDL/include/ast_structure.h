@@ -1,3 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
+// $Id$
 /*
 
 COPYRIGHT
@@ -103,7 +105,7 @@ public:
   virtual void		dump(ostream &o);
 
 private:
-  friend int yyparse();
+  friend int tao_yyparse();
   // Scope Management Protocol
 
   virtual AST_Union	*fe_add_union(AST_Union		*u);
