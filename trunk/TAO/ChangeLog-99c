@@ -1,6 +1,11 @@
+Thu Apr 08 20:36:39 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO[_Static].dsp:
+	* orbsvcs/orbsvcs/orbsvcs[_static].dsp: Reworked.
+
 Thu Apr  8 15:30:55 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* TAO/docs/releasenotes/index.html: Updated to reflect the
+	* docs/releasenotes/index.html: Updated to reflect the
  	  availability of the Persistent Naming Service.
 
 	* orbsvcs/tests/Simple_Naming/client.cpp: Added a missing coma
