@@ -1,3 +1,11 @@
+Wed Dec  8 15:03:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Invocation.{h,i,cpp}:
+	  Modified TAO_GIOP_Oneway_Invocation to create a Reply
+	  Dispatcher (and thus an ACE_InputCDR) only if the
+	  SyncScope policy dictates that a reply is required.
+	  Thanks to Carlos for this suggestion.
+
 Wed Dec 08 13:57:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp:
