@@ -1,29 +1,14 @@
 # -*- perl -*-
 # $Id$
 #
-# This script checkouts ACE from CVS, updates the "clone" directory,
-# compiles $ACE_ROOT/ace and $ACE_ROOT/tests and finally runs
-# $ACE_ROOT/tests/run_tests.sh.
+# This script execute the test programs (usually, other scripts) in
+# the RUN_LIST defined below. If it detects any problem it send email.
 #
-# If it detects any problem it send email.
+# This script requires ActivePerl for Win32 and libnet from CPAN.
 #
-# DO NOT invoke this script from your crontab, use
-# auto_compile_wrapper for that.
+# Usage:  run_all_win32.pl <log directory> <admin email address>
 #
-# This script requires Perl5.
-#
-# TODO: Modify the script or split it in such a way that the main copy
-# can be obtained either using cvs or downloading the lastest beta
-# from the WWW.
-#
-
-eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
-
-# The first three lines above let this script run without specifying the
-# full path to perl, as long as it is in the user's PATH.
-# Taken from perlrun man page.
+#     For example: run_all_win32.pl c:\log peter_pan@neverland.org
 
 use Net::SMTP;
 use File::Basename;
@@ -94,11 +79,8 @@ $CMD = basename($0);
 
 # Extract configuration information from command line.
 # TODO: Some validation and checking should be done here.
-$CHECKOUT = $ARGV[0];
-$BUILD = $ARGV[1];
-$LOGDIR = $ARGV[2];
-$ADMIN = $ARGV[3];
-$MAKEFLAGS = $ARGV[4];
+$LOGDIR = $ARGV[0];
+$ADMIN = $ARGV[1];
 
 # When an error is found we try to die gracefully and send some email
 # to ADMIN.
@@ -189,7 +171,7 @@ foreach $i (@RUN_LIST) {
 	|| mydie "cannot chdir to $subdir";
 
     $run_error = 0;
-    if (open(RUN, "$program 2>&1 |") == 0) {
+    if (open(RUN, "$program |") == 0) {
 	push @failures, "cannot run $program in $directory";
 	next;
     }
@@ -227,4 +209,3 @@ unlink $disable_file
     || mydie "cannot unlink disable file";
 
 exit 0;
-
