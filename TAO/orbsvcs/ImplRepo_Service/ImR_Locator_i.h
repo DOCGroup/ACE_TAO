@@ -12,7 +12,7 @@
 #include "Locator_Options.h"
 #include "Locator_Repository.h"
 
-#include "orbsvcs/orbsvcs/IOR_Multicast.h"
+#include "orbsvcs/IOR_Multicast.h"
 
 #include "ImR_LocatorS.h"
 

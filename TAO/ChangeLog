@@ -1,3 +1,12 @@
+Fri Dec 31 22:10:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+	* orbsvcs/orbsvcs/Time_Utilities.cpp:
+	* orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+
+          Changed #include "orbsvcs/orbsvcs/..." to #include "orbsvcs/..."
+          in files where it was missed or was inadvertantly reintroduced.
+
 Thu Dec 30 13:22:25 2004  Chris Cleeland  <cleeland@ociweb.com>
 
         * TAO version 1.4.3 released.
@@ -24,7 +33,7 @@ Sat Dec 25 20:53:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* Release:
 
-	  Added INSTALL target which generates textual version of 
+	  Added INSTALL target which generates textual version of
 	  TAO-INSTAll.html and some autoconf files for the release.
 
 Sat Dec 25 15:12:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
