@@ -622,14 +622,22 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   AST_Interface **p_intf = 0;
 
   UTL_ScopedName *excep_holder_name =
-    node->compute_name ("AMH_", "ExceptionHolder");
+    node->compute_name ("AMH_", 
+                        "ExceptionHolder");
 
   be_valuetype *excep_holder = 0;
   ACE_NEW_RETURN (excep_holder,
-                  be_valuetype (excep_holder_name,  // name
-                                p_intf,             // list of inherited
-                                inherit_count,      // number of inherited
-                                0),                 // set abstract
+                  be_valuetype (excep_holder_name,
+                                p_intf,
+                                inherit_count,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0),
                   0);
 
   excep_holder->set_name (excep_holder_name);

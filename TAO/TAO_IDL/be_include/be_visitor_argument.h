@@ -22,7 +22,7 @@
 #ifndef _BE_VISITOR_ARGUMENT_H
 #define _BE_VISITOR_ARGUMENT_H
 
-#include "be_visitor_decl.h"
+#include "be_visitor_scope.h"
 #include "be_visitor_argument/argument.h"
 #include "be_visitor_argument/arglist.h"
 #include "be_visitor_argument/vardecl_ss.h"

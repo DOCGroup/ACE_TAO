@@ -22,11 +22,8 @@ noinst_LTLIBRARIES = libdriver.la
 
 libdriver_la_SOURCES = \
   drv_args.cpp \
-  drv_fork.cpp \
-  drv_init.cpp \
-  drv_link.cpp \
   drv_preproc.cpp \
-  drv_private.cpp
+  tao_idl.cpp
 
 ## Additional C++ preprocessor flags to define for the TAO IDL compiler.
 AM_CPPFLAGS = \

@@ -114,6 +114,7 @@ public:
     , PS_InterfaceIDSeen        // Seen the interface ID
     , PS_InheritSpecSeen        // Seen a complete inheritance spec
     , PS_InterfaceForwardSeen   // Forward interface decl seen
+    , PS_ValuetypeForwardSeen   // Forward valuetype decl seen
     , PS_InterfaceSqSeen        // '{' seen for interface
     , PS_InterfaceQsSeen        // '}' seen for interface
     , PS_InterfaceBodySeen      // Seen an interface body
@@ -216,6 +217,9 @@ public:
     , PS_DeclsDeclSeen          // Seen complete decl in decls list
     , PS_NativeSeen             // Seen a native declaration
     , PS_PragmaPrefixSyntax     // Could not parse the #pragma prefix
+    , PS_EventSeen              // Seen an event declaration
+    , PS_ComponentSeen          // Seen a component declaration
+    , PS_HomeDeclSeen           // Seen a home declaration
   };
 
   // Constructor

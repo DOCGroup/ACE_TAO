@@ -45,8 +45,10 @@ int
 be_visitor_valuetype_obv_ci::visit_valuetype (be_valuetype *node)
 {
   // only visit non-abstract valuetype
-  if (node->is_abstract_valuetype ())
-    return 0;
+  if (node->is_abstract ())
+    {
+      return 0;
+    }
 
   TAO_OutStream *os; // output stream
 

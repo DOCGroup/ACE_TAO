@@ -102,11 +102,20 @@ public:
                                                   idl_bool local,
                                                   idl_bool abstract);
 
-  virtual AST_Interface *create_valuetype (UTL_ScopedName *n,
-                                           AST_Interface **ih,
-                                           long nih);
+  virtual AST_ValueType *create_valuetype (UTL_ScopedName *n,
+                                           AST_Interface **inherits,
+                                           long n_inherits,
+                                           AST_ValueType *inherits_concrete,
+                                           AST_Interface **inherits_flat,
+                                           long n_inherits_flat,
+                                           AST_Interface **supports,
+                                           long n_supports,
+                                           AST_Interface *supports_concrete,
+                                           idl_bool abstract,
+                                           idl_bool truncatable);
 
-  virtual AST_InterfaceFwd *create_valuetype_fwd (UTL_ScopedName *n);
+  virtual AST_ValueTypeFwd *create_valuetype_fwd (UTL_ScopedName *n,
+                                                  idl_bool abstract);
 
   virtual AST_Exception *create_exception (UTL_ScopedName *n,
                                            idl_bool local,

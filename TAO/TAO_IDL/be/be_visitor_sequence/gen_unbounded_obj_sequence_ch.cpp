@@ -103,46 +103,27 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   // Accessors
   *os << "// = Accessors." << be_nl;
 
+  AST_Decl::NodeType nt = pt->node_type ();
+
   // operator[]
   be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
 
   int is_pseudo_object =
-    pt->node_type () == AST_Decl::NT_pre_defined
+    nt == AST_Decl::NT_pre_defined
     && prim 
     && prim->pt () == AST_PredefinedType::PT_object;
-
-  int is_valuetype = 0;
 
   if (is_pseudo_object)
     {
       *os << "TAO_Pseudo_Object_Manager<";
     }
-  else
+  else if (nt == AST_Decl::NT_valuetype)
     {
-      be_interface *bf = be_interface::narrow_from_decl (pt);
-
-      if (bf != 0)
-        {
-          is_valuetype = bf->is_valuetype ();
-        }
-      else
-        {
-          be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (pt);
-
-          if (bff != 0)
-            {
-              is_valuetype = bff->is_valuetype ();
-            }
-        }
-
-      if (is_valuetype)
-        {
-          *os << "TAO_Valuetype_Manager<";
-        }
-      else
-        {
-          *os << "TAO_Object_Manager<";
-        }
+      *os << "TAO_Valuetype_Manager<";
+    }
+  else if (nt == AST_Decl::NT_interface)
+    {
+      *os << "TAO_Object_Manager<";
     }
 
   *os << bt->name () << ","
@@ -193,7 +174,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
       << "CORBA::ULong ol" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
-  if (! (is_pseudo_object || is_valuetype))
+  if (! (is_pseudo_object || nt == AST_Decl::NT_valuetype))
     {
       // Pseudo objects do not require these methods.
       *os << "virtual void _downcast (" << be_idt << be_idt_nl

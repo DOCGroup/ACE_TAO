@@ -71,8 +71,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of every AST class.
 
 #include "ast_root.h"
-#include "ast_interface.h"
-#include "ast_interface_fwd.h"
+#include "ast_valuetype.h"
+#include "ast_valuetype_fwd.h"
 #include "ast_exception.h"
 #include "ast_enum.h"
 #include "ast_attribute.h"
@@ -198,22 +198,22 @@ AST_Generator::create_root (UTL_ScopedName *n)
 
 AST_Interface *
 AST_Generator::create_interface (UTL_ScopedName *n,
-                                 AST_Interface **ih,
-                                 long nih,
-                                 AST_Interface **ih_flat,
-                                 long nih_flat,
-                                 idl_bool l,
-                                 idl_bool a)
+                                 AST_Interface **inherits,
+                                 long n_inherits,
+                                 AST_Interface **inherits_flat,
+                                 long n_inherits_flat,
+                                 idl_bool local,
+                                 idl_bool abstract)
 {
   AST_Interface *retval = 0;
   ACE_NEW_RETURN (retval,
                   AST_Interface (n,
-                                 ih,
-                                 nih,
-                                 ih_flat,
-                                 nih_flat,
-                                 l,
-                                 a),
+                                 inherits,
+                                 n_inherits,
+                                 inherits_flat,
+                                 n_inherits_flat,
+                                 local,
+                                 abstract),
                   0);
 
   return retval;
@@ -239,28 +239,33 @@ AST_Generator::create_interface_fwd (UTL_ScopedName *n,
   return retval;
 }
 
-AST_Interface *
+AST_ValueType *
 AST_Generator::create_valuetype (UTL_ScopedName *n,
-                                 AST_Interface **ih,
-                                 long nih)
+                                 AST_Interface **inherits,
+                                 long n_inherits,
+                                 AST_ValueType *inherits_concrete,
+                                 AST_Interface **inherits_flat,
+                                 long n_inherits_flat,
+                                 AST_Interface **supports,
+                                 long n_supports,
+                                 AST_Interface *supports_concrete,
+                                 idl_bool abstract,
+                                 idl_bool truncatable)
 {
-  AST_Interface *retval = 0;
+  AST_ValueType *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Interface (n,
-                                 ih,
-                                 nih,
-                                 0,
-                                 0,
-                                 0,
-                                 0),
+                  AST_ValueType (n,
+                                 inherits,
+                                 n_inherits,
+                                 inherits_concrete,
+                                 inherits_flat,
+                                 n_inherits_flat,
+                                 supports,
+                                 n_supports,
+                                 supports_concrete,
+                                 abstract,
+                                 truncatable),
                   0);
-
-  // Valuetypes are represented as be_valuetype derived from be_interface,
-  // which derives from AST_Interface. If you construct a backend which
-  // utilizes only the AST_... classes, you must instantiate an object that
-  // returns true from AST_Interface::is_valuetype().
-  // (@@@ (JP) implemented 2000/10/4)
-  retval->set_valuetype ();
 
   // The following helps with OBV_ namespace generation.
   AST_Module *m = AST_Module::narrow_from_scope (retval->defined_in ());
@@ -273,19 +278,28 @@ AST_Generator::create_valuetype (UTL_ScopedName *n,
   return retval;
 }
 
-AST_InterfaceFwd *
-AST_Generator::create_valuetype_fwd (UTL_ScopedName *n)
+AST_ValueTypeFwd *
+AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
+                                     idl_bool abstract)
 {
   // See note in create_valuetype().
   // Dummy placeholder must return true from is_valuetype().
 
-  AST_Interface *dummy = this->create_valuetype (n,
+  AST_ValueType *dummy = this->create_valuetype (n,
                                                  0,
-                                                 -1);
+                                                 -1,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 abstract,
+                                                 I_FALSE);
 
-  AST_InterfaceFwd *retval = 0;
+  AST_ValueTypeFwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_InterfaceFwd (dummy,
+                  AST_ValueTypeFwd (dummy,
                                     n),
                   0);
 

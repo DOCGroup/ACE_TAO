@@ -69,8 +69,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_indenter.h"
 #include "utl_string.h"
-#include "ast_interface.h"
-#include "ast_interface_fwd.h"
+#include "ast_valuetype.h"
+#include "ast_valuetype_fwd.h"
 #include "ast_typedef.h"
 #include "ast_type.h"
 #include "ast_root.h"
@@ -411,6 +411,11 @@ UTL_Scope::redef_clash (AST_Decl::NodeType new_nt,
     case AST_Decl::NT_interface_fwd:
       return (scope_elem_nt != AST_Decl::NT_interface_fwd
               && scope_elem_nt != AST_Decl::NT_interface);
+    case AST_Decl::NT_valuetype:
+      return scope_elem_nt != AST_Decl::NT_valuetype_fwd;
+    case AST_Decl::NT_valuetype_fwd:
+      return (scope_elem_nt != AST_Decl::NT_valuetype_fwd
+              && scope_elem_nt != AST_Decl::NT_valuetype);
     default:
       return I_TRUE;
   }
@@ -462,6 +467,30 @@ UTL_Scope::add_interface (AST_Interface *i)
 
 AST_InterfaceFwd *
 UTL_Scope::add_interface_fwd (AST_InterfaceFwd *i)
+{
+  if (i == 0)
+    {
+      return 0;
+    }
+
+  i->set_added (I_TRUE);
+  return i;
+}
+
+AST_ValueType *
+UTL_Scope::add_valuetype (AST_ValueType *i)
+{
+  if (i == 0)
+    {
+      return 0;
+    }
+
+  i->set_added (I_TRUE);
+  return i;
+}
+
+AST_ValueTypeFwd *
+UTL_Scope::add_valuetype_fwd (AST_ValueTypeFwd *i)
 {
   if (i == 0)
     {
@@ -803,6 +832,18 @@ UTL_Scope::fe_add_interface (AST_Interface *)
 
 AST_InterfaceFwd *
 UTL_Scope::fe_add_interface_fwd (AST_InterfaceFwd *)
+{
+  return 0;
+}
+
+AST_ValueType *
+UTL_Scope::fe_add_valuetype (AST_ValueType *)
+{
+  return 0;
+}
+
+AST_ValueTypeFwd *
+UTL_Scope::fe_add_valuetype_fwd (AST_ValueTypeFwd *)
 {
   return 0;
 }
@@ -1337,7 +1378,8 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
               // Special case for forward declared interfaces,
               // In this case, we want to return
               // the full definition member, whether defined yet or not
-              if (d->node_type () == AST_Decl::NT_interface_fwd)
+              if (nt == AST_Decl::NT_interface_fwd
+                  || nt == AST_Decl::NT_valuetype_fwd)
                 {
                   d = AST_InterfaceFwd::narrow_from_decl (d)->full_definition ();
                 }
@@ -1443,10 +1485,11 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       if (d == 0)
         {
 
-          // Special case for scope which is an interface. We have to look
-          // in the inherited interfaces as well.
-                // Look before parent scopes.
-          if (pd_scope_node_type == AST_Decl::NT_interface)
+          // Special case for scope which is an interface or value type.
+          // We have to look in the inherited interfaces as well.
+          // Look before parent scopes.
+          if (pd_scope_node_type == AST_Decl::NT_interface
+              || pd_scope_node_type == AST_Decl::NT_valuetype)
             {
               d = look_in_inherited (e,
                                      treat_as_ref);

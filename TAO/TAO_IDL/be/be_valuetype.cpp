@@ -45,35 +45,50 @@ be_valuetype::be_valuetype (void)
 
   // Always the case.
   this->has_constructor (I_TRUE);
-
-  // Set the base (AST_Interface) class member.
-  this->set_valuetype ();
 }
 
 // Constructor used to build the AST.
 be_valuetype::be_valuetype (UTL_ScopedName *n,
-                            AST_Interface **ih,
-                            long nih,
-                            idl_bool set_abstract)
+                            AST_Interface **inherits,
+                            long n_inherits,
+                            AST_ValueType *inherits_concrete,
+                            AST_Interface **inherits_flat,
+                            long n_inherits_flat,
+                            AST_Interface **supports,
+                            long n_supports,
+                            AST_Interface *supports_concrete,
+                            idl_bool abstract,
+                            idl_bool truncatable)
   : be_interface (n,
-                  ih,
-                  nih,
+                  inherits,
+                  n_inherits,
+                  inherits_flat,
+                  n_inherits_flat,
                   0,
-                  0,
-                  0,
-                  set_abstract),
+                  abstract),
+    AST_ValueType (n,
+                   inherits,
+                   n_inherits,
+                   inherits_concrete,
+                   inherits_flat,
+                   n_inherits_flat,
+                   supports,
+                   n_supports,
+                   supports_concrete,
+                   abstract,
+                   truncatable),
     AST_Interface (n,
-                   ih,
-                   nih,
+                   inherits,
+                   n_inherits,
+                   inherits_flat,
+                   n_inherits_flat,
                    0,
-                   0,
-                   0,
-                   set_abstract),
-    AST_Decl (AST_Decl::NT_interface,  // It's like an interface.
+                   abstract),
+    AST_Decl (AST_Decl::NT_valuetype,
               n),
-    UTL_Scope (AST_Decl::NT_interface),
+    UTL_Scope (AST_Decl::NT_valuetype),
     COMMON_Base (0,
-                 set_abstract),
+                 abstract),
     full_obv_skel_name_ (0)
 {
   // Check that redefine() copies all members.
@@ -90,22 +105,16 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
 
   // Always the case.
   this->has_constructor (I_TRUE);
-
-  // Set the base (AST_Interface) class member.
-  this->set_valuetype ();
 }
 
 be_valuetype::~be_valuetype (void)
 {
-
 }
 
 void
-be_valuetype::redefine (AST_Interface *from)
+be_valuetype::redefine (AST_ValueType *from)
 {
-  this->AST_Interface::redefine (from);
-
-  this->is_abstract_ = from->is_abstract_valuetype ();
+  this->AST_ValueType::redefine (from);
 }
 
 // Is true if non-virtual accessor and modifier should be generated
@@ -718,35 +727,29 @@ be_valuetype::gen_helper_stubs (char* ,
 }
 
 // For building the pre and postfix of private data fields.
-const char*
+const char *
 be_valuetype::field_pd_prefix (void)
 {
   return "_pd_";
 }
 
-const char*
+const char *
 be_valuetype::field_pd_postfix (void)
 {
   return "";
 }
 
-be_valuetype*
+be_valuetype *
 be_valuetype::statefull_inherit (void)
 {
-  be_valuetype *rval = 0;
-
-  if (this->n_inherits () > 0)
+  if (this->pd_inherits_concrete != 0)
     {
-      rval = be_valuetype::narrow_from_decl (this->inherits ()[0]);
-
-      if (rval && (rval->is_valuetype ())
-          && (!rval->is_abstract_valuetype ()))
-        {
-          return rval;
-        }
+      return be_valuetype::narrow_from_decl (this->pd_inherits_concrete);
     }
-
-  return 0;
+  else
+    {
+      return 0;
+    }
 }
 
 // Accept a visitor.
@@ -754,6 +757,11 @@ int
 be_valuetype::accept (be_visitor *visitor)
 {
   return visitor->visit_valuetype (this);
+}
+
+void
+be_valuetype::destroy (void)
+{
 }
 
 ACE_CDR::ULong
@@ -864,6 +872,6 @@ be_valuetype::in_recursion (AST_Type *node)
 
 
 // Narrowing.
-IMPL_NARROW_METHODS1 (be_valuetype, be_interface)
+IMPL_NARROW_METHODS2 (be_valuetype, be_interface, AST_ValueType)
 IMPL_NARROW_FROM_DECL (be_valuetype)
 IMPL_NARROW_FROM_SCOPE (be_valuetype)

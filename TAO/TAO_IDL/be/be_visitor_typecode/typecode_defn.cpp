@@ -329,19 +329,11 @@ be_visitor_typecode_defn::visit_type (be_type *node)
       *os << "CORBA::tk_except";
       break;
     case AST_Decl::NT_interface:
-      {
-        // Yet another fruit of interface being a valuetype sometimes :-(
-        AST_Interface* iface = AST_Interface::narrow_from_decl (node);
-        if (iface != 0 && iface->is_valuetype ())
-          {
-            *os << "CORBA::tk_value";
-          }
-        else
-          {
-            *os << "CORBA::tk_objref";
-          }
-       break;
-      }
+      *os << "CORBA::tk_objref";
+      break;
+    case AST_Decl::NT_valuetype:
+      *os << "CORBA::tk_value";
+      break;
     case AST_Decl::NT_sequence:
       *os << "CORBA::tk_sequence";
       break;
@@ -2317,7 +2309,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_valuetype *node)
   // TAO doesn't support neither CUSTOM nor TRUNCATABLE
   // valuetypes. So basically need to choose between
   // VM_NONE = 0 and VM_ABSTRACT = 2
-  ACE_CDR::ULong value_modifier = node->is_abstract_valuetype () ? 2 : 0;
+  ACE_CDR::ULong value_modifier = node->is_abstract () ? 2 : 0;
 
   *os << value_modifier << ", // value modifier" << "\n";
 
@@ -2325,19 +2317,14 @@ be_visitor_typecode_defn::gen_encapsulation (be_valuetype *node)
 
   //STEP 4: generate TypeCode of concrete base
 
-  AST_Interface *inherited = 0;
-  if (node->n_inherits () > 0 &&
-      (   // Statefull base valuetype is always first
-          inherited =
-          AST_Interface::narrow_from_decl(node->inherits ()[0])
-      ) != 0 &&
-      inherited->is_valuetype () &&
-      !inherited->is_abstract ()
-     )
+  AST_ValueType *concrete_inherited = node->inherits_concrete ();
+
+  if (concrete_inherited != 0)
     {
       // Got non-abstract base valuetype. Now emit its typecode
-      be_valuetype *vt = be_valuetype::narrow_from_decl(node->inherits ()[0]);
+      be_valuetype *vt = be_valuetype::narrow_from_decl(concrete_inherited);
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
+
       if (!vt || vt->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -2346,6 +2333,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_valuetype *node)
                              ACE_TEXT ("failed to generate typecode\n")),
                             -1);
         }
+
       // revert the state to what it was before
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
     }
@@ -3260,22 +3248,17 @@ be_visitor_typecode_defn::compute_encap_length (be_valuetype *node)
 
 
   // STEP 5: get encapsulation length for concrete base valuetype
-  AST_Interface *inherited = 0;
-  if (node->n_inherits () > 0 &&
-      (   // Statefull abse valuetype is always first
-          inherited =
-          AST_Interface::narrow_from_decl(node->inherits ()[0])
-      ) != 0 &&
-      inherited->is_valuetype () &&
-      !inherited->is_abstract ()
-     )
+  AST_ValueType *concrete_inherited = node->inherits_concrete ();
+
+  if (concrete_inherited != 0)
     {
       // Got non-abstract base valuetype.
 
       this->computed_encap_len_ = 0;
 
-      be_valuetype *vt = be_valuetype::narrow_from_decl(node->inherits ()[0]);
+      be_valuetype *vt = be_valuetype::narrow_from_decl (concrete_inherited);
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
+
       if (!vt || vt->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

@@ -113,39 +113,36 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   // Find the possible base classes.
 
   int n_inherits_downcastable = 0;
+  AST_Interface *inherited = 0;
 
   for (int i = 0; i < node->n_inherits (); ++i)
     {
-      AST_Interface *inherited =
-          AST_Interface::narrow_from_decl (node->inherits ()[i]);
+      inherited = node->inherits ()[i];
 
-      if (inherited->is_valuetype())
+      ++n_inherits_downcastable;
+
+      *os << "if (rval == 0)" << be_idt_nl
+          << "rval = ";
+
+      AST_Decl::NodeType nt = 
+        inherited->defined_in ()->scope_node_type ();
+
+      if (nt == AST_Decl::NT_module)
         {
-          ++n_inherits_downcastable;
+          be_scope *scope = 
+            be_scope::narrow_from_scope (inherited->defined_in ());
+          be_decl *scope_decl = scope->decl ();
 
-          *os << "if (rval == 0)" << be_idt_nl
-              << "rval = ";
-
-          AST_Decl::NodeType nt = 
-            inherited->defined_in ()->scope_node_type ();
-
-          if (nt == AST_Decl::NT_module)
-            {
-              be_scope *scope = 
-                be_scope::narrow_from_scope (inherited->defined_in ());
-              be_decl *scope_decl = scope->decl ();
-
-              *os << "ACE_NESTED_CLASS ("
-                  << scope_decl->name () << ","
-                  << inherited->local_name () << ")";
-            }
-          else
-            {
-              *os << inherited->name ();
-            }
-
-          *os << "::_tao_obv_narrow (type_id);" << be_uidt_nl;
+          *os << "ACE_NESTED_CLASS ("
+              << scope_decl->name () << ","
+              << inherited->local_name () << ")";
         }
+      else
+        {
+          *os << inherited->name ();
+        }
+
+      *os << "::_tao_obv_narrow (type_id);" << be_uidt_nl;
     }
 
   *os <<    "return rval;" << be_uidt_nl
@@ -162,7 +159,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
 
   // Nothing to marshal if abstract valuetype.
-  if (!node->is_abstract_valuetype ())
+  if (!node->is_abstract ())
     {
       // The virtual _tao_marshal_v method.
       *os << "CORBA::Boolean " << node->name ()

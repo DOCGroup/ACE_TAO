@@ -83,7 +83,7 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  if (!node->is_abstract_valuetype ())
+  if (!node->is_abstract ())
     {
       // Functions that marshal state.
       be_visitor_context new_ctx (*this->ctx_);

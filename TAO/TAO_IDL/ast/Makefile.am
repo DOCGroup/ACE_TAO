@@ -43,11 +43,15 @@ libast_la_SOURCES = \
   ast_sequence.cpp \
   ast_string.cpp \
   ast_structure.cpp \
+  ast_structure_fwd.cpp \
   ast_type.cpp \
   ast_typedef.cpp \
   ast_union.cpp \
+  ast_union_fwd.cpp \
   ast_union_branch.cpp \
   ast_union_label.cpp \
+  ast_valuetype.cpp \
+  ast_valuetype_fwd.cpp \
   ast_visitor.cpp
 
 

@@ -80,6 +80,8 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_module:
     case AST_Decl::NT_interface:
     case AST_Decl::NT_interface_fwd:
+    case AST_Decl::NT_valuetype:
+    case AST_Decl::NT_valuetype_fwd:
     case AST_Decl::NT_const:
     case AST_Decl::NT_except:
     case AST_Decl::NT_argument:

@@ -20,6 +20,7 @@ noinst_LTLIBRARIES = libfe.la
 libfe_la_SOURCES = \
   fe_declarator.cpp \
   fe_extern.cpp \
+  fe_global.cpp \
   fe_init.cpp \
   fe_interface_header.cpp \
   fe_lookup.cpp \

@@ -85,8 +85,12 @@ AST_InterfaceFwd::AST_InterfaceFwd (void)
 
 AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : AST_Decl (AST_Decl::NT_interface_fwd,
-              n)
+  : AST_Type (AST_Decl::NT_interface_fwd,
+              n),
+    AST_Decl (AST_Decl::NT_interface_fwd,
+              n),
+    COMMON_Base (I_FALSE,
+                 I_FALSE)
 {
   // Create a dummy placeholder for the forward declared interface. This
   // interface node is not yet defined (n_inherits < 0), so some operations
@@ -108,19 +112,14 @@ AST_InterfaceFwd::is_local (void)
 
 idl_bool AST_InterfaceFwd::is_valuetype (void)
 {
-  return this->full_definition ()->is_valuetype ();
+  return this->full_definition ()->node_type () == AST_Decl::NT_valuetype;
 }
 
 idl_bool
 AST_InterfaceFwd::is_abstract_valuetype (void)
 {
-  return this->full_definition ()->is_abstract_valuetype ();
-}
-
-void
-AST_InterfaceFwd::set_abstract_valuetype (void)
-{
-  this->full_definition ()->set_abstract_valuetype ();
+  return (this->full_definition ()->is_abstract ()
+          && this->is_valuetype ());
 }
 
 // Redefinition of inherited virtual operations.
@@ -129,28 +128,16 @@ AST_InterfaceFwd::set_abstract_valuetype (void)
 void
 AST_InterfaceFwd::dump (ACE_OSTREAM_TYPE &o)
 {
-  if (this->is_valuetype ())
+  if (this->is_abstract ())
     {
-      if (this->is_abstract_valuetype ())
-        {
-          o << "abstract ";
-        }
-
-      o << "valuetype ";
+      o << "abstract ";
     }
-  else
+  else if (this->is_local ())
     {
-      if (this->is_abstract ())
-        {
-          o << "abstract ";
-        }
-      else if (this->is_local ())
-        {
-          o << "local ";
-        }
-
-      o << "interface ";
+      o << "local ";
     }
+
+  o << "interface ";
 
   this->local_name ()->dump (o);
 }
@@ -158,14 +145,7 @@ AST_InterfaceFwd::dump (ACE_OSTREAM_TYPE &o)
 int
 AST_InterfaceFwd::ast_accept (ast_visitor *visitor)
 {
-  if (this->is_valuetype ())
-    {
-      return visitor->visit_valuetype_fwd (this);
-    }
-  else
-    {
-      return visitor->visit_interface_fwd (this);
-    }
+  return visitor->visit_interface_fwd (this);
 }
 
 // Data accessors.

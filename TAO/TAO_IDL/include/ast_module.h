@@ -136,9 +136,13 @@ private:
 
   virtual AST_Module *fe_add_module (AST_Module *m);
 
-  virtual AST_Interface  *fe_add_interface (AST_Interface *i);
+  virtual AST_Interface *fe_add_interface (AST_Interface *i);
 
   virtual AST_InterfaceFwd *fe_add_interface_fwd (AST_InterfaceFwd *i);
+
+  virtual AST_ValueType *fe_add_valuetype (AST_ValueType *i);
+
+  virtual AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i);
 
   virtual AST_Constant *fe_add_constant (AST_Constant *c);
 

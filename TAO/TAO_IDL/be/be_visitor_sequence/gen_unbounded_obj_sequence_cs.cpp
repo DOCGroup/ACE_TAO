@@ -72,25 +72,6 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       bt_is_defined = ibt->is_defined ();
     }
 
-  int is_valuetype = 0;
-  {
-    be_interface *bf = be_interface::narrow_from_decl (pt);
-
-    if (bf != 0)
-      {
-        is_valuetype = bf->is_valuetype ();
-      }
-    else
-      {
-        be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (pt);
-
-        if (bff != 0)
-          {
-            is_valuetype = bff->is_valuetype ();
-          }
-      }
-  }
-
   const char * class_name = node->instance_name ();
 
   static char full_class_name [NAMEBUFSIZE];
@@ -153,7 +134,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "if (!this->release_)" << be_idt_nl
       << "{" << be_idt_nl;
 
-  if (is_valuetype)
+  if (pt->node_type () == AST_Decl::NT_valuetype)
     {
       *os << "if (old[i] != 0)" << be_idt_nl
           << "old[i]->_add_ref ();" << be_uidt_nl
@@ -208,7 +189,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
       << "{" << be_idt_nl;
 
-  if (is_valuetype)
+  if (pt->node_type () == AST_Decl::NT_valuetype)
     {
       *os << "if (tmp[i] != 0)" << be_idt_nl
           << "tmp[i]->_remove_ref ();" << be_uidt_nl
@@ -260,7 +241,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "for (CORBA::ULong i = nl; i < ol; ++i)" << be_idt_nl
       << "{" << be_idt_nl;
 
-  if (is_valuetype)
+  if (pt->node_type () == AST_Decl::NT_valuetype)
     {
       *os << "if (tmp[i] != 0)" << be_idt_nl
           << "tmp[i]->_remove_ref ();" << be_uidt_nl
@@ -289,7 +270,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
   be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
 
-  if (!is_valuetype
+  if (pt->node_type () != AST_Decl::NT_valuetype
       && (pt->node_type () != AST_Decl::NT_pre_defined) 
       || (prim &&
           prim->pt () == AST_PredefinedType::PT_object))
