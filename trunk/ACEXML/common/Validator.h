@@ -16,9 +16,9 @@
 #include "ACEXML/common/Env.h"
 
 /**
- * @ class ACEXML_Validator Validator.h "common/Validator.h"
+ * @class ACEXML_Validator Validator.h "common/Validator.h"
  *
- * @ brief An abstract virtual class defining validator interface.
+ * @brief An abstract virtual class defining validator interface.
  *
  * An validator provides validation service for one XML element.
  * ACEXML_Validators are stateful object.  Implementations should

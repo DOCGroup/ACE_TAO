@@ -15,6 +15,7 @@ DIRS =  \
         PluggableUDP \
         POA \
         Quoter \
+        RTCORBA \
         Simple \
 	TypeCode_Creation
 

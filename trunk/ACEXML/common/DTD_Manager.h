@@ -17,9 +17,9 @@
 #include "ACEXML/common/Validator.h"
 
 /**
- * @ class ACEXML_DTD_Manager DTD_Manager.h "common/DTD_Manager.h"
+ * @class ACEXML_DTD_Manager DTD_Manager.h "common/DTD_Manager.h"
  *
- * @ todo Fill in the blank.
+ * @todo Fill in the blank.
  */
 class ACEXML_Export ACEXML_DTD_Manager
 {

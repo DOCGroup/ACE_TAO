@@ -21,7 +21,7 @@ typedef ACE_Unbounded_Queue<ACEXML_String> ACEXML_STRING_QUEUE;
 typedef ACE_Unbounded_Queue_Iterator<ACEXML_String> ACEXML_STRING_QUEUE_ITERATOR;
 
 /**
- * @ class ACEXML_Debug_Attribute_Builder Debug_Attributes_Builder.h "parser/debug_validator/Debug_Attributes_Builder.h"
+ * @class ACEXML_Debug_Attribute_Builder Debug_Attributes_Builder.h "parser/debug_validator/Debug_Attributes_Builder.h"
  *
  * This class prints out the Attribute definition for debugging purpose.
  */
@@ -117,7 +117,7 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
                                          ACE_Null_Mutex> ACEXML_ATT_MAP_REVERSE_ITER;
 
 /**
- * @ class ACEXML_Debug_Attributes_Builder Debug_Attributes_Builder.h "parser/debug_validator/Debug_Attributes_Builder.h"
+ * @class ACEXML_Debug_Attributes_Builder Debug_Attributes_Builder.h "parser/debug_validator/Debug_Attributes_Builder.h"
  *
  * This class prints out Attribute definitions for debugging purpose.
  */
