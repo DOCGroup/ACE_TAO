@@ -25,6 +25,13 @@ Wed Apr 15 09:11:11 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/orbsvcs/Event/RT_Task.h (ACE_RT_Task): added "class"
           to declaration of friend ACE_RT_Thread_Manager.
 
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp (main): added an _out
+          temporary to avoid compiler warning about a temporary being used
+          for a non-const reference.  Because only Sun C++ seems to complain
+          about this, and the temporary is non-comformant (it is an _out
+          type, and users aren't supposed to create them), the hack is
+          only used with Sun C++.
+
 Tue Apr 14 19:35:50 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * tests/Quoter/*: Quoter example is running using the Cos LifeCycle
