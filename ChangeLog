@@ -1,3 +1,7 @@
+Tue Jan 04 07:26:24 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE version 5.0.11 released.
+
 Mon Jan 03 07:34:38 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (gmtime_r): return res instead of *res, because
