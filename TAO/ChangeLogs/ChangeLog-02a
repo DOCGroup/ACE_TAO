@@ -6,7 +6,8 @@ Tue Aug 14 15:16:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Tue Aug 14 14:50:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/SmartProxies/SmartProxies.dsp (RSC): Added MFC
-	  configurations.
+	  configurations. Thanks to Garry Shammis <Garry.Shamis@kbcfp.com>
+	  for giving us the patch.
 
 	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp (dispatch_reply):
 	* tao/Synch_Reply_Dispatcher.cpp:
