@@ -1,3 +1,9 @@
+Thu Mar 12 17:21:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/sequence_T.cpp: Fixed a couple of weird bugs were freebuf
+ 	  (MAX) was being called instead of freebuf (tmp).  Thanks to
+ 	  Keith Nicewarner <knicewar@sanders.com> for reporting this.
+
 Thu Mar 12 15:53:44 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/except.h: Changed the member functions "type ()" and "id ()"
