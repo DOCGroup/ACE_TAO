@@ -1,3 +1,18 @@
+Mon Aug 11 23:05:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Base.cpp (reply_service_context): Return the
+	  reply service context from the operation details. This typo
+	  fixes a bug with PI implementation in this branch.
+	
+	* tao/operation_details.cpp (parameter_list): A bit of
+	  manipulation. Since the first pointer in the array of arguments
+	  actually points to a return value, we just omit that while
+	  trying to create a argument list. This change fixes yet another
+	  bug. 
+
+	  But there is still one problem lurking. If the argument list is
+	  void we would be in soup. 
+
 Mon Aug 11 12:22:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
@@ -22,7 +37,6 @@ Mon Aug 11 12:02:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Messaging/Messaging_Policy_i.cpp:
 	* tao/Messaging/Messaging_Policy_i.h: Fixed compile errors with
 	  g++ 3.3. 
-
 
 Mon Aug 11 11:31:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 

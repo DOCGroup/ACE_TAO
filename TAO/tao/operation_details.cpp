@@ -2,7 +2,7 @@
 #include "operation_details.h"
 #include "Stub.h"
 #include "Argument.h"
-#include <iostream>
+#include "ace/streams.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/operation_details.i"
@@ -74,10 +74,11 @@ TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
 bool
 TAO_Operation_Details::parameter_list (Dynamic::ParameterList &param_list)
 {
-  param_list.length (this->num_args_);
+  // Account for the return type that could be in the argument list.
+  param_list.length (this->num_args_ - 1);
 
-   for (CORBA::ULong i = 0; i != this->num_args_; ++i)
-     this->args_[i]->interceptor_param (param_list[i]);
+   for (CORBA::ULong i = 1; i != this->num_args_; ++i)
+     this->args_[i]->interceptor_param (param_list[i - 1]);
 
    return true;
 }

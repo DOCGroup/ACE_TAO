@@ -93,7 +93,7 @@ namespace TAO
   TAO_Service_Context &
   Invocation_Base::reply_service_context (void)
   {
-    return this->details_.request_service_context ();
+    return this->details_.reply_service_context ();
   }
 
 #if TAO_HAS_INTERCEPTORS == 1
