@@ -1,3 +1,12 @@
+Fri Jun 16 23:18:21 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
+
+	  Added missing TAO_ENV_ARG_DEFN macro.  This fixes a compile
+	  error that occured due to the fact that a CORBA Environment
+	  variable wasn't declared (nor should one be) when exception
+	  support was enabled. 
+
 Fri Jun 16 18:41:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Sequence_T.h:

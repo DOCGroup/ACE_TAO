@@ -23,6 +23,8 @@ TAO_LB_ReplicaLocator::preinvoke (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
+  TAO_ENV_ARG_DEFN;
+
   if (this->load_balancer_ == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
