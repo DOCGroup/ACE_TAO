@@ -723,7 +723,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   int return_value = 0;
   TAO_TRY
     {
-      CORBA::Boolean value = dyn_any.get_short (TAO_TRY_ENV);
+    CORBA::Boolean value = (CORBA::Boolean) dyn_any.get_short (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       return_value = (value == element);
     }
