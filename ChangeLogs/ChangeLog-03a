@@ -1,3 +1,9 @@
+Fri May 12 15:04:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* bin/run_all_list.pm:
+	* bin/auto_compile_win32.pl:
+	  Updated to include the new TAO test.
+
 Fri May 12 11:25:10 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Basic_Types.h:

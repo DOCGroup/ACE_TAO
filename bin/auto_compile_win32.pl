@@ -251,6 +251,7 @@ TAO/tests/AMI/ami_test.dsw, AMI_Test_Client:
 TAO/tests/AMI/ami_test.dsw, AMI_Test_Simple_Client:
 TAO/tests/Timeout/Timeout.dsw, Timeout Server:
 TAO/tests/Timeout/Timeout.dsw, Timeout Client:
+TAO/tests/Policies/Policies.dsw, Manipulation:
 TAO/tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.dsw, Timed_Buffered_Oneways Server:
 TAO/tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.dsw, Timed_Buffered_Oneways Client:
 TAO/tests/Smart_Proxies/Smart_Proxies.dsw, server:
@@ -470,6 +471,7 @@ TAO/tests/AMI/ami_test.dsw, AMI_Test_Client:
 TAO/tests/AMI/ami_test.dsw, AMI_Test_Simple_Client:
 TAO/tests/Timeout/Timeout.dsw, Timeout Server:
 TAO/tests/Timeout/Timeout.dsw, Timeout Client:
+TAO/tests/Policies/Policies.dsw, Manipulation:
 TAO/tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.dsw, Timed_Buffered_Oneways Server:
 TAO/tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.dsw, Timed_Buffered_Oneways Client:
 TAO/tests/Smart_Proxies/Smart_Proxies.dsw, server:
