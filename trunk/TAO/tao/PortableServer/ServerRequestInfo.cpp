@@ -5,6 +5,7 @@
 #include "ServerRequestInfo.h"
 
 #include "tao/TAO_Server_Request.h"
+#include "tao/PolicyC.h"
 
 ACE_RCSID (TAO_PortableServer,
            ServerRequestInfo,

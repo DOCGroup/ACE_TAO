@@ -1,3 +1,12 @@
+Sat Mar 03 02:10:00 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/ServerRequestInfo.cpp:
+
+	  Include "tao/PolicyC.h" to pull in declaration of
+	  CORBA::Policy::_nil().  This is particularly necessary for
+	  builds that disable compile-time support for CORBA Messaging
+	  since the Policy header doesn't get pulled in otherwise.
+
 Sat Mar  3 00:16:46 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/ForwardRequest/Makefile:
