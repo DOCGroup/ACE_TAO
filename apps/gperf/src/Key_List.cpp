@@ -937,7 +937,7 @@ Key_List::output_hash_function (void)
       // We've got to use the correct, but brute force, technique.
       else
         {
-          printf ("\n    };\n  int hval = %s;\n\n  switch (%s)\n    {\n      default:\n",
+          printf ("\n    };\n  unsigned int hval = %s;\n\n  switch (%s)\n    {\n      default:\n",
                   option[NOLENGTH] ? "0" : "len", option[NOLENGTH] ? "len" : "hval");
 
           // User wants *all* characters considered in hash.

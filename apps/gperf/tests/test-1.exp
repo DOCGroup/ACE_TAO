@@ -33,7 +33,7 @@ hash (str, len)
      26, 30, 31, 83, 15,  1,  0, 28, 13,  4,
      83, 83,  5, 83, 83, 83, 83, 83,
     };
-  int hval = len;
+  unsigned int hval = len;
 
   switch (hval)
     {
@@ -121,7 +121,7 @@ is_reserved_word (str, len)
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      int key = hash (str, len);
+      unsigned int key = hash (str, len);
 
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
