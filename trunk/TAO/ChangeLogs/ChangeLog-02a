@@ -1,3 +1,11 @@
+Fri Apr 28 23:29:03 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+	  Updated RT CORBA section, Naming section and fixed incorrect
+	  link (thanks to Steve Vranyes for pointing it out).
+	* docs/INS.html:
+	  Fixed link.
+
 Fri Apr 28 20:56:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ImplRepoC.h:
@@ -110,21 +118,21 @@ Fri Apr 28 20:09:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Invocation.cpp (create_ior_info): 
+	* tao/Invocation.cpp (create_ior_info):
 	* tao/Invocation.h: Added support for GIOP 1.2 exceptions. GIOP
 	  1.2 raises two new exceptions for the Request and
 	  LocateRequest. Added support to handle these exceptions. To add
 	  support, I had to add a new method called create_ior_info ()
 	  which would create IOP::IOR information only once, if an
 	  exception is received from the server side seeking that
-	  information. 
+	  information.
 
 	* tao/Acceptor_Registry.cpp:
 	* tao/Acceptor_Registry.h: Added a new method, that would return
 	  the right acceptor by taking a tag value. This is similar to the
 	  method in Connector_Registry.{h,cpp}.
 
-	* tao/Pluggable_Messaging_Utils.h:	
+	* tao/Pluggable_Messaging_Utils.h:
 	* tao/operation_details.h:
 	* tao/operation_details.i:
 	* tao/target_specification.h:
@@ -138,7 +146,7 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/GIOP_Message_Headers.h:
 	* tao/GIOP_Message_Headers.i:
 	* tao/GIOP_Message_Lite.cpp: Added support for GIOP 1.2
-	
+
 	* tao/GIOP_Server_Request.cpp:
 	* tao/GIOP_Server_Request.h:
 	* tao/GIOP_Server_Request.i: Removed some of the GIOP 1.2 specific
@@ -146,13 +154,13 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  TaggedProfile.{h,cpp,i} which would do the related processing of
 	  the data to extract ObjectKey. As TAO servers, as on date do not
 	  use any data other than ObjectKey, we need to do the processing
-	  to extract ObjectKey from IOP::IOR and IOP::TaggedProfile. 
+	  to extract ObjectKey from IOP::IOR and IOP::TaggedProfile.
 
 	* tao/Pluggable.h: Added a virtual function that would extract an
-	  ObjectKey from an IOP::TaggedProfile.	
+	  ObjectKey from an IOP::TaggedProfile.
 
 	* tao/IIOP_Acceptor.cpp:
-	* tao/IIOP_Acceptor.h: 
+	* tao/IIOP_Acceptor.h:
 	* tao/SHMIOP_Acceptor.cpp:
 	* tao/SHMIOP_Acceptor.h:
 	* tao/UIOP_Acceptor.cpp:
@@ -163,8 +171,8 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  IOP::TaggedProfile info from the profile info that is being
 	  stored. This is necessary as different protocol implementations
 	  could encapsulate different types of info in its profile which
-	  is a part of the server exhibited IOR. 
-	
+	  is a part of the server exhibited IOR.
+
 	* tao/IIOP_Profile.cpp:
 	* tao/IIOP_Profile.h:
 	* tao/IIOP_Profile.i:
@@ -172,7 +180,7 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/UIOP_Profile.h:
 	* tao/SHMIOP_Profile.cpp:
 	* tao/SHMIOP_Profile.h: Concrete implementations for the above.
-	
+
 	* tao/Stub.cpp:
 	* tao/Stub.h:
 	* tao/Stub.i: Added a method to store and retrieve information
@@ -191,9 +199,9 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Tagged_Profile.h:
 	* tao/Tagged_Profile.i: New files that would do GIOP 1.2 specific
 	  data processing for the server side.
-	
+
 	* tao/Makefile: Added the above file in the Makefile.
-	
+
 	* tao/orbconf.h: Turned on support for GIOP 1.2. Now would be
 	  ideal time. Any bugs that arises can be fixed I am gone on vacation.
 
