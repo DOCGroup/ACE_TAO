@@ -1,7 +1,46 @@
+Sun Jun 18 03:18:21 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/CORBA_macros.h: The definition of ACE_RETHORW is flawed
+          because it requires all ACE_RETHROW statements be the last
+          statement executed within the ACE_CATCH block as this example:
+
+          ACE_CATCH ( /* whatever */ )
+            {
+              // Do something else
+              ACE_RETHROW;
+            }
+          ACE_ENDTRY;
+          ACE_CHECK;
+
+          However, if this is not the case, programs may exhibit different
+          behavior on platforms with/without native C++ exceptions, as
+          shown in the following example:
+
+          ACE_CATCH ( /* whatever */ )
+            {
+              if (foo == bar)
+                ACE_RETHROW;
+              foo = bar;
+            }
+          ACE_ENDTRY;
+          ACE_CHECK;
+
+          Although the problem is easy to fix, unfortunately, I can't find
+          a way to fix it without changing the macro name because the
+          program flow may get completely messed up if ACE_TRY and
+          ACE_TRY_EX are used together.  Therefore, I have added two new
+          macros ACE_RE_THROW and ACE_RE_THROW_EX.
+
+          The old macro is now depricated.  If you are absolutely sure
+          that you are not using the old ACE_RETHROW macro as mentioned
+          above, you can define ACE_HAS_DEPRICATED_ACE_RETHROW in your
+          ace/config.h file and continue to use ACE_RETHROW.  However,
+          you should move to the new macros as soon as possible.
+
 Sat Jun 17 18:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/Makefile.DLL:
-	* tests/Makefile.DLL_Test: 
+	* tests/Makefile.DLL_Test:
 	  Renamed Makefile.DLL since on NT it appeared as if there was a
 	  dll version of the Makefile. Also did a make depend. Thanks to
 	  James Megquier  <jmegq@bbn.com> for reporting this and to
@@ -9,7 +48,7 @@ Sat Jun 17 18:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
   	  name be changed.
 	* tests/Makefile: Updated the Makefile to now have
 	  Makefile.DLL_Test.
-		
+
 Sat Jun 17 08:03:53 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* docs/tutorials/Chap_5/ex02.html: Fixed a typo where
@@ -17,10 +56,10 @@ Sat Jun 17 08:03:53 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  <kkelly@fallschurch.esys.com> for reporting this.
 
 Sat Jun 17 07:46:44 2000  Chris Kohlhoff <chris@kohlhoff.com>
-  
+
 	* include/makeinclude/ace_flags.bor:
-  
-          Added support for new LoadBalancing orbsvcs library.  
+
+          Added support for new LoadBalancing orbsvcs library.
 
 Fri Jun 16 17:30:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 
