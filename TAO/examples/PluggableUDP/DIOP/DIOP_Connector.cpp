@@ -365,10 +365,10 @@ TAO_DIOP_Connector::preconnect (const char *preconnects)
       ACE_Auto_Basic_Array_Ptr<TAO_DIOP_Connection_Handler*>
         safe_handlers (handlers);
 
-      char *failures;
+      /*char *failures;
       ACE_NEW_RETURN (failures,
                       char[num_connections],
-                      -1);
+                      -1);*/
 
       // No longer need to worry about exception safety at this point.
       remote_addrs = safe_remote_addrs.release ();

@@ -1,3 +1,8 @@
+Fri Mar 16 12:43:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp: Fixed a unused
+	  variable warning.
+
 Fri Mar 16 07:22:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Throughput/run_test.pl: Removed the usage of
