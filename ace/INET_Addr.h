@@ -37,6 +37,7 @@ class ACE_Export ACE_INET_Addr : public ACE_Addr
 {
 public:
   // = Initialization methods.
+
   /// Default constructor.
   ACE_INET_Addr (void);
 
@@ -290,6 +291,10 @@ public:
   /// Computes and returns hash value.
   virtual u_long hash (void) const;
 
+#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
+  static int protocol_family(void);
+#endif
+
   /// Dump the state of an object.
   void dump (void) const;
 
@@ -309,9 +314,13 @@ private:
 
   /// Underlying representation.
 #if defined (ACE_HAS_IPV6)
-  sockaddr_in6 inet_addr_;
+  sockaddr_in6 inet_addr6_;
+#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
+  sockaddr_in inet_addr4_;
+  static int protocol_family_;
+#endif
 #else
-  sockaddr_in inet_addr_;
+  sockaddr_in inet_addr4_;
 #endif
 
 #if defined (VXWORKS)

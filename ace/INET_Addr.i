@@ -16,9 +16,15 @@ ACE_INET_Addr::get_port_number (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_port_number");
 #if defined (ACE_HAS_IPV6)
-  return ntohs (this->inet_addr_.sin6_port);
+
+#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
+  if(ACE_INET_Addr::protocol_family() == PF_INET)
+    return ntohs (this->inet_addr4_.sin_port);
+   else
+#endif
+    return ntohs (this->inet_addr6_.sin6_port);
 #else
-  return ntohs (this->inet_addr_.sin_port);
+  return ntohs (this->inet_addr6_.sin_port);
 #endif
 }
 
@@ -28,7 +34,17 @@ ACE_INLINE void *
 ACE_INET_Addr::get_addr (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_addr");
-  return (void *) &this->inet_addr_;
+#if defined (ACE_HAS_IPV6)
+
+#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
+  if(ACE_INET_Addr::protocol_family() == PF_INET)
+    return (void*)&this->inet_addr4_;
+  else
+#endif
+    return (void*)&this->inet_addr6_;
+#else
+  return (void *) &this->inet_addr4_;
+#endif
 }
 
 ACE_INLINE u_long
