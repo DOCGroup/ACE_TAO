@@ -52,11 +52,11 @@ My_Test_Object::My_Test_Object (CORBA::Short id)
 {
 }
 
-My_Test_Object::~My_Test_Object (void) 
+My_Test_Object::~My_Test_Object (void)
 {
 }
 
-CORBA::Short 
+CORBA::Short
 My_Test_Object::id (CORBA::Environment &_env)
 {
   return id_;
@@ -89,55 +89,55 @@ CosNaming_Client::parse_args (void)
     switch (c)
       {
       case 'd':  // debug flag
-	TAO_debug_level++;
-	break;
+        TAO_debug_level++;
+        break;
       case 's':
-	if (this->test_ == 0) 
-	  ACE_NEW_RETURN (this->test_,
-			  Simple_Test,
-			  -1);
-	break;
+        if (this->test_ == 0)
+          ACE_NEW_RETURN (this->test_,
+                          Simple_Test,
+                          -1);
+        break;
       case 't':
-	if (this->test_ == 0) 
-	  ACE_NEW_RETURN (this->test_,
-			  Tree_Test,
-			  -1);	  
-	break;
+        if (this->test_ == 0)
+          ACE_NEW_RETURN (this->test_,
+                          Tree_Test,
+                          -1);
+        break;
       case 'i':
-	if (this->test_ == 0) 
-	  ACE_NEW_RETURN (this->test_,
-			  Iterator_Test,
-			  -1);
-	break;
+        if (this->test_ == 0)
+          ACE_NEW_RETURN (this->test_,
+                          Iterator_Test,
+                          -1);
+        break;
       case 'e':
-	if (this->test_ == 0) 
-	  ACE_NEW_RETURN (this->test_,
-			  Exceptions_Test,
-			  -1);
-	break;
+        if (this->test_ == 0)
+          ACE_NEW_RETURN (this->test_,
+                          Exceptions_Test,
+                          -1);
+        break;
       case 'y':
-	if (this->test_ == 0) 
-	  ACE_NEW_RETURN (this->test_,
-			  Destroy_Test,
-			  -1);
-	break;
+        if (this->test_ == 0)
+          ACE_NEW_RETURN (this->test_,
+                          Destroy_Test,
+                          -1);
+        break;
       default:
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "usage:  %s"
-			   " [-d]"
-			   " [-s or -e or -t or -i or -y]"
-			   "\n",
-                           this->argv_ [0]), 
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s"
+                           " [-d]"
+                           " [-s or -e or -t or -i or -y]"
+                           "\n",
+                           this->argv_ [0]),
                           -1);
       }
 
-  if (this->test_ == 0) 
+  if (this->test_ == 0)
     ACE_NEW_RETURN (this->test_,
-		    Simple_Test,
-		    -1);
+                    Simple_Test,
+                    -1);
 
   // Indicates successful parsing of command line.
-  return 0;  
+  return 0;
 }
 
 // Execute client example code.
@@ -201,7 +201,7 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
       root_context->bind (test_name,
                           test_obj_ref.in (),
                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "Bound name OK\n"));
 
@@ -210,20 +210,20 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
         root_context->resolve (test_name,
                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      Test_Object_var result_object = 
-    	Test_Object::_narrow (result_obj_ref.in (),
-                              TAO_TRY_ENV);        
+      Test_Object_var result_object =
+        Test_Object::_narrow (result_obj_ref.in (),
+                              TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      if (!CORBA::is_nil (result_object.in ()) 
+      if (!CORBA::is_nil (result_object.in ())
           && result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ1_ID)
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     "Resolved name OK\n"));
       TAO_CHECK_ENV;
-      
+
       // Unbind the object from the Naming Context.
       root_context->unbind (test_name,
                             TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "Unbound name OK\n"));
     }
@@ -244,7 +244,7 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       // Create a tree of contexts: root->level1->level2.  Bind object
       // foo under context level2.
 
-      // Bind level1 context under root. 
+      // Bind level1 context under root.
       CosNaming::Name level1;
       level1.length (1);
       level1[0].id = CORBA::string_dup ("level1_context");
@@ -265,7 +265,7 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       CosNaming::Name obj_name;
       obj_name.length (1);
       obj_name[0].id = CORBA::string_dup ("foo");
-      level2_context->bind (obj_name, obj1.in (), 
+      level2_context->bind (obj_name, obj1.in (),
                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -286,14 +286,14 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
         root_context->resolve (test_name,
                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      Test_Object_var result_object = 
-    	Test_Object::_narrow (result_obj_ref.in (),
-                              TAO_TRY_ENV);        
+      Test_Object_var result_object =
+        Test_Object::_narrow (result_obj_ref.in (),
+                              TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      if (CORBA::is_nil (result_object.in ()) 
-          || !result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ1_ID)
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "Problems with resolving foo in Tree Test\n"), 
+      if (CORBA::is_nil (result_object.in ())
+          || !(result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ1_ID))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Problems with resolving foo in Tree Test\n"),
                           -1);
       TAO_CHECK_ENV;
 
@@ -301,12 +301,12 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       // in.
       root_context->unbind (test_name,
                             TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      TAO_CHECK_ENV;
       root_context->bind (test_name,
                           obj1.in (),
                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
-            
+      TAO_CHECK_ENV;
+
       // Create new context and rebind under the name level1/level2.
       CosNaming::NamingContext_var new_level2_context;
       new_level2_context =
@@ -321,18 +321,18 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       root_context->bind (test_name,
                           obj1.in (),
                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      TAO_CHECK_ENV;
       result_obj_ref = root_context->resolve (test_name,
                                               TAO_TRY_ENV);
       TAO_CHECK_ENV;
       result_object = Test_Object::_narrow (result_obj_ref.in (),
-                                            TAO_TRY_ENV);        
+                                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      if (CORBA::is_nil (result_object.in ()) 
-          || !result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ1_ID)
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "Problems in the Tree Test\n"), 
-                          -1);   
+      if (CORBA::is_nil (result_object.in ())
+          || !(result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ1_ID))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Problems in the Tree Test\n"),
+                          -1);
       TAO_CHECK_ENV;
 
       My_Test_Object impl2 (CosNaming_Client::OBJ2_ID);
@@ -346,13 +346,13 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
                                               TAO_TRY_ENV);
       TAO_CHECK_ENV;
       result_object = Test_Object::_narrow (result_obj_ref.in (),
-                                            TAO_TRY_ENV);        
+                                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      if (CORBA::is_nil (result_object.in ()) 
-          || !result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ2_ID)
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "Problems with rebind in Tree Test\n"), 
-                          -1);   
+      if (CORBA::is_nil (result_object.in ())
+          || !(result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ2_ID))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Problems with rebind in Tree Test\n"),
+                          -1);
       TAO_CHECK_ENV;
     }
 
@@ -364,7 +364,7 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
 
   TAO_ENDTRY;
   ACE_DEBUG ((LM_DEBUG,
-	      "All functions work properly \n"));
+              "All functions work properly \n"));
   return 0;
 }
 
@@ -372,7 +372,7 @@ int
 Exceptions_Test::execute (TAO_Naming_Client &root_context)
 {
   TAO_TRY
-    { 
+    {
       // Set things up.
 
       // Create a tree of contexts root->level1->level2.
@@ -408,7 +408,7 @@ Exceptions_Test::execute (TAO_Naming_Client &root_context)
                             obj.in (),
                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       // Run exceptions tests.
       invalid_name_test (root_context,
                          TAO_TRY_ENV);
@@ -443,10 +443,10 @@ Exceptions_Test::invalid_name_test (TAO_Naming_Client &root_context,
                                     CORBA::Environment &_env)
 {
   TAO_TRY
-    { 
+    {
       CosNaming::Name test_name;
       test_name.length (0);
-      
+
       root_context->resolve (test_name,
                              TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -470,7 +470,7 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context,
                                      CORBA::Environment &_env)
 {
   TAO_TRY
-    { 
+    {
       CosNaming::Name test_name;
       test_name.length (1);
       test_name[0].id = CORBA::string_dup ("foo");
@@ -493,7 +493,7 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context,
     {
       TAO_RETHROW;
     }
-  
+
   TAO_ENDTRY;
 }
 
@@ -502,7 +502,7 @@ Exceptions_Test::already_bound_test2 (TAO_Naming_Client &root_context,
                                       CORBA::Environment &_env)
 {
   TAO_TRY
-    { 
+    {
       CosNaming::Name test_name;
       test_name.length (2);
       test_name[0].id = CORBA::string_dup ("level1_context");
@@ -534,7 +534,7 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context,
                                  CORBA::Environment &_env)
 {
   TAO_TRY
-    { 
+    {
       CosNaming::Name test_name;
       test_name.length (3);
       test_name[0].id = CORBA::string_dup ("level1_context");
@@ -549,15 +549,15 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context,
   TAO_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
       if (ex.why == CosNaming::NamingContext::not_object &&
-	  ex.rest_of_name.length () == 1 
+          ex.rest_of_name.length () == 1
           && ACE_OS::strcmp (ex.rest_of_name[0].id.in (),
                              "bar") == 0)
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     "NotFound  exception (case 1) works properly\n"));
       else
-	ACE_DEBUG ((LM_DEBUG, 
-		    "NotFound  exception (case 1)"
-		    " - parameters aren't set correctly\n"));
+        ACE_DEBUG ((LM_DEBUG,
+                    "NotFound  exception (case 1)"
+                    " - parameters aren't set correctly\n"));
       TAO_TRY_ENV.clear ();
     }
   TAO_CATCHANY
@@ -566,13 +566,13 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context,
     }
   TAO_ENDTRY;
 }
- 
+
 void
 Exceptions_Test::not_found_test2 (TAO_Naming_Client &root_context,
                                   CORBA::Environment &_env)
 {
   TAO_TRY
-    { 
+    {
       CosNaming::Name test_name;
       test_name.length (3);
       test_name[0].id = CORBA::string_dup ("level1_context");
@@ -586,25 +586,25 @@ Exceptions_Test::not_found_test2 (TAO_Naming_Client &root_context,
 
   TAO_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
-      if (ex.why == CosNaming::NamingContext::missing_node 
-          && ex.rest_of_name.length () == 2 
+      if (ex.why == CosNaming::NamingContext::missing_node
+          && ex.rest_of_name.length () == 2
           && ACE_OS::strcmp (ex.rest_of_name[0].id.in (),
-                             "level3_context") == 0 
+                             "level3_context") == 0
           && ACE_OS::strcmp (ex.rest_of_name[1].id.in (),
                              "foo") == 0)
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     "NotFound  exception (case 2) works properly\n"));
       else
-	ACE_DEBUG ((LM_DEBUG, 
-		    "NotFound  exception (case 2)"
-		    " - parameters aren't set correctly\n"));
+        ACE_DEBUG ((LM_DEBUG,
+                    "NotFound  exception (case 2)"
+                    " - parameters aren't set correctly\n"));
       TAO_TRY_ENV.clear ();
     }
   TAO_CATCHANY
     {
       TAO_RETHROW;
     }
-  
+
   TAO_ENDTRY;
 }
 
@@ -613,7 +613,7 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context,
                                   CORBA::Environment &_env)
 {
   TAO_TRY
-    { 
+    {
       CosNaming::Name test_name;
       test_name.length (3);
       test_name[0].id = CORBA::string_dup ("level1_context");
@@ -626,18 +626,18 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context,
 
   TAO_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
-      if (ex.why == CosNaming::NamingContext::not_context 
-          && ex.rest_of_name.length () == 2 
+      if (ex.why == CosNaming::NamingContext::not_context
+          && ex.rest_of_name.length () == 2
           && ACE_OS::strcmp (ex.rest_of_name[0].id.in (),
-                             "foo") == 0 
+                             "foo") == 0
           && ACE_OS::strcmp (ex.rest_of_name[1].id.in (),
                              "foo") == 0)
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     "NotFound  exception (case 3) works properly\n"));
       else
-	ACE_DEBUG ((LM_DEBUG, 
-		    "NotFound  exception (case 3)"
-		    " - parameters aren't set correctly\n"));
+        ACE_DEBUG ((LM_DEBUG,
+                    "NotFound  exception (case 3)"
+                    " - parameters aren't set correctly\n"));
       TAO_TRY_ENV.clear ();
     }
   TAO_CATCHANY
@@ -665,7 +665,7 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
       My_Test_Object impl4;
       Test_Object_var obj4 = impl4._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
- 
+
       // Bind objects to the naming context.
       CosNaming::Name name1;
       name1.length (1);
@@ -682,19 +682,19 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
       root_context->bind (name1,
                           obj1.in (),
                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      TAO_CHECK_ENV;
       root_context->bind (name2,
                           obj2.in (),
                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      TAO_CHECK_ENV;
       root_context->bind (name3,
                           obj3.in (),
                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      TAO_CHECK_ENV;
       root_context->bind (name4,
                           obj4.in (),
                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      TAO_CHECK_ENV;
 
       // List the content of the Naming Context.
       CosNaming::BindingIterator_var iter;
@@ -704,15 +704,15 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
                           iter.out (),
                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      if (CORBA::is_nil (iter.in ()) 
-          || bindings_list->length () != 1 
+      if (CORBA::is_nil (iter.in ())
+          || bindings_list->length () != 1
           || bindings_list[0].binding_type != CosNaming::nobject)
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "CosNaming::list does not function properly\n"), 
-                          -1);      
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "CosNaming::list does not function properly\n"),
+                          -1);
       ACE_DEBUG ((LM_DEBUG,
-                  "First binding: %s\n", 
-		  bindings_list[0].binding_name[0].id.in ()));
+                  "First binding: %s\n",
+                  bindings_list[0].binding_name[0].id.in ()));
 
       // Invoke operations on the iterator.
       CosNaming::Binding_var binding;
@@ -720,35 +720,35 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
       if (binding->binding_type != CosNaming::nobject)
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "CosNaming::next_one does not function properly\n"), 
-                          -1);      
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "CosNaming::next_one does not function properly\n"),
+                          -1);
       ACE_DEBUG ((LM_DEBUG,
                   "Second binding: %s\n",
-		  binding->binding_name[0].id.in ()));
+                  binding->binding_name[0].id.in ()));
 
       iter->next_n (2, bindings_list.out (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      if (bindings_list->length () != 2 
-          || bindings_list[0].binding_type != CosNaming::nobject 
+      if (bindings_list->length () != 2
+          || bindings_list[0].binding_type != CosNaming::nobject
           || bindings_list[1].binding_type != CosNaming::nobject)
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "CosNaming::BindingIterator does not function properly\n"), 
-			  -1);
-      ACE_DEBUG ((LM_DEBUG, 
-		  "Third binding: %s\n"
-		  "Fourth binding: %s\n",
-		  bindings_list[0].binding_name[0].id.in (),
-		  bindings_list[1].binding_name[0].id.in ()));
-      
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "CosNaming::BindingIterator does not function properly\n"),
+                          -1);
+      ACE_DEBUG ((LM_DEBUG,
+                  "Third binding: %s\n"
+                  "Fourth binding: %s\n",
+                  bindings_list[0].binding_name[0].id.in (),
+                  bindings_list[1].binding_name[0].id.in ()));
+
       // We already iterated over all the bindings, so the following
       // should return false.
       CORBA::Boolean result = iter->next_one (binding.out (),
                                               TAO_TRY_ENV);
       TAO_CHECK_ENV;
       if (result)
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "CosNaming::BindingIterator does not function properly\n"), 
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "CosNaming::BindingIterator does not function properly\n"),
                           -1);
       iter->destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -766,7 +766,7 @@ int
 Destroy_Test::execute (TAO_Naming_Client &root_context)
 {
   TAO_TRY
-    { 
+    {
       // Create a context and bind an object under it.
 
       CosNaming::NamingContext_var my_context;
@@ -789,7 +789,7 @@ Destroy_Test::execute (TAO_Naming_Client &root_context)
       not_empty_test (my_context,
                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       my_context->unbind (object_name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
       my_context->destroy (TAO_TRY_ENV);
@@ -813,7 +813,7 @@ Destroy_Test::not_empty_test (CosNaming::NamingContext_var &ref,
                                     CORBA::Environment &_env)
 {
   TAO_TRY
-    { 
+    {
       ref->destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
@@ -836,7 +836,7 @@ Destroy_Test::not_exist_test (CosNaming::NamingContext_var &ref,
                                     CORBA::Environment &_env)
 {
   TAO_TRY
-    { 
+    {
       ref->destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
@@ -860,10 +860,9 @@ int
 main (int argc, char **argv)
 {
   CosNaming_Client cosnaming_client;
-  
+
   if (cosnaming_client.init (argc, argv) == -1)
     return 1;
 
   return cosnaming_client.run ();
 }
-
