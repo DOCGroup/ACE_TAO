@@ -1,11 +1,16 @@
+Wed Jun 30 08:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/catior.cpp:
+          Added missing include to fix compile error in LynxOS build
+
 Tue Jun 29 11:13:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
-        
+
           Removed unused local variables.
-          
+
         * orbsvcs/IFR_Service/IFR_Service.mpc:
-        
+
           Modified TAO_IFR_EXE project to remove dependency on TAO
           and IFR_Client libraries, and added include paths to
           enable the preprocessor to find some TAO header files
