@@ -1,3 +1,13 @@
+Fri Jun 27 14:27:49 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* any.cpp: The deep_copy and deep_free optimizations applied. In
+	the previous release, I had forgotten to add these to the Any
+	constructor (that calls deep_copy) and Any destructor/replace
+	(that call deep_free).
+
+	* connect.cp, factories.cpp: Added code that hardcodes the socket
+	buffer sizes to 64K. This is a hack for the time being.
+
 Thu Jun 26 09:49:38 1997  Aniruddha Gokhale  <gokhale@merengue.cs.wustl.edu>
 
 	* Added a full range of optimizations to the TAO IIOP interpretive
