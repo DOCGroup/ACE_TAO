@@ -38,7 +38,7 @@ public:
 		   u_int streambuf_size = ACE_STREAMBUF_SIZE,
 		   int io_mode = ios::in | ios::out);
   // We will be given a STREAM by the iostream object which creates
-  // us.  See the ACE_IOStream_T template for how that works.  Like
+  // us.  See the ACE_IOStream template for how that works.  Like
   // other streambuf objects, we can be input-only, output-only or
   // both.
 
@@ -66,7 +66,7 @@ protected:
 };
 
 template <class STREAM>
-class ACE_IOStream_T : public iostream, public STREAM
+class ACE_IOStream : public iostream, public STREAM
   // = TITLE
   //     A template adapter for creating an iostream-like object using
   //     an ACE IPC Stream for the actual I/O.  Iostreams use an
@@ -90,8 +90,8 @@ class ACE_IOStream_T : public iostream, public STREAM
   //
   //     Because the operators in the iostream class are not virtual,
   //     you cannot easily provide overloads in your custom
-  //     ACE_IOStream_T classes.  To make these things work correctly,
-  //     you need to overload ALL operators of the ACE_IOStream_T you
+  //     ACE_IOStream classes.  To make these things work correctly,
+  //     you need to overload ALL operators of the ACE_IOStream you
   //     create. I've attempted to do that here to make things easier
   //     for you but there are no guarantees.
   //
@@ -100,14 +100,14 @@ class ACE_IOStream_T : public iostream, public STREAM
   //     customize only one or two.
 {
 public:
-  ACE_IOStream_T (STREAM &stream,
+  ACE_IOStream (STREAM &stream,
 		  u_int streambuf_size = ACE_STREAMBUF_SIZE);
-  ACE_IOStream_T (u_int streambuf_size = ACE_STREAMBUF_SIZE);
+  ACE_IOStream (u_int streambuf_size = ACE_STREAMBUF_SIZE);
   // The default constructor.  This will initiailze your STREAM and
   // then setup the iostream baseclass to use a custom streambuf based
   // on STREAM.
 
-  virtual ~ACE_IOStream_T (void);
+  virtual ~ACE_IOStream (void);
   // We have to get rid of the streambuf_ ourselves since we gave it
   // to iostream();
 
@@ -116,18 +116,18 @@ public:
   // function.
 
 #if defined (ACE_HAS_STRING_CLASS)
-  virtual ACE_IOStream_T<STREAM> &operator>> (ACE_IOStream_String &v);
+  virtual ACE_IOStream<STREAM> &operator>> (ACE_IOStream_String &v);
   // A simple string operator.  The base iostream has 'em for char*
   // but that isn't always the best thing for a String.  If we don't
   // provide our own here, we may not get what we want.
 
-  virtual ACE_IOStream_T<STREAM> &operator<< (ACE_IOStream_String &v);
+  virtual ACE_IOStream<STREAM> &operator<< (ACE_IOStream_String &v);
   // The converse of the String put operator.
 
 #endif /* ACE_HAS_STRING_CLASS */
 
   // = Using the macros to provide get/set operators.
-  GETPUT_FUNC_SET (ACE_IOStream_T<STREAM>)
+  GETPUT_FUNC_SET (ACE_IOStream<STREAM>)
 
 #if defined (ACE_LACKS_IOSTREAM_FX)
   virtual int ipfx (int /* need */ = 0) {  return good(); }
@@ -150,7 +150,7 @@ public:
   virtual void osfx (void)        {  iostream::osfx(); return; }
 #endif /* ACE_LACKS_IOSTREAM_FX */
 
-  ACE_IOStream_T<STREAM> & operator>>(ACE_Time_Value *&tv);
+  ACE_IOStream<STREAM> & operator>>(ACE_Time_Value *&tv);
   // Allow the programmer to provide a timeout for read operations.
   // Give it a pointer to NULL to block forever.
 

@@ -14,7 +14,7 @@
     // file.  That name contains a ".", so it's not a legal C variable name.
     // The root of all this trouble is a static instance (of Iostream_init)
     // declared in the iostream.h header file.
-    int ACE_IOStream_T_global_of_builtin_type_to_avoid_munch_problems = 0;
+    int ACE_IOStream_global_of_builtin_type_to_avoid_munch_problems = 0;
 # endif /* ! ACE_IOSTREAM_T_H */
 #endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION && defined (__GNUG__) */
 
@@ -26,7 +26,7 @@
 #endif /* !__ACE_INLINE__ */
 
 // We will be given a STREAM by the iostream object which creates us.
-// See the ACE_IOStream_T template for how that works.  Like other
+// See the ACE_IOStream template for how that works.  Like other
 // streambuf objects, we can be input-only, output-only or both.
 
 template <class STREAM>
@@ -58,7 +58,7 @@ ACE_Streambuf_T<STREAM>::ACE_Streambuf_T (STREAM *peer,
 // STREAM.
 
 template <class STREAM>
-ACE_IOStream_T<STREAM>::ACE_IOStream_T (STREAM &stream,
+ACE_IOStream<STREAM>::ACE_IOStream (STREAM &stream,
 					u_int streambuf_size)
   : iostream (streambuf_ = new ACE_Streambuf_T<STREAM> ((STREAM *) this, streambuf_size)),
     STREAM (stream)
@@ -67,7 +67,7 @@ ACE_IOStream_T<STREAM>::ACE_IOStream_T (STREAM &stream,
 }
 
 template <class STREAM>
-ACE_IOStream_T<STREAM>::ACE_IOStream_T (u_int streambuf_size)
+ACE_IOStream<STREAM>::ACE_IOStream (u_int streambuf_size)
   : iostream (streambuf_ = new ACE_Streambuf_T<STREAM> ((STREAM *) this, streambuf_size))
 {
   iostream::init (this->streambuf_);
@@ -77,7 +77,7 @@ ACE_IOStream_T<STREAM>::ACE_IOStream_T (u_int streambuf_size)
 // iostream ()
 
 template <class STREAM>
-ACE_IOStream_T<STREAM>::~ACE_IOStream_T (void)
+ACE_IOStream<STREAM>::~ACE_IOStream (void)
 {
   delete this->streambuf_;
 }
@@ -86,13 +86,13 @@ ACE_IOStream_T<STREAM>::~ACE_IOStream_T (void)
 // function.
 
 template <class STREAM> int
-ACE_IOStream_T<STREAM>::close (void)
+ACE_IOStream<STREAM>::close (void)
 {
   return STREAM::close ();
 }
 
-template <class STREAM> ACE_IOStream_T<STREAM> &
-ACE_IOStream_T<STREAM>::operator>> (ACE_Time_Value *&tv)
+template <class STREAM> ACE_IOStream<STREAM> &
+ACE_IOStream<STREAM>::operator>> (ACE_Time_Value *&tv)
 {
   ACE_Time_Value *old_tv = this->streambuf_->recv_timeout (tv);
   tv = old_tv;
@@ -105,8 +105,8 @@ ACE_IOStream_T<STREAM>::operator>> (ACE_Time_Value *&tv)
 // that isn't always the best thing for a String.  If we don't provide
 // our own here, we may not get what we want.
 
-template <class STREAM> ACE_IOStream_T<STREAM> &
-ACE_IOStream_T<STREAM>::operator>> (ACE_IOStream_String &v)
+template <class STREAM> ACE_IOStream<STREAM> &
+ACE_IOStream<STREAM>::operator>> (ACE_IOStream_String &v)
 {
   if (ipfx0 ())
     {
@@ -122,8 +122,8 @@ ACE_IOStream_T<STREAM>::operator>> (ACE_IOStream_String &v)
   return *this;
 }
 
-template <class STREAM> ACE_IOStream_T<STREAM> &
-ACE_IOStream_T<STREAM>::operator<< (ACE_IOStream_String &v)
+template <class STREAM> ACE_IOStream<STREAM> &
+ACE_IOStream<STREAM>::operator<< (ACE_IOStream_String &v)
 {
   if (opfx ())
     {

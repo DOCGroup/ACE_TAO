@@ -1,4 +1,4 @@
-// This is a simple example of using the ACE_IOStream_T and
+// This is a simple example of using the ACE_IOStream and
 // ACE_Streambuf_T templates to create an object based on ACE_*_Stream
 // classes which mimic a C++ iostream.
 
@@ -13,7 +13,7 @@
 // like an iostream.  The new type (ACE_SOCK_IOStream) can be used
 // anywhere an ACE_SOCK_Stream is used.
 
-typedef ACE_IOStream_T<ACE_SOCK_Stream> ACE_SOCK_IOStream ;
+typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream ;
 
 // Create a service handler object based on our new
 // iostream/SOCK_Stream hybrid.
@@ -149,12 +149,12 @@ main (int argc, char *argv [])
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor <Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_IOStream_T <ACE_SOCK_Stream>;
+template class ACE_IOStream <ACE_SOCK_Stream>;
 template class ACE_Streambuf_T <ACE_SOCK_Stream>;
 template class ACE_Svc_Handler <ACE_SOCK_IOStream, ACE_INET_Addr, ACE_NULL_SYNCH>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Acceptor <Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_IOStream_T <ACE_SOCK_Stream>
+#pragma instantiate ACE_IOStream <ACE_SOCK_Stream>
 #pragma instantiate ACE_Streambuf_T <ACE_SOCK_Stream>
 #pragma instantiate ACE_Svc_Handler <ACE_SOCK_IOStream, ACE_INET_Addr, ACE_NULL_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
