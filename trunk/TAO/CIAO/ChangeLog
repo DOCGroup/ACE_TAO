@@ -1,3 +1,11 @@
+Mon May 17 21:07:25 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tools/static_configurator/Static_Assembly_Visitors.h:
+	* tools/static_configurator/Static_Configurator.cpp:
+	* tools/static_configurator/Static_Configurator.mpc:
+	  
+	  Fixed some compile errors because of a typo. 
+
 Mon May 17 19:29:43 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tools/RTComponentServer/RTServer_Impl.cpp:

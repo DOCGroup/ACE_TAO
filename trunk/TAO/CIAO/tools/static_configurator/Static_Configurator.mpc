@@ -18,6 +18,5 @@ project (Static_Configurator) : ciao_server, orbsvcslib, portableserver, securit
 
   Source_Files {
     Static_Configurator.cpp
-    Segment_Timer.cpp
   }
 }

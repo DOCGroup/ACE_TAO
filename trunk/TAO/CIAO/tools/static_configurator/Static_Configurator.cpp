@@ -2,7 +2,7 @@
 
 #include "Static_Configurator.h"
 #include "ace/OS_NS_stdio.h"
-#include "Segment_Timer.h"
+//#include "Segment_Timer.h"
 
 int CIAO::Static_Configurator::configure(
                    CORBA::ORB_ptr orb,
@@ -46,8 +46,6 @@ int CIAO::Static_Configurator::create_homes (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG, "Creating Homes...\n"));
   for (int i=0; i<homes_count_; ++i)
     {
-      segment_timers[CREATE_HOME_TIMER].start_timer ();
-
       // install home
       Components::ConfigValues home_config;
       // Setting home config value here:
@@ -100,7 +98,6 @@ int CIAO::Static_Configurator::create_homes (ACE_ENV_SINGLE_ARG_DECL)
 
       this->installed_homes_.bind (homes_[i].id_,
                                                      home);
-      segment_timers[CREATE_HOME_TIMER].stop_timer ();
       homes_[i].home_ = klhome;
     }
   ACE_DEBUG ((LM_DEBUG, "Homes installed...\n"));
@@ -111,9 +108,7 @@ int CIAO::Static_Configurator::create_connections (ACE_ENV_SINGLE_ARG_DECL)
 {
   for (int i=0; i<connections_count_; ++i)
     {
-      segment_timers[CREATE_CONNECTION_TIMER].start_timer ();
       make_connection (i ACE_ENV_ARG_PARAMETER);
-      segment_timers[CREATE_CONNECTION_TIMER].stop_timer ();
     }
   return 0;
 }
@@ -367,7 +362,6 @@ Components::Deployment::Container_ptr
 CIAO::Static_Configurator::get_container (const ACE_CString& rtpolicy
                                           ACE_ENV_ARG_DECL)
 {
-  segment_timers[CREATE_CONTAINER_TIMER].start_timer ();
 
   // If we are not using the same rtpolicy set, or the there's no
   // cached container, then create a new one.
@@ -379,7 +373,6 @@ CIAO::Static_Configurator::get_container (const ACE_CString& rtpolicy
         {
           if (!CORBA::is_nil (containers_[i].container_.in ()))
             {
-              segment_timers[CREATE_CONTAINER_TIMER].stop_timer ();
               return Components::Deployment::Container::_duplicate
                 (containers_[i].container_.in ());
             }
@@ -419,7 +412,6 @@ CIAO::Static_Configurator::get_container (const ACE_CString& rtpolicy
     ACE_DEBUG ((LM_DEBUG,
                 "Creating container with empty policy set\n"));
 
-  segment_timers[CREATE_CONTAINER_TIMER].stop_timer ();
   return Components::Deployment::Container::_duplicate
     (this->containers_[container_index].container_.in ());
 }
@@ -429,7 +421,6 @@ int CIAO::Static_Configurator::create_components (ACE_ENV_SINGLE_ARG_DECL)
   for (int i=0; i<components_count_; ++i)
     {
       // @@ instantiation and register component.
-      segment_timers[CREATE_COMPONENT_TIMER].start_timer ();
       ACE_DEBUG ((LM_DEBUG, "ComponentInstantiation %s\n",
                   components_[i].id_.c_str ()));
 
@@ -439,8 +430,6 @@ int CIAO::Static_Configurator::create_components (ACE_ENV_SINGLE_ARG_DECL)
 
       this->instantiated_components_.bind (components_[i].id_,
                                                              comp);
-
-      segment_timers[CREATE_COMPONENT_TIMER].stop_timer ();
 
       int begin_index = components_[i].component_registration_begin_index_;
       int end_index = components_[i].component_registration_end_index_;
@@ -452,12 +441,10 @@ int CIAO::Static_Configurator::create_components (ACE_ENV_SINGLE_ARG_DECL)
             {
               CIAO::Assembly_Placement::componentinstantiation::Register_Info
                 info = component_instantiations_[j];
-              segment_timers[REGISTER_COMPONENT_TIMER].start_timer ();
               this->register_component (info,
                                         comp.in ()
                                         ACE_ENV_ARG_PARAMETER);
 
-              segment_timers[REGISTER_COMPONENT_TIMER].stop_timer ();
             }
         }
     }
