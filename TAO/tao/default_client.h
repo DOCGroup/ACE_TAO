@@ -54,6 +54,7 @@ public:
   TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
   TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
   virtual ACE_Lock *create_cached_connector_lock (void);
+  virtual ACE_Lock *create_ft_service_retention_id_lock (void);
 
 private:
   enum Lock_Type

@@ -34,6 +34,7 @@
 #include "tao/Adapter.h"
 #include "tao/Service_Callbacks.h"
 #include "tao/Parser_Registry.h"
+#include "tao/Fault_Tolerance_Service.h"
 
 #include "ace/Hash_Map_Manager.h"
 
@@ -222,7 +223,7 @@ public:
     COLLOCATION_STRATEGIES_NUM  // This value should always be the
                                 // last value in the enumeration.  It
                                 // provides the count for the number
-                                // of collocation strategies.  
+                                // of collocation strategies.
   };
 
   static TAO_Collocation_Strategies collocation_strategy (CORBA::Object_ptr object);
@@ -562,6 +563,23 @@ public:
   // actually nill or not. This would be useful to accomodate new
   // enhanced definitions as defined by the service specification.
 
+  CORBA::Policy_ptr service_create_policy (CORBA::PolicyType policy,
+                                           const CORBA::Any &val,
+                                           CORBA::Environment &ACE_TRY_ENV);
+  // The create_policy () method that is delegated to the service
+  // layer. This method would call the loaded services to check
+  // whether they can create the policy object requested by the
+  // application.
+
+  void service_context_list (TAO_Stub *&stub,
+                             IOP::ServiceContextList &service_list,
+                             CORBA::Environment &ACE_TRY_ENV);
+  // Call the service layers with the IOP::ServiceContext to check
+  // whether they would like to add something to the list.
+
+  TAO_Fault_Tolerance_Service &fault_tolerance_service (void);
+  // Return a reference to the Fault Tolerant service object
+
 protected:
 
   ~TAO_ORB_Core (void);
@@ -702,12 +720,10 @@ protected:
   //    is staticaly added to the service configurator.
 
   // Start of service level hooks
-  // Service level hooks follow.
-  // NOTE: You shouldn't be deleting these. The service layer that
-  // allocated them should be deleting them.
 
-  TAO_Service_Callbacks *ft_service_callbacks_;
-  // ORB level hook to callback on to the service
+  TAO_Fault_Tolerance_Service ft_service_;
+  // Fault Tolerant service hook.
+
   // End of Service level hooks
 
   CORBA::Boolean opt_for_collocation_;

@@ -1,3 +1,43 @@
+Fri Sep 29 10:14:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/Invocation.cpp:
+	* tao/Service_Callbacks.h:
+	* tao/Service_Callbacks.cpp: Added some more hooks for the FT
+	  CORBA implementation. These hooks are used for creating service
+	  context list based on some policies set in the ORB. Hooks for
+	  the creation of policy objects have also been added.
+
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	* tao/ORB.i: Added TAO specific methods _tao_ft_client_id () that
+	  would allow applications to set a client id for Fault
+	  Tolerance. A combination of client id and a unique retention id
+	  (more or less like a request id) helps to identify the
+	  requests.
+
+	* tao/Fault_Tolerance_Service.h:
+	* tao/Fault_Tolerance_Service.cpp:
+	* tao/Fault_Tolerance_Service.i: New files. A collection of ORB &
+	  ORB_Core related properties that are specific to FT CORBA. These
+	  would not get activated unless the FT library has been loaded in
+	  to the ORB_Core.
+
+	* tao/Client_Strategy_Factory.cpp:
+	* tao/Client_Strategy_Factory.h: Added a method for the creation
+	  of a lock (create_ft_service_retention_id_lock ()) for the
+	  creation of a unique retention id in the Fault Tolerance Service
+	  class.
+
+	* tao/default_client.cpp:
+	* tao/default_client.h: Implementation of
+	  create_ft_service_retention_id_lock () for the default_client.
+
+	* tao/Makefile: Added the new file.
+
+
 Fri Sep 29 09:17:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
@@ -11,13 +51,13 @@ Fri Sep 29 09:17:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Fri Sep 29 02:09:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/diffs/RTPortableServerC.h.diff: 
-	* tao/diffs/RTPortableServerC.cpp.diff: 
+	* tao/diffs/RTPortableServerC.h.diff:
+	* tao/diffs/RTPortableServerC.cpp.diff:
 
 	  Added diff files.
 
-	* tao/PortableServer/PortableServer.pidl: 
-	* tao/PortableServer/RTPortableServer.pidl: 
+	* tao/PortableServer/PortableServer.pidl:
+	* tao/PortableServer/RTPortableServer.pidl:
 
 	  Updated documentation.
 
@@ -34,8 +74,8 @@ Fri Sep 29 01:41:05 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tao/PortableServer/PortableServer.pidl: Improved IDL code
 	  generation and patching information and comments.
 
-	* tao/PortableServer/TAO_PortableServer.dsp: 
-	* tao/PortableServer/Makefile: 
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	* tao/PortableServer/Makefile:
 
 	  Added RTPortableServerC.* files.
 
@@ -49,11 +89,11 @@ Fri Sep 29 01:41:05 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  RTPortableServer::POA or PortableServer::POA depending on
 	  TAO_HAS_RT_CORBA.
 
-	* tao/PortableServer/PortableServer.h: 
-	* tao/PortableServer/Object_Adapter.h: 
+	* tao/PortableServer/PortableServer.h:
+	* tao/PortableServer/Object_Adapter.h:
 
-	  #include "RTPortableServerC.h" instead of 
-	  #include "PortableServerC.h".  
+	  #include "RTPortableServerC.h" instead of
+	  #include "PortableServerC.h".
 
 	  RTPortableServerC.h includes PortableServerC.h.
 
@@ -72,8 +112,8 @@ Fri Sep 29 01:27:26 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
 
 	  Removed <init_tcp_properties> method and <tcp_properties_>
-	  member because we already inherit them from TAO_IIOP_Acceptor. 
-	
+	  member because we already inherit them from TAO_IIOP_Acceptor.
+
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp
@@ -81,7 +121,7 @@ Fri Sep 29 01:27:26 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	  Added support for client protocol properties configurations
 	  through RTCORBA::ClientProtocolPolicy.
-	
+
 Thu Sep 28 23:51:11 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/IIOP_Connect.cpp
@@ -100,16 +140,16 @@ Thu Sep 28 23:51:11 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* tao/ORB_Core.h:
 
 	  Added ORB default RTCORBA::ClientProtocolPolicy.
-	
+
 	* tao/Policy_Manager.cpp
 	* tao/Policy_Manager.h:
 
 	  Added <client_protocol> setter.
-	
+
 Thu Sep 28 20:34:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
-	   
+
 	  Put back a generated 'const' that was inadvertently removed.
 
 Thu Sep 28 17:47:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -119,7 +159,7 @@ Thu Sep 28 17:47:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp:
 
 	  Fixed generated code for more use cases of interceptors. The
-	  errors that prompted this fix were in FT_CORBA.idl and 
+	  errors that prompted this fix were in FT_CORBA.idl and
 	  reported by Aniruddha Gokhale <gokhale@research.bell-labs.com>.
 
 Thu Sep 28 14:35:32 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
@@ -127,12 +167,12 @@ Thu Sep 28 14:35:32 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	* orbsvcs/tests/Notify/performance_tests/RedGreen/Makefile:
 	* orbsvcs/tests/Notify/performance_tests/RedGreen/README:
 	* orbsvcs/tests/Notify/performance_tests/RedGreen/RedGreen_Test.cpp:
-	* orbsvcs/tests/Notify/performance_tests/RedGreen/RedGreen_Test.h: 
+	* orbsvcs/tests/Notify/performance_tests/RedGreen/RedGreen_Test.h:
 	* orbsvcs/tests/Notify/performance_tests/RedGreen/main.cpp:
 	* orbsvcs/tests/Notify/performance_tests/RedGreen/listener.conf:
 	* orbsvcs/tests/Notify/performance_tests/RedGreen/lookup.conf:
 	* orbsvcs/tests/Notify/performance_tests/RedGreen/reactive.conf:
-	* orbsvcs/tests/Notify/performance_tests/RedGreen/svc.conf: 
+	* orbsvcs/tests/Notify/performance_tests/RedGreen/svc.conf:
 	* orbsvcs/tests/Notify/performance_tests/Throughput/Makefile:
 	* orbsvcs/tests/Notify/performance_tests/Throughput/README:
 	* orbsvcs/tests/Notify/performance_tests/Throughput/Throughput.cpp:
@@ -186,7 +226,7 @@ Thu Sep 28 01:49:36 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* tao/iiop_endpoints.pidl
 	* tao/uiop_endpoints.pidl
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp	
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp
@@ -204,8 +244,8 @@ Wed Sep 27 18:54:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Added code generation for the const version of the
 	  [] operator for the sequence _var classes. According
 	  to H & V, page 212 and 214, both versions must be
-	  there for sequences. We were generating only the 
-	  non-const version. Thanks to Michael Rinne 
+	  there for sequences. We were generating only the
+	  non-const version. Thanks to Michael Rinne
 	  <Michael.Rinne@ZN-AG.de> for reporting this.
 
 Wed Sep 27 17:44:12 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>

@@ -10,7 +10,8 @@
 //
 // = DESCRIPTION
 //   This is a generic interface that would be used to override many
-//   of the default functionalities that the ORB provides.
+//   of the default functionalities that the ORB provides by the
+//   services if they have been loaded in to the ORB_Core
 //
 // = AUTHOR
 //   Bala Natarajan <bala@cs.wustl.edu>
@@ -19,14 +20,12 @@
 #define TAO_SERVICE_CALLBACK_H
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/IOPC.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-// Need to figure a way to remove this....
-//#include "tao/IOPC.h"
 
 class TAO_Profile;
 class TAO_MProfile;
@@ -44,6 +43,9 @@ class TAO_Export TAO_Service_Callbacks
 
 public:
 
+  virtual ~TAO_Service_Callbacks (void);
+  // Dtor
+
   virtual CORBA::Boolean select_profile (TAO_MProfile *mprofile,
                                          TAO_Profile *&pfile);
   // Select the profile from MProfile as the needs of the services
@@ -59,6 +61,18 @@ public:
 
   virtual CORBA::Boolean object_is_nil (CORBA::Object_ptr obj);
   // Check whether <obj> is nil or not.
+
+  virtual CORBA::Policy_ptr service_create_policy (
+      CORBA::PolicyType policy,
+      const CORBA::Any &val,
+      CORBA::Environment &ACE_TRY_ENV);
+  // Create a CORBA::Policy object
+
+  virtual void service_context_list (TAO_Stub *&stub,
+                                     IOP::ServiceContextList &service_list,
+                                     CORBA::Environment &ACE_TRY_ENV);
+  // Allow the services to add service specific service contexr
+  // information.
 };
 
 

@@ -284,6 +284,12 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
 #if (TAO_HAS_RT_CORBA == 1)
 
+  // @@ Marina: IMHO, the filling up of the service context list should
+  // be going in to the prepare_header () method. The prepare_header
+  // () should be calling the right messaging protocol loaded to set
+  // the IOP::ServiceContext. If you move it there, this place would
+  // be less crowded. - Bala
+  //
   // @@ RT CORBA Policies processing code.  This is a temporary location
   // for this code until more of it is accumulated.  It will likely be
   // factored into separate method(s)/split/moved to different
@@ -440,9 +446,15 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Then fill in the rest of the RequestHeader
-  //
-  // The target specification mode
 
+  // Fill up the service context lists
+  // First lookup at the services to see whether they have anything to
+  // add to the service context lists
+  this->orb_core_->service_context_list (this->stub_,
+                                         this->service_info (),
+                                         ACE_TRY_ENV);
+
+  // The target specification mode
   if (this->stub_->addressing_mode () ==
       TAO_Target_Specification::Key_Addr)
     {
@@ -471,7 +483,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   // Update the response flags
   this->op_details_.response_flags (response_flags);
 
-  //Send the request for the header
+  // Send the request for the header
   if (this->transport_->send_request_header (this->op_details_,
                                              this->target_spec_,
                                              this->out_stream_) == 0)
@@ -1011,6 +1023,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
       this->close_connection ();
 
+      // @@ BALA here is a place for FT REINVOCATION hooks
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (
           CORBA_SystemException::_tao_minor_code (
             TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
@@ -1261,7 +1274,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
         }
 
       this->close_connection ();
-
+      // @@ BALA here is a place for FT REINVOCATION hooks
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (
           CORBA_SystemException::_tao_minor_code (
             TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
@@ -1459,6 +1472,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       //    works? Or is that something that a higher level component
       //    should decide?  Remember that LocateRequests are part of
       //    the strategy to establish a connection.
+
+      // @@ BALA here is a place for FT REINVOCATION hooks
       ACE_THROW_RETURN (CORBA::TRANSIENT (
         CORBA_SystemException::_tao_minor_code (
           TAO_INVOCATION_SEND_REQUEST_MINOR_CODE,
@@ -1499,7 +1514,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
         }
 
       this->close_connection ();
-
+      // @@ BALA here is a place for FT REINVOCATION hooks
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE,
                                              CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);

@@ -132,7 +132,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
           if (curarg < argc)
             {
               char *name = argv[curarg];
-              
+
               if (ACE_OS::strcasecmp (name,
                                       "thread") == 0)
                 this->cached_connector_lock_type_ = TAO_THREAD_LOCK;
@@ -202,17 +202,34 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
   else
     {
       // = Leader follower model.
-      
+
       ACE_NEW_RETURN (ws,
                       TAO_Wait_On_Leader_Follower (transport),
                       0);
     }
-      
+
   return ws;
 }
 
 ACE_Lock *
 TAO_Default_Client_Strategy_Factory::create_cached_connector_lock (void)
+{
+  ACE_Lock *the_lock = 0;
+
+  if (this->cached_connector_lock_type_ == TAO_NULL_LOCK)
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>,
+                    0);
+  else
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<ACE_SYNCH_MUTEX>,
+                    0);
+
+  return the_lock;
+}
+
+ACE_Lock *
+TAO_Default_Client_Strategy_Factory::create_ft_service_retention_id_lock (void)
 {
   ACE_Lock *the_lock = 0;
 

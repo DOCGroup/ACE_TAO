@@ -58,6 +58,10 @@ public:
 
   virtual ACE_Lock *create_cached_connector_lock (void);
   // Create the lock to be used by the cached connector.
+
+  virtual ACE_Lock *create_ft_service_retention_id_lock (void);
+  // Create a lock to be used by the TAO_Fault_Tolerant_Service class
+  // to generate unique retention ids
 };
 
 #include "ace/post.h"
