@@ -2,8 +2,8 @@ Thu Oct 31 12:57:10 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (fstat): Added check for FILE_ATTRIBUTE_DIRECTORY on
 	  Win32 to set the file type in the st_mode so one can determine
-	  if it's a file or a directory.  Thanks to <pmarquis@pobox.com>
-	  for submitting the patch.
+	  if it's a file or a directory.  Thanks to Paul Marquis
+	  <pmarquis@pobox.com> for submitting the patch.
 
 Wed Oct 30 13:47:14 2002  Steve Huston  <shuston@riverace.com>
 
