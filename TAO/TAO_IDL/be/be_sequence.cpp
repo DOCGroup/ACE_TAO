@@ -111,8 +111,7 @@ be_sequence::gen_name (void)
                             0);
         }
 
-      // Some platforms define IDL sequences as template classes
-      // and some do not. If the nested sequence were defined in
+      // If the nested sequence were defined in
       // the scope of the enclosing sequence, we would have to
       // not only define the nested class in two places, but also
       // deal with the fact that, for the template classes, the

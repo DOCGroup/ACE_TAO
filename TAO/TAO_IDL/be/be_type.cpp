@@ -34,7 +34,8 @@ ACE_RCSID (be,
 
 be_type::be_type (void)
   : tc_name_ (0),
-    common_varout_gen_ (0)
+    common_varout_gen_ (I_FALSE),
+    seen_in_sequence_ (I_FALSE)
 {
 }
 
@@ -47,7 +48,8 @@ be_type::be_type (AST_Decl::NodeType nt,
     AST_Decl (nt,
               n),
     tc_name_ (0),
-    common_varout_gen_ (0)
+    common_varout_gen_ (I_FALSE),
+    seen_in_sequence_ (I_FALSE)
 {
   AST_Decl *parent = ScopeAsDecl (this->defined_in ());
   Identifier *segment = 0;
@@ -314,6 +316,18 @@ be_type::gen_common_tmplinst (TAO_OutStream *os)
     }
 
   os->gen_endif_AHETI ();
+}
+
+idl_bool
+be_type::seen_in_sequence (void) const
+{
+  return this->seen_in_sequence_;
+}
+
+void
+be_type::seen_in_sequence (idl_bool val)
+{
+  this->seen_in_sequence_ = val;
 }
 
 AST_Decl::NodeType

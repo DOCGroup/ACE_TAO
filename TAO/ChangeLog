@@ -1,3 +1,32 @@
+Tue Apr  1 000:37:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be_include/be_type.h:
+
+	  Moved managed type template class generation from the Any
+	  operator pass (which might be skipped if Any operator generation
+	  is suppressed, or generated needlessly if the type is not used
+	  in a sequence) to the sequence visitor.
+
+        * tao/Sequence_T.cpp:
+
+	  Fixed code in TAO_Abstract_Manager that doesn't work with
+	  forward declared abstract interfaces.
+
+        * tao/DynamicAny/DynamicAny.pidl:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+
+	  Regenerated hand-crafted DynamicAny.pidl files and changed comment
+	  at the top of the .pidl file to show added options to the IDL
+	  compiler command line to suppress Any operator and Typecode
+	  generation. Although these types contain a Typecode, they do
+	  not need Typecodes or Any operators of their own.
+
 Mon Mar 31 22:31:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
