@@ -1,20 +1,29 @@
+Wed Nov 20 15:23:13 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connection_Handler.cpp (close_connection_eh): Do not do
+	  comparisions checks for reactor pointers in TAO_Transport,
+	  TAO_ORB_Core and ACE_Event_handler when the ORB has already
+	  shutdown. The comparisons could be wrong since the thread that
+	  is closing it may not have the right access to all the resources
+	  opened up by other threads (read RTCORBA threads).
+	  
 Wed Nov 20 16:14:31 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs\Notify_Service\Notify_Service.cpp: Added
+	* orbsvcs/Notify_Service/Notify_Service.cpp: Added
 	  ../orbsvcs/Notify/Notify_Service.h so that the static
 	  initializer can run and add the service objects to the service
 	  repository.  Thanks to Bala for helping with this.
 
 Wed Nov 20 12:48:35 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs\tests\Notify\performance-tests\RedGreen\Makefile.bor:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile.bor:
 
 	  Fixed test name from RedGreen to RedGreen_Test.
 
-	* orbsvcs\tests\Notify\Structured_Filter/Structured_Filter_Consumer.dsp
-	* orbsvcs\tests\Notify\Structured_Filter/Structured_Filter_Supplier.dsp
-	* orbsvcs\tests\Notify\Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp
-	* orbsvcs\tests\Notify\Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.dsp
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp
 
 	  Fixed release executable name.
 	
