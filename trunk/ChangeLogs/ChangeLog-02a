@@ -1,3 +1,12 @@
+Sat Sep 29 08:07:07 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Configuration.{h,cpp}: Changed "allocator" to "alloc" to
+	  avoid bugs with MSVC++ 5.0.  Thanks to Munagala Ramanath
+ 	  <amberarrow@yahoo.com> for reporting this.
+
+	* ACE-INSTALL.html: Yet more improvements courtesy of Chris
+ 	  Kohloff.
+
 Fri Sep 28 23:38:07 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):

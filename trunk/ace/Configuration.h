@@ -473,7 +473,7 @@ public:
 
   /// Frees the name of the value.  needed since we don't know the
   /// allocator name_ was created in
-  void free (ACE_Allocator* allocator);
+  void free (ACE_Allocator *alloc);
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
@@ -531,7 +531,7 @@ public:
   ACE_Configuration_Value_IntId& operator= (
     const ACE_Configuration_Value_IntId& rhs);
 
-  void free (ACE_Allocator* allocator);
+  void free (ACE_Allocator *alloc);
 
   // = Data members.
 
@@ -587,7 +587,7 @@ public:
     const ACE_Configuration_Section_IntId& rhs);
 
   /// frees the hash table and all its values
-  void free (ACE_Allocator* allocator);
+  void free (ACE_Allocator *alloc);
 
   // = Data Members.
   VALUE_MAP* value_hash_map_;
