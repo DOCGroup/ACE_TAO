@@ -26,13 +26,16 @@ extern "C"
 }
 #endif /* ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
-TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value)
-  : value_ (value)
+TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value,
+                                      PortableServer::POA_ptr poa)
+  : value_ (value),
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
 TAO_Thread_Policy::TAO_Thread_Policy (const TAO_Thread_Policy &rhs)
-  : value_ (rhs.value_)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
 {
 }
 
@@ -64,19 +67,39 @@ TAO_Thread_Policy::copy (CORBA::Environment &env)
 void
 TAO_Thread_Policy::destroy (CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
+  // Remove self from POA
+  //
+  // Note that there is no real error checking here as we can't do
+  // much about errors here anyway
+  //
+  PortableServer::POA_var poa = this->_default_POA (env);
+  if (env.exception () == 0)
+    {
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
+      if (env.exception () == 0)
+        poa->deactivate_object (id.in (), env);
+    }
 
-  // Commit suicide:  must have been dynamically allocated
+  // Commit suicide: must have been dynamically allocated
   delete this;
 }
 
-TAO_Lifespan_Policy::TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue value)
-  : value_ (value)
+PortableServer::POA_ptr
+TAO_Thread_Policy::_default_POA (CORBA::Environment &env)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
+}
+
+TAO_Lifespan_Policy::TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue value,
+                                          PortableServer::POA_ptr poa)
+  : value_ (value),
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
 TAO_Lifespan_Policy::TAO_Lifespan_Policy (const TAO_Lifespan_Policy &rhs)
-  : value_ (rhs.value_)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
 {
 }
 
@@ -107,19 +130,39 @@ TAO_Lifespan_Policy::copy (CORBA::Environment &env)
 void
 TAO_Lifespan_Policy::destroy (CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
+  // Remove self from POA
+  //
+  // Note that there is no real error checking here as we can't do
+  // much about errors here anyway
+  //
+  PortableServer::POA_var poa = this->_default_POA (env);
+  if (env.exception () == 0)
+    {
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
+      if (env.exception () == 0)
+        poa->deactivate_object (id.in (), env);
+    }
 
   // Commit suicide: must have been dynamically allocated
   delete this;
 }
 
-TAO_Id_Uniqueness_Policy::TAO_Id_Uniqueness_Policy (PortableServer::IdUniquenessPolicyValue value)
-  : value_ (value)
+PortableServer::POA_ptr
+TAO_Lifespan_Policy::_default_POA (CORBA::Environment &env)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
+}
+
+TAO_Id_Uniqueness_Policy::TAO_Id_Uniqueness_Policy (PortableServer::IdUniquenessPolicyValue value,
+                                                    PortableServer::POA_ptr poa)
+  : value_ (value),
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
 TAO_Id_Uniqueness_Policy::TAO_Id_Uniqueness_Policy (const TAO_Id_Uniqueness_Policy &rhs)
-  : value_ (rhs.value_)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
 {
 }
 
@@ -150,19 +193,39 @@ TAO_Id_Uniqueness_Policy::copy (CORBA::Environment &env)
 void
 TAO_Id_Uniqueness_Policy::destroy (CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
+  // Remove self from POA
+  //
+  // Note that there is no real error checking here as we can't do
+  // much about errors here anyway
+  //
+  PortableServer::POA_var poa = this->_default_POA (env);
+  if (env.exception () == 0)
+    {
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
+      if (env.exception () == 0)
+        poa->deactivate_object (id.in (), env);
+    }
 
   // Commit suicide: must have been dynamically allocated
   delete this;
 }
 
-TAO_Id_Assignment_Policy::TAO_Id_Assignment_Policy (PortableServer::IdAssignmentPolicyValue value)
-  : value_ (value)
+PortableServer::POA_ptr
+TAO_Id_Uniqueness_Policy::_default_POA (CORBA::Environment &env)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
+}
+
+TAO_Id_Assignment_Policy::TAO_Id_Assignment_Policy (PortableServer::IdAssignmentPolicyValue value,
+                                                    PortableServer::POA_ptr poa)
+  : value_ (value),
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
 TAO_Id_Assignment_Policy::TAO_Id_Assignment_Policy (const TAO_Id_Assignment_Policy &rhs)
-  : value_ (rhs.value_)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
 {
 }
 
@@ -193,19 +256,39 @@ TAO_Id_Assignment_Policy::copy (CORBA::Environment &env)
 void
 TAO_Id_Assignment_Policy::destroy (CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
+  // Remove self from POA
+  //
+  // Note that there is no real error checking here as we can't do
+  // much about errors here anyway
+  //
+  PortableServer::POA_var poa = this->_default_POA (env);
+  if (env.exception () == 0)
+    {
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
+      if (env.exception () == 0)
+        poa->deactivate_object (id.in (), env);
+    }
 
   // Commit suicide: must have been dynamically allocated
   delete this;
 }
 
-TAO_Implicit_Activation_Policy::TAO_Implicit_Activation_Policy (PortableServer::ImplicitActivationPolicyValue value)
-  : value_ (value)
+PortableServer::POA_ptr
+TAO_Id_Assignment_Policy::_default_POA (CORBA::Environment &env)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
+}
+
+TAO_Implicit_Activation_Policy::TAO_Implicit_Activation_Policy (PortableServer::ImplicitActivationPolicyValue value,
+                                                                PortableServer::POA_ptr poa)
+  : value_ (value),
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
 TAO_Implicit_Activation_Policy::TAO_Implicit_Activation_Policy (const TAO_Implicit_Activation_Policy &rhs)
-  : value_ (rhs.value_)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
 {
 }
 
@@ -236,19 +319,39 @@ TAO_Implicit_Activation_Policy::copy (CORBA::Environment &env)
 void
 TAO_Implicit_Activation_Policy::destroy (CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
+  // Remove self from POA
+  //
+  // Note that there is no real error checking here as we can't do
+  // much about errors here anyway
+  //
+  PortableServer::POA_var poa = this->_default_POA (env);
+  if (env.exception () == 0)
+    {
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
+      if (env.exception () == 0)
+        poa->deactivate_object (id.in (), env);
+    }
 
   // Commit suicide: must have been dynamically allocated
   delete this;
 }
 
-TAO_Servant_Retention_Policy::TAO_Servant_Retention_Policy (PortableServer::ServantRetentionPolicyValue value)
-  : value_ (value)
+PortableServer::POA_ptr
+TAO_Implicit_Activation_Policy::_default_POA (CORBA::Environment &env)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
+}
+
+TAO_Servant_Retention_Policy::TAO_Servant_Retention_Policy (PortableServer::ServantRetentionPolicyValue value,
+                                                            PortableServer::POA_ptr poa)
+  : value_ (value),
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
 TAO_Servant_Retention_Policy::TAO_Servant_Retention_Policy (const TAO_Servant_Retention_Policy &rhs)
-  : value_ (rhs.value_)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
 {
 }
 
@@ -279,19 +382,39 @@ TAO_Servant_Retention_Policy::copy (CORBA::Environment &env)
 void
 TAO_Servant_Retention_Policy::destroy (CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
+  // Remove self from POA
+  //
+  // Note that there is no real error checking here as we can't do
+  // much about errors here anyway
+  //
+  PortableServer::POA_var poa = this->_default_POA (env);
+  if (env.exception () == 0)
+    {
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
+      if (env.exception () == 0)
+        poa->deactivate_object (id.in (), env);
+    }
 
   // Commit suicide: must have been dynamically allocated
   delete this;
 }
 
-TAO_Request_Processing_Policy::TAO_Request_Processing_Policy (PortableServer::RequestProcessingPolicyValue value)
-  : value_ (value)
+PortableServer::POA_ptr
+TAO_Servant_Retention_Policy::_default_POA (CORBA::Environment &env)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
+}
+
+TAO_Request_Processing_Policy::TAO_Request_Processing_Policy (PortableServer::RequestProcessingPolicyValue value,
+                                                              PortableServer::POA_ptr poa)
+  : value_ (value),
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
 TAO_Request_Processing_Policy::TAO_Request_Processing_Policy (const TAO_Request_Processing_Policy &rhs)
-  : value_ (rhs.value_)
+  : value_ (rhs.value_),
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
 {
 }
 
@@ -322,10 +445,27 @@ TAO_Request_Processing_Policy::copy (CORBA::Environment &env)
 void
 TAO_Request_Processing_Policy::destroy (CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
+  // Remove self from POA
+  //
+  // Note that there is no real error checking here as we can't do
+  // much about errors here anyway
+  //
+  PortableServer::POA_var poa = this->_default_POA (env);
+  if (env.exception () == 0)
+    {
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
+      if (env.exception () == 0)
+        poa->deactivate_object (id.in (), env);
+    }
 
   // Commit suicide: must have been dynamically allocated
   delete this;
+}
+
+PortableServer::POA_ptr
+TAO_Request_Processing_Policy::_default_POA (CORBA::Environment &env)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 TAO_POA_Policies::TAO_POA_Policies (void)
@@ -2841,7 +2981,12 @@ PortableServer::ThreadPolicy_ptr
 TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value,
                                CORBA::Environment &env)
 {
-  auto_ptr<TAO_Thread_Policy> new_policy (new TAO_Thread_Policy (value));
+  PortableServer::POA_var self = this->_this (env);
+  // Check for exceptions
+  if (env.exception () != 0)
+    return PortableServer::ThreadPolicy::_nil ();
+
+  auto_ptr<TAO_Thread_Policy> new_policy (new TAO_Thread_Policy (value, self.in ()));
   PortableServer::ThreadPolicy_var result = new_policy->_this (env);
   if (env.exception () != 0)
     return PortableServer::ThreadPolicy::_nil ();
@@ -2858,7 +3003,12 @@ PortableServer::LifespanPolicy_ptr
 TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value,
                                  CORBA::Environment &env)
 {
-  auto_ptr<TAO_Lifespan_Policy> new_policy (new TAO_Lifespan_Policy (value));
+  PortableServer::POA_var self = this->_this (env);
+  // Check for exceptions
+  if (env.exception () != 0)
+    return PortableServer::LifespanPolicy::_nil ();
+
+  auto_ptr<TAO_Lifespan_Policy> new_policy (new TAO_Lifespan_Policy (value, self.in ()));
   PortableServer::LifespanPolicy_var result = new_policy->_this (env);
   if (env.exception () != 0)
     return PortableServer::LifespanPolicy::_nil ();
@@ -2875,7 +3025,12 @@ PortableServer::IdUniquenessPolicy_ptr
 TAO_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value,
                                       CORBA::Environment &env)
 {
-  auto_ptr<TAO_Id_Uniqueness_Policy> new_policy (new TAO_Id_Uniqueness_Policy (value));
+  PortableServer::POA_var self = this->_this (env);
+  // Check for exceptions
+  if (env.exception () != 0)
+    return PortableServer::IdUniquenessPolicy::_nil ();
+
+  auto_ptr<TAO_Id_Uniqueness_Policy> new_policy (new TAO_Id_Uniqueness_Policy (value, self.in ()));
   PortableServer::IdUniquenessPolicy_var result = new_policy->_this (env);
   if (env.exception () != 0)
     return PortableServer::IdUniquenessPolicy::_nil ();
@@ -2892,7 +3047,12 @@ PortableServer::IdAssignmentPolicy_ptr
 TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value,
                                       CORBA::Environment &env)
 {
-  auto_ptr<TAO_Id_Assignment_Policy> new_policy (new TAO_Id_Assignment_Policy (value));
+  PortableServer::POA_var self = this->_this (env);
+  // Check for exceptions
+  if (env.exception () != 0)
+    return PortableServer::IdAssignmentPolicy::_nil ();
+
+  auto_ptr<TAO_Id_Assignment_Policy> new_policy (new TAO_Id_Assignment_Policy (value, self.in ()));
   PortableServer::IdAssignmentPolicy_var result = new_policy->_this (env);
   if (env.exception () != 0)
     return PortableServer::IdAssignmentPolicy::_nil ();
@@ -2909,7 +3069,12 @@ PortableServer::ImplicitActivationPolicy_ptr
 TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,
                                             CORBA::Environment &env)
 {
-  auto_ptr<TAO_Implicit_Activation_Policy> new_policy (new TAO_Implicit_Activation_Policy (value));
+  PortableServer::POA_var self = this->_this (env);
+  // Check for exceptions
+  if (env.exception () != 0)
+    return PortableServer::ImplicitActivationPolicy::_nil ();
+
+  auto_ptr<TAO_Implicit_Activation_Policy> new_policy (new TAO_Implicit_Activation_Policy (value, self.in ()));
   PortableServer::ImplicitActivationPolicy_var result = new_policy->_this (env);
   if (env.exception () != 0)
     return PortableServer::ImplicitActivationPolicy::_nil ();
@@ -2926,7 +3091,12 @@ PortableServer::ServantRetentionPolicy_ptr
 TAO_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value,
                                           CORBA::Environment &env)
 {
-  auto_ptr<TAO_Servant_Retention_Policy> new_policy (new TAO_Servant_Retention_Policy (value));
+  PortableServer::POA_var self = this->_this (env);
+  // Check for exceptions
+  if (env.exception () != 0)
+    return PortableServer::ServantRetentionPolicy::_nil ();
+
+  auto_ptr<TAO_Servant_Retention_Policy> new_policy (new TAO_Servant_Retention_Policy (value, self.in ()));
   PortableServer::ServantRetentionPolicy_var result = new_policy->_this (env);
   if (env.exception () != 0)
     return PortableServer::ServantRetentionPolicy::_nil ();
@@ -2943,7 +3113,12 @@ PortableServer::RequestProcessingPolicy_ptr
 TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,
                                            CORBA::Environment &env)
 {
-  auto_ptr<TAO_Request_Processing_Policy> new_policy (new TAO_Request_Processing_Policy (value));
+  PortableServer::POA_var self = this->_this (env);
+  // Check for exceptions
+  if (env.exception () != 0)
+    return PortableServer::RequestProcessingPolicy::_nil ();
+
+  auto_ptr<TAO_Request_Processing_Policy> new_policy (new TAO_Request_Processing_Policy (value, self.in ()));
   PortableServer::RequestProcessingPolicy_var result = new_policy->_this (env);
   if (env.exception () != 0)
     return PortableServer::RequestProcessingPolicy::_nil ();

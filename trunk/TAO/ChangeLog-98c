@@ -1,3 +1,22 @@
+Wed Mar 11 12:54:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Explicit_Activation/server.cpp (main): The server was
+ 	  changed to test how the POA handles a user given ID which does
+ 	  not contain printable characters.
+
+	* tao/poa (Policies and Currents): Since Policies and Currents do
+ 	  not have locality constraints, they now inherit from regular
+ 	  servants rather than local servants.  This change causes them to
+ 	  register with POAs when their _this() method is invoked.
+  	  Therefore, the destroy() methods on the Policies was changed to
+ 	  make sure that the Policies are deactivated from the POA they
+ 	  were registered with.
+
+	* tao/sequence_T.cpp (operator=): The semantics of the elements of
+ 	  a sequence are the same as that of a var variable.  Therefore we
+ 	  will not duplicate the user provided pointer before assigning it
+ 	  to the internal variable.  However, we will release it.
+
 Tue Mar 10 16:09:56 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/cdr.{h,cpp}: Added a get_string and put_string method for

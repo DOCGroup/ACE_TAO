@@ -28,7 +28,7 @@ main (int argc, char **argv)
 
   // Initialize the ORB first.
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
-//       
+
   if (env.exception () != 0)
     {
       env.print_exception ("CORBA::ORB_init");
@@ -41,7 +41,7 @@ main (int argc, char **argv)
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (obj.in (), env);
-//       
+
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
@@ -154,8 +154,17 @@ main (int argc, char **argv)
   //   Object create_reference_with_id (in ObjectId oid, in CORBA::RepositoryId intf );
   // This operation creates an object reference that encapsulates the
   // specified Object Id and interface repository Id values.
+  /* 
   PortableServer::ObjectId_var third_oid =
     PortableServer::string_to_ObjectId ("thirdFoo");
+  */
+
+  // This will test how the POA handles a user given ID
+  PortableServer::ObjectId_var third_oid = 
+    PortableServer::string_to_ObjectId ("third Foo");
+
+  third_oid[5] = (CORBA::Octet) '\0';
+
   CORBA::Object_var third_foo =
     first_poa->create_reference_with_id (third_oid.in (),
                                          "IDL:Foo:1.0", env);

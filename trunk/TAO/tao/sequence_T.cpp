@@ -202,11 +202,12 @@ TAO_Object_Manager<T>::operator=(T* p)
 {
   if (this->release_)
     {
-      // Only release after increasing refcount, otherwise it can fail
-      // for assignment on the same object.
-      T* tmp = *this->ptr_;
-      *this->ptr_ = T::_duplicate (p);
-      CORBA::release (tmp);
+      // The semantics of the elements of a sequence are the same as
+      // that of a var variable.  Therefore we will not duplicate the
+      // user provided pointer before assigning it to the internal
+      // variable.  However, we will release it.
+      CORBA::release (*this->ptr_);
+      *this->ptr_ = p;
     }
   else
     {
