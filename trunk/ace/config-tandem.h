@@ -200,8 +200,6 @@
 //ACE_HAS_PTHREADS                      Platform supports POSIX Pthreads
 //ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP   Platform has pthread_condattr_
 // setkind_np().
-//ACE_HAS_PTHREAD_DSTATE_PTR            pthread_attr_setdetachstate() takes
-// pointer to 2nd arg.
 //ACE_HAS_PTHREAD_EQUAL                 Platform has pthread_equal().
 //ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR   pthread_getspecific() takes a data
 // pointer for 2nd arg.
