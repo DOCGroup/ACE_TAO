@@ -1,3 +1,9 @@
+Sat May 24 01:53:22 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* performance-tests/Misc/test_naming.cpp (do_testing): Thanks to
+	  Sandro Doro, squashed a bug where we were trying to concatenate
+	  onto a string constant.
+
 Fri May 23 21:27:05 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Process.{h,cpp} (env_argv): added "const" to char * type in
