@@ -292,6 +292,12 @@ if (defined $opt_d) {
 
 record_resources () if (!defined $opt_d);
 
+if ($OSNAME eq "MSWin32") {
+    $ENV{'PATH'} .= ';'.$PerlACE::Process::ExeSubDir;
+} else {
+    $ENV{'PATH'} .= ':'.$PerlACE::Process::ExeSubDir;
+}
+
 foreach $test (@tests) {
     if (defined $opt_d) {
         print "Would run test $test now\n";

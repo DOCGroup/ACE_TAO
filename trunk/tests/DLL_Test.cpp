@@ -23,27 +23,17 @@
 
 ACE_RCSID(tests, DLL_Test, "$Id$")
 
-#if defined (ACE_WIN32) && defined (_DEBUG)
+#if defined (ACE_WIN32) && defined (_MSC_VER) && defined (_DEBUG)
 # define OBJ_SUFFIX ACE_TEXT ("d") ACE_DLL_SUFFIX
-#else /* ACE_WIN32 && _DEBUG */
+#else /* ACE_WIN32 && _MSC_VER && _DEBUG */
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
-#endif /* ACE_WIN32 && _DEBUG */
+#endif /* ACE_WIN32 && && _MSC_VER && _DEBUG */
 
-#define OBJ_PREFIX ACE_TEXT ("./") ACE_DLL_PREFIX
-
-ACE_TCHAR const *
-cdecl_decoration (ACE_TCHAR const *func_name)
-{
-#if defined (__BORLANDC__)
-  static ACE_TCHAR decorated_func_name[10*1024];
-  ACE_OS::sprintf (decorated_func_name,
-                   ACE_TEXT ("_%s"),
-                   func_name);
-  return decorated_func_name;
+#if defined (ACE_WIN32)
+#  define OBJ_PREFIX ACE_DLL_PREFIX
 #else
-  return func_name;
-#endif /* __BORLANDC__ */
-}
+#  define OBJ_PREFIX ACE_TEXT("./") ACE_DLL_PREFIX
+#endif /* ACE_WIN32 */
 
 // Declare the type of the symbol:
 typedef Hello *(*Hello_Factory)(void);
@@ -83,8 +73,9 @@ main (int, ACE_TCHAR *[])
   // TC f = (Hello_Factory) dll.symbol ("get_hello");
   void *foo;
 
-  ACE_TCHAR const *cdecl_str = cdecl_decoration (ACE_TEXT ("get_hello"));
+  ACE_TCHAR *cdecl_str = ACE::ldname (ACE_TEXT ("get_hello"));
   foo = dll.symbol (cdecl_str);
+  delete[] cdecl_str;
 
   // Cast the void* to long first.
   long tmp = ACE_reinterpret_cast (long, foo);
