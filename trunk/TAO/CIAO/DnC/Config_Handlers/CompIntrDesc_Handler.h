@@ -1,4 +1,12 @@
-// $Id$
+//==================================================================
+/**
+ *  @file  CompIntrDesc_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Emre Turkay  <turkaye@dre.vanderbilt.edu>
+ */
+//=====================================================================
 
 #ifndef COMPINTRDESC_HANDLER_H
 #define COMPINTRDESC_HANDLER_H
