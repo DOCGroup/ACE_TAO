@@ -1,6 +1,14 @@
+Thu Oct 17 17:32:39 2002  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * ACEXML/examples/svcconf/Svcconf_Handler.cpp:
+        * ACEXML/examples/svcconf/Svcconf_Handler.h:
+        * ACEXML/examples/svcconf/main.cpp:
+
+          Fixed compilation errors under Windows.
+
 Thu Oct 17 19:18:02 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/config-macosx.h: 
+	* ace/config-macosx.h:
 	   - Remove define of __MACOSX__, and use constant __APPLE__
 	     instead defined by Apple's gcc.
 	   - Removed definitions:

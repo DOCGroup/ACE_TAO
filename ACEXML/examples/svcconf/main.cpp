@@ -68,7 +68,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   ACEXML_CATCH (ACEXML_SAXException, ex)
     {
-      ex->print ();
+      ex.print ();
       return -1;
   }
   ACEXML_ENDTRY;
