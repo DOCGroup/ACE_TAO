@@ -539,6 +539,7 @@ if (open(IN, $ARGV[0])) {
           last;
         }
       }
+      unshift(@lines, "// \$Id\$\n\n");
     }
     print OUT @lines;
     close(OUT);
