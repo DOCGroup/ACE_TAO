@@ -121,7 +121,7 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
       << full_class_name << "::allocbuf (CORBA::ULong nelems)" << be_nl
       << "{" << be_idt_nl;
   pt->accept(visitor); 
-  *os <<" **buf;" << be_nl
+  *os <<" **buf = 0;" << be_nl
       << be_nl
       << "ACE_NEW_RETURN (buf, "; 
   pt->accept (visitor); 
