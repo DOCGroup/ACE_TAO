@@ -28,10 +28,10 @@ else
             $DIR_SEPARATOR."tao_imr".$EXE_EXT;
 }
 
-$airplane_server = $EXEPREFIX."airplane_server".$EXE_EXT;
-$airplane_client = $EXEPREFIX."airplane_client".$EXE_EXT;
-$nestea_server = $EXEPREFIX."nestea_server".$EXE_EXT;
-$nestea_client = $EXEPREFIX."nestea_client".$EXE_EXT;
+$airplane_server = $EXEPREFIX."airplane_server".$EXE_EXT." ";
+$airplane_client = $EXEPREFIX."airplane_client".$EXE_EXT." ";
+$nestea_server = $EXEPREFIX."nestea_server".$EXE_EXT." ";
+$nestea_client = $EXEPREFIX."nestea_client".$EXE_EXT." ";
 
 # Make sure the files are gone, so we can wait on them.
 unlink $airplane_ior;
@@ -47,7 +47,7 @@ sub airplane_test
 
   ACE::waitforfile ($airplane_ior);
 
-  $status = system ($airplane_client."-k file://$airplane_ior");
+  $status = system ($airplane_client." -k file://$airplane_ior");
 
   $SV->Kill (); $SV->Wait ();
 }
