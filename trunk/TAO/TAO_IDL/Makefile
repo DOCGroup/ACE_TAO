@@ -175,12 +175,6 @@ else  # ! CROSS-COMPILE
 
   ifeq ($(findstring g++,$(CXX)),g++)
     CCFLAGS += -Wno-switch
-  else
-  ifeq ($(findstring gcx,$(CXX)),gcx)
-    # GreenHills gcx, to suppress many warnings about TAO_YY_BREAK
-    # statements being unreachable.
-    CCFLAGS += -w
-  endif # gcx
   endif # g++
 
   CPPFLAGS += -Iinclude -Ibe_include -Ife \
