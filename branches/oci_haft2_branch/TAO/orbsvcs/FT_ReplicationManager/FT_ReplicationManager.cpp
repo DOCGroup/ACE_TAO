@@ -32,6 +32,38 @@ ACE_RCSID (FT_ReplicationManager,
            FT_ReplicationManager,
            "$Id$")
 
+
+// Use this macro at the beginning of CORBA methods
+// to aid in debugging.
+#define METHOD_ENTRY(name)    \
+  if (TAO_debug_level > 6)    \
+  {                           \
+    ACE_DEBUG (( LM_DEBUG,    \
+    "Enter %s\n", #name       \
+      ));                     \
+  }
+
+// Use this macro to return from CORBA methods
+// to aid in debugging.  Note that you can specify
+// the return value after the macro, for example:
+// METHOD_RETURN(Plugh::plover) xyzzy; is equivalent
+// to return xyzzy;
+// METHOD_RETURN(Plugh::troll); is equivalent to
+// return;
+// WARNING: THIS GENERATES TWO STATEMENTS!!! THE FOLLOWING
+// will not do what you want it to:
+//  if (cave_is_closing) METHOD_RETURN(Plugh::pirate) aarrggh;
+// Moral:  Always use braces.
+#define METHOD_RETURN(name)   \
+  if (TAO_debug_level > 6)    \
+  {                           \
+    ACE_DEBUG (( LM_DEBUG,    \
+      "Leave %s\n", #name     \
+      ));                     \
+  }                           \
+  return /* value goes here */
+
+
 TAO::FT_ReplicationManager::FT_ReplicationManager ()
   : orb_ (CORBA::ORB::_nil ())
   , poa_ (PortableServer::POA::_nil ())
@@ -673,6 +705,7 @@ TAO::FT_ReplicationManager::add_member (
                    PortableGroup::MemberAlreadyPresent,
                    PortableGroup::ObjectNotAdded))
 {
+  METHOD_ENTRY (TAO::FT_ReplicationManager::add_member);
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
 
   // Find the object group corresponding to this IOGR
@@ -698,7 +731,9 @@ TAO::FT_ReplicationManager::add_member (
       member
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
     result = group->reference ();
+
   }
   else
   {
@@ -710,7 +745,7 @@ TAO::FT_ReplicationManager::add_member (
     }
     ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result);
   }
-  return result._retn ();
+  METHOD_RETURN (TAO::FT_ReplicationManager::add_member) result._retn ();
 
 }
 
@@ -843,6 +878,8 @@ TAO::FT_ReplicationManager::create_object (
                    PortableGroup::InvalidProperty,
                    PortableGroup::CannotMeetCriteria))
 {
+  METHOD_ENTRY (TAO::FT_ReplicationManager::create_object)
+
   // Start with the LB-oriented create_object
   // which actually creates an object group
   CORBA::Object_var obj = this->generic_factory_.create_object (
@@ -891,8 +928,7 @@ TAO::FT_ReplicationManager::create_object (
 
   }
 
-
-  return obj._retn ();
+  METHOD_RETURN (TAO::FT_ReplicationManager::create_object) obj._retn ();
 }
 
 void
@@ -909,6 +945,3 @@ TAO::FT_ReplicationManager::delete_object (
   int todo;
   ACE_CHECK;
 }
-
-
-

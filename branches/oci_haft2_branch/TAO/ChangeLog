@@ -1,3 +1,37 @@
+Tue Nov 25 17:40:01 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+          Add METHO_ENTRY/METHOD_RETURN to help debug Object_Group problem.
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+          Support -r meaning don't register with ReplicationManager.
+
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+          Check TAO_debug_level on error messages.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+          Build errors on linux.
+          Object reference count mismanagement.
+          Add TAO_debug_level controlled debug info.
+
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+          Remove unnecessary messages.
+
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+          Improve messages.  Remove some unneeded ones.
+
+        * orbsvcs/tests/FT_App/run_test_notifier.pl:
+        * orbsvcs/tests/FT_App/run_test_rmregistry.pl:
+          Update command line options to reflect recent changes.
+
+        * orbsvcs/tests/FT_App/README:
+          Document test scripts.
+
+        * orbsvcs/tests/FT_App/run_test_iogr.pl:
+        * orbsvcs/tests/FT_App/run_test_replication_mgr.pl:
+          Retire these tests.
+          Removed these files.
+
 Tue Nov 25 12:10:24 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:

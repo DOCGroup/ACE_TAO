@@ -77,12 +77,11 @@ Unit Tests based on this application:
     implementation in the ReplicationManager.
 
 
-// todo: DOCUMENT AND TEST THESE
+  run_test_rmnotifier.pl
+    uses ft_client, ft_replica, Fault_Detector to test the connection between
+    the Fault_Notifier and the ReplicationManager
 
-[]run_test_replication_mgr.pl
-[]run_test_rmnotifier.pl
-
-[]  demo.pl
+  demo.pl
      tests the entire FT system.
 
 

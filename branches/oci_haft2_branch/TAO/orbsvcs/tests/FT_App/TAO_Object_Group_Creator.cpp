@@ -23,9 +23,9 @@
 
 
 TAO::Object_Group_Creator::Object_Group_Creator ()
-  : registry_(0)
-  , replication_manager_(0)
-  , have_replication_manager_(0)
+  : registry_ (0)
+  , replication_manager_ (0)
+  , have_replication_manager_ (0)
   , detector_infos_ (0)
 {
 }
@@ -37,14 +37,14 @@ TAO::Object_Group_Creator::~Object_Group_Creator ()
 int TAO::Object_Group_Creator::set_factory_registry (PortableGroup::FactoryRegistry_ptr factory)
 {
   this->registry_ = PortableGroup::FactoryRegistry::_duplicate (factory);
-  return CORBA::is_nil (this->registry_.in()) ? -1 : 0 ;
+  return CORBA::is_nil (this->registry_.in ()) ? -1 : 0 ;
 }
 
 
 int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   int result = 0;
-  this->orb_ = CORBA::ORB::_duplicate(orb);
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 
   if (CORBA::is_nil (this->registry_))
   {
@@ -52,44 +52,43 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     // Find the ReplicationManager
     ACE_TRY_NEW_ENV
     {
-      CORBA::Object_var rm_obj = orb->resolve_initial_references("ReplicationManager" ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var rm_obj = orb->resolve_initial_references ("ReplicationManager" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->replication_manager_ = ::FT::ReplicationManager::_narrow(rm_obj.in() ACE_ENV_ARG_PARAMETER);
+      this->replication_manager_ = ::FT::ReplicationManager::_narrow (rm_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (!CORBA::is_nil (this->replication_manager_))
       {
         this->have_replication_manager_ = 1;
         // empty criteria
         ::PortableGroup::Criteria criteria;
-        this->registry_ = this->replication_manager_->get_factory_registry(criteria  ACE_ENV_ARG_PARAMETER);
+        this->registry_ = this->replication_manager_->get_factory_registry (criteria  ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
         if (!CORBA::is_nil (this->registry_))
         {
-          this->detector_infos_ = this->registry_->list_factories_by_role (FT::FAULT_DETECTOR_ROLE_NAME, this->detector_type_id_.out()
+          this->detector_infos_ = this->registry_->list_factories_by_role (FT::FAULT_DETECTOR_ROLE_NAME, this->detector_type_id_.out ()
               ACE_ENV_ARG_PARAMETER)
           ACE_TRY_CHECK;
-          CORBA::ULong count = this->detector_infos_->length();
-          ACE_DEBUG ((LM_DEBUG,
+          CORBA::ULong count = this->detector_infos_->length ();
+          ACE_DEBUG ( (LM_DEBUG,
             "%T %n (%P|%t)Object_Group_Creator: found %u factories for FaultDetectors\n",
              ACE_static_cast (unsigned, count)
              ));
-          result = 0;
         }
         else
         {
-          ACE_ERROR ((LM_ERROR,
+          ACE_ERROR ( (LM_ERROR,
             "%T %n (%P|%t) Object_Group_Creator: ReplicationManager failed to return FactoryRegistry.\n"
             ));
-          ACE_TRY_THROW (CORBA::NO_IMPLEMENT());
+          ACE_TRY_THROW (CORBA::NO_IMPLEMENT ());
         }
       }
       else
       {
-        ACE_ERROR ((LM_ERROR,
+        ACE_ERROR ( (LM_ERROR,
           "%T %n (%P|%t) Object_Group_Creator: resolve_initial_references for ReplicationManager failed.\n"
           ));
-        ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST());
+        ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST ());
       }
     }
     ACE_CATCHANY
@@ -105,10 +104,10 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   return result;
 }
 
-int TAO::Object_Group_Creator::unregister_role(const char * role ACE_ENV_ARG_DECL)
+int TAO::Object_Group_Creator::unregister_role (const char * role ACE_ENV_ARG_DECL)
 {
   int result = 0;
-  ACE_ERROR ((LM_INFO,
+  ACE_ERROR ( (LM_INFO,
     "%T %n (%P|%t) Object_Group_Creator: Unregistering all factories for %s\n",
     role
     ));
@@ -131,7 +130,7 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
 
   if (this->have_replication_manager_)
   {
-    CORBA::ULong detector_count = this->detector_infos_->length();
+    CORBA::ULong detector_count = this->detector_infos_->length ();
     for (CORBA::ULong n_detector = 0; result == 0 && n_detector < detector_count; ++n_detector)
     {
       PortableGroup::FactoryInfo & info = (*this->detector_infos_)[n_detector];
@@ -140,15 +139,6 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
         TAO_PG::Properties_Encoder encoder;
 
         PortableGroup::Value value;
-
-/*
-      //////////////////
-      // FaultDetectorFactory gets picky about FaultNotifier's object type.
-      // coddle it.
-      ::FT::FaultNotifier_var notifier = ::FT::FaultNotifier::_narrow(this_obj);
-      value <<= notifier;
-      encoder.add(::FT::FT_NOTIFIER, value);
-*/
 
         FT::PullMonitorable_ptr monitorable = FT::PullMonitorable::_narrow (replica);
         value <<= monitorable;
@@ -174,21 +164,21 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
         PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
           PortableGroup::Criteria);
-        if (criteria.ptr() == 0)
+        if (criteria.ptr () == 0)
         {
-          ACE_ERROR((LM_ERROR,
+          ACE_ERROR ( (LM_ERROR,
             "%T %n (%P|%t)Object_Group_Creater: Error cannot allocate criteria.\n"
             ));
             result = -1;
         }
         else
         {
-          encoder.encode(criteria);
+          encoder.encode (criteria);
           PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
 
           info.the_factory->create_object (
             type_id,
-            criteria.in(),
+            criteria.in (),
             factory_creation_id
             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -200,27 +190,26 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
   return result;
 }
 
-CORBA::Object_ptr TAO::Object_Group_Creator::create_group(
+CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
     const char * role,
     int write_iors
     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException ))
+  ACE_THROW_SPEC ( (CORBA::SystemException ))
 {
-  int result = 0;
-  CORBA::Object_var group;
+  CORBA::Object_var group = CORBA::Object::_nil ();
 
   PortableGroup::ObjectGroupId group_id = 0;
   CORBA::String_var type_id;
   ::PortableGroup::FactoryInfos_var infos = this->registry_->list_factories_by_role (role, type_id
       ACE_ENV_ARG_PARAMETER)
-  ACE_CHECK_RETURN (CORBA::Object::_nil());
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  CORBA::ULong count = infos->length();
-  ACE_ERROR ((LM_INFO,
+  CORBA::ULong count = infos->length ();
+  ACE_ERROR ( (LM_INFO,
     "%T %n (%P|%t): Object_Group_Creator: found %u factories for %s : %s\n",
     ACE_static_cast (unsigned, count),
     role,
-    ACE_static_cast(const char *, type_id)
+    ACE_static_cast (const char *, type_id)
     ));
 
   if (count > 0)
@@ -230,19 +219,19 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group(
     ::PortableGroup::GenericFactory::FactoryCreationId_var creation_id;
     if (this->have_replication_manager_)
     {
-      PortableGroup::Criteria criteria(1);
-      criteria.length(1);
-      criteria[0].nam.length(1);
+      PortableGroup::Criteria criteria (1);
+      criteria.length (1);
+      criteria[0].nam.length (1);
       criteria[0].nam[0].id = PortableGroup::PG_MEMBERSHIP_STYLE;
       criteria[0].val <<= PortableGroup::MEMB_APP_CTRL;
 
-      group = this->replication_manager_->create_object(
-        type_id.in(),
+      group = this->replication_manager_->create_object (
+        type_id.in (),
         criteria,
         creation_id
         ACE_ENV_ARG_PARAMETER
         );
-      ACE_CHECK_RETURN (CORBA::Object::_nil());
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       //@@ this is a bit of a hack
       creation_id >>= group_id;
@@ -256,7 +245,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group(
       ::PortableGroup::FactoryInfo & info = infos[nFact];
 
       const char * loc_name = info.the_location[0].id;
-      ACE_ERROR ((LM_INFO,
+      ACE_ERROR ( (LM_INFO,
         "%T %n (%P|%t) Object_Group_Creator: Creating %s@%s\n",
         role,
         loc_name
@@ -264,28 +253,30 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group(
 
       PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
       CORBA::Object_var created_obj = info.the_factory->create_object (
-        type_id.in(),
+        type_id.in (),
         info.the_criteria,
-        factory_creation_id.out()
+        factory_creation_id.out ()
         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil());
-      if ( !CORBA::is_nil(created_obj) )
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      if ( !CORBA::is_nil (created_obj) )
       {
 // that which was first shall now be last        if (nFact == 0)
         {
           first_location = & info.the_location;
         }
-        create_detector_for_replica (
+
+        // try to create a detector, but don't worry if it doesn't happen
+        (void) create_detector_for_replica (
           created_obj,
           role,
-          type_id.in(),
+          type_id.in (),
           group_id,
           info.the_location
           ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (CORBA::Object::_nil());
+        ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
         const char * replica_ior = orb_->object_to_string (created_obj ACE_ENV_ARG_PARAMETER );
-        ACE_CHECK_RETURN (CORBA::Object::_nil());
+        ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
 
         if (write_iors)
@@ -301,32 +292,32 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group(
           }
           else if (factory_creation_id >>= long_id)
           {
-            ulong_id = ACE_static_cast(CORBA::ULong, long_id);
+            ulong_id = ACE_static_cast (CORBA::ULong, long_id);
           }
           else
           {
-            ACE_ERROR ((LM_ERROR,
+            ACE_ERROR ( (LM_ERROR,
               "%T %n (%P|%t) Object_Group_Creator: Can't decypher factory creation id.\n"
               ));
             // Guessed wrong.  Just use default value
           }
 
-          char replica_ior_filename[200]; // "${role}_$(location)_${factory_id}.ior"
+          char replica_ior_filename[200]; // "${role}_$ (location)_${factory_id}.ior"
 
-          ACE_OS::snprintf(replica_ior_filename, sizeof(replica_ior_filename)-1, "%s_%s_%lu.ior",
+          ACE_OS::snprintf (replica_ior_filename, sizeof (replica_ior_filename)-1, "%s_%s_%lu.ior",
             role,
             loc_name,
-            ACE_static_cast(unsigned long, ulong_id));
-          replica_ior_filename[sizeof(replica_ior_filename)-1] = '\0';
+            ACE_static_cast (unsigned long, ulong_id));
+          replica_ior_filename[sizeof (replica_ior_filename)-1] = '\0';
 
-          ACE_ERROR ((LM_INFO,
+          ACE_ERROR ( (LM_INFO,
             "%T %n (%P|%t) Object_Group_Creator: Writing ior for created object to %s\n",
             replica_ior_filename
             ));
 
-          if (write_ior_file(replica_ior_filename, replica_ior) != 0)
+          if (write_ior_file (replica_ior_filename, replica_ior) != 0)
           {
-            ACE_ERROR ((LM_ERROR,
+            ACE_ERROR ( (LM_ERROR,
               "%T %n (%P|%t) Object_Group_Creator: Error writing ior [%s] to %s\n",
                replica_ior,
                replica_ior_filename
@@ -340,12 +331,12 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group(
                             info.the_location,
                             created_obj
                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::Object::_nil());
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
         }
       }
       else
       {
-        ACE_ERROR ((LM_ERROR,
+        ACE_ERROR ( (LM_ERROR,
           "%T %n (%P|%t) Object_Group_Creator: create_object returned nil????\n"
           ));
       }
@@ -353,19 +344,19 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group(
 
     if (first_location != 0 && this->have_replication_manager_)
     {
-      group = this->replication_manager_->set_primary_member (group.in(), * first_location ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil());
+      group = this->replication_manager_->set_primary_member (group.in (), * first_location ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
-    ACE_ERROR ((LM_INFO,
+    ACE_ERROR ( (LM_INFO,
       "%T %n (%P|%t) Object_Group_Creator:  Successfully created group of %s\n",
       role
       ));
 
     const char * group_iogr = orb_->object_to_string (group ACE_ENV_ARG_PARAMETER );
-    ACE_CHECK_RETURN (CORBA::Object::_nil());
+    ACE_CHECK_RETURN (CORBA::Object::_nil ());
   }
 
-  return group._retn();
+  return group._retn ();
 }
 
 
@@ -374,7 +365,7 @@ int TAO::Object_Group_Creator::fini ()
   return 0;
 }
 
-int TAO::Object_Group_Creator::write_ior_file(const char * outputFile, const char * ior)
+int TAO::Object_Group_Creator::write_ior_file (const char * outputFile, const char * ior)
 {
   int result = -1;
   FILE* out = ACE_OS::fopen (outputFile, "w");
@@ -386,7 +377,7 @@ int TAO::Object_Group_Creator::write_ior_file(const char * outputFile, const cha
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
+    ACE_ERROR ( (LM_ERROR,
       "%T %n (%P|%t) Object_Group_Creator: Open failed for %s\n", outputFile
     ));
   }

@@ -171,12 +171,12 @@ unlink $client_data;
 
 my($status) = 0;
 
-my($RM) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager$build_directory/FT_ReplicationManager", "-o $rm_ior $rm_endpoint");
+my($RM) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager$build_directory/FT_ReplicationManager", "-ORBDebugLevel 0 -o $rm_ior $rm_endpoint");
 my($RMC) = new PerlACE::Process (".$build_directory/replmgr_controller", "$rm_initref -x");
 my($FAC1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior $rm_initref -l $location1 -i $role1 -q");
 my($FAC2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior $rm_initref -l $location2 -i $role1 -i $role2 -i $role3 -q -u");
 my($FAC3) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory3_ior $rm_initref -l $location3 -i $role2 -q -u");
-my($CTR) = new PerlACE::Process (".$build_directory/ft_create", "$rm_initref -r $role1 -r $role2 -r $role1 -u $role3");
+my($CTR) = new PerlACE::Process (".$build_directory/ft_create", "$rm_initref -n -r $role1 -r $role2 -r $role1 -u $role3 -i");
 
 my($CL1);
 my($CL2);
@@ -205,6 +205,7 @@ if (PerlACE::waitforfile_timed ($rm_ior, 5) == -1) {
     $RM->Kill (); $RM->TimedWait (1);
     exit 1;
 }
+
 
 #################
 # Start Factories

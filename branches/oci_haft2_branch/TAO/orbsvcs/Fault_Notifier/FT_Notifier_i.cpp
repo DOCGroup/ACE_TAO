@@ -17,9 +17,12 @@
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
 #define METHOD_ENTRY(name)    \
+  if (TAO_debug_level > 6)    \
+  {                           \
     ACE_DEBUG (( LM_DEBUG,    \
     "Enter %s\n", #name       \
-      ));
+      ));                     \
+  }
 
 // Use this macro to return from CORBA methods
 // to aid in debugging.  Note that you can specify
@@ -33,10 +36,13 @@
 //  if (cave_is_closing) METHOD_RETURN(Plugh::pirate) aarrggh;
 // Moral:  Always use braces.
 #define METHOD_RETURN(name)   \
+  if (TAO_debug_level > 6)    \
+  {                           \
     ACE_DEBUG (( LM_DEBUG,    \
       "Leave %s\n", #name     \
       ));                     \
-    return /* value goes here */
+  }                           \
+  return /* value goes here */
 
 
 // Implementation skeleton constructor
@@ -419,7 +425,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL )
     ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "ReplicaFactory: Exception resolving ReplicationManager, and no -f option was given.  Factory will not be registered.\n" );
+        "FaultNotifier: Exception resolving ReplicationManager.  Notifier will not be registered.\n" );
     }
     ACE_ENDTRY;
   }
