@@ -1,3 +1,30 @@
+Tue May 18 11:28:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK.{h,cpp,i}:
+        * ace/SOCK_Acceptor.{h,cpp,i}:
+        * ace/SOCK_CODgram.{h,cpp,i}:
+        * ace/Sock_Connect.{h,cpp}:
+        * ace/SOCK_Connector.{h,cpp,i}:
+        * ace/SOCK_Dgram.{h,cpp,i}:
+        * ace/SOCK_Dgram_Bcast.{cpp,h,i}
+        * ace/SOCK_Dgram_Mcast.i:
+        * ace/SOCK_IO.{h,cpp,ï):
+          Instead of using ACE_LACKS_INLINE_FUNCTIONS use __ACE_INLINE__ to
+          check whether to enabling inlining or not. The last is the way
+          we now use and the first is not really working. In fact, all files
+          with ACE_LACKS_INLINE_FUNCTIONS use always inlining even when
+          __ACE_INLINE__ is not defined. With the latest GCC versions on
+          Windows we get hundreds of warnings that we are missing declspec
+          import and inline, when building DLL's we disable inlining but
+          this doesn't work for all files. See bugzilla 1581 for some
+          more info. More files will be updated later.
+
+        * ace/Sock_Connect.i:
+          Removed this file, was not containing any code
+
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
+          Added needed include of changes above
+
 Tue May 18 08:25:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_mpc_auto_compile.pl:
