@@ -121,6 +121,22 @@ SOURCE=.\enum_in_structS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\fullC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\fullS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\fwdC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\fwdS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\generic_objectC.cpp
 # End Source File
 # Begin Source File
@@ -273,6 +289,22 @@ SOURCE=.\enum_in_structS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\fullC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\fullS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\fwdC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\fwdS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\generic_objectC.h
 # End Source File
 # Begin Source File
@@ -402,6 +434,22 @@ SOURCE=.\constantsC.i
 # Begin Source File
 
 SOURCE=.\enum_in_structC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\fullC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\fullS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\fwdC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\fwdS.i
 # End Source File
 # Begin Source File
 
@@ -798,6 +846,68 @@ BuildCmds= \
 
 "$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\full.idl
+
+!IF  "$(CFG)" == "idl_test - Win32 Release"
+
+USERDEP__FULL_="..\..\..\bin\release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\full.idl
+InputName=full
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\bin\release\tao_idl $(InputName).idl
+
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
+
+USERDEP__FULL_="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\full.idl
+InputName=full
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\fwd.idl
+
+!IF  "$(CFG)" == "idl_test - Win32 Release"
+
+USERDEP__FWD_I="..\..\..\bin\release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\fwd.idl
+InputName=fwd
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\bin\release\tao_idl $(InputName).idl
+
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
+
+USERDEP__FWD_I="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\fwd.idl
+InputName=fwd
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+
 # End Custom Build
 
 !ENDIF 

@@ -71,24 +71,6 @@ interface child : mother, father
 {
 };
 
-// Tests of CORBA 2.3.1 relaxation of forward declared
-// interface restrictions.
-#if 0
-// Full definition is in generic_object.idl
-interface forward;
-
-interface bar_iface
-{
-  forward op (in forward inarg, 
-              inout forward inoutarg, 
-              out forward outarg);
-};
-
-union boik switch (short)
-{
-  case 0: forward blik;
-};
-#endif
 // Definition below in file.
 interface later;
 
