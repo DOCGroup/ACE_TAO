@@ -133,24 +133,28 @@ sub Spawn ()
     my $self = shift;
 
     if ($self->{RUNNING} == 1) {
-        print STDERR "ERROR: Cannot Spawn: <$self->{EXECUTABLE}> ",
-                     "already running\n";
+        print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
+                     "> already running\n";
         return -1;
     }
 
     if (!defined $self->{EXECUTABLE}) {
         print STDERR "ERROR: Cannot Spawn: No executable specified\n";
+        return -1;
+    }
+
+    if (!$self->{IGNOREEXESUBDIR} {
+        if (!-f $self->Executable ()) {
+            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (), 
+                         "> not found\n";
             return -1;
-    }
+        }
 
-    if (!-f $self->{EXECUTABLE}) {
-        print STDERR "ERROR: Cannot Spawn: $self->{EXECUTABLE} not found\n";
-	    return -1;
-    }
-
-    if (!-x $self->{EXECUTABLE}) {
-        print STDERR "ERROR: Cannot Spawn: $self->{EXECUTABLE} not executable\n";
-	    return -1;
+        if (!-x $self->Executable ()) {
+            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (), 
+                         "> not executable\n";
+            return -1;
+        }
     }
 
     FORK:

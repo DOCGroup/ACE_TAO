@@ -1,3 +1,15 @@
+Thu Mar  1 17:02:10 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_Win32.pm:
+
+          Fixed up the Spawn code to use the Executable ()
+          instead of {EXECUTABLE}, since that's how we get the
+          adjusted name (with .exe and stuff).  And also 
+          skipped the file existance with IgnoreExeSubDir, since
+          IgnoreExeSubDir is often used when you need to find
+          the program in the path.
+
 Thu Mar  1 15:48:10 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/fuzz.pl:
