@@ -593,7 +593,7 @@ DRV_pre_proc (const char *myfile)
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC)
     {
       FILE *preproc = ACE_OS::fopen (tmp_file, "r");
-      char buffer[BUFSIZ + 1];  // 1 for extra null
+      char buffer[ACE_Log_Record::MAXLOGMSGLEN];
       int bytes;
 
       if (preproc == NULL)
@@ -606,7 +606,11 @@ DRV_pre_proc (const char *myfile)
           ACE_OS::exit (99);
         }
 
-      while ((bytes = ACE_OS::fread (buffer, sizeof (char), BUFSIZ, preproc)) != 0)
+      while ((bytes = ACE_OS::fread (buffer, 
+                                     sizeof (char), 
+                                     ACE_Log_Record::MAXLOGMSGLEN - 1, 
+                                     preproc)) 
+          != 0)
         {
           buffer[bytes] = 0;  // Null char
 
