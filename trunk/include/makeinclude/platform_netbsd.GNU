@@ -15,7 +15,7 @@ CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 DLD             = ld
 LD		= $(CXX) 
-LIBS            += -lstdc++ #-lcompat -lresolv
+LIBS            += /usr/lib/c++rt0.o -lstdc++  #-lcompat -lresolv
 ##OCFLAGS         += -O2
 PIC             = -fpic -DPIC
 AR              = ar
@@ -23,5 +23,5 @@ ARFLAGS         = ruv
 RANLIB          = ranlib
 
 SOFLAGS = -Bshareable -x
-SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
+SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $< /usr/lib/c++rt0.o
 PRELIB = @echo
