@@ -36,6 +36,8 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  ACE_DEBUG ((LM_DEBUG, "Starting server\n"));
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -89,11 +91,16 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_Time_Value tv (240, 0);
+      ACE_Time_Value tv (180, 0);
       orb->run (tv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Now terminating test\n"));
+      CORBA::Long count =
+        payload_receiver->get_message_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "(%P) - Payload_Receiver on server got %d messages\n",
+                  count));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -108,6 +115,8 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
+
+  ACE_DEBUG ((LM_DEBUG, "Ending server\n"));
 
   return 0;
 }
