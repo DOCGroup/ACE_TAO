@@ -822,6 +822,10 @@ SOURCE=.\PICurrent.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PICurrent_Copy_Callback.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PICurrent_ORBInitializer.cpp
 # End Source File
 # Begin Source File
@@ -1968,6 +1972,10 @@ SOURCE=.\PI_ForwardC.h
 # Begin Source File
 
 SOURCE=.\PICurrent.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PICurrent_Copy_Callback.h
 # End Source File
 # Begin Source File
 
