@@ -17,7 +17,7 @@
 #define TAO_RECONFIG_SCHEDULER_T_H
 #include "ace/pre.h"
 
-#include "ace/inc_user_config.h"
+#include "ace/config-all.h"
 
 // The templatized method parameters needed by this file are
 // hopelessly broken on pre-2.8 versions of g++

@@ -1,3 +1,16 @@
+Tue Apr 18 21:14:45 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
+        * performance-tests/Cubit/IDL_Cubit/client.cpp:
+        * performance-tests/Cubit/IDL_Cubit/server.cpp:
+        * performance-tests/Cubit/MT_Cubit/client.cpp:
+        * performance-tests/Cubit/MT_Cubit/server.cpp:
+
+          Some more of the config-all changes.
+
 Tue Apr 18 22:43:52 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Leader_Followers/run_test.pl:

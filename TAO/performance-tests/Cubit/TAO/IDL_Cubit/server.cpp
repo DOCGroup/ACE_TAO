@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/inc_user_config.h"
+#include "ace/config-all.h"
 #if defined (VXWORKS)
 # undef ACE_MAIN
 # define ACE_MAIN server
