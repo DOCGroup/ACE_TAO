@@ -93,6 +93,10 @@ Mon Sep 01 21:31:25 1997  David L. Levine  <levine@cs.wustl.edu>
 	* tests/Thread_Manager_Test (worker): added ACE_UNUSED_ARG (thr_mgr)
 	  if ACE_LACKS_UNIX_SIGNALS, and added template instantiations.
 
+	* tests/Thread_Manager_Test.cpp: dynamically allocate the
+	 signal_catcher so that we can destroy it before the main
+	 thread's TSS is cleaned up.
+
 	* tests/TSS_Test.cpp: dynamically allocate TSS_Error so that we
 	  can ensure its deletion before that of ACE_Object_Manager.
 	  Also, makde the code a little easier to change the number of threads.
