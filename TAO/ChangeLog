@@ -1,3 +1,8 @@
+Tue Dec 30 13:43:09 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ICMG_Any_Bug/client.cpp:
+          Removed not needed ; after ACE_RCSID to fix Tru64 warning
+
 Tue Dec 30 13:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BD_String_Argument_T.h:
