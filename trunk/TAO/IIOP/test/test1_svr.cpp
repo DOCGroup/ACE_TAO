@@ -15,7 +15,7 @@
 #	include	<unistd.h>		// for getopt on some systems
 
 #else	// windows
-#	include "getopt.h"		// e.g. GNU's version
+#include "ace/Get_Opt.h"
 
 #endif
 
@@ -26,7 +26,9 @@
 
 
 
+#if !defined (_WIN32)
 extern char 	*optarg;	// missing on some platforms
+#endif
 
 //
 // Skeleton code ... just a macro for a bunch of DSI-based method code,
@@ -104,10 +106,10 @@ extern char 	*optarg;	// missing on some platforms
 	    return; \
 	} \
     } \
-    extern calldata test1_ ## name ## _calldata;
+    calldata test1_ ## name ## _calldata;
 
 
-extern const calldata test1_void_calldata;
+const calldata test1_void_calldata;
 
 static void
 _test1_test_void (
@@ -225,7 +227,7 @@ DEFINE_SKEL3 (wstring, WString, WString)
 // void test_throw (in long case_num) raises (x1, x2);
 //
 
-extern const calldata test1_test_throw_calldata;
+const calldata test1_test_throw_calldata;
 
 static void
 _test1_test_throw (
@@ -561,10 +563,7 @@ OA_listen (
 // Standard command line parsing utilities used.
 //
 int
-main (
-    int			argc,
-    char		*const *argv
-)
+main (int    argc, char   *argv[])
 {
     CORBA_Environment	env;
     CORBA_ORB_ptr	orb_ptr;
@@ -577,28 +576,29 @@ main (
     //
     // Parse the command line, get options
     //
+    ACE_Get_Opt get_opt (argc, argv, "dln:O:x");
     int			c;
 
-    while ((c = getopt (argc, argv, "di:k:o:p:")) != EOF)
+    while ((c = get_opt ()) != -1)
 	switch (c) {
 	  case 'd':			// more debug noise
 	    debug_level++;
 	    continue;
 
 	  case 'i':			// idle seconds b4 exit
-	    idle = atoi (optarg);
+	    idle = atoi (get_opt.optarg);
 	    continue;
 
 	  case 'k':			// key (str)
-	    key = (CORBA_String) optarg;
+	    key = (CORBA_String) get_opt.optarg;
 	    continue;
 
 	  case 'o':			// orb name
-	    orb_name = optarg;
+	    orb_name = get_opt.optarg;
 	    continue;
 
 	  case 'p':			// portnum
-	    oa_name = optarg;
+	    oa_name = get_opt.optarg;
 	    continue;
 
 	  // XXX set debug filters ...

@@ -14,7 +14,7 @@
 #	include	<sys/time.h>
 
 #else	// windows
-#	include	"getopt.h"		// e.g. GNU's version
+#include "ace/Get_Opt.h"
 
 #endif	// unix
 
@@ -27,7 +27,9 @@
 extern "C" int gettimeofday (struct timeval *, struct timezone *);
 #endif
 
+#if !defined (_WIN32)
 extern char 	*optarg;	// missing on some platforms
+#endif
 
 inline int func (unsigned i) { return i - 117; }
 
@@ -46,7 +48,7 @@ static void cube_union_dii(unsigned &, unsigned &,
 
 
 int
-main (int argc, char *const *argv)
+main (int    argc, char   *argv[])
 {
     CORBA_ORB_ptr	orb_ptr;
     CORBA_Environment	env;
@@ -63,49 +65,54 @@ main (int argc, char *const *argv)
     //
     // Parse command line and verify parameters.
     //
+    ACE_Get_Opt get_opt (argc, argv, "dn:O:x");
+
     int			c;
 
-    while ((c = getopt (argc, argv, "dn:O:x")) != EOF)
-	switch (c) {
-	  case 'd':			// debug flag
-	    debug_level++;
-	    continue;
+    while ((c = get_opt ()) != -1)
+       switch (c)
+    {
+      case 'd':			// debug flag
+         debug_level++;
+         continue;
+   
+      case 'n':			// loop count
+         loop_count = (unsigned) atoi (get_opt.optarg);
+         continue;
+         
+      case 'O':			// stringified objref
+      {
+         objref = orb_ptr->string_to_object (
+            (CORBA_String)get_opt.optarg, env);
+         if (env.exception () != 0)
+         {
+            print_exception (env.exception (), "string2object");
+            return 1;
+         }
+      }
+      continue;
 
-	  case 'n':			// loop count
-	    loop_count = (unsigned) atoi (optarg);
-	    continue;
+	   case 'x':
+	       exit_later++;
+	      continue;
 
-	  case 'O':			// stringified objref
-	    {
-		objref = orb_ptr->string_to_object (
-			(CORBA_String)optarg, env);
-		if (env.exception () != 0) {
-		    print_exception (env.exception (), "string2object");
-		    return 1;
-		}
-	    }
-	    continue;
-
-	  case 'x':
-	    exit_later++;
-	    continue;
-
-	  case '?':
-	  default:
-	    fprintf (stderr, "usage:  %s"
-			    " [-d]"
-			    " [-n loopcount]"
-			    " [-O objref]"
-			    " [-x]"
-			    "\n", argv [0]
-			    );
-	    return 1;
-        }
+	   case '?':
+	   default:
+	       fprintf (stderr, "usage:  %s"
+			       " [-d]"
+			       " [-n loopcount]"
+   			    " [-O objref]"
+	   		    " [-x]"
+		   	    "\n", argv [0]
+			       );
+	      return 1;
+    }
     
-    if (CORBA_is_nil (objref) == CORBA_B_TRUE) {
-	fprintf (stderr, "%s:  must identify non-null target objref\n",
+    if (CORBA_is_nil (objref) == CORBA_B_TRUE)
+    {
+	   fprintf (stderr, "%s:  must identify non-null target objref\n",
 		argv [0]);
-	return 1;
+	   return 1;
     }
 
     //
@@ -116,14 +123,17 @@ main (int argc, char *const *argv)
     CORBA_Boolean		type_ok;
 
     type_ok = objref->_is_a (Cubit__id, env);
-    if (env.exception () != 0) {
-	print_exception (env.exception (), "check type of target");
-	return -1;
-    } else if (type_ok != CORBA_B_TRUE) {
-	fprintf (stderr, "%s:  target objref is of wrong type\n",
-		argv [0]);
-	printf ("type_ok = %d\n", type_ok);
-	return 1;
+    if (env.exception () != 0)
+    {
+	   print_exception (env.exception (), "check type of target");
+	   return -1;
+    } 
+    else if (type_ok != CORBA_B_TRUE)
+    {
+	   fprintf (stderr, "%s:  target objref is of wrong type\n",
+	   	argv [0]);
+	   printf ("type_ok = %d\n", type_ok);
+	   return 1;
     }
 
     //
@@ -144,7 +154,7 @@ main (int argc, char *const *argv)
     timeval			before, after;
 
     if (gettimeofday (&before, 0) < 0)
-	dperror ("gettimeofday before");
+   	dperror ("gettimeofday before");
 #endif	// defined (HAVE_GETTIMEOFDAY)
 
     for (i = 0; i < loop_count; i++) {

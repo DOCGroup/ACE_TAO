@@ -16,7 +16,7 @@
 #	include	<unistd.h>
 
 #else	// windows
-#	include	"getopt.h"		// e.g. GNU's version
+#include "ace/Get_Opt.h"
 
 #endif	// unix
 
@@ -24,7 +24,9 @@
 #include "../lib/runtime/debug.hh"
 
 
+#if !defined (_WIN32)
 extern char 	*optarg;	// missing on some platforms
+#endif
 
 extern void
 print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
@@ -540,10 +542,7 @@ do_tests (
 
 
 int
-main (
-    int		argc,
-    char	*const *argv
-)
+main (int    argc, char   *argv[])
 {
     CORBA_ORB_ptr	orb_ptr;
     CORBA_Environment	env;
@@ -561,9 +560,10 @@ main (
     //
     // Parse and verify parameters.
     //
+    ACE_Get_Opt get_opt (argc, argv, "dln:O:x");
     int			c;
 
-    while ((c = getopt (argc, argv, "dln:O:x")) != EOF)
+    while ((c = get_opt ()) != -1)
 	switch (c) {
 	  case 'd':			// debug flag
 	    debug_level++;
@@ -574,13 +574,13 @@ main (
 	    continue;
 
 	  case 'n':			// loop count
-	    loop_count = (unsigned) atoi (optarg);
+	    loop_count = (unsigned) atoi (get_opt.optarg);
 	    continue;
 
 	  case 'O':			// stringified objref
 	    {
 		objref = orb_ptr->string_to_object (
-			(CORBA_String)optarg, env);
+			(CORBA_String)get_opt.optarg, env);
 		if (env.exception () != 0) {
 		    dexc (env, "string2object");
 		    return 1;
