@@ -1,3 +1,9 @@
+Tue Dec  7 13:10:08 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Logging_Strategy.cpp (init): Make sure that the dynamically
+	  allocated ostream is deleted on shutdown.  Thanks to Zvika
+ 	  Ashani <zvika at aspectusvi dot com> for reporting this.	
+  
 Tue Dec  7 08:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/GNUmakefile.clone:
