@@ -130,9 +130,3 @@ TAO_Notify_ProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
   }
 }
 
-void
-TAO_Notify_ProxyPushConsumer::init (TAO_Notify_SupplierAdmin *supplier_admin
-                                    ACE_ENV_ARG_DECL)
-{
-  TAO_Notify_ProxyConsumer::init (supplier_admin ACE_ENV_ARG_PARAMETER);
-}
