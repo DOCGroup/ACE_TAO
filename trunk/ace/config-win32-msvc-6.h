@@ -87,10 +87,6 @@
 # define ACE_LACKS_MODE_MASKS
 # define ACE_LACKS_STRRECVFD
 
-# if !defined (ACE_HAS_WINCE)
-# define ACE_HAS_LLSEEK
-# endif /* ACE_HAS_WINCE */
-
 // Compiler/platform has correctly prototyped header files.
 # define ACE_HAS_CPLUSPLUS_HEADERS
 
