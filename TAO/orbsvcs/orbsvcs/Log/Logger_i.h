@@ -11,7 +11,7 @@
 //   Logger_i.h
 //
 // = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
+//    Marina Spivak <marina@cs.wustl.edu> and
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 // 
 // ============================================================================
@@ -23,6 +23,8 @@
 
 class TAO_ORBSVCS_Export Logger_Factory_i : public virtual POA_Logger_Factory
 {
+  // = TITLE
+  //   Create a <Logger> of type <name>.
 public:
   Logger_Factory_i (void);
   // constructor.
@@ -34,6 +36,8 @@ public:
 
 class Logger_i : public virtual POA_Logger
 {
+  // = TITLE
+  //   Used to log messages to a logging server.
 public:
   Logger_i (const char* name);
   // constructor
