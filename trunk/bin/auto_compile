@@ -238,8 +238,8 @@ sub copy_logs {
   copy($LOGFILE, $DEST_DIR.'/'.$LOGBASE.'.txt');
 
   local $MAKE_PRETTY="$CHECKOUT/$MODULE/bin/make_pretty.pl";
-  system ("perl $MAKE_PRETTY -b $LOGFILE >$DEST_DIR/$LOGBASE"."_brief.html");
-  system ("perl $MAKE_PRETTY    $LOGFILE >$DEST_DIR/$LOGBASE".".html");
+  system ("perl $MAKE_PRETTY -b -i $LOGFILE >$DEST_DIR/$LOGBASE"."_brief.html");
+  system ("perl $MAKE_PRETTY    -i $LOGFILE >$DEST_DIR/$LOGBASE".".html");
 
   chmod 0644, $DEST_DIR.'/'.$LOGBASE.'.txt'
             , $DEST_DIR.'/'.$LOGBASE.'_brief.html'
