@@ -72,7 +72,8 @@ namespace CIAO
               mid.deployRequirement.length (i + 1);
 
               // delegate to requirement handler
-              Requirement_Handler::process_Requirement (mid.deployRequirement[i]);
+              Requirement_Handler::process_Requirement (this->iter_,
+                                                        mid.deployRequirement[i]);
             }
           else if (name == XStr (ACE_TEXT ("primaryArtifact")))
             {

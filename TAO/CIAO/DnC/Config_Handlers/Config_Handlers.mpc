@@ -15,20 +15,26 @@ project (Config_Handlers) : taolib {
     APM_Handler.cpp
     Bridge_Handler.cpp
     CAD_Handler.cpp
+    CAP_Handler.cpp
     CEPE_Handler.cpp
     CompImplDesc_Handler.cpp
+    CompIntrDesc_Handler.cpp
     CompPkgDesc_Handler.cpp
+    CompPortDesc_Handler.cpp
     CPR_Handler.cpp
     CRDD_Handler.cpp
     Domain_Handler.cpp
     DP_Handler.cpp
     ERE_Handler.cpp
+    IAD_Handler.cpp
     IC_Handler.cpp
     ID_Handler.cpp
     IDD_Handler.cpp
+    IR_Handler.cpp
     IRDD_Handler.cpp
     MDD_Handler.cpp
     MID_Handler.cpp
+    NIA_Handler.cpp
     Node_Handler.cpp
     PC_Handler.cpp
     PCD_Handler.cpp

@@ -9,6 +9,7 @@
 
 #include "Node_Handler.h"
 #include "IC_handler.h"
+#include "SP_handler.h"
 #include "SR_handler.h"
 
 #include <iostream>
@@ -79,7 +80,7 @@ namespace CIAO
             {
               // increase the length of the sequence
               CORBA::ULong i (sr.property.length ());
-              resource.sr.length (i + 1);
+              sr.property.length (i + 1);
 
               // delegate the populating process
               SP_Handler::process_SatisfierProperty (this->iter_,
@@ -112,7 +113,7 @@ namespace CIAO
         {
           CORBA::ULong i (sr.resourceType.length ());
           sr.resourceType.length (i + 1);
-          sr.resourceType[i] = str (XMLString::transcode (resource_type));
+          sr.resourceType[i] = XMLString::transcode (resource_type);
         }
     }
 
@@ -124,7 +125,8 @@ namespace CIAO
         {
           CORBA::ULong i (sr.nodeRef.length ());
           sr.nodeRef.length (i + 1);
-          sr.nodeRef[i] = strtoul (XMLString::transcode (node_ref));
+          CORBA::String_var temp = XMLString::transcode (node_ref);
+          sr.nodeRef[i] = ACE_OS::strtol (temp.in (), 0, 10);
         }
     }
 

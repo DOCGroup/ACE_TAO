@@ -8,7 +8,7 @@
 #include "ace/Log_Msg.h"
 
 #include "Property_Handler.h"
-#include "CompIntfDesc_Handler.h"
+#include "CompIntrDesc_Handler.h"
 #include "MDD_Handler.h"
 #include "IDD_Handler.h"
 #include "PCD_Handler.h"
@@ -31,7 +31,7 @@ namespace CIAO
       : doc_ (doc),
         root_ (doc->getDocumentElement()),
         filter_ (filter),
-        iter_ (traverse_->createNodeIterator (this->root_,
+        iter_ (doc_->createNodeIterator (this->root_,
                                               this->filter_,
                                               0,
                                               true)),
@@ -78,7 +78,7 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("realizes")))
             {
               // fetch the component interface description handler
-              CID_Handler handler (iter_, false);
+              CompIntrDesc_Handler handler (iter_, false);
 
               // delegate the populating process
               handler.process_ComponentInterfaceDescription (dp.realizes);
@@ -134,15 +134,13 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("dependsOn")))
             {
-              // fetch the implementation dependencies handler
-              ID_Handler id_handler (iter_, false);
-
               // increase the length of the sequence
               CORBA::ULong i (dp.dependsOn.length ());
               dp.dependsOn.length (i + 1);
 
               // delegate the populating process
-              id_handler.process_ImplementationDependency (dp.dependsOn[i]);
+              ID_Handler::process_ImplementationDependency
+              (this->iter_, dp.dependsOn[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("artifact")))
             {
@@ -158,16 +156,12 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("infoProperty")))
             {
-              // @@Issue 5967@@
-              // fetch the property handler
-              Property_Handler prop_handler (iter_, false);
-
               // increase the length of the sequence
               CORBA::ULong i (dp.infoProperty.length ());
               dp.infoProperty.length (i + 1);
 
               // delegate the populating process
-              prop_handler.process_Property (dp.infoProperty[i]);
+              Property_Handler::process_Property (this->iter_, dp.infoProperty[i]);
             }
           else
             {
