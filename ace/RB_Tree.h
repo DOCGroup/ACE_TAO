@@ -17,9 +17,9 @@
 #if !defined (ACE_RB_TREE_H)
 #define ACE_RB_TREE_H
 
-#include "ace/ACE.h"
+// enum RB_Tree_Node_Color {RED, BLACK};
 
-enum RB_Tree_Node_Color {RED, BLACK};
+#include "ace/ACE.h"
 
 // Class Template: RB_Tree_Node
 //
@@ -29,6 +29,7 @@ template <class KEY, class T>
 class RB_Tree_Node
 {
 public:
+  enum RB_Tree_Node_Color {RED, BLACK};
 
   RB_Tree_Node (const KEY &k, const T &t);
   // constructor
@@ -137,7 +138,6 @@ public:
 
   void clear ();
   // destroys all nodes and sets the root pointer null.
-
 
 // These could all be made private methods by making the corresponding
 // class template instantiations friends, but there are some problems
