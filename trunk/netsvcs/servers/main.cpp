@@ -39,7 +39,7 @@ main (int argc, char *argv[])
   // Register ourselves to receive SIGINT and SIGQUIT so we can shut
   // down gracefully via signals.
   if (ACE_Service_Config::reactor ()->register_handler (sig_set, &sa) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", -1));
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n"), -1);
 
   // Try to link in the svc.conf entries dynamically.
   if (daemon.open (argc, argv) == -1)

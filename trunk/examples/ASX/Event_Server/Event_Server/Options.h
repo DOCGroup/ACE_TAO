@@ -1,17 +1,15 @@
 /* -*- C++ -*- */
 // $Id$
 
-/* Option manager for Event Server */
-
-#if !defined (DEVICE_OPTIONS_H)
-#define DEVICE_OPTIONS_H
+#if !defined (OPTIONS_H)
+#define OPTIONS_H
 
 #include "ace/OS.h"
 #include "ace/Profile_Timer.h"
 
-#if defined (ACE_HAS_THREADS)
-
 class Options
+  // = TITLE
+  //     Option Singleton for Event Server.
 {
 public:
   static Options *instance (void);
@@ -98,5 +96,4 @@ private:
 };
 
 #include "Options.i"
-#endif /* ACE_HAS_THREADS */
-#endif /* DEVICE_OPTIONS_H */
+#endif /* OPTIONS_H */

@@ -3278,7 +3278,9 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
   int result;
   int policy = 0;
 
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_id, &policy, &param), result), int, -1, result);
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_id, &policy, &param), 
+				result), int, 
+	      -1, result);
   prio = param.sched_priority;
   return result;
 #elif defined (ACE_HAS_WTHREADS)
@@ -3767,8 +3769,10 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
   int result;
   int policy = 0;
 
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, &policy, &param), result), int, -1, result);
-  prio = param.sched_priority;
+  param.sched_priority = prio;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, &policy, &param), 
+				       result), int,
+		     -1, result);
   return result;
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)

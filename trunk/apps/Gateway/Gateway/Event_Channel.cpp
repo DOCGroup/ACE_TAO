@@ -6,7 +6,8 @@
 #include "Event_Channel.h"
 
 ACE_Event_Channel_Options::ACE_Event_Channel_Options (void)
-  : performance_window_ (0),
+  : locking_strategy_ (0),
+    performance_window_ (0),
     blocking_semantics_ (ACE_NONBLOCK),
     socket_queue_size_ (0),
     threading_strategy_ (REACTIVE),
@@ -16,14 +17,17 @@ ACE_Event_Channel_Options::ACE_Event_Channel_Options (void)
 {
 }
 
+ACE_Event_Channel_Options::~ACE_Event_Channel_Options (void)
+{
+  delete this->locking_strategy_;
+}
+
 ACE_Event_Channel::~ACE_Event_Channel (void)
 {
-  delete this->lock_adapter_;
 }
 
 ACE_Event_Channel::ACE_Event_Channel (void)
-  : lock_adapter_ (0),
-    acceptor_ (*this)
+  : acceptor_ (*this)
 {
 }
 
@@ -31,12 +35,6 @@ ACE_Event_Channel_Options &
 ACE_Event_Channel::options (void)
 {
   return this->options_;
-}
-
-ACE_Lock *
-ACE_Event_Channel::message_block_locking_strategy (void)
-{
-  return this->lock_adapter_;
 }
 
 int
@@ -104,8 +102,11 @@ ACE_Event_Channel::compute_performance_statistics (void)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "resume_all"), -1);
       ACE_DEBUG ((LM_DEBUG, "(%t) resuming all threads..."));
     }
+
+  return 0;
 }
 
+int
 ACE_Event_Channel::handle_timeout (const ACE_Time_Value &, 
 				   const void *)
 {
@@ -115,6 +116,7 @@ ACE_Event_Channel::handle_timeout (const ACE_Time_Value &,
 // This method forwards the <event> to Consumer that have registered
 // to receive it.
 
+int
 ACE_Event_Channel::put (ACE_Message_Block *event, 
 			ACE_Time_Value *)
 {
@@ -191,6 +193,7 @@ ACE_Event_Channel::put (ACE_Message_Block *event,
   return 0;
 }
 
+int
 ACE_Event_Channel::svc (void)
 {
   return 0;
@@ -234,6 +237,7 @@ ACE_Event_Channel::complete_proxy_connection (Proxy_Handler *proxy_handler)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", 
 		      n == 0 ? "peer has closed down unexpectedly" : "send"), 
 		      -1);
+  return 0;
 }
 
 // Restart connection (blocking_semantics dicates whether we restart
@@ -308,6 +312,7 @@ ACE_Event_Channel::initiate_acceptor (void)
 // This method gracefully shuts down all the Handlers in the
 // Proxy_Handler Connection Map.
 
+int
 ACE_Event_Channel::close (u_long)
 {
   if (this->options ().threading_strategy_ != ACE_Event_Channel_Options::REACTIVE)
@@ -351,7 +356,9 @@ ACE_Event_Channel::find_proxy (ACE_INT32 proxy_id,
 int
 ACE_Event_Channel::bind_proxy (Proxy_Handler *proxy_handler)
 {
-  switch (this->proxy_map_.bind (proxy_handler->id (), proxy_handler))
+  int result = this->proxy_map_.bind (proxy_handler->id (), proxy_handler);
+
+  switch (result)
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, 
@@ -366,6 +373,10 @@ ACE_Event_Channel::bind_proxy (Proxy_Handler *proxy_handler)
     case 0:
       // Success.
       return 0;
+    default:
+      ACE_ERROR_RETURN ((LM_DEBUG, 
+			 "(%t) invalid result %d\n", result), -1);
+      /* NOTREACHED */
     }
 }
 
@@ -373,23 +384,32 @@ int
 ACE_Event_Channel::subscribe (const Event_Key &event_addr, 
 			      Consumer_Dispatch_Set *cds)
 {
+  int result = this->efd_.bind (event_addr, cds);
+
   // Bind with consumer map, keyed by peer address.
-  switch (this->efd_.bind (event_addr, cds))
+  switch (result)
     {
     case -1:
-      ACE_ERROR_RETURN ((LM_ERROR, "(%t) bind failed for connection %d\n", 
+      ACE_ERROR_RETURN ((LM_ERROR, 
+			 "(%t) bind failed for connection %d\n", 
 			 event_addr.proxy_id_), -1);
       /* NOTREACHED */
     case 1: // Oops, found a duplicate!
-      ACE_ERROR_RETURN ((LM_DEBUG, "(%t) duplicate consumer map entry %d, "
+      ACE_ERROR_RETURN ((LM_DEBUG, 
+			 "(%t) duplicate consumer map entry %d, "
 			 "already bound\n", event_addr.proxy_id_), -1);
       /* NOTREACHED */
     case 0:
       // Success.
       return 0;
+    default:
+      ACE_ERROR_RETURN ((LM_DEBUG, 
+			 "(%t) invalid result %d\n", result), -1);
+      /* NOTREACHED */
     }
 }
 
+int
 ACE_Event_Channel::open (void *)
 {
   // Ignore SIPPIPE so each Consumer_Proxy can handle it.
@@ -406,9 +426,10 @@ ACE_Event_Channel::open (void *)
   // If we're not running reactively, then we need to make sure that
   // <ACE_Message_Block> reference counting operations are
   // thread-safe.  Therefore, we create an <ACE_Lock_Adapter> that is
-  // parameterized by <ACE_Thread_Mutex> to prevent race conditions.
+  // parameterized by <REF_COUNT_MUTEX> to prevent race conditions.
   if (this->options ().threading_strategy_ != ACE_Event_Channel_Options::REACTIVE)
-    ACE_NEW_RETURN (this->lock_adapter_, ACE_Lock_Adapter<ACE_Thread_Mutex>, -1);
-
+    ACE_NEW_RETURN (this->options ().locking_strategy_, 
+		    ACE_Lock_Adapter<REF_COUNT_MUTEX>, 
+		    -1);
   return 0;
 }

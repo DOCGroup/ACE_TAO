@@ -13,6 +13,9 @@
 // it). 
 //#define ACE_HAS_STREAM_PIPES 
 
+// Platform supports getpagesize() call.
+#define ACE_HAS_GETPAGESIZE
+
 #define ACE_HAS_SIGWAIT
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)

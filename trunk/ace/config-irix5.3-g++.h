@@ -7,6 +7,9 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+// Platform supports getpagesize() call.
+#define ACE_HAS_GETPAGESIZE
+
 #define IRIX5
 #define ACE_HAS_SIGWAIT
 

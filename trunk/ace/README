@@ -32,6 +32,7 @@ ACE_HAS_COMPLEX_LOCK			Platform supports non-standard readers/writer locks...
 ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES 	Prototypes for both signal() and struct sigaction are consistent.
 ACE_HAS_CPLUSPLUS_HEADERS		Compiler/platform has correctly prototyped header files
 ACE_HAS_DLL				Build ACE using the frigging PC DLL nonsense...
+ACE_HAS_GETPAGESIZE			Platform supports getpagesize() call.
 ACE_HAS_GETRUSAGE                       Platform supports the getrusage() system call.
 ACE_HAS_GNU_CSTRING_H			Denotes that GNU has cstring.h as standard which redefines memchr() 
 ACE_HAS_GREENHILLS_SOCKETS		Platform is using GreenHills compiler with its weird socket headers.

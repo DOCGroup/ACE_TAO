@@ -205,7 +205,12 @@ Supplier_Proxy::recv (ACE_Message_Block *&forward_addr)
   if (this->msg_frag_ == 0)
     // No existing fragment...
     ACE_NEW_RETURN (this->msg_frag_, 
-		    ACE_Message_Block (sizeof (Event)), 
+		    ACE_Message_Block (sizeof (Event),
+				       ACE_Message_Block::MB_DATA,
+				       0,
+				       0,
+				       0,
+				       this->event_channel_.options ().locking_strategy_),
 		    -1);
 
   Event *event = (Event *) this->msg_frag_->rd_ptr ();
@@ -311,7 +316,10 @@ Supplier_Proxy::recv (ACE_Message_Block *&forward_addr)
           // portion onto its continuation field.
           forward_addr = new ACE_Message_Block (sizeof (Event_Key), 
 						ACE_Message_Block::MB_PROTO, 
-						this->msg_frag_);
+						this->msg_frag_,
+						0,
+						0,
+						this->event_channel_.options ().locking_strategy_);
 	  if (forward_addr == 0)
 	    {
 	      this->msg_frag_ = this->msg_frag_->release ();
@@ -441,7 +449,7 @@ Thr_Consumer_Proxy::open (void *)
   // Reactivate message queue.  If it was active then this is the
   // first time in and we need to spawn a thread, otherwise the queue
   // was inactive due to some problem and we've already got a thread.
-  else if (this->msg_queue ()->activate () == ACE_Message_Queue<ACE_MT_SYNCH>::WAS_ACTIVE)
+  else if (this->msg_queue ()->activate () == ACE_Message_Queue<ACE_SYNCH>::WAS_ACTIVE)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) spawning new thread\n"));
       // Become an active object by spawning a new thread to transmit
@@ -534,7 +542,7 @@ Thr_Supplier_Proxy::open (void *)
   // Reactivate message queue.  If it was active then this is the
   // first time in and we need to spawn a thread, otherwise the queue
   // was inactive due to some problem and we've already got a thread.
-  else if (this->msg_queue ()->activate () == ACE_Message_Queue<ACE_MT_SYNCH>::WAS_ACTIVE)
+  else if (this->msg_queue ()->activate () == ACE_Message_Queue<ACE_SYNCH>::WAS_ACTIVE)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) spawning new thread\n"));
       // Become an active object by spawning a new thread to transmit
