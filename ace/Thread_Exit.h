@@ -21,7 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/OS.h"
-#include "ace/Synch.h"
 #include "ace/Thread_Control.h"
 
 /**
@@ -56,7 +55,7 @@ public:
 
   /// Cleanup method, used by the <ACE_Object_Manager> to destroy the
   /// singleton.
-  static void cleanup (ACE_TSS_TYPE (ACE_Thread_Exit) *instance);
+  static void cleanup (void *instance);
 
 private:
   /// Automatically add/remove the thread from the
