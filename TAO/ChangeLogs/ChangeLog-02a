@@ -1,3 +1,14 @@
+Sun Jul 20 12:30:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+	* tao/Asynch_Invocation.cpp:
+	* tao/Asynch_Invocation.i:
+
+	  Changed the code which sets up a reply dispatcher for 
+	  AMI calls to only set up one, if a non-nil reply handler
+	  got registerd. This change is related to my change on
+	  Fri Jul 20 08:10:00 2001. It assumes that the ORB
+	  will drop replies to which no reply dispatcher is registered.
+
 Sun Jul 22 09:43:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Reply/Test.idl: Added a no-op ping () operation which
