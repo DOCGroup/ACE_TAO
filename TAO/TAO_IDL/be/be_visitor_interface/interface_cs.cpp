@@ -61,8 +61,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (node->is_defined ())
     {
-      *os << "\n\n#if defined (_MSC_VER)";
-
       *os << be_nl << be_nl
           << "// Traits specializations for " << node->name () << ".";
 
@@ -104,8 +102,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "return p->marshal (cdr);" << be_uidt_nl
           << "}";
-
-      *os << "\n\n#endif /* _MSC_VER */";
     }
 
   if (node->has_mixed_parentage ())
