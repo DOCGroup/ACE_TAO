@@ -18,17 +18,19 @@ FT_ProxyAdmin_Base::~FT_ProxyAdmin_Base()
 {
 }
 
-void FT_ProxyAdmin_Base::activate(const PortableServer::ObjectId& oid
+void FT_ProxyAdmin_Base::activate(const FtRtecEventComm::ObjectId& oid
               ACE_ENV_ARG_DECL)
 {
-  poa_->activate_object_with_id(oid, servant_
-                            ACE_ENV_ARG_PARAMETER);
+  poa_->activate_object_with_id(
+    ACE_reinterpret_cast(const PortableServer::ObjectId&, oid), 
+    servant_
+    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   object_id_ = oid;
 }
 
 
-const PortableServer::ObjectId& FT_ProxyAdmin_Base::object_id(ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+const FtRtecEventComm::ObjectId& FT_ProxyAdmin_Base::object_id(ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return object_id_;
 }

@@ -13,12 +13,11 @@
 #ifndef FTRTECEVNETCOMM_H
 #define FTRTECEVNETCOMM_H
 
-#include "OctetSeq.pidl"
 #include "orbsvcs/RtecEventComm.idl"
 
 module FtRtecEventComm {
 
-  typedef CORBA::OctetSeq ObjectId;
+  typedef sequence<octet> ObjectId;
 
   exception InvalidObjectID {
   };

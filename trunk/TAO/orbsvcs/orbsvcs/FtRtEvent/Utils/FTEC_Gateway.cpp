@@ -176,7 +176,7 @@ FTEC_Gateway::activate(PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
     lifespan->destroy();
     assign->destroy();
 
-    PortableServer::ObjectId oid;
+    FtRtecEventComm::ObjectId oid;
     oid.length(16);
     UUID::create(oid.get_buffer());
 
@@ -260,10 +260,10 @@ FTEC_Gateway_ConsumerAdmin::obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  PortableServer::ObjectId** remote_proxy_oid_ptr;
-  ACE_NEW_THROW_EX(remote_proxy_oid_ptr, PortableServer::ObjectId*, CORBA::NO_MEMORY());
+  FtRtecEventComm::ObjectId** remote_proxy_oid_ptr;
+  ACE_NEW_THROW_EX(remote_proxy_oid_ptr, FtRtecEventComm::ObjectId*, CORBA::NO_MEMORY());
 
-  PortableServer::ObjectId local_oid;
+  FtRtecEventComm::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
   memcpy(&local_oid[0], &remote_proxy_oid_ptr, sizeof(remote_proxy_oid_ptr));
 
@@ -290,10 +290,10 @@ RtecEventChannelAdmin::ProxyPushConsumer_ptr
 FTEC_Gateway_SupplierAdmin::obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableServer::ObjectId** remote_proxy_oid_ptr;
-  ACE_NEW_THROW_EX(remote_proxy_oid_ptr, PortableServer::ObjectId*, CORBA::NO_MEMORY());
+  FtRtecEventComm::ObjectId** remote_proxy_oid_ptr;
+  ACE_NEW_THROW_EX(remote_proxy_oid_ptr, FtRtecEventComm::ObjectId*, CORBA::NO_MEMORY());
 
-  PortableServer::ObjectId local_oid;
+  FtRtecEventComm::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
   memcpy(&local_oid[0], &remote_proxy_oid_ptr, sizeof(remote_proxy_oid_ptr));
 
@@ -305,7 +305,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 }
 
 
-PortableServer::ObjectId**
+FtRtecEventComm::ObjectId**
 get_remote_oid_ptr(CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   PortableServer::Current_var current =
@@ -318,8 +318,8 @@ get_remote_oid_ptr(CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     current->get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
 
-  PortableServer::ObjectId** result;
-  memcpy(&result, &object_id[0], sizeof(PortableServer::ObjectId**));
+  FtRtecEventComm::ObjectId** result;
+  memcpy(&result, &object_id[0], sizeof(FtRtecEventComm::ObjectId**));
   return result;
 }
 
@@ -345,7 +345,7 @@ void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
     RtecEventChannelAdmin::TypeError))
 {
 
-  PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   *oid_ptr = impl_->ftec->connect_push_consumer(push_consumer, qos ACE_ENV_ARG_PARAMETER);
@@ -355,7 +355,7 @@ void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
 void FTEC_Gateway_ProxyPushSupplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   impl_->ftec->disconnect_push_supplier(**oid_ptr ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -366,7 +366,7 @@ void FTEC_Gateway_ProxyPushSupplier::disconnect_push_supplier (ACE_ENV_SINGLE_AR
 void FTEC_Gateway_ProxyPushSupplier::suspend_connection (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   impl_->ftec->suspend_push_supplier(**oid_ptr ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -375,7 +375,7 @@ void FTEC_Gateway_ProxyPushSupplier::suspend_connection (ACE_ENV_SINGLE_ARG_DECL
 void FTEC_Gateway_ProxyPushSupplier::resume_connection (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   impl_->ftec->resume_push_supplier(**oid_ptr ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -399,7 +399,7 @@ void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data
                          ACE_ENV_ARG_DECL)
                          ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   /*
@@ -423,7 +423,7 @@ void FTEC_Gateway_ProxyPushConsumer::connect_push_supplier (
     ACE_THROW_SPEC ((CORBA::SystemException,
     RtecEventChannelAdmin::AlreadyConnected))
 {
-  PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *oid_ptr = impl_->ftec->connect_push_supplier(push_supplier, qos ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -432,7 +432,7 @@ void FTEC_Gateway_ProxyPushConsumer::connect_push_supplier (
 void FTEC_Gateway_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   impl_->ftec->disconnect_push_consumer(**oid_ptr ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

@@ -114,13 +114,13 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership
 
     this->ec_impl_ = ec;
 
-    const PortableServer::ObjectId& object_id
+    const FtRtecEventComm::ObjectId& object_id
       = FTRTEC::Identification_Service::instance()->object_id();
 
-    PortableServer::ObjectId consumer_admin_object_id(object_id);
+    FtRtecEventComm::ObjectId consumer_admin_object_id(object_id);
     consumer_admin_object_id[9]++;
 
-    PortableServer::ObjectId supplier_admin_object_id(consumer_admin_object_id);
+    FtRtecEventComm::ObjectId supplier_admin_object_id(consumer_admin_object_id);
     supplier_admin_object_id[9]++;
 
     ec->activate(orb_,

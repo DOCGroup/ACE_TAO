@@ -16,18 +16,19 @@ void
 activate_object_with_id (T * &result,
                          PortableServer::POA_var poa,
                          PortableServer::ServantBase *servant,
-                         const PortableServer::ObjectId &oid
+                         const FtRtecEventComm::ObjectId &oid
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-    poa->activate_object_with_id(oid,
-                                 servant ACE_ENV_ARG_PARAMETER);
+  PortableServer::ObjectId& id = ACE_reinterpret_cast(PortableServer::ObjectId& ,oid);
+  poa->activate_object_with_id(id,
+    servant ACE_ENV_ARG_PARAMETER);
 
-    ACE_CHECK;
+  ACE_CHECK;
 
-    CORBA::Object_var object = poa->
-      id_to_reference(oid ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+  CORBA::Object_var object = poa->
+    id_to_reference(id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-    result = T::_narrow(object.in() ACE_ENV_ARG_PARAMETER);
+  result = T::_narrow(object.in() ACE_ENV_ARG_PARAMETER);
 }
 #endif

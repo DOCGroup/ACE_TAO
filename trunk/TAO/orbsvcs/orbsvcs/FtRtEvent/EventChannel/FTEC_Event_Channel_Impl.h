@@ -41,8 +41,8 @@ public:
   /// After this call the EC can be used.
   virtual void activate (
     CORBA::ORB_var orb,
-    const PortableServer::ObjectId& supplier_admin_oid,
-    const PortableServer::ObjectId& consumer_admin_oid
+    const FtRtecEventComm::ObjectId& supplier_admin_oid,
+    const FtRtecEventComm::ObjectId& consumer_admin_oid
     ACE_ENV_ARG_DECL);
 
 
@@ -115,8 +115,8 @@ public:
   /// the activation...
   TAO_FTEC_SupplierAdmin* supplier_admin (void) const;
 
-  TAO_FTEC_ProxyPushSupplier* find_proxy_push_supplier(const PortableServer::ObjectId& id);
-  TAO_FTEC_ProxyPushConsumer* find_proxy_push_consumer(const PortableServer::ObjectId& id);
+  TAO_FTEC_ProxyPushSupplier* find_proxy_push_supplier(const FtRtecEventChannelAdmin::ObjectId& id);
+  TAO_FTEC_ProxyPushConsumer* find_proxy_push_consumer(const FtRtecEventChannelAdmin::ObjectId& id);
 
 
   CORBA::Object_var make_iogr(CORBA::Object_ptr obj

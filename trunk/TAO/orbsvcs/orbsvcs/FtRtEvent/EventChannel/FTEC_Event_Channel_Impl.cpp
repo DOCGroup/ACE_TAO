@@ -246,8 +246,8 @@ TAO_FTEC_Event_Channel_Impl::factory()
 void
 TAO_FTEC_Event_Channel_Impl::activate (
   CORBA::ORB_var orb,
-  const PortableServer::ObjectId& supplier_admin_oid,
-  const PortableServer::ObjectId& consumer_admin_oid
+  const FtRtecEventComm::ObjectId& supplier_admin_oid,
+  const FtRtecEventComm::ObjectId& consumer_admin_oid
   ACE_ENV_ARG_DECL)
 {
 
@@ -527,12 +527,13 @@ TAO_FTEC_SupplierAdmin* TAO_FTEC_Event_Channel_Impl::supplier_admin (void) const
 
 
 TAO_FTEC_ProxyPushSupplier*
-TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const PortableServer::ObjectId& id)
+TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const FtRtecEventChannelAdmin::ObjectId& id)
 {
   ACE_TRY_NEW_ENV {
     PortableServer::POA_var poa = consumer_poa();
 
-    PortableServer::Servant servant = poa->id_to_servant(id
+    PortableServer::Servant servant = poa->id_to_servant(
+      ACE_reinterpret_cast(PortableServer::ObjectId& ,id)
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr obj =
@@ -550,14 +551,16 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const PortableServer::Obje
 }
 
 TAO_FTEC_ProxyPushConsumer*
-TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(const PortableServer::ObjectId& id)
+TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(const FtRtecEventChannelAdmin::ObjectId& id)
 {
   ACE_TRY_NEW_ENV {
     PortableServer::POA_var poa= supplier_poa();
 
-    PortableServer::Servant servant = poa->id_to_servant(id
+    PortableServer::Servant servant = poa->id_to_servant(
+      ACE_reinterpret_cast(PortableServer::ObjectId& ,id)
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
+
     POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr obj =
       ACE_reinterpret_cast (
       POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr,
