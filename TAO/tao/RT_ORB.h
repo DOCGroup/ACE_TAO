@@ -21,7 +21,7 @@
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-#include "tao/RTCORBAS.h"
+#include "tao/RTCORBAC.h"
 #include "tao/LocalObject.h"
 #include "ace/Hash_Map_Manager_T.h"
 
