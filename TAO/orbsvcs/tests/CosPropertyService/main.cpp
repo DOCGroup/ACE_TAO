@@ -29,7 +29,7 @@ main (int argc, char *argv [])
     CORBA::Any testval;
 
     // Number of properties in the PropertyaSet
-    ACE_DEBUG ( (LM_DEBUG, "Number of props : %d \n", propSet.get_number_of_properties (TAO_TRY_ENV)) );
+    ACE_DEBUG ( (LM_DEBUG, "Test : Number of props : %d \n", propSet.get_number_of_properties (TAO_TRY_ENV)) );
 
     // prepare a Short and  "define" that in the PropertySet 
     CORBA::Short s = 3;
