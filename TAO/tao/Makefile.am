@@ -962,6 +962,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Default_Acceptor_Filter.cpp \
   PortableServer/Default_Policy_Validator.cpp \
   PortableServer/Default_Servant_Dispatcher.cpp \
+  PortableServer/Direct_Collocation_Upcall_Wrapper.cpp \
   PortableServer/ForwardRequestA.cpp \
   PortableServer/ForwardRequestC.cpp \
   PortableServer/IdAssignmentPolicy.cpp \
@@ -1107,6 +1108,7 @@ nobase_include_HEADERS += \
   PortableServer/Default_Acceptor_Filter.h \
   PortableServer/Default_Policy_Validator.h \
   PortableServer/Default_Servant_Dispatcher.h \
+  PortableServer/Direct_Collocation_Upcall_Wrapper.h \
   PortableServer/Fixed_Array_SArgument_T.cpp \
   PortableServer/Fixed_Array_SArgument_T.h \
   PortableServer/Fixed_Array_SArgument_T.inl \
@@ -1293,6 +1295,7 @@ nobase_include_HEADERS += \
   PortableServer/Var_Size_SArgument_T.cpp \
   PortableServer/Var_Size_SArgument_T.h \
   PortableServer/Var_Size_SArgument_T.inl \
+  PortableServer/get_arg.h \
   PortableServer/poa_macros.h \
   PortableServer/portableserver_export.h
 
