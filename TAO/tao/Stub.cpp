@@ -581,8 +581,8 @@ TAO_Stub::do_dynamic_call (const char *opname,
 
                   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                     {
-                      any->any_owns_data_ = 1;
                       any->value_ = 0;
+                      any->any_owns_data_ = 0;
                     }
                 }
             }
@@ -655,8 +655,8 @@ TAO_Stub::do_dynamic_call (const char *opname,
 
                       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                         {
-                          any->any_owns_data_ = 1;
                           any->value_ = 0;
+                          any->any_owns_data_ = 0;
                         }
                     }
                 }
