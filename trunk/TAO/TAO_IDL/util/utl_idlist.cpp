@@ -87,9 +87,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * Constructor(s)
  */
 
-UTL_IdList::UTL_IdList(Identifier *s, UTL_IdList *cdr)
-    : pd_car_data(s),
-      UTL_List((UTL_List *) cdr)
+UTL_IdList::UTL_IdList (Identifier *s, UTL_IdList *cdr)
+  : pd_car_data (s),
+    UTL_List ((UTL_List *) cdr)
 {
 }
 
@@ -103,51 +103,53 @@ UTL_IdList::UTL_IdList(Identifier *s, UTL_IdList *cdr)
 
 // Copy a list
 UTL_List *
-UTL_IdList::copy()
+UTL_IdList::copy ()
 {
-  if (tail() == NULL)
-    return (UTL_List *) new UTL_IdList(head(), NULL);
-  return (UTL_List *) new UTL_IdList(head(), (UTL_IdList *) tail()->copy());
+  if (tail () == NULL)
+    return (UTL_List *) new UTL_IdList (head (), NULL);
+  return (UTL_List *) new UTL_IdList (head (), (UTL_IdList *) tail ()->copy ());
 }
 
 // Get list item
 Identifier *
-UTL_IdList::head()
+UTL_IdList::head ()
 {
     return pd_car_data;
 }
 
 // Get last item of this list
 Identifier *
-UTL_IdList::last_component()
+UTL_IdList::last_component ()
 {
   if (tail()== NULL)
-    return head();
-  return ((UTL_IdList *) tail())->last_component();
+    return head ();
+  return ((UTL_IdList *) tail ())->last_component ();
 }
 
 // AST Dumping
 void
-UTL_IdList::dump(ostream &o)
+UTL_IdList::dump (ostream &o)
 {
-  UTL_IdListActiveIterator	*i = new UTL_IdListActiveIterator(this);
+  UTL_IdListActiveIterator	*i = new UTL_IdListActiveIterator (this);
   long				first = I_TRUE;
   long				second = I_FALSE;
 
-  while (!(i->is_done())) {
-    if (!first)
-      o << "::";
-    else if (second)
-      first = second = I_FALSE;
-    i->item()->dump(o);
-    if (first) {
-      if (strcmp(i->item()->get_string(), "::") != 0)
-	first = I_FALSE;
-      else
-	second = I_TRUE;
+  while (!(i->is_done ())) 
+    {
+      if (!first)
+        o << "::";
+      else if (second)
+        first = second = I_FALSE;
+      i->item ()->dump (o);
+      if (first) 
+        {
+          if (ACE_OS::strcmp (i->item ()->get_string (), "::") != 0)
+            first = I_FALSE;
+          else
+            second = I_TRUE;
+        }
+      i->next ();
     }
-    i->next();
-  }
 }
 
 /*
@@ -160,8 +162,8 @@ UTL_IdList::dump(ostream &o)
  * Constructor
  */
 
-UTL_IdListActiveIterator::UTL_IdListActiveIterator(UTL_IdList *s)
-    : UTL_ListActiveIterator(s)
+UTL_IdListActiveIterator::UTL_IdListActiveIterator (UTL_IdList *s)
+    : UTL_ListActiveIterator (s)
 {
 }
 
@@ -175,11 +177,11 @@ UTL_IdListActiveIterator::UTL_IdListActiveIterator(UTL_IdList *s)
 
 // Get current item
 Identifier *
-UTL_IdListActiveIterator::item()
+UTL_IdListActiveIterator::item ()
 {
     if (source == NULL)
         return NULL;
-    return ((UTL_IdList *) source)->head();
+    return ((UTL_IdList *) source)->head ();
 }
 
 /*

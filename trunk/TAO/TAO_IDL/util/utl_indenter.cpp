@@ -73,8 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 /*
  * Constructors
  */
-UTL_Indenter::UTL_Indenter()
-	    : pd_indent_level(0)
+UTL_Indenter::UTL_Indenter ()
+  : pd_indent_level (0)
 {
 }
 
@@ -88,21 +88,21 @@ UTL_Indenter::UTL_Indenter()
 
 // Reset indentation level
 void
-UTL_Indenter::reset()
+UTL_Indenter::reset ()
 {
   pd_indent_level = 0;
 }
 
 // Increase indentation level
 void
-UTL_Indenter::increase()
+UTL_Indenter::increase ()
 {
   pd_indent_level++;
 }
 
 // Decrease indentation level
 void
-UTL_Indenter::decrease()
+UTL_Indenter::decrease ()
 {
   if (pd_indent_level > 0)
     pd_indent_level--;
@@ -110,12 +110,22 @@ UTL_Indenter::decrease()
 
 // Produce white space to indent to current indentation level on ostream o
 void
-UTL_Indenter::skip_to(ostream &o)
+UTL_Indenter::skip_to (ostream &o)
 {
   long i;
 
   for (i = 0; i < pd_indent_level; i++)
     o << "  ";
+}
+
+// Produce white space to indent to current indentation level on ostream o
+void
+UTL_Indenter::skip_to (FILE *fp)
+{
+  long i;
+
+  for (i = 0; i < pd_indent_level; i++)
+    ACE_OS::fprintf (fp, "  ");
 }
 
 /*

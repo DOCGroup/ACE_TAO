@@ -81,40 +81,63 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 class	UTL_String
 {
+  // =TITLE
+  //  UTL_String
+  // =DESCRIPTION
+  //  string class to store identifiers
 public:
-  // Operations
+  // =Operations
 
-  // Constructor(s)
-  UTL_String();
-  UTL_String(char *str);
-  UTL_String(unsigned long maxlen);
-  UTL_String(UTL_String *s);
-  virtual ~UTL_String() {}
+  UTL_String (void);
+  // default constructor
 
-  // AST Dumping
-  virtual void		dump(ostream &o);
+  UTL_String (char *str);
+  // construct from a char *
 
-  // Other Operations
+  UTL_String (unsigned long maxlen);
+  // constructor with an initial string length
 
+  UTL_String (UTL_String *s);
+  // construct using a pointer to UTL_String
+
+  virtual ~UTL_String (void) {}
+  // destructor 
+
+  // =AST Dumping
+
+  virtual void dump (ostream &o);
+  // dump to the ostream
+
+  // =Other Operations
+
+  char *get_string (void);
   // Get contents of utl_string
-  char			*get_string();
 
+  char *get_canonical_rep (void);
   // Get canonical representation. This is (implemented as) the all upper
   // case corresponding string
-  char			*get_canonical_rep();
 
+  virtual long compare (UTL_String *s);
   // Compare two String *
-  virtual long		compare(UTL_String *s);
 
 private:
   // Data
-  char		*p_str;		// Storage for characters
-  char		*c_str;		// Canonicalized string
-  unsigned long	len;		// How long is string
-  unsigned long alloced;	// How much allocated
+  char		*p_str;		
+  // Storage for characters
 
-  // Operations
-  void		canonicalize();	// Compute canonical representation
+  char		*c_str;		
+  // Canonicalized string
+
+  unsigned long	len;		
+  // How long is string
+
+  unsigned long alloced;	
+  // How much allocated
+
+  // =Private helper operations
+
+  void canonicalize (void);	
+  // Compute canonical representation
 };
 
 #endif           // _STRING_STRING_HH

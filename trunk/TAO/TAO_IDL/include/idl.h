@@ -82,6 +82,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include	<sys/types.h>		// POSIX standard types
 
+#include        "ace/OS.h"              // Most important ACE include file
+
 #include	"idl_narrow.h"		// IDL Narrowing mechanism
 
 #include	"idl_defines.h"	// Constants for IDL compiler

@@ -83,7 +83,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"ast_field.h"
 
 
-class	AST_Argument : public virtual AST_Field
+class AST_Argument : public virtual AST_Field
 {
 public:
   // Define enum with values denoting argument passing directions

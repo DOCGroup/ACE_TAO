@@ -119,7 +119,7 @@ UTL_ScopeStack::push(UTL_Scope *el)
     for (i = 0; i < ostack_data_nalloced; i++)
       tmp[i] = pd_stack_data[i];
 
-    delete pd_stack_data;
+    delete []pd_stack_data;
     pd_stack_data = tmp;
   }
 

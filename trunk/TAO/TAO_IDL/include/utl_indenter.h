@@ -79,20 +79,35 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: in CFE in dumping the AST
 */
 
-class	UTL_Indenter
+class UTL_Indenter
 {
+  // =TITLE
+  //  UTL_Indenter
+  // =DESCRIPTION
+  //  useful in generating indented output
 public:
   // Operations
 
-  // Constructor(s)
   UTL_Indenter();		// constructor
+  // Constructor(s)
+
   virtual ~UTL_Indenter() {}
+  // destructor
 
-  void reset();			// Reset indentation level to 0
-  void increase();		// Increase indentation level
-  void decrease();		// Decrease indentation level
+  void reset();			
+  // Reset indentation level to 0
 
-  void skip_to(ostream &o);	// Skip to indentation level stop
+  void increase();		
+  // Increase indentation level
+
+  void decrease();		
+  // Decrease indentation level
+
+  void skip_to (ostream &o);	
+  // Skip to indentation level stop
+
+  void skip_to (FILE *fp);
+  // skip to indentation level stop
 
 private:
   // Data

@@ -955,7 +955,7 @@ UTL_Scope::add_to_referenced(AST_Decl *e, idl_bool recursive)
     for (i = 0; i < oreferenced_allocated; i++)
       tmp[i] = pd_referenced[i];
 
-    delete pd_referenced;
+    delete []pd_referenced;
 
     pd_referenced = tmp;
   }
@@ -993,7 +993,7 @@ UTL_Scope::add_to_scope(AST_Decl *e)
     for (i = 0; i < odecls_allocated; i++)
       tmp[i] = pd_decls[i];
 
-    delete pd_decls;
+    delete []pd_decls;
 
     pd_decls = tmp;
   }
@@ -1022,7 +1022,7 @@ UTL_Scope::add_to_local_types(AST_Decl *e)
     for (i = 0; i < olocals_allocated; i++)
       tmp[i] = pd_local_types[i];
 
-    delete pd_local_types;
+    delete []pd_local_types;
 
     pd_local_types = tmp;
   }
