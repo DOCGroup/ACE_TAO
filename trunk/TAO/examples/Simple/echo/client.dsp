@@ -142,7 +142,7 @@ SOURCE=.\Echo.idl
 !IF  "$(CFG)" == "Simple Echo Client - Win32 Release"
 
 USERDEP__ECHO_="..\..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Echo.idl
 InputName=Echo
 
@@ -180,7 +180,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Simple Echo Client - Win32 Debug"
 
 USERDEP__ECHO_="..\..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Echo.idl
 InputName=Echo
 

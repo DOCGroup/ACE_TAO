@@ -3,6 +3,102 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "Callback Quoter Consumer"=.\Callback_Quoter\Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Callback Quoter Notifier"=.\Callback_Quoter\Notifier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Callback Quoter Supplier"=.\Callback_Quoter\Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Event_Comm Consumer"=.\Event_Comm\Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Event_Comm Notifier"=.\Event_Comm\Notifier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Event_Comm Supplier"=.\Event_Comm\Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "OBV Typed Events Client"=.\OBV\Typed_Events\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "OBV Typed Events Server"=.\OBV\Typed_Events\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "POA Adapter Activator Server"=.\POA\Adapter_Activator\server.dsp - Package Owner=<4>
 
 Package=<5>
@@ -322,6 +418,30 @@ Package=<4>
 ###############################################################################
 
 Project: "Simple Bank Server"=.\Simple\bank\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Simple Chat Client"=.\Simple\chat\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Simple Chat Server"=.\Simple\chat\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
