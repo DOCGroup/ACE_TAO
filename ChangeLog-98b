@@ -1,4 +1,10 @@
- 
+Sat Jul 18 21:11:52 1998  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/platform_hpux_aCC.GNU: Added +W829 to suppress
+	  "string literal to char * is deprecated".  I was going to fix these
+	  in ACE, but TAO just wore me down... ;-)
+
+Sat Jul 18         ??????????? 
 
 	* tests/Upgradable_RW_Test.cpp: Changed the time measurement
 	  completely. Before we meassured end to end. Now we meassure
