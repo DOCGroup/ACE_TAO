@@ -1,3 +1,9 @@
+Mon Feb  7 08:57:21 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * docs/implrepo/usersguide.html: As Karl Proese 
+          [karl.proese@mchp.siemens.de] pointed out to me, I was still 
+          using -ORBUseImplRepo instead of -ORBUseIMR.  Fixed.
+
 Sat Feb 05 04:24:09 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Leader_Follower: The leader followers class did not support
