@@ -6,8 +6,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # TAO_ROOT
 
-override TAO_IDLFLAGS += -I$(TAO_ROOT)/orbsvcs/orbsvcs -Ge 1
-
 # The following lines tell the souce code that the trading
 # service is available.
 
@@ -45,6 +43,7 @@ GENERIC_FACTORY_OBJS = $(COMMON_OBJS) Generic_Factory.o Generic_Factory_i.o
 
 BIN2 = client server Factory_Finder Generic_Factory
 
+TAO_IDLFLAGS += -I$(TAO_ROOT)/orbsvcs/orbsvcs -Ge 1
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------

@@ -1,3 +1,13 @@
+Mon Feb 19 09:59:01 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* examples/Quoter/Makefile:
+	  TAO_IDLFLAGS was redefined, loosing all the global settings.
+
+	* tao/Object_Loader.h:
+	  Must include "tao/Exception.h" to satisfy more strict ANSI-C++
+	  compilers: the new throw spec uses CORBA::SystemException, so a
+	  forward declaration is not enough.
+
 Sun Feb 18 15:01:09 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Object_Loader.h:
