@@ -35,6 +35,9 @@ LB_Basic_Test::destroy (void)
     }
   ACE_ENDTRY;
 
+  // @@ Jai, you're returning the same return value regardless of
+  //    whether or not an error occurred.  By convention, return zero
+  //    on success or non-zero on failure (typically -1).
   return 1;
 }
 
