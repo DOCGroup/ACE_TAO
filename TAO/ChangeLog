@@ -1,3 +1,28 @@
+Tue Dec  7 18:16:14 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.h:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/server.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/test_i.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/test.idl:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.h:
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/test.cpp:
+        
+          Changes to IFR test code and to associated perl scripts to both
+          fix bugs in test executions and minimize output for successful
+          test executions. These changes are in preparation for adding
+          the tests to the list of automatically executed tests in our
+          nightly builds.
+
 Tue Dec  7 18:10:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:

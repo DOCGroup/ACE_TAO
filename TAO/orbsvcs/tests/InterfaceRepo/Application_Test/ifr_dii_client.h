@@ -73,10 +73,13 @@ private:
   CORBA::String_var op_name;
   // Things that we will be searching for in the repository.
 
-  CORBA::Boolean lookup_by_name_;
+  bool lookup_by_name_;
   // Are we looking up info on the target object by querying the
   // IFR directly with the target's name, or indirectly
   // by calling _get_interface() on the target object?
+  
+  bool debug_;
+  // Display results and debugging info?
 };
 
 #endif /* IFR_DII_CLIENT_H */
