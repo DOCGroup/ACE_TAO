@@ -70,7 +70,7 @@ ACE_IOStream<STREAM>::eof (void) const
 
   // If recv_n() didn't fail or failed because of timeout we're not at
   // EOF.
-  return rval == -1 && ! this->streambuf_->timeout ();
+  return rval == 0  ||  (rval == -1 && ! this->streambuf_->timeout ()(;
 }
 
 template <class STREAM> ACE_INLINE
