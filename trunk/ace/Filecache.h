@@ -323,9 +323,10 @@ private:
   ACE_TCHAR *tempname_;
   ACE_TCHAR filename_[MAXPATHLEN + 1];
 
-  /// mmap_ holds the memory mapped version of the temporary file.
-  /// handle_ is the descriptor to the temporary file.
+  /// Holds the memory mapped version of the temporary file.
   ACE_Mem_Map mmap_;
+
+  /// The descriptor to the temporary file.
   ACE_HANDLE handle_;
 
   /// Used to compare against the real file to test if an update is needed.
@@ -342,9 +343,10 @@ private:
   /// Security attribute object.
   LPSECURITY_ATTRIBUTES sa_;
 
-  /// lock_ provides a bookkeeping mechanism for users of this object.
-  /// junklock_ is the default initializer
+  /// The default initializer
   ACE_SYNCH_RW_MUTEX junklock_;
+
+  /// Provides a bookkeeping mechanism for users of this object.
   ACE_SYNCH_RW_MUTEX &lock_;
 };
 
