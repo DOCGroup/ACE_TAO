@@ -55,7 +55,7 @@ private:
   // back to hack this with casting.
 };
 
-template <class T, class LOCK>
+template <class T, class ACE_LOCK>
 class ACE_Cached_Allocator : public ACE_New_Allocator
 {
 public:
@@ -77,7 +77,7 @@ private:
   // remember how we allocate the memory in the first place so
   // we can clear things up later.
 
-  ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<T>, LOCK> free_list_;
+  ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<T>, ACE_LOCK> free_list_;
   // Maintain a cached memory free list.
 };
 
@@ -201,10 +201,10 @@ private:
 };
 
 // Forward declaration.
-template <ACE_MEM_POOL_1, class LOCK>
+template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Malloc_Iterator;
 
-template <ACE_MEM_POOL_1, class LOCK>
+template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Malloc
   // = TITLE
   //     Define a C++ class that uses parameterized types to provide
@@ -213,10 +213,10 @@ class ACE_Malloc
   //
   // = DESCRIPTION
   //     This class can be configured flexibly with different
-  //     MEMORY_POOL strategies and different types of LOCK
+  //     MEMORY_POOL strategies and different types of ACE_LOCK
   //     strategies.
 {
-friend class ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>;
+friend class ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>;
 public:
   typedef ACE_MEM_POOL MEMORY_POOL;
   typedef ACE_MEM_POOL_OPTIONS MEMORY_POOL_OPTIONS;
@@ -372,11 +372,11 @@ private:
   MEMORY_POOL memory_pool_;
   // Pool of memory used by ACE_Malloc 
 
-  LOCK lock_;
+  ACE_LOCK lock_;
   // Local that ensures mutual exclusion.
 };
 
-template <ACE_MEM_POOL_1, class LOCK>
+template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Malloc_Iterator
   // = TITLE
   //     Iterator for names stored in Malloc'd memory.
@@ -386,7 +386,7 @@ class ACE_Malloc_Iterator
 {
 public:
   // = Initialization method.
-  ACE_Malloc_Iterator (ACE_Malloc<ACE_MEM_POOL_2, LOCK> &malloc, const char *name = 0);
+  ACE_Malloc_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc, const char *name = 0);
   // if <name> = 0 it will iterate through everything else only
   // through those entries whose <name> match
 
@@ -417,13 +417,13 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Malloc<ACE_MEM_POOL_2, LOCK> &malloc_;
+  ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc_;
   // Malloc we are iterating over.
 
   ACE_Name_Node *curr_;
   // Keeps track of how far we've advanced...
 
-  ACE_Read_Guard<LOCK> guard_;
+  ACE_Read_Guard<ACE_LOCK> guard_;
   // Lock Malloc for the lifetime of the iterator.
 
   const char *name_;

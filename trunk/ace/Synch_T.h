@@ -23,7 +23,7 @@
 // Forward decl
 class ACE_Time_Value;
 
-template <class LOCKING_MECHANISM>
+template <class ACE_LOCKING_MECHANISM>
 class ACE_Lock_Adapter : public ACE_Lock
   // = TITLE
 
@@ -37,11 +37,9 @@ class ACE_Lock_Adapter : public ACE_Lock
   //     This class uses a form of the Adapter pattern.
 {
 public:
-  typedef LOCKING_MECHANISM LOCK;
+  typedef ACE_LOCKING_MECHANISM ACE_LOCK;
 
-  virtual int remove (void);
-  // Explicitly destroy the lock.
-
+  // = Lock accessors.
   virtual int acquire (void);
   // Block the thread until the lock is acquired.
 
@@ -69,12 +67,15 @@ public:
   // Conditionally acquire a write lock.  If the locking mechanism
   // doesn't support read locks then this just calls <acquire>.
 
+  virtual int remove (void);
+  // Explicitly destroy the lock.
+
 private:
-  LOCKING_MECHANISM lock_;
+  ACE_LOCKING_MECHANISM lock_;
   // The concrete locking mechanism that all the methods delegate to.
 };
 
-template <class LOCK, class TYPE>
+template <class ACE_LOCK, class TYPE>
 class ACE_Test_and_Set : public ACE_Event_Handler
 {
   // = TITLE
@@ -107,11 +108,11 @@ private:
   TYPE is_set_;
   // Keeps track of our state.
 
-  LOCK lock_;
+  ACE_LOCK lock_;
   // Protect the state from race conditions.
 };
 
-template <class LOCK, class TYPE>
+template <class ACE_LOCK, class TYPE>
 class ACE_Atomic_Op
   // = TITLE
   //     Transparently parameterizes synchronization into basic
@@ -123,11 +124,15 @@ class ACE_Atomic_Op
   //     templatized version of the Decorator pattern from the GoF book.
 {
 public:
+  // = Initialization methods.
+
   ACE_Atomic_Op (void);
   // Initialize <count_> to 0.
 
   ACE_Atomic_Op (TYPE c);
   // Initialize <count_> to c.
+
+  // = Accessors.
 
   TYPE operator++ (void);
   // Atomically pre-increment <count_>.
@@ -165,7 +170,7 @@ public:
   void operator= (const TYPE i);
   // Atomically assign rhs to <count_>.
 
-  void operator= (const ACE_Atomic_Op<LOCK, TYPE> &rhs);
+  void operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs);
   // Atomically assign <rhs> to <count_>.
 
   operator TYPE () const;
@@ -177,11 +182,11 @@ public:
   // ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  ACE_Atomic_Op (const ACE_Atomic_Op<LOCK, TYPE> &);
+  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_LOCK, TYPE> &);
   // Manage copying...
 
 private:
-  LOCK lock_;
+  ACE_LOCK lock_;
   // Type of synchronization mechanism.
 
   TYPE value_;
@@ -202,6 +207,8 @@ class ACE_TSS
   //     thread-specific storage.
 {
 public:
+  // = Initialization and termination methods.
+
   ACE_TSS (TYPE *ts_obj = 0);
   // If caller has passed us a non-NULL ts_obj *, then we'll just use
   // this to initialize the thread-specific value.  Thus, subsequent
@@ -211,6 +218,8 @@ public:
 
   virtual ~ACE_TSS (void);
   // Deregister with thread-key administration.
+
+  // = Accessors.
 
   TYPE *ts_object (void) const;
   // Get the thread-specific object for the key associated with this
@@ -231,6 +240,8 @@ public:
 
   virtual TYPE *make_TSS_TYPE (void) const;
   // hook for construction parameters.
+
+  // = Utility methods.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -284,20 +295,21 @@ public:
 #define ACE_NULL_SYNCH ACE_Null_Mutex, ACE_Null_Condition_Mutex
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
-template <class LOCK>
+template <class ACE_LOCK>
 class ACE_Guard
   // = TITLE
   //     This data structure is meant to be used within a method or
   //     function...  It performs automatic aquisition and release of
-  //     a parameterized synchronization object <LOCK>.
+  //     a parameterized synchronization object <ACE_LOCK>.
   //
   // = DESCRIPTION
-  //     The <LOCK> class given as an actual parameter must provide at
+  //     The <ACE_LOCK> class given as an actual parameter must provide at
   //     the very least the <acquire>, <tryacquire>, <release>, and
   //     <remove> methods.
 {
 public:
-  ACE_Guard (LOCK &l, int block = 1): lock_ (&l)
+  // = Initialization and termination methods.
+  ACE_Guard (ACE_LOCK &l, int block = 1): lock_ (&l)
     {
       this->owner_ = block ? this->acquire () : this->tryacquire ();
     }
@@ -307,12 +319,7 @@ public:
   ~ACE_Guard (void) { if (this->owner_ != -1) this->release (); }
   // Implicitly release the lock.
 
-  int locked (void) { return this->owner_ != -1; }
-  // 1 if locked, 0 if couldn't acquire the lock
-  // (errno will contain the reason for this).
-
-  int remove (void) { return this->release (); }
-  // Explicitly release the lock.
+  // = Lock accessors.
 
   int acquire (void) { return this->owner_ = this->lock_->acquire (); }
   // Explicitly acquire the lock.
@@ -332,6 +339,14 @@ public:
     }
   // Explicitly release the lock, but only if it is held!
 
+  // = Utility methods.
+  int locked (void) { return this->owner_ != -1; }
+  // 1 if locked, 0 if couldn't acquire the lock
+  // (errno will contain the reason for this).
+
+  int remove (void) { return this->release (); }
+  // Explicitly release the lock.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -339,36 +354,40 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  ACE_Guard (LOCK *lock): lock_ (lock) {}
+  ACE_Guard (ACE_LOCK *lock): lock_ (lock) {}
   // Helper, meant for subclass only.
 
-  LOCK *lock_;
-  // Pointer to the LOCK we're guarding.
+  ACE_LOCK *lock_;
+  // Pointer to the ACE_LOCK we're guarding.
 
   int owner_;
   // Keeps track of whether we acquired the lock or failed.
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Guard<LOCK> &);
-  ACE_Guard (const ACE_Guard<LOCK> &);
+  void operator= (const ACE_Guard<ACE_LOCK> &);
+  ACE_Guard (const ACE_Guard<ACE_LOCK> &);
 };
 
-template <class LOCK>
-class ACE_Write_Guard : public ACE_Guard<LOCK>
+template <class ACE_LOCK>
+class ACE_Write_Guard : public ACE_Guard<ACE_LOCK>
   // = TITLE
   //     This class is similar to class <ACE_Guard>, though it
   //     acquires/releases a write lock automatically (naturally, the
-  //     <LOCK> it is instantiated with must support the appropriate
+  //     <ACE_LOCK> it is instantiated with must support the appropriate
   //     API).
 {
 public:
-  ACE_Write_Guard (LOCK &m, int block = 1): ACE_Guard<LOCK> (&m) 
+  // = Initialization method.
+
+  ACE_Write_Guard (ACE_LOCK &m, int block = 1): ACE_Guard<ACE_LOCK> (&m) 
     { 
       this->owner_ = block ? this->acquire_write () : this->tryacquire_write ();
     }
   // Implicitly and automatically acquire (or try to acquire) a write
   // lock.
+
+  // = Lock accessors.
 
   int acquire_write (void) { return this->owner_ = this->lock_->acquire_write (); }
   // Explicitly acquire the write lock.
@@ -382,6 +401,8 @@ public:
   int tryacquire (void) { return this->owner_ = this->lock_->tryacquire_write (); }
   // Conditionally acquire the write lock (i.e., won't block).
 
+  // Utility methods.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -389,21 +410,25 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
-template <class LOCK>
-class ACE_Read_Guard : public ACE_Guard<LOCK>
+template <class ACE_LOCK>
+class ACE_Read_Guard : public ACE_Guard<ACE_LOCK>
   // = TITLE
   //     This class is similar to class <ACE_Guard>, though it
   //     acquires/releases a read lock automatically (naturally, the
-  //     <LOCK> it is instantiated with must support the appropriate
+  //     <ACE_LOCK> it is instantiated with must support the appropriate
   //     API).
 {
 public:
-  ACE_Read_Guard (LOCK &m, int block = 1): ACE_Guard<LOCK> (&m) 
+  // = Initialization methods.
+
+  ACE_Read_Guard (ACE_LOCK &m, int block = 1): ACE_Guard<ACE_LOCK> (&m) 
     { 
       this->owner_ = block ? this->acquire_read () : this->tryacquire_read ();
     }
   // Implicitly and automatically acquire (or try to acquire) a read
   // lock.
+
+  // = Lock accessors.
 
   int acquire_read (void) { return this->owner_ = this->lock_->acquire_read (); }
   // Explicitly acquire the read lock.
@@ -416,6 +441,8 @@ public:
 
   int tryacquire (void) { return this->owner_ = this->lock_->tryacquire_read (); }
   // Conditionally acquire the read lock (i.e., won't block).
+
+  // = Utility methods.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -433,7 +460,7 @@ public:
 #else /* ACE platform supports some form of threading and */
       // thread-specific storage.
 
-template <class LOCK>
+template <class ACE_LOCK>
 class ACE_TSS_Guard
   // = TITLE
   //     This data structure is meant to be used within a method or
@@ -442,14 +469,15 @@ class ACE_TSS_Guard
   //     is released even if a thread exits via "thr_exit()"!
 {
 public:
-  ACE_TSS_Guard (LOCK &lock, int block = 1);
+  // = Initialization and termination methods.
+
+  ACE_TSS_Guard (ACE_LOCK &lock, int block = 1);
   // Implicitly and automatically acquire the thread-specific lock.
 
   ~ACE_TSS_Guard (void);
   // Implicitly release the thread-specific lock.
 
-  int remove (void);
-  // Explicitly release the thread-specific lock.
+  // = Lock accessors.
 
   int acquire (void);
   // Explicitly acquire the thread-specific lock.
@@ -459,6 +487,10 @@ public:
   // block).
 
   int release (void);
+  // Explicitly release the thread-specific lock.
+
+  // = Utility methods.
+  int remove (void);
   // Explicitly release the thread-specific lock.
 
   void dump (void) const;
@@ -482,21 +514,25 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_TSS_Guard<LOCK> &);
-  ACE_TSS_Guard (const ACE_TSS_Guard<LOCK> &);
+  void operator= (const ACE_TSS_Guard<ACE_LOCK> &);
+  ACE_TSS_Guard (const ACE_TSS_Guard<ACE_LOCK> &);
 };
 
-template <class LOCK>
-class ACE_TSS_Write_Guard : public ACE_TSS_Guard<LOCK>
+template <class ACE_LOCK>
+class ACE_TSS_Write_Guard : public ACE_TSS_Guard<ACE_LOCK>
   // = TITLE
   //     This class is similar to class ACE_TSS_Guard, though it
   //     acquires/releases a write-lock automatically (naturally, the
-  //     LOCK it is instantiated with must support the appropriate
+  //     ACE_LOCK it is instantiated with must support the appropriate
   //     API).
 {
 public:
-  ACE_TSS_Write_Guard (LOCK &lock, int block = 1);
+  // = Initialization method.
+
+  ACE_TSS_Write_Guard (ACE_LOCK &lock, int block = 1);
   // Implicitly and automatically acquire the thread-specific write lock.
+
+  // = Lock accessors.
 
   int acquire_write (void);
   // Explicitly acquire the thread-specific write lock.
@@ -510,6 +546,8 @@ public:
   int tryacquire (void);
   // Conditionally acquire the thread-specific write lock (i.e., won't block).
 
+  // = Utility methods.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -517,18 +555,20 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
-template <class LOCK>
-class ACE_TSS_Read_Guard : public ACE_TSS_Guard<LOCK>
+template <class ACE_LOCK>
+class ACE_TSS_Read_Guard : public ACE_TSS_Guard<ACE_LOCK>
   // = TITLE
   //     This class is similar to class <ACE_TSS_Guard>, though it
   //     acquires/releases a read lock automatically (naturally, the
-  //     <LOCK> it is instantiated with must support the appropriate
-  //     API).
+  //     <ACE_LOCK> it is instantiated with must support the
+  //     appropriate API).
 {
 public:
-  ACE_TSS_Read_Guard (LOCK &lock, int block = 1);
+  // = Initialization method.
+  ACE_TSS_Read_Guard (ACE_LOCK &lock, int block = 1);
   // Implicitly and automatically acquire the thread-specific read lock.
 
+  // = Lock accessors.
   int acquire_read (void);
   // Explicitly acquire the thread-specific read lock.
 
@@ -536,11 +576,14 @@ public:
   // Explicitly acquire the thread-specific read lock.
 
   int tryacquire_read (void);
-  // Conditionally acquire the thread-specific read lock (i.e., won't block).
+  // Conditionally acquire the thread-specific read lock (i.e., won't
+  // block).
 
   int tryacquire (void);
-  // Conditionally acquire the thread-specific read lock (i.e., won't block).
+  // Conditionally acquire the thread-specific read lock (i.e., won't
+  // block).
 
+  // = Utility methods.
   void dump (void) const;
   // Dump the state of an object.
 
@@ -571,6 +614,7 @@ class ACE_Condition
   //
 {
 public:
+  // = Initialiation and termination methods.
   ACE_Condition (MUTEX &m, int type = USYNC_THREAD, 
 		 LPCTSTR name = 0, void *arg = 0);
   // Initialize the condition variable.
@@ -578,9 +622,7 @@ public:
   ~ACE_Condition (void);
   // Implicitly destroy the condition variable.     
 
-  int remove (void);
-  // Explicitly destroy the condition variable.     
-
+  // = Lock accessors.
   int wait (const ACE_Time_Value *abstime);
   // Block on condition, or until absolute time-of-day has passed.  If
   // abstime == 0 use "blocking" <wait> semantics.  Else, if <abstime>
@@ -603,6 +645,10 @@ public:
 
   int broadcast (void);
   // Signal *all* waiting threads.
+
+  // = Utility methods.
+  int remove (void);
+  // Explicitly destroy the condition variable.     
 
   MUTEX &mutex (void);
   // Returns a reference to the underlying mutex_;
@@ -645,6 +691,7 @@ class ACE_Thread_Condition : public ACE_Condition<MUTEX>
   //
 {
 public:
+  // = Initialization method.
   ACE_Thread_Condition (MUTEX &m, LPCTSTR name = 0, void *arg = 0);
 
   void dump (void) const;

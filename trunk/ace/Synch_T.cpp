@@ -14,32 +14,32 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Atomic_Op)
 
-template <class LOCK, class TYPE>
-ACE_Test_and_Set<LOCK, TYPE>::ACE_Test_and_Set (TYPE initial_value)
+template <class ACE_LOCK, class TYPE>
+ACE_Test_and_Set<ACE_LOCK, TYPE>::ACE_Test_and_Set (TYPE initial_value)
   : is_set_ (initial_value)
 {
 }
 
 // Returns true if we are done, else false.
-template <class LOCK, class TYPE> TYPE 
-ACE_Test_and_Set<LOCK, TYPE>::is_set (void) const
+template <class ACE_LOCK, class TYPE> TYPE 
+ACE_Test_and_Set<ACE_LOCK, TYPE>::is_set (void) const
 {
-  ACE_GUARD_RETURN (LOCK, ace_mon, (LOCK &) this->lock_, this->is_set_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->lock_, this->is_set_);
   return this->is_set_;
 }
 
 // Sets the <is_set_> status.
-template <class LOCK, class TYPE> TYPE
-ACE_Test_and_Set<LOCK, TYPE>::set (TYPE status)
+template <class ACE_LOCK, class TYPE> TYPE
+ACE_Test_and_Set<ACE_LOCK, TYPE>::set (TYPE status)
 {
-  ACE_GUARD_RETURN (LOCK, ace_mon, this->lock_, this->is_set_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, this->is_set_);
   TYPE o_status = this->is_set_;
   this->is_set_ = status;
   return o_status;
 }
 
-template <class LOCK, class TYPE> int 
-ACE_Test_and_Set<LOCK, TYPE>::handle_signal (int, siginfo_t *, ucontext_t *)
+template <class ACE_LOCK, class TYPE> int 
+ACE_Test_and_Set<ACE_LOCK, TYPE>::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   // By setting this to 1, we are "signaling" to anyone calling
   // <is_set> or or <set> that the "test and set" object is in the
@@ -48,36 +48,36 @@ ACE_Test_and_Set<LOCK, TYPE>::handle_signal (int, siginfo_t *, ucontext_t *)
   return 0;
 }
 
-template <class LOCK, class TYPE> void
-ACE_Atomic_Op<LOCK, TYPE>::dump (void) const
+template <class ACE_LOCK, class TYPE> void
+ACE_Atomic_Op<ACE_LOCK, TYPE>::dump (void) const
 {
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::dump");
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->lock_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-template <class LOCK, class TYPE>
-ACE_Atomic_Op<LOCK, TYPE>::ACE_Atomic_Op (void)
+template <class ACE_LOCK, class TYPE>
+ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (void)
   : value_ (0)
 { 
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::ACE_Atomic_Op");
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
 }
 
-template <class LOCK, class TYPE>
-ACE_Atomic_Op<LOCK, TYPE>::ACE_Atomic_Op (TYPE c) 
+template <class ACE_LOCK, class TYPE>
+ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (TYPE c) 
 { 
-// ACE_TRACE ("ACE_Atomic_Op<LOCK, TYPE>::ACE_Atomic_Op");
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
   this->value_ = c; 
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Guard)
 
-template <class LOCK> void
-ACE_Guard<LOCK>::dump (void) const
+template <class ACE_LOCK> void
+ACE_Guard<ACE_LOCK>::dump (void) const
 {
-// ACE_TRACE ("ACE_Guard<LOCK>::dump");
+// ACE_TRACE ("ACE_Guard<ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "lock_ = %x\n", this->lock_));
@@ -87,20 +87,20 @@ ACE_Guard<LOCK>::dump (void) const
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Write_Guard)
 
-template <class LOCK> void
-ACE_Write_Guard<LOCK>::dump (void) const
+template <class ACE_LOCK> void
+ACE_Write_Guard<ACE_LOCK>::dump (void) const
 {
-// ACE_TRACE ("ACE_Write_Guard<LOCK>::dump");
-  ACE_Guard<LOCK>::dump ();
+// ACE_TRACE ("ACE_Write_Guard<ACE_LOCK>::dump");
+  ACE_Guard<ACE_LOCK>::dump ();
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Read_Guard)
 
-template <class LOCK> void
-ACE_Read_Guard<LOCK>::dump (void) const
+template <class ACE_LOCK> void
+ACE_Read_Guard<ACE_LOCK>::dump (void) const
 {
-// ACE_TRACE ("ACE_Read_Guard<LOCK>::dump");
-  ACE_Guard<LOCK>::dump ();
+// ACE_TRACE ("ACE_Read_Guard<ACE_LOCK>::dump");
+  ACE_Guard<ACE_LOCK>::dump ();
 }
 
 #if defined (ACE_HAS_THREADS)
@@ -461,10 +461,10 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_TSS_Guard)
 
-template <class LOCK> void
-ACE_TSS_Guard<LOCK>::dump (void) const
+template <class ACE_LOCK> void
+ACE_TSS_Guard<ACE_LOCK>::dump (void) const
 {
-// ACE_TRACE ("ACE_TSS_Guard<LOCK>::dump");
+// ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "key_ = %d", this->key_));
@@ -472,39 +472,39 @@ ACE_TSS_Guard<LOCK>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-template <class LOCK> void
-ACE_TSS_Guard<LOCK>::init_key (void)
+template <class ACE_LOCK> void
+ACE_TSS_Guard<ACE_LOCK>::init_key (void)
 {
-// ACE_TRACE ("ACE_TSS_Guard<LOCK>::init_key");
+// ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::init_key");
 
   this->key_ = ACE_OS::NULL_key;
   ACE_Thread::keycreate (&this->key_, 
 #if defined (ACE_HAS_THR_C_DEST)
                          &ACE_TSS_C_cleanup,
 #else
-			 &ACE_TSS_Guard<LOCK>::cleanup,
+			 &ACE_TSS_Guard<ACE_LOCK>::cleanup,
 #endif /* ACE_HAS_THR_C_DEST */
 			 (void *) this);
 }
 
-template <class LOCK> 
-ACE_TSS_Guard<LOCK>::ACE_TSS_Guard (void)
+template <class ACE_LOCK> 
+ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard (void)
 {
-// ACE_TRACE ("ACE_TSS_Guard<LOCK>::ACE_TSS_Guard");
+// ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard");
   this->init_key ();
 }
 
-template <class LOCK> int
-ACE_TSS_Guard<LOCK>::release (void)
+template <class ACE_LOCK> int
+ACE_TSS_Guard<ACE_LOCK>::release (void)
 {
-// ACE_TRACE ("ACE_TSS_Guard<LOCK>::release");
+// ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::release");
 
-  ACE_Guard<LOCK> *guard = 0;
+  ACE_Guard<ACE_LOCK> *guard = 0;
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
   ACE_Thread::getspecific (this->key_, (void **) &tss_adapter);
-  guard = (ACE_Guard<LOCK> *)tss_adapter->ts_obj_;
+  guard = (ACE_Guard<ACE_LOCK> *)tss_adapter->ts_obj_;
 #else
   ACE_Thread::getspecific (this->key_, (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
@@ -512,17 +512,17 @@ ACE_TSS_Guard<LOCK>::release (void)
   return guard->release ();
 }
 
-template <class LOCK> int
-ACE_TSS_Guard<LOCK>::remove (void)
+template <class ACE_LOCK> int
+ACE_TSS_Guard<ACE_LOCK>::remove (void)
 {
-// ACE_TRACE ("ACE_TSS_Guard<LOCK>::remove");
+// ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::remove");
 
-  ACE_Guard<LOCK> *guard = 0;
+  ACE_Guard<ACE_LOCK> *guard = 0;
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
   ACE_Thread::getspecific (this->key_, (void **) &tss_adapter);
-  guard = (ACE_Guard<LOCK> *)tss_adapter->ts_obj_;
+  guard = (ACE_Guard<ACE_LOCK> *)tss_adapter->ts_obj_;
 #else
   ACE_Thread::getspecific (this->key_, (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
@@ -530,17 +530,17 @@ ACE_TSS_Guard<LOCK>::remove (void)
   return guard->remove ();
 }
 
-template <class LOCK> 
-ACE_TSS_Guard<LOCK>::~ACE_TSS_Guard (void)
+template <class ACE_LOCK> 
+ACE_TSS_Guard<ACE_LOCK>::~ACE_TSS_Guard (void)
 {
-// ACE_TRACE ("ACE_TSS_Guard<LOCK>::~ACE_TSS_Guard");
+// ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::~ACE_TSS_Guard");
 
-  ACE_Guard<LOCK> *guard = 0;
+  ACE_Guard<ACE_LOCK> *guard = 0;
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
   ACE_Thread::getspecific (this->key_, (void **) &tss_adapter);
-  guard = (ACE_Guard<LOCK> *) tss_adapter->ts_obj_;
+  guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
   ACE_Thread::getspecific (this->key_, (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
@@ -552,46 +552,46 @@ ACE_TSS_Guard<LOCK>::~ACE_TSS_Guard (void)
   delete guard;
 }
 
-template <class LOCK> void
-ACE_TSS_Guard<LOCK>::cleanup (void *ptr)
+template <class ACE_LOCK> void
+ACE_TSS_Guard<ACE_LOCK>::cleanup (void *ptr)
 {
-// ACE_TRACE ("ACE_TSS_Guard<LOCK>::dump");
+// ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::dump");
 
   // Destructor releases lock.
-  delete (ACE_Guard<LOCK> *) ptr;
+  delete (ACE_Guard<ACE_LOCK> *) ptr;
 }
 
-template <class LOCK> 
-ACE_TSS_Guard<LOCK>::ACE_TSS_Guard (LOCK &lock, int block)
+template <class ACE_LOCK> 
+ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard (ACE_LOCK &lock, int block)
 {
-// ACE_TRACE ("ACE_TSS_Guard<LOCK>::ACE_TSS_Guard");
+// ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard");
 
   this->init_key ();
-  ACE_Guard<LOCK> *guard;
-  ACE_NEW (guard, ACE_Guard<LOCK> (lock, block));
+  ACE_Guard<ACE_LOCK> *guard;
+  ACE_NEW (guard, ACE_Guard<ACE_LOCK> (lock, block));
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter;
   ACE_NEW (tss_adapter, 
 	   ACE_TSS_Adapter ((void *) guard, 
-			    ACE_TSS_Guard<LOCK>::cleanup));
+			    ACE_TSS_Guard<ACE_LOCK>::cleanup));
   ACE_Thread::setspecific (this->key_, (void *) tss_adapter);
 #else
   ACE_Thread::setspecific (this->key_, (void *) guard);
 #endif /* ACE_HAS_THR_C_DEST */
 }
 
-template <class LOCK> int
-ACE_TSS_Guard<LOCK>::acquire (void)
+template <class ACE_LOCK> int
+ACE_TSS_Guard<ACE_LOCK>::acquire (void)
 {
-// ACE_TRACE ("ACE_TSS_Guard<LOCK>::acquire");
+// ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::acquire");
 
-  ACE_Guard<LOCK> *guard = 0;
+  ACE_Guard<ACE_LOCK> *guard = 0;
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
   ACE_Thread::getspecific (this->key_, (void **) &tss_adapter);
-  guard = (ACE_Guard<LOCK> *) tss_adapter->ts_obj_;
+  guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
   ACE_Thread::getspecific (this->key_, (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
@@ -599,17 +599,17 @@ ACE_TSS_Guard<LOCK>::acquire (void)
   return guard->acquire ();
 }
 
-template <class LOCK> int
-ACE_TSS_Guard<LOCK>::tryacquire (void)
+template <class ACE_LOCK> int
+ACE_TSS_Guard<ACE_LOCK>::tryacquire (void)
 {
-// ACE_TRACE ("ACE_TSS_Guard<LOCK>::tryacquire");
+// ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::tryacquire");
 
-  ACE_Guard<LOCK> *guard = 0;
+  ACE_Guard<ACE_LOCK> *guard = 0;
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
   ACE_Thread::getspecific (this->key_, (void **) &tss_adapter);
-  guard = (ACE_Guard<LOCK> *) tss_adapter->ts_obj_;
+  guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
   ACE_Thread::getspecific (this->key_, (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
@@ -617,37 +617,37 @@ ACE_TSS_Guard<LOCK>::tryacquire (void)
   return guard->tryacquire ();
 }
 
-template <class LOCK> 
-ACE_TSS_Write_Guard<LOCK>::ACE_TSS_Write_Guard (LOCK &lock, int block)
+template <class ACE_LOCK> 
+ACE_TSS_Write_Guard<ACE_LOCK>::ACE_TSS_Write_Guard (ACE_LOCK &lock, int block)
 {
-// ACE_TRACE ("ACE_TSS_Write_Guard<LOCK>::ACE_TSS_Write_Guard");
+// ACE_TRACE ("ACE_TSS_Write_Guard<ACE_LOCK>::ACE_TSS_Write_Guard");
 
   this->init_key ();
-  ACE_Guard<LOCK> *guard;
-  ACE_NEW (guard, ACE_Write_Guard<LOCK> (lock, block));
+  ACE_Guard<ACE_LOCK> *guard;
+  ACE_NEW (guard, ACE_Write_Guard<ACE_LOCK> (lock, block));
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter;
   ACE_NEW (tss_adapter, 
 	   ACE_TSS_Adapter ((void *) guard,
-			    ACE_TSS_Guard<LOCK>::cleanup));
+			    ACE_TSS_Guard<ACE_LOCK>::cleanup));
   ACE_Thread::setspecific (this->key_, (void *) tss_adapter);
 #else
   ACE_Thread::setspecific (this->key_, (void *) guard);
 #endif /* ACE_HAS_THR_C_DEST */
 }
 
-template <class LOCK> int
-ACE_TSS_Write_Guard<LOCK>::acquire (void)
+template <class ACE_LOCK> int
+ACE_TSS_Write_Guard<ACE_LOCK>::acquire (void)
 {
-// ACE_TRACE ("ACE_TSS_Write_Guard<LOCK>::acquire");
+// ACE_TRACE ("ACE_TSS_Write_Guard<ACE_LOCK>::acquire");
 
-  ACE_Write_Guard<LOCK> *guard = 0;
+  ACE_Write_Guard<ACE_LOCK> *guard = 0;
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
   ACE_Thread::getspecific (this->key_, (void **) &tss_adapter);
-  guard = (ACE_Guard<LOCK> *) tss_adapter->ts_obj_;
+  guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
   ACE_Thread::getspecific (this->key_, (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
@@ -655,17 +655,17 @@ ACE_TSS_Write_Guard<LOCK>::acquire (void)
   return guard->acquire_write ();
 }
 
-template <class LOCK> int
-ACE_TSS_Write_Guard<LOCK>::tryacquire (void)
+template <class ACE_LOCK> int
+ACE_TSS_Write_Guard<ACE_LOCK>::tryacquire (void)
 {
-// ACE_TRACE ("ACE_TSS_Write_Guard<LOCK>::tryacquire");
+// ACE_TRACE ("ACE_TSS_Write_Guard<ACE_LOCK>::tryacquire");
 
-  ACE_Write_Guard<LOCK> *guard = 0;
+  ACE_Write_Guard<ACE_LOCK> *guard = 0;
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
   ACE_Thread::getspecific (this->key_, (void **) &tss_adapter);
-  guard = (ACE_Guard<LOCK> *) tss_adapter->ts_obj_;
+  guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
   ACE_Thread::getspecific (this->key_, (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
@@ -673,60 +673,60 @@ ACE_TSS_Write_Guard<LOCK>::tryacquire (void)
   return guard->tryacquire_write ();
 }
 
-template <class LOCK> int
-ACE_TSS_Write_Guard<LOCK>::acquire_write (void)
+template <class ACE_LOCK> int
+ACE_TSS_Write_Guard<ACE_LOCK>::acquire_write (void)
 {
-// ACE_TRACE ("ACE_TSS_Write_Guard<LOCK>::acquire_write");
+// ACE_TRACE ("ACE_TSS_Write_Guard<ACE_LOCK>::acquire_write");
 
   return this->acquire ();
 }
 
-template <class LOCK> int
-ACE_TSS_Write_Guard<LOCK>::tryacquire_write (void)
+template <class ACE_LOCK> int
+ACE_TSS_Write_Guard<ACE_LOCK>::tryacquire_write (void)
 {
-// ACE_TRACE ("ACE_TSS_Write_Guard<LOCK>::tryacquire_write");
+// ACE_TRACE ("ACE_TSS_Write_Guard<ACE_LOCK>::tryacquire_write");
 
   return this->tryacquire ();
 }
 
-template <class LOCK> void
-ACE_TSS_Write_Guard<LOCK>::dump (void) const
+template <class ACE_LOCK> void
+ACE_TSS_Write_Guard<ACE_LOCK>::dump (void) const
 {
-// ACE_TRACE ("ACE_TSS_Write_Guard<LOCK>::dump");
-  ACE_TSS_Guard<LOCK>::dump ();
+// ACE_TRACE ("ACE_TSS_Write_Guard<ACE_LOCK>::dump");
+  ACE_TSS_Guard<ACE_LOCK>::dump ();
 }
 
-template <class LOCK> 
-ACE_TSS_Read_Guard<LOCK>::ACE_TSS_Read_Guard (LOCK &lock, int block)
+template <class ACE_LOCK> 
+ACE_TSS_Read_Guard<ACE_LOCK>::ACE_TSS_Read_Guard (ACE_LOCK &lock, int block)
 {
-// ACE_TRACE ("ACE_TSS_Read_Guard<LOCK>::ACE_TSS_Read_Guard");
+// ACE_TRACE ("ACE_TSS_Read_Guard<ACE_LOCK>::ACE_TSS_Read_Guard");
 
   this->init_key ();
-  ACE_Guard<LOCK> *guard;
-  ACE_NEW (guard, ACE_Read_Guard<LOCK> (lock, block));
+  ACE_Guard<ACE_LOCK> *guard;
+  ACE_NEW (guard, ACE_Read_Guard<ACE_LOCK> (lock, block));
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter;
   ACE_NEW (tss_adapter, 
 	   ACE_TSS_Adapter ((void *)guard, 
-			    ACE_TSS_Guard<LOCK>::cleanup));
+			    ACE_TSS_Guard<ACE_LOCK>::cleanup));
   ACE_Thread::setspecific (this->key_, (void *) tss_adapter);
 #else
   ACE_Thread::setspecific (this->key_, (void *) guard);
 #endif /* ACE_HAS_THR_C_DEST */
 }
 
-template <class LOCK> int
-ACE_TSS_Read_Guard<LOCK>::acquire (void)
+template <class ACE_LOCK> int
+ACE_TSS_Read_Guard<ACE_LOCK>::acquire (void)
 {
-// ACE_TRACE ("ACE_TSS_Read_Guard<LOCK>::acquire");
+// ACE_TRACE ("ACE_TSS_Read_Guard<ACE_LOCK>::acquire");
 
-  ACE_Read_Guard<LOCK> *guard = 0;
+  ACE_Read_Guard<ACE_LOCK> *guard = 0;
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
   ACE_Thread::getspecific (this->key_, (void **) &tss_adapter);
-  guard = (ACE_Guard<LOCK> *)tss_adapter->ts_obj_;
+  guard = (ACE_Guard<ACE_LOCK> *)tss_adapter->ts_obj_;
 #else
   ACE_Thread::getspecific (this->key_, (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
@@ -734,17 +734,17 @@ ACE_TSS_Read_Guard<LOCK>::acquire (void)
   return guard->acquire_read ();
 }
 
-template <class LOCK> int
-ACE_TSS_Read_Guard<LOCK>::tryacquire (void)
+template <class ACE_LOCK> int
+ACE_TSS_Read_Guard<ACE_LOCK>::tryacquire (void)
 {
-// ACE_TRACE ("ACE_TSS_Read_Guard<LOCK>::tryacquire");
+// ACE_TRACE ("ACE_TSS_Read_Guard<ACE_LOCK>::tryacquire");
 
-  ACE_Read_Guard<LOCK> *guard = 0;
+  ACE_Read_Guard<ACE_LOCK> *guard = 0;
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
   ACE_Thread::getspecific (this->key_, (void **) &tss_adapter);
-  guard = (ACE_Guard<LOCK> *) tss_adapter->ts_obj_;
+  guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
   ACE_Thread::getspecific (this->key_, (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
@@ -752,27 +752,27 @@ ACE_TSS_Read_Guard<LOCK>::tryacquire (void)
   return guard->tryacquire_read ();
 }
 
-template <class LOCK> int
-ACE_TSS_Read_Guard<LOCK>::acquire_read (void)
+template <class ACE_LOCK> int
+ACE_TSS_Read_Guard<ACE_LOCK>::acquire_read (void)
 {
-// ACE_TRACE ("ACE_TSS_Read_Guard<LOCK>::acquire_read");
+// ACE_TRACE ("ACE_TSS_Read_Guard<ACE_LOCK>::acquire_read");
 
   return this->acquire ();
 }
 
-template <class LOCK> int
-ACE_TSS_Read_Guard<LOCK>::tryacquire_read (void)
+template <class ACE_LOCK> int
+ACE_TSS_Read_Guard<ACE_LOCK>::tryacquire_read (void)
 {
-// ACE_TRACE ("ACE_TSS_Read_Guard<LOCK>::tryacquire_read");
+// ACE_TRACE ("ACE_TSS_Read_Guard<ACE_LOCK>::tryacquire_read");
 
   return this->tryacquire ();
 }
 
-template <class LOCK> void
-ACE_TSS_Read_Guard<LOCK>::dump (void) const
+template <class ACE_LOCK> void
+ACE_TSS_Read_Guard<ACE_LOCK>::dump (void) const
 {
-// ACE_TRACE ("ACE_TSS_Read_Guard<LOCK>::dump");
-  ACE_TSS_Guard<LOCK>::dump ();
+// ACE_TRACE ("ACE_TSS_Read_Guard<ACE_LOCK>::dump");
+  ACE_TSS_Guard<ACE_LOCK>::dump ();
 }
 
 #endif /* defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) */

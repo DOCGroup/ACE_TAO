@@ -3,7 +3,7 @@
 
 // Malloc_T.i
 
-template <class T> T * ACE_INLINE
+template <class T> ACE_INLINE T * 
 ACE_Cached_Mem_Pool_Node<T>::addr (void)
 {
   return (T *) this;
