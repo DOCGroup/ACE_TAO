@@ -59,10 +59,9 @@ TAO_Server_Connection_Handler::open (void*)
   char client[MAXHOSTNAMELEN + 1];
 
   if (addr.get_host_name (client, MAXHOSTNAMELEN) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "get_host_name"),
-                      -1);
+    {
+      addr.addr_to_string (client, sizeof (client));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) connection from client %s\n",
