@@ -28,7 +28,7 @@ class TAO_TSS_Resources;
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> IdType;
 
-extern ACE_Atomic_Op<ACE_Thread_Mutex, long> guid_counter;
+extern ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
 
 class TAO_RTScheduler_Export TAO_DTId_Hash
 {
@@ -39,8 +39,8 @@ public:
 };
 
 
-typedef ACE_Hash_Map_Manager_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex> DT_Hash_Map;
-typedef ACE_Hash_Map_Iterator_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex> DT_Hash_Map_Iterator;
+typedef ACE_Hash_Map_Manager_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, TAO_SYNCH_MUTEX> DT_Hash_Map;
+typedef ACE_Hash_Map_Iterator_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, TAO_SYNCH_MUTEX> DT_Hash_Map_Iterator;
 typedef ACE_Hash_Map_Entry <IdType,RTScheduling::DistributableThread_var> DT_Hash_Map_Entry;
 
 class TAO_RTScheduler_Current;

@@ -9,7 +9,7 @@
 #include "ace/Atomic_Op.h"
 #include "Current.h"
 
-extern ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
+extern ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
 
 class TAO_RTScheduler_Export Client_Interceptor:
 public  PortableInterceptor::ClientRequestInterceptor
