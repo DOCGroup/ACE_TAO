@@ -1,3 +1,9 @@
+Thu Jan  8 15:58:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Select_Reactor.cpp (suspend_i): The clr_bit call was
+ 	  mistakenly made on the write mask, rather than the read mask.
+  	  Thanks to Billy Quinn <ace-users@lads.com> for reporting this.
+
 Thu Jan 08 11:05:15 1998    <coryan@CHA-CHA>
 
 	* ace/ace_dll.dsp: 
