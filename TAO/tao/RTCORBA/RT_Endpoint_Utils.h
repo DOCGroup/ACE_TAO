@@ -32,7 +32,7 @@ class TAO_GIOP_Invocation;
 namespace TAO
 {
   class Profile_Transport_Resolver;
-};
+}
 
 /**
  * @class RT_Endpoint_Utils

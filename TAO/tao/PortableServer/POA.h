@@ -141,7 +141,7 @@ namespace PortableInterceptor
 {
   class IORInfo;
   typedef IORInfo *IORInfo_ptr;
-};
+}
 
 /**
  * @class TAO_POA

@@ -234,7 +234,7 @@ namespace TAO
     // of arg classes as interfaces.
     static void tao_release (CORBA::ValueBase *);
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 # include "ValueBase.inl"
