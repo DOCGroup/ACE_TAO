@@ -132,7 +132,7 @@ namespace
     virtual void
     post (Type&)
     {
-      os << ";" << endl;
+      os << ";" << endl << endl;
     }
 
     virtual void
@@ -252,7 +252,7 @@ namespace
       os << endl
          << a.name () << " (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual void" << endl
          << a.name () << " (" << endl;
@@ -261,7 +261,7 @@ namespace
 
       os << endl
          << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
     }
 
   private:
@@ -292,7 +292,7 @@ namespace
       os << endl
          << a.name () << " (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
     }
 
   private:
@@ -422,14 +422,14 @@ namespace
          << "_var executor_;" << endl
          << "// Context object." << endl
          << "::Components::CCMContext_var ctx_;" << endl
-         << "};" << endl;
+         << "};";
          
       os << "typedef " << ctx.export_macro () << " " 
          << i.name () << "_Servant_T<int> " 
          << i.name () << "_Servant;";
 
       // Close the CIAO_GLUE namespace.
-      os << "}" << endl;
+      os << "}";
       
       i.context ().set ("facet_hdr_gen", true);
     }
@@ -549,7 +549,7 @@ namespace
            << STRS[ENV_SNGL_HDR] << ")" << endl
            << STRS[EXCP_START] << endl
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "));" << endl;
+           << STRS[EXCP_NC] << "));" << endl << endl;
       }
 
       virtual void
@@ -733,86 +733,86 @@ namespace
       }
 
       os << STRS[GLUE_NS]
-          << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
-          << "{";
+         << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
+         << "{";
 
       os << "class " << ctx.export_macro () << " " << t.name ()
-          << "_Context" << endl
-          << ": public virtual " << t.scoped_name ().scope_name () << "::CCM_"
-          << t.name () << "_Context,"
-          << endl
-          << "public virtual TAO_Local_RefCounted_Object"
-          << endl
-          << "{"
-          << "public:" << endl;
+         << "_Context" << endl
+         << ": public virtual " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_Context,"
+         << endl
+         << "public virtual TAO_Local_RefCounted_Object"
+         << endl
+         << "{"
+         << "public:" << endl;
 
       os << "// We will allow the servant glue code we generate to "
-          << "access our state." << endl
-          << "friend class " << t.name () << "_Servant;"
-          << endl;
+         << "access our state." << endl
+         << "friend class " << t.name () << "_Servant;"
+         << endl;
 
       os << t.name () << "_Context (" << endl
-          << "::Components::CCMHome_ptr home," << endl
-          << "::CIAO::Session_Container *c," << endl
-          << t.name () << "_Servant *sv);" << endl;
+         << "::Components::CCMHome_ptr home," << endl
+         << "::CIAO::Session_Container *c," << endl
+         << t.name () << "_Servant *sv);" << endl;
 
       os << "virtual ~" << t.name () << "_Context (void);"
-          << endl;
+         << endl;
 
       os << "// Operations from ::Components::CCMContext." << endl << endl;
 
       os << "virtual ::Components::Principal_ptr" << endl
-          << "get_caller_principal (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl;
+         << "get_caller_principal (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl;
 
       os << "virtual ::Components::CCMHome_ptr" << endl
-          << "get_CCM_home (" << endl
-          << STRS[ENV_SNGL_HDR_NOTUSED] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl ;
+         << "get_CCM_home (" << endl
+         << STRS[ENV_SNGL_HDR_NOTUSED] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl ;
 
       os << "virtual CORBA::Boolean" << endl
-          << "get_rollback_only (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IS] << "));" << endl;
+         << "get_rollback_only (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IS] << "));" << endl;
 
       os << "virtual ::Components::Transaction::UserTransaction_ptr" << endl
-          << "get_user_transaction (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IS] << "));" << endl;
+         << "get_user_transaction (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IS] << "));" << endl;
 
       os << "virtual CORBA::Boolean" << endl
-          << "is_caller_in_role (" << endl
-          << "const char *role" << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl;
+         << "is_caller_in_role (" << endl
+         << "const char *role" << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl;
 
       os << "virtual void" << endl
-          << "set_rollback_only (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IS] << "));" << endl;
+         << "set_rollback_only (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IS] << "));" << endl;
 
-      os << "// Operations from ::Components::SessionContext interface."
-          << endl << endl;
+      os << "// Operations from " << STRS[COMP_SC] << " interface."
+         << endl << endl;
 
       os << "virtual CORBA::Object_ptr" << endl
-          << "get_CCM_object (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IS] << "));" << endl;
+         << "get_CCM_object (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IS] << "));" << endl;
 
       os << "// Operations for " << t.name () << " receptacles"
-          << " and event sources," << endl
-          << "// defined in " << t.scoped_name ().scope_name () << "::CCM_"
-          << t.name () << "_Context."
-          << endl << endl;
+         << " and event sources," << endl
+         << "// defined in " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_Context."
+         << endl << endl;
 
       {
         Traversal::Component component_emitter;
@@ -836,7 +836,7 @@ namespace
 
       os << "static " << t.name () << "_Context *" << endl
          << "_narrow (" << endl
-         << "::Components::SessionContext_ptr p" << endl
+         << STRS[COMP_SC] << "_ptr p" << endl
          << STRS[ENV_HDR] << ");" << endl;
 
       os << "protected:" << endl
@@ -881,16 +881,16 @@ namespace
     virtual void
     post (Type& t)
     {
-      os << "::Components::CCMHome_var home_;" << endl << endl
+      os << "::Components::CCMHome_var home_;" << endl
          << "::CIAO::Session_Container *container_;" << endl << endl
-         << t.name () << "_Servant *servant_;" << endl << endl
-         << t.scoped_name () << "_var component_;" << endl << endl;
+         << t.name () << "_Servant *servant_;" << endl
+         << t.scoped_name () << "_var component_;" << endl;
 
       // Component context class closer.
-      os << "};" << endl;
+      os << "};";
 
       // Namespace closer.
-      os << "}" << endl;
+      os << "}";
     }
   };
 
@@ -1079,9 +1079,9 @@ namespace
         os << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
            << c.scoped_name ().scope_name ().simple_name ()
            << "_Context_var" << endl
-           << "ctx_;" << endl;
+           << "ctx_;" << endl << endl;
 
-        os << "};" << endl << endl;
+        os << "};";
 
         os << "virtual ";
 
@@ -1181,7 +1181,7 @@ namespace
         Traversal::ConsumerData::belongs (c, belongs_);
 
         os << "Consumer_var" << endl
-           << "consumes_" << c.name () << "_;" << endl;
+           << "consumes_" << c.name () << "_;" << endl << endl;
       }
 
     private:
@@ -1215,20 +1215,20 @@ namespace
          << "public:" << endl;
 
       os << "/// Hack for VC6 the most sucky compiler" << endl
-	 << "typedef CIAO::Servant_Impl<" << endl
-	 <<  "POA_" << stripped << "," << endl
+	       << "typedef CIAO::Servant_Impl<" << endl
+	       <<  "POA_" << stripped << "," << endl
          << "      " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "," << endl
          << "      " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_var," << endl
          << "      " << t.name () << "_Context" << endl
-         << "    > our_base;" << endl << endl;
+         << "    > our_base;" << endl;
 
       os << t.name () << "_Servant (" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr executor," << endl
          << "::Components::CCMHome_ptr home," << endl
-         << "::CIAO::Session_Container *c);" << endl << endl;
+         << "::CIAO::Session_Container *c);" << endl;
 
       os << "virtual ~" << t.name () << "_Servant (void);"
          << endl << endl;
@@ -1337,8 +1337,7 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << endl
-         << "// Operations for Navigation interface." << endl << endl;
+      os << "// Operations for Navigation interface." << endl << endl;
 
       os << "virtual CORBA::Object_ptr" << endl
          << "provide_facet (" << endl
@@ -1355,12 +1354,6 @@ namespace
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "));" << endl << endl;
-
-      os << "virtual CORBA::Boolean" << endl
-         << "same_component (" << endl
-         << "CORBA::Object_ptr object_ref" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "// Operations for Receptacles interface." << endl << endl;
 
@@ -1582,72 +1575,40 @@ namespace
       os << "private:" << endl << endl
          << "void populate_port_tables (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
     }
 
     virtual void
     post (Type& t)
     {
       // Component servant class closer.
-      os << "};" << endl;
+      os << "};";
 
       // Namespace closer.
-      os << "}" << endl;
+      os << "}";
     }
   };
 
   struct HomeEmitter : Traversal::Home, EmitterBase
   {
     HomeEmitter (Context& c)
-      : EmitterBase (c)
-    {}
+      : EmitterBase (c),
+        type_name_emitter_ (c.os ()),
+        simple_type_name_emitter_ (c.os ()),
+        enclosing_type_name_emitter_ (c.os ())
+    {
+      manages_.node_traverser (type_name_emitter_);
+      simple_manages_.node_traverser (simple_type_name_emitter_);
+      enclosing_manages_.node_traverser (enclosing_type_name_emitter_);
+    }
 
   // Nested classes used by this emitter.
   private:
-    struct ManagesEmitter : Traversal::Component, EmitterBase
-    {
-      ManagesEmitter (Context& c)
-        : EmitterBase (c)
-      {}
-
-      virtual void
-      traverse (Type& c)
-      {
-        os << c.scoped_name ();
-      }
-    };
-
-    struct ManagesSimpleEmitter : Traversal::Component, EmitterBase
-    {
-      ManagesSimpleEmitter (Context& c)
-        : EmitterBase (c)
-      {}
-
-      virtual void
-      traverse (Type& c)
-      {
-        os << c.name ();
-      }
-    };
-
-    struct ManagesScopeEmitter : Traversal::Component, EmitterBase
-    {
-      ManagesScopeEmitter (Context& c)
-        : EmitterBase (c)
-      {}
-
-      virtual void
-      traverse (Type& c)
-      {
-        os << c.scoped_name ().scope_name ();
-      }
-    };
-
     // HomeFactory and HomeFinder are tied to Operation in
     // the front end. Since we want to treat them differently
-    // than regular operations in a home (we don't want to
-    // generate anything for base class factory operations,
-    // example), we use this class for regular home operations
+    // than regular operations in a home (we want to generate
+    // base class factory operations returning the base component,
+    // for example), we use this class for regular home operations
     // that overrides HomeFactory and HomeFinder traversals
     // to do nothing.
     struct HomeOperationEmitter : OperationEmitter,
@@ -1670,12 +1631,10 @@ namespace
     };
 
     struct FactoryOperationEmitter : Traversal::HomeFactory,
-                                     Traversal::Home,
                                      EmitterBase
     {
-      FactoryOperationEmitter (Context& c, SemanticGraph::Home& home)
-        : EmitterBase (c),
-          home_ (home)
+      FactoryOperationEmitter (Context& c)
+        : EmitterBase (c)
       {}
 
       virtual void
@@ -1685,21 +1644,21 @@ namespace
       }
 
       virtual void
-      returns (SemanticGraph::HomeFactory& hf)
+      returns (SemanticGraph::HomeFactory& t)
       {
         ReturnTypeNameEmitter returns_emitter (os);
         Traversal::Returns returns_;
         returns_.node_traverser (returns_emitter);
 
-        Traversal::HomeFactory::returns (hf, returns_);
+        Traversal::HomeFactory::returns (t, returns_);
 
         os << endl;
       }
 
       virtual void
-      name (SemanticGraph::HomeFactory& hf)
+      name (SemanticGraph::HomeFactory& t)
       {
-        os << hf.name ();
+        os << t.name ();
       }
 
       virtual void
@@ -1751,9 +1710,91 @@ namespace
       {
         os << "," << endl;
       }
+    };
 
+    struct FinderOperationEmitter : Traversal::HomeFinder,
+                                    EmitterBase
+    {
+      FinderOperationEmitter (Context& c)
+        : EmitterBase (c),
+          returns_emitter_ (c.os ())
+      {
+        returns_.node_traverser (returns_emitter_);
+      }
+
+      virtual void
+      pre (SemanticGraph::HomeFinder&)
+      {
+        os << "virtual ";
+      }
+
+      virtual void
+      returns (SemanticGraph::HomeFinder& t)
+      {
+        Traversal::HomeFinder::returns (t, returns_);
+
+        os << endl;
+      }
+
+      virtual void
+      name (SemanticGraph::HomeFinder& t)
+      {
+        os << t.name ();
+      }
+
+      virtual void
+      receives_none (SemanticGraph::HomeFinder&)
+      {
+        os << " (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl;
+      }
+
+      virtual void
+      receives_pre (SemanticGraph::HomeFinder&)
+      {
+        os << " (" << endl;
+      }
+
+      virtual void
+      receives_post (SemanticGraph::HomeFinder&)
+      {
+        os << endl << STRS[ENV_HDR] << ")" << endl;
+      }
+
+      virtual void
+      raises_none (SemanticGraph::HomeFinder&)
+      {
+        os << STRS[EXCP_SNGL];
+      }
+
+      virtual void
+      raises_pre (SemanticGraph::HomeFinder&)
+      {
+        os << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl;
+      }
+
+      virtual void
+      raises_post (SemanticGraph::HomeFinder&)
+      {
+        os << "))";
+      }
+
+      virtual void
+      post (SemanticGraph::HomeFinder&)
+      {
+        os << ";" << endl << endl;
+      }
+
+      virtual void
+      comma (SemanticGraph::HomeFinder&)
+      {
+        os << "," << endl;
+      }
+      
     private:
-      SemanticGraph::Home& home_;
+      ReturnTypeNameEmitter returns_emitter_;
+      Traversal::Returns returns_;
     };
 
   public:
@@ -1776,7 +1817,7 @@ namespace
       os << t.name () << "_Servant (" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
-         << "::CIAO::Session_Container *c);" << endl << endl;
+         << "::CIAO::Session_Container *c);" << endl;
 
       os << "virtual ~" << t.name () << "_Servant (void);"
          << endl << endl;
@@ -1832,9 +1873,9 @@ namespace
       }
 
       // Generate home factory operations. This is a separate traversal
-      // stack because we don't want to generate the factory operations
-      // of ancestors.
-      os << "// Home factory operations." << endl << endl;
+      // stack because we want to generate the factory operations
+      // of ancestors with the return type of the base component.
+      os << "// Home factory and finder operations." << endl << endl;
 
       {
         Traversal::Home home_emitter;
@@ -1846,8 +1887,10 @@ namespace
         Traversal::Defines defines;
         home_emitter.edge_traverser (defines);
 
-        FactoryOperationEmitter factory_operation_emitter (ctx, t);
+        FactoryOperationEmitter factory_operation_emitter (ctx);
+        FinderOperationEmitter finder_operation_emitter (ctx);
         defines.node_traverser (factory_operation_emitter);
+        defines.node_traverser (finder_operation_emitter);
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
@@ -1855,6 +1898,9 @@ namespace
         factory_operation_emitter.edge_traverser (receives);
         factory_operation_emitter.edge_traverser (returns);
         factory_operation_emitter.edge_traverser (raises);
+        finder_operation_emitter.edge_traverser (receives);
+        finder_operation_emitter.edge_traverser (returns);
+        finder_operation_emitter.edge_traverser (raises);
 
         ParameterEmitter<Traversal::InParameter> in_param (os);
         ParameterEmitter<Traversal::InOutParameter> inout_param (os);
@@ -1912,19 +1958,13 @@ namespace
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
-         << "::Components::CreateFailure));" << endl << endl ;
+         << "::Components::CreateFailure));" << endl << endl;
 
       os << "// Operations for implicit home interface." << endl << endl;
 
       os << "virtual ";
 
-      {
-        Traversal::Manages manages_;
-        ManagesEmitter manages_emitter (ctx);
-        manages_.node_traverser (manages_emitter);
-
-        manages (t, manages_);
-      }
+      Traversal::Home::manages (t, manages_);
 
       os << "_ptr" << endl
          << "create (" << endl
@@ -2020,34 +2060,16 @@ namespace
       os << "protected:" << endl
          << "// CIAO-specific operations." << endl << endl;
 
-      {
-        Traversal::Manages manages_;
-        ManagesEmitter manages_emitter (ctx);
-        manages_.node_traverser (manages_emitter);
-
-        manages (t, manages_);
-      }
+      Traversal::Home::manages (t, manages_);
 
       os << "_ptr" << endl
          << "_ciao_activate_component (" << endl;
 
-      {
-        Traversal::Manages manages_;
-        ManagesScopeEmitter manages_emitter (ctx);
-        manages_.node_traverser (manages_emitter);
-
-        manages (t, manages_);
-      }
+      Traversal::Home::manages (t, enclosing_manages_);
 
       os << "::CCM_";
 
-      {
-        Traversal::Manages manages_;
-        ManagesSimpleEmitter manages_emitter (ctx);
-        manages_.node_traverser (manages_emitter);
-
-        manages (t, manages_);
-      }
+      Traversal::Home::manages (t, simple_manages_);
 
       os << "_ptr exe" << endl
          << STRS[ENV_HDR] << ")" << endl
@@ -2056,13 +2078,7 @@ namespace
       os << "void" << endl
          << "_ciao_passivate_component (" << endl;
 
-      {
-        Traversal::Manages manages_;
-        ManagesEmitter manages_emitter (ctx);
-        manages_.node_traverser (manages_emitter);
-
-        manages (t, manages_);
-      }
+      Traversal::Home::manages (t, manages_);
 
       os << "_ptr comp" << endl
          << STRS[ENV_HDR] << ")" << endl
@@ -2080,25 +2096,19 @@ namespace
       os << "ACE_Hash_Map_Manager_Ex<" << endl
          << "PortableServer::ObjectId," << endl;
 
-      {
-        Traversal::Manages manages_;
-        ManagesSimpleEmitter manages_emitter (ctx);
-        manages_.node_traverser (manages_emitter);
-
-        manages (t, manages_);
-      }
+      Traversal::Home::manages (t, simple_manages_);
 
       os << "_Servant *," << endl
          << "TAO_ObjectId_Hash," << endl
          << "ACE_Equal_To<PortableServer::ObjectId>," << endl
          << "ACE_SYNCH_MUTEX>" << endl
-         << "component_map_;" << endl;
+         << "component_map_;" << endl << endl;
 
       // Home servant class closer.
-      os << "};" << endl << endl;
+      os << "};";
 
-      os << "extern \"C\" " << ctx.export_macro () << " ::PortableServer::Servant"
-         << endl
+      os << "extern \"C\" " << ctx.export_macro () 
+         << " ::PortableServer::Servant" << endl
          << "create" << t.name () << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
          << "CIAO::Session_Container *c" << endl
@@ -2108,10 +2118,17 @@ namespace
     virtual void post (Type& t)
     {
       // Namespace closer.
-      os << "}" << endl;
+      os << "}";
     }
+    
+  private:
+    TypeNameEmitter type_name_emitter_;
+    SimpleTypeNameEmitter simple_type_name_emitter_;
+    EnclosingTypeNameEmitter enclosing_type_name_emitter_;
+    Traversal::Manages manages_;
+    Traversal::Manages simple_manages_;
+    Traversal::Manages enclosing_manages_;
   };
-
 
   struct CompositionEmitter : Traversal::Composition, EmitterBase
   {
@@ -2128,7 +2145,7 @@ namespace
     }
 
     virtual void
-    post (Type& t)
+    post (Type&)
     {
       os << "}";
     }
@@ -2194,7 +2211,7 @@ ServantHeaderEmitter::pre (TranslationUnit& u)
                   uc_file_name.begin (),
                   upcase);
 
-  string uc_file_suffix = cl_.get_value ("hdr-file-suffix",
+  string uc_file_suffix = cl_.get_value ("svnt-hdr-file-suffix",
                                          "_svnt.h");
 
   std::transform (uc_file_suffix.begin (),
@@ -2351,7 +2368,7 @@ ServantHeaderEmitter::post (TranslationUnit& u)
                   uc_file_name.begin (),
                   upcase);
 
-  string uc_file_suffix = cl_.get_value ("hdr-file-suffix",
+  string uc_file_suffix = cl_.get_value ("svnt-hdr-file-suffix",
                                          "_svnt.h");
 
   std::transform (uc_file_suffix.begin (),
@@ -2366,8 +2383,7 @@ ServantHeaderEmitter::post (TranslationUnit& u)
 
   guard = regex::perl_s (guard, "/\\./_/");
 
-  os << endl
-     << "#include /**/ \"ace/post.h\"" << endl << endl
+  os << "#include /**/ \"ace/post.h\"" << endl << endl
      << "#endif /* " << guard << " */"
      << endl << endl;
 }

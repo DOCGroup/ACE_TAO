@@ -196,6 +196,12 @@ ReturnTypeNameEmitter::traverse (SemanticGraph::Component& c)
   os << c.scoped_name () << "_ptr";
 }
 
+void
+ReturnTypeNameEmitter::traverse (SemanticGraph::Home& h)
+{
+  os << h.scoped_name () << "_ptr";
+}
+
 // ===============================================================
 
 INArgTypeNameEmitter::INArgTypeNameEmitter (ostream& os_)
@@ -357,6 +363,12 @@ void
 INArgTypeNameEmitter::traverse (SemanticGraph::Component& c)
 {
   os << c.scoped_name () << "_ptr";
+}
+
+void
+INArgTypeNameEmitter::traverse (SemanticGraph::Home& h)
+{
+  os << h.scoped_name () << "_ptr";
 }
 
 // ===============================================================
@@ -522,6 +534,12 @@ INOUTArgTypeNameEmitter::traverse (SemanticGraph::Component& c)
   os << c.scoped_name () << "_ptr &";
 }
 
+void
+INOUTArgTypeNameEmitter::traverse (SemanticGraph::Home& h)
+{
+  os << h.scoped_name () << "_ptr";
+}
+
 // =================================================================
 
 OUTArgTypeNameEmitter::OUTArgTypeNameEmitter (ostream& os_)
@@ -683,6 +701,204 @@ void
 OUTArgTypeNameEmitter::traverse (SemanticGraph::Component& c)
 {
   os << c.scoped_name () << "_out";
+}
+
+void
+OUTArgTypeNameEmitter::traverse (SemanticGraph::Home& h)
+{
+  os << h.scoped_name () << "_ptr";
+}
+
+// ====================================================================
+
+NullReturnEmitter::NullReturnEmitter (ostream& os_)
+  : TypeNameEmitter (os_)
+{
+}
+
+void
+NullReturnEmitter::traverse (Void&)
+{
+}
+
+void
+NullReturnEmitter::traverse (Boolean&)
+{
+  os << "return false;";
+}
+
+void
+NullReturnEmitter::traverse (Octet&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (Char&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (Wchar&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (Short&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (UnsignedShort&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (Long&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (UnsignedLong&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (LongLong&)
+{
+  os << "return ACE_CDR_LONGLONG_INITIALIZER;";
+}
+
+void
+NullReturnEmitter::traverse (UnsignedLongLong&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (Float&)
+{
+  os << "return 0.0f;";
+}
+
+void
+NullReturnEmitter::traverse (Double&)
+{
+  os << "return 0.0;";
+}
+
+void
+NullReturnEmitter::traverse (String&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (Wstring&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (Object&)
+{
+  os << "return ::CORBA::Object::_nil ();";
+}
+
+void
+NullReturnEmitter::traverse (ValueBase&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (Any&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (SemanticGraph::Enum& e)
+{
+  os << e.scoped_name ();
+}
+
+void
+NullReturnEmitter::traverse (SemanticGraph::Struct& s)
+{
+  // This should always be in the context, since the SizeTypeCalculator
+  // is executed before the servant code generators.
+  bool var_size = s.context ().get<bool> (STRS[VAR_SIZE]);
+  
+  if (var_size)
+  {
+    os << "return 0;";
+  }
+  else
+  {
+    os << s.scoped_name () << " retval;" << endl
+       << "return retval;";
+  }
+}
+
+void
+NullReturnEmitter::traverse (SemanticGraph::Union& u)
+{
+  // This should always be in the context, since the SizeTypeCalculator
+  // is executed before the servant code generators.
+  bool var_size = u.context ().get<bool> (STRS[VAR_SIZE]);
+  
+  if (var_size)
+  {
+    os << "return 0;";
+  }
+  else
+  {
+    os << u.scoped_name () << " retval;" << endl
+       << "return retval;";
+  }
+}
+
+void
+NullReturnEmitter::traverse (SemanticGraph::UnboundedSequence& s)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (SemanticGraph::Interface& i)
+{
+  os << "return " << i.scoped_name () << "::_nil ();";
+}
+
+void
+NullReturnEmitter::traverse (SemanticGraph::ValueType& v)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (SemanticGraph::EventType& e)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (SemanticGraph::Component& c)
+{
+  os << "return " << c.scoped_name () << "::_nil ();";
+}
+
+void
+NullReturnEmitter::traverse (SemanticGraph::Home& h)
+{
+  os << "return " << h.scoped_name () << "::_nil ();";
 }
 
 

@@ -1,3 +1,68 @@
+Thu Aug  5 17:42:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ExecImplGenerator.cpp:
+        * CIDLC/ExecImplGenerator.hpp:
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplHeaderGenerator.hpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.hpp:
+        
+          New files, which generate empty executor implementation
+          classes (with spec-defined operations filled in and
+          IDL operations and attributes marked for the developer
+          to fill in). This generation is optional, triggered by
+          the CIDL compiler command line option --gen-exec-impl.
+          Two other options --exec-hdr-file-suffix and --exec-src-file-suffix,
+          can override the default generated file extensions of
+          _exec.h and _exec.cpp. Tao others, --exec-hdr-file-regex and
+          --exec-src-file-regex, allow replacement of default generated
+          filenames by pattern matching with regular expressions. 
+          And finally, two more, --exec-export-include,
+          overrides the default generated export macro header file,
+          and --exec-export-macro, overrides the default generated
+          export macro for the executor implementation file.
+        
+        * CIDLC/Literals.cpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.hpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/TypeNameEmitter.cpp:
+        * CIDLC/TypeNameEmitter.hpp:
+        * CIDLC/cidlc.cpp:
+        
+          - Added generation of (unimplemented) home finder
+            operations.
+            
+          - Filled gaps and organized the command line options
+            for servant filename suffixes and regular expressions
+            to replace default generated filenames.
+            
+          - Added a new type name emitter that generates the
+            appropriate NULL return value for any type.
+        
+        * tests/CIDL/CodeGen/Basic.idl:
+        * tests/CIDL/CodeGen/Basic_stub_export.h:
+        * tests/CIDL/CodeGen/Basic_svnt_export.h:
+        * tests/CIDL/CodeGen/CodeGen.cidl:
+        * tests/CIDL/CodeGen/CodeGen.idl:
+        * tests/CIDL/CodeGen/CodeGen.mpc:
+        * tests/CIDL/CodeGen/CodeGen_exec_export.h:
+        * tests/CIDL/CodeGen/CodeGen_stub_export.h:
+        * tests/CIDL/CodeGen/CodeGen_svnt_export.h:
+        * tests/CIDL/CodeGen/README:
+        
+          New test, for servant and executor implemtation code
+          generation of the CIDL compiler. This test target
+          correct code generation for many component-specific
+          features of IDL - catching operations and attributes
+          for supported interfaces, operations and attributes
+          for parents of supported interfaces, home operations
+          from base homes, inherited home factory and finder 
+          operations, etc. The object of the test is to check
+          that the generated code builds and links successfully.
+
 Thu Aug  5 15:49:10 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* DAnCE/tests/NodeApplicationTest/RoundTrip_exec.h:
@@ -36,6 +101,7 @@ Thu Aug  5 15:49:10 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Fixed unused parameter warning in emulated exception builds.
 
+>>>>>>> 1.869
 Thu Aug  5 11:48:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* performance-tests/Protocols/Controller/Controller.mpc:
