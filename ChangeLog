@@ -1,3 +1,9 @@
+Mon Dec  8 07:38:52 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Logging_Strategy.cpp (fini): Check whether there's a reactor
+	  configured before trying to access it!  Thanks to Yoav Borer
+ 	  <yoav.borer@data-pod.com> for reporting this.
+
 Mon Dec  8 16:14:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
