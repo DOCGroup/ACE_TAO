@@ -1,125 +1,136 @@
+Thu Mar 04 10:22:55 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp (parse_args):
+          when type_count_ <= 0, moved the statement that resets it to 1
+          to before the ACE_ERROR_RETURN.  That way, it really will be
+          reset to 1 :-)
+
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp (parse_args):
+          when ec_concurrency_hwm_ <= 0, moved the statement that resets
+          it to 1 to before the ACE_ERROR_RETURN.
+
 Wed Mar  3 18:28:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h: 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i: 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin_T.h: 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin_T.i: 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin_T.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h: 
-	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.i: 
-	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.h: 
-	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.i: 
-	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp: 
-	  Factored out the collection of ProxyPushSuppliers from the
-	  ConsumerAdmin class: it is used in other places like the
-	  SupplierFiltering strategies.
-	  I also added extensive documentation about the several
-	  variations on this particular strategy.
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin_T.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin_T.i:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin_T.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp:
+          Factored out the collection of ProxyPushSuppliers from the
+          ConsumerAdmin class: it is used in other places like the
+          SupplierFiltering strategies.
+          I also added extensive documentation about the several
+          variations on this particular strategy.
 
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h: 
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.i: 
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp: 
-	  Added a new SupplierFiltering strategy, simply keep the list of
-	  consumers for each supplier.
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+          Added a new SupplierFiltering strategy, simply keep the list of
+          consumers for each supplier.
 
-	* orbsvcs/orbsvcs/Event/EC_Filter.h: 
-	* orbsvcs/orbsvcs/Event/EC_Filter.i: 
-	* orbsvcs/orbsvcs/Event/EC_Filter.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h: 
-	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.h: 
-	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Type_Filter.h: 
-	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp: 
-	  Changed the mechanism to match suppliers and consumers: the
-	  filter objects have a new method that can be used to detect if a 
-	  event is potentially interesting to the consumer.
-	  The red-black tree is not needed anymore.
+        * orbsvcs/orbsvcs/Event/EC_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
+          Changed the mechanism to match suppliers and consumers: the
+          filter objects have a new method that can be used to detect if a
+          event is potentially interesting to the consumer.
+          The red-black tree is not needed anymore.
 
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h: 
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.i: 
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp: 
-	  Moved the instantiation of the EventHeader red-black tree to
-	  this file, because now this is the only place we use it.
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.i:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+          Moved the instantiation of the EventHeader red-black tree to
+          this file, because now this is the only place we use it.
 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/EC_Factory.h: 
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h: 
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h: 
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp: 
-	  Added new factory methods to create and detroy
-	  EC_ProxyPushSupplier_Set objects.
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+          Added new factory methods to create and detroy
+          EC_ProxyPushSupplier_Set objects.
 
-	* tao/orbconf.h: 
-	  Added description of the TAO_DOTTED_DECIMAL_ADDRESSES macro.
+        * tao/orbconf.h:
+          Added description of the TAO_DOTTED_DECIMAL_ADDRESSES macro.
 
-	* tao/MProfile.i: 
-	* tao/Any.h: 
-	* orbsvcs/Event_Service/Event_Service.cpp: 
-	  Minor cosmetic fixes.
+        * tao/MProfile.i:
+        * tao/Any.h:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Minor cosmetic fixes.
 
 Wed Mar  3 03:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
-	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.dsp:
-	* TAO/performance-tests/Cubit/TAO/DII_Cubit/README:
-	* TAO/performance-tests/Cubit/TAO/DII_Cubit/Makefile:
-	  Removed all the naming service stuff from DII_Cubit_Test.
-	  Made a note in the README file that the IDL server no
-	  longer uses it either. Also removed the orbsvcs library
-	  load from the makefile since we no longer need it. And 
-	  removed client.h from the VC project file and the link to
-	  orbsvcsd.lib from same.
+        * TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+        * TAO/performance-tests/Cubit/TAO/DII_Cubit/client.dsp:
+        * TAO/performance-tests/Cubit/TAO/DII_Cubit/README:
+        * TAO/performance-tests/Cubit/TAO/DII_Cubit/Makefile:
+          Removed all the naming service stuff from DII_Cubit_Test.
+          Made a note in the README file that the IDL server no
+          longer uses it either. Also removed the orbsvcs library
+          load from the makefile since we no longer need it. And
+          removed client.h from the VC project file and the link to
+          orbsvcsd.lib from same.
 
 Tue Mar  2 17:36:29 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEventComm.idl:
-	* orbsvcs/orbsvcs/CosEventChannelAdmin.idl:
-	  added a comment header to describe the idl file contents.
+        * orbsvcs/orbsvcs/CosEventComm.idl:
+        * orbsvcs/orbsvcs/CosEventChannelAdmin.idl:
+          added a comment header to describe the idl file contents.
 
 Tue Mar  2 11:41:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * examples/Simulator/DOVEBrowser/DoubleVisComp.java: Added flexible
-	  monotonic scaling of all DoubleVisComp windows.
+          monotonic scaling of all DoubleVisComp windows.
 
 Tue Mar  2 02:32:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/IIOP_Profile.{h,i,cpp}: Added new file IIOP_Profile.i for
-	  inline functions.  Moved some accessors from .cpp file to .i
-	  file.  Added _host_(), _port_(), _object_key_(),
-	  reset_object_addr() when TAO_USES_FLICK is defined.  Flick needs
-	  to access the structure directly.
+        * tao/IIOP_Profile.{h,i,cpp}: Added new file IIOP_Profile.i for
+          inline functions.  Moved some accessors from .cpp file to .i
+          file.  Added _host_(), _port_(), _object_key_(),
+          reset_object_addr() when TAO_USES_FLICK is defined.  Flick needs
+          to access the structure directly.
 
 Mon Mar  1 23:37:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Server_Request.cpp:
-	  Fixed yet another instance of backwards
-	  any_owns_data behavior, is dsi_marshal(). Will look
-	  at the rest of Server_Request.cpp later - there
-	  seems to be questionable stuff in the other methods
-	  as well.
+        * tao/Server_Request.cpp:
+          Fixed yet another instance of backwards
+          any_owns_data behavior, is dsi_marshal(). Will look
+          at the rest of Server_Request.cpp later - there
+          seems to be questionable stuff in the other methods
+          as well.
 
 Mon Mar  1 17:57:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/dynany_test/test_dynsequence.cpp:
-	  Fixed a double-deletion problem with a data string.
-	  All the dynany test code will need to be looked over
-	  for memory-handling behavior since the many recent
-	  changes to the IDL compiler. Thanks to Barry Hoggard
-	  for reporting this bug.
+        * TAO/tests/dynany_test/test_dynsequence.cpp:
+          Fixed a double-deletion problem with a data string.
+          All the dynany test code will need to be looked over
+          for memory-handling behavior since the many recent
+          changes to the IDL compiler. Thanks to Barry Hoggard
+          for reporting this bug.
 
 Mon Mar  1 17:31:57 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/sfp.cpp: Added the flowProtocol:: class
-	specifier for frameHeader so that it compiles on win32. Thanks to
-	David Hooker <DHooker@uniview.net> for the fix.
+        * orbsvcs/orbsvcs/AV/sfp.cpp: Added the flowProtocol:: class
+        specifier for frameHeader so that it compiles on win32. Thanks to
+        David Hooker <DHooker@uniview.net> for the fix.
 
 Mon Mar 01 17:19:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
