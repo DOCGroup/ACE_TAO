@@ -274,7 +274,6 @@
 #   define ACE_LITTLE_ENDIAN 0123X
 #   define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
 # else
-dasdsa
     // Otherwise, we'll assume big endian.
 #   define ACE_BIG_ENDIAN 3210X
 #   define ACE_BYTE_ORDER ACE_BIG_ENDIAN
