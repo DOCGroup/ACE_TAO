@@ -122,7 +122,7 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
 {
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                      orb_core->leader_follower_lock (), -1);
+                      orb_core->leader_follower ().lock (), -1);
 
     // The last request may have left this unitialized
     this->reply_received_ = 0;
@@ -160,7 +160,7 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
   if (result == -1)
     {
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                        orb_core->leader_follower_lock (), -1);
+                        orb_core->leader_follower ().lock (), -1);
 
       this->reply_received_ = 0;
       this->expecting_response_ = 0;
@@ -180,12 +180,17 @@ TAO_Wait_On_Leader_Follower::wait (void)
   TAO_ORB_Core* orb_core =
     this->transport_->orb_core ();
 
+  TAO_Leader_Follower& leader_follower =
+    orb_core->leader_follower ();
+
   // Obtain the lock.
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                    orb_core->leader_follower_lock (), -1);
+                    leader_follower.lock (), -1);
+
+  leader_follower.set_client_thread ();
 
   // Check if there is a leader, but the leader is not us
-  if (orb_core->leader_available () && !orb_core->I_am_the_leader_thread ())
+  if (leader_follower.leader_available ())
     {
       // = Wait as a follower.
 
@@ -204,18 +209,18 @@ TAO_Wait_On_Leader_Follower::wait (void)
 
       // Add ourselves to the list, do it only once because we can
       // wake up multiple times from the CV loop
-      if (orb_core->add_follower (cond) == -1)
+      if (leader_follower.add_follower (cond) == -1)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
                     "add_follower failed for <%x>\n", cond));
 
-      while (!this->reply_received_ && orb_core->leader_available ())
+      while (!this->reply_received_ && leader_follower.leader_available ())
         {
           if (cond == 0 || cond->wait () == -1)
             return -1;
         }
 
-      if (orb_core->remove_follower (cond) == -1)
+      if (leader_follower.remove_follower (cond) == -1)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
                     "remove_follower failed for <%x>\n", cond));
@@ -246,6 +251,7 @@ TAO_Wait_On_Leader_Follower::wait (void)
       // FALLTHROUGH
       // We only get here if we woke up but the reply is not complete
       // yet, time to assume the leader role....
+      // i.e. ACE_ASSERT (this->reply_received_ == 0);
 
     }
 
@@ -257,37 +263,29 @@ TAO_Wait_On_Leader_Follower::wait (void)
   // on the leader in TAO_ORB_Core.
 
   // This might increase the refcount of the leader.
-  orb_core->set_leader_thread ();
-
-  // Release the lock.
-  if (ace_mon.release () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::wait: "
-                       "Failed to release the lock.\n"),
-                      -1);
-
-  // Become owner of the reactor.
-  orb_core->reactor ()->owner (ACE_Thread::self ());
-
-  // Run the reactor event loop.
+  leader_follower.set_leader_thread ();
 
   int result = 0;
 
-  //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (leader) on <%x>\n",
-  //this->transport_));
+  {
+    ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_SYNCH_MUTEX>, rev_mon,
+                      leader_follower.reverse_lock (), -1);
 
-  while (result >= 0 && this->reply_received_ == 0)
-    result = orb_core->reactor ()->handle_events ();
+    // @@ Do we need to do this?
+    // Become owner of the reactor.
+    orb_core->reactor ()->owner (ACE_Thread::self ());
 
-  //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (leader) on <%x>\n",
-  //this->transport_));
+    // Run the reactor event loop.
 
-  // Re-acquire the lock.
-  if (ace_mon.acquire () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::wait: "
-                       "Failed to acquire the lock.\n"),
-                      -1);
+    //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (leader) on <%x>\n",
+    //this->transport_));
+
+    while (result >= 0 && this->reply_received_ == 0)
+      result = orb_core->reactor ()->handle_events ();
+
+    //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (leader) on <%x>\n",
+    //this->transport_));
+  }
 
   // Wake up the next leader, we cannot do that in handle_input,
   // because the woken up thread would try to get into
@@ -296,11 +294,15 @@ TAO_Wait_On_Leader_Follower::wait (void)
   // if there is an error in our input we should continue running the
   // loop in another thread.
 
-  if (orb_core->unset_leader_wake_up_follower () == -1)
+  leader_follower.reset_leader_thread ();
+  leader_follower.reset_client_thread ();
+
+  if (leader_follower.elect_new_leader () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::send_request: "
                        "Failed to unset the leader and wake up a new follower.\n"),
                       -1);
+
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::wait: "
@@ -331,7 +333,7 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
 
   // Obtain the lock.
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                    orb_core->leader_follower_lock (), -1);
+                    orb_core->leader_follower ().lock (), -1);
 
   //  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - reading reply <%x>\n",
   //              this->transport_));
@@ -398,8 +400,10 @@ TAO_Wait_On_Leader_Follower::cond_response_available (void)
   // the same thread.
   if (this->cond_response_available_ == 0)
     {
+      ACE_SYNCH_MUTEX &lock =
+        this->transport_->orb_core ()->leader_follower().lock ();        
       ACE_NEW_RETURN (this->cond_response_available_,
-                      ACE_SYNCH_CONDITION (this->transport_->orb_core ()->leader_follower_lock ()),
+                      ACE_SYNCH_CONDITION (lock),
                       0);
     }
   return this->cond_response_available_;

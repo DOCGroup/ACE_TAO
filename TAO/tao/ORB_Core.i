@@ -150,6 +150,132 @@ TAO_ORB_Core::get_tss_resources (void)
   return ACE_TSS_GET (&this->tss_resources_,TAO_ORB_Core_TSS_Resources);
 }
 
+ACE_INLINE TAO_Leader_Follower &
+TAO_ORB_Core::leader_follower (void)
+{
+  return this->leader_follower_;
+}
+
+// ****************************************************************
+
+ACE_INLINE
+TAO_Leader_Follower::TAO_Leader_Follower (TAO_ORB_Core* orb_core)
+  : orb_core_ (orb_core),
+    reverse_lock_ (lock_),
+    leaders_ (0)
+{
+}
+
+ACE_INLINE TAO_ORB_Core_TSS_Resources *
+TAO_Leader_Follower::get_tss_resources (void) const
+{
+  return this->orb_core_->get_tss_resources ();
+}
+
+ACE_INLINE void
+TAO_Leader_Follower::set_server_thread (void)
+{
+  // Set the TSS flag to remember that we are a leader thread...
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  tss->is_server_thread_ = 1;
+
+  ++this->leaders_;
+}
+
+ACE_INLINE void
+TAO_Leader_Follower::reset_server_thread (void)
+{
+  // Set the TSS flag to remember that we are a leader thread...
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  tss->is_server_thread_ = 0;
+
+  --this->leaders_;
+}
+
+ACE_INLINE int
+TAO_Leader_Follower::leader_available (void) const
+{
+  return this->leaders_ != 0;
+}
+
+ACE_INLINE void
+TAO_Leader_Follower::set_client_thread (void)
+{
+  // Set the TSS flag to remember that we are a leader thread...
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  if (tss->is_server_thread_)
+    {
+      --this->leaders_;
+    }
+}
+
+ACE_INLINE void
+TAO_Leader_Follower::reset_client_thread (void)
+{
+  // Set the TSS flag to remember that we are a leader thread...
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  if (tss->is_server_thread_)
+    {
+      ++this->leaders_;
+    }
+}
+
+ACE_INLINE void
+TAO_Leader_Follower::set_leader_thread (void)
+{
+  ++this->leaders_;
+}
+
+ACE_INLINE void
+TAO_Leader_Follower::reset_leader_thread (void)
+{
+  --this->leaders_;
+}
+
+ACE_INLINE ACE_SYNCH_MUTEX &
+TAO_Leader_Follower::lock (void)
+{
+  return this->lock_;
+}
+
+ACE_INLINE ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &
+TAO_Leader_Follower::reverse_lock (void)
+{
+  return this->reverse_lock_;
+}
+
+ACE_INLINE int
+TAO_Leader_Follower::elect_new_leader (void)
+{
+  if (this->leaders_ == 0 && this->follower_available ())
+    {
+      ACE_SYNCH_CONDITION* condition_ptr = this->get_next_follower ();
+      if (condition_ptr == 0 || condition_ptr->signal () == -1)
+        return -1;
+    }
+  return 0;
+}
+
+ACE_INLINE int
+TAO_Leader_Follower::add_follower (ACE_SYNCH_CONDITION *follower_ptr)
+{
+  if (this->follower_set_.insert (follower_ptr) != 0)
+    return -1;
+  return 0;
+}
+
+ACE_INLINE int
+TAO_Leader_Follower::follower_available (void) const
+{
+  return !this->follower_set_.is_empty ();
+}
+
+ACE_INLINE int
+TAO_Leader_Follower::remove_follower (ACE_SYNCH_CONDITION *follower_ptr)
+{
+  return this->follower_set_.remove (follower_ptr);
+}
+
 // ****************************************************************
 
 ACE_INLINE TAO_ORB_Table*

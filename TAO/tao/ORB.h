@@ -78,22 +78,6 @@ class TAO_ValueFactory_Map;
 // The new (POA) base class for servants.
 class TAO_ServantBase;
 
-typedef struct TAO_Leader_Follower_Info_Struct
-{
-  ACE_SYNCH_MUTEX leader_follower_lock_;
-  // do protect the access to the following three members
-
-  ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
-  // keep a set of followers around (protected)
-
-  int leaders_;
-  // 0 if no leader is around, 1 if there is a leader
-  // > 1 if we do nested upcalls (protected)
-
-  ACE_thread_t leader_thread_ID_;
-  // thread ID of the leader thread (protected)
-} TAO_Leader_Follower_Info;
-
 class TAO_Stub;
 // Forward declarations.
 
@@ -505,8 +489,7 @@ public:
   // <wait_for_completion> parameter is TRUE, this operation blocks
   // until all ORB processing (including request processing and object
   // deactivation or other operations associated with object adapters)
-  // has completed.  <[NOTE]> <wait_for_completion>=TRUE is not
-  // currently supported.
+  // has completed.
 
   // @@EXC@@ Add the ACE_THROW_SPEC for these two functions
 
@@ -610,9 +593,6 @@ public:
   // Reference counting...
   virtual CORBA::ULong _incr_refcnt (void);
   virtual CORBA::ULong _decr_refcnt (void);
-
-  TAO_Leader_Follower_Info &leader_follower_info (void);
-  // Get access to the leader_follower_info
 
   void should_shutdown (int value);
   // Set the shutdown flag to <value>.
@@ -731,12 +711,6 @@ private:
   static int orb_init_count_;
   // Count of the number of times that <ORB_init> has been called.
   // This must be protected by <ACE_Static_Object_Lock>.
-
-  ACE_SYNCH_CONDITION* cond_become_leader_;
-  // wait to become the leader if the leader-follower model is active
-
-  TAO_Leader_Follower_Info  leader_follower_info_;
-  // Information about the leader follower model
 
   TAO_ORB_Core *orb_core_;
   // The ORB_Core that created us....

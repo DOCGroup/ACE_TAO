@@ -1,3 +1,34 @@
+Sat Jun 19 17:19:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	* tao/Wait_Strategy.cpp:
+	  Added support for thread pools.
+	  Moved the Leader_Follower data structure into the ORB_Core and
+	  all the methods from ORB_Core into the Leader_Follower class.
+
+	* tests/Makefile:
+	* tests/MT_Server/Makefile:
+	* tests/MT_Server/README:
+	* tests/MT_Server/client.cpp:
+	* tests/MT_Server/run_test.pl:
+	* tests/MT_Server/server.conf:
+	* tests/MT_Server/server.cpp:
+	* tests/MT_Server/test.idl:
+	* tests/MT_Server/test_i.h:
+	* tests/MT_Server/test_i.i:
+	* tests/MT_Server/test_i.cpp:
+	  New test for the leader follower implementation.
+
+	* tests/MT_Client/README:
+	  Updated
+
+	* tao/UIOP_Profile.cpp:
+	  Removed sperious debug message
+
 Sat Jun 19 15:46:22 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	One more step Generating Reply Handler skeleton code in the client
@@ -89,7 +120,7 @@ Sat Jun 19 14:54:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  resolution problems with 16 and 32 bit types respectively,
 	  so they had been specialized classes inheriting from a
 	  non-template base class. The cases for char and boolean,
-	  however, needed onlythe template function check_match()
+	  however, needed only the template function check_match()
 	  specialized, in order to use to_char and to_boolean. This
 	  kept all the compilers happy until recently, when AIX/egcs
 	  complained about char and boolean, so they have also been

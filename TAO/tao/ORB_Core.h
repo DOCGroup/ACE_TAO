@@ -90,6 +90,96 @@ public:
   // This is is just a place holder, in the future the connection
   // cache will be separated from the connectors and it will be a
   // (potentially) TSS object.
+
+  int is_server_thread_;
+  // Is this thread a leader for this ORB?
+};
+
+// ****************************************************************
+
+class TAO_Export TAO_Leader_Follower
+{
+public:
+  TAO_Leader_Follower (TAO_ORB_Core *orb_core);
+  // Constructor
+
+  void set_server_thread (void);
+  // The current thread has become a server thread (i.e. called
+  // ORB::run), update any flags and counters.
+
+  void reset_server_thread (void);
+  // The current thread is not a server thread anymore, reset any
+  // flags and counters.
+
+  int leader_available (void) const;
+  // Is there any thread running as a leader?
+
+  void set_client_thread (void);
+  // A server thread is making a request.
+
+  void reset_client_thread (void);
+  // A server thread has finished is making a request.
+
+  void set_leader_thread (void) ;
+  // The current thread has become the leader thread in the
+  // client side leader-follower set.
+
+  void reset_leader_thread (void) ;
+  // The current thread is no longer the leader thread in the client
+  // side leader-follower set.
+
+  void set_leader_thread (ACE_thread_t thread_ID);
+  // sets the thread ID of the leader thread in the leader-follower
+  // model
+
+  ACE_SYNCH_MUTEX &lock (void);
+  ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &reverse_lock (void);
+  // Accessors
+
+  int elect_new_leader (void);
+  // A leader thread is relinquishing its role, unless there are more
+  // leader threads running pick up a follower (if there is any) to
+  // play the leader role.
+
+  int add_follower (ACE_SYNCH_CONDITION *follower_ptr);
+  // adds the a follower to the set of followers in the leader-
+  // follower model
+  // returns 0 on success, -1 on failure
+
+  int follower_available (void) const;
+  // checks for the availablity of a follower
+  // returns 1 on available, 0 else
+
+  int remove_follower (ACE_SYNCH_CONDITION *follower_ptr);
+  // removes a follower from the leader-follower set
+  // returns 0 on success, -1 on failure
+
+  ACE_SYNCH_CONDITION *get_next_follower (void);
+  // returns randomly a follower from the leader-follower set
+  // returns follower on success, else 0
+
+private:
+  TAO_ORB_Core_TSS_Resources *get_tss_resources (void) const;
+  // Shortcut to obtain the TSS resources of the orb core.
+
+private:
+  TAO_ORB_Core *orb_core_;
+  // The orb core
+
+  ACE_SYNCH_MUTEX lock_;
+  // do protect the access to the following three members
+
+  ACE_Reverse_Lock<ACE_SYNCH_MUTEX> reverse_lock_;
+  // do protect the access to the following three members
+
+  ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
+  // keep a set of followers around (protected)
+
+  int leaders_;
+  // Count the number of active leaders.
+  // There could be many leaders in the thread pool (i.e. calling
+  // ORB::run), and the same leader could show up multiple times as it 
+  // receives nested upcalls and sends more requests.
 };
 
 // ****************************************************************
@@ -244,48 +334,6 @@ public:
   int add_to_ior_table (ACE_CString init_ref, TAO_IOR_LookupTable &table);
   // Add the init_ref (objectID->IOR) to the Lookup Table
 
-  int leader_available (void);
-  // returns the refcount on the leader
-
-  int I_am_the_leader_thread (void);
-  // returns 1 if we are the leader thread,
-  // else 0
-
-  void set_leader_thread (void) ;
-  // sets the thread_available flag and the thread ID of the leader
-  // thread in the leader-follower model
-
-  void set_leader_thread (ACE_thread_t thread_ID);
-  // sets the thread ID of the leader thread in the leader-follower
-  // model
-
-  void unset_leader_thread (void);
-  // sets the leader_available flag to false
-
-  int unset_leader_wake_up_follower (void);
-  // sets the leader_available flag to false
-  // and wakes up a new follower
-
-  ACE_SYNCH_MUTEX &leader_follower_lock (void);
-  // returns the leader-follower lock
-
-  int add_follower (ACE_SYNCH_CONDITION *follower_ptr);
-  // adds the a follower to the set of followers in the leader-
-  // follower model
-  // returns 0 on success, -1 on failure
-
-  int follower_available ();
-  // checks for the availablity of a follower
-  // returns 1 on available, 0 else
-
-  int remove_follower (ACE_SYNCH_CONDITION *follower_ptr);
-  // removes a follower from the leader-follower set
-  // returns 0 on success, -1 on failure
-
-  ACE_SYNCH_CONDITION *get_next_follower (void);
-  // returns randomly a follower from the leader-follower set
-  // returns follower on success, else 0
-
   ACE_Allocator *output_cdr_dblock_allocator (void);
   // This allocator is always TSS and has no locks. It is intended for
   // allocating the ACE_Data_Blocks used in *outgoing* CDR streams.
@@ -348,6 +396,12 @@ public:
 
   TAO_ORB_Core_TSS_Resources* get_tss_resources (void);
   // Obtain the TSS resources of this orb.
+
+  TAO_Leader_Follower &leader_follower (void);
+  // Get access to the leader_follower class
+
+  int run (ACE_Time_Value *tv, int break_on_timeouts);
+  // Run the event loop
 
 protected:
   int set_iiop_endpoint (int dotted_decimal_addresses,
@@ -498,6 +552,9 @@ protected:
   // NOTE: this is only used to *send* requests, not to store the
   // service context list of a reply...
   TAO_GIOP_ServiceContextList service_context_;
+
+  TAO_Leader_Follower leader_follower_;
+  // Information about the leader follower model
 };
 
 // ****************************************************************

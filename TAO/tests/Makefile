@@ -18,6 +18,7 @@ DIRS  = CDR \
         NestedUpcall \
         Multiple_Inheritance \
 	MT_Client \
+	MT_Server \
 	FL_Cube
 
 #----------------------------------------------------------------------------
