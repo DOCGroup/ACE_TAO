@@ -79,11 +79,11 @@ ACE_RCSID(ast, ast_interface, "$Id$")
 // Constructor(s) and destructor.
 
 AST_Interface::AST_Interface (void)
-  : pd_inherits (0),
+  : is_valuetype_ (0),
+    pd_inherits (0),
     pd_n_inherits (0),
     pd_inherits_flat (0),
-    pd_n_inherits_flat (0),
-    is_valuetype_ (0)
+    pd_n_inherits_flat (0)
 {
 }
 
@@ -101,11 +101,11 @@ AST_Interface::AST_Interface(UTL_ScopedName *n,
     UTL_Scope (AST_Decl::NT_interface),
     COMMON_Base (local, 
                  abstract),
+    is_valuetype_ (0),
     pd_inherits (ih),
     pd_n_inherits (nih),
     pd_inherits_flat (ih_flat),
-    pd_n_inherits_flat (nih_flat),
-    is_valuetype_ (0)
+    pd_n_inherits_flat (nih_flat)
 {
 }
 
