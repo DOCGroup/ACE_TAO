@@ -7,6 +7,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 unshift @INC, '../../../../bin';
 require ACEutils;
 
-$status  = system ("FindPOA$Process::EXE_EXT");
+$status  = system ($EXEPREFIX."FindPOA$Process::EXE_EXT");
 
 exit $status;

@@ -54,7 +54,7 @@ $iorfile_1 = $iorfile."_1";
 $iorfile_2 = $iorfile."_2";
 $iorfile_3 = $iorfile."_3";
 
-$SV = Process::Create ("server$Process::EXE_EXT", "-f $iorfile $extra_args");
+$SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", "-f $iorfile $extra_args");
 
 ACE::waitforfile ($iorfile_1);
 ACE::waitforfile ($iorfile_2);
