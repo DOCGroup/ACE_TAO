@@ -1,3 +1,53 @@
+Wed Sep 01 04:04:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Invocation.h:
+	* tao/Invocation.cpp (prepare_header): Extracted the code that
+	  builds the request header out from transport->start_request.
+	  The problem with putting the requst header builder in
+	  transport->start_request was that it built the request header
+	  pre-maturely.  And when interceptors have a change to modify the
+	  service context list, the change wouldn't get to put into the
+	  header.  We can build the request header directly from
+	  GIOP_Invocation directly because all the pieces of information
+	  required to build the header are carried by the Invocation
+	  class. The disadvantage of this change is that, we'll need to
+	  call the <prepare_header> method explicitly in stubs which
+	  somehow increase the footprint a bit.  We may need to improve
+	  this so for people don't need interceptors, TAO can still be
+	  mean and lean.
+
+	* tao/Asynch_Invocation.cpp:
+	* tao/Invocation.cpp (start): The signature of
+	  transport_->start_request has been changed.
+
+	* tao/Pluggable.h:
+	* tao/Pluggable.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/IIOP_Transport.cpp:
+	* tao/UIOP_Transport.h:
+	* tao/UIOP_Transport.cpp: (start_request): Since the header
+	  builder has been moved to GIOP_Invocation, this method no longer
+	  needs that many arguments.
+
+	* tao/Object.cpp: Fixed remote method invocation code (to call
+	  prepare_header explicitly.)
+
+	* tao/Stub.cpp (do_static_call,do_dynamic_call): Fixed remote
+	  method invocation code.
+
+	* tao/DomainC.cpp:
+	* tao/InterfaceC.cpp
+	* tao/POAC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PollableC.cpp: Fixed remote method invocation code.
+
+	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:  Generated
+	  stubs also need call <prepare_header> explicitly.
+
+	* tests/Interceptors/interceptors.cpp: Turned on the service
+	  context list testing code.  Fixed incorrect message id check.
+
 Tue Aug 31 21:04:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp
