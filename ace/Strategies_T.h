@@ -516,13 +516,70 @@ public:
 
   virtual void dump (void) const;
   // Dump the state of the object.
+};
+
+template <class SVC_HANDLER>
+class ACE_Schedule_All_Reactive_Strategy : public ACE_Scheduling_Strategy<SVC_HANDLER>
+{
+  // = TITLE
+  //     Defines the interface for specifying how to suspend and
+  //     resume a single-threaded reactive service .
+  //
+  // = DESCRIPTION
+  //     This class provides a strategy that suspends and resumes all
+  //     the Event_Handlers in a Reactor in one fell swoop.
+public:
+  // = Initialization and termination methods.
+  ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = 0);
+  // Constructor
+
+  // = Scheduling methods
+
+  virtual int suspend (void);
+  // Suspend hook.
+
+  virtual int resume (void);
+  // Resume hook.
+
+  virtual void dump (void) const;
+  // Dump the state of the object.
 
 protected:
-  SVC_HANDLER *scheduler_;
-  // Points to the scheduler strategy object...
 
-  int delete_scheduler_;
-  // Keeps track of whether we need to delete this or not...
+  ACE_Reactor *reactor_;
+  // Thread Manager
+};
+
+template <class SVC_HANDLER>
+class ACE_Schedule_All_Threaded_Strategy : public ACE_Scheduling_Strategy<SVC_HANDLER>
+{
+  // = TITLE
+  //     Defines the interface for specifying how to suspend and
+  //     resume a multithreaded service .
+  //
+  // = DESCRIPTION
+  //     This class provides a strategy that suspends and resumes all
+  //     the Event_Handlers controlled by a Thread_Manager in one fell swoop.
+public:
+  // = Initialization and termination methods.
+  ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = 0);
+  // Constructor
+
+  // = Scheduling methods
+
+  virtual int suspend (void);
+  // Suspend hook.
+
+  virtual int resume (void);
+  // Resume hook.
+
+  virtual void dump (void) const;
+  // Dump the state of the object.
+
+protected:
+
+  ACE_Thread_Manager *thr_mgr_;
+  // Thread Manager
 };
 
 template <class SVC_HANDLER>
@@ -785,60 +842,6 @@ private:
   int delete_recycling_strategy_;
   // 1 if <Connector> created the recycling strategy and thus should
   // delete it, else 0.
-};
-
-template <class SVC_HANDLER>
-class ACE_Schedule_All_Reactive_Strategy : public ACE_Scheduling_Strategy<SVC_HANDLER>
-{
-  // = TITLE
-  //     Defines the interface for specifying how to suspend and
-  //     resume a single-threaded reactive service .
-  //
-  // = DESCRIPTION
-  //     This class provides a strategy that suspends and resumes all
-  //     the Event_Handlers in a Reactor in one fell swoop.
-public:
-  // = Initialization and termination methods.
-  ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = 0);
-  // Constructor
-
-  // = Scheduling methods
-
-  virtual int suspend (void);
-  // Suspend hook.
-
-  virtual int resume (void);
-  // Resume hook.
-
-  virtual void dump (void) const;
-  // Dump the state of the object.
-};
-
-template <class SVC_HANDLER>
-class ACE_Schedule_All_Threaded_Strategy : public ACE_Scheduling_Strategy<SVC_HANDLER>
-{
-  // = TITLE
-  //     Defines the interface for specifying how to suspend and
-  //     resume a multithreaded service .
-  //
-  // = DESCRIPTION
-  //     This class provides a strategy that suspends and resumes all
-  //     the Event_Handlers controlled by a Thread_Manager in one fell swoop.
-public:
-  // = Initialization and termination methods.
-  ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = 0);
-  // Constructor
-
-  // = Scheduling methods
-
-  virtual int suspend (void);
-  // Suspend hook.
-
-  virtual int resume (void);
-  // Resume hook.
-
-  virtual void dump (void) const;
-  // Dump the state of the object.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
