@@ -132,24 +132,15 @@ Thu Jun 19 20:45:06 2003  Pradeep Gore  <pradeep@oomworks.com>
 
           Added ACE_TYPENAME to stop compiler warnings.
 
->>>>>>> 1.1966
 Thu Jun 19 18:29:28 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-<<<<<<< ChangeLog
 	* performance-tests/Sequence_Latency/AMH/Single_Threaded/run_test.pl
-=======
-        * performance-test/Sequence_Latency/AMH/Single_Threaded/run_test.pl
->>>>>>> 1.1966
 
           Fixed some wrong output information.
 
 Thu Jun 19 17:32:38 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-<<<<<<< ChangeLog
 	* performance-tests/Sequence_Latency/DSI/client.cpp
-=======
-        * performance-test/Sequence_Latency/DSI/client.cpp
->>>>>>> 1.1966
 
           Removed an unused dummy variable in the source code.
 
