@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:150
+// be/be_codegen.cpp:186
 
 #ifndef _TAO_IDL_ORIG_CURRENTC_H_
 #define _TAO_IDL_ORIG_CURRENTC_H_
@@ -38,6 +38,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -80,7 +81,7 @@ namespace CORBA
 {
 
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:610
+  // be/be_interface.cpp:611
 
 #if !defined (_CORBA_CURRENT__VAR_OUT_CH_)
 #define _CORBA_CURRENT__VAR_OUT_CH_
@@ -123,15 +124,20 @@ namespace CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
+    static Current_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     static Current_ptr _nil (void)
     {
       return (Current_ptr)0;
     }
 
-
+    static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // be/be_visitor_interface/interface_ch.cpp:196
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -167,7 +173,7 @@ namespace CORBA
 } // module CORBA
 
 // TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:48
+// be/be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -206,7 +212,7 @@ namespace TAO
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:911
+// be/be_codegen.cpp:1050
 
 #if defined (__ACE_INLINE__)
 #include "CurrentC.i"
@@ -223,4 +229,3 @@ namespace TAO
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-

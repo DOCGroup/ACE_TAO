@@ -1,4 +1,35 @@
-Tue Dec 23 18:17:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+Tue Dec 23 19:04:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/BoundsC.cpp:
+	* tao/BoundsC.h:
+	* tao/BoundsC.i:
+	* tao/CONV_FRAMEC.cpp:
+	* tao/CONV_FRAMEC.h:
+	* tao/CONV_FRAMEC.i:
+	* tao/CurrentC.cpp:
+	* tao/CurrentC.h:
+	* tao/CurrentC.i:
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/DomainC.i:
+	* tao/DynamicC.cpp:
+	* tao/DynamicC.h:
+	* tao/DynamicC.i:
+	* tao/Dynamic_ParameterC.cpp:
+	* tao/Dynamic_ParameterC.h:
+	* tao/GIOPC.cpp:
+	* tao/GIOPC.h:
+	* tao/GIOPC.i:
+	* tao/IIOPC.cpp:
+	* tao/IIOPC.h:
+	* tao/IIOPC.i:
+	* tao/IIOP_EndpointsC.cpp:
+	* tao/IIOP_EndpointsC.h:
+
+	  First set of regenerated code. They had to be regenerated since
+	  the interfaces needed to have a _unchecked_narrow ().
+
+Dec 23 18:17:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Object_T.cpp:
 	 

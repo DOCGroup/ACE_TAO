@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+// be/be_codegen.cpp:186
 
 #ifndef _TAO_IDL_ORIG_IIOP_ENDPOINTSC_H_
 #define _TAO_IDL_ORIG_IIOP_ENDPOINTSC_H_
@@ -68,13 +68,13 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+// be/be_visitor_module/module_ch.cpp:48
 
 namespace TAO
 {
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
+  // be/be_type.cpp:258
 
   struct IIOP_Endpoint_Info;
 
@@ -92,20 +92,25 @@ namespace TAO
     IIOP_Endpoint_Info_out;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
+  // be/be_visitor_structure/structure_ch.cpp:52
 
   struct TAO_Export IIOP_Endpoint_Info
   {
     typedef IIOP_Endpoint_Info_var _var_type;
 
-
+    static void _tao_any_destructor (void *);
     TAO_String_Manager host;
     CORBA::Short port;
     CORBA::Short priority;
   };
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IIOP_Endpoint_Info;
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_TAO_IIOPENDPOINTSEQUENCE_CH_)
 #define _TAO_IIOPENDPOINTSEQUENCE_CH_
@@ -145,18 +150,25 @@ namespace TAO
     IIOPEndpointSequence (const IIOPEndpointSequence &);
     ~IIOPEndpointSequence (void);
 
+    static void _tao_any_destructor (void *);
+
     typedef IIOPEndpointSequence_var _var_type;
   };
 
 #endif /* end #if !defined */
 
+  // TAO_IDL - Generated from
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IIOPEndpointSequence;
+
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
+// be/be_visitor_module/module_ch.cpp:66
 
 } // module TAO
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+// be/be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -164,18 +176,18 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
+// be/be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:53
+// be/be_visitor_structure/cdr_op_ch.cpp:53
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO::IIOP_Endpoint_Info &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO::IIOP_Endpoint_Info &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
+// be/be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_TAO_IIOPEndpointSequence_H_
 #define _TAO_CDR_OP_TAO_IIOPEndpointSequence_H_
@@ -192,15 +204,15 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_TAO_IIOPEndpointSequence_H_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
+// be/be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:920
+// be/be_codegen.cpp:1050
 
 #if defined (__ACE_INLINE__)
-#include "IIOP_EndpointsC.inl"
+#include "IIOP_EndpointsC.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
@@ -212,5 +224,5 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
-#endif /* ifndef */
 
+#endif /* ifndef */

@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+// be/be_codegen.cpp:186
 
 #ifndef _TAO_IDL_ORIG_IIOPC_H_
 #define _TAO_IDL_ORIG_IIOPC_H_
@@ -68,13 +68,13 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+// be/be_visitor_module/module_ch.cpp:48
 
 namespace IIOP
 {
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
+  // be/be_type.cpp:258
 
   struct ListenPoint;
 
@@ -92,24 +92,24 @@ namespace IIOP
     ListenPoint_out;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
+  // be/be_visitor_structure/structure_ch.cpp:52
 
   struct TAO_Export ListenPoint
   {
     typedef ListenPoint_var _var_type;
 
-
+    static void _tao_any_destructor (void *);
     TAO_String_Manager host;
     CORBA::UShort port;
   };
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ListenPoint;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
+  // be/be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_IIOP_LISTENPOINTLIST_CH_)
 #define _IIOP_LISTENPOINTLIST_CH_
@@ -149,18 +149,20 @@ namespace IIOP
     ListenPointList (const ListenPointList &);
     ~ListenPointList (void);
 
+    static void _tao_any_destructor (void *);
+
     typedef ListenPointList_var _var_type;
   };
 
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ListenPointList;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
+  // be/be_type.cpp:258
 
   struct BiDirIIOPServiceContext;
 
@@ -178,28 +180,28 @@ namespace IIOP
     BiDirIIOPServiceContext_out;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
+  // be/be_visitor_structure/structure_ch.cpp:52
 
   struct TAO_Export BiDirIIOPServiceContext
   {
     typedef BiDirIIOPServiceContext_var _var_type;
 
-
+    static void _tao_any_destructor (void *);
     IIOP::ListenPointList listen_points;
   };
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_BiDirIIOPServiceContext;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
+// be/be_visitor_module/module_ch.cpp:66
 
 } // module IIOP
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+// be/be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -207,18 +209,18 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
+// be/be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:53
+// be/be_visitor_structure/cdr_op_ch.cpp:53
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IIOP::ListenPoint &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IIOP::ListenPoint &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
+// be/be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_IIOP_ListenPointList_H_
 #define _TAO_CDR_OP_IIOP_ListenPointList_H_
@@ -235,18 +237,18 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_IIOP_ListenPointList_H_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:53
+// be/be_visitor_structure/cdr_op_ch.cpp:53
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IIOP::BiDirIIOPServiceContext &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IIOP::BiDirIIOPServiceContext &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
+// be/be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
+// be/be_codegen.cpp:1050
 
 #if defined (__ACE_INLINE__)
 #include "IIOPC.i"
@@ -261,5 +263,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IIOP::BiDirIIOPServiceCont
 #endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
-#endif /* ifndef */
 
+#endif /* ifndef */
