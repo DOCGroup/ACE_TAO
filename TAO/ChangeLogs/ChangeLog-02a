@@ -1,3 +1,12 @@
+Mon Jan 14 19:53:18 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableServer/IORInfo.cpp (current_factory):
+	  Was a returning a void value. Fixed it.
+	
+	* tao/PortableServer/POA.cpp (establish_components): 
+	  Modified variable i as variable j to satisfy win.
+	  Also modified a const variable as non-const.
+
 Mon Jan 14 19:37:03 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/PortableServer/TAO_PortableServer_Static.dsp (SOURCE): 
