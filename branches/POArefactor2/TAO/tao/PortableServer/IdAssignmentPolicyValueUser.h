@@ -14,8 +14,8 @@
 #define TAO_PORTABLESERVER_IDASSIGNMENTPOLICYVALUEUSER_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
-#include "IdAssignmentPolicyValue.h"
+#include "tao/PortableServer/portableserver_export.h"
+#include "tao/PortableServer/IdAssignmentPolicyValue.h"
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

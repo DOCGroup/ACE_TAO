@@ -1,3 +1,16 @@
+Sun Jan 23 01:22:45 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/PortableServer/Adapter_Activator.cpp:
+	* tao/PortableServer/Default_Policy_Validator.cpp:
+	* tao/PortableServer/Default_Servant_Dispatcher.cpp:
+	* tao/PortableServer/IdAssignmentPolicyValue.cpp:
+	* tao/PortableServer/IdAssignmentPolicyValueSystem.cpp:
+	* tao/PortableServer/IdAssignmentPolicyValueSystem.h:
+	* tao/PortableServer/IdAssignmentPolicyValueUser.h:
+	* tao/PortableServer/IdAssignmentStrategyFactoryImpl.cpp:
+
+	  Cosmetic fixes.
+
 Sat Jan 22 23:08:08 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/PortableServer/PortableServer.cpp:

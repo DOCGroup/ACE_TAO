@@ -14,13 +14,15 @@
 #define TAO_PORTABLESERVER_IDASSIGNMENTPOLICYVALUESYSTEM_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
-#include "IdAssignmentPolicyValue.h"
-#include "ace/Service_Config.h"
+#include "tao/POrtableServer/portableserver_export.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/PortableServer/IdAssignmentPolicyValue.h"
+#include "ace/Service_Config.h"
 
 namespace TAO
 {
