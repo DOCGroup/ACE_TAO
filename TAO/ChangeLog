@@ -1,3 +1,10 @@
+Tue Feb  3 14:12:01 2004  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        * docs/releasenotes/index.html:
+
+          Minor edit, change "FT EC" to "FT/RT EC" which is the name
+          given by the developers of this service.
+
 Tue Feb  3 13:09:22 2004  Gautam Thaker  <gthaker@atl.lmco.com>
 
         * docs/releasenotes/index.html:
