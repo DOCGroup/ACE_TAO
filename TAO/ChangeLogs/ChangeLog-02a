@@ -6,9 +6,10 @@ Wed Jan 19 15:44:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  where the union in nested inside other structs
 	  and/or unions, Dec Unix picks up on the fact that
 	  the inner union's destructor is called before
-	  it is declared inline. Although he didn't report
+	  it is defined inline. Although he didn't report
 	  this bug, thanks to Hugh Arnold <harnold@itginc.com>
-	  for sending in the example IDL file.
+	  for sending in the example IDL file that rooted it
+	  out.
 
 Wed Jan 19 12:07:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
