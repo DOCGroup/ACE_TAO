@@ -92,12 +92,27 @@ SOURCE="<%pch_source%>"
 # End Source File
 <%endif%>
 <%endif%>
+<%if(grouped_source_files)%>
+<%foreach(grouped_source_files)%>
+# Begin Group "<%grouped_source_file%>"
+
+# PROP Default_Filter ""
+<%foreach(grouped_source_file->files)%>
+# Begin Source File
+
+SOURCE="<%grouped_source_file->file%>"
+# End Source File
+<%endfor%>
+# End Group
+<%endfor%>
+<%else%>
 <%foreach(source_files)%>
 # Begin Source File
 
 SOURCE="<%source_file%>"
 # End Source File
 <%endfor%>
+<%endif%>
 # End Group
 <%endif%>
 <%if(header_files)%>
