@@ -12,7 +12,7 @@ common_defines        = WIN32 _CONSOLE
 subsystem             = console
 need_staticflags      = 1
 pdb                   = 1
-
+use_modifier          =
 
 Release {
   use_debug_libraries   = 0

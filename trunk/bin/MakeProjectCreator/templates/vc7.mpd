@@ -68,7 +68,7 @@
 				AdditionalDependencies="<%foreach(pure_libs)%><%pure_lib%> <%endfor%><%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs)%><%lib%><%lib_modifier%>.lib<%fornotlast(" ")%><%endfor%>"
 <%endif%>
 <%if(exename || sharedname || staticname)%>
-				OutputFile="$(OutDir)/<%if(type_is_dynamic)%><%sharedname%><%lib_modifier%>.dll<%else%><%exename%>.exe<%endif%>"
+				OutputFile="$(OutDir)/<%if(type_is_dynamic)%><%sharedname%><%lib_modifier%>.dll<%else%><%exename%><%if(use_modifier)%><%lib_modifier%><%endif%>.exe<%endif%>"
 <%endif%>
 				Version="<%version("1.0")%>"
 				LinkIncremental="<%LinkIncremental("1")%>"
@@ -79,7 +79,7 @@
 				ProgramDatabaseFile="$(OutDir)/<%sharedname%><%lib_modifier%>.pdb"
 <%else%>
    <%if(type_is_binary)%>
-				ProgramDatabaseFile="$(OutDir)/<%exename%>.pdb"
+				ProgramDatabaseFile="$(OutDir)/<%exename%><%if(use_modifier)%><%lib_modifier%><%endif%>.pdb"
    <%endif%>
 <%endif%>
 				SubSystem="<%subsystem("1")%>"

@@ -5,6 +5,7 @@ conditional_include "bmakecommon"
 
 need_staticflags = 1
 startup_obj      = c0x32$(OBJ_EXT)
+use_modifier     =
 
 Release {
   optimize         = 1

@@ -1,8 +1,30 @@
+Tue Mar  2 12:28:09 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/bmake.mpd:
+        * bin/MakeProjectCreator/templates/bmakedllexe.mpt:
+        * bin/MakeProjectCreator/templates/bmakelibexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/em3vcpdllexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplibexe.mpt:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/nmakeexe.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc6dspdllexe.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsplibexe.mpt:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+        * bin/MakeProjectCreator/templates/vc7exe.mpt:
+        * bin/MakeProjectCreator/templates/vc7libexe.mpt:
+
+          Allow the user to generate projects with executable names with a
+          modifier for different configurations similar to the library
+          modifier for debug/release.  To enable this add '-value_template
+          use_modifier=1' to your MPC command line.
+
 Tue Mar  2 12:33:51 2004  Steve Huston  <shuston@riverace.com>
 
-	* m4/compiler.m4: Added HPUX_VERS to HP-UX compiler options, and
-	  -D_HPUX_SOURCE to aC++ options. This mirrors what the traditional
-	  platform options do.
+        * m4/compiler.m4: Added HPUX_VERS to HP-UX compiler options, and
+          -D_HPUX_SOURCE to aC++ options. This mirrors what the traditional
+          platform options do.
 
 Tue Mar  2 11:16:03 2004  Chad Elliott  <elliott_c@ociweb.com>
 
