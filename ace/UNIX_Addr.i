@@ -18,8 +18,8 @@ ACE_UNIX_Addr::get_addr (void) const
 ACE_INLINE int
 ACE_UNIX_Addr::string_to_addr (const char addr[])
 {
-  ACE_OS::strncpy (this->unix_addr_.sun_path, addr,
-	     sizeof this->unix_addr_.sun_path);
+  ACE_OS::strsncpy (this->unix_addr_.sun_path, addr,
+                    sizeof this->unix_addr_.sun_path);
   return 0;
 }
 
@@ -28,7 +28,7 @@ ACE_UNIX_Addr::string_to_addr (const char addr[])
 ACE_INLINE int
 ACE_UNIX_Addr::addr_to_string (char s[], size_t len) const
 {
-  ACE_OS::strncpy (s, this->unix_addr_.sun_path, len);
+  ACE_OS::strsncpy (s, this->unix_addr_.sun_path, len);
   return 0;
 }
 

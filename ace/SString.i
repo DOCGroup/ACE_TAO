@@ -173,7 +173,7 @@ ACE_CString::rep (void) const
 
   char *new_string;
   ACE_NEW_RETURN (new_string, char[this->len_ + 1], 0);
-  ACE_OS::strncpy (new_string, this->rep_, this->len_);
+  ACE_OS::strsncpy (new_string, this->rep_, this->len_);
   new_string[this->len_] = '\0';
 
   return new_string;
