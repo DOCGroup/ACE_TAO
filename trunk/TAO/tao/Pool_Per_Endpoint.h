@@ -40,7 +40,9 @@ class TAO_Export TAO_Pool_Per_Endpoint : public ACE_Task_Base
 public:
   TAO_Pool_Per_Endpoint (CORBA::ORB_ptr orb,
                          int policy = ACE_SCHED_OTHER,
-                         int poolsize = 1);
+                         int poolsize = 1,
+                         int flags =
+                             THR_NEW_LWP|THR_JOINABLE|THR_SCHED_DEFAULT);
   // Constructor
 
   virtual ~TAO_Pool_Per_Endpoint (void);
@@ -62,6 +64,9 @@ private:
 
   int poolsize_;
   // The number of threads on each pool.
+
+  int flags_;
+  // The flags used to create the threads
 
   ACE_Thread_Manager thread_manager_;
   // The thread manager.
