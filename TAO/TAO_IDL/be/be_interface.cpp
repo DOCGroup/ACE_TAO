@@ -1561,8 +1561,8 @@ be_interface::gen_gperf_lookup_methods (void)
                       -1);
 
   // Open the temp file.
-  ACE_HANDLE input =  ACE::open_temp_file (cg->gperf_input_filename (),
-                                           O_RDONLY);
+  ACE_HANDLE input = ACE::open_temp_file (cg->gperf_input_filename (),
+                                          O_RDONLY);
 
   if (input == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -1570,12 +1570,12 @@ be_interface::gen_gperf_lookup_methods (void)
                        "open_temp_file"),
                       -1);
 
-  // Stdout is server skeleton. Do *not* close the file, just open
-  // again with ACE_OS::open with WRITE + APPEND option.. After this,
-  // remember to update the file offset to the correct location.
+  // Stdout is server skeleton.  Do *not* close the file, just open
+  // again with <ACE_OS::open> with WRITE + APPEND option.. After
+  // this, remember to update the file offset to the correct location.
 
-  ACE_HANDLE output =  ACE_OS::open (this->strategy_->get_out_stream_fname (),
-                                     O_WRONLY | O_APPEND);
+  ACE_HANDLE output = ACE_OS::open (this->strategy_->get_out_stream_fname (),
+                                    O_WRONLY | O_APPEND);
 
   if (output == ACE_INVALID_HANDLE)
     {
@@ -1585,6 +1585,9 @@ be_interface::gen_gperf_lookup_methods (void)
                          "open"),
                         -1);
     }
+
+  // Seek to the end of the output file.
+  ACE_OS::lseek (output, 0, SEEK_END);
 
   // Set the handles now in the process options.
   process_options.set_handles (input, output);
@@ -1686,7 +1689,8 @@ be_interface::gen_gperf_lookup_methods (void)
           result = -1;
         }
 
-      // Adjust the file offset to the EOF for the server skeleton file.
+      // Adjust the file offset to the EOF for the server skeleton
+      // file.
       ACE_OS::fseek (this->strategy_->get_out_stream()->file (),
                      0,
                      SEEK_END);
