@@ -62,6 +62,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
                                                UTL_Scope::IK_decls),
                       -1);
       this->elem_number_ = 0;
+
       // continue until each element is visited
       for (;!si->is_done ();si->next())
         {
@@ -118,6 +119,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
       for (;!si->is_done ();si->next())
         {
           AST_Decl *d = si->item ();
+
           if (!d)
             {
               delete si;
@@ -126,15 +128,22 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
                                  "bad node in this scope\n"), -1);
 
             }
+
           AST_Field *field = AST_Field::narrow_from_decl (d);
+
           if (!field ||
               (field && field->visibility() != AST_Field::vis_PRIVATE))
             {
               continue;      // only private fields in this run
             }
+
           ++ n_processed;
+
           if (n_processed == 1)
-            this->begin_private ();
+            {
+              this->begin_private ();
+            }
+
           be_decl *bd = be_decl::narrow_from_decl (d);
           // set the scope node as "node" in which the code is being
           // generated so that elements in the node's scope can use it
@@ -151,12 +160,15 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "codegen for scope failed\n"), -1);
+                                 "codegen for scope failed\n"), 
+                                -1);
 
             }
         } // end of for loop
+
       delete si;
     } // end of if
+
   return 0;
 }
 
@@ -776,7 +788,7 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
   // now output the field name.
   *os << " " << vt->field_pd_prefix ()
              << node->local_name ()
-             << vt->field_pd_postfix() << ";\n";
+             << vt->field_pd_postfix() << ";" << be_nl;
   return 0;
 
 }
