@@ -72,6 +72,15 @@ public:
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
                                TAO_MProfile &mprofile);
+  /**
+   * Rather than creating a separate profile for each endpoint, this
+   * version of <create_mprofile> method adds all endpoints to a
+   * single DIOP profile, i.e., <mprofile> will not contain more than
+   * one DIOP_Profile, no matter how many acceptors there are.
+   */
+  virtual int create_endpoint_for_mprofile (const TAO_ObjectKey &object_key,
+                                            TAO_MProfile &mprofile);
+
   virtual int is_collocated (const TAO_Endpoint *endpoint);
   virtual CORBA::ULong endpoint_count (void);
 
@@ -121,15 +130,6 @@ protected:
   /// Obtain tcp properties that must be used by this acceptor, i.e.,
   /// initialize <tcp_properties_>.
   int init_tcp_properties (void);
-
-  /**
-   * Rather than creating a separate profile for each endpoint, this
-   * version of <create_mprofile> method adds all endpoints to a
-   * single DIOP profile, i.e., <mprofile> will not contain more than
-   * one DIOP_Profile, no matter how many acceptors there are.
-   */
-  int create_rt_mprofile (const TAO_ObjectKey &object_key,
-                          TAO_MProfile &mprofile);
 
 protected:
 

@@ -1,3 +1,96 @@
+Tue Apr 15 09:50:40 2001  Frank Hunleth <fhunleth@cs.wustl.edu>, Angelo Corsaro <corsaro@cs.wustl.edu>
+
+        * tao/Stub.cpp:
+        * tao/Stub.h:
+        * tao/RT_Stub.cpp:
+        * tao/RT_Stub.h:
+        * tao/RT_Stub_Factory.cpp:
+        * tao/RT_Stub_Factory.h:
+        * tao/Stub_Factory.cpp:
+        * tao/Stub_Factory.h:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/Object.cpp:
+          Added Stub Factories that create the right kind of stub
+          depending on whether RT-CORBA is being used or not.
+
+          Substituted all the usage of explicit instatntiation of stub,
+          with the use of stub factory.
+
+          Removed RT-CORBA specific code from the Stub, this code has been
+          placed in the RT_Stub.
+
+          Added hook in the ORB_Core to create Stubs. The hook uses underneath
+          the Stub Factory that is registered at ORB initialization time, or
+          when RT-CORBA libs are loaded.
+
+
+        * tao/Invocation.cpp:
+        * tao/Invocation.h:
+        * tao/Invocation.i:
+        * tao/Invocation_Endpoint_Selectors.cpp:
+        * tao/Invocation_Endpoint_Selectors.h:
+        * tao/Invocation_Endpoint_Selectors.i:
+        * tao/RT_Endpoint_Selector_Factory.cpp:
+        * tao/RT_Endpoint_Selector_Factory.h:
+        * tao/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RT_Invocation_Endpoint_Selectors.h:
+        * tao/RT_Endpoint_Utils.cpp:
+        * tao/RT_Endpoint_Utils.h:
+          Refactored the endpoint selector code to remove the
+          use of TAO_Endpoint_Selection_State in TAO_GIOP_Invocation.
+          TAO_Endpoint_Selection_State was only being used for RTCORBA.
+          Also, performed the following refactorings:
+           - Removed recursion in the endpoint selectors
+           - Added accessors so that all of the selectors didn't need to be
+             friends with TAO_GIOP_Invocation
+           - Moved some commonly used code to RT_Endpoint_Utils.cpp
+           - More still needs to be done in order to make the Invocation
+             related code clear and easy to comprehend,  the refactoring
+             made was a step toward that goal.
+
+        * tao/Makefile:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Added RT_Stub.{cpp,h}, Stub_Factory.{cpp,h}, RT_Stub_Factory.{cpp,h}
+          and RT_Endpoint_Utils.{cpp,h}
+
+        * tao/RT_Protocols_Hooks.cpp:
+        * tao/RT_Protocols_Hooks.h:
+        * tao/Protocols_Hooks.cpp:
+        * tao/Protocols_Hooks.h:
+          Added rt_service_context () to add the client priority service
+          context to outgoing requests.  This uses the same mechanism
+          as FT.  The change to use the portable interceptors hasn't been
+          done yet.
+
+        * tao/RTCORBA/README:
+          Updated status of RTCORBA subsetting work.
+
+        * tao/Pluggable.h:
+        * tao/PortableServer/RT_Acceptor_Filters.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.h:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Acceptor.h:
+        * tao/Strategies/UIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.h:
+        * examples/PluggableUDP/DIOP/DIOP_Profile.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Acceptor.h:
+          Removed TAO_HAS_RT_CORBA #ifdefs.  Added the
+          TAO_Acceptor::create_endpoint_for_mprofile () to
+          add endpoints to the same profile as is done when
+          using RTCORBA.  Now the POA calls either create_mprofile
+          when RTCORBA is not being used or create_endpoint_for_mprofile
+          when RTCORBA is used.
+
 Mon May 14 22:40:42 2001  Balachandran  <bala@cs.wustl.edu>
 
         * TAO version 1.1.16 released.
@@ -13,39 +106,39 @@ Mon May 14 10:44:02 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Mon May 14 07:06:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connector.cpp: Added a #include. This should fix
-	  problems in Visual Age. Thanks to Giga Giguashvili
-	  <gregoryg@paradigmgeo.com> for reporting this.
+        * tao/IIOP_Connector.cpp: Added a #include. This should fix
+          problems in Visual Age. Thanks to Giga Giguashvili
+          <gregoryg@paradigmgeo.com> for reporting this.
 
 Sat May 12 12:39:47 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableServer/POA.cpp (imr_notify_startup, key_to_object):
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (server_is_running):
-	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp (run): 
+        * tao/PortableServer/POA.cpp (imr_notify_startup, key_to_object):
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (server_is_running):
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp (run):
 
-	  The Implementation Repository code used stringified URL style
-	  IORs to determine which port a given server was running on.  It
-	  expected them to be of the form "iioploc://".  However, TAO no
-	  longer generates IORs of that form.  Instead it generates URL
-	  style IORs of the form defined in the latest Interoperable
-	  Naming Service spec, i.e. "corbaloc:iiop:...".  Updated the
-	  above functions to parse "corbaloc" IORs instead.  This fixes a
-	  segmentation fault that occured when "ImR-ifying" IORs.  Thanks
-	  to John Ashmun <John.ASHMUN@esca.com> and Kirat Singh
-	  <kirat.singh@gs.com> for reporting this problem.  [Bug 909]
+          The Implementation Repository code used stringified URL style
+          IORs to determine which port a given server was running on.  It
+          expected them to be of the form "iioploc://".  However, TAO no
+          longer generates IORs of that form.  Instead it generates URL
+          style IORs of the form defined in the latest Interoperable
+          Naming Service spec, i.e. "corbaloc:iiop:...".  Updated the
+          above functions to parse "corbaloc" IORs instead.  This fixes a
+          segmentation fault that occured when "ImR-ifying" IORs.  Thanks
+          to John Ashmun <John.ASHMUN@esca.com> and Kirat Singh
+          <kirat.singh@gs.com> for reporting this problem.  [Bug 909]
 
-	* orbsvcs/ImplRepo_Service/README.txt:
+        * orbsvcs/ImplRepo_Service/README.txt:
 
-	  Corrected malformed "corbaloc" URL IORs in this file.
+          Corrected malformed "corbaloc" URL IORs in this file.
 
 Sat May 12 08:30:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Services_Activate.h: Fixed a compile error in platforms with
-	  native exception support. 
+        * tao/Services_Activate.h: Fixed a compile error in platforms with
+          native exception support.
 
 Fri May 11 18:52:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/EC_ProxyConsumer.h: Fixed a stupid typo.
+        * orbsvcs/orbsvcs/EC_ProxyConsumer.h: Fixed a stupid typo.
 
 Fri May 11 17:19:03 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -57,26 +150,26 @@ Fri May 11 17:19:03 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Fri May 11 15:09:32 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp (run): Make the
-	  code more robust for invalid IORs.  Thanks to John Ashmum
- 	  <John.ASHMUN@esca.com> for reporting this.
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp (run): Make the
+          code more robust for invalid IORs.  Thanks to John Ashmum
+           <John.ASHMUN@esca.com> for reporting this.
 
 Fri May 11 12:13:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: More fixes for FORTE
-	  6.1.  
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: More fixes for FORTE
+          6.1.
 
 Fri May 11 07:52:02 2001  Carlos O'Ryan  <coryan@uci.edu>
 

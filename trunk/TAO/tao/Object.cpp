@@ -592,11 +592,12 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
 
   // Ownership of type_hint is given to TAO_Stub
   // TAO_Stub will make a copy of mp!
-  TAO_Stub *objdata = 0;
-  ACE_NEW_RETURN (objdata, TAO_Stub (type_hint.in (),
-                                     mp,
-                                     orb_core),
-                  0);
+
+  TAO_Stub *objdata = orb_core->create_stub (type_hint.in (),
+                                             mp,
+                                             orb_core,
+                                             TAO_default_environment ());
+  // @@ RTCORBA_Subsetting FIX THIS!!  ACE_CHECK_RETURN (0);
 
   TAO_Stub_Auto_Ptr safe_objdata (objdata);
 

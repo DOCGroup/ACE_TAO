@@ -77,6 +77,9 @@ class TAO_BiDir_Adapter;
 
 class TAO_Flushing_Strategy;
 
+class TAO_Stub_Factory;
+class TAO_Service_Context;
+
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 class TAO_Eager_Buffering_Sync_Strategy;
@@ -102,7 +105,7 @@ class TAO_Export TAO_ORB_Core_TSS_Resources
 {
 public:
 
-  /// onstructor
+  /// Constructor
   TAO_ORB_Core_TSS_Resources (void);
 
   /// destructor
@@ -363,6 +366,9 @@ public:
   /// Returns pointer to the Protocol_Hooks
   TAO_Protocols_Hooks *protocols_hooks (void);
   //@}
+
+  /// Sets the value of TAO_ORBCode::stub_factory_name_
+  static void set_stub_factory (const char *stub_factory_name);
 
   /// Sets the value of TAO_ORB_Core::resource_factory_
   static void set_resource_factory (const char *resource_factory_name);
@@ -662,6 +668,16 @@ public:
                                 TAO_Acceptor_Filter *filter,
                                 CORBA::Environment &ACE_TRY_ENV);
 
+  /// Factory method that create the "right" Stub depending on
+  /// wheather RTCORBA is loaded or not. The factory used to create
+  /// the stub, is loaded at ORB initialization, and its type depends
+  /// on the fact that RTCORBA is being used or not.
+  TAO_Stub *create_stub (const char *repository_id,
+                         const TAO_MProfile &profiles,
+                         TAO_ORB_Core *orb_core,
+                         CORBA::Environment &ACE_TRY_ENV);
+
+
   /// Give each registered IOR interceptor the opportunity to add
   /// tagged components to profiles of each created servant.
   void establish_components (TAO_MProfile &mp,
@@ -754,10 +770,10 @@ public:
    */
   CORBA::Boolean object_is_nil (CORBA::Object_ptr object);
 
-  /// Call the service layers with the IOP::ServiceContext to check
+  /// Call the service layers with the Service Context to check
   /// whether they would like to add something to the list.
-  void service_context_list (TAO_Stub *&stub,
-                             IOP::ServiceContextList &service_list,
+  void service_context_list (TAO_Stub *stub,
+                             TAO_Service_Context &service_context,
                              CORBA::Boolean retstart,
                              CORBA::Environment &ACE_TRY_ENV);
 
@@ -968,6 +984,8 @@ protected:
   /// each loaded protocol.
   TAO_Acceptor_Registry *acceptor_registry_;
 
+  TAO_Stub_Factory *stub_factory_;
+
   /// Pointer to the list of protocol loaded into this ORB instance.
   TAO_ProtocolFactorySet *protocol_factories_;
 
@@ -1027,6 +1045,8 @@ protected:
   ACE_Allocator *message_block_dblock_allocator_;
   ACE_Allocator *message_block_buffer_allocator_;
   //@}
+
+  static const char *stub_factory_name_;
 
   // Name of the resource factory that needs to be instantiated.
   // The default value is "Resource_Factory". If TAO_Strategies is

@@ -89,8 +89,8 @@ protected:
 
   /// Initializes RTCORBA::PriorityBandsPolicy in the endpoint
   /// selection state.
-  void init_bands (TAO_GIOP_Invocation *invocation,
-                   CORBA::Environment &ACE_TRY_ENV);
+  //  void init_bands (TAO_GIOP_Invocation *invocation,
+  //                 CORBA::Environment &ACE_TRY_ENV);
 
 private:
   /// The possible endpoint selector strategies that can be

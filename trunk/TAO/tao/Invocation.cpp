@@ -95,10 +95,10 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (void)
     profile_ (0),
     endpoint_ (0),
     max_wait_time_ (0),
-    rt_context_initialized_ (0),
     restart_flag_ (0),
     forward_reference_ (),
-    received_location_forward_ (0)
+    received_location_forward_ (0),
+    profile_index_ (0)
 {
 }
 
@@ -128,10 +128,10 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
     profile_ (0),
     endpoint_ (0),
     max_wait_time_ (0),
-    rt_context_initialized_ (0),
     restart_flag_ (0),
     forward_reference_ (),
-    received_location_forward_ (0)
+    received_location_forward_ (0),
+    profile_index_ (0)
 {
 }
 
@@ -181,20 +181,6 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                 CORBA::COMPLETED_NO));
     }
 
-  // Get a pointer to the connector registry, which might be in
-  // thread-specific storage, depending on the concurrency model.
-  TAO_Connector_Registry *conn_reg =
-    this->orb_core_->connector_registry ();
-
-  if (conn_reg == 0)
-    {
-      ACE_THROW (CORBA::INTERNAL (
-                   CORBA_SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
-                     EINVAL),
-                   CORBA::COMPLETED_NO));
-    }
-
   // Initialize endpoint selection strategy.
   if (!this->is_selector_initialized_)
     {
@@ -219,101 +205,179 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     }
 
   ACE_Countdown_Time countdown (this->max_wait_time_);
+  this->countdown_ = &countdown;
+
+  this->endpoint_selector_->select_endpoint (this,
+                                             ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Loop until a connection is established or there aren't any more
   // profiles to try.
-  for (;;)
-    {
-      // Allow loaded services to select the profile.
-      if (this->stub_->service_profile_selection ())
-        {
-          this->profile_ = this->stub_->profile_in_use ();
-          this->endpoint_ = this->profile_->endpoint ();
-        }
-      else
-        {
-          // If loaded services have nothing to say on
-          // profile/endpoint selection, let the strategy do the work.
-          this->endpoint_selector_->select_endpoint (this,
-                                                     ACE_TRY_ENV);
-          ACE_CHECK;
-        }
+  //  for (;;)
+  // {
+//       // Allow loaded services to select the profile.
+//       if (this->stub_->service_profile_selection ())
+//         {
+//           this->profile_ = this->stub_->profile_in_use ();
+//           this->endpoint_ = this->profile_->endpoint ();
+//         }
+//       else
+//         {
+//           // If loaded services have nothing to say on
+//           // profile/endpoint selection, let the strategy do the work.
+//           this->endpoint_selector_->select_endpoint (this,
+//                                                      ACE_TRY_ENV);
+//           ACE_CHECK;
+//         }
 
-      // Get the transport object.
-      if (this->transport_ != 0)
-        {
-          this->transport_->make_idle ();
-        }
+//       // Get the transport object.
+//       if (this->transport_ != 0)
+//         {
+//           this->transport_->make_idle ();
+//         }
 
-      // Create descriptor for the connection we need to find.
-      TAO_Transport_Descriptor_Interface *desc;
-      TAO_Base_Transport_Property default_desc (this->endpoint_);
-      desc = &default_desc;
+//       // Create descriptor for the connection we need to find.
+//       TAO_Transport_Descriptor_Interface *desc;
+//       TAO_Base_Transport_Property default_desc (this->endpoint_);
+//       desc = &default_desc;
 
-#if (TAO_HAS_RT_CORBA == 1)
+// #if (TAO_HAS_RT_CORBA == 1)
 
-      // RTCORBA::PrivateConnectionPolicy processing.
-      TAO_Private_Transport_Descriptor
-        private_desc (this->endpoint_,
-                      ACE_reinterpret_cast (long, this->stub_));
-      if (this->endpoint_selection_state_.private_connection_)
-        desc = &private_desc;
+//       // RTCORBA::PrivateConnectionPolicy processing.
+//       TAO_Private_Transport_Descriptor
+//         private_desc (this->endpoint_,
+//                       ACE_reinterpret_cast (long, this->stub_));
+//       if (this->endpoint_selection_state_.private_connection_)
+//         desc = &private_desc;
 
-#endif /* TAO_HAS_RT_CORBA == 1 */
+// #endif /* TAO_HAS_RT_CORBA == 1 */
 
-      // Release the transport prior to connecting.
-      // In most cases the transport_ will already be zero.
-      TAO_Transport::release (this->transport_);
-      this->transport_ = 0;
+//       // Release the transport prior to connecting.
+//       // In most cases the transport_ will already be zero.
+//       TAO_Transport::release (this->transport_);
+//       this->transport_ = 0;
 
-      // Obtain a connection.
-      int result = conn_reg->connect (desc,
-                                      this->transport_,
-                                      this->max_wait_time_,
-                                      ACE_TRY_ENV);
-      ACE_CHECK;
+//       // Obtain a connection.
+//       int result = this->conn_reg_->connect (desc,
+//                                       this->transport_,
+//                                       this->max_wait_time_,
+//                                       ACE_TRY_ENV);
+//       ACE_CHECK;
 
-      if (result == 0)
-        {
-          // Now that we have the client connection handler object we need to
-          // set the right messaging protocol for in the client side transport.
-          const TAO_GIOP_Version& version = this->profile_->version ();
-          result = this->transport_->messaging_init (version.major,
-                                                     version.minor);
-          if (result == -1)
-            {
-              if (TAO_debug_level > 0)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%N|%l|%p|%t) ")
-                              ACE_TEXT ("messaging_init() failed\n")));
-                }
-            }
-          else
-            break;
-        }
+//       if (result == 0)
+//         {
+//           // Now that we have the client connection handler object we need to
+//           // set the right messaging protocol for in the client side transport.
+//           const TAO_GIOP_Version& version = this->profile_->version ();
+//           result = this->transport_->messaging_init (version.major,
+//                                                      version.minor);
+//           if (result == -1)
+//             {
+//               if (TAO_debug_level > 0)
+//                 {
+//                   ACE_DEBUG ((LM_DEBUG,
+//                               ACE_TEXT ("(%N|%l|%p|%t) ")
+//                               ACE_TEXT ("messaging_init() failed\n")));
+//                 }
+//             }
+//           else
+//             break;
+//         }
 
-      if (errno == ETIME)
-        {
-          ACE_THROW (CORBA::TIMEOUT (
-              CORBA_SystemException::_tao_minor_code (
-                  TAO_TIMEOUT_CONNECT_MINOR_CODE,
-                  errno),
-              CORBA::COMPLETED_NO));
-        }
+//       if (errno == ETIME)
+//         {
+//           ACE_THROW (CORBA::TIMEOUT (
+//               CORBA_SystemException::_tao_minor_code (
+//                   TAO_TIMEOUT_CONNECT_MINOR_CODE,
+//                   errno),
+//               CORBA::COMPLETED_NO));
+//         }
 
-      // Try another profile/endpoint.
-      this->endpoint_selector_->next (this, ACE_TRY_ENV);
-      ACE_CHECK;
+//       // Try another profile/endpoint.
+//       this->endpoint_selector_->next (this, ACE_TRY_ENV);
+//       ACE_CHECK;
 
-      countdown.update ();
-    }
+//       countdown.update ();
+//    }
 
   // Set the unique request ID associated with this request.
   this->op_details_.request_id (this->transport_->tms ()->request_id ());
 
   // Make sure that you have the right object key
   this->target_spec_.target_specifier (this->profile_->object_key ());
+}
+
+int
+TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc,
+                                   CORBA::Environment &ACE_TRY_ENV)
+{
+  // Get the transport object.
+  if (this->transport_ != 0)
+    {
+      this->transport_->make_idle ();
+    }
+
+  // Release the transport prior to connecting.
+  // In most cases the transport_ will already be zero.
+  TAO_Transport::release (this->transport_);
+  this->transport_ = 0;
+
+  // Get a pointer to the connector registry, which might be in
+  // thread-specific storage, depending on the concurrency model.
+  TAO_Connector_Registry *conn_reg =
+    this->orb_core_->connector_registry ();
+
+  if (conn_reg == 0)
+    {
+      ACE_THROW (CORBA::INTERNAL (
+                   CORBA_SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
+    }
+
+  // Obtain a connection.
+  int result = conn_reg->connect (&desc,
+                                  this->transport_,
+                                  this->max_wait_time_,
+                                  ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (result == 0)
+    {
+      // Now that we have the client connection handler object we need to
+      // set the right messaging protocol for in the client side transport.
+      const TAO_GIOP_Version& version = this->profile_->version ();
+      result = this->transport_->messaging_init (version.major,
+                                                     version.minor);
+      if (result == -1)
+        {
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%N|%l|%p|%t) ")
+                          ACE_TEXT ("messaging_init() failed\n")));
+            }
+        }
+      else
+        return 1;
+    }
+
+  if (errno == ETIME)
+    {
+      ACE_THROW_RETURN (CORBA::TIMEOUT (
+              CORBA_SystemException::_tao_minor_code (
+                  TAO_TIMEOUT_CONNECT_MINOR_CODE,
+                  errno),
+              CORBA::COMPLETED_NO),
+              1);
+    }
+
+  // Update the remaining time for this call.
+  this->countdown_->update ();
+
+  // Return that we'd like to try another endpoint.
+  return 0;
 }
 
 void
@@ -327,12 +391,9 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   // First lookup at the services to see whether they have anything to
   // add to the service context lists
   this->orb_core_->service_context_list (this->stub_,
-                                         this->request_service_context().service_info (),
+                                         this->request_service_context (),
                                          this->restart_flag_,
                                          ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->add_rt_service_context (ACE_TRY_ENV);
   ACE_CHECK;
 
   // The target specification mode
@@ -533,48 +594,10 @@ TAO_GIOP_Invocation::location_forward (CORBA::Object_ptr forward,
   return TAO_INVOKE_RESTART;
 }
 
-
-
-void
-TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment &ACE_TRY_ENV)
-{
-  // RTCORBA-specific processing.
-  // If invocation target supports RTCORBA::CLIENT_PROPAGATED priority
-  // model, we must add IOP::RTCorbaPriority service context to the
-  // list.
-
 #if (TAO_HAS_RT_CORBA == 1)
+#include "tao/RT_Stub.h"
+#endif /* TAO_HAS_RT_CORBA */
 
-  // This function may get called multiple times, but we only need to
-  // perform the processing once.
-  if (this->rt_context_initialized_)
-    {
-      return;
-    }
-
-  if (this->endpoint_selection_state_.priority_model_policy_)
-    {
-      this->orb_core_->get_protocols_hooks
-        ()->add_rt_service_context_hook (
-                this,
-                this->endpoint_selection_state_.priority_model_policy_,
-                this->endpoint_selection_state_.client_priority_,
-                ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-  else
-    {
-      // The Object does not contain PriorityModel policy in its IOR.
-      // We must be talking to a non-RT ORB.  Do nothing.
-    }
-
-  this->rt_context_initialized_ = 1;
-
-#else
-  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-}
 
 // ****************************************************************
 

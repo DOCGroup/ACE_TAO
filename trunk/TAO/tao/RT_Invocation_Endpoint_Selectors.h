@@ -120,9 +120,9 @@ public:
 
 protected:
   /// Helper for <select_endpoint>.
-  virtual void endpoint (TAO_GIOP_Invocation *invocation,
-                         CORBA::Environment &ACE_TRY_ENV =
-                         TAO_default_environment ());
+  //  virtual void endpoint (TAO_GIOP_Invocation *invocation,
+  //                       CORBA::Environment &ACE_TRY_ENV =
+  //                       TAO_default_environment ());
 };
 
 // ****************************************************************
@@ -185,9 +185,9 @@ public:
 
 protected:
   ///
-  virtual void endpoint (TAO_GIOP_Invocation *invocation,
-                         CORBA::Environment &ACE_TRY_ENV =
-                         TAO_default_environment ());
+//   virtual void endpoint (TAO_GIOP_Invocation *invocation,
+//                          CORBA::Environment &ACE_TRY_ENV =
+//                          TAO_default_environment ());
 
   /// Helper for <select_endpoint>.
   int is_multihomed (TAO_Endpoint *endpoint);
@@ -215,9 +215,9 @@ public:
   virtual ~TAO_Bands_Protocol_Selector (void);
 
 protected:
-  virtual void endpoint (TAO_GIOP_Invocation *invocation,
-                         CORBA::Environment &ACE_TRY_ENV =
-                         TAO_default_environment ());
+//   virtual void endpoint (TAO_GIOP_Invocation *invocation,
+//                          CORBA::Environment &ACE_TRY_ENV =
+//                          TAO_default_environment ());
 };
 
 #endif /* TAO_HAS_RT_CORBA == 1 */

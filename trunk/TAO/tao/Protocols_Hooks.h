@@ -27,6 +27,7 @@
 class TAO_ORB_Core;
 class TAO_GIOP_Invocation;
 class TAO_Resource_Factory;
+class TAO_Service_Context;
 
 class TAO_Export TAO_Protocols_Hooks : public ACE_Service_Object
 {
@@ -61,6 +62,11 @@ public:
   virtual void validate_policy_type (CORBA::ULong slot,
                                      CORBA::ULong &type_value,
                                      CORBA::Environment &ACE_TRY_ENV);
+
+  virtual void rt_service_context (TAO_Stub *stub,
+                                   TAO_Service_Context &service_context,
+                                   CORBA::Boolean restart,
+                                   CORBA::Environment &ACE_TRY_ENV);
 
   virtual void add_rt_service_context_hook (
                   TAO_GIOP_Invocation *invocation,
