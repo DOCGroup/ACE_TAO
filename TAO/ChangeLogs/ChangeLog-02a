@@ -1,3 +1,8 @@
+Thu Apr 18 10:57:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h: Removed the 
+	  declaration of connect (), that is not needed anymore.
+
 Thu Apr 18 08:49:55 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: 
