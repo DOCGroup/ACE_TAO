@@ -240,7 +240,7 @@ Timer_Cancellation_Test
 
 <h3>
 <a NAME="idl"></a>IDL Compiler</h3>
-Point of contact: <a href="mailto:parsons@cs.wustl.edu">
+Point of contact: <a href="mailto:j.parsons@vanderbilt.edu">
 Jeff Parsons</a>
 <p>Current status: (As of October 1, 2002.)
 <ul>
@@ -645,7 +645,7 @@ marshaling of IDL character types specifically, see section 15.3.1.6.<p>
 
 <h3>
 <a NAME="pp"></a>Pluggable Protocols</h3>
-Point of contact: <a href="mailto:ossama@uci.edu">Ossama Othman</a>
+Point of contact: <a href="mailto:ossama@dre.vanderbilt.edu">Ossama Othman</a>
 <p>The goal of the pluggable protocol effort is to (1) identify logical
 communication layers in the ORB, (2) abstract out common features, (3)
 define general interfaces, and (4) provide necessary mechanisms for
@@ -1634,7 +1634,7 @@ This is an extension to TAO's CORBA Notification Service with Real-Time CORBA su
 
 <b>Interface Extensions:</b>
 The <a href ="../../orbsvcs/orbsvcs/NotifyExt.idl"> $TAO_ROOT/orbsvcs/orbsvcs/NotifyExt.idl</a> extends the ConsumerAdmin
-and SupplierAdmin interfaces. The <tt> obtain_notification_push_supplier_with_qos <tt> <tt> and <tt> obtain_notification_push_consumer_with_qos <tt> methods can be used to specify QoS parameters.
+and SupplierAdmin interfaces. The <tt>obtain_notification_push_supplier_with_qos</tt> and <tt>obtain_notification_push_consumer_with_qos</tt> methods can be used to specify QoS parameters.
 
 </li>
 
@@ -1733,7 +1733,7 @@ The framemork and its options are described <a href="notify.html#test_framework"
 <!-- BEGIN: CORBA Security Service Release Notes -->
 <HR WIDTH="100%">
 <H3><A NAME="security"></A>CORBA Security Service </H3>
-Point of contact: <A HREF="mailto:ossama@uci.edu">Ossama Othman</A>
+Point of contact: <A HREF="mailto:ossama@dre.vanderbilt.edu">Ossama Othman</A>
 
 <P>
 Additional information is available
@@ -1995,7 +1995,7 @@ Add persistence and then to add event notification</li>
 <h3><a NAME="fault_tolerance"></a>TAO's support for FT services</h3>
 
 <p>
-Point of contact: <a href="mailto:bala@cs.wustl.edu">Balachandran Natarajan</a>
+Point of contact: <a href="mailto:bala@dre.vanderbilt.edu">Balachandran Natarajan</a>
 
 <h4>Current Status:</h4>
 <p>TAO supports the ORB level requirements to achieve Fault Tolerance
@@ -2014,16 +2014,16 @@ CORBA 3.0 specification</a>.  Specifically TAO implements the sections
 <h3><a NAME="loadbalancer"></a>Load Balancer</h3>
 
 <p>
-Point of contact: <a href="mailto:ossama@uci.edu">Ossama Othman</a>
+Point of contact: <a href="mailto:ossama@dre.vanderbilt.edu">Ossama Othman</a>
 
 <h4>Current Status:</h4>
 <p>TAO's
 <A HREF="http://www.cs.wustl.edu/~schmidt/PDF/load_balancing.pdf">
 Load Balancer</a> currently implements the latest revision of the
-OMG <I>Load Balancing and Monitoring</I> specification.
+OMG <I>Load Balancing and Monitoring</I> proposed specification.
 <p>
-It provides many features and advantages over the previous
-non-standards based prototype.  Those features and advantages include:
+It provides many features and advantages over the previous prototype.
+Those features and advantages include:
 <ul>
  <li>Multiple object group support</li>
  <li>Extensible load balancing strategies through IDL interfaces</li>
@@ -2034,23 +2034,19 @@ non-standards based prototype.  Those features and advantages include:
  <li>Improved server-side transparency</li>
 </ul>
 
-The current <I>Load Balancing and Monitoring</I> specification defines
-three built-in load balancing strategies.  They are:
+The current proposed <I>Load Balancing and Monitoring</I>
+specification defines three built-in load balancing strategies.  They
+are:
 <ol>
  <li><CODE>RoundRobin</CODE> <FONT COLOR=BLUE>(non-adaptive)</FONT></li>
  <li><CODE>Random</CODE> <FONT COLOR=BLUE>(non-adaptive)</FONT></li>
  <li><CODE>LeastLoaded</CODE> <FONT COLOR=BLUE>(adaptive)</FONT></li>
 </ol>
 
-TAO currently implements the <CODE>RoundRobin</CODE> and
-<CODE>Random</CODE> load balancing strategies.
+TAO implements all of these load balancing strategies.
 
 <h4>Known Issues:</h4>
 <ul>
-<li><CODE>LeastLoaded</CODE> load balancing strategy is currently non-operational.</li>
-<li>New group members are not automatically created if possible and
-    when necessary.  This is only a problem for the <I>infrastructure
-    controlled</I> object group membership style.</li>
 <li><em>Adaptive</em> load balancing is currently not working.  In
      particular, the load shedding mechanism needs work.
 </li>
@@ -2058,12 +2054,14 @@ TAO currently implements the <CODE>RoundRobin</CODE> and
 
 <h4>Recent Work:</h4>
 <ul>
-<li>Implemented <CODE>RoundRobin</CODE> load balancing strategy</li>
+<li>Implemented <CODE>RoundRobin</CODE> load balancing strategy.</li>
+<li>Implemented <CODE>LeastLoaded</CODE> load balancing strategy.</li>
+<li>Implemented preliminary infrastructure-controlled membership
+	support.<li>
 </ul>
 
 <h4>Future Work:</h4>
 <ul>
-<li>Complete the <CODE>LeastLoaded</CODE> load balancing strategy implementation</li>
 <li>Implement cooperative (distributed) load balancing support</li>
 <li>Integrate multicast support</li>
 </ul>
@@ -2332,7 +2330,7 @@ This reduced the amount of AMI specific IDL compiler code dramatically.</li>
 href="../../examples/Buffered_AMI">Buffered AMI</a> example for
 details.</li>
 <li>Support for deferred synchronous invocations.
-<a href="mailto:parsons@cs.wustl.edu">Jeff Parsons</a></li>
+<a href="mailto:j.parsons@vanderbilt.edu">Jeff Parsons</a></li>
 <li>Support for timeouts in combination with AMI calls, response handler gets
 CORBA::TIMEOUT exception on timeout</li>
 </ul>
@@ -2344,7 +2342,7 @@ CORBA::TIMEOUT exception on timeout</li>
 <hr>
 
 <h3> <a NAME="interceptor"></a>Portable Interceptors</h3>
-Point of contact: <a href="mailto:ossama@uci.edu">Ossama Othman</a>.
+Point of contact: <a href="mailto:ossama@dre.vanderbilt.edu">Ossama Othman</a>.
 <p>For more information see <a href="../interceptors.html">Portable
 Interceptors</a>
 </p>
@@ -2406,5 +2404,11 @@ specifications (updated 9 August 2000):<br>
 <hr>
 
 <p>Back to the TAO <a href="../index.html">documentation index</a>.<!--#include virtual="/~schmidt/cgi-sig.html" -->
+
+    <hr>
+<!-- hhmts start -->
+Last modified: Mon Aug 25 12:30:29 PDT 2003
+<!-- hhmts end -->
+
 </body>
 </html>
