@@ -2,12 +2,17 @@
 
 #include "Default_Policy_Validator.h"
 #include "POA_Policies.h"
+#include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 
-ACE_RCSID(tao, POA, "$Id$")
+
+ACE_RCSID (PortableServer,
+           Default_Policy_Validator,
+           "$Id$")
 
 
-TAO_POA_Default_Policy_Validator::TAO_POA_Default_Policy_Validator (TAO_ORB_Core &orb_core)
+TAO_POA_Default_Policy_Validator::TAO_POA_Default_Policy_Validator (
+  TAO_ORB_Core &orb_core)
   : TAO_Policy_Validator (orb_core)
 {
 }
@@ -102,17 +107,23 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
 CORBA::Boolean
 TAO_POA_Default_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
 {
-  return (type == PortableServer::THREAD_POLICY_ID ||
-          type == PortableServer::LIFESPAN_POLICY_ID ||
-          type == PortableServer::ID_UNIQUENESS_POLICY_ID ||
-          type == PortableServer::ID_ASSIGNMENT_POLICY_ID ||
-          type == PortableServer::IMPLICIT_ACTIVATION_POLICY_ID ||
-          type == PortableServer::SERVANT_RETENTION_POLICY_ID ||
-          type == PortableServer::REQUEST_PROCESSING_POLICY_ID);
+  // Check known POA policies, or if given PolicyType has a
+  // corresponding PolicyFactory.  The PolicyFactory check is mandated
+  // by the CORBA specification.
+  return
+    (type == PortableServer::THREAD_POLICY_ID
+     || type == PortableServer::LIFESPAN_POLICY_ID
+     || type == PortableServer::ID_UNIQUENESS_POLICY_ID
+     || type == PortableServer::ID_ASSIGNMENT_POLICY_ID
+     || type == PortableServer::IMPLICIT_ACTIVATION_POLICY_ID
+     || type == PortableServer::SERVANT_RETENTION_POLICY_ID
+     || type == PortableServer::REQUEST_PROCESSING_POLICY_ID
+     || this->orb_core_.policy_factory_registry ()->factory_exists (type));
 }
 
 void
-TAO_POA_Default_Policy_Validator::merge_policies_impl (TAO_Policy_Set &
-                                                       ACE_ENV_ARG_DECL_NOT_USED)
+TAO_POA_Default_Policy_Validator::merge_policies_impl (
+  TAO_Policy_Set &
+  ACE_ENV_ARG_DECL_NOT_USED)
 {
 }

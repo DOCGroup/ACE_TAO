@@ -14,17 +14,18 @@
 #define TAO_POLICY_FACTORY_REGISTRY_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Null_Mutex.h"
+
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Map_Manager.h"
-#include "ace/CORBA_macros.h"
-
-#include "TAO_Export.h"
 #include "Basic_Types.h"
+
+#include "ace/Map_Manager.h"
+#include "ace/Null_Mutex.h"
+#include "ace/CORBA_macros.h"
 
 //-- Forward Declarations--
 namespace CORBA
@@ -99,6 +100,10 @@ public:
   /// demarshaling.
   CORBA::Policy_ptr _create_policy (CORBA::PolicyType type
                                     ACE_ENV_ARG_DECL);
+
+  /// Check if a @c PolicyFactory corresponding to the given type,
+  /// exists.
+  bool factory_exists (CORBA::PolicyType & type) const;
 
 private:
 
