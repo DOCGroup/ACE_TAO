@@ -1,3 +1,23 @@
+Fri Jul 26 18:32:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	Merged from branch allocators_lanes. This merge basically moves
+	some of the allocators that are global in nature to lanes. This
+	help RTCORBA use cases. Details of the changes are explained
+	below. 
+
+	Thu Jul 25 07:17:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	* tao/Thread_Lane_Resources.h:
+	* tao/Thread_Lane_Resources.cpp (finalize): Moved the allocators,
+	  used to create the InputCDR allocators like the data_block
+	  allocator, message_block allocator, buffer allocator and the
+	  allocator used for buffering messages in the transport object
+	  from the ORB_Core to the lanes. Since these allocators are
+	  global, sharing the allocators across threads in multiple lanes
+	  could lead to jitter.
+
 Fri Jul 26 17:41:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory.pidl:
