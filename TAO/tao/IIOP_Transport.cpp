@@ -139,6 +139,7 @@ TAO_IIOP_Client_Transport::
 
 TAO_IIOP_Client_Transport::~TAO_IIOP_Client_Transport (void)
 {
+  delete this->client_mesg_factory_;
 }
 
 
@@ -339,9 +340,14 @@ TAO_IIOP_Client_Transport::messaging_init (CORBA::Octet major,
                                0);
               break;
             case 1:
-          ACE_NEW_RETURN  (this->client_mesg_factory_,
-                           TAO_GIOP_Message_Connector_11,
-                           0);
+              ACE_NEW_RETURN  (this->client_mesg_factory_,
+                               TAO_GIOP_Message_Connector_11,
+                               0);
+              break;
+            case 2:
+              ACE_NEW_RETURN  (this->client_mesg_factory_,
+                               TAO_GIOP_Message_Connector_12,
+                               0);
           break;
             default:
               if (TAO_debug_level > 0)

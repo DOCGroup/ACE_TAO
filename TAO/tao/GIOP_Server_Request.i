@@ -137,14 +137,14 @@ TAO_GIOP_ServerRequest::requesting_principal (CORBA_Principal_ptr
   this->requesting_principal_ = principal;
 }
 
-//ACE_INLINE void
-//TAO_GIOP_ServerRequest::header_length (size_t len)
-//{
-//  this->header_len_ = len;
-//}
-//
-//ACE_INLINE void
-//TAO_GIOP_ServerRequest::message_size_offset (size_t len)
-//{
-//  this->message_size_offset_ = len;
-//}
+ACE_INLINE IOP::TaggedProfile &
+TAO_GIOP_ServerRequest::tagged_profile (void)
+{
+  return this->profile_;
+}
+
+ACE_INLINE GIOP::IORAddressingInfo &
+TAO_GIOP_ServerRequest::addressing_info (void)
+{
+  return this->addr_info_;
+}
