@@ -30,6 +30,11 @@ Mon Sep 22 07:11:21 1997  David L. Levine  <levine@cs.wustl.edu>
 	  ACE_Cleanup_Adapter.  2) Moved ACE_Object_Manager_Destroyer from
 	  ACE.cpp to Object_Manager.cpp. 3) Added Filecache and Signal locks.
 
+	* ace/Singleton.*: removed instance (TYPE *) member function because
+	  it wasn't being used.  And, it allows us to store the contained
+	  instance_ as an object instead of a pointer, saving a dynamic
+	  memory allocation on construction.
+
 Sat Sep 20 17:32:23 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Object_Manager.{h,cpp},Managed_Object.*,
