@@ -42,57 +42,72 @@ be_visitor_array_cs::~be_visitor_array_cs (void)
 
 int be_visitor_array_cs::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_type *bt;  // base type
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
   unsigned long i;
 
-  // nothing to do if we are imported or code is already generated
+  // Nothing to do if we are imported or code is already generated.
   if (node->imported () || (node->cli_stub_gen ()))
-    return 0;
+    {
+      return 0;
+    }
 
-  this->ctx_->node (node); // save the array node
+  this->ctx_->node (node);
 
-  // retrieve the type
+  // Retrieve the type.
   bt = be_type::narrow_from_decl (node->base_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_array_ci::"
+                         "be_visitor_array_cs::"
                          "visit_array - "
                          "Bad base type\n"),
                         -1);
     }
 
-  char fname [NAMEBUFSIZE];  // to hold the full and
-  char lname [NAMEBUFSIZE];  // local names of the var
-  // save the node's local name and full name in a buffer for quick use later
-  // on
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
+  // To hold the full and local.
+  char fname [NAMEBUFSIZE];
+  char lname [NAMEBUFSIZE];
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::memset (lname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
   if (this->ctx_->tdef ())
     {
-      // typedefed node
-      ACE_OS::sprintf (fname, "%s", node->full_name ());
+      // Typedefed node.
+      ACE_OS::sprintf (fname, "%s", 
+                       node->full_name ());
       ACE_OS::sprintf (lname, "%s",
                        node->local_name ()->get_string ());
     }
   else
     {
-      // for anonymous arrays ...
+      // For anonymous arrays ...
       // we have to generate a name for us that has an underscope prepended to
-      // our local name. This needs to be inserted after the parents's name
+      // our local name. This needs to be inserted after the parents's name.
       if (node->is_nested ())
         {
-          be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->full_name (),
+          be_decl *parent = 
+            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+          ACE_OS::sprintf (fname, 
+                           "%s::_%s", 
+                           parent->full_name (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (lname, "_%s",
+          ACE_OS::sprintf (lname, 
+                           "_%s",
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, "_%s", node->full_name ());
-          ACE_OS::sprintf (lname, "_%s",
+          ACE_OS::sprintf (fname, 
+                           "_%s", 
+                           node->full_name ());
+          ACE_OS::sprintf (lname, 
+                           "_%s",
                            node->local_name ()->get_string ());
         }
     }
@@ -100,15 +115,17 @@ int be_visitor_array_cs::visit_array (be_array *node)
   os->indent ();
 
   if (!node->is_local ())
-    *os << "void " << fname << "_forany"
-        << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
-        << "{" << be_idt_nl
-        << lname << "_slice *tmp = ACE_static_cast ("
-        << lname << "_slice*, _tao_void_pointer);" << be_nl
-        << lname << "_free (tmp);" << be_uidt_nl
-        << "}\n\n";
+    {
+      *os << "void " << fname << "_forany"
+          << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
+          << "{" << be_idt_nl
+          << lname << "_slice *tmp = ACE_static_cast ("
+          << lname << "_slice*, _tao_void_pointer);" << be_nl
+          << lname << "_free (tmp);" << be_uidt_nl
+          << "}\n\n";
+    }
 
-  // dup method
+  // dup method.
   *os << fname << "_slice *" << be_nl
       << fname << "_dup (const " << fname
       << "_slice *_tao_src_array)" << be_nl;
@@ -121,17 +138,18 @@ int be_visitor_array_cs::visit_array (be_array *node)
   *os << "return _tao_dup_array;" << be_uidt_nl;
   *os << "}\n\n";
 
-  // alloc method
-  os->indent (); // start from current indentation
+  // alloc method.
+  os->indent ();
   *os << fname << "_slice *" << be_nl;
   *os << fname << "_alloc (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << fname << "_slice *retval = 0;" << be_nl;
   *os << "ACE_NEW_RETURN (retval, ";
+
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_array_ci::"
+                         "be_visitor_array_cs::"
                          "visit_array - "
                          "base type decl failed\n"),
                         -1);
@@ -140,8 +158,8 @@ int be_visitor_array_cs::visit_array (be_array *node)
   if (node->gen_dimensions (os) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_array::"
-                         "gen_client - "
+                         "(%N:%l) be_visitor_array_cs::"
+                         "visit_array - "
                          "dimensions codegen failed\n"),
                         -1);
     }
@@ -150,7 +168,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   *os << "return retval;" << be_uidt_nl;
   *os << "}\n\n";
 
-  // free method
+  // free method.
   os->indent ();
   *os << "void" << be_nl
       << fname << "_free (" << fname
@@ -159,7 +177,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   *os << "delete [] _tao_slice;" << be_uidt_nl;
   *os << "}\n\n";
 
-  // copy method
+  // copy method.
   os->indent ();
   *os << "void " << be_nl;
   *os << fname << "_copy (" << fname << "_slice * _tao_to, "
@@ -167,13 +185,13 @@ int be_visitor_array_cs::visit_array (be_array *node)
   *os << "{" << be_idt_nl;
   *os << "// copy each individual element" << be_nl;
 
-  // generate nested loops for as many dimensions as there are
+  // Generate nested loops for as many dimensions as there are.
   for (i = 0; i < node->n_dims (); i++)
     {
-      // retrieve the ith dimension value
+      // Retrieve the ith dimension value.
       AST_Expression *expr = node->dims ()[i];
-      // dimension value
-      if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
+
+      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_array_cs::"
@@ -181,9 +199,10 @@ int be_visitor_array_cs::visit_array (be_array *node)
                              "bad array dimension\n"),
                             -1);
         }
+
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
-          // generate a loop for each dimension
+          // Generate a loop for each dimension.
           *os << "for (CORBA::ULong i" << i << " = 0; i" << i << " < "
               << expr->ev ()->u.ulval << "; i" << i << "++)" << be_idt_nl;
         }
@@ -197,8 +216,8 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
     }
 
-  // now generate code such that every element of the array gets assigned
-  // inside the innermost level of the  nested loops generated above
+  // Now generate code such that every element of the array gets assigned
+  // inside the innermost level of the  nested loops generated above.
   be_array *primitive_type = 0;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
@@ -236,39 +255,47 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
 
       *os << "_copy (_tao_to";
+
       for (i = 0; i < node->n_dims (); i++)
         {
           *os << "[i" << i << "]";
         }
+
       *os << ", ";
-      *os << "_tao_from";  // generate the rvalue
+      *os << "_tao_from";
+
       for (i = 0; i < node->n_dims (); i++)
         {
           *os << "[i" << i << "]";
         }
+
       *os << ");";
     }
   else
     {
-      // the base type is not a typedef to possibly another array type. In
+      // The base type is not a typedef to possibly another array type. In
       // such a case, assign each element.
 
-      *os << "_tao_to"; // generate the lvalue
+      *os << "_tao_to";
+
       for (i = 0; i < node->n_dims (); i++)
         {
           *os << "[i" << i << "]";
         }
+
       *os << " = ";
-      *os << "_tao_from";  // generate the rvalue
+      *os << "_tao_from";
+
       for (i = 0; i < node->n_dims (); i++)
         {
           *os << "[i" << i << "]";
         }
+
       *os << ";";
     }
   for (i = 0; i < node->n_dims (); i++)
     {
-      // decrement indentation as many times as the number of dimensions
+      // Decrement indentation as many times as the number of dimensions.
       *os << be_uidt;
     }
   *os << be_uidt_nl << "}\n\n";
@@ -288,32 +315,6 @@ int be_visitor_array_cs::visit_array (be_array *node)
                             -1);
         }
     }
-
-#if 0
-  // typecode for anonymous arrays is not required since we do not generate the
-  // Any operators for it and it cannot be used as a type
-
-  // is this a typedefined array? if so, then let the typedef deal with
-  // generation of the typecode
-  if (!this->ctx_->tdef ())
-    {
-      // by using a visitor to declare and define the TypeCode, we have the
-      // added advantage to conditionally not generate any code. This will be
-      // based on the command line options. This is still TO-DO
-      be_visitor_context ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_array_cs::"
-                             "visit_array - "
-                             "TypeCode definition failed\n"
-                             ), -1);
-        }
-      delete visitor;
-    }
-#endif /* 0 */
 
   node->cli_stub_gen (1);
 
