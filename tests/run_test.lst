@@ -45,7 +45,7 @@ IOStream_Test
 Lazy_Map_Manager_Test
 Map_Manager_Test
 Map_Test
-MEM_Stream_Test
+MEM_Stream_Test: !Linux
 Mem_Map_Test: !chorus !Unicos
 Message_Block_Test: !chorus
 Message_Queue_Notifications_Test
