@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be\be_codegen.cpp:323
 
 
 #include "BiDirGIOP.h"
@@ -41,15 +41,16 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:60
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
+
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for BiDirPolicy::BidirectionalPolicy.
 
@@ -89,7 +90,7 @@ TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*BiDirPolicy__TAO_BidirectionalPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -110,10 +111,27 @@ BiDirPolicy::BidirectionalPolicy::_narrow (
     {
       return BidirectionalPolicy::_nil ();
     }
-
+  
   BidirectionalPolicy_ptr proxy =
     dynamic_cast<BidirectionalPolicy_ptr> (_tao_objref);
+  
+  return BidirectionalPolicy::_duplicate (proxy);
+}
 
+BiDirPolicy::BidirectionalPolicy_ptr
+BiDirPolicy::BidirectionalPolicy::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return BidirectionalPolicy::_nil ();
+    }
+  
+  BidirectionalPolicy_ptr proxy =
+    dynamic_cast<BidirectionalPolicy_ptr> (_tao_objref);
+  
   return BidirectionalPolicy::_duplicate (proxy);
 }
 
@@ -124,7 +142,7 @@ BiDirPolicy::BidirectionalPolicy::_duplicate (BidirectionalPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -141,7 +159,7 @@ BiDirPolicy::BidirectionalPolicy::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:BiDirPolicy/BidirectionalPolicy:1.0"
+          "IDL:omg.org/BiDirPolicy/BidirectionalPolicy:1.0"
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
@@ -163,7 +181,7 @@ BiDirPolicy::BidirectionalPolicy::_is_a (
 
 const char* BiDirPolicy::BidirectionalPolicy::_interface_repository_id (void) const
 {
-  return "IDL:BiDirPolicy/BidirectionalPolicy:1.0";
+  return "IDL:omg.org/BiDirPolicy/BidirectionalPolicy:1.0";
 }
 
 CORBA::Boolean
@@ -173,7 +191,7 @@ BiDirPolicy::BidirectionalPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -186,7 +204,7 @@ BiDirPolicy::BidirectionalPolicy::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         BiDirPolicy::BidirectionalPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         BiDirPolicy::BidirectionalPolicy
