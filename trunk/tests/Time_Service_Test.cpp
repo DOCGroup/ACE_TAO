@@ -31,13 +31,20 @@ main (int, char *[])
 {
   ACE_START_TEST ("Time_Service_Test");
 
+  // Make sure that the backing store is not there. We need to make
+  // sure because this test kills the Time Clerk and on some platforms
+  // the Clerk is not allowed to do a graceful shutdown. By cleaning
+  // the backing store here, we are sure that we get a fresh start and
+  // no garbage data from a possible aborted run
+  ACE_OS::unlink (ACE_DEFAULT_BACKING_STORE);
+
   char app[BUFSIZ];
   char server_conf[BUFSIZ];
   char clerk_conf[BUFSIZ];
 
   ACE_OS::sprintf (server_conf, "%s", ACE_PLATFORM "server.conf");
   ACE_OS::sprintf (clerk_conf, "%s", ACE_PLATFORM "clerk.conf");
-
+  
   ACE_OS::sprintf (app, ".." ACE_DIRECTORY_SEPARATOR_STR_A "netsvcs" ACE_DIRECTORY_SEPARATOR_STR_A
 		   "servers" ACE_DIRECTORY_SEPARATOR_STR_A "main" ACE_PLATFORM_EXE_SUFFIX);
 
@@ -73,9 +80,10 @@ main (int, char *[])
   if (server.kill () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "Kill failed for server.\n"), -1);
 
-  // Since we kill the clerk process, it does not do a graceful
-  // shutdown and the backing store file is left behind.
-  ACE_OS::unlink (ACE_DEFAULT_BACKING_STORE);    
+  // Since we kill the clerk process, on Win32 it may not do a
+  // graceful shutdown and the backing store file is left behind.
+  if (clerk.wait () != 0)
+    ACE_OS::unlink (ACE_DEFAULT_BACKING_STORE);
 
   ACE_END_TEST;
   return 0;
