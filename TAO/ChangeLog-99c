@@ -1,7 +1,7 @@
 Sat Jun 05 19:00:18 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/corbafwd.h: changed value of TAO_UNKNOWN_MINOR_CODE
-          from 0xFF to 0xF because its only 4 bits wide.
+          from 0xFF to 0xF because it's only 4 bits wide.
 
 Sat Jun  5 18:04:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
