@@ -9,6 +9,8 @@
 
 #include "InterceptorC.h"
 
+#if (TAO_HAS_INTERCEPTORS == 1)
+
 #if !defined (__ACE_INLINE__)
 #include "InterceptorC.i"
 #endif /* !defined INLINE */
@@ -403,3 +405,4 @@ const char* PortableInterceptor::ClientRequestInterceptor::_interface_repository
   return "IDL:TAO/PortableInterceptor/ClientRequestInterceptor:1.0";
 }
 
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
