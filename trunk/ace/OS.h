@@ -4484,6 +4484,8 @@ public:
                     int val = 0);
   static int fdetach (const char *file);
 
+  static int fsync(ACE_HANDLE handle);
+
 # if !defined (ACE_HAS_WINCE)
   // CE doesn't support these char version functions.
   // However, we should provide UNICODE version of them.
