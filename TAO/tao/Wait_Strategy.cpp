@@ -235,7 +235,7 @@ TAO_Exclusive_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
   //
   // Begin artificial scope for auto_ptr like helpers calling:
   // leader_follower.set_client_thread () and (maybe later on)
-  // leader_follower.set_leader_thread ().
+  // leader_follower.set_client_leader_thread ().
   //
   {
     // Calls leader_follower.set_client_thread () on construction and
@@ -245,9 +245,9 @@ TAO_Exclusive_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
     ACE_Countdown_Time countdown (max_wait_time);
 
-    // Check if there is a leader, but the leader is not us
-    if (leader_follower.leader_available ()
-        && !leader_follower.is_leader_thread ())
+    // Check if there is a leader.  Note that it cannot be us since we
+    // gave up our leadership when we became a client.
+    if (leader_follower.leader_available ())
       {
         // = Wait as a follower.
 
@@ -358,11 +358,12 @@ TAO_Exclusive_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
     // leader or we are doing nested upcalls in this case we do
     // increase the refcount on the leader in TAO_ORB_Core.
 
-    // Calls leader_follower.set_leader_thread () on construction and
-    // leader_follower.reset_leader_thread () on destruction.
-    // Note that this may increase the refcount of the leader.
-    TAO_LF_Leader_Thread_Helper leader_thread_helper (leader_follower);
-    ACE_UNUSED_ARG (leader_thread_helper);
+    // Calls leader_follower.set_client_leader_thread () on
+    // construction and leader_follower.reset_client_leader_thread ()
+    // on destruction.  Note that this may increase the refcount of
+    // the leader.
+    TAO_LF_Client_Leader_Thread_Helper client_leader_thread_helper (leader_follower);
+    ACE_UNUSED_ARG (client_leader_thread_helper);
 
     {
       ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_SYNCH_MUTEX>, rev_mon,
@@ -415,7 +416,7 @@ TAO_Exclusive_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
   //
   // End artificial scope for auto_ptr like helpers calling:
   // leader_follower.reset_client_thread () and (maybe)
-  // leader_follower.reset_leader_thread ().
+  // leader_follower.reset_client_leader_thread ().
   //
 
   // Wake up the next leader, we cannot do that in handle_input,
@@ -653,7 +654,7 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
   //
   // Begin artificial scope for auto_ptr like helpers calling:
   // leader_follower.set_client_thread () and (maybe later on)
-  // leader_follower.set_leader_thread ().
+  // leader_follower.set_client_leader_thread ().
   //
   {
     // Calls leader_follower.set_client_thread () on construction and
@@ -663,9 +664,9 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
     ACE_Countdown_Time countdown (max_wait_time);
 
-    // Check if there is a leader, but the leader is not us
-    if (leader_follower.leader_available ()
-        && !leader_follower.is_leader_thread ())
+    // Check if there is a leader.  Note that it cannot be us since we
+    // gave up our leadership when we became a client.
+    if (leader_follower.leader_available ())
       {
         // = Wait as a follower.
 
@@ -763,11 +764,12 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
     // leader or we are doing nested upcalls in this case we do
     // increase the refcount on the leader in TAO_ORB_Core.
 
-    // Calls leader_follower.set_leader_thread () on construction and
-    // leader_follower.reset_leader_thread () on destruction.
-    // Note that this may increase the refcount of the leader.
-    TAO_LF_Leader_Thread_Helper leader_thread_helper (leader_follower);
-    ACE_UNUSED_ARG (leader_thread_helper);
+    // Calls leader_follower.set_client_leader_thread () on
+    // construction and leader_follower.reset_client_leader_thread ()
+    // on destruction.  Note that this may increase the refcount of
+    // the leader.
+    TAO_LF_Client_Leader_Thread_Helper client_leader_thread_helper (leader_follower);
+    ACE_UNUSED_ARG (client_leader_thread_helper);
 
     {
       ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_SYNCH_MUTEX>, rev_mon,
@@ -816,7 +818,7 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
   //
   // End artificial scope for auto_ptr like helpers calling:
   // leader_follower.reset_client_thread () and (maybe)
-  // leader_follower.reset_leader_thread ().
+  // leader_follower.reset_client_leader_thread ().
   //
 
   // Wake up the next leader, we cannot do that in handle_input,

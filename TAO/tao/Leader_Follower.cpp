@@ -51,14 +51,14 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
   ACE_Countdown_Time countdown (max_wait_time);
 
   // Note that we are waiting.
-  ++this->server_threads_waiting_;
+  ++this->event_loop_threads_waiting_;
 
   while (this->client_thread_is_leader_ &&
          result != -1)
     {
       if (max_wait_time == 0)
         {
-          if (this->server_threads_condition_.wait () == -1)
+          if (this->event_loop_threads_condition_.wait () == -1)
             {
               ACE_ERROR ((LM_ERROR,
                           ASYS_TEXT ("TAO (%P|%t): TAO_Leader_Follower::wait_for_client_leader_to_complete - ")
@@ -72,7 +72,7 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
           countdown.update ();
           ACE_Time_Value tv = ACE_OS::gettimeofday ();
           tv += *max_wait_time;
-          if (this->server_threads_condition_.wait (&tv) == -1)
+          if (this->event_loop_threads_condition_.wait (&tv) == -1)
             {
               if (errno != ETIME)
                 ACE_ERROR ((LM_ERROR,
@@ -85,7 +85,7 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
     }
 
   // Reset waiting state.
-  --this->server_threads_waiting_;
+  --this->event_loop_threads_waiting_;
 
   return result;
 }

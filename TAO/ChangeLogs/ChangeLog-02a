@@ -1,3 +1,37 @@
+Sat Feb 05 04:24:09 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Leader_Follower: The leader followers class did not support
+	  nested calls to the event loop, i.e., calling perform_work() or
+	  run() from the servant code.  In order to accommodate this
+	  feature the following changes were made:
+
+	  - server_threads* was renamed to event_loop_threads* since this
+	    name was more appropriate.
+
+	  - In set_event_loop_thread(), if we are the client thread
+	    running the show, then it is ok and we down have to wait.
+
+	  - Changes to <leader_> are made more carefully now.  Both the
+	    values of <event_loop_thread_> and <client_leader_thread_> are
+	    taken into account since they may signify that we are already
+	    a leader.
+
+	    Since set_client_thread() and reset_client_thread() both
+	    became more careful, set_client_leader_thread() and
+	    reset_client_leader_thread() became easier.  Also, code in the
+	    wait strategies became a bit easier.
+
+	  - <is_event_loop_thread_> was changed from a flag to
+	    <event_loop_thread_>, a counter that keeps track of how many
+	    nested event loop call we have made.
+
+	  Thanks to Dave Meyer <dmeyer@lima.alex.std.saic.com> for
+	  suggesting the addition of this missing feature!
+
+	* tests/Nested_Event_Loop: A new test for invoking nested event
+	  loop calls from user code, i.e., a call to perform_work() or
+	  run() from the implementation of the servant.
+
 Fri Feb 04 22:28:16 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/GIOP_Server_Request.cpp (parse_header_lite): Recent auto

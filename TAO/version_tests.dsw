@@ -327,6 +327,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Nested_Event_Loop Client"=.\tests\Nested_Event_Loop\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Nested_Event_Loop Server"=.\tests\Nested_Event_Loop\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Leader_Followers Client"=.\tests\Leader_Followers\client.dsp - Package Owner=<4>
 
 Package=<5>
