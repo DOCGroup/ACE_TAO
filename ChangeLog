@@ -1,3 +1,19 @@
+Mon Jan 10 10:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Mem_Map/IO-tests/test_io.cpp:
+        * examples/IPC_SAP/TLI_SAP/ftp-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/ftp-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/db-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/db-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-server.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-memserver.cpp:
+        * examples/Connection/non_blocking/test_lsock_acceptor.cpp:
+        * examples/Bounded_Packet_Relay/bpr_thread.cpp:
+        * examples/ASX/Message_Queue/bounded_buffer.cpp:
+        * examples/ASX/Message_Queue/priority_buffer.cpp:
+        * examples/ASX/CCM_App/SC_Client.cpp:
+          Fixed unicode link errors
+
 Mon Jan 10 08:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
