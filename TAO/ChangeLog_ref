@@ -1,6 +1,7 @@
 Sat Aug 30 09:53:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ORB_Core.cpp:
+        * tao/ORB_Core.i:
         * tao/Objref_VarOut_T.cpp:
         * tao/Thread_Lane_Resources.cpp:
 
