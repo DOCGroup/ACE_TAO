@@ -273,6 +273,14 @@ public:
   ~ACE_Select_Reactor_Handler_Repository (void);
 
   /// Initialize a repository of the appropriate <size>.
+  /**
+   * On Unix platforms, the size parameter should be as large as the
+   * maximum number of file descriptors allowed for a given process.
+   * This is necessary since a file descriptor is used to directly
+   * index the array of event handlers maintained by the Reactor's
+   * handler repository.  Direct indexing is used for efficiency
+   * reasons.
+   */
   int open (size_t size);
 
   /// Close down the repository.
