@@ -3,6 +3,7 @@
 
 // ****************************************************************
 
+ACE_INLINE
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (void)
   : type_ (TAO_UNKNOWN)
 {
