@@ -1,4 +1,4 @@
-# $Id$
+# $Id$ -*- Picture -*-
 
 # Hint: use picture-mode to make editing this easier (C-c . will set
 # the direction to "down".
@@ -63,24 +63,24 @@ Legend:
 
 [0x0x0x] Thruput/TAO compiles
 
-[x 11xx] liborbsvcs compiles
-[1 11x ] Naming_Service compiles
+[x111xx] liborbsvcs compiles
+[1111x ] Naming_Service compiles
 [1x11xx] Simple_Naming compiles
 [xxx0xx] 	Simple_Naming runs
 [0x01xx] Logger compiles
 [xxx0xx] 	Logger runs
-[1 011 ] Scheduling_Service compiles
-[1 010 ] Event_Service compiles
-[1 010 ] Dump_Schedule compiles
-[1 111x] Event_Latency compiles
+[11011 ] Scheduling_Service compiles
+[11010 ] Event_Service compiles
+[11010 ] Dump_Schedule compiles
+[11111x] Event_Latency compiles
 [x x0xx] Event_Latency runs
-
+  
 [010100] MT_Cubit compiles
-[xxx0xx] 	runs for Octet
-[xxx0xx] 	runs for Short
-[xxx0xx] 	runs for Long
-[xxx0xx] 	runs for Struct
-
+[x0x0xx] 	runs for Octet
+[x0x0xx] 	runs for Short
+[x0x0xx] 	runs for Long
+[x0x0xx] 	runs for Struct
+  
 NOTES
 * Solaris/CC
 **orbsvcs/tests/Logger does not compile
