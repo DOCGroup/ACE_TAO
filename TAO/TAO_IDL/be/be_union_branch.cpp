@@ -100,6 +100,69 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
 }
 
 int
+be_union_branch::gen_default_label_value (TAO_OutStream *os,
+                                          be_union *bu)
+{
+  be_union::DefaultValue dv;
+
+  if (bu->default_value (dv) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch::"
+                         "gen_default_label_value - "
+                         "computing default value failed\n"),
+                        -1);
+    }
+  
+  switch (bu->udisc_type ())
+    {
+      case AST_Expression::EV_short:
+        *os << dv.u.short_val;
+        break;
+      case AST_Expression::EV_ushort:
+        *os << dv.u.ushort_val;
+        break;
+      case AST_Expression::EV_long:
+        *os << dv.u.long_val;
+        break;
+      case AST_Expression::EV_ulong:
+        *os << dv.u.ulong_val;
+        break;
+      case AST_Expression::EV_char:
+        os->print ("%d", dv.u.char_val);
+        break;
+      case AST_Expression::EV_bool:
+        *os << dv.u.bool_val;
+        break;
+      case AST_Expression::EV_any:
+        // The discriminant is an enum. Some compilers will
+        // not accept a numeric value assigned to this
+        // discriminant, so we must generate the string name.
+        {
+          AST_ConcreteType *act = bu->disc_type ();
+          be_enum *be = be_enum::narrow_from_decl (act);
+
+          // The function value_to_name() takes care of adding
+          // any necessary scoping to the output.
+          *os << be->value_to_name (dv.u.enum_val);
+          break;
+        }
+      case AST_Expression::EV_longlong:
+      case AST_Expression::EV_ulonglong:
+        // unimplemented
+      default:
+        // error caught earlier.
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_union_branch::"
+                           "gen_default_label_value - "
+                           "bad or unimplemented discriminant type\n"),
+                          -1);
+    }
+
+  return 0;
+}
+
+int
 be_union_branch::accept (be_visitor *visitor)
 {
   return visitor->visit_union_branch (this);
