@@ -1,3 +1,14 @@
+Thu Jan 31 19:18:16 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* include/makeinclude/wrapper_macros.GNU:
+	  Corrected placement of the include_env switch.
+	  include_env=1 is only sensible in combination with
+	  exceptions=1.  NB: The include_env switch is only
+	  intended to facilitate transition to the ACE_ENV_ARG
+	  macros and should not be used for new applications.
+	  There will be unused-variable warnings when using this
+	  build configuration.
+
 Thu Jan 31 11:57:07 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* XML/parser/debug_validator/Debug_Attributes_Builder.cpp:

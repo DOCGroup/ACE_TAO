@@ -474,9 +474,6 @@ ifneq ($(ssl),)
 endif # ssl
 
 ifeq ($(exceptions),0)
-  ifeq ($(include_env),1)
-    CPPFLAGS += -DACE_ENV_BKWD_COMPAT
-  endif
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
     #### Disable the default exception handling of g++ >= 2.8.0.
     ifneq ($(ACE_GNUG_ON_UNIXWARE),)
@@ -487,6 +484,9 @@ ifeq ($(exceptions),0)
   endif # ! ACE_HAS_GNUG_PRE_2_8
 else  # exceptions
   CPPFLAGS += -DACE_HAS_EXCEPTIONS
+  ifeq ($(include_env),1)
+    CPPFLAGS += -DACE_ENV_BKWD_COMPAT
+  endif
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
     #### Enable exception handling with g++ < 2.8.0.  Not recommended,
     #### but provided here for completeness.
