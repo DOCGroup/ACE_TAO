@@ -19,7 +19,7 @@ $outfile = PerlACE::LocalFile ("output");
 unlink $nsior;
 
 $NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
-$SV = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior");
+$SV = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -f udp_output");
 $CL = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior");
 
 print STDERR "Starting Naming Service\n";
@@ -32,6 +32,59 @@ if (PerlACE::waitforfile_timed ($nsior, 10) == -1) {
     exit 1;
 }
 
+print STDERR "Using UDP\n";
+print STDERR "Starting Receiver\n";
+
+$SV->Spawn ();
+
+sleep $sleeptime;
+
+print STDERR "Starting Sender\n";
+
+$sender = $CL->SpawnWaitKill (200);
+
+if ($sender != 0) {
+    print STDERR "ERROR: sender returned $sender\n";
+    $status = 1;
+}
+
+$receiver = $SV->TerminateWaitKill (5);
+
+if ($receiver != 0) {
+    print STDERR "ERROR: receiver returned $receiver\n";
+    $status = 1;
+}
+
+$SV = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -f tcp_output");
+$CL = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -p TCP");
+
+print STDERR "Using TCP\n";
+print STDERR "Starting Receiver\n";
+
+$SV->Spawn ();
+
+sleep $sleeptime;
+
+print STDERR "Starting Sender\n";
+
+$sender = $CL->SpawnWaitKill (200);
+
+if ($sender != 0) {
+    print STDERR "ERROR: sender returned $sender\n";
+    $status = 1;
+}
+
+$receiver = $SV->TerminateWaitKill (5);
+
+if ($receiver != 0) {
+    print STDERR "ERROR: receiver returned $receiver\n";
+    $status = 1;
+}
+
+$SV = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -f rtp_output");
+$CL = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -p RTP/UDP");
+
+print STDERR "Using RTP/UDP\n";
 print STDERR "Starting Receiver\n";
 
 $SV->Spawn ();
