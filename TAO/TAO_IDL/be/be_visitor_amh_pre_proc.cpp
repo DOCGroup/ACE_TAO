@@ -384,7 +384,7 @@ be_visitor_amh_pre_proc::create_amh_class (be_interface *node)
   UTL_ScopedName *amh_class_name = ACE_static_cast (UTL_ScopedName *, node->name ()->copy ());
   amh_class_name->last_component ()->replace_string (amh_class_local_name.rep ());
 
-  AST_Interface_ptr *p_intf = new AST_Interface_ptr[1];
+//  AST_Interface_ptr *p_intf = new AST_Interface_ptr[1];
 
   be_interface *amh_class =
     new be_interface (amh_class_name, // name
@@ -493,11 +493,11 @@ be_visitor_amh_pre_proc::create_amh_operation (be_operation *node,
     return 0;
 
   // Create the return type, which is "void"
-  be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
-                                                   new UTL_ScopedName
-                                                     (new Identifier ("void", 1, 0, I_FALSE),
-                                                      0),
-                                                   0);
+//  be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
+//                                                   new UTL_ScopedName
+//                                                     (new Identifier ("void", 1, 0, I_FALSE),
+//                                                      0),
+//                                                   0);
 
   ACE_CString original_op_name (node
                                   ->name ()
@@ -612,7 +612,7 @@ be_visitor_amh_pre_proc::create_amh_operation (be_operation *node,
 
 be_interface *
 be_visitor_amh_pre_proc::create_response_handler (be_interface *node,
-                                                  be_valuetype *excep_holder)
+                                                  be_valuetype * /*excep_holder*/)
 {
   // Create a virtual module named "Messaging" and an interface "responseHandler"
   // from which we inherit.
@@ -721,8 +721,8 @@ be_visitor_amh_pre_proc::create_response_handler (be_interface *node,
             }
           else
             {
-              be_operation* operation = be_operation::narrow_from_decl (d);
 /*
+              be_operation* operation = be_operation::narrow_from_decl (d);
               if (operation)
                 {
                   this->create_response_handler_operation (operation,

@@ -984,14 +984,14 @@ be_interface_amh_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
     {
     case TAO_CodeGen::TAO_INTERFACE_SS:
       return TAO_CodeGen::TAO_INTERFACE_AMH_SS;
+    default:
+      return current_state;
     };
-
-  return current_state;
 }
 
 
 int
-be_interface_amh_strategy::has_extra_code_generation (TAO_CodeGen::CG_STATE current_state)
+be_interface_amh_strategy::has_extra_code_generation (TAO_CodeGen::CG_STATE)
 {
   return 0;
 }

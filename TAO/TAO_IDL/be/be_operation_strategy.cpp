@@ -295,7 +295,7 @@ be_operation_amh_strategy::next_state (
 
 int 
 be_operation_amh_strategy::has_extra_code_generation (
-    TAO_CodeGen::CG_STATE current_state
+    TAO_CodeGen::CG_STATE 
   )
 {
   return 0;
