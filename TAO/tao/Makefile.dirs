@@ -15,7 +15,8 @@ DIRS = \
   IORManipulation \
   IORTable \
   Strategies \
-  SmartProxies
+  SmartProxies \
+  Utils
 
 
 #----------------------------------------------------------------------------
