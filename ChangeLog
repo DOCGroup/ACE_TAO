@@ -1,3 +1,24 @@
+Mon Nov 10 03:56:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/NT_Service/main.cpp:
+        * examples/Registry/test_registry_iterator.cpp:
+        * examples/Registry/test_registry_update.cpp:
+          Fixed FUZZ errors.
+
+        * examples/NT_Service/main.cpp:
+          Added #include OS_NS_errno.h.
+
+        * ace/NT_Service.h:
+        * ace/WFMO_Reactor.h:
+          Removed #include Synch.h.
+
+        * ace/WFMO_Reactor.cpp:
+          Added #include Null_Condition.h.
+
+        * ace/WFMO_Reactor.h:
+          Added #include Auto_Event.h, Manual_Event.h,
+          Condition_Thread_Mutexc.h, and Lock_Adapter_T.h.
+
 Mon Nov 10 02:44:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/IOStream.h:

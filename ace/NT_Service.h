@@ -27,7 +27,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_Log_Msg_Attributes.h"
 #include "ace/Service_Object.h"
-#include "ace/Synch.h"
 #include "ace/Task.h"
 
 // ACE_NT_SERVICE_START_TIMEOUT is an estimate of the number of
