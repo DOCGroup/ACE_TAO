@@ -1,3 +1,10 @@
+Mon Jul 21 13:11:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+
+          Added Bala's new collocation-related files to these projects.
+
 Mon Jul 21 11:41:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/utl_idlist.h:
