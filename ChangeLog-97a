@@ -1,3 +1,8 @@
+Sun May 18 21:57:54 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/Threads/tss2.cpp: added second parameter to
+	  ACE_TSS_Singleton template specialization.
+
 Sun May 18 09:20:15 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Released version 4.2.
