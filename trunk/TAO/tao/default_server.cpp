@@ -173,10 +173,8 @@ TAO_Default_Server_Strategy_Factory::init (int argc, char *argv[])
 }
 
 int
-TAO_Default_Server_Strategy_Factory::open (void)
+TAO_Default_Server_Strategy_Factory::open (TAO_ORB_Core* orb_core)
 {
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-
   if (reactive_strategy_.open (orb_core->reactor ()) == 0
       && threaded_strategy_.open (orb_core->thr_mgr (),
                                   this->thread_flags_) == 0)

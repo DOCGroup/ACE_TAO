@@ -17,17 +17,11 @@
 #ifndef TAO_ORB_CORE_H
 #define TAO_ORB_CORE_H
 
-#include "ace/Strategies_T.h"
-#include "ace/Hash_Map_Manager.h"
 #include "ace/Singleton.h"
 #include "tao/corbafwd.h"
 #include "tao/Environment.h"
-#include "tao/IIOP_Connector.h"
-#include "tao/IIOP_Acceptor.h"
-#include "tao/POA.h"
-
 #include "tao/Policy_Manager.h"
-
+#include "tao/Resource_Factory.h"
 #include "tao/params.h"
 
 class TAO_Client_Connection_Handler;
@@ -42,64 +36,9 @@ class TAO_Connector_Registry;
 class TAO_Resource_Factory;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
+class TAO_Connection_Cache;
 
-// @@ TODO Move the Resource Factory to its own file.
-
-class TAO_Collocation_Table_Lock : public ACE_Adaptive_Lock
-{
-  // TITLE
-  //   This lock class determines the type underlying lock
-  //   when it gets constructed.
-public:
-  TAO_Collocation_Table_Lock (void);
-  ~TAO_Collocation_Table_Lock (void);
-};
-
-// @@ Will this work, changing ACE_INET_Addr to ACE_Addr??
-typedef ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
-        TAO_GLOBAL_Collocation_Table;
-
-class TAO_Cached_Connector_Lock : public ACE_Adaptive_Lock
-{
-  // TITLE
-  //   This lock class determines the type underlying lock
-  //   when it gets constructed.
-public:
-  TAO_Cached_Connector_Lock (void);
-  ~TAO_Cached_Connector_Lock (void);
-};
-
-typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler,
-                                    TAO_SOCK_CONNECTOR,
-                                    TAO_Cached_Connector_Lock>
-        TAO_CACHED_CONNECT_STRATEGY;
-
-typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
-        TAO_NULL_CREATION_STRATEGY;
-
-typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
-        TAO_NULL_ACTIVATION_STRATEGY;
-
-// Forward decl.
-class TAO_Resource_Factory;
-
-class TAO_Export TAO_ST_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_Client_Connection_Handler>
-{
-public:
-  TAO_ST_Connect_Creation_Strategy (ACE_Thread_Manager * = 0);
-
-  virtual int make_svc_handler (TAO_Client_Connection_Handler *&sh);
-  // Makes TAO_ST_Client_Connection_Handlers
-};
-
-class TAO_Export TAO_MT_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_Client_Connection_Handler>
-{
-public:
-  TAO_MT_Connect_Creation_Strategy (ACE_Thread_Manager * = 0);
-
-  virtual int make_svc_handler (TAO_Client_Connection_Handler *&sh);
-  // Makes TAO_MT_Client_Connection_Handlers
-};
+// ****************************************************************
 
 class TAO_Export TAO_ORB_Core
 {
@@ -107,18 +46,21 @@ class TAO_Export TAO_ORB_Core
   //    Encapsulates the state of an ORB.
   //
   // = DESCRIPTION
-  //    This class encapsulates the state of an ORB.  The motivation for
-  //    this is so that the state can be accessed as a singleton.  The scope
-  //    of the state can be regulated by utilizing singletons of different
-  //    scope, e.g., <ACE_Singleton> will provide process-wide scope, while
-  //    <ACE_TSS_Singleton> will provide thread-specific scope (which
-  //    is useful for the "thread-per-rate" real-time concurrency
-  //    model).
+  //   This is the implementation class for the CORBA::ORB interface.
+  //   The class also encapsulates the access to the ORB resources and 
+  //   its state.
+  //   Some resources can be TSS or global, those resources are always 
+  //   accessed through a TSS interface, but are allocated using the
+  //   Resource_Factory.  If the resource is really global the
+  //   Resource_Factory will simply return a pointer to the global
+  //   instance.
+  //
   friend class CORBA_ORB;
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char * const*,
                                          const char *,
                                          CORBA_Environment &);
+
 public:
   // = Initialization and termination methods.
   TAO_ORB_Core (void);
@@ -126,9 +68,6 @@ public:
 
   ~TAO_ORB_Core (void);
   // Destructor
-
-  TAO_OA_Parameters *oa_params (void);
-  // Accessor for the Object Adapter parameters.
 
   TAO_ORB_Parameters *orb_params (void);
   // Accessor for the ORB parameters.
@@ -306,8 +245,8 @@ public:
   // Return the Policy_Manager for this ORB.
 
   TAO_Policy_Current *policy_current (void) const;
-  void policy_current (TAO_Policy_Current *);
-  // Accesors to the policy current, this object should be kept in TSS 
+  TAO_Policy_Current *policy_current (TAO_Policy_Current *);
+  // Accesors to the policy current, this object should be kept in TSS
   // storage.
   // The POA has to reset the policy current object on every upcall.
 
@@ -346,18 +285,19 @@ protected:
                                 const TAO_POA_Policies *policies);
   // Initialize the root POA.
 
+protected:
   // = Data members.
-  ACE_Reactor *reactor_;
-  // Used for responding to I/O reactively
-
   ACE_Thread_Manager *thr_mgr_;
   // Used to manage threads within the ORB
 
   TAO_Connector_Registry *connector_registry_;
-  // The connector registry which all active connecters must register themselves
-  // with.
+  // The connector registry which all active connecters must register
+  // themselves with.
 
   CORBA::ORB_ptr orb_;
+  // @@ Should we keep a single ORB pointer? This is good because
+  //    multiple calls to ORB_init() with the same ORBid can use the
+  //    same object, but maybe don't want so much coupling.
   // Pointer to the ORB.
 
   TAO_POA *root_poa_;
@@ -367,9 +307,6 @@ protected:
 
   PortableServer::POA_var root_poa_reference_;
   // Cached POA reference
-
-  TAO_OA_Parameters *oa_params_;
-  // Parameters which should be used by OAs attached to this ORB.
 
   TAO_ORB_Parameters *orb_params_;
   // Parameters used by the ORB.
@@ -381,15 +318,6 @@ protected:
 
   TAO_Acceptor *acceptor_;
   // The acceptor passively listening for connection requests.
-
-  TAO_POA_Current *poa_current_;
-  // Points to structure containing state for the current upcall
-  // context in this thread.  Note that it does not come from the
-  // resource factory because it must always be held in
-  // thread-specific storage.  For now, since TAO_ORB_Core instances
-  // are TSS singletons, we simply ride along and don't allocate
-  // occupy another TSS slot since there are some platforms where
-  // those are precious commodities (e.g., NT).
 
   TAO_Resource_Factory *resource_factory_;
   // Handle to the factory for resource information..
@@ -427,6 +355,47 @@ protected:
   // A string of comma-separated <{host}>:<{port}> pairs used to
   // pre-establish connections using <preconnect>.
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+  TAO_Policy_Manager policy_manager_;
+  // The Policy_Manager for this ORB.
+
+  TAO_Policy_Manager_Impl default_policies_;
+  // The default policies.
+#endif /* TAO_HAS_CORBA_MESSAGING */
+};
+
+// ****************************************************************
+
+class TAO_Export TAO_ORB_Core_TSS_Resources
+{
+  // = TITLE
+  //   The TSS resoures of an ORB core.
+  //
+  // = DESCRIPTION
+  //   This class is used by the ORB_Core to store the resources
+  //   potentially bound to a thread in TSS storage.
+  //   The members are public because only the ORB Core is expected to 
+  //   access them.
+  //
+public:
+  TAO_ORB_Core_TSS_Resources (void);
+  // constructor
+
+  ~TAO_ORB_Core_TSS_Resources (void);
+  // destructor
+
+  ACE_Reactor *reactor_;
+  // Used for responding to I/O reactively
+
+  TAO_POA_Current *poa_current_;
+  // Points to structure containing state for the current upcall
+  // context in this thread.  Note that it does not come from the
+  // resource factory because it must always be held in
+  // thread-specific storage.  For now, since TAO_ORB_Core instances
+  // are TSS singletons, we simply ride along and don't allocate
+  // occupy another TSS slot since there are some platforms where
+  // those are precious commodities (e.g., NT).
+
   CORBA_Environment* default_environment_;
   // The default environment for the thread.
 
@@ -435,318 +404,30 @@ protected:
   // still holds one.
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
-  TAO_Policy_Manager policy_manager_;
-  // The Policy_Manager for this ORB.
-
   TAO_Policy_Current initial_policy_current_;
   // The initial PolicyCurrent for this thread. Should be a TSS
   // resource.
 
   TAO_Policy_Current* policy_current_;
   // This pointer is reset by the POA on each upcall.
-
-  TAO_Policy_Manager_Impl default_policies_;
-  // The default policies.
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
+  ACE_Allocator *output_cdr_dblock_allocator_;
+  ACE_Allocator *output_cdr_buffer_allocator_;
+  // The allocators for the output CDR streams.
+
+  TAO_Connection_Cache *connection_cache_;
+  // This is is just a place holder, in the future the connection
+  // cache will be separated from the connectors and it will be a
+  // (potentially) TSS object.
 };
 
-class TAO_Default_Reactor : public ACE_Reactor
-{
-  // = TITLE
-  //
-  //   Force TAO to use Select Reactor.
-public:
-  TAO_Default_Reactor (int nolock = 0);
-  virtual ~TAO_Default_Reactor (void);
-};
-
-class TAO_Export TAO_Resource_Factory : public ACE_Service_Object
-{
-  // = TITLE
-  //   Factory which manufacturers resources for use by the ORB Core.
-  //
-  // = DESCRIPTION
-  //   This class is a factory/repository for critical ORB Core
-  //   resources.  Using a <{resource source specifier}> as a
-  //   discriminator, the factory can return resource instances which
-  //   are, e.g., global, stored in thread-specific storage, stored in
-  //   shared memory, etc.
-
-public:
-  // = Initialization and termination methods.
-  TAO_Resource_Factory ();
-  virtual ~TAO_Resource_Factory (void);
-
-  // = Service Configurator hooks.
-  virtual int init (int argc, char *argv[]);
-
-  virtual int parse_args (int argc, char *argv[]);
-  // Arguments are in the form of -ORBxxx.  Valid arguments are:
-  // <-ORBresources> <{which}> where <{which}> is one of <global> or
-  // <tss>.
-
-  // = Member Accessors
-  enum
-  {
-    TAO_GLOBAL,
-    TAO_TSS
-  };
-
-  // = Type of Reactor
-  enum
-  {
-    TAO_TOKEN,                  // Use ACE_Token as Select_Reactor's internal lock
-    TAO_NULL_LOCK               // Use ACE_Noop_Token as Select_Reactor's internal lock
-  };
-
-  // = Range of values for <{resource source specifier}>.
-  virtual void resource_source (int which_source);
-  // Set the resource source specifier.
-  virtual int resource_source (void);
-  // Get the resource source specifier.
-
-  virtual void poa_source (int which_source);
-  // Set the POA source specifier.
-  virtual int poa_source (void);
-  // Get the POA source specifier.
-
-  int cdr_allocator_source (void);
-  // Modify and get the source for the CDR allocators
-
-  // = Resource Retrieval
-  //
-  // Methods in this category return pointers to resources.  Based on
-  // the resource source specifier value, these resources may be
-  // either global, i.e., the same resource is used across all threads
-  // throughout the process, or thread-specific, i.e., different
-  // resources are used in each thread.  Currently, all resources are
-  // either global or thread-specific; choosing on a per-resource
-  // basis is not supported.
-
-  virtual ACE_Reactor *get_reactor (void);
-  // Return an <ACE_Reactor> to be utilized.
-
-  virtual ACE_Thread_Manager *get_thr_mgr (void);
-  // Return an <ACE_Thread_Manager> to be utilized.
-
-  virtual TAO_Connector *get_connector (void);
-  // Return an Connector to be utilized.
-
-  virtual TAO_Connector_Registry *get_connector_registry (void);
-  // Return an Connector to be utilized.
-
-  virtual TAO_CACHED_CONNECT_STRATEGY *get_cached_connect_strategy (void);
-  // Return an Cached Connect Strategy to be utilized.
-
-  virtual TAO_NULL_CREATION_STRATEGY *get_null_creation_strategy (void);
-  // This no-op creation strategy is necessary for using the
-  // <Strategy_Connector> with the <Cached_Connect_Strategy>.
-
-  virtual TAO_NULL_ACTIVATION_STRATEGY *get_null_activation_strategy (void);
-  // This no-op activation strategy prevents the cached connector from
-  // calling the service handler's <open> method multiple times.
-
-  virtual TAO_Acceptor *get_acceptor (void);
-  // Return an Acceptor to be utilized.
-
-  virtual TAO_ORB_Parameters *get_orb_params (void);
-  // Return ORB parameters to be utilized.
-
-  virtual TAO_OA_Parameters *get_oa_params (void);
-  // Return ORB parameters to be utilized.
-
-  virtual CORBA::ORB_ptr get_orb (void);
-  // Return an ORB ptr to be utilized.
-
-  virtual TAO_POA *get_root_poa (void);
-  // Return a root poa to be utilized.
-
-  virtual TAO_Object_Adapter *object_adapter (void);
-  // Return a object adapter to be utilized.
-
-  virtual ACE_Allocator *get_allocator (void);
-  // Return a pointer to an ACE_Allocator used for allocating memory
-  // within the ORB.
-
-  virtual TAO_GLOBAL_Collocation_Table *get_global_collocation_table (void);
-  // Get the global collocation table.  Return the pointer to the
-  // global collocation table if we are using one, otherwise, return
-  // 0.
-
-  // = Modifiers
-
-  virtual void set_allocator (ACE_Allocator *alloc);
-  // Set the allocator pointer which will be returned by
-  // <get_allocator()>.
-
-  virtual void set_orb (CORBA::ORB_ptr op);
-  // Set the ORB pointer which will be returned by <get_orb()>.  This
-  // is necessary because the ORB is created in application space by
-  // <CORBA::ORB_init()>, but needs to be available to stubs and
-  // generated code.
-
-  virtual void set_root_poa (TAO_POA *pp);
-  // Set the Root POA pointer which will be returned by
-  // <get_root_poa()>.  This is necessary because the Root POA is
-  // created in application space by <CORBA::ORB_init()>, but needs to
-  // be available to stubs and generated code.
-
-  virtual int reactor_lock (void);
-  // Returns 0 if a reactor without locking was configured.
-
-  virtual ACE_Allocator* input_cdr_dblock_allocator (void);
-  virtual ACE_Allocator* input_cdr_buffer_allocator (void);
-  // Access the input CDR allocators.
-
-  virtual ACE_Allocator* output_cdr_dblock_allocator (void);
-  virtual ACE_Allocator* output_cdr_buffer_allocator (void);
-  // Access the output CDR allocators.
-
-  ACE_Data_Block *create_input_cdr_data_block (size_t size);
-  // The Message Blocks used for input CDRs must have appropiate
-  // locking strategies.
-
-  // @@ I suspect that putting these structs inside of this class is
-  // going to break some compilers (e.g., HP/YUX) when you try to use
-  // this stuff with the ACE_Singletons below.  I suggest you move
-  // them out and rename them as TAO_Pre_Allocated, etc.
-  //
-  // Let's do this after we merge the poa branch and the main back
-  // together.
-  struct Pre_Allocated
-    // = TITLE
-    //   Structure containing resources which can be pre-allocated by
-    //   the ORB Core without intervention from the application.
-  {
-    Pre_Allocated (void);
-    // Constructor
-
-    ~Pre_Allocated (void);
-    // Destructor
-
-    TAO_Default_Reactor r_;
-    // The Reactor.
-
-    TAO_Object_Adapter object_adapter_;
-    // Object Adapter.
-
-    ACE_Thread_Manager tm_;
-    // The Thread Manager
-
-    TAO_Connector_Registry cr_;
-    // The Connector Registry!
-
-    TAO_IIOP_Connector c_;
-    // The Connector, HACK to create the first connector which happens to be
-    // IIOP.
-
-    TAO_CACHED_CONNECT_STRATEGY cached_connect_strategy_;
-    // The Cached Connect Strategy
-
-    TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
-    // This no-op creation strategy is necessary for using the
-    // <Strategy_Connector> with the <Cached_Connect_Strategy>.
-
-    TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
-    // This no-op activation strategy prevents the cached connector from
-    // calling the service handler's <open> method multiple times.
-
-    TAO_IIOP_Acceptor a_;
-    // The Acceptor
-
-    TAO_ORB_Parameters orbparams_;
-    // ORB Parameters
-
-    TAO_OA_Parameters oaparams_;
-    // OA Parameters (will go away with new POA impl)
-  };
-
-  struct App_Allocated
-    // = TITLE
-    //   Structure containing resources which can only be allocated
-    //   after obtaining information from the application such as
-    //   arguments, etc.
-  {
-    App_Allocated (void);
-    // Constructor necessary because we have pointers.  It's inlined
-    // here rather than in the .i file because it's easier than trying
-    // to re-order header files in corba.h to eliminate the "used
-    // before declared inline" warnings/errors on certain compilers.
-
-    ~App_Allocated (void);
-    // Destructor is also necessary because we now allocate some of
-    // the objects held here.
-
-    // = Resources
-
-    // Note:  These should change to _var types when they are available.
-    CORBA::ORB_ptr orb_;
-    // Pointer to application-created ORB.
-
-    TAO_POA *poa_;
-    // Pointer to application-created POA.
-
-    ACE_Allocator *alloc_;
-    // Pointer to application-created ACE_Allocator.
-
-    ACE_Allocator *input_cdr_dblock_allocator_;
-    ACE_Allocator *input_cdr_buffer_allocator_;
-    // The allocators for the input CDR streams.
-
-    ACE_Allocator *output_cdr_dblock_allocator_;
-    ACE_Allocator *output_cdr_buffer_allocator_;
-    // The allocators for the output CDR streams.
-  };
-
-protected:
-
-  int resource_source_;
-  // Flag indicating whether resources should be global or
-  // thread-specific.
-
-  int poa_source_;
-  // Flag indicating whether the POA should be global or
-  // thread-specific.  If not set specifically, this takes on the
-  // value of <resource_source_>.
-
-  int collocation_table_source_;
-  // Flag indicating whether the collocation table should be global
-  // thread-specific.  It defaults to TAO_GLOBAL if not set
-  // specifically.
-
-  int reactor_lock_;
-  // Flag indicating wether we should provide a lock-freed reactor
-  // or not.
-
-  int cdr_allocator_source_;
-  // The source for the CDR allocator. Even with a TSS resource
-  // factory the user may be interested in global allocators for the
-  // CDR streams, for instance to keep the buffers around after the
-  // upcall and/or pass them to another thread.
-
-  // = Typedefs for the singleton types used to store our orb core
-  // information.
-  typedef ACE_Singleton<Pre_Allocated, ACE_SYNCH_MUTEX>
-          GLOBAL_PRE_ALLOCATED;
-  typedef ACE_TSS_Singleton<Pre_Allocated, ACE_SYNCH_MUTEX>
-          TSS_PRE_ALLOCATED;
-
-  typedef ACE_Singleton<App_Allocated, ACE_SYNCH_MUTEX>
-          GLOBAL_APP_ALLOCATED;
-  typedef ACE_TSS_Singleton<App_Allocated, ACE_SYNCH_MUTEX>
-          TSS_APP_ALLOCATED;
-  typedef ACE_Singleton<TAO_GLOBAL_Collocation_Table, ACE_SYNCH_MUTEX>
-          GLOBAL_Collocation_Table;
-};
+// ****************************************************************
 
 extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB_Core.i"
 #endif /* __ACE_INLINE__ */
-
-ACE_STATIC_SVC_DECLARE (TAO_Resource_Factory)
-ACE_FACTORY_DECLARE (TAO, TAO_Resource_Factory)
 
 #endif /* TAO_ORB_CORE_H */

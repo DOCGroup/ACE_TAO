@@ -19,6 +19,7 @@
 
 #include "tao/Key_Adapters.h"
 #include "tao/Server_Strategy_Factory.h"
+#include "tao/poa_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

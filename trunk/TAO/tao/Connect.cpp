@@ -7,6 +7,7 @@
 #include "tao/GIOP.h"
 #include "tao/Server_Request.h"
 #include "tao/ORB_Core.h"
+#include "tao/POA.h"
 #include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
@@ -1088,7 +1089,7 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
 
       if (this->reactor () != r)
         {
-          ACE_Reactor_Mask mask = 
+          ACE_Reactor_Mask mask =
             ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL;
           this->reactor ()->remove_handler (this, mask);
 

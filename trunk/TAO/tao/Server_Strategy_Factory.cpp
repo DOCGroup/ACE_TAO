@@ -14,7 +14,7 @@ TAO_Server_Strategy_Factory::~TAO_Server_Strategy_Factory(void)
 }
 
 int
-TAO_Server_Strategy_Factory::open (void)
+TAO_Server_Strategy_Factory::open (TAO_ORB_Core*)
 {
   return 0;
 }

@@ -6,20 +6,6 @@
 #define TAO_OC_RETRIEVE(member) \
   ((this->member##_ == 0) ? (this->member##_ = this->resource_factory ()->get_##member ()) : (this->member##_) )
 
-ACE_INLINE ACE_Reactor *
-TAO_ORB_Core::reactor (ACE_Reactor *r)
-{
-  ACE_Reactor *old_reactor = this->reactor_;
-  this->reactor_ = r;
-  return old_reactor;
-}
-
-ACE_INLINE ACE_Reactor *
-TAO_ORB_Core::reactor (void)
-{
-  return TAO_OC_RETRIEVE (reactor);
-}
-
 ACE_INLINE TAO_Object_Adapter *
 TAO_ORB_Core::object_adapter (void)
 {
@@ -43,7 +29,7 @@ TAO_ORB_Core::thr_mgr (void)
 ACE_INLINE CORBA::ORB_ptr
 TAO_ORB_Core::orb (void)
 {
-  return TAO_OC_RETRIEVE (orb);
+  return this->orb_;
 }
 
 ACE_INLINE TAO_POA *
@@ -59,17 +45,11 @@ TAO_ORB_Core::root_poa (const char *adapter_name,
   return this->root_poa_;
 }
 
-ACE_INLINE TAO_OA_Parameters *
-TAO_ORB_Core::oa_params (void)
-{
-  return TAO_OC_RETRIEVE (oa_params);
-}
-
 ACE_INLINE
 TAO_ORB_Parameters *
 TAO_ORB_Core::orb_params(void)
 {
-  return TAO_OC_RETRIEVE (orb_params);
+  return this->orb_params_;
 }
 
 ACE_INLINE TAO_Connector_Registry *
@@ -103,20 +83,6 @@ TAO_ORB_Core::acceptor (void)
 #undef TAO_OC_RETRIEVE
 #undef TAO_TRF
 
-ACE_INLINE TAO_POA_Current *
-TAO_ORB_Core::poa_current (void)
-{
-  return poa_current_;
-}
-
-ACE_INLINE TAO_POA_Current *
-TAO_ORB_Core::poa_current (TAO_POA_Current *new_current)
-{
-  TAO_POA_Current *old = poa_current_;
-  poa_current_ = new_current;
-  return old;
-}
-
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::using_collocation (void)
 {
@@ -129,18 +95,6 @@ TAO_ORB_Core::using_collocation (CORBA::Boolean use_col)
   CORBA::Boolean retv = this->opt_for_collocation_;
   this->opt_for_collocation_ = use_col;
   return retv;
-}
-
-ACE_INLINE CORBA_Environment*
-TAO_ORB_Core::default_environment (void) const
-{
-  return this->default_environment_;
-}
-
-ACE_INLINE void
-TAO_ORB_Core::default_environment (CORBA_Environment* env)
-{
-  this->default_environment_ = env;
 }
 
 ACE_INLINE ACE_Data_Block*
@@ -156,18 +110,6 @@ TAO_ORB_Core::policy_manager (void)
   return &this->policy_manager_;
 }
 
-ACE_INLINE TAO_Policy_Current*
-TAO_ORB_Core::policy_current (void) const
-{
-  return this->policy_current_;
-}
-
-ACE_INLINE void
-TAO_ORB_Core::policy_current (TAO_Policy_Current* current)
-{
-  this->policy_current_ = current;
-}
-
 ACE_INLINE CORBA::Policy_ptr
 TAO_ORB_Core::get_default_policy (
       CORBA::PolicyType policy,
@@ -177,43 +119,5 @@ TAO_ORB_Core::get_default_policy (
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
-
-// ****************************************************************
-
-ACE_INLINE void
-TAO_Resource_Factory::resource_source (int which_source)
-{
-  resource_source_ = which_source;
-}
-
-ACE_INLINE int
-TAO_Resource_Factory::resource_source (void)
-{
-  return resource_source_;
-}
-
-ACE_INLINE void
-TAO_Resource_Factory::poa_source (int which_source)
-{
-  poa_source_ = which_source;
-}
-
-ACE_INLINE int
-TAO_Resource_Factory::poa_source (void)
-{
-  return poa_source_;
-}
-
-ACE_INLINE int
-TAO_Resource_Factory::reactor_lock (void)
-{
-  return reactor_lock_;
-}
-
-ACE_INLINE int
-TAO_Resource_Factory::init (int argc, char *argv[])
-{
-  return this->parse_args (argc, argv);
-}
 
 // ****************************************************************

@@ -6,7 +6,7 @@
 #include "ace/Object_Manager.h"
 #include "tao/default_server.h"
 #include "tao/default_client.h"
-#include "tao/ORB_Core.h"
+#include "tao/default_resource.h"
 
 ACE_RCSID(tao, TAO_Internal, "$Id$")
 
@@ -32,7 +32,7 @@ TAO_Internal::open_services (int& argc, char** argv, int ignore_default_svc_conf
   if (TAO_Internal::service_open_count_++ == 0)
     {
       ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_Resource_Factory);
+        insert (&ace_svc_desc_TAO_Default_Resource_Factory);
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_Default_Client_Strategy_Factory);
       ACE_Service_Config::static_svcs ()->
