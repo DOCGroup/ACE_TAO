@@ -109,7 +109,10 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   else {
     result->successor = info_->successor;
   }
-
+  {
+    CORBA::PolicyList_var pols;
+    result->successor->_validate_connection (pols.out ());
+  }
   // update backups
   result->backups.length(successors_length);
   for (i = 0; i < successors_length; ++i)  {
@@ -117,6 +120,8 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
       FtRtecEventChannelAdmin::EventChannel::_narrow(
       info_list[i+ my_position+1].ior.in()
       ACE_ENV_ARG_PARAMETER);
+    CORBA::PolicyList_var pols;
+    result->backups[i]->_validate_connection (pols.out ());
     ACE_CHECK;
   }
 

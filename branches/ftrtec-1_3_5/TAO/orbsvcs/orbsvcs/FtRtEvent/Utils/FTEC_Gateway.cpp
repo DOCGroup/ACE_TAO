@@ -138,67 +138,72 @@ FTEC_Gateway::~FTEC_Gateway()
 RtecEventChannelAdmin::EventChannel_ptr
 FTEC_Gateway::activate(PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
-    PortableServer::IdUniquenessPolicy_var id_uniqueness_policy =
-      poa->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+  // preallocation connections
+  CORBA::PolicyList_var pols;
+  impl_->ftec->_validate_connection (pols.out () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
 
-      PortableServer::LifespanPolicy_var lifespan =
-      poa->create_lifespan_policy(PortableServer::PERSISTENT
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+  PortableServer::IdUniquenessPolicy_var id_uniqueness_policy =
+    poa->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
 
-    // create a USER_ID IdAssignmentPolicy object
-    PortableServer::IdAssignmentPolicy_var assign =
-      poa->create_id_assignment_policy(PortableServer::USER_ID
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+  PortableServer::LifespanPolicy_var lifespan =
+    poa->create_lifespan_policy(PortableServer::PERSISTENT
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
 
-    CORBA::PolicyList policy_list;
-    policy_list.length(3);
+  // create a USER_ID IdAssignmentPolicy object
+  PortableServer::IdAssignmentPolicy_var assign =
+    poa->create_id_assignment_policy(PortableServer::USER_ID
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
 
-    policy_list[0] = PortableServer::IdUniquenessPolicy::_duplicate(
-      id_uniqueness_policy.in());
-    ACE_CHECK_RETURN(0);
-    policy_list[1]=
-      PortableServer::LifespanPolicy::_duplicate(lifespan.in());
-    ACE_CHECK_RETURN(0);
-    policy_list[2]=
-      PortableServer::IdAssignmentPolicy::_duplicate(assign.in());
-    ACE_CHECK_RETURN(0);
+  CORBA::PolicyList policy_list;
+  policy_list.length(3);
 
-    PortableServer::POAManager_var mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
+  policy_list[0] = PortableServer::IdUniquenessPolicy::_duplicate(
+    id_uniqueness_policy.in());
+  ACE_CHECK_RETURN(0);
+  policy_list[1]=
+    PortableServer::LifespanPolicy::_duplicate(lifespan.in());
+  ACE_CHECK_RETURN(0);
+  policy_list[2]=
+    PortableServer::IdAssignmentPolicy::_duplicate(assign.in());
+  ACE_CHECK_RETURN(0);
 
-    impl_->poa = poa->create_POA("gateway_poa", mgr.in(), policy_list
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+  PortableServer::POAManager_var mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
 
-    id_uniqueness_policy->destroy();
-    lifespan->destroy();
-    assign->destroy();
+  impl_->poa = poa->create_POA("gateway_poa", mgr.in(), policy_list
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
 
-    PortableServer::ObjectId oid;
-    oid.length(16);
-    UUID::create(oid.get_buffer());
+  id_uniqueness_policy->destroy();
+  lifespan->destroy();
+  assign->destroy();
 
-    RtecEventChannelAdmin::EventChannel_var gateway;
+  PortableServer::ObjectId oid;
+  oid.length(16);
+  UUID::create(oid.get_buffer());
 
-    activate_object_with_id(gateway.out(), impl_->poa, this, oid ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
-    ++oid[9];
-    activate_object_with_id(impl_->consumer_admin.out(),
-                            impl_->poa,
-                            &impl_->consumer_admin_servant,
-                            oid ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
-    ++oid[9];
-    activate_object_with_id(impl_->supplier_admin.out(),
-                            impl_->poa,
-                            &impl_->supplier_admin_servant,
-                            oid ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+  RtecEventChannelAdmin::EventChannel_var gateway;
 
-    return gateway._retn();
+  activate_object_with_id(gateway.out(), impl_->poa, this, oid ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
+  ++oid[9];
+  activate_object_with_id(impl_->consumer_admin.out(),
+                          impl_->poa,
+                          &impl_->consumer_admin_servant,
+                          oid ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
+  ++oid[9];
+  activate_object_with_id(impl_->supplier_admin.out(),
+                          impl_->poa,
+                          &impl_->supplier_admin_servant,
+                          oid ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
+
+  return gateway._retn();
 }
 
 //= The RtecEventChannelAdmin::EventChannel methods
