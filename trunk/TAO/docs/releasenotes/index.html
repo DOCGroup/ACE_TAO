@@ -29,7 +29,7 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#poa">Portable Object Adapter</a></li>
 
 <li>
-<a href="#implrepo">Implementation Repository</a></li>
+<a href="..\implrepo\status.html">Implementation Repository</a></li>
 
 <li>
 <a href="#interfrepo">Interface Repository</a></li>
@@ -355,83 +355,6 @@ The POA now supports active demultiplexing of servants in the SYSTEM_ID
 policy. This should make the POA faster and more predictable since there
 is no hashing involved and the index of the slot where the servant is registered
 is in the Object Key.</li>
-</ul>
-
-<hr>
-<h3>
-<a NAME="implrepo"></a>Implementation Repository</h3>
-Point of contact: <a href="mailto:brunsch@cs.wustl.edu">Darrell Brunsch</a>
-<p>Current status (as of November 17, 1998)
-<p>Here is a brief list of my goals (and the dates completed). For more
-information, please see the <a href="../implrepo.html">Implementation Repository
-documentation</a>.
-<br>Immediate goals:
-<ul>
-<li>
-[7/17] Create the base test client and server programs</li>
-
-<li>
-[7/23] Add an IR that forwards server requests</li>
-
-<li>
-[7/23] Persistence</li>
-
-<li>
-[8/10] Have the server register its IOR with the IR</li>
-
-<li>
-[8/14] Have the server exit after every call, so it is restarted each time</li>
-
-<li>
-[9/10] Make the IR forward any request</li>
-
-<li>
-[9/10] Add the ping object to the server</li>
-
-<li>
-[9/10] Add in shutdown calls to test ping objects</li>
-
-<li>
-[9/15] Implement the full IDL Interface for the IR</li>
-
-<li>
-Add another test server</li>
-</ul>
-Longer term goals:
-<ul>
-<li>
-Change IOR format</li>
-
-<li>
-Add in support for virtual server names</li>
-
-<li>
-Integration with POA and ORB</li>
-</ul>
-Other goals:
-<ul>
-<li>
-Multiple Profiles</li>
-
-<li>
-POA extension</li>
-</ul>
-Future Goals (might or might not happen):
-<ul>
-<li>
-TAO client-side optimization with restarted servers</li>
-
-<li>
-Server security (checksums)</li>
-
-<li>
-Helper Application</li>
-
-<li>
-Federation of IRs</li>
-
-<li>
-DLLs</li>
 </ul>
 
 <hr>
