@@ -1,3 +1,7 @@
+Sun Jan 04 17:19:34 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.53, released Sun Jan 04 17:19:34 1998.
+
 Sun Jan  4 13:49:21 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO/tao/nvlist.cpp: NamedValue::Release was calling delete, but
