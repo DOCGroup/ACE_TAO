@@ -23,6 +23,17 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // =========================================================================
+// Perfect Multicast filting refers to RFC 3376, where a socket is only 
+// delivered dgrams for groups joined even if it didn't bind the group
+// address.  We turn this option off by default, although most OS's 
+// except for Windows and Solaris probably lack perfect filtering.
+// =========================================================================
+
+# if !defined (ACE_LACKS_PERFECT_MULTICAST_FILTERING)
+#   define ACE_LACKS_PERFECT_MULTICAST_FILTERING 0
+# endif /* ACE_LACKS_PERFECT_MULTICAST_FILTERING */
+
+// =========================================================================
 // Enable/Disable Features By Default
 // =========================================================================
 

@@ -221,6 +221,11 @@
 # define ACE_HAS_IP_MULTICAST
 #endif /* ! ACE_HAS_IP_MULTICAST */
 
+// At least for IPv4, Linux lacks perfect filtering.
+#if !defined ACE_LACKS_PERFECT_MULTICAST_FILTERING
+# define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
+#endif /* ACE_LACKS_PERFECT_MULTICAST_FILTERING */
+
 #define ACE_HAS_BIG_FD_SET
 
 // Linux defines struct msghdr in /usr/include/socket.h
