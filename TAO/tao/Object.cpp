@@ -14,21 +14,6 @@
 // GET_INTERFACE ... send a simple call to the object, it returns
 // an InterfaceDef objref.
 
-static const TAO_Param_Data Object_get_interface_params [] =
-{
-  { CORBA::_tc_Object, PARAM_RETURN, 0 }
-  // XXX should be tc_InterfaceDef
-};
-
-static const TAO_Call_Data Object_get_interface_calldata =
-{
-  "_interface",
-  CORBA::B_TRUE,
-  1,
-  &Object_get_interface_params [0],
-  0, 0
-};
-
 CORBA_Object::~CORBA_Object (void)
 {
   this->parent_->Release ();
@@ -70,6 +55,21 @@ CORBA::release (CORBA_Object_ptr obj)
 CORBA::InterfaceDef_ptr
 CORBA_Object::_get_interface (CORBA::Environment &env)
 {
+  static const TAO_Param_Data Object_get_interface_params [] =
+  {
+    { CORBA::_tc_Object, PARAM_RETURN, 0 }
+    // XXX should be tc_InterfaceDef
+  };
+
+  static const TAO_Call_Data Object_get_interface_calldata =
+  {
+    "_interface",
+    CORBA::B_TRUE,
+    1,
+    &Object_get_interface_params [0],
+    0, 0
+  };
+
   CORBA::InterfaceDef_ptr retval = 0;
 
   // At this time, we only have a single generic way to find the CORBA
@@ -101,23 +101,23 @@ CORBA_Object::_get_interface (CORBA::Environment &env)
 // IS_A ... ask the object if it's an instance of the type whose
 // logical type ID is passed as a parameter.
 
-static const TAO_Param_Data Object_is_a_params [] =
-{
-  { CORBA::_tc_boolean, PARAM_RETURN, 0 },
-  { CORBA::_tc_string, PARAM_IN, 0 }
-};
-
-static const TAO_Call_Data Object_is_a_calldata =
-{
-  "_is_a", CORBA::B_TRUE,
-  2, &Object_is_a_params [0],
-  0, 0
-};
-
 CORBA::Boolean
 CORBA_Object::_is_a (const CORBA::Char *type_id,
                      CORBA::Environment &env)
 {
+  static const TAO_Param_Data Object_is_a_params [] =
+  {
+    { CORBA::_tc_boolean, PARAM_RETURN, 0 },
+    { CORBA::_tc_string, PARAM_IN, 0 }
+  };
+
+  static const TAO_Call_Data Object_is_a_calldata =
+  {
+    "_is_a", CORBA::B_TRUE,
+    2, &Object_is_a_params [0],
+    0, 0
+  };
+
   // If the object is collocated then try locally....
   if (this->is_collocated_ && this->servant_ != 0)
     return this->servant_->_is_a (type_id, env);
@@ -187,24 +187,24 @@ CORBA_Object::_is_collocated (void) const
 // GET_IMPLEMENTATION ... send a simple call to the object, it returns
 // an ImplementationDef objref.
 
-static const TAO_Param_Data Object_get_implementation_params [] =
-{
-  { CORBA::_tc_Object, PARAM_RETURN, 0 }
-  // XXX should be tc_ImplementationDef
-};
-
-static const TAO_Call_Data Object_get_implementation_calldata =
-{
-  "_implementation",
-  CORBA::B_TRUE,
-  1,
-  &Object_get_implementation_params [0],
-  0, 0
-};
-
 CORBA::ImplementationDef_ptr
 CORBA_Object::_get_implementation (CORBA::Environment &env)
 {
+  static const TAO_Param_Data Object_get_implementation_params [] =
+  {
+    { CORBA::_tc_Object, PARAM_RETURN, 0 }
+    // XXX should be tc_ImplementationDef
+  };
+
+  static const TAO_Call_Data Object_get_implementation_calldata =
+  {
+    "_implementation",
+    CORBA::B_TRUE,
+    1,
+    &Object_get_implementation_params [0],
+    0, 0
+  };
+
   STUB_Object *istub;
   CORBA::ImplementationDef_ptr  retval = 0;
 
@@ -224,21 +224,21 @@ CORBA_Object::_get_implementation (CORBA::Environment &env)
 // either elicit a FALSE response or a OBJECT_NOT_EXIST exception.  In
 // the latter case, return FALSE.
 
-static const TAO_Param_Data Object_non_existent_params [] =
-{
-  { CORBA::_tc_boolean, PARAM_RETURN, 0 }
-};
-
-static const TAO_Call_Data Object_non_existent_calldata =
-{
-  "_non_existent", CORBA::B_TRUE,
-  1, &Object_non_existent_params [0],
-  0, 0
-};
-
 CORBA::Boolean
 CORBA_Object::_non_existent (CORBA::Environment &env)
 {
+  static const TAO_Param_Data Object_non_existent_params [] =
+  {
+    { CORBA::_tc_boolean, PARAM_RETURN, 0 }
+  };
+
+  static const TAO_Call_Data Object_non_existent_calldata =
+  {
+    "_non_existent", CORBA::B_TRUE,
+    1, &Object_non_existent_params [0],
+    0, 0
+  };
+
   CORBA::Boolean retval = CORBA::B_FALSE;
   STUB_Object *istub;
 
