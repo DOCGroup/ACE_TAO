@@ -1,3 +1,11 @@
+Fri Aug 10 17:59:47 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Svc_Conf_y.cpp:
+	* ace/OS.h: Added /**/ between #include and <sys/modem.h> and
+	  <alloca.h> to avoid warning from CE compiler.
+
+	* ace/ace_dll.vcp: Added Svc_Conf_Lexer_Guard.* to the project.
+
 Fri Aug 10 13:40:46 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/nightlybuilds/builds.lst:
