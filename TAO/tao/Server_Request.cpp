@@ -168,7 +168,7 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
   if (incoming_->length () != 0)
     {
       dmsg1 ("params (), %d bytes remaining (error)",
-             incoming_->bytes_remaining ());
+             incoming_->length ());
       env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
     }
 }
