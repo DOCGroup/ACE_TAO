@@ -1889,7 +1889,7 @@ be_interface::is_a_helper (be_interface * /*derived*/,
 {
   // Emit the comparison code.
   *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-      << "(char *)value," << be_nl
+      << "value," << be_nl
       << "\"" << bi->repoID () << "\"" << be_uidt_nl
       << ") ||" << be_uidt_nl;
 

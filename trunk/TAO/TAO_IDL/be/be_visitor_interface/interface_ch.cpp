@@ -170,8 +170,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << "static " << node->local_name () << "_ptr _nil (void)"
       << be_nl
       << "{" << be_idt_nl
-      << "return (" << node->local_name ()
-      << "_ptr)0;" << be_uidt_nl
+      << "return static_cast<" << node->local_name ()
+      << "_ptr> (0);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   if (be_global->any_support ())
