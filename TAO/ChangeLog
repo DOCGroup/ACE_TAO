@@ -1,3 +1,10 @@
+Wed Mar 12 09:11:48 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/RTCORBA/RT_ORBInitializer.cpp:
+
+	  Include "tao/debug.h" to pull in TAO_debug_level global
+	  variable declaration.
+
 Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * Merge of the dyn_corba CVS branch. The new features included
@@ -11,7 +18,7 @@ Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	- Change of operation dispatch in the IFR from Servant Locator
 	  to Default Servant.
 
-	- Optimizations to the IFR to eliminate data copies and 
+	- Optimizations to the IFR to eliminate data copies and
 	  new/delete pairs.
 
 	- A new latency/throughput test for the IFR.
@@ -1227,7 +1234,7 @@ Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 		* tao/Any_T.cpp:
 
 		  In cases where typed extraction fails and interpretive
-		  extraction must be performed, the constructor of the 
+		  extraction must be performed, the constructor of the
 		  temporary CDR stream was changed to one that does not
 		  own the underlying message block, thus eliminating a
 		` duplicate/release pair.
@@ -1744,7 +1751,7 @@ Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 		* orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
 
 		  Interface Repository Service implementation files
-		  modified to comply with the latest OMG 
+		  modified to comply with the latest OMG
 		  specification (CORBA 3.0). All skeleton files have
  		  been regenerated.
 
@@ -1779,7 +1786,7 @@ Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 		  When marshaling an interface union member, replaced a
 		  generated call to the virtual marshal() method with a
-		  call to the global <flat_name>_marshal() method, if 
+		  call to the global <flat_name>_marshal() method, if
 		  the interface is not yet defined when it is referenced.
 
 	Sat Feb  8 13:15:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -1794,23 +1801,23 @@ Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 		* tao/TypeCodeFactory/TypeCodeFactory_i.cpp (valid_content_type):
 
-		  Fixed a bug in the unaliasing loop. 
+		  Fixed a bug in the unaliasing loop.
 
 	Mon Feb  3 16:14:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 		* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
 
 		  Added comments and cosmetic changes to create_recursive_tc().
-		  Also changed update_map() to use the CDR stream's total 
+		  Also changed update_map() to use the CDR stream's total
 		  length to get the unaligned offset. Thanks to Matej
 		  Sekoranja <matej.sekoranza@ijs.si> for suggesting this
-		  last change.   
+		  last change.
 
 	Mon Feb  3 11:30:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 		* tao/TypeCodeFactory/TypeCodeFactory_i.cpp (create_recursive_tc):
 
-		  Changed ACE_ENV_ARG_DECL_NOT_USED to ACE_ENV_ARG_DECL.        
+		  Changed ACE_ENV_ARG_DECL_NOT_USED to ACE_ENV_ARG_DECL.
 
 	Wed Jan 29 20:47:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -2171,7 +2178,7 @@ Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 		* tao/RTPortableServer/TAO_RTPortableServer.dsp:
 
 		  Regenerated hand-crafted files in all TAO satellite libraries,
-		  modified PIDL files and MSVC project files as needed, and 
+		  modified PIDL files and MSVC project files as needed, and
 		  fixed a few mistakes in TAO, all relating to the new Any
 		  implementation.
 
@@ -2492,7 +2499,7 @@ Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 		* tao/Typecode.h:
 		* tao/Typecode.cpp:
 
-		  Completed addition of eventtype typecode support, 
+		  Completed addition of eventtype typecode support,
 		  also cosmetic changes.
 
 		* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
@@ -2511,7 +2518,7 @@ Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 		* tao/Any.cpp:
 
-		  Added explicit template instantiations used in the 
+		  Added explicit template instantiations used in the
 		  insertion/extraction operators.
 
 		* TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
@@ -2557,7 +2564,7 @@ Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 		* tao/Messaging/MessagingS.cpp:
 
-		  Replaced an occurrence of CORBA_InterfaceDef with 
+		  Replaced an occurrence of CORBA_InterfaceDef with
 		  CORBA::InterfaceDef.
 
 	Tue Dec 17 13:06:06 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -2695,7 +2702,7 @@ Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 		  New files added to TAO for the template classes of the
 		  revamped Any implementation. The original Any class contains
 		  few spec-required methods but is mostly a container for
-		  these template classes. Thanks to Carlos O'Ryan 
+		  these template classes. Thanks to Carlos O'Ryan
 		  <coryan@atdesk.com> for guidance with the design.
 
 		* orbsvcs/orbsvcs/IFRService/Servant_Factory.cpp:
@@ -2877,7 +2884,7 @@ Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 		  POA for each, are created at startup. The object key of
 		  POACurrent is parsed to reconstruct the database key, which
 		  is then plugged into the servant just before the C++ call.
-		  Also, the skeleton files were regenerated. Now only one 
+		  Also, the skeleton files were regenerated. Now only one
 		  line in each *S.h file needs to be patched.
 
 		* tao/AbstractBase.cpp:
@@ -2915,7 +2922,7 @@ Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 		  implementation and in the IR Object class names. Also,
 		  a virtual marshal() method was added to CORBA::Object to
 		  help detect an attempt to marshal a local interface. Finally,
-		  a TAO-specific method was added to class TypeCode, which 
+		  a TAO-specific method was added to class TypeCode, which
 		  returns the content type without making a duplicate.
 		  Similar versions of other TypeCode methods that return
 		` typecodes will be made in the future, for internal ORB use.
