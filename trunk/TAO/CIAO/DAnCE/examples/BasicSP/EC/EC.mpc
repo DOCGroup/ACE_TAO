@@ -4,7 +4,7 @@
 project(EC_DnC_stub): ciao_client_dnc {
   after += BasicSP_DnC_stub
 
-  sharedname = EC_DnC_stub
+  sharedname = EC_stub
 
   idlflags += -Wb,stub_export_macro=EC_STUB_Export 
   idlflags += -Wb,stub_export_include=EC_stub_export.h 
@@ -26,7 +26,7 @@ project(EC_DnC_stub): ciao_client_dnc {
 
 project(EC_DnC_svnt) : ciao_servant_dnc {
   after     += BasicSP_DnC_svnt EC_DnC_stub
-  sharedname = EC_DnC_svnt
+  sharedname = EC_svnt
 
   libpaths  += ..
 
@@ -55,7 +55,7 @@ project(EC_DnC_svnt) : ciao_servant_dnc {
 
 project(EC_DnC_exec) : ciao_component_dnc {
   after    += EC_DnC_svnt
-  sharedname = EC_DnC_exec
+  sharedname = EC_exec
 
   libs     += EC_DnC_stub BasicSP_DnC_stub EC_DnC_svnt
 
