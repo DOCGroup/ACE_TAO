@@ -52,6 +52,8 @@ Wed Oct 21 07:12:32 1998  David L. Levine  <levine@cs.wustl.edu>
           Thanks to Rainer Blome <rainer_blome@de.ibm.com> for
           reporting this.
 
+        * ace/Object_Manager.cpp: removed some old, unused printouts.
+
 Tue Oct 20 19:40:41 1998  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU: Added
