@@ -2,9 +2,14 @@
 //
 // $Id$
 
-template <typename StringType, class AttrType, class RefCountPolicy>
+#include "tao/True_RefCount_Policy.h"
+
+
+template <typename StringType,
+          class EnumeratorArrayType,
+          class RefCountPolicy>
 ACE_INLINE
-TAO::TypeCode::Enum<StringType, AttrType, RefCountPolicy>::Enum (
+TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::Enum (
   char const * id,
   char const * name,
   Enumerator<StringType> const * enumerators,
@@ -13,4 +18,30 @@ TAO::TypeCode::Enum<StringType, AttrType, RefCountPolicy>::Enum (
   , nenumerators_ (nenumerators)
   , enumerators_ (enumerators)
 {
+}
+
+template <typename StringType,
+          class EnumeratorArrayType,
+          class RefCountPolicy>
+ACE_INLINE TAO::TypeCode::Enumerator<StringType> const *
+TAO::TypeCode::Enum<
+  StringType,
+  EnumeratorArrayType,
+  RefCountPolicy>::enumerators (void) const
+{
+  return this->enumerators_;
+
+}
+
+// -------------------------------------------------------------
+// Member specializations
+// -------------------------------------------------------------
+
+ACE_INLINE TAO::TypeCode::Enumerator<CORBA::String_var> const *
+TAO::TypeCode::Enum<
+  CORBA::String_var,
+  ACE_Auto_Array_Ptr<TAO::TypeCode::Enumerator<CORBA::String_var> const>,
+  TAO::True_RefCount_Policy>::enumerators (void) const
+{
+  return this->enumerators_.get ();
 }

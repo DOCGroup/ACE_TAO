@@ -123,6 +123,15 @@ namespace TAO
 # include "tao/Sequence_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
+#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
+# include "tao/Sequence_TypeCode.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
+# pragma implementation ("Sequence_TypeCode.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
+
 #include /**/ "ace/post.h"
 
 #endif /* TAO_SEQUENCE_TYPECODE_H */

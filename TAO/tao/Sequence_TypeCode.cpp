@@ -64,7 +64,7 @@ TAO::TypeCode::Sequence<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
     tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return *(this->content_type_)->equal (rhs_content_type.in ()
+  return (*this->content_type_)->equal (rhs_content_type.in ()
                                         ACE_ENV_ARG_PARAMETER);
 }
 
@@ -91,7 +91,7 @@ TAO::TypeCode::Sequence<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
     tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return *(this->content_type_)->equivalent (rhs_content_type.in ()
+  return (*this->content_type_)->equivalent (rhs_content_type.in ()
                                              ACE_ENV_ARG_PARAMETER);
 }
 
@@ -111,11 +111,15 @@ TAO::TypeCode::Sequence<RefCountPolicy>::get_compact_typecode_i (
   // Already compact since tk_sequence and tk_array TypeCodes have no
   // name or member names, meaning that we can simply call
   // _duplicate() on this TypeCode.
-  return CORBA::TypeCode::_duplicate (this);
+
+  CORBA::TypeCode_ptr mutable_tc =
+    const_cast<TAO::TypeCode::Sequence<RefCountPolicy> *> (this);
+
+  return CORBA::TypeCode::_duplicate (mutable_tc);
 }
 
 template <class RefCountPolicy>
-CORBA::TypeCode_ptr
+CORBA::ULong
 TAO::TypeCode::Sequence<RefCountPolicy>::length_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
