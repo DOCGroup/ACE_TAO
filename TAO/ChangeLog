@@ -1,3 +1,20 @@
+Wed May 12 21:46:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.h:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.h:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.h:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Update_Manager.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Update_Manager.h:
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/server.cpp:
+
+	  Fixed single-threaded build compile-time errors
+	  (e.g. "ACE_MT_SYNCH" -> "ACE_SYNCH", "ACE_Thread_Mutex" ->
+	  "ACE_SYNCH_MUTEX", etc.).
+
 Wed May 12 20:09:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:

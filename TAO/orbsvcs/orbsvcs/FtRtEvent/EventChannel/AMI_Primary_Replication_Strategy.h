@@ -57,7 +57,7 @@ private:
   PortableServer::POAManager_var mgr_;
   bool running_;
   UpdateableHandler handler_;
-  ACE_RW_Thread_Mutex* mutex_;
+  ACE_SYNCH_RW_MUTEX* mutex_;
 };
 
 #endif // AMI_PRIMARY_REPLICATION_STRATEGY_H
