@@ -1,0 +1,35 @@
+# Makefile for building the Notification Service executable
+
+NAME = Notify_Service
+
+OBJFILES = \
+	$(OBJDIR)\Notify_Service.obj \
+	$(OBJDIR)\Notify_Server.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_DYNAMICANY_CFLAGS) \
+	$(TAO_IORTABLE_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS) \
+	$(TAO_NAMING_CFLAGS) \
+	$(TAO_EVENT_CFLAGS) \
+	$(TAO_TRADING_CFLAGS) \
+	$(TAO_NOTIFY_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_DYNAMICANY_LIB) \
+	$(TAO_IORTABLE_LIB) \
+	$(TAO_SVC_UTILS_LIB) \
+	$(TAO_NAMING_LIB) \
+	$(TAO_EVENT_LIB) \
+	$(TAO_TRADING_LIB) \
+	$(TAO_NOTIFY_LIB)
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>

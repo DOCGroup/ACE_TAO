@@ -1,0 +1,86 @@
+#
+# Makefile for building the TAO AV library
+#
+
+NAME = TAO_AV
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
+	-I..\.. -Ge 1 -Wb,export_macro=TAO_AV_Export \
+	-Wb,export_include=AV/AV_export.h -Wb,pre_include=ace/pre.h \
+	-Wb,post_include=ace/post.h
+
+IDLFILES = \
+	$(IDLDIR)\AVStreams.idl \
+	$(IDLDIR)\Null_MediaCtrl.idl \
+	$(IDLDIR)\sfp.idl
+
+OBJFILES = \
+        $(OBJDIR)\AV_Core.obj \
+	$(OBJDIR)\AVStreams_i.obj \
+	$(OBJDIR)\AVStreamsC.obj \
+	$(OBJDIR)\AVStreamsS.obj \
+	$(OBJDIR)\Endpoint_Strategy.obj \
+	$(OBJDIR)\FlowSpec_Entry.obj \
+	$(OBJDIR)\MCast.obj \
+        $(OBJDIR)\md5c.obj \
+	$(OBJDIR)\media-timer.obj \
+	$(OBJDIR)\Null_MediaCtrlC.obj \
+	$(OBJDIR)\Null_MediaCtrlS.obj \
+	$(OBJDIR)\Policy.obj \
+	$(OBJDIR)\Protocol_Factory.obj \
+	$(OBJDIR)\RTCP.obj \
+        $(OBJDIR)\RTCP_Channel.obj \
+        $(OBJDIR)\RTCP_Packet.obj \
+	$(OBJDIR)\RTP.obj \
+	$(OBJDIR)\sfp.obj \
+	$(OBJDIR)\sfpC.obj \
+	$(OBJDIR)\sfpS.obj \
+	$(OBJDIR)\TCP.obj \
+	$(OBJDIR)\Transport.obj \
+	$(OBJDIR)\UDP.obj
+
+RESOURCE = $(OBJDIR)\AV.res
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_PROPERTY_CFLAGS) \
+	$(TAO_NAMING_CFLAGS) \
+	$(TAO_AV_CFLAGS) \
+	-DTAO_AV_BUILD_DLL
+
+CPPDIR = .;AV
+CDIR = AV
+
+IDLDIR = .
+
+INCDIR_NAME = orbsvcs\AV
+INCLUDES = AV\*.h AV\*.i AV\*_T.cpp
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_NAMING_LIB) \
+	$(TAO_PROPERTY_LIB)
+
+all: idl_src_files
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+$(IDLDIR)\AVStreamsC.cpp $(IDLDIR)\AVStreamsS.cpp: $(IDLDIR)\AVStreams.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\Null_MediaCtrlC.cpp $(IDLDIR)\Null_MediaCtrlS.cpp: $(IDLDIR)\Null_MediaCtrl.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\sfpC.cpp $(IDLDIR)\sfpS.cpp: $(IDLDIR)\sfp.idl
+       @$(TAO_IDL) $**

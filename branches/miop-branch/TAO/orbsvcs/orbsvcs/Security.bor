@@ -1,0 +1,76 @@
+#
+# Makefile for building	the TAO	Security library
+#
+
+NAME = TAO_Security
+
+TAO_IDL	= $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
+	-I..\..	-Ge 1 -Wb,export_macro=TAO_Security_Export \
+	-Wb,export_include=Security/security_export.h \
+	-Wb,pre_include=ace/pre.h \
+	-Wb,post_include=ace/post.h
+
+IDLFILES = \
+	$(IDLDIR)\Security.idl \
+	$(IDLDIR)\SecurityLevel1.idl \
+	$(IDLDIR)\SecurityLevel2.idl
+
+OBJFILES = \
+	$(OBJDIR)\SecurityC.obj	\
+	$(OBJDIR)\SecurityLevel1C.obj	\
+	$(OBJDIR)\SecurityLevel2C.obj	\
+	$(OBJDIR)\SecurityLevel2S.obj \
+	$(OBJDIR)\Security_Current.obj \
+	$(OBJDIR)\Security_Current_Impl.obj \
+        $(OBJDIR)\Security_ORBInitializer.obj \
+        $(OBJDIR)\Security_PolicyFactory.obj \
+	$(OBJDIR)\SecurityManager.obj \
+	$(OBJDIR)\PrincipalAuthenticator.obj \
+	$(OBJDIR)\EstablishTrustPolicy.obj \
+	$(OBJDIR)\InvocationCredentialsPolicy.obj \
+        $(OBJDIR)\QOPPolicy.obj
+
+RESOURCE = $(OBJDIR)\Security.res
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_SECURITY_CFLAGS) \
+	-DTAO_SECURITY_BUILD_DLL
+
+CPPDIR = .;Security
+
+IDLDIR = .
+
+INCDIR_NAME = orbsvcs\Security
+INCLUDES = Security\*.h
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_SVC_UTILS_LIB)
+
+all: idl_src_files
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+$(IDLDIR)\SecurityC.cpp: $(IDLDIR)\Security.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\SecurityLevel1C.cpp: $(IDLDIR)\SecurityLevel1.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\SecurityLevel2C.cpp: $(IDLDIR)\SecurityLevel2.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\SecurityLevel2S.cpp: $(IDLDIR)\SecurityLevel2.idl
+	$(TAO_IDL) $**
