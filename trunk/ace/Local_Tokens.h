@@ -57,6 +57,10 @@
 #include "ace/Synch_Options.h"
 #include "ace/Map_Manager.h"
 
+#if !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
+# define ACE_NO_TSS_TOKENS 1
+#endif /* !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)) */
+
 // 1.
 class ACE_Export ACE_TOKEN_CONST
 {
@@ -203,10 +207,10 @@ public:
   // Dump the state of the class.
 
 #if defined (ACE_NO_TSS_TOKENS)
-  ACE_TSS_TPQ_Entry *operator-> (void)
+  ACE_TPQ_Entry *operator-> (void)
     {
-      return this;
-    }
+      return (ACE_TPQ_Entry *) this;
+    } 
 #endif /* ACE_NO_TSS_TOKENS */
 
 private:

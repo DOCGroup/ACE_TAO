@@ -3002,8 +3002,7 @@ ACE_OS::close (ACE_HANDLE handle)
 #if defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (handle), ace_result_), int, -1);
 #elif defined (ACE_PSOS) && ! defined (ACE_PSOS_LACKS_PHILE)
-  unsigned long result;
-  result = ::close_f (handle);
+  u_long result = ::close_f (handle);
   if (result != 0)
     {
       errno = result;
@@ -3276,7 +3275,10 @@ ACE_OS::sema_init (ACE_sema_t *s,
                              O_CREAT,
                              ACE_DEFAULT_FILE_PERMS,
                              count);
-      return s->sema_ == SEM_FAILED ? -1 : 0;
+      if (s->sema_ == SEM_FAILED)
+        return -1;
+      else
+        return 0;
     }
 #   endif /* ACE_LACKS_NAMED_POSIX_SEM */
   else

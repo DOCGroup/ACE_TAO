@@ -1,3 +1,41 @@
+Fri Nov 19 17:25:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Double checked that ACE builds correctly when threads are
+	  disabled.
+
+	* ace/Local_Tokens.cpp (client_id): Had to futz with the code
+	  a bit to get it to work for both the threaded and non-threaded
+ 	  case.
+
+	* ace/Activation_Queue.h: Added a #define of ACE_Activation_List
+	  to ACE_Activation_Queue to be compatible with the terminology
+ 	  used in the POSA2 book!
+
+	* ace/Message_Queue_T: Moved message_bytes(size_t) and
+ 	  message_length(size_t) from the *.i file to the *.cpp file to
+ 	  workaround bugs with SunC++ 5.0.  Thanks to Rick Weisner
+ 	  <Rick.Weisner@East.Sun.COM> and John Tucker
+ 	  <jtucker@infoglide.com> for reporting this problem and providing
+ 	  the fix.
+
+	* ace/Configuration.cpp: There were inconsistencies in the explicit
+	  template instantiations where ACE_Thread_Mutex should have been
+ 	  ACE_SYNCH_MUTEX so that the code will work when threading is
+ 	  disabled.  In addition, we must be careful to conditionally
+ 	  compile certain ACE_Allocator<> and ACE_Malloc<> template
+ 	  instantiations since they are only valid when ACE_HAS_THREADS is
+ 	  defined.
+
+	* include/makeinclude/platform_irix6.x_sgic++.GNU,
+	* ace/Local_Tokens,
+	* ace/Synch_T.i:
+	  Made a number of minor changes so that ACE will compile/work
+ 	  when threading is not enabled.  Thanks to Extern Chatterji
+ 	  <Extern.Chatterji@kmweg.de> for reporting this.
+
+	* ace/Message_Block.h: Clarified the comment for space().
+	  Thanks to Eric Newton for reporting this.
+
 Fri Nov 19 02:21:11 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/Configuration.h:
