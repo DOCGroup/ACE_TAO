@@ -386,8 +386,16 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
     // Try to narrow to ForwardRequest
-    PortableServer::ForwardRequest_ptr forward_request =
-      PortableServer::ForwardRequest::_narrow ((CORBA::Exception *) value.value ());
+    PortableServer::ForwardRequest_ptr forward_request = 
+      (PortableServer::ForwardRequest_ptr)0;
+
+    if (value.value ())
+      {
+        forward_request = 
+          PortableServer::ForwardRequest::_narrow (
+              (CORBA::Exception *) value.value ()
+            );
+      }
 
     // If narrowing of exception succeeded
     if (forward_request != 0)
@@ -403,13 +411,19 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
       {
         this->exception_ = new CORBA::Any (value);
 
-        // @@ This cast is not safe, but we haven't implemented the >>=
-        // and <<= operators for base exceptions (yet).
-        CORBA_Exception* x = (CORBA_Exception*)value.value ();
-        if (CORBA_UserException::_narrow (x) != 0)
-          this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
-        else
-          this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
+        this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
+
+        if (value.value ())
+          {
+            // @@ This cast is not safe, but we haven't implemented the >>=
+            // and <<= operators for base exceptions (yet).
+            CORBA_Exception* x = (CORBA_Exception*)value.value ();
+
+            if (CORBA_SystemException::_narrow (x) != 0)
+              {
+                this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
+              }
+          }
       }
    }
 }
