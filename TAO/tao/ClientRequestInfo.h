@@ -18,11 +18,13 @@
 
 #include "ace/pre.h"
 
-#include "orbconf.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if (TAO_HAS_INTERCEPTORS == 1)
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -31,10 +33,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-
-#include "PortableInterceptorC.h"
-#include "LocalObject.h"
+#include "tao/PortableInterceptorC.h"
+#include "tao/LocalObject.h"
 
 class TAO_ClientRequestInfo_i;
 
@@ -109,14 +109,12 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
-#if TAO_HAS_CORBA_MESSAGING == 1
   /// Return the sync_scope policy value for the current one-way
   /// operation.  If the operation is not a one-way, a
   /// CORBA::BAD_INV_ORDER exception is thrown.
-  virtual CORBA::Short sync_scope (
+  virtual Messaging::SyncScope sync_scope (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   /// Return the reply status for the current request.  Statuses can
   /// be PortableInterceptor::SUCCESSFUL, SYSTEM_EXCEPTION,
@@ -279,11 +277,11 @@ private:
 #  include "ClientRequestInfo.inl"
 # endif  /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
-
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/post.h"
 
