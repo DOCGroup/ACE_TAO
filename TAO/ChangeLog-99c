@@ -1,3 +1,12 @@
+Fri Feb  5 02:33:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: 
+	  Fixed explicit template instantiations for the new collocation
+	  map, it may not work correctly though.
+
+	* orbsvcs/tests/EC_Custom_Marshal/Makefile: 
+	  Updated dependencies.
+
 Thu Feb 04 23:42:39 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Stub.cpp: It should now include Stub.i instead of
