@@ -620,20 +620,17 @@ CORBA_ORB::multicast_query (char *buf,
                             ACE_Time_Value *timeout,
                             u_short attempts)
 {
+  // Dgram to wait for ORB service to reply with its IOR.
+  ACE_SOCK_Dgram response;
+  ACE_INET_Addr response_addr;
+
   // Dgram for multicasting to ORB service locator. 
   ACE_SOCK_Dgram_Mcast multicast;
-  ACE_INET_Addr multicast_addr;
+  ACE_INET_Addr multicast_addr (port, 
+                                   ACE_DEFAULT_MULTICAST_ADDR);
 
-  ACE_INET_Addr response_addr;
-  ACE_SOCK_Dgram response;
-
-  if (multicast_addr.open (port, 
-                           ACE_DEFAULT_MULTICAST_ADDR) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open ORB multicast addr!\n"),
-                      -1);
   // Subscribe to multicast address.
-  else if (multicast.subscribe (multicast_addr) == -1)
+  if (multicast.subscribe (multicast_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to iniialize ORB multicast endpoint!\n"),
                       -1);
