@@ -357,7 +357,7 @@ Wed Jun 25 09:40:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/TAO_Static.dsp:
         * tao/IORInterceptor/TAO_IORInterceptor_Static.dsp: Added missing
           files into the project. Thanks to Tommy Andreasen
-          <Tommy.Andreasen@Radiometer.dk> for provind the patches.
+          <Tommy.Andreasen@Radiometer.dk> for providing the patches.
 
 Tue Jun 25 11:26:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -475,7 +475,6 @@ Tue Jun 24 03:49:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Scheduler_Factory.cpp: Added patches supplied by
           Rob Andzik to get it compiling on VxWORKS.
-
 
 Mon Jun 23 22:28:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
