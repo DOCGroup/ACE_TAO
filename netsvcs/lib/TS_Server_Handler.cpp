@@ -1,4 +1,3 @@
-// TS_Server_Handler.cpp
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
@@ -21,15 +20,15 @@ ACE_TS_Server_Acceptor::parse_args (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
     {
       switch (c)
-	{
-	case 'p':
-	  this->service_port_ = ACE_OS::atoi (get_opt.optarg);
-	  break;
-	default:
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			    "%n:\n[-p server-port]\n%a", 1),
-			   -1);
-	}
+        {
+        case 'p':
+          this->service_port_ = ACE_OS::atoi (get_opt.optarg);
+          break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "%n:\n[-p server-port]\n%a", 1),
+                           -1);
+        }
     }
   this->service_addr_.set (this->service_port_);
   return 0;
@@ -47,12 +46,12 @@ ACE_TS_Server_Acceptor::init (int argc, char *argv[])
   // Set the acceptor endpoint into listen mode (use the Singleton
   // global Reactor...).
   if (this->open (this->service_addr_, ACE_Reactor::instance (),
-		  0, 0, 0,
-		  &this->scheduling_strategy_,
-		  "Time Server", "ACE time service") == -1)
+                  0, 0, 0,
+                  &this->scheduling_strategy_,
+                  "Time Server", "ACE time service") == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%n: %p on port %d\n",
-		       "acceptor::open failed",
-		       this->service_addr_.get_port_number ()), -1);
+                       "acceptor::open failed",
+                       this->service_addr_.get_port_number ()), -1);
 
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
@@ -66,9 +65,9 @@ ACE_TS_Server_Acceptor::init (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), -1);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "starting up Time Server at port %d on handle %d\n",
-	     server_addr.get_port_number (),
-	     this->acceptor ().get_handle ()));
+              "starting up Time Server at port %d on handle %d\n",
+             server_addr.get_port_number (),
+             this->acceptor ().get_handle ()));
   return 0;
 }
 
@@ -99,7 +98,7 @@ ACE_TS_Server_Handler::open (void *)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_remote_addr"), -1);
 
   ACE_DEBUG ((LM_DEBUG, "(%t) accepted connection from host %s on fd %d\n",
-	      client_addr.get_host_name (), this->peer ().get_handle ()));
+              client_addr.get_host_name (), this->peer ().get_handle ()));
 
   // Call down to our parent to register ourselves with the Reactor.
   if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (0) == -1)
@@ -183,29 +182,29 @@ ACE_TS_Server_Handler::recv_request (void)
   if (n != bytes_expected)
     {
       switch (n)
-	{
-	case -1:
-	  /* FALLTHROUGH */
-	  ACE_DEBUG ((LM_DEBUG, "****************** recv_request returned -1\n"));
-	default:
-	  ACE_ERROR ((LM_ERROR, "%p got %d bytes, expected %d bytes\n",
-		      "recv failed", n, bytes_expected));
-	  /* FALLTHROUGH */
-	case 0:
-	  // We've shutdown unexpectedly, let's abandon the connection.
-	  this->abandon ();
-	  return -1;
-	  /* NOTREACHED */
-	}
+        {
+        case -1:
+          /* FALLTHROUGH */
+          ACE_DEBUG ((LM_DEBUG, "****************** recv_request returned -1\n"));
+        default:
+          ACE_ERROR ((LM_ERROR, "%p got %d bytes, expected %d bytes\n",
+                      "recv failed", n, bytes_expected));
+          /* FALLTHROUGH */
+        case 0:
+          // We've shutdown unexpectedly, let's abandon the connection.
+          this->abandon ();
+          return -1;
+          /* NOTREACHED */
+        }
     }
   else
     {
       // Decode the request into host byte order.
       if (this->time_request_.decode () == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "%p\n", "decode failed"));
-	  return this->abandon ();
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "%p\n", "decode failed"));
+          return this->abandon ();
+        }
     }
   return 0;
 }
@@ -228,7 +227,7 @@ ACE_TS_Server_Handler::~ACE_TS_Server_Handler (void)
 {
   ACE_TRACE ("ACE_TS_Server_Handler::~ACE_TS_Server_Handler");
   ACE_DEBUG ((LM_DEBUG, "closing down Handle  %d\n",
-	      this->get_handle ()));
+              this->get_handle ()));
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -239,10 +238,10 @@ template class ACE_Creation_Strategy<ACE_TS_Server_Handler>;
 template class ACE_Schedule_All_Reactive_Strategy<ACE_TS_Server_Handler>;
 template class ACE_Scheduling_Strategy<ACE_TS_Server_Handler>;
 template class ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>;
-#if defined (ACE_HAS_TLI)
+#if defined (ACE_HAS_STREAM_PIPES)
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 // #else the instantiation in is Client_Logging_Handler.cpp
-#endif /* ACE_HAS_TLI */
+#endif /* ACE_HAS_STREAM_PIPES */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Accept_Strategy<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
@@ -251,8 +250,8 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #pragma instantiate ACE_Schedule_All_Reactive_Strategy<ACE_TS_Server_Handler>
 #pragma instantiate ACE_Scheduling_Strategy<ACE_TS_Server_Handler>
 #pragma instantiate ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
-#if defined (ACE_HAS_TLI)
+#if defined (ACE_HAS_STREAM_PIPES)
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 // #else the instantiation in is Client_Logging_Handler.cpp
-#endif /* ACE_HAS_TLI */
+#endif /* ACE_HAS_STREAM_PIPES */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
