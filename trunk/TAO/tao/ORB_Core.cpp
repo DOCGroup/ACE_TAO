@@ -1391,21 +1391,24 @@ int
 TAO_ORB_Table::bind (const char* orb_id,
                      TAO_ORB_Core* orb_core)
 {
-  return this->table_.bind (orb_id, orb_core);
+  ACE_CString id (orb_id);
+  return this->table_.bind (id, orb_core);
 }
 
 TAO_ORB_Core*
 TAO_ORB_Table::find (const char* orb_id)
 {
   TAO_ORB_Core* found = 0;
-  this->table_.find (orb_id, found);
+  ACE_CString id (orb_id);
+  this->table_.find (id, found);
   return found;
 }
 
 int
 TAO_ORB_Table::unbind (const char* orb_id)
 {
-  return this->table_.unbind (orb_id);
+  ACE_CString id (orb_id);
+  return this->table_.unbind (id);
 }
 
 // ****************************************************************

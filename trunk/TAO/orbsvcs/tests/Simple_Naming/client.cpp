@@ -199,7 +199,8 @@ CosNaming_Client::init (int argc, char **argv)
       if (this->parse_args () == -1)
         return -1;
 
-      return this->naming_client_.init (this->orbmgr_.orb ());
+      CORBA::ORB_var orb = this->orbmgr_.orb ();
+      return this->naming_client_.init (orb.in ());
     }
   ACE_CATCHANY
     {

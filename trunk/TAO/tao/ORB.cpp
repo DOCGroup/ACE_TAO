@@ -150,6 +150,15 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
 
 CORBA_ORB::~CORBA_ORB (void)
 {
+  if (!CORBA::is_nil (this->name_service_))
+    CORBA::release (this->name_service_);
+  if (!CORBA::is_nil (this->schedule_service_))
+    CORBA::release (this->schedule_service_);
+  if (!CORBA::is_nil (this->event_service_))
+    CORBA::release (this->event_service_);
+  if (!CORBA::is_nil (this->trading_service_))
+    CORBA::release (this->trading_service_);
+
   this->orb_core_->fini ();
 
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon, *ACE_Static_Object_Lock::instance ()));
@@ -168,14 +177,6 @@ CORBA_ORB::~CORBA_ORB (void)
   delete this->shutdown_lock_;
   this->shutdown_lock_ = 0;
 
-  if (!CORBA::is_nil (this->name_service_))
-    CORBA::release (this->name_service_);
-  if (!CORBA::is_nil (this->schedule_service_))
-    CORBA::release (this->schedule_service_);
-  if (!CORBA::is_nil (this->event_service_))
-    CORBA::release (this->event_service_);
-  if (!CORBA::is_nil (this->trading_service_))
-    CORBA::release (this->trading_service_);
 # ifdef TAO_HAS_VALUETYPE
   // delete valuetype_factory_map_;
   // not really, its a singleton
