@@ -1,3 +1,8 @@
+Wed Jan 20 19:47:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Parse_Node.cpp (symbol): <func> need to be initialized.
+	  Thanks to David for reporting the bug.
+
 Wed Jan 20 17:37:21 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.h: Added "do {} while (0)" as defs for ACE_HEX_DUMP,
