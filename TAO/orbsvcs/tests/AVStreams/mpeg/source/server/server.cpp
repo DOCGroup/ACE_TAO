@@ -122,12 +122,12 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
       this->destroy ();
       break;
     case CmdINITaudio:
-      ACE_DEBUG ((LM_DEBUG,"(%P|%t)Received CmdINITaudio\n"));
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t) Received CmdINITaudio\n"));
       // %% need to fork here
       switch (ACE_OS::fork ("child"))
         {
         case 0:
-          ACE_DEBUG ((LM_DEBUG,"(%P|%t)New process forked \n"));
+          ACE_DEBUG ((LM_DEBUG,"(%P|%t) New process forked \n"));
           if (Mpeg_Global::live_audio)
             LeaveLiveAudio ();
           ACE_NEW_RETURN (this->as_,
@@ -139,7 +139,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                                     Mpeg_Global::rttag,
                                     -INET_SOCKET_BUFFER_SIZE);
           if (result < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)Audio_Server init failed ()\n"),-1);
+          ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) Audio_Server init failed ()\n"),-1);
           result = as_->run ();
           //    ACE_Reactor::instance ()->end_event_loop ();
           TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
