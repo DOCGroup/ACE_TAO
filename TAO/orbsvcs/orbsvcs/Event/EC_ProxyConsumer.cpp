@@ -39,7 +39,8 @@ TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier,
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+        CORBA::INTERNAL ());
+    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
     if (this->is_connected_i () == 0)
@@ -54,7 +55,8 @@ TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier,
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+        CORBA::INTERNAL ());
+    // @@  RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
     filter->_decr_refcnt ();
   }
@@ -186,7 +188,8 @@ TAO_EC_ProxyPushConsumer::connect_push_supplier (
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+        CORBA::INTERNAL ());
+    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
     if (this->is_connected_i ())
@@ -205,7 +208,8 @@ TAO_EC_ProxyPushConsumer::connect_push_supplier (
         {
           ACE_GUARD_THROW_EX (
               TAO_EC_Unlock, ace_mon, reverse_lock,
-              RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+              CORBA::INTERNAL ());
+          // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
           ACE_CHECK;
 
           this->event_channel_->disconnected (this, ACE_TRY_ENV);
@@ -238,7 +242,8 @@ TAO_EC_ProxyPushConsumer::push (const RtecEventComm::EventSet& event,
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+        CORBA::INTERNAL ());
+    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
     if (this->is_connected_i () == 0)
@@ -257,7 +262,8 @@ TAO_EC_ProxyPushConsumer::push (const RtecEventComm::EventSet& event,
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+        CORBA::INTERNAL ());
+    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
     filter->_decr_refcnt ();
     this->refcount_--;
@@ -275,7 +281,8 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+        CORBA::INTERNAL ());
+    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
     if (this->is_connected_i () == 0)
