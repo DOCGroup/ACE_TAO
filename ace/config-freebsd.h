@@ -22,6 +22,7 @@
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_SIG_MACROS
+#define ACE_HAS_CHARPTR_DL
 
 // This is for 2.1.x only.  By default, gcc defines __FreeBSD__ automatically
 #if defined(FreeBSD_2_1)
