@@ -23,7 +23,7 @@
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
-#include reopened_modulesC.cpp
-#include reopened_modulesS.cpp
+#include "reopened_modulesC.cpp"
+#include "reopened_modulesS.cpp"
 
 #endif /* ACE_HAS_USING_KEYWORD */
