@@ -1,3 +1,9 @@
+Thu Nov 13 12:54:35 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          When defining OBJS, always use $(notdir $(FILES)).
+
 Thu Nov 13 18:39:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
