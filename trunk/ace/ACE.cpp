@@ -483,14 +483,14 @@ ACE::crc32 (const char *buffer, ACE_UINT32 len)
   return ~crc;
 }
 
-u_long 
+u_long
 ACE::crc32 (iovec *iov, int len)
 {
   register ACE_UINT32 crc = 0;
 
   int total_len = 0;
 
-  for (int i = 0; i < len; ++i) 
+  for (int i = 0; i < len; ++i)
     {
       for (const char *p = (char *) iov[i].iov_base;
            p != (char *) iov[i].iov_base + iov[i].iov_len;
@@ -2577,6 +2577,12 @@ ACE::format_hexdump (const char *buffer,
           ACE_OS::sprintf (obuf,
                            ACE_LIB_TEXT ("   "));
           obuf += 3;
+          if (i == 7)
+            {
+              ACE_OS::sprintf (obuf,
+                               ACE_LIB_TEXT (" "));
+              obuf++;
+            }
           textver[i] = ' ';
         }
 
