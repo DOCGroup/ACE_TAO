@@ -214,9 +214,13 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
 
   Object_ID tmp;
   tmp.guid = int_guid;
+  tmp.id = qos.id;
+  tmp.tid = qos.tid;
+  tmp.pid = qos.pid;
+  tmp.task_id = qos.task_id;
   DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RELEASE_GUARD_START, 0, sizeof(Object_ID), (char*)&tmp);
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG((LM_DEBUG,"(%t|%T):release guard enter and current task id is %d and period is %d.\n",qos.task_id_,qos.period_));
+  ACE_DEBUG((LM_DEBUG,"(%t|%T):release guard enter and current task id is %d and period is %d.\n",qos.task_id,qos.period_));
 #endif
 
       ACE_Time_Value cur_time, tv, proper_t;
@@ -227,7 +231,7 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
       cur_time = ACE_OS::gettimeofday ();
 
 //If I change the guid to Task ID, will it work?
-      if(this->release_map_.find(qos.task_id_, tv)==0)
+      if(this->release_map_.find(qos.task_id, tv)==0)
       {
 #ifdef MY_KOKYU_DSRT_LOGGING
            ACE_DEBUG ((LM_DEBUG,
@@ -242,7 +246,7 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
            ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T): Over the proper release time\n"));
 #endif
-             this->release_map_.rebind(qos.task_id_, proper_t);
+             this->release_map_.rebind(qos.task_id, proper_t);
 /*DTTIME:
   Release time on the server side. please record the guid in your DSUI_EVENT_LOG
 */
@@ -285,11 +289,11 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
                   "(%t|%T): And Current time is set in the map and %d, %d.\n",cur_time.sec(), cur_time.usec() ));
 #endif
 
-             this->release_map_.rebind(qos.task_id_, proper_t);
+             this->release_map_.rebind(qos.task_id, proper_t);
 /*DTTIME:
   Release time on the server side. please record the guid in your DSUI_EVENT_LOG
 */
-             tmp.task_id = qos.task_id_;
+             tmp.task_id = qos.task_id;
              DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, RG_EVENT_DELAYED_RELEASED_FIRE, 0, sizeof(Object_ID), (char*)&tmp);
 
              this->schedule_i (guid, qos);
@@ -302,7 +306,7 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
                   "(%t|%T): Can not find release information in map\n"));
 #endif
 
-             this->release_map_.bind(qos.task_id_, cur_time);
+             this->release_map_.bind(qos.task_id, cur_time);
 /*DTTIME:
   Release time on the server side. please record the guid in your DSUI_EVENT_LOG
 */
