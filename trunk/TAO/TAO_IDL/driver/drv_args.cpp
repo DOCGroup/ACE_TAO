@@ -74,6 +74,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/Process.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/os_include/os_ctype.h"
 
 ACE_RCSID (driver,
            drv_args,

@@ -1,3 +1,9 @@
+Sat Jun 19 12:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:
+          Added missing includes for Tru64 no online build
+
 Fri Jun 18 14:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Impl.cpp:
