@@ -23,6 +23,9 @@
 
 #define ACE_HAS_BROKEN_CONVERSIONS
 
+// They forgot a const in the prototype of putmsg and putpmsg...
+#define ACE_LACKS_CONST_STRBUF_PTR
+
 // They forgot a const in the prototype of const_timewait...
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 
@@ -82,6 +85,19 @@
 
 // Compiler/platform has thread-specific storage
 // #define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
+// Platform supports getpagesize() call.
+#define ACE_HAS_GETPAGESIZE
+
+// Platform supports reentrant functions (i.e., all the POSIX *_r
+// functions).
+#define ACE_HAS_REENTRANT_FUNCTIONS
+
+// Platform supports the tid_t type (e.g., AIX and Irix 6.2)
+#define ACE_HAS_TID_T
+
+// Platform supports IP multicast
+#define ACE_HAS_IP_MULTICAST
 
 // Platform supports POSIX 1.b clock_gettime ()
 #define ACE_HAS_CLOCK_GETTIME

@@ -28,12 +28,16 @@ class ACE_Export ACE_Shared_Memory_MM : public ACE_Shared_Memory
 public:
   // = Initialization and termination methods.
   ACE_Shared_Memory_MM (void);
+  // Default constructor.
+
   ACE_Shared_Memory_MM (ACE_HANDLE handle, 
 			int length = -1, 
 			int prot = PROT_RDWR, 
 			int share = MAP_PRIVATE, 
 			char *addr = 0, 
 			off_t pos = 0);
+  // Constructor.
+
   ACE_Shared_Memory_MM (LPTSTR file_name, 
 			int len = -1, 
 			int flags = O_RDWR | O_CREAT,
@@ -41,6 +45,7 @@ public:
 			int prot = PROT_RDWR, 
 			int share = MAP_SHARED, 
 			char *addr = 0, off_t pos = 0);
+  // Constructor.
 
   int open (ACE_HANDLE handle, 
 	    int length = -1, 
@@ -48,6 +53,7 @@ public:
 	    int share = MAP_PRIVATE, 
 	    char *addr = 0, 
 	    off_t pos = 0);
+  // Open method.
 
   int open (LPTSTR file_name, 
 	    int len = -1, 
@@ -57,6 +63,10 @@ public:
 	    int share = MAP_SHARED, 
 	    char *addr = 0, 
 	    off_t pos = 0);
+  // Open method.
+
+  const TCHAR *filename (void) const;	
+  // Return the name of file that is mapped (if any).
 
   virtual int close (void);
   // Close down the shared memory segment.
@@ -69,7 +79,8 @@ public:
   // Create a new chuck of memory containing <size> bytes.
 
   virtual int free (void *p);
-  // Free a chuck of memory allocated by <ACE_Shared_Memory_MM::malloc>.
+  // Free a chuck of memory allocated by
+  // <ACE_Shared_Memory_MM::malloc>.
   
   virtual int get_segment_size (void) const;
   // Return the size of the shared memory segment.

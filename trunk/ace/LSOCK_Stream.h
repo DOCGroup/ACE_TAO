@@ -30,10 +30,10 @@ class ACE_Export ACE_LSOCK_Stream : public ACE_SOCK_Stream, public ACE_LSOCK
 {
 public:
   // = Send/recv methods.
-  ssize_t send_msg (const iovec iov[], size_t n, int fd);
+  ssize_t send_msg (const iovec iov[], size_t n, ACE_HANDLE handle);
   // Send iovecs via <::writev>.
 
-  ssize_t recv_msg (iovec iov[], size_t n, int &fd);
+  ssize_t recv_msg (iovec iov[], size_t n, ACE_HANDLE &handle);
   // Send iovecs via <::writev>.
 
   ACE_HANDLE get_handle (void) const;

@@ -22,6 +22,11 @@
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).  
 #include "ace/config.h"
 
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+// control message size to pass a file descriptor
+#define ACE_BSD_CONTROL_MSG_LEN sizeof (struct cmsghdr) + sizeof (ACE_HANDLE)
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+
 // Define the default constants for ACE.  Many of these are used for
 // the ACE tests and applications.  You may want to change some of
 // these to correspond to your environment.

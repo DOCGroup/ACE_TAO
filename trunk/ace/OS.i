@@ -28,6 +28,12 @@ typedef size_t ACE_SOCKET_LEN;
 typedef int ACE_SOCKET_LEN;
 #endif /* ACE_HAS_SIZET_SOCKET_LEN */
 
+#if defined (ACE_LACKS_CONST_STRBUF_PTR)
+typedef struct strbuf *ACE_STRBUF_TYPE;
+#else
+typedef const struct strbuf *ACE_STRBUF_TYPE;
+#endif /* ACE_LACKS_CONST_STRBUF_PTR */
+
 #if defined (ACE_HAS_VOIDPTR_SOCKOPT)
 typedef void *ACE_SOCKOPT_TYPE1;
 #elif defined (ACE_HAS_CHARPTR_SOCKOPT)
@@ -2692,7 +2698,7 @@ ACE_OS::select (int width,
 				 (ACE_FD_SET_TYPE *) rfds, 
 				 (ACE_FD_SET_TYPE *) wfds, 
 				 (ACE_FD_SET_TYPE *) efds, 
-				 (timeval *) timeout) , int, -1);
+				 timeout == 0 ? 0 : (timeval *) *timeout) , int, -1);
 }
 
 ACE_INLINE int 
@@ -5428,7 +5434,10 @@ ACE_OS::putmsg (ACE_HANDLE handle, const struct strbuf *ctl,
 {
   // ACE_TRACE ("ACE_OS::putmsg");
 #if defined (ACE_HAS_STREAM_PIPES)
-  ACE_OSCALL_RETURN (::putmsg (handle, ctl, data, flags), int, -1);
+  ACE_OSCALL_RETURN (::putmsg (handle, 
+			       (ACE_STRBUF_TYPE) ctl,
+			       (ACE_STRBUF_TYPE) data, 
+			       flags), int, -1);
 #else
   ACE_UNUSED_ARG (flags);
   if (ctl == 0 && data == 0)
@@ -5456,12 +5465,18 @@ ACE_OS::putmsg (ACE_HANDLE handle, const struct strbuf *ctl,
 }
 
 ACE_INLINE int
-ACE_OS::putpmsg (ACE_HANDLE handle, const struct strbuf *ctl, 
-		 const struct strbuf *data, int band, int flags)
+ACE_OS::putpmsg (ACE_HANDLE handle, 
+		 const struct strbuf *ctl, 
+		 const struct strbuf *data, 
+		 int band, 
+		 int flags)
 {
   // ACE_TRACE ("ACE_OS::putpmsg");
 #if defined (ACE_HAS_STREAM_PIPES)
-  ACE_OSCALL_RETURN (::putpmsg (handle, ctl, data, band, flags), int, -1);
+  ACE_OSCALL_RETURN (::putpmsg (handle, 
+				(ACE_STRBUF_TYPE) ctl, 
+				(ACE_STRBUF_TYPE) data, 
+				band, flags), int, -1);
 #else
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (band);
