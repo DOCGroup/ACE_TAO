@@ -1,3 +1,17 @@
+Sun Jun 27 17:18:29 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_type.cpp (gen_nested_typename):
+
+	  Fixed a bug where we were generating incorrect relative path
+	  in a specific scenario where the "use" scope of a type shares
+	  only a few ancestors of the scope in which the type is defined.
+	  Our code would work only when either of the "use" scope or the
+	  "defined" scope was a subset of the other.
+
+	  Thanks to Brian Peterson <bpeterson@globalmt.com> for sending 
+	  the bug report and fixes. We have used a slightly different 
+	  solution than the suggested fixes.
+
 Sun Jun 27 15:23:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/any.cpp:
