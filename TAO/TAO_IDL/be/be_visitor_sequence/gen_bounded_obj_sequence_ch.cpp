@@ -230,6 +230,51 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
       << "}" << be_nl
       << be_nl;
 
+  // get_buffer
+  pt->accept(visitor); *os << "* *get_buffer (CORBA::Boolean orphan = 0)" << be_nl
+      << "{" << be_idt_nl;
+  pt->accept(visitor); *os << " **result = 0;" << be_nl
+      << "if (orphan == 0)" << be_nl
+      << "{" << be_idt_nl
+      << "// We retain ownership." << be_nl
+      << "if (this->buffer_ == 0)" << be_nl
+      << "{" << be_idt_nl
+      << "result = allocbuf (this->maximum_);" << be_nl
+      << "this->buffer_ = result;" << be_uidt_nl
+      << "}" << be_nl
+      << "else" << be_nl
+      << "{" << be_idt_nl
+      << "result = ACE_reinterpret_cast (";
+  pt->accept (visitor);
+  *os << "**, this->buffer_);" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_nl
+      << "else // if (orphan == 1)" << be_nl
+      << "{" << be_idt_nl
+      << "if (this->release_ != 0)" << be_nl
+      << "{" << be_idt_nl
+      << "// We set the state back to default and relinquish" << be_nl
+      << "// ownership." << be_nl
+      << "result = ACE_reinterpret_cast("; pt->accept (visitor); *os << "**,this->buffer_);" << be_nl
+      << "this->maximum_ = 0;" << be_nl
+      << "this->length_ = 0;" << be_nl
+      << "this->buffer_ = 0;" << be_nl
+      << "this->release_ = 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_nl
+      << "return result;" << be_uidt_nl
+      << "}" << be_nl
+      << be_nl;
+
+  // get_buffer
+  *os << "const "; pt->accept (visitor); *os << "* *get_buffer (void) const" << be_nl
+      << "{" << be_idt_nl
+      << "return ACE_reinterpret_cast(const ";
+  pt->accept (visitor);
+  *os << " ** ACE_CAST_CONST, this->buffer_);" << be_uidt_nl
+      << "}" << be_nl
+      << be_nl;
+
   // _shrink_buffer
   *os << "virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)" << be_nl
       << "{" << be_idt_nl;
