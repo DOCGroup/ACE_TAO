@@ -153,7 +153,7 @@ Server::init_high_priority (void)
 void
 Server::init_low_priority (void)
 {
-  int j;
+  u_int j;
   this->num_low_priority_ =
     GLOBALS::instance ()->num_of_objs - 1;
 
@@ -204,7 +204,7 @@ Server::init_low_priority (void)
 void
 Server::write_iors (void)
 {
-  int j;
+  u_int j;
   this->cubits_[0] = ACE_OS::strdup (this->high_priority_task_->get_servant_ior (0));
 
   for (j = 1;
