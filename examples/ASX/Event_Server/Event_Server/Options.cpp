@@ -70,9 +70,9 @@ void Options::print_results (void)
 		"%8d = involuntary context switches\n"
 		"%8d = system calls\n"
 		"%8d = chars read/written\n",
-		rusage.pr_lwpid,
+		(int) rusage.pr_lwpid,
 		(int) rusage.pr_count,
-		rusage.pr_minf,
+		(int) rusage.pr_minf,
 		(int) rusage.pr_majf,
 		(int) rusage.pr_inblk,
 		(int) rusage.pr_oublk,
