@@ -1,0 +1,13 @@
+project(RTCORBA Private Connection Server): rt_server {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(RTCORBA Private Connection Client): rt_client {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+

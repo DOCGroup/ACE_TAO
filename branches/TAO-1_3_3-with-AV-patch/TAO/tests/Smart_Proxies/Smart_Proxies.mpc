@@ -1,0 +1,18 @@
+project(Smart Proxies Server): server {
+  idlflags += -Gsp
+
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(Smart Proxies Client): client {
+  idlflags += -Gsp
+
+  Source_Files {
+    testC.cpp
+    Smart_Proxy_Impl.cpp
+    client.cpp
+  }
+}
+

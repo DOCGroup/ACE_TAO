@@ -1,0 +1,48 @@
+#
+# $Id$
+#
+
+NAME = server
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -GC
+
+OBJFILES = \
+	$(OBJDIR)\TestC.obj \
+	$(OBJDIR)\TestS.obj \
+        $(OBJDIR)\Echo_Callback.obj \
+        $(OBJDIR)\Server_Task.obj \
+        $(OBJDIR)\ORB_Task.obj \
+        $(OBJDIR)\Server_i.obj \
+	$(OBJDIR)\server.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_MESSAGING_CFLAGS) \
+        $(TAO_SVC_UTILS_CFLAGS) \
+        $(TAO_VALUETYPE_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_MESSAGING_LIB) \
+        $(TAO_SVC_UTILS_LIB) \
+        $(TAO_VALUETYPE_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\Test.idl
+
+CPPDIR = .
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\TestS.cpp $(IDLDIR)\TestC.cpp: $(IDLDIR)\Test.idl
+	$(TAO_IDL) $**

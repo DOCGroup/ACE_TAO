@@ -1,0 +1,48 @@
+project(CDR Alignment) : taoexe {
+  exename  = alignment
+
+  Source_Files {
+    alignment.cpp
+  }
+}
+
+project(CDR Allocator) : taoexe {
+  exename  = allocator
+
+  Source_Files {
+    allocator.cpp
+  }
+}
+
+project(CDR Basic Types) : taoexe {
+  exename  = basic_types
+
+  Source_Files {
+    basic_types.cpp
+  }
+}
+
+project(CDR Growth) : taoexe {
+  exename  = growth
+
+  Source_Files {
+    growth.cpp
+  }
+}
+
+project(CDR Octet Sequence) : taoexe {
+  exename  = octet_sequence
+
+  Source_Files {
+    octet_sequence.cpp
+  }
+}
+
+project(CDR Tc) : taoexe {
+  exename  = tc
+
+  Source_Files {
+    tc.cpp
+  }
+}
+

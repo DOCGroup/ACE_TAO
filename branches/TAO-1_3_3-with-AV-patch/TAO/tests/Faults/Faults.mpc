@@ -1,0 +1,73 @@
+project(Faults Server): server, minimum_corba {
+  IDL_Files {
+    test.idl
+  }
+
+  Source_Files {
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(Faults Middle): server, minimum_corba {
+  exename = middle
+
+  IDL_Files {
+    test.idl
+  }
+
+  Source_Files {
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+    middle.cpp
+  }
+}
+
+project(Faults Client): server, minimum_corba {
+  exename = client
+
+  IDL_Files {
+    test.idl
+  }
+
+  Source_Files {
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+    client.cpp
+  }
+}
+
+project(Faults Ping): server, minimum_corba {
+  exename = ping
+
+  IDL_Files {
+    ping.idl
+  }
+
+  Source_Files {
+    pingC.cpp
+    pingS.cpp
+    ping_i.cpp
+    ping.cpp
+  }
+}
+
+project(Faults Pong): server, minimum_corba {
+  exename = pong
+
+  IDL_Files {
+    ping.idl
+  }
+
+  Source_Files {
+    pingC.cpp
+    pingS.cpp
+    ping_i.cpp
+    pong.cpp
+  }
+}
+

@@ -1,0 +1,19 @@
+--- orig/Messaging_PolicyValueC.h	Fri Feb  8 14:42:47 2002
++++ Messaging_PolicyValueC.h	Fri Feb  8 14:43:59 2002
+@@ -23,7 +23,7 @@
+ #define _TAO_IDL_ORIG_MESSAGING_POLICYVALUEC_H_
+ 
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++#include "tao/corbafwd.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+@@ -31,6 +31,7 @@
+ 
+ #include "TAO_Export.h"
+ #include "IOPC.h"
++#include "Sequence.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO

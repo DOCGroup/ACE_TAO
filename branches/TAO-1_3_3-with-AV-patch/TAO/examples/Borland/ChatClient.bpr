@@ -1,0 +1,193 @@
+# ---------------------------------------------------------------------------
+!if !$d(BCB)
+BCB = $(MAKEDIR)\..
+!endif
+
+# ---------------------------------------------------------------------------
+# IDE SECTION
+# ---------------------------------------------------------------------------
+# The following section of the project makefile is managed by the BCB IDE.
+# It is recommended to use the IDE to change any of the values in this
+# section.
+# ---------------------------------------------------------------------------
+
+VERSION = BCB.04.04
+# ---------------------------------------------------------------------------
+PROJECT = ChatClient.exe
+OBJFILES = obj\ChatClient.obj obj\ChatClientWnd.obj obj\BroadcasterC.obj \
+  obj\BroadcasterS.obj obj\ReceiverC.obj obj\ReceiverS.obj obj\ReceiverImpl.obj \
+  obj\ORBThread.obj
+RESFILES = ChatClient.res
+RESDEPEN = $(RESFILES) ChatClientWnd.dfm
+LIBFILES =
+LIBRARIES = ACE_bp.lib TAO_bp.lib TAO_PortableServer_bp.lib
+SPARELIBS = Vcl40.lib TAO_PortableServer_bp.lib TAO_bp.lib ACE_bp.lib
+PACKAGES = Vcl40.bpi Vclx40.bpi vcljpg40.bpi bcbsmp40.bpi Qrpt40.bpi Vcldb40.bpi \
+  ibsmp40.bpi vcldbx40.bpi TeeUI40.bpi teedb40.bpi tee40.bpi nmfast40.bpi \
+  dclocx40.bpi
+DEFFILE =
+# ---------------------------------------------------------------------------
+PATHCPP = .;
+PATHPAS = .;
+PATHASM = .;
+PATHRC = .;
+DEBUGLIBPATH = $(BCB)\lib\debug
+RELEASELIBPATH = $(BCB)\lib\release
+USERDEFINES =
+SYSDEFINES = _RTLDLL;NO_STRICT;USEPACKAGES
+# ---------------------------------------------------------------------------
+CFLAG1 = -I$(BCB)\include;$(BCB)\include\vcl;..\..\..;..\.. -O2 -Hc \
+  -H=obj\ChatClient.csm -Hh=pch.h -w-rvl -w-rch -w-par -w-obs -w-inl -w-aus -Ve -a8 -k- \
+  -vi -c -b- -Vx -tW -tWM -D$(SYSDEFINES);$(USERDEFINES)
+PFLAGS = -U$(BCB)\lib\obj;$(BCB)\lib;..\..\..\bin\Dynamic\Release\Pascal;$(RELEASELIBPATH) \
+  -I$(BCB)\include;$(BCB)\include\vcl;..\..\..;..\.. -N2obj -N0obj -$Y- -$L- -$D- -v -JPHNE -M
+RFLAGS = -i$(BCB)\include;$(BCB)\include\vcl;..\..\..;..\..
+AFLAGS = /i$(BCB)\include /i$(BCB)\include\vcl /i..\..\.. /i..\..  /mx /w2 /zn
+LFLAGS = -L$(BCB)\lib\obj;$(BCB)\lib;..\..\..\bin\Dynamic\Release\Pascal;$(RELEASELIBPATH) -aa \
+  -Tpe -x -Gn
+# ---------------------------------------------------------------------------
+ALLOBJ = c0w32.obj Memmgr.Lib $(PACKAGES) sysinit.obj $(OBJFILES)
+ALLRES = $(RESFILES)
+ALLLIB = $(LIBFILES) $(LIBRARIES) import32.lib cp32mti.lib
+# ---------------------------------------------------------------------------
+!ifdef IDEOPTIONS
+
+[Version Info]
+IncludeVerInfo=0
+AutoIncBuild=0
+MajorVer=1
+MinorVer=0
+Release=0
+Build=0
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=1033
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=
+FileDescription=
+FileVersion=1.0.0.0
+InternalName=
+LegalCopyright=
+LegalTrademarks=
+OriginalFilename=
+ProductName=
+ProductVersion=1.0.0.0
+Comments=
+
+[HistoryLists\hlIntOutputDir]
+Count=1
+Item0=obj
+
+[HistoryLists\hlFinalOutputDir]
+Count=1
+Item0=..\..\..\..\bin
+
+[Debugging]
+DebugSourceDirs=
+
+[Parameters]
+RunParams=
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteDebug=0
+
+[Compiler]
+InMemoryExe=0
+ShowInfoMsgs=0
+
+!endif
+
+# ---------------------------------------------------------------------------
+# MAKE SECTION
+# ---------------------------------------------------------------------------
+# This section of the project file is not used by the BCB IDE.  It is for
+# the benefit of building from the command-line using the MAKE utility.
+# ---------------------------------------------------------------------------
+
+.autodepend
+# ---------------------------------------------------------------------------
+!if !$d(BCC32)
+BCC32 = bcc32
+!endif
+
+!if !$d(CPP32)
+CPP32 = cpp32
+!endif
+
+!if !$d(DCC32)
+DCC32 = dcc32
+!endif
+
+!if !$d(TASM32)
+TASM32 = tasm32
+!endif
+
+!if !$d(LINKER)
+LINKER = ilink32
+!endif
+
+!if !$d(BRCC32)
+BRCC32 = brcc32
+!endif
+
+# ---------------------------------------------------------------------------
+!if $d(PATHCPP)
+.PATH.CPP = $(PATHCPP)
+.PATH.C   = $(PATHCPP)
+!endif
+
+!if $d(PATHPAS)
+.PATH.PAS = $(PATHPAS)
+!endif
+
+!if $d(PATHASM)
+.PATH.ASM = $(PATHASM)
+!endif
+
+!if $d(PATHRC)
+.PATH.RC  = $(PATHRC)
+!endif
+# ---------------------------------------------------------------------------
+$(PROJECT): $(OBJFILES) $(RESDEPEN) $(DEFFILE)
+    $(BCB)\BIN\$(LINKER) @&&!
+    $(LFLAGS) +
+    $(ALLOBJ), +
+    $(PROJECT),, +
+    $(ALLLIB), +
+    $(DEFFILE), +
+    $(ALLRES)
+!
+# ---------------------------------------------------------------------------
+.pas.hpp:
+    $(BCB)\BIN\$(DCC32) $(PFLAGS) {$< }
+
+.pas.obj:
+    $(BCB)\BIN\$(DCC32) $(PFLAGS) {$< }
+
+.cpp.obj:
+    $(BCB)\BIN\$(BCC32) $(CFLAG1) -n$(@D) {$< }
+
+.c.obj:
+    $(BCB)\BIN\$(BCC32) $(CFLAG1) -n$(@D) {$< }
+
+.c.i:
+    $(BCB)\BIN\$(CPP32) $(CFLAG1) -n. {$< }
+
+.cpp.i:
+    $(BCB)\BIN\$(CPP32) $(CFLAG1) -n. {$< }
+
+.asm.obj:
+    $(BCB)\BIN\$(TASM32) $(AFLAGS) $<, $@
+
+.rc.res:
+    $(BCB)\BIN\$(BRCC32) $(RFLAGS) -fo$@ $<
+# ---------------------------------------------------------------------------
+
+
+

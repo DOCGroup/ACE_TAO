@@ -1,0 +1,5 @@
+project(Throughput): notifytest, strategies {
+  depends += Messaging
+  libs    += TAO_Messaging
+  exename  = Throughput
+}

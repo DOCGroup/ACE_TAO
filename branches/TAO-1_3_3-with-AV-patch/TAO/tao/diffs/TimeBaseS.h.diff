@@ -1,0 +1,45 @@
+--- orig/TimeBaseS.h	Mon Apr  2 10:04:55 2001
++++ TimeBaseS.h	Mon Apr  2 18:53:35 2001
+@@ -30,42 +30,11 @@
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+-#include "tao/PortableServer/PortableServer.h"
+-#include "tao/PortableServer/Servant_Base.h"
+-#include "tao/PortableServer/Collocated_Object.h"
+-#include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
+-#include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
+-#include "tao/PortableServer/ServerRequestInfo.h"
+-
+-#if defined(_MSC_VER)
+-#if (_MSC_VER >= 1200)
+-#pragma warning(push)
+-#endif /* _MSC_VER >= 1200 */
+-#pragma warning(disable:4250)
+-#endif /* _MSC_VER */
+-
+-#if defined (__BORLANDC__)
+-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
+-#endif /* __BORLANDC__ */
+-
+-TAO_NAMESPACE  POA_TimeBase
+-{
+-}
+-TAO_NAMESPACE_CLOSE
+-
+ #include "TimeBaseS_T.h"
+ 
+ #if defined (__ACE_INLINE__)
+ #include "TimeBaseS.i"
+ #endif /* defined INLINE */
+-
+-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+-#pragma warning(pop)
+-#endif /* _MSC_VER */
+-
+-#if defined (__BORLANDC__)
+-#pragma option pop
+-#endif /* __BORLANDC__ */
+ 
+ #include "ace/post.h"
+ #endif /* ifndef */
