@@ -1,3 +1,14 @@
+Sun Oct 08 12:19:15 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Object.cpp:
+
+	  Fixed _tao_QueryInterface to return the correct
+	  value instead of 0.
+
+	* tao/PortableServer/Makefile.bor:
+
+	  Removed typo.
+
 Sat Oct 07 16:00:45 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/corbafwd.h: Changed CORBA::is_nil (CORBA::Object_ptr) to
