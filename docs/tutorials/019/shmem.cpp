@@ -3,6 +3,8 @@
 #include "shmem.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 #if ! defined (ACE_LACKS_SYSV_SHMEM)
 

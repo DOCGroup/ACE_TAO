@@ -5,6 +5,7 @@
    communicating with the server
 */
 #include "Client_i.h"
+#include "ace/OS_NS_string.h"
 
 int main(int argc, char *argv[])
 {
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
                           "we want there to be an opportunity for some compression to occur. "
                           "That's why it has a whofflly style and goes on and on and on.",
                          i);
-        message->wr_ptr (strlen (message->rd_ptr ())+1);
+        message->wr_ptr (ACE_OS::strlen (message->rd_ptr ())+1);
 
         // client will take ownership of the message block so that
         // we don't have to remember to release().  We *do* have

@@ -3,6 +3,7 @@
 
 #include "Xmit.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/OS_NS_string.h"
 
 /* Construct the object with the peer connection and choose not to
    activate ourselves into a dedicated thread.  You might get some
@@ -63,7 +64,7 @@ int Xmit::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
 
      // Be sure we send the end-of-string NULL so that Recv will
      // know when to stop assembling the length.
-    rval = this->peer().send_n( msize, strlen(msize)+1, 0, timeout );
+    rval = this->peer().send_n( msize, ACE_OS::strlen(msize)+1, 0, timeout );
 
     if( rval == -1 )
     {

@@ -4,7 +4,7 @@
 #ifndef MLD_H
 #define MLD_H
 
-#include "ace/Synch.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -12,6 +12,7 @@
 
 #include "ace/Singleton.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Mutex.h"
 
 /*
    This is a cheap memory leak detector.  Each class I want to watch over
