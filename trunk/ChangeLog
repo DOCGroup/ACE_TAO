@@ -1,3 +1,22 @@
+Fri Aug 20 07:47:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * bin/bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added $(EXEEXT) to BIN build target.
+          Removed from $(EXEEXT) from install and cleanup target
+          because these are derived from build target.
+          This improves link behaviour (disables unnecessary links
+          because dependency checks on build targets did not function)
+          on platforms using GNU make and having a executable extension
+          (like MingW; .exe).
+          Fixes [Bug 1876].
+
+        * apps/gperf/tests/tests.mpc:
+
+          Added $(EXEEXT) to verbatim 'runtests' targets because
+          otherwise dependencies on build targets do not function
+          anymore.
+
 Thu Aug 19 16:45:05 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/security.mpb:
