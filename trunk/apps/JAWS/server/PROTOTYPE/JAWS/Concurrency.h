@@ -4,8 +4,10 @@
 #if !defined (JAWS_CONCURRENCY_H)
 #define JAWS_CONCURRENCY_H
 
+#include "ace/Singelton.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
+
 #include "JAWS/IO.h"
 
 class JAWS_Concurrency_Base : public ACE_Task<ACE_MT_SYNCH>
@@ -20,6 +22,7 @@ class JAWS_Concurrency_Base : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   JAWS_Concurrency_Base (void);
+
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
   virtual int svc (void);
 };
@@ -65,9 +68,9 @@ class JAWS_Thread_Pool_Task : public JAWS_Concurrency_Base
   //     requests through the message queue.
 {
 public:
-  JAWS_Thread_Pool_Task (long flags = THR_NEW_LWP,
-                         int nthreads = 5,
-                         int maxthreads = 20);
+  virtual int open (long flags = THR_NEW_LWP,
+                    int nthreads = 5, int maxthreads = 20);
+  // Initiate the thread_pool task
 
 private:
   int nthreads_;
@@ -86,11 +89,27 @@ class JAWS_Thread_Per_Task : public JAWS_Concurrency_Base
 public:
   JAWS_Thread_Per_Task (long flags = THR_NEW_LWP, int maxthreads = 20);
 
+  virtual int open (long flags = THR_NEW_LWP, int maxthreads = 20);
+  // Initiate the thread_per task
+
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
 
 private:
   long flags_;
   int maxthreads_;
 };
+
+typedef ACE_Singleton<JAWS_Dispatcher, ACE_MT_SYNCH>
+        JAWS_Dispatcher_Singleton;
+
+typedef ACE_Singleton<JAWS_Thread_Pool_Task, ACE_MT_SYNCH>
+        JAWS_Thread_Pool_Singleton;
+
+typedef ACE_Singleton<JAWS_Thread_Per_Task, ACE_MT_SYNCH>
+        JAWS_Thread_Per_Singleton;
+
+extern JAWS_Dispatcher_Singleton jaws_dispatcher;
+extern JAWS_Thread_Pool_Singleton jaws_thread_pool;
+extern JAWS_Thread_Per_Singleton jaws_thread_per;
 
 #endif /* !defined (JAWS_CONCURRENCY_H) */

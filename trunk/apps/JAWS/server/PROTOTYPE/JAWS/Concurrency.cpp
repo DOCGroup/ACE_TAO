@@ -2,6 +2,10 @@
 
 #include "JAWS/Concurrency.h"
 
+JAWS_Dispatcher_Singleton jaws_dispatcher;
+JAWS_Thread_Pool_Singleton jaws_thread_pool;
+JAWS_Thread_Per_Singleton jaws_thread_per;
+
 JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
 {
 }
@@ -58,10 +62,29 @@ JAWS_Thread_Pool_Task::JAWS_Thread_Pool_Task (long flags,
     ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"));
 }
 
+int
+JAWS_Thread_Pool_Task::open (long flags, int nthreads, int maxthreads)
+{
+  this->nthreads_ = nthreads;
+  this->maxthreads_ = maxthreads;
+
+  if (this->activate (flags, nthreads) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
+                      -1);
+}
+
 JAWS_Thread_Per_Task::JAWS_Thread_Per_Task (long flags, int maxthreads)
   : flags_ (flags),
     maxthreads_ (maxthreads)
 {
+}
+
+int
+JAWS_Thread_Per_Task::open (long flags, int maxthreads)
+{
+  this->flags_ = flags;
+  this->maxthreads_ = maxthreads;
+  return 0;
 }
 
 int
@@ -78,3 +101,13 @@ JAWS_Thread_Per_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<JAWS_Dispatcher, ACE_MT_SYNCH>;
+template class ACE_Singleton<JAWS_Thread_Pool_Task, ACE_MT_SYNCH>;
+template class ACE_Singleton<JAWS_Thread_Per_Task, ACE_MT_SYNCH>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate  ACE_Singleton<JAWS_Dispatcher, ACE_MT_SYNCH>
+#pragma instantiate  ACE_Singleton<JAWS_Thread_Pool_Task, ACE_MT_SYNCH>
+#pragma instantiate  ACE_Singleton<JAWS_Thread_Per_Task, ACE_MT_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

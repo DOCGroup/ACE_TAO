@@ -142,6 +142,8 @@ protected:
   virtual void error_message_complete (void);
   virtual JAWS_IO_Handler_Factory *factory (void);
 
+  virtual void done (void);
+
 private:
   ACE_Message_Block *state_;
   // This maintains the state of the request.
