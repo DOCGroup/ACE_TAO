@@ -1,5 +1,9 @@
 Fri Aug 23 08:40:38 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/config-qnx-rtp.h: Added some new #defines so ACE will
+	  compile on QNX 6.2.  Thanks to Leen Van Kampen
+ 	  <leen.van.kampen@nl.vanderlande.com> for reporting this.
+
 	* ace/Task.cpp (svc_run): Added a #ifdef for _MSC_VER <= 1200
 	  since there are complaints about reinterpret_cast from int to
  	  unsigned long.  Thanks to Espen Harlinn

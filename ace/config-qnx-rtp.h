@@ -90,7 +90,8 @@
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_SIG_MACROS
 #define ACE_HAS_SIN_LEN
-#define ACE_HAS_SIZET_SOCKET_LEN
+// #define ACE_HAS_SIZET_SOCKET_LEN
+#define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_SSIZE_T
 #define ACE_HAS_STRERROR
 #define ACE_HAS_STRINGS
@@ -190,6 +191,9 @@
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
+
+#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+#define ACE_LACKS_ACE_IOSTREAM
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */
