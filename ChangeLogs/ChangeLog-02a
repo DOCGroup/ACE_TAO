@@ -1,3 +1,13 @@
+Fri Feb 18 17:30:26 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h: Filled out with the known compiler settings
+          for g++, KCC, HP CC, and HP aC++. This is now the official HP-UX 11
+          config.h file for all compilers.
+
+        * ace/config-hpux-11.x-hpc++.h: This file is no longer in use. It
+          generates a compiler error if used. It is planned to go away
+          for ACE 5.1.
+
 Fri Feb 18 10:25:45 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.h:
