@@ -220,8 +220,7 @@ public:
   virtual CORBA::ULong test_exception (CORBA::ULong s1,
 				       CORBA::ULong& s2,
 				       CORBA::ULong_out s3,
-				       CORBA::Environment &env)
-    TAO_THROW_SPEC ((CORBA::SystemException, Param_Test::Ooops));
+				       CORBA::Environment &env);
 
   void shutdown (CORBA::Environment &env);
 

@@ -535,27 +535,30 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
       ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
                          "ACE_ES_Dispatch_Queue::open_queue"), -1);
     case 0:
-      TAO_TRY
-        {// @@ TODO: Handle exceptions...
-          ACE_Scheduler_Factory::server()->set (rt_info_,
-                                                RtecScheduler::VERY_HIGH_CRITICALITY,
-                                                ORBSVCS_Time::zero,
-                                                ORBSVCS_Time::zero,
-                                                ORBSVCS_Time::zero,
-                                                period,
-                                                RtecScheduler::VERY_LOW_IMPORTANCE,
-                                                ORBSVCS_Time::zero,
-                                                1,
-                                                RtecScheduler::OPERATION,
-                                                TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-        }
-      TAO_CATCHANY
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "ACE_ES_Dispatch_Queue::exception"), -1);
-        }
-      TAO_ENDTRY;
+      {
+	TAO_TRY
+	  {// @@ TODO: Handle exceptions...
+	    ACE_Scheduler_Factory::server()->set (rt_info_,
+						  RtecScheduler::VERY_HIGH_CRITICALITY,
+						  ORBSVCS_Time::zero,
+						  ORBSVCS_Time::zero,
+						  ORBSVCS_Time::zero,
+						  period,
+						  RtecScheduler::VERY_LOW_IMPORTANCE,
+						  ORBSVCS_Time::zero,
+						  1,
+						  RtecScheduler::OPERATION,
+						  TAO_TRY_ENV);
+	    TAO_CHECK_ENV;
+	  }
+	TAO_CATCHANY
+	  {
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       "ACE_ES_Dispatch_Queue::exception"), -1);
+	  }
+	TAO_ENDTRY;
+      }
+      // FALLTHROUGH
     case 1:
       // Found.
       break;

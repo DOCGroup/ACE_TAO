@@ -101,8 +101,8 @@ void ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
   // any differences.
   if (handle < 0 || handle > entry_count_)
     {
-      TAO_THROW (RtecScheduler::UNKNOWN_TASK);
-      ACE_NOTREACHED (return);
+      TAO_THROW (RtecScheduler::UNKNOWN_TASK());
+      // NOTREACHED
     }
   if (rt_info_[handle].worst_case_execution_time != time
       || rt_info_[handle].typical_execution_time != typical_time
@@ -133,7 +133,7 @@ void ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
   if (handle < 0 || handle > entry_count_)
     {
       TAO_THROW (RtecScheduler::UNKNOWN_TASK());
-      ACE_NOTREACHED (return);
+      // NOTREACHED
     }
   priority = rt_info_[handle].priority;
   subpriority = rt_info_[handle].static_subpriority;
@@ -170,8 +170,8 @@ void ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
 {
   if (handle < 0 || handle > entry_count_)
     {
-      TAO_THROW (RtecScheduler::UNKNOWN_TASK);
-      ACE_NOTREACHED (return);
+      TAO_THROW (RtecScheduler::UNKNOWN_TASK());
+      // NOTREACHED
     }
 #if 0
   // Just check that the information is consistent.

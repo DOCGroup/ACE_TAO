@@ -1,3 +1,31 @@
+Fri Aug 21 00:04:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Exception.cpp: 
+	* tao/corba.h: 
+	* tao/orbconf.h: 
+	  The ORB is ready to work with exceptions now. I was able to
+	  throw an exception on the server side, catch it, transmit it to
+	  the client, the client is able to build the exception with the
+	  right dynamic type and then raise it again. This, of course,
+	  using SII. We still have to do some more work to support DII.
+
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp: 
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp: 
+	  Fixed misuses of TAO_THROW and TAO_TRY macros that did not work
+	  when the code was used with exceptions enabled.
+
+	* tests/Param_Test/except.cpp: 
+	* tests/Param_Test/param_test_i.cpp: 
+	* tests/Param_Test/param_test_i.h: 
+	  Removed throw specs from the servant implementation, they just
+	  complicate things. Cleanup the client side.
+
 Thu Aug 20 19:42:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Invocation.cpp: 

@@ -406,7 +406,7 @@ ACE_Push_Supplier_Proxy::connect_push_supplier (RtecEventComm::PushSupplier_ptr 
                                                 CORBA::Environment &_env)
 {
   if (this->connected ())
-    TAO_THROW (RtecEventChannelAdmin::AlreadyConnected);
+    TAO_THROW (RtecEventChannelAdmin::AlreadyConnected());
 
   this->push_supplier_ =
     RtecEventComm::PushSupplier::_duplicate(push_supplier);
@@ -515,7 +515,7 @@ ACE_Push_Consumer_Proxy::connect_push_consumer (RtecEventComm::PushConsumer_ptr 
                                                 CORBA::Environment &_env)
 {
   if (this->connected ())
-    TAO_THROW (RtecEventChannelAdmin::AlreadyConnected);
+    TAO_THROW (RtecEventChannelAdmin::AlreadyConnected());
 
   this->push_consumer_ =
     RtecEventComm::PushConsumer::_duplicate(push_consumer);
@@ -1196,10 +1196,10 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
   {
     ACE_ES_GUARD ace_mon (lock_);
     if (ace_mon.locked () == 0)
-      TAO_THROW (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR);
+      TAO_THROW (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
 
     if (all_consumers_.remove (consumer) == -1)
-      TAO_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR);
+      TAO_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR());
   }
 
   // Tell everyone else that the consumer is disconnecting.  This
@@ -1290,7 +1290,7 @@ ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &_env)
     if (ace_mon.locked () == 0)
       {
         delete new_consumer;
-        TAO_THROW_RETURN (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR, 0);
+        TAO_THROW_RETURN (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR(), 0);
       }
 
     if (all_consumers_.insert (new_consumer) == -1)
@@ -1420,7 +1420,7 @@ ACE_ES_Correlation_Module::connected (ACE_Push_Consumer_Proxy *consumer,
 {
   // Initialize the consumer correlation filter.
   if (consumer->correlation ().connected (consumer, this) == -1)
-    TAO_THROW (RtecEventChannelAdmin::EventChannel::CORRELATION_ERROR);
+    TAO_THROW (RtecEventChannelAdmin::EventChannel::CORRELATION_ERROR());
 }
 
 void
@@ -2163,7 +2163,7 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
  {
     ACE_ES_WGUARD ace_mon (lock_);
     if (ace_mon.locked () == 0)
-      TAO_THROW (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR);
+      TAO_THROW (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
 
     if (all_suppliers_.insert (supplier) == -1)
       ACE_ERROR ((LM_ERROR, "ACE_ES_Subscription_Module insert failed.\n"));
@@ -2306,10 +2306,10 @@ ACE_ES_Subscription_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
 {
   ACE_ES_WGUARD ace_mon (lock_);
   if (ace_mon.locked () == 0)
-    TAO_THROW (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR);
+    TAO_THROW (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
 
   if (all_suppliers_.remove (supplier) == -1)
-    TAO_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR);
+    TAO_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR());
 
   // Remove all consumers from the supplier's source-based subscription lists.
   ACE_ES_Subscription_Info::Subscriber_Set_Iterator source_iterator
@@ -3064,10 +3064,10 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
 {
   ACE_ES_GUARD ace_mon (lock_);
   if (ace_mon.locked () == 0)
-    TAO_THROW (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR);
+    TAO_THROW (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
 
   if (all_suppliers_.remove (supplier) == -1)
-    TAO_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR);
+    TAO_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR());
 
   up_->disconnecting (supplier, _env);
 
@@ -3133,7 +3133,7 @@ ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &_env)
     if (ace_mon.locked () == 0)
       {
         delete new_supplier;
-        TAO_THROW_RETURN (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR, 0);
+        TAO_THROW_RETURN (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR(), 0);
       }
 
     if (all_suppliers_.insert (new_supplier) == -1)
