@@ -43,7 +43,7 @@ public:
   // Creates an <ACE_INET_Addr> from a <port_number> and the remote
   // <host_name>.
 
-  ACE_MEM_Addr (const ACE_TCHAR port_name[]);
+  ACE_EXPLICIT ACE_MEM_Addr (const ACE_TCHAR port_name[]);
   // Creates an <ACE_INET_Addr> from a <port_name>.
 
   ~ACE_MEM_Addr (void);

@@ -41,7 +41,7 @@ public:
   int set (const ACE_DEV_Addr &sa);
   // Acts like a copy constructor.
 
-  ACE_DEV_Addr (const ACE_TCHAR *devname);
+  ACE_EXPLICIT ACE_DEV_Addr (const ACE_TCHAR *devname);
   // Create a ACE_DEV_Addr from a device name.
 
   void set (const ACE_TCHAR *devname);
