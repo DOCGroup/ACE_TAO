@@ -53,9 +53,9 @@ class TAO_Export TAO_ClientRequestInterceptor_Adapter
 public:
 
   TAO_ClientRequestInterceptor_Adapter (
-    TAO_ClientRequestInterceptor_List::TYPE &interceptors,
-    TAO_GIOP_Invocation *invocation,
-    int &_invoke_status);
+    TAO_ClientRequestInterceptor_List::TYPE & interceptors,
+    TAO_GIOP_Invocation * invocation,
+    int & _invoke_status);
 
   ~TAO_ClientRequestInterceptor_Adapter (void);
 
@@ -73,22 +73,22 @@ public:
   //@{
   /// This method implements one of the "starting" client side
   /// interception points.
-  void send_request (TAO_ClientRequestInfo_i *ri
+  void send_request (TAO_ClientRequestInfo_i * ri
                      ACE_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" client side
   /// interception point.
-  void receive_reply (TAO_ClientRequestInfo_i *ri
+  void receive_reply (TAO_ClientRequestInfo_i * ri
                       ACE_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" client side
   /// interception point.
-  void receive_exception (TAO_ClientRequestInfo_i *ri
+  void receive_exception (TAO_ClientRequestInfo_i * ri
                           ACE_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" client side
   /// interception point.
-  void receive_other (TAO_ClientRequestInfo_i *ri
+  void receive_other (TAO_ClientRequestInfo_i * ri
                       ACE_ENV_ARG_DECL);
   //@}
 
@@ -97,26 +97,26 @@ protected:
   /// Process the given PortableInterceptor::ForwardRequest exception,
   /// i.e. invoke the receive_other() interception point, in addition
   /// to notifying the Invocation object of the LOCATION_FORWARD.
-  void process_forward_request (TAO_ClientRequestInfo_i *ri,
-                                PortableInterceptor::ForwardRequest &exc
+  void process_forward_request (TAO_ClientRequestInfo_i * ri,
+                                PortableInterceptor::ForwardRequest & exc
                                 ACE_ENV_ARG_DECL);
 
 private:
 
   /// Reference to the list of registered interceptors.
-  TAO_ClientRequestInterceptor_List::TYPE &interceptors_;
+  TAO_ClientRequestInterceptor_List::TYPE & interceptors_;
 
   /// Pointer to the GIOP invocation object for the current request.
-  TAO_GIOP_Invocation *invocation_;
+  TAO_GIOP_Invocation * invocation_;
 
   /// Reference to the invocation status obtained from and returned to
   /// the stub.  Needed to support the
   /// PortableInterceptor::ForwardRequest exception.
-  int &invoke_status_;
+  int & invoke_status_;
 
   /// Cache the length of the interceptor list so that we don't have
   /// to compute it at each stage of the current interception.
-  size_t len_;
+  const size_t len_;
 
   /// The number of interceptors "pushed" onto the logical flow
   /// stack.  This is used when unwinding the flow stack.
@@ -132,7 +132,7 @@ private:
    *       case for AMI!  In that case, we'll have to perform a TSS
    *       access in each interception point.
    */
-  TAO_ClientRequestInfo *info_;
+  TAO_ClientRequestInfo * info_;
 
 };
 

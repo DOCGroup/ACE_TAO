@@ -70,26 +70,26 @@ public:
   /// This method implements the "starting" server side interception
   /// point.
   void receive_request_service_contexts (
-    TAO_ServerRequestInfo *ri
+    TAO_ServerRequestInfo * ri
     ACE_ENV_ARG_DECL);
 
   /// This method an "intermediate" server side interception point.
-  void receive_request (TAO_ServerRequestInfo *ri
+  void receive_request (TAO_ServerRequestInfo * ri
                         ACE_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" server side
   /// interception points.
-  void send_reply (TAO_ServerRequestInfo *ri
+  void send_reply (TAO_ServerRequestInfo * ri
                    ACE_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" server side
   /// interception points.
-  void send_exception (TAO_ServerRequestInfo *ri
+  void send_exception (TAO_ServerRequestInfo * ri
                        ACE_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" server side
   /// interception points.
-  void send_other (TAO_ServerRequestInfo *ri
+  void send_other (TAO_ServerRequestInfo * ri
                    ACE_ENV_ARG_DECL);
   //@}
 
@@ -100,15 +100,15 @@ public:
 private:
 
   /// Reference to the list of registered interceptors.
-  TAO_ServerRequestInterceptor_List::TYPE &interceptors_;
+  TAO_ServerRequestInterceptor_List::TYPE & interceptors_;
 
   /// Cache the length of the interceptor list so that we don't have
   /// to compute it at each stage of the current interception.
-  size_t len_;
+  const size_t len_;
 
   /// The number of interceptors "pushed" onto the logical flow
   /// stack.  This is used when unwinding the flow stack.
-  size_t &stack_size_;
+  size_t & stack_size_;
 
   /// True if a PortableInterceptor::ForwardRequest exception was
   /// thrown.
