@@ -31,11 +31,11 @@ int enable_yield = 1;
 int enable_rand = 0;
 int niteration1 = 5;
 int niteration2 = 3;
-int workload1 = 2;
-int period1 = 4;
-int workload2 = 1;
-int period2 = 4;
-int left_work = 1;
+int workload1 = 100;
+int period1 = 200;
+int workload2 = 50;
+int period2 = 200;
+int left_work = 50;
 int count = 0;
 
 int ID_BEGIN = 1;
@@ -568,14 +568,16 @@ Worker::svc (void)
   CORBA::Policy_var implicit_sched_param;
   double rand2=0.0;
 
+  int sec_period = period_/1000;
+  int usec_period = (period_%1000)*1000;
+
   if (enable_dynamic_scheduling)
     {
       sched_param.importance = importance_;
       ORBSVCS_Time::Time_Value_to_TimeT (sched_param.deadline,
                                          ACE_OS::gettimeofday () +
-                                         ACE_Time_Value (period_,0) -
-					 ACE_Time_Value (left_work,0));
-      sched_param.period = period_*10000000;
+                                         ACE_Time_Value (sec_period,usec_period)); 
+      sched_param.period = period_*10000;
       sched_param.task_id = oid.task_id;
       first_task_id = sched_param.task_id;
       second_task_id = ID_BEGIN++;
@@ -610,7 +612,7 @@ Worker::svc (void)
     {
       if(i>0 && enable_dynamic_scheduling)
         {
-          sched_param.deadline = sched_param.deadline+period_*10000000-left_work*10000000;
+          sched_param.deadline = sched_param.deadline+period_*10000;
           sched_param_policy = scheduler_->create_scheduling_parameter (sched_param);
           oid = ACE_OBJECT_COUNTER->increment();
           oid.task_id = sched_param.task_id;
@@ -633,15 +635,15 @@ Worker::svc (void)
       if (i==0)
 	start_t =  ACE_OS::gettimeofday ();
       else {
-        repair_t = start_t+ACE_Time_Value(period_*i,0)-ACE_OS::gettimeofday ();
+        repair_t = start_t+ACE_Time_Value(sec_period*i,usec_period*i)-ACE_OS::gettimeofday ();
       }
 
       timeval tv;
 
       DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
-      tv.tv_sec = server_load_-1;
-      tv.tv_usec = 800000;
+      tv.tv_sec = server_load_/1000;
+      tv.tv_usec = (server_load_%1000)*1000;
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG((LM_DEBUG,"(%t|%T)before running the client workload\n"));
@@ -654,7 +656,6 @@ Worker::svc (void)
 #endif
       DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
-      sched_param.deadline = sched_param.deadline + left_work*10000000;
       DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
       server_->test_method (left_work ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
@@ -682,14 +683,14 @@ Worker::svc (void)
       rand2 = 0.1*rand()/RAND_MAX;
       if(enable_rand)
         {
-          int sleep_t = period_ * 1000000 -
-            (int)(period_ * rand2 * 1000000) +
+          int sleep_t = period_ * 1000 -
+            (int)(period_ * rand2 * 1000) +
             repair_t.sec()*1000000 + repair_t.usec();
 
           if(sleep_t > 0)
             {
               ACE_DEBUG((LM_DEBUG,"NOW I AM GOING TO SLEEP FOR %d.\n",
-                         (int)(period_*1000000-period_*rand2*1000000)));
+                         (int)(period_*1000-period_*rand2*1000)));
               usleep(sleep_t);
             }
           else
