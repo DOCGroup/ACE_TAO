@@ -1,3 +1,96 @@
+Fri Jun 08 07:01:59 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Accept_Handler.h:
+	* ace/SSL/SSL_Accept_Handler.cpp:
+	* ace/SSL/SSL_Connect_Handler.h:
+	* ace/SSL/SSL_Connect_Handler.cpp:
+
+	  New event handlers that are designed to complete non-blocking
+	  SSL passive (accepts) and active connections (connects).  They
+	  are registered with the Reactor (either the singleton Reactor or
+	  a user-supplied one) after the TCP 3-way handshake is
+	  completed.  Once registered, the Reactor does its voodoo and
+	  invokes the appropriate event handler.
+
+	  This fixes several inter-related problems:
+	    (1) the ACE_SSL wrappers now work with the
+	        ACE_WFMO_Reactor,   [Bug 614]
+	    (2) non-blocking SSL accepts/connects and finally work,
+	    (3) fixes a CORBA::TRANSIENT exception in TAO's SSLIOP
+	        pluggable protocol that occured when the client attempted
+	        to connect to the server.
+
+	  Thanks to Andrew Finnell <Andrew.Finnell@esecurityinc.com> for
+	  suggesting that an event loop was necessary to complete the SSL
+	  connection after 3-way handshake was necessary, and for
+	  persisting in his effort to hammer that point into me.  :-)
+
+	* ace/SSL/SSL_SOCK_Stream.h (send_i, recv_i):
+
+	  New low-level helper methods that refactor the common underlying
+	  SSL IO calls.
+
+	* ace/SSL/SSL_SOCK_Stream.i (send):
+
+	  Fixed problem where one of the low-level send() methods returned
+	  zero instead of the number of bytes sent.  Thanks to Boris
+	  Temkin <borist@allcharge.com> and Dan Levi <DanL@webmap.com> for
+	  reporting the problem.
+
+	  (send_i, recv_i):
+
+	  Refactored code common to all send()/recv() methods.  Thanks to
+	  Boris for suggesting this.  This will help prevent problems such
+	  as the one that was described above from happening again since
+	  there is no code duplication.
+
+	* ace/SSL/SSL_SOCK_Stream.cpp (sendv_n, recv_n):
+
+	  Greatly improved the speed of these methods by removing all
+	  allocations and copies.  The allocations and copies were
+	  unnecessary.  These methods are now zero-copy implementations.
+
+	  (send):
+
+	  Don't bother attempting to implement this method using a scatter
+	  write (sendv).  The SSL_SOCK_Stream scatter write implementation
+	  simply emulates this functionality.  That emulation does not
+	  work well when using non-blocking IO.  Instead, just use
+	  send_n().
+
+	  Added missing "va_end()."
+
+	* ace/SSL/SSL_SOCK_Acceptor.h (reactor):
+	* ace/SSL/SSL_SOCK_Acceptor.i (reactor):
+	* ace/SSL/SSL_SOCK_Connector.h (reactor):
+	* ace/SSL/SSL_SOCK_Connector.i (reactor):
+
+	  New methods to set and get the Reactor to use when completing
+	  non-blocking SSL passive/active connections.
+
+	* ace/SSL_SOCK_Acceptor.cpp (ssl_accept):
+	* ace/SSL_SOCK_Connector.cpp (ssl_connect):
+
+	  Added new overload methods that accept a timeout value.  These
+	  new methods will register the event handlers described above in
+	  order to complete a non-blocking SSL connection.
+
+	  (shared_connect_start, shared_connect_finish):
+
+	  Removed these unused methods.
+
+	  (connect):
+
+	  Actually do a non-blocking SSL connect if the timeout value is
+	  non-zero.  This code was previously broken.  Even though the
+	  underlying TCP connect was non-blocking, the SSL connect was
+	  always blocking.
+
+	* THANKS:
+
+	  Added Andrew Finnell and Dan Levi to the "Hall of Fame."  Boris
+	  Temkin (see above) was already on it.  :-)
+
 Fri Jun 08 07:52:48 2001  Joe Hoffert <joeh@cs.wustl.edu>
 
         * Makefile: Removed PACE from the list of directories.

@@ -4,8 +4,7 @@
 
 
 #include "SSL_SOCK_Acceptor.h"
-
-#include <openssl/err.h>
+#include "SSL_Accept_Handler.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Acceptor)
 
@@ -16,6 +15,11 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Acceptor)
 ACE_RCSID (ACE_SSL,
            SSL_SOCK_Acceptor,
            "$Id$")
+
+ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor (void)
+{
+  ACE_TRACE ("ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor");
+}
 
 int
 ACE_SSL_SOCK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
@@ -85,7 +89,7 @@ ACE_SSL_SOCK_Acceptor::shared_accept_finish (ACE_SSL_SOCK_Stream& new_stream,
   if (new_handle == ACE_INVALID_HANDLE)
     return -1;
 
-  return this->ssl_accept (new_stream);
+  return 0;
 }
 
 int
@@ -93,54 +97,84 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const
 {
   if (SSL_is_init_finished (new_stream.ssl ()))
     return 0;
-
+  
   if (!SSL_in_accept_init (new_stream.ssl ()))
     ::SSL_set_accept_state (new_stream.ssl ());
 
-  int status = 0;
-  long verify_error = 0;
-  do
+  int status = ::SSL_accept (new_stream.ssl ());
+
+  if (::SSL_get_error (new_stream.ssl (), status) != SSL_ERROR_NONE)
     {
-      status = ::SSL_accept (new_stream.ssl ());
-
-      switch (::SSL_get_error (new_stream.ssl (), status))
-        {
-        case SSL_ERROR_NONE:
-          verify_error =
-            ::SSL_get_verify_result (new_stream.ssl ());
-
-          if (verify_error != X509_V_OK)
-            {
 #ifndef ACE_NDEBUG
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) X.509 certificate verification "
-                          "error:%s\n",
-                          ::X509_verify_cert_error_string (verify_error)));
+      ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
 
-              (void) new_stream.close ();
-              return -1;
-            }
-
-          return 0;
-
-        case SSL_ERROR_WANT_WRITE:
-        case SSL_ERROR_WANT_READ:
-          break;
-
-        default:
-#ifndef ACE_NDEBUG
-          ERR_print_errors_fp (stderr);
-#endif  /* ACE_NDEBUG */
-          return -1;
-        }
+      return -1;
     }
-  while (::SSL_pending (new_stream.ssl ()));
 
-  // If we get this far then we would have blocked.
-  errno = EWOULDBLOCK;
+  long verify_error =
+    ::SSL_get_verify_result (new_stream.ssl ());
 
-  return -1;
+  if (verify_error != X509_V_OK)
+    {
+#ifndef ACE_NDEBUG
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) X.509 certificate verification "
+                  "error:%s\n",
+                  ::X509_verify_cert_error_string (verify_error)));
+#endif  /* ACE_NDEBUG */
+
+      return -1;
+    }
+
+  return 0;
+}
+
+int
+ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
+                                   ACE_Time_Value *timeout) const
+{
+  if (SSL_is_init_finished (new_stream.ssl ()))
+    return 0;
+  
+  if (!SSL_in_accept_init (new_stream.ssl ()))
+    ::SSL_set_accept_state (new_stream.ssl ());
+
+  // Register an event handler to complete the non-blocking SSL
+  // accept.  A specialized event handler is necessary since since
+  // the ACE Acceptor strategies are not designed for protocols
+  // that require additional handshakes after the initial accept.
+  ACE_SSL_Accept_Handler eh (new_stream);
+
+  if (this->reactor_->register_handler (
+        new_stream.get_handle (),
+        &eh,
+        ACE_Event_Handler::READ_MASK |
+        ACE_Event_Handler::WRITE_MASK) == -1)
+    return -1;
+
+  // Make the current thread take ownership of the Reactor.
+  this->reactor_->owner (ACE_Thread::self ());
+
+  // Have the Reactor complete the SSL passive connection.  Run the
+  // event loop until the passive connection is completed.  Since
+  // the Reactor is used, this isn't a busy wait.
+  while (SSL_in_accept_init (new_stream.ssl ()))
+    if (this->reactor_->handle_events (timeout) == -1)
+      {
+        reactor_->remove_handler (&eh,
+                                  ACE_Event_Handler::READ_MASK |
+                                  ACE_Event_Handler::WRITE_MASK);
+        return -1;
+      }
+
+  // SSL passive connection was completed.  Deregister the event
+  // handler from the Reactor, but don't close it.
+  return
+    this->reactor_->remove_handler (&eh,
+                                    ACE_Event_Handler::READ_MASK |
+                                    ACE_Event_Handler::WRITE_MASK |
+                                    ACE_Event_Handler::DONT_CALL);
 }
 
 // General purpose routine for accepting new connections.
@@ -192,9 +226,15 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
       new_stream.set_handle (handle);
     }
 
-  return this->shared_accept_finish (new_stream,
-				     in_blocking_mode,
-				     reset_new_handle);
+  if (this->shared_accept_finish (new_stream,
+                                  in_blocking_mode,
+                                  reset_new_handle) != 0)
+    return -1;
+
+  if (in_blocking_mode)
+    return this->ssl_accept (new_stream);
+
+  return this->ssl_accept (new_stream, timeout);
 }
 
 int
@@ -247,7 +287,13 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
       new_stream.set_handle (handle);
     }
 
-  return this->shared_accept_finish (new_stream,
-				     in_blocking_mode,
-				     reset_new_handle);
+  if (this->shared_accept_finish (new_stream,
+                                  in_blocking_mode,
+                                  reset_new_handle) != 0)
+    return -1;
+
+  if (in_blocking_mode)
+    return this->ssl_accept (new_stream);
+
+  return this->ssl_accept (new_stream, timeout);
 }
