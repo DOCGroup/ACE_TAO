@@ -1,0 +1,21 @@
+project: server, strategies {
+  avoids += minimum_corba
+
+  Source_Files {
+    Roundtrip.cpp
+    server.cpp
+  }
+}
+
+project(client): server, strategies {
+  exename  = client
+  depends += DynamicInterface
+  libs    += TAO_DynamicInterface
+  avoids  += minimum_corba
+
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+
