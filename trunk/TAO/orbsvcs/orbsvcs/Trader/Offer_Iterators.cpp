@@ -196,11 +196,8 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
         }
       TAO_CATCHANY
         {
-          goto TAO_Offer_Iterator_Collection_loop_end;
         }
       TAO_ENDTRY;
-
-    TAO_Offer_Iterator_Collection_loop_end: ;
     }
 
   // Determine if we have anything left to offer.

@@ -73,18 +73,18 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
         link_if->describe_link (link_name_seq[0], _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
       
-      CosTrading::Lookup_ptr lookup_reg;
+      CosTrading::Lookup_var lookup_if;
 #ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
       CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
       CORBA::Object_var obj = orb->string_to_object (link_info->target, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-      lookup_reg = CosTrading::Lookup::_narrow (obj, _env);
+      lookup_if = CosTrading::Lookup::_narrow (obj, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
 #else 
-      lookup_reg = link_info->lookup_reg;
+      lookup_if = CosTrading::Lookup::_duplicate (link_info->target);
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 
-      CosTrading::Link_var link_if2 = lookup_reg->link_if (_env);
+      CosTrading::Link_var link_if2 = lookup_if->link_if (_env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
 
       CosTrading::LinkNameSeq_var link_name_seq2 = link_if2->list_links (_env);

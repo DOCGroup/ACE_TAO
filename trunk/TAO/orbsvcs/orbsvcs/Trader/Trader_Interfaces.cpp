@@ -341,13 +341,8 @@ lookup_all_subtypes (const char* type,
 	}
       TAO_CATCHANY
 	{
-          // Argh! These macros make me use gotos -- TAO_CATCHANY is a 
-          // do-while loop, so 'break' is out of the question. 
-          goto lookup_all_subtypes_loop;
 	}
       TAO_ENDTRY;
-            
-    lookup_all_subtypes_loop: ;
     }  
 }
 

@@ -253,7 +253,7 @@ TAO_Offer_Exporter::describe_offers (CORBA::Environment& _env)
 
 	      ACE_DEBUG ((LM_DEBUG, "Offer Id: %s\n", (const char *) offer_id_seq[i]));
 	      ACE_DEBUG ((LM_DEBUG, "Service Type: %s\n", offer_info->type.in ()));	      
-	      TT_Info::dump_properties (offer_info->properties);
+	      TT_Info::dump_properties (offer_info->properties, CORBA::B_FALSE);
 	      ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
 	    }
 	}
@@ -383,7 +383,7 @@ TAO_Offer_Exporter::create_offers (void)
     {      
       ACE_OS::sprintf (name, "Plotter #%d", i);
       ACE_OS::sprintf (description,
-		       "%s is a plotter. It plots stuff. Like charts.",
+		       "%s is a plotter. It plots stuff.",
 		       name);
 
       for (int j = 0; j < QUEUE_SIZE; j++, counter = (counter + 1) % NUM_OFFERS)
@@ -443,7 +443,7 @@ TAO_Offer_Exporter::create_offers (void)
     {
       ACE_OS::sprintf (name, "Printer #%d", i);
       ACE_OS::sprintf (description,
-		       "%s is a printer. It prints stuff. Like reports.",
+		       "%s is a printer. It prints stuff.",
 		       name);
 
       for (int j = 0; j < QUEUE_SIZE; j++, counter = (counter + 1) % NUM_OFFERS)
@@ -504,7 +504,7 @@ TAO_Offer_Exporter::create_offers (void)
     {
       ACE_OS::sprintf (name, "File System #%d", i);
       ACE_OS::sprintf (description,
-		       "%s is a File System. It stores stuff. Like files.",
+		       "%s is a File System. It stores stuff.",
 		       name);
 
       dp_space_left = this->dp_fs_[i].construct_dynamic_prop
