@@ -53,12 +53,13 @@ IFR_DII_Client::run (CORBA::Environment &ACE_TRY_ENV)
   if (this->lookup_by_name_)
     {
       this->lookup_interface_def (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
     }
   else
     {
       this->find_interface_def (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
     }
-  ACE_CHECK_RETURN (-1);
 
   this->get_operation_def (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
