@@ -1,18 +1,16 @@
+// -*- C++ -*-
+//
 //$Id$
 
 #ifndef SERVER_IORINTERCEPTOR_H
 #define SERVER_IORINTERCEPTOR_H
 
-#include "ace/config-all.h"
+#include "GatewayC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "GatewayC.h"
-
-#include "tao/PortableInterceptorC.h"
-#include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -21,11 +19,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class Server_IORInterceptor :
-  public virtual PortableInterceptor::IORInterceptor,
-  public virtual TAO_Local_RefCounted_Object
+class Server_IORInterceptor
+  : public virtual PortableInterceptor::IORInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
- public:
+public:
 
   Server_IORInterceptor (Gateway::Object_Factory_ptr gateway_object_factory);
 
@@ -70,7 +68,11 @@ class Server_IORInterceptor :
 
   //@}
 
- private:
+protected:
+
+  ~Server_IORInterceptor (void);
+
+private:
 
   Gateway::Object_Factory_ptr gateway_object_factory_;
 

@@ -1,3 +1,38 @@
+Tue Mar 18 15:31:06 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/examples/ORT/ObjectReferenceFactory.idl:
+
+	  New file containing this example's concrete
+	  ObjectReferenceFactory valuetype.
+
+	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h:
+
+	  Inherit from the new concrete ObjectReferenceFactory valuetype
+	  instead of the PortableInterceptor::ObjectReferenceFactory
+	  abstract valuetype.  Fixes compile-time errors related to
+	  instantiation of an abstract class.
+
+	  Removed all useless includes.
+
+	* orbsvcs/examples/ORT/Server_IORInterceptor.cpp
+	  (establish_components):
+
+	  Removed code that needlessly added a tagged component object
+	  references.
+
+	  (components_established):
+
+	  Added missing emulated exception macro parameters.
+
+	* orbsvcs/examples/ORT/Server_IORInterceptor.h:
+
+	  Made destructor protected since the class is reference counted.
+
+	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp:
+	* orbsvcs/examples/ORT/server.cpp:
+
+	  Removed useless includes.
+
 Tue Mar 18 16:54:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TAOC.cpp:
