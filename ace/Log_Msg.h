@@ -527,7 +527,7 @@ private:
   /// The log message, which resides in thread-specific storage.  Note
   /// that only the current log message is stored here -- it will be
   /// overwritten by the subsequent call to <log>.
-  ACE_TCHAR msg_[ACE_Log_Record::MAXLOGMSGLEN];
+  ACE_TCHAR msg_[ACE_Log_Record::MAXLOGMSGLEN + 1]; // Add one for NUL-terminator.
 
   /// Indicates whether we should restart system calls that are
   /// interrupted.
