@@ -287,7 +287,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i) const
 ACE_INLINE ACE_Message_Block*
 TAO_Unbounded_Sequence<CORBA::Octet>::mb (void) const
 {
-  return ACE_Message_Block::duplicate (this->mb_);
+  return this->mb_;
 }
 
 ACE_INLINE void

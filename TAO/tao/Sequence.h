@@ -430,14 +430,12 @@ public:
 
   // = TAO extension
   ACE_Message_Block* mb (void) const;
-  // returns a duplicate of the underlying message block, it is the
-  // caller responsability to release the copy (IMHO this is
-  // consistent with the CORBA calling semantics, return values are
-  // owned by the caller).
+  // Returns the underlying message block, the caller must *not*
+  // release the copy.
 
   void replace (CORBA::ULong length, const ACE_Message_Block* mb);
   // Replaces the current buffer with <mb>, using only <length> bytes.
-  // It takes a duplicate of <mb>.
+  // It takes a duplicate of <mb> so the user still owns it.
 
 private:
   ACE_Message_Block* mb_;
