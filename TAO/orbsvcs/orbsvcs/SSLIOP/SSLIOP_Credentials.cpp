@@ -42,7 +42,13 @@ TAO::SSLIOP::Credentials::Credentials (::X509 *cert, ::EVP_PKEY *evp)
 
           this->id_ = CORBA::string_dup (s.c_str ());
 
-          ::OPENSSL_free (id);
+#ifdef OPENSSL_free
+          OPENSSL_free (id);
+#else
+          // Older versions of OpenSSL didn't define the OpenSSL
+          // macro.
+          CRYPTO_free (id);
+#endif  /* OPENSSL_free */
         }
 
       // -------------------------------------------
