@@ -148,7 +148,8 @@ int main (int argc, char *argv[])
       CORBA::String_var str =
         orb->object_to_string (ec.in (), TAO_TRY_ENV);
 
-      ACE_DEBUG ((LM_DEBUG, "%s; The EC IOR is <%s>\n", str.in (), __FILE__));
+      ACE_DEBUG ((LM_DEBUG,
+		  "The EC IOR is <%s>\n", str.in ()));
 
       CosNaming::Name channel_name (1);
       channel_name.length (1);
