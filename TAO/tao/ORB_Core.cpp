@@ -1824,7 +1824,10 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
       // contains references to objects, which themselves may contain
       // reference to this ORB.
       this->object_ref_table_.destroy ();
+
+#if (TAO_HAS_INTERCEPTORS == 1)
       this->pi_current_ = 0;  // For the sake of consistency.
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
     }
 }
 
