@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#ifdef CONNECTION_MANAGER_H
+#ifndef CONNECTION_MANAGER_H
 #define CONNECTION_MANAGER_H
 
 #include "orbsvcs/Naming/Naming_Utils.h"
