@@ -57,12 +57,12 @@ Trading_Service::init (int argc, char* argv[])
 {
   TAO_TRY
     {
-      if (this->parse_args (argc, argv) == -1)
-        return -1;
-
       this->orb_manager_.init (argc, argv, TAO_TRY_ENV);
       TAO_CHECK_ENV;
-            
+     
+      if (this->parse_args (argc, argv) == -1)
+        return -1;
+       
       CORBA::ORB_ptr orb = this->orb_manager_.orb ();
       
       // Create a Trader Object and set its Service Type Repository.
