@@ -62,6 +62,19 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_sto
         this->local_cb_.sh_.mapped_size_;
       this->local_cb_.sh_.free_size_ = 0;
     }
+  else
+    {
+      this->local_cb_.req_base_ = 0;
+      this->local_cb_.mapped_base_ = 0;
+      this->local_cb_.sh_.max_size_ = 
+        this->round_to_chunk_size (page_size_) ;
+      this->local_cb_.sh_.mapped_size_ = 0;
+      this->local_cb_.sh_.free_offset_ =
+        this->local_cb_.sh_.mapped_size_;
+      this->local_cb_.sh_.free_size_ = 0;
+    }
+
+  int update_backing_store_name = backing_store_name == 0 ? 0 : 1;
 
   if (backing_store_name == 0)
     // Only create a new unique filename for the backing store file if
@@ -71,6 +84,11 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_sto
   ACE_OS::strsncpy (this->backing_store_name_,
                     backing_store_name,
                     (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
+
+  if (update_backing_store_name
+      && ACE_OS::strlen (this->backing_store_name_) < sizeof this->backing_store_name_)
+      ACE_OS::strcat (this->backing_store_name_,
+                      ACE_LIB_TEXT ("_"));
 }
 
 void *
