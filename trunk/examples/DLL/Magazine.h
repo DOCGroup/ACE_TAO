@@ -32,13 +32,11 @@ class Magazine
   //   will exploit.
 public:
 
-  // @@*done* Kirthika, please put the comments under the methods. 
   virtual ~Magazine (void) {};
   // No-op vitrual destructor.
   
   virtual void title (void) = 0;
   // This method gives the title of the magazine.
-
 };
 
 #endif /* MAGAZINE_H */

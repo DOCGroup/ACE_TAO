@@ -3,7 +3,6 @@
 
 // ===========================================================
 //
-//
 // = LIBRARY
 //    ACE_wrappers/examples/DLL
 //
@@ -38,9 +37,6 @@ class Today : public Magazine
   //   Polymoriphism is exploited and an object pointer of Magazine 
   //   is bound to the Today object at runtime.
 public:
-
-  // *done*@@ Kirthika, please put this comment underneath the title()
-  // method.  Also, please make the comment more descriptive.
 
   void title (void);
   // The virtual abstract class method which returns the title of the
