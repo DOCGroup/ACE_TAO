@@ -775,7 +775,6 @@ Kamen Penev <penev@earthlink.net>
 Gregory Yarmit <Gregory.Yarmit@hboc.com>
 Jarek Tomaszewski <jarek-tomaszewski@vertel.de>
 Siegurd Weber <siegurdw@hotmail.com>
-Dennis D Noll <Dennis.Noll@MW.Boeing.com>
 Fabrizio Giannotti <fabrizio.giannotti@alephinfo.it>
 Harald Finster <finster@ave.ac.agit.de>
 Fritz Bosch <FBosch@alcatel.de>
@@ -908,6 +907,7 @@ Rich Seibel <seibel_r@ociweb.com>
 Jim Scheller <csoftware@iname.com>
 Sandeep Adwankar <adwankar@rsch.comm.mot.com>
 W. Craig Trader <ct7@vitelinc.com> 
+Bruce McIntosh <Bruce.McIntosh@australia.boeing.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
