@@ -734,7 +734,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
       return;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
 
   TAO_Stub_Auto_Ptr safe_objdata (objdata);
 

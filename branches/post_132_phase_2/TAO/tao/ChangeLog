@@ -1,3 +1,11 @@
+Fri Mar  7 13:29:43 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Object.cpp:
+	* tao/IOP_CodecC.h:
+	* tao/IOP_IORC.h:
+	* tao/Makefile.tao:
+	* tao/IOPC.h: Fixed compile errors with g++.
+
 Fri Mar 07 09:49:35 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:
