@@ -549,447 +549,6 @@ class TAO_Export ThreadpoolPolicy: public virtual CORBA::Policy
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong PRIVATE_CONNECTION_POLICY_TYPE;
-
-
-#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___PTR_CH_)
-#define _RTCORBA_PRIVATECONNECTIONPOLICY___PTR_CH_
-
-  class PrivateConnectionPolicy;
-  typedef PrivateConnectionPolicy *PrivateConnectionPolicy_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___VAR_CH_)
-#define _RTCORBA_PRIVATECONNECTIONPOLICY___VAR_CH_
-
-  class TAO_Export PrivateConnectionPolicy_var : public TAO_Base_var
-  {
-  public:
-    PrivateConnectionPolicy_var (void); // default constructor
-    PrivateConnectionPolicy_var (PrivateConnectionPolicy_ptr p) : ptr_ (p) {}
-    PrivateConnectionPolicy_var (const PrivateConnectionPolicy_var &); // copy constructor
-    ~PrivateConnectionPolicy_var (void); // destructor
-
-    PrivateConnectionPolicy_var &operator= (PrivateConnectionPolicy_ptr);
-    PrivateConnectionPolicy_var &operator= (const PrivateConnectionPolicy_var &);
-    PrivateConnectionPolicy_ptr operator-> (void) const;
-
-    operator const PrivateConnectionPolicy_ptr &() const;
-    operator PrivateConnectionPolicy_ptr &();
-    // in, inout, out, _retn
-    PrivateConnectionPolicy_ptr in (void) const;
-    PrivateConnectionPolicy_ptr &inout (void);
-    PrivateConnectionPolicy_ptr &out (void);
-    PrivateConnectionPolicy_ptr _retn (void);
-    PrivateConnectionPolicy_ptr ptr (void) const;
-
-  private:
-    PrivateConnectionPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    PrivateConnectionPolicy_var (const TAO_Base_var &rhs);
-    PrivateConnectionPolicy_var &operator= (const TAO_Base_var &rhs);
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___OUT_CH_)
-#define _RTCORBA_PRIVATECONNECTIONPOLICY___OUT_CH_
-
-  class TAO_Export PrivateConnectionPolicy_out
-  {
-  public:
-    PrivateConnectionPolicy_out (PrivateConnectionPolicy_ptr &);
-    PrivateConnectionPolicy_out (PrivateConnectionPolicy_var &);
-    PrivateConnectionPolicy_out (const PrivateConnectionPolicy_out &);
-    PrivateConnectionPolicy_out &operator= (const PrivateConnectionPolicy_out &);
-    PrivateConnectionPolicy_out &operator= (const PrivateConnectionPolicy_var &);
-    PrivateConnectionPolicy_out &operator= (PrivateConnectionPolicy_ptr);
-    operator PrivateConnectionPolicy_ptr &();
-    PrivateConnectionPolicy_ptr &ptr (void);
-    PrivateConnectionPolicy_ptr operator-> (void);
-
-  private:
-    PrivateConnectionPolicy_ptr &ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY_CH_)
-#define _RTCORBA_PRIVATECONNECTIONPOLICY_CH_
-
-class TAO_Export PrivateConnectionPolicy: public virtual CORBA::Policy
-  {
-  public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef PrivateConnectionPolicy_ptr _ptr_type;
-    typedef PrivateConnectionPolicy_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    // the static operations
-    static PrivateConnectionPolicy_ptr _duplicate (PrivateConnectionPolicy_ptr obj);
-    static PrivateConnectionPolicy_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-    static PrivateConnectionPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-    static PrivateConnectionPolicy_ptr _nil (void)
-      {
-        return (PrivateConnectionPolicy_ptr)0;
-      }
-
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
-
-    virtual const char* _interface_repository_id (void) const;
-
-  protected:
-    PrivateConnectionPolicy ();
-
-    virtual ~PrivateConnectionPolicy (void);
-  private:
-    PrivateConnectionPolicy (const PrivateConnectionPolicy &);
-    void operator= (const PrivateConnectionPolicy &);
-  };
-
-
-#endif /* end #if !defined */
-
-  struct PriorityBand;
-  class PriorityBand_var;
-
-  struct TAO_Export PriorityBand
-  {
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef PriorityBand_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    static void _tao_any_destructor (void*);
-
-    ACE_NESTED_CLASS (RTCORBA, Priority) low;
-    ACE_NESTED_CLASS (RTCORBA, Priority) high;
-  };
-
-  class TAO_Export PriorityBand_var
-  {
-  public:
-    PriorityBand_var (void); // default constructor
-    PriorityBand_var (PriorityBand *);
-    PriorityBand_var (const PriorityBand_var &); // copy constructor
-    PriorityBand_var (const PriorityBand &); // fixed-size types only
-    ~PriorityBand_var (void); // destructor
-
-    PriorityBand_var &operator= (PriorityBand *);
-    PriorityBand_var &operator= (const PriorityBand_var &);
-    PriorityBand_var &operator= (const PriorityBand &); // fixed-size types only
-    PriorityBand *operator-> (void);
-    const PriorityBand *operator-> (void) const;
-
-    operator const PriorityBand &() const;
-    operator PriorityBand &();
-    operator PriorityBand &() const;
-
-    // in, inout, out, _retn
-    const PriorityBand &in (void) const;
-    PriorityBand &inout (void);
-    PriorityBand &out (void);
-    PriorityBand _retn (void);
-    PriorityBand *ptr (void) const;
-
-  private:
-    PriorityBand *ptr_;
-  };
-
-  typedef PriorityBand &PriorityBand_out;
-
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PriorityBand;
-
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CH_)
-#define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CH_
-
-    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_RTCORBA_PriorityBands : public TAO_Unbounded_Base_Sequence
-    {
-    public:
-      // = Initialization and termination methods.
-
-      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void); // Default constructor.
-      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum);
-      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum,
-        CORBA::ULong length,
-        PriorityBand *data,
-        CORBA::Boolean release = 0);
-      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs);
-      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &operator= (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs);
-      virtual ~_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void); // Dtor.
-      // = Accessors.
-      PriorityBand &operator[] (CORBA::ULong i);
-      const PriorityBand &operator[] (CORBA::ULong i) const;
-      // = Static operations.
-      static PriorityBand *allocbuf (CORBA::ULong size);
-      static void freebuf (PriorityBand *buffer);
-      virtual void _allocate_buffer (CORBA::ULong length);
-      virtual void _deallocate_buffer (void);
-      // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
-      PriorityBand *get_buffer (CORBA::Boolean orphan = 0);
-      const PriorityBand *get_buffer (void) const;
-      void replace (CORBA::ULong max,
-        CORBA::ULong length,
-        PriorityBand *data,
-        CORBA::Boolean release);
-    };
-
-#endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-
-#if !defined (_RTCORBA_PRIORITYBANDS_CH_)
-#define _RTCORBA_PRIORITYBANDS_CH_
-
-  class PriorityBands;
-  class PriorityBands_var;
-
-  // *************************************************************
-  // PriorityBands
-  // *************************************************************
-
-  class TAO_Export PriorityBands : public
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Sequence_RTCORBA_PriorityBands
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Sequence<PriorityBand>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-  {
-  public:
-    PriorityBands (void); // default ctor
-    PriorityBands (CORBA::ULong max); // uses max size
-    PriorityBands (
-      CORBA::ULong max,
-      CORBA::ULong length,
-      PriorityBand *buffer,
-      CORBA::Boolean release = 0
-    );
-    PriorityBands (const PriorityBands &); // copy ctor
-    ~PriorityBands (void);
-    static void _tao_any_destructor (void*);
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef PriorityBands_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-  };
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_PRIORITYBANDS___VAR_CH_)
-#define _RTCORBA_PRIORITYBANDS___VAR_CH_
-
-  // *************************************************************
-  // class RTCORBA::PriorityBands_var
-  // *************************************************************
-
-  class TAO_Export PriorityBands_var
-  {
-  public:
-    PriorityBands_var (void); // default constructor
-    PriorityBands_var (PriorityBands *);
-    PriorityBands_var (const PriorityBands_var &); // copy constructor
-    PriorityBands_var (const PriorityBands &); // fixed-size base types only
-    ~PriorityBands_var (void); // destructor
-
-    PriorityBands_var &operator= (PriorityBands *);
-    PriorityBands_var &operator= (const PriorityBands_var &);
-    PriorityBands_var &operator= (const PriorityBands &); // fixed-size base types only
-    PriorityBands *operator-> (void);
-    const PriorityBands *operator-> (void) const;
-
-    operator const PriorityBands &() const;
-    operator PriorityBands &();
-    operator PriorityBands &() const;
-
-    PriorityBand & operator[] (CORBA::ULong index);
-    const PriorityBand & operator[] (CORBA::ULong index) const;
-
-    // in, inout, out, _retn
-    const PriorityBands &in (void) const;
-    PriorityBands &inout (void);
-    PriorityBands *&out (void);
-    PriorityBands *_retn (void);
-    PriorityBands *ptr (void) const;
-
-  private:
-    PriorityBands *ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_PRIORITYBANDS___OUT_CH_)
-#define _RTCORBA_PRIORITYBANDS___OUT_CH_
-
-  class TAO_Export PriorityBands_out
-  {
-  public:
-    PriorityBands_out (PriorityBands *&);
-    PriorityBands_out (PriorityBands_var &);
-    PriorityBands_out (const PriorityBands_out &);
-    PriorityBands_out &operator= (const PriorityBands_out &);
-    PriorityBands_out &operator= (PriorityBands *);
-    operator PriorityBands *&();
-    PriorityBands *&ptr (void);
-    PriorityBands *operator-> (void);
-    PriorityBand & operator[] (CORBA::ULong index);
-
-  private:
-    PriorityBands *&ptr_;
-    // assignment from T_var not allowed
-    void operator= (const PriorityBands_var &);
-  };
-
-
-#endif /* end #if !defined */
-
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PriorityBands;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong PRIORITY_BANDED_CONNECTION_POLICY_TYPE;
-
-
-#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___PTR_CH_)
-#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___PTR_CH_
-
-  class PriorityBandedConnectionPolicy;
-  typedef PriorityBandedConnectionPolicy *PriorityBandedConnectionPolicy_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___VAR_CH_)
-#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___VAR_CH_
-
-  class TAO_Export PriorityBandedConnectionPolicy_var : public TAO_Base_var
-  {
-  public:
-    PriorityBandedConnectionPolicy_var (void); // default constructor
-    PriorityBandedConnectionPolicy_var (PriorityBandedConnectionPolicy_ptr p) : ptr_ (p) {}
-    PriorityBandedConnectionPolicy_var (const PriorityBandedConnectionPolicy_var &); // copy constructor
-    ~PriorityBandedConnectionPolicy_var (void); // destructor
-
-    PriorityBandedConnectionPolicy_var &operator= (PriorityBandedConnectionPolicy_ptr);
-    PriorityBandedConnectionPolicy_var &operator= (const PriorityBandedConnectionPolicy_var &);
-    PriorityBandedConnectionPolicy_ptr operator-> (void) const;
-
-    operator const PriorityBandedConnectionPolicy_ptr &() const;
-    operator PriorityBandedConnectionPolicy_ptr &();
-    // in, inout, out, _retn
-    PriorityBandedConnectionPolicy_ptr in (void) const;
-    PriorityBandedConnectionPolicy_ptr &inout (void);
-    PriorityBandedConnectionPolicy_ptr &out (void);
-    PriorityBandedConnectionPolicy_ptr _retn (void);
-    PriorityBandedConnectionPolicy_ptr ptr (void) const;
-
-  private:
-    PriorityBandedConnectionPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    PriorityBandedConnectionPolicy_var (const TAO_Base_var &rhs);
-    PriorityBandedConnectionPolicy_var &operator= (const TAO_Base_var &rhs);
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___OUT_CH_)
-#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___OUT_CH_
-
-  class TAO_Export PriorityBandedConnectionPolicy_out
-  {
-  public:
-    PriorityBandedConnectionPolicy_out (PriorityBandedConnectionPolicy_ptr &);
-    PriorityBandedConnectionPolicy_out (PriorityBandedConnectionPolicy_var &);
-    PriorityBandedConnectionPolicy_out (const PriorityBandedConnectionPolicy_out &);
-    PriorityBandedConnectionPolicy_out &operator= (const PriorityBandedConnectionPolicy_out &);
-    PriorityBandedConnectionPolicy_out &operator= (const PriorityBandedConnectionPolicy_var &);
-    PriorityBandedConnectionPolicy_out &operator= (PriorityBandedConnectionPolicy_ptr);
-    operator PriorityBandedConnectionPolicy_ptr &();
-    PriorityBandedConnectionPolicy_ptr &ptr (void);
-    PriorityBandedConnectionPolicy_ptr operator-> (void);
-
-  private:
-    PriorityBandedConnectionPolicy_ptr &ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY_CH_)
-#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY_CH_
-
-class TAO_Export PriorityBandedConnectionPolicy: public virtual CORBA::Policy
-  {
-  public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef PriorityBandedConnectionPolicy_ptr _ptr_type;
-    typedef PriorityBandedConnectionPolicy_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    // the static operations
-    static PriorityBandedConnectionPolicy_ptr _duplicate (PriorityBandedConnectionPolicy_ptr obj);
-    static PriorityBandedConnectionPolicy_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-    static PriorityBandedConnectionPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-    static PriorityBandedConnectionPolicy_ptr _nil (void)
-      {
-        return (PriorityBandedConnectionPolicy_ptr)0;
-      }
-
-    virtual RTCORBA::PriorityBands * priority_bands (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
-
-    virtual const char* _interface_repository_id (void) const;
-
-  protected:
-    PriorityBandedConnectionPolicy ();
-
-    virtual ~PriorityBandedConnectionPolicy (void);
-  private:
-    PriorityBandedConnectionPolicy (const PriorityBandedConnectionPolicy &);
-    void operator= (const PriorityBandedConnectionPolicy &);
-  };
-
-
-#endif /* end #if !defined */
-
 
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES___PTR_CH_)
 #define _RTCORBA_PROTOCOLPROPERTIES___PTR_CH_
@@ -1104,6 +663,579 @@ class TAO_Export ProtocolProperties : public virtual CORBA_Object,
   private:
     ProtocolProperties (const ProtocolProperties &);
     void operator= (const ProtocolProperties &);
+  };
+
+
+#endif /* end #if !defined */
+
+  struct Protocol;
+  class Protocol_var;
+
+  struct TAO_Export Protocol
+  {
+
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+    typedef Protocol_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
+
+        IOP::ProfileId protocol_type;
+    ACE_NESTED_CLASS (RTCORBA, ProtocolProperties_var) orb_protocol_properties;
+    ACE_NESTED_CLASS (RTCORBA, ProtocolProperties_var) transport_protocol_properties;
+  };
+
+  class TAO_Export Protocol_var
+  {
+  public:
+    Protocol_var (void); // default constructor
+    Protocol_var (Protocol *);
+    Protocol_var (const Protocol_var &); // copy constructor
+    ~Protocol_var (void); // destructor
+
+    Protocol_var &operator= (Protocol *);
+    Protocol_var &operator= (const Protocol_var &);
+    Protocol *operator-> (void);
+    const Protocol *operator-> (void) const;
+
+    operator const Protocol &() const;
+    operator Protocol &();
+    operator Protocol &() const;
+    operator Protocol *&(); // variable-size types only
+
+    // in, inout, out, _retn
+    const Protocol &in (void) const;
+    Protocol &inout (void);
+    Protocol *&out (void);
+    Protocol *_retn (void);
+    Protocol *ptr (void) const;
+
+  private:
+    Protocol *ptr_;
+  };
+
+  class TAO_Export Protocol_out
+  {
+  public:
+    Protocol_out (Protocol *&);
+    Protocol_out (Protocol_var &);
+    Protocol_out (const Protocol_out &);
+    Protocol_out &operator= (const Protocol_out &);
+    Protocol_out &operator= (Protocol *);
+    operator Protocol *&();
+    Protocol *&ptr (void);
+    Protocol *operator-> (void);
+
+  private:
+    Protocol *&ptr_;
+    // assignment from T_var not allowed
+    void operator= (const Protocol_var &);
+  };
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CH_)
+#define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CH_
+
+    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_RTCORBA_ProtocolList : public TAO_Unbounded_Base_Sequence
+    {
+    public:
+      // = Initialization and termination methods.
+
+      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void); // Default constructor.
+      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum);
+      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum,
+        CORBA::ULong length,
+        Protocol *data,
+        CORBA::Boolean release = 0);
+      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs);
+      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &operator= (const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs);
+      virtual ~_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void); // Dtor.
+      // = Accessors.
+      Protocol &operator[] (CORBA::ULong i);
+      const Protocol &operator[] (CORBA::ULong i) const;
+      // = Static operations.
+      static Protocol *allocbuf (CORBA::ULong size);
+      static void freebuf (Protocol *buffer);
+      virtual void _allocate_buffer (CORBA::ULong length);
+      virtual void _deallocate_buffer (void);
+      // Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+      Protocol *get_buffer (CORBA::Boolean orphan = 0);
+      const Protocol *get_buffer (void) const;
+      void replace (CORBA::ULong max,
+        CORBA::ULong length,
+        Protocol *data,
+        CORBA::Boolean release);
+    };
+
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
+#if !defined (_RTCORBA_PROTOCOLLIST_CH_)
+#define _RTCORBA_PROTOCOLLIST_CH_
+
+  class ProtocolList;
+  class ProtocolList_var;
+
+  // *************************************************************
+  // ProtocolList
+  // *************************************************************
+
+  class TAO_Export ProtocolList : public
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+    _TAO_Unbounded_Sequence_RTCORBA_ProtocolList
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+    TAO_Unbounded_Sequence<Protocol>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+  {
+  public:
+    ProtocolList (void); // default ctor
+    ProtocolList (CORBA::ULong max); // uses max size
+    ProtocolList (
+      CORBA::ULong max,
+      CORBA::ULong length,
+      Protocol *buffer,
+      CORBA::Boolean release = 0
+    );
+    ProtocolList (const ProtocolList &); // copy ctor
+    ~ProtocolList (void);
+    static void _tao_any_destructor (void*);
+
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+    typedef ProtocolList_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  };
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_PROTOCOLLIST___VAR_CH_)
+#define _RTCORBA_PROTOCOLLIST___VAR_CH_
+
+  // *************************************************************
+  // class RTCORBA::ProtocolList_var
+  // *************************************************************
+
+  class TAO_Export ProtocolList_var
+  {
+  public:
+    ProtocolList_var (void); // default constructor
+    ProtocolList_var (ProtocolList *);
+    ProtocolList_var (const ProtocolList_var &); // copy constructor
+    ~ProtocolList_var (void); // destructor
+
+    ProtocolList_var &operator= (ProtocolList *);
+    ProtocolList_var &operator= (const ProtocolList_var &);
+    ProtocolList *operator-> (void);
+    const ProtocolList *operator-> (void) const;
+
+    operator const ProtocolList &() const;
+    operator ProtocolList &();
+    operator ProtocolList &() const;
+    operator ProtocolList *&(); // variable-size base types only
+
+    Protocol & operator[] (CORBA::ULong index);
+    const Protocol & operator[] (CORBA::ULong index) const;
+
+    // in, inout, out, _retn
+    const ProtocolList &in (void) const;
+    ProtocolList &inout (void);
+    ProtocolList *&out (void);
+    ProtocolList *_retn (void);
+    ProtocolList *ptr (void) const;
+
+  private:
+    ProtocolList *ptr_;
+  };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_PROTOCOLLIST___OUT_CH_)
+#define _RTCORBA_PROTOCOLLIST___OUT_CH_
+
+  class TAO_Export ProtocolList_out
+  {
+  public:
+    ProtocolList_out (ProtocolList *&);
+    ProtocolList_out (ProtocolList_var &);
+    ProtocolList_out (const ProtocolList_out &);
+    ProtocolList_out &operator= (const ProtocolList_out &);
+    ProtocolList_out &operator= (ProtocolList *);
+    operator ProtocolList *&();
+    ProtocolList *&ptr (void);
+    ProtocolList *operator-> (void);
+    Protocol & operator[] (CORBA::ULong index);
+
+  private:
+    ProtocolList *&ptr_;
+    // assignment from T_var not allowed
+    void operator= (const ProtocolList_var &);
+  };
+
+
+#endif /* end #if !defined */
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong SERVER_PROTOCOL_POLICY_TYPE;
+
+
+#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY___PTR_CH_)
+#define _RTCORBA_SERVERPROTOCOLPOLICY___PTR_CH_
+
+  class ServerProtocolPolicy;
+  typedef ServerProtocolPolicy *ServerProtocolPolicy_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY___VAR_CH_)
+#define _RTCORBA_SERVERPROTOCOLPOLICY___VAR_CH_
+
+  class TAO_Export ServerProtocolPolicy_var : public TAO_Base_var
+  {
+  public:
+    ServerProtocolPolicy_var (void); // default constructor
+    ServerProtocolPolicy_var (ServerProtocolPolicy_ptr p) : ptr_ (p) {}
+    ServerProtocolPolicy_var (const ServerProtocolPolicy_var &); // copy constructor
+    ~ServerProtocolPolicy_var (void); // destructor
+
+    ServerProtocolPolicy_var &operator= (ServerProtocolPolicy_ptr);
+    ServerProtocolPolicy_var &operator= (const ServerProtocolPolicy_var &);
+    ServerProtocolPolicy_ptr operator-> (void) const;
+
+    operator const ServerProtocolPolicy_ptr &() const;
+    operator ServerProtocolPolicy_ptr &();
+    // in, inout, out, _retn
+    ServerProtocolPolicy_ptr in (void) const;
+    ServerProtocolPolicy_ptr &inout (void);
+    ServerProtocolPolicy_ptr &out (void);
+    ServerProtocolPolicy_ptr _retn (void);
+    ServerProtocolPolicy_ptr ptr (void) const;
+
+  private:
+    ServerProtocolPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ServerProtocolPolicy_var (const TAO_Base_var &rhs);
+    ServerProtocolPolicy_var &operator= (const TAO_Base_var &rhs);
+  };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY___OUT_CH_)
+#define _RTCORBA_SERVERPROTOCOLPOLICY___OUT_CH_
+
+  class TAO_Export ServerProtocolPolicy_out
+  {
+  public:
+    ServerProtocolPolicy_out (ServerProtocolPolicy_ptr &);
+    ServerProtocolPolicy_out (ServerProtocolPolicy_var &);
+    ServerProtocolPolicy_out (const ServerProtocolPolicy_out &);
+    ServerProtocolPolicy_out &operator= (const ServerProtocolPolicy_out &);
+    ServerProtocolPolicy_out &operator= (const ServerProtocolPolicy_var &);
+    ServerProtocolPolicy_out &operator= (ServerProtocolPolicy_ptr);
+    operator ServerProtocolPolicy_ptr &();
+    ServerProtocolPolicy_ptr &ptr (void);
+    ServerProtocolPolicy_ptr operator-> (void);
+
+  private:
+    ServerProtocolPolicy_ptr &ptr_;
+  };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY_CH_)
+#define _RTCORBA_SERVERPROTOCOLPOLICY_CH_
+
+class TAO_Export ServerProtocolPolicy: public virtual CORBA::Policy
+  {
+  public:
+  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+    typedef ServerProtocolPolicy_ptr _ptr_type;
+    typedef ServerProtocolPolicy_var _var_type;
+  #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+    // the static operations
+    static ServerProtocolPolicy_ptr _duplicate (ServerProtocolPolicy_ptr obj);
+    static ServerProtocolPolicy_ptr _narrow (
+        CORBA::Object_ptr obj,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+    static ServerProtocolPolicy_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+    static ServerProtocolPolicy_ptr _nil (void)
+      {
+        return (ServerProtocolPolicy_ptr)0;
+      }
+
+    virtual RTCORBA::ProtocolList * protocols (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+
+    virtual void *_tao_QueryInterface (ptr_arith_t type);
+
+    virtual const char* _interface_repository_id (void) const;
+
+  protected:
+    ServerProtocolPolicy ();
+
+    virtual ~ServerProtocolPolicy (void);
+  private:
+    ServerProtocolPolicy (const ServerProtocolPolicy &);
+    void operator= (const ServerProtocolPolicy &);
+  };
+
+
+#endif /* end #if !defined */
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong CLIENT_PROTOCOL_POLICY_TYPE;
+
+
+#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY___PTR_CH_)
+#define _RTCORBA_CLIENTPROTOCOLPOLICY___PTR_CH_
+
+  class ClientProtocolPolicy;
+  typedef ClientProtocolPolicy *ClientProtocolPolicy_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY___VAR_CH_)
+#define _RTCORBA_CLIENTPROTOCOLPOLICY___VAR_CH_
+
+  class TAO_Export ClientProtocolPolicy_var : public TAO_Base_var
+  {
+  public:
+    ClientProtocolPolicy_var (void); // default constructor
+    ClientProtocolPolicy_var (ClientProtocolPolicy_ptr p) : ptr_ (p) {}
+    ClientProtocolPolicy_var (const ClientProtocolPolicy_var &); // copy constructor
+    ~ClientProtocolPolicy_var (void); // destructor
+
+    ClientProtocolPolicy_var &operator= (ClientProtocolPolicy_ptr);
+    ClientProtocolPolicy_var &operator= (const ClientProtocolPolicy_var &);
+    ClientProtocolPolicy_ptr operator-> (void) const;
+
+    operator const ClientProtocolPolicy_ptr &() const;
+    operator ClientProtocolPolicy_ptr &();
+    // in, inout, out, _retn
+    ClientProtocolPolicy_ptr in (void) const;
+    ClientProtocolPolicy_ptr &inout (void);
+    ClientProtocolPolicy_ptr &out (void);
+    ClientProtocolPolicy_ptr _retn (void);
+    ClientProtocolPolicy_ptr ptr (void) const;
+
+  private:
+    ClientProtocolPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    ClientProtocolPolicy_var (const TAO_Base_var &rhs);
+    ClientProtocolPolicy_var &operator= (const TAO_Base_var &rhs);
+  };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY___OUT_CH_)
+#define _RTCORBA_CLIENTPROTOCOLPOLICY___OUT_CH_
+
+  class TAO_Export ClientProtocolPolicy_out
+  {
+  public:
+    ClientProtocolPolicy_out (ClientProtocolPolicy_ptr &);
+    ClientProtocolPolicy_out (ClientProtocolPolicy_var &);
+    ClientProtocolPolicy_out (const ClientProtocolPolicy_out &);
+    ClientProtocolPolicy_out &operator= (const ClientProtocolPolicy_out &);
+    ClientProtocolPolicy_out &operator= (const ClientProtocolPolicy_var &);
+    ClientProtocolPolicy_out &operator= (ClientProtocolPolicy_ptr);
+    operator ClientProtocolPolicy_ptr &();
+    ClientProtocolPolicy_ptr &ptr (void);
+    ClientProtocolPolicy_ptr operator-> (void);
+
+  private:
+    ClientProtocolPolicy_ptr &ptr_;
+  };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY_CH_)
+#define _RTCORBA_CLIENTPROTOCOLPOLICY_CH_
+
+class TAO_Export ClientProtocolPolicy: public virtual CORBA::Policy
+  {
+  public:
+  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+    typedef ClientProtocolPolicy_ptr _ptr_type;
+    typedef ClientProtocolPolicy_var _var_type;
+  #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+    // the static operations
+    static ClientProtocolPolicy_ptr _duplicate (ClientProtocolPolicy_ptr obj);
+    static ClientProtocolPolicy_ptr _narrow (
+        CORBA::Object_ptr obj,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+    static ClientProtocolPolicy_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+    static ClientProtocolPolicy_ptr _nil (void)
+      {
+        return (ClientProtocolPolicy_ptr)0;
+      }
+
+    virtual RTCORBA::ProtocolList * protocols (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+
+    virtual void *_tao_QueryInterface (ptr_arith_t type);
+
+    virtual const char* _interface_repository_id (void) const;
+
+  protected:
+    ClientProtocolPolicy ();
+
+    virtual ~ClientProtocolPolicy (void);
+  private:
+    ClientProtocolPolicy (const ClientProtocolPolicy &);
+    void operator= (const ClientProtocolPolicy &);
+  };
+
+
+#endif /* end #if !defined */
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong PRIVATE_CONNECTION_POLICY_TYPE;
+
+
+#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___PTR_CH_)
+#define _RTCORBA_PRIVATECONNECTIONPOLICY___PTR_CH_
+
+  class PrivateConnectionPolicy;
+  typedef PrivateConnectionPolicy *PrivateConnectionPolicy_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___VAR_CH_)
+#define _RTCORBA_PRIVATECONNECTIONPOLICY___VAR_CH_
+
+  class TAO_Export PrivateConnectionPolicy_var : public TAO_Base_var
+  {
+  public:
+    PrivateConnectionPolicy_var (void); // default constructor
+    PrivateConnectionPolicy_var (PrivateConnectionPolicy_ptr p) : ptr_ (p) {}
+    PrivateConnectionPolicy_var (const PrivateConnectionPolicy_var &); // copy constructor
+    ~PrivateConnectionPolicy_var (void); // destructor
+
+    PrivateConnectionPolicy_var &operator= (PrivateConnectionPolicy_ptr);
+    PrivateConnectionPolicy_var &operator= (const PrivateConnectionPolicy_var &);
+    PrivateConnectionPolicy_ptr operator-> (void) const;
+
+    operator const PrivateConnectionPolicy_ptr &() const;
+    operator PrivateConnectionPolicy_ptr &();
+    // in, inout, out, _retn
+    PrivateConnectionPolicy_ptr in (void) const;
+    PrivateConnectionPolicy_ptr &inout (void);
+    PrivateConnectionPolicy_ptr &out (void);
+    PrivateConnectionPolicy_ptr _retn (void);
+    PrivateConnectionPolicy_ptr ptr (void) const;
+
+  private:
+    PrivateConnectionPolicy_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    PrivateConnectionPolicy_var (const TAO_Base_var &rhs);
+    PrivateConnectionPolicy_var &operator= (const TAO_Base_var &rhs);
+  };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___OUT_CH_)
+#define _RTCORBA_PRIVATECONNECTIONPOLICY___OUT_CH_
+
+  class TAO_Export PrivateConnectionPolicy_out
+  {
+  public:
+    PrivateConnectionPolicy_out (PrivateConnectionPolicy_ptr &);
+    PrivateConnectionPolicy_out (PrivateConnectionPolicy_var &);
+    PrivateConnectionPolicy_out (const PrivateConnectionPolicy_out &);
+    PrivateConnectionPolicy_out &operator= (const PrivateConnectionPolicy_out &);
+    PrivateConnectionPolicy_out &operator= (const PrivateConnectionPolicy_var &);
+    PrivateConnectionPolicy_out &operator= (PrivateConnectionPolicy_ptr);
+    operator PrivateConnectionPolicy_ptr &();
+    PrivateConnectionPolicy_ptr &ptr (void);
+    PrivateConnectionPolicy_ptr operator-> (void);
+
+  private:
+    PrivateConnectionPolicy_ptr &ptr_;
+  };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY_CH_)
+#define _RTCORBA_PRIVATECONNECTIONPOLICY_CH_
+
+class TAO_Export PrivateConnectionPolicy: public virtual CORBA::Policy
+  {
+  public:
+  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+    typedef PrivateConnectionPolicy_ptr _ptr_type;
+    typedef PrivateConnectionPolicy_var _var_type;
+  #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+    // the static operations
+    static PrivateConnectionPolicy_ptr _duplicate (PrivateConnectionPolicy_ptr obj);
+    static PrivateConnectionPolicy_ptr _narrow (
+        CORBA::Object_ptr obj,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+    static PrivateConnectionPolicy_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+    static PrivateConnectionPolicy_ptr _nil (void)
+      {
+        return (PrivateConnectionPolicy_ptr)0;
+      }
+
+    virtual void *_tao_QueryInterface (ptr_arith_t type);
+
+    virtual const char* _interface_repository_id (void) const;
+
+  protected:
+    PrivateConnectionPolicy ();
+
+    virtual ~PrivateConnectionPolicy (void);
+  private:
+    PrivateConnectionPolicy (const PrivateConnectionPolicy &);
+    void operator= (const PrivateConnectionPolicy &);
   };
 
 
@@ -1731,103 +1863,91 @@ class TAO_Export SharedMemoryProtocolProperties: public virtual ProtocolProperti
 
 #endif /* end #if !defined */
 
-  struct Protocol;
-  class Protocol_var;
+  struct PriorityBand;
+  class PriorityBand_var;
 
-  struct TAO_Export Protocol
+  struct TAO_Export PriorityBand
   {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef Protocol_var _var_type;
+    typedef PriorityBand_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-        IOP::ProfileId protocol_type;
-    ACE_NESTED_CLASS (RTCORBA, ProtocolProperties_var) orb_protocol_properties;
-    ACE_NESTED_CLASS (RTCORBA, ProtocolProperties_var) transport_protocol_properties;
+    static void _tao_any_destructor (void*);
+
+    ACE_NESTED_CLASS (RTCORBA, Priority) low;
+    ACE_NESTED_CLASS (RTCORBA, Priority) high;
   };
 
-  class TAO_Export Protocol_var
+  class TAO_Export PriorityBand_var
   {
   public:
-    Protocol_var (void); // default constructor
-    Protocol_var (Protocol *);
-    Protocol_var (const Protocol_var &); // copy constructor
-    ~Protocol_var (void); // destructor
+    PriorityBand_var (void); // default constructor
+    PriorityBand_var (PriorityBand *);
+    PriorityBand_var (const PriorityBand_var &); // copy constructor
+    PriorityBand_var (const PriorityBand &); // fixed-size types only
+    ~PriorityBand_var (void); // destructor
 
-    Protocol_var &operator= (Protocol *);
-    Protocol_var &operator= (const Protocol_var &);
-    Protocol *operator-> (void);
-    const Protocol *operator-> (void) const;
+    PriorityBand_var &operator= (PriorityBand *);
+    PriorityBand_var &operator= (const PriorityBand_var &);
+    PriorityBand_var &operator= (const PriorityBand &); // fixed-size types only
+    PriorityBand *operator-> (void);
+    const PriorityBand *operator-> (void) const;
 
-    operator const Protocol &() const;
-    operator Protocol &();
-    operator Protocol &() const;
-    operator Protocol *&(); // variable-size types only
+    operator const PriorityBand &() const;
+    operator PriorityBand &();
+    operator PriorityBand &() const;
 
     // in, inout, out, _retn
-    const Protocol &in (void) const;
-    Protocol &inout (void);
-    Protocol *&out (void);
-    Protocol *_retn (void);
-    Protocol *ptr (void) const;
+    const PriorityBand &in (void) const;
+    PriorityBand &inout (void);
+    PriorityBand &out (void);
+    PriorityBand _retn (void);
+    PriorityBand *ptr (void) const;
 
   private:
-    Protocol *ptr_;
+    PriorityBand *ptr_;
   };
 
-  class TAO_Export Protocol_out
-  {
-  public:
-    Protocol_out (Protocol *&);
-    Protocol_out (Protocol_var &);
-    Protocol_out (const Protocol_out &);
-    Protocol_out &operator= (const Protocol_out &);
-    Protocol_out &operator= (Protocol *);
-    operator Protocol *&();
-    Protocol *&ptr (void);
-    Protocol *operator-> (void);
+  typedef PriorityBand &PriorityBand_out;
 
-  private:
-    Protocol *&ptr_;
-    // assignment from T_var not allowed
-    void operator= (const Protocol_var &);
-  };
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PriorityBand;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CH_)
-#define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CH_
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CH_)
+#define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CH_
 
-    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_RTCORBA_ProtocolList : public TAO_Unbounded_Base_Sequence
+    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_RTCORBA_PriorityBands : public TAO_Unbounded_Base_Sequence
     {
     public:
       // = Initialization and termination methods.
 
-      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void); // Default constructor.
-      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum);
-      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum,
+      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void); // Default constructor.
+      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum);
+      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum,
         CORBA::ULong length,
-        Protocol *data,
+        PriorityBand *data,
         CORBA::Boolean release = 0);
-      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs);
-      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &operator= (const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs);
-      virtual ~_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void); // Dtor.
+      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs);
+      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &operator= (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs);
+      virtual ~_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void); // Dtor.
       // = Accessors.
-      Protocol &operator[] (CORBA::ULong i);
-      const Protocol &operator[] (CORBA::ULong i) const;
+      PriorityBand &operator[] (CORBA::ULong i);
+      const PriorityBand &operator[] (CORBA::ULong i) const;
       // = Static operations.
-      static Protocol *allocbuf (CORBA::ULong size);
-      static void freebuf (Protocol *buffer);
+      static PriorityBand *allocbuf (CORBA::ULong size);
+      static void freebuf (PriorityBand *buffer);
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
       // Implement the TAO_Base_Sequence methods (see Sequence.h)
 
-      Protocol *get_buffer (CORBA::Boolean orphan = 0);
-      const Protocol *get_buffer (void) const;
+      PriorityBand *get_buffer (CORBA::Boolean orphan = 0);
+      const PriorityBand *get_buffer (void) const;
       void replace (CORBA::ULong max,
         CORBA::ULong length,
-        Protocol *data,
+        PriorityBand *data,
         CORBA::Boolean release);
     };
 
@@ -1836,38 +1956,38 @@ class TAO_Export SharedMemoryProtocolProperties: public virtual ProtocolProperti
 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
-#if !defined (_RTCORBA_PROTOCOLLIST_CH_)
-#define _RTCORBA_PROTOCOLLIST_CH_
+#if !defined (_RTCORBA_PRIORITYBANDS_CH_)
+#define _RTCORBA_PRIORITYBANDS_CH_
 
-  class ProtocolList;
-  class ProtocolList_var;
+  class PriorityBands;
+  class PriorityBands_var;
 
   // *************************************************************
-  // ProtocolList
+  // PriorityBands
   // *************************************************************
 
-  class TAO_Export ProtocolList : public
+  class TAO_Export PriorityBands : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Sequence_RTCORBA_ProtocolList
+    _TAO_Unbounded_Sequence_RTCORBA_PriorityBands
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Sequence<Protocol>
+    TAO_Unbounded_Sequence<PriorityBand>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
-    ProtocolList (void); // default ctor
-    ProtocolList (CORBA::ULong max); // uses max size
-    ProtocolList (
+    PriorityBands (void); // default ctor
+    PriorityBands (CORBA::ULong max); // uses max size
+    PriorityBands (
       CORBA::ULong max,
       CORBA::ULong length,
-      Protocol *buffer,
+      PriorityBand *buffer,
       CORBA::Boolean release = 0
     );
-    ProtocolList (const ProtocolList &); // copy ctor
-    ~ProtocolList (void);
+    PriorityBands (const PriorityBands &); // copy ctor
+    ~PriorityBands (void);
     static void _tao_any_destructor (void*);
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef ProtocolList_var _var_type;
+    typedef PriorityBands_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
@@ -1875,174 +1995,177 @@ class TAO_Export SharedMemoryProtocolProperties: public virtual ProtocolProperti
 #endif /* end #if !defined */
 
 
-#if !defined (_RTCORBA_PROTOCOLLIST___VAR_CH_)
-#define _RTCORBA_PROTOCOLLIST___VAR_CH_
+#if !defined (_RTCORBA_PRIORITYBANDS___VAR_CH_)
+#define _RTCORBA_PRIORITYBANDS___VAR_CH_
 
   // *************************************************************
-  // class RTCORBA::ProtocolList_var
+  // class RTCORBA::PriorityBands_var
   // *************************************************************
 
-  class TAO_Export ProtocolList_var
+  class TAO_Export PriorityBands_var
   {
   public:
-    ProtocolList_var (void); // default constructor
-    ProtocolList_var (ProtocolList *);
-    ProtocolList_var (const ProtocolList_var &); // copy constructor
-    ~ProtocolList_var (void); // destructor
+    PriorityBands_var (void); // default constructor
+    PriorityBands_var (PriorityBands *);
+    PriorityBands_var (const PriorityBands_var &); // copy constructor
+    PriorityBands_var (const PriorityBands &); // fixed-size base types only
+    ~PriorityBands_var (void); // destructor
 
-    ProtocolList_var &operator= (ProtocolList *);
-    ProtocolList_var &operator= (const ProtocolList_var &);
-    ProtocolList *operator-> (void);
-    const ProtocolList *operator-> (void) const;
+    PriorityBands_var &operator= (PriorityBands *);
+    PriorityBands_var &operator= (const PriorityBands_var &);
+    PriorityBands_var &operator= (const PriorityBands &); // fixed-size base types only
+    PriorityBands *operator-> (void);
+    const PriorityBands *operator-> (void) const;
 
-    operator const ProtocolList &() const;
-    operator ProtocolList &();
-    operator ProtocolList &() const;
-    operator ProtocolList *&(); // variable-size base types only
+    operator const PriorityBands &() const;
+    operator PriorityBands &();
+    operator PriorityBands &() const;
 
-    Protocol & operator[] (CORBA::ULong index);
-    const Protocol & operator[] (CORBA::ULong index) const;
+    PriorityBand & operator[] (CORBA::ULong index);
+    const PriorityBand & operator[] (CORBA::ULong index) const;
 
     // in, inout, out, _retn
-    const ProtocolList &in (void) const;
-    ProtocolList &inout (void);
-    ProtocolList *&out (void);
-    ProtocolList *_retn (void);
-    ProtocolList *ptr (void) const;
+    const PriorityBands &in (void) const;
+    PriorityBands &inout (void);
+    PriorityBands *&out (void);
+    PriorityBands *_retn (void);
+    PriorityBands *ptr (void) const;
 
   private:
-    ProtocolList *ptr_;
+    PriorityBands *ptr_;
   };
 
 
 #endif /* end #if !defined */
 
 
-#if !defined (_RTCORBA_PROTOCOLLIST___OUT_CH_)
-#define _RTCORBA_PROTOCOLLIST___OUT_CH_
+#if !defined (_RTCORBA_PRIORITYBANDS___OUT_CH_)
+#define _RTCORBA_PRIORITYBANDS___OUT_CH_
 
-  class TAO_Export ProtocolList_out
+  class TAO_Export PriorityBands_out
   {
   public:
-    ProtocolList_out (ProtocolList *&);
-    ProtocolList_out (ProtocolList_var &);
-    ProtocolList_out (const ProtocolList_out &);
-    ProtocolList_out &operator= (const ProtocolList_out &);
-    ProtocolList_out &operator= (ProtocolList *);
-    operator ProtocolList *&();
-    ProtocolList *&ptr (void);
-    ProtocolList *operator-> (void);
-    Protocol & operator[] (CORBA::ULong index);
+    PriorityBands_out (PriorityBands *&);
+    PriorityBands_out (PriorityBands_var &);
+    PriorityBands_out (const PriorityBands_out &);
+    PriorityBands_out &operator= (const PriorityBands_out &);
+    PriorityBands_out &operator= (PriorityBands *);
+    operator PriorityBands *&();
+    PriorityBands *&ptr (void);
+    PriorityBands *operator-> (void);
+    PriorityBand & operator[] (CORBA::ULong index);
 
   private:
-    ProtocolList *&ptr_;
+    PriorityBands *&ptr_;
     // assignment from T_var not allowed
-    void operator= (const ProtocolList_var &);
+    void operator= (const PriorityBands_var &);
   };
 
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong SERVER_PROTOCOL_POLICY_TYPE;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PriorityBands;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong PRIORITY_BANDED_CONNECTION_POLICY_TYPE;
 
 
-#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY___PTR_CH_)
-#define _RTCORBA_SERVERPROTOCOLPOLICY___PTR_CH_
+#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___PTR_CH_)
+#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___PTR_CH_
 
-  class ServerProtocolPolicy;
-  typedef ServerProtocolPolicy *ServerProtocolPolicy_ptr;
+  class PriorityBandedConnectionPolicy;
+  typedef PriorityBandedConnectionPolicy *PriorityBandedConnectionPolicy_ptr;
 
 #endif /* end #if !defined */
 
 
-#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY___VAR_CH_)
-#define _RTCORBA_SERVERPROTOCOLPOLICY___VAR_CH_
+#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___VAR_CH_)
+#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___VAR_CH_
 
-  class TAO_Export ServerProtocolPolicy_var : public TAO_Base_var
+  class TAO_Export PriorityBandedConnectionPolicy_var : public TAO_Base_var
   {
   public:
-    ServerProtocolPolicy_var (void); // default constructor
-    ServerProtocolPolicy_var (ServerProtocolPolicy_ptr p) : ptr_ (p) {}
-    ServerProtocolPolicy_var (const ServerProtocolPolicy_var &); // copy constructor
-    ~ServerProtocolPolicy_var (void); // destructor
+    PriorityBandedConnectionPolicy_var (void); // default constructor
+    PriorityBandedConnectionPolicy_var (PriorityBandedConnectionPolicy_ptr p) : ptr_ (p) {}
+    PriorityBandedConnectionPolicy_var (const PriorityBandedConnectionPolicy_var &); // copy constructor
+    ~PriorityBandedConnectionPolicy_var (void); // destructor
 
-    ServerProtocolPolicy_var &operator= (ServerProtocolPolicy_ptr);
-    ServerProtocolPolicy_var &operator= (const ServerProtocolPolicy_var &);
-    ServerProtocolPolicy_ptr operator-> (void) const;
+    PriorityBandedConnectionPolicy_var &operator= (PriorityBandedConnectionPolicy_ptr);
+    PriorityBandedConnectionPolicy_var &operator= (const PriorityBandedConnectionPolicy_var &);
+    PriorityBandedConnectionPolicy_ptr operator-> (void) const;
 
-    operator const ServerProtocolPolicy_ptr &() const;
-    operator ServerProtocolPolicy_ptr &();
+    operator const PriorityBandedConnectionPolicy_ptr &() const;
+    operator PriorityBandedConnectionPolicy_ptr &();
     // in, inout, out, _retn
-    ServerProtocolPolicy_ptr in (void) const;
-    ServerProtocolPolicy_ptr &inout (void);
-    ServerProtocolPolicy_ptr &out (void);
-    ServerProtocolPolicy_ptr _retn (void);
-    ServerProtocolPolicy_ptr ptr (void) const;
+    PriorityBandedConnectionPolicy_ptr in (void) const;
+    PriorityBandedConnectionPolicy_ptr &inout (void);
+    PriorityBandedConnectionPolicy_ptr &out (void);
+    PriorityBandedConnectionPolicy_ptr _retn (void);
+    PriorityBandedConnectionPolicy_ptr ptr (void) const;
 
   private:
-    ServerProtocolPolicy_ptr ptr_;
+    PriorityBandedConnectionPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
-    ServerProtocolPolicy_var (const TAO_Base_var &rhs);
-    ServerProtocolPolicy_var &operator= (const TAO_Base_var &rhs);
+    PriorityBandedConnectionPolicy_var (const TAO_Base_var &rhs);
+    PriorityBandedConnectionPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
 
 #endif /* end #if !defined */
 
 
-#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY___OUT_CH_)
-#define _RTCORBA_SERVERPROTOCOLPOLICY___OUT_CH_
+#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___OUT_CH_)
+#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___OUT_CH_
 
-  class TAO_Export ServerProtocolPolicy_out
+  class TAO_Export PriorityBandedConnectionPolicy_out
   {
   public:
-    ServerProtocolPolicy_out (ServerProtocolPolicy_ptr &);
-    ServerProtocolPolicy_out (ServerProtocolPolicy_var &);
-    ServerProtocolPolicy_out (const ServerProtocolPolicy_out &);
-    ServerProtocolPolicy_out &operator= (const ServerProtocolPolicy_out &);
-    ServerProtocolPolicy_out &operator= (const ServerProtocolPolicy_var &);
-    ServerProtocolPolicy_out &operator= (ServerProtocolPolicy_ptr);
-    operator ServerProtocolPolicy_ptr &();
-    ServerProtocolPolicy_ptr &ptr (void);
-    ServerProtocolPolicy_ptr operator-> (void);
+    PriorityBandedConnectionPolicy_out (PriorityBandedConnectionPolicy_ptr &);
+    PriorityBandedConnectionPolicy_out (PriorityBandedConnectionPolicy_var &);
+    PriorityBandedConnectionPolicy_out (const PriorityBandedConnectionPolicy_out &);
+    PriorityBandedConnectionPolicy_out &operator= (const PriorityBandedConnectionPolicy_out &);
+    PriorityBandedConnectionPolicy_out &operator= (const PriorityBandedConnectionPolicy_var &);
+    PriorityBandedConnectionPolicy_out &operator= (PriorityBandedConnectionPolicy_ptr);
+    operator PriorityBandedConnectionPolicy_ptr &();
+    PriorityBandedConnectionPolicy_ptr &ptr (void);
+    PriorityBandedConnectionPolicy_ptr operator-> (void);
 
   private:
-    ServerProtocolPolicy_ptr &ptr_;
+    PriorityBandedConnectionPolicy_ptr &ptr_;
   };
 
 
 #endif /* end #if !defined */
 
 
-#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY_CH_)
-#define _RTCORBA_SERVERPROTOCOLPOLICY_CH_
+#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY_CH_)
+#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY_CH_
 
-class TAO_Export ServerProtocolPolicy: public virtual CORBA::Policy
+class TAO_Export PriorityBandedConnectionPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef ServerProtocolPolicy_ptr _ptr_type;
-    typedef ServerProtocolPolicy_var _var_type;
+    typedef PriorityBandedConnectionPolicy_ptr _ptr_type;
+    typedef PriorityBandedConnectionPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     // the static operations
-    static ServerProtocolPolicy_ptr _duplicate (ServerProtocolPolicy_ptr obj);
-    static ServerProtocolPolicy_ptr _narrow (
+    static PriorityBandedConnectionPolicy_ptr _duplicate (PriorityBandedConnectionPolicy_ptr obj);
+    static PriorityBandedConnectionPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
-    static ServerProtocolPolicy_ptr _unchecked_narrow (
+    static PriorityBandedConnectionPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
-    static ServerProtocolPolicy_ptr _nil (void)
+    static PriorityBandedConnectionPolicy_ptr _nil (void)
       {
-        return (ServerProtocolPolicy_ptr)0;
+        return (PriorityBandedConnectionPolicy_ptr)0;
       }
 
-    virtual RTCORBA::ProtocolList * protocols (
+    virtual RTCORBA::PriorityBands * priority_bands (
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
@@ -2055,135 +2178,12 @@ class TAO_Export ServerProtocolPolicy: public virtual CORBA::Policy
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    ServerProtocolPolicy ();
+    PriorityBandedConnectionPolicy ();
 
-    virtual ~ServerProtocolPolicy (void);
+    virtual ~PriorityBandedConnectionPolicy (void);
   private:
-    ServerProtocolPolicy (const ServerProtocolPolicy &);
-    void operator= (const ServerProtocolPolicy &);
-  };
-
-
-#endif /* end #if !defined */
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong CLIENT_PROTOCOL_POLICY_TYPE;
-
-
-#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY___PTR_CH_)
-#define _RTCORBA_CLIENTPROTOCOLPOLICY___PTR_CH_
-
-  class ClientProtocolPolicy;
-  typedef ClientProtocolPolicy *ClientProtocolPolicy_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY___VAR_CH_)
-#define _RTCORBA_CLIENTPROTOCOLPOLICY___VAR_CH_
-
-  class TAO_Export ClientProtocolPolicy_var : public TAO_Base_var
-  {
-  public:
-    ClientProtocolPolicy_var (void); // default constructor
-    ClientProtocolPolicy_var (ClientProtocolPolicy_ptr p) : ptr_ (p) {}
-    ClientProtocolPolicy_var (const ClientProtocolPolicy_var &); // copy constructor
-    ~ClientProtocolPolicy_var (void); // destructor
-
-    ClientProtocolPolicy_var &operator= (ClientProtocolPolicy_ptr);
-    ClientProtocolPolicy_var &operator= (const ClientProtocolPolicy_var &);
-    ClientProtocolPolicy_ptr operator-> (void) const;
-
-    operator const ClientProtocolPolicy_ptr &() const;
-    operator ClientProtocolPolicy_ptr &();
-    // in, inout, out, _retn
-    ClientProtocolPolicy_ptr in (void) const;
-    ClientProtocolPolicy_ptr &inout (void);
-    ClientProtocolPolicy_ptr &out (void);
-    ClientProtocolPolicy_ptr _retn (void);
-    ClientProtocolPolicy_ptr ptr (void) const;
-
-  private:
-    ClientProtocolPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ClientProtocolPolicy_var (const TAO_Base_var &rhs);
-    ClientProtocolPolicy_var &operator= (const TAO_Base_var &rhs);
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY___OUT_CH_)
-#define _RTCORBA_CLIENTPROTOCOLPOLICY___OUT_CH_
-
-  class TAO_Export ClientProtocolPolicy_out
-  {
-  public:
-    ClientProtocolPolicy_out (ClientProtocolPolicy_ptr &);
-    ClientProtocolPolicy_out (ClientProtocolPolicy_var &);
-    ClientProtocolPolicy_out (const ClientProtocolPolicy_out &);
-    ClientProtocolPolicy_out &operator= (const ClientProtocolPolicy_out &);
-    ClientProtocolPolicy_out &operator= (const ClientProtocolPolicy_var &);
-    ClientProtocolPolicy_out &operator= (ClientProtocolPolicy_ptr);
-    operator ClientProtocolPolicy_ptr &();
-    ClientProtocolPolicy_ptr &ptr (void);
-    ClientProtocolPolicy_ptr operator-> (void);
-
-  private:
-    ClientProtocolPolicy_ptr &ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY_CH_)
-#define _RTCORBA_CLIENTPROTOCOLPOLICY_CH_
-
-class TAO_Export ClientProtocolPolicy: public virtual CORBA::Policy
-  {
-  public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef ClientProtocolPolicy_ptr _ptr_type;
-    typedef ClientProtocolPolicy_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    // the static operations
-    static ClientProtocolPolicy_ptr _duplicate (ClientProtocolPolicy_ptr obj);
-    static ClientProtocolPolicy_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-    static ClientProtocolPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-    static ClientProtocolPolicy_ptr _nil (void)
-      {
-        return (ClientProtocolPolicy_ptr)0;
-      }
-
-    virtual RTCORBA::ProtocolList * protocols (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
-
-    virtual const char* _interface_repository_id (void) const;
-
-  protected:
-    ClientProtocolPolicy ();
-
-    virtual ~ClientProtocolPolicy (void);
-  private:
-    ClientProtocolPolicy (const ClientProtocolPolicy &);
-    void operator= (const ClientProtocolPolicy &);
+    PriorityBandedConnectionPolicy (const PriorityBandedConnectionPolicy &);
+    void operator= (const PriorityBandedConnectionPolicy &);
   };
 
 
@@ -2632,6 +2632,19 @@ class TAO_Export RTORB : public virtual CORBA_Object
         RTCORBA::RTORB::MutexNotFound
       )) = 0;
 
+    virtual RTCORBA::TCPProtocolProperties_ptr create_tcp_protocol_properties (
+        CORBA::Long send_buffer_size,
+        CORBA::Long recv_buffer_size,
+        CORBA::Boolean keep_alive,
+        CORBA::Boolean dont_route,
+        CORBA::Boolean no_delay,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+
 
 #if !defined (_RTCORBA_RTORB_INVALIDTHREADPOOL_CH_)
 #define _RTCORBA_RTORB_INVALIDTHREADPOOL_CH_
@@ -2740,14 +2753,6 @@ class TAO_Export RTORB : public virtual CORBA_Object
         CORBA::SystemException
       )) = 0;
 
-    virtual RTCORBA::PrivateConnectionPolicy_ptr create_private_connection_policy (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
     virtual RTCORBA::ServerProtocolPolicy_ptr create_server_protocol_policy (
         const RTCORBA::ProtocolList & protocols,
         CORBA::Environment &ACE_TRY_ENV =
@@ -2759,6 +2764,14 @@ class TAO_Export RTORB : public virtual CORBA_Object
 
     virtual RTCORBA::ClientProtocolPolicy_ptr create_client_protocol_policy (
         const RTCORBA::ProtocolList & protocols,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+
+    virtual RTCORBA::PrivateConnectionPolicy_ptr create_private_connection_policy (
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )

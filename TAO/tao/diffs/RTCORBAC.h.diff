@@ -1,5 +1,5 @@
---- orig/RTCORBAC.h	Tue Jan 30 19:10:26 2001
-+++ RTCORBAC.h	Tue Jan 30 19:06:01 2001
+--- orig/RTCORBAC.h	Sun Mar  4 10:31:28 2001
++++ RTCORBAC.h	Sun Mar  4 10:50:47 2001
 @@ -23,16 +23,22 @@
  #define _TAO_IDL_ORIG_RTCORBAC_H_
  
@@ -42,7 +42,7 @@
    typedef CORBA::ULong ThreadpoolId;
    typedef CORBA::ULong_out ThreadpoolId_out;
      TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ThreadpoolId;
-@@ -1053,7 +1062,8 @@
+@@ -612,7 +621,8 @@
  #if !defined (_RTCORBA_PROTOCOLPROPERTIES_CH_)
  #define _RTCORBA_PROTOCOLPROPERTIES_CH_
  
@@ -52,7 +52,7 @@
    {
    public:
    #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-@@ -1082,6 +1092,11 @@
+@@ -641,6 +651,11 @@
  
      virtual const char* _interface_repository_id (void) const;
  
@@ -64,7 +64,7 @@
    protected:
      ProtocolProperties ();
  
-@@ -2648,7 +2663,7 @@
+@@ -2661,7 +2676,7 @@
            CORBA::Environment &
          );
  
@@ -73,7 +73,7 @@
  
  
        // = TAO extension.
-@@ -2845,6 +2860,8 @@
+@@ -2858,6 +2873,8 @@
  #if defined (__BORLANDC__)
  #pragma option pop
  #endif /* __BORLANDC__ */
