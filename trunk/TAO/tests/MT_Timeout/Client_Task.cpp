@@ -46,7 +46,6 @@ Client_Task::too_big_difference_calls (void) const
 int
 Client_Task::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
   ACE_DECLARE_NEW_CORBA_ENV;
 
   int successful_calls = 0;
@@ -110,7 +109,6 @@ Client_Task::svc (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
   this->successful_calls_ += successful_calls;

@@ -1,3 +1,19 @@
+Thu May 10 08:46:21 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/IIOP_Connection_Handler.cpp:
+	  A debugging message was confusing it said 'connection from
+	  client', but it was used for both passive and actively
+	  established connections.  IMHO 'connection to peer' is less
+	  confusing.
+
+        * tests/Big_Oneways/Session.cpp:
+        * tests/Big_Twoways/Session.cpp:
+        * tests/Blocking_Sync_None/client.cpp:
+        * tests/MT_Timeout/Client_Task.cpp:
+        * tests/MT_Timeout/Server_Task.cpp:
+	  Several tests were too verbose for the nightly regression tests,
+	  eliminate a lot of output.
+
 Thu May 10 07:11:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/DSI_Latency/Roundtrip.h: Added exception
