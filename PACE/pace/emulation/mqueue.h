@@ -37,7 +37,6 @@ typedef struct mq_attr
 
 struct mqd
 {
-  int fd;
   long length;
   int oflag;
   char* mptr;

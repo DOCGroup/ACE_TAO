@@ -33,8 +33,8 @@ pace_raise (int sig)
 
 PACE_INLINE
 int
-pace_sigaction (int sig, const pace_s_sigaction * act,
-                pace_s_sigaction * oact)
+pace_sigaction (int sig, const pace_sigaction_s * act,
+                pace_sigaction_s * oact)
 {
   return sigaction (sig, act, oact);
 }

@@ -126,7 +126,8 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
-  int pace_fprintf (PACE_FILE *stream, const char *format, ...);
+# define pace_fprintf fprintf
+  /*  int pace_fprintf (PACE_FILE *stream, const char *format, ...);*/
 
   /**
      PACE's implementation of the POSIX function fputc.
@@ -260,7 +261,8 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
-  int pace_printf (const char* format, ...);
+# define pace_printf printf
+  /*  int pace_printf (const char* format, ...); */
 
   /**
      PACE's implementation of the POSIX function putc.
@@ -326,7 +328,8 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
-  int pace_sprintf (char* s, const char* format, ...);
+#define pace_sprintf sprintf
+  /*  int pace_sprintf (char* s, const char* format, ...); */
 
   /**
      PACE's implementation of the POSIX function scanf.

@@ -1,4 +1,4 @@
-/* $Id$
+/* $Id$ -*- C -*-
  * ============================================================================
  *
  * = LIBRARY
@@ -11,8 +11,6 @@
  *    John Heitmann
  *
  * ============================================================================ */
-
-#if PACE_LINUX
 
 #include "pace/sys/mman.h"
 #include "pace/stdio.h"
@@ -27,7 +25,10 @@
 typedef struct
 {
   pace_mq_attr attr;
-  pace_size_t num_open;
+  pace_size_t num_open; /* How many processes have a valid mqd_t to here */
+  pace_size_t rec_wait; /* How many processes are blocked on mq_receive */
+  pace_pid_t not_pid; /* Who is actually registered for notification */
+  pace_sigevent notification;
   pace_pthread_mutex_t mutex;
   pace_pthread_cond_t cond;
   pace_size_t head;
@@ -42,6 +43,8 @@ typedef struct
 } message_header;
 
 struct mq_attr attrdefault = { 0, 32, 256, 0 };
+#define PACE_MQ_LOCKPOSTFIX "mqlock9587"
+#define PACE_MQ_DATAPOSTFIX "mqdata2355"
 
 /* This remains mq_open due to the macro in pace/mqueue.h */
 pace_mqd_t mq_open (const char* name,
@@ -57,8 +60,9 @@ pace_mqd_t mq_open (const char* name,
   pace_size_t mapsize;
   char* mmaploc;
   char* new_name;
+  char* lock_name;
   int create_mmap = 0; /* 1 if the file has never be inited */
-  message_header* temp = 0; /*Used in initializaiton of mqueue*/
+  message_header* temp = 0; /*Used in initialization of mqueue*/
   long index; /* index into the file */
   pace_mqd_t result = pace_malloc (sizeof (struct mqd));
   pace_stat_s statbuf;
@@ -79,16 +83,20 @@ retry:
 
   /* Create a name that will go to /tmp with a unique name */
   new_name = malloc (256);
-  snprintf (new_name, 256, "/tmp/mq013028%s", name);
+  lock_name = malloc (256);
+  snprintf (new_name, 256, "/tmp%s%s", name, PACE_MQ_DATAPOSTFIX);
+  snprintf (lock_name, 256, "/tmp%s%s", name, PACE_MQ_LOCKPOSTFIX);
+
   /* Fix alignment */
   if (attr->mq_msgsize % sizeof (long) != 0)
   {
     attr->mq_msgsize += 8 - (attr->mq_msgsize % sizeof (long));
   }
+
   if (oflag & PACE_O_CREAT)
   {
     /* We need to protect access without the help of O_RDONLY in the fs */
-    fd = pace_open ((new_name, PACE_O_RDWR | PACE_O_CREAT | PACE_O_EXCL, mode & ~S_IXUSR));
+    fd = pace_open (new_name, PACE_O_RDWR | PACE_O_CREAT | PACE_O_EXCL, mode);
 
     if (fd == -1 && errno != EEXIST)
     {
@@ -109,7 +117,7 @@ retry:
     else
     {
       /* We want the existing file */
-      fd = pace_open ((new_name, PACE_O_RDWR));
+      fd = pace_open (new_name, PACE_O_RDWR);
       if (fd == -1 && errno == ENOENT)
       {
         /* Something odd is going on */
@@ -123,7 +131,7 @@ retry:
   }
   else
   {
-    fd = pace_open ((new_name, PACE_O_RDWR));
+    fd = pace_open (new_name, PACE_O_RDWR);
     if (fd == -1)
     {
       return (pace_mqd_t)-1;
@@ -136,7 +144,7 @@ retry:
   */
   while (create_mmap == 0)
   {
-    if (stat (new_name, &statbuf) == -1)
+    if (stat (lock_name, &statbuf) == -1)
     {
       close (fd);
       if (errno == ENOENT && (oflag & O_CREAT))
@@ -145,7 +153,7 @@ retry:
       }
       return (pace_mqd_t)-1;
     }
-    else if ((statbuf.st_mode & S_IXUSR) == 0)
+    else
     {
       break;
     }
@@ -171,14 +179,12 @@ retry:
     }
 
     mmaploc = pace_mmap (0, mapsize, mprot, mflags, fd, 0);
-
+    pace_close (fd);
     if (mmaploc == MAP_FAILED)
     {
       pace_unlink (new_name);
       return (pace_mqd_t)-1;
     }
-
-    pace_close (fd);
 
     pace_memset (mmaploc, 0, mapsize);
 
@@ -194,6 +200,7 @@ retry:
       pace_munmap (mmaploc, mapsize);
       return (pace_mqd_t)-1;
     }
+
     if ((errno = pace_pthread_cond_init (&(((mqfile*)mmaploc)->cond), 0)) != 0)
     {
       pace_unlink (new_name);
@@ -215,13 +222,14 @@ retry:
     attr->mq_curmsgs = 0;
     ((mqfile*)mmaploc)->attr = *attr;
 
-    /* Set S_IXUSR so that the file is known to be inited */
-    if (pace_fchmod (fd, mode | S_IXUSR) == -1)
+    /* Create the lock file so that the file is known to be inited */
+    if (pace_open (lock_name, O_CREAT | O_EXCL) == -1)
     {
       pace_unlink (new_name);
       pace_munmap (mmaploc, mapsize);
       return (pace_mqd_t)-1;
     }
+
   }
   else
   {
@@ -252,7 +260,6 @@ retry:
     return (pace_mqd_t)-1;
   }
 
-  result->fd = fd;
   result->mptr = mmaploc;
   result->length = mapsize;
   result->oflag = oflag;
@@ -320,6 +327,7 @@ int mq_send (pace_mqd_t mqdes,
     while (queue->attr.mq_maxmsg <= queue->attr.mq_curmsgs)
     {
       pace_pthread_cond_wait (&queue->cond, &queue->mutex);
+      pace_printf ("Send Woke Up\n");
     }
   }
 
@@ -353,15 +361,6 @@ int mq_send (pace_mqd_t mqdes,
     ((message_header*)(&mqdes->mptr[old_index]))->next = index;
   }
 
-
-  if (queue->attr.mq_curmsgs == 0)
-  {
-    /* Let other waiting threads know there is food on the table */
-    if ((errno = pace_pthread_cond_signal (&((mqfile*)mqdes->mptr)->cond)) != 0)
-    {
-      return -1;
-    }
-  }
   queue->attr.mq_curmsgs++;
 
   if ((errno = pace_pthread_mutex_unlock (&queue->mutex)) != 0)
@@ -369,6 +368,29 @@ int mq_send (pace_mqd_t mqdes,
     return -1;
   }
 
+  if (queue->attr.mq_curmsgs == 1)
+  {
+    /* If there is no one waiting and blocked */
+    if (queue->not_pid != 0 && queue->rec_wait == 0)
+    {
+      if (queue->notification.sigev_notify == SIGEV_SIGNAL)
+      {
+        sigqueue (queue->not_pid,
+                  queue->notification.sigev_signo,
+                  queue->notification.sigev_value);
+      }
+      queue->not_pid = 0;
+    }
+    else
+    {
+      pace_printf ("Send is Signalling\n");
+      /* Let other waiting threads know there is food on the table */
+      if ((errno = pace_pthread_cond_signal (&((mqfile*)mqdes->mptr)->cond)) != 0)
+      {
+        return -1;
+      }
+    }
+  }
   return 0;
 }
 
@@ -385,28 +407,30 @@ pace_ssize_t mq_receive (pace_mqd_t mqdes,
     errno = EMSGSIZE;
     return -1;
   }
-  if (queue->attr.mq_curmsgs == 0)
+
+  if ((errno = pace_pthread_mutex_lock (&queue->mutex)) != 0)
+  {
+    return -1;
+  }
+
+  /* If the queue is empty... */
+  if (queue->attr.mq_curmsgs <= 0)
   {
     if (queue->attr.mq_flags & O_NONBLOCK)
     {
       errno = EAGAIN;
       return -1;
     }
-    else
+    while (queue->attr.mq_curmsgs <= 0)
     {
-      errno = ENOTSUP;
-      return -1;
-      /*???? wait on cond var */
+      pace_printf ("Recv is going to sleep\n");
+      queue->rec_wait++;
+      pace_pthread_cond_wait (&(queue->cond), &(queue->mutex));
+      queue->rec_wait--;
+      pace_printf ("Recv is waking from sleep\n");
     }
   }
 
-  if (pace_pthread_mutex_lock (&queue->mutex) == -1)
-  {
-    errno = EBADMSG;
-    return -1;
-  }
-
-  queue->attr.mq_curmsgs--;
   if (nmsg_prio != 0)
   {
     *nmsg_prio = ((message_header*)(&mqdes->mptr[queue->head]))->priority;
@@ -419,17 +443,40 @@ pace_ssize_t mq_receive (pace_mqd_t mqdes,
   ((message_header*)(&mqdes->mptr[temp]))->next = queue->freelist;
   queue->freelist = temp;
 
+  queue->attr.mq_curmsgs--;
+
   if (pace_pthread_mutex_unlock (&queue->mutex) == -1)
   {
     errno = EBADMSG;
     return -1;
   }
+
+  if (queue->attr.mq_curmsgs == (queue->attr.mq_maxmsg-1))
+  {
+    pace_printf ("Recv is signalling\n");
+    /* Let other waiting threads know there is room available */
+    if ((errno = pace_pthread_cond_signal (&((mqfile*)mqdes->mptr)->cond)) != 0)
+    {
+      return -1;
+    }
+  }
+
   return ((message_header*)(&mqdes->mptr[queue->head]))->length;
 }
 
 int mq_getattr (pace_mqd_t mqdes, pace_mq_attr * mqstat)
 {
-  *mqstat = ((mqfile*)mqdes->mptr)->attr;
+  mqfile* queue = ((mqfile*)mqdes->mptr);
+
+  if ((errno = pace_pthread_mutex_lock (&queue->mutex)) != 0)
+  {
+    return -1;
+  }
+
+  *mqstat = queue->attr;
+
+  pace_pthread_mutex_unlock (&queue->mutex);
+
   return 0;
 }
 
@@ -437,6 +484,12 @@ int mq_setattr(pace_mqd_t mqdes,
                const pace_mq_attr * mqstat,
                pace_mq_attr * omqstat)
 {
+  mqfile* queue = ((mqfile*)(mqdes->mptr));
+
+  if ((errno = pace_pthread_mutex_lock (&queue->mutex)) != 0)
+  {
+    return -1;
+  }
   if (omqstat != 0)
   {
     *omqstat = ((mqfile*)mqdes->mptr)->attr;
@@ -445,20 +498,52 @@ int mq_setattr(pace_mqd_t mqdes,
   {
     /* You eediot*/
     errno = EFAULT;
+    pace_pthread_mutex_unlock (&queue->mutex);
     return -1;
   }
 
   ((mqfile*)mqdes->mptr)->attr.mq_flags = mqstat->mq_flags;
 
+  pace_pthread_mutex_unlock (&queue->mutex);
   return 0;
 }
 
 int mq_notify (pace_mqd_t mqd, const pace_sigevent* notification)
 {
-  errno = ENOSYS;
-  PACE_UNUSED_ARG (mqd);
-  PACE_UNUSED_ARG (notification);
-  return -1;
+  mqfile* queue = ((mqfile*)(mqd->mptr));
+  pace_pid_t pid = pace_getpid ();
+
+  if ((errno = pace_pthread_mutex_lock (&queue->mutex)) != 0)
+  {
+    return -1;
+  }
+
+  if (notification == 0)
+  {
+    /* Unregister if notification is null */
+    if (queue->not_pid == pid)
+    {
+      queue->not_pid = 0;
+    }
+  }
+  else
+  {
+    if (queue->not_pid && pace_kill (queue->not_pid, 0))
+    {
+      /* If another process is registered */
+      if (errno != ESRCH)
+      {
+        pace_pthread_mutex_unlock (&queue->mutex);
+        return -1;
+      }
+    }
+    queue->not_pid = pid;
+    queue->notification = *notification;
+  }
+
+  pthread_mutex_unlock (&queue->mutex);
+
+  return 0;
 }
 
 void print_queue (pace_mqd_t mqd)
@@ -489,5 +574,3 @@ void print_queue (pace_mqd_t mqd)
     }
   printf ("\n");
 }
-
-#endif /* PACE_LINUX */
