@@ -1086,6 +1086,14 @@ be_union::compute_default_value (void)
                               break_loop = 1;
                             }
                           break;
+                        case AST_Expression::EV_wchar:
+                          if (this->default_value_.u.wchar_val
+                              == expr->ev ()->u.wcval)
+                            {
+                              this->default_value_.u.wchar_val++;
+                              break_loop = 1;
+                            }
+                          break;
                         case AST_Expression::EV_bool:
                           if (this->default_value_.u.bool_val
                               == expr->ev ()->u.bval)
