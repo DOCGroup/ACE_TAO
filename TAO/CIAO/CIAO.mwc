@@ -2,6 +2,7 @@
 // $Id$
 
 workspace {
+  DnC
   ciao
   tools
 }

@@ -11,6 +11,7 @@ workspace {
   ../orbsvcs/orbsvcs/Svc_Utils.mpc
   ../orbsvcs/orbsvcs/Security.mpc
   ../orbsvcs/orbsvcs/IFRService.mpc
+  DnC
   ciao
   tools
 }

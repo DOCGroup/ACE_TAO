@@ -2,12 +2,11 @@
 // $Id$
 
 project (DomainApplicationManager): taolib, ciao_deployment_stub, ciao_deployment_svnt {
-  requires += dnc
   after += Config_Handlers Node_Daemon
   
   sharedname = DomainApplicationManager
   dynamicflags   = DOMAINAPPLICATIONMANAGER_BUILD_DLL
-  libs += TAO_Valuetype CIAO_Client CIAO_Server Config_Handlers TAO_IFR_Client
+  libs += TAO_Valuetype CIAO_DnC_Client CIAO_DnC_Server Config_Handlers TAO_IFR_Client
  
   Source_Files {
     DomainApplicationManager_Impl.cpp
