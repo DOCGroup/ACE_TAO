@@ -1408,6 +1408,7 @@ typedef HANDLE ACE_sema_t;
 #  define THR_DETACHED    0       /* ?? ignore in most places */
 #  define THR_BOUND       0       /* ?? ignore in most places */
 #  define THR_NEW_LWP     0       /* ?? ignore in most places */
+#  define THR_JOINABLE    0       /* ?? ignore in most places */
 #  define THR_SUSPENDED   CREATE_SUSPENDED
 #  define THR_USE_AFX             0x01000000
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
