@@ -45,6 +45,7 @@ DIRS  = CDR \
 	Faults \
 	Param_Test \
 	DSI_Gateway \
+	Abstract_Interface \
 	AMI \
 	AMI_Timeouts \
 	Timeout \
