@@ -34,24 +34,17 @@ SUBDIRS = ace \
 ##          bin \
 ##          ASNMP \
 ##          os-patches \
-##          psosim \
-##          rpc++ \
-##          WindozeCE \
 ##          etc \
 ##          includes
 
 ## For some reason, automake doesn't include acconfig.h in the distribution
 EXTRA_DIST = \
         ACE-INSTALL.html \
-        ACE-categories.html \
-        ACE-inheritance.pdf.gz \
-        ACE-inheritance.ps.gz \
         ACE-install.sh \
         ACE-lessons.html \
         ACE.DSW \
         BIBLIOGRAPHY \
         BUG-REPORT-FORM \
-        CE-status.txt \
         ChangeLog-93 \
         ChangeLog-94 \
         ChangeLog-95 \
@@ -62,7 +55,6 @@ EXTRA_DIST = \
         ChangeLog-98a \
         ChangeLog-98b \
         FAQ \
-        NEWS.in \
         README.aceconf \
         VERSION \
         acconfig.h \
@@ -112,6 +104,12 @@ noinst_DATA = ACE.ifnames
 ACE.ifnames: ChangeLog acconfig.h
 	ifnames ace/*.{h,i,cpp} | sed -e 's/ .*//g' > ACE.ifnames
 
+
+## Directories to include in the distribution but which I am too lazy to
+## create Makefile.am files for.  A Makefile.am for these directories isn't
+## needed anyway.
+ACE_EXTRA_DIST = ./bin ./docs ./m4
+
 ## Make sure config.h doesn't get into the distribution
 ## since it may later intefere with the newly generated
 ## config.h when doing VPATH builds.
@@ -119,7 +117,7 @@ ACE.ifnames: ChangeLog acconfig.h
 ## config.h is platform specific.
 dist-hook:
 	-rm -f $(distdir)/ace/config.h
-	tar cf - ./docs | (cd $(distdir); tar xfBp -)
+	tar cf - $(ACE_EXTRA_DIST) | (cd $(distdir); tar xfBp -)
 	list=`find $(distdir) -type d -name CVS -print`; for p in $$list; do \
           rm -rf $$p; \
         done

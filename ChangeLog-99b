@@ -1,3 +1,44 @@
+Sun Mar 21 18:39:16 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ACE.ifnames:
+
+	Updated with new macro list.
+	
+	* Makefile.am:
+
+	Added the m4 directory to the distribution list and made some
+	minor updates.
+	
+	* ace/Makefile.am: 
+	* m4/subsets.m4:
+
+	Subsetting updates/corrections.
+
+	* configure.in:
+
+	Added work around for buggy glibc2.1 when including both
+	<ucontext.h> and <sys/procfs.h>.  Added check for auto_ptr class
+	declaration since some platforms have <memory> but may not
+	declare the auto_ptr class.  Shortened some of the "checking"
+	messages.
+
+	* ace-config.1.in:  ace-config script man page template
+	* aceConf.sh.in:    ace-config "unknown" library script
+	
+	Added these files to the CVS repository.
+
+	* config.guess:
+	* config.sub:
+	* ltconfig:
+	* ltmain.sh:
+
+	Updated these files to the ones in the latest libtool.
+
+	* libtool:
+
+	Removed this since it is automatically generated for each platform.
+  	It shouldn't be under CVS control.
+	
 Sun Mar 21 17:59:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/CDR_Stream.cpp: 
