@@ -5,6 +5,7 @@ project(JAWS) : acelib {
   sharedname = JAWS
   dynamicflags = ACE_BUILD_SVC_DLL
   requires    += ace_filecache
+  avoids += uses_wchar
 
   Source_Files {
     HTTP_Server.cpp
@@ -25,6 +26,7 @@ project(JAWS_server) : aceexe {
   after += JAWS
   libs  += JAWS
   requires += ace_filecache
+  avoids += uses_wchar
 
   Source_Files {
     main.cpp

@@ -107,7 +107,7 @@ IPC_Server<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
 {
   const ACE_TCHAR *local_addr = argc > 1
     ? argv[1]
-    : ACE_TEXT (ACE_DEFAULT_SERVER_PORT_STR);
+    : ACE_DEFAULT_SERVER_PORT_STR;
   ACE_Time_Value timeout (argc > 2
                           ? ACE_OS::atoi (argv[2])
                           : ACE_DEFAULT_TIMEOUT);

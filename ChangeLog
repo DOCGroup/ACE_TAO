@@ -1,3 +1,18 @@
+Mon Jan  3 17:42:39 2005  Steve Huston  <shuston@riverace.com>
+
+	* apps/JAWS/server/server.mpc:
+	* apps/JAWS3jaws3/jaws3.mpc: Added "avoids += uses_wchar" because
+	  there are some sources in here that won't work with wide-char.
+	  Furthermore, it's not immediately clear what the needs of the code
+	  are with respect to char width. These could probably be fixed,
+	  but may require (or be greatly helped by) some improvement to
+	  ACE_Process_Options::setenv() to accept narrow-char args and/or
+	  adjust string formatting to account for wide-char input.
+
+	* examples/Connection/non_blocking/CPP-acceptor.cpp: The
+	  ACE_DEFAULT_SERVER_PORT_STR is already defined in terms of
+	  ACE_TEXT, so it shouldn't be wrapped in ACE_TEXT.
+
 Mon Jan  3 14:38:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* netsvcs/lib/Makefile.am:
