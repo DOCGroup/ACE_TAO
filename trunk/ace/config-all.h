@@ -63,6 +63,44 @@
 // Keep this at the bottom of the file.  It contains the main macros.
 #include "ace/OS_main.h"
 
+// ----------------------------------------------------------------
+
+# define ACE_TRACE_IMPL(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
+
+// By default tracing is turned off.
+#if !defined (ACE_NTRACE)
+#  define ACE_NTRACE 1
+#endif /* ACE_NTRACE */
+
+#if (ACE_NTRACE == 1)
+#  define ACE_TRACE(X)
+#else
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
+#  define ACE_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Global_Macros.h"
+#  include "ace/Trace.h"
+#endif /* ACE_NTRACE */
+
+// By default we perform no tracing on the OS layer, otherwise the
+// coupling between the OS layer and Log_Msg is too tight.  But the
+// application can override the default if they wish to.
+#if !defined (ACE_OS_NTRACE)
+#  define ACE_OS_NTRACE 1
+#endif /* ACE_OS_NTRACE */
+
+#if (ACE_OS_NTRACE == 1)
+#  define ACE_OS_TRACE(X)
+#else
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
+#  define ACE_OS_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Global_Macros.h"
+#  include "ace/Trace.h"
+#endif /* ACE_OS_NTRACE */
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_ALL_H */
