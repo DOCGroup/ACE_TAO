@@ -2,6 +2,7 @@
 
 #include "Metrics_Logger.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/ace_wchar.h"
 
 ACE_RCSID(Metrics_Logger, Metrics_Logger, "$Id$")
 
@@ -585,8 +586,8 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
          // Look up the name of the probe in the hash map.
          // If successful, use the name, and if not just use the probe id.
          CORBA::String_var *probe_name = 0;
-         ASYS_TCHAR format_spec[255];
-         ASYS_TCHAR export_spec[255];
+         char format_spec[255];
+         char export_spec[255];
 
          if (probe_name_map_.find (timeprobe_params [i].probe_id, probe_name) == 0
              && probe_name != 0)

@@ -12,8 +12,10 @@
 #endif /* ! VXWORKS */
 
 #include "ace/OS.h"
+#include "ace/Singleton.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/MetricsC.h"
+#include "orbsvcs/orbsvcs_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

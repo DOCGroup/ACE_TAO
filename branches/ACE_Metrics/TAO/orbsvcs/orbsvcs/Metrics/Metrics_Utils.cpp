@@ -4,6 +4,7 @@
 #define METRICS_UTILS_CPP
 
 #include "Metrics_Utils.h"
+#include "Metrics_LocalCache.h"
 
 /////////////////////////////
 // Class TAO_Metrics_Utils //

@@ -17,8 +17,10 @@
 #include "ace/OS.h"
 #include "ace/Task.h"
 #include "ace/Singleton.h"
+#include "ace/Functor.h"
+#include "ace/Hash_Map_Manager.h"
 
-#include "tao/TAO.h"
+//#include "tao/TAO.h"
 
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/MetricsS.h"

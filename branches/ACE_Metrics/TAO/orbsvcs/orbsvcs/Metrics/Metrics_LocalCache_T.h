@@ -113,7 +113,7 @@ public:
      ACE_METRICS_STRING_TYPE probe_name;
      TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR> probe;
   };
-  
+
   struct TAO_Metrics_Cache_Data : public TAO_Metrics_Cache_Data_Base
   {
      int is_hrt;
