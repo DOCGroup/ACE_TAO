@@ -2,48 +2,51 @@ Thu Jan 29 10:52:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-lynxos.h: added putenv () declaration.
 
+        * include/makeinclude/platform_sunos5_g++.GNU: added comment
+          about disabling optimization with g++ 2.8.0.
+
 Thu Jan 29 10:32:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/platform_sunos5_sunc++.GNU:
-	  The posix4 library is needed in some TAO examples.
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          The posix4 library is needed in some TAO examples.
 
-	* ace/Module.h:
-	* ace/Message_Queue.h:
-	  Workaround HP/C++ compiler bug, it does not support enums inside
-	  templates so we move them into base classes. Thanks to Sundar
-	  T.J <tjsundar@cisco.com> for reporting this problem.
+        * ace/Module.h:
+        * ace/Message_Queue.h:
+          Workaround HP/C++ compiler bug, it does not support enums inside
+          templates so we move them into base classes. Thanks to Sundar
+          T.J <tjsundar@cisco.com> for reporting this problem.
 
 Thu Jan 29 10:14:03 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/FIFO.h: Revised the comment at the beginning of ACE_FIFO to
- 	  clearly indicate that it doesn't work portably to Win32.  Thanks
- 	  to Thomas Hampson <thomas.hampson@lmco.com> for suggesting this.
+        * ace/FIFO.h: Revised the comment at the beginning of ACE_FIFO to
+          clearly indicate that it doesn't work portably to Win32.  Thanks
+          to Thomas Hampson <thomas.hampson@lmco.com> for suggesting this.
 
 Wed Jan 28 15:36:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile:
-	  We can use the top level Makefile on TAO now.
+        * bin/auto_compile:
+          We can use the top level Makefile on TAO now.
 
 Wed Jan 28 11:59:41 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (isatty): Added conversion from a Win32 HANDLE to a C
- 	  file handle. It works correctly now.  Thanks to Chuck R. Gehr
- 	  <GehrCR@louisville.stortek.com> for noticing the problem.
+        * ace/OS.i (isatty): Added conversion from a Win32 HANDLE to a C
+          file handle. It works correctly now.  Thanks to Chuck R. Gehr
+          <GehrCR@louisville.stortek.com> for noticing the problem.
 
 Tue Jan 27 20:32:07 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Message_Block: Added an accessor to retrieve the reference
- 	  count on an ACE_Data_Block.  Thanks to Dave Meyer
- 	  <dmeyer@std.saic.com> for contributing this.
+        * ace/Message_Block: Added an accessor to retrieve the reference
+          count on an ACE_Data_Block.  Thanks to Dave Meyer
+          <dmeyer@std.saic.com> for contributing this.
 
 Tue Jan 27 15:09:08 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/OS.i,
-	* ace/Timer_Queue_Adapters.cpp:
-	  When using ACE_CLEANUP_???_POP macros, it was being called with
- 	  argument 1, which should be 0 (don't execute the cleanup).
-	  Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
- 	  argument 1, which should be 0 (don't execute the cleanup).this.
+        * ace/OS.i,
+        * ace/Timer_Queue_Adapters.cpp:
+          When using ACE_CLEANUP_???_POP macros, it was being called with
+          argument 1, which should be 0 (don't execute the cleanup).
+          Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
+          argument 1, which should be 0 (don't execute the cleanup).this.
 
 Tue Jan 27 14:56:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -54,9 +57,9 @@ Tue Jan 27 14:56:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Jan 27 08:28:34 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/Basic_Types.h: Simplified and changed so that the config.h file
-	  can pre-specify the ACE_SIZEOF_* macros in case the preprocessor
-	  has trouble calculating them.
+        * ace/Basic_Types.h: Simplified and changed so that the config.h file
+          can pre-specify the ACE_SIZEOF_* macros in case the preprocessor
+          has trouble calculating them.
 
 Tue Jan 27 06:45:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -75,8 +78,8 @@ Tue Jan 27 06:45:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Jan 27 02:38:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.{i,cpp}:
-	* ace/config-WinCE.h: More Windows CE insanities.
+        * ace/OS.{i,cpp}:
+        * ace/config-WinCE.h: More Windows CE insanities.
 
 Mon Jan 26 13:20:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -99,8 +102,8 @@ Mon Jan 26 13:20:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Jan 26 11:35:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile:
-	  Added TAO_ROOT to the environment.
+        * bin/auto_compile:
+          Added TAO_ROOT to the environment.
 
 Mon Jan 26 10:28:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -108,44 +111,44 @@ Mon Jan 26 10:28:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Jan 26 02:53:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Namespace related macros are now ifdef'ed by
-	  ACE_HAS_BROKEN_NAMESPACES instead of ACE_ORBIX_HAS_NAMESPACES.
+        * ace/OS.h: Namespace related macros are now ifdef'ed by
+          ACE_HAS_BROKEN_NAMESPACES instead of ACE_ORBIX_HAS_NAMESPACES.
 
-	* ace/README
-	* ace/config-win32-common.h: Added a new flag
-	  ACE_HAS_BROKEN_NAMESPACES to deal with MSVC's broken namespace
-	  support.
+        * ace/README
+        * ace/config-win32-common.h: Added a new flag
+          ACE_HAS_BROKEN_NAMESPACES to deal with MSVC's broken namespace
+          support.
 
-	* ace/config-win32.h: Re-enable defining ACE_ORBIX_HAS_NAMESPACES
-	  for Win32.
+        * ace/config-win32.h: Re-enable defining ACE_ORBIX_HAS_NAMESPACES
+          for Win32.
 
-	* ace/config-WinCE.h: Temporary file to hold WinCE specific
-	  configurations.  It will probably be merged with
-	  config-win32-common.h in some point.
+        * ace/config-WinCE.h: Temporary file to hold WinCE specific
+          configurations.  It will probably be merged with
+          config-win32-common.h in some point.
 
-	* ace/ace_dll.dsp: Added WinCE x86 emulation mode project
- 	  definition.
+        * ace/ace_dll.dsp: Added WinCE x86 emulation mode project
+          definition.
 
-	* ace/OS.{h.i} (ACE_OS): Added Windows CE macros madness.
+        * ace/OS.{h.i} (ACE_OS): Added Windows CE macros madness.
 
-	* ace/config-win32-common.h: Ifdef'ed out ACE_HAS_SIG_ATOMIC_T for
- 	  WinCE.  Prevent repeat definition of STRICT.
+        * ace/config-win32-common.h: Ifdef'ed out ACE_HAS_SIG_ATOMIC_T for
+          WinCE.  Prevent repeat definition of STRICT.
 
 Sun Jan 25 17:31:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-win32.h: Disabled setting ACE_ORBIX_HAS_NAMESPACES by
- 	  default on NT.  MSVC's namespace support is buggy.
+        * ace/config-win32.h: Disabled setting ACE_ORBIX_HAS_NAMESPACES by
+          default on NT.  MSVC's namespace support is buggy.
 
 1998-01-25  Nanbor Wang  <nanbor@fennec.wolfpack.cs.wustl.edu>
 
-	* tests/Conn_Test.cpp: Rearranged explicit template instantiations
-	  order to avoid errors from egcs.  Thanks to Gonzo for reporting
-	  the bug.
+        * tests/Conn_Test.cpp: Rearranged explicit template instantiations
+          order to avoid errors from egcs.  Thanks to Gonzo for reporting
+          the bug.
 
 Fri Jan 23 12:24:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i (sleep): Fixed a typo where tv_sec was being set rather
- 	  than tv_usec.  Thanks to Gonzo for pointing this out.
+        * ace/OS.i (sleep): Fixed a typo where tv_sec was being set rather
+          than tv_usec.  Thanks to Gonzo for pointing this out.
 
 Fri Jan 23 06:27:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -182,10 +185,10 @@ Fri Jan 23 06:27:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Jan 22 16:34:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Connection/misc/Connection_Handler.cpp (svc): Fixed a
- 	  bug in the example where the global Singleton Reactor was being
- 	  used rather than the object's Reactor.  Thanks to Peter Gross
- 	  <pag@kokako.probita.com> for reporting this.
+        * examples/Connection/misc/Connection_Handler.cpp (svc): Fixed a
+          bug in the example where the global Singleton Reactor was being
+          used rather than the object's Reactor.  Thanks to Peter Gross
+          <pag@kokako.probita.com> for reporting this.
 
 Thu Jan 22 09:04:13 1998  David L. Levine  <@cs.wustl.edu>
 
@@ -238,11 +241,11 @@ Thu Jan 22 09:04:13 1998  David L. Levine  <@cs.wustl.edu>
 
 Wed Jan 21 21:37:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager.cpp (close_i): Removed the HPUX_11
- 	  destructor madness by saving the location to be destructed in a
- 	  temporary reference instead of calling the destructor from the
- 	  array directly.  Thanks to Istvan Buki <ibuki@fedex.com> for
- 	  providing the patch.
+        * ace/Hash_Map_Manager.cpp (close_i): Removed the HPUX_11
+          destructor madness by saving the location to be destructed in a
+          temporary reference instead of calling the destructor from the
+          array directly.  Thanks to Istvan Buki <ibuki@fedex.com> for
+          providing the patch.
 
 Wed Jan 21 20:36:43 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
@@ -263,21 +266,21 @@ Tue Jan 20 21:15:01 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Jan 20 20:31:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/test_config.h:
-	  Changed several buffer sizes from BUFSIZ to MAXPATHLEN, they
-	  were used for storing pathnames, so the later is a proper size
-	  for them.
+        * tests/test_config.h:
+          Changed several buffer sizes from BUFSIZ to MAXPATHLEN, they
+          were used for storing pathnames, so the later is a proper size
+          for them.
 
 Tue Jan 20 15:54:44 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
-	* ace/Timer_Heap_T.cpp: Fixed a bug that was introduced on
-	  Sunday because of the non-use of position 0 (we have to
-	  grow the heap one node early).
+        * ace/Timer_Heap_T.cpp: Fixed a bug that was introduced on
+          Sunday because of the non-use of position 0 (we have to
+          grow the heap one node early).
 
-	* ace/Timer_Queue_T.{h,cpp}: Added a return_node () method
-	  which is used to return a ACE_Timer_Node back into the
-	  control of the Timer Queue after it leaves via
-	  remove_first ().
+        * ace/Timer_Queue_T.{h,cpp}: Added a return_node () method
+          which is used to return a ACE_Timer_Node back into the
+          control of the Timer Queue after it leaves via
+          remove_first ().
 
 Tue Jan 20 15:52:31 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -285,137 +288,137 @@ Tue Jan 20 15:52:31 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Jan 20 12:49:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager.cpp (ACE_Hash_Map_Manager): Member table_
- 	  needs to be initialized to prevent deleting invalid memories.
+        * ace/Hash_Map_Manager.cpp (ACE_Hash_Map_Manager): Member table_
+          needs to be initialized to prevent deleting invalid memories.
 
 Tue Jan 20 11:57:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile:
-	  Added several TAO components to the compile list.
-	  The regular expression for make errors was missing several of
-	  them.
+        * bin/auto_compile:
+          Added several TAO components to the compile list.
+          The regular expression for make errors was missing several of
+          them.
 
 Tue Jan 20 03:36:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager.cpp (open): We should call close_i () to
- 	  ensure previously allocated memory gets release before we
- 	  allocate new one.
+        * ace/Hash_Map_Manager.cpp (open): We should call close_i () to
+          ensure previously allocated memory gets release before we
+          allocate new one.
 
 Mon Jan 19 22:21:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Env_Value_Test.cpp (main): Added test codes for unsigned
-	  short.
+        * tests/Env_Value_Test.cpp (main): Added test codes for unsigned
+          short.
 
-	* ace/Env_Value_T.i (ACE_Convert): Added conversion function for
-	  unsigned short.
+        * ace/Env_Value_T.i (ACE_Convert): Added conversion function for
+          unsigned short.
 
 Mon Jan 19 15:13:47 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* bin/Makefile: Fixed a problem with the CCFLAGS definition that
- 	  was causing circular macro expansion.  Thanks to Philippe
- 	  O'Reilly <philippe@robot.ireq.ca> for reporting this.
+        * bin/Makefile: Fixed a problem with the CCFLAGS definition that
+          was causing circular macro expansion.  Thanks to Philippe
+          O'Reilly <philippe@robot.ireq.ca> for reporting this.
 
 Sun Jan 18 14:32:42 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
-	* ace/Timer_Heap_T.cpp: Problems were arising because of the
-	  use of negative numbers in the timer_id array of the timer
-	  heap for the free list.  When the 0th index is in the free
-	  list, pointers to it will show up as 0 (because 0 == -0).
-	  This will look the same as a timer_id for the top of the
-	  heap, and if cancel () was attempted on this invalid
-	  timer_id, bad things would happen.  To prevent this, index
-	  0 is now ignored so it doesn't show up in the free list.
+        * ace/Timer_Heap_T.cpp: Problems were arising because of the
+          use of negative numbers in the timer_id array of the timer
+          heap for the free list.  When the 0th index is in the free
+          list, pointers to it will show up as 0 (because 0 == -0).
+          This will look the same as a timer_id for the top of the
+          heap, and if cancel () was attempted on this invalid
+          timer_id, bad things would happen.  To prevent this, index
+          0 is now ignored so it doesn't show up in the free list.
 
 Sun Jan 18 18:12:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Service_Configurator/Misc/*.ds?: Added new project
- 	  files for this example.
+        * examples/Service_Configurator/Misc/*.ds?: Added new project
+          files for this example.
 
 Sun Jan 18 17:27:52 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
-	* ace/Timer_Wheel_T.cpp: Fixed a problem with Timer Wheel's
-	  expire().  The problem occured when the handle_timeout() method
-	  of the event handler used would return a 0.  This causes the
-	  Timer Queue to cancel all timers using that event handler.
-	  Because Timer Wheel's expire caches the position of some timers
-	  that will be expired, it was trying to expire timers that were
-	  already cancelled.  Now it checks the timer before it expires.
+        * ace/Timer_Wheel_T.cpp: Fixed a problem with Timer Wheel's
+          expire().  The problem occured when the handle_timeout() method
+          of the event handler used would return a 0.  This causes the
+          Timer Queue to cancel all timers using that event handler.
+          Because Timer Wheel's expire caches the position of some timers
+          that will be expired, it was trying to expire timers that were
+          already cancelled.  Now it checks the timer before it expires.
 
 Sun Jan 18 16:08:36 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Thread_Manager: Modified the signature to the spawn_n()
- 	  method so that it's possible to pass in an array of stack
- 	  pointers and stack sizes.  Thanks to Thomas Venturella
- 	  <tventurell@mdc.com> for requesting this.
+        * ace/Thread_Manager: Modified the signature to the spawn_n()
+          method so that it's possible to pass in an array of stack
+          pointers and stack sizes.  Thanks to Thomas Venturella
+          <tventurell@mdc.com> for requesting this.
 
-	* ace/Task: Modified the signature to the activate() method so
- 	  that it's possible to pass in an array of stack pointers and
- 	  stack sizes.  Thanks to Thomas Venturella <tventurell@mdc.com>
- 	  for requesting this.
+        * ace/Task: Modified the signature to the activate() method so
+          that it's possible to pass in an array of stack pointers and
+          stack sizes.  Thanks to Thomas Venturella <tventurell@mdc.com>
+          for requesting this.
 
 Sun Jan 18 15:54:16 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
-	* ace/Timer_Wheel_T.h:
-	  ace/Timer_Hash_T.h:
-	  ace/Timer_Queue_T.h:
-	  ace/Timer_Wheel_T.cpp:
-	  ace/Timer_Hash_T.cpp:  Added pure virtual get_first() method to
-	  Timer_Queue_T.  Added implementations to Timer_Wheel and Timer_Hash.
-	  Timer_Heap and Timer_List already had implementations.
+        * ace/Timer_Wheel_T.h:
+          ace/Timer_Hash_T.h:
+          ace/Timer_Queue_T.h:
+          ace/Timer_Wheel_T.cpp:
+          ace/Timer_Hash_T.cpp:  Added pure virtual get_first() method to
+          Timer_Queue_T.  Added implementations to Timer_Wheel and Timer_Hash.
+          Timer_Heap and Timer_List already had implementations.
 
 Sat Jan 17 23:40:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* netsvcs/VCAUTO.MAK:
-	* netsvcs/lib/VCAUTO.MAK: Added directory information for easier
- 	  debugging.
+        * netsvcs/VCAUTO.MAK:
+        * netsvcs/lib/VCAUTO.MAK: Added directory information for easier
+          debugging.
 
 Sat Jan 17 16:10:04 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* examples/Service_Configurator/Misc/main.cpp (main): Replaced the
- 	  buggy use of ACE_Service_Config daemon; with
- 	  ACE_Service_Config::open().  We'll have to fix this properly
- 	  some day, but for now this is the best solution.  Thanks to
- 	  Pawel Roman <proman@npac.syr.edu> for reporting this.
+        * examples/Service_Configurator/Misc/main.cpp (main): Replaced the
+          buggy use of ACE_Service_Config daemon; with
+          ACE_Service_Config::open().  We'll have to fix this properly
+          some day, but for now this is the best solution.  Thanks to
+          Pawel Roman <proman@npac.syr.edu> for reporting this.
 
 Sat Jan 17 00:42:13 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/SString.cpp (substring): Fixed bug.  count should be
- 	  initialized to length and not len_.
+        * ace/SString.cpp (substring): Fixed bug.  count should be
+          initialized to length and not len_.
 
 Fri Jan 16 15:52:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/IOStream.h (ACE_Streambuf):
-	* ace/config-win32-common.h:
-	* ace/iosfwd.h:
-	* ace/streams.h: Applied IOStream patches from James CE Johnson
- 	  <jcej@chiroptera.tragus.org>.
+        * ace/IOStream.h (ACE_Streambuf):
+        * ace/config-win32-common.h:
+        * ace/iosfwd.h:
+        * ace/streams.h: Applied IOStream patches from James CE Johnson
+          <jcej@chiroptera.tragus.org>.
 
 Fri Jan 16 01:42:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.h: Changed the definition of ACE_CORBA_* macros so that
- 	  on non-Win32 platforms, they will be expand to the nested
- 	  classes. Thanks to Jonathan Reis <reis@minniemouse.cemax.com>
- 	  for reporting this.
+        * ace/OS.h: Changed the definition of ACE_CORBA_* macros so that
+          on non-Win32 platforms, they will be expand to the nested
+          classes. Thanks to Jonathan Reis <reis@minniemouse.cemax.com>
+          for reporting this.
 
-	* ace/SString.h: Added the correct export macros.
+        * ace/SString.h: Added the correct export macros.
 
 Thu Jan 15 15:45:48 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* etc/ACE-guidelines.html: Reformatted this page a bit.
+        * etc/ACE-guidelines.html: Reformatted this page a bit.
 
-	* ace/Message_Queue.cpp (open): The fix from Slawomir Kuzniar was
- 	  incorrect.  I reverted the change.
+        * ace/Message_Queue.cpp (open): The fix from Slawomir Kuzniar was
+          incorrect.  I reverted the change.
 
 Thu Jan 15 12:43:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* /: Added a bunch of makefiles (*.MAK) for one button
- 	  make-and-test on NT.
+        * /: Added a bunch of makefiles (*.MAK) for one button
+          make-and-test on NT.
 
-	* Makefile (FILTER): Added filter to remove VC one button related
- 	  makefile from ACE release.
+        * Makefile (FILTER): Added filter to remove VC one button related
+          makefile from ACE release.
 
-	* ace/ACE_Library.{mdp,mak}: Added Shared_Memory.cpp file into the
- 	  project makefile.
+        * ace/ACE_Library.{mdp,mak}: Added Shared_Memory.cpp file into the
+          project makefile.
 
 Thu Jan 15 09:12:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -453,26 +456,26 @@ Thu Jan 15 09:12:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Jan 14 20:41:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Signal.i (is_member):
-	  Fixed typo in new cast, the type is sigset_t not sigset.
+        * ace/Signal.i (is_member):
+          Fixed typo in new cast, the type is sigset_t not sigset.
 
 Wed Jan 14 20:27:44 1998    <coryan@MILONGA>
 
-	* ace/OS.h:
-	  The new location for AF_ANY and AF_FILE was in the middle of a
-	  big #if !ACE_WIN32, hence it was not working for NT, I moved it
-	  further down and now NT is happy.
+        * ace/OS.h:
+          The new location for AF_ANY and AF_FILE was in the middle of a
+          big #if !ACE_WIN32, hence it was not working for NT, I moved it
+          further down and now NT is happy.
 
 Wed Jan 14 19:01:59 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Message_Queue.cpp (open): In Message_Queue::open
- 	  deactivated_ flag is being set to 0 instead of
- 	  WAS_INACTIVE. This is causing incorrect return value from
- 	  first-time call to activate().  Thanks to Slawomir Kuzniar
- 	  <kuzniar@Bear.COM> for reporting this.
+        * ace/Message_Queue.cpp (open): In Message_Queue::open
+          deactivated_ flag is being set to 0 instead of
+          WAS_INACTIVE. This is causing incorrect return value from
+          first-time call to activate().  Thanks to Slawomir Kuzniar
+          <kuzniar@Bear.COM> for reporting this.
 
-	* ace/Signal.i (is_member): Added an ACE_const_cast().  Thanks to
- 	  Oleg Krivosheev <kriol@fnal.gov> for reporting this.
+        * ace/Signal.i (is_member): Added an ACE_const_cast().  Thanks to
+          Oleg Krivosheev <kriol@fnal.gov> for reporting this.
 
 Wed Jan 14 06:45:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -487,10 +490,10 @@ Wed Jan 14 06:45:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Jan 13 16:31:48 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/OS.i: Changed the signature of ACE_Time_Value::operator
- 	  timeval *() to return operator const timeval *().  Thanks to
- 	  Oleg Krivosheev <kriol@fnal.gov> for reporting this.  Changed
- 	  several other unsafe casts to use the ACE_const_cast() macro.
+        * ace/OS.i: Changed the signature of ACE_Time_Value::operator
+          timeval *() to return operator const timeval *().  Thanks to
+          Oleg Krivosheev <kriol@fnal.gov> for reporting this.  Changed
+          several other unsafe casts to use the ACE_const_cast() macro.
 
 Tue Jan 13 13:30:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -510,31 +513,31 @@ Tue Jan 13 13:30:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Jan 12 20:19:54 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/SString.i: Replaced all uses of NULL with 0 since NULL
- 	  causes problems with some lame C++ compilers.
+        * ace/SString.i: Replaced all uses of NULL with 0 since NULL
+          causes problems with some lame C++ compilers.
 
-	* ace/SString.i: Moved one of the inline find() methods down
-	  so that GCC doesn't complain anymore.
+        * ace/SString.i: Moved one of the inline find() methods down
+          so that GCC doesn't complain anymore.
 
-	* tests/Reactor_Timer_Test.cpp (main): Changed long i to size_t i
-	  to be consistent.
+        * tests/Reactor_Timer_Test.cpp (main): Changed long i to size_t i
+          to be consistent.
 
-	* ace/Select_Reactor.h: Updated the explanation of how the
- 	  ACE_Select_Reactor_Token works.  Thanks to Detlef Becker for
- 	  explaining this in great detail.
+        * ace/Select_Reactor.h: Updated the explanation of how the
+          ACE_Select_Reactor_Token works.  Thanks to Detlef Becker for
+          explaining this in great detail.
 
-	* tests/test_config.h: Changed the type of all the consts to
- 	  size_t rather than int.  This may cause a bit of upheaval at
- 	  first since we'll need to fix some other types.  But it's the
- 	  "Right Thing"[TM] to do.
+        * tests/test_config.h: Changed the type of all the consts to
+          size_t rather than int.  This may cause a bit of upheaval at
+          first since we'll need to fix some other types.  But it's the
+          "Right Thing"[TM] to do.
 
 Mon Jan 12 18:31:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* Start renaming MSVC 4.2 workspace/makefile names.
+        * Start renaming MSVC 4.2 workspace/makefile names.
 
-	* apps/Gateway/Peer/Peer4.{mdp,mak}:
-	* apps/Gateway/Gateway/Gateway4.{mdp,mak}: Made them in synch with
- 	  VC 5.0's status.
+        * apps/Gateway/Peer/Peer4.{mdp,mak}:
+        * apps/Gateway/Gateway/Gateway4.{mdp,mak}: Made them in synch with
+          VC 5.0's status.
 
 Mon Jan 12 12:30:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -559,15 +562,15 @@ Mon Jan 12 12:30:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Sun Jan 11 23:02:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/SString_Test.cpp (main): Removed the "silly" strings from
- 	  the tests.  They are annoying and cause memory leaks.
+        * tests/SString_Test.cpp (main): Removed the "silly" strings from
+          the tests.  They are annoying and cause memory leaks.
 
 Sun Jan 11 22:16:28 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* apps/Gateway/Peer/Peer.{h,cpp} (transmit): Changed the function
- 	  to return the result of transmission.
-	  (transmit_stdin): Make sure the function returns proper results
- 	  of transmission.
+        * apps/Gateway/Peer/Peer.{h,cpp} (transmit): Changed the function
+          to return the result of transmission.
+          (transmit_stdin): Make sure the function returns proper results
+          of transmission.
 
 Sun Jan 11 16:18:15 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -575,53 +578,53 @@ Sun Jan 11 16:18:15 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Jan 11 00:00:26 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* apps/Gateway/Gateway/Gateway.cpp (parse_connection_config_file):
- 	  Fixed a typo, == should be =.  Thanks to David Levine for
- 	  reporting this.
+        * apps/Gateway/Gateway/Gateway.cpp (parse_connection_config_file):
+          Fixed a typo, == should be =.  Thanks to David Levine for
+          reporting this.
 
-	* apps/Gateway/Peer/Peer.cpp (recv),
-	  apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (recv):
- 	  Added a cast to remove a GCC warning about signed/unsigned
- 	  comparisons.  Thanks to David Levine for reporting this.
+        * apps/Gateway/Peer/Peer.cpp (recv),
+          apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (recv):
+          Added a cast to remove a GCC warning about signed/unsigned
+          comparisons.  Thanks to David Levine for reporting this.
 
-	* ace/Log_Msg.cpp (log): Made a minor change to move where the
- 	  message is copied from thread-specific storage into the transfer
- 	  buffer.  Thanks to Patrick J. McNerthney <pat@thememedia.com>
- 	  for reporting this.
+        * ace/Log_Msg.cpp (log): Made a minor change to move where the
+          message is copied from thread-specific storage into the transfer
+          buffer.  Thanks to Patrick J. McNerthney <pat@thememedia.com>
+          for reporting this.
 
-	* apps/Gateway/Peer/Peer: Added new logic to transmit subscription
- 	  requests to the Gateway.
+        * apps/Gateway/Peer/Peer: Added new logic to transmit subscription
+          requests to the Gateway.
 
-	* apps/Gateway/Gateway/Event.h (class Event_Header): Make sure
- 	  that we correctly encode/decode the connection_id.
+        * apps/Gateway/Gateway/Event.h (class Event_Header): Make sure
+          that we correctly encode/decode the connection_id.
 
 Sat Jan 10 18:17:06 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* apps/Gateway/Gateway/Event.h: Added the event priority_ field to
- 	  the Event_Key.  We don't currently use this, but we may some
- 	  day.
+        * apps/Gateway/Gateway/Event.h: Added the event priority_ field to
+          the Event_Key.  We don't currently use this, but we may some
+          day.
 
-	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (put):
- 	  Changed the forward() method to process() since our new scheme
- 	  will need to do more than just forward, e.g., it will need to
- 	  handle subscriptions.
+        * apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (put):
+          Changed the forward() method to process() since our new scheme
+          will need to do more than just forward, e.g., it will need to
+          handle subscriptions.
 
-	* apps/Gateway/Gateway/Connection_Handler: Made the accessors
- 	  const member functions and also added accessors for the
- 	  Event_Channel * so this can be set by the
- 	  Connection_Handler_Acceptor::accept_svc_handler() method.
+        * apps/Gateway/Gateway/Connection_Handler: Made the accessors
+          const member functions and also added accessors for the
+          Event_Channel * so this can be set by the
+          Connection_Handler_Acceptor::accept_svc_handler() method.
 
-	* apps/Gateway/Gateway/Connection_Handler: Added mutators so that
- 	  we can set the local and remote addresses outside of the
- 	  constructor.
+        * apps/Gateway/Gateway/Connection_Handler: Added mutators so that
+          we can set the local and remote addresses outside of the
+          constructor.
 
-	* apps/Gateway/Gateway/Options: Added a connection_id() accessor
- 	  to set/get the connection id.  This makes it possible to allow
- 	  Peers to connection with the Gateway.
+        * apps/Gateway/Gateway/Options: Added a connection_id() accessor
+          to set/get the connection id.  This makes it possible to allow
+          Peers to connection with the Gateway.
 
-	* apps/Gateway/Gateway/Gateway.cpp (parse_connection_config_file):
- 	  Added a sanity check to ensure that the connection ids start at
- 	  1 and increment by 1.
+        * apps/Gateway/Gateway/Gateway.cpp (parse_connection_config_file):
+          Added a sanity check to ensure that the connection ids start at
+          1 and increment by 1.
 
 Sat Jan 10 22:37:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -630,68 +633,68 @@ Sat Jan 10 22:37:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Sat Jan 10 14:57:01 1998    <coryan@MILONGA>
 
-	* ace/Env_Value_T.h:
-	  The return value for the assignment operator had no template
-	  parameter, ditto for the arguments of the copy constructor and
-	  the already mentioned operator.
+        * ace/Env_Value_T.h:
+          The return value for the assignment operator had no template
+          parameter, ditto for the arguments of the copy constructor and
+          the already mentioned operator.
 
 Sat Jan 10 13:20:08 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* tests/Conn_Test.cpp: Moved template instantiation codes around
-	  to avoid warnings.
+        * tests/Conn_Test.cpp: Moved template instantiation codes around
+          to avoid warnings.
 
 Sat Jan 10 01:36:08 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/SString: Made the following changes to make the ACE string
- 	  class look more like the STL string class:
+        * ace/SString: Made the following changes to make the ACE string
+          class look more like the STL string class:
 
-	  - Added npos to all classes.
+          - Added npos to all classes.
 
-	  - Added non-const reference operator[].
+          - Added non-const reference operator[].
 
-	  - Changed operator= and operator+= to return *this.
+          - Changed operator= and operator+= to return *this.
 
-	  - Added STL like find and rfind routines
+          - Added STL like find and rfind routines
 
-	  - Made the three classes be a similar as possible.
+          - Made the three classes be a similar as possible.
 
-	  - Changed the implementation of strstr to use the C library
- 	    strstr function.
+          - Changed the implementation of strstr to use the C library
+            strstr function.
 
-	  - Added constructors from single characters.
+          - Added constructors from single characters.
 
-	  - Made substring a const method.
+          - Made substring a const method.
 
 Fri Jan  9 19:11:39 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* tests/Map_Manager_Test.cpp (test_hash_map_manager): Added
- 	  ACE_UNUSED_ARG to eliminate warnings.
+        * tests/Map_Manager_Test.cpp (test_hash_map_manager): Added
+          ACE_UNUSED_ARG to eliminate warnings.
 
-	* ace/Hash_Map_Manager.cpp (rbegin): Added more static cast to
-	  eliminate warning messages.
+        * ace/Hash_Map_Manager.cpp (rbegin): Added more static cast to
+          eliminate warning messages.
 
 Fri Jan  9 11:35:53 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* examples/Service_Configurator/IPC-tests/server/server_test.cpp:
- 	  Fixed a syntax error.  Thanks to John Mulhern
- 	  <9107@MN3.LAWSON.lawson.com> for reporting this.
+        * examples/Service_Configurator/IPC-tests/server/server_test.cpp:
+          Fixed a syntax error.  Thanks to John Mulhern
+          <9107@MN3.LAWSON.lawson.com> for reporting this.
 
-	* ace/Log_Msg.cpp (log): Changed abort_prog == 0 to abort_prog so
- 	  that STDERR would be printed correctly.
+        * ace/Log_Msg.cpp (log): Changed abort_prog == 0 to abort_prog so
+          that STDERR would be printed correctly.
 
-	* ACE-categories: Added all the ACE files into the ACE-categories
- 	  listing.  Thanks to Andres Kruse for motivating this.
+        * ACE-categories: Added all the ACE files into the ACE-categories
+          listing.  Thanks to Andres Kruse for motivating this.
 
-	* include/makeinclude/platform_sunos5_egcs.GNU (CXX): Removed
- 	  -pipe from CC and CXX.  It was already in CCFLAGS.
+        * include/makeinclude/platform_sunos5_egcs.GNU (CXX): Removed
+          -pipe from CC and CXX.  It was already in CCFLAGS.
 
 Fri Jan 09 11:56:44 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/config-win32.h (ACE_ORBIX_HAS_NAMESPACES): By default, you
- 	  will get the proper namespace usage for Orbix.  If you don't
- 	  like this, comment out the #define ACE_ORBIX_HAS_NAMESPACES line
- 	  or #undef ACE_ORBIX_HAS_NAMESPACES in your config.h file after
- 	  including this config-win32.h.
+        * ace/config-win32.h (ACE_ORBIX_HAS_NAMESPACES): By default, you
+          will get the proper namespace usage for Orbix.  If you don't
+          like this, comment out the #define ACE_ORBIX_HAS_NAMESPACES line
+          or #undef ACE_ORBIX_HAS_NAMESPACES in your config.h file after
+          including this config-win32.h.
 
 Fri Jan 09 07:04:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -712,18 +715,18 @@ Fri Jan 09 07:04:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Jan 09 00:14:20 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* apps/Gateway/Gateway/Connection_Handler_Acceptor.cpp:
-	* apps/Gateway/Gateway/Config_Files.cpp:  Defined
-	  ACE_BUILD_SVC_DLL flag.  All declarations of an exported class
-	  must be declared with the same exporting flag.
+        * apps/Gateway/Gateway/Connection_Handler_Acceptor.cpp:
+        * apps/Gateway/Gateway/Config_Files.cpp:  Defined
+          ACE_BUILD_SVC_DLL flag.  All declarations of an exported class
+          must be declared with the same exporting flag.
 
-	* apps/Gateway/Peer/Options.h: Updated the path of include file
- 	  Event.h.
+        * apps/Gateway/Peer/Options.h: Updated the path of include file
+          Event.h.
 
 Thu Jan 08 22:11:57 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* ace/Env_Value_T.i (ACE_Convert): Added static cast for int and
- 	  short conversion funcions.
+        * ace/Env_Value_T.i (ACE_Convert): Added static cast for int and
+          short conversion funcions.
 
 Thu Jan 08 21:37:30 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -731,66 +734,66 @@ Thu Jan 08 21:37:30 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Jan  8 19:50:43 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Task: Added a virtual destructor for ~ACE_Task_Base.  Thanks
- 	  to Oleg Krivosheev <kriol@fnal.gov> for suggesting this.
+        * ace/Task: Added a virtual destructor for ~ACE_Task_Base.  Thanks
+          to Oleg Krivosheev <kriol@fnal.gov> for suggesting this.
 
-	* ace: Added a new config-sunos5.5-egcs.h for the EGCS compiler.
-  	  Thanks to Oleg Krivosheev <kriol@fnal.gov> for contributing
- 	  this.
+        * ace: Added a new config-sunos5.5-egcs.h for the EGCS compiler.
+          Thanks to Oleg Krivosheev <kriol@fnal.gov> for contributing
+          this.
 
-	* include/makeinclude: Added a new platform macros file for the
- 	  EGCS compiler on Solaris 2.x.  Thanks to Oleg Krivosheev
- 	  <kriol@fnal.gov> for contributing this.
+        * include/makeinclude: Added a new platform macros file for the
+          EGCS compiler on Solaris 2.x.  Thanks to Oleg Krivosheev
+          <kriol@fnal.gov> for contributing this.
 
-	* include/makeinclude/platform_sunos5_g++.GNU (CXX): Added the
-	  -pipe flag.
+        * include/makeinclude/platform_sunos5_g++.GNU (CXX): Added the
+          -pipe flag.
 
-	* man: Updated all the manual pages.
+        * man: Updated all the manual pages.
 
-	* ace/Log_Msg: Added changes to allow the logging of custom built
- 	  log records.  The main reason for these changes is to allow code
- 	  to handle the logging of out of memory conditions without
- 	  allocating any additional memory.  Thanks to Patrick
- 	  J. McNerthney <pat@thememedia.com> for this feature.
+        * ace/Log_Msg: Added changes to allow the logging of custom built
+          log records.  The main reason for these changes is to allow code
+          to handle the logging of out of memory conditions without
+          allocating any additional memory.  Thanks to Patrick
+          J. McNerthney <pat@thememedia.com> for this feature.
 
-	* ace/Log_Msg: Added a new method called log_priority_enabled(),
- 	  which returns true if the priority is enabled (gee, is *that*
- 	  what it does? ;-)).  Thanks to Patrick J. McNerthney
- 	  <pat@thememedia.com> for this feature.
+        * ace/Log_Msg: Added a new method called log_priority_enabled(),
+          which returns true if the priority is enabled (gee, is *that*
+          what it does? ;-)).  Thanks to Patrick J. McNerthney
+          <pat@thememedia.com> for this feature.
 
-	* examples/Service_Configurator/IPC-tests/server/server_test.cpp
- 	  (main): Revised the driver program so that it doesn't create an
- 	  explicit ACE_Service_Config object.  Thanks to John Mulhern
- 	  <9107@MN3.LAWSON.lawson.com> for reporting this.
+        * examples/Service_Configurator/IPC-tests/server/server_test.cpp
+          (main): Revised the driver program so that it doesn't create an
+          explicit ACE_Service_Config object.  Thanks to John Mulhern
+          <9107@MN3.LAWSON.lawson.com> for reporting this.
 
-	* apps/Gateway/{Gateway,Peer}/Options.cpp: Oops, ACE_BUILD_DLL
- 	  should be ACE_BUILD_SVC_DLL, yikes!  Thanks to Jeff Hellzen
- 	  <JHellzen@hwdcsaws.cahwnet.gov> for reporting this.
+        * apps/Gateway/{Gateway,Peer}/Options.cpp: Oops, ACE_BUILD_DLL
+          should be ACE_BUILD_SVC_DLL, yikes!  Thanks to Jeff Hellzen
+          <JHellzen@hwdcsaws.cahwnet.gov> for reporting this.
 
-	* apps/Gateway/{Peer,Gateway}/Options.{h,cpp}: Added a missing
- 	  #define ACE_BUILD_DLL and a missing ACE_Svc_Export.  Thanks to
- 	  Jeff Hellzen <JHellzen@hwdcsaws.cahwnet.gov> for reporting this.
+        * apps/Gateway/{Peer,Gateway}/Options.{h,cpp}: Added a missing
+          #define ACE_BUILD_DLL and a missing ACE_Svc_Export.  Thanks to
+          Jeff Hellzen <JHellzen@hwdcsaws.cahwnet.gov> for reporting this.
 
-	* ace/Select_Reactor.cpp (suspend_i): The clr_bit call was
- 	  mistakenly made on the write mask, rather than the read mask.
-  	  Thanks to Billy Quinn <ace-users@lads.com> for reporting this.
+        * ace/Select_Reactor.cpp (suspend_i): The clr_bit call was
+          mistakenly made on the write mask, rather than the read mask.
+          Thanks to Billy Quinn <ace-users@lads.com> for reporting this.
 
 Thu Jan 08 16:02:33 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager.{h,cpp}: Added STL-styled iterator
- 	  functions.
+        * ace/Hash_Map_Manager.{h,cpp}: Added STL-styled iterator
+          functions.
 
-	* tests/Map_Manager_Test.cpp:
-	* tests/Hash_Map_Manager_Test.cpp:
-	* tests/Conn_Test.cpp:
-	* ace/Local_Name_Space.cpp:
-	* ace/Filecache.cpp: Added missing template instantiation codes.
+        * tests/Map_Manager_Test.cpp:
+        * tests/Hash_Map_Manager_Test.cpp:
+        * tests/Conn_Test.cpp:
+        * ace/Local_Name_Space.cpp:
+        * ace/Filecache.cpp: Added missing template instantiation codes.
 
 Thu Jan 08 11:05:15 1998    <coryan@CHA-CHA>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
-	  Added the new Shared_Memory.cpp file to the project.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Added the new Shared_Memory.cpp file to the project.
 
 Wed Jan 07 20:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -807,34 +810,34 @@ Wed Jan 07 20:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Jan 07 17:59:57 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* ace/Free_List.i (add): Only delete freeed item when we hit the
- 	  high water mark, not the other way around.  Thanks to Stuart
- 	  Myles <smyles@wsj.dowjones.com> for pointing this out.
+        * ace/Free_List.i (add): Only delete freeed item when we hit the
+          high water mark, not the other way around.  Thanks to Stuart
+          Myles <smyles@wsj.dowjones.com> for pointing this out.
 
 Wed Jan  7 17:46:09 1998  James C Hu  <jxh@cs.wustl.edu>
 
-	* examples/Timer_Queue/Thread_Timer_Queue_Test.h:
-	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
-	* examples/Timer_Queue/Reactor_Timer_Queue_Test.h:
-	* examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
-	* examples/Timer_Queue/Driver.h:
-	* examples/Timer_Queue/Driver.cpp:
-	  Added virtual destructors to classes that needed them.
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.h:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.h:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Driver.h:
+        * examples/Timer_Queue/Driver.cpp:
+          Added virtual destructors to classes that needed them.
 
 Wed Jan  7 16:28:16 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Event_Handler_T.cpp: Reordered the initializers in the
- 	  ACE_Event_Handler_T constructor so G++ doesn't complain.  Thanks
- 	  to Oleg Krivosheev <kriol@fnal.gov> for reporting this.
+        * ace/Event_Handler_T.cpp: Reordered the initializers in the
+          ACE_Event_Handler_T constructor so G++ doesn't complain.  Thanks
+          to Oleg Krivosheev <kriol@fnal.gov> for reporting this.
 
-	* ace/Shared_Memory.h: Added a virtual destructor to the
- 	  ACE_Shared_Memory abstract base class so that EGCS won't
- 	  complain.  Thanks to Oleg Krivosheev <kriol@fnal.gov> for
- 	  reporting this.
+        * ace/Shared_Memory.h: Added a virtual destructor to the
+          ACE_Shared_Memory abstract base class so that EGCS won't
+          complain.  Thanks to Oleg Krivosheev <kriol@fnal.gov> for
+          reporting this.
 
-	* ace/Event_Handler_T.h: Had to include the *.cpp file into .h
- 	  when ACE_TEMPLATES_REQUIRE_SOURCE is defined.  Thanks to Oleg
- 	  Krivosheev <kriol@fnal.gov> for reporting this.
+        * ace/Event_Handler_T.h: Had to include the *.cpp file into .h
+          when ACE_TEMPLATES_REQUIRE_SOURCE is defined.  Thanks to Oleg
+          Krivosheev <kriol@fnal.gov> for reporting this.
 
 Wed Jan 07 14:31:34 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -842,27 +845,27 @@ Wed Jan 07 14:31:34 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Jan  7 13:38:28 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tests/test_config.h (set_output): Added an environment variable
- 	  to specify where to put the log directory: ACE_TEST_DIR.  Thanks
- 	  to Keith Nicewarner <knicewar@sanders.com> for reporting this.
+        * tests/test_config.h (set_output): Added an environment variable
+          to specify where to put the log directory: ACE_TEST_DIR.  Thanks
+          to Keith Nicewarner <knicewar@sanders.com> for reporting this.
 
-	* ace/Service_Repository.cpp (close): Removed a fragment of
- 	  redundant code.  Thanks to Eric Newton <ecn@smart.net> and Alex
- 	  Chan <Alex.Chan@Aspect.com> for reporting this.
+        * ace/Service_Repository.cpp (close): Removed a fragment of
+          redundant code.  Thanks to Eric Newton <ecn@smart.net> and Alex
+          Chan <Alex.Chan@Aspect.com> for reporting this.
 
 Tue Jan 06 17:19:13 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* ace/Containers.{h,cpp} (ACE_Unbounded_Set[_Iterator]):  Added
-	  STL-styled iterator functions.  Changed the internal
-	  representation of ACE_Unbounded_Set within iterators from a
-	  reference to a pointer.  We need this to compare if two
-	  iterators are refering to the same set or not.
+        * ace/Containers.{h,cpp} (ACE_Unbounded_Set[_Iterator]):  Added
+          STL-styled iterator functions.  Changed the internal
+          representation of ACE_Unbounded_Set within iterators from a
+          reference to a pointer.  We need this to compare if two
+          iterators are refering to the same set or not.
 
 Tue Jan  6 14:11:54 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* tests/Reader_Writer_Test.cpp:
-	  Reverted to revision 4.21 since the latest one (4.23) fails;
-	  thanks to Irfan for this solution.
+        * tests/Reader_Writer_Test.cpp:
+          Reverted to revision 4.21 since the latest one (4.23) fails;
+          thanks to Irfan for this solution.
 
 Tue Jan 06 10:37:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
