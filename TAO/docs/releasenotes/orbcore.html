@@ -328,8 +328,18 @@
     Current Work:
 
     <UL>
+      <li>Rework collocation mechanism so we can either have
+          a collocation table per ORB or a global collocation table.
+          The default settings should include a locking mechanism in
+          the global table but allow it to be turn off by users.
+          This, however, requires users to allocate all ORB cores and
+          set up the collocation table before any request comes in.<p>
+
+      <li>Collocation registration needs to be moved.<p>
+
       <li>Adding a new -ORB option to turn on/off collocation
-          optimization.
+          optimization.<p>
+
       <LI>
 	<p>Verify that, in the ORB-per-thread concurrency model,
 	  it's possible to have a factory in each thread that creates
