@@ -12,11 +12,11 @@
 //
 // = DESCRIPTION
 //    Visitor that generates the result argument in a call back method
-//    of a Reply Handler.  
+//    of a Reply Handler.
 //
 // = AUTHOR
 //    Aniruddha Gokhale and Alexander Babu Arulanthu
-//    <alex@cs.wustl.edu>  
+//    <alex@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -95,13 +95,13 @@ be_visitor_args_ami_handler_result_arg::visit_predefined_type (be_predefined_typ
   // Check if the type is an any.
   if (node->pt () == AST_PredefinedType::PT_any)
     {
-      *os << "const " << this->type_name (node) << " &" << " _tao_retval";  
+      *os << "const " << this->type_name (node) << " &" << " _tao_retval";
     }
   else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
     {
       *os << this->type_name (node, "_ptr") << " _tao_retval";
     }
-  else 
+  else
     {
       *os << this->type_name (node) << " _tao_retval";
     }
@@ -166,7 +166,7 @@ be_visitor_args_ami_handler_result_arg::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   *os << this->type_name (node) << " *" << " _tao_retval";
   return 1;
-} 
+}
 
 int
 be_visitor_args_ami_handler_result_arg::visit_valuetype_fwd (be_valuetype_fwd *node)

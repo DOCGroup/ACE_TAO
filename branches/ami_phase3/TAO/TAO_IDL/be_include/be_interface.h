@@ -69,7 +69,7 @@ public:
                             char *interface_full_name  = 0);
   // Generate the implementation for the _var class.
   // If any one of the argument is 0, then use the name in <this>,
-  // otherwise use the name given. Just making the class more useful. 
+  // otherwise use the name given. Just making the class more useful.
 
   virtual int gen_out_defn (char *interface_name = 0);
   // Generate the out class definition. If <interface_name> is not 0,
@@ -78,15 +78,15 @@ public:
 
   virtual int gen_out_impl (char *interface_local_name = 0,
                             char *interface_full_name = 0);
-  // Generate the out class implementation. 
+  // Generate the out class implementation.
   // If any one of the argument is 0, then use the name giin this
-  // node, else use the arguments. 
+  // node, else use the arguments.
 
   const char *full_skel_name (void);
-  // Retrieve the fully scoped skel class name. 
+  // Retrieve the fully scoped skel class name.
 
   const char *ami_handler_full_skel_name (void);
-  // Retrieve the fully scoped skel AMI handler class name 
+  // Retrieve the fully scoped skel AMI handler class name
 
   //
   // Each interface (to fix names "T") also defines two help classes,
@@ -112,14 +112,14 @@ public:
   // Retrieve the fully qualified collocated AMI handler class name.
 
   const char *ami_handler_local_name (void);
-  // Retrieve the local name of the AMI handler 
+  // Retrieve the local name of the AMI handler
 
   int compute_coll_names (const char *local_name,
                           char *&coll_local_name,
-                          char *&coll_full_name); 
+                          char *&coll_full_name);
   // Generate collocated local and full names for the arbitrary local
   // name under the scope of this interface. Usefull to generate AMI
-  // Handlers. 
+  // Handlers.
 
   virtual int traverse_inheritance_graph (tao_code_emitter gen,
                                           TAO_OutStream *os);

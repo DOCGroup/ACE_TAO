@@ -321,23 +321,23 @@ be_decl::compute_flatname  (const char *prefix, const char *suffix)
 {
   if (prefix == 0 || suffix == 0)
     return 0;
-  
+
   ACE_CString prefix_str (prefix);
   ACE_CString suffix_str (suffix);
-  
+
   ACE_CString result_str;
 
   // Get parent.
   if (this->defined_in () == 0)
     {
       // Global scope.
-      
+
       // Prefix.
       result_str = prefix_str;
 
       // Local name.
       result_str += ACE_CString (this->local_name ()->get_string ());
-      
+
       // Suffix.
       result_str += suffix_str;
     }
@@ -353,20 +353,20 @@ be_decl::compute_flatname  (const char *prefix, const char *suffix)
                              "scope name is nil\n"),
                             0);
         }
-      
+
       // Parent name.
       result_str = ACE_CString (parent->fullname ());
-      
+
       // _
       if (ACE_OS::strcmp (parent->fullname (), "") != 0)
         result_str += ACE_CString ("_");
-      
+
       // Prefix.
       result_str += ACE_CString ("AMI_");
-      
+
       // Local name.
       result_str += ACE_CString (this->local_name ()->get_string ());
-      
+
       // Suffix.
       result_str += suffix_str;
     }
@@ -469,7 +469,7 @@ be_decl::compute_repoID (void)
 }
 
 // Apply the prefix and suffix to the local name and compute the
-// repoID.  Both the parameters should be non-null. 
+// repoID.  Both the parameters should be non-null.
 char *
 be_decl::compute_repoID (const char *prefix, const char *suffix)
 {
@@ -477,16 +477,16 @@ be_decl::compute_repoID (const char *prefix, const char *suffix)
   if (prefix == 0 || suffix == 0)
     return 0;
 
-  // First prepare the result without IDL: and  :1.0 strings. 
+  // First prepare the result without IDL: and  :1.0 strings.
 
-  // repoID without IDL: and :1.0 strings. 
+  // repoID without IDL: and :1.0 strings.
   char *result = 0;
-  
+
   long namelen;
   UTL_IdListActiveIterator *i;
   long first = I_TRUE;
   long second = I_FALSE;
-  
+
   // In the first loop compute the total length.
   namelen = 8; // for the prefix "IDL:" and suffix ":1.0"
   namelen += ACE_OS::strlen (this->prefix ()) + 1;
@@ -510,7 +510,7 @@ be_decl::compute_repoID (const char *prefix, const char *suffix)
       i->next ();
     }
   delete i;
-  
+
   // Get the result.
 
   result = new char [namelen+1];
@@ -547,24 +547,24 @@ be_decl::compute_repoID (const char *prefix, const char *suffix)
   delete i;
 
   // Add prefix and suffix.
-  
+
   // Search where the last / is. If it is not there put AMI_ right
   // after IDL: and _Handler after that and then the :1.0 string.
   // Otherwise put AMI after the last / and _Handler at the end and
   // then the 1.0 string.
-  
+
   // CStrings are cool.
 
   ACE_CString result_str (result);
 
-  // Return val. Release = 0 so that we can return the <c_str>.  
+  // Return val. Release = 0 so that we can return the <c_str>.
   ACE_CString repoID ("IDL:", 0, 0);
 
   // Useful CStrings.
   ACE_CString prefix_str (prefix);
   ACE_CString suffix_str (suffix);
   ACE_CString version_str (":1.0");
-  
+
   // Find the last /.
   int last_name_pos = result_str.rfind ('/');
 
@@ -576,18 +576,18 @@ be_decl::compute_repoID (const char *prefix, const char *suffix)
       repoID += prefix_str;
 
       repoID += result_str;
-      
+
       // Add suffix.
       repoID += suffix_str;
     }
   else
     {
       // '/' present.
-      
+
       // IDl:<result except the last name>'/'. Watch get the last /
-      // also. 
+      // also.
       repoID += result_str.substring (0, last_name_pos+1);
-      
+
       // Put prefix.
       repoID += prefix_str;
 
@@ -597,18 +597,18 @@ be_decl::compute_repoID (const char *prefix, const char *suffix)
       // Add suffix.
       repoID += suffix_str;
     }
-  
+
   // Add 1.0.
   repoID += version_str;
 
   // Delete result.
   delete result;
   result = 0;
-  
+
   this->ami_handler_repoID_ = repoID.rep ();
 
   return this->ami_handler_repoID_;
-}  
+}
 
 
 int
@@ -618,7 +618,7 @@ be_decl::compute_ami_handler_name (const char *name,
   int name_length = ACE_OS::strlen (name);
   int ami_handler_length = ACE_OS::strlen ("AMI__HANDLER");
 
-  ACE_NEW_RETURN (ami_handler_name, 
+  ACE_NEW_RETURN (ami_handler_name,
                   char[name_length + ami_handler_length+1],
                   -1);
 
@@ -635,7 +635,7 @@ be_decl::compute_ami_handler_name (const char *name,
           break;
         }
       else if (i >= 3)
-        if (name[i-3] == 'P' && 
+        if (name[i-3] == 'P' &&
             name[i-2] == 'O' &&
             name[i-1] == 'A' &&
             name[i] == '_')
@@ -647,7 +647,7 @@ be_decl::compute_ami_handler_name (const char *name,
 
   if (interface_name == 0)
     interface_name = name;
-  
+
   ACE_OS::strcpy(&ami_handler_name[name_length-ACE_OS::strlen(interface_name)],"AMI_");
   ACE_OS::strcpy(&ami_handler_name[name_length-ACE_OS::strlen(interface_name)+4],
                  interface_name);
@@ -657,7 +657,7 @@ be_decl::compute_ami_handler_name (const char *name,
   return 0;
 }
 
-  
+
 
 void
 be_decl::compute_prefix ()

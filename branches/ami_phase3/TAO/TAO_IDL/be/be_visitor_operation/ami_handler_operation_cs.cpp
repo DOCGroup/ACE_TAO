@@ -63,7 +63,7 @@ be_visitor_operation_ami_handler_operation_cs::visit_operation (be_operation *no
   this->ctx_->node (node); // save the node for future use
 
   // Start with the current indentation level.
-  os->indent (); 
+  os->indent ();
 
   // Init the return type variable.
   bt = be_type::narrow_from_decl (node->return_type ());
@@ -75,7 +75,7 @@ be_visitor_operation_ami_handler_operation_cs::visit_operation (be_operation *no
                          "Bad return type\n"),
                         -1);
     }
-  
+
   // Generate the return type. Return type is simply void.
   *os << "void " << be_nl;
 
@@ -92,10 +92,10 @@ be_visitor_operation_ami_handler_operation_cs::visit_operation (be_operation *no
 
   // Genereate scope name.
   *os << parent->compute_name ("AMI_", "_Handler");
-  
+
   // Generate the operation name.
   *os << "::" << node->local_name ();
-  
+
   // Generate the argument list with the appropriate mapping (same as
   // in the header file).
   ctx = *this->ctx_;
@@ -144,12 +144,12 @@ be_visitor_operation_ami_handler_operation_cs::visit_operation (be_operation *no
     }
 
   // Declaring return type is not necessary. Since return  type is
-  // void. 
-  
+  // void.
+
   // Native exists => no stub.
   if (node->has_native ())
     {
-      if (this->gen_raise_exception (bt, "CORBA::MARSHAL", "") == -1)  
+      if (this->gen_raise_exception (bt, "CORBA::MARSHAL", "") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_ami_handler_operation_cs::"
@@ -166,11 +166,11 @@ be_visitor_operation_ami_handler_operation_cs::visit_operation (be_operation *no
       *os << be_nl
           << "TAO_Stub *istub = this->_stubobj ();" << be_nl
           << "if (istub == 0)" << be_idt_nl;
-      
+
       // If the stub object was bad, then we raise a system
       // exception.
       *os << "ACE_THROW (CORBA::INTERNAL ());\n\n";
-      
+
       *os << be_uidt;
 
       // do any pre marshal and invoke stuff with arguments
@@ -198,19 +198,19 @@ be_visitor_operation_ami_handler_operation_cs::visit_operation (be_operation *no
                             -1);
 
         }
-      
+
       // Return type is void,
 
     } // end of if (!native)
 
   *os << be_uidt_nl << "}" << be_nl << be_nl;
-  
+
   // Generate the skeleton method.
-  
+
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_SKELETON_CS);
   visitor = tao_cg->make_visitor (&ctx);
-  
+
   if (!visitor || (node->accept (visitor) == -1))
     {
       delete visitor;
@@ -652,7 +652,7 @@ gen_marshal_and_invoke (be_operation *node,
 
   os->indent ();
 
-  // Create the GIOP_Invocation and grab the outgoing CDR stream. 
+  // Create the GIOP_Invocation and grab the outgoing CDR stream.
   switch (node->flags ())
     {
     case AST_Operation::OP_oneway:
@@ -690,7 +690,7 @@ gen_marshal_and_invoke (be_operation *node,
   // Now make sure that we have some AMI result  parameter or OUT or
   // INOUT parameters. Otherwise, there is nothing to be marshaled
   // in.
-  if (!this->void_return_type (bt) || 
+  if (!this->void_return_type (bt) ||
       this->has_param_type (node, AST_Argument::dir_OUT) ||
       this->has_param_type (node, AST_Argument::dir_INOUT))
     {
@@ -699,26 +699,26 @@ gen_marshal_and_invoke (be_operation *node,
           << be_nl
           << "if (!(\n" << be_idt << be_idt << be_idt;
 
-      // @@ Michael: This has to be replaced witht he code in the 
+      // @@ Michael: This has to be replaced witht he code in the
       //             "#if 0" clause
       // Marshal the ami result argument, if the return type is not
-      // void. 
+      // void.
       if (!this->void_return_type (bt))
         {
           os->indent ();
           *os << "(_tao_out << _tao_retval)";
 
           // Print the && if there are OUT or INOUT arguements in the
-          // signature. 
+          // signature.
           if (this->has_param_type (node, AST_Argument::dir_OUT) ||
               this->has_param_type (node, AST_Argument::dir_INOUT))
             *os << " &&\n";
         }
-     
+
 #if 0
       // @@ This for giving the _tao_retval argument only. But
       //    this may be needed for some data types.
-      //    But the one that is above is ok for basic types. 
+      //    But the one that is above is ok for basic types.
       // @@ We may need to do this.
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RETVAL_MARSHAL_CS);
@@ -789,7 +789,7 @@ gen_marshal_and_invoke (be_operation *node,
 
   // Check if there is an exception.
   *os << "ACE_CHECK;";
-  
+
   *os << be_nl
       << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
       << "continue;" << be_uidt_nl
@@ -805,6 +805,6 @@ gen_marshal_and_invoke (be_operation *node,
       << "}" << be_nl
       << "break;" << be_nl
       << be_uidt_nl << "}" << be_nl;
-  
+
   return 0;
 }

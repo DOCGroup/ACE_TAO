@@ -11,7 +11,7 @@
 //    operation_ami_handler_skeleton_cs.h
 //
 // = DESCRIPTION
-//    Visitor for generating code skelton code for IDL operations 
+//    Visitor for generating code skelton code for IDL operations
 //    of AMI Reply Handlers.
 //
 // = AUTHOR
@@ -33,7 +33,7 @@ class be_visitor_operation_ami_handler_skeleton_cs : public be_visitor_operation
   //   be_visitor_operation_ami_handler_operation_cs
   //
   // = DESCRIPTION
-  //    Visitor for generating code skelton code for IDL operations 
+  //    Visitor for generating code skelton code for IDL operations
   //    of AMI Reply Handlers.
   //
   //
@@ -80,7 +80,7 @@ class be_interpretive_visitor_operation_ami_handler_skeleton_cs : public be_visi
   //   be_interpretive_visitor_operation_ami_skeleton_operation_cs
   //
   // = DESCRIPTION
-  //   This is a concrete visitor to generate the client skeletons 
+  //   This is a concrete visitor to generate the client skeletons
   //   for AMI reply handlers of IDL operations using interpretive marshaling.
   //
   //
@@ -106,7 +106,7 @@ class be_compiled_visitor_operation_ami_handler_skeleton_cs : public be_visitor_
   //   be_compiled_visitor_operation_ami_handler_skeleton_cs
   //
   // = DESCRIPTION
-  //   This is a concrete visitor to generate the client skeletons 
+  //   This is a concrete visitor to generate the client skeletons
   //   for AMI reply handlers of IDL operations using compiled marshaling.
   //
   //

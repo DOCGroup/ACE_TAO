@@ -273,15 +273,15 @@ public:
     TAO_OBV_OPERATION_ARGLIST_OTHERS,          // ... for all other cases
 
     // Emitting code for AMI.
-    TAO_OPERATION_AMI_CH,                  // AMI stub generation.  
-    TAO_OPERATION_AMI_CS,                  // AMI stub generation.  
+    TAO_OPERATION_AMI_CH,                  // AMI stub generation.
+    TAO_OPERATION_AMI_CS,                  // AMI stub generation.
     TAO_OPERATION_AMI_ARGLIST_CH,             // AMI stubs in client header
     TAO_OPERATION_AMI_ARGLIST_CS,             // AMI stubs in client cpp.
     TAO_OPERATION_ARG_AMI,                 // AMI stub.
     TAO_ARGUMENT_AMI,                      // Argument in AMI stub.
     TAO_ARGUMENT_AMI_ARGLIST_CH,              // Arg list in AMI stub.
     TAO_ARGUMENT_AMI_ARGLIST_CS,              // Arg list in AMI stub.
-    TAO_AMI_HANDLER_FWD_CH,                // FWD decl for AMI handler.           
+    TAO_AMI_HANDLER_FWD_CH,                // FWD decl for AMI handler.
     TAO_AMI_HANDLER_FWD_CI,                // FWD decl for AMI handler.
 
     TAO_AMI_HANDLER_SERVANT_CH,            // POA_AMI_*_Handler.
@@ -290,7 +290,7 @@ public:
     TAO_AMI_HANDLER_STUB_CH,               // AMI_*_Handler class visitor.
 
     TAO_AMI_HANDLER_STUB_CS,               // AMI_*_Handler class visitor.
-    
+
     TAO_AMI_HANDLER_SERVANT_OPERATION_CH,  // Operation in AMI_*_Handler.
     TAO_AMI_HANDLER_STUB_OPERATION_CH,     // Operation in POA_AMI_*_Handler.
     TAO_AMI_HANDLER_OPERATION_ARGLIST_CH,
@@ -317,15 +317,15 @@ public:
     TAO_AMI_OPERATION_ARG_INVOKE_CS,         // Invoke arguments for AMI's sendc method.
 
     TAO_AMI_ARGUMENT_INVOKE_CS,
-    
+
     TAO_AMI_HANDLER_SKELETON_CS,
-    
+
     TAO_AMI_HANDLER_OPERATION_RETVAL_DECL_CS,        // Result argument declaration.
 
     TAO_AMI_HANDLER_OPERATION_ARG_DECL_CS,           // Argument declartion.
 
     TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS,             // State derived out of the above
-    
+
     TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS,         // Argument list for the upcall
                                                      // (only out and inout arguments)
     TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS,              // State derived out of the above
@@ -472,7 +472,7 @@ public:
     TAO_TC_DEFN_TC_SIZE, // tc size computation
     TAO_TC_DEFN_ENCAP_LEN, // encap size computation
     TAO_TC_DEFN_SCOPE_LEN, // scope size computation
-    
+
     TAO_AMI_HANDLER_TC_DEFN_TYPECODE, // For AMI Handler interface.
 
     // used to denote either error or don't care
