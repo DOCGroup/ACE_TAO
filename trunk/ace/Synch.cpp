@@ -247,8 +247,8 @@ ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h)
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
   if (ACE_OS::flock_init (&this->lock_) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT("%p\n"),
-                ASYS_TEXT("ACE_File_Lock::ACE_File_Lock")));
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_File_Lock::ACE_File_Lock")));
   this->set_handle (h);
 }
 
@@ -261,8 +261,8 @@ ACE_File_Lock::ACE_File_Lock (LPCTSTR name,
   if (this->open (name, flags, perms) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p %s\n"),
-                ASYS_TEXT("ACE_File_Lock::ACE_File_Lock")),
-               name);
+                ASYS_TEXT ("ACE_File_Lock::ACE_File_Lock"),
+                name));
 }
 
 int
