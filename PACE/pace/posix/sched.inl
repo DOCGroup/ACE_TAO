@@ -6,13 +6,12 @@
  *    pace
  *
  * = FILENAME
- *    sched.inl
+ *    pace/posix/sched.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
-
 
 PACE_INLINE
 int

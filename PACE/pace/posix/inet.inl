@@ -6,18 +6,16 @@
  *    pace
  *
  * = FILENAME
- *    inet.inl
+ *    pace/posix/inet.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
 #include "pace/sys/socket.h"
 #include "pace/sys/types.h"
 #include "pace/netinet/in.h"
-
 
 PACE_INLINE
 unsigned long

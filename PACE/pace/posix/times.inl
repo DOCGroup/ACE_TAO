@@ -6,13 +6,12 @@
  *    pace
  *
  * = FILENAME
- *    times.inl
+ *    pace/posix/times.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
-
 
 PACE_INLINE
 clock_t

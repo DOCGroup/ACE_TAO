@@ -6,25 +6,22 @@
  *    pace
  *
  * = FILENAME
- *    semaphore.h
+ *    pace/posix/semaphore.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_SEMAPHORE_H
 #define PACE_SEMAPHORE_H
-
 
 #include "pace/defines.h"
 #include <semaphore.h>
 
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE int pace_sem_close (sem_t * sem);
 
@@ -50,13 +47,12 @@ extern "C" {
 
   PACE_INLINE int pace_sem_wait (sem_t * sem);
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "semaphore.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/semaphore.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_SEMAPHORE_H */

@@ -6,16 +6,14 @@
  *    pace
  *
  * = FILENAME
- *    unistd.inl
+ *    pace/posix/unistd.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
 #include <unistd.h>
-
 
 PACE_INLINE
 void

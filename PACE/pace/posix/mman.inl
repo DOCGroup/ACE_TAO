@@ -6,13 +6,12 @@
  *    pace
  *
  * = FILENAME
- *    mman.inl
+ *    pace/posix/mman.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
-
 
 PACE_INLINE
 int

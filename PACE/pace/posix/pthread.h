@@ -6,27 +6,24 @@
  *    pace
  *
  * = FILENAME
- *    pthread.h
+ *    pace/posix/pthread.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_PTHREAD_H
 #define PACE_PTHREAD_H
-
 
 #include "pace/defines.h"
 #include "pace/sys/types.h"
 #include "pace/signal.h"
 #include <pthread.h>
 
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE int pace_pthread_atfork (void  (*prepare) (),
                                        void (*parent) (),
@@ -204,13 +201,12 @@ extern "C" {
 
   PACE_INLINE void pace_pace_pthread_testcancel ();
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "pthread.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/pthread.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_PTHREAD_H */

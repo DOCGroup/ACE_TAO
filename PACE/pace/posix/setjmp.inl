@@ -6,13 +6,12 @@
  *    pace
  *
  * = FILENAME
- *    setjmp.inl
+ *    pace/posix/setjmp.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
-
 
 PACE_INLINE
 int

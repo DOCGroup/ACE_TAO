@@ -6,26 +6,23 @@
  *    pace
  *
  * = FILENAME
- *    signal.h
+ *    pace/posix/signal.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
 #ifndef PACE_SIGNAL_H
 #define PACE_SIGNAL_H
-
 
 #include "pace/defines.h"
 #include "pace/sys/types.h"
 #include <signal.h>
 
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE int pace_kill (pid_t pid, int sig);
 
@@ -64,13 +61,12 @@ extern "C" {
 
   PACE_INLINE int pace_sigwaitinfo (const sigset_t * set, siginfo_t * info);
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "signal.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/signal.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_SIGNAL_H */

@@ -6,13 +6,12 @@
  *    pace
  *
  * = FILENAME
- *    fcntl.inl
+ *    pace/posix/fcntl.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
-
 
 PACE_INLINE
 int

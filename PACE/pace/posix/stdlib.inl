@@ -6,16 +6,14 @@
  *    pace
  *
  * = FILENAME
- *    stdlib.inl
+ *    pace/posix/stdlib.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
 #include <stdlib.h>
-
 
 PACE_INLINE
 void

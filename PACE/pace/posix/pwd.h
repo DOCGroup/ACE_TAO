@@ -6,32 +6,22 @@
  *    pace
  *
  * = FILENAME
- *    pwd.h
+ *    pace/posix/pwd.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_PWD_H
 #define PACE_PWD_H
-
 
 #include "pace/defines.h"
 #include <pwd.h>
 
-/* Linux wants to use sys/types.h to define uid_t.
- * Sun is happy with pwd.h.
- */
-# if defined (linux)
-# include "pace/sys/types.h"
-# endif /* linux */
-
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE struct passwd * pace_getpwuid (uid_t uid);
 
@@ -51,13 +41,12 @@ extern "C" {
                                    struct passwd ** result);
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "pwd.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/pwd.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_PWD_H */

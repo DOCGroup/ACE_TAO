@@ -6,25 +6,22 @@
  *    pace
  *
  * = FILENAME
- *    aio.h
+ *    pace/posix/aio.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_AIO_H
 #define PACE_AIO_H
-
 
 #include "pace/defines.h"
 #include <aio.h>
 
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE int pace_aio_cancel (int fildes, struct aiocb * aiocb);
 
@@ -47,13 +44,17 @@ extern "C" {
                                    int nent,
                                    struct sigevent * sig);
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "aio.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/aio.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_AIO_H */
+
+
+
+
+

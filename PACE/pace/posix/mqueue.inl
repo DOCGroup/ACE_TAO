@@ -6,13 +6,12 @@
  *    pace
  *
  * = FILENAME
- *    mqueue.inl
+ *    pace/posix/mqueue.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
-
 
 PACE_INLINE
 int

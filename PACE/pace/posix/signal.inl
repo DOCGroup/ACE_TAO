@@ -6,13 +6,12 @@
  *    pace
  *
  * = FILENAME
- *    signal.inl
+ *    pace/posix/signal.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
-
 
 PACE_INLINE
 int

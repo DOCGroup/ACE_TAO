@@ -6,17 +6,15 @@
  *    pace
  *
  * = FILENAME
- *    time.inl
+ *    pace/posix/time.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
 #include <errno.h>
 extern int errno;
-
 
 PACE_INLINE
 char *

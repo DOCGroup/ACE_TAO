@@ -6,16 +6,14 @@
  *    pace
  *
  * = FILENAME
- *    socket.inl
+ *    pace/posix/socket.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
-#include <unistd.h>
-
+#include "pace/unistd.h"
 
 PACE_INLINE
 int

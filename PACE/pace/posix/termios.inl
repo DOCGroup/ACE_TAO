@@ -6,16 +6,14 @@
  *    pace
  *
  * = FILENAME
- *    termios.inl
+ *    pace/posix/termios.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
-#include <unistd.h>
-
+#include "pace/unistd.h"
 
 PACE_INLINE
 speed_t

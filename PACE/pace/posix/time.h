@@ -6,39 +6,22 @@
  *    pace
  *
  * = FILENAME
- *    time.h
+ *    pace/posix/time.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_TIME_H
 #define PACE_TIME_H
 
-
 #include "pace/defines.h"
-
-/* Linux doesn't support this file at all.
- * Need these typedefs to just allow compilation.
- */
-# if defined (linux)
-typedef unsigned int clockid_t;
-typedef unsigned int timerid_t;
-typedef unsigned int timer_t;
-struct tm { };
-struct sigevent { };
-struct itimerspec { };
-#include "pace/unistd.h"
-# else /* !linux */
 #include <time.h>
-#endif /* ! linux */
 
-
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
   PACE_INLINE char * pace_asctime_r (const struct tm * tm, char * buf);
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
@@ -97,13 +80,12 @@ extern "C" {
   PACE_INLINE void pace_tzset ();
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-# if defined (PACE_HAS_CPLUSPLUS)
+#if defined (PACE_HAS_CPLUSPLUS)
 }
-# endif /* PACE_HAS_CPLUSPLUS */
+#endif /* PACE_HAS_CPLUSPLUS */
 
-# if defined (PACE_HAS_INLINE)
-# include "time.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/time.inl"
+#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_TIME_H */

@@ -6,16 +6,14 @@
  *    pace
  *
  * = FILENAME
- *    string.inl
+ *    pace/posix/string.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
 #include <string.h>
-
 
 PACE_INLINE
 void *

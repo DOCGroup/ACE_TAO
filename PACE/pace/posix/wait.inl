@@ -6,16 +6,14 @@
  *    pace
  *
  * = FILENAME
- *    wait.inl
+ *    pace/posix/wait.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
 #include <sys/wait.h>
-
 
 PACE_INLINE
 pid_t

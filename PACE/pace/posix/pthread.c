@@ -6,17 +6,15 @@
  *    pace
  *
  * = FILENAME
- *    pthread.c
+ *    pace/posix/pthread.c
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================= */
 
-
 #include "pace/pthread.h"
 
-
-# if !defined (PACE_HAS_INLINE)
-# include "pthread.inl"
-# endif /* !PACE_HAS_INLINE */
+#if !defined (PACE_HAS_INLINE)
+# include "pace/posix/pthread.inl"
+#endif /* ! PACE_HAS_INLINE */
