@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/WFMO_Reactor.h"

@@ -1,3 +1,100 @@
+Fri Dec 26 16:53:18 2003  Steve Huston  <shuston@riverace.com>
+
+	* m4/ace.m4: Don't restrict --enable-rtti to Solaris. AIX Visual Age
+	  C++ needs to be able to turn this on also. Also changed the default
+	  to yes, believing I saw a need for RTTI in TAO recently.
+
+	* m4/compiler.m4: For AIX Visual Age C++, if rtti is desired, add
+	  -qrtti to CXXFLAGS.
+
+	* ace/OS_NS_Thread.inl: Added #include "ace/OS_NS_sys_mman.h" to see
+	  ACE_OS::shm_unlink() and ACE_OS::shm_open(), needed when
+	  ACE_LACKS_NAMED_POSIX_SEM is defined.
+
+	* ace/Timer_Hash_T.cpp:
+	* ace/TImer_Wheel_T.cpp: Added #include "ace/OS_NS_sys_time.h" so
+	  Visual Age C++ can see ACE_OS::gettimeofday(), and "ace/Guard_T.h"
+	  so Visual Age C++ can see ACE_Guard classes.
+
+	* tests/test_config.h:
+	* tests/Signal_Test.cpp:
+	* tests/Thread_Pool_Test.cpp: Added #include "ace/OS_NS_stdio.h" so
+	  Visual Age C++ sees ACE_OS::sprintf().
+
+	* tests/Message_Block_Test.cpp: Added #include "ace/OS_NS_string.h"
+	  so Visual Age C++ sees ACE_OS::strcmp() and "ace/OS_NS_stdio.h"
+	  so Visual Age C++ sees ACE_OS::sprintf().
+
+	* tests/Message_Queue_Test.cpp:
+	* tests/Upgradable_RW_Test.cpp: Added #include "ace/OS_NS_sys_time.h"
+	  so Visual Age C++ can see ACE_OS::gettimeofday() and
+	  "ace/OS_NS_stdio.h" so it can see ACE_OS::sprintf().
+
+	* tests/Message_Queue_Test_Ex.cpp:
+	* tests/Recursive_Condition_Bug_Test.cpp:
+	* tests/Thread_Manager_Test.cpp: Added #include
+	  "ace/OS_NS_sys_time.h" so Visual Age C++ can see
+	  ACE_OS::gettimeofday().
+
+	* tests/Message_Queue_Notifications_Test.cpp:
+	* tests/Reactor_Dispatch_Order_Test.cpp:
+	* tests/SString_Test.cpp:
+	* tests/Svc_Handler_Test.cpp: Added #include "ace/OS_NS_string.h" so
+	  Visual Age C++ sees ACE_OS::strlen().
+
+	* tests/Multicast_Test.cpp: Added #include "ace/Min_Max.h" so
+	  Visual Age C++ can see ACE_MIN and ACE_MAX. Added #include
+	  "ace/OS_NS_sys_time.h" so Visual Age C++ can see
+	  ACE_OS::gettimeofday() and "ace/OS_NS_stdio.h" so it can see
+	  ACE_OS::sprintf().
+
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+	* tests/Reactor_Registration_Test.cpp:
+	* tests/Reference_Counted_Event_Handler_Test.cpp: Added #include
+	  "ace/Reactor.h" so Visual Age C++ sees ACE_Reactor.
+
+	* tests/MT_Reference_Counted_Notify_Test.cpp:
+	* tests/Timer_Cancellation_Test.cpp: Added #include
+	  "ace/Reactor.h" so Visual Age C++ sees ACE_Reactor and
+	  "ace/OS_NS_unistd.h" so Visual Age C++ sees ACE_OS::sleep().
+
+	* tests/Naming_Test.cpp:
+	* tests/Priority_Task_Test.cpp:
+	* tests/Thread_Pool_Reactor_Test.cpp:
+	* tests/Thread_Pool_Reactor_Resume_Test.cpp: Added #include
+	  "ace/OS_NS_string.h" so Visual Age C++ can see ACE_OS::strcmp().
+
+	* tests/Process_Manager_Test.cpp:
+	* tests/Reactor_Notify_Test.cpp: Added #include "ace/OS_NS_unistd.h"
+	  so Visual Age C++ can see ACE_OS::sleep().
+
+	* tests/Process_Strategy_Test.cpp: Added #include "ace/OS_NS_string.h"
+	  so Visual Age C++ can see ACE_OS::strcpy(), strcat(), strlen().
+
+	* tests/Reader_Writer_Test.cpp: Added #include "ace/Guard_T.h" and
+	  "ace/RW_Thread_Mutex.h" so Visual Age C++ can see ACE_Guard and
+	  ACE_RW_Thread_Mutex classes.
+
+	* tests/Recursive_Condition_Test.cpp: Added #include
+	  "ace/OS_NS_sys_time.h" so Visual Age C++ sees ACE_OS::gettimeofday()
+	  and "ace/OS_NS_unistd.h" so Visual Age C++ sees ACE_OS::sleep().
+
+	* tests/Service_Config_Test.cpp: Added #include "ace/OS_NS_stdio.h" so
+	  Visual Age C++ can see ACE_OS::fprintf().
+
+	* tests/Time_Service_Test.cpp: Added #include "ace/OS_NS_string.h"
+	  so Visual Age C++ sees ACE_OS::strcat().
+
+	* tests/TP_Reactor_Test.cpp:  Added #include "ace/OS_NS_stdio.h" so
+	  Visual Age C++ sees ACE_OS::sprintf() and "ace/OS_NS_string.h" so
+	  Visual Age C++ sees ACE_OS::strlen().
+
+	* tests/TSS_Test.cpp:
+	* tests/TSS_Test_Errno.h:
+	* tests/Thread_Mutex_Test.cpp: Added #include "ace/Guard_T.h" so Visual
+	  Age C++ can see ACE_Guard stuff and "ace/Thread_Mutex.h" to see the
+	  ACE_Thread_Mutex class.
+
 Fri Dec 26 12:30:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/taoexe.mpb:

@@ -112,6 +112,10 @@ changequote([, ])dnl
            [
             CXXFLAGS="$CXXFLAGS -qflag=w:w"
            ])
+         if test "$ace_user_enable_rtti" = yes; then
+           CXXFLAGS="$CXXFLAGS -qrtti"
+         fi
+
          ;;
      esac
      ;;

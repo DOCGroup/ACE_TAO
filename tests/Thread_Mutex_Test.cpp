@@ -20,7 +20,6 @@
 
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Process_Mutex.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
@@ -29,13 +28,17 @@ ACE_RCSID(tests, Thread_Mutex_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Guard_T.h"
+
 // For all platforms except for Windows use the ACE_Thread_Mutex.
 // Since Windows only supports timed process mutexes and not
 // timed thread mutexes, use ACE_Process_Mutex.
 #if defined (ACE_HAS_WTHREADS)
-#define ACE_TEST_MUTEX  ACE_Process_Mutex
+# include "ace/Process_Mutex.h"
+# define ACE_TEST_MUTEX  ACE_Process_Mutex
 #else
-#define ACE_TEST_MUTEX  ACE_Thread_Mutex
+# include "ace/Thread_Mutex.h"
+# define ACE_TEST_MUTEX  ACE_Thread_Mutex
 #endif
 
 #if !defined (ACE_HAS_MUTEX_TIMEOUTS)
