@@ -1,0 +1,44 @@
+--- orig/DomainS.i	Tue Apr  3 17:47:30 2001
++++ patched/DomainS.i	Tue Apr  3 20:45:37 2001
+@@ -26,10 +26,10 @@
+     CORBA::Environment &ACE_TRY_ENV
+   )
+ {
+-  POA_CORBA::Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
+-  POA_CORBA::Policy::_get_policy_type_skel (
++  POA_CORBA_Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
++  POA_CORBA_Policy::_get_policy_type_skel (
+       req,
+-      (POA_CORBA::Policy_ptr) impl,
++      (POA_CORBA_Policy_ptr) impl,
+       context,
+       ACE_TRY_ENV
+     );
+@@ -41,10 +41,10 @@
+     CORBA::Environment &ACE_TRY_ENV
+   )
+ {
+-  POA_CORBA::Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
+-  POA_CORBA::Policy::copy_skel (
++  POA_CORBA_Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
++  POA_CORBA_Policy::copy_skel (
+       req,
+-      (POA_CORBA::Policy_ptr) impl,
++      (POA_CORBA_Policy_ptr) impl,
+       context,
+        ACE_TRY_ENV
+     );
+@@ -56,10 +56,10 @@
+     CORBA::Environment &ACE_TRY_ENV
+   )
+ {
+-  POA_CORBA::Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
+-  POA_CORBA::Policy::destroy_skel (
++  POA_CORBA_Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
++  POA_CORBA_Policy::destroy_skel (
+       req,
+-      (POA_CORBA::Policy_ptr) impl,
++      (POA_CORBA_Policy_ptr) impl,
+       context,
+        ACE_TRY_ENV
+     );

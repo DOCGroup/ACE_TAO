@@ -1,0 +1,31 @@
+--- DynamicC.h.old	Mon Oct 16 22:31:46 2000
++++ DynamicC.h	Mon Oct 16 22:32:48 2000
+@@ -23,13 +23,15 @@
+ #define _TAO_IDL_DYNAMICC_H_
+ 
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++
++#include "tao/corbafwd.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+-#include "tao/corbafwd.h"
++#include "tao/Any.h"
++#include "tao/Sequence.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
+--- DynamicC.cpp.old	Mon Oct 16 22:31:46 2000
++++ DynamicC.cpp	Mon Oct 16 22:32:48 2000
+@@ -25,6 +25,8 @@
+ #include "DynamicC.i"
+ #endif /* !defined INLINE */
+ 
++#include "tao/StringSeqC.h"
++
+ static const CORBA::Long _oc_Dynamic_ParameterMode[] =
+ {
+   TAO_ENCAP_BYTE_ORDER, // byte order
