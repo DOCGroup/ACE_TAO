@@ -7,11 +7,11 @@
 #ifndef ACE_RMCAST_SIMULATOR_H
 #define ACE_RMCAST_SIMULATOR_H
 
-#include "ace/RMCast/Stack.h"
-#include "ace/RMCast/Protocol.h"
-#include "ace/RMCast/Bits.h"
-
 #include "ace/Thread_Mutex.h"
+
+#include "Stack.h"
+#include "Protocol.h"
+#include "Bits.h"
 
 namespace ACE_RMCast
 {

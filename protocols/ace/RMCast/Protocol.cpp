@@ -2,7 +2,7 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
-#include <ace/RMCast/Protocol.h>
+#include "Protocol.h"
 
 namespace ACE_RMCast
 {

@@ -7,8 +7,6 @@
 #ifndef ACE_RMCAST_PROTOCOL_H
 #define ACE_RMCAST_PROTOCOL_H
 
-#include "ace/RMCast/Bits.h"
-
 #include "ace/Refcounted_Auto_Ptr.h"
 
 #include "ace/Vector_T.h"
@@ -19,6 +17,8 @@
 #include "ace/Null_Mutex.h"
 
 #include "ace/OS_NS_string.h"
+
+#include "Bits.h"
 
 
 namespace ACE_RMCast
