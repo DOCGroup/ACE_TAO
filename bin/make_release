@@ -756,10 +756,9 @@ sub create_kit () {
   my $build_command;
   my $archives;
 
-  ##### @@ DISABLED UNTIL READY FOR GENERAL USE -- Ossama
   ## Temporary ACE+autoconf hack to bootstrap autoconf support into
   ## ACE distribution.
-  #&ex("cd ACE_wrappers && bin/bootstrap");
+  &ex("cd ACE_wrappers && bin/bootstrap");
 
   if ($kit eq 'ace'  ||  $kit eq 'ace+tao') {
 

@@ -3199,13 +3199,14 @@ AC_CACHE_SAVE
 
 dnl SECTION 10: checks for library functions
 
-
-AC_FUNC_ALLOCA
-if test "$ac_cv_header_alloca_h" = yes; then
-  AC_DEFINE([ACE_HAS_ALLOCA_H])
-fi
-if test "$ac_cv_func_alloca_works" = yes; then
-  AC_DEFINE([ACE_HAS_ALLOCA])
+if test "$ace_user_enable_alloca" = yes; then
+  AC_FUNC_ALLOCA
+  if test "$ac_cv_header_alloca_h" = yes; then
+    AC_DEFINE([ACE_HAS_ALLOCA_H])
+  fi
+  if test "$ac_cv_func_alloca_works" = yes; then
+    AC_DEFINE([ACE_HAS_ALLOCA])
+  fi
 fi
 
 dnl ACE should really have something for both the sys/mman.h header
@@ -3824,12 +3825,7 @@ dnl End check for SYSV IPC functions
 AC_CHECK_FUNC([read_real_time],
   [AC_DEFINE([ACE_HAS_AIX_HI_RES_TIMER])],)
 
-AC_CHECK_FUNC([shm_open],
-  [
-   AC_MSG_WARN([platform supports shm_open but shm_open support will not be])
-   AC_MSG_WARN([enabled since ACE currently supports it only on LynxOS])
-dnl  AC_DEFINE([ACE_HAS_SHM_OPEN])
-  ],)
+AC_CHECK_FUNC([shm_open], [AC_DEFINE([ACE_HAS_SHM_OPEN])],)
 
 AC_CHECK_FUNC([snprintf],
   [AC_DEFINE([ACE_HAS_SNPRINTF])],)

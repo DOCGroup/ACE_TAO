@@ -1,3 +1,19 @@
+Mon May 19 11:03:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* configure.ac: 
+
+	  Only detect alloca() support if explicitly enabled by the user.
+
+	* bin/make_release:
+
+	  Reenabled bootstrapping of ACE+Autoconf support when creating
+	  ACE beta/release kits.
+
+	* m4/ace.m4 (ACE_CONFIGURATION_OPTIONS):
+
+	  Added "--enable-alloca" configure script option.  alloca()
+	  support will be disabled by support.
+
 Mon May 19 16:08:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/CDR_Test.cpp:
