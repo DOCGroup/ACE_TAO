@@ -234,33 +234,11 @@ namespace Deployment
     Dump_Obj dump_obj("ComponentPackageDescription");
     dump ("label", comppkgdesc.label);
     dump ("UUID", comppkgdesc.UUID);
-
-    ACE_DEBUG ((LM_DEBUG, "  configProperty: \n"));
-    for (CORBA::ULong i = 0;
-         i < comppkgdesc.configProperty.length ();
-         ++i)
-      {
-        DnC_Dump::dump (comppkgdesc.configProperty[i]); // Property
-      }
-
-    ACE_DEBUG ((LM_DEBUG, "  infoProperty: \n"));
-    for (CORBA::ULong i = 0;
-         i < comppkgdesc.infoProperty.length ();
-         ++i)
-      {
-        DnC_Dump::dump (comppkgdesc.infoProperty[i]); // Property
-      }
-
+    dump_sequence ("configProperty", comppkgdesc.configProperty);
+    dump_sequence ("infoProperty", comppkgdesc.infoProperty);
+    dump_sequence ("implementation", comppkgdesc.implementation);
     ACE_DEBUG ((LM_DEBUG, "  realizes: \n"));
     DnC_Dump::dump (comppkgdesc.realizes); // ComponentInterfaceDescription
-
-    ACE_DEBUG ((LM_DEBUG, "  implementation: \n"));
-    for (CORBA::ULong i = 0;
-         i < comppkgdesc.implementation.length ();
-         ++i)
-      {
-        DnC_Dump::dump (comppkgdesc.implementation[i]); // PackagedComponentImplementation
-      }
   }
 
   // ComponentPortDescription
@@ -295,47 +273,6 @@ namespace Deployment
     Dump_Obj dump_obj("ComponentPropertyDescription");
     
     dump ("name", comppropdesc.name);
-    /*
-    ACE_DEBUG ((LM_DEBUG, "%stype: ", Dump_Obj::indent()));
-    switch (comppropdesc.type) {
-    case tk_null: ACE_DEBUG ((LM_DEBUG, "tk_null\n")); break;
-    case tk_void: ACE_DEBUG ((LM_DEBUG, "tk_void\n")); break;
-    case tk_short: ACE_DEBUG ((LM_DEBUG, "tk_short\n")); break;
-    case tk_long: ACE_DEBUG ((LM_DEBUG, "tk_long\n")); break;
-    case tk_ushort: ACE_DEBUG ((LM_DEBUG, "tk_ushort\n")); break;
-    case tk_ulong: ACE_DEBUG ((LM_DEBUG, "tk_ulong\n")); break;
-    case tk_float: ACE_DEBUG ((LM_DEBUG, "tk_float\n")); break;
-    case tk_double: ACE_DEBUG ((LM_DEBUG, "tk_double\n")); break;
-    case tk_boolean: ACE_DEBUG ((LM_DEBUG, "tk_boolean\n")); break;
-    case tk_char: ACE_DEBUG ((LM_DEBUG, "tk_char\n")); break;
-    case tk_octet: ACE_DEBUG ((LM_DEBUG, "tk_octet\n")); break;
-    case tk_any: ACE_DEBUG ((LM_DEBUG, "tk_any\n")); break;
-    case tk_TypeCode: ACE_DEBUG ((LM_DEBUG, "tk_TypeCode\n")); break;
-    case tk_Principal: ACE_DEBUG ((LM_DEBUG, "tk_Principal\n")); break;
-    case tk_objref: ACE_DEBUG ((LM_DEBUG, "tk_objref\n")); break;
-    case tk_struct: ACE_DEBUG ((LM_DEBUG, "tk_struct\n")); break;
-    case tk_union: ACE_DEBUG ((LM_DEBUG, "tk_union\n")); break;
-    case tk_enum: ACE_DEBUG ((LM_DEBUG, "tk_enum\n")); break;
-    case tk_string: ACE_DEBUG ((LM_DEBUG, "tk_string\n")); break;
-    case tk_sequence: ACE_DEBUG ((LM_DEBUG, "tk_sequence\n")); break;
-    case tk_array: ACE_DEBUG ((LM_DEBUG, "tk_array\n")); break;
-    case tk_alias: ACE_DEBUG ((LM_DEBUG, "tk_alias\n")); break;
-    case tk_except: ACE_DEBUG ((LM_DEBUG, "tk_except\n")); break;
-    case tk_longlong: ACE_DEBUG ((LM_DEBUG, "tk_longlong\n")); break;
-    case tk_ulonglong: ACE_DEBUG ((LM_DEBUG, "tk_ulonglong\n")); break;
-    case tk_longdouble: ACE_DEBUG ((LM_DEBUG, "tk_longdouble\n")); break;
-    case tk_wchar: ACE_DEBUG ((LM_DEBUG, "tk_wchar\n")); break;
-    case tk_wstring: ACE_DEBUG ((LM_DEBUG, "tk_wstring\n")); break;
-    case tk_fixed: ACE_DEBUG ((LM_DEBUG, "tk_fixed\n")); break;
-    case tk_value: ACE_DEBUG ((LM_DEBUG, "tk_value\n")); break;
-    case tk_value_box: ACE_DEBUG ((LM_DEBUG, "tk_value_box\n")); break;
-    case tk_native: ACE_DEBUG ((LM_DEBUG, "tk_native\n")); break;
-    case tk_abstract_interface: ACE_DEBUG ((LM_DEBUG, "tk_abstract_interface\n")); break;
-    case tk_local_interface: ACE_DEBUG ((LM_DEBUG, "tk_local_interface\n")); break;
-    case tk_component: ACE_DEBUG ((LM_DEBUG, "tk_component\n")); break;
-    case tk_home: ACE_DEBUG ((LM_DEBUG, "tk_home\n")); break;
-    }
-    */
   }
 
   // MonolithicImplementationDescription
@@ -423,8 +360,9 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::PackagedComponentImplementation &pci)
   {
     Dump_Obj dump_obj("PackagedComponentImplementation");
-    ACE_DEBUG ((LM_DEBUG, "  name: %s\n", pci.name.in ()));
-
+    dump ("Name", pci.name);
+    ACE_DEBUG ((LM_DEBUG, 
+                "%sReferencedIMplementation: \n", Dump_Obj::indent()));
     ACE_DEBUG ((LM_DEBUG, "  referencedImplementation: \n"));
     DnC_Dump::dump (pci.referencedImplementation); // ComponentImplementationDescription
   }
@@ -679,9 +617,7 @@ namespace Deployment
     Dump_Obj dump_obj("NamedImplementationArtifact");
     ACE_DEBUG ((LM_DEBUG, "%sName: %s \n", Dump_Obj::indent(), nia.name.in ()));
     ACE_DEBUG ((LM_DEBUG, "%sReferencedArtifact: \n", Dump_Obj::indent()));
-    //ACE_DEBUG ((LM_DEBUG, "name: %s \n", nia.name.in ()));
-    //ACE_DEBUG ((LM_DEBUG, "referencedArtifact: \n"));
-    DnC_Dump::dump (nia.referencedArtifact);  // ImplementationArtifactDescription
+    DnC_Dump::dump (nia.referencedArtifact);  
   }
 
   void DnC_Dump::dump (const ::Deployment::ComponentInterfaceDescription &cid)
@@ -861,8 +797,8 @@ namespace Deployment
   {
     Dump_Obj dump_obj("Capability");
     ACE_DEBUG ((LM_DEBUG, "name: %s", capability.name.in ()));
-    DnC_Dump::dump ("resourceType", capability.resourceType); // string sequence
-    DnC_Dump::dump_sequence ("property", capability.property); // SatisfierProperty sequence
+    DnC_Dump::dump ("resourceType", capability.resourceType); 
+    DnC_Dump::dump_sequence ("property", capability.property);
   }
 
   void DnC_Dump::dump (const ::Deployment::ImplementationArtifactDescription &iad)
@@ -872,18 +808,16 @@ namespace Deployment
                 iad.label.in ()));
     ACE_DEBUG ((LM_DEBUG, "%sUUID: %s \n", Dump_Obj::indent(), 
                 iad.UUID.in ()));
-    DnC_Dump::dump_sequence ("execParameter", iad.execParameter); // Property seq.
-    DnC_Dump::dump_sequence ("infoProperty", iad.infoProperty); // Property seq.
-    DnC_Dump::dump_sequence ("deployRequirement", iad.deployRequirement); // Requirement seq.
-    DnC_Dump::dump_sequence ("dependsOn", iad.dependsOn); // NamedImplementationArtifact seq.
+    DnC_Dump::dump_sequence ("execParameter", iad.execParameter);
+    DnC_Dump::dump_sequence ("infoProperty", iad.infoProperty); 
+    DnC_Dump::dump_sequence ("deployRequirement", iad.deployRequirement); 
+    DnC_Dump::dump_sequence ("dependsOn", iad.dependsOn); 
   }
 
   void DnC_Dump::dump (const ::Deployment::ImplementationRequirement &ir)
   {
     Dump_Obj dump_obj("ImplementationRequirement");
-    //    DnC_Dump::dump ("resourcePort", ir.resourcePort); // string sequence
-    //    DnC_Dump::dump ("componentPort", ir.componentPort); // string sequence
-    DnC_Dump::dump_sequence ("resourceUsage", ir.resourceUsage); // ResourceUsageKind seq.
+    DnC_Dump::dump_sequence ("resourceUsage", ir.resourceUsage); 
     ACE_DEBUG ((LM_DEBUG, "resourceType: %s", ir.resourceType.in ()));
     ACE_DEBUG ((LM_DEBUG, "name: %s", ir.name.in ()));
   }
@@ -901,8 +835,8 @@ namespace Deployment
     Dump_Obj dump_obj("      COMPONENT IMPLEMENTATION DESCRIPTION ");
     ACE_DEBUG ((LM_DEBUG,
                 "===================================-====================\n"));
-    ACE_DEBUG ((LM_DEBUG, "\nUUID: %s \n", cid.UUID.in ()));
-    ACE_DEBUG ((LM_DEBUG, "Label: %s \n", cid.label.in ()));
+    dump ("label", cid.label);
+    dump ("UUID", cid.UUID);
     ACE_DEBUG ((LM_DEBUG, "%sImplements:\n", Dump_Obj::indent()));
     dump (cid.implements);
     for (CORBA::ULong i = 0; i < cid.assemblyImpl.length (); ++i)

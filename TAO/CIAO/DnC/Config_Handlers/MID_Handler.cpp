@@ -26,6 +26,8 @@ void MID_Handler::process_MonolithicImplementationDescription
        node = this->iter_->nextNode())
     {
       XStr node_name (node->getNodeName());
+      ACE_DEBUG ((LM_DEBUG, "the node name in MID file is %s\n",
+XMLString::transcode (node_name)));
 
       if (node_name == XStr 
         (ACE_TEXT ("Deployment:MonolithicImplementationDescription")))
@@ -48,8 +50,8 @@ void MID_Handler::process_MonolithicImplementationDescription
           &IR_Handler::process_ImplementationRequirement, this->id_map_));
       else
         {
-          // ??? How did we get here ???
-          ACE_THROW (CORBA::INTERNAL());
+          this->iter_->previousNode ();
+          return;
         }
     }
 }

@@ -40,6 +40,8 @@ void CompImplDesc_Handler::process_ComponentImplementationDescription
        node = this->iter_->nextNode())
     {
       XStr node_name (node->getNodeName());
+      ACE_DEBUG ((LM_DEBUG, "node name in CID file is %s\n",
+XMLString::transcode (node_name)));
 
       if (node_name == XStr
           (ACE_TEXT ("Deployment:ComponentImplementationDescription")))

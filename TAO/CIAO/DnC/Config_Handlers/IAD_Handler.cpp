@@ -29,6 +29,9 @@ void IAD_Handler::process_ImplementationArtifactDescription
     {
       XStr node_name (node->getNodeName());
 
+      ACE_DEBUG ((LM_DEBUG, "the node name in IAD file is %s\n",
+XMLString::transcode (node_name)));
+
       if (node_name == XStr 
         (ACE_TEXT ("Deployment:ImplementationArtifactDescription")))
         {
