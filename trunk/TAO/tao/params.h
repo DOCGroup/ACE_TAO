@@ -31,9 +31,9 @@ class TAO_Server_Connection_Handler;
 // This is a quick hack to avoid having to unravel the intracacies of
 // the all the hairy order interdepencies that currently exist in TAO.
 #if ! defined (__ACE_INLINE__)
-#define LOCAL_INLINE
+#define TAO_LOCAL_INLINE
 #else
-#define LOCAL_INLINE ACE_INLINE
+#define TAO_LOCAL_INLINE ACE_INLINE
 #endif /* ! __ACE_INLINE__ */
 
 class ACE_Svc_Export TAO_ORB_Parameters
@@ -42,28 +42,28 @@ class ACE_Svc_Export TAO_ORB_Parameters
 //    for the client, the server, or for both.
 {
 public:
-  LOCAL_INLINE TAO_ORB_Parameters (void);
+  TAO_LOCAL_INLINE TAO_ORB_Parameters (void);
   // Constructor
   
-  LOCAL_INLINE ~TAO_ORB_Parameters (void);
+  TAO_LOCAL_INLINE ~TAO_ORB_Parameters (void);
   // Destructor
   
-  LOCAL_INLINE void addr (const ACE_INET_Addr &addr);
+  TAO_LOCAL_INLINE void addr (const ACE_INET_Addr &addr);
   // Set the address on which we're listening.
 
-  LOCAL_INLINE const ACE_INET_Addr &addr (void);
+  TAO_LOCAL_INLINE const ACE_INET_Addr &addr (void);
   // Get the address on which we're listening.
 
-  LOCAL_INLINE void name_service_ior (CORBA::String ns);
+  TAO_LOCAL_INLINE void name_service_ior (CORBA::String ns);
   // Set the IOR of our name service.
 
-  LOCAL_INLINE CORBA::String name_service_ior (void);
+  TAO_LOCAL_INLINE CORBA::String name_service_ior (void);
   // Get the IOR of our name service.
 
-  LOCAL_INLINE void name_service_port (CORBA::UShort port);
+  TAO_LOCAL_INLINE void name_service_port (CORBA::UShort port);
   // Set the port of our name service.
 
-  LOCAL_INLINE CORBA::UShort name_service_port (void);
+  TAO_LOCAL_INLINE CORBA::UShort name_service_port (void);
   // Get the port of our name service.
 
 private:
@@ -98,10 +98,10 @@ class ACE_Svc_Export TAO_OA_Parameters
   //    this and add its own parameters.
 {
 public:
-  LOCAL_INLINE TAO_OA_Parameters (void);
+  TAO_LOCAL_INLINE TAO_OA_Parameters (void);
   // Constructor
 
-  LOCAL_INLINE ~TAO_OA_Parameters (void);
+  TAO_LOCAL_INLINE ~TAO_OA_Parameters (void);
   // Destructor
   
   void demux_strategy (const char *strategy);
@@ -110,23 +110,23 @@ public:
   // "user_def", or "active_demux".  If the value is not valid, then
   // <Dynamic Hash> is used as a default.
   
-  LOCAL_INLINE void demux_strategy (TAO_Demux_Strategy s);
+  TAO_LOCAL_INLINE void demux_strategy (TAO_Demux_Strategy s);
   // Specify the demultiplexing strategy to be used.
   
-  LOCAL_INLINE TAO_Demux_Strategy demux_strategy (void);
+  TAO_LOCAL_INLINE TAO_Demux_Strategy demux_strategy (void);
   // Return the demultiplexing strategy being used.
 
-  LOCAL_INLINE void userdef_lookup_strategy (TAO_Object_Table *&ot);
+  TAO_LOCAL_INLINE void userdef_lookup_strategy (TAO_Object_Table *&ot);
   // Provide a way for user defined object key lookup strategies to be
   // plugged in.
 
-  LOCAL_INLINE TAO_Object_Table *userdef_lookup_strategy (void);
+  TAO_LOCAL_INLINE TAO_Object_Table *userdef_lookup_strategy (void);
   // return the lookup strategy
 
-  LOCAL_INLINE void tablesize (CORBA::ULong tablesize);
+  TAO_LOCAL_INLINE void tablesize (CORBA::ULong tablesize);
   // set the table size for lookup table
 
-  LOCAL_INLINE CORBA::ULong tablesize (void);
+  TAO_LOCAL_INLINE CORBA::ULong tablesize (void);
   // get the table size for the lookup table
 
 private:
