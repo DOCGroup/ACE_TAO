@@ -2,6 +2,8 @@
 
 # Irix 6.[234] with SGI C++ in -n32 mode
 
+debug = 1
+
 # This suppresses common compiler warnings which appear in the 
 # ACE code but should not matter.  The warnings can be turned on
 # again by removing the -woff clause in the CPPFLAGS definition.

@@ -2,6 +2,8 @@
 
 # Irix 6.[234] with SGI C++
 
+debug = 1
+
 # Instead of setting the ABI here we rely on the the macro SGI_ABI.
 CC		= cc
 CXX		= CC

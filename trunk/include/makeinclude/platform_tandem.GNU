@@ -2,6 +2,8 @@
 
 # NonStop-UX NCC 3.20
 
+debug = 1
+
 # Please see  the config-NonS... file for more information about status
 # This file is built from Sunos5(os) and sgic++(compiler)
 
