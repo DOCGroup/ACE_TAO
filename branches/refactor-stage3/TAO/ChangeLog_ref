@@ -2,6 +2,7 @@ Wed Jun 18 22:57:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/BD_String_Argument_T.cpp:
         * tao/BD_String_Argument_T.h:
+	* tao/TAO.dsp:
 
 	  New files, for bounded string and wstring arguments.
 
