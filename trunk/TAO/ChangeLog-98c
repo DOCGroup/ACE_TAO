@@ -1,3 +1,9 @@
+Mon Mar 09 09:59:01 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: removed
+          VxWorks-specific code, because it was no longer used, and
+          relied on a header that was not distributed with TAO.
+
 Sat Mar 07 12:14:58 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* TAO version 0.1.7, released Sat Mar 07 12:14:58 1998.
