@@ -1,3 +1,27 @@
+Sat May 22 18:43:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs.dsw:
+	* orbsvcs/CosEvent_Service/CosEvent_Service.dsp:
+	* orbsvcs/CosEvent_Service/CosEvent_Service.dsw:
+	* orbsvcs/examples/CosEC/Factory/Makefile:
+	* orbsvcs/examples/CosEC/Factory/Factory.dsw:
+	* orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
+	* orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	* orbsvcs/tests/Event/Event.dsw:
+	* orbsvcs/tests/Event/Basic/Basic.dsw:
+	* orbsvcs/tests/Event/Basic/Observer.dsp:
+	* orbsvcs/tests/Event/Basic/Reconnect.dsp:
+	* orbsvcs/tests/Event/Basic/Schedule.dsp:
+	* orbsvcs/tests/Event/Basic/Shutdown.dsp:
+	* orbsvcs/tests/Event/Performance/Connect.dsp:
+	* orbsvcs/tests/Event/Performance/ECPerformance.dsw:
+	* orbsvcs/tests/Event/Performance/Throughput.dsp:
+	* orbsvcs/tests/Event/lib/ECTest.dsp:
+	  Added project files for several new tests and examples.
+
 Sat May 22 17:50:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
