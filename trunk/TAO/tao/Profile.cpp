@@ -117,7 +117,7 @@ TAO_Profile::policies (void)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  CORBA::PolicyList *policies = this->stub_->base_profiles ().policy_list ();
+  CORBA::PolicyList *policies = this->stub_->base_profiles ().policy_list_;
 
   if (!this->are_policies_parsed_)
     // None has already parsed the policies.
@@ -193,7 +193,7 @@ TAO_Profile::policies (void)
 
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
 
-  return *(stub_->base_profiles ().policy_list ());
+  return *(stub_->base_profiles ().policy_list_);
 }
 
 void

@@ -173,6 +173,11 @@ public:
 
 protected:
 
+  void init_policy_list (void);
+  // Initialize the policy list, demarsharling the policy.
+
+protected:
+  friend class TAO_Profile;
   CORBA::PolicyList *policy_list_;
   // Stores the policy list for the profile of this MProfile.
 
