@@ -293,6 +293,49 @@ TAO_Link_Attributes<IF>::max_link_follow_policy (CORBA::Environment &env)
 }
 
 
+  // *************************************************************
+  // TAO_Sequence_Extracter
+  // *************************************************************
+
+template <class SEQ_TYPE> CORBA::Boolean
+TAO_Sequence_Extracter<SEQ_TYPE>::
+extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
+{
+  CORBA::Boolean return_value = CORBA::B_FALSE;
+
+  TAO_TRY
+    {
+      CORBA::TCKind kind_1 =
+        TAO_Sequence_Extracter::sequence_type (any_value.type(),
+                                               TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+      CORBA::TCKind kind_2 =
+        TAO_Sequence_Extracter::sequence_type (this->typecode_,
+                                               TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Ensure the sequence type of each sequence is the same.
+      if (kind_1 != CORBA::tk_void &&
+          kind_2 != CORBA::tk_void &&
+          kind_1 == kind_2)
+        {
+          // Allocate a new sequence and extract into it.
+          ACE_NEW_RETURN (short_seq, SEQ_TYPE, return_value);
+          return_value = extract_value (any_value,
+                                        this->typecode_,
+                                        (void *) short_seq);          
+        }
+    }
+  TAO_CATCHANY
+    {
+    }
+  TAO_ENDTRY;  
+  
+  return return_value;
+}
+
+
 template <class SEQ, class OPERAND_TYPE> CORBA::Boolean
 TAO_find (SEQ& sequence, const OPERAND_TYPE element)
 {
@@ -310,5 +353,7 @@ TAO_find (SEQ& sequence, const OPERAND_TYPE element)
 
   return (CORBA::Boolean) return_value;
 }
+
+
 
 #endif /* TAO_TRADER_C */
