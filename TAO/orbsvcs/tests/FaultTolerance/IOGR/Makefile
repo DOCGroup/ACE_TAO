@@ -256,6 +256,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   testC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -477,6 +479,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   testC.i $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Containers.h \
@@ -722,6 +726,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   testC.i $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
@@ -1026,6 +1032,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   testC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1097,7 +1105,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Adapter.h \
   $(TAO_ROOT)/tao/Adapter.i \
   $(TAO_ROOT)/tao/PortableServer/Default_Policy_Validator.h \
-  $(TAO_ROOT)/tao/PortableServer/Policy_Validator.h \
+  $(TAO_ROOT)/tao/Policy_Validator.h \
   $(TAO_ROOT)/tao/PortableServer/POA_Policy_Set.h \
   $(TAO_ROOT)/tao/PortableServer/POA_Policies.h \
   $(TAO_ROOT)/tao/PortableServer/POA_Policies.i \
@@ -1371,6 +1379,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   testC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \

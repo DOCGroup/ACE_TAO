@@ -258,6 +258,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h \
   $(TAO_ROOT)/tao/GIOPC.h \
