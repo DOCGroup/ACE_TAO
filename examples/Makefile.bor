@@ -6,6 +6,7 @@ DIRS = \
         Log_Msg \
         Map_Manager \
         Reactor \
+        RMCast \
         Service_Configurator \
         Threads
 
