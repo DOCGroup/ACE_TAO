@@ -1,3 +1,9 @@
+Fri Jun  7 16:42:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Date_Time.i (update): Use ACE_OS::localtime_r rather than
+          ACE_OS::localtime to avoid MT time confusion.  Thanks to Kelly
+          Hickel <kfh@mqsoftware.com> for reporting this.
+
 Fri Jun  7 16:29:21 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Acceptor.{h cpp}:
