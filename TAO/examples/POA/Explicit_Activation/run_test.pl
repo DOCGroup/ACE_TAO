@@ -62,19 +62,19 @@ unlink $iorfile_3;
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-f $iorfile $extra_args");
 
-if (ACE::waitforfile_timed ($iorfile_1, 5) == -1) {
+if (ACE::waitforfile_timed ($iorfile_1, 10) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile_1>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;
 }
 
-if (ACE::waitforfile_timed ($iorfile_2, 5) == -1) {
+if (ACE::waitforfile_timed ($iorfile_2, 10) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile_2>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;
 }
 
-if (ACE::waitforfile_timed ($iorfile_3, 5) == -1) {
+if (ACE::waitforfile_timed ($iorfile_3, 10) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile_3>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;
@@ -107,7 +107,7 @@ if ($client_3 == -1) {
   $CL_3->Kill (); $CL_3->TimedWait (1);
 }
 
-$server = $SV->TimedWait (5);
+$server = $SV->TimedWait (10);
 if ($server == -1) {
   print STDERR "ERROR: server timedout\n";
   $SV->Kill (); $SV->TimedWait (1);
