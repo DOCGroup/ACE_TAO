@@ -1,3 +1,11 @@
+Thu Aug  5 22:26:18 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ace/OS.h (ACE_OS): Added support for strptime() for platforms that lack it.  
+	  Thanks to Kevin Lyda <kevin.lyda@trintech.com> for contributing
+ 	  this.  Note that if a platform fails to compile because it
+ 	  doesn't support this function, please enable ACE_LACKS_STRPTIME
+ 	  in the config.h file and send us email.
+
 Thu Aug 05 21:37:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Object_Manager.cpp (ACE_Static_Object_Lock_lock,
