@@ -48,8 +48,8 @@ FILES= $(IDL_FILES) \
 
 # Compile using av=1 to compile the AVStreams stuff.
 ifdef av
-## Add the implementation files
-FILES += AVStreams_i CosPropertyService_i
+## Add the implementation files 
+FILES += AVStreams_i CosPropertyService_i CosProperty_Hash
 endif
 
 
@@ -93,6 +93,10 @@ clean:
 realclean: clean
 	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
 
+#ifdef av
+#CosProperty : CosProperty_Hash.o
+#	CC -g -o $@ $(LDFLAGS) $(CPPFLAGS) CosProperty_Hash.o 
+#endif
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
