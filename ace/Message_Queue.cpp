@@ -204,6 +204,15 @@ ACE_Message_Queue_Vx::enqueue_i (ACE_Message_Block *new_item)
     ACE_NOTSUP_RETURN (-1);
 }
 
+int
+ACE_Message_Queue_Vx::enqueue_deadline_i (ACE_Message_Block *new_item)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::enqueue_deadline_i");
+
+  // Just delegate to enqueue_tail_i.
+  return enqueue_tail_i (new_item);
+}
+
 // Actually get the first ACE_Message_Block (no locking, so must be
 // called with locks held).  This method assumes that the queue has at
 // least one item in it when it is called.
@@ -226,6 +235,27 @@ ACE_Message_Queue_Vx::dequeue_head_i (ACE_Message_Block *&first_item)
     return -1;
   else
     return ::msgQNumMsgs (msgq ());
+}
+
+int
+ACE_Message_Queue_Vx::dequeue_prio_i (ACE_Message_Block *& /*dequeued*/)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::dequeue_prio_i");
+  ACE_NOTSUP_RETURN (-1);
+}
+
+int
+ACE_Message_Queue_Vx::dequeue_tail_i (ACE_Message_Block *& /*dequeued*/)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::dequeue_tail_i");
+  ACE_NOTSUP_RETURN (-1);
+}
+
+int
+ACE_Message_Queue_Vx::dequeue_deadline_i (ACE_Message_Block *& /*dequeued*/)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::dequeue_deadline_i");
+  ACE_NOTSUP_RETURN (-1);
 }
 
 // Take a look at the first item without removing it.
