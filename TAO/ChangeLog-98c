@@ -8,9 +8,9 @@ Wed Feb 25 21:41:50 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Wed Feb 25 18:03:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: 
-	* orbsvcs/tests/AVStreams/Makefile: 
-	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/tests/AVStreams/Makefile:
+	* tests/Cubit/TAO/IDL_Cubit/Makefile:
 	  Updated dependencies.
 
 Wed Feb 25 17:13:05 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
@@ -70,7 +70,7 @@ Wed Feb 25 16:52:13 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 Wed Feb 25 16:06:59 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/{client,server}.{h,cpp}: Added callback
-	support 
+	support
 
 Wed Feb 25 16:04:49 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
@@ -83,23 +83,28 @@ Wed Feb 25 12:58:04 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 	* tao/tao_util.cpp: Added the implementation for the 2 new methods
 	to use a child_poa.
 
-	* tao/tao_util.h (class TAO_ORB_Manager): Added 2 new methods 
+	* tao/tao_util.h (class TAO_ORB_Manager): Added 2 new methods
 	init_child_poa and activate_under_child_poa to create a child_poa
 	with policies PERSISTENT and USER_ID.
 
 	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (bind): Added checks for
 	null pointers in ACE_DEBUG.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Moved this file from 
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Moved this file from
 	orbsvcs/Naming_Service/ to this dir.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: Moved this file from 
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: Moved this file from
 	orbsvcs/Naming_Service/ to this directory.
 
 Wed Feb 25 12:20:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/any.cpp (operator<<=): removed declaration of local "tc",
           which shadowed the declaration in the outer scope.
+
+        * tao/giop.cpp (start): added a debug message for connection
+          failures.  This is where problems often occur for new users/
+          environments, and it'll help diagnose configuration problems.
+          And Linux getsockname () bugs.
 
 Tue Feb 24 21:05:08 1998  Nagarajan Surendran  <naga@mambo.cs.wustl.edu>
 
