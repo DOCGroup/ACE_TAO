@@ -1,3 +1,7 @@
+Sun Dec 17 11:00:47 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Date_Time.i (update): Fixed a typo.
+
 Sun Dec 17 08:52:04 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * etc/tao_smartproxies.doxygen:
