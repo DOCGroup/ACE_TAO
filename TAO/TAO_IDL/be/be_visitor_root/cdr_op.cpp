@@ -45,6 +45,9 @@ be_visitor_root_cdr_op::~be_visitor_root_cdr_op (void)
 int
 be_visitor_root_cdr_op::visit_root (be_root *node)
 {
+  // @@ TODO Disable code generation until fixes are in place wrt
+  // operator overloading.
+#if 0
   // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)
     {
@@ -52,5 +55,8 @@ be_visitor_root_cdr_op::visit_root (be_root *node)
                          "(%N:%l) be_visitor_root_cdr_op::visit_root - "
                          "codegen for scope failed\n"), -1);
     }
+#else
+  ACE_UNUSED_ARG (node);
+#endif
   return 0;
 }
