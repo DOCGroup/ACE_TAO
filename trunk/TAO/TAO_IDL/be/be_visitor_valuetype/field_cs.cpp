@@ -235,7 +235,7 @@ be_visitor_valuetype_field_cs::visit_enum (be_enum *node)
                      os);
 
   *os << "::" << ub->local_name () << " (" << bt->name ()
-      << " val)/" << be_nl
+      << " val)" << be_nl
       << "{" << be_idt_nl;
 
   *os << "this->"
