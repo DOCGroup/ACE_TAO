@@ -1368,17 +1368,17 @@ TAO_Unbounded_Array_Sequence<T,T_slice>::TAO_Unbounded_Array_Sequence (
   if (rhs.buffer_ != 0)
     {
       typedef TAO_Unbounded_Array_Sequence<T,T_slice> SEQ_TYPE;
-      T_slice ** tmp1 =
+      T * tmp1 =
         ACE_reinterpret_cast (
-            T_slice **,
+            T *,
             SEQ_TYPE::allocbuf (this->maximum_)
           );
 
 #if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
-      const T_slice ** tmp2 = (const T_slice **) rhs.buffer_;
+      const T * tmp2 = (const T *) rhs.buffer_;
 #else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
-      const T_slice ** tmp2 = ACE_reinterpret_cast (const T_slice **,
-                                                    rhs.buffer_);
+      const T * tmp2 = ACE_reinterpret_cast (const T *,
+                                             rhs.buffer_);
 #endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
 
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
@@ -1457,14 +1457,14 @@ TAO_Unbounded_Array_Sequence<T,T_slice>::operator= (
     {
 #if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
       TAO::Array_Traits<T,T_slice>::tao_copy (
-          ((T_slice **) this->buffer_)[i],
-          ((const T_slice **) rhs.buffer_)[i]
+          ((T *) this->buffer_)[i],
+          ((const T *) rhs.buffer_)[i]
         );
 #else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
       TAO::Array_Traits<T,T_slice>::tao_copy (
-          ACE_reinterpret_cast (T_slice **,
+          ACE_reinterpret_cast (T *,
                                 this->buffer_)[i],
-          ACE_reinterpret_cast (const T_slice **,
+          ACE_reinterpret_cast (const T *,
                                 rhs.buffer_)[i]
         );
 #endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
@@ -1525,19 +1525,19 @@ void
 TAO_Unbounded_Array_Sequence<T,T_slice>::_allocate_buffer (CORBA::ULong length)
 {
   typedef TAO_Unbounded_Array_Sequence<T,T_slice> SEQ_TYPE;
-  T_slice ** tmp =
+  T * tmp =
     ACE_reinterpret_cast (
-        T_slice **,
+        T *,
         SEQ_TYPE::allocbuf (length)
       );
 
   if (this->buffer_ != 0)
     {
 #if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
-      T_slice ** old = (T_slice **) this->buffer_;
+      T* old = (T *) this->buffer_;
 #else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
-      T_slice ** old = ACE_reinterpret_cast (T_slice **,
-                                             this->buffer_);
+      T* old = ACE_reinterpret_cast (T *,
+                                     this->buffer_);
 #endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
@@ -1621,16 +1621,16 @@ TAO_Bounded_Array_Sequence<T,T_slice,MAX>::TAO_Bounded_Array_Sequence (
   if (rhs.buffer_ != 0)
     {
       typedef TAO_Bounded_Array_Sequence<T,T_slice,MAX> SEQ_TYPE;
-      T_slice ** tmp1 =
+      T * tmp1 =
         ACE_reinterpret_cast (
-            T_slice **,
+            T *,
             SEQ_TYPE::allocbuf (MAX)
           );
 
 #if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
-      const T_slice ** tmp2 = (const T_slice **) rhs.buffer_;
+      const T* tmp2 = (const T *) rhs.buffer_;
 #else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
-      const T_slice ** tmp2 = ACE_reinterpret_cast (const T_slice **,
+      const T * tmp2 = ACE_reinterpret_cast (const T*,
                                                     rhs.buffer_);
 #endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
 
@@ -1690,14 +1690,14 @@ TAO_Bounded_Array_Sequence<T,T_slice,MAX>::operator= (
     {
 #if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
       TAO::Array_Traits<T,T_slice>::tao_copy (
-          ((T_slice **) this->buffer_)[i],
-          ((const T_slice **) rhs.buffer_)[i]
+          ((T *) this->buffer_)[i],
+          ((const T *) rhs.buffer_)[i]
         );
 #else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
       TAO::Array_Traits<T,T_slice>::tao_copy (
-          ACE_reinterpret_cast (T_slice **,
+          ACE_reinterpret_cast (T *,
                                 this->buffer_)[i],
-          ACE_reinterpret_cast (const T_slice **,
+          ACE_reinterpret_cast (const T *,
                                 rhs.buffer_)[i]
         );
 #endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */

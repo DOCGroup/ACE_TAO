@@ -280,8 +280,6 @@ namespace TAO
                            TAO_INVOKE_FAILURE);
           if (this->details_.demarshal_args (cdr) == false)
             {
-              this->reply_received (TAO_INVOKE_FAILURE);
-
               ACE_THROW_RETURN (CORBA::MARSHAL (),
                                 TAO_INVOKE_FAILURE);
             }
