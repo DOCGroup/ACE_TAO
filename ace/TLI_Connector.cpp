@@ -151,7 +151,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 	result = ACE_OS::ioctl (new_stream.get_handle (), I_PUSH, "tirdwr");
 #endif /* I_PUSH */
     }
-  else if (!(errno == EWOULDBLOCK || errno == ETIMEDOUT))
+  else if (!(errno == EWOULDBLOCK || errno == ETIME))
     {
       // If things have gone wrong, close down and return an error.
       this->close ();

@@ -20,7 +20,7 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
   ACE_TRACE ("ACE_SOCK_Connector::ACE_SOCK_Connector");
   if (this->connect (new_stream, remote_sap, timeout, local_sap,
 		     reuse_addr, flags, perms, protocol_family, protocol) == -1
-      && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIMEDOUT))
+      && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_SOCK_Connector::ACE_SOCK_Connector"));
 }
 

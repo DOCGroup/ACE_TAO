@@ -86,7 +86,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
   if (result != -1 || errno == EISCONN)
     // Start out with non-blocking disabled on the <new_stream>.
     new_stream.disable (ACE_NONBLOCK);
-  else if (!(errno == EWOULDBLOCK || errno == ETIMEDOUT))
+  else if (!(errno == EWOULDBLOCK || errno == ETIME))
     {
       // If things have gone wrong, close down and return an error.
       int saved_errno = errno;
@@ -109,14 +109,17 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
   // Win32 has a timing problem - if you check to see if the
   // connection has completed too fast, it will fail - so wait 1
   // millisecond to let it catch up.
-  ACE_Time_Value time (0, ACE_OS::NON_BLOCKING_BUG_DEALY);
+  ACE_Time_Value time (0, ACE_NON_BLOCKING_BUG_DEALY);
   ACE_OS::sleep (time);
 #endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
   ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (), tv);
 
   if (h == ACE_INVALID_HANDLE)
     {
+      // Preserve the value of errno across the close() call.
+      int error = errno;
       new_stream.close ();
+      errno = error;
       return -1;
     }
   else 	  // We've successfully connected!
@@ -130,14 +133,16 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
 
 	  if (ACE_OS::getpeername (h, addr, &len) == -1)
 	    {
+	      // Preserve the value of errno across the close() call.
+	      int error = errno;
 	      new_stream.close ();
+	      errno = error;
 	      return -1;
 	    }
 	}
 
       // Start out with non-blocking disabled on the <new_stream>.
       new_stream.disable (ACE_NONBLOCK);
-
       return 0;
     }
 }

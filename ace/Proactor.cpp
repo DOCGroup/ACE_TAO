@@ -534,7 +534,7 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
       // @@  What's the WIN32 constant for timeout (258)?!?!?!
       if (errno == 258)
 	{
-	  errno = ETIMEDOUT;
+	  errno = ETIME;
 	  return 0;
 	}
       else
@@ -542,9 +542,10 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
     }
   else
     {
-      // Narrow result
+      // Narrow the result.
       ACE_Asynch_Result *asynch_result = (ACE_Asynch_Result *) overlapped;
-      // If errors happen, grab the error
+
+      // If errors happen, grab the error.
       if (result == FALSE)
 	errno = ::GetLastError ();
       

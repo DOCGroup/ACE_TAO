@@ -289,6 +289,13 @@
 // block is left. The old state will then be restored Only used for
 // Win32 (in the moment).
 #if defined (ACE_WIN32)
+
+// This is necessary to work around bugs with Win32 non-blocking
+// connects...
+#if !defined (ACE_NON_BLOCKING_BUG_DELAY)
+#define ACE_NON_BLOCKING_BUG_DELAY 35000
+#endif /* ACE_NON_BLOCKING_BUG_DELAY */
+  
 #if defined (_DEBUG)
 class ACE_No_Heap_Check 
 {
@@ -3135,8 +3142,6 @@ class ACE_Export ACE_OS
   //     <ACE_Log_Msg::restart> flag is enabled).
 {
 public:
-  enum { NON_BLOCKING_BUG_DELAY = 35000 };
-  
   struct ace_flock_t
     // = TITLE
     //     OS file locking structure.
