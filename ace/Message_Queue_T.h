@@ -359,6 +359,16 @@ class ACE_Dynamic_Message_Queue : public ACE_Message_Queue<ACE_SYNCH_USE>
   //     be modified in derived classes by providing alternative
   //     definitions for the appropriate virtual methods.
   //
+  //     Caveat: the virtual methods enqueue_tail, enqueue_head,
+  //             and peek_dequeue_head were made private, but for some
+  //             compilers it is possible to gain access to these methods
+  //             through nefarious means: achieving this may result in
+  //             highly unpredictable results, as expectations about
+  //             where a message starts or remains between method
+  //             invocations may not hold for a dynamically managed 
+  //             message queue.
+
+
 public:
   // = Initialization and termination methods.
   ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Strategy & message_strategy,
@@ -369,20 +379,23 @@ public:
   virtual ~ACE_Dynamic_Message_Queue (void);
   // Close down the message queue and release all resources.
 
+  virtual int dequeue_head (ACE_Message_Block *&first_item,
+                            ACE_Time_Value *timeout = 0);
+  // Dequeue and return the <ACE_Message_Block *> at the head of the
+  // queue.  Returns -1 on failure, else the number of items still on
+  // the queue.
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
 protected:
+
   virtual int enqueue_i (ACE_Message_Block *new_item);
   // Enqueue an <ACE_Message_Block *> in accordance with its priority.
   // priority may be *dynamic* or *static* or a combination or *both*
   // It calls the priority evaluation function passed into the Dynamic
   // Message Queue constructor to update the priorities of all
   // enqueued messages.
-
-  virtual int dequeue_head_i (ACE_Message_Block *&first_item);
-  // Dequeue and return the <ACE_Message_Block *> at the head of the
-  // queue.
 
   virtual int refresh_priorities (const ACE_Time_Value & tv);
   // Refresh the priorities in the queue according to a specific
@@ -392,6 +405,12 @@ protected:
   // Refresh the order of messages in the queue after refreshing their
   // priorities.
 
+  virtual int remove_stale_messages (const ACE_Time_Value & tv);
+  // Remove messages that are later than the priority range can represent.
+
+  virtual int reorder_queue (const ACE_Time_Value & tv);
+  // Refresh the order of messages in the queue.
+
   ACE_Message_Block *pending_list_tail_;
   // Pointer to tail of the pending messages (those whose priority is
   // and has been non-negative) in the <ACE_Message_Block list>.
@@ -400,33 +419,29 @@ protected:
   // Pointer to a dynamic priority evaluation function.
 
 private:
-  // = Disallow these operations.
+  // = Disallow public access to these operations.
+
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Message_Queue (const ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> &))
 
-  // = These methods can wierdness in dynamically prioritized queue.
+  // provide definitions for these (just call base class method), 
+  // but make them private so they're not accessible outside the class
 
-  // Disallow their use until and unless a coherent semantics for head
-  // and tail enqueueing can be identified.
-  ACE_UNIMPLEMENTED_FUNC (virtual int
-                          enqueue_tail (ACE_Message_Block *new_item,
-                                        ACE_Time_Value *timeout = 0))
-  ACE_UNIMPLEMENTED_FUNC (virtual int
-                          enqueue_head (ACE_Message_Block *new_item,
-                                        ACE_Time_Value *timeout = 0))
+  virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
+                                 ACE_Time_Value *tv = 0);
+  // private method to hide public base class method: just calls base class method
 
-  ACE_UNIMPLEMENTED_FUNC (virtual int
-                          peek_dequeue_head (ACE_Message_Block *&first_item,
-                                             ACE_Time_Value *tv = 0))
-  // Since messages are *dynamically* prioritized, it is not possible
-  // to guarantee that the message at the head of the queue when this
-  // method is called will still be at the head when the next method
-  // is called: disallow its use until and unless a coherent semantics
-  // for peeking at the head of the queue can be identified.
+  virtual int enqueue_tail (ACE_Message_Block *new_item,
+                            ACE_Time_Value *timeout = 0);
+  // private method to hide public base class method: just calls base class method
+
+  virtual int enqueue_head (ACE_Message_Block *new_item,
+                            ACE_Time_Value *timeout = 0);
+  // private method to hide public base class method: just calls base class method
 };
 
 template <ACE_SYNCH_DECL>
-class ACE_Export ACE_Message_Queue_Factory
+class ACE_Message_Queue_Factory
 {
   // = TITLE
   //     ACE_Message_Queue_Factory is a static factory class template which
