@@ -1,6 +1,6 @@
 // $Id$
 
-#include "../test_i.h"
+#include "test_i.h"
 #include "tao/Pool_Per_Endpoint.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"

@@ -18,7 +18,7 @@
 
 #include "testS.h"
 
-class Test_i : public POA_Test
+class RTCORBA_COMMON_Export Test_i : public POA_Test
 {
   // = TITLE
   //   An implementation for the Test interface

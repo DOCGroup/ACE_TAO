@@ -11,16 +11,8 @@ endif
 
 TAO_IDLFLAGS += -Ge 1
 
-ifdef AMI
-TAO_IDLFLAGS += -GC
-endif # AMI
-
-IDL_FILES = test
-IDL_SRC = \
-        $(addsuffix S.cpp, $(IDL_FILES)) \
-        $(addsuffix C.cpp, $(IDL_FILES))
-
-DIRS  = Single_Endpoint \
+DIRS  = Common \
+	Single_Endpoint \
         Orb_Per_Priority \
         Endpoint_Per_Priority
 
@@ -34,21 +26,8 @@ include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
-
-all.nested: idl_stubs.local
-
-realclean:
-	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
-
-# DO NOT DELETE THIS LINE -- g++dep uses it.
-# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
-
-
-
-# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
