@@ -191,72 +191,53 @@
 # create your own targets, e.g., server and client.  In this case, assign
 # them to BIN, or BIN_UNCHECKED if they depend on other components, do not
 # include rules.bin.GNU.  That way they will still get cleaned up.
-ifndef CLEANUP_BIN
-  ifdef BIN
-    CLEANUP_BIN = $(BIN)
-  else # !BIN
-    ifdef BIN2
-      CLEANUP_BIN = $(BIN2)
-      BIN_UNCHECKED = $(BIN2)
-    else # !BIN2
-      ifdef BIN_UNCHECKED
-        CLEANUP_BIN = $(BIN_UNCHECKED)
-      else # !BIN_UNCHECKED
-        BIN_UNCHECKED ?=
-        CLEANUP_BIN ?=
-      endif # BIN_UNCHECKED
-    endif # BIN2
-  endif # BIN
-endif # CLEANUP_BIN
+BIN_UNCHECKED ?=
+CLEANUP_BIN ?=
+ifdef BIN
+  CLEANUP_BIN = $(BIN)
+endif # !BIN
+ifdef BIN2
+  CLEANUP_BIN += $(BIN2)
+endif # !BIN2
+ifneq ($(BIN_UNCHECKED),)
+  CLEANUP_BIN += $(BIN_UNCHECKED)
+endif # !BIN_UNCHECKED
 
-ifndef CLEANUP_LIB
-  ifdef LIB
-    CLEANUP_LIB = $(LIB)
-  else # !LIB
-    ifdef LIB2
-      CLEANUP_LIB = $(LIB2)
-      LIB_UNCHECKED = $(LIB2)
-    else # !LIB2
-      ifdef LIB_UNCHECKED
-        CLEANUP_LIB = $(LIB_UNCHECKED)
-      else # !LIB_UNCHECKED
-        LIB_UNCHECKED ?=
-        CLEANUP_LIB ?=
-      endif # LIB_UNCHECKED
-    endif # LIB2
-  endif # LIB
-endif # CLEANUP_LIB
+LIB_UNCHECKED ?=
+CLEANUP_LIB ?=
+ifdef LIB
+  CLEANUP_LIB = $(LIB)
+endif # !LIB
+ifdef LIB2
+  CLEANUP_LIB += $(LIB2)
+endif # !LIB2
+ifneq ($(LIB_UNCHECKED),)
+  CLEANUP_LIB = $(LIB_UNCHECKED)
+endif # !LIB_UNCHECKED
 
-ifndef CLEANUP_SHLIB
-  ifdef SHLIB
-    CLEANUP_SHLIB = $(SHLIB)
-  else # !SHLIB
-    ifdef SHLIB2
-      CLEANUP_SHLIB = $(SHLIB2)
-      SHLIB_UNCHECKED = $(SHLIB2)
-    else # !SHLIB2
-      ifdef SHLIB_UNCHECKED
-        CLEANUP_SHLIB = $(SHLIB_UNCHECKED)
-      else # ! SHLIB_UNCHECKED
-        SHLIB_UNCHECKED ?=
-        CLEANUP_SHLIB ?=
-      endif # SHLIB_UNCHECKED
-    endif # SHLIB_UNCHECKED
-  endif # SHLIB
-endif # CLEANUP_SHLIB
+SHLIB_UNCHECKED ?=
+CLEANUP_SHLIB ?=
+ifdef SHLIB
+  CLEANUP_SHLIB = $(SHLIB)
+endif # !SHLIB
+ifdef SHLIB2
+  CLEANUP_SHLIB += $(SHLIB2)
+endif # SHLIB2
+ifneq ($(SHLIB_UNCHECKED),)
+  CLEANUP_SHLIB += $(SHLIB_UNCHECKED)
+endif # ! SHLIB_UNCHECKED
 
-ifndef CLEANUP_SHLIBA
-  ifdef SHLIBA
-    CLEANUP_SHLIBA = $(SHLIBA)
-  else
-    ifdef SHLIBA2
-      CLEANUP_SHLIBA = $(SHLIBA2)
-      SHLIBA2_UNCHECKED = $(SHLIBA2)
-    else
-      CLEANUP_SHLIBA = $(SHLIBA_UNCHECKED)
-    endif
-  endif
-endif
+SHLIBA_UNCHECKED ?=
+CLEANUP_SHLIBA ?=
+ifdef SHLIBA
+  CLEANUP_SHLIBA = $(SHLIBA)
+endif # SHLIBA
+ifdef SHLIBA2
+  CLEANUP_SHLIBA = $(SHLIBA2)
+endif # SHLIB2A
+ifneq ($(SHLIBA_UNCHECKED),)
+  CLEANUP_SHLIBA = $(SHLIBA_UNCHECKED)
+endif # SHLIBA_UNCHECKED
 
 #### Default to building shared libraries only.  Set it here to give the
 #### platform a chance to override.
