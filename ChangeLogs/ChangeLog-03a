@@ -1,3 +1,47 @@
+Thu Jul 18 08:39:08 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+
+          Update the documentation to reflect the additions to the grammar.
+
+        * bin/MakeProjectCreator/config/avstreamsexe.mpb:
+        * bin/MakeProjectCreator/config/corba_messaging.mpb:
+        * bin/MakeProjectCreator/config/minimum_corba.mpb:
+        * bin/MakeProjectCreator/config/namingexe.mpb:
+        * bin/MakeProjectCreator/config/notify.mpb:
+        * bin/MakeProjectCreator/config/orbsvcsexe.mpb:
+        * bin/MakeProjectCreator/config/orbsvcslib.mpb:
+        * bin/MakeProjectCreator/config/rt_client.mpb:
+        * bin/MakeProjectCreator/config/rt_server.mpb:
+        * bin/MakeProjectCreator/config/rteventexe.mpb:
+
+          Add the GNU specific info for generating conditional target
+          Makefiles.
+
+        * bin/MakeProjectCreator/modules/GNUProjectCreator.pm:
+
+          Added code to generate the conditional sections of the GNU
+          Makefiles.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Fix some minor problems with generated project files.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added template info for conditional targets.
+
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Removed the tie class idl targets.
+
+        * bin/ace_components:
+
+          Added a new append option that will be used by the generated GNU
+          Makefiles.
+
 Thu Jul 18 06:17:19 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* Doug turns 40 today.  Fortunately, that's only 32 in Octal ;-).

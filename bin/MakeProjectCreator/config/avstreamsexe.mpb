@@ -1,5 +1,6 @@
-project {
+project: orbsvcsexe {
   depends += AV CosProperty CosNaming Svc_Utils IORTable PortableServer
   libs    += TAO_AV TAO_CosProperty TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_PortableServer
+  comps   += AV
 }
 

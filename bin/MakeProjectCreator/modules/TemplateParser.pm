@@ -212,14 +212,14 @@ sub relative {
             if ($self->{'prjc'}->convert_slashes()) {
               $val =~ s/\//\\/g;
             }
-            $value =~ s/\$\([^)]+\)/$val/;
+            substr($value, $start) =~ s/\$\([^)]+\)/$val/;
           }
         }
         $start += length($whole);
       }
     }  
   }    
-       
+
   return $value;
 }
 

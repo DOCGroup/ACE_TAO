@@ -19,6 +19,15 @@ use vars qw(@ISA);
 @ISA = qw(ProjectCreator);
 
 # ************************************************************
+# Data Section
+# ************************************************************
+
+my(%compscript) = ('ACE_COMPONENTS'     => ["--ace",     "--set"],
+                   'TAO_COMPONENTS'     => ["--tao",     "--set"],
+                   'ORBSVCS_COMPONENTS' => ["--orbsvcs", "--append"],
+                  );
+
+# ************************************************************
 # Subroutine Section
 # ************************************************************
 
@@ -56,12 +65,11 @@ sub fill_value {
   my($name)  = shift;
   my($value) = undef;
   my($crlf)  = $self->crlf();
+  my($tag)   = 'source_files';
+  my($names) = $self->{$tag};
 
   if ($name eq "gnu_source_files") {
     my(%vpath) = ();
-    my($tag)   = 'source_files';
-    my($names) = $self->{$tag};
-
     $value = "";
     foreach my $name (keys %$names) {
       my($comps) = $$names{$name};
@@ -118,6 +126,38 @@ sub fill_value {
       $value .= "$crlf$crlf" . "VPATH = .";
       foreach my $key (@vkeys) {
         $value .= ":$key";
+      }
+    }
+  }
+  elsif ($name eq "build") {
+    foreach my $name (keys %$names) {
+      if ($name ne "default") {
+        if (!defined $value) {
+          $value = "BUILD +=";
+        }
+        $value .= " $name";
+      }
+    }
+  }
+  elsif ($name eq "comptarget") {
+    foreach my $name (keys %$names) {
+      if ($name ne "default") {
+        if (!defined $value) {
+          $value = "";
+        }
+        $value .= "$crlf.PHONY: $name$crlf" .
+                  "$name:$crlf" .
+                  "\t\@sh \$(ACE_ROOT)/bin/ace_components $compscript{$name}->[0] $compscript{$name}->[1] '\$($name)'$crlf$crlf" .
+                  "compclean:$crlf" .
+                  "\t\@sh \$(ACE_ROOT)/bin/ace_components $compscript{$name}->[0] --remove";
+      }
+    }
+  }
+  elsif ($name eq "compclean") {
+    foreach my $name (keys %$names) {
+      if ($name ne "default") {
+        $value = "compclean";
+        last;
       }
     }
   }

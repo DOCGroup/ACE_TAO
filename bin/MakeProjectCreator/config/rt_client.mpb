@@ -1,4 +1,5 @@
 project : client {
-  depends += RTCORBA
-  libs    += TAO_RTCORBA
+  depends  += RTCORBA
+  libs     += TAO_RTCORBA
+  requires += rt_corba
 }
