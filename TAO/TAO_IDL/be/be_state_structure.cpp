@@ -1,3 +1,5 @@
+// $Id$
+//
 // ============================================================================
 //
 // = LIBRARY
@@ -14,9 +16,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 be_state_struct::be_state_struct (void)
 {
@@ -42,6 +44,8 @@ be_state_struct ::gen_code (be_type *bt, be_decl *d, be_type *type)
     case TAO_CodeGen::TAO_STRUCT_CI:
       os = cg->client_inline ();
       break;
+    default:
+      os = 0;  // Force a seg fault.  At least os will have a known value.
     }
 
   f = be_field::narrow_from_decl (d); // downcast to field node
