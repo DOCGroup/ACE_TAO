@@ -1,7 +1,7 @@
 //  -*- MPC -*-
 // $Id$
 
-project(Test_Output) : acelib {
+project(Test_Output) : acelib, script {
   sharedname = Test_Output
   dynamicflags = TEST_OUTPUT_BUILD_DLL
   Source_Files {
@@ -12,6 +12,10 @@ project(Test_Output) : acelib {
     test_config.h
   }
   Resource_Files {
+  }
+  Script_Files {
+    run_test.pl
+    run_test.lst
   }
 }
 
