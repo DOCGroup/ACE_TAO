@@ -17,23 +17,30 @@ TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      dyn_seq.init (sequence ACE_ENV_ARG_PARAMETER);
+      dyn_seq.init (sequence, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::ULong length =
-        dyn_seq.get_length (ACE_ENV_SINGLE_ARG_PARAMETER);
+        dyn_seq.get_length (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+	  
+      dyn_seq.rewind(ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      for (CORBA::ULong i = 0; i < length && ! return_value; i++)
-        if (functor (dyn_seq, element))
-          return_value = 1;
+      for (CORBA::ULong i = 0 ; i < length && ! return_value; i++)
+        {
+          if (functor (dyn_seq, element))
+            return_value = 1;
+		
+          dyn_seq.next(ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {
       return 0;
     }
   ACE_ENDTRY;
-
 
   return return_value;
 }

@@ -199,7 +199,7 @@ Eric Parker <eparker@credence.com>
 James Michael Dwyer <jdwyer@knox.edu>
 Arun Katkere <katkere@praja.com>
 Bob Dunmire <bobd@titan.com>
-Sandro Doro <doro.s@flashnet.it>
+Sandro Doro <sandro@dorogroup.com>
 Robert Lyng <rlyng@synertech.highmark.com>
 Phil Logan <phill@in.ot.com.au>
 John Cosby <John.D.Cosby@cpmx.saic.com>
@@ -697,7 +697,7 @@ Carsten Zerbst <zerbst@tu-harburg.de>
 Paul Calabrese <calabrese_p@ociweb.com>
 Stephane Chatre <schatre@oresis.com>
 James Whitledge <jwhitledge@spyglass.com>
-Erik Johannes <ejohannes@oresis.com>
+Erik Johannes <erik_johannes@teseda.com>
 Alex Hornby <alex@anvil.co.uk>
 Riaz Syed <syed@Lynx.COM>
 Clarence M. Weaver <clarence_m_weaver@md.northgrum.com>
@@ -1484,7 +1484,11 @@ Rainer Lucas <rainer.lucas@fun.de>
 Allan S Iverson <allaniverson@sprynet.com>
 Jeffrey Shaffer <jeffs@integ.com>
 Oleg Burlachenko <ua_fireball@yahoo.com>
-Chen Jian <jchen@huawei.com>
+Jian Chen <jchen@huawei.com>
+Matthew P. Hampton <mph2@cs.wustl.edu>
+Dante J. Cannarozzi <djc2@cs.wustl.edu>
+Jeff Paciga <jmpaciga@uwaterloo.ca>
+Laurent Sabourin <lsabourin@interstarinc.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
