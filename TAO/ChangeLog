@@ -1,3 +1,12 @@
+Tue Sep 21 20:31:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
+	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.h:
+	* orbsvcs/orbsvcs/Log/PersistStore.cpp:
+
+	  Applied patches to Logging service provided by
+	  Thomas Girard <thomas dot g dot girard at free.fr>.
+
 Tue Sep 21 07:19:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
