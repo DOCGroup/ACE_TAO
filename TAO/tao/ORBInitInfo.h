@@ -35,7 +35,14 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if defined (__BORLANDC__)
+#pragma option push -w-rvl -w-rch -w-ccc -w-inl
+#endif /* __BORLANDC__ */
+
 class TAO_ORB_Core;
+class TAO_ORBInitInfo_var;
+class TAO_ORBInitInfo;
+typedef TAO_ORBInitInfo *TAO_ORBInitInfo_ptr;
 
 /**
  * @class TAO_ORBInitInfo
@@ -88,12 +95,15 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Register a mapping between a string and a corresponding object
-  /// reference with the ORB being initialized.  This is particularly
-  /// useful for registering references to local (locality
-  /// constrained) objects.  Note that this method should be called
-  /// in ORBInitializer::pre_init() so that the registered reference
-  /// will be available to the resolve_initial_references() that may
-  /// be called in the ORBInitializer::post_init() call.
+  /// reference with the ORB being initialized.
+  /**
+   * This methid is particularly useful for registering references to
+   * local (locality constrained) objects.  Note that this method
+   * should be called in ORBInitializer::pre_init() so that the
+   * registered reference will be available to the
+   * resolve_initial_references() that may be called in the
+   * ORBInitializer::post_init() call.
+   */
   virtual void register_initial_reference (
       const char * id,
       CORBA::Object_ptr obj,
@@ -157,13 +167,13 @@ public:
    */
 
   //@{
-  /**
-   * Allocate a slot in the ORB's TSS resources.  TAO uses a single
-   * TSS key for these resources, so it is useful to place TSS objects
-   * in TAO's TSS resources on platforms where the number of TSS keys
-   * is low.  The returned SlotId can be used to index into the array
-   * stored in ORB's TSS resources structure.
-   *
+  /// Allocate a slot in the ORB's TSS resources.
+  /** 
+   * TAO uses a single TSS key for these resources, so it is useful to
+   * place TSS objects in TAO's TSS resources on platforms where the
+   * number of TSS keys is low.  The returned SlotId can be used to
+   * index into the array stored in ORB's TSS resources structure.
+   * @par
    * An accompanying cleanup function (e.g. a TSS destructor) can also
    * be registered.
    */
@@ -171,30 +181,56 @@ public:
       ACE_CLEANUP_FUNC cleanup,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// Return a pointer to the ORB Core associated with the ORB being
+  /// initialized.
+  /**
+   * The ORB Core is essentialy fully initialized by the time
+   * ORBInitializer::post_init() is invoked.  As such, it is generally
+   * best if this method is used in that method.
+   *
+   * @note Only use this method if you know what you are doing.
+   */
+  TAO_ORB_Core *orb_core (void) const;
   //@}
 
   /**
-   * @name Downcast Related Methods
-   *
-   * These are methods used to get around RTTI compiler deficiencies.
-   * They do not increase the reference count.
+   * @name Reference Related Methods
    */
   //@{
-  static TAO_ORBInitInfo * _narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+  typedef TAO_ORBInitInfo_ptr _ptr_type;
+  typedef TAO_ORBInitInfo_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static TAO_ORBInitInfo * _unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-
+  static TAO_ORBInitInfo_ptr _duplicate (TAO_ORBInitInfo_ptr obj);
+  
+  static TAO_ORBInitInfo_ptr _narrow (
+      CORBA::Object_ptr obj,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+  
+  static TAO_ORBInitInfo_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+  
+  static TAO_ORBInitInfo_ptr _nil (void)
+    {
+      return (TAO_ORBInitInfo_ptr)0;
+    }
+  
   virtual void *_tao_QueryInterface (ptr_arith_t type);
+  
+  virtual const char* _interface_repository_id (void) const;
   //@}
 
 protected:
 
   /// Destructor is protected to force instantiation on the heap since
-  /// it is reference counted.
+  /// ORBInitInfo is reference counted.
   ~TAO_ORBInitInfo (void);
 
   /// Check if this ORBInitInfo instance is valid.  Once post_init()
@@ -227,9 +263,60 @@ private:
   TAO_CodecFactory codec_factory_;
 };
 
+/**
+ * @class TAO_ORBInitInfo_var
+ */
+class  TAO_ORBInitInfo_var : public TAO_Base_var
+{
+public:
+  TAO_ORBInitInfo_var (void); // default constructor
+  TAO_ORBInitInfo_var (TAO_ORBInitInfo_ptr p) : ptr_ (p) {} 
+  TAO_ORBInitInfo_var (const TAO_ORBInitInfo_var &); // copy constructor
+  ~TAO_ORBInitInfo_var (void); // destructor
+  
+  TAO_ORBInitInfo_var &operator= (TAO_ORBInitInfo_ptr);
+  TAO_ORBInitInfo_var &operator= (const TAO_ORBInitInfo_var &);
+  TAO_ORBInitInfo_ptr operator-> (void) const;
+  
+  operator const TAO_ORBInitInfo_ptr &() const;
+  operator TAO_ORBInitInfo_ptr &();
+  // in, inout, out, _retn 
+  TAO_ORBInitInfo_ptr in (void) const;
+  TAO_ORBInitInfo_ptr &inout (void);
+  TAO_ORBInitInfo_ptr &out (void);
+  TAO_ORBInitInfo_ptr _retn (void);
+  TAO_ORBInitInfo_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static TAO_ORBInitInfo_ptr duplicate (TAO_ORBInitInfo_ptr);
+  static void release (TAO_ORBInitInfo_ptr);
+  static TAO_ORBInitInfo_ptr nil (void);
+  static TAO_ORBInitInfo_ptr narrow (
+      CORBA::Object *,
+      CORBA::Environment &
+    );
+  static CORBA::Object * upcast (void *);
+
+private:
+  TAO_ORBInitInfo_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  TAO_ORBInitInfo_var (const TAO_Base_var &rhs);
+  TAO_ORBInitInfo_var &operator= (const TAO_Base_var &rhs);
+};
+
+
+#if defined (__ACE_INLINE__)
+#include "ORBInitInfo.inl"
+#endif  /* __ACE_INLINE__ */
+
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#if defined (__BORLANDC__)
+#pragma option pop
+#endif /* __BORLANDC__ */
 
 #include "ace/post.h"
 
