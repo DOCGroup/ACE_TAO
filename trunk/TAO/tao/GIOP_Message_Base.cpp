@@ -21,12 +21,8 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core)
   : message_handler_ (orb_core,
 		      this),
     output_ (0),
-    cdr_buffer_alloc_ (
-	orb_core->resource_factory ()->output_cdr_buffer_allocator ()
-      ),
-    cdr_dblock_alloc_ (
-	orb_core->resource_factory ()->output_cdr_dblock_allocator ()
-      ),
+    cdr_buffer_alloc_ (orb_core->resource_factory ()->output_cdr_buffer_allocator ()),
+    cdr_dblock_alloc_ (orb_core->resource_factory ()->output_cdr_dblock_allocator ()),
     generator_parser_ (0)
 {
 #if defined(ACE_HAS_PURIFY)
@@ -145,12 +141,9 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
   return 0;
 }
 
-
 int
-TAO_GIOP_Message_Base::generate_reply_header (
-    TAO_OutputCDR &cdr,
-    TAO_Pluggable_Reply_Params &params
-  )
+TAO_GIOP_Message_Base::generate_reply_header (TAO_OutputCDR &cdr,
+                                              TAO_Pluggable_Reply_Params &params)
 {
   // Write the GIOP header first
   if (!this->write_protocol_header (TAO_GIOP_REPLY,
@@ -198,7 +191,6 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
 
   return retval;
 }
-
 
 int
 TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
@@ -259,7 +251,6 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
   return 0;
 }
 
-
 TAO_Pluggable_Message_Type
 TAO_GIOP_Message_Base::message_type (void)
 {
@@ -284,15 +275,10 @@ TAO_GIOP_Message_Base::message_type (void)
 	ACE_ERROR ((LM_ERROR,
 		    ACE_TEXT ("TAO (%P|%t) %N:%l	message_type : ")
 		    ACE_TEXT ("wrong message.\n")));
-
-
     }
 
   return TAO_PLUGGABLE_MESSAGE_MESSAGERROR;
 }
-
-
-
 
 int
 TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
@@ -331,7 +317,6 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 			  this->message_handler_.message_state ().byte_order,
 			  orb_core);
 
-
   // input_cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   // Send the message state for the service layer like FT to log the
@@ -341,7 +326,6 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 
   // Reset the message handler to receive upcalls if any
   this->message_handler_.reset (0);
-
 
   // We know we have some request message. Check whether it is a
   // GIOP_REQUEST or GIOP_LOCATE_REQUEST to take action.
@@ -360,7 +344,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 					   orb_core,
 					   input_cdr);
     default:
-    return -1;
+      return -1;
     }
 }
 
@@ -400,7 +384,6 @@ TAO_GIOP_Message_Base::process_reply_message (
       return this->generator_parser_->parse_reply (input_cdr,
 						   params);
 
-
     case TAO_GIOP_LOCATEREPLY:
       return this->generator_parser_->parse_locate_reply (input_cdr,
 							  params);
@@ -410,11 +393,9 @@ TAO_GIOP_Message_Base::process_reply_message (
 }
 
 int
-TAO_GIOP_Message_Base::generate_exception_reply (
-    TAO_OutputCDR &cdr,
-    TAO_Pluggable_Reply_Params &params,
-    CORBA::Exception &x
-  )
+TAO_GIOP_Message_Base::generate_exception_reply (TAO_OutputCDR &cdr,
+                                                 TAO_Pluggable_Reply_Params &params,
+                                                 CORBA::Exception &x)
 {
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
@@ -445,11 +426,9 @@ TAO_GIOP_Message_Base::generate_exception_reply (
   return 0;
 }
 
-
 int
-TAO_GIOP_Message_Base::write_protocol_header (
-    TAO_GIOP_Message_Type t,
-    TAO_OutputCDR &msg)
+TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type t, 
+                                              TAO_OutputCDR &msg)
 {
   // Reset the message type
   msg.reset ();
@@ -485,8 +464,6 @@ TAO_GIOP_Message_Base::write_protocol_header (
   return 1;
 }
 
-
-
 int
 TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 					TAO_ORB_Core *orb_core,
@@ -507,7 +484,6 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
   int parse_error = 0;
 
-
   ACE_TRY
     {
       parse_error =
@@ -522,7 +498,6 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
       response_required = request.response_expected ();
 
       CORBA::Object_var forward_to;
-
 
       // Do this before the reply is sent.
       orb_core->adapter_registry ()->dispatch (request.object_key (),
@@ -624,13 +599,9 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
       if (response_required)
 	{
-	  CORBA::UNKNOWN exception (
-	      CORBA::SystemException::_tao_minor_code (
-		  TAO_UNHANDLED_SERVER_CXX_EXCEPTION,
-		  0
-		),
-	      CORBA::COMPLETED_MAYBE
-	    );
+	  CORBA::UNKNOWN exception (CORBA::SystemException::_tao_minor_code 
+                                    (TAO_UNHANDLED_SERVER_CXX_EXCEPTION, 0),
+                                    CORBA::COMPLETED_MAYBE);
 
 	  result = this->send_reply_exception (transport,
 					       orb_core,
@@ -807,14 +778,10 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 				       status_info);
 }
 
-
-
 int
-TAO_GIOP_Message_Base::make_send_locate_reply (
-    TAO_Transport *transport,
-    TAO_GIOP_Locate_Request_Header &request,
-    TAO_GIOP_Locate_Status_Msg &status_info
-  )
+TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
+                                               TAO_GIOP_Locate_Request_Header &request,
+                                               TAO_GIOP_Locate_Status_Msg &status_info)
 {
   // Note here we are making the Locate reply header which is *QUITE*
   // different from the reply header made by the make_reply () call..
@@ -896,7 +863,6 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
 
   return result;
 }
-
 
 void
 TAO_GIOP_Message_Base::set_state (CORBA::Octet def_major,
@@ -1154,12 +1120,8 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 		       (const char *) ptr,
 		       len,
 		       ACE_TEXT ("GIOP message")));
-
-
     }
 }
-
-
 
 int
 TAO_GIOP_Message_Base::generate_locate_reply_header (
@@ -1168,7 +1130,6 @@ TAO_GIOP_Message_Base::generate_locate_reply_header (
 {
   return 0;
 }
-
 
 int
 TAO_GIOP_Message_Base::is_ready_for_bidirectional (void)
