@@ -1,3 +1,10 @@
+Wed Jun 24 15:36:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp
+	(Peer_Router_Context): For some reason, MSVC can't grop the
+ 	temporary objects.  Therefore, I changed the ACE_INET_Addr object
+ 	in the constructor to a local variable.
+
 Wed Jun 24 17:10:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Timeprobe: Removed ACE_COMPILE_TIMEPROBE.  ACE library will
