@@ -172,9 +172,6 @@ CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
                                 ACE_TRY_ENV);
       ACE_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("errno is %p\n")));
-
       if (status == TAO_INVOKE_RESTART)
         {
           continue;
