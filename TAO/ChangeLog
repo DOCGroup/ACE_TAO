@@ -1,3 +1,13 @@
+Fri Nov 12 14:51:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        
+          Changed behavior of typecode generation for exceptions
+          to always be in the *C.cpp file. Since exceptions always
+          depend on their typecodes, this gives us an opportunity
+          to link the exception's typecode without linking the
+          correspoding Any operators. 
+
 Fri Nov 12 14:15:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
