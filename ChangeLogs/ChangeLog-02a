@@ -7,7 +7,7 @@ Fri May 12 11:25:10 2000  Darrell Brunsch <brunsch@uci.edu>
           now I realize that this will not work if ACE_SIZEOF_WCHAR
           is used in a #if.  Bleh.  Since wchar_t is always different,
           I just defined it as 2 for WIN32 and 0 for others (so the
-          tests/Basic_Types_Test will catch it).
+          tests/Basic_Types_Test will catch it). [Bug 560]
 
         * ace/ACE.cpp:
 
@@ -43,13 +43,13 @@ Fri May 12 11:25:10 2000  Darrell Brunsch <brunsch@uci.edu>
           here.  Instead I added in both the new constructor and a 
           ushort_rep method on ACE_WString.  I changed the Name Space stuff
           to use this instead.  BTW, old code shouldn't need to be changed
-          on MSVC, just if you use BCB.
+          on MSVC, just if you use BCB. [Bug 561]
 
         * tests/SString_Test.cpp:
 
           We were using ACE_USHORT16 as the single character type for 
           ACE_WString. This has been changed to wchar_t.  Thanks to Chris 
-          for this one also.  
+          for this one also. [Bug 561]
 
 Fri May 12 10:12:05 2000  James Hu  <jxh@entera.com>
 
