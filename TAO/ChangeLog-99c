@@ -1,3 +1,11 @@
+Thu Nov 11 15:52:03 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynAny_i.cpp:
+	  Added some more patches sent in by Philippe Merle
+	  <Philippe.Merle@lifl.fr> which modify get_string,
+	  get_reference and get_typecode to return duplicates,
+	  so the return value can be put into a _var.
+
 Wed Nov 10 17:16:19 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsp:
