@@ -1,3 +1,10 @@
+Sat Apr 10 14:21:44 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
+        
+          Fixed typos in error messages. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for pointing out the mistakes.
+
 Sat Apr 10 14:07:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
