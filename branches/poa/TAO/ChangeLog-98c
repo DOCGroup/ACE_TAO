@@ -1,3 +1,15 @@
+Tue Jan 13 12:15:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_operation.h: 
+	* TAO_IDL/be/be_operation.cpp: 
+	* TAO_IDL/be/be_state_operation.cpp: 
+	  The stubs and skeletons for operations that have a "native"
+	  argument or return value simply "throw" a CORBA::MARSHAL
+	  exception; those methods cannot be called for remote objects.
+	  I also had to return something when an exception is raised and
+	  the return type is a "native", we choose to return 0 for lack of
+	  a better choice.
+
 Tue Jan 13 10:49:48 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/current.{i,cpp}: Added a first cut at implementations for
