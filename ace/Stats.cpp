@@ -463,33 +463,33 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
 
       printf ("%f %qu\n", throughput / 400000000.0, this->samples_count_);
 #endif /* 0 */
-
-      return;
     }
+  else
+    {
+      if (this->latency_min_ > latency)
+        this->latency_min_ = latency;
+      if (this->latency_max_ < latency)
+        this->latency_max_ = latency;
 
-  if (this->latency_min_ > latency)
-    this->latency_min_ = latency;
-  if (this->latency_max_ < latency)
-    this->latency_max_ = latency;
-
-  this->latency_sum_  += latency;
+      this->latency_sum_  += latency;
 #if defined ACE_LACKS_LONGLONG_T
-  this->latency_sum2_ += latency * ACE_U64_TO_U32 (latency);
+      this->latency_sum2_ += latency * ACE_U64_TO_U32 (latency);
 #else  /* ! ACE_LACKS_LONGLONG_T */
-  this->latency_sum2_ += latency * latency;
+      this->latency_sum2_ += latency * latency;
 #endif /* ! ACE_LACKS_LONGLONG_T */
 
-  this->throughput_last_ = throughput;
+      this->throughput_last_ = throughput;
 
 #if 0
-  this->throughput_sum_y_  += this->samples_count_;
-  this->throughput_sum_y2_ += this->samples_count_ * this->samples_count_;
-  this->throughput_sum_x_  += throughput;
-  this->throughput_sum_x2_ += throughput * throughput;
-  this->throughput_sum_xy_ += throughput * this->samples_count_;
+      this->throughput_sum_y_  += this->samples_count_;
+      this->throughput_sum_y2_ += this->samples_count_ * this->samples_count_;
+      this->throughput_sum_x_  += throughput;
+      this->throughput_sum_x2_ += throughput * throughput;
+      this->throughput_sum_xy_ += throughput * this->samples_count_;
 
-  printf ("%f %qu\n", throughput / 400000000.0, this->samples_count_);
+      printf ("%f %qu\n", throughput / 400000000.0, this->samples_count_);
 #endif /* 0 */
+    }
 }
 
 void
