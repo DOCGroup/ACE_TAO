@@ -216,7 +216,9 @@ dump_iov (iovec *iov, int iovcnt, int id,
         {
           char header[1024];
           ACE_OS::sprintf (header,
-                           "TAO - Transport[%d]::%s (%d/%d)\n",
+                           "TAO - Transport[%d]::%s ("
+                           ACE_SIZE_T_FORMAT_SPECIFIER "/"
+                           ACE_SIZE_T_FORMAT_SPECIFIER")\n",
                            id, location, offset, iov_len);
 
           len = iov_len - offset;

@@ -1,3 +1,15 @@
+Tue Jun 12 22:58:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* tao/Transport.cpp:
+	* examples/Load_Balancing/Identity_Server.cpp:
+	* examples/Load_Balancing_persistent/Identity_Server.cpp:
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+
+	Fixes for compilation on IA-64 Linux. This includes changing usage
+	of plain [s]size_t to use ACE_[S]SIZE_T_FORMAT_SPECIFIER and using
+	reinterpret_cast to silence warnings about conversion from
+	integer to pointer of different size.
+
 Tue Jun 12 19:00:58 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/RTCORBA/RT_ORB_Loader.cpp:
@@ -17,8 +29,8 @@ Tue Jun 12 18:28:46 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
         * tao/diffs/PolicyC.h.diff:
         * tao/diffs/PolicyC.i.diff:
         * tao/diffs/PolicyS.h.diff:
-          Regenerated diff files and added information to the  
-          instructions in Policy.pidl to make regeneration easier 
+          Regenerated diff files and added information to the
+          instructions in Policy.pidl to make regeneration easier
           for the next person.
 
         * tao/TAO.pidl:
@@ -26,7 +38,7 @@ Tue Jun 12 18:28:46 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
         * tao/diffs/TAOC.h.diff:
         * tao/diffs/TAOC.i.diff:
           Regenerated diff files and added instructions to the pidl
-          file since it wasn't specified how this was being done 
+          file since it wasn't specified how this was being done
           before.
 
         * tao/RTCORBA/RTCORBA.pidl:
@@ -143,7 +155,7 @@ Tue Jun 12 17:42:59 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/drv_args_ifr.cpp:
 
-          Added -A (preprocessor assertion) command line option, 
+          Added -A (preprocessor assertion) command line option,
           identical to the option for the IDL compiler.
 
 Tue Jun 12 17:31:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
@@ -183,7 +195,7 @@ Tue Jun 12 16:16:17 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
         * tao/RTPortableServer/RTPortableServerC.h:
         * tao/RTPortableServer/RTPortableServerC.i:
           Added some more files that were missed in previous check in.
-          It turns out that cvs ignores *C.* when reporting unadded 
+          It turns out that cvs ignores *C.* when reporting unadded
           files, but these should be the last ones.
 
 Tue Jun 12 16:11:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
@@ -225,8 +237,8 @@ Tue Jun 12 13:30:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>, Angelo Corsaro
 
         * tao/POA_Extension_Initializer.cpp:
         * tao/POA_Extension_Initializer.h:
-          Add interface to register POA initializers with the ORB core.  When the POA 
-          library is loaded, it will call all of the registered initializers so that 
+          Add interface to register POA initializers with the ORB core.  When the POA
+          library is loaded, it will call all of the registered initializers so that
           they can add POA policies, override interfaces, etc.
 
         * tao/Policy_Set.cpp:
@@ -236,7 +248,7 @@ Tue Jun 12 13:30:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>, Angelo Corsaro
           reused in the POA.  The name was changed from TAO_Policy_Manager_Impl
           to TAO_Policy_Set since Policy Manager code is only available when
           messaging is enabled.  Also, as part of the RT CORBA subsetting, all
-          of the RT CORBA policy accessors were removed, and a generic "cached" 
+          of the RT CORBA policy accessors were removed, and a generic "cached"
           policy accessor was put in its place.  The downside to this change
           is that users of this class can only get CORBA::Policy * from the
           get routines.  They need to perform the narrow (and pay for its lock)
@@ -308,7 +320,7 @@ Tue Jun 12 13:30:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>, Angelo Corsaro
           3.  The PriorityMappingManager commandline options that used
               to be passed to the advanced resources (Strategies) library
               are now passed to the RT_ORB_Loader.
-          4.  The default priority mapping is direct mapped.  This is 
+          4.  The default priority mapping is direct mapped.  This is
               the same as if the Strategies library were loaded before,
               but different from when Strategies wasn't loaded in that
               the to_native () and to_CORBA () calls would just return
@@ -330,7 +342,7 @@ Tue Jun 12 13:30:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>, Angelo Corsaro
           Added RTCORBA and RTPortableServer libraries to project list.
 
         * rules.tao.GNU:
-          Added RT_TAO_SRVR_LIBS and RT_TAO_CLNT_LIBS macros to 
+          Added RT_TAO_SRVR_LIBS and RT_TAO_CLNT_LIBS macros to
           make it easier to pull in the RT CORBA libraries.
 
         * */Makefile*:
@@ -413,7 +425,7 @@ Tue Jun 12 13:30:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>, Angelo Corsaro
         * tao/Messaging_Policy_i.cpp:
         * tao/Messaging_Policy_i.h:
           Added _tao_cached_type methods to allow for constant
-          time access to a couple of policies in the policy 
+          time access to a couple of policies in the policy
           set.
 
         * tao/ORB.cpp:
@@ -427,10 +439,10 @@ Tue Jun 12 13:30:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>, Angelo Corsaro
 
         * tao/PolicyC.cpp:
         * tao/PolicyC.h:
-          Added _tao_cached_type and _tao_scope methods to 
+          Added _tao_cached_type and _tao_scope methods to
           CORBA::Policy.  The _tao_cached_type returns a special
           enum (see orbconf.h) for use by TAO_Policy_Set to
-          be able to retrieve policies generically in constant 
+          be able to retrieve policies generically in constant
           time.  The _tao_scope is used to specify the scope to
           which a specific policy applies.  The current possible
           scopes are object level, current level, ORB level, POA level,
@@ -447,7 +459,7 @@ Tue Jun 12 13:30:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>, Angelo Corsaro
           to allow for reuse with the POA.  Also, removed all accessors
           to specific policies in all of the "TAO_Policy_Manager" classes.
           If users need constant time access to policies, they should
-          use the get_cached_policy interface.  
+          use the get_cached_policy interface.
 
         * tao/Pool_Per_Endpoint.cpp:
         * tao/Pool_Per_Endpoint.h:
@@ -579,7 +591,7 @@ Tue Jun 12 13:30:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>, Angelo Corsaro
           Factored out RT specific code into RTPOA.{cpp,h,i} in
           the RTPortableServer library.  Moved implementation of
           standard 7 POA policies to POA_Policies.{cpp,h,i}.  Moved
-          and refactored the TAO_POA_Policies class to 
+          and refactored the TAO_POA_Policies class to
           POA_Policy_Set.{cpp,h,i} and POA_Cached_Policies.{cpp,h,i}.
 
         * tao/PortableServer/POA_Cached_Policies.cpp:
@@ -718,27 +730,27 @@ Mon Jun 11 16:56:06 2001  Balachandran  <bala@cs.wustl.edu>
 
 Mon Jun 11 11:26:38 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/Security/Secure_Invocation/client_cert.pem: 
-	* orbsvcs/tests/Security/Secure_Invocation/server_cert.pem: 
-	* orbsvcs/tests/Security/Secure_Invocation/client_key.pem: 
-	* orbsvcs/tests/Security/Secure_Invocation/server_cert.pem: 
-	* orbsvcs/tests/Security/Secure_Invocation/cacert.pem: 
+	* orbsvcs/tests/Security/Secure_Invocation/client_cert.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/client_key.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
+	* orbsvcs/tests/Security/Secure_Invocation/cacert.pem:
 
-	* orbsvcs/tests/Security/SecurityLevel1/ca.pem: 
-	* orbsvcs/tests/Security/SecurityLevel1/client_cert.pem: 
-	* orbsvcs/tests/Security/SecurityLevel1/client_key.pem: 
-	* orbsvcs/tests/Security/SecurityLevel1/server_cert.pem: 
-	* orbsvcs/tests/Security/SecurityLevel1/server_key.pem: 
+	* orbsvcs/tests/Security/SecurityLevel1/ca.pem:
+	* orbsvcs/tests/Security/SecurityLevel1/client_cert.pem:
+	* orbsvcs/tests/Security/SecurityLevel1/client_key.pem:
+	* orbsvcs/tests/Security/SecurityLevel1/server_cert.pem:
+	* orbsvcs/tests/Security/SecurityLevel1/server_key.pem:
 	  Updated certs to expire only after 10 years.
-	
+
 	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp
   	  (shutdown): Modified the check parameters to go with the new
-	  certificates.  
-	
+	  certificates.
+
 Sun Jun 10 16:13:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Stub_Factory.cpp: Enclosed a debug statement within if
-	  statment. 
+	  statment.
 
 Sat Jun 09 21:03:45 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -752,7 +764,7 @@ Sat Jun 09 21:03:45 2001  Ossama Othman  <ossama@uci.edu>
 Sat Jun 09 20:54:10 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp (baz):
-	* orbsvcs/tests/Security/Secure_Invocation/server.cpp (main): 
+	* orbsvcs/tests/Security/Secure_Invocation/server.cpp (main):
 
 	  Improved test output so that it is more obvious when the test
 	  passes.
@@ -791,12 +803,12 @@ Fri Jun 08 07:30:08 2001  Ossama Othman  <ossama@uci.edu>
 
 Fri Jun  8 09:14:53 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
-	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.cpp: 
-	  
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.cpp:
+
 	  Fixed compile errors due to missing template instantiations.
 
-	* auto_run_tests.lst: 
+	* auto_run_tests.lst:
 
 	  Added the AVStreams tests to the nightly builds.
 
@@ -814,7 +826,7 @@ Fri Jun  8 06:35:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Mon Jun  4 17:38:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/Event_Service/Makefile: Updated
-	  dependencies. 
+	  dependencies.
 
 Mon Jun  4 11:00:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -826,7 +838,7 @@ Mon Jun  4 11:00:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
           may not be used in any way in an application IDL
           file. Their presence in orb.idl only creates a
           headache for the IDL compiler when processing any
-          IDL file that contains orb.idl. Thanks to Heping He 
+          IDL file that contains orb.idl. Thanks to Heping He
           <heping@research.bell-labs.com> for pointing out
           the problem
 
@@ -981,14 +993,14 @@ Sat Jun  2 13:41:50 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	  _MSC_VER so that mingw will work properly.  Thanks to Cristian
  	  Ferretti <cristian_ferretti@yahoo.com> for pointing this out.
 
-	* tao/DynamicInterface/Dynamic_Implementation.cpp (_create_stub): 
+	* tao/DynamicInterface/Dynamic_Implementation.cpp (_create_stub):
 	  Changed "interface" to "pinterface" to work around problems with
  	  mingw.  Thanks to Cristian Ferretti
  	  <cristian_ferretti@yahoo.com> for pointing this out.
 
 Sat Jun  2 09:23:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/ifr_adding_visitor.cpp: Fixed a Fuzz error.   
+	* orbsvcs/IFR_Service/ifr_adding_visitor.cpp: Fixed a Fuzz error.
 
 Fri Jun 01 23:15:05 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -1091,14 +1103,14 @@ Fri Jun  1 17:00:53 2001  Ossama Othman  <ossama@uci.edu>
 	  local addr and remote addr to be the same.
 
 Fri Jun  1 14:58:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
- 
+
         * orbsvcs/orbsvcs/AV/QoS_UDP.cpp
- 
+
           Fix some bugs in converting QoS_Param arguments to correct
           values for RAPI.
- 
+
         * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_Qos/sender.cpp
- 
+
           Change Token Bucket Size (TBS) from 9200 to 708 to work around
           bug in Cisco 2500 series router.  If TBS is too big, the
           Cisco will drop the packet without issuing an RSVP error
@@ -1107,7 +1119,7 @@ Fri Jun  1 14:58:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 Fri Jun  1 13:58:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/RT_Event_Service/Makefile: Updated
-	  dependecies. 
+	  dependecies.
 
 	* Changelog : Reformatted this file, specifically the previous
 	  entry.
@@ -1122,7 +1134,7 @@ Fri Jun  1 12:37:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 	* tests/RTCORBA/Banded_Connections/client.cpp (main):
 
           The previous band used for an invalid band falls into valid
-	  priority band under Tru64. 
+	  priority band under Tru64.
 
 	  Thanks to Irfan for pointing these.
 
