@@ -233,14 +233,13 @@ CORBA::Object::_proxy_broker (void)
 }
 
 CORBA::Boolean
-CORBA::is_nil (CORBA::Object_ptr obj)
+CORBA::Object::is_nil_i (CORBA::Object_ptr obj)
 {
-  if (obj == 0)
-    return 1;
-
-  // To accomodate new definitions
+  // To accomodate new definitions.
   if (obj->_stubobj ())
-    return obj->_stubobj ()->orb_core ()->object_is_nil (obj);
+    {
+      return obj->_stubobj ()->orb_core ()->object_is_nil (obj);
+    }
 
   return 0;
 }
