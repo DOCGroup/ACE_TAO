@@ -17,8 +17,7 @@
 #ifndef ACE_OFFER_MODIFIER_H
 #define ACE_OFFER_MODIFIER_H
 
-#include <set>
-#include <map>
+#include "stl.h"
 #include "Trader.h"
 
 class TAO_Offer_Modifier

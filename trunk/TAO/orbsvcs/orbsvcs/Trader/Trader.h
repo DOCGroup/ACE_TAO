@@ -19,9 +19,7 @@
 #ifndef TAO_TRADER_BASE_H
 #define TAO_TRADER_BASE_H
 
-#include <string>
-#include <map>
-
+#include "stl.h"
 #include "Attributes.h"
 
 typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;

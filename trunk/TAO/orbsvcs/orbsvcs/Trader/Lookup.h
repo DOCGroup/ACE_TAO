@@ -25,7 +25,7 @@
 #include "Constraint_Interpreter.h"
 #include "Preference_Interpreter.h"
 
-#include <list>
+#include "stl.h"
 
 template<class TRADER>
 class TAO_Lookup :

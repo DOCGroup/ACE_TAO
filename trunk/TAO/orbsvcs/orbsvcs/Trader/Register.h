@@ -19,9 +19,7 @@
 
 #include "Offer_Modifier.h"
 
-#include <map>
-#include <string>
-#include <deque>
+#include "stl.h"
 
 template <class TRADER>
 class TAO_Register :

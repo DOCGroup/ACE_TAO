@@ -18,7 +18,7 @@
 #ifndef TAO_SERVICE_TYPE_REPOSITORY_H
 #define TAO_SERVICE_TYPE_REPOSITORY_H
 
-#include <list>
+#include "stl.h"
 #include "Trader.h"
 #include "Monitor.h"
 

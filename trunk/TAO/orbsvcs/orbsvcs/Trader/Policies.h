@@ -18,10 +18,7 @@
 #define TAO_POLICIES_H
 
 // STL fun stuff.
-#include <vector>
-#include <set>
-#include <string>
-
+#include "stl.h"
 #include "Trader.h"
 
 class TAO_Policies
