@@ -37,6 +37,8 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Array_Base.h"
+#include "ace/SString.h"
+
 
 // Fwd Declarations.
 class TAO_PSDL_Node;
