@@ -1203,7 +1203,7 @@ void POA_CORBA::FixedDef::_get_digits_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -1301,7 +1301,7 @@ void POA_CORBA::FixedDef::_set_digits_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -1401,7 +1401,7 @@ void POA_CORBA::FixedDef::_get_scale_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -1499,7 +1499,7 @@ void POA_CORBA::FixedDef::_set_scale_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -1606,7 +1606,7 @@ void POA_CORBA::FixedDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -1703,7 +1703,7 @@ void POA_CORBA::FixedDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -1847,7 +1847,7 @@ void POA_CORBA::FixedDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -2317,7 +2317,7 @@ void POA_CORBA::ValueMemberDef::_get_type_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -2415,7 +2415,7 @@ void POA_CORBA::ValueMemberDef::_get_type_def_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -2513,7 +2513,7 @@ void POA_CORBA::ValueMemberDef::_set_type_def_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -2613,7 +2613,7 @@ void POA_CORBA::ValueMemberDef::_get_access_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -2711,7 +2711,7 @@ void POA_CORBA::ValueMemberDef::_set_access_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -2818,7 +2818,7 @@ void POA_CORBA::ValueMemberDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -2915,7 +2915,7 @@ void POA_CORBA::ValueMemberDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -3059,7 +3059,7 @@ void POA_CORBA::ValueMemberDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -3568,7 +3568,7 @@ void POA_CORBA::ValueDef::_get_supported_interfaces_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -3666,7 +3666,7 @@ void POA_CORBA::ValueDef::_set_supported_interfaces_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -3766,7 +3766,7 @@ void POA_CORBA::ValueDef::_get_initializers_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -3864,7 +3864,7 @@ void POA_CORBA::ValueDef::_set_initializers_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -3964,7 +3964,7 @@ void POA_CORBA::ValueDef::_get_base_value_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4062,7 +4062,7 @@ void POA_CORBA::ValueDef::_set_base_value_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4162,7 +4162,7 @@ void POA_CORBA::ValueDef::_get_abstract_base_values_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4260,7 +4260,7 @@ void POA_CORBA::ValueDef::_set_abstract_base_values_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4360,7 +4360,7 @@ void POA_CORBA::ValueDef::_get_is_abstract_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4458,7 +4458,7 @@ void POA_CORBA::ValueDef::_set_is_abstract_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4558,7 +4558,7 @@ void POA_CORBA::ValueDef::_get_is_custom_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4656,7 +4656,7 @@ void POA_CORBA::ValueDef::_set_is_custom_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4756,7 +4756,7 @@ void POA_CORBA::ValueDef::_get_is_truncatable_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4854,7 +4854,7 @@ void POA_CORBA::ValueDef::_set_is_truncatable_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4961,7 +4961,7 @@ void POA_CORBA::ValueDef::is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -5061,7 +5061,7 @@ void POA_CORBA::ValueDef::describe_value_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -5194,7 +5194,7 @@ void POA_CORBA::ValueDef::create_value_member_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -5337,7 +5337,7 @@ void POA_CORBA::ValueDef::create_attribute_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -5501,7 +5501,7 @@ void POA_CORBA::ValueDef::create_operation_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -5622,7 +5622,7 @@ void POA_CORBA::ValueDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -5719,7 +5719,7 @@ void POA_CORBA::ValueDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -5863,7 +5863,7 @@ void POA_CORBA::ValueDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -6385,7 +6385,7 @@ void POA_CORBA::ExtValueDef::_get_ext_initializers_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -6483,7 +6483,7 @@ void POA_CORBA::ExtValueDef::_set_ext_initializers_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -6583,7 +6583,7 @@ void POA_CORBA::ExtValueDef::describe_ext_value_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -6730,7 +6730,7 @@ void POA_CORBA::ExtValueDef::create_ext_attribute_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -6849,7 +6849,7 @@ void POA_CORBA::ExtValueDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -6946,7 +6946,7 @@ void POA_CORBA::ExtValueDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -7090,7 +7090,7 @@ void POA_CORBA::ExtValueDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -7572,7 +7572,7 @@ void POA_CORBA::ValueBoxDef::_get_original_type_def_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -7670,7 +7670,7 @@ void POA_CORBA::ValueBoxDef::_set_original_type_def_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -7777,7 +7777,7 @@ void POA_CORBA::ValueBoxDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -7874,7 +7874,7 @@ void POA_CORBA::ValueBoxDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -8018,7 +8018,7 @@ void POA_CORBA::ValueBoxDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   

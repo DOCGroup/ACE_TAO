@@ -24,6 +24,10 @@ Tue Feb 22 20:17:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/ImR_Client/ServerObjectS.cpp:
 	* tao/Messaging/MessagingS.cpp:
 	* tao/PortableServer/PolicyS.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
 
 	  Fixed compile time errors regarding zero length arrays.  MSVC++
 	  7.1 and Borland C++ cannot handle them.
