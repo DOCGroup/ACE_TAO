@@ -171,7 +171,7 @@ private:
   // Code common to the constructor from an Any arg and the member
   // function from_any().
   void set_from_any (const CORBA::Any &any
-                     ACE_ENV_SINGLE_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
 
   // Called by both versions of init().
   void init_common (void);
