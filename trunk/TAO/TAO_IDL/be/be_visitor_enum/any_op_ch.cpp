@@ -18,10 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_enum.h"
 
 ACE_RCSID(be_visitor_enum, any_op_ch, "$Id$")
@@ -31,8 +30,9 @@ ACE_RCSID(be_visitor_enum, any_op_ch, "$Id$")
 // Enum visitor for generating Any operator declarations in the client header
 // ***************************************************************************
 
-be_visitor_enum_any_op_ch::be_visitor_enum_any_op_ch
-(be_visitor_context *ctx)
+be_visitor_enum_any_op_ch::be_visitor_enum_any_op_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_scope (ctx)
 {
 }
@@ -45,7 +45,9 @@ int
 be_visitor_enum_any_op_ch::visit_enum (be_enum *node)
 {
   if (node->cli_hdr_any_op_gen () || node->imported ())
-    return 0;
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
