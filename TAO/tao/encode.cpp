@@ -810,10 +810,28 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                               break;
 
                             case CORBA::tk_octet:
+#if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
                               // For primitives, compute the size only once
                               continue_encoding = continue_encoding &&
                                 stream->write_octet_array
                                 ((CORBA::Octet*)value, bounds);
+#else
+			      {
+				TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
+				  ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*,seq);
+				if (oseq->mb_ == 0)
+				  {
+				    continue_encoding = continue_encoding &&
+				      stream->write_octet_array
+				      ((CORBA::Octet*)value, bounds);
+				  }
+				else
+				  {
+				    continue_encoding = continue_encoding &&
+				      stream->write_octet_array_mb (oseq->mb_);
+				  }
+			      }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
                               if (continue_encoding == CORBA::B_TRUE)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;

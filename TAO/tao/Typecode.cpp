@@ -75,7 +75,8 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
     refcount_ (1),
     delete_flag_ (CORBA::B_FALSE),
     orb_owns_ (orb_owns_tc),
-    private_state_ (new TC_Private_State (kind))
+    private_state_ (new TC_Private_State (kind)),
+    non_aligned_buffer_ (0)
 {
   // The CDR code used to interpret TypeCodes requires in-memory
   // alignments to match the "on-the-wire" alignments, simplifying
@@ -144,6 +145,14 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
 
 CORBA_TypeCode::~CORBA_TypeCode (void)
 {
+  // Delete the original, possibly nonaligned, buffer.
+  if (this->non_aligned_buffer_ != 0)
+    {
+      delete [] this->non_aligned_buffer_;
+      this->non_aligned_buffer_ = 0;
+    }
+  this->buffer_ = 0;
+
   if (this->orb_owns_)
     {
       // we free up this typcode only when the ORB resources are freed
@@ -157,11 +166,6 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
 	      delete this->private_state_;
 	      this->private_state_ = 0;
 	    }
-
-          // Delete the original, possibly nonaligned, buffer.
-          delete [] this->non_aligned_buffer_;
-          this->non_aligned_buffer_ = 0;
-          this->buffer_ = 0;
         }
     }
   else if (this->parent_) // check if we have a parent
@@ -185,11 +189,6 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
               delete this->private_state_;
               this->private_state_ = 0;
             }
-
-          // We share the buffer octets of our parent. Hence we don't
-          // deallocate it.
-          this->non_aligned_buffer_ = 0;
-          this->buffer_ = 0;
         }
       // Else, somebody maliciously tried to delete us, but we won't
       // get deleted.
@@ -204,11 +203,6 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
       // Free up our children.
       delete this->private_state_;
       this->private_state_ = 0;
-
-      // Delete the original, possibly nonaligned, buffer.
-      delete [] this->non_aligned_buffer_;
-      this->non_aligned_buffer_ = 0;
-      this->buffer_ = 0;
     }
 }
 

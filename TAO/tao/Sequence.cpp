@@ -288,6 +288,16 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (const TAO_Unbounded_Sequence<CO
   return *this;
 }
 
+TAO_Unbounded_Sequence<CORBA::Octet>::
+TAO_Unbounded_Sequence (const ACE_Message_Block *mb)
+  :  mb_ (ACE_Message_Block::duplicate (mb)),
+     TAO_Unbounded_Base_Sequence (mb->length (),
+				  mb->length (),
+				  mb->rd_ptr (),
+				  CORBA::B_FALSE)
+{
+}
+
 TAO_Unbounded_Sequence<CORBA::Octet>::~TAO_Unbounded_Sequence (void)
 {
   this->_deallocate_buffer ();
@@ -305,15 +315,14 @@ TAO_Unbounded_Sequence<CORBA::Octet>::_allocate_buffer (CORBA::ULong length)
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
 
-      if (this->release_)
+      if (this->mb_ != 0)
 	{
-	  if (this->mb_ == 0)
-	    TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (old);
-	  else
-	    {
-	      ACE_Message_Block::release (this->mb_);
-	      this->mb_ = 0;
-	    }
+	  ACE_Message_Block::release (this->mb_);
+	  this->mb_ = 0;
+	}
+      else if (this->release_)
+	{
+	  TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (old);
 	}
     }
 
