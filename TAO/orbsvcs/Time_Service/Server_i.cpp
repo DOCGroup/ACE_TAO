@@ -8,8 +8,7 @@ ACE_RCSID(Time_Service, Server_i, "$Id$")
 // Constructor.
 Server_i::Server_i (void)
   : ior_output_file_ (0),
-    use_ir_ (0),
-    register_with_ir_ (0)
+    use_ir_ (0)
 {
   // no-op.
 }
@@ -26,7 +25,7 @@ Server_i::~Server_i (void)
 int
 Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:ir");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:i");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -46,9 +45,6 @@ Server_i::parse_args (void)
         break;
       case 'i': // Use the Implementation Repository.
         this->use_ir_ = 1;
-        break;
-      case 'r': // Register with the Implementation repository.
-        this->register_with_ir_ = 1;
         break;
       case '?':  // display help for use of the server.
       default:
@@ -80,7 +76,7 @@ Server_i::init_naming_service (CORBA::Environment &)
       // Initialize the POA.
       this->orb_manager_.init_child_poa (this->argc_,
                                          this->argv_,
-                                         "my_child_poa",
+                                         "time_server",
                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -118,14 +114,11 @@ Server_i::init_IR (void)
       if (this->use_ir_ == 1)
         {
           ACE_NEW_RETURN (this->ir_helper_,
-                          IR_Helper ("child_poa",
+                          IR_Helper ("time_server",
                                      this->orb_manager_.child_poa (),
                                      this->orb_manager_.orb (),
                                      TAO_debug_level),
                           -1);
-
-          if (this->register_with_ir_ == 1)
-            this->ir_helper_->register_server ("server -i -ORBobjrefstyle url");
 
           this->ir_helper_->change_object (this->time_service_server_.in (),
                                            TAO_TRY_ENV);
@@ -348,7 +341,7 @@ Server_i::init (int argc,
 
       if (this->orb_manager_.init_child_poa (argc,
                                              argv,
-                                             "child_poa",
+                                             "time_server",
                                              TAO_TRY_ENV) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                                  "%p\n",
@@ -412,7 +405,7 @@ Server_i::run (CORBA::Environment &)
                            "[SERVER] Process/Thread Id : (%P/%t) Server_i::run"),
                           -1);
 
-      if (this->register_with_ir_ == 1)
+      if (this->use_ir_ == 1)
         {
           this->ir_helper_->notify_shutdown (TAO_TRY_ENV);
           TAO_CHECK_ENV;
