@@ -2,11 +2,9 @@
 // $Id$
 
 // The following configuration file is designed to work for FreeBSD
-// platforms using GNU C++ and the POSIX (pthread) threads package
-// by John Birrell.
+// platforms with GNU C++ and the POSIX (pthread) threads package.
 
-// Currently, only this test is failing,
-//    tests/MT_SOCK_Test
+// Notice that the threaded version of ACE is only supported for -current.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
@@ -63,6 +61,10 @@ enum schedparam_policy {
 #define ACE_HAS_SYSCALL_H
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
+#define ACE_HAS_SIGINFO_T
+#define ACE_LACKS_SIGINFO_H
+#define ACE_LACKS_UCONTEXT_H
+#define ACE_LACKS_SI_ADDR
 
 // Compiler/platform supports SVR4 signal typedef
 #define ACE_HAS_SVR4_SIGNAL_T
@@ -145,7 +147,7 @@ enum schedparam_policy {
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 // If ACE doesn't compile due to the lack of these methods, please
-// send email to schmidt@cs.wustl.edu reporting this. 
+// send email to schmidt@cs.wustl.edu reporting this.
 // #define ACE_LACKS_CONDATTR_PSHARED
 // #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
