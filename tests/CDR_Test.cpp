@@ -74,6 +74,7 @@ short_stream (void)
 
   // Basic types for output
   ACE_CDR::Char ch = 'A';
+  ACE_CDR::WChar wch = '\x93';
   ACE_CString str ("Test String");
   ACE_CDR::Short s = -123;
   ACE_CDR::UShort us =  123;
@@ -90,6 +91,8 @@ short_stream (void)
 
   ACE_OutputCDR::from_char fc (ch);
   os << fc;
+  ACE_OutputCDR::from_wchar fwc (wch);
+  os << fwc;
   os << str;
   os << s;
   os << us;
@@ -130,6 +133,7 @@ short_stream (void)
 
   // Basic types for input
   ACE_CDR::Char ch1 = '\0';
+  ACE_CDR::WChar wch1 = '\0';
   ACE_CString str1;
   ACE_CDR::Short s1 = 0;
   ACE_CDR::UShort us1 = 0;
@@ -149,6 +153,8 @@ short_stream (void)
 
   ACE_InputCDR::to_char tc (ch1);
   is >> tc;
+  ACE_InputCDR::to_wchar twc (wch1);
+  is >> twc;
   is >> str1;
   is >> s1;
   is >> us1;
@@ -165,6 +171,12 @@ short_stream (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("char transfer error")),
+                      1);
+  
+  if (wch1 != wch)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("wchar transfer error")),
                       1);
 
   if (str1 != str)

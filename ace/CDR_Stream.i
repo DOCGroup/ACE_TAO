@@ -151,14 +151,6 @@ ACE_OutputCDR::write_char (ACE_CDR::Char x)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
-{
-  if (this->wchar_translator_ == 0)
-    return this->write_2 (ACE_reinterpret_cast (const ACE_CDR::UShort*, &x));
-  return this->wchar_translator_->write_wchar (*this, x);
-}
-
-ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_short (ACE_CDR::Short x)
 {
   return this->write_2 (ACE_reinterpret_cast (const ACE_CDR::UShort*, &x));
@@ -493,14 +485,6 @@ ACE_InputCDR::read_char (ACE_CDR::Char &x)
   return this->char_translator_->read_char (*this, x);
 }
 
-
-ACE_INLINE ACE_CDR::Boolean
-ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
-{
-  if (this->wchar_translator_ == 0)
-    return this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort*,&x));
-  return this->wchar_translator_->read_wchar (*this, x);
-}
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_short (ACE_CDR::Short &x)
