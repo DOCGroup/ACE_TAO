@@ -83,7 +83,6 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/INET_Addr.i \
- websvcs_export.h URL_Addr.i
+ $(ACE_ROOT)/ace/INET_Addr.i websvcs_export.h URL_Addr.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

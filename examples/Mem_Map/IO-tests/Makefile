@@ -41,8 +41,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/IO_Test.o .obj/IO_Test.so .shobj/IO_Test.o .shobj/IO_Test.so: IO_Test.cpp \
- $(ACE_ROOT)/ace/OS.h \
+.obj/IO_Test.o .obj/IO_Test.so .shobj/IO_Test.o .shobj/IO_Test.so: IO_Test.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -85,8 +84,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- IO_Test.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl IO_Test.h \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
