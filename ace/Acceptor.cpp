@@ -773,7 +773,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_timeout
    const void *arg)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_timeout");
-  errno = ETIMEDOUT;
+  errno = ETIME;
 
   if (this->svc_handler_->handle_timeout (tv, arg) == -1)
     this->svc_handler_->handle_close (this->svc_handler_->get_handle (), 
@@ -782,7 +782,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_timeout
   // Since we aren't necessarily registered with the Reactor, don't
   // bother to check the return value here...
   if (this->reactor ())
-        this->reactor ()->remove_handler (this, ACE_Event_Handler::ACCEPT_MASK);
+    this->reactor ()->remove_handler (this, ACE_Event_Handler::ACCEPT_MASK);
   return 0;
 }
 

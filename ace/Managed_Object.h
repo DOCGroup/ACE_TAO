@@ -40,6 +40,7 @@ public:
 
   TYPE &object (void);
   // Accessor for contained object.
+
 private:
   TYPE object_;
   // Contained object.
@@ -89,14 +90,12 @@ class ACE_Managed_Object
   //     the ACE library.
 {
 public:
-  static
-  TYPE *get_preallocated_object (ACE_Object_Manager::Preallocated_Object id);
+  static TYPE *get_preallocated_object (ACE_Object_Manager::Preallocated_Object id);
   // Get the preallocated object identified by "id".  Returns a
   // pointer to the object.  Beware: no error indication is provided,
   // because it can _only_ be used for accessing preallocated objects.
 
-  static
-  TYPE *get_preallocated_array (ACE_Object_Manager::Preallocated_Array id);
+  static TYPE *get_preallocated_array (ACE_Object_Manager::Preallocated_Array id);
   // Get the preallocated array identified by "id".  Returns a
   // pointer to the array.  Beware: no error indication is provided,
   // because it can _only_ be used for accessing preallocated arrays.

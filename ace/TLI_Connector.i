@@ -22,7 +22,7 @@ ACE_TLI_Connector::ACE_TLI_Connector (ACE_TLI_Stream &new_stream,
 		     flags, perms, device, 
 		     info, rwf,
 		     udata, opt) == ACE_INVALID_HANDLE
-      && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIMEDOUT))
+      && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_TLI_Stream::ACE_TLI_Stream"));
 }
 

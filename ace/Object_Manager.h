@@ -207,10 +207,12 @@ private:
 public:
   // For internal use only by ACE_Managed_Objects.
 
-  ACE_MT (ACE_Thread_Mutex *lock_);
+# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  ACE_Thread_Mutex *lock_;
   // Lock that is used to guard internal structures.  Just a pointer
   // is declared here in order to minimize the headers that this one
   // includes.
+#endif /* ACE_MT_SAFE */
 
   static ACE_Object_Manager *instance (void);
   // Accessor to singleton instance.  Because static member functions

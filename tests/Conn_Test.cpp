@@ -427,7 +427,7 @@ server (void *arg)
 
   if (result == -1)
     {
-      if (errno == ETIMEDOUT)
+      if (errno == ETIME)
 	ACE_ERROR ((LM_DEBUG,
 		    "(%P|%t) accept timedout, shutting down\n"));
       else
