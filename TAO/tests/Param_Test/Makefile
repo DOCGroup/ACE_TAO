@@ -39,6 +39,7 @@ CLI_FILES =	param_testCli	\
 		bd_string	\
 		bd_wstring	\
 		bd_struct_seq	\
+		bd_array_seq	\
 		fixed_array	\
 		fixed_struct	\
 		nested_struct	\
@@ -56,6 +57,7 @@ CLI_FILES =	param_testCli	\
 		ub_string	\
 		ub_wstring	\
 		ub_struct_seq	\
+		ub_array_seq	\
 		var_array    	\
 		var_struct	\
 		recursive_struct \

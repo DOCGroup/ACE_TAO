@@ -169,6 +169,7 @@ interface Param_Test
                                              inout Bounded_Coffee_Mix s2,
                                              out Bounded_Coffee_Mix s3);
 
+
   typedef sequence<any> AnySeq;
   AnySeq test_anyseq (in AnySeq s1,
                       inout AnySeq s2,
@@ -247,6 +248,16 @@ interface Param_Test
                             inout Var_Array v2,
                             out Var_Array v3);
 
+  // Bounded and unbounced sequences of arrays.
+  typedef sequence<Fixed_Array> ArraySeq;
+  ArraySeq test_array_sequence (in ArraySeq s1,
+                                inout ArraySeq s2,
+                                out ArraySeq s3);
+
+  typedef sequence<Fixed_Array, 32> Bounded_ArraySeq;
+  Bounded_ArraySeq test_bounded_array_sequence (in Bounded_ArraySeq s1,
+                                                inout Bounded_ArraySeq s2,
+                                                out Bounded_ArraySeq s3);
 
   // Just to test report a problem
   exception Ooops {

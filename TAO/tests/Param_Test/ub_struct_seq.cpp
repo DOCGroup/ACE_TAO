@@ -55,7 +55,7 @@ Test_Struct_Sequence::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_Struct_Sequence::init_parameters (Param_Test_ptr ,
+Test_Struct_Sequence::init_parameters (Param_Test_ptr,
                                        CORBA::Environment &)
 {
   Generator *gen = GENERATOR::instance (); // value generator
@@ -69,7 +69,7 @@ Test_Struct_Sequence::init_parameters (Param_Test_ptr ,
   // now set each individual element
   for (CORBA::ULong i = 0; i < this->in_.length (); i++)
     {
-      // generate some arbitrary string to be filled into the ith location in
+      // generate some arbitrary struct to be filled into the ith location in
       // the sequence
       this->in_[i] = gen->gen_fixed_struct ();
       this->inout_[i] = gen->gen_fixed_struct ();
@@ -128,7 +128,7 @@ Test_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
                             0);
 
       CORBA::Any out_arg (Param_Test::_tc_StructSeq,
-                          &this->out_.inout (), // .out () causes crash
+                          &this->out_.inout (),
                           0);
 
       // add parameters

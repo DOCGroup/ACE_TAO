@@ -388,6 +388,7 @@ Param_Test_i::test_struct_sequence (const Param_Test::StructSeq &s1,
   return ret;
 }
 
+// test for bounded struct sequences
 Param_Test::Bounded_StructSeq *
 Param_Test_i::test_bounded_struct_sequence (const Param_Test::Bounded_StructSeq & s1,
                                             Param_Test::Bounded_StructSeq & s2,
@@ -438,6 +439,48 @@ Param_Test_i::test_unbounded_struct_sequence (const Param_Test::PathSpec & s1,
   return ret;
 }
 
+
+// test for array sequences
+Param_Test::ArraySeq *
+Param_Test_i::test_array_sequence (const Param_Test::ArraySeq &s1,
+                                   Param_Test::ArraySeq &s2,
+                                   Param_Test::ArraySeq_out s3,
+                                   CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // we copy the "in" sequences into all the inout, out and return sequences.
+
+  Param_Test::ArraySeq
+    *ret = new Param_Test::ArraySeq,
+
+    *out = new Param_Test::ArraySeq;
+
+  // now copy all elements of s1 into the others using the assignment operator
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
+// test for bounded array sequences
+Param_Test::Bounded_ArraySeq *
+Param_Test_i::test_bounded_array_sequence (const Param_Test::Bounded_ArraySeq & s1,
+                                           Param_Test::Bounded_ArraySeq & s2,
+                                           Param_Test::Bounded_ArraySeq_out s3,
+                                           CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  Param_Test::Bounded_ArraySeq
+    *ret = new Param_Test::Bounded_ArraySeq,
+    *out = new Param_Test::Bounded_ArraySeq;
+
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
 
 Param_Test::Coffee_Mix *
 Param_Test_i::test_coffe_mix (const Param_Test::Coffee_Mix & s1,

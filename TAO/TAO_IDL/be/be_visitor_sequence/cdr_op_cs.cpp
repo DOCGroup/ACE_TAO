@@ -481,6 +481,10 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
   TAO_OutStream *os = this->ctx_->stream ();
   be_sequence *node = this->ctx_->be_node_as_sequence ();
 
+  be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
   if (!node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -511,7 +515,8 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
     {
       *os << "for (CORBA::ULong i = 0; i < _tao_sequence.length ()"
           << " && _tao_marshal_flag; "
-          << "i++)" << be_idt_nl;
+          << "i++)" << be_nl
+          << "{" << be_idt_nl;
     }
   else
     {
@@ -530,9 +535,32 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "_tao_marshal_flag = (strm >> ";
       switch (bt->node_type ())
         {
+        case AST_Decl::NT_array:
+          if (bt->accept (visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                 "visit_node - "
+                                 "base type visit failed\n"),
+                                -1);
+            }
+
+          *os << "_forany tmp (ACE_reinterpret_cast (";
+
+          if (bt->accept (visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                 "visit_node - "
+                                 "base type visit failed\n"),
+                                -1);
+            }
+
+          *os << "_slice *, _tao_sequence[i]));" << be_nl;
+          *os << "_tao_marshal_flag = (strm >> tmp";
+          break;
         case AST_Decl::NT_string:
         case AST_Decl::NT_wstring:
           {
@@ -549,17 +577,19 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             if (str->max_size ()->ev ()->u.ulval == 0)
               {
                 // unbounded
-                *os << "_tao_sequence[i].out ()";
+                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ()";
               }
             else
               {
                 if (str->width () == sizeof (char))
                   {
-                    *os << "CORBA::Any::to_string (_tao_sequence[i].out (), ";
+                    *os << "_tao_marshal_flag = (strm >> "
+                        << "CORBA::Any::to_string (_tao_sequence[i].out (), ";
                   }
                 else
                   {
-                    *os << "CORBA::Any::to_wstring (_tao_sequence[i].out (), ";
+                    *os << "_tao_marshal_flag = (strm >> "
+                        << "CORBA::Any::to_wstring (_tao_sequence[i].out (), ";
                   }
                 *os << str->max_size ()->ev ()->u.ulval << ")";
               }
@@ -567,7 +597,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
           break;
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
-          *os << "_tao_sequence[i].out ()";
+          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ()";
           break;
         case AST_Decl::NT_pre_defined:
           {
@@ -582,30 +612,56 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                    "bad predefined type node\n"),
                                   -1);
               }
+
             if (pt->pt () == AST_PredefinedType::PT_pseudo)
               {
-                *os << "_tao_sequence[i].out ()";
+                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ()";
               }
             else
               {
-                *os << "_tao_sequence[i]";
+                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]";
               }
           }
           break;
         default:
-          *os << "_tao_sequence[i]";
+          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]";
+          break;
         }
-      *os << ");";
+      *os << ");" << be_uidt_nl
+          << "}";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "_tao_marshal_flag = (strm << _tao_sequence[i]";
       switch (bt->node_type ())
         {
+        case AST_Decl::NT_array:
+          if (bt->accept (visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                 "visit_node - "
+                                 "base type visit failed\n"),
+                                -1);
+            }
+
+          *os << "_forany tmp (ACE_reinterpret_cast (";
+
+          if (bt->accept (visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                 "visit_node - "
+                                 "base type visit failed\n"),
+                                -1);
+            }
+
+          *os << "_slice *, _tao_sequence[i]));" << be_nl;
+          *os << "_tao_marshal_flag = (strm << tmp";
+          break;
         case AST_Decl::NT_string:
         case AST_Decl::NT_wstring:
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
-          *os << ".in ()";
+          *os << "_tao_marshal_flag = (strm << _tao_sequence[i].in ()";
           break;
         case AST_Decl::NT_pre_defined:
           {
@@ -618,15 +674,23 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                    "bad predefined type node\n"),
                                   -1);
               }
+
             if (pt->pt () == AST_PredefinedType::PT_pseudo)
               {
-                *os << ".in ()";
+                *os << "_tao_marshal_flag = (strm << _tao_sequence[i].in ()";
+              }
+            else
+              {
+                *os << "_tao_marshal_flag = (strm << _tao_sequence[i]";
               }
           }
+          break;
         default:
+          *os << "_tao_marshal_flag = (strm << _tao_sequence[i]";
           break;
         }
-      *os << ");";
+      *os << ");" << be_uidt_nl
+          << "}";
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -639,5 +703,6 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
   *os << be_uidt_nl;
   *os << "return _tao_marshal_flag;" << be_uidt_nl;
 
+  delete visitor;
   return 0;
 }
