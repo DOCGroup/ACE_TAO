@@ -6,13 +6,13 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS = -lAVsvc -lorbsvcs -lTAO 
+LDLIBS = -lAVsvc -lorbsvcs -lTAO
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-PSRC = $(PING_OBJS:.o=.cpp) $(PONG_OBJS:.o=.cpp) $(CONTROL_OBJS:.o=.cpp) 
+PSRC = $(PING_OBJS:.o=.cpp) $(PONG_OBJS:.o=.cpp) $(CONTROL_OBJS:.o=.cpp)
 
 BIN2 = ping pong control
 

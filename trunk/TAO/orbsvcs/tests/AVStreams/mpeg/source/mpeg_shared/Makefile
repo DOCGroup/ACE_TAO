@@ -25,14 +25,14 @@ FILES = $(IDL_FILES)
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
-FILES += com fileio filters routine sendpt 
+FILES += com fileio filters routine sendpt
 
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG) -I$(TAO_ROOT)/orbsvcs/orbsvcs
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
 CPPFLAGS += -I$(MPEG_ROOT)
 
-LDLIBS 	= -lAVsvc -lorbsvcs -lTAO 
+LDLIBS 	= -lAVsvc -lorbsvcs -lTAO
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
@@ -62,7 +62,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 ##LDFLAGS += -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 CPPFLAGS += -DSH_MEM -DNDEBUG
 
 .PRECIOUS: Video_ControlS.cpp Video_ControlC.cpp Audio_ControlS.cpp Audio_ControlC.cpp

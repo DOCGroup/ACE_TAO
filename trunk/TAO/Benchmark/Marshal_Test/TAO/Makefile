@@ -21,6 +21,10 @@ MARSHAL_SERVER_OBJS = marshalC.o marshalS.o tao_marshal_impl.o tao_marshal_serve
 
 BIN = client server
 
+ifndef TAO_ROOT
+TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
@@ -28,7 +32,6 @@ BIN = client server
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
@@ -38,10 +41,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 # Local modifications to variables imported by includes above.
 #----------------------------------------------------------------------------
-
-ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
-endif
 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/Benchmark
 server:	$(addprefix $(VDIR),$(MARSHAL_SERVER_OBJS))
