@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -20,7 +22,7 @@
 #include "ace/Signal.h"
 
 template <class TQ>
-class ACE_Async_Timer_Queue_Adapter : public ACE_Event_Handler
+class ACE_Export ACE_Async_Timer_Queue_Adapter : public ACE_Event_Handler
   // = TITLE
   //     Adapts a <TQ> to be run asynchronously.
   //
@@ -75,7 +77,7 @@ private:
 };
 
 template <class TQ>
-class ACE_Thread_Timer_Queue_Adapter : public ACE_Task_Base
+class ACE_Export ACE_Thread_Timer_Queue_Adapter : public ACE_Task_Base
   // = TITLE
   //   Adapts a Timer_Queue using a separate thread for dispatching.
   //
