@@ -277,13 +277,11 @@ TAO_ComponentDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
   for (i = 0; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
-      this->repo_->config ()->get_string_value (attrs_key,
-                                                stringified,
-                                                holder);
-      this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                           holder,
-                                           attr_key,
-                                           0);
+      this->repo_->config ()->open_section (attrs_key,
+                                            stringified,
+                                            0,
+                                            attr_key);
+
       TAO_ExtAttributeDef_i impl (this->repo_);
       impl.section_key (attr_key);
       impl.fill_description (cd.attributes[i]
