@@ -15,4 +15,11 @@ struct Dummy_Data
   ACE_Based_Pointer<Dummy_Data> next_;
 };
 
+// Some more dummy data.
+struct Long_Test
+{
+  ACE_Based_Pointer<long> bpl_;
+  long array_[10];
+};
+
 #endif /* __TEST_POSITION_INDEPENDENT_MALLOC */

@@ -16,7 +16,7 @@ static void *request_base_addr = ((void *) (64 * 1024 * 1024));
 static const char *request_string = "hello from request repository";
 
 // Default address for shared memory mapped files and SYSV shared
-// memory (defaults to 64 M).
+// memory (defaults to 128 M).
 static void *response_base_addr = ((void *) (128 * 1024 * 1024));
 static const char *response_string = "hello from response repository";
 

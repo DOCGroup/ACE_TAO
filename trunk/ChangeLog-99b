@@ -1,8 +1,14 @@
+Sat Jul 31 19:27:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Shared_Malloc/test_position_independent_malloc.cpp:
+	  Now that position-independent malloc works, I finished
+ 	  integrating all the features in this test.
+
 Sat Jul 31 19:06:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Pipe.cpp:
 	  The third argument to ACE_OS::setsockopt() is a "const char*" no
-	  sense in casting it to void*!
+ 	  sense in casting it to void*!
 
 Sat Jul 31 18:55:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
