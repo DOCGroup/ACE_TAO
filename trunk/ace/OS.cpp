@@ -36,7 +36,7 @@ const wchar_t *ACE_OS::month_name[] = {__TEXT ("Jan"), __TEXT ("Feb"),
                                        __TEXT ("Sep"), __TEXT ("Oct"),
                                        __TEXT ("Nov"), __TEXT ("Dec") };
 
-static const ASYS_TCHAR *fmtstr = __TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
+static const ASYS_TCHAR *ACE_OS_CTIME_R_FMTSTR = __TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
 #endif /* ACE_HAS_WINCE */
 
 #if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
@@ -3608,7 +3608,7 @@ ACE_OS::ctime_r (const time_t *clock,
   SYSTEMTIME systime;
   FileTimeToSystemTime ((FILETIME *) &file_time, &systime);
 #endif /* 0 */
-  ACE_OS::sprintf (buf, fmtstr,
+  ACE_OS::sprintf (buf, ACE_OS_CTIME_R_FMTSTR,
                    ACE_OS::day_of_week_name[systime.wDayOfWeek],
                    ACE_OS::month_name[systime.wMonth - 1],
                    systime.wDay,
