@@ -37,7 +37,7 @@ CPPDIR = .
 
 IDLDIR = .
 
-!include <$(ACE_ROOT)\include\makeinclude\build_dll.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
 
 #
 # IDL Build rules
