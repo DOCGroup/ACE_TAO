@@ -1,3 +1,15 @@
+Tue Aug 17 18:43:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/OS.i:
+	  Added wscmp and wsncmp functions to go with the existing
+	  wslen and wscpy functions. These all use WChar*, so arg
+	  size is independent of platform. These are to be used for 
+	  all manipulations of CORBA::WString. The two that were
+	  added were needed for wstring tests in Param_Test. WChar*
+	  versions of the other string manipulation functions will
+	  be added as needed.
+
 Tue Aug 17 17:49:33 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/config-sunos5.5.h: If (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64)
