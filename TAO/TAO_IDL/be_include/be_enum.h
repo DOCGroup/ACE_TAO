@@ -55,6 +55,9 @@ public:
   // Convert a numeric value to the enum's string name for it.
   virtual UTL_ScopedName        *value_to_name (const unsigned long v);
 
+  virtual void destroy (void);
+  // Cleanup method.
+
   // Visiting
   virtual int accept (be_visitor *visitor);
 

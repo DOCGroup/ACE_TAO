@@ -72,7 +72,7 @@ be_visitor_interface_si::visit_interface (be_interface *node)
                          "codegen for base class skeletons failed\n"), -1);
     }
 
-  if (idl_global->gen_tie_classes ())
+  if (be_global->gen_tie_classes ())
     {
       // generate the TIE class
       be_visitor_context ctx (*this->ctx_);

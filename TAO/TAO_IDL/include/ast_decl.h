@@ -95,7 +95,7 @@ class Identifier;
 // the hierarchy rooted in a single class, thereby eliminating the situation
 // that causes the bug to appear
 
-class   COMMON_Base
+class TAO_IDL_FE_Export COMMON_Base
 {
 public:
 
@@ -105,15 +105,18 @@ public:
   virtual idl_bool is_local (void);
   virtual idl_bool is_abstract (void);
 
+  // A no-op, overridden in the BE classes
+  virtual void destroy (void);
+
         // Narrowing
-    DEF_NARROW_METHODS0(COMMON_Base);
+  DEF_NARROW_METHODS0(COMMON_Base);
 
 protected:
   idl_bool is_local_;
   idl_bool is_abstract_;
 };
 
-class   AST_Decl : public virtual COMMON_Base
+class TAO_IDL_FE_Export AST_Decl : public virtual COMMON_Base
 {
 public:
   // Enum defining the different kinds of AST nodes
@@ -202,6 +205,9 @@ public:
 
   // AST Dumping
   virtual void                  dump(ostream &o);
+
+  // Cleanup method.
+  virtual void destroy (void);
 
   // Other operations
 

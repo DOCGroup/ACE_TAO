@@ -106,7 +106,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
       // this is the starting point for generation of all Any operators. If we
       // have the any support enabled, then go ahead
-      if (idl_global->any_support ())
+      if (be_global->any_support ())
         return new be_visitor_root_any_op (new_ctx);
       else
         // return a NO_OP visitor
@@ -406,7 +406,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
     case TAO_CodeGen::TAO_TYPECODE_DECL:
       // Do we need TypeCode Support?
-      if (idl_global->tc_support ())
+      if (be_global->tc_support ())
         return new be_visitor_typecode_decl (new_ctx);
       else
         // return a NO_OP visitor
@@ -414,7 +414,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
     case TAO_CodeGen::TAO_TYPECODE_DEFN:
       // Do we need TypeCode Support?
-      if (idl_global->tc_support ())
+      if (be_global->tc_support ())
         return new be_visitor_typecode_defn (new_ctx);
       else
         // return a NO_OP visitor

@@ -78,7 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-class   AST_UnionBranch : public virtual AST_Field
+class TAO_IDL_FE_Export AST_UnionBranch : public virtual AST_Field
 {
 public:
   // Operations

@@ -73,6 +73,9 @@ public:
   virtual idl_bool has_duplicate_case_labels (void);
   // Do we have at least one member with multiple case labels?
 
+  virtual void destroy (void);
+  // Cleanup function.
+
   // Visiting
   virtual int accept (be_visitor *visitor);
 

@@ -19,16 +19,12 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 
 ACE_RCSID(be, be_structure, "$Id$")
 
-
-/*
- * BE_Structure
- */
 be_structure::be_structure (void)
 {
 }
@@ -37,19 +33,22 @@ be_structure::be_structure (UTL_ScopedName *n,
                             UTL_StrList *p,
                             idl_bool local,
                             idl_bool abstract)
-  : AST_Decl (AST_Decl::NT_struct, n, p),
+  : AST_Decl (AST_Decl::NT_struct, 
+              n, 
+              p),
     UTL_Scope (AST_Decl::NT_struct),
-    COMMON_Base (local, abstract)
+    COMMON_Base (local, 
+                 abstract)
 {
 }
 
-// generate the _var definition for ourself
+// Generate the _var definition for ourself.
 int
 be_structure::gen_var_defn (char *)
 {
-  TAO_OutStream *ch; // output stream
-  TAO_NL  nl;        // end line
-  char namebuf [NAMEBUFSIZE];  // names
+  TAO_OutStream *ch = 0;
+  TAO_NL nl;
+  char namebuf [NAMEBUFSIZE];
 
   ACE_OS::memset (namebuf,
                   '\0',
@@ -59,58 +58,61 @@ be_structure::gen_var_defn (char *)
                    "%s_var",
                    this->local_name ()->get_string ());
 
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  ch = tao_cg->client_header ();
 
-  ch = cg->client_header ();
-
-  // generate the var definition (always in the client header).
+  // Generate the var definition (always in the client header).
   // Depending upon the data type, there are some differences which
   // we account for here.
 
-  ch->indent (); // start with whatever was our current indent level
-  *ch << "class " << idl_global->stub_export_macro ()
+  // Start with whatever was our current indent level.
+  ch->indent ();
+  *ch << "class " << be_global->stub_export_macro ()
       << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent ();
-  // default constr
+
+  // Default constructor.
   *ch << namebuf << " (void); // default constructor" << nl;
-  // constr
+
+  // Constructor.
   *ch << namebuf << " (" << this->local_name () << " *);" << nl;
-  // copy constructor
+
+  // Copy constructor.
   *ch << namebuf << " (const " << namebuf <<
     " &); // copy constructor" << nl;
 
-  // fixed-size types only
+  // Fixed-size types only.
   if (this->size_type () == be_decl::FIXED)
     {
       *ch << namebuf << " (const " << this->local_name ()
           << " &); // fixed-size types only" << nl;
     }
 
-  // destructor
+  // Destructor.
   *ch << "~" << namebuf << " (void); // destructor" << nl;
   *ch << nl;
-  // assignment operator from a pointer
+
+  // Assignment operator from a pointer.
   *ch << namebuf << " &operator= (" << this->local_name () << " *);" << nl;
-  // assignment from _var
+
+  // Assignment from _var.
   *ch << namebuf << " &operator= (const " << namebuf << " &);" << nl;
 
-  // fixed-size types only
+  // Fixed-size types only.
   if (this->size_type () == be_decl::FIXED)
     {
       *ch << namebuf << " &operator= (const " << this->local_name ()
           << " &); // fixed-size types only" << nl;
     }
 
-  // arrow operator
+  // Arrow operator.
   *ch << local_name () << " *operator-> (void);" << nl;
   *ch << "const " << this->local_name ()
       << " *operator-> (void) const;" << nl;
   *ch << nl;
 
-  // other extra types (cast operators, [] operator, and others)
+  // Other extra types (cast operators, [] operator, and others).
   *ch << "operator const " << this->local_name () << " &() const;" << nl;
   *ch << "operator " << this->local_name () << " &();" << nl;
   *ch << "operator " << this->local_name () << " &() const;" << nl;
@@ -123,8 +125,9 @@ be_structure::gen_var_defn (char *)
 
   *ch << nl;
   *ch << "// in, inout, out, _retn " << nl;
-  // the return types of in, out, inout, and _retn are based on the
-  // parameter passing rules and the base type
+
+  // The return types of in, out, inout, and _retn are based on the
+  // parameter passing rules and the base type.
   if (this->size_type () == be_decl::FIXED)
     {
       *ch << "const " << this->local_name () << " &in (void) const;" << nl;
@@ -140,14 +143,14 @@ be_structure::gen_var_defn (char *)
       *ch << local_name () << " *_retn (void);" << nl;
     }
 
-  // generate an additional member function
-  // that returns the underlying pointer
+  // Generate an additional member function
+  // that returns the underlying pointer.
   *ch << this->local_name () << " *ptr (void) const;\n";
 
   *ch << "\n";
   ch->decr_indent ();
 
-  // generate the private section
+  // Generate the private section.
   *ch << "private:\n";
   ch->incr_indent ();
   *ch << this->local_name () << " *ptr_;\n";
@@ -162,37 +165,45 @@ int
 be_structure::gen_var_impl (char *,
                             char *)
 {
-  TAO_OutStream *ci; // output stream
-  TAO_NL  nl;        // end line
-  char fname [NAMEBUFSIZE];  // to hold the full and
-  char lname [NAMEBUFSIZE];  // local _var names
+  TAO_OutStream *ci = 0;
+  TAO_NL nl;        // end line
+  char fname [NAMEBUFSIZE];
+  char lname [NAMEBUFSIZE];
 
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_var", this->full_name ());
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
-  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, "%s_var", this->local_name ()->get_string ());
+  ACE_OS::sprintf (fname, 
+                   "%s_var", 
+                   this->full_name ());
 
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  ACE_OS::memset (lname, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
-  ci = cg->client_inline ();
+  ACE_OS::sprintf (lname, 
+                   "%s_var", 
+                   this->local_name ()->get_string ());
 
-  ci->indent (); // start with whatever was our current indent level
+  ci = tao_cg->client_inline ();
+
+  // Start with whatever was our current indent level.
+  ci->indent ();
 
   *ci << "// *************************************************************"
       << nl;
   *ci << "// Inline operations for class " << fname << nl;
   *ci << "// *************************************************************\n\n";
 
-  // default constr
+  // Default constructor.
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname
       << " (void) // default constructor" << nl;
   *ci << "  " << ": ptr_ (0)" << nl;
   *ci << "{}\n\n";
 
-  // constr from a pointer
+  // Constructor from a pointer.
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << this->local_name ()
@@ -200,7 +211,7 @@ be_structure::gen_var_impl (char *,
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
-  // copy constructor
+  // Copy constructor.
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const ::" << fname
@@ -215,7 +226,7 @@ be_structure::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // fixed-size types only
+  // Fixed-size types only.
   if (this->size_type () == be_decl::FIXED)
     {
       *ci << "// fixed-size types only" << nl;
@@ -230,7 +241,7 @@ be_structure::gen_var_impl (char *,
       *ci << "}\n\n";
     }
 
-  // destructor
+  // Destructor.
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::~" << lname << " (void) // destructor" << nl;
@@ -240,7 +251,7 @@ be_structure::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // assignment operator from a pointer
+  // Assignment operator from a pointer.
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
   *ci << fname << "::operator= (" << this->local_name ()
@@ -253,7 +264,7 @@ be_structure::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // assignment operator from _var
+  // Assignment operator from _var.
   ci->indent ();
   *ci << "ACE_INLINE ::" << fname << " &" << nl;
   *ci << fname << "::operator= (const ::" << fname
@@ -272,7 +283,7 @@ be_structure::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // fixed-size types only
+  // Fixed-size types only.
   if (this->size_type () == be_decl::FIXED)
     {
       ci->indent ();
@@ -295,7 +306,7 @@ be_structure::gen_var_impl (char *,
       *ci << "}\n\n";
     }
 
-  // two arrow operators
+  // Two arrow operators.
   ci->indent ();
   *ci << "ACE_INLINE const " << "::" << this->name () << " *" << nl;
   *ci << fname << "::operator-> (void) const" << nl;
@@ -314,7 +325,7 @@ be_structure::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // other extra methods - 3 cast operator ()
+  // Other extra methods - 3 cast operator ().
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::operator const " << "::" << this->name ()
@@ -345,7 +356,7 @@ be_structure::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // variable-size types only
+  // Variable-size types only.
   if (this->size_type () == be_decl::VARIABLE)
     {
       ci->indent ();
@@ -379,7 +390,7 @@ be_structure::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // the out is handled differently based on our size type
+  // The out is handled differently based on our size type.
   ci->indent ();
   if (this->size_type () == be_decl::VARIABLE)
     {
@@ -428,7 +439,7 @@ be_structure::gen_var_impl (char *,
 
     }
 
-  // the additional ptr () member function
+  // The additional ptr () member function.
   ci->indent ();
   *ci << "ACE_INLINE " << "::" << this->name () << " *" << nl;
   *ci << fname << "::ptr (void) const" << nl;
@@ -441,13 +452,13 @@ be_structure::gen_var_impl (char *,
   return 0;
 }
 
-// generate the _out definition
+// Generate the _out definition.
 int
 be_structure::gen_out_defn (char *)
 {
-  TAO_OutStream *ch; // output stream
-  TAO_NL  nl;        // end line
-  char namebuf [NAMEBUFSIZE];  // to hold the _out name
+  TAO_OutStream *ch = 0;
+  TAO_NL nl;
+  char namebuf [NAMEBUFSIZE];
 
   ACE_OS::memset (namebuf,
                   '\0',
@@ -457,15 +468,14 @@ be_structure::gen_out_defn (char *)
                    "%s_out",
                    this->local_name ()->get_string ());
 
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  ch = tao_cg->client_header ();
 
-  ch = cg->client_header ();
+  // Generate the out definition (always in the client header).
 
-  // generate the out definition (always in the client header)
-  ch->indent (); // start with whatever was our current indent level
+  // Start with whatever was our current indent level.
+  ch->indent ();
 
-  *ch << "class " << idl_global->stub_export_macro ()
+  *ch << "class " << be_global->stub_export_macro ()
       << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
@@ -473,23 +483,31 @@ be_structure::gen_out_defn (char *)
 
   // No default constructor
 
-  // constructor from a pointer
+  // Constructor from a pointer.
   *ch << namebuf << " (" << this->local_name () << " *&);" << nl;
-  // constructor from a _var &
+
+  // Constructor from a _var &.
   *ch << namebuf << " (" << this->local_name () << "_var &);" << nl;
-  // constructor from a _out &
+
+  // Constructor from a _out &.
   *ch << namebuf << " (const " << namebuf << " &);" << nl;
-  // assignment operator from a _out &
+
+  // Assignment operator from a _out &.
   *ch << namebuf << " &operator= (const " << namebuf << " &);" << nl;
-  // assignment operator from a pointer &, cast operator, ptr fn, operator
-  // -> and any other extra operators
-  // assignment
+
+  // Assignment operator from a pointer &, cast operator, ptr fn, operator
+  // -> and any other extra operators.
+
+  // Assignment.
   *ch << namebuf << " &operator= ("
       << this->local_name () << " *);" << nl;
-  // operator ()
+
+  // Operator ().
   *ch << "operator " << this->local_name () << " *&();" << nl;
+
   // ptr fn
   *ch << this->local_name () << " *&ptr (void);" << nl;
+
   // operator ->
   *ch << this->local_name () << " *operator-> (void);" << nl;
 
@@ -510,10 +528,10 @@ int
 be_structure::gen_out_impl (char *,
                             char *)
 {
-  TAO_OutStream *ci; // output stream
-  TAO_NL  nl;        // end line
-  char fname [NAMEBUFSIZE];  // to hold the full and
-  char lname [NAMEBUFSIZE];  // local _out names
+  TAO_OutStream *ci = 0;
+  TAO_NL nl;
+  char fname [NAMEBUFSIZE];
+  char lname [NAMEBUFSIZE];
 
   ACE_OS::memset (fname,
                   '\0',
@@ -531,21 +549,19 @@ be_structure::gen_out_impl (char *,
                    "%s_out",
                    this->local_name ()->get_string ());
 
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  ci = tao_cg->client_inline ();
 
-  ci = cg->client_inline ();
+  // Generate the var implementation in the inline file.
 
-  // generate the var implementation in the inline file
-
-  ci->indent (); // start with whatever was our current indent level
+  // Start with whatever was our current indent level.
+  ci->indent ();
 
   *ci << "// *************************************************************"
       << nl;
   *ci << "// Inline operations for class " << fname << nl;
   *ci << "// *************************************************************\n\n";
 
-  // constr from a pointer
+  // Constructor from a pointer.
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << "::"
@@ -557,7 +573,7 @@ be_structure::gen_out_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // constructor from _var &
+  // Constructor from _var &.
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << this->local_name ()
@@ -570,7 +586,7 @@ be_structure::gen_out_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // copy constructor
+  // Copy constructor.
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const ::" << fname
@@ -578,7 +594,7 @@ be_structure::gen_out_impl (char *,
   *ci << "  : ptr_ (ACE_const_cast (" << lname << "&, p).ptr_)" << nl;
   *ci << "{}\n\n";
 
-  // assignment operator from _out &
+  // assignment operator from _out &.
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
   *ci << fname << "::operator= (const ::" << fname <<
@@ -590,9 +606,9 @@ be_structure::gen_out_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // assignment from _var is not allowed by a private declaration
+  // Assignment from _var is not allowed by a private declaration.
 
-  // assignment operator from pointer
+  // Assignment operator from pointer.
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
   *ci << fname << "::operator= (" << this->local_name () << " *p)" << nl;
@@ -603,7 +619,7 @@ be_structure::gen_out_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // other extra methods - cast operator ()
+  // Other extra methods - cast operator ().
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
   *ci << fname << "::operator " << "::" << this->name ()
@@ -638,30 +654,31 @@ be_structure::gen_out_impl (char *,
   return 0;
 }
 
-// compute the size type of the node in question
+// Compute the size type of the node in question.
 int
 be_structure::compute_size_type (void)
 {
-  UTL_ScopeActiveIterator *si;
-  AST_Decl *d;
-  be_decl *bd;
+  UTL_ScopeActiveIterator *si = 0;
+  AST_Decl *d = 0;
+  be_decl *bd = 0;
 
   if (this->nmembers () > 0)
     {
-      // if there are elements in this scope
-
-      si = new UTL_ScopeActiveIterator (this,
-                                        UTL_Scope::IK_decls);
+      // If there are elements in this scope,
       // instantiate a scope iterator.
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (this,
+                                               UTL_Scope::IK_decls),
+                      -1);
 
       while (!(si->is_done ()))
         {
-          // get the next AST decl node
+          // Get the next AST decl node.
           d = si->item ();
           bd = be_decl::narrow_from_decl (d);
           if (bd != 0)
             {
-              // our sizetype depends on the sizetype of our members. Although
+              // Our sizetype depends on the sizetype of our members. Although
               // previous value of sizetype may get overwritten, we are
               // guaranteed by the "size_type" call that once the value reached
               // be_decl::VARIABLE, nothing else can overwrite it.
@@ -677,44 +694,49 @@ be_structure::compute_size_type (void)
                           "narrow_from_decl returned 0\n"));
             }
           si->next ();
-        } // end of while
-      delete si; // free the iterator object
+        }
+
+      delete si;
     }
+
   return 0;
 }
 
-// Are we or the parameter node involved in any recursion
+// Are we or the parameter node involved in any recursion?
 idl_bool
 be_structure::in_recursion (be_type *node)
 {
-  if (!node)
+  if (node == 0)
     {
-      // we are determining the recursive status for ourselves
+      // We are determining the recursive status for ourselves.
       node = this;
     }
 
-  // proceed if the number of members in our scope is greater than 0
+  // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
     {
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
+      // Initialize an iterator to iterate over our scope.
+      UTL_ScopeActiveIterator *si = 0;
       ACE_NEW_RETURN (si,
                       UTL_ScopeActiveIterator (this,
                                                UTL_Scope::IK_decls),
                       -1);
-      // continue until each element is visited
+      // Continue until each element is visited.
       while (!si->is_done ())
         {
           be_field *field = be_field::narrow_from_decl (si->item ());
-          if (!field)
-          // This will be an enum value or other legitimate non-field
-          // member - in any case, no recursion.
+
+          if (field == 0)
+            // This will be an enum value or other legitimate non-field
+            // member - in any case, no recursion.
             {
               si->next ();
               continue;
             }
+
           be_type *type = be_type::narrow_from_decl (field->field_type ());
-          if (!type)
+
+          if (type == 0)
             {
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -723,18 +745,29 @@ be_structure::in_recursion (be_type *node)
                                  ACE_TEXT ("bad field type\n")),
                                 0);
             }
+
           if (type->in_recursion (node))
             {
               delete si;
               return 1;
             }
           si->next ();
-        } // end of while loop
-      delete si;
-    } // end of if
+        }
 
-  // not in recursion
+      delete si;
+    }
+
+  // Not in recursion.
   return 0;
+}
+
+void
+be_structure::destroy (void)
+{
+  // Call the destroy methods of our base classes.
+  be_scope::destroy ();
+  be_type::destroy ();
+  AST_Decl::destroy ();
 }
 
 int
@@ -743,7 +776,7 @@ be_structure::accept (be_visitor *visitor)
   return visitor->visit_structure (this);
 }
 
-// Narrowing
+// Narrowing.
 IMPL_NARROW_METHODS3 (be_structure, AST_Structure, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_structure)
 IMPL_NARROW_FROM_SCOPE (be_structure)

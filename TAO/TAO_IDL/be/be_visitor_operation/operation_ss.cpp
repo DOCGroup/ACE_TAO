@@ -397,7 +397,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl;
 
-  if (idl_global->use_raw_throw ())
+  if (be_global->use_raw_throw ())
     *os << "throw;" << be_uidt_nl;
   else
     *os << "ACE_RE_THROW;" << be_uidt_nl;
@@ -673,14 +673,14 @@ be_visitor_operation_ss::gen_raise_exception (be_type *,
 
   os->indent ();
 
-  if (idl_global->use_raw_throw ())
+  if (be_global->use_raw_throw ())
     *os << "throw ";
   else
     *os << "ACE_THROW (";
 
   *os << excep << "(" << completion_status << ")";
 
-  if (idl_global->use_raw_throw ())
+  if (be_global->use_raw_throw ())
     *os << ";\n";
   else
     *os << ");\n";

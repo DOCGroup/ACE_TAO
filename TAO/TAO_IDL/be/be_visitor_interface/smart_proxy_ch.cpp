@@ -45,7 +45,7 @@ be_visitor_interface_smart_proxy_ch::~be_visitor_interface_smart_proxy_ch (void)
 int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 {
 
-  if (idl_global->gen_smart_proxies ())
+  if (be_global->gen_smart_proxies ())
     {
 
       TAO_OutStream *os = this->ctx_->stream ();
@@ -59,7 +59,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
         bt = node;
       // output the class defn
 
-      *os << "class " << idl_global->stub_export_macro ()<< " "
+      *os << "class " << be_global->stub_export_macro ()<< " "
           << "TAO_" << node->flat_name ()
           << "_Default_Proxy_Factory" << be_nl
           << "{" << be_nl
@@ -85,7 +85,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << ");" << be_uidt << be_uidt_nl
           << "};\n\n";
 
-      *os << "class " << idl_global->stub_export_macro ()<< " "
+      *os << "class " << be_global->stub_export_macro ()<< " "
           << "TAO_" << node->flat_name ()
           << "_Proxy_Factory_Adapter" << be_nl
           << "{" << be_nl
@@ -130,7 +130,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_"
           << node->flat_name ()<< "_PROXY_FACTORY_ADAPTER;"<<be_nl << be_nl;
 
-      *os << "class " << idl_global->stub_export_macro ()<< " "
+      *os << "class " << be_global->stub_export_macro ()<< " "
           << "TAO_"<< node->flat_name ()
           << "_Smart_Proxy_Base" << be_idt_nl
           << ": public virtual "

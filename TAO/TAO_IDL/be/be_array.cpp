@@ -25,9 +25,6 @@
 
 ACE_RCSID(be, be_array, "$Id$")
 
-/*
- * BE_Array
- */
 be_array::be_array (void)
   :  tao_name_ (0)
 {
@@ -38,9 +35,16 @@ be_array::be_array (UTL_ScopedName *n,
                     UTL_ExprList *dims,
                     idl_bool local,
                     idl_bool abstract)
-  : AST_Array (n, ndims, dims, local, abstract),
-    AST_Decl (AST_Decl::NT_array, n, NULL),
-    COMMON_Base (local, abstract),
+  : AST_Array (n, 
+               ndims, 
+               dims, 
+               local, 
+               abstract),
+    AST_Decl (AST_Decl::NT_array, 
+              n, 
+              0),
+    COMMON_Base (local, 
+                 abstract),
     tao_name_ (0)
 {
 }
@@ -189,7 +193,8 @@ be_array::create_name (void)
 // Code generation
 
 int
-be_array::gen_dimensions (TAO_OutStream *os, unsigned short slice)
+be_array::gen_dimensions (TAO_OutStream *os, 
+                          unsigned short slice)
 {
   unsigned long i;   // loop index
 

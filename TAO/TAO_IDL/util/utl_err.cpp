@@ -86,69 +86,69 @@ error_string(UTL_Error::ErrorCode c)
 {
   switch (c) {
   case UTL_Error::EIDL_OK:
-    return GTDEVEL("all is fine ");
+    return ACE_TEXT ("all is fine ");
   case UTL_Error::EIDL_SYNTAX_ERROR:
     return "";
   case UTL_Error::EIDL_REDEF:
-    return GTDEVEL("illegal redefinition ");
+    return ACE_TEXT ("illegal redefinition ");
   case UTL_Error::EIDL_DEF_USE:
-    return GTDEVEL("redefinition after use, ");
+    return ACE_TEXT ("redefinition after use, ");
   case UTL_Error::EIDL_MULTIPLE_BRANCH:
-    return GTDEVEL("union with duplicate branch label ");
+    return ACE_TEXT ("union with duplicate branch label ");
   case UTL_Error::EIDL_COERCION_FAILURE:
-    return GTDEVEL("coercion failure ");
+    return ACE_TEXT ("coercion failure ");
   case UTL_Error::EIDL_SCOPE_CONFLICT:
-    return GTDEVEL("definition scope is different than fwd declare scope, ");
+    return ACE_TEXT ("definition scope is different than fwd declare scope, ");
   case UTL_Error::EIDL_ONEWAY_CONFLICT:
-    return GTDEVEL("oneway operation with OUT or INOUT parameters, ");
+    return ACE_TEXT ("oneway operation with OUT or INOUT parameters, ");
   case UTL_Error::EIDL_DISC_TYPE:
-    return GTDEVEL("union with illegal discriminator type, ");
+    return ACE_TEXT ("union with illegal discriminator type, ");
   case UTL_Error::EIDL_LABEL_TYPE:
-    return GTDEVEL("label type incompatible with union discriminator type, ");
+    return ACE_TEXT ("label type incompatible with union discriminator type, ");
   case UTL_Error::EIDL_ILLEGAL_ADD:
-    return GTDEVEL("illegal add operation, ");
+    return ACE_TEXT ("illegal add operation, ");
   case UTL_Error::EIDL_ILLEGAL_USE:
-    return GTDEVEL("illegal type used in expression, ");
+    return ACE_TEXT ("illegal type used in expression, ");
   case UTL_Error::EIDL_ILLEGAL_RAISES:
-    return GTDEVEL("error in or illegal use of raises(..) clause, ");
+    return ACE_TEXT ("error in or illegal use of raises(..) clause, ");
   case UTL_Error::EIDL_ILLEGAL_CONTEXT:
-    return GTDEVEL("error in context(..) clause, ");
+    return ACE_TEXT ("error in context(..) clause, ");
   case UTL_Error::EIDL_CANT_INHERIT:
-    return GTDEVEL("");
+    return ACE_TEXT ("");
   case UTL_Error::EIDL_LOOKUP_ERROR:
-    return GTDEVEL("error in lookup of symbol: ");
+    return ACE_TEXT ("error in lookup of symbol: ");
   case UTL_Error::EIDL_INHERIT_FWD_ERROR:
     /* More intelligible message printed by error routine */
     return "";
   case UTL_Error::EIDL_CONSTANT_EXPECTED:
-    return GTDEVEL("constant expected: ");
+    return ACE_TEXT ("constant expected: ");
   case UTL_Error::EIDL_EVAL_ERROR:
-    return GTDEVEL("expression evaluation error: ");
+    return ACE_TEXT ("expression evaluation error: ");
   case UTL_Error::EIDL_NAME_CASE_ERROR:
-    return GTDEVEL("identifier spellings differ only in case: ");
+    return ACE_TEXT ("identifier spellings differ only in case: ");
   case UTL_Error::EIDL_NAME_CASE_WARNING:
-    return GTDEVEL("Warning - identifier spellings differ only in case: ");
+    return ACE_TEXT ("Warning - identifier spellings differ only in case: ");
   case UTL_Error::EIDL_ENUM_VAL_EXPECTED:
-    return GTDEVEL("enumerator expected: ");
+    return ACE_TEXT ("enumerator expected: ");
   case UTL_Error::EIDL_ENUM_VAL_NOT_FOUND:
-    return GTDEVEL("enumerator by this name not defined: ");
+    return ACE_TEXT ("enumerator by this name not defined: ");
   case UTL_Error::EIDL_AMBIGUOUS:
-    return GTDEVEL("ambiguous definition: ");
+    return ACE_TEXT ("ambiguous definition: ");
   case UTL_Error::EIDL_DECL_NOT_DEFINED:
-    return GTDEVEL("forward declared but never defined: ");
+    return ACE_TEXT ("forward declared but never defined: ");
   case UTL_Error::EIDL_FWD_DECL_LOOKUP:
     /* More intelligible message printed by error routine */
     return "";
   case UTL_Error::EIDL_RECURSIVE_TYPE:
-    return GTDEVEL("illegal recursive use of type: ");
+    return ACE_TEXT ("illegal recursive use of type: ");
   case UTL_Error::EIDL_NONVOID_ONEWAY:
-    return GTDEVEL("non-void return type in oneway operation: ");
+    return ACE_TEXT ("non-void return type in oneway operation: ");
   case UTL_Error::EIDL_REDEF_SCOPE:
-    return GTDEVEL("redefinition inside defining scope: ");
+    return ACE_TEXT ("redefinition inside defining scope: ");
   case UTL_Error::EIDL_NOT_A_TYPE:
-    return GTDEVEL("specified symbol is not a type: ");
+    return ACE_TEXT ("specified symbol is not a type: ");
   case UTL_Error::EIDL_BACK_END:
-    return GTDEVEL("back end: ");
+    return ACE_TEXT ("back end: ");
   }
   return NULL;
 }
@@ -160,7 +160,7 @@ idl_error_header(UTL_Error::ErrorCode c, long lineno, UTL_String *s)
   cerr << idl_global->prog_name()
        << ": \""
        << (idl_global->read_from_stdin() ? "standard input" : s->get_string())
-       << GTDEVEL("\", line ")
+       << ACE_TEXT ("\", line ")
        << ((lineno == -1) ? idl_global->lineno() : lineno)
        << ": "
        << error_string(c);
@@ -216,249 +216,249 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
 {
   switch (ps) {
   case IDL_GlobalData::PS_NoState:
-    return GTDEVEL("Statement can not be parsed");
+    return ACE_TEXT ("Statement can not be parsed");
   case IDL_GlobalData::PS_TypeDeclSeen:
-    return GTDEVEL("Malformed typedef declaration");
+    return ACE_TEXT ("Malformed typedef declaration");
   case IDL_GlobalData::PS_ConstDeclSeen:
-    return GTDEVEL("Malformed const declaration");
+    return ACE_TEXT ("Malformed const declaration");
   case IDL_GlobalData::PS_ExceptDeclSeen:
     return
-      GTDEVEL("Malformed exception declaration");
+      ACE_TEXT ("Malformed exception declaration");
   case IDL_GlobalData::PS_InterfaceDeclSeen:
     return
-      GTDEVEL("Malformed interface declaration");
+      ACE_TEXT ("Malformed interface declaration");
   case IDL_GlobalData::PS_ModuleDeclSeen:
-    return GTDEVEL("Malformed module declaration");
+    return ACE_TEXT ("Malformed module declaration");
   case IDL_GlobalData::PS_AttrDeclSeen:
     return
-      GTDEVEL("Malformed attribute declaration");
+      ACE_TEXT ("Malformed attribute declaration");
   case IDL_GlobalData::PS_OpDeclSeen:
     return
-      GTDEVEL("Malformed operation declaration");
+      ACE_TEXT ("Malformed operation declaration");
   case IDL_GlobalData::PS_ModuleSeen:
-    return GTDEVEL("Missing module identifier following MODULE keyword");
+    return ACE_TEXT ("Missing module identifier following MODULE keyword");
   case IDL_GlobalData::PS_ModuleIDSeen:
-    return GTDEVEL("Missing '{' or illegal syntax following module identifier");
+    return ACE_TEXT ("Missing '{' or illegal syntax following module identifier");
   case IDL_GlobalData::PS_ModuleSqSeen:
-    return GTDEVEL("Illegal syntax following module '{' opener");
+    return ACE_TEXT ("Illegal syntax following module '{' opener");
   case IDL_GlobalData::PS_ModuleQsSeen:
-    return GTDEVEL("Illegal syntax following module '}' closer");
+    return ACE_TEXT ("Illegal syntax following module '}' closer");
   case IDL_GlobalData::PS_ModuleBodySeen:
-    return GTDEVEL("Illegal syntax following module body statement(s)");
+    return ACE_TEXT ("Illegal syntax following module body statement(s)");
   case IDL_GlobalData::PS_InterfaceSeen:
-    return GTDEVEL("Missing interface identifier following INTERFACE keyword");
+    return ACE_TEXT ("Missing interface identifier following INTERFACE keyword");
   case IDL_GlobalData::PS_InterfaceIDSeen:
-    return GTDEVEL("Illegal syntax following interface identifier");
+    return ACE_TEXT ("Illegal syntax following interface identifier");
   case IDL_GlobalData::PS_InheritSpecSeen:
-    return GTDEVEL("Missing '{' or illegal syntax following inheritance spec");
+    return ACE_TEXT ("Missing '{' or illegal syntax following inheritance spec");
   case IDL_GlobalData::PS_ForwardDeclSeen:
-    return GTDEVEL("Missing ';' following forward interface declaration");
+    return ACE_TEXT ("Missing ';' following forward interface declaration");
   case IDL_GlobalData::PS_InterfaceSqSeen:
-    return GTDEVEL("Illegal syntax following interface '{' opener");
+    return ACE_TEXT ("Illegal syntax following interface '{' opener");
   case IDL_GlobalData::PS_InterfaceQsSeen:
-    return GTDEVEL("Illegal syntax following interface '}' closer");
+    return ACE_TEXT ("Illegal syntax following interface '}' closer");
   case IDL_GlobalData::PS_InterfaceBodySeen:
-    return GTDEVEL("Illegal syntax following interface body statement(s)");
+    return ACE_TEXT ("Illegal syntax following interface body statement(s)");
   case IDL_GlobalData::PS_InheritColonSeen:
-    return GTDEVEL("Illegal syntax following ':' starting inheritance list");
+    return ACE_TEXT ("Illegal syntax following ':' starting inheritance list");
   case IDL_GlobalData::PS_SNListCommaSeen:
-    return GTDEVEL("Found illegal scoped name in scoped name list");
+    return ACE_TEXT ("Found illegal scoped name in scoped name list");
   case IDL_GlobalData::PS_ScopedNameSeen:
-    return GTDEVEL("Missing ',' following scoped name in scoped name list");
+    return ACE_TEXT ("Missing ',' following scoped name in scoped name list");
   case IDL_GlobalData::PS_SN_IDSeen:
-    return GTDEVEL("Illegal component in scoped name");
+    return ACE_TEXT ("Illegal component in scoped name");
   case IDL_GlobalData::PS_ScopeDelimSeen:
-    return GTDEVEL("Illegal component in scoped name following '::'");
+    return ACE_TEXT ("Illegal component in scoped name following '::'");
   case IDL_GlobalData::PS_ConstSeen:
-    return GTDEVEL("Missing type or illegal syntax following CONST keyword");
+    return ACE_TEXT ("Missing type or illegal syntax following CONST keyword");
   case IDL_GlobalData::PS_ConstTypeSeen:
-    return GTDEVEL("Missing identifier or illegal syntax following const type");
+    return ACE_TEXT ("Missing identifier or illegal syntax following const type");
   case IDL_GlobalData::PS_ConstIDSeen:
-    return GTDEVEL("Missing '=' or illegal syntax after const identifier");
+    return ACE_TEXT ("Missing '=' or illegal syntax after const identifier");
   case IDL_GlobalData::PS_ConstAssignSeen:
-    return GTDEVEL("Missing value expr or illegal syntax following '='");
+    return ACE_TEXT ("Missing value expr or illegal syntax following '='");
   case IDL_GlobalData::PS_ConstExprSeen:
-    return GTDEVEL("Missing ';' or illegal syntax following value expr in const");
+    return ACE_TEXT ("Missing ';' or illegal syntax following value expr in const");
   case IDL_GlobalData::PS_TypedefSeen:
-    return GTDEVEL("Missing type or illegal syntax following TYPEDEF keyword");
+    return ACE_TEXT ("Missing type or illegal syntax following TYPEDEF keyword");
   case IDL_GlobalData::PS_TypeSpecSeen:
-    return GTDEVEL("Missing declarators or illegal syntax following type spec");
+    return ACE_TEXT ("Missing declarators or illegal syntax following type spec");
   case IDL_GlobalData::PS_DeclaratorsSeen:
-    return GTDEVEL("Illegal syntax following declarators in TYPEDEF declaration");
+    return ACE_TEXT ("Illegal syntax following declarators in TYPEDEF declaration");
   case IDL_GlobalData::PS_StructSeen:
-    return GTDEVEL("Missing struct identifier following STRUCT keyword");
+    return ACE_TEXT ("Missing struct identifier following STRUCT keyword");
   case IDL_GlobalData::PS_StructIDSeen:
-    return GTDEVEL("Missing '{' or illegal syntax following struct identifier");
+    return ACE_TEXT ("Missing '{' or illegal syntax following struct identifier");
   case IDL_GlobalData::PS_StructSqSeen:
-    return GTDEVEL("Illegal syntax following struct '{' opener");
+    return ACE_TEXT ("Illegal syntax following struct '{' opener");
   case IDL_GlobalData::PS_StructQsSeen:
-    return GTDEVEL("Illegal syntax following struct '}' closer");
+    return ACE_TEXT ("Illegal syntax following struct '}' closer");
   case IDL_GlobalData::PS_StructBodySeen:
-    return GTDEVEL("Illegal syntax following struct body statement(s)");
+    return ACE_TEXT ("Illegal syntax following struct body statement(s)");
   case IDL_GlobalData::PS_MemberTypeSeen:
-    return GTDEVEL("Illegal syntax of missing identifier following member type");
+    return ACE_TEXT ("Illegal syntax of missing identifier following member type");
   case IDL_GlobalData::PS_MemberDeclsSeen:
-    return GTDEVEL("Illegal syntax following member declarator(s)");
+    return ACE_TEXT ("Illegal syntax following member declarator(s)");
   case IDL_GlobalData::PS_MemberDeclsCompleted:
-    return GTDEVEL("Missing ',' between member decls of same type(?)");
+    return ACE_TEXT ("Missing ',' between member decls of same type(?)");
   case IDL_GlobalData::PS_UnionSeen:
-    return GTDEVEL("Missing identifier following UNION keyword");
+    return ACE_TEXT ("Missing identifier following UNION keyword");
   case IDL_GlobalData::PS_UnionIDSeen:
-    return GTDEVEL("Illegal syntax following union identifier");
+    return ACE_TEXT ("Illegal syntax following union identifier");
   case IDL_GlobalData::PS_SwitchSeen:
-    return GTDEVEL("Illegal syntax following SWITCH keyword");
+    return ACE_TEXT ("Illegal syntax following SWITCH keyword");
   case IDL_GlobalData::PS_SwitchOpenParSeen:
-    return GTDEVEL("Illegal syntax following '(' in switch in union");
+    return ACE_TEXT ("Illegal syntax following '(' in switch in union");
   case IDL_GlobalData::PS_SwitchTypeSeen:
-    return GTDEVEL("Illegal syntax following type decl in switch in union");
+    return ACE_TEXT ("Illegal syntax following type decl in switch in union");
   case IDL_GlobalData::PS_SwitchCloseParSeen:
-    return GTDEVEL("Missing union '{' opener");
+    return ACE_TEXT ("Missing union '{' opener");
   case IDL_GlobalData::PS_UnionSqSeen:
-    return GTDEVEL("Illegal syntax following union '{' opener");
+    return ACE_TEXT ("Illegal syntax following union '{' opener");
   case IDL_GlobalData::PS_UnionQsSeen:
-    return GTDEVEL("Illegal syntax following union '}' closer");
+    return ACE_TEXT ("Illegal syntax following union '}' closer");
   case IDL_GlobalData::PS_DefaultSeen:
-    return GTDEVEL("Illegal syntax or missing ':' following DEFAULT keyword");
+    return ACE_TEXT ("Illegal syntax or missing ':' following DEFAULT keyword");
   case IDL_GlobalData::PS_UnionLabelSeen:
-    return GTDEVEL("Illegal syntax following branch label in union");
+    return ACE_TEXT ("Illegal syntax following branch label in union");
   case IDL_GlobalData::PS_LabelColonSeen:
-    return GTDEVEL("Illegal syntax following ':' in branch label in union");
+    return ACE_TEXT ("Illegal syntax following ':' in branch label in union");
   case IDL_GlobalData::PS_LabelExprSeen:
-    return GTDEVEL("Illegal syntax following label expression in union");
+    return ACE_TEXT ("Illegal syntax following label expression in union");
   case IDL_GlobalData::PS_UnionElemSeen:
   case IDL_GlobalData::PS_UnionElemCompleted:
-    return GTDEVEL("Illegal syntax following union element");
+    return ACE_TEXT ("Illegal syntax following union element");
   case IDL_GlobalData::PS_CaseSeen:
-    return GTDEVEL("Illegal syntax following CASE keyword in union");
+    return ACE_TEXT ("Illegal syntax following CASE keyword in union");
   case IDL_GlobalData::PS_UnionElemTypeSeen:
-    return GTDEVEL("Illegal syntax following type decl in union element");
+    return ACE_TEXT ("Illegal syntax following type decl in union element");
   case IDL_GlobalData::PS_UnionElemDeclSeen:
-    return GTDEVEL("Illegal syntax following declarator in union element");
+    return ACE_TEXT ("Illegal syntax following declarator in union element");
   case IDL_GlobalData::PS_UnionBodySeen:
-    return GTDEVEL("Illegal syntax following union body statement(s)");
+    return ACE_TEXT ("Illegal syntax following union body statement(s)");
   case IDL_GlobalData::PS_EnumSeen:
-    return GTDEVEL("Illegal syntax or missing identifier following ENUM keyword");
+    return ACE_TEXT ("Illegal syntax or missing identifier following ENUM keyword");
   case IDL_GlobalData::PS_EnumIDSeen:
-    return GTDEVEL("Illegal syntax or missing '{' following enum identifier");
+    return ACE_TEXT ("Illegal syntax or missing '{' following enum identifier");
   case IDL_GlobalData::PS_EnumSqSeen:
-    return GTDEVEL("Illegal syntax following enum '{' opener");
+    return ACE_TEXT ("Illegal syntax following enum '{' opener");
   case IDL_GlobalData::PS_EnumQsSeen:
-    return GTDEVEL("Illegal syntax following enum '}' closer");
+    return ACE_TEXT ("Illegal syntax following enum '}' closer");
   case IDL_GlobalData::PS_EnumBodySeen:
-    return GTDEVEL("Illegal syntax following enum body statement(s)");
+    return ACE_TEXT ("Illegal syntax following enum body statement(s)");
   case IDL_GlobalData::PS_EnumCommaSeen:
-    return GTDEVEL("Illegal syntax or missing identifier following ',' in enum");
+    return ACE_TEXT ("Illegal syntax or missing identifier following ',' in enum");
   case IDL_GlobalData::PS_SequenceSeen:
-    return GTDEVEL("Illegal syntax or missing '<' following SEQUENCE keyword");
+    return ACE_TEXT ("Illegal syntax or missing '<' following SEQUENCE keyword");
   case IDL_GlobalData::PS_SequenceSqSeen:
-    return GTDEVEL("Illegal syntax or missing type following '<' in sequence");
+    return ACE_TEXT ("Illegal syntax or missing type following '<' in sequence");
   case IDL_GlobalData::PS_SequenceQsSeen:
-    return GTDEVEL("Illegal syntax following '>' in sequence");
+    return ACE_TEXT ("Illegal syntax following '>' in sequence");
   case IDL_GlobalData::PS_SequenceTypeSeen:
-    return GTDEVEL("Illegal syntax following sequence type declaration");
+    return ACE_TEXT ("Illegal syntax following sequence type declaration");
   case IDL_GlobalData::PS_SequenceCommaSeen:
     return
-      GTDEVEL("Illegal syntax of missing size expr following ',' in sequence");
+      ACE_TEXT ("Illegal syntax of missing size expr following ',' in sequence");
   case IDL_GlobalData::PS_SequenceExprSeen:
     return
-      GTDEVEL("Illegal syntax or missing '>' following size expr in sequence");
+      ACE_TEXT ("Illegal syntax or missing '>' following size expr in sequence");
   case IDL_GlobalData::PS_StringSeen:
-    return GTDEVEL("Illegal syntax or missing '<' following STRING keyword");
+    return ACE_TEXT ("Illegal syntax or missing '<' following STRING keyword");
   case IDL_GlobalData::PS_StringSqSeen:
-    return GTDEVEL("Illegal syntax or missing size expr following '<' in string");
+    return ACE_TEXT ("Illegal syntax or missing size expr following '<' in string");
   case IDL_GlobalData::PS_StringQsSeen:
-    return GTDEVEL("Illegal syntax following '>' in string");
+    return ACE_TEXT ("Illegal syntax following '>' in string");
   case IDL_GlobalData::PS_StringExprSeen:
-    return GTDEVEL("Illegal syntax or missing '>' after size expr in string");
+    return ACE_TEXT ("Illegal syntax or missing '>' after size expr in string");
   case IDL_GlobalData::PS_StringCompleted:
-    return GTDEVEL("Illegal syntax after string declaration");
+    return ACE_TEXT ("Illegal syntax after string declaration");
   case IDL_GlobalData::PS_ArrayIDSeen:
-    return GTDEVEL("Illegal syntax or missing dimensions after array identifier");
+    return ACE_TEXT ("Illegal syntax or missing dimensions after array identifier");
   case IDL_GlobalData::PS_ArrayCompleted:
-    return GTDEVEL("Illegal syntax after array declaration");
+    return ACE_TEXT ("Illegal syntax after array declaration");
   case IDL_GlobalData::PS_DimSqSeen:
     return
-    GTDEVEL("Illegal syntax or missing size expr after '[' in array declaration");
+    ACE_TEXT ("Illegal syntax or missing size expr after '[' in array declaration");
   case IDL_GlobalData::PS_DimQsSeen:
-    return GTDEVEL("Illegal syntax after ']' in array declaration");
+    return ACE_TEXT ("Illegal syntax after ']' in array declaration");
   case IDL_GlobalData::PS_DimExprSeen:
     return
-    GTDEVEL("Illegal syntax or missing ']' after size expr in array declaration");
+    ACE_TEXT ("Illegal syntax or missing ']' after size expr in array declaration");
   case IDL_GlobalData::PS_AttrROSeen:
-    return GTDEVEL("Illegal syntax after READONLY keyword");
+    return ACE_TEXT ("Illegal syntax after READONLY keyword");
   case IDL_GlobalData::PS_AttrSeen:
-    return GTDEVEL("Illegal syntax after ATTRIBUTE keyword");
+    return ACE_TEXT ("Illegal syntax after ATTRIBUTE keyword");
   case IDL_GlobalData::PS_AttrTypeSeen:
-    return GTDEVEL("Illegal syntax after type in attribute declaration");
+    return ACE_TEXT ("Illegal syntax after type in attribute declaration");
   case IDL_GlobalData::PS_AttrDeclsSeen:
-    return GTDEVEL("Illegal syntax after attribute declarators");
+    return ACE_TEXT ("Illegal syntax after attribute declarators");
   case IDL_GlobalData::PS_AttrCompleted:
-    return GTDEVEL("Illegal syntax after attribute declaration");
+    return ACE_TEXT ("Illegal syntax after attribute declaration");
   case IDL_GlobalData::PS_ExceptSeen:
     return
-      GTDEVEL("Illegal syntax or missing identifier after EXCEPTION keyword");
+      ACE_TEXT ("Illegal syntax or missing identifier after EXCEPTION keyword");
   case IDL_GlobalData::PS_ExceptIDSeen:
-    return GTDEVEL("Illegal syntax or missing '{' after exception identifier");
+    return ACE_TEXT ("Illegal syntax or missing '{' after exception identifier");
   case IDL_GlobalData::PS_ExceptSqSeen:
-    return GTDEVEL("Illegal syntax after exception '{' opener");
+    return ACE_TEXT ("Illegal syntax after exception '{' opener");
   case IDL_GlobalData::PS_ExceptQsSeen:
-    return GTDEVEL("Illegal syntax after exception '}' closer");
+    return ACE_TEXT ("Illegal syntax after exception '}' closer");
   case IDL_GlobalData::PS_ExceptBodySeen:
-    return GTDEVEL("Illegal syntax after exception body statement(s)");
+    return ACE_TEXT ("Illegal syntax after exception body statement(s)");
   case IDL_GlobalData::PS_OpAttrSeen:
-    return GTDEVEL("Illegal syntax or missing type after operation attribute");
+    return ACE_TEXT ("Illegal syntax or missing type after operation attribute");
   case IDL_GlobalData::PS_OpTypeSeen:
-    return GTDEVEL("Illegal syntax or missing identifier after operation type");
+    return ACE_TEXT ("Illegal syntax or missing identifier after operation type");
   case IDL_GlobalData::PS_OpIDSeen:
-    return GTDEVEL("Illegal syntax or missing '(' after operation identifier");
+    return ACE_TEXT ("Illegal syntax or missing '(' after operation identifier");
   case IDL_GlobalData::PS_OpParsCompleted:
-    return GTDEVEL("Illegal syntax after operation parameter list");
+    return ACE_TEXT ("Illegal syntax after operation parameter list");
   case IDL_GlobalData::PS_OpRaiseCompleted:
     return
-      GTDEVEL("Illegal syntax after optional RAISES in operation declaration");
+      ACE_TEXT ("Illegal syntax after optional RAISES in operation declaration");
   case IDL_GlobalData::PS_OpContextCompleted:
     return
-      GTDEVEL("Illegal syntax after optional CONTEXT in operation declaration");
+      ACE_TEXT ("Illegal syntax after optional CONTEXT in operation declaration");
   case IDL_GlobalData::PS_OpCompleted:
-    return GTDEVEL("Illegal syntax after operation declaration");
+    return ACE_TEXT ("Illegal syntax after operation declaration");
   case IDL_GlobalData::PS_OpSqSeen:
-    return GTDEVEL("Illegal syntax after operation parameter list '(' opener");
+    return ACE_TEXT ("Illegal syntax after operation parameter list '(' opener");
   case IDL_GlobalData::PS_OpQsSeen:
-    return GTDEVEL("Illegal syntax after operation parameter list ')' closer");
+    return ACE_TEXT ("Illegal syntax after operation parameter list ')' closer");
   case IDL_GlobalData::PS_OpParCommaSeen:
     return
-      GTDEVEL("Illegal syntax or missing direction in parameter declaration");
+      ACE_TEXT ("Illegal syntax or missing direction in parameter declaration");
   case IDL_GlobalData::PS_OpParDirSeen:
-    return GTDEVEL("Illegal syntax or missing type in parameter declaration");
+    return ACE_TEXT ("Illegal syntax or missing type in parameter declaration");
   case IDL_GlobalData::PS_OpParTypeSeen:
     return
-      GTDEVEL("Illegal syntax or missing declarator in parameter declaration");
+      ACE_TEXT ("Illegal syntax or missing declarator in parameter declaration");
   case IDL_GlobalData::PS_OpParDeclSeen:
-    return GTDEVEL("Illegal syntax following parameter declarator");
+    return ACE_TEXT ("Illegal syntax following parameter declarator");
   case IDL_GlobalData::PS_OpRaiseSeen:
-    return GTDEVEL("Illegal syntax or missing '(' after RAISES keyword");
+    return ACE_TEXT ("Illegal syntax or missing '(' after RAISES keyword");
   case IDL_GlobalData::PS_OpRaiseSqSeen:
-    return GTDEVEL("Illegal syntax after RAISES '(' opener");
+    return ACE_TEXT ("Illegal syntax after RAISES '(' opener");
   case IDL_GlobalData::PS_OpRaiseQsSeen:
-    return GTDEVEL("Illegal syntax after RAISES ')' closer");
+    return ACE_TEXT ("Illegal syntax after RAISES ')' closer");
   case IDL_GlobalData::PS_OpContextSeen:
-    return GTDEVEL("Illegal syntax or missing '(' after CONTEXT keyword");
+    return ACE_TEXT ("Illegal syntax or missing '(' after CONTEXT keyword");
   case IDL_GlobalData::PS_OpContextSqSeen:
-    return GTDEVEL("Illegal syntax after CONTEXT '(' opener");
+    return ACE_TEXT ("Illegal syntax after CONTEXT '(' opener");
   case IDL_GlobalData::PS_OpContextQsSeen:
-    return GTDEVEL("Illegal syntax after CONTEXT ')' closer");
+    return ACE_TEXT ("Illegal syntax after CONTEXT ')' closer");
   case IDL_GlobalData::PS_OpContextCommaSeen:
     return
-      GTDEVEL("Illegal syntax after ',' in CONTEXT in operation declaration");
+      ACE_TEXT ("Illegal syntax after ',' in CONTEXT in operation declaration");
   case IDL_GlobalData::PS_DeclsCommaSeen:
-    return GTDEVEL("Illegal syntax after ',' in declarators list");
+    return ACE_TEXT ("Illegal syntax after ',' in declarators list");
   case IDL_GlobalData::PS_DeclsDeclSeen:
-    return GTDEVEL("Illegal syntax after declarator in declarators list");
+    return ACE_TEXT ("Illegal syntax after declarator in declarators list");
 
   case IDL_GlobalData::PS_PragmaPrefixSyntax:
-    return GTDEVEL ("Illegal syntax for #pragma prefix");
+    return ACE_TEXT ("Illegal syntax for #pragma prefix");
   default:
-    return GTDEVEL("Some syntax error");
+    return ACE_TEXT ("Some syntax error");
   }
 }
 /*
@@ -558,7 +558,7 @@ UTL_Error::coercion_error(AST_Expression *v, AST_Expression::ExprType t)
 {
   idl_error_header(EIDL_COERCION_FAILURE, v->line(), v->file_name());
   v->dump(cerr);
-  cerr << GTDEVEL(" to ") << exprtype_to_string(t) << "\n";
+  cerr << ACE_TEXT (" to ") << exprtype_to_string(t) << "\n";
   idl_global->set_err_count(idl_global->err_count() + 1);
 }
 
@@ -582,7 +582,7 @@ UTL_Error::inheritance_fwd_error(UTL_ScopedName *n, AST_Interface *f)
   idl_error_header(EIDL_INHERIT_FWD_ERROR, f->line(), f->file_name());
   cerr << "interface ";
   n->dump(cerr);
-  cerr << GTDEVEL(" cannot inherit from forward declared interface ");
+  cerr << ACE_TEXT (" cannot inherit from forward declared interface ");
   f->local_name()->dump(cerr);
   cerr << "\n";
   idl_global->set_err_count(idl_global->err_count() + 1);
@@ -595,7 +595,7 @@ UTL_Error::inheritance_error(UTL_ScopedName *n, AST_Decl *d)
   idl_error_header(EIDL_CANT_INHERIT, idl_global->lineno(), idl_global->filename());
   /* cerr << " interface "; */
   n->dump(cerr);
-  cerr << GTDEVEL(" attempts to inherit from ");
+  cerr << ACE_TEXT (" attempts to inherit from ");
   d->name()->dump(cerr);
   cerr << "\n";
   idl_global->set_err_count(idl_global->err_count() + 1);
@@ -608,7 +608,7 @@ UTL_Error::abstract_inheritance_error (UTL_ScopedName *n)
   idl_error_header(EIDL_CANT_INHERIT, idl_global->lineno(), idl_global->filename());
   cerr << " abstract valuetype ";
   n->dump(cerr);
-  cerr << GTDEVEL(" attempts to inherit from nonabstract type\n");
+  cerr << ACE_TEXT (" attempts to inherit from nonabstract type\n");
   idl_global->set_err_count(idl_global->err_count() + 1);
 }
 
@@ -631,7 +631,7 @@ UTL_Error::constant_expected(UTL_ScopedName *n, AST_Decl *d)
 {
   idl_error_header(EIDL_CONSTANT_EXPECTED, d->line(), d->file_name());
   n->dump(cerr);
-  cerr << GTDEVEL(" bound to ");
+  cerr << ACE_TEXT (" bound to ");
   d->dump(cerr);
   cerr << "\n";
   idl_global->set_err_count(idl_global->err_count() + 1);
@@ -677,7 +677,7 @@ UTL_Error::redef_error (char *b, char *n)
   idl_error_header(EIDL_REDEF,
                    idl_global->lineno(),
                    idl_global->filename());
-  cerr << "\"" << b << GTDEVEL("\" and ") << "\"" << n << "\"\n";
+  cerr << "\"" << b << ACE_TEXT ("\" and ") << "\"" << n << "\"\n";
   idl_global->set_err_count(idl_global->err_count() + 1);
 }
 
@@ -688,7 +688,7 @@ UTL_Error::name_case_error (char *b, char *n)
   idl_error_header(EIDL_NAME_CASE_ERROR,
                    idl_global->lineno(),
                    idl_global->filename());
-  cerr << "\"" << b << GTDEVEL("\" and ") << "\"" << n << "\"\n";
+  cerr << "\"" << b << ACE_TEXT ("\" and ") << "\"" << n << "\"\n";
   idl_global->set_err_count(idl_global->err_count() + 1);
 }
 
@@ -698,7 +698,7 @@ UTL_Error::name_case_warning (char *b, char *n)
   idl_error_header(EIDL_NAME_CASE_WARNING,
                    idl_global->lineno(),
                    idl_global->filename());
-  cerr << "\"" << b << GTDEVEL("\" and ") << "\"" << n << "\"\n";
+  cerr << "\"" << b << ACE_TEXT ("\" and ") << "\"" << n << "\"\n";
 }
 
 // Report an ambiguous definition of a name
@@ -706,10 +706,10 @@ void
 UTL_Error::ambiguous(UTL_Scope *s, AST_Decl *l, AST_Decl *d)
 {
   idl_error_header(EIDL_AMBIGUOUS, d->line(), d->file_name());
-  cerr << GTDEVEL(" scope: ")
+  cerr << ACE_TEXT (" scope: ")
        << (ScopeAsDecl(s))->local_name()->get_string()
        << ", ";
-  cerr << GTDEVEL(" collision: ");
+  cerr << ACE_TEXT (" collision: ");
   d->name()->dump(cerr);
   cerr << " vs. ";
   l->name()->dump(cerr);
@@ -735,9 +735,9 @@ UTL_Error::fwd_decl_lookup(AST_Interface *d, UTL_ScopedName *n)
   idl_error_header(EIDL_FWD_DECL_LOOKUP,
                    idl_global->lineno(),
                    idl_global->filename());
-  cerr << GTDEVEL("trying to look up ");
+  cerr << ACE_TEXT ("trying to look up ");
   n->dump(cerr);
-  cerr << GTDEVEL(" in undefined forward declared interface ");
+  cerr << ACE_TEXT (" in undefined forward declared interface ");
   d->local_name()->dump(cerr);
   cerr << "\n";
   idl_global->set_err_count(idl_global->err_count() + 1);
@@ -763,7 +763,7 @@ UTL_Error::not_a_type(AST_Decl *d)
                    idl_global->lineno(),
                    idl_global->filename());
   if (d == NULL || d->name() == NULL)
-    cerr << GTDEVEL("unknown symbol");
+    cerr << ACE_TEXT ("unknown symbol");
   else
     d->name()->dump(cerr);
   cerr << "\n";

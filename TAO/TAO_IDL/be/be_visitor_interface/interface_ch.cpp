@@ -101,8 +101,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       os->gen_ifdef_macro (node->flat_name ());
 
       // now generate the class definition
-      *os << "class " << idl_global->stub_export_macro ()
-                << " " << node->local_name ();
+      *os << "class " << be_global->stub_export_macro ()
+          << " " << node->local_name ();
 
       if (node->n_inherits () > 0)  // node interface inherits from other
                                     // interfaces

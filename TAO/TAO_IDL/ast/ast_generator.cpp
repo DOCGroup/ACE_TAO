@@ -122,7 +122,7 @@ AST_Root *
 AST_Generator::create_root(UTL_ScopedName *n,
                            UTL_StrList *p)
 {
-    return new AST_Root(n, p);
+  return new AST_Root(n, p);
 }
 
 /*

@@ -55,6 +55,9 @@ public:
   // Return the most "unaliased" type node for the base type (see
   // be_type.h).
 
+  virtual void destroy (void);
+  // Cleanup function.
+
   // Visiting
   virtual int accept (be_visitor *visitor);
 

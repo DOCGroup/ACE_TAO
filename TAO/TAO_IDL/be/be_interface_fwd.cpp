@@ -25,34 +25,37 @@
 
 ACE_RCSID(be, be_interface_fwd, "$Id$")
 
-/*
- * BE_InterfaceFwd
- */
-
 be_interface_fwd::be_interface_fwd (void)
 {
-  this->size_type (be_decl::VARIABLE); // always the case
+  // Always the case.
+  this->size_type (be_decl::VARIABLE); 
 }
 
 be_interface_fwd::be_interface_fwd (AST_Interface *dummy,
-                                    UTL_ScopedName *n, UTL_StrList *p)
-  : AST_InterfaceFwd (dummy, n, p),
-    AST_Decl (AST_Decl::NT_interface_fwd, n, p)
+                                    UTL_ScopedName *n, 
+                                    UTL_StrList *p)
+  : AST_InterfaceFwd (dummy, 
+                      n, 
+                      p),
+    AST_Decl (AST_Decl::NT_interface_fwd, 
+              n, 
+              p)
 {
-  this->size_type (be_decl::VARIABLE); // always the case
+  // Always the case.
+  this->size_type (be_decl::VARIABLE); 
 }
 
 be_interface_fwd::~be_interface_fwd (void)
 {
 }
 
-// generate the var definition
+// Generate the var definition.
 int
 be_interface_fwd::gen_var_defn (char *)
 {
-  TAO_OutStream *ch; // output stream
-  TAO_NL  nl;        // end line
-  char namebuf [NAMEBUFSIZE];  // names
+  TAO_OutStream *ch = 0;
+  TAO_NL nl;      
+  char namebuf [NAMEBUFSIZE]; 
 
   ACE_OS::memset (namebuf, 
                   '\0', 
@@ -62,68 +65,67 @@ be_interface_fwd::gen_var_defn (char *)
                    "%s_var", 
                    this->local_name ()->get_string ());
 
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  ch = tao_cg->client_header ();
 
-  ch = cg->client_header ();
-
-  // generate the var definition (always in the client header).
+  // Generate the var definition (always in the client header).
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
-  ch->indent (); // start with whatever was our current indent level
-  *ch << "class " << idl_global->stub_export_macro ()
+  // Start with whatever was our current indent level.
+  ch->indent (); 
+  *ch << "class " << be_global->stub_export_macro ()
       << " " << namebuf << " : public TAO_Base_var" << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent ();
 
-  // default constr
+  // Default constructor.
   *ch << namebuf << " (void); // default constructor" << nl;
   *ch << namebuf << " (" << this->local_name () << "_ptr p)" 
       << " : ptr_ (p) {} " << nl;
 
-  // copy constructor
+  // Copy constructor.
   *ch << namebuf << " (const " << namebuf <<
     " &); // copy constructor" << nl;
 
-  // destructor
+  // Destructor.
   *ch << "~" << namebuf << " (void); // destructor" << nl;
   *ch << nl;
 
-  // assignment operator from a pointer
+  // Assignment operator from a pointer.
   *ch << namebuf << " &operator= (" << this->local_name () 
       << "_ptr);" << nl;
 
-  // assignment from _var
+  // Assignment from _var.
   *ch << namebuf << " &operator= (const " << namebuf <<
     " &);" << nl;
 
-  // arrow operator
+  // Arrow operator.
   *ch << this->local_name () << "_ptr operator-> (void) const;" << nl;
 
   *ch << nl;
 
-  // other extra types (cast operators, [] operator, and others)
+  // Other extra types (cast operators, [] operator, and others).
   *ch << "operator const " << this->local_name () 
       << "_ptr &() const;" << nl;
   *ch << "operator " << this->local_name () << "_ptr &();" << nl;
 
   *ch << "// in, inout, out, _retn " << nl;
-  // the return types of in, out, inout, and _retn are based on the parameter
-  // passing rules and the base type
+  // The return types of in, out, inout, and _retn are based on the parameter
+  // passing rules and the base type.
   *ch << this->local_name () << "_ptr in (void) const;" << nl;
   *ch << this->local_name () << "_ptr &inout (void);" << nl;
   *ch << this->local_name () << "_ptr &out (void);" << nl;
   *ch << this->local_name () << "_ptr _retn (void);" << nl;
 
-  // generate an additional member function that returns the underlying pointer
+  // Generate an additional member function that returns the 
+  // underlying pointer.
   *ch << this->local_name () << "_ptr ptr (void) const;\n";
 
   *ch << "\n";
   ch->decr_indent ();
 
-  // private
+  // Private.
   *ch << "private:\n";
   ch->incr_indent ();
   *ch << this->local_name () << "_ptr ptr_;" << nl;
@@ -137,16 +139,16 @@ be_interface_fwd::gen_var_defn (char *)
   return 0;
 }
 
-// implementation of the _var class. All of these get generated in the inline
-// file
+// Implementation of the _var class. All of these get generated in the inline
+// file.
 int
 be_interface_fwd::gen_var_impl (char *, 
                                 char *)
 {
-  TAO_OutStream *ci; // output stream
-  TAO_NL  nl;        // end line
-  char fname [NAMEBUFSIZE];  // to hold the full and
-  char lname [NAMEBUFSIZE];  // local _var names
+  TAO_OutStream *ci = 0;
+  TAO_NL nl;
+  char fname [NAMEBUFSIZE];  // To hold the full and
+  char lname [NAMEBUFSIZE];  // local _var names.
 
   ACE_OS::memset (fname, 
                   '\0', 
@@ -164,30 +166,28 @@ be_interface_fwd::gen_var_impl (char *,
                    "%s_var", 
                    this->local_name ()->get_string ());
 
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  ci = tao_cg->client_inline ();
 
-  ci = cg->client_inline ();
-
-  // generate the var implementation in the inline file
+  // Generate the var implementation in the inline file
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
-  ci->indent (); // start with whatever was our current indent level
+  // Start with whatever was our current indent level.
+  ci->indent ();
 
   *ci << "// *************************************************************"
       << nl;
   *ci << "// Inline operations for class " << fname << nl;
   *ci << "// *************************************************************\n\n";
 
-  // default constr
+  // Default constructor.
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname <<
     " (void) // default constructor" << nl;
   *ci << "  " << ": ptr_ (" << this->name () << "::_nil ())" << nl;
   *ci << "{}\n\n";
 
-  // the additional ptr () member function. This member function must be
+  // The additional ptr () member function. This member function must be
   // defined before the remaining member functions including the copy
   // constructor because this inline function is used elsewhere. Hence to make
   // inlining of this function possible, we must define it before its use.
@@ -200,7 +200,7 @@ be_interface_fwd::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // copy constructor
+  // Copy constructor.
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const " << fname <<
@@ -209,7 +209,7 @@ be_interface_fwd::gen_var_impl (char *,
   *ci << "    ptr_ (" << this->local_name () << "::_duplicate (p.ptr ()))" << nl;
   *ci << "{}\n\n";
 
-  // destructor
+  // Destructor.
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::~" << lname << " (void) // destructor" << nl;
@@ -219,7 +219,7 @@ be_interface_fwd::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // assignment operator
+  // Assignment operator.
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
   *ci << fname << "::operator= (" << this->name () <<
@@ -232,7 +232,7 @@ be_interface_fwd::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // assignment operator from _var
+  // Assignment operator from _var.
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
   *ci << fname << "::operator= (const " << fname <<
@@ -251,7 +251,7 @@ be_interface_fwd::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // other extra methods - cast operator ()
+  // Other extra methods - cast operator ().
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
   *ci << fname << "::operator const " << this->name () <<
@@ -327,13 +327,13 @@ be_interface_fwd::gen_var_impl (char *,
   return 0;
 }
 
-// generate the _out definition
+// Generate the _out definition.
 int
 be_interface_fwd::gen_out_defn (char *)
 {
-  TAO_OutStream *ch; // output stream
-  TAO_NL  nl;        // end line
-  char namebuf [NAMEBUFSIZE];  // to hold the _out name
+  TAO_OutStream *ch;
+  TAO_NL  nl;
+  char namebuf [NAMEBUFSIZE];
 
   ACE_OS::memset (namebuf, 
                   '\0', 
@@ -343,15 +343,12 @@ be_interface_fwd::gen_out_defn (char *)
                    "%s_out", 
                    this->local_name ()->get_string ());
 
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  ch = tao_cg->client_header ();
 
-  ch = cg->client_header ();
+  // Generate the out definition (always in the client header)
+  ch->indent (); // start with whatever was our current indent level.
 
-  // generate the out definition (always in the client header)
-  ch->indent (); // start with whatever was our current indent level
-
-  *ch << "class " << idl_global->stub_export_macro ()
+  *ch << "class " << be_global->stub_export_macro ()
       << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
@@ -359,25 +356,32 @@ be_interface_fwd::gen_out_defn (char *)
 
   // No default constructor
 
-  // constructor from a pointer
+  // Constructor from a pointer.
   *ch << namebuf << " (" << this->local_name () << "_ptr &);" << nl;
-  // constructor from a _var &
+
+  // Constructor from a _var &.
   *ch << namebuf << " (" << this->local_name () << "_var &);" << nl;
-  // constructor from a _out &
+
+  // Constructor from a _out &.
   *ch << namebuf << " (const " << namebuf << " &);" << nl;
-  // assignment operator from a _out &
+
+  // Assignment operator from a _out &.
   *ch << namebuf << " &operator= (const " << namebuf << " &);" << nl;
-  // assignment operator from a pointer &, cast operator, ptr fn, operator
-  // -> and any other extra operators
-  // only interface allows assignment from var &
+
+  // Assignment operator from a pointer &, cast operator, ptr fn, operator
+  // -> and any other extra operators.
+  // Only interface allows assignment from var &.
   *ch << namebuf << " &operator= (const " 
       << this->local_name () << "_var &);" << nl;
   *ch << namebuf << " &operator= (" 
       << this->local_name () << "_ptr);" << nl;
+
   // cast
   *ch << "operator " << this->local_name () << "_ptr &();" << nl;
+
   // ptr fn
   *ch << this->local_name () << "_ptr &ptr (void);" << nl;
+
   // operator ->
   *ch << this->local_name () << "_ptr operator-> (void);" << nl;
 
@@ -396,10 +400,10 @@ be_interface_fwd::gen_out_defn (char *)
 int
 be_interface_fwd::gen_out_impl (char *, char *)
 {
-  TAO_OutStream *ci; // output stream
-  TAO_NL  nl;        // end line
-  char fname [NAMEBUFSIZE];  // to hold the full and
-  char lname [NAMEBUFSIZE];  // local _out names
+  TAO_OutStream *ci = 0;
+  TAO_NL nl;
+  char fname [NAMEBUFSIZE];  // To hold the full and
+  char lname [NAMEBUFSIZE];  // local _out names.
 
   ACE_OS::memset (fname, 
                   '\0', 
@@ -417,23 +421,21 @@ be_interface_fwd::gen_out_impl (char *, char *)
                    "%s_out", 
                    this->local_name ()->get_string ());
 
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  ci = tao_cg->client_inline ();
 
-  ci = cg->client_inline ();
-
-  // generate the var implementation in the inline file
+  // Generate the var implementation in the inline file
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
-  ci->indent (); // start with whatever was our current indent level
+  // Start with whatever was our current indent level.
+  ci->indent ();
 
   *ci << "// *************************************************************"
       << nl;
   *ci << "// Inline operations for class " << fname << nl;
   *ci << "// *************************************************************\n\n";
 
-      // constr from a _ptr
+      // Constructor from a _ptr.
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" 
@@ -445,7 +447,7 @@ be_interface_fwd::gen_out_impl (char *, char *)
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // constructor from _var &
+  // Constructor from _var &.
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << this->name () <<
@@ -458,7 +460,7 @@ be_interface_fwd::gen_out_impl (char *, char *)
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // copy constructor
+  // Copy constructor.
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const " << fname <<
@@ -467,7 +469,7 @@ be_interface_fwd::gen_out_impl (char *, char *)
       << "&,p).ptr_)" << nl;
   *ci << "{}\n\n";
 
-      // assignment operator from _out &
+  // Assignment operator from _out &.
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
   *ci << fname << "::operator= (const " << fname <<
@@ -479,7 +481,7 @@ be_interface_fwd::gen_out_impl (char *, char *)
   ci->decr_indent ();
   *ci << "}\n\n";
 
-      // assignment operator from _var
+  // Assignment operator from _var.
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
   *ci << fname << "::operator= (const " << this->name () <<
@@ -492,7 +494,7 @@ be_interface_fwd::gen_out_impl (char *, char *)
   ci->decr_indent ();
   *ci << "}\n\n";
 
-      // assignment operator from _ptr
+  // Assignment operator from _ptr.
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
   *ci << fname << "::operator= (" << this->name () <<
@@ -504,7 +506,7 @@ be_interface_fwd::gen_out_impl (char *, char *)
   ci->decr_indent ();
   *ci << "}\n\n";
 
-      // other extra methods - cast operator ()
+  // Other extra methods - cast operator ().
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
   *ci << fname << "::operator " << this->name () <<
@@ -525,7 +527,7 @@ be_interface_fwd::gen_out_impl (char *, char *)
   ci->decr_indent ();
   *ci << "}\n\n";
 
-      // operator->
+  // operator->
   ci->indent ();
   *ci << "ACE_INLINE " << this->name () << "_ptr " << nl;
   *ci << fname << "::operator-> (void)" << nl;
@@ -536,6 +538,12 @@ be_interface_fwd::gen_out_impl (char *, char *)
   *ci << "}\n\n";
 
   return 0;
+}
+
+void
+be_interface_fwd::destroy (void)
+{
+  // Do nothing.
 }
 
 int

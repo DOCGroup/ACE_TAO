@@ -84,7 +84,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "utl_scoped_name.h"
 
 
-class   AST_Operation : public virtual AST_Decl, public virtual UTL_Scope
+class TAO_IDL_FE_Export AST_Operation : public virtual AST_Decl, 
+                                        public virtual UTL_Scope
 {
 public:
   // Define enum with flags for operation attributes
@@ -124,6 +125,8 @@ public:
   // Method to add exceptions
   UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
 
+  // Cleanup function.
+  virtual void destroy (void);
 
 private:
   // Data

@@ -70,31 +70,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // fe_private.hh - Defines data which is private to the FE but
 //                 which must be accessible throughout the FE
 
-/*
-** DEPENDENCIES: NONE
-**
-** USE: Included from source files
-*/
-
-/*
- * FE includes
- */
+// FE includes
 
 #include        "fe_interface_header.h"// class FE_InterfaceHeader
 #include        "fe_declarator.h"       // class FE_Declarator
 
-/*
- * FE Operations
- */
+// FE Operations
 
-// define an entry for the C++ keyword and its mapping
-struct TAO_IDL_CPP_Keyword_Entry
+// Define an entry for the C++ keyword and its mapping.
+struct TAO_IDL_FE_Export TAO_IDL_CPP_Keyword_Entry
 {
   const char *keyword_;
   const char *mapping_;
 };
 
-class TAO_IDL_CPP_Keyword_Table
+class TAO_IDL_FE_Export TAO_IDL_CPP_Keyword_Table
 {
   // = TITLE
   //   Define a table that provides the lookup for the C++

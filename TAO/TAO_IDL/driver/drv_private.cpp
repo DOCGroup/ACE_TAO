@@ -62,13 +62,12 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-// drv_global.cc - Global variables for IDL compiler driver program
+// Global variables for IDL compiler driver program
 
 #include "idl.h"
 #include "idl_extern.h"
-
 #include "drv_private.h"
 
 ACE_RCSID(driver, drv_private, "$Id$")
@@ -82,4 +81,3 @@ ACE_RCSID(driver, drv_private, "$Id$")
 const char     *DRV_files[NFILES];
 long            DRV_nfiles = 0;
 long            DRV_file_index = -1;
-IDL_GlobalData *idl_global = NULL;

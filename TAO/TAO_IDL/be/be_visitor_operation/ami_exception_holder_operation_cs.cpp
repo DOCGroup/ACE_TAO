@@ -102,7 +102,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
     }
   *os << node->local_name () << "(";
 
-  if (!idl_global->exception_support ())
+  if (!be_global->exception_support ())
     *os << "CORBA::Environment &ACE_TRY_ENV";
 
   *os << ")" << be_uidt;
@@ -188,7 +188,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
       << "    // Could not demarshal the exception id, raise an local" << be_nl
       << "    // CORBA::MARSHAL" << be_nl;
 
-  if (idl_global->use_raw_throw ())
+  if (be_global->use_raw_throw ())
     {
       *os << "    throw CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," << be_nl;
       *os << "                          CORBA::COMPLETED_YES);" << be_nl;
@@ -207,7 +207,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
       << "CORBA::ULong completion = 0;" << be_nl
       << "if ((_tao_in >> minor) == 0 ||" << be_nl
       << "  (_tao_in >> completion) == 0)" << be_idt_nl;
-  if (idl_global->use_raw_throw ())
+  if (be_global->use_raw_throw ())
     {
       *os << "    throw CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," << be_idt_nl;
       *os << "                          CORBA::COMPLETED_MAYBE);" 
@@ -270,7 +270,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
 
           << "if (exception == 0)" << be_idt_nl;
 
-      if (idl_global->use_raw_throw ())
+      if (be_global->use_raw_throw ())
         {
           *os << "throw CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE," << be_nl;
           *os << "                        CORBA::COMPLETED_YES);" 
@@ -306,7 +306,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
           << be_nl
           << "//    completed." << be_nl;
 
-      if (idl_global->use_raw_throw ())
+      if (be_global->use_raw_throw ())
         {
           *os << "throw CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE," << be_nl;
           *os << "                      CORBA::COMPLETED_YES);" 

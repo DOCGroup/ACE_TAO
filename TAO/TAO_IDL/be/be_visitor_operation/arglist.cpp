@@ -61,7 +61,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     }
 
   // generate the CORBA::Environment parameter for the alternative mapping
-  if (!idl_global->exception_support ())
+  if (!be_global->exception_support ())
     {
       // if the operation node has parameters, then we need to insert a comma
       if (node->argument_count () > 0)

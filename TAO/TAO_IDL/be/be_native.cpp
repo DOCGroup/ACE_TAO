@@ -23,18 +23,17 @@
 ACE_RCSID(be, be_native, "$Id$")
 
 
-// be_native: New IDL type added by the POA spec
-/*
- * Constructor(s)
- */
 be_native::be_native (void)
 {
 }
 
 be_native::be_native (UTL_ScopedName *n,
                       UTL_StrList *p)
-  : AST_Native (n, p),
-    AST_Decl (AST_Decl::NT_native, n, p)
+  : AST_Native (n, 
+                p),
+    AST_Decl (AST_Decl::NT_native, 
+              n, 
+              p)
 {
 }
 

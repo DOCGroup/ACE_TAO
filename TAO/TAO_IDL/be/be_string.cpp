@@ -19,19 +19,16 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 
 ACE_RCSID(be, be_string, "$Id$")
 
-
-/*
- * BE_String
- */
 be_string::be_string (void)
 {
-  this->size_type (be_decl::VARIABLE); // always the case
+  // Always the case.
+  this->size_type (be_decl::VARIABLE);
 }
 
 be_string::be_string (AST_Expression *v)
@@ -44,7 +41,8 @@ be_string::be_string (AST_Expression *v)
                                   NULL),
               NULL)
 {
-  this->size_type (be_decl::VARIABLE); // always the case
+  // Always the case.
+  this->size_type (be_decl::VARIABLE);
 }
 
 be_string::be_string (AST_Expression *v, 
@@ -66,25 +64,47 @@ be_string::be_string (AST_Expression *v,
                                       NULL),
               NULL)
 {
-  this->size_type (be_decl::VARIABLE); // always the case
+  // Always the case.
+  this->size_type (be_decl::VARIABLE);
 }
 
-// overriden method
+// Overriden method.
 void
 be_string::compute_tc_name (void)
 {
-  // start with the head as the CORBA namespace
-  this->tc_name_ = new UTL_ScopedName (new Identifier ("CORBA", 1, 0, I_FALSE),
-                                       NULL);
+  // Start with the head as the CORBA namespace.
+  Identifier *corba_id = 0;
+  ACE_NEW (corba_id,
+           Identifier ("CORBA", 
+                       1, 
+                       0, 
+                       I_FALSE));
 
-  this->tc_name_->nconc (new UTL_ScopedName (new Identifier ("_tc_string", 1, 0,
-                                                             I_FALSE), NULL));
+  ACE_NEW (this->tc_name_,
+           UTL_ScopedName (corba_id,
+                           0));
+
+  Identifier *id = 0;
+  ACE_NEW (id,
+           Identifier ("_tc_string",
+                       1,
+                       0,
+                       I_FALSE));
+
+  UTL_ScopedName *conc_name = 0;
+  ACE_NEW (conc_name,
+           UTL_ScopedName (id,
+                           0));
+
+  this->tc_name_->nconc (conc_name);
 }
 
 UTL_ScopedName *
-be_string::compute_tc_name (const char *prefix, const char *suffix)
+be_string::compute_tc_name (const char *prefix, 
+                            const char *suffix)
 {
-  return be_type::compute_tc_name (prefix, suffix);
+  return be_type::compute_tc_name (prefix, 
+                                   suffix);
 }
 
 int
@@ -93,6 +113,6 @@ be_string::accept (be_visitor *visitor)
   return visitor->visit_string (this);
 }
 
-// Narrowing
+// Narrowing.
 IMPL_NARROW_METHODS2 (be_string, AST_String, be_type)
 IMPL_NARROW_FROM_DECL (be_string)

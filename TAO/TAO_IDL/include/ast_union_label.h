@@ -77,7 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: included from ast.hh
 */
 
-class   AST_UnionLabel
+class TAO_IDL_FE_Export AST_UnionLabel
 {
 public:
   // Define kind of label

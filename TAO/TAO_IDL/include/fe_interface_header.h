@@ -82,7 +82,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from fe.hh
 */
 
-class   FE_InterfaceHeader
+class TAO_IDL_FE_Export FE_InterfaceHeader
 {
 public:
   // Operations

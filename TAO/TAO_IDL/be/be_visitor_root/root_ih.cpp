@@ -42,14 +42,16 @@ int
 be_visitor_root_ih::init (void)
 {
   // open the file
-  if (tao_cg->start_implementation_header (idl_global->be_get_implementation_hdr_fname ())
+  if (tao_cg->start_implementation_header (
+          be_global->be_get_implementation_hdr_fname ()
+        )
       == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_ih::init - "
                          "Error :%p: Unable to open implementation header file : %s\n",
                          "start_implementation_header",
-                         idl_global->be_get_implementation_hdr_fname ()),
+                         be_global->be_get_implementation_hdr_fname ()),
                         -1);
     }
 

@@ -62,22 +62,28 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _DRV_PRIVATE_DRV_PRIVATE_HH
 #define _DRV_PRIVATE_DRV_PRIVATE_HH
 
-// drv_private.hh - Define data and functions which are private to
-//                  the DRV but which must be accessible througout the DRV
+// Define data and functions which are private to
+// the DRV but which must be accessible throughout the DRV
 
 // Data
 
-extern const char       *DRV_files[];   // All files to be processed
-extern long             DRV_nfiles;     // How many are there?
-extern long             DRV_file_index; // What's the file I am responsible
-                                        // for?
+extern const char *DRV_files[];   
+// All files to be processed
+
+extern long DRV_nfiles;     
+// How many are there?
+
+extern long DRV_file_index;
+// What's the file I am responsible for?
 
 // Functions
-extern  void            DRV_drive(const char *);// Compiler driver for single file
+
+extern void DRV_drive (const char *);
+// Compiler driver for single file
 
 #endif  // _DRV_PRIVATE_DRV_PRIVATE_HH

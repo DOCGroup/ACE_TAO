@@ -831,7 +831,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
 
   // Forward Request exception needs to be taken care off here.
   // For now we dont bother about it.
-  if (idl_global->use_raw_throw ())
+  if (be_global->use_raw_throw ())
     *os << "throw;" << be_uidt_nl;
   else
     *os << "ACE_RE_THROW;" << be_uidt_nl;
@@ -862,14 +862,14 @@ be_visitor_operation_cs::gen_raise_exception (be_type *bt,
 
   if (this->void_return_type (bt))
     {
-      if (idl_global->use_raw_throw ())
+      if (be_global->use_raw_throw ())
         *os << "throw ";
       else
         *os << "ACE_THROW (";
 
       *os << excep << " (" << completion_status << ")";
 
-      if (idl_global->use_raw_throw ())
+      if (be_global->use_raw_throw ())
         *os << ";\n";
       else
         *os << ");\n";
@@ -900,7 +900,7 @@ be_visitor_operation_cs::gen_raise_interceptor_exception (be_type *bt,
 
   if (this->void_return_type (bt))
     {
-      if (idl_global->use_raw_throw ())
+      if (be_global->use_raw_throw ())
         *os << "throw ";
       else
         *os << "TAO_INTERCEPTOR_THROW (";
@@ -908,7 +908,7 @@ be_visitor_operation_cs::gen_raise_interceptor_exception (be_type *bt,
       *os << excep << "("
           << completion_status << ")";
 
-      if (idl_global->use_raw_throw ())
+      if (be_global->use_raw_throw ())
         *os << ";";
       else
         *os << ");";

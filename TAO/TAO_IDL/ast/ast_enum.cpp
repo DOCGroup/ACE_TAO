@@ -262,6 +262,11 @@ AST_Enum::dump(ostream &o)
   o << "}";
 }
 
+void
+AST_Enum::destroy (void)
+{
+}
+
 /*
  * Narrowing methods
  */

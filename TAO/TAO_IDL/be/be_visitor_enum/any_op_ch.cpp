@@ -51,10 +51,10 @@ be_visitor_enum_any_op_ch::visit_enum (be_enum *node)
 
   // generate the Any <<= and >>= operators
   os->indent ();
-  *os << idl_global->stub_export_macro () << " void"
+  *os << be_global->stub_export_macro () << " void"
       << " operator<<= (CORBA::Any &, " << node->name ()
       << ");" << be_nl;
-  *os << idl_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, "
       << node->name () << " &);\n";
 

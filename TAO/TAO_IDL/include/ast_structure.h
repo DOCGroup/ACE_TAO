@@ -84,8 +84,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-class   AST_Structure : public virtual AST_ConcreteType,
-                        public virtual UTL_Scope
+class TAO_IDL_FE_Export AST_Structure : public virtual AST_ConcreteType,
+                                        public virtual UTL_Scope
 {
 public:
   // Operations
@@ -119,6 +119,9 @@ public:
 
   // AST Dumping
   virtual void          dump(ostream &o);
+
+  // Cleanup function.
+  virtual void destroy (void);
 
 private:
   friend int tao_yyparse();

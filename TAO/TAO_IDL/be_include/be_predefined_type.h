@@ -71,7 +71,7 @@ protected:
   virtual void compute_repoID (void);
   // The object and TypeCode repository IDs have a mandatory omg.org
   // prefix, but the default compute_repoID() uses the #pragma's to
-  // obtain preffixes.
+  // obtain prefixes.
 };
 
 #endif

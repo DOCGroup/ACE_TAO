@@ -19,16 +19,12 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 
 ACE_RCSID(be, be_union_branch, "$Id$")
 
-
-/*
- * BE_UnionBranch
- */
 be_union_branch::be_union_branch (void)
 {
 }
@@ -37,28 +33,40 @@ be_union_branch::be_union_branch (UTL_LabelList *ll,
                                   AST_Type *ft,
                                   UTL_ScopedName *n,
                                   UTL_StrList *p)
-  : AST_UnionBranch (ll, ft, n, p),
-    AST_Field (AST_Decl::NT_union_branch, ft, n, p),
-    AST_Decl (AST_Decl::NT_union_branch, n, p),
-    COMMON_Base (ft->is_local (), ft->is_abstract ())
+  : AST_UnionBranch (ll, 
+                     ft, 
+                     n, 
+                     p),
+    AST_Field (AST_Decl::NT_union_branch, 
+               ft, 
+               n, 
+               p),
+    AST_Decl (AST_Decl::NT_union_branch, 
+              n, 
+              p),
+    COMMON_Base (ft->is_local (), 
+                 ft->is_abstract ())
 {
 }
 
-// compute the size type of the node in question
+// Compute the size type of the node in question.
 int
 be_union_branch::compute_size_type (void)
 {
   be_type *type = be_type::narrow_from_decl (this->field_type ());
-  if (!type)
+
+  if (type == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_field::compute_size_type - "
-                         "bad field type\n"), -1);
+                         "bad field type\n"), 
+                        -1);
     }
 
-  // our size type is the same as our type
-  this->size_type (type->size_type ()); // as a side effect will also update
-                                        // the size type of parent
+  // Our size type is the same as our type.
+  // As a side effect will also update the size type of parent.
+  this->size_type (type->size_type ());
+
   return 0;
 }
 
@@ -66,6 +74,7 @@ int
 be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
 {
   AST_Expression *e = this->label (index)->label_val ();
+
   if (e->ec () != AST_Expression::EC_symbol)
     {
       // Easy, just a number...
@@ -76,13 +85,19 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
   // If the enum is not in the global scope we have to prefix it.
   be_union *u =
     be_union::narrow_from_scope (this->defined_in ());
+
   if (u == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   be_type* dt =
     be_type::narrow_from_decl (u->disc_type ());
+
   if (dt == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // Check if discriminator is a typedef of an integer. If so, and the
   // first IF block in this function didn't catch it, then we
@@ -99,6 +114,7 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
   // scope, then it is easy to generate the enum values....
   be_scope* scope =
     be_scope::narrow_from_scope (dt->defined_in ());
+
   if (scope == 0)
     {
       *os << e->n ();
@@ -107,10 +123,10 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
 
   // But if it was generated inside a module or something similar then
   // we must prefix the enum value with something...
-  be_decl* decl =
-    scope->decl ();
+  be_decl* decl = scope->decl ();
 
   *os << decl->full_name () << "::" << e->n ()->last_component ();
+
   return 0;
 }
 
@@ -164,15 +180,16 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
         }
       case AST_Expression::EV_longlong:
       case AST_Expression::EV_ulonglong:
-        // unimplemented
+        // Unimplemented.
       default:
-        // error caught earlier.
+        // Error caught earlier.
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_union_branch::"
                            "gen_default_label_value - "
                            "bad or unimplemented discriminant type\n"),
                           -1);
     }
+
   return 0;
 }
 
@@ -182,6 +199,6 @@ be_union_branch::accept (be_visitor *visitor)
   return visitor->visit_union_branch (this);
 }
 
-// Narrowing
+// Narrowing.
 IMPL_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl)
 IMPL_NARROW_FROM_DECL (be_union_branch)

@@ -78,7 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 */
 
 // An expression (and maybe its value, if computed)
-class   AST_Expression {
+class TAO_IDL_FE_Export AST_Expression 
+{
 public:
   // Enum to define all the different operators to combine expressions
   enum ExprComb {

@@ -109,7 +109,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
       // now generate the class definition
       os->indent ();
-      *os << "class " << idl_global->stub_export_macro ()
+      *os << "class " << be_global->stub_export_macro ()
                 << " " << node->local_name ();
 
       // node valuetype inherits from other valuetypes (OMG 20.17.9)

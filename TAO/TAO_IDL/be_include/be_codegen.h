@@ -21,6 +21,7 @@
 
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
+#include "TAO_IDL_BE_Export.h"
 
 #define NAMEBUFSIZE 1024
 // maximum length of static buffers used to store names
@@ -31,7 +32,7 @@ class be_visitor_context;
 class be_visitor;
 class be_decl;
 
-class TAO_CodeGen
+class TAO_IDL_BE_Export TAO_CodeGen
 {
   // = TITLE
   //   TAO_CodeGen
@@ -679,6 +680,7 @@ private:
 typedef ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CODEGEN;
 // Singleton instance of the BE code generator
 
-extern TAO_CodeGen *tao_cg; // code generator instance which is used everywhere
+extern TAO_IDL_BE_Export TAO_CodeGen *tao_cg; 
+// Code generator instance which is used everywhere.
 
 #endif /* if !defined */

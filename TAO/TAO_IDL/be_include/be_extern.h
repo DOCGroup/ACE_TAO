@@ -1,5 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
-
 /*
 
 COPYRIGHT
@@ -64,61 +64,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#ifndef _DRV_LINK_DRV_LINK_HH
-#define _DRV_LINK_DRV_LINK_HH
+#ifndef _BE_EXTERN_BE_EXTERN_HH
+#define _BE_EXTERN_BE_EXTERN_HH
 
-// drv_link.hh - Define data and functions which are used to
-//               link in the back end functions
+#include "TAO_IDL_BE_Export.h"
 
-/*
- * Front end interface
- */
+// be_extern.h - Defines the BE part of the BE<->FE protocol
 
-class File;
-typedef void (* DRV_PF_FE_init_stage1)();
-typedef void (* DRV_PF_FE_init_stage2)();
-typedef int  (* DRV_PF_FE_yyparse)();
-typedef void (* DRV_PF_FE_set_yyin)(File *);
+extern TAO_IDL_BE_Export BE_GlobalData *be_global;
 
-class UTL_Error;
-class UTL_Indenter;
-class UTL_String;
-typedef UTL_Error * (* DRV_PF_FE_new_UTL_Error)();
-typedef UTL_Indenter * (* DRV_PF_FE_new_UTL_Indenter)();
-typedef UTL_String * (* DRV_PF_FE_new_UTL_String)(char *);
+// Functions:
 
-extern DRV_PF_FE_init_stage1    DRV_FE_init_stage1;
-extern DRV_PF_FE_init_stage2    DRV_FE_init_stage2;
-extern DRV_PF_FE_yyparse        DRV_FE_yyparse;
-extern DRV_PF_FE_set_yyin       DRV_FE_set_yyin;
+extern TAO_IDL_BE_Export void BE_produce (void);
+extern TAO_IDL_BE_Export void BE_abort (void);
 
-extern DRV_PF_FE_new_UTL_Error  DRV_FE_new_UTL_Error;
-extern DRV_PF_FE_new_UTL_Indenter DRV_FE_new_UTL_Indenter;
-extern DRV_PF_FE_new_UTL_String DRV_FE_new_UTL_String;
-
-/*
- * Back end interface
- */
-
-class AST_Generator;
-typedef AST_Generator * (* DRV_PF_BE_init)();
-typedef void (* DRV_PF_BE_produce)();
-typedef void (* DRV_PF_BE_abort)();
-typedef void (* DRV_PF_BE_prep_arg)(char *, idl_bool);
-typedef void (* DRV_PF_BE_version)();
-
-extern DRV_PF_BE_init           DRV_BE_init;
-extern DRV_PF_BE_produce        DRV_BE_produce;
-extern DRV_PF_BE_abort          DRV_BE_abort;
-extern DRV_PF_BE_prep_arg       DRV_BE_prep_arg;
-extern DRV_PF_BE_version        DRV_BE_version;
-
-// Functions
-
-extern void DRV_FE_open();
-extern void DRV_FE_close();
-
-extern void DRV_BE_open();
-extern void DRV_BE_close();
-
-#endif  // _DRV_LINK_DRV_LINK_HH
+#endif           // _BE_EXTERN_BE_EXTERN_HH

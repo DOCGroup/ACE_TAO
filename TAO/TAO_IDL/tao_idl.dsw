@@ -11,11 +11,32 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_BE_DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TAO_IDL Compiler Static"=.\tao_idl_static.dsp - Package Owner=<4>
+Project: "TAO_IDL_BE_DLL"=.\TAO_IDL_BE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_FE_DLL"=.\TAO_IDL_FE_DLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

@@ -55,7 +55,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
 
   // Generate the stub factory function pointer declaration the interface is
   // not locality constraint.
-  *os << "extern " << idl_global->stub_export_macro () << " "
+  *os << "extern " << be_global->stub_export_macro () << " "
       << node->full_name () << "_ptr (*_TAO_collocation_"
       << node->flat_name () << "_Stub_Factory_function_pointer) ("
       << be_idt << be_idt_nl
@@ -65,10 +65,10 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
   // generate the Any <<= and >>= operator declarations
   os->indent ();
   *os << "// Any operators for interface " << node->name () << be_nl;
-  *os << idl_global->stub_export_macro () << " void"
+  *os << be_global->stub_export_macro () << " void"
       << " operator<<= (CORBA::Any &, " << node->name ()
       << "_ptr);" << be_nl;
-  *os << idl_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, "
       << node->name () << " *&);\n";
 

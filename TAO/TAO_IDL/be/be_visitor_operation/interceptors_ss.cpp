@@ -209,7 +209,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
   *os<< "::"
       << "arguments (";
   // generate the CORBA::Environment parameter for the alternative mapping
-  if (!idl_global->exception_support ())
+  if (!be_global->exception_support ())
     *os<<"CORBA::Environment &";
   else
     *os << "void";
@@ -295,7 +295,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
   *os<< "::"
       << "exceptions (";
   // generate the CORBA::Environment parameter for the alternative mapping
-  if (!idl_global->exception_support ())
+  if (!be_global->exception_support ())
     *os<<"CORBA::Environment &";
   else
     *os << "void";
@@ -371,7 +371,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
   *os<< "::"
       << "result (";
   // generate the CORBA::Environment parameter for the alternative mapping
-  if (!idl_global->exception_support ())
+  if (!be_global->exception_support ())
     *os<<"CORBA::Environment &";
   else
     *os << "void";

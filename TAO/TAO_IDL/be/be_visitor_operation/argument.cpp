@@ -84,7 +84,7 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
 
   // if we are supporting the alternate mapping, we must pass the
   // CORBA::Environment parameter as the last parameter
-  if (!idl_global->exception_support ())
+  if (!be_global->exception_support ())
     {
       switch (this->ctx_->state ())
         {

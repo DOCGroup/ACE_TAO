@@ -84,7 +84,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-class   AST_Constant : public virtual AST_Decl
+class TAO_IDL_FE_Export AST_Constant : public virtual AST_Decl
 {
 public:
   // Operations

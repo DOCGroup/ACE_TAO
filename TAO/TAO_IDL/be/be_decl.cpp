@@ -53,7 +53,9 @@ be_decl::be_decl (void)
 be_decl::be_decl (AST_Decl::NodeType type,
                   UTL_ScopedName *n,
                   UTL_StrList *pragmas)
-  : AST_Decl (type, n, pragmas),
+  : AST_Decl (type, 
+              n, 
+              pragmas),
     cli_hdr_gen_ (I_FALSE),
     cli_stub_gen_ (I_FALSE),
     cli_inline_gen_ (I_FALSE),
@@ -75,56 +77,43 @@ be_decl::be_decl (AST_Decl::NodeType type,
 {
 }
 
-//destructor
+// Destructor
 be_decl::~be_decl (void)
 {
-  if (this->full_name_ != 0)
-    {
-      delete[] this->full_name_;
-      this->full_name_ = 0;
-    }
-  if (this->flat_name_ != 0)
-    {
-      delete[] this->flat_name_;
-      this->flat_name_ = 0;
-    }
-  if (this->repoID_ != 0)
-    {
-      delete[] this->repoID_;
-      this->repoID_ = 0;
-    }
-  if (this->prefix_ != 0)
-    {
-      delete[] this->prefix_;
-      this->prefix_ = 0;
-    }
 }
 
-// return our size type
+// Return our size type.
 be_decl::SIZE_TYPE
 be_decl::size_type (void)
 {
   if (this->size_type_ == be_decl::SIZE_UNKNOWN)
-    (void) this->compute_size_type ();
+    {
+      (void) this->compute_size_type ();
+    }
+
   return this->size_type_;
 }
 
-// set our size type and that of all our ancestors
+// Set our size type and that of all our ancestors.
 void
 be_decl::size_type (be_decl::SIZE_TYPE st)
 {
-  // precondition - you cannot set somebody's sizetype to unknown
+  // p\Precondition - you cannot set somebody's sizetype to unknown.
   ACE_ASSERT (st != be_decl::SIZE_UNKNOWN);
 
-  // st can be VARIABLE or FIXED
+  // Size type can be VARIABLE or FIXED.
   if (this->size_type_ == be_decl::SIZE_UNKNOWN) // not set yet
-    this->size_type_ = st; // set it
-  else if ((this->size_type_ == be_decl::FIXED) &&
-           (st == be_decl::VARIABLE))
-    // once we are VARIABLE, we cannot be FIXED. But if we were FIXED and then
-    // get overwritten to VARIABLE, it is fine. Such a situation occurs only
-    // when setting the sizes of structures and unions
-    this->size_type_ = st;
+    {
+      this->size_type_ = st; // set it
+    }
+  else if ((this->size_type_ == be_decl::FIXED)
+           && (st == be_decl::VARIABLE))
+    {
+      // Once we are VARIABLE, we cannot be FIXED. But if we were FIXED and then
+      // get overwritten to VARIABLE, it is fine. Such a situation occurs only
+      // when setting the sizes of structures and unions.
+      this->size_type_ = st;
+    }
 }
 
 const char*
@@ -136,74 +125,106 @@ be_decl::full_name (void)
   return this->full_name_;
 }
 
-// compute stringified fully scoped name
+// Compute stringified fully scoped name
 void
 be_decl::compute_full_name (void)
 {
-  if (full_name_)
-    return;
+  if (this->full_name_ != 0)
+    {
+      return;
+    }
   else
     {
-      long namelen;
-      UTL_IdListActiveIterator *i;
+      long namelen = 0;
+      UTL_IdListActiveIterator *i = 0;
       long first = I_TRUE;
       long second = I_FALSE;
 
-      // in the first loop compute the total length
-      namelen = 0;
-      i = new UTL_IdListActiveIterator (this->name ());
+      // In the first loop, compute the total length.
+      ACE_NEW (i,
+               UTL_IdListActiveIterator (this->name ()));
+
       while (!(i->is_done ()))
         {
           if (!first)
-            namelen += 2; // for "::"
+            {
+              namelen += 2; // for "::"
+            }
           else if (second)
-            first = second = I_FALSE;
-          // print the identifier
+            {
+              first = second = I_FALSE;
+            }
+
+          // Print the identifier.
           namelen += ACE_OS::strlen (i->item ()->get_string ());
+
           if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
-                // does not start with a ""
-                first = I_FALSE;
+                {
+                  // Does not start with a "".
+                  first = I_FALSE;
+                }
               else
-                second = I_TRUE;
+                {
+                  second = I_TRUE;
+                }
             }
+
           i->next ();
         }
+
       delete i;
 
-      this->full_name_ = new char [namelen+1];
+      ACE_NEW (this->full_name_,
+               char[namelen + 1]);
       this->full_name_[0] = '\0';
       first = I_TRUE;
       second = I_FALSE;
-      i = new UTL_IdListActiveIterator (this->name ());
+
+      ACE_NEW (i,
+               UTL_IdListActiveIterator (this->name ()));
+
       while (!(i->is_done ()))
         {
           if (!first)
-            ACE_OS::strcat (this->full_name_, "::");
+            {
+              ACE_OS::strcat (this->full_name_, "::");
+            }
           else if (second)
-            first = second = I_FALSE;
-          // print the identifier
+            {
+              first = second = I_FALSE;
+            }
+
+          // Print the identifier.
           ACE_OS::strcat (this->full_name_, i->item ()->get_string ());
+
           if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
-                // does not start with a ""
-                first = I_FALSE;
+                {
+                  // Does not start with a "".
+                  first = I_FALSE;
+                }
               else
-                second = I_TRUE;
+                {
+                  second = I_TRUE;
+                }
             }
+
           i->next ();
         }
+
       delete i;
     }
+
   return;
 }
 
 void
 be_decl::compute_full_name  (const char *prefix,
-                            const char *suffix,
-                            char *&name)
+                             const char *suffix,
+                             char *&name)
 {
   if (prefix == 0 || suffix == 0)
     return;
@@ -264,74 +285,107 @@ const char*
 be_decl::flat_name (void)
 {
   if (!this->flat_name_)
-    this->compute_flat_name ();
+    {
+      this->compute_flat_name ();
+    }
 
   return this->flat_name_;
 }
 
 
-// compute stringified flattened fully scoped name
+// Compute stringified flattened fully scoped name.
 void
 be_decl::compute_flat_name (void)
 {
-  if (flat_name_)
-    return;
+  if (this->flat_name_ != 0)
+    {
+      return;
+    }
   else
     {
-      long namelen;
-      UTL_IdListActiveIterator *i;
+      long namelen = 0;
+      UTL_IdListActiveIterator *i = 0;
       long first = I_TRUE;
       long second = I_FALSE;
 
-      // in the first loop compute the total length
-      namelen = 0;
-      i = new UTL_IdListActiveIterator (this->name ());
+      // In the first loop, compute the total length.
+      ACE_NEW (i,
+               UTL_IdListActiveIterator (this->name ()));
 
       while (!(i->is_done ()))
         {
           if (!first)
-            namelen += 1; // for "_"
+            {
+              namelen += 1; // for "_"
+            }
           else if (second)
-            first = second = I_FALSE;
-          // print the identifier
+            {
+              first = second = I_FALSE;
+            }
+
+          // Print the identifier.
           namelen += ACE_OS::strlen (i->item ()->get_string ());
+
           if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
-                // does not start with a ""
-                first = I_FALSE;
+                {
+                  // Does not start with a "".
+                  first = I_FALSE;
+                }
               else
-                second = I_TRUE;
+                {
+                  second = I_TRUE;
+                }
             }
+
           i->next ();
         }
+
       delete i;
 
-      this->flat_name_ = new char [namelen+1];
+      ACE_NEW (this->flat_name_,
+               char[namelen + 1]);
+
       this->flat_name_[0] = '\0';
       first = I_TRUE;
       second = I_FALSE;
-      i = new UTL_IdListActiveIterator (this->name ());
+
+      ACE_NEW (i,
+               UTL_IdListActiveIterator (this->name ()));
+
       while (!(i->is_done ()))
         {
           if (!first)
-            ACE_OS::strcat (this->flat_name_, "_");
+            {
+              ACE_OS::strcat (this->flat_name_, "_");
+            }
           else if (second)
-            first = second = I_FALSE;
-          // print the identifier
+            {
+              first = second = I_FALSE;
+            }
+
+          // Print the identifier.
           ACE_OS::strcat (this->flat_name_, i->item ()->get_string ());
           if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
-                // does not start with a ""
-                first = I_FALSE;
+                {
+                  // Does not start with a "".
+                  first = I_FALSE;
+                }
               else
-                second = I_TRUE;
+                {
+                  second = I_TRUE;
+                }
             }
+
           i->next ();
         }
+
       delete i;
     }
+
   return;
 }
 
@@ -339,11 +393,13 @@ be_decl::compute_flat_name (void)
 
 void
 be_decl::compute_flat_name  (const char *prefix,
-                            const char *suffix,
-                            char *&name)
+                             const char *suffix,
+                             char *&name)
 {
   if (prefix == 0 || suffix == 0)
-    return;
+    {
+      return;
+    }
 
   ACE_CString prefix_str (prefix);
   ACE_CString suffix_str (suffix);
@@ -399,8 +455,10 @@ be_decl::compute_flat_name  (const char *prefix,
 const char *
 be_decl::repoID (void)
 {
-  if (!this->repoID_)
-    this->compute_repoID ();
+  if (this->repoID_ == 0)
+    {
+      this->compute_repoID ();
+    }
 
   return this->repoID_;
 }
@@ -410,72 +468,107 @@ be_decl::repoID (void)
 void
 be_decl::compute_repoID (void)
 {
-  if (repoID_)
-    return;
+  if (this->repoID_ != 0)
+    {
+      return;
+    }
   else
     {
-      long namelen;
-      UTL_IdListActiveIterator *i;
+      long namelen = 8; // for the prefix "IDL:" and suffix ":1.0"
+      UTL_IdListActiveIterator *i = 0;
       long first = I_TRUE;
       long second = I_FALSE;
 
       // in the first loop compute the total length
-      namelen = 8; // for the prefix "IDL:" and suffix ":1.0"
       namelen += ACE_OS::strlen (this->prefix ()) + 1;
-      i = new UTL_IdListActiveIterator (this->name ());
+
+      ACE_NEW (i,
+               UTL_IdListActiveIterator (this->name ()));
+
       while (!(i->is_done ()))
         {
           if (!first)
-            namelen += 1; // for "/"
+            {
+              namelen += 1; // for "/"
+            }
           else if (second)
-            first = second = I_FALSE;
-          // print the identifier
+            {
+              first = second = I_FALSE;
+            }
+
+          // Print the identifier.
           namelen += ACE_OS::strlen (i->item ()->get_string ());
+
           if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
-                // does not start with a ""
-                first = I_FALSE;
+                {
+                  // Does not start with a "".
+                  first = I_FALSE;
+                }
               else
-                second = I_TRUE;
+                {
+                  second = I_TRUE;
+                }
             }
+
           i->next ();
         }
+
       delete i;
 
-      this->repoID_ = new char [namelen+1];
+      ACE_NEW (this->repoID_,
+               char[namelen + 1]);
       this->repoID_[0] = '\0';
       ACE_OS::sprintf (this->repoID_, "%s", "IDL:");
       ACE_OS::strcat (this->repoID_, this->prefix ());
 
-      // Add the "/" only if there is a prefix
+      // Add the "/" only if there is a prefix.
       if (ACE_OS::strcmp (this->prefix (), "") != 0)
-        ACE_OS::strcat (this->repoID_, "/");
+        {
+          ACE_OS::strcat (this->repoID_, "/");
+        }
 
-      i = new UTL_IdListActiveIterator (this->name ());
+      ACE_NEW (i,
+               UTL_IdListActiveIterator (this->name ()));
+
       first = I_TRUE;
       second = I_FALSE;
+
       while (!(i->is_done ()))
         {
           if (!first)
-            ACE_OS::strcat (this->repoID_, "/");
+            {
+              ACE_OS::strcat (this->repoID_, "/");
+            }
           else if (second)
-            first = second = I_FALSE;
-          // print the identifier
+            {
+              first = second = I_FALSE;
+            }
+
+          // Print the identifier.
           ACE_OS::strcat (this->repoID_, i->item ()->get_string ());
+
           if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
-                // does not start with a ""
-                first = I_FALSE;
+                {
+                  // Does not start with a "".
+                  first = I_FALSE;
+                }
               else
-                second = I_TRUE;
+                {
+                  second = I_TRUE;
+                }
             }
+
           i->next ();
         }
+
       delete i;
       ACE_OS::strcat (this->repoID_, ":1.0");
     }
+
   return;
 }
 
@@ -488,45 +581,61 @@ be_decl::compute_repoID (const char *prefix,
 {
   // Prefix and suffix should be valid.
   if (prefix == 0 || suffix == 0)
-    return;
+    {
+      return;
+    }
 
   // First prepare the result without IDL: and  :1.0 strings.
 
   // repoID without IDL: and :1.0 strings.
   char *result = 0;
 
-  long namelen;
-  UTL_IdListActiveIterator *i;
+  long namelen = 8; // for the prefix "IDL:" and suffix ":1.0"
+  UTL_IdListActiveIterator *i = 0;
   long first = I_TRUE;
   long second = I_FALSE;
 
   // In the first loop compute the total length.
-  namelen = 8; // for the prefix "IDL:" and suffix ":1.0"
   namelen += ACE_OS::strlen (this->prefix ()) + 1;
-  i = new UTL_IdListActiveIterator (this->name ());
+
+  ACE_NEW (i,
+           UTL_IdListActiveIterator (this->name ()));
+
   while (!(i->is_done ()))
     {
       if (!first)
-        namelen += 1; // for "/"
+        {
+          namelen += 1; // for "/"
+        }
       else if (second)
-        first = second = I_FALSE;
-      // print the identifier
+        {
+          first = second = I_FALSE;
+        }
+
+      // Print the identifier.
       namelen += ACE_OS::strlen (i->item ()->get_string ());
+
       if (first)
         {
           if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
-            // does not start with a ""
-            first = I_FALSE;
+            {
+              // Does not start with a "".
+              first = I_FALSE;
+            }
           else
-            second = I_TRUE;
+            {
+              second = I_TRUE;
+            }
         }
+
       i->next ();
     }
+
   delete i;
 
   // Get the result.
-
-  result = new char [namelen+1];
+  ACE_NEW (result,
+           char[namelen + 1]);
   result[0] = '\0';
 
   // Start the result with prefix.
@@ -534,29 +643,46 @@ be_decl::compute_repoID (const char *prefix,
 
   // Add the "/" only if there is a prefix
   if (ACE_OS::strcmp (this->prefix (), "") != 0)
-    ACE_OS::strcat (result, "/");
+    {
+      ACE_OS::strcat (result, "/");
+    }
 
-  i = new UTL_IdListActiveIterator (this->name ());
+  ACE_NEW (i,
+           UTL_IdListActiveIterator (this->name ()));
+
   first = I_TRUE;
   second = I_FALSE;
+
   while (!(i->is_done ()))
     {
       if (!first)
-        ACE_OS::strcat (result, "/");
+        {
+          ACE_OS::strcat (result, "/");
+        }
       else if (second)
-        first = second = I_FALSE;
-      // print the identifier
+        {
+          first = second = I_FALSE;
+        }
+
+      // Print the identifier
       ACE_OS::strcat (result, i->item ()->get_string ());
+
       if (first)
         {
           if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
-            // does not start with a ""
-            first = I_FALSE;
+            {
+              // Does not start with a ""
+              first = I_FALSE;
+            }
           else
-            second = I_TRUE;
+            {
+              second = I_TRUE;
+            }
         }
+
       i->next ();
     }
+
   delete i;
 
   // Add prefix and suffix.
@@ -624,7 +750,7 @@ be_decl::compute_repoID (const char *prefix,
 
 
 void
-be_decl::compute_prefix ()
+be_decl::compute_prefix (void)
 {
   const char* pragma = 0;
   if (this->pragmas () != 0)
@@ -650,13 +776,16 @@ be_decl::compute_prefix ()
 
       if (end == 0)
         {
-          idl_global->err ()->syntax_error
-            (IDL_GlobalData::PS_PragmaPrefixSyntax);
+          idl_global->err ()->syntax_error (
+              IDL_GlobalData::PS_PragmaPrefixSyntax
+            );
           this->prefix_ = ACE::strnew ("");
           return;
         }
+
       int l = end - tmp;
-      this->prefix_ = new char[l+1];
+      ACE_NEW (this->prefix_,
+               char[l + 1]);
       ACE_OS::strncpy (this->prefix_, tmp, end - tmp);
       this->prefix_[l] = 0;
       return;
@@ -665,23 +794,61 @@ be_decl::compute_prefix ()
   // Could not find it in the local scope, try to recurse to the top
   // scope...
   if (this->defined_in () == 0)
-    this->prefix_ = ACE::strnew ("");
+    {
+      this->prefix_ = ACE::strnew ("");
+    }
   else
     {
       be_scope* scope =
         be_scope::narrow_from_scope (this->defined_in ());
+
       if (scope == 0)
-        this->prefix_ = ACE::strnew ("");
+        {
+          this->prefix_ = ACE::strnew ("");
+        }
       else
-        this->prefix_ = ACE::strnew (scope->decl()->prefix ());
+        {
+          this->prefix_ = ACE::strnew (scope->decl()->prefix ());
+        }
+    }
+}
+
+void
+be_decl::destroy (void)
+{
+  if (this->full_name_ != 0)
+    {
+      delete this->full_name_;
+      this->full_name_ = 0;
+    }
+
+  if (this->flat_name_ != 0)
+    {
+      delete this->flat_name_;
+      this->flat_name_ = 0;
+    }
+
+  if (this->repoID_ != 0)
+    {
+      ACE_OS::free (this->repoID_);
+      this->repoID_ = 0;
+    }
+
+  if (this->prefix_ != 0)
+    {
+      delete this->prefix_;
+      this->prefix_ = 0;
     }
 }
 
 const char*
 be_decl::prefix (void)
 {
-  if (!this->prefix_)
-    compute_prefix ();
+  if (this->prefix_ == 0)
+    {
+      this->compute_prefix ();
+    }
+
   return this->prefix_;
 }
 
@@ -691,62 +858,64 @@ be_decl::is_nested (void)
   be_decl *d;
 
   d = be_scope::narrow_from_scope (this->defined_in ())->decl ();
-  // if we have an outermost scope and if that scope is not that of the Root,
-  // then we are defined at some nesting level
-  if (d && d->node_type () != AST_Decl::NT_root)
-    return I_TRUE;
+
+  // If we have an outermost scope and if that scope is not that of the Root,
+  // then we are defined at some nesting level.
+  if (d != 0 && d->node_type () != AST_Decl::NT_root)
+    {
+      return I_TRUE;
+    }
 
   return I_FALSE;
 }
 
-// compute the size type of the node in question
+// Compute the size type of the node in question
 int
 be_decl::compute_size_type (void)
 {
   return 0;
 }
 
-// return the scope created by this node (if one exists, else NULL)
+// Return the scope created by this node (if one exists, else NULL).
 be_scope *
 be_decl::scope (void)
 {
   be_decl *d = this;
 
-   switch (this->node_type()) {
-   case AST_Decl::NT_interface_fwd:
-      /*
-       * Resolve forward declared interface by looking at full_definition()
-       * field and iterating
-       */
-      d = be_interface::narrow_from_decl ((be_interface_fwd::narrow_from_decl
-                                           (this))->full_definition ());
-      /*
-       * Fall through
-       */
-   case AST_Decl::NT_interface:
-      return be_interface::narrow_from_decl (d);
-   case AST_Decl::NT_module:
-      return be_module::narrow_from_decl (d);
-   case AST_Decl::NT_root:
-      return be_root::narrow_from_decl (d);
-   case AST_Decl::NT_except:
-      return be_exception::narrow_from_decl (d);
-   case AST_Decl::NT_union:
-      return be_union::narrow_from_decl (d);
-   case AST_Decl::NT_struct:
-      return be_structure::narrow_from_decl (d);
-   case AST_Decl::NT_enum:
-      return be_enum::narrow_from_decl (d);
-   case AST_Decl::NT_op:
-      return be_operation::narrow_from_decl (d);
-   case AST_Decl::NT_sequence:
-      return be_sequence::narrow_from_decl (d);
-   default:
-      return (be_scope *)0;
+   switch (this->node_type ()) 
+   {
+     case AST_Decl::NT_interface_fwd:
+        // Resolve forward declared interface by looking at full_definition()
+        // field and iterating.
+        d = 
+          be_interface::narrow_from_decl (
+              (be_interface_fwd::narrow_from_decl (this))->full_definition ()
+            );
+     // Fall through
+     case AST_Decl::NT_interface:
+        return be_interface::narrow_from_decl (d);
+     case AST_Decl::NT_module:
+        return be_module::narrow_from_decl (d);
+     case AST_Decl::NT_root:
+        return be_root::narrow_from_decl (d);
+     case AST_Decl::NT_except:
+        return be_exception::narrow_from_decl (d);
+     case AST_Decl::NT_union:
+        return be_union::narrow_from_decl (d);
+     case AST_Decl::NT_struct:
+        return be_structure::narrow_from_decl (d);
+     case AST_Decl::NT_enum:
+        return be_enum::narrow_from_decl (d);
+     case AST_Decl::NT_op:
+        return be_operation::narrow_from_decl (d);
+     case AST_Decl::NT_sequence:
+        return be_sequence::narrow_from_decl (d);
+     default:
+        return (be_scope *)0;
    }
 }
 
-// boolean methods to test if code was already generated
+// Boolean methods to test if code was already generated.
 idl_bool
 be_decl::cli_hdr_gen (void)
 {
@@ -825,7 +994,7 @@ be_decl::srv_inline_gen (void)
   return this->srv_inline_gen_;
 }
 
-// set the flag indicating that code generation is done
+// Set the flag indicating that code generation is done.
 void
 be_decl::cli_hdr_gen (idl_bool val)
 {
@@ -910,16 +1079,22 @@ be_decl::is_child (be_decl *node)
 {
   if (this->defined_in ())
     {
-      be_decl *bd;
+      be_decl *bd = 0;
 
       bd = be_scope::narrow_from_scope (this->defined_in ())->decl ();
-      if (!bd)
-        return 0;
+
+      if (bd == 0)
+        {
+          return 0;
+        }
 
       if (!ACE_OS::strcmp (bd->full_name (), node->full_name ()))
-        return 1; // true
+        {
+          return 1;
+        }
     }
-  return 0; // not a child
+
+  return 0; // Not a child.
 }
 
 idl_bool
@@ -934,12 +1109,12 @@ be_decl::has_constructor (idl_bool value)
   // Similarly to be_decl::size_type_, once this
   // gets set to I_TRUE, we don't want it to
   // change back.
-  if (!this->has_constructor_)
+  if (this->has_constructor_ == 0)
     {
       this->has_constructor_ = value;
     }
 }
 
-// narrowing methods
+// Narrowing methods.
 IMPL_NARROW_METHODS1 (be_decl, AST_Decl)
 IMPL_NARROW_FROM_DECL (be_decl)

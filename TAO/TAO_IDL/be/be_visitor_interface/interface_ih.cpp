@@ -57,36 +57,44 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
   ACE_OS::sprintf (namebuf, "%s", node->flat_name ());
 
-  *os << "//Class " << idl_global->impl_class_prefix ()<<namebuf << idl_global->impl_class_suffix ()<< be_nl;
+  *os << "//Class " << be_global->impl_class_prefix () 
+      << namebuf << be_global->impl_class_suffix () << be_nl;
   // now generate the class definition
-  *os << "class " << idl_global->stub_export_macro ()
-      << " " <<idl_global->impl_class_prefix () << namebuf << idl_global->impl_class_suffix () << " : ";
+  *os << "class " << be_global->stub_export_macro ()
+      << " " << be_global->impl_class_prefix () << namebuf 
+      << be_global->impl_class_suffix () << " : ";
   //inherit from the base skeleton file
-  *os<<"public virtual "<<node->full_skel_name ();
+  *os <<"public virtual "<< node->full_skel_name ();
 
   *os << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
       << "//Constructor " << be_nl
-      <<  idl_global->impl_class_prefix () << namebuf << idl_global->impl_class_suffix () << " (void);" << be_nl << be_nl;
+      <<  be_global->impl_class_prefix () << namebuf 
+      << be_global->impl_class_suffix () << " (void);" << be_nl << be_nl;
 
-  if (idl_global->gen_copy_ctor ())
+  if (be_global->gen_copy_ctor ())
     {
       *os << "//Copy Constructor"<<be_nl
-          << idl_global->impl_class_prefix () << namebuf << idl_global->impl_class_suffix () << " (const "
-          << idl_global->impl_class_prefix () << namebuf << idl_global->impl_class_suffix () << "&);" <<be_nl <<be_nl;
+          << be_global->impl_class_prefix () << namebuf 
+          << be_global->impl_class_suffix () << " (const "
+          << be_global->impl_class_prefix () << namebuf 
+          << be_global->impl_class_suffix () << "&);" <<be_nl <<be_nl;
     }
 
-  if (idl_global->gen_assign_op ())
+  if (be_global->gen_assign_op ())
     {
       *os << "//Copy Assignment" << be_nl
-          << idl_global->impl_class_prefix () << namebuf << idl_global->impl_class_suffix () << "& "
-          << "operator=(const " << idl_global->impl_class_prefix () << namebuf << idl_global->impl_class_suffix () << "&);"<<be_nl << be_nl;
+          << be_global->impl_class_prefix () << namebuf 
+          << be_global->impl_class_suffix () << "& " << "operator=(const " 
+          << be_global->impl_class_prefix () << namebuf 
+          << be_global->impl_class_suffix () << "&);" << be_nl << be_nl;
 
     }
 
   *os << "//Destructor " << be_nl
-      << "virtual " << "~" << idl_global->impl_class_prefix () << namebuf << idl_global->impl_class_suffix () << " (void);" << be_nl << be_uidt_nl;
+      << "virtual " << "~" << be_global->impl_class_prefix () << namebuf 
+      << be_global->impl_class_suffix () << " (void);" << be_nl << be_uidt_nl;
 
 
   // generate code for elements in the scope (e.g., operations)
