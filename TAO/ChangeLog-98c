@@ -1,3 +1,9 @@
+Tue Jan  5 13:06:12 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* examples/Simple/bank/Client_i.cpp (withdraw): Removed the
+	cast and used the .in () method instead. This would probably
+	fix the error on DU cxx.
+
 Tue Jan 05 07:57:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simple/bank/Client_i.cpp (withdraw): added in ()
