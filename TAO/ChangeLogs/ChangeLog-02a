@@ -1,3 +1,9 @@
+Sat Oct 14 19:49:39 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/tests/RTCORBA/Client_Protocol/server.cpp:
+
+	  Fixed copy/paste error.
+
 Sat Oct 14 17:15:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_argument.cpp:
