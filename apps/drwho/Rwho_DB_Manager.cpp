@@ -29,9 +29,11 @@ RWho_DB_Manager::RWho_DB_Manager (void)
 
   this->rwho_dir.open (this->rwho_dir_name);
 
+#if 0  
   // Skip "." and ".." 
   this->rwho_dir.read ();
   this->rwho_dir.read ();
+#endif 
 }
 
 // The destructor cleans up the RWHOD_DIR handle.
@@ -71,7 +73,8 @@ RWho_DB_Manager::get_next_host (void)
        dir_ptr != 0;
        dir_ptr = this->rwho_dir.read ())
     {
-      ACE_HANDLE user_file = ACE_OS::open (dir_ptr->d_name, O_RDONLY);
+      ACE_HANDLE user_file =
+        ACE_OS::open (dir_ptr->d_name, O_RDONLY);
 	  
       if (user_file < 0)
 	return -1;
@@ -109,10 +112,8 @@ RWho_DB_Manager::get_next_user (Protocol_Record &protocol_record)
       && this->get_next_host () == 0)
     return 0;
 
-  Drwho_Node *current_node = protocol_record.get_drwho_list ();
-
   protocol_record.set_login (this->host_data.wd_we[current_user].we_utmp.out_name);
-
+  Drwho_Node *current_node = protocol_record.get_drwho_list ();
   current_node->set_host_name (this->host_data.wd_hostname);
   current_node->set_idle_time (this->host_data.wd_we[current_user].we_idle);
   this->current_user++;
