@@ -1,3 +1,9 @@
+Tue Mar  2 19:50:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DnC/Node/NodeApplicationManager_Impl.h:
+
+	  Added @@Tao comments. 
+
 Tue Mar  2 15:08:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
