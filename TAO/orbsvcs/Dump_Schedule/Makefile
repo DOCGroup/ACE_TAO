@@ -6,7 +6,7 @@ BUILD = $(BIN)
 DUMP_SRCS = \
 	Dump_Schedule.cpp
 
-LSRC = 	$(DUMP_SRCS)
+SRC = $(DUMP_SRCS)
 
 SCHEDULE_OBJS=$(SCHEDULE_SRCS:.cpp=.o)
 DUMP_OBJS=$(DUMP_SRCS:.cpp=.o)
@@ -262,6 +262,8 @@ Dump_Schedule: $(addprefix $(VDIR),$(DUMP_OBJS))
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
