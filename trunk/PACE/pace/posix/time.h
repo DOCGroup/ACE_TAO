@@ -16,7 +16,6 @@
 #ifndef PACE_TIME_H
 #define PACE_TIME_H
 
-#include "pace/defines.h"
 #include <time.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)

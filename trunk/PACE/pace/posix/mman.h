@@ -16,7 +16,6 @@
 #ifndef PACE_SYS_MMAN_H
 #define PACE_SYS_MMAN_H
 
-#include "pace/defines.h"
 #include <sys/mman.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)

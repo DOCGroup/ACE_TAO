@@ -16,7 +16,6 @@
 #ifndef PACE_UNISTD_H
 #define PACE_UNISTD_H
 
-#include "pace/defines.h"
 #include "pace/sys/types.h"
 #include <stropts.h>
 

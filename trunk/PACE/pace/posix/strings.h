@@ -16,7 +16,6 @@
 #ifndef PACE_STRINGS_H
 #define PACE_STRINGS_H
 
-#include "pace/defines.h"
 #include "pace/unistd.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)

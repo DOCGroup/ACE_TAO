@@ -16,7 +16,6 @@
 #ifndef PACE_NETDB_H
 #define PACE_NETDB_H
 
-#include "pace/defines.h"
 #include <netdb.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)

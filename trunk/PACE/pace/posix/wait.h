@@ -16,7 +16,6 @@
 #ifndef PACE_WAIT_H
 #define PACE_WAIT_H
 
-#include "pace/defines.h"
 #include "pace/sys/types.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
