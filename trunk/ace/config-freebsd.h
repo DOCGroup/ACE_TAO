@@ -65,6 +65,7 @@
 #define ACE_LACKS_SETSCHED
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_LACKS_UCONTEXT_H
+#define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
 #endif
 
 #define ACE_NEEDS_SCHED_H
@@ -94,7 +95,9 @@ extern "C" { char * cuserid (char *s); }
 
 #define ACE_LACKS_SYSTIME_H
 
+#if (__FreeBSD_version < 501000)
 #define ACE_LACKS_STDINT_H
+#endif
 
 #define ACE_LACKS_STRRECVFD
 
@@ -113,10 +116,12 @@ extern "C" { char * cuserid (char *s); }
 #if (__FreeBSD_version >= 320000)
 #define ACE_HAS_REENTRANT_FUNCTIONS
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
-#define ACE_LACKS_PWD_REENTRANT_FUNCTIONS
-#define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #endif /* __FreeBSD_version >= 320000 */
+
+#if (__FreeBSD_version < 501000)
+#define ACE_LACKS_PWD_REENTRANT_FUNCTIONS
+#endif
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define ACE_LACKS_SIGINFO_H
