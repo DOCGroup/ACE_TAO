@@ -27,22 +27,22 @@ class Simple_Server_i : public POA_Simple_Server
   //
 public:
   Simple_Server_i (CORBA::ORB_ptr orb);
-  
+
   // ctor
 
   Simple_Server_i (void);
   // ctor
 
   // = The Simple_Server methods.
-  void remote_call (CORBA::Environment &);
-  
+  void remote_call (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:
   CORBA::ORB_var orb_;
-  
+
 };
 
 #if defined(__ACE_INLINE__)
