@@ -1094,6 +1094,10 @@ SOURCE=.\UPIPE_Stream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\UUID.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\WFMO_Reactor.cpp
 # End Source File
 # Begin Source File
@@ -2346,6 +2350,10 @@ SOURCE=.\UPIPE_Stream.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\UUID.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Version.h
 # End Source File
 # Begin Source File
@@ -3243,6 +3251,10 @@ SOURCE=.\UPIPE_Connector.i
 # Begin Source File
 
 SOURCE=.\UPIPE_Stream.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\UUID.i
 # End Source File
 # Begin Source File
 
