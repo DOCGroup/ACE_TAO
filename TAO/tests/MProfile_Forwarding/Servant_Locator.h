@@ -22,7 +22,7 @@
 
 #include "tao/corba.h"
 
-class Servant_Locator : public POA_PortableServer::ServantLocator
+class Servant_Locator : public PortableServer::ServantLocator
 {
   // = TITLE
   //   This class is used by a POA with USE_SERVANT_MANAGER and

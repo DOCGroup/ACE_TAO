@@ -124,12 +124,8 @@ MyFirstFooServant::handle_input (ACE_HANDLE)
         this->poa_->servant_to_id (this, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      PortableServer::Servant servant = this->poa_->_servant ();
-      ACE_ASSERT (servant != 0);
-
-      void *ptr = servant->_downcast ("IDL:omg.org/PortableServer/POA:1.0");
-      POA_PortableServer::POA *poa = (POA_PortableServer::POA *) ptr;
-      TAO_POA *tao_poa = ACE_dynamic_cast (TAO_POA *, poa);
+      TAO_POA *tao_poa =
+        ACE_dynamic_cast (TAO_POA *, this->poa_.in ());
 
       tao_poa->forward_object (oid.in (),
                                this->forward_to_var_.in (),

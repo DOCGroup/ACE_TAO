@@ -52,7 +52,7 @@ Reference_Counted_Foo::Reference_Counted_Foo (CORBA::ORB_ptr orb,
 {
 }
 
-class Adapter_Activator : public POA_PortableServer::AdapterActivator
+class Adapter_Activator : public PortableServer::AdapterActivator
 {
 public:
 
@@ -101,10 +101,7 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
           ACE_CHECK_RETURN (0);
         }
 
-      PortableServer::AdapterActivator_var activator = this->_this (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      child->the_activator (activator.in (),
+      child->the_activator (this,
                             ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
@@ -168,7 +165,7 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
     }
 }
 
-static char *ior_output_file = 0;
+const char *ior_output_file = "ior";
 
 static int
 parse_args (int argc, char **argv)
@@ -202,10 +199,6 @@ write_iors_to_file (const char *first_ior,
                     const char *second_ior,
                     const char *third_ior)
 {
-  if (ior_output_file == 0)
-    // No filename was specified; simply return
-    return 0;
-
   char ior_output_file_1[BUFSIZ];
   char ior_output_file_2[BUFSIZ];
   char ior_output_file_3[BUFSIZ];
@@ -298,13 +291,14 @@ main (int argc, char **argv)
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      Adapter_Activator adapter_activator (poa_manager.in (),
-                                           orb.in ());
+      Adapter_Activator *adapter_activator =
+        new Adapter_Activator (poa_manager.in (),
+                               orb.in ());
 
-      PortableServer::AdapterActivator_var activator = adapter_activator._this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      PortableServer::AdapterActivator_var adapter_activator_var =
+        adapter_activator;
 
-      root_poa->the_activator (activator.in (),
+      root_poa->the_activator (adapter_activator_var.in (),
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -313,7 +307,7 @@ main (int argc, char **argv)
 
       {
         // Policies for the firstPOA to be created.
-        CORBA::PolicyList &policies = adapter_activator.first_poa_policies_;
+        CORBA::PolicyList &policies = adapter_activator->first_poa_policies_;
         policies.length (4);
 
         // Id Assignment Policy
@@ -350,7 +344,7 @@ main (int argc, char **argv)
 
       {
         // Policies for the secondPOA to be created.
-        CORBA::PolicyList &policies = adapter_activator.second_poa_policies_;
+        CORBA::PolicyList &policies = adapter_activator->second_poa_policies_;
         policies.length (2);
 
         // Id Assignment Policy
@@ -436,12 +430,6 @@ main (int argc, char **argv)
 
       if (orb->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
-
-      // Destroy RootPOA (also destroys all child POAs).
-      root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

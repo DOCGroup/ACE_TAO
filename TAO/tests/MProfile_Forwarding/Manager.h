@@ -12,8 +12,8 @@ class Manager
 
   // Ctor
 
-  int init (int argc, 
-            char *argv[], 
+  int init (int argc,
+            char *argv[],
             CORBA::Environment & ACE_TRY_ENV);
 
   // Initialize the ORB, POA etc.
@@ -30,13 +30,16 @@ class Manager
   // Run the  ORB event loop..
  private:
   CORBA::ORB_var orb_;
-  // Our ORB 
+  // Our ORB
 
   PortableServer::POA_var new_poa_var_;
   // The new poa that is created..
-  
+
   Servant_Locator *servant_locator_;
   // Our servant locator
+
+  PortableServer::ServantLocator_var servant_locator_var_;
+  // Our servant locator var
 
   CORBA::Object_var new_manager_ior_;
 };

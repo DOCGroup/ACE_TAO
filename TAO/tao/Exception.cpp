@@ -445,7 +445,7 @@ CORBA_SystemException::_info (void) const
           location = "Failure when trying to acquire a guard/monitor";
           break;
         case TAO_POA_BEING_DESTROYED:
-          location = "POA is current being destroyed";
+          location = "POA has been destroyed or is currently being destroyed";
           break;
         default:
           location = "unknown location";

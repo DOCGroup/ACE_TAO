@@ -93,7 +93,7 @@ operator<<(ostream & os, const CORBA::Exception & e)
 
 //----------------------------------------------------------------
 
-// Helper function to create object references. 
+// Helper function to create object references.
 
 static CCS::Thermometer_ptr
 make_dref(PortableServer::POA_ptr poa, CCS::AssetType anum)
@@ -238,7 +238,7 @@ location(const char *loc) throw(CORBA::SystemException)
 {
     set_loc(loc);
 }
-    
+
 //----------------------------------------------------------------
 
 // Helper function to get a thermostat's nominal temperature.
@@ -269,7 +269,7 @@ throw(CCS::Thermostat::BadTemp)
             m_anum, "nominal_temp", &old_temp, sizeof(old_temp)
         ) == 0
     );
-    
+
     // Now set the nominal temperature to the new value.
     if (ICP_set(m_anum, "nominal_temp", &new_temp) != 0) {
 
@@ -527,7 +527,7 @@ change(
             ec.errors[len].info = bt.details;
         }
     }
-    
+
     // If we encountered errors in the above loop,
     // we will have added elements to the errors sequence.
     if (ec.errors.length() != 0)
@@ -547,7 +547,7 @@ throw(CORBA::SystemException)
 
         AssetMap::iterator where;   // Iterator for asset set
         int num_found = 0;          // Num matched per iteration
-        
+
         // Assume we will not find a matching device.
         slist[i].device = CCS::Thermometer::_nil();
 
@@ -572,7 +572,7 @@ throw(CORBA::SystemException)
                         m_assets.begin(), m_assets.end(),
                         StrFinder(sc, search_str)
                     );
-            
+
             // While there are matches...
             while (where != m_assets.end()) {
                 if (num_found == 0) {
@@ -633,7 +633,7 @@ preinvoke(
     istr >> anum;
     if (istr.fail())
         throw CORBA::OBJECT_NOT_EXIST();
-    
+
     // Check whether the device is known.
     if (!m_ctrl->exists(anum))
         throw CORBA::OBJECT_NOT_EXIST();
@@ -700,7 +700,7 @@ main(int argc, char * argv[])
 
         // Get POA manager
         PortableServer::POAManager_var poa_mgr = poa->the_POAManager();
-        
+
         // Create a policy list. We use persistent objects with
         // user-assigned IDs, and explicit activation.
         CORBA::PolicyList policy_list;
@@ -727,7 +727,7 @@ main(int argc, char * argv[])
         // Create a POA for all CCS elements.
         PortableServer::POA_var ccs_poa
             = poa->create_POA("CCS_POA", poa_mgr.in(), policy_list);
-        
+
         // Create a controller and set static m_ctrl member
         // for thermostats and thermometers.
         Controller_impl ctrl_servant(ccs_poa.in(), "/tmp/CCS_assets");
@@ -766,13 +766,12 @@ main(int argc, char * argv[])
         inc->rebind(n, ctrl.in());
 
         // Instantiate the servant locator for devices.
-        DeviceLocator_impl my_locator(&ctrl_servant);
-        PortableServer::ServantManager_var locator
-            = my_locator._this();
+        PortableServer::ServantManager_var locator =
+          new DeviceLocator_impl (&ctrl_servant);
 
         // Set servant locator.
         ccs_poa->set_servant_manager(locator.in());
-        
+
         // Activate the POA manager.
         poa_mgr->activate();
 

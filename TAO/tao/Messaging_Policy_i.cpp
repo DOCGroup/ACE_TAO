@@ -18,23 +18,9 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const Ti
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs)
   : Messaging::RelativeRoundtripTimeoutPolicy (),
-    CORBA::LocalObject (),
+    TAO_Local_RefCounted_Object (),
     relative_expiry_ (rhs.relative_expiry_)
 {
-}
-
-void
-TAO_RelativeRoundtripTimeoutPolicy::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-TAO_RelativeRoundtripTimeoutPolicy::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
 }
 
 TimeBase::TimeT
@@ -136,23 +122,9 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronizati
 
 TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
   : Messaging::SyncScopePolicy (),
-    CORBA::LocalObject (),
+    TAO_Local_RefCounted_Object (),
     synchronization_ (rhs.synchronization_)
 {
-}
-
-void
-TAO_Sync_Scope_Policy::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-TAO_Sync_Scope_Policy::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
 }
 
 CORBA::PolicyType

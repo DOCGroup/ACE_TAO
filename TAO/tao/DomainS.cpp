@@ -488,7 +488,7 @@ POA_CORBA::_tao_collocated_ConstructionPolicy::_tao_collocated_ConstructionPolic
     TAO_Stub *stub
   )
   : ACE_CORBA_1 (ConstructionPolicy) (),
-    ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
+    ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_CORBA_Policy) (stub),
     CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {

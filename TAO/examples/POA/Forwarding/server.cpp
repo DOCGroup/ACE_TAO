@@ -53,10 +53,10 @@ read_ior (char *filename,
       first_foo_forward_to_IOR_ = ior_buffer.read ();
 
       if (first_foo_forward_to_IOR_ == 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to allocate memory to read ior: %p\n",
                            "ACE_Read_Buffer::read"),
-			  -1);
+                          -1);
     }
   else if (foo_number == 2)
     {
@@ -95,19 +95,19 @@ parse_args (int argc, char **argv)
         result = read_ior (get_opts.optarg,1);
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-			     "Unable to read ior from %s : %p\n",
-			     get_opts.optarg,
+                             "Unable to read ior from %s : %p\n",
+                             get_opts.optarg,
                              "read_ior"),
-			    -1);
+                            -1);
         break;
       case 'g': // read the IOR from the file.
         result = read_ior (get_opts.optarg,2);
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-			     "Unable to read ior from %s : %p\n",
-			     get_opts.optarg,
+                             "Unable to read ior from %s : %p\n",
+                             get_opts.optarg,
                              "read_ior"),
-			    -1);
+                            -1);
         break;
       case 'k':
         first_foo_forward_to_IOR_ = get_opts.optarg;
@@ -147,7 +147,7 @@ parse_args (int argc, char **argv)
                            "-p file_for_IOR (second foo)\n"
                            "\n",
                            argv [0]),
-			  -1);
+                          -1);
       }
 
   // Indicates successful parsing of command line.
@@ -415,15 +415,11 @@ create_second_servant (PortableServer::POA_ptr second_poa_ptr,
                                            second_foo_forward_to_var.in ()),
                       -1);
 
-      ACE_OS::strcpy (str, "PortableServer::POAManager::_this");
-      PortableServer::ServantLocator_var servant_locator_var =
-        myFooServantLocator_ptr->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       ACE_OS::strcpy (str, "PortableServer::POAManager::set_servant_manager");
       // Set MyFooServantLocator object as the servant Manager of
       // secondPOA.
-      second_poa_ptr->set_servant_manager (servant_locator_var.in (), ACE_TRY_ENV);
+      second_poa_ptr->set_servant_manager (myFooServantLocator_ptr,
+                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
 
@@ -534,16 +530,8 @@ main (int argc, char **argv)
                            "CORBA::ORB::run"),
                           -1);
 
-      ACE_OS::strcpy (str, "PortableServer::POA::destroy");
-
-      // Destroy RootPOA. (Also destroys childPOA)
-      root_poa_var->destroy (1,
-                             1,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       delete myFirstFooServant_ptr;
       delete myFooServantLocator_ptr;
-
     }
   ACE_CATCHANY
     {

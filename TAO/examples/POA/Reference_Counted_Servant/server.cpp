@@ -49,7 +49,7 @@ Reference_Counted_Foo::Reference_Counted_Foo (CORBA::ORB_ptr orb,
 {
 }
 
-static char *ior_output_file = 0;
+static char *ior_output_file = "ior";
 
 static int
 parse_args (int argc, char **argv)
@@ -81,10 +81,6 @@ parse_args (int argc, char **argv)
 static int
 write_iors_to_file (const char *ior)
 {
-  if (ior_output_file == 0)
-    // No filename was specified; simply return
-    return 0;
-
   FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
 
   if (output_file == 0)
@@ -175,12 +171,6 @@ main (int argc, char **argv)
 
       if (orb->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
-
-      // Destroy RootPOA (also destroys all child POAs).
-      root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

@@ -23,13 +23,10 @@
 #include "tao/poa_macros.h"
 
 // Stubs
-#include "tao/POAC.h"
+#include "tao/PortableServerC.h"
 
 // Servant
 #include "tao/Servant_Base.h"
-
-// Skeletons
-#include "tao/POAS.h"
 
 // Active Object Table
 #include "tao/Active_Object_Map.h"
@@ -37,9 +34,19 @@
 // RTCORBA
 #include "tao/RTCORBAC.h"
 
+// Local Object
+#include "tao/LocalObject.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -51,7 +58,9 @@ class TAO_POA_Current_Impl;
 class TAO_TSS_Resources;
 class TAO_Transport;
 
-class TAO_Export TAO_POA_Current : public POA_PortableServer::Current
+class TAO_Export TAO_POA_Current :
+  public PortableServer::Current,
+  public TAO_Local_RefCounted_Object
 {
 public:
   TAO_POA_Current (void);
@@ -184,7 +193,7 @@ protected:
   void operator= (const TAO_POA_Current_Impl &);
 };
 
-class TAO_Object_Adapter
+class TAO_Export TAO_Object_Adapter
 {
   // = TITLE
   //     Defines the Object Adapter abstraction.
@@ -303,7 +312,7 @@ protected:
 
 public:
 
-  class Hint_Strategy
+  class TAO_Export Hint_Strategy
   {
     // = TITLE
     //     Base class for POA active hint strategy.
@@ -333,7 +342,7 @@ public:
     TAO_Object_Adapter *object_adapter_;
   };
 
-  class Active_Hint_Strategy : public Hint_Strategy
+  class TAO_Export Active_Hint_Strategy : public Hint_Strategy
   {
     // = TITLE
     //     This class uses active demux hint for POA active hint
@@ -369,7 +378,7 @@ public:
     persistent_poa_system_map persistent_poa_system_map_;
   };
 
-  class No_Hint_Strategy : public Hint_Strategy
+  class TAO_Export No_Hint_Strategy : public Hint_Strategy
   {
     // = TITLE
     //     This class doesn't use any hints for POA active hint
@@ -481,7 +490,7 @@ protected:
 
 public:
 
-  class poa_name_iterator
+  class TAO_Export poa_name_iterator
   {
     // = TITLE
     //     Iterator for a folded poa name.
@@ -510,7 +519,7 @@ public:
     CORBA::ULong last_separator_;
   };
 
-  class iteratable_poa_name
+  class TAO_Export iteratable_poa_name
   {
     // = TITLE
     //     This class allows iteration over a folded poa name.
@@ -528,7 +537,7 @@ public:
     const poa_name &folded_name_;
   };
 
-  class Non_Servant_Upcall
+  class TAO_Export Non_Servant_Upcall
   {
     // = TITLE
     //     This class helps us with a recursive thread lock without
@@ -669,7 +678,7 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  class Priority_Model_Processing
+  class TAO_Export Priority_Model_Processing
   {
     // = TITLE
     //     This class encapsulates processing necessary for

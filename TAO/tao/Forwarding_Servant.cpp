@@ -5,7 +5,7 @@
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
 #include "tao/Object.h"
-#include "tao/POAC.h"
+#include "tao/PortableServerC.h"
 #include "tao/Any.h"
 #include "tao/Server_Request.h"
 

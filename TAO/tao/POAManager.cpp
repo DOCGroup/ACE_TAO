@@ -231,11 +231,7 @@ TAO_POA_Manager::remove_poa (TAO_POA *poa)
     {
       if (this->poa_collection_.is_empty ())
         {
-          // @@ This may cause segfault if another thread gets a hold
-          // at this POAManager but gets blocked on register POA
-          // waiting for remove_poa to complete.  I think we need to
-          // use the client side mapping to refcount this.
-          delete this;
+          CORBA::release (this);
         }
     }
 

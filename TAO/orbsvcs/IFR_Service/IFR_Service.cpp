@@ -11,7 +11,7 @@
 ACE_RCSID(IFR_Service, IFR_Service, "$Id$")
 
 IFR_Service::IFR_Service (void)
-  : servant_locator_impl_ (0),
+  : servant_locator_ (),
     ior_multicast_ (0),
     config_ (0),
     repo_impl_ (0),
@@ -36,7 +36,6 @@ IFR_Service::~IFR_Service (void)
     }
 
   CORBA::release (this->repository_);
-  delete this->servant_locator_impl_;
   delete this->config_;
   delete this->ior_multicast_;
 }
@@ -48,23 +47,23 @@ IFR_Service::init (int argc,
 {
   ACE_TRY
     {
-      this->orb_ = CORBA::ORB_init (argc, 
-                                    argv, 
-                                    0, 
+      this->orb_ = CORBA::ORB_init (argc,
+                                    argv,
+                                    0,
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
-        this->orb_->resolve_initial_references ("RootPOA", 
+        this->orb_->resolve_initial_references ("RootPOA",
                                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       this->root_poa_ =
-        PortableServer::POA::_narrow (obj.in (), 
+        PortableServer::POA::_narrow (obj.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      int retval = OPTIONS::instance()->parse_args (argc, 
+      int retval = OPTIONS::instance()->parse_args (argc,
                                                     argv);
 
       if (retval != 0)
@@ -119,7 +118,7 @@ IFR_Service::init (int argc,
 int
 IFR_Service::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  int status = this->orb_->run (0, 
+  int status = this->orb_->run (0,
                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
@@ -138,14 +137,14 @@ IFR_Service::fini (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
-      this->root_poa_->destroy (1, 
-                                1, 
+      this->root_poa_->destroy (1,
+                                1,
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "IFR_Service::fini");
       ACE_RE_THROW;
     }
@@ -203,14 +202,14 @@ IFR_Service::create_poas (CORBA::Environment &ACE_TRY_ENV)
   // Specifically, we'll use a servant locator.
   policies[3] =
     this->root_poa_->create_servant_retention_policy (
-                         PortableServer::NON_RETAIN, 
+                         PortableServer::NON_RETAIN,
                          ACE_TRY_ENV
                        );
   ACE_CHECK_RETURN (-1);
 
   ACE_TString name = "ir_objectPOA";
 
-  this->ir_object_poa_ = 
+  this->ir_object_poa_ =
     this->root_poa_->create_POA (name.c_str (),
                                  poa_manager.in (),
                                  policies,
@@ -234,16 +233,12 @@ IFR_Service::create_poas (CORBA::Environment &ACE_TRY_ENV)
 int
 IFR_Service::create_locator (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_NEW_THROW_EX (this->servant_locator_impl_,
+  ACE_NEW_THROW_EX (this->servant_locator_,
                     IFR_ServantLocator (this->repo_impl_),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (-1);
 
-  PortableServer::ServantLocator_var servant_locator =
-    this->servant_locator_impl_->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  this->ir_object_poa_->set_servant_manager (servant_locator.in (),
+  this->ir_object_poa_->set_servant_manager (this->servant_locator_.in (),
                                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
@@ -256,9 +251,9 @@ IFR_Service::open_config (CORBA::Environment &ACE_TRY_ENV)
   if (OPTIONS::instance ()->using_registry ())
     {
 #if defined (ACE_WIN32)
-      HKEY root = 
+      HKEY root =
         ACE_Configuration_Win32Registry::resolve_key (
-            HKEY_LOCAL_MACHINE, 
+            HKEY_LOCAL_MACHINE,
             "Software\\TAO\\IFR"
           );
 
@@ -288,7 +283,7 @@ IFR_Service::open_config (CORBA::Environment &ACE_TRY_ENV)
                   LM_ERROR,
                   ACE_TEXT ("Error:: Opening persistent heap file '%s'\n"),
                   filename
-                ), 
+                ),
                 -1
               );
             }
@@ -325,7 +320,7 @@ IFR_Service::create_repository (CORBA::Environment &ACE_TRY_ENV)
   ACE_NEW_THROW_EX (
       impl_tie,
       POA_IR::ComponentRepository_tie<TAO_ComponentRepository_i> (
-          impl, 
+          impl,
           this->repo_poa_,
           1
         ),
@@ -346,21 +341,21 @@ IFR_Service::create_repository (CORBA::Environment &ACE_TRY_ENV)
   this->repository_ = impl_tie->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  
+
   impl->repo_objref (this->repository_);
 
   // Register with the INS.
-  this->orb_->_tao_add_to_IOR_table ("InterfaceRepository", 
+  this->orb_->_tao_add_to_IOR_table ("InterfaceRepository",
                                      this->repository_);
 
   // Save and output the IOR string.
   this->ifr_ior_ =
-    this->orb_->object_to_string (this->repository_, 
+    this->orb_->object_to_string (this->repository_,
                                   ACE_TRY_ENV);
 
   ACE_CHECK_RETURN (-1);
 
-  FILE *output_file_ = 
+  FILE *output_file_ =
     ACE_OS::fopen (OPTIONS::instance()->ior_output_file (),
                    "w");
 
@@ -397,7 +392,7 @@ IFR_Service::init_multicast_server (CORBA::Environment &ACE_TRY_ENV)
   if (port == 0)
     {
       // Check environment var. for multicast port.
-      const char *port_number = 
+      const char *port_number =
         ACE_OS::getenv ("InterfaceRepoServicePort");
 
       if (port_number != 0)
@@ -411,8 +406,8 @@ IFR_Service::init_multicast_server (CORBA::Environment &ACE_TRY_ENV)
 
   // Instantiate a handler which will handle client requests for
   // the IFR ior, received on the multicast port.
-  ACE_NEW_THROW_EX (this->ior_multicast_, 
-                    TAO_IOR_Multicast (), 
+  ACE_NEW_THROW_EX (this->ior_multicast_,
+                    TAO_IOR_Multicast (),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (-1);
 
@@ -468,4 +463,3 @@ IFR_Service::init_multicast_server (CORBA::Environment &ACE_TRY_ENV)
 
   return 0;
 }
-

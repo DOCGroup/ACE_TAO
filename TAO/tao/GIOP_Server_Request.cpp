@@ -7,7 +7,7 @@
 #include "tao/GIOP_Message_Acceptors.h"
 
 #include "tao/CDR.h"
-#include "tao/POAC.h"
+#include "tao/PortableServerC.h"
 #include "tao/Environment.h"
 #include "tao/NVList.h"
 #include "tao/Principal.h"

@@ -28,7 +28,7 @@
 
 #include "tao/POA_CORBA.h"
 #include "tao/Servant_Base.h"
-#include "tao/POAC.h"
+#include "tao/PortableServerC.h"
 #include "tao/Typecode.h"
 
 ACE_RCSID(tao, DynAnyS, "$Id$")

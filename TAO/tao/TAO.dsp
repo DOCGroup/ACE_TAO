@@ -556,25 +556,6 @@ SOURCE=.\CurrentC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CurrentS.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\debug.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -2057,7 +2038,7 @@ SOURCE=.\POA.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\POAC.cpp
+SOURCE=.\PortableServerC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -2077,25 +2058,6 @@ SOURCE=.\POAC.cpp
 # Begin Source File
 
 SOURCE=.\POAManager.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\POAS.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3762,19 +3724,11 @@ SOURCE=.\poa_macros.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\poa_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\poaC.h
+SOURCE=.\PortableServerC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\POAManager.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\poaS.h
 # End Source File
 # Begin Source File
 
@@ -4274,15 +4228,11 @@ SOURCE=.\params.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\poaC.i
+SOURCE=.\PortableServerC.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\POAManager.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\poaS.i
 # End Source File
 # Begin Source File
 

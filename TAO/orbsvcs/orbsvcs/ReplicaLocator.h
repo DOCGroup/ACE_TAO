@@ -31,7 +31,7 @@
 class TAO_LB_LoadBalancer;
 
 class TAO_LoadBalancing_Export TAO_LB_ReplicaLocator
-  : public virtual POA_PortableServer::ServantLocator
+  : public virtual PortableServer::ServantLocator
 {
   // = TITLE
   //    Class that provides request forwarding.

@@ -1128,7 +1128,6 @@ TAO_Policy_Current::implementation (void) const
   return *TAO_TSS_RESOURCES::instance ()->policy_current_;
 }
 
-
 void
 TAO_Policy_Current_Impl::set_policy_overrides (
         const CORBA::PolicyList & policies,
