@@ -74,6 +74,21 @@ ACE_TTY_IO::control (Control_Mode cmd,
         case 38400:
           c_cflag |= B38400;
           break;
+        case 56000:
+          c_cflag |= B56000;
+          break;
+        case 57600:
+          c_cflag |= B57600;
+          break;
+        case 115200:
+          c_cflag |= B115200;
+          break;
+        case 128000:
+          c_cflag |= B128000;
+          break;
+        case 256000:
+          c_cflag |= B256000;
+          break;
         default:
           return -1;
         }
@@ -107,8 +122,8 @@ ACE_TTY_IO::control (Control_Mode cmd,
       if (arg->parityenb)
         {
           c_cflag |= PARENB;
-          if (strcmp((char *) arg->paritymode,"ODD")==0 ||
-              strcmp((char *) arg->paritymode,"odd")==0)
+          if (ACE_OS::strcmp ((char *) arg->paritymode, "ODD") == 0 
+              || ACE_OS::strcmp ((char *) arg->paritymode, "odd") == 0)
             c_cflag |= PARODD;
         }
 #if defined (CRTSCTS)
@@ -120,14 +135,14 @@ ACE_TTY_IO::control (Control_Mode cmd,
         c_cflag |= CREAD;
 #endif /* CREAD */
 
-      c_oflag=0;
+      c_oflag = 0;
       c_iflag = IGNPAR | INPCK;
       if (arg->databits < 8)
         c_iflag |= ISTRIP;
-      c_lflag=0;
+      c_lflag = 0;
 
-      ivmin_cc4 =(u_char) 0;
-      ivtime_cc5=(u_char) (arg->readtimeoutmsec / 100);
+      ivmin_cc4 = (u_char) 0;
+      ivtime_cc5= (u_char) (arg->readtimeoutmsec / 100);
       devpar.c_iflag = c_iflag;
       devpar.c_oflag = c_oflag;
       devpar.c_cflag = c_cflag;
@@ -136,17 +151,17 @@ ACE_TTY_IO::control (Control_Mode cmd,
       devpar.c_cc[5] = ivtime_cc5;
 
 #if defined(TCSETS)
-      return this->ACE_IO_SAP::control (TCSETS, (void *) &devpar);
+      return this->ACE_IO_SAP::control (TCSETS,
+                                        (void *) &devpar);
 #elif defined(TCSETA)
-      return this->ACE_IO_SAP::control (TCSETA, (void *) &devpar);
+      return this->ACE_IO_SAP::control (TCSETA,
+                                        (void *) &devpar);
 #else
       errno = ENOSYS;
       return -1;
 #endif
-
     case GETPARAMS:
       return -1; // Not yet implemented.
-
     default:
       return -1; // Wrong cmd.
     }
@@ -168,6 +183,11 @@ ACE_TTY_IO::control (Control_Mode cmd,
         case  9600: dcb.BaudRate = CBR_9600; break;
         case  19200: dcb.BaudRate = CBR_19200; break;
         case  38400: dcb.BaudRate = CBR_38400; break;
+        case  56000: dcb.BaudRate = CBR_56000; break;
+        case  57600: dcb.BaudRate = CBR_57600; break;
+        case  115200: dcb.BaudRate = CBR_115200; break;
+        case  128000: dcb.BaudRate = CBR_128000; break;
+        case  256000: dcb.BaudRate = CBR_256000; break;
         default:  return -1;
         }
 
