@@ -1,14 +1,13 @@
 //
 // $Id$
 //
-#include "tao/corba.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "structC.h"
-#include <iostream.h>
+#include <iostream>
 
 using namespace StructTest;
 using namespace DynamicAny;
-;
+using namespace std;
 //--------------------------------------------------------------------
 int main (int argc, char * argv[])
 //--------------------------------------------------------------------
