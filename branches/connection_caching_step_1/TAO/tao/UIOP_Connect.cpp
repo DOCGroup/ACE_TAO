@@ -129,8 +129,8 @@ TAO_UIOP_Server_Connection_Handler::open (void*)
     return -1;
 
   // Construct an  UIOP_Endpoint object
-  TAO_UIOP_Endpoint endpoint (addr,
-                              0);
+  TAO_UIOP_Endpoint endpoint (addr);
+
 
   // Construct a property object
   TAO_Base_Connection_Property prop (&endpoint);
