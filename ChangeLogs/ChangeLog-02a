@@ -1,31 +1,37 @@
+Wed Aug 22 10:38:08 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/nightlybuilds/print_config.pl:
+          Add new perl script to print out the build configuration, the
+          script will be shared by the Unix and Win32 builds.
+
 Wed Aug 22 11:30:13 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
-	* ace/OS_Memory.h: 
-	  Removed include of pace/stddef.h. PACE does not have this
-	  file. There are no POSIX functions that typically reside
-	  in this header. Maybe PACE will need this later but it
-	  doesn't now.
+        * ace/OS_Memory.h:
+          Removed include of pace/stddef.h. PACE does not have this
+          file. There are no POSIX functions that typically reside
+          in this header. Maybe PACE will need this later but it
+          doesn't now.
 
-	* ace/OS.h (ACE_cond_t): 
-	  Modified #if guard to include ACE_cond_t class if we're
-	  on Win32. If we're using PACE then we don't want this method
-	  (since PACE takes care of it) unless we're on Windows. Win32
-	  mutexes, semaphores, and condition variables are not yet
-	  supported in PACE.
+        * ace/OS.h (ACE_cond_t):
+          Modified #if guard to include ACE_cond_t class if we're
+          on Win32. If we're using PACE then we don't want this method
+          (since PACE takes care of it) unless we're on Windows. Win32
+          mutexes, semaphores, and condition variables are not yet
+          supported in PACE.
 
-	* ace/OS.cpp (ACE_OS::cond_destroy): 
-	  Modified #if guard to include ACE_cond_t::cond_destroy
-	  if we're on Win32. If we're using PACE then we don't want
-	  this method (since PACE takes care of it) unless we're on
-	  Windows. Win32 mutexes, semaphores, and condition variables
-	  are not yet supported in PACE.
+        * ace/OS.cpp (ACE_OS::cond_destroy):
+          Modified #if guard to include ACE_cond_t::cond_destroy
+          if we're on Win32. If we're using PACE then we don't want
+          this method (since PACE takes care of it) unless we're on
+          Windows. Win32 mutexes, semaphores, and condition variables
+          are not yet supported in PACE.
 
-	* ace/OS.i (ACE_OS::waiters): 
-	  Modified #if guard to include ACE_cond_t::waiters if
-	  we're not on Win32. If we're using PACE then we want
-	  this method (since PACE defines cond_t) unless we're
-	  on Windows. Win32 mutexes, semaphores, and condition
-	  variables are not yet supported in PACE.
+        * ace/OS.i (ACE_OS::waiters):
+          Modified #if guard to include ACE_cond_t::waiters if
+          we're not on Win32. If we're using PACE then we want
+          this method (since PACE defines cond_t) unless we're
+          on Windows. Win32 mutexes, semaphores, and condition
+          variables are not yet supported in PACE.
 
 Tue Aug 21 08:26:30 2001  David L. Levine <levine@cs.wustl.edu>
 
