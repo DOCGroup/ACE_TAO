@@ -4,8 +4,11 @@ Fri Jun 19 07:25:41 1998  David L. Levine  <levine@cs.wustl.edu>
           break following a TAO_THROW to avoid compiler warning about
           unreachable statement.
 
-        * TAO/ORB.cpp (run): #ifdef'ed out unused locals max_iterations and
+        * tao/ORB.cpp (run): #ifdef'ed out unused locals max_iterations and
           counter.
+
+        * tests/NestedUpcall/client.cpp: removed unused static
+          max_sequence_length.
 
 Thu Jun 18 18:33:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
