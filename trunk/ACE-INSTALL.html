@@ -523,8 +523,8 @@ If you use the GNU GCC g++ compiler please note the following:
   <li>If you have problems building shared libraries with egcs 1.1 or 1.1.1
       on SunOS 2.5 or 2.5.1 that look like this:
       <pre>
-	/usr/ccs/lib/libgen.a(reg_compile.o): In function `_get_vars_storage':
-	reg_compile.o(.text+0x30): relocation truncated to fit: R_SPARC_GOT13 free
+        /usr/ccs/lib/libgen.a(reg_compile.o): In function `_get_vars_storage':
+        reg_compile.o(.text+0x30): relocation truncated to fit: R_SPARC_GOT13 free
       </pre>
       the suggested workaround is to comment out the <code>ACE_HAS_REGEX</code>
       <code>#define</code> in <code>ace/config-sunos5.5.h</code>.
@@ -786,7 +786,7 @@ and rebuild from scratch to ensure that everything is rebuilt correctly.
 You might have to manually go through the ACE directories and delete
 all *.obj, *.dll, *.lib, *.ilk, *.pdb, *.idb, *.ncb, *.opt, and *.exp
 files in order to start over from scratch (the Clean command in MSVC
-may not do this).  
+may not do this).
 <P>
 
 ACE contains project files for Microsoft Visual C++ 4.x (*.mdp) and
@@ -1122,6 +1122,14 @@ without the ACE library by added <code>ACELIB=</code> to the make
 invocation when building them.  When they are loaded onto the target,
 the should load against the symbols from the ACE library from the
 first executable that was loaded.<p>
+
+ACE now supports shared libraries for VxWorks, but only with the
+g++ compiler.  To build shared libraries instead of the default
+static libraries, added <code>static_libs_only=1</code> to either
+your <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code>
+or your <code>make</code> invocation.  Then, be sure to load
+the ACE (and any other) shared library before loading your
+executable(s).<p>
 
 <h5><a name="VxWorks/NT">Building ACE on Tornado/NT hosts for VxWorks targets</a>.</h5>
 The following, very useful information was contributed by
