@@ -1,3 +1,10 @@
+Thu Jan 22 09:04:13 1998  David L. Levine  <@cs.wustl.edu>
+
+        * ace/Hash_Map_Manager.cpp (ACE_Hash_Map_Iterator_Base ctor):
+          added a cast of mm.total_size_ to ssize_t, to try to avoid
+          a compiler warning.  Thanks to Brian Mendel <bmendel@mdc.com>
+          for reporting this.
+
 Wed Jan 21 21:37:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.cpp (close_i): Removed the HPUX_11
