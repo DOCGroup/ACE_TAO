@@ -1,3 +1,22 @@
+Wed Sep  8 12:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/diffs/*.diff:
+          Serveral new diffs
+
+        * tao/PortableServer/*C.{h,cpp,inl}:
+          Several new generated files
+
+        * tao/PortableServer/POA.{h,cpp}:
+          Removed tao_poa_downcast, use dynamic cast
+          Also inherit from GOA, this will be moved soon.
+
+        * tao/PortableGroup_Hooks.h:
+          Temporarily removed checks for minimum poa, this has to move
+          together with the GOA to the PortableGroup library.
+
+          Also used the minimum corba 1.0 spec to remove the parts we don't
+          use with minimum corba.
+
 Wed Sep  8 10:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/diffs/PS_Forward.diff:
@@ -8,6 +27,9 @@ Wed Sep  8 08:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.{h,cpp,i}:
           Zapped tss_resources, we don't need to store them
+
+        * tao/ORB_Core.{h,cpp}:
+          Zapped inherit_from_parent_thread
 
 Wed Sep  8 08:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
