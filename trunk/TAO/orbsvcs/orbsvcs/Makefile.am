@@ -738,10 +738,6 @@ libTAO_CosEvent_Skel_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_CosEvent_Skel_la_LIBADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosEvent.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -818,12 +814,12 @@ libTAO_CosEvent_Serv_la_LDFLAGS = \
 libTAO_CosEvent_Serv_la_LIBADD = \
   libTAO_Svc_Utils.la \
   libTAO_CosNaming.la \
-  libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  libTAO_CosEvent_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosEvent.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -1889,11 +1885,7 @@ libTAO_CosNotification_Skel_la_LDFLAGS = \
 
 libTAO_CosNotification_Skel_la_LIBADD = \
   libTAO_CosEvent_Skel.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNotification.la \
   libTAO_CosEvent.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -2018,11 +2010,7 @@ libTAO_CosNotification_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   libTAO_CosNotification_Skel.la \
   libTAO_CosEvent_Skel.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNotification.la \
   libTAO_CosEvent.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -2481,76 +2469,48 @@ EXTRA_DIST += \
 BUILT_SOURCES += \
   DsLogAdminS_T.cpp \
   DsLogAdminC.inl \
-  DsLogAdminS.inl \
   DsLogAdminS_T.inl \
   DsLogAdminC.cpp \
-  DsLogAdminS.cpp \
   DsLogAdminC.h \
-  DsLogAdminS.h \
   DsLogAdminS_T.h
 
 CLEANFILES += \
   DsLogAdminS_T.cpp \
   DsLogAdminC.inl \
-  DsLogAdminS.inl \
   DsLogAdminS_T.inl \
   DsLogAdminC.cpp \
-  DsLogAdminS.cpp \
   DsLogAdminC.h \
-  DsLogAdminS.h \
   DsLogAdminS_T.h \
   DsLogAdmin-stamp
 
-DsLogAdminS_T.cpp DsLogAdminC.inl DsLogAdminS.inl DsLogAdminS_T.inl DsLogAdminC.cpp DsLogAdminS.cpp DsLogAdminC.h DsLogAdminS.h DsLogAdminS_T.h: DsLogAdmin-stamp
+DsLogAdminS_T.cpp DsLogAdminC.inl DsLogAdminS_T.inl DsLogAdminC.cpp DsLogAdminC.h DsLogAdminS_T.h: DsLogAdmin-stamp
 
 DsLogAdmin-stamp: $(srcdir)/DsLogAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Log_Export -Wb,export_include=orbsvcs/Log/log_export.h $(srcdir)/DsLogAdmin.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h $(srcdir)/DsLogAdmin.idl
 	@touch $@
 
 BUILT_SOURCES += \
   DsLogNotificationS_T.cpp \
   DsLogNotificationC.inl \
-  DsLogNotificationS.inl \
   DsLogNotificationS_T.inl \
   DsLogNotificationC.cpp \
-  DsLogNotificationS.cpp \
   DsLogNotificationC.h \
-  DsLogNotificationS.h \
   DsLogNotificationS_T.h
 
 CLEANFILES += \
   DsLogNotificationS_T.cpp \
   DsLogNotificationC.inl \
-  DsLogNotificationS.inl \
   DsLogNotificationS_T.inl \
   DsLogNotificationC.cpp \
-  DsLogNotificationS.cpp \
   DsLogNotificationC.h \
-  DsLogNotificationS.h \
   DsLogNotificationS_T.h \
   DsLogNotification-stamp
 
-DsLogNotificationS_T.cpp DsLogNotificationC.inl DsLogNotificationS.inl DsLogNotificationS_T.inl DsLogNotificationC.cpp DsLogNotificationS.cpp DsLogNotificationC.h DsLogNotificationS.h DsLogNotificationS_T.h: DsLogNotification-stamp
+DsLogNotificationS_T.cpp DsLogNotificationC.inl DsLogNotificationS_T.inl DsLogNotificationC.cpp DsLogNotificationC.h DsLogNotificationS_T.h: DsLogNotification-stamp
 
 DsLogNotification-stamp: $(srcdir)/DsLogNotification.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Log_Export -Wb,export_include=orbsvcs/Log/log_export.h $(srcdir)/DsLogNotification.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h $(srcdir)/DsLogNotification.idl
 	@touch $@
-
-DsLogAdmin = \
-  DsLogAdminC.cpp \
-  DsLogAdminS.cpp \
-  DsLogNotificationC.cpp \
-  DsLogNotificationS.cpp \
-  Log/BasicLogFactory_i.cpp \
-  Log/BasicLog_i.cpp \
-  Log/Iterator_i.cpp \
-  Log/LogMgr_i.cpp \
-  Log/LogNotification.cpp \
-  Log/LogRecordStore.cpp \
-  Log/Log_Constraint_Interpreter.cpp \
-  Log/Log_Constraint_Visitors.cpp \
-  Log/Log_i.cpp \
-  Log/PersistStore.cpp
 
 lib_LTLIBRARIES += libTAO_DsLogAdmin.la
 
@@ -2564,43 +2524,26 @@ libTAO_DsLogAdmin_la_CPPFLAGS = \
   -DTAO_LOG_BUILD_DLL
 
 libTAO_DsLogAdmin_la_SOURCES = \
-  $(DsLogAdmin)
+  DsLogAdminC.cpp \
+  DsLogNotificationC.cpp
 
 libTAO_DsLogAdmin_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_DsLogAdmin_la_LIBADD = \
-  libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
   Channel_Clients_T.h \
   DsLogAdminC.h \
-  DsLogAdminS.h \
   DsLogAdminS_T.h \
   DsLogNotificationC.h \
-  DsLogNotificationS.h \
   DsLogNotificationS_T.h \
-  Log/BasicLogFactory_i.h \
-  Log/BasicLog_i.h \
-  Log/Iterator_i.h \
-  Log/LogMgr_i.h \
-  Log/LogNotification.h \
-  Log/LogRecordStore.h \
-  Log/Log_Constraint_Interpreter.h \
-  Log/Log_Constraint_Visitors.h \
-  Log/Log_i.h \
-  Log/PersistStore.h \
   Channel_Clients_T.i \
   DsLogAdminC.inl \
-  DsLogAdminS.inl \
   DsLogAdminS_T.inl \
   DsLogNotificationC.inl \
-  DsLogNotificationS.inl \
   DsLogNotificationS_T.inl \
   Channel_Clients_T.cpp \
   DsLogAdminS_T.cpp \
@@ -2618,39 +2561,25 @@ if !BUILD_MINIMUM_CORBA
 BUILT_SOURCES += \
   DsEventLogAdminS_T.cpp \
   DsEventLogAdminC.inl \
-  DsEventLogAdminS.inl \
   DsEventLogAdminS_T.inl \
   DsEventLogAdminC.cpp \
-  DsEventLogAdminS.cpp \
   DsEventLogAdminC.h \
-  DsEventLogAdminS.h \
   DsEventLogAdminS_T.h
 
 CLEANFILES += \
   DsEventLogAdminS_T.cpp \
   DsEventLogAdminC.inl \
-  DsEventLogAdminS.inl \
   DsEventLogAdminS_T.inl \
   DsEventLogAdminC.cpp \
-  DsEventLogAdminS.cpp \
   DsEventLogAdminC.h \
-  DsEventLogAdminS.h \
   DsEventLogAdminS_T.h \
   DsEventLogAdmin-stamp
 
-DsEventLogAdminS_T.cpp DsEventLogAdminC.inl DsEventLogAdminS.inl DsEventLogAdminS_T.inl DsEventLogAdminC.cpp DsEventLogAdminS.cpp DsEventLogAdminC.h DsEventLogAdminS.h DsEventLogAdminS_T.h: DsEventLogAdmin-stamp
+DsEventLogAdminS_T.cpp DsEventLogAdminC.inl DsEventLogAdminS_T.inl DsEventLogAdminC.cpp DsEventLogAdminC.h DsEventLogAdminS_T.h: DsEventLogAdmin-stamp
 
 DsEventLogAdmin-stamp: $(srcdir)/DsEventLogAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_EventLog_Export -Wb,export_include=orbsvcs/Log/eventlog_export.h $(srcdir)/DsEventLogAdmin.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h $(srcdir)/DsEventLogAdmin.idl
 	@touch $@
-
-DsEventLogAdmin = \
-  DsEventLogAdminC.cpp \
-  DsEventLogAdminS.cpp \
-  Log/EventLogConsumer.cpp \
-  Log/EventLogFactory_i.cpp \
-  Log/EventLogNotification.cpp \
-  Log/EventLog_i.cpp
 
 lib_LTLIBRARIES += libTAO_DsEventLogAdmin.la
 
@@ -2665,43 +2594,219 @@ libTAO_DsEventLogAdmin_la_CPPFLAGS = \
   -DTAO_EVENTLOG_BUILD_DLL
 
 libTAO_DsEventLogAdmin_la_SOURCES = \
-  $(DsEventLogAdmin)
+  DsEventLogAdminC.cpp
 
 libTAO_DsEventLogAdmin_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_DsEventLogAdmin_la_LIBADD = \
-  libTAO_CosEvent_Serv.la \
-  libTAO_CosEvent_Skel.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosEvent.la \
   libTAO_DsLogAdmin.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  libTAO_ETCL.la \
-  libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
   Channel_Clients_T.h \
   DsEventLogAdminC.h \
-  DsEventLogAdminS.h \
   DsEventLogAdminS_T.h \
+  Channel_Clients_T.i \
+  DsEventLogAdminC.inl \
+  DsEventLogAdminS_T.inl \
+  Channel_Clients_T.cpp \
+  DsEventLogAdminS_T.cpp \
+  DsEventLogAdmin.idl
+
+endif !BUILD_MINIMUM_CORBA
+
+EXTRA_DIST += \
+  DsEventLogAdmin.rc
+
+## Makefile.DsLogAdmin_Skel.am 
+
+lib_LTLIBRARIES += libTAO_DsLogAdmin_Skel.la
+
+libTAO_DsLogAdmin_Skel_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_LOG_SKEL_BUILD_DLL
+
+libTAO_DsLogAdmin_Skel_la_SOURCES = \
+  DsLogAdminS.cpp \
+  DsLogNotificationS.cpp
+
+libTAO_DsLogAdmin_Skel_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_DsLogAdmin_Skel_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Channel_Clients_T.h \
+  DsLogAdminS.h \
+  DsLogNotificationS.h \
+  Channel_Clients_T.i \
+  DsLogAdminS.inl \
+  DsLogNotificationS.inl \
+  Channel_Clients_T.cpp
+
+## Makefile.DsLogAdmin_Serv.am 
+
+DsLogAdmin = \
+  Log/BasicLogFactory_i.cpp \
+  Log/BasicLog_i.cpp \
+  Log/Iterator_i.cpp \
+  Log/LogMgr_i.cpp \
+  Log/LogNotification.cpp \
+  Log/LogRecordStore.cpp \
+  Log/Log_Constraint_Interpreter.cpp \
+  Log/Log_Constraint_Visitors.cpp \
+  Log/Log_i.cpp \
+  Log/PersistStore.cpp
+
+lib_LTLIBRARIES += libTAO_DsLogAdmin_Serv.la
+
+libTAO_DsLogAdmin_Serv_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_LOG_SERV_BUILD_DLL
+
+libTAO_DsLogAdmin_Serv_la_SOURCES = \
+  $(DsLogAdmin)
+
+libTAO_DsLogAdmin_Serv_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_DsLogAdmin_Serv_la_LIBADD = \
+  libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  libTAO_DsLogAdmin_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Channel_Clients_T.h \
+  Log/BasicLogFactory_i.h \
+  Log/BasicLog_i.h \
+  Log/Iterator_i.h \
+  Log/LogMgr_i.h \
+  Log/LogNotification.h \
+  Log/LogRecordStore.h \
+  Log/Log_Constraint_Interpreter.h \
+  Log/Log_Constraint_Visitors.h \
+  Log/Log_i.h \
+  Log/PersistStore.h \
+  Channel_Clients_T.i \
+  Channel_Clients_T.cpp
+
+## Makefile.DsEventLogAdmin_Skel.am 
+
+if !BUILD_MINIMUM_CORBA
+
+lib_LTLIBRARIES += libTAO_DsEventLogAdmin_Skel.la
+
+libTAO_DsEventLogAdmin_Skel_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL \
+  -DTAO_EVENTLOG_SKEL_BUILD_DLL
+
+libTAO_DsEventLogAdmin_Skel_la_SOURCES = \
+  DsEventLogAdminS.cpp
+
+libTAO_DsEventLogAdmin_Skel_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_DsEventLogAdmin_Skel_la_LIBADD = \
+  libTAO_CosEvent_Skel.la \
+  libTAO_DsLogAdmin_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  libTAO_DsEventLogAdmin.la \
+  libTAO_CosEvent.la \
+  libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Channel_Clients_T.h \
+  DsEventLogAdminS.h \
+  Channel_Clients_T.i \
+  DsEventLogAdminS.inl \
+  Channel_Clients_T.cpp
+
+endif !BUILD_MINIMUM_CORBA
+
+## Makefile.DsEventLogAdmin_Serv.am 
+
+if !BUILD_MINIMUM_CORBA
+
+DsEventLogAdmin = \
+  Log/EventLogConsumer.cpp \
+  Log/EventLogFactory_i.cpp \
+  Log/EventLogNotification.cpp \
+  Log/EventLog_i.cpp
+
+lib_LTLIBRARIES += libTAO_DsEventLogAdmin_Serv.la
+
+libTAO_DsEventLogAdmin_Serv_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL \
+  -DTAO_EVENTLOG_SERV_BUILD_DLL
+
+libTAO_DsEventLogAdmin_Serv_la_SOURCES = \
+  $(DsEventLogAdmin)
+
+libTAO_DsEventLogAdmin_Serv_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_DsEventLogAdmin_Serv_la_LIBADD = \
+  libTAO_CosEvent_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  libTAO_DsLogAdmin_Serv.la \
+  libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  libTAO_DsEventLogAdmin_Skel.la \
+  libTAO_CosEvent_Skel.la \
+  libTAO_DsLogAdmin_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  libTAO_DsEventLogAdmin.la \
+  libTAO_CosEvent.la \
+  libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Channel_Clients_T.h \
   Log/EventLogConsumer.h \
   Log/EventLogFactory_i.h \
   Log/EventLogNotification.h \
   Log/EventLog_i.h \
   Channel_Clients_T.i \
-  DsEventLogAdminC.inl \
-  DsEventLogAdminS.inl \
-  DsEventLogAdminS_T.inl \
-  Channel_Clients_T.cpp \
-  DsEventLogAdminS_T.cpp \
-  DsEventLogAdmin.idl
+  Channel_Clients_T.cpp
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -2712,39 +2817,25 @@ if !BUILD_MINIMUM_CORBA
 BUILT_SOURCES += \
   DsNotifyLogAdminS_T.cpp \
   DsNotifyLogAdminC.inl \
-  DsNotifyLogAdminS.inl \
   DsNotifyLogAdminS_T.inl \
   DsNotifyLogAdminC.cpp \
-  DsNotifyLogAdminS.cpp \
   DsNotifyLogAdminC.h \
-  DsNotifyLogAdminS.h \
   DsNotifyLogAdminS_T.h
 
 CLEANFILES += \
   DsNotifyLogAdminS_T.cpp \
   DsNotifyLogAdminC.inl \
-  DsNotifyLogAdminS.inl \
   DsNotifyLogAdminS_T.inl \
   DsNotifyLogAdminC.cpp \
-  DsNotifyLogAdminS.cpp \
   DsNotifyLogAdminC.h \
-  DsNotifyLogAdminS.h \
   DsNotifyLogAdminS_T.h \
   DsNotifyLogAdmin-stamp
 
-DsNotifyLogAdminS_T.cpp DsNotifyLogAdminC.inl DsNotifyLogAdminS.inl DsNotifyLogAdminS_T.inl DsNotifyLogAdminC.cpp DsNotifyLogAdminS.cpp DsNotifyLogAdminC.h DsNotifyLogAdminS.h DsNotifyLogAdminS_T.h: DsNotifyLogAdmin-stamp
+DsNotifyLogAdminS_T.cpp DsNotifyLogAdminC.inl DsNotifyLogAdminS_T.inl DsNotifyLogAdminC.cpp DsNotifyLogAdminC.h DsNotifyLogAdminS_T.h: DsNotifyLogAdmin-stamp
 
 DsNotifyLogAdmin-stamp: $(srcdir)/DsNotifyLogAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_NotifyLog_Export -Wb,export_include=orbsvcs/Log/notifylog_export.h $(srcdir)/DsNotifyLogAdmin.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_NotifyLog_Export -Wb,stub_export_include=orbsvcs/Log/notifylog_export.h -Wb,skel_export_macro=TAO_NotifyLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/notifylog_skel_export.h $(srcdir)/DsNotifyLogAdmin.idl
 	@touch $@
-
-DsNotifyLogAdmin = \
-  DsNotifyLogAdminC.cpp \
-  DsNotifyLogAdminS.cpp \
-  Log/NotifyLogConsumer.cpp \
-  Log/NotifyLogFactory_i.cpp \
-  Log/NotifyLogNotification.cpp \
-  Log/NotifyLog_i.cpp
 
 lib_LTLIBRARIES += libTAO_DsNotifyLogAdmin.la
 
@@ -2759,46 +2850,134 @@ libTAO_DsNotifyLogAdmin_la_CPPFLAGS = \
   -DTAO_NOTIFYLOG_BUILD_DLL
 
 libTAO_DsNotifyLogAdmin_la_SOURCES = \
-  $(DsNotifyLogAdmin)
+  DsNotifyLogAdminC.cpp
 
 libTAO_DsNotifyLogAdmin_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_DsNotifyLogAdmin_la_LIBADD = \
-  libTAO_CosNotification_Skel.la \
   libTAO_CosNotification.la \
   libTAO_DsEventLogAdmin.la \
-  libTAO_CosEvent_Serv.la \
-  libTAO_CosEvent_Skel.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosEvent.la \
   libTAO_DsLogAdmin.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  libTAO_ETCL.la \
-  libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
   Channel_Clients_T.h \
   DsNotifyLogAdminC.h \
-  DsNotifyLogAdminS.h \
   DsNotifyLogAdminS_T.h \
+  Channel_Clients_T.i \
+  DsNotifyLogAdminC.inl \
+  DsNotifyLogAdminS_T.inl \
+  Channel_Clients_T.cpp \
+  DsNotifyLogAdminS_T.cpp \
+  DsNotifyLogAdmin.idl
+
+endif !BUILD_MINIMUM_CORBA
+
+EXTRA_DIST += \
+  DsNotifyLogAdmin.rc
+
+## Makefile.DsNotifyLogAdmin_Skel.am 
+
+if !BUILD_MINIMUM_CORBA
+
+lib_LTLIBRARIES += libTAO_DsNotifyLogAdmin_Skel.la
+
+libTAO_DsNotifyLogAdmin_Skel_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL \
+  -DTAO_NOTIFYLOG_SKEL_BUILD_DLL
+
+libTAO_DsNotifyLogAdmin_Skel_la_SOURCES = \
+  DsNotifyLogAdminS.cpp
+
+libTAO_DsNotifyLogAdmin_Skel_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_DsNotifyLogAdmin_Skel_la_LIBADD = \
+  libTAO_CosNotification_Skel.la \
+  libTAO_DsEventLogAdmin_Skel.la \
+  libTAO_CosEvent_Skel.la \
+  libTAO_DsLogAdmin_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  libTAO_DsNotifyLogAdmin.la \
+  libTAO_CosNotification.la \
+  libTAO_DsEventLogAdmin.la \
+  libTAO_CosEvent.la \
+  libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Channel_Clients_T.h \
+  DsNotifyLogAdminS.h \
+  Channel_Clients_T.i \
+  DsNotifyLogAdminS.inl \
+  Channel_Clients_T.cpp
+
+endif !BUILD_MINIMUM_CORBA
+
+## Makefile.DsNotifyLogAdmin_Serv.am 
+
+if !BUILD_MINIMUM_CORBA
+
+DsNotifyLogAdmin = \
+  Log/NotifyLogConsumer.cpp \
+  Log/NotifyLogFactory_i.cpp \
+  Log/NotifyLogNotification.cpp \
+  Log/NotifyLog_i.cpp
+
+lib_LTLIBRARIES += libTAO_DsNotifyLogAdmin_Serv.la
+
+libTAO_DsNotifyLogAdmin_Serv_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL \
+  -DTAO_NOTIFYLOG_SERV_BUILD_DLL
+
+libTAO_DsNotifyLogAdmin_Serv_la_SOURCES = \
+  $(DsNotifyLogAdmin)
+
+libTAO_DsNotifyLogAdmin_Serv_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_DsNotifyLogAdmin_Serv_la_LIBADD = \
+  libTAO_DsLogAdmin_Serv.la \
+  libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  libTAO_DsNotifyLogAdmin_Skel.la \
+  libTAO_CosNotification_Skel.la \
+  libTAO_DsEventLogAdmin_Skel.la \
+  libTAO_CosEvent_Skel.la \
+  libTAO_DsLogAdmin_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  libTAO_DsNotifyLogAdmin.la \
+  libTAO_CosNotification.la \
+  libTAO_DsEventLogAdmin.la \
+  libTAO_CosEvent.la \
+  libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Channel_Clients_T.h \
   Log/NotifyLogConsumer.h \
   Log/NotifyLogFactory_i.h \
   Log/NotifyLogNotification.h \
   Log/NotifyLog_i.h \
   Channel_Clients_T.i \
-  DsNotifyLogAdminC.inl \
-  DsNotifyLogAdminS.inl \
-  DsNotifyLogAdminS_T.inl \
-  Channel_Clients_T.cpp \
-  DsNotifyLogAdminS_T.cpp \
-  DsNotifyLogAdmin.idl
+  Channel_Clients_T.cpp
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -4451,8 +4630,6 @@ libTAO_RTEventLogAdmin_la_LDFLAGS = \
 
 libTAO_RTEventLogAdmin_la_LIBADD = \
   libTAO_DsLogAdmin.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  libTAO_ETCL.la \
   libTAO_RTOLDEvent.la \
   libTAO_RTSched.la \
   libTAO_RTEvent.la \
@@ -4624,12 +4801,15 @@ libTAO_RT_Notification_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_RT_Notification_la_LIBADD = \
+  libTAO_CosNotification_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  libTAO_ETCL.la \
+  libTAO_CosNotification_Skel.la \
+  libTAO_CosEvent_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosNotification.la \
   libTAO_CosEvent.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
