@@ -27,8 +27,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
@@ -41,6 +39,8 @@ namespace TAO
 
       virtual ~RequestProcessingStrategyAOMOnly (void);
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
       PortableServer::ServantManager_ptr
       get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
@@ -51,6 +51,8 @@ namespace TAO
                            ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
       PortableServer::Servant
       get_servant (ACE_ENV_SINGLE_ARG_DECL)
@@ -98,8 +100,6 @@ namespace TAO
     };
   }
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_REQUESTPROCESSINGSTRATEGYAOMONLY_H */

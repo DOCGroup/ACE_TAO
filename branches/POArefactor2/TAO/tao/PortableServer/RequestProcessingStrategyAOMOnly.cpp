@@ -10,8 +10,6 @@ ACE_RCSID (PortableServer,
            Request_Processing,
            "$Id$")
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
@@ -23,6 +21,8 @@ namespace TAO
     RequestProcessingStrategyAOMOnly::~RequestProcessingStrategyAOMOnly()
     {
     }
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
     PortableServer::ServantManager_ptr
     RequestProcessingStrategyAOMOnly::get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
@@ -42,6 +42,8 @@ namespace TAO
     {
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     PortableServer::Servant
     RequestProcessingStrategyAOMOnly::get_servant (ACE_ENV_SINGLE_ARG_DECL)
@@ -153,6 +155,4 @@ namespace TAO
     }
   }
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 

@@ -23,8 +23,6 @@
 #include "ace/Service_Config.h"
 #include "tao/PortableServer/RequestProcessingStrategyFactory.h"
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
@@ -35,10 +33,7 @@ namespace TAO
     public:
       virtual ~RequestProcessingStrategyFactoryImpl (void);
 
-      /// Create a new servant retention strategy
-      virtual RequestProcessingStrategy* create (
-        ::PortableServer::RequestProcessingPolicyValue value);
-
+      /// Create a new request processing strategy
       virtual RequestProcessingStrategy* create (
         ::PortableServer::RequestProcessingPolicyValue value,
         ::PortableServer::ServantRetentionPolicyValue srvalue);
@@ -48,8 +43,6 @@ namespace TAO
     ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingStrategyFactoryImpl)
   }
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PORTABLESERVER_REQUESTPROCESSINGSTRATEGYFACTORYIMPL_H */

@@ -11,38 +11,12 @@ ACE_RCSID (PortableServer,
            RequestProcessingStrategyFactoryImpl,
            "$Id$")
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
   {
     RequestProcessingStrategyFactoryImpl::~RequestProcessingStrategyFactoryImpl (void)
     {
-    }
-    RequestProcessingStrategy*
-    RequestProcessingStrategyFactoryImpl::create (
-      ::PortableServer::RequestProcessingPolicyValue value)
-    {
-      RequestProcessingStrategy* strategy = 0;
-
-      switch (value)
-      {
-        case ::PortableServer::USE_DEFAULT_SERVANT :
-        {
-          break;
-        }
-        case ::PortableServer::USE_SERVANT_MANAGER :
-        {
-          break;
-        }
-        case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
-        {
-          break;
-        }
-      }
-
-      return strategy;
     }
 
     RequestProcessingStrategy*
@@ -61,11 +35,14 @@ namespace TAO
         }
         case ::PortableServer::USE_DEFAULT_SERVANT :
         {
+#if (TAO_HAS_MINIMUM_POA == 0)
           ACE_NEW_RETURN (strategy, RequestProcessingStrategyDefaultServant, 0);
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
           break;
         }
         case ::PortableServer::USE_SERVANT_MANAGER :
         {
+#if (TAO_HAS_MINIMUM_POA == 0)
           switch (srvalue)
           {
             case ::PortableServer::RETAIN :
@@ -79,6 +56,7 @@ namespace TAO
               break;
             }
           }
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
           break;
         }
       }
@@ -98,16 +76,10 @@ namespace TAO
     ACE_FACTORY_DEFINE (TAO_PortableServer, RequestProcessingStrategyFactoryImpl)
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
     template class ACE_Dynamic_Service<RequestProcessingStrategyFactoryImpl>;
-
     #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
     #pragma instantiate ACE_Dynamic_Service<RequestProcessingStrategyFactoryImpl>
-
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
