@@ -21,6 +21,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "tao/corba.h"
 #include "Naming_Utils.h"
+#include "tao/orbobj.h"
 
 // Default constructor
 
@@ -103,9 +104,10 @@ TAO_Naming_Server::init (CORBA::ORB_var &orb,
 
       // Instantiate a server which will receive requests for an ior
       ACE_NEW_RETURN (ior_multicast_,
-                      IOR_Multicast (naming_ior ,
+                      IOR_Multicast (naming_ior,
                                      port,
-                                     ACE_DEFAULT_MULTICAST_ADDR),
+                                     ACE_DEFAULT_MULTICAST_ADDR,
+				     TAO_SERVICEID_NAMESERVICE),
                       -1);
       
       // Register event handler for the ior multicast.
