@@ -17,13 +17,10 @@ class Ping_i: public POA_Ping_Object
 public:
   Ping_i (int debug = 0) : debug_ (debug) {}
 
-  virtual void ping (CORBA::Environment &env = CORBA_Environment::default_environment ())
+  virtual void ping (CORBA::Environment &)
     {
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG, "Pong!\n"));
-
-      ACE_UNUSED_ARG (env);
-      // Does nothing, just returns.
     }
 private:
   int debug_;
@@ -42,46 +39,53 @@ IR_Helper::IR_Helper (char *server_name,
     orb_ (orb),
     debug_ (debug)
 {
+  const char *exception_message = "Null Message";
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
-      this->read_ir_ior (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      exception_message = "While read_ir_ior";
+      this->read_ir_ior (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Resolve the IR.
+      exception_message = "While string_to_object of ImplRepo";
       CORBA::Object_var implrepo_object =
-        this->orb_->string_to_object (this->ir_key_, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        this->orb_->string_to_object (this->ir_key_, ACE_TRY_ENV);
+      ACE_TRY_CHECK;;
 
       if (CORBA::is_nil (implrepo_object.in ()))
         ACE_ERROR ((LM_ERROR,
                     "invalid implrepo key <%s>\n",
                     this->ir_key_));
 
+      exception_message = "While narrowing ImplRepo";
       this->implrepo_ =
-        Implementation_Repository::_narrow (implrepo_object.in(), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        Implementation_Repository::_narrow (implrepo_object.in(), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Now register the Ping Object
        PortableServer::ObjectId_var ping_id =
       PortableServer::string_to_ObjectId ("ping");
 
+      exception_message = "While activating ping object";
       this->poa_->activate_object_with_id (ping_id.in (),
                                            this->ping_,
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
+      exception_message = "While creating reference to ping object";
       this->ping_ptr_ =
         this->poa_->id_to_reference (ping_id.in (),
-                                     TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("IR_Helper::IR_Helper");
+      ACE_ERROR ((LM_ERROR, "IR_Helper::IR_Helper - %s\n", exception_message));
+      ACE_TRY_ENV.print_exception ("SYS_EX");
       return;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 }
 
 IR_Helper::~IR_Helper ()
@@ -96,17 +100,17 @@ int
 IR_Helper::register_server (const char *comm_line,
                             const char *environment,
                             const char *working_dir,
-                            CORBA_Environment &TAO_IN_ENV)
+                            CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_TRY
+  ACE_TRY
     {
       CORBA::Object_var implrepo_object =
-        this->orb_->string_to_object (this->ir_key_, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        this->orb_->string_to_object (this->ir_key_, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       Implementation_Repository *ImplRepo =
-        Implementation_Repository::_narrow (implrepo_object.in(), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        Implementation_Repository::_narrow (implrepo_object.in(), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (implrepo_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -120,21 +124,21 @@ IR_Helper::register_server (const char *comm_line,
       proc_opts.environment_ = CORBA::string_dup (environment);
       proc_opts.working_directory_ = CORBA::string_dup (working_dir);
 
-      ImplRepo->reregister_server (this->name_, proc_opts, TAO_TRY_ENV);
+      ImplRepo->reregister_server (this->name_, proc_opts, ACE_TRY_ENV);
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("IR_Helper::register_server");
+      ACE_TRY_ENV.print_exception ("IR_Helper::register_server");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
 
 int
-IR_Helper::read_ir_ior (CORBA_Environment &TAO_IN_ENV)
+IR_Helper::read_ir_ior (CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (TAO_IN_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 
   // Open the file for reading.
   // @@ Hard-coded name is bad.  Need to fix.
@@ -159,7 +163,7 @@ IR_Helper::read_ir_ior (CORBA_Environment &TAO_IN_ENV)
 
 
 void
-IR_Helper::notify_startup (CORBA_Environment &TAO_IN_ENV)
+IR_Helper::notify_startup (CORBA_Environment &ACE_TRY_ENV)
 {
   // Get our host and port and convert it to something we can use.
   ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
@@ -167,41 +171,41 @@ IR_Helper::notify_startup (CORBA_Environment &TAO_IN_ENV)
   my_ir_addr.port_ = my_addr.get_port_number ();
   my_ir_addr.host_ = CORBA::string_dup (my_addr.get_host_name ());
 
-  TAO_TRY
+  ACE_TRY
     {
       delete this->ir_addr_;
       this->ir_addr_ = this->implrepo_->server_is_running (this->name_,
                                                            my_ir_addr,
                                                            this->ping_ptr_,
-                                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       TAO_RETHROW;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 }
 
 
 // Notify the IR that the server has been shut down.
 void
-IR_Helper::notify_shutdown (CORBA_Environment &TAO_IN_ENV)
+IR_Helper::notify_shutdown (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_TRY
+  ACE_TRY
     {
-      this->implrepo_->server_is_shutting_down (this->name_, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->implrepo_->server_is_shutting_down (this->name_, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       TAO_RETHROW;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 }
 
 void
-IR_Helper::change_object (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV)
+IR_Helper::change_object (CORBA::Object_ptr obj, CORBA_Environment &ACE_TRY_ENV)
 {
   if ( obj
     && obj->_stubobj ()
