@@ -19,6 +19,15 @@ void *ACE_Object_Manager::managed_object[ACE_MAX_MANAGED_OBJECTS] = { 0 };
 
 u_int ACE_Object_Manager::next_managed_object = 0;
 
+// Handy macro for use by ACE_Object_Manager constructor to preallocate
+// an object.
+#define ACE_PREALLOCATE_OBJECT(TYPE, ID) \
+  { \
+    ACE_Managed_Cleanup<TYPE> *obj_p; \
+    ACE_NEW (obj_p, ACE_Managed_Cleanup<TYPE>); \
+    managed_object[ID - 1] = obj_p; \
+  }
+
 ACE_Object_Manager::ACE_Object_Manager (void)
   : shutting_down_(0)
 {
@@ -35,19 +44,13 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   // Allocate the preallocated (hard-coded) object instances, and
   // register them for destruction.
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Managed_Cleanup<ACE_Thread_Mutex> *mutex;
-
-  ACE_NEW (mutex, ACE_Managed_Cleanup<ACE_Thread_Mutex>);
-  managed_object[ACE_MT_CORBA_HANDLER_LOCK] = mutex;
-
-  ACE_NEW (mutex, ACE_Managed_Cleanup<ACE_Thread_Mutex>);
-  managed_object[ACE_DUMP_LOCK] = mutex;
-
-  ACE_NEW (mutex, ACE_Managed_Cleanup<ACE_Thread_Mutex>);
-  managed_object[ACE_TSS_CLEANUP_LOCK] = mutex;
+  ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_LOG_MSG_INSTANCE_LOCK)
+  ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_MT_CORBA_HANDLER_LOCK)
+  ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
+  ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_TSS_CLEANUP_LOCK)
 # endif /* ACE_MT_SAFE */
 
-  next_managed_object = ACE_END_OF_PREALLOCATED_OBJECTS;
+  next_managed_object = ACE_END_OF_PREALLOCATED_OBJECTS - 1;
 
 #if defined (ACE_HAS_TSS_EMULATION)
   // Initialize the main thread's TS storage.
@@ -111,7 +114,7 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   // Cleanup the preallocated objects.
-  for (u_int i = 0; i < ACE_END_OF_PREALLOCATED_OBJECTS; ++i)
+  for (u_int i = 0; i < ACE_END_OF_PREALLOCATED_OBJECTS - 1; ++i)
     {
       // The object is an ACE_Managed_Cleanup<ACE_Thread_Mutex).
       ace_cleanup_destroyer (

@@ -94,7 +94,10 @@ public:
 
   enum Preallocated_Objects
     {
+      ACE_NULL_PREALLOCATED_OBJECT,
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+      ACE_LOG_MSG_INSTANCE_LOCK,
       ACE_MT_CORBA_HANDLER_LOCK,
       ACE_DUMP_LOCK,
       ACE_TSS_CLEANUP_LOCK,
