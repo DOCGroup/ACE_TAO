@@ -552,6 +552,9 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
                            *this->outgoing_,
                            this->orb_core_);
 
+#if defined (TAO_HAS_MINIMUM_CORBA)
+  *this->outgoing_ << this->service_info_;
+#else
   if (this->lazy_evaluation_ == 0 || this->params_ == 0)
     {
       *this->outgoing_ << this->service_info_;
@@ -584,7 +587,7 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
         }
 
       // @@ Much of this code is GIOP 1.1 specific and should be
-      //    re-thought once GIOP 1.2 is implemented, this is not a big 
+      //    re-thought once GIOP 1.2 is implemented, this is not a big
       //    deal because the code is only used in DSI gateways.
       ptr_arith_t target =
         this->params_->_tao_target_alignment ();
@@ -602,7 +605,7 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
       CORBA::ULong pad = 0;
       if (target == 0)
         {
-          // We want to generate adequate padding to start the request 
+          // We want to generate adequate padding to start the request
           // id on a 8 byte boundary, two cases:
           // - If the dummy tag starts on a 4 byte boundary and the
           //   dummy sequence has 0 elements then we have:
@@ -642,6 +645,8 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
           *this->outgoing_ << ACE_OutputCDR::from_octet(0);
         }
     }
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
   this->outgoing_->write_ulong (this->request_id_);
 
   // Standard exceptions are caught in Connect::handle_input
