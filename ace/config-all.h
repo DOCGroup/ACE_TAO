@@ -376,7 +376,7 @@
 #        define ACE_nothrow_t nothrow_t
 #      endif /* __HP_aCC */
 #    elif ((__HP_aCC <  12500 && !defined (RWSTD_NO_NAMESPACE)) || \
-           (__HP_aCC >= 12500 && defined (_NAMESPACE_STD)))
+           (__HP_aCC >= 12500 && defined (_HP_NAMESPACE_STD)))
 #      define ACE_bad_alloc std::bad_alloc
 #      define ACE_nothrow   std::nothrow
 #      define ACE_nothrow_t std::nothrow_t

@@ -1,3 +1,8 @@
+Mon Mar 11 20:21:38 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-all.h: Fixed ACE_NEW section to work with HP-UX 10.20,
+          aC++ A.01.27 with -AA option.
+
 Mon Mar 11 18:48:41 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Logging_Client.cpp: Added a compile-time check
