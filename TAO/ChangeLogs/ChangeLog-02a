@@ -1,3 +1,10 @@
+Tue Jan 16 22:35:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Single_Read/Makefile: Forgot to checkin the Makefile this
+	  morning. 
+
+	* tests/Makefile: Added teh above Makefile to teh list.
+
 Tue Jan 16 18:57:27 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/tests/ior_corbaname/Makefile: 
