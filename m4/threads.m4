@@ -186,7 +186,6 @@ EOF
         (eval "$AWK '{print \[$]2}' > conftest.awk 2>&1"); then
           rm -f conftest.$ac_ext
           ace_real_function=`cat conftest.awk`
-          echo "$ace_real_function"
           rm -f conftest.awk
      fi
     ],
