@@ -94,7 +94,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
       this->length_ = len_request;
 
       // Extend the backing store.
-#if defined (ACE_HAD_P_READ_WRITE)
+#if defined (ACE_HAS_P_READ_WRITE)
       if (ACE_OS::pwrite (this->handle_, "", 1, 
 			  len_request > 0 ? len_request - 1 : 0) == -1)
 #else
