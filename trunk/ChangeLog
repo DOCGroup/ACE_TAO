@@ -1,3 +1,127 @@
+Fri Feb 11 08:43:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/RMCast/Makefile.am:
+	* ace/RMCast/RMCast.cpp:
+	* ace/RMCast/RMCast.h:
+	* ace/RMCast/RMCast.rc:
+	* ace/RMCast/RMCast_Ack_Worker.cpp:
+	* ace/RMCast/RMCast_Ack_Worker.h:
+	* ace/RMCast/RMCast_Ack_Worker.i:
+	* ace/RMCast/RMCast_Copy_On_Write.cpp:
+	* ace/RMCast/RMCast_Copy_On_Write.h:
+	* ace/RMCast/RMCast_Copy_On_Write.i:
+	* ace/RMCast/RMCast_Export.h:
+	* ace/RMCast/RMCast_Fork.cpp:
+	* ace/RMCast/RMCast_Fork.h:
+	* ace/RMCast/RMCast_Fork.i:
+	* ace/RMCast/RMCast_Fragment.cpp:
+	* ace/RMCast/RMCast_Fragment.h:
+	* ace/RMCast/RMCast_Fragment.i:
+	* ace/RMCast/RMCast_IO_UDP.cpp:
+	* ace/RMCast/RMCast_IO_UDP.h:
+	* ace/RMCast/RMCast_IO_UDP.i:
+	* ace/RMCast/RMCast_Membership.cpp:
+	* ace/RMCast/RMCast_Membership.h:
+	* ace/RMCast/RMCast_Membership.i:
+	* ace/RMCast/RMCast_Module.cpp:
+	* ace/RMCast/RMCast_Module.h:
+	* ace/RMCast/RMCast_Module.i:
+	* ace/RMCast/RMCast_Module_Factory.cpp:
+	* ace/RMCast/RMCast_Module_Factory.h:
+	* ace/RMCast/RMCast_Partial_Message.cpp:
+	* ace/RMCast/RMCast_Partial_Message.h:
+	* ace/RMCast/RMCast_Partial_Message.i:
+	* ace/RMCast/RMCast_Proxy.cpp:
+	* ace/RMCast/RMCast_Proxy.h:
+	* ace/RMCast/RMCast_Proxy.i:
+	* ace/RMCast/RMCast_Reassembly.cpp:
+	* ace/RMCast/RMCast_Reassembly.h:
+	* ace/RMCast/RMCast_Receiver_Module.cpp:
+	* ace/RMCast/RMCast_Receiver_Module.h:
+	* ace/RMCast/RMCast_Receiver_Module.i:
+	* ace/RMCast/RMCast_Reliable_Factory.cpp:
+	* ace/RMCast/RMCast_Reliable_Factory.h:
+	* ace/RMCast/RMCast_Reliable_Factory.i:
+	* ace/RMCast/RMCast_Reordering.cpp:
+	* ace/RMCast/RMCast_Reordering.h:
+	* ace/RMCast/RMCast_Reordering.i:
+	* ace/RMCast/RMCast_Resend_Handler.cpp:
+	* ace/RMCast/RMCast_Resend_Handler.h:
+	* ace/RMCast/RMCast_Resend_Handler.i:
+	* ace/RMCast/RMCast_Resend_Worker.cpp:
+	* ace/RMCast/RMCast_Resend_Worker.h:
+	* ace/RMCast/RMCast_Resend_Worker.i:
+	* ace/RMCast/RMCast_Retransmission.cpp:
+	* ace/RMCast/RMCast_Retransmission.h:
+	* ace/RMCast/RMCast_Retransmission.i:
+	* ace/RMCast/RMCast_Sequencer.cpp:
+	* ace/RMCast/RMCast_Sequencer.h:
+	* ace/RMCast/RMCast_Sequencer.i:
+	* ace/RMCast/RMCast_Singleton_Factory.cpp:
+	* ace/RMCast/RMCast_Singleton_Factory.h:
+	* ace/RMCast/RMCast_Singleton_Factory.i:
+	* ace/RMCast/RMCast_UDP_Event_Handler.cpp:
+	* ace/RMCast/RMCast_UDP_Event_Handler.h:
+	* ace/RMCast/RMCast_UDP_Event_Handler.i:
+	* ace/RMCast/RMCast_UDP_Proxy.cpp:
+	* ace/RMCast/RMCast_UDP_Proxy.h:
+	* ace/RMCast/RMCast_UDP_Proxy.i:
+	* ace/RMCast/RMCast_UDP_Reliable_Receiver.cpp:
+	* ace/RMCast/RMCast_UDP_Reliable_Receiver.h:
+	* ace/RMCast/RMCast_UDP_Reliable_Receiver.i:
+	* ace/RMCast/RMCast_UDP_Reliable_Sender.cpp:
+	* ace/RMCast/RMCast_UDP_Reliable_Sender.h:
+	* ace/RMCast/RMCast_UDP_Reliable_Sender.i:
+	* ace/RMCast/RMCast_Worker.cpp:
+	* ace/RMCast/RMCast_Worker.h:
+	* examples/RMCast/Makefile.am:
+	* examples/RMCast/Send_File/Makefile.am:
+	* examples/RMCast/Send_File/RMCast_Send_File.mpc:
+	* examples/RMCast/Send_File/Receiver.cpp:
+	* examples/RMCast/Send_File/Sender.cpp:
+	* tests/RMCast/Main.cpp:
+	* tests/RMCast/Makefile.am:
+	* tests/RMCast/RMCast_Fragment_Test.cpp:
+	* tests/RMCast/RMCast_Membership_Test.cpp:
+	* tests/RMCast/RMCast_Reassembly_Test.cpp:
+	* tests/RMCast/RMCast_Reordering_Test.cpp:
+	* tests/RMCast/RMCast_Retransmission_Test.cpp:
+	* tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp:
+	* tests/RMCast/acetest.mpb:
+	* tests/RMCast/tests.mpc:
+
+	  Removed old ACE reliable multicast implementation.  It is not
+	  maintained, and is now superseded by Boris's implementation
+	  described below.
+
+	From Boris Kolpkacov <boris at kolpackov dot net>
+	* ace/RMCast/Acknowledge.cpp:
+	* ace/RMCast/Acknowledge.h:
+	* ace/RMCast/Agent.tar.bz2:
+	* ace/RMCast/Bits.h:
+	* ace/RMCast/Link.cpp:
+	* ace/RMCast/Link.h:
+	* ace/RMCast/Protocol.cpp:
+	* ace/RMCast/Protocol.h:
+	* ace/RMCast/RMCast.mpc:
+	* ace/RMCast/Retransmit.cpp:
+	* ace/RMCast/Retransmit.h:
+	* ace/RMCast/Simulator.cpp:
+	* ace/RMCast/Simulator.h:
+	* ace/RMCast/Socket.cpp:
+	* ace/RMCast/Socket.h:
+	* ace/RMCast/Stack.cpp:
+	* ace/RMCast/Stack.h:
+	* examples/RMCast/Send_Msg/Protocol.h:
+	* examples/RMCast/Send_Msg/README:
+	* examples/RMCast/Send_Msg/Receiver.cpp:
+	* examples/RMCast/Send_Msg/Send_Msg.mpc:
+	* examples/RMCast/Send_Msg/Sender.cpp:
+
+	  New reliable source-ordered multicast protocol implementation
+	  for message-oriented multi-sender group communication built on
+	  top of IPv4 multicast.
+
 Fri Feb 11 16:01:37 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Thread_Pool_Reactor_Test.cpp:
