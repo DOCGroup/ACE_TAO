@@ -1453,10 +1453,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #      if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_SETKIND_NP)
 	  sparam.sched_priority = ACE_MIN (priority, PRIORITY_MAX);
-#      elif defined(ACE_HAS_IRIX62_THREADS) || defined(ACE_HAS_PTHREADS_1003_DOT_1C)
-	  // Should trigger for IRIX, DEC UNIX, and Linux w/LinuxThreads 0.5
+#      elif defined(ACE_HAS_IRIX62_THREADS)
 	  sparam.sched_priority = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);
-#      elif defined (PTHREAD_MAX_PRIORITY) /* For MIT pthreads... */
+#      elif defined (PTHREAD_MAX_PRIORITY) && !defined(ACE_HAS_PTHREADS_1003_DOT_1C)
+	  /* For MIT pthreads... */
 	  sparam.prio = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);
 #      elif defined(ACE_HAS_PTHREADS_1003_DOT_1C)
 	  // The following code forces priority into range.
