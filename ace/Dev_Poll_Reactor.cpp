@@ -14,7 +14,7 @@ ACE_RCSID (ace,
 #    include "ace/OS_NS_unistd.h"
 #    include "ace/OS_NS_fcntl.h"
 
-#    include <sys/epoll.h>
+#    include /**/ <sys/epoll.h>
 
 #  elif defined (ACE_HAS_DEV_POLL)
 

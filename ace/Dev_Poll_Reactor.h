@@ -29,7 +29,7 @@
 // The sys_epoll interface was introduced in Linux kernel 2.5.45.
 // Don't support backported versions since they appear to be buggy.
 // The obsolete ioctl()-based interface is no longer supported.
-# include <linux/version.h>
+# include /**/ <linux/version.h>
 # if LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45)
 #   undef ACE_HAS_EVENT_POLL
 #   error Disabling Linux epoll support.  Kernel used in C library is too old.
