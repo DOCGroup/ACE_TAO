@@ -38,6 +38,7 @@
 #include "be_sequence.h"
 #include "be_visitor.h"
 #include "utl_identifier.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (be, 
            be_decl, 

@@ -25,6 +25,7 @@
 #include "ast_module.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (be,
            be_valuetype,

@@ -26,6 +26,7 @@
 #include "be_visitor.h"
 #include "be_helper.h"
 #include "ast_union_label.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (be, 
            be_union_branch, 

@@ -24,6 +24,7 @@
 #include "be_predefined_type.h"
 #include "be_argument.h"
 #include "utl_identifier.h"
+#include "ace/Log_Msg.h"
 
 be_visitor_amh_pre_proc::be_visitor_amh_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
