@@ -4,8 +4,6 @@ default:
 	:defines=DEBUG
 any.cpp
 	C++
-boa.cpp
-	C++
 cdr.cpp
 	C++
 client_factory.cpp
@@ -50,17 +48,17 @@ objtable.cpp
 	C++
 optable.cpp
 	C++
-Orb_Core.cpp
-	C++
 orbobj.cpp
 	C++
+orb_core.cpp
+	C++
 params.cpp
+	C++
+poa.cpp
 	C++
 principa.cpp
 	C++
 request.cpp
-	C++
-roa.cpp
 	C++
 server_factory.cpp
 	C++
