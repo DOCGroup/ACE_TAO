@@ -39,8 +39,6 @@ TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
   ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_SHMIOP_Protocol_Factory);
 #endif /* TAO_HAS_UIOP == 1 */
-
-  TAO_ORB_Core::set_resource_factory ("Advanced_Resource_Factory");
 }
 
 TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
@@ -62,6 +60,8 @@ int
 TAO_Advanced_Resource_Factory::init (int argc, char **argv)
 {
   ACE_TRACE ("TAO_Advanced_Resource_Factory::parse_args");
+
+  TAO_ORB_Core::set_resource_factory ("Advanced_Resource_Factory");
 
   int curarg = 0;
 
