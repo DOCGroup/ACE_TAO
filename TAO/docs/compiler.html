@@ -34,10 +34,11 @@ bgcolor="#ffffff">
       <CODE>S.i</CODE>
       and <CODE>S.cpp</CODE>;
       the client stubs are declared in the <CODE>C.h</CODE> file,
-      the skeletons in the <CODE>S.h</CODE> file.
+      the skeletons in the <CODE>S.h</CODE> file. Please see the
+      Options list on how to get different suffixes for these files.
     </P>
 
-    <P>
+     <P>
       Both clients and servers should link against the object files
       for the stubs and skeletons,
       this is needed to transparently support collocated objects.
@@ -108,18 +109,25 @@ bgcolor="#ffffff">
       <TR NAME="Y">
 	<TD><CODE>-Y</CODE></TD>
         <TD>It is passed to the preprocessor</TD></TR>
-     <TR NAME="H">
-	<TD><CODE>-H</CODE></TD>
-	<TD>IDL-Compiler-Generated Skeleton uses  Dynamic Hashed
-            Operation Lookup Strategy. Default operation lookup
-            strategy is Perfect hashing which uses <A
-            HREF="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">gperf 
-            </A> program, to generate lookup methods.
+     <TR NAME="H perfect">
+	<TD><CODE>-H perfect</CODE></TD>
+        <TD>To specify the IDL compiler to generate skelton code that
+            uses perfect hashed operation lookup strategy, which is
+            the default strategy. Perfect hashing uses <A
+            HREF="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz"> gperf 
+            </A> program, to generate lookup methods. 
         </TD>
       </TR>
+      <TR NAME="H dynamic">
+        <TD><CODE>-H dynamic</CODE></TD>
+        <TD>To specify the IDL compiler to generate skelton code that
+            uses dynamic hashed operation lookup strategy. 
+        </TD>
+      </TR>
+
       <TR NAME="g">
-           <TD><CODE>-g</CODE></TD>
-           <TD> To specify the path for the perfect hasing program 
+        <TD><CODE>-g</CODE></TD>
+        <TD> To specify the path for the perfect hasing program 
                (GPERF). Default is $ACE_ROOT/bin/gperf.
            </TD>
        </TR>
