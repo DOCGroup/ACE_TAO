@@ -111,10 +111,6 @@ Sender_Impl::Sender_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   ACE_DEBUG ((LM_DEBUG, "Sender_Impl::Sender_exec_i::ccm_remove\n"));
-  CORBA::Object_var comp_object = this->context_->get_CCM_object ();
-  Hello::Sender_var sender = Hello::Sender::_narrow (comp_object.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-  sender->remove ();
 }
 
 Sender_Impl::SenderHome_exec_i::SenderHome_exec_i ()
