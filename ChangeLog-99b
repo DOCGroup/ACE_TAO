@@ -1,3 +1,12 @@
+Thu May 20 17:47:35 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.h (ACE_DES_ARRAY_FREE_*): Added new macros to facilitate
+	  proper destruction of arrays.
+
+	* ace/Containers_T.cpp (ACE_Array_Base): Changed ACE_Array_Base to
+	  use the new ACE_DES_ARRAY_FREE_* macros in order to prevent the
+	  memory leaks.
+
 Thu May 20 17:46:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_dll.dsp:

@@ -33,6 +33,18 @@ Thu May 20 15:22:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  Also, cleaned up the POA Current implementation class.  There
 	  were many extra methods that not used in the new scheme.
 
+	* examples/POA/DSI:
+
+	  - Changed access to POA Current.  Previously, we use to ask the
+	    ORB everytime.  Now we only ask once and keep it around as a
+	    state variable.
+
+	  - Added shutdown() method.
+
+	  - Fixed exception handling.
+
+	  - Added more debugging info to the server.
+
 Thu May 20 15:00:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Pluggable.h:
