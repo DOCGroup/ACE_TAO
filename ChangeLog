@@ -1,3 +1,9 @@
+Thu Apr 11 17:37:20 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/Basic_Types.h: Added missing typedefs for pid_t and
+	  ssize-t for WIN32 builds needed for my Log_Msg changes
+	  below.
+
 Thu Apr 11 14:42:32 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/ARGV.h:  Replaced include of ACE.h with config-all.h.

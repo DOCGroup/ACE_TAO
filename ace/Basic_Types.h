@@ -636,21 +636,29 @@ typedef ACE_UINT16 ACE_USHORT16;
 #    endif /* ACE_PSOS_HAS_TSS */
 #  elif defined (VXWORKS)
      typedef u_int ACE_thread_key_t;
+#  elif defined (ACE_WIN32)
+#    if !defined(__MINGW32__)
+       typedef long pid_t;
+#    endif /* __MINGW32__ */
+#    if defined (ACE_HAS_TSS_EMULATION)
+//     typedef DWORD ACE_OS_thread_key_t;
+       typedef u_int ACE_thread_key_t;
+#    else  /* ! ACE_HAS_TSS_EMULATION */
+       typedef DWORD ACE_thread_key_t;
+#    endif /* ! ACE_HAS_TSS_EMULATION */
 #  endif
 #else
    typedef u_int ACE_thread_key_t;
 #endif
 
-#if defined (ACE_WIN32)
-#  if defined (ACE_HAS_TSS_EMULATION)
-//typedef DWORD ACE_OS_thread_key_t;
-     typedef u_int ACE_thread_key_t;
-#  else  /* ! ACE_HAS_TSS_EMULATION */
-     typedef DWORD ACE_thread_key_t;
-#  endif /* ! ACE_HAS_TSS_EMULATION */
-#endif
+#if !defined (ACE_HAS_SSIZE_T)
+  typedef int ssize_t;
+#endif /* ACE_HAS_SSIZE_T */
 
-
+// This doesn't belong here, but the bigger fix isn't ready to commit.
+#   if !defined (ENOMEM)
+#     define ENOMEM       12       /* Not enough core                       */
+#   endif /* ENOMEM */
 
 
 # if defined (__ACE_INLINE__)
