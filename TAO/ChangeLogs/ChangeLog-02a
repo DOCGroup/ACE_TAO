@@ -1,123 +1,130 @@
+Mon May 07 10:35:27 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Big_Twoways/Big_Twoways.dsw:
+        * tests/Big_Twoways/server.dsp:
+        * tests/Big_Twoways/client.dsp:
+          Add missing project file
+
 Mon May  7 11:37:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (fini): Deferred the deletion of the allocators
-	  till the  reactor registry is deleted. The RTCORBA has a
-	  configuration called Reactor-Per-Priority, which deletes the
-	  service handlers only when the registry is deleted. There seems
-	  to be a subtle problem in the way the handlers are de-registered
-	  from the reactor for this particular configuration. We will look
-	  at that problem next. This fix should get around that problem
-	  for the time being.
+        * tao/ORB_Core.cpp (fini): Deferred the deletion of the allocators
+          till the  reactor registry is deleted. The RTCORBA has a
+          configuration called Reactor-Per-Priority, which deletes the
+          service handlers only when the registry is deleted. There seems
+          to be a subtle problem in the way the handlers are de-registered
+          from the reactor for this particular configuration. We will look
+          at that problem next. This fix should get around that problem
+          for the time being.
 
 Mon May  7 9:10:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
+        * orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
 
-	  Changed the run_test.pl to test for sender switching.
-	
+          Changed the run_test.pl to test for sender switching.
+
 Mon May  7 06:46:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/Makefile:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile: 
-	  
-	  Added checks to make sure that the above examples do not compile
-	  with older versions of g++.
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
+
+          Added checks to make sure that the above examples do not compile
+          with older versions of g++.
 
 Mon May  7 06:40:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
-	  Fixed a warning in g++.
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+          Fixed a warning in g++.
 
 Sun May  6 11:15:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.h:
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
-	* orbsvcs/tests/AVStreams/Component_Switching/distributer.h:
-	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.h:
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:	
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
 
-	  Added clean termination of the processes using the signal_handler.
-	
+          Added clean termination of the processes using the signal_handler.
+
 Sun May  6 12:36:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
-	  Added #include "tao/debug.h" to get it compiling on SunCC4.2. 
+        * orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
+          Added #include "tao/debug.h" to get it compiling on SunCC4.2.
 
 Sun May  6 10:33:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp: Replicated the
-	  changes from IIOP to these protocols.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp: Replicated the
+          changes from IIOP to these protocols.
 
 Sun May  6 10:27:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Handler.cpp:
-	* tao/GIOP_Message_Handler.h:
-	* tao/GIOP_Message_Handler.inl: Changed the error handling
-	  conditions. When we come across a read failure with EWOULDBLOCK
-	  we used to ask the reactor to call us back. This caused
-	  thrashing when the application received a signal. We dont ask
-	  the reactor to call us back, instead we just return a zero to
-	  the reactor. Further, changed the error codes to match the
-	  reactor semantics. This should fix bug id 830.
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Handler.cpp:
+        * tao/GIOP_Message_Handler.h:
+        * tao/GIOP_Message_Handler.inl: Changed the error handling
+          conditions. When we come across a read failure with EWOULDBLOCK
+          we used to ask the reactor to call us back. This caused
+          thrashing when the application received a signal. We dont ask
+          the reactor to call us back, instead we just return a zero to
+          the reactor. Further, changed the error codes to match the
+          reactor semantics. This should fix bug id 830.
 
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/IIOP_Transport.cpp: Made sure that we pass the error codes
-	  from the GIOP layer, as is to the reactor. We dont manipulate
-	  the return values as we did before. The return values just match
-	  the reactor semantics ie. returns -1 on error, 1 for a quick
-	  callback and a zero for everything is fine case.
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Transport.cpp: Made sure that we pass the error codes
+          from the GIOP layer, as is to the reactor. We dont manipulate
+          the return values as we did before. The return values just match
+          the reactor semantics ie. returns -1 on error, 1 for a quick
+          callback and a zero for everything is fine case.
 
-	* tao/Wait_On_Read.cpp: The wait () call used to loop on
-	  reply_received flag alone. We now use a temporary variable also
-	  for the looping similar to the way other Wait strategies
-	  loop. The other strategies used a reactor and adhered to the
-	  reactor semantics. The Wait_On_Read did not use a reactor and
-	  followed a different semantics for success and failure. This
-	  created confusion at the protocol implementation level.
+        * tao/Wait_On_Read.cpp: The wait () call used to loop on
+          reply_received flag alone. We now use a temporary variable also
+          for the looping similar to the way other Wait strategies
+          loop. The other strategies used a reactor and adhered to the
+          reactor semantics. The Wait_On_Read did not use a reactor and
+          followed a different semantics for success and failure. This
+          created confusion at the protocol implementation level.
 
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* tao/Strategies/UIOP_Transport.cpp: Replicated the changes from
-	  IIOP.
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.cpp: Replicated the changes from
+          IIOP.
 
 Sun May  6 9:49:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
 
-	  Changed the order of connection to senders and receivers so that
-	  when switiching distributers the old distributer is disconnected
-	  from the sender before the new distributer is connected.
+          Changed the order of connection to senders and receivers so that
+          when switiching distributers the old distributer is disconnected
+          from the sender before the new distributer is connected.
 
 Sat May  5 20:31:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
         * orbsvcs/tests/AVStreams/Component_Switching/Makefile:
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
 
-	  Made changes to avoid compiling and running the test on VxWorks.
+          Made changes to avoid compiling and running the test on VxWorks.
 
 Sat May  5 16:24:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/TIE/server.cpp: Guarded some more portions using
-	  the ACE_HAS_USING_KEYWORD macros. This should prevent compile
-	  errors in the two Lynx builds.
+        * examples/POA/TIE/server.cpp: Guarded some more portions using
+          the ACE_HAS_USING_KEYWORD macros. This should prevent compile
+          errors in the two Lynx builds.
 
 Sat May  5 13:27:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/Makefile:
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.h:
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
-	* orbsvcs/tests/AVStreams/Component_Switching/distributer.h:
-	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.h:
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:	
-	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.h:
-	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile:
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
 
-	  Added clean unbinding of the object references from the Naming
-	  Service  on termination of processes. Also fixed bugs that were
-	  breaking the test on many platforms.
+          Added clean unbinding of the object references from the Naming
+          Service  on termination of processes. Also fixed bugs that were
+          breaking the test on many platforms.
 
 Fri May  4 14:11:36 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -170,122 +177,122 @@ Fri May  4 12:08:55 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu May  3 14:56:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Synch_Reply_Dispatcher.cpp (dispatch_reply):
-	* tao/Asynch_Reply_Dispatcher.cpp:
-	* tao/GIOP_Message_Generator_Parser_10.cpp:
-	* tao/GIOP_Message_Generator_Parser_12.cpp: Changed the call
-	  steal_data () to exchange_data_blocks (). This should give us a
-	  "release" free, malloc free and a lock free version of what we
-	  want to achieve.
+        * tao/Synch_Reply_Dispatcher.cpp (dispatch_reply):
+        * tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp: Changed the call
+          steal_data () to exchange_data_blocks (). This should give us a
+          "release" free, malloc free and a lock free version of what we
+          want to achieve.
 
 Thu May  3 11:55:42 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	These are a set of changes for enabling lock free CDR input
-	stream allocators in TAO as default. (see my previous changes on
-	Tue Apr 10 17:25:18 2001)
+        These are a set of changes for enabling lock free CDR input
+        stream allocators in TAO as default. (see my previous changes on
+        Tue Apr 10 17:25:18 2001)
 
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	  Modified the TAO_CodeGen::TAO_CDR_INPUT case to perform octet
-	  sequence optimization only if its safe. This check was absent
-	  previously, forcing us to always use locked input cdr allocators.
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+          Modified the TAO_CodeGen::TAO_CDR_INPUT case to perform octet
+          sequence optimization only if its safe. This check was absent
+          previously, forcing us to always use locked input cdr allocators.
 
-	* tao/IOPC.cpp:
-	* tao/MessagingC.cpp:
-	* tao/Services.cpp:
-	* tao/PortableServer/PortableServerC.cpp:
-	  Files affected by the IDL compiler changes had to be redone.
+        * tao/IOPC.cpp:
+        * tao/MessagingC.cpp:
+        * tao/Services.cpp:
+        * tao/PortableServer/PortableServerC.cpp:
+          Files affected by the IDL compiler changes had to be redone.
 
-	* tao/diffs/IOPC.cpp.diff:
-	* tao/diffs/MessagingC.cpp.diff:
-	* tao/diffs/PortableServerC.cpp.diff:
-	* tao/diffs/OctetSeqC.cpp.diff:
-	  Regenerated the diff files. Note that i have added
-	  OctetSeqC.cpp.diff. This should be used to patch the IDL
-	  generated stub file instead of OctetSeq.diff.
+        * tao/diffs/IOPC.cpp.diff:
+        * tao/diffs/MessagingC.cpp.diff:
+        * tao/diffs/PortableServerC.cpp.diff:
+        * tao/diffs/OctetSeqC.cpp.diff:
+          Regenerated the diff files. Note that i have added
+          OctetSeqC.cpp.diff. This should be used to patch the IDL
+          generated stub file instead of OctetSeq.diff.
 
 Thu May  3 10:11:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Wait_Strategy.h: Removed some comments that were not
-	  applicable anymore.
+        * tao/Wait_Strategy.h: Removed some comments that were not
+          applicable anymore.
 
 Wed May  2 22:39:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: Fixed a couple of unused variable warnings.
+        * tao/ORB_Core.cpp: Fixed a couple of unused variable warnings.
 
 Wed May  2 20:26:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Generator_Parser_12.cpp:
-	* tao/GIOP_Message_Generator_Parser_10.cpp:
-	* tao/GIOP_Message_Base.cpp: Added some comments.
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Base.cpp: Added some comments.
 
 Wed May  2 16:52:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.h: Added new methods that could dish out memory
-	  always from the global pool. The motivation for a new methods
-	  are:
-	  (1) In olden days out CDR's were created only in the invocation
-	      path and destroyed during the invocation path. If the ORB is
-	      configured with TSS, it made sense to get the allocators
-	      from the TSS. That doesn't hold true anymore as illustrated
-	      by point (2).
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h: Added new methods that could dish out memory
+          always from the global pool. The motivation for a new methods
+          are:
+          (1) In olden days out CDR's were created only in the invocation
+              path and destroyed during the invocation path. If the ORB is
+              configured with TSS, it made sense to get the allocators
+              from the TSS. That doesn't hold true anymore as illustrated
+              by point (2).
 
-	  (2) We now cache CDR streams, message blocks in classes within
-	      the connection handlers. These objects are on a
-	      per-connection basis as opposed to per-thread basis (though
-	      the thread may very well create the connections). We want
-	      the connections to be reused by other threads and so we
-	      cannot destroy the connections when the threads go
-	      away.
+          (2) We now cache CDR streams, message blocks in classes within
+              the connection handlers. These objects are on a
+              per-connection basis as opposed to per-thread basis (though
+              the thread may very well create the connections). We want
+              the connections to be reused by other threads and so we
+              cannot destroy the connections when the threads go
+              away.
 
-	  The above two reasons motivated adding new methods that dish out
-	  memory from the global pool alone,  even if the ORB has been
-	  configured to use TSS.
+          The above two reasons motivated adding new methods that dish out
+          memory from the global pool alone,  even if the ORB has been
+          configured to use TSS.
 
-	* tao/GIOP_Message_Base.cpp: Changes for bug id 871. We were
-	  trying to use a constructor for an InputCDR stream that made a
-	  copy from a message block. The process happened in two steps. It
-	  first allocated memory and then copied the contents. Both of
-	  them are bad. To make things efficient we use only the data
-	  block in which the incoming stream has been read to create a CDR
-	  stream. The same stream is passed onto the higher layers of the
-	  ORB. The stream *never* gets copied. The stream that is handled
-	  by the Reply_Dispatcher only uses this very same  data block to
-	  pass it onto the stubs. So this should give us a neat path with
-	  no-copies to the stubs. But there is one release that can be
-	  removed which will be done in the next cycle.
+        * tao/GIOP_Message_Base.cpp: Changes for bug id 871. We were
+          trying to use a constructor for an InputCDR stream that made a
+          copy from a message block. The process happened in two steps. It
+          first allocated memory and then copied the contents. Both of
+          them are bad. To make things efficient we use only the data
+          block in which the incoming stream has been read to create a CDR
+          stream. The same stream is passed onto the higher layers of the
+          ORB. The stream *never* gets copied. The stream that is handled
+          by the Reply_Dispatcher only uses this very same  data block to
+          pass it onto the stubs. So this should give us a neat path with
+          no-copies to the stubs. But there is one release that can be
+          removed which will be done in the next cycle.
 
-	* tao/GIOP_Message_Handler.cpp:
-	* tao/GIOP_Message_Handler.h:
-	* tao/GIOP_Message_Handler.inl: Added a new method
-	  steal_data_block (). This gives ownership away of the existing
-	  data_block and creates a new data_block for itself. Further the
-	  message_blocks use the memory from the global memory pool so
-	  that we dont have problems when the message blocks loose
-	  ownership to other threads.
+        * tao/GIOP_Message_Handler.cpp:
+        * tao/GIOP_Message_Handler.h:
+        * tao/GIOP_Message_Handler.inl: Added a new method
+          steal_data_block (). This gives ownership away of the existing
+          data_block and creates a new data_block for itself. Further the
+          message_blocks use the memory from the global memory pool so
+          that we dont have problems when the message blocks loose
+          ownership to other threads.
 
 Wed May  2 15:14:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/CDR.h (TAO_InputCDR):
-	* tao/CDR.i: Added a new constructor for TAO_InputCDR
-	  class. It is basically a wrapper for the new constructor added
-	  in ACE_InputCDR class by this ChangeLog entry "Wed May  2
-	  15:10:28 2001 Balachandran Natarajan ". This would make the
-	  construtor usable in TAO.
+        * tao/CDR.h (TAO_InputCDR):
+        * tao/CDR.i: Added a new constructor for TAO_InputCDR
+          class. It is basically a wrapper for the new constructor added
+          in ACE_InputCDR class by this ChangeLog entry "Wed May  2
+          15:10:28 2001 Balachandran Natarajan ". This would make the
+          construtor usable in TAO.
 
 Wed May  2 11:26:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * examples/POA/TIE/Makefile:
 
           Disabled this build for SunCC 4.2. It worked before, even though
- 	  4.2 does not have ACE_HAS_USING_KEYWORD defined (in other words,
- 	  it has no namespace support), because the IDL compiler left out
- 	  the #ifdef guards using the above macro if the interface was
- 	  declared at global scope, and the only interface in the TIE
- 	  example where the tie class was used happened to fall into that
- 	  category. This generation of #ifdef guards was inconsistent,
- 	  however, and now *all* tie classes are left out by the
- 	  preprocessor if ACE_HAS_USING_KEYWORD is not defined.
+          4.2 does not have ACE_HAS_USING_KEYWORD defined (in other words,
+          it has no namespace support), because the IDL compiler left out
+          the #ifdef guards using the above macro if the interface was
+          declared at global scope, and the only interface in the TIE
+          example where the tie class was used happened to fall into that
+          category. This generation of #ifdef guards was inconsistent,
+          however, and now *all* tie classes are left out by the
+          preprocessor if ACE_HAS_USING_KEYWORD is not defined.
 
 Wed May 02 05:37:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -297,8 +304,8 @@ Tue May 1 22:42:44 2001  Ossama Othman  <ossama@uci.edu>
 
         * tao/GIOP_Message_Generator_Parser_10.cpp (write_reply_header):
 
-	  Silence the false Fuzz error about a missing ACE_CHECK by adding
- 	  the awful "// FUZZ: ignore check_for_ace_check" comment hack.
+          Silence the false Fuzz error about a missing ACE_CHECK by adding
+          the awful "// FUZZ: ignore check_for_ace_check" comment hack.
 
 Tue May  1 22:14:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -502,35 +509,35 @@ Mon Apr 30 16:53:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Apr 30 11:23:45 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Cache_Entries.h (relinquish_transport):
-	* tao/Cache_Entries.inl (relinquish_transport):
+        * tao/Cache_Entries.h (relinquish_transport):
+        * tao/Cache_Entries.inl (relinquish_transport):
 
-	  New method that causes the given TAO_Cache_IntId to relinquish
-	  ownership of the TAO_Transport associated with it.  This method
-	  exists to get around some inflexibility in the
-	  Transport_Cache_Manager interface.  It should be removed once
-	  the interface is improved.
+          New method that causes the given TAO_Cache_IntId to relinquish
+          ownership of the TAO_Transport associated with it.  This method
+          exists to get around some inflexibility in the
+          Transport_Cache_Manager interface.  It should be removed once
+          the interface is improved.
 
-	* tao/Transport_Cache_Manager.cpp (find_transport):
+        * tao/Transport_Cache_Manager.cpp (find_transport):
 
-	  Do not duplicate the TAO_Transport object after it is found.
-	  It is already duplicated during the find process.  Instead call
-	  the new TAO_Cache_IntId::relinquish_transport() method.  This
-	  change removes two locks from the critical path.  [Bug 878]
+          Do not duplicate the TAO_Transport object after it is found.
+          It is already duplicated during the find process.  Instead call
+          the new TAO_Cache_IntId::relinquish_transport() method.  This
+          change removes two locks from the critical path.  [Bug 878]
 
 <<<<<<< ChangeLog
-	* tao/IIOP_Endpoint.cpp (hash):
+        * tao/IIOP_Endpoint.cpp (hash):
 =======
         * tao/Cache_Entries.h (relinquish_transport):
         * tao/Cache_Entries.inl (relinquish_transport):
 >>>>>>> 1.3407
 
 <<<<<<< ChangeLog
-	  Improved the speed of this hash operation by basing the hash on
-	  the IP address of the peer instead of computing a hash that
-	  involves some string operations (ACE::hash_pjw()).  Since this
-	  hash method is called on each invocation, i.e. in the critical
-	  path, a performance improvement should be noticeable.
+          Improved the speed of this hash operation by basing the hash on
+          the IP address of the peer instead of computing a hash that
+          involves some string operations (ACE::hash_pjw()).  Since this
+          hash method is called on each invocation, i.e. in the critical
+          path, a performance improvement should be noticeable.
 =======
           New method that causes the given TAO_Cache_IntId to relinquish
           ownership of the TAO_Transport associated with it.  This method
