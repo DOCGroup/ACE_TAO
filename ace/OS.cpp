@@ -1754,6 +1754,7 @@ ACE_TSS_Cleanup::free_all_keys_left (void)
        iter.advance ())
 #if defined (ACE_HAS_TSS_EMULATION)
     if (key_info->key_ != in_use_key_)
+#endif /* ACE_HAS_TSS_EMULATION */
       // Don't call ACE_OS::thr_keyfree () on ACE_TSS_Cleanup's own
       // key.  See the comments in ACE_OS::thr_key_detach ():  the key
       // doesn't get detached, so it will be in the table here.
@@ -1761,12 +1762,17 @@ ACE_TSS_Cleanup::free_all_keys_left (void)
       // need to keyfree it.  The dynamic memory associated with it
       // was already deleted by ACE_TSS_Cleanup::exit (), so we don't
       // want to access it again.
-#endif /* ACE_HAS_TSS_EMULATION */
       key_arr [idx++] = key_info->key_;
 
   for (int i = 0; i < idx; i++)
     if (key_arr[i] != ACE_OS::NULL_key)
+#if defined (ACE_HAS_TSS_EMULATION)
       ACE_OS::thr_keyfree (key_arr[i]);
+#else /* ACE_WIN32 */
+      // Don't call ACE_OS::thr_keyfree here.  It will try to use
+      // <in_use_> which has already been cleaned up here.
+      TlsFree (key_arr[i]);
+#endif /* ACE_HAS_TSS_EMULATION */
 
   return 0;
 }
@@ -2113,7 +2119,7 @@ ACE_OS::cleanup_tss (const u_int main_thread)
       // thread.
 
       // Remove all TSS_Info table entries.
-      // ACE_TSS_Cleanup::instance ()->free_all_keys_left ();
+      ACE_TSS_Cleanup::instance ()->free_all_keys_left ();
 #endif /* ACE_WIN32 */
 
       // Finally, free up the ACE_TSS_Cleanup instance.  This method gets
