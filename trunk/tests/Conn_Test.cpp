@@ -425,7 +425,7 @@ handler (int signum)
 {
   // Print the signal number and exit.
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) %S\n", signum));
-  ACE_OS::_exit (0);
+  ACE_OS::exit (0);
 }
 
 // Spawn threads.
@@ -445,7 +445,7 @@ spawn_processes (ACCEPTOR *acceptor,
       {
       case -1:
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
-	ACE_OS::_exit (-1);
+	ACE_OS::exit (-1);
 	/* NOTREACHED */
       case 0:
 	{
