@@ -1,5 +1,9 @@
 Mon Nov 10 09:13:45 2003  Dale Wilson  <wilson_d@ociweb.com>
 
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.dsp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.cpp:
         * tao/Utils/Server_Main.h:

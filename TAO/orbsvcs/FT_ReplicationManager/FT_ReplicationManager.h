@@ -134,14 +134,6 @@ namespace TAO
         CORBA::SystemException
       ));
 
-    /// Implementation of TAO-specific shutdown operation.
-    void shutdown_i (
-        ACE_ENV_SINGLE_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
   public:
 
     /**

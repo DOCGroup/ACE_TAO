@@ -47,8 +47,8 @@ TAO::FT_ReplicationManager::FT_ReplicationManager ()
   , iorm_(TAO_IOP::TAO_IOR_Manipulation::_nil())
   , ior_output_file_(0)
   , ns_name_(0)
-  , replication_manager_ref_(FT::ReplicationManager::_nil())
   , naming_context_(CosNaming::NamingContext::_nil())
+  , replication_manager_ref_(FT::ReplicationManager::_nil())
   , object_group_manager_()
   , property_manager_ (this->object_group_manager_)
   , generic_factory_ (this->object_group_manager_, this->property_manager_)
@@ -95,10 +95,10 @@ int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
         // fall thru
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " -o <iorfile>"
-                           " -n <name-to-bind-in-NameService>"
-                           "\n",
+                           ACE_TEXT ("%T %n (%P|%t) - usage:  %s")
+                           ACE_TEXT (" -o <iorfile>")
+                           ACE_TEXT (" -n <name-to-bind-in-NameService>")
+                           ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
       break;
@@ -121,7 +121,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT (
-        "Enter TAO::FT_ReplicationManager::init.\n")
+        "%T %n (%P|%t) - Enter TAO::FT_ReplicationManager::init.\n")
     ));
   }
 
@@ -139,7 +139,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
       ACE_TEXT (
-        "TAO::FT_ReplicationManager::init: "
+        "%T %n (%P|%t) - "
         "Could not create Property Validator.\n")),
       -1);
   }
@@ -164,7 +164,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
       ACE_TEXT (
-        "TAO::FT_ReplicationManager::init: "
+        "%T %n (%P|%t) - "
         "Could not initialize the Object Group Manager.\n")),
       -1);
   }
@@ -223,7 +223,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   if (CORBA::is_nil (ior_table.in ()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
-      ACE_TEXT ("%T %n (%P|%t) Unable to resolve the IORTable.\n")),
+      ACE_TEXT ("%T %n (%P|%t) - Unable to resolve the IORTable.\n")),
       -1);
   }
   else
@@ -260,7 +260,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     if (CORBA::is_nil(naming_obj.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT ("%T %n (%P|%t) Unable to find the Naming Service.\n")),
+        ACE_TEXT ("%T %n (%P|%t) - Unable to find the Naming Service.\n")),
         -1);
     }
 
@@ -285,7 +285,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT (
-        "Leave TAO::FT_ReplicationManager::init.\n")
+        "%T %n (%P|%t) - Leave TAO::FT_ReplicationManager::init.\n")
     ));
   }
 
@@ -342,7 +342,7 @@ int TAO::FT_ReplicationManager::write_ior()
   else
   {
     ACE_ERROR ((LM_ERROR,
-      ACE_TEXT("Open failed for %s\n"), this->ior_output_file_
+      ACE_TEXT("%T %n (%P|%t) - Open failed for %s\n"), this->ior_output_file_
     ));
   }
   return result;
@@ -372,7 +372,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   {
     ACE_ERROR ((LM_ERROR,
       ACE_TEXT (
-        "TAO::FT_ReplicationManager::register_fault_notifier_i: "
+        "%T %n (%P|%t) - "
         "Bad Fault Notifier object reference provided.\n")
     ));
     ACE_THROW (CORBA::BAD_PARAM (
@@ -402,7 +402,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
     {
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT (
-          "TAO::FT_ReplicationManager::register_fault_notifier_i: "
+          "%T %n (%P|%t) - "
           "Error creating FaultAnalyzer.\n"
           )
       ));
@@ -432,7 +432,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   {
     ACE_ERROR ((LM_ERROR,
       ACE_TEXT (
-        "TAO::FT_ReplicationManager::register_fault_notifier_i: "
+        "%T %n (%P|%t) -  "
         "Could not re-initialize FT_FaultConsumer.\n")
     ));
 
@@ -462,6 +462,7 @@ TAO::FT_ReplicationManager::get_factory_registry (
   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (selection_criteria);
   return this->factory_registry_.reference();
 }
 
@@ -470,18 +471,7 @@ void TAO::FT_ReplicationManager::shutdown (
   ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->shutdown_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-void TAO::FT_ReplicationManager::shutdown_i (
-  ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  int result = 0;
   quit_ = 1;
-  ACE_CHECK;
-
-  // this->orb_->shutdown (0 ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // Get the type_id associated with an object group.
@@ -626,7 +616,7 @@ TAO::FT_ReplicationManager::set_primary_member (
     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (CORBA::Object::_nil());
 
-  if (CORBA::is_nil (member) )
+  if (CORBA::is_nil (member.in ()) )
   {
     ACE_THROW (PortableGroup::MemberNotFound ());
     ACE_CHECK_RETURN (CORBA::Object::_nil());
@@ -642,10 +632,10 @@ TAO::FT_ReplicationManager::set_primary_member (
     (void)iorm_->remove_primary_tag (&prop, object_group ACE_ENV_ARG_PARAMETER);
   }
 
-  if (! iorm_->set_primary (&prop, member, object_group ACE_ENV_ARG_PARAMETER))
+  if (! iorm_->set_primary (&prop, member.in(), object_group ACE_ENV_ARG_PARAMETER))
   {
     ACE_ERROR ((LM_ERROR,
-      "ReplicationManager::set_primary_member: Can't set primary in IOGR .\n"
+      ACE_TEXT ("%T %n (%P|%t) - Can't set primary in IOGR .\n")
       ));
     ACE_THROW( FT::PrimaryNotSet());
   }
@@ -659,7 +649,8 @@ TAO::FT_ReplicationManager::set_primary_member (
 
   tag_component.object_group_ref_version += 1;
   ACE_DEBUG ((LM_DEBUG,
-    "set_primary_member: Setting IOGR version to %u\n", ACE_static_cast(unsigned, tag_component.object_group_ref_version)
+    ACE_TEXT ("%T %n (%P|%t) - set_primary_member: Setting IOGR version to %u\n"), 
+    ACE_static_cast(unsigned, tag_component.object_group_ref_version)
     ));
 
   // Set the property
@@ -714,14 +705,14 @@ void TAO::FT_ReplicationManager::dump_membership (TAO_IOP::TAO_IOR_Manipulation_
   if (iorm->is_primary_set(&prop, member))
   {
     ACE_DEBUG ((LM_DEBUG,
-      "%s: PRIMARY member.\n",
+      ACE_TEXT ("%T %n (%P|%t) - %s: PRIMARY member.\n"),
       label
       ));
   }
   else
   {
     ACE_DEBUG ((LM_DEBUG,
-      "%s: backup member.\n",
+      ACE_TEXT ("%T %n (%P|%t) - %s: backup member.\n"),
       label
       ));
   }
@@ -730,8 +721,8 @@ void TAO::FT_ReplicationManager::dump_membership (TAO_IOP::TAO_IOR_Manipulation_
   if (TAO::PG_Utils::get_tagged_component (member, tag_component))
   {
     ACE_DEBUG ((LM_DEBUG,
-      "%s: Group: ."
-      " version: %u\n",
+      ACE_TEXT ("%T %n (%P|%t) - %s: Group: .")
+      ACE_TEXT (" version: %u\n"),
 
       label,
       tag_component.object_group_ref_version
@@ -740,7 +731,7 @@ void TAO::FT_ReplicationManager::dump_membership (TAO_IOP::TAO_IOR_Manipulation_
   else
   {
     ACE_DEBUG ((LM_DEBUG,
-      "%s: No group information found.\n",
+      ACE_TEXT ("%T %n (%P|%t) - %s: No group information found.\n"),
       label
       ));
   }
@@ -800,7 +791,7 @@ TAO::FT_ReplicationManager::add_member (
     if (! iorm_->set_primary (&prop, member, cleaned.in () ACE_ENV_ARG_PARAMETER))
     {
       ACE_ERROR ((LM_ERROR,
-        "Can't set primary in IOGR after adding first replica.\n"
+        ACE_TEXT ("%T %n (%P|%t) - Can't set primary in IOGR after adding first replica.\n")
         ));
     }
     ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());
@@ -811,7 +802,8 @@ TAO::FT_ReplicationManager::add_member (
 
   tag_component.object_group_ref_version += 1;
   ACE_DEBUG ((LM_DEBUG,
-    "add_member: Setting IOGR version to %u\n", ACE_static_cast(unsigned, tag_component.object_group_ref_version)
+    ACE_TEXT ("%T %n (%P|%t) - add_member: Setting IOGR version to %u\n"), 
+    ACE_static_cast(unsigned, tag_component.object_group_ref_version)
     ));
 
   // Set the property
@@ -830,7 +822,7 @@ TAO::FT_ReplicationManager::add_member (
 
     // Set the new group reference
     // and distribute it to all members
-    group->set_reference (merged, tag_component.object_group_ref_version, 1);
+    group->set_reference (merged.in (), tag_component.object_group_ref_version, 1);
 
   }
   return merged._retn();
@@ -961,7 +953,7 @@ TAO::FT_ReplicationManager::create_object (
   if (! ((*factory_creation_id) >>= oid ))
   {
     ACE_ERROR ((LM_ERROR,
-      "ReplicationManager::create_object: unexpected type of factory creation id.\n"
+      ACE_TEXT ("%T %n (%P|%t) - Unexpected type of factory creation id.\n")
       ));
     ACE_THROW (PortableGroup::ObjectNotCreated());
     ACE_CHECK_RETURN (CORBA::Object::_nil());

@@ -16,7 +16,7 @@
 #define FT_FAULT_CONSUMER_H_
 
 #include /**/ "ace/pre.h"
-
+#include <ace/ACE.h>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
