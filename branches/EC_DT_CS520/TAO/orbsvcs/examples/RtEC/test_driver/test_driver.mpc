@@ -8,7 +8,8 @@ project(test_driver_lib): orbsvcslib, rtevent, rtsched, rtkokyuevent, kokyu, ace
     TestConfig.cpp
     Test_Handler.cpp
     Config_Factory.cpp
-    AddrServer.cpp
+    Timer_Event_Handler.cpp
+    cpuload.cpp
   }
 
   Template_Files {

@@ -26,6 +26,9 @@
 #include "orbsvcs/RtecEventCommC.h"
 #include "orbsvcs/Event/EC_Gateway_Sched.h"
 
+//REACTOR CHANGE
+#include "tao/ORB_Core.h"
+
 namespace TestConfig {
 
 //TODO: Obviously, we can't just hardcode these!
@@ -54,11 +57,12 @@ ECConfig<SCHED_STRAT>::ECConfig (void)
   , periods(0)
   , importances(0)
   , crits(0)
-  , test_done(new ACE_RW_Mutex())
   //, udp_mcast_address(ACE_DEFAULT_MULTICAST_ADDR ":10001")
   , configured (0) //false
   , use_federated (1) //TODO Check whether or not FEDERATED; default to true
+  //, use_federated (0) //TODO Check whether or not FEDERATED; default to false
 {
+  this->test_done = new ACE_RW_Mutex();
 }
 
 template <class SCHED_STRAT>
@@ -385,10 +389,13 @@ ECConfig<SCHED_STRAT>::run (void)
   ACE_TRY
     {
       ACE_Thread_Manager *inst = ACE_Thread_Manager::instance();
+      ACE_Reactor *reactor = ACE_Reactor::instance();
 
       // Spawn orb thread (which calls orb.run(), then terminates on return)
       ACE_DEBUG((LM_DEBUG,"SPAWNING ORB thread\n"));
-      int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,&(this->orb));
+      //int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,&(this->orb));
+      int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,this->test_done);
+      //int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,reactor);
       //no need for getting tid?
       if (ret == -1)
         {
@@ -397,22 +404,25 @@ ECConfig<SCHED_STRAT>::run (void)
           return 1;
         }
 
-      //      Block waiting for consumers to finish
-      //when can acquire write lock, all Suppliers are finished
-      ret = this->test_done->acquire_write();
-      if (ret == -1)
-        {
-          ACE_DEBUG((LM_DEBUG, "ERROR: could not acquire write lock for ECConfig: %s\n",
-                     ACE_OS::strerror(errno)));
-          return 1;
-        }
+      /*
+      orb->run();
+      //this method returns when orb->shutdown() is called; then thread exits
+      */
 
-      //all Suppliers done, so stop EC and ORB
-      //Shutdown EC
-      this->reset();
+      //REACTOR CHANGE
+      //orb->orb_core()->reactor()->run_reactor_event_loop();
+      ACE_DEBUG((LM_DEBUG,"Starting Reactor loop; work? %d\n",
+                 reactor->work_pending()));
 
-      // Shutdown ORB
-      this->orb->shutdown(1); //argument is TRUE
+      //@BT INSTRUMENT with event ID: EVENT_TEST_BEGIN Measure time
+      //when test starts being able to push events.
+      reactor->run_reactor_event_loop();
+      //this method returns when end_reactor_event_loop() is called; then thread exits
+      ACE_CHECK;
+
+      //REACTOR CHANGE END
+
+      ACE_DEBUG((LM_DEBUG, "ORB thread: Shutdown\n"));
 
       if (inst->wait() == -1) //wait for ORB thread to terminate
         {
@@ -420,6 +430,10 @@ ECConfig<SCHED_STRAT>::run (void)
                      ACE_OS::strerror(errno)));
           return 1;
         }
+
+      //all Suppliers done, so stop EC and ORB
+      //Shutdown EC
+      //this->reset();
 
       ACE_DEBUG ((LM_DEBUG, "suppliers finished\n"));
 
@@ -636,26 +650,35 @@ ECConfig<SCHED_STRAT>::connect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 template <class SCHED_STRAT> void
 ECConfig<SCHED_STRAT>::disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 {
-  for (size_t i = 0; i < this->suppliers.size(); ++i)
+  if (this->configured)
     {
-      this->suppliers[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      for (size_t i = 0; i < this->suppliers.size(); ++i)
+        {
+          ACE_DEBUG((LM_DEBUG,"Disconnecting supplier %d\n",i));
+          this->suppliers[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
 
-      delete this->suppliers[i];
-      this->suppliers[i] = 0;
+          delete this->suppliers[i];
+          this->suppliers[i] = 0;
+        }
+      this->suppliers.size(0);
     }
 }
 
 template <class SCHED_STRAT> void
 ECConfig<SCHED_STRAT>::disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 {
-  for (size_t i = 0; i < this->consumers.size(); ++i)
+  if (this->configured)
     {
-      this->consumers[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      for (size_t i = 0; i < this->consumers.size(); ++i)
+        {
+          this->consumers[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
 
-      delete this->consumers[i];
-      this->consumers[i] = 0;
+          delete this->consumers[i];
+          this->consumers[i] = 0;
+        }
+      this->consumers.size(0);
     }
 }
 
@@ -767,26 +790,35 @@ ECConfig<SCHED_STRAT>::barrier(bool is_supplier)
 template <class SCHED_STRAT> ACE_THR_FUNC_RETURN
 ECConfig<SCHED_STRAT>::run_orb(void *data)
 {
-  //ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_RW_Mutex *test_done = ACE_reinterpret_cast(ACE_RW_Mutex*,data);
+  printf("test_done: %p\n",test_done);
+  //test_done->dump();
+  //const ACE_rwlock_t& lock = test_done->lock();
+  //printf("Number of: readers=%d\twriters=%d\n",lock.num_waiting_readers_,lock.num_waiting_writers_);
+  //printf("acquire_read(): %d\n",test_done->acquire_read());
+  //printf("acquire_write(): %d\n",test_done->acquire_write());
+  //std::exit(0);
+
+  //      Block waiting for consumers to finish
+  //when can acquire write lock, all Suppliers are finished
+  int ret = test_done->acquire_write();
+  if (ret == -1)
     {
-      ACE_DEBUG((LM_DEBUG, "ORB thread: Casting %x\n",data));
-
-      CORBA::ORB_var orb = *(ACE_reinterpret_cast(CORBA::ORB_var*,data));
-
-      ACE_DEBUG((LM_DEBUG, "ORB thread: Running orb\n"));
-
-      orb->run();
-      //this method returns when orb->shutdown() is called; then thread exits
-
-      ACE_DEBUG((LM_DEBUG, "ORB thread: Shutdown\n"));
+      ACE_DEBUG((LM_DEBUG, "ERROR: could not acquire write lock for ECConfig: %s\n",
+                 ACE_OS::strerror(errno)));
+      return 0;
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "ECConfig ORB thread");
-    }
-  ACE_ENDTRY;
+  //@BT INSTRUMENT with event ID: EVENT_TEST_END Measure time when
+  //all events have been pushed.
 
+  //REACTOR CHANGE
+  // Shutdown ORB
+  //this->orb->shutdown(1); //argument is TRUE
+  //orb->orb_core()->reactor()->end_reactor_event_loop();
+  ACE_DEBUG((LM_DEBUG,"DONE; stopping reactor event loop\n"));
+  ACE_Reactor::instance()->end_reactor_event_loop();
+
+  ACE_DEBUG((LM_DEBUG,"ORB Thread exiting\n"));
   return 0;
 }
 

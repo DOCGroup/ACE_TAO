@@ -17,10 +17,14 @@
 #ifndef CONSUMER_H
 #define CONSUMER_H
 
+#include "ace/Time_Value.h"
+
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommC.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Channel_Clients_T.h"
+
+#include "cpuload.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -103,7 +107,11 @@ private:
   // We connect to the EC as a consumer so we can receive the
   // timeout events.
 
+  ACE_Time_Value _work_time;
+
   int _consumer_id;
+
+  CPULoad _work;
 };
 
 #endif /* CONSUMER_H */

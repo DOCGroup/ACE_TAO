@@ -23,6 +23,9 @@ Supplier::update(ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->_num_sent < this->_to_send)
     {
+      //@BT INSTRUMENT with event ID: EVENT_PUSH Measure time
+      //when event is pushed by client.
+
       //send this->_events
       this->_consumer_proxy->push(this->_events ACE_ENV_ARG_PARAMETER);
 
@@ -145,6 +148,8 @@ Supplier::connect (ACE_RW_Mutex* done,
   this->timeoutconsumer.connect(scheduler,supp_entry_pt.str().c_str(),period,
                                 importance,criticality,ec ACE_ENV_ARG_PARAMETER);
 
+  //REACTOR CHANGE
+  /*
   //Add Scheduler dependency between TimeoutConsumer and Supplier
   scheduler->add_dependency (this->timeoutconsumer.get_RT_Info(),
                              rt_info,
@@ -152,7 +157,8 @@ Supplier::connect (ACE_RW_Mutex* done,
                              RtecBase::TWO_WAY_CALL
                              ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
-
+  */
+  //REACTOR CHANGE END
 }
 
 void

@@ -17,11 +17,17 @@
 #ifndef TIMEOUTCONSUMER_H
 #define TIMEOUTCONSUMER_H
 
+#include <sstream> //for ostringstream
+
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommC.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Channel_Clients_T.h"
 #include "TestConfig.h"
+
+//REACTOR CHANGE
+class Timer_Event_Handler; //forward decl
+//REACTOR CHANGE END
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -65,7 +71,7 @@ public:
 
   virtual ~TimeoutConsumer (void);
 
-  RtecScheduler::handle_t get_RT_Info(void);
+  //RtecScheduler::handle_t get_RT_Info(void);
 
   void connect (RtecScheduler::Scheduler_ptr scheduler,
                 const char *entry_prefix,
@@ -93,7 +99,8 @@ public:
 private:
   Timeout_Observer* _observer;
 
-  RtecScheduler::handle_t _rt_info;
+  //RtecScheduler::handle_t _rt_info;
+  std::ostringstream entry_pt;
 
   RtecScheduler::Scheduler_ptr _scheduler;
 
@@ -106,6 +113,12 @@ private:
 
   RtecEventComm::EventSet _events;
   // set of events to push when a timeout event is received.
+
+  //REACTOR CHANGE
+  Timer_Event_Handler *_handler;
+
+  long _timer_id;
+  //REACTOR CHANGE END
 };
 
 #endif /* CONSUMER_H */
