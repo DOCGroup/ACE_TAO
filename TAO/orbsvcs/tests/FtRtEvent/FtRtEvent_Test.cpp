@@ -21,6 +21,7 @@ FtRtEvent_Test_Base::FtRtEvent_Test_Base()
 {
   options_.num_iterations=100;
   options_.timer_interval.set(1,0);
+  options_.proxy_consumer_file="consumer.ior";
 }
 
 FtRtEvent_Test_Base::~FtRtEvent_Test_Base()
