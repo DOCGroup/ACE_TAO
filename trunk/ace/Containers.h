@@ -342,6 +342,10 @@ public:
   // Move forward by one element in the Stack.  Returns 0 when all the
   // items in the Stack have been seen, else 1.
 
+  int first (void);
+  // Move to the first element in the Stack.  Returns 0 if the
+  // Stack is empty, else 1.
+
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
 
@@ -380,6 +384,10 @@ public:
   int advance (void);
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the queue have been seen, else 1.
+
+  int first (void);
+  // Move to the first element in the queue.  Returns 0 if the
+  // queue is empty, else 1.
 
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
@@ -517,8 +525,12 @@ public:
   // 0 if there is no more element available.
 
   int advance (void);
-  // Move forward by one element in the Stack.  Returns 0 when all the
-  // items in the Stack have been seen, else 1.
+  // Move forward by one element in the list.  Returns 0 when all the
+  // items in the list have been seen, else 1.
+
+  int first (void);
+  // Move to the first element in the list.  Returns 0 if the
+  // list is empty, else 1.
 
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
@@ -681,6 +693,10 @@ public:
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.
 
+  int first (void);
+  // Move to the first element in the set.  Returns 0 if the
+  // set is empty, else 1.
+
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
 
@@ -832,6 +848,10 @@ public:
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.
 
+  int first (void);
+  // Move to the first element in the set.  Returns 0 if the
+  // set is empty, else 1.
+
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
 
@@ -954,6 +974,10 @@ public:
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.
 
+  int first (void);
+  // Move to the first element in the set.  Returns 0 if the
+  // set is empty, else 1.
+
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
 
@@ -1064,7 +1088,7 @@ template <class T>
 class ACE_Ordered_MultiSet_Iterator
 {
   // = TITLE
-  //     Implement an iterator over an ordered multiset.
+  //     Implement a bidirectional iterator over an ordered multiset.
   //     This class template requires that < operator semantics be defined 
   //     for the parameterized type <T>, but does not impose any restriction
   //     on how that ordering operator is implemented.

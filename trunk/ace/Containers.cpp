@@ -610,6 +610,14 @@ ACE_Unbounded_Queue_Iterator<T>::advance (void)
 }
 
 template <class T> int
+ACE_Unbounded_Queue_Iterator<T>::first (void)
+{
+// ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::first");
+  this->current_ = this->queue_.head_->next_;
+  return this->current_ != this->queue_.head_;
+}
+
+template <class T> int
 ACE_Unbounded_Queue_Iterator<T>::done (void) const
 {
   ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::done");
@@ -671,6 +679,13 @@ template <class T> int
 ACE_Double_Linked_List_Iterator<T>::advance (void)
 {
   return this->do_advance () ? 1 : 0;
+}
+
+template <class T> int
+ACE_Double_Linked_List_Iterator<T>::first (void)
+{
+  this->current_ = dll.head_->next_; 
+  return this->not_done ();
 }
 
 template <class T> int
@@ -1103,6 +1118,15 @@ ACE_Fixed_Set_Iterator<T, SIZE>::advance (void)
 }
 
 template <class T, size_t SIZE> int
+ACE_Fixed_Set_Iterator<T, SIZE>::first (void)
+{
+  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::first");
+
+  next_ = -1;
+  return this->advance ();
+}
+
+template <class T, size_t SIZE> int
 ACE_Fixed_Set_Iterator<T, SIZE>::done (void) const
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::done");
@@ -1304,6 +1328,15 @@ ACE_Bounded_Set_Iterator<T>::advance (void)
     continue;
 
   return ACE_static_cast(size_t, this->next_) < this->s_.cur_size_;
+}
+
+template <class T> int
+ACE_Bounded_Set_Iterator<T>::first (void)
+{
+  ACE_TRACE ("ACE_Bounded_Set_Iterator<T>::first");
+
+  next_ = -1;
+  return this->advance ();
 }
 
 template <class T> int
@@ -1611,6 +1644,14 @@ ACE_Unbounded_Set_Iterator<T>::advance (void)
 }
 
 template <class T> int
+ACE_Unbounded_Set_Iterator<T>::first (void)
+{
+// ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::first");
+  this->current_ = this->set_->head_->next_;
+  return this->current_ != this->set_->head_;
+}
+
+template <class T> int
 ACE_Unbounded_Set_Iterator<T>::done (void) const
 {
   ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::done");
@@ -1692,6 +1733,14 @@ ACE_Unbounded_Stack_Iterator<T>::advance (void)
 {
 // ACE_TRACE ("ACE_Unbounded_Stack_Iterator<T>::advance");
   this->current_ = this->current_->next_;
+  return this->current_ != this->stack_.head_;
+}
+
+template <class T> int
+ACE_Unbounded_Stack_Iterator<T>::first (void)
+{
+// ACE_TRACE ("ACE_Unbounded_Stack_Iterator<T>::first");
+  this->current_ = this->stack_.head_->next_;
   return this->current_ != this->stack_.head_;
 }
 
