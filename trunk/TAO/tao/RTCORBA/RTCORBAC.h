@@ -45,7 +45,6 @@
 
 #include "rtcorba_export.h"
 #include "rtcorba_typedefs.h"
-#include "tao/CDR.h"
 #include "tao/Encodable.h"
 #include "tao/TimeBaseC.h"
 #include "tao/Environment.h"
@@ -79,13 +78,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_root/root_ch.cpp:63
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-  
+
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -95,109 +94,109 @@ namespace TAO
 
 namespace RTCORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:342
-  
+
   typedef CORBA::Short NativePriority;
   typedef CORBA::Short_out NativePriority_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NativePriority;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:342
-  
+
   typedef CORBA::Short Priority;
   typedef CORBA::Short_out Priority_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Priority;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const RTCORBA::Priority minPriority = 0;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const RTCORBA::Priority maxPriority = 32767;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:342
-  
+
   typedef CORBA::Long NetworkPriority;
   typedef CORBA::Long_out NetworkPriority_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NetworkPriority;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:342
-  
+
   typedef CORBA::ULong ThreadpoolId;
   typedef CORBA::ULong_out ThreadpoolId_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadpoolId;
-  
+
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
-  
+
   struct ThreadpoolLane;
-  
+
   typedef
     TAO_Fixed_Var_T<
         ThreadpoolLane
       >
     ThreadpoolLane_var;
-  
+
   typedef
     ThreadpoolLane &
     ThreadpoolLane_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_RTCORBA_Export ThreadpoolLane
   {
     typedef ThreadpoolLane_var _var_type;
-    
+
     static void _tao_any_destructor (void *);
     RTCORBA::Priority lane_priority;
     CORBA::ULong static_threads;
     CORBA::ULong dynamic_threads;
   };
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadpoolLane;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_RTCORBA_THREADPOOLLANES_CH_)
 #define _RTCORBA_THREADPOOLLANES_CH_
-  
+
   class ThreadpoolLanes;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         ThreadpoolLanes,
         ThreadpoolLane
       >
     ThreadpoolLanes_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         ThreadpoolLanes,
@@ -574,7 +573,7 @@ namespace RTCORBA
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
-    // CDR Encoder/Decoder methods.
+    // CDR Encoder/Decoder methods. (handcrafted)
     virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
     virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   protected:

@@ -30,6 +30,7 @@
 
 
 #include "RTPortableServerC.h"
+#include "tao/CDR.h"
 #include "tao/Typecode.h"
 #include "ace/OS_NS_string.h"
 
@@ -87,7 +88,7 @@ TAO::Objref_Traits<RTPortableServer::POA>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -200,42 +201,7 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_RTPortableServer_POA[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254506f), 
-  ACE_NTOHL (0x72746162), 
-  ACE_NTOHL (0x6c655365), 
-  ACE_NTOHL (0x72766572), 
-  ACE_NTOHL (0x2f504f41), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTPortableServer/POA:1.0
-    4,
-  ACE_NTOHL (0x504f4100),  // name = POA
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_RTPortableServer_POA (
-    CORBA::tk_objref,
-    sizeof (_oc_RTPortableServer_POA),
-    (char *) &_oc_RTPortableServer_POA,
-    0,
-    sizeof (RTPortableServer::POA)
-  );
-
-namespace RTPortableServer
-{
-  ::CORBA::TypeCode_ptr _tc_POA =
-    &_tc_TAO_tc_RTPortableServer_POA;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
