@@ -1,3 +1,10 @@
+Sat Feb 22 08:52:13 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+
+	  Include "tao/Wait_Strategy.h".  Necessitated by inter-header
+	  dependency reductions.
+
 Sat Feb 22 08:44:46 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Queued_Message_Test/Queued_Message_Test.cpp:
@@ -36,7 +43,7 @@ Fri Feb 21 13:40:41 2003  Ossama Othman  <ossama@uci.edu>
 Fri Feb 21 13:07:33 2003  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_interface.cpp (gen_stub_ctor):
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp (visit_exception): 
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp (visit_exception):
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp (visit_interface):
 
 	  Generate code that uses the ACE_NESTED_CLASS macro to work
