@@ -70,14 +70,24 @@ public:
       orb_ (orb)
     {};
 
-  void test_method (CORBA::Environment &)
+  void test_method (CORBA::ULongLong stamp,
+                    CORBA::Environment &)
     {
       // Get the currect time.
       ACE_hrtime_t now = ACE_OS::gethrtime ();
+      int i = this->nreplies_received_;
+
+      if (TAO_debug_level > 0)
+        fprintf (stderr,
+                 "Latency %llu %llu %llu\n",
+                 now, stamp, latency_base_array[i]);
 
       // Take the sample.
       throughput_stats.sample (now - throughput_base,
-                               now - latency_base_array [this->nreplies_received_]);
+                               now - stamp);
+
+      if (TAO_debug_level > 0 && i % 100 == 0)
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) received = %d\n", i));
 
       // Inc count.
       this->nreplies_received_++;
@@ -238,10 +248,23 @@ main (int argc, char *argv[])
                                        1,
                                        1,
                                        priority + 1) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "Cannot activate client threads"),
-                          1);
+        {
+          int priority =
+            (ACE_Sched_Params::priority_min (ACE_SCHED_OTHER)
+             + ACE_Sched_Params::priority_max (ACE_SCHED_OTHER)) / 2;
+
+          // Retry in the regular class:
+          if (reply_handler_task.activate (THR_NEW_LWP | THR_JOINABLE,
+                                           1,
+                                           1,
+                                           priority + 1) != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%p\n",
+                                 "Cannot activate client threads"),
+                                1);
+            }
+        }
 
       // Allocate memory for latency base array.
       ACE_NEW_RETURN (latency_base_array,
@@ -259,6 +282,7 @@ main (int argc, char *argv[])
 
           // Invoke asynchronous operation.
           server->sendc_test_method (reply_handler.in (),
+                                     latency_base_array [i],
                                      ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -323,11 +347,18 @@ int
 Reply_Handler_Task::svc (void)
 {
   if (sleep_flag)
-    // Spend 10 msecs running the ORB.
-    this->orb_->run ();
+    { 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - starting receiver thread [1]\n"));
+      // Spend 10 msecs running the ORB.
+      this->orb_->run ();
+    }
   else
-    while (!done)
-      this->orb_->perform_work ();
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - starting receiver thread [2]\n"));
+      while (!done)
+        this->orb_->perform_work ();
+    }
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) - finished receiver thread\n"));
   return 0;
 }
 

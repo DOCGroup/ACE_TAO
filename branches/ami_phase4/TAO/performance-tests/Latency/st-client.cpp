@@ -139,15 +139,15 @@ main (int argc, char *argv[])
       Client client;
 
       client.set (server.in (), niterations);
-      
+
       client.svc ();
-      
+
       ACE_Throughput_Stats throughput;
 
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-      
+
       client.accumulate_into (throughput);
-      
+
       char buf[64];
       ACE_OS::sprintf (buf, "Single Theaded:SMI");
       client.dump_stats (buf, gsf);
@@ -201,8 +201,8 @@ Client::svc (void)
           ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
           // Invoke method.
-          server_->test_method (ACE_TRY_ENV);
-          
+          server_->test_method (latency_base,ACE_TRY_ENV);
+
           // Grab timestamp again.
           ACE_hrtime_t now = ACE_OS::gethrtime ();
 

@@ -68,16 +68,17 @@ class Handler : public POA_AMI_Test_Handler
 {
 public:
   Handler (void) {};
-  
-  void test_method (CORBA::Environment&)
+
+  void test_method (CORBA::ULongLong stamp,
+                    CORBA::Environment&)
     {
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       throughput_stats.sample (now - throughput_base,
-                               now - latency_base);
+                               now - stamp);
 
       done = 1;
     };
- 
+
   ~Handler (void) {};
 };
 
@@ -92,9 +93,9 @@ class Client
 public:
   Client (void);
   // ctor
-  
+
   void set (Test_ptr server,
-            int niterations, 
+            int niterations,
             CORBA::ORB_ptr orb,
             AMI_Test_Handler_ptr reply_handler);
   // Set the test attributes.
@@ -114,7 +115,7 @@ private:
 
   int niterations_;
   // The number of iterations on each client thread.
-  
+
   CORBA::ORB_ptr orb_;
   // Cache the ORB pointer.
 
@@ -157,7 +158,7 @@ main (int argc, char *argv[])
 
       if (parse_args (argc, argv) != 0)
         return 1;
-      
+
       CORBA::Object_var object =
         orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -178,16 +179,16 @@ main (int argc, char *argv[])
       Handler handler;
       AMI_Test_Handler_var reply_handler = handler._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Activate POA to handle the call back.
-      
+
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
-      
+
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -202,26 +203,26 @@ main (int argc, char *argv[])
       Client client;
 
       // Init the client object.
-      client.set (server.in (), 
-                  niterations, 
+      client.set (server.in (),
+                  niterations,
                   orb,
                   reply_handler.in ());
-      
+
       // Start the test.
       client.svc ();
-      
+
       ACE_Throughput_Stats throughput;
       char buf[64];
 
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
 
       client.accumulate_into (throughput);
-      
+
       ACE_OS::sprintf (buf, "Single Threaded:AMI");
       client.dump_stats (buf, gsf);
-      
+
       throughput.dump_results ("Aggregated", gsf);
-      
+
       // server->shutdown (ACE_TRY_ENV);
       // ACE_TRY_CHECK;
     }
@@ -246,8 +247,8 @@ Client::Client (void)
 }
 
 void
-Client::set (Test_ptr server, 
-             int niterations, 
+Client::set (Test_ptr server,
+             int niterations,
              CORBA::ORB_ptr orb,
              AMI_Test_Handler_ptr reply_handler)
 {
@@ -276,9 +277,10 @@ Client::svc (void)
         {
           // Get timestamp.
           latency_base = ACE_OS::gethrtime ();
-          
+
           // Invoke asynchronous operation.
           server_->sendc_test_method (this->reply_handler_,
+                                      ACE_OS::gethrtime (),
                                       ACE_TRY_ENV);
 
           if (sleep_flag)
@@ -287,7 +289,7 @@ Client::svc (void)
           else
             while (!done)
               this->orb_->perform_work ();
-            
+
           ACE_TRY_CHECK;
 
           if (TAO_debug_level > 0 && i % 100 == 0)
@@ -316,5 +318,3 @@ Client::dump_stats (const char* msg, ACE_UINT32 gsf)
 {
   throughput_stats.dump_results (msg, gsf);
 }
-
-
