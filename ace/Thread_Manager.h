@@ -426,7 +426,7 @@ public:
 
   // = Initialization and termination methods.
   /**
-   * @breif Initialization and termination methods.
+   * @brief Initialization and termination methods.
    *
    * Internally, ACE_Thread_Manager keeps a freelist for caching
    * resources it uses to keep track of managed threads (not the
