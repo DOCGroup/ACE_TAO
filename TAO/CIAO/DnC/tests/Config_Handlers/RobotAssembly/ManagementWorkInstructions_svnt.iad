@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ImplementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <label>ManagementWorkInstructions Servant Library</label>
+
+  <UUID>C40F8DC0-9EE9-4008-9C1D-320D028D78E0</UUID>
+
+  <location>ManagementWorkInstructions_svnt</location>
+
+  <dependsOn>
+    <name>ManagementWorkInstructions_stub</name>
+    <referencedArtifact href="ManagementWorkInstructions_stub.iad"/>
+  </dependsOn>
+
+  <execParameter>
+    <name>entryPoint</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>createManagementWorkInstructionsHome_Servant</string>
+      </value>
+    </value>
+  </execParameter>
+
+</Deployment:ImplementationArtifactDescription>

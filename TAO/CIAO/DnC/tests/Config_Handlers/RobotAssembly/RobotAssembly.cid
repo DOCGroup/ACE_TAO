@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ComponentImplementationDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>AACECC3F-A903-4224-A090-38F8A6988F86</UUID>
+
+  <assemblyImpl>
+    <instance xmi:id="HumanMachineInterface_483EBD69-2BDB-4A6B-8713-26A66BE8912B">
+      <name>HumanMachineInterface</name>
+      <package href="HumanMachineInterface.cpd"/>
+    </instance>
+    <instance xmi:id="ManagementWorkInstructions_E451C313-14C2-4B8A-8F10-B4A4696DF82A">
+      <name>ManagementWorkInstructions</name>
+      <package href="ManagementWorkInstructions.cpd"/>
+    </instance>
+    <instance xmi:id="WatchSettingManager_137DADE0-EB93-4D3F-9D7F-E74C8F50EAA0">
+      <name>WatchSettingManager</name>
+      <package href="WatchSettingManager.cpd"/>
+    </instance>
+    <instance xmi:id="PalletConveyorManager_EEE36369-0E67-479E-9B4C-3B3660899F7A">
+      <name>PalletConveyorManager</name>
+      <package href="PalletConveyorManager.cpd"/>
+    </instance>
+    <instance xmi:id="RobotManager_3F7E6341-D6D3-4048-88BB-655597DA0449">
+      <name>RobotManager</name>
+      <package href="RobotManager.cpd"/>
+    </instance>
+    <connection>
+      <name>HumanResponse_DisplayResponse</name>
+      <internalEndpoint>
+        <portName>DisplayResponse</portName>
+        <instance xmi:idref="WatchSettingManager_137DADE0-EB93-4D3F-9D7F-E74C8F50EAA0"/>
+      </internalEndpoint>
+      <internalEndpoint>
+        <portName>HumanResponse</portName>
+        <instance xmi:idref="HumanMachineInterface_483EBD69-2BDB-4A6B-8713-26A66BE8912B"/>
+      </internalEndpoint>
+    </connection>
+    <connection>
+      <name>recvWorkOrder_sendWorkOrder</name>
+      <internalEndpoint>
+        <portName>sendWorkOrder</portName>
+        <instance xmi:idref="ManagementWorkInstructions_E451C313-14C2-4B8A-8F10-B4A4696DF82A"/>
+      </internalEndpoint>
+      <internalEndpoint>
+        <portName>recvWorkOrder</portName>
+        <instance xmi:idref="WatchSettingManager_137DADE0-EB93-4D3F-9D7F-E74C8F50EAA0"/>
+      </internalEndpoint>
+    </connection>
+    <connection>
+      <name>ProductionReport_ProductionReport</name>
+      <internalEndpoint>
+        <portName>ProductionReport</portName>
+        <instance xmi:idref="WatchSettingManager_137DADE0-EB93-4D3F-9D7F-E74C8F50EAA0"/>
+      </internalEndpoint>
+      <internalEndpoint>
+        <portName>ProductionReport</portName>
+        <instance xmi:idref="ManagementWorkInstructions_E451C313-14C2-4B8A-8F10-B4A4696DF82A"/>
+      </internalEndpoint>
+    </connection>
+    <connection>
+      <name>PalletRequests_MovePallet</name>
+      <internalEndpoint>
+        <portName>MovePallet</portName>
+        <instance xmi:idref="WatchSettingManager_137DADE0-EB93-4D3F-9D7F-E74C8F50EAA0"/>
+      </internalEndpoint>
+      <internalEndpoint>
+        <portName>PalletRequests</portName>
+        <instance xmi:idref="PalletConveyorManager_EEE36369-0E67-479E-9B4C-3B3660899F7A"/>
+      </internalEndpoint>
+    </connection>
+    <connection>
+      <name>PalletStatus_PalletStatus</name>
+      <internalEndpoint>
+        <portName>PalletStatus</portName>
+        <instance xmi:idref="PalletConveyorManager_EEE36369-0E67-479E-9B4C-3B3660899F7A"/>
+      </internalEndpoint>
+      <internalEndpoint>
+        <portName>PalletStatus</portName>
+        <instance xmi:idref="WatchSettingManager_137DADE0-EB93-4D3F-9D7F-E74C8F50EAA0"/>
+      </internalEndpoint>
+    </connection>
+    <connection>
+      <name>ProcessingStatus_ProcessingStatus</name>
+      <internalEndpoint>
+        <portName>ProcessingStatus</portName>
+        <instance xmi:idref="RobotManager_3F7E6341-D6D3-4048-88BB-655597DA0449"/>
+      </internalEndpoint>
+      <internalEndpoint>
+        <portName>ProcessingStatus</portName>
+        <instance xmi:idref="WatchSettingManager_137DADE0-EB93-4D3F-9D7F-E74C8F50EAA0"/>
+      </internalEndpoint>
+    </connection>
+    <connection>
+      <name>ProcessPalletCommands_ProductionControl</name>
+      <internalEndpoint>
+        <portName>ProductionControl</portName>
+        <instance xmi:idref="WatchSettingManager_137DADE0-EB93-4D3F-9D7F-E74C8F50EAA0"/>
+      </internalEndpoint>
+      <internalEndpoint>
+        <portName>ProcessPalletCommands</portName>
+        <instance xmi:idref="RobotManager_3F7E6341-D6D3-4048-88BB-655597DA0449"/>
+      </internalEndpoint>
+    </connection>
+    <connection>
+      <name>WorkDisplayUpdate_Display</name>
+      <internalEndpoint>
+        <portName>Display</portName>
+        <instance xmi:idref="WatchSettingManager_137DADE0-EB93-4D3F-9D7F-E74C8F50EAA0"/>
+      </internalEndpoint>
+      <internalEndpoint>
+        <portName>WorkDisplayUpdate</portName>
+        <instance xmi:idref="HumanMachineInterface_483EBD69-2BDB-4A6B-8713-26A66BE8912B"/>
+      </internalEndpoint>
+    </connection>
+  </assemblyImpl>
+
+</Deployment:ComponentImplementationDescription>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ComponentImplementationDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>438E0207-5E97-44F4-8543-BAF25B3FA69C</UUID>
+
+  <implements href="RobotManager.ccd"/>
+
+  <monolithicImpl>
+    <primaryArtifact>
+      <name>RobotManager_exec</name>
+      <referencedArtifact href="RobotManager_exec.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>RobotManager_stub</name>
+      <referencedArtifact href="RobotManager_stub.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>RobotManager_svnt</name>
+      <referencedArtifact href="RobotManager_svnt.iad"/>
+    </primaryArtifact>
+  </monolithicImpl>
+
+  <ConfigProperty>
+    <name>ComponentIOR</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>RM.ior</string>
+      </value>
+    </value>
+  </ConfigProperty>
+
+</Deployment:ComponentImplementationDescription>

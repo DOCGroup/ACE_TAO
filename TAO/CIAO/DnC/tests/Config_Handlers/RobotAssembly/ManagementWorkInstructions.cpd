@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ComponentPackageDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>283BE3F8-2AA4-429C-B669-1626FE685B1D</UUID>
+
+  <realizes href="ManagementWorkInstructions.ccd"/>
+
+  <implementation>
+    <name>ManagementWorkInstructions</name>
+    <referencedImplementation href="ManagementWorkInstructions.cid"/>
+  </implementation>
+
+</Deployment:ComponentPackageDescription>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ImplementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <label>HumanMachineInterface Stub library</label>
+
+  <UUID>479EBAE2-74D4-4812-AB75-8A74A0E07588</UUID>
+
+  <location>HumanMachineInterface_stub</location>
+
+  <dependsOn>
+    <name>CIAO</name>
+    <referencedArtifact href="CIAO.iad"/>
+  </dependsOn>
+
+  <dependsOn>
+    <name>ACE</name>
+    <referencedArtifact href="ACE.iad"/>
+  </dependsOn>
+
+  <dependsOn>
+    <name>TAO</name>
+    <referencedArtifact href="TAO.iad"/>
+  </dependsOn>
+
+</Deployment:ImplementationArtifactDescription>

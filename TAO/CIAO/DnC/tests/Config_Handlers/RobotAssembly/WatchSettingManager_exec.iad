@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ImplementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <label>WatchSettingManager Executor</label>
+
+  <UUID>29A1EB52-096C-4DD8-A72F-C14BFBF563D0</UUID>
+
+  <location>WatchSettingManager_exec</location>
+
+  <dependsOn>
+    <name>WatchSettingManager_stub</name>
+    <referencedArtifact href="WatchSettingManager_stub.iad"/>
+  </dependsOn>
+
+  <execParameter>
+    <name>entryPoint</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>createWatchSettingManagerHome_Impl</string>
+      </value>
+    </value>
+  </execParameter>
+
+</Deployment:ImplementationArtifactDescription>
