@@ -179,38 +179,38 @@ public:
   // return the current number of elements in the list
 
   CORBA_NamedValue_ptr add (CORBA::Flags,
-                             CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                             CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // add an element and just initialize the flags
 
   CORBA_NamedValue_ptr add_item (const char *,
                                   CORBA::Flags,
-                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                                  CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // add an element and initialize its name and flags
 
   CORBA_NamedValue_ptr add_value (const char *,
                                    const CORBA::Any &,
                                    CORBA::Flags,
-                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                                   CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // initializes a value, name, and flags
 
   CORBA_NamedValue_ptr add_item_consume (char *,
                                           CORBA::Flags,
-                                          CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                                          CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // just like add_item. In addition, memory management of char * name is taken
   // over by the NVList
 
   CORBA_NamedValue_ptr add_value_consume (char *,
                                            CORBA::Any_ptr,
                                            CORBA::Flags,
-                                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                                           CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // just like add_value. In addition, the NVList controls the memory
   // management of the char *name and Any *value parameter
 
-  CORBA_NamedValue_ptr item (CORBA::ULong n, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  CORBA_NamedValue_ptr item (CORBA::ULong n, CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // retrieve the item at the nth location. Raises Bounds
 
   //  CORBA::Status
-  void remove (CORBA::ULong n, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  void remove (CORBA::ULong n, CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // remove element at index n. Raises Bounds
 
   // The pseudo object static methods..
@@ -232,7 +232,7 @@ private:
   // constructor - cannot be instantiated directly other than through the
   // ORB::create_list method
 
-  CORBA_NamedValue_ptr add_element (CORBA::Flags, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  CORBA_NamedValue_ptr add_element (CORBA::Flags, CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // helper to increase the list size. This is used by all the add_ methods of
   // the NVList class
 

@@ -53,3 +53,12 @@ CORBA::wstring_dup (const WChar *const str)
   CORBA::WChar* retval = CORBA::wstring_alloc (ACE_OS::wslen (str));
   return ACE_OS::wscpy (retval, str);
 }
+
+// ****************************************************************
+
+ACE_INLINE CORBA_Environment&
+CORBA::default_environment ()
+{
+  return TAO_default_environment ();
+}
+

@@ -113,9 +113,9 @@ public:
   // = The Servant methods
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
   virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV =
-                             CORBA::default_environment ());
+                             TAO_default_environment ());
   virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV =
-                                CORBA::default_environment ());
+                                TAO_default_environment ());
 
 private:
   CORBA::Boolean is_connected_i (void) const;

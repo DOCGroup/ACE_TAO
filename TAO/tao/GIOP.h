@@ -265,7 +265,8 @@ public:
   // Constructor
 
   CORBA::Boolean init (TAO_InputCDR &msg,
-                       CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                       CORBA_Environment &TAO_IN_ENV =
+                           TAO_default_environment ());
   // Initialize the header from the values found in <msg>.
 
   CORBA::ULong request_id;

@@ -14,7 +14,7 @@ ACE_RCSID(Event, EC_Command, "$Id$")
 template<class Target, class Object> int
 TAO_EC_Connected_Command<Target,Object>::execute (void* arg)
 {
-  CORBA::Environment *env = &CORBA::default_environment ();
+  CORBA::Environment *env = &TAO_default_environment ();
   if (arg != 0)
     env = ACE_static_cast(CORBA::Environment*, arg);
 
@@ -27,7 +27,7 @@ TAO_EC_Connected_Command<Target,Object>::execute (void* arg)
 template<class Target, class Object> int
 TAO_EC_Disconnected_Command<Target,Object>::execute (void* arg)
 {
-  CORBA::Environment *env = &CORBA::default_environment ();
+  CORBA::Environment *env = &TAO_default_environment ();
   if (arg != 0)
     env = ACE_static_cast(CORBA::Environment*, arg);
 
@@ -40,7 +40,7 @@ TAO_EC_Disconnected_Command<Target,Object>::execute (void* arg)
 template<class Target> int
 TAO_EC_Shutdown_Command<Target>::execute (void* arg)
 {
-  CORBA::Environment *env = &CORBA::default_environment ();
+  CORBA::Environment *env = &TAO_default_environment ();
   if (arg != 0)
     env = ACE_static_cast(CORBA::Environment*, arg);
 

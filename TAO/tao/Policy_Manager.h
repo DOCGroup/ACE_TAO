@@ -49,7 +49,7 @@ public:
       const CORBA::PolicyList & policies,
       CORBA::SetOverrideType set_add,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   // Modify the list of policies to include <policies>.
   // If <set_add> is CORBA::SET_OVERRIDE then we replace all the old
@@ -60,7 +60,7 @@ public:
   CORBA::PolicyList * get_policy_overrides (
       const CORBA::PolicyTypeSeq & types,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   // Get the values (if any) for the policies in <types>, if <types>
   // is an empty list the method returns *all* the current policies.
@@ -68,7 +68,7 @@ public:
   CORBA::Policy_ptr get_policy (
       CORBA::PolicyType policy,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   // Obtain a single policy.
 
@@ -101,7 +101,7 @@ public:
   CORBA::Policy_ptr get_policy (
       CORBA::PolicyType policy,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   // Obtain a single policy.
 
@@ -134,7 +134,7 @@ public:
   CORBA::Policy_ptr get_policy (
       CORBA::PolicyType policy,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   // Obtain a single policy.
 
@@ -167,7 +167,7 @@ public:
   CORBA::Policy_ptr get_policy (
       CORBA::PolicyType policy,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   // Obtain a single policy.
 

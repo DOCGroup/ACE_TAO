@@ -140,31 +140,31 @@ public:
   static CORBA_Policy_ptr _narrow (
       CORBA::Object_ptr obj,
       CORBA_Environment &TAO_IN_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   static CORBA_Policy_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
       CORBA_Environment &TAO_IN_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   static CORBA_Policy_ptr _nil (void);
 
   virtual CORBA::PolicyType policy_type (
       CORBA_Environment &TAO_IN_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual CORBA_Policy_ptr copy (
       CORBA_Environment &TAO_IN_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual void destroy (
       CORBA_Environment &TAO_IN_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
       CORBA_Environment &TAO_IN_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 protected:
@@ -381,30 +381,30 @@ public:
   static CORBA_PolicyManager_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &env =
-          CORBA::default_environment ()
+          TAO_default_environment ()
       );
   static CORBA_PolicyManager_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &env =
-          CORBA::default_environment ()
+          TAO_default_environment ()
       );
   static CORBA_PolicyManager_ptr _nil (void);
 
   virtual CORBA_PolicyList * get_policy_overrides (
         const CORBA_PolicyTypeSeq & ts,
         CORBA::Environment &ACE_TRY_ENV =
-          CORBA::default_environment ()
+          TAO_default_environment ()
       );
   virtual void set_policy_overrides (
         const CORBA_PolicyList & policies,
         CORBA::SetOverrideType set_add,
         CORBA::Environment &ACE_TRY_ENV =
-          CORBA::default_environment ()
+          TAO_default_environment ()
       );
   virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
-          CORBA::default_environment ()
+          TAO_default_environment ()
       );
   virtual const char* _interface_repository_id (void) const;
 protected:
@@ -476,19 +476,19 @@ public:
   static CORBA_PolicyCurrent_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &env =
-          CORBA::default_environment ()
+          TAO_default_environment ()
       );
   static CORBA_PolicyCurrent_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &env =
-          CORBA::default_environment ()
+          TAO_default_environment ()
       );
   static CORBA_PolicyCurrent_ptr _nil (void);
 
   virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
-          CORBA::default_environment ()
+          TAO_default_environment ()
       );
   virtual const char* _interface_repository_id (void) const;
 protected:

@@ -1251,7 +1251,7 @@ CORBA::ORB_init (int &argc,
                  const char * orb_name)
 {
   return CORBA::ORB_init (argc, argv, orb_name,
-                          CORBA::default_environment ());
+                          TAO_default_environment ());
 }
 
 CORBA::ORB_ptr

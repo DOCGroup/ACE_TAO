@@ -141,28 +141,28 @@ class TAO_Export CORBA_Pollable : public virtual CORBA_Object
   static CORBA_Pollable_ptr _narrow (
       CORBA::Object_ptr obj,
       CORBA::Environment &env =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   static CORBA_Pollable_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
       CORBA::Environment &env =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   static CORBA_Pollable_ptr _nil (void);
 
   virtual CORBA::Boolean is_ready (
       CORBA::ULong timeout,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual CORBA_PollableSet_ptr create_pollable_set (
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
       CORBA::Environment &env =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 protected:
@@ -235,19 +235,19 @@ public:
   static CORBA_DIIPollable_ptr _narrow (
       CORBA::Object_ptr obj,
       CORBA::Environment &env =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   static CORBA_DIIPollable_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
       CORBA::Environment &env =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   static CORBA_DIIPollable_ptr _nil (void);
 
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
       CORBA::Environment &env =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 protected:
@@ -275,12 +275,12 @@ public:
   static CORBA_PollableSet_ptr _narrow (
       CORBA::Object_ptr obj,
       CORBA::Environment &env =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   static CORBA_PollableSet_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
       CORBA::Environment &env =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   static CORBA_PollableSet_ptr _nil (void);
 
@@ -349,31 +349,31 @@ public:
 
   virtual CORBA_DIIPollable_ptr create_dii_pollable (
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual void add_pollable (
       CORBA_Pollable_ptr potential,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual CORBA_Pollable_ptr poll (
       CORBA::ULong timeout,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual void remove (
       CORBA_Pollable_ptr potential,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual CORBA::UShort number_left (
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
       CORBA::Environment &env =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 protected:
