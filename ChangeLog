@@ -1,3 +1,8 @@
+Thu Apr 17 16:04:54 2003  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Process_Mutex_Test.cpp: Removed call to sleep(). It was
+	  really not required.  This closes bug 91.
+
 Thu Apr 17 19:26:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 	* ace/os_include/aio.h:
