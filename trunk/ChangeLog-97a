@@ -1,3 +1,9 @@
+Mon Apr 28 00:25:17 1997    <irfan@TWOSTEP>
+
+	* apps/JAWS/client: Removed ACE_Export macro from class
+ 	  declarations. Fixed buffer size bug in
+ 	  ACE_Blob_Reader::receive_reply ().
+
 Sun Apr 27 22:22:14 1997    <irfan@TWOSTEP>
 
 	* ace/Proactor: The Proactor can now be registered with ReactorEx
