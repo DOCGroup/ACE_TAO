@@ -1,3 +1,10 @@
+Mon Oct 23 19:13:54 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/DomainC.cpp:
+
+	  Corrected the last of the references to TAO_ClientRequest_Info.
+	  That class has been renamed to TAO_ClientRequestInfo.
+
 Mon Oct 23 18:07:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Once more, recompute dependencies YET ANOTHER TIME.  IMnsHO the

@@ -420,9 +420,8 @@ void CORBA_ConstructionPolicy::make_domain_manager (
 #if (TAO_HAS_INTERCEPTORS == 1)
 
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV)
+      istub->orb_core ()->client_request_interceptors ()
     );
-  ACE_CHECK;
   CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager ri (
       "make_domain_manager",
       _tao_call.service_info (),
@@ -559,7 +558,7 @@ CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_d
     CORBA::Boolean &constr_policy,
     CORBA::Environment &
   )
-  : TAO_ClientRequest_Info (
+  : TAO_ClientRequestInfo (
         _tao_operation, 
         _tao_service_context_list, 
         _tao_target
