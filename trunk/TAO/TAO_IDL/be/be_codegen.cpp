@@ -1161,7 +1161,7 @@ TAO_CodeGen::end_server_template_header (void)
       << "\")";
   *this->server_template_header_ << "\n#endif /* defined REQUIRED PRAGMA */";
 
-  *this->server_template_header_ << "#\n\nif defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
+  *this->server_template_header_ << "\n\n#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
                                  << "#pragma warning(pop)\n"
                                  << "#endif /* _MSC_VER */";
 
