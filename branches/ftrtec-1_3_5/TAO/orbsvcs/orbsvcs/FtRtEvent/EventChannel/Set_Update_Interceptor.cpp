@@ -48,6 +48,7 @@ TAO_Set_Update_Interceptor::send_request (
                                       ACE_THROW_SPEC ((CORBA::SystemException,
                                       PortableInterceptor::ForwardRequest))
 {
+  FTRTEC_TRACE("TAO_Set_Update_Interceptor::send_request");
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -117,6 +118,7 @@ TAO_Set_Update_Interceptor::receive_reply (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(ri);
+  FTRTEC_TRACE("TAO_Set_Update_Interceptor::receive_reply");
 }
 
 void
@@ -126,6 +128,7 @@ TAO_Set_Update_Interceptor::receive_other (
                                        ACE_THROW_SPEC ((CORBA::SystemException,
                                        PortableInterceptor::ForwardRequest))
 {
+  FTRTEC_TRACE("TAO_Set_Update_Interceptor::receive_other");
 }
 
 void
@@ -135,5 +138,6 @@ TAO_Set_Update_Interceptor::receive_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
   PortableInterceptor::ForwardRequest))
 {
+  FTRTEC_TRACE("TAO_Set_Update_Interceptor::receive_exception");
   ACE_UNUSED_ARG(ri);
 }
