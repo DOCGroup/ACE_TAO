@@ -166,7 +166,7 @@ Base_Server::register_servant (AMH_Servant *servant)
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      (void) this->write_ior_to_file (ior);
+      (void) this->write_ior_to_file (ior.in ());
     }
   ACE_CATCHANY
     {

@@ -1,3 +1,8 @@
+Fri Oct 18 10:30:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/AMH/Sink_Server/Base_Server.cpp: Fixed a warning with
+	  g++. 
+
 Thu Oct 17 18:35:29 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* examples/AMH/Sink_Server/Base_Server.inl:
