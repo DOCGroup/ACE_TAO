@@ -69,7 +69,7 @@ public:
              const void *act,
              int signal_number,
              size_t sequence_number)
-    : RESULT_CLASS (handler,
+    : RESULT_CLASS (handler.proxy (),
                     act,
                     ACE_INVALID_HANDLE,
                     0, // Offset

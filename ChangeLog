@@ -1,3 +1,10 @@
+Wed Feb 16 10:13:41 2005  Steve Huston  <shuston@riverace.com>
+
+	* examples/Reactor/Proactor/post_completions.cpp:
+	* examples/Reactor/Proactor/test_proactor.cpp: Adjust the overridden
+	  result class and internal proactor calls to pass handler's proxy
+	  pointer, not the handler itself.
+
 Wed Feb 16 07:02:15 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_NS_stdlib.inl:
