@@ -1,3 +1,12 @@
+Thu May  6 22:15:14 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/taoidldefaults.mpb:
+	* include/makeinclude/wrapper_macros.GNU:
+
+	  ".inl" is now the default TAO_IDL generated stub/skeleton inline
+	  file extension instead of ".i".  The latter is generally used
+	  for preprocessed C sources.  Updated these files accordingly.
+
 Thu May 7 02:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
         * examples/Service_Configurator/IPC-tests/:
