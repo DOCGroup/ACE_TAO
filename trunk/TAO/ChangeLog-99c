@@ -1,3 +1,10 @@
+Fri Jul  2 12:39:42 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/Tags.html:
+
+	  Updated "location encoding" table with the three new minor
+	  exception codes I added.
+
 Fri Jul  2 11:53:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Sequence_T.cpp:
