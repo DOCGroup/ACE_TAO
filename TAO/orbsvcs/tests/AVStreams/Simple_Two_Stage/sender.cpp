@@ -149,6 +149,7 @@ Sender::init (int argc,
 
   // Resolve the object reference of the receiver from the Naming Service.
   result = this->bind_to_receiver (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
   
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,

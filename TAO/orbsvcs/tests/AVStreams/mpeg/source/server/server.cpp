@@ -370,13 +370,18 @@ AV_Server::init (int argc,
   this->my_name_client_->bind (video_server_mmdevice_name,
                                this->video_mmdevice_->_this (ACE_TRY_ENV),
                                ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   if (ACE_TRY_ENV.exception () != 0)
     {
       ACE_TRY_ENV.clear ();
+      CORBA::Object_var video_mmdevice 
+        = this->video_mmdevice_->_this (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+
       this->my_name_client_->rebind (video_server_mmdevice_name,
-                              this->video_mmdevice_->_this (ACE_TRY_ENV),
-                              ACE_TRY_ENV);
+                                     video_mmdevice.in (),
+                                     ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -399,17 +404,25 @@ AV_Server::init (int argc,
   audio_server_mmdevice_name.length (1);
   audio_server_mmdevice_name [0].id = CORBA::string_dup ("Audio_Server_MMDevice");
 
+  CORBA::Object_var audio_mmdevice
+    = this->audio_mmdevice_->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   // Register the audio control object with the naming server.
   this->my_name_client_->bind (audio_server_mmdevice_name,
-                        this->audio_mmdevice_->_this (ACE_TRY_ENV),
-                        ACE_TRY_ENV);
+                               audio_mmdevice.in (),
+                               ACE_TRY_ENV);
 
   if (ACE_TRY_ENV.exception () != 0)
     {
       ACE_TRY_ENV.clear ();
+
+      CORBA::Object_var audio_mmdevice
+        = this->audio_mmdevice_->_this (ACE_TRY_ENV);
+
       this->my_name_client_->rebind (audio_server_mmdevice_name,
-                              this->audio_mmdevice_->_this (ACE_TRY_ENV),
-                              ACE_TRY_ENV);
+                                     audio_mmdevice.in (),
+                                     ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -435,6 +448,7 @@ AV_Server::run (CORBA::Environment& ACE_TRY_ENV){
 //   while (1)
 //     {
       this->orb_manager_.run (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
 //       if (errno == EINTR)
 //         continue;
 //       else
@@ -463,9 +477,13 @@ main (int argc, char **argv)
 {
   ACE_TRY_NEW_ENV
     {
-      if (AV_SERVER::instance ()->init (argc, argv, ACE_TRY_ENV) == -1)
-        return 1;
+      int result 
+        = AV_SERVER::instance ()->init (argc, argv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      
+      if (result == -1)
+        return -1;
+      
       AV_SERVER::instance ()->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }

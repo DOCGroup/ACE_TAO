@@ -103,7 +103,8 @@ Command_Handler::init (int argc,
       ACE_TRY_CHECK;
 
       this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
-
+      ACE_TRY_CHECK;
+      
       // Initialize the naming services
       if (my_name_client_.init (orb_manager_.orb ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -1916,14 +1917,18 @@ Command_Handler::connect_to_video_server (void)
   ACE_NEW_RETURN (this->video_streamctrl_,
                   TAO_StreamCtrl,
                   -1);
-  this->video_streamctrl_->bind_devs
-    (this->video_client_mmdevice_->_this (ACE_TRY_ENV),
-         this->video_server_mmdevice_.in (),
-         the_qos.inout (),
-         flow_spec.in (),
-         ACE_TRY_ENV);
 
-      ACE_TRY_CHECK;
+  AVStreams::MMDevice_var video_client_mmdevice
+    = this->video_client_mmdevice_->_this (ACE_TRY_ENV);
+  ACE_TRY_CHECK;
+
+  this->video_streamctrl_->bind_devs (video_client_mmdevice.in (),
+                                      this->video_server_mmdevice_.in (),
+                                      the_qos.inout (),
+                                      flow_spec.in (),
+                                      ACE_TRY_ENV);
+  
+  ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -1931,9 +1936,9 @@ Command_Handler::connect_to_video_server (void)
       return -1;
     }
   ACE_ENDTRY;
-
+  
   return 0;
-
+  
 }
 
 // connects and handshakes with the server
@@ -1973,15 +1978,18 @@ Command_Handler::connect_to_audio_server (void)
                   TAO_StreamCtrl,
                   -1);
 
-  // Bind the client and server mmdevices.
-      this->audio_streamctrl_->bind_devs
-        (this->audio_client_mmdevice_->_this (ACE_TRY_ENV),
-         this->audio_server_mmdevice_.in (),
-         the_qos.inout (),
-         the_flows.in (),
-         ACE_TRY_ENV);
+  AVStreams::MMDevice_var audio_client_mmdevice
+    = this->audio_client_mmdevice_->_this (ACE_TRY_ENV);
+  ACE_TRY_CHECK;
 
-      ACE_TRY_CHECK;
+  // Bind the client and server mmdevices.
+  this->audio_streamctrl_->bind_devs (audio_client_mmdevice.in (),
+                                      this->audio_server_mmdevice_.in (),
+                                      the_qos.inout (),
+                                      the_flows.in (),
+                                      ACE_TRY_ENV);
+  
+  ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
