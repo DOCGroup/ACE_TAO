@@ -38,7 +38,7 @@
 
 // Adapt the weird threading and synchronization routines (which
 // return errno rather than -1) so that they return -1 and set errno.
-// This is more consistent with the rest of ACE_OS and enables use to
+// This is more consistent with the rest of ACE_OS and enables us to
 // use the ACE_OSCALL* macros.
 # if defined (VXWORKS)
 #   define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != OK ? (errno = RESULT, -1) : 0)

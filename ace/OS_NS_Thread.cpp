@@ -3236,39 +3236,41 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
   // ACE_OS_TRACE ("ACE_OS::thr_keycreate");
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
-    ACE_UNUSED_ARG (inst);
+  ACE_UNUSED_ARG (inst);
 
 
 #     if defined (ACE_HAS_PTHREADS_DRAFT4)
 #       if defined (ACE_HAS_STDARG_THR_DEST)
-    ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
+  ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
 #       else  /* ! ACE_HAS_STDARG_THR_DEST */
-    ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
+  ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
 #       endif /* ! ACE_HAS_STDARG_THR_DEST */
 #     elif defined (ACE_HAS_PTHREADS_DRAFT6)
-    ACE_OSCALL_RETURN (::pthread_key_create (key, dest), int, -1);
+  ACE_OSCALL_RETURN (::pthread_key_create (key, dest), int, -1);
 #     else
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
-                                         ace_result_),
-                       int, -1);
+  int result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
+                                       result),
+                     int, -1);
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
 #   elif defined (ACE_HAS_STHREADS)
-    ACE_UNUSED_ARG (inst);
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
-                                         ace_result_),
-                       int, -1);
+  ACE_UNUSED_ARG (inst);
+  int result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
+                                       result),
+                     int, -1);
 #   elif defined (ACE_HAS_WTHREADS)
-    *key = ::TlsAlloc ();
+  *key = ::TlsAlloc ();
 
-    if (*key != ACE_SYSCALL_FAILED)
-      {
-        // Extract out the thread-specific table instance and stash away
-        // the key and destructor so that we can free it up later on...
-        return ACE_TSS_Cleanup::instance ()->insert (*key, dest, inst);
-      }
-    else
-      ACE_FAIL_RETURN (-1);
-      /* NOTREACHED */
+  if (*key != ACE_SYSCALL_FAILED)
+    {
+      // Extract out the thread-specific table instance and stash away
+      // the key and destructor so that we can free it up later on...
+      return ACE_TSS_Cleanup::instance ()->insert (*key, dest, inst);
+    }
+  else
+    ACE_FAIL_RETURN (-1);
+  /* NOTREACHED */
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (key);
@@ -3294,7 +3296,7 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
     if (ACE_TSS_Emulation::next_key (*key) == 0)
       {
         ACE_TSS_Emulation::tss_destructor (
-                               *key, 
+                               *key,
                                (ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR) dest);
 
         // Extract out the thread-specific table instance and stash away
@@ -3318,15 +3320,17 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 #   elif defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_OSCALL_RETURN (::pthread_key_create (key, dest), int, -1);
 #   else
+    int result;
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
-                                         ace_result_),
+                                         result),
                        int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
 # elif defined (ACE_HAS_STHREADS)
     ACE_UNUSED_ARG (inst);
+    int result;
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
-                                         ace_result_),
+                                         result),
                        int, -1);
 # elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
 
@@ -3456,18 +3460,20 @@ ACE_OS::thr_setspecific (ACE_OS_thread_key_t key, void *data)
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
 #     if defined (ACE_HAS_FSU_PTHREADS)
-      // Call pthread_init() here to initialize threads package.  FSU
-      // threads need an initialization before the first thread constructor.
-      // This seems to be the one; however, a segmentation fault may
-      // indicate that another pthread_init() is necessary, perhaps in
-      // Synch.cpp or Synch_T.cpp.  FSU threads will not reinit if called
-      // more than once, so another call to pthread_init will not adversely
-      // affect existing threads.
-      pthread_init ();
+  // Call pthread_init() here to initialize threads package.  FSU
+  // threads need an initialization before the first thread
+  // constructor.  This seems to be the one; however, a segmentation
+  // fault may indicate that another pthread_init() is necessary,
+  // perhaps in Synch.cpp or Synch_T.cpp.  FSU threads will not reinit
+  // if called more than once, so another call to pthread_init will
+  // not adversely affect existing threads.
+  pthread_init ();
 #     endif /*  ACE_HAS_FSU_PTHREADS */
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data), ace_result_), int, -1);
+  int result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data), result), int, -1);
 #   elif defined (ACE_HAS_STHREADS)
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), ace_result_), int, -1);
+  int result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), result), int, -1);
 #   elif defined (ACE_HAS_WTHREADS)
     ::TlsSetValue (key, data);
     return 0;
@@ -3503,26 +3509,28 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
       }
 # elif defined (ACE_HAS_PTHREADS)
 #   if defined (ACE_HAS_FSU_PTHREADS)
-      // Call pthread_init() here to initialize threads package.  FSU
-      // threads need an initialization before the first thread constructor.
-      // This seems to be the one; however, a segmentation fault may
-      // indicate that another pthread_init() is necessary, perhaps in
-      // Synch.cpp or Synch_T.cpp.  FSU threads will not reinit if called
-      // more than once, so another call to pthread_init will not adversely
-      // affect existing threads.
-      pthread_init ();
+    // Call pthread_init() here to initialize threads package.  FSU
+    // threads need an initialization before the first thread
+    // constructor.  This seems to be the one; however, a segmentation
+    // fault may indicate that another pthread_init() is necessary,
+    // perhaps in Synch.cpp or Synch_T.cpp.  FSU threads will not
+    // reinit if called more than once, so another call to
+    // pthread_init will not adversely affect existing threads.
+    pthread_init ();
 #   endif /*  ACE_HAS_FSU_PTHREADS */
 
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_OSCALL_RETURN (::pthread_setspecific (key, data), int, -1);
 #   else
+    int result;
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data),
-                                         ace_result_),
+                                         result),
                        int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
 
 # elif defined (ACE_HAS_STHREADS)
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), ace_result_), int, -1);
+  int result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), result), int, -1);
 # elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
     ACE_hthread_t tid;
     ACE_OS::thr_self (tid);
