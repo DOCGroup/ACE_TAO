@@ -4,6 +4,7 @@
 
 DIRS = \
         Log_Msg \
-        Map_Manager
+        Map_Manager \
+        Threads
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
