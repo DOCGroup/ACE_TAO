@@ -166,6 +166,9 @@ public:
   CORBA_String_out &operator= (char *p);
   // Assignment from a string.
 
+  CORBA_String_out& operator= (const char* p);
+  // Assignment from a constant char*.
+
   operator char *&();
   // Cast.
 
