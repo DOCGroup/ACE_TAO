@@ -162,7 +162,7 @@ DRV_get_line(FILE *f)
  * Copy from stdin to a file
  */
 static void
-DRV_copy_input(FILE *fin, char *fn)
+DRV_copy_input(FILE *fin, char *fn, const char *orig_filename)
 {
   FILE  *f = fopen(fn, "w");
 
@@ -178,6 +178,7 @@ DRV_copy_input(FILE *fin, char *fn)
            << GTDEVEL(": cannot open input file\n");
       exit(99);
   }
+  fprintf (f, "#1 \"%s\"\n", orig_filename);
   while (DRV_get_line(fin))
     fprintf(f, "%s\n", drv_line);
   fclose(f);
@@ -249,11 +250,11 @@ DRV_pre_proc(char *myfile)
             (*DRV_FE_new_UTL_String)(DRV_stripped_name(tmp_ifile))
         );
     idl_global->set_real_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
-    DRV_copy_input(stdin, tmp_ifile);
+    DRV_copy_input(stdin, tmp_ifile, "standard input");
     idl_global->set_read_from_stdin(I_TRUE);
   } else {
     FILE *fd = fopen(myfile, "r");
-    DRV_copy_input(fd, tmp_ifile);
+    DRV_copy_input(fd, tmp_ifile, myfile);
     fclose(fd);
     idl_global->set_read_from_stdin(I_FALSE);
     idl_global->set_filename((*DRV_FE_new_UTL_String)(myfile));
