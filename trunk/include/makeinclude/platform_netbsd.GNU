@@ -22,6 +22,6 @@ AR              = ar
 ARFLAGS         = ruv
 RANLIB          = ranlib
 
-SOFLAGS = -Bshareable -x
-SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $< /usr/lib/c++rt0.o
+SOFLAGS = -Bshareable -x /usr/lib/c++rt0.o 
+SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so  $<
 PRELIB = @echo
