@@ -25,7 +25,7 @@ namespace TAO
     public:
       // = The skeleton methods
       virtual void send_stuff (const char* str,
-                               bool flag)
+                               CORBA::Boolean flag)
         ACE_THROW ((CORBA::SystemException))
       {
         ACE_DEBUG ((LM_DEBUG,
