@@ -1,7 +1,6 @@
 #----------------------------------------------------------------------------
 #       GNU Makefile
 #----------------------------------------------------------------------------
-
 MAKEFILE        = Makefile.Svcconf
 DEPENDENCY_FILE = .depend.Makefile.Svcconf
 BIN_UNCHECKED   = Svcconf
@@ -11,10 +10,10 @@ BIN_UNCHECKED   = Svcconf
 FILES = \
   main \
   Svcconf_Handler
-
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
+
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 BIN    = $(BIN_UNCHECKED)
@@ -29,9 +28,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 CPPFLAGS     += -I../../..
+ifeq ($(static_libs),1)
+  ifneq ($(LIB),)
+    CPPFLAGS += -DACE_AS_STATIC_LIBS
+  endif
+endif
+
+
 LDFLAGS      += -L../../../ace
 
-LDLIBS = -lACEXML_XML_Svc_Conf_Parser -lACEXML_Parser -lACEXML
+LDLIBS  = -lACEXML_XML_Svc_Conf_Parser -lACEXML_Parser -lACEXML
 
 #----------------------------------------------------------------------------
 #       Local targets
@@ -40,10 +46,5 @@ LDLIBS = -lACEXML_XML_Svc_Conf_Parser -lACEXML_Parser -lACEXML
 $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
 
-#----------------------------------------------------------------------------
-#       Dependencies
-#----------------------------------------------------------------------------
-# DO NOT DELETE THIS LINE -- g++dep uses it.
-# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+realclean: clean 
 
-# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -1,0 +1,22 @@
+# $Id$
+#----------------------------------------------------------------------------
+#       GNU ACE Workspace
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+MFILES = \
+         Makefile.HttpCharStream_Test \
+         Makefile.Transcoder_Test \
+         Makefile.NamespaceSupport_Test
+
+$(TARGETS_NESTED):
+ifneq (Windows,$(findstring Windows,$(OS)))
+	@for file in $(MFILES); do \
+	$(MAKE) -f `basename $$file` -C `dirname $$file` $(@); \
+	done
+else
+	-@cmd /c "$(MAKE) -f Makefile.HttpCharStream_Test -C . $(@)"
+	-@cmd /c "$(MAKE) -f Makefile.Transcoder_Test -C . $(@)"
+	-@cmd /c "$(MAKE) -f Makefile.NamespaceSupport_Test -C . $(@)"
+endif
