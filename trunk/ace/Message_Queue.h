@@ -237,10 +237,10 @@ protected:
   // Protect queue from concurrent access.
 
 #if defined (ACE_LACKS_COND_T)
-  ACE_SYNCH_SEMAPHORE_T not_empty_cond;
+  ACE_SYNCH_SEMAPHORE_T not_empty_cond_;
   // Used to make threads sleep until the queue is no longer empty.
 
-  ACE_SYNCH_SEMAPHORE_T not_full_cond;
+  ACE_SYNCH_SEMAPHORE_T not_full_cond_;
   // Used to make threads sleep until the queue is no longer full.
 
   size_t dequeue_waiters_;
