@@ -1,3 +1,9 @@
+Tue Nov 21 11:00:14 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/run_test.lst:
+
+          Borland shouldn't be running ACE_Init_Test.
+
 Tue Nov 21 10:15:15 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.inl:
