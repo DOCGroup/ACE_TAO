@@ -1,3 +1,12 @@
+Wed Oct  6 10:33:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tao/MessagingC.h,
+	  tao/MessagingC.i,
+	  tao/MessagingC.cpp: In the .cpp file file were inline
+	  methods, moved these to the .i file.
+
+	* tao/Reply_Dispatcher.cpp: Cosmetic changes.
+
 Wed Oct  6 07:23:23 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI/client.cpp,

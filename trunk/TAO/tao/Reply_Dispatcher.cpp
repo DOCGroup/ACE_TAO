@@ -178,20 +178,6 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
                   "(%P | %t):TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n"));
     }
 
-  // @@ Michael: Addition
-  // Check the reply error.
-
-  // @@Michael: Do this. I think we have to marshal
-  // it in order to be able to handle it as the other exceptions.
-  // if (this->reply_status_ == -1)
-  //      ACE_THROW_RETURN (CORBA::COMM_FAILURE (
-  //        CORBA_SystemException::_tao_minor_code (
-  //          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-  //          errno),
-  //        CORBA::COMPLETED_MAYBE),
-  //      TAO_INVOKE_EXCEPTION);
-
-  // @@ Michael: We need to refine the following.
   CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
   switch (reply_status)
     {
@@ -222,6 +208,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
                            reply_handler_,
                            reply_error,
                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
