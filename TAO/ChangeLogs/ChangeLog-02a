@@ -1,3 +1,8 @@
+Thu Feb 10 14:10:32 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO/TAO.dsp:
+	* TAO/TAO_Static.dsp: Added SHMIOP_* files.
+
 Thu Feb 10 13:25:07 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO/tao/SHMIOP_Acceptor.h:
