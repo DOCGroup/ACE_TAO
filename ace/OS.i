@@ -48,12 +48,16 @@ typedef const char *ACE_SOCKOPT_TYPE1;
 #endif /* ACE_HAS_VOIDPTR_SOCKOPT */
 
 #if defined (ACE_NEEDS_WRITEV)
-extern "C" int writev (ACE_HANDLE handle, ACE_WRITEV_TYPE *iov, int iovcnt);
+extern "C" ACE_Export int writev (ACE_HANDLE handle, ACE_WRITEV_TYPE *iov, int iovcnt);
 #endif /* ACE_NEEDS_WRITEV */
 
 #if defined (ACE_NEEDS_READV)
-extern "C" ssize_t readv (ACE_HANDLE handle, ACE_READV_TYPE *iov, int iovcnt);
+extern "C" ACE_Export ssize_t readv (ACE_HANDLE handle, ACE_READV_TYPE *iov, int iovcnt);
 #endif /* ACE_NEEDS_READV */
+
+#if defined (ACE_NEEDS_FTRUNCATE)
+extern "C" ACE_Export int ftruncate (ACE_HANDLE handle, long len);
+#endif /* ACE_NEEDS_FTRUNCATE */
 
 #if defined (ACE_HAS_VOIDPTR_MMAP)
 // Needed for some odd OS's (e.g., SGI).
@@ -454,7 +458,7 @@ extern "C" char *mktemp (char *);
 
 #if defined (ACE_HAS_THR_C_FUNC)
 // This is necessary to work around nasty problems with MVS C++.
-extern "C" void ace_mutex_lock_cleanup_adapter (void *args);
+extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
 #define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 #elif !defined (ACE_LACKS_PTHREAD_CLEANUP)

@@ -40,20 +40,20 @@ ACE_Atomic_Op<ACE_Thread_Mutex, int> TSS_Obj::count_ = 0;
 TSS_Obj::TSS_Obj (void)
 {
   TSS_Obj::count_++;
-  ACE_DEBUG ((LM_DEBUG, "(%t) TSS_Obj+: %d\n", (int) TSS_Obj::count_));
+  ACE_DEBUG ((LM_DEBUG, "(%t) TSS_Obj+: %d\n", TSS_Obj::count_.value ()));
 }
 
 TSS_Obj::~TSS_Obj (void)
 {
   TSS_Obj::count_--;
-  ACE_DEBUG ((LM_DEBUG, "(%t) TSS_Obj-: %d\n", (int) TSS_Obj::count_));
+  ACE_DEBUG ((LM_DEBUG, "(%t) TSS_Obj-: %d\n", TSS_Obj::count_.value ()));
 }
 
 Test_Task::Test_Task (void)
 {
   Test_Task::count_++;
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) Test_Task+: %d\n", (int) Test_Task::count_));
+	      "(%t) Test_Task+: %d\n", Test_Task::count_.value ()));
 }
 
 Test_Task::~Test_Task (void)
@@ -61,7 +61,7 @@ Test_Task::~Test_Task (void)
   Test_Task::count_--;
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) Test_Task-: %d\n", (int) Test_Task::count_));
+	      "(%t) Test_Task-: %d\n", Test_Task::count_.value ()));
   Test_Task::wait_count_--;
 }
 
@@ -125,7 +125,7 @@ main (int argc, char *argv[])
 		  "(%t) ********* iteration %d **********\n"
 		  "Test_Task::max_count_ %d\n",
 		  i,
-		  (int) Test_Task::max_count_));
+		  Test_Task::max_count_.value ()));
       Test_Task::max_count_ = 0;
 
       for (int j = 0; j < num_tasks; j++)
@@ -158,8 +158,8 @@ main (int argc, char *argv[])
 	  ACE_DEBUG ((LM_DEBUG,
 		      "(%t) Test_Task::max_count_ = %d,"
 		      " Test_Task::wait_count_ = %d",
-		      (int) Test_Task::max_count_,
-		      (int) Test_Task::wait_count_));
+		      Test_Task::max_count_.value (),
+		      Test_Task::wait_count_.value ()));
 	  break;
 	}
 

@@ -1008,7 +1008,7 @@ typedef const struct iovec ACE_WRITEV_TYPE;
 typedef const struct iovec ACE_READV_TYPE;
 #else
 typedef struct iovec ACE_READV_TYPE;
-#endif /* ACE_HAS_BROKEN_WRITEV */
+#endif /* ACE_HAS_BROKEN_READV */
 
 #if defined (ACE_HAS_BROKEN_SETRLIMIT)
 typedef struct rlimit ACE_SETRLIMIT_TYPE;
@@ -3060,7 +3060,7 @@ struct ACE_Cleanup_Info
 
 // Run the thread entry point for the <ACE_Thread_Adapter>.  This must
 // be an extern "C" to make certain compilers happy...
-extern "C" void *ace_thread_adapter (void *args);
+extern "C" ACE_Export void *ace_thread_adapter (void *args);
 
 // Forward decl.
 class ACE_Thread_Manager;

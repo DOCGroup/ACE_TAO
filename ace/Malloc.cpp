@@ -134,9 +134,9 @@ ACE_Malloc_Stats::dump (void) const
   ACE_TRACE ("ACE_Malloc_Stats::print");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  int nblocks = this->nblocks_;
-  int ninuse  = this->ninuse_;
-  int nchunks = this->nchunks_;
+  int nblocks = this->nblocks_.value ();
+  int ninuse  = this->ninuse_.value ();
+  int nchunks = this->nchunks_.value ();
 
   ACE_DEBUG ((LM_DEBUG, "nblocks = %d", nblocks));
   ACE_DEBUG ((LM_DEBUG, "\nninuse = %d", ninuse));
