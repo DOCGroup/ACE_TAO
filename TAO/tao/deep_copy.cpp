@@ -792,8 +792,10 @@ TAO_Marshal_Array::deep_copy (CORBA::TypeCode_ptr  tc,
   size_t size;
   CORBA::ULong  bounds;
 
+#if 0
   // Used only to access the marshal_object factory.
   CDR stream;
+#endif /* 0 */
 
   // Rely on binary format of sequences -- all are the same except for
   // the type pointed to by "buffer".

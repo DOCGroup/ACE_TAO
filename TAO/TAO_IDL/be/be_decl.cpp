@@ -353,7 +353,6 @@ be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
 {
   static long buf [NAMEBUFSIZE / sizeof (long)];
   long slen;
-  unsigned int i;
 
   slen = ACE_OS::strlen (name) + 1; // 1 for NULL terminating
 
