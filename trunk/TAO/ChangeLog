@@ -1,3 +1,9 @@
+Wed Jan 22 11:08:57 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * tao/Messaging/Messaging_Policy_i.cpp (hook): Fixed debug message
+        so that it actually printed out milliseconds rather than the
+        microsecond component expressed as milliseconds.
+
 Wed Jan 22 17:03:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
@@ -7,8 +13,8 @@ Wed Jan 22 17:03:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jan 22 16:34:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * Makefile.RTCORBAEvent:
-        * Makefile.RTSchedEvent:
+        * orbsvcs/orbsvcs/Makefile.RTCORBAEvent:
+        * orbsvcs/orbsvcs/Makefile.RTSchedEvent:
           Set the correct x_BUILD_DLL defines. These are needed for the
           Cygwin/MingW and Kylix compiler.
 
@@ -16,16 +22,16 @@ Tue Jan 21 15:31:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
 
-	  Modified code handling #pragma version directive to handle
-	  the case where one or more of the spaces between the words
-	  in the directive contains a tab. Thanks to Dima Scub
-	  <dima_scub@sniip.ru> for reporting the bug. This closes
-	  [BUGID:1425].
+          Modified code handling #pragma version directive to handle
+          the case where one or more of the spaces between the words
+          in the directive contains a tab. Thanks to Dima Scub
+          <dima_scub@sniip.ru> for reporting the bug. This closes
+          [BUGID:1425].
 
-	* TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.ll:
 
-	  Changed the file that generates lex.yy.cpp to reflect the
-	  change above.
+          Changed the file that generates lex.yy.cpp to reflect the
+          change above.
 
 Tue Jan 21 19:28:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -36,72 +42,72 @@ Tue Jan 21 19:28:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jan 21 10:38:48 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/Crash_Test/run_test.pl: fixed few
-	  race conditions.
+        * orbsvcs/tests/Security/Crash_Test/run_test.pl: fixed few
+          race conditions.
 
 Mon Jan 20 18:46:17 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/README.txt (ImplRepoService): Fixed
-	  incorrect usages of InitRef ID ImplRepo_Service which should
-	  really be ImplRepoService.
+        * orbsvcs/ImplRepo_Service/README.txt (ImplRepoService): Fixed
+          incorrect usages of InitRef ID ImplRepo_Service which should
+          really be ImplRepoService.
 
-	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp (run):
-	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp (init): On Win32,
-	  changed to use ACE_OS::hostname to get the "machine name" and
-	  then use the name to acquire the full DNS name of the machine.
-	  Without this extra step, ImpoRepo uses the all-caps, short form
-	  name of the machine, which causes a mismatch with the incoming
-	  corbaloc endpoint name.  Perhaps ACE_OS::hostname needs to be
-	  fixed on Win32 to return.  These changes allow ImplRepo to
-	  startup correctly on Win32.
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp (run):
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp (init): On Win32,
+          changed to use ACE_OS::hostname to get the "machine name" and
+          then use the name to acquire the full DNS name of the machine.
+          Without this extra step, ImpoRepo uses the all-caps, short form
+          name of the machine, which causes a mismatch with the incoming
+          corbaloc endpoint name.  Perhaps ACE_OS::hostname needs to be
+          fixed on Win32 to return.  These changes allow ImplRepo to
+          startup correctly on Win32.
 
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (server_is_running):
-	  The following change seemed to be missing for some reason.
-	  Figured out what to do and fixed it.
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (server_is_running):
+          The following change seemed to be missing for some reason.
+          Figured out what to do and fixed it.
 
-	Mon Nov 11 09:28:43 2002  Priyanka Gontla  <pgontla@ociweb.com>
+        Mon Nov 11 09:28:43 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
-		* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
-		  Get the whole hostname name including the domain instead
-		  of just the hostname.
-		  Thanks to Kobi Cohen-Arazi <kobi@mivzak.com> for pointing
-		  out a exception thats raised.
+                * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+                  Get the whole hostname name including the domain instead
+                  of just the hostname.
+                  Thanks to Kobi Cohen-Arazi <kobi@mivzak.com> for pointing
+                  out a exception thats raised.
 
 
 Mon Jan 20 18:05:26 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/LF_Connect_Strategy.cpp: Removed debugging statements that
-	  needed access to the transport object. The transport object
-	  could dissappear even before the thread gets to this point  and
-	  it is only chaos after that.
+        * tao/LF_Connect_Strategy.cpp: Removed debugging statements that
+          needed access to the transport object. The transport object
+          could dissappear even before the thread gets to this point  and
+          it is only chaos after that.
 
-	* tao/IIOP_Connector.cpp:
-	* tao/Strategies/UIOP_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (make_connection):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Added debugging
-	  statements to make up for the loss from the above change.
+        * tao/IIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (make_connection):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Added debugging
+          statements to make up for the loss from the above change.
 
-	* tao/Leader_Follower.cpp: Added comments and also made sure that
-	  we access the transport object only when debugging is turned on.
+        * tao/Leader_Follower.cpp: Added comments and also made sure that
+          we access the transport object only when debugging is turned on.
 
-	  Thanks to Duane Binder for sharing his purify logs from his runs
-	  that he ran for a long time (which wouldnt have been possible at
-	  all for us)
+          Thanks to Duane Binder for sharing his purify logs from his runs
+          that he ran for a long time (which wouldnt have been possible at
+          all for us)
 
 Mon Jan 20 16:42:34 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/Muxed_TMS.cpp (bind_dispatcher): Added a lock to synchronize
-	  acces to the map. It *was* initially thought that
-	  synchronization will not be required since we always believed
-	  that only one thread could be active in the map. This is *not*
-	  true since a thread could be accessing the transport from the
-	  invocation side whereas another thread could be accessing the
-	  transport and the map underneath from the LF. This is really
-	  really bad.
+        * tao/Muxed_TMS.cpp (bind_dispatcher): Added a lock to synchronize
+          acces to the map. It *was* initially thought that
+          synchronization will not be required since we always believed
+          that only one thread could be active in the map. This is *not*
+          true since a thread could be accessing the transport from the
+          invocation side whereas another thread could be accessing the
+          transport and the map underneath from the LF. This is really
+          really bad.
 
 Mon Jan 20 13:32:30 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/README.txt: Fixed a broken HTML tag.
+        * orbsvcs/ImplRepo_Service/README.txt: Fixed a broken HTML tag.
 
 Mon Jan 20 19:20:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -121,13 +127,13 @@ Mon Jan 20 12:03:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicInterface/Request.cpp:
 
-	  Fixed a bug in poll_response(). Thanks to Jaroslaw Nozderko
-	  <jarek@eko.net.pl> for reporting it.
+          Fixed a bug in poll_response(). Thanks to Jaroslaw Nozderko
+          <jarek@eko.net.pl> for reporting it.
 
 Mon Jan 20 08:00:44 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/Connection_Handler.cpp: Removed multiple inclusions of an
-	  header.
+        * tao/Connection_Handler.cpp: Removed multiple inclusions of an
+          header.
 
 Mon Jan 20 10:00:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -149,19 +155,19 @@ Sun Jan 19 16:56:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Jan 18 12:07:14 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/Notify/Properties.cpp: Fixed my fix by removing
-	a #define I used to test the fix.
+        * orbsvcs/orbsvcs/Notify/Properties.cpp: Fixed my fix by removing
+        a #define I used to test the fix.
 
 Sat Jan 18 10:40:58 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/orbconf.h: Added TAO_RD_TABLE_SIZE and set the value to be
-	  16.
+        * tao/orbconf.h: Added TAO_RD_TABLE_SIZE and set the value to be
+          16.
 
-	* tao/Muxed_TMS.cpp:
-	* tao/Muxed_TMS.h: Used the TAO_RD_TABLE_SIZE to configure the
-	  internal hash map. This is now hard coded. We should have a way
-	  for the user to configure the size of these hash maps and it will
-	  be integrated after 1.3.2.
+        * tao/Muxed_TMS.cpp:
+        * tao/Muxed_TMS.h: Used the TAO_RD_TABLE_SIZE to configure the
+          internal hash map. This is now hard coded. We should have a way
+          for the user to configure the size of these hash maps and it will
+          be integrated after 1.3.2.
 
 Sat Jan 18 09:08:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -176,92 +182,92 @@ Sat Jan 18 09:08:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jan 17 14:22:48 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/Notify/Properties.cpp: Fixed explicit
-	instantiation to instantiate TAO_Singleton rather than
-	ACE_Singleton.  This fixes the RH71_Explicit_Templates build.
+        * orbsvcs/orbsvcs/Notify/Properties.cpp: Fixed explicit
+        instantiation to instantiate TAO_Singleton rather than
+        ACE_Singleton.  This fixes the RH71_Explicit_Templates build.
 
 Fri Jan 17 08:34:57 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: Removed an extra
-	  ';'. This may nor may not help the Borland builds.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: Removed an extra
+          ';'. This may nor may not help the Borland builds.
 
 Thu Jan 16 17:24:30 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
-	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h:
-	  Make the FilterFactory a RefCounted servant.
-	  This allows us to cleanup this object when the ChannelFactory
-	  dies.
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h:
+          Make the FilterFactory a RefCounted servant.
+          This allows us to cleanup this object when the ChannelFactory
+          dies.
 
-	* orbsvcs/orbsvcs/NotifyExt.idl:
-	* orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
-	* orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
-	  Extend the ChannelFactory interface to include a destroy method.
-	  This allows us to check for memory leaks using a tool like
-	  purify when the channel factory is destroyed.
+        * orbsvcs/orbsvcs/NotifyExt.idl:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+          Extend the ChannelFactory interface to include a destroy method.
+          This allows us to check for memory leaks using a tool like
+          purify when the channel factory is destroyed.
 
-	* orbsvcs/orbsvcs/Notify/EventType.cpp:
-	* orbsvcs/orbsvcs/Notify/EventType.h:
-	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
-	* orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
-	  Made the <dump> methods const.
+        * orbsvcs/orbsvcs/Notify/EventType.cpp:
+        * orbsvcs/orbsvcs/Notify/EventType.h:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
+          Made the <dump> methods const.
 
-	* orbsvcs/orbsvcs/Notify/Object.cpp:
-	* orbsvcs/orbsvcs/Notify/Object_T.cpp:
-	* orbsvcs/orbsvcs/Notify/Object_T.h:
-	  The <shutdown_> flag is now set in the Object_T::destroy method.
-	  Note that if multiple threads that encounter dispatch failure
-	  try to destroy the proxy object, only the first one will run the
-	  destroy method, others will check for the shutdown flag and
-	  return. This fixes the random crashes in some of the Linux
-	  builds on the scoreboard (orbsvcs/tests/Notify/MT_Dispatching).
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+        * orbsvcs/orbsvcs/Notify/Object_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Object_T.h:
+          The <shutdown_> flag is now set in the Object_T::destroy method.
+          Note that if multiple threads that encounter dispatch failure
+          try to destroy the proxy object, only the first one will run the
+          destroy method, others will check for the shutdown flag and
+          return. This fixes the random crashes in some of the Linux
+          builds on the scoreboard (orbsvcs/tests/Notify/MT_Dispatching).
 
-	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
-	* orbsvcs/orbsvcs/Notify/Proxy.h:
-	  Changed the <subscribed_types> method to return a copy of the
-	  curent subscriptions. This method has been corrected to be
-	  thread safe.
+        * orbsvcs/orbsvcs/Notify/Proxy.cpp:
+        * orbsvcs/orbsvcs/Notify/Proxy.h:
+          Changed the <subscribed_types> method to return a copy of the
+          curent subscriptions. This method has been corrected to be
+          thread safe.
 
-	* orbsvcs/orbsvcs/Notify/Peer.cpp:
-	  Changed to new usage of Proxy::subscribed_types.
+        * orbsvcs/orbsvcs/Notify/Peer.cpp:
+          Changed to new usage of Proxy::subscribed_types.
 
-	* orbsvcs/orbsvcs/Notify/Properties.h:
-	  Use TAO_Singleton instead of ACE_Singleton.
+        * orbsvcs/orbsvcs/Notify/Properties.h:
+          Use TAO_Singleton instead of ACE_Singleton.
 
 Thu Jan 16 16:27:59 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.{h,cpp}: Added patches from
-	 this checkin "Mon Oct 28 18:21:18 CET 2002  Oliver Kellogg
+         this checkin "Mon Oct 28 18:21:18 CET 2002  Oliver Kellogg
          <oliver.kellogg@sysde.eads.net>". The patches mysteriously
-	 dissappeared. Thanks to Oliver Kellogg for alerting me.
+         dissappeared. Thanks to Oliver Kellogg for alerting me.
 
 Thu Jan 16 13:25:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/rtcorba/features.html: Fixed obsolete references to the
-	  location of various priority mapping source files.
+        * docs/rtcorba/features.html: Fixed obsolete references to the
+          location of various priority mapping source files.
 
 Thu Jan 16 12:29:00 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* COPYING: Extended the validity of the copyright notice from 2002
-	  to 2003. Should have been done yesterday.., anyway, better late
-	  than never.
+        * COPYING: Extended the validity of the copyright notice from 2002
+          to 2003. Should have been done yesterday.., anyway, better late
+          than never.
 
 Thu Jan 16 10:52:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
- 	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
 
- 	  In the generated TAO_*_Proxy_Factory_Adapter class,
- 	  changed signatures of register_proxy_factory() and
- 	  unregister_proxy_factory() to return void. Error
- 	  reporting through return type is not necessary, since
- 	  native exceptions or an environment variable are
- 	  already used, and there is no code in either of these
- 	  methods that sets the return value to anything other
- 	  than 0. Although the methods are public, the class
-	  itself has a protected constructor, and the methods
-	  are intended for TAO internal use only.
-	  This closes [BUGID:844].
+          In the generated TAO_*_Proxy_Factory_Adapter class,
+          changed signatures of register_proxy_factory() and
+          unregister_proxy_factory() to return void. Error
+          reporting through return type is not necessary, since
+          native exceptions or an environment variable are
+          already used, and there is no code in either of these
+          methods that sets the return value to anything other
+          than 0. Although the methods are public, the class
+          itself has a protected constructor, and the methods
+          are intended for TAO internal use only.
+          This closes [BUGID:844].
 
 Wed Jan 15 18:02:49 2003  Bala  <bala@cs.wustl.edu>
 
@@ -269,44 +275,44 @@ Wed Jan 15 18:02:49 2003  Bala  <bala@cs.wustl.edu>
 
 Tue Jan 14 22:11:14 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tests/Crashed_Callback/client.dsp:
-	* tests/Crashed_Callback/server.dsp:
-	* tests/MProfile_Connection_Timeout/client.dsp:
-	* tests/MT_Timeout/MT_Timeout_Client.dsp:
-	* tests/MT_Timeout/MT_Timeout_Server.dsp: Fixed the release
-	  configurations.
+        * tests/Crashed_Callback/client.dsp:
+        * tests/Crashed_Callback/server.dsp:
+        * tests/MProfile_Connection_Timeout/client.dsp:
+        * tests/MT_Timeout/MT_Timeout_Client.dsp:
+        * tests/MT_Timeout/MT_Timeout_Server.dsp: Fixed the release
+          configurations.
 
 Tue Jan 14 20:46:40 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tests/Crashed_Callback/client.dsp:
-	* tests/Crashed_Callback/server.dsp: Fixed the release build
-	  configuration. Thanks to Nanbor for pointing this out.
+        * tests/Crashed_Callback/client.dsp:
+        * tests/Crashed_Callback/server.dsp: Fixed the release build
+          configuration. Thanks to Nanbor for pointing this out.
 
 Tue Jan 14 16:37:15 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tests/Stack_Recursion/server.dsp: Adding this file to the repo.
+        * tests/Stack_Recursion/server.dsp: Adding this file to the repo.
 
 Tue Jan 14 16:37:44 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/Crash_Test/run_test.pl: The timeout was
-	  adjusted.
+        * orbsvcs/tests/Security/Crash_Test/run_test.pl: The timeout was
+          adjusted.
 
 Tue Jan 14 15:10:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
 
-	  Added a check and graceful exit for the case where the -H command
-	  line option is not followed by a selection (i.e., is followed by
-	  another dash-prefixed command line option or by nothing). The case
-	  where the selection exists but is invalid was already handled.
-	  Thanks to Chip Jones <jones_c@ociweb.com> for reporting the bug.
-	  This fix closes [BUGID:1422].
+          Added a check and graceful exit for the case where the -H command
+          line option is not followed by a selection (i.e., is followed by
+          another dash-prefixed command line option or by nothing). The case
+          where the selection exists but is invalid was already handled.
+          Thanks to Chip Jones <jones_c@ociweb.com> for reporting the bug.
+          This fix closes [BUGID:1422].
 
 Tue Jan 14 16:13:09 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/IFR_Service/Makefile.IFR_Service: Added a check for
-	  TAO_IFRService library before going head to actually compile
-	  stuff.
+        * orbsvcs/IFR_Service/Makefile.IFR_Service: Added a check for
+          TAO_IFRService library before going head to actually compile
+          stuff.
 
 Tue Jan 14 07:05:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -331,9 +337,9 @@ Mon Jan 13 10:12:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
 
-	  Removed generation of
-	  'friend class <remote/thru-POA/direct proxy class name>' for local
-	  interfaces.
+          Removed generation of
+          'friend class <remote/thru-POA/direct proxy class name>' for local
+          interfaces.
 
 Mon Jan 13 12:47:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -348,146 +354,146 @@ Mon Jan 13 12:47:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jan 10 19:36:56 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/Transport_Cache_Manager.h:
-	* tao/Transport_Cache_Manager.cpp: Added a debug
-	  statement. Removed the method close_entries () which was under
-	  #if 0 guard.
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.cpp: Added a debug
+          statement. Removed the method close_entries () which was under
+          #if 0 guard.
 
-	  The method is_entry_idle () was trying to make the transport as
-	  busy, which is horribly horribly bad. The method is_entry_idle
-	  () should only do one thing, ie. check whether the entry is idle
-	  or not!
+          The method is_entry_idle () was trying to make the transport as
+          busy, which is horribly horribly bad. The method is_entry_idle
+          () should only do one thing, ie. check whether the entry is idle
+          or not!
 
 Fri Jan 10 08:28:34 2003  Frank Hunleth  <frank@hunleth.com>
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
 
-	  Removed call to unsubscribe from multicast socket as this happens
-	  automatically.  Thanks to Don Hinton <dhinton@ieee.org> for
-	  pointing this out.
+          Removed call to unsubscribe from multicast socket as this happens
+          automatically.  Thanks to Don Hinton <dhinton@ieee.org> for
+          pointing this out.
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
 
-	  Added code to check length of MIOP UniqueID so that it can be
-	  properly parsed.  Thanks to Chau Vincent
-	  <Vincent.Chau@fr.thalesgroup.com> for finding the problem when
-	  performing MIOP interoperability testing.  Also, added code to
-	  set the UniqueID and packet length fields properly per update to
-	  the MIOP spec and tightened bounds checks on MIOP packets to
-	  prevent buffer overruns.
+          Added code to check length of MIOP UniqueID so that it can be
+          properly parsed.  Thanks to Chau Vincent
+          <Vincent.Chau@fr.thalesgroup.com> for finding the problem when
+          performing MIOP interoperability testing.  Also, added code to
+          set the UniqueID and packet length fields properly per update to
+          the MIOP spec and tightened bounds checks on MIOP packets to
+          prevent buffer overruns.
 
-	* orbsvcs/tests/Miop/McastHello/client.cpp:
+        * orbsvcs/tests/Miop/McastHello/client.cpp:
 
-	  Fixed spelling error.
+          Fixed spelling error.
 
 Thu Jan  9 11:01:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/try_macros.h: Removed the file from the repo. This is no
-	  longer used and seems like a good time to remove it. Thanks to
-	  Oliver Kellog for reminding us.
+        * tao/try_macros.h: Removed the file from the repo. This is no
+          longer used and seems like a good time to remove it. Thanks to
+          Oliver Kellog for reminding us.
 
 Tue Jan  7 09:02:52 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* performance-tests/Memory/IORsize/Foo_i.h: Fixed fuzz errors.
+        * performance-tests/Memory/IORsize/Foo_i.h: Fixed fuzz errors.
 
 Mon Jan  6 17:31:03 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/Reactive_Connect_Strategy.cpp:
-	* tao/LF_Connect_Strategy.cpp: Used the cached pointer to access
-	  the ORB_Core, instead of accessing the ORB_Core in the
-	  transport. The reason why this should be done this way is too
-	  involved to explain here, but suffice to say that in highly
-	  multi-threaded environments the transports could dis-sappear
-	  before the connection handlers. Accessing the ORB_Core from the
-	  transport could then lead to vague crashes.
+        * tao/Reactive_Connect_Strategy.cpp:
+        * tao/LF_Connect_Strategy.cpp: Used the cached pointer to access
+          the ORB_Core, instead of accessing the ORB_Core in the
+          transport. The reason why this should be done this way is too
+          involved to explain here, but suffice to say that in highly
+          multi-threaded environments the transports could dis-sappear
+          before the connection handlers. Accessing the ORB_Core from the
+          transport could then lead to vague crashes.
 
 Mon Jan  6 17:12:40 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 
-	* performance-tests/Memory/IORsize/client.cpp:
-	* performance-tests/Memory/IORsize/server.cpp:
-	* performance-tests/Memory/IORsize/Memory_Growth.h:
-	* performance-tests/Memory/IORsize/Memory_Growth.cpp:
-	* performance-tests/Memory/IORsize/Foo_i.h:
-	* performance-tests/Memory/IORsize/Foo_i.cpp:
-	* performance-tests/Memory/IORsize/Makefile:
-	* performance-tests/Memory/IORsize/Test.idl: A simple, again a
-	  very simple test, to measure the memory consumed by the server
-	  for unmarshalling an IOR. This test will not be compiled in all
-	  the builds, but only in the builds where the scripts are run.
+        * performance-tests/Memory/IORsize/client.cpp:
+        * performance-tests/Memory/IORsize/server.cpp:
+        * performance-tests/Memory/IORsize/Memory_Growth.h:
+        * performance-tests/Memory/IORsize/Memory_Growth.cpp:
+        * performance-tests/Memory/IORsize/Foo_i.h:
+        * performance-tests/Memory/IORsize/Foo_i.cpp:
+        * performance-tests/Memory/IORsize/Makefile:
+        * performance-tests/Memory/IORsize/Test.idl: A simple, again a
+          very simple test, to measure the memory consumed by the server
+          for unmarshalling an IOR. This test will not be compiled in all
+          the builds, but only in the builds where the scripts are run.
 
-	* performance-tests/Memory/Makefile: Added the new test to the
-	  list of directories.
+        * performance-tests/Memory/Makefile: Added the new test to the
+          list of directories.
 
 Sat Jan 04 12:15:39 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/Notify_Service/Notify_Server.cpp:
-	  Removed extra ACE_CHECK_RETURN causing build errors.
+        * orbsvcs/Notify_Service/Notify_Server.cpp:
+          Removed extra ACE_CHECK_RETURN causing build errors.
 
 Fri Jan  3 14:43:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp:
-	* TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/idl_global.h:
 
-	  Changes to the management of the IDL compiler's stack of prefixes,
-	  to address a problem that appeared when there is a chain of
-	  included IDL files. Thanks to Adee Ran <adeeran@yahoo.com> for
-	  reporting the problem and supplying example IDL files to
-	  reproduce it.
+          Changes to the management of the IDL compiler's stack of prefixes,
+          to address a problem that appeared when there is a chain of
+          included IDL files. Thanks to Adee Ran <adeeran@yahoo.com> for
+          reporting the problem and supplying example IDL files to
+          reproduce it.
 
 Fri Jan 03 14:22:14 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/Notify_Service/Notify_Server.cpp:
-	  Moved the call to <init> to catch any resulting exceptions and
-	  exit gracefully.
+        * orbsvcs/Notify_Service/Notify_Server.cpp:
+          Moved the call to <init> to catch any resulting exceptions and
+          exit gracefully.
 
-	The following changes are made to fix the crashes observed on the
-	scoreboard in the $TAO_ROOT/orbsvcs/tests/Notify/Sequence_Multi_Test.
-	Thanks to Irfan and Bala for helping to fix this problem.
+        The following changes are made to fix the crashes observed on the
+        scoreboard in the $TAO_ROOT/orbsvcs/tests/Notify/Sequence_Multi_Test.
+        Thanks to Irfan and Bala for helping to fix this problem.
 
-	* orbsvcs/orbsvcs/Notify/Container_T.cpp:
-	  Changed the order of destruction of the Notify objects. The tree
-	  is destroyed bottom up. This ensures that proxy objects that
-	  refer to a valid parent during shutdown.
+        * orbsvcs/orbsvcs/Notify/Container_T.cpp:
+          Changed the order of destruction of the Notify objects. The tree
+          is destroyed bottom up. This ensures that proxy objects that
+          refer to a valid parent during shutdown.
 
-	* orbsvcs/orbsvcs/Notify/Method_Request.h:
-	* orbsvcs/orbsvcs/Notify/Method_Request.inl:
-	* orbsvcs/orbsvcs/Notify/Refcountable.h:
-	* orbsvcs/orbsvcs/Notify/Refcountable.inl:
-	  Moved the TAO_NS_Refcountable_Guard class from Method_Request.*
-	  files into Refcountable.* files.
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request.inl:
+        * orbsvcs/orbsvcs/Notify/Refcountable.h:
+        * orbsvcs/orbsvcs/Notify/Refcountable.inl:
+          Moved the TAO_NS_Refcountable_Guard class from Method_Request.*
+          files into Refcountable.* files.
 
-	* orbsvcs/orbsvcs/Notify/Object.cpp:
-	  Moved the <worker_task_> and <proxy_poa_> data member shutdown
-	  from the destructor to the <shutdown> method.
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+          Moved the <worker_task_> and <proxy_poa_> data member shutdown
+          from the destructor to the <shutdown> method.
 
-	* orbsvcs/orbsvcs/Notify/Object_T.cpp:
-	  Replaced the TAO_NS_Object_RefCount_Guard with
-	  TAO_NS_Refcountable_Guard.
+        * orbsvcs/orbsvcs/Notify/Object_T.cpp:
+          Replaced the TAO_NS_Object_RefCount_Guard with
+          TAO_NS_Refcountable_Guard.
 
-	* orbsvcs/orbsvcs/Notify/Peer.cpp:
-	  Protect the Peer from being destroyed while it is dispatching
-	  updates by using a TAO_NS_Refcountable_Guard.
+        * orbsvcs/orbsvcs/Notify/Peer.cpp:
+          Protect the Peer from being destroyed while it is dispatching
+          updates by using a TAO_NS_Refcountable_Guard.
 
-	* orbsvcs/orbsvcs/Notify/Types.h:
-	  Removed the TAO_NS_Object_RefCount_Guard class. We use
-	  TAO_NS_Refcountable_Guard instead.
+        * orbsvcs/orbsvcs/Notify/Types.h:
+          Removed the TAO_NS_Object_RefCount_Guard class. We use
+          TAO_NS_Refcountable_Guard instead.
 
-	* orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.cpp:
-	* orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.h:
-	  Modified the <dequeue_available> method to return the number of
-	  pending events.
+        * orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.h:
+          Modified the <dequeue_available> method to return the number of
+          pending events.
 
-	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
-	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
-	  + Protect the call to the event batch <push> method with
-	  TAO_NS_Refcountable_Guard so that the proxy (and hence this
-	  peer) is not destroyed while the push is in progress.
-	  + Reset the pacing error on dispatch error so that we don't
-	  schedule a timer on an object that is about to be destroyed.
-	  + Schedule a timer in the <handle_timeout> method only if there
-	  are pending events.
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+          + Protect the call to the event batch <push> method with
+          TAO_NS_Refcountable_Guard so that the proxy (and hence this
+          peer) is not destroyed while the push is in progress.
+          + Reset the pacing error on dispatch error so that we don't
+          schedule a timer on an object that is about to be destroyed.
+          + Schedule a timer in the <handle_timeout> method only if there
+          are pending events.
 
 Fri Jan  3 07:48:01 2003  Chad Elliott  <elliott_c@ociweb.com>
 
