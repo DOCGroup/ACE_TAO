@@ -1,5 +1,8 @@
 Mon Dec 24 08:08:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/Atomic_Op.i: Make sure to initialize the mutex_ reference in the 
+	  ACE_Atomic_Op_Ex copy constructor. 	
+
 	* ace/OS.cpp (pwrite): The lseek() call must use SEEK_CUR rather
 	  than SEEK_SET.  Thanks to Duane Binder
  	  <duane.binder@veritas.com> for reporting this.  This fixes bugid
