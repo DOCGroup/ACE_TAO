@@ -14,7 +14,7 @@
 #include "cubit.H"
 #include "Task_Client.h"
 
-int LOOP_COUNT;
+int LOOP_COUNT=100;
 char SERVER_HOST [1024];
 unsigned int THREAD_COUNT=1;
 
@@ -26,7 +26,7 @@ unsigned int THREAD_COUNT=1;
 int parse_args(int argc, char *argv[])
 {
   ACE_OS::strcpy (SERVER_HOST, "localhost");
-  ACE_Get_Opt opts (argc, argv, "dh:n:O:xt:");
+  ACE_Get_Opt opts (argc, argv, "n:t:");
   int			c;
   
   while ((c = opts ()) != -1)
@@ -34,22 +34,12 @@ int parse_args(int argc, char *argv[])
     case 'h':
       ACE_OS::strcpy (SERVER_HOST, opts.optarg);
       continue;
-    case 'd':  // debug flag
-      continue;
-      
     case 'n':			// loop count
       LOOP_COUNT = (unsigned) ACE_OS::atoi (opts.optarg);
-      continue;
-      
-    case 'O':			// stringified objref
-      continue;
-      
-    case 'x':
       continue;
     case 't':
       THREAD_COUNT = (unsigned) ACE_OS::atoi (opts.optarg);
       continue;
-      
     case '?':
     default:
       ACE_OS::fprintf (stderr, "usage:  %s"
@@ -71,31 +61,21 @@ int parse_args(int argc, char *argv[])
 // Mainline
 //
 int
-main (int argc, char *argv[])
+main (int argc, char *argv [])
 {
   if (parse_args (argc, argv) != 0)
     return -1;
-  CORBA_Environment env;
-  CORBA_ORB_ptr orb = CORBA_ORB_init (argc, argv, 0, env);
 
-  if (env.exception ()) {
-    ACE_ERROR ((LM_ERROR, "ORB_init failed..\n"));
-    return -1;
-  }
-
-
-  COOL_NamingService_var naming = thisCapsule->naming_service (env);
-  CORBA_Object_ptr obj = new CORBA_Object;
-  naming->import ("Cubit", obj, env);
-  
-  if (env.exception ()) {
-    ACE_ERROR ((LM_ERROR, "naming->import failed..\n"));
-    return -1;
-  }
-
-  
+//  CORBA_Environment env;
+//  CORBA_ORB_ptr orb = CORBA_ORB_init (argc, argv, 0, env);
+//
+//  if (env.exception ()) {
+//    ACE_ERROR ((LM_ERROR, "ORB_init failed..\n"));
+//    return -1;
+//  }
+//
   Client clients (SERVER_HOST, THREAD_COUNT, LOOP_COUNT);
-  ACE_Thread_Manager::instance ()->wait ();
+  //  ACE_Thread_Manager::instance ()->wait ();
   ACE_OS::printf ("Test done.\n"
                   "High priority client latency : %f msec\n"
                   "Low priority client latency : %f msec\n",
