@@ -1,3 +1,10 @@
+Wed Sep 12 12:33:15 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+
+          Added 'const' to the char* passed to the extraction
+          operator in the change below.
+
 Wed Sep 12 10:13:31 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynAny_i.cpp:
