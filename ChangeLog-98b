@@ -1,3 +1,7 @@
+Mon Dec 14 08:27:11 1998  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_tests.sh: Enabled MT_Reactor_Timer_Test.
+
 Sun Dec 13 16:40:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/MT_Reactor_Timer_Test.dsp:
