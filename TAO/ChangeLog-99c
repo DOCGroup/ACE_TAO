@@ -1,3 +1,14 @@
+Tue Jul 20 10:32:34 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Multiple/Makefile: for LynxOS/PPC only,
+          use -O instead of -O2 to avoid this compilation failure:
+
+          {standard input}: Assembler messages:
+          {standard input}:28076: Warning: end of file not at end of a line;
+            newline inserted
+          {standard input}:29949: Error: Unknown pseudo-op:  `.balig'
+          g++: Internal compiler error: program cc1plus got fatal signal 11
+
 Tue Jul 20 07:34:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp
