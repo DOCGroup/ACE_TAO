@@ -1,0 +1,36 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file test.idl
+ *
+ * $Id$
+ *
+ * IDL file to test request interceptor flow.
+ *
+ * @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
+interface Test
+{
+  typedef short TestScenario;
+
+  /// Dummy exception used during the test.
+  exception X {};
+
+  /// Unknown scenario number was passed to the test operation.
+  exception UnknownScenario {
+    TestScenario scenario;
+  };
+
+  /// The client-side test operation.
+  void client_test (in TestScenario scenario) raises (X, UnknownScenario);
+
+  /// The server-side test operation.
+  void server_test (in TestScenario scenario) raises (X, UnknownScenario);
+
+  /// Shutdown the server.
+  oneway void shutdown ();
+
+};

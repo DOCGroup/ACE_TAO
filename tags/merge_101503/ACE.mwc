@@ -1,0 +1,17 @@
+// $Id$
+
+workspace {
+ exclude {
+   build
+   TAO
+  }
+ ace
+ ACEXML
+ ASNMP
+ apps
+ tests
+ Kokyu
+ examples
+ netsvcs
+ websvcs
+}

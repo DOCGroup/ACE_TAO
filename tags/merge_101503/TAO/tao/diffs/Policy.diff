@@ -1,0 +1,129 @@
+--- orig/PolicyC.h	Wed Feb  6 19:31:31 2002
++++ PolicyC.h	Fri Feb  8 10:50:48 2002
+@@ -23,7 +23,7 @@
+ #define _TAO_IDL_ORIG_POLICYC_H_
+ 
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++#include "tao/corbafwd.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+@@ -32,6 +32,9 @@
+ #include "TAO_Export.h"
+ #include "CurrentC.h"
+ #include "Policy_ForwardC.h"
++#include "Exception.h"
++#include "Remote_Object_Proxy_Impl.h"
++#include "Encodable.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
+@@ -346,6 +349,9 @@
+   
+   class TAO_Export Policy
+     : public virtual CORBA_Object
++    // ****************************************************************
++    , public virtual TAO_Encodable
++    // ****************************************************************
+   {
+   public:
+   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+@@ -407,6 +413,13 @@
+     virtual void *_tao_QueryInterface (ptr_arith_t type);
+     
+     virtual const char* _interface_repository_id (void) const;
++
++    // ****************************************************************
++    virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &);
++    virtual CORBA::Boolean _tao_decode (TAO_InputCDR &);
++    virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
++    virtual TAO_Policy_Scope _tao_scope (void) const;
++    // ****************************************************************
+ 
+   private:
+     _TAO_Policy_Proxy_Broker *the_TAO_Policy_Proxy_Broker_;
+--- orig/PolicyC.cpp	Wed Feb  6 19:31:31 2002
++++ PolicyC.cpp	Fri Feb  8 10:50:48 2002
+@@ -1678,6 +1678,32 @@
+   return "IDL:omg.org/CORBA/Policy:1.0";
+ }
+ 
++// ****************************************************************
++CORBA::Boolean
++CORBA::Policy::_tao_encode (TAO_OutputCDR &)
++{
++  return 0;
++}
++
++CORBA::Boolean
++CORBA::Policy::_tao_decode (TAO_InputCDR &)
++{
++  return 0;
++}
++
++TAO_Cached_Policy_Type
++CORBA::Policy::_tao_cached_type (void) const
++{
++  return TAO_CACHED_POLICY_UNCACHED;
++}
++
++TAO_Policy_Scope
++CORBA::Policy::_tao_scope (void) const
++{
++  return TAO_POLICY_DEFAULT_SCOPE;
++}
++// ****************************************************************
++
+ CORBA::PolicyType CORBA::Policy::policy_type (
+     
+     ACE_ENV_SINGLE_ARG_DECL
+--- orig/PolicyS.h	Wed Feb  6 19:31:31 2002
++++ PortableServer/PolicyS.h	Fri Feb  8 10:52:00 2002
+@@ -23,9 +23,7 @@
+ #define _TAO_IDL_ORIG_POLICYS_H_
+ 
+ #include "ace/pre.h"
+-#include "CurrentS.h"
+-#include "Policy_ForwardS.h"
+-#include "PolicyC.h"
++#include "tao/PolicyC.h"
+ 
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+@@ -58,7 +56,7 @@
+   class _TAO_Policy_Direct_Proxy_Impl;
+   class _TAO_Policy_Strategized_Proxy_Broker;
+   
+-  class TAO_Export Policy
++  class TAO_PortableServer_Export Policy
+     : public virtual PortableServer::ServantBase
+   {
+   protected:
+@@ -164,7 +162,7 @@
+   //               Strategized Proxy Broker Declaration 
+   //
+   
+-  class TAO_Export _TAO_Policy_Strategized_Proxy_Broker : public virtual ::CORBA::_TAO_Policy_Proxy_Broker
++  class TAO_PortableServer_Export _TAO_Policy_Strategized_Proxy_Broker : public virtual ::CORBA::_TAO_Policy_Proxy_Broker
+   {
+   public: 
+     _TAO_Policy_Strategized_Proxy_Broker (void);
+@@ -209,7 +207,7 @@
+   //                    ThruPOA  Impl. Declaration
+   //
+   
+-  class TAO_Export _TAO_Policy_ThruPOA_Proxy_Impl : 
++  class TAO_PortableServer_Export _TAO_Policy_ThruPOA_Proxy_Impl :
+     public virtual ::CORBA::_TAO_Policy_Proxy_Impl,
+     public virtual TAO_ThruPOA_Object_Proxy_Impl
+   {
+@@ -254,7 +252,7 @@
+ //                    Direct  Impl. Declaration
+ //
+ 
+-class TAO_Export _TAO_Policy_Direct_Proxy_Impl : 
++class TAO_PortableServer_Export _TAO_Policy_Direct_Proxy_Impl :
+   public virtual CORBA::_TAO_Policy_Proxy_Impl,
+   public virtual TAO_Direct_Object_Proxy_Impl
+ {
