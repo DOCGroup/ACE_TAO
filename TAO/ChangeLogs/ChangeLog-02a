@@ -1,3 +1,10 @@
+Wed Mar  8 08:59:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/InterfaceC.cpp:
+	  Added a missing operation name length argument. Thanks to
+	  Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for
+	  pointing this out.
+
 Wed Mar  8 01:33:21 2000  Christopher Kohlhoff <chris@kohlhoff.com> 
 
         * TAO/Makefile.bor: Added support for 3 different "levels" of
