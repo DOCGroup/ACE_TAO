@@ -403,6 +403,7 @@ ACE_Name_Handler::resolve (void)
                             avalue.rep (),
                             avalue.length () * sizeof (ACE_USHORT16),
                             atype, ACE_OS::strlen (atype));
+      delete[] atype;
       return this->send_request (nrq);
     }
 

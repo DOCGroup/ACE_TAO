@@ -1,3 +1,9 @@
+Thu May 13 10:51:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* netsvcs/lib/Name_Handler.cpp (resolve): The atype string needs
+	  to be delete[]'ed once we are done with it.  Thanks to Valery
+	  Arkhangorodsky <valerya@servicesoft.com> for pointing this out.
+
 Thu May 13 09:39:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Makefile: added Tokens_Test to BIN2 if Tokens component
