@@ -1,3 +1,8 @@
+Mon Feb 16 14:57:26 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Priority_Task_Test.cpp (open): fallback to minimum
+          ACE_SCHED_OTHER priority instead of 0.
+
 Mon Feb 16 10:51:28 1998  Oliver Kellogg <Oliver.Kellogg@vs.dasa.de>
 
         * include/makeinclude/platform_osf1_4.0_rcc.GNU: added this
