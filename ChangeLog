@@ -1,3 +1,18 @@
+Tue Sep  3 15:40:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/XtReactor_Test.cpp (sock_callback):
+
+	  Removed this unused static function.
+
+	* tests/TkReactor_Test.cpp (sock_callback):
+
+	  Likewise.
+
+	* (ACE_TMAIN):
+
+	  Fixed "deprecated conversion from string constant to char *"
+	  warning.
+
 Tue Sep  3 15:16:03 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Fixed a typo!

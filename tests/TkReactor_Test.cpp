@@ -136,13 +136,6 @@ client (void *)
   return 0;
 }
 
-static void
-sock_callback (ClientData, int)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "Socket callback called\n"));
-}
-
 // Callback for "Press Me" button.
 
 static int
@@ -288,8 +281,12 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   }
   // set up callback
   char label_var_name[] = "label_var";
-  Tcl_CreateCommand (tcl_interp, "pressme", inc_count,
-                     label_var_name, 0);
+  char pressme[] = "pressme";
+  Tcl_CreateCommand (tcl_interp,
+                     pressme,
+                     inc_count,
+                     label_var_name,
+                     0);
 
   // Register callback for X Timer
   (void) Tk_CreateTimerHandler (1000,
