@@ -11,7 +11,9 @@
 #include "Progress_i.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(FL_Cube, test_i, "$Id$")
+ACE_RCSID (FL_Cube, 
+           test_i, 
+           "$Id$")
 
 Progress_i::Progress_i (Progress_Window *window)
   :  window_ (window)

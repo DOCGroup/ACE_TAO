@@ -41,9 +41,9 @@
 #include "Messaging_RT_PolicyC.h"
 #include "Messaging_No_ImplC.h"
 #include "tao/OctetSeqC.h"
-#include "tao/ValueBase.h"
-#include "tao/ValueFactory.h"
-#include "tao/Value_VarOut_T.h"
+#include "tao/Valuetype/Value_VarOut_T.h"
+#include "tao/Valuetype/ValueBase.h"
+#include "tao/Valuetype/ValueFactory.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

@@ -633,6 +633,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "IORInterceptor"=.\tao\IORInterceptor\TAO_IORInterceptor.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "IORManip"=.\tao\IORManipulation\TAO_IORManip.dsp - Package Owner=<4>
 
 Package=<5>
@@ -828,6 +840,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ObjRefTemplate"=.\tao\ObjRefTemplate\TAO_ObjRefTemplate.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Valuetype
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "PortableGroup"=.\orbsvcs\orbsvcs\PortableGroup.dsp - Package Owner=<4>
 
 Package=<5>
@@ -841,9 +868,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name CosNaming
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Messaging
     End Project Dependency
 }}}
 
@@ -859,6 +883,12 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORInterceptor
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate
     End Project Dependency
 }}}
 
@@ -1296,7 +1326,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "XML_Common"=..\ACEXML\common\XML_Common.dsp - Package Owner=<4>
+Project: "Valuetype"=.\tao\Valuetype\TAO_Valuetype.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1305,8 +1335,20 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ACE DLL
+    Project_Dep_Name TAO DLL
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "XML_Common"=..\ACEXML\common\XML_Common.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################

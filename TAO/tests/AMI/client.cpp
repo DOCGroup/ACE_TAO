@@ -19,10 +19,11 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ami_testC.h"
 #include "ami_testS.h"
 
-ACE_RCSID(AMI, client, "$Id$")
+ACE_RCSID (AMI, 
+           client, 
+           "$Id$")
 
 const char *ior = "file://test.ior";
 int nthreads = 5;

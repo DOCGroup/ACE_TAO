@@ -400,9 +400,8 @@ public:
 
   /// Sets the name of the POA factory and the dynamic service
   /// configurator directive to load it if needed.
-  static void set_poa_factory (
-                    const char *poa_factory_name,
-                    const char *poa_factory_directive);
+  static void set_poa_factory (const char *poa_factory_name,
+                               const char *poa_factory_directive);
 
   /// Access the POA factory name.
   static const ACE_CString &poa_factory_name (void);
@@ -427,6 +426,18 @@ public:
 
   /// Gets the value of TAO_ORB_Core::typecodefactory_adapter_name_.
   static const char *typecodefactory_adapter_name (void);
+
+  /// Sets the value of TAO_ORB_Core::iorinterceptor_adapter_name_.
+  static void iorinterceptor_adapter_name (const char *name);
+
+  /// Gets the value of TAO_ORB_Core::iorinterceptor_adapter_name_.
+  static const char *iorinterceptor_adapter_name (void);
+
+  /// Sets the value of TAO_ORB_Core::valuetype_adapter_name.
+  static void valuetype_adapter_name (const char *name);
+
+  /// Gets the value of TAO_ORB_Core::valuetype_adapter_name.
+  static const char *valuetype_adapter_name (void);
 
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.
@@ -1343,6 +1354,22 @@ public:
   // function typecodefactory_adapter_name() will be called to set
   // the value to "Concrete_TypeCodeFactory_Adapter".
   ACE_CString typecodefactory_adapter_name_;
+
+  // Name of the service object used to adapt function calls on
+  // the PortableInterceptor interfaces IORInfo and IORInterceptor.
+  // The default value is "IORInterceptor_Adapter". If the
+  // IORInterceptor library is linked, the corresponding accessor
+  // function iorinterceptor_adapter_name() will be called to set
+  // the value to "Concrete_IORInterceptor_Adapter".
+  ACE_CString iorinterceptor_adapter_name_;
+
+  // Name of the service object used to adapt function calls on
+  // the valuetype-related interfaces.
+  // The default value is "Valuetype_Adapter". If the
+  // Valuetype library is linked, the corresponding accessor
+  // function valuetype_adapter_name() will be called to set
+  // the value to "Concrete_Valuetype_Adapter".
+  ACE_CString valuetype_adapter_name_;
 
   // Name of the service object used to create the RootPOA.  The
   // default value is "TAO_POA".  If TAO_RTCORBA is loaded, this

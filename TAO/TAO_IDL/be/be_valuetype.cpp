@@ -26,6 +26,7 @@
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
+#include "global_extern.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (be,
@@ -122,9 +123,11 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
         }
     }
 
-  if (n != 0 && this->fwd_helper_name_ == "") 
+  // Set the flag that says we have a valuetype in this IDL file.
+  if (this->is_defined ())
     {
-      this->gen_fwd_helper_name ();
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.valuetype_seen_);
     }
 }
 

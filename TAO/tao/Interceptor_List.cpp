@@ -3,14 +3,19 @@
 // $Id$
 
 #include "tao/Interceptor_List.h"
-
+#include "tao/IORInterceptor_Adapter.h"
 #include "tao/CORBA_String.h"
+#include "tao/ORB_Core.h"
+
+#include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Interceptor_List.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Interceptor_List, "$Id$")
+ACE_RCSID (tao, 
+           Interceptor_List, 
+           "$Id$")
 
 // ****************************************************************
 
@@ -34,7 +39,8 @@ TAO_Interceptor_List::add_interceptor_i (
       /// If the Interceptor is not anonymous, make sure an
       /// Interceptor with the same isn't already registered.
       CORBA::String_var name = interceptor->name (
-        ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_ENV_SINGLE_ARG_PARAMETER
+        );
       ACE_CHECK_RETURN (0);
 
       size_t old_len = this->length ();
@@ -60,26 +66,35 @@ TAO_Interceptor_List::add_interceptor_i (
             {
               CORBA::String_var existing_name =
                 this->interceptor (i)->name ();
-              if (ACE_OS_String::strcmp (existing_name.in (),
+
+              if (ACE_OS_String::strcmp (existing_name.in (), 
                                          name.in ()) == 0)
-                ACE_THROW_RETURN
-                  (PortableInterceptor::ORBInitInfo::DuplicateName (),
-                   0);
+                {
+                  ACE_THROW_RETURN
+                    (PortableInterceptor::ORBInitInfo::DuplicateName (),
+                     0);
+                }
             }
         }
 
       /// Increase the length of the Interceptor sequence by one.
       size_t new_len = old_len + 1;
       this->length (new_len);
-          return old_len;
+      return old_len;
     }
   else
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
-                          EINVAL),
-                        CORBA::COMPLETED_NO),
-                      0);
+    {
+      ACE_THROW_RETURN (
+          CORBA::INV_OBJREF (
+              CORBA::SystemException::_tao_minor_code (
+                  TAO_DEFAULT_MINOR_CODE,
+                  EINVAL
+                ),
+              CORBA::COMPLETED_NO
+            ),
+          0
+        );
+    }
 }
 
 
@@ -191,8 +206,18 @@ TAO_IORInterceptor_List::~TAO_IORInterceptor_List (void)
 {
   size_t len = this->interceptors_.size ();
 
-  for (size_t i = 0; i < len; ++i)
-    CORBA::release (this->interceptors_[i]);
+  TAO_IORInterceptor_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_IORInterceptor_Adapter>::instance (
+        TAO_ORB_Core::iorinterceptor_adapter_name ()
+      );
+
+  if (adapter != 0)
+    {
+      for (size_t i = 0; i < len; ++i)
+        {
+          adapter->tao_iorinterceptor_release (this->interceptors_[i]);
+        }
+    }
 }
 
 size_t
@@ -210,7 +235,21 @@ TAO_IORInterceptor_List::length (size_t len)
 PortableInterceptor::Interceptor_ptr
 TAO_IORInterceptor_List::interceptor (size_t index)
 {
-  return this->interceptors_[index];
+  TAO_IORInterceptor_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_IORInterceptor_Adapter>::instance (
+        TAO_ORB_Core::iorinterceptor_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_DECLARE_NEW_CORBA_ENV;
+
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        PortableInterceptor::Interceptor::_nil ());
+    }
+
+  return adapter->tao_iorinterceptor (this->interceptors_,
+                                      index);
 }
 
 void
@@ -218,14 +257,21 @@ TAO_IORInterceptor_List::add_interceptor (
   PortableInterceptor::IORInterceptor_ptr interceptor
   ACE_ENV_ARG_DECL)
 {
-  size_t index = this->add_interceptor_i (interceptor
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  TAO_IORInterceptor_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_IORInterceptor_Adapter>::instance (
+        TAO_ORB_Core::iorinterceptor_adapter_name ()
+      );
 
-  this->interceptors_[index] =
-    PortableInterceptor::IORInterceptor::_duplicate (interceptor);
+  if (adapter == 0)
+    {
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
+  adapter->tao_add_iorinterceptor (this,
+                                   this->interceptors_,
+                                   interceptor
+                                   ACE_ENV_ARG_PARAMETER);
 }
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

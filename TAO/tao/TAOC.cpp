@@ -29,6 +29,9 @@
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
 
+#include "tao/Any_Impl_T.h"
+#include "tao/Any_Dual_Impl_T.h"
+
 #if !defined (__ACE_INLINE__)
 #include "TAOC.i"
 #endif /* !defined INLINE */

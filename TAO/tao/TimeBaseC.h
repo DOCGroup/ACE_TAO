@@ -26,7 +26,7 @@
 #define _TAO_IDL_ORIG_TIMEBASEC_H_
 
 #include "ace/pre.h"
-#include "tao/Any_T.h"
+#include "tao/Any_Dual_Impl_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

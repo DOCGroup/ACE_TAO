@@ -37,9 +37,9 @@
 #ifndef _PORTABLE_INTERCEPTOR_IDL_
 #define _PORTABLE_INTERCEPTOR_IDL_
 
+#include <PI_Forward.pidl>
 #include <Current.pidl>
 #include <Dynamic.pidl>
-#include <ObjectReferenceTemplate.pidl>
 #include <Messaging_SyncScope.pidl>
 #include <IOP.pidl>
 
@@ -108,11 +108,6 @@ module PortableInterceptor {
       in boolean replace);
   };
 
-  // typedef string ServerId;
-  // typedef string ORBId;
-  // typedef CORBA::StringSeq AdapterName;
-  // typedef CORBA::OctetSeq ObjectId;
-
   local interface ServerRequestInfo : RequestInfo {
     readonly attribute any sending_exception;
     readonly attribute ServerId server_id;
@@ -145,34 +140,13 @@ module PortableInterceptor {
     void send_other (in ServerRequestInfo ri) raises (ForwardRequest);
   };
 
-  local interface IORInfo {
-    CORBA::Policy get_effective_policy (in CORBA::PolicyType type);
-    void add_ior_component (in IOP::TaggedComponent a_component);
-    void add_ior_component_to_profile (
-      in IOP::TaggedComponent a_component,
-      in IOP::ProfileId profile_id);
-    readonly attribute AdapterManagerId manager_id;
-    readonly attribute AdapterState state;
-    readonly attribute ObjectReferenceTemplate adapter_template;
-    attribute ObjectReferenceFactory current_factory;
-    };
-
-  local interface IORInterceptor : Interceptor {
-    void establish_components (in IORInfo info);
-
-    void components_established (in IORInfo info);
-    void adapter_manager_state_changed(
-       in AdapterManagerId id, in AdapterState state);
-    void adapter_state_changed (
-       in ObjectReferenceTemplateSeq templates,
-       in AdapterState state);
-  };
-
   local interface PolicyFactory
   {
     CORBA::Policy create_policy (in CORBA::PolicyType type, in any value)
       raises (CORBA::PolicyError);
   };
+
+  local interface IORInterceptor;
 
   local interface ORBInitInfo {
     typedef string ObjectId;

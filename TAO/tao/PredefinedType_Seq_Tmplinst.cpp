@@ -19,8 +19,6 @@
 // ============================================================================
 
 #include "tao/Sequence_T.h"
-#include "tao/ValueBase.h"
-#include "tao/AbstractBase.h"
 #include "tao/Any.h"
 
 ACE_RCSID (tao, 
@@ -42,11 +40,6 @@ template class TAO_Unbounded_Sequence<CORBA::Double>;
 template class TAO_Unbounded_Sequence<CORBA::LongDouble>;
 template class TAO_Unbounded_Pseudo_Sequence<CORBA::Object, 
                                              CORBA::Object_var>;
-template class TAO_Unbounded_Valuetype_Sequence<CORBA::ValueBase, 
-                                                CORBA::ValueBase_var, 
-                                                CORBA::tao_ValueBase_life>;
-template class TAO_Unbounded_Pseudo_Sequence<CORBA::AbstractBase, 
-                                             CORBA::AbstractBase_var>;
 template class TAO_Unbounded_Sequence<CORBA::Any>;
 template class TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode, 
                                              CORBA::TypeCode_var>;
@@ -66,11 +59,6 @@ template class TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode,
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::LongDouble>
 #pragma instantiate TAO_Unbounded_Pseudo_Sequence<CORBA::Object, \
                                                   CORBA::Object_var>
-#pragma instantiate TAO_Unbounded_Valuetype_Sequence<CORBA::ValueBase, \
-                                                     CORBA::ValueBase_var, \
-                                                     CORBA::tao_ValueBase_life>
-#pragma instantiate TAO_Unbounded_Pseudo_Sequence<CORBA::AbstractBase, \
-                                                  CORBA::AbstractBase_var>
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::Any>
 #pragma instantiate TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode, \
                                                   CORBA::TypeCode_var>
