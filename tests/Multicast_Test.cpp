@@ -406,10 +406,10 @@ private:
 
   // Flag used to set the 'finished' flag when the last event handler
   // gets removed from the reactor.
-  static ACE_Atomic_Op<ACE_Thread_Mutex, long> active_handlers_;
+  static ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> active_handlers_;
 };
 
-ACE_Atomic_Op<ACE_Thread_Mutex, long> MCT_Event_Handler::active_handlers_ = 0;
+ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> MCT_Event_Handler::active_handlers_ = 0;
 
 MCT_Event_Handler::MCT_Event_Handler (ACE_SOCK_Dgram_Mcast::options options)
   : mcast_ (options)
