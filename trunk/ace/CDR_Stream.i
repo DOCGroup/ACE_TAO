@@ -1134,7 +1134,7 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_string x)
     }
 
   os.write_string (len, x.val_);
-  return 
+  return
     (ACE_CDR::Boolean) (os.good_bit () && (!x.bound_ || len <= x.bound_));
 }
 
@@ -1149,7 +1149,7 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_wstring x)
     }
 
   os.write_wstring (len, x.val_);
-  return 
+  return
     (ACE_CDR::Boolean) (os.good_bit () && (!x.bound_ || len <= x.bound_));
 }
 
@@ -1273,9 +1273,9 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_string x)
 {
   is.read_string (ACE_const_cast (char *&, x.val_));
   // check if the bounds are satisfied
-  return 
-    (ACE_CDR::Boolean) (is.good_bit () 
-                        && (!x.bound_ 
+  return
+    (ACE_CDR::Boolean) (is.good_bit ()
+                        && (!x.bound_
                             || ACE_OS::strlen (x.val_) <= x.bound_));
 }
 
@@ -1284,9 +1284,9 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_wstring x)
 {
   is.read_wstring (ACE_const_cast (ACE_CDR::WChar *&, x.val_));
   // check if the bounds are satisfied
-  return 
-    (ACE_CDR::Boolean) (is.good_bit () 
-                        && (!x.bound_ 
+  return
+    (ACE_CDR::Boolean) (is.good_bit ()
+                        && (!x.bound_
                             || ACE_OS::strlen (x.val_) <= x.bound_));
 }
 
