@@ -1,4 +1,3 @@
-// IPC_SAP.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -17,7 +16,7 @@ ACE_IPC_SAP::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-// Cache for the process ID. 
+// Cache for the process ID.
 pid_t ACE_IPC_SAP::pid_ = 0;
 
 // This is the do-nothing constructor.  It does not perform a
@@ -45,51 +44,51 @@ ACE_IPC_SAP::enable (int signum) const
   switch (signum)
     {
     case ACE_NONBLOCK:
-    // nonblocking argument (1) 
+    // nonblocking argument (1)
     // blocking:            (0)
       {
-	u_long nonblock = 1;
-	return ACE_OS::ioctl (this->handle_, FIONBIO, &nonblock);
+        u_long nonblock = 1;
+        return ACE_OS::ioctl (this->handle_, FIONBIO, &nonblock);
       }
     default:
       ACE_NOTSUP_RETURN (-1);
     }
-#else
+#else  /* ! ACE_WIN32 && ! VXWORKS */
   switch (signum)
     {
 #if defined (SIGURG)
     case SIGURG:
 #if defined (F_SETOWN)
       if (ACE_OS::fcntl (this->handle_, F_SETOWN, ACE_IPC_SAP::pid_) < 0)
-	return -1;
+        return -1;
 #else
       return -1;
 #endif /* F_SETOWN */
       break;
 #endif /* SIGURG */
-#if defined (SIGIO)		// <==
+#if defined (SIGIO)             // <==
     case SIGIO:
 #if defined (F_SETOWN) && defined (FASYNC)
       if (ACE_OS::fcntl (this->handle_, F_SETOWN, ACE_IPC_SAP::pid_) == -1)
-	return -1;
+        return -1;
       if (ACE::set_flags (this->handle_, FASYNC) == -1)
-	return -1;
+        return -1;
 #else
       return -1;
 #endif /* F_SETOWN && FASYNC */
 #else  // <==
-      return -1;		// <==
+      return -1;                // <==
 #endif /* SIGIO <== */
        break;
     case ACE_NONBLOCK:
       if (ACE::set_flags (this->handle_, ACE_NONBLOCK) == ACE_INVALID_HANDLE)
-	return -1;
+        return -1;
       break;
     default:
       return -1;
     }
-#endif /* !ACE_WIN32 */
   return 0;
+#endif /* ! ACE_WIN32 && ! VXWORKS */
 }
 
 // Restore the IPC_SAPet by turning off synchronous I/O or urgent
@@ -104,50 +103,49 @@ ACE_IPC_SAP::disable (int signum) const
   switch (signum)
     {
     case ACE_NONBLOCK:
-      // nonblocking argument (1) 
+      // nonblocking argument (1)
       // blocking:            (0)
       {
-	u_long nonblock = 0;
-	return ACE_OS::ioctl (this->handle_, FIONBIO, &nonblock);
+        u_long nonblock = 0;
+        return ACE_OS::ioctl (this->handle_, FIONBIO, &nonblock);
       }
     default:
       ACE_NOTSUP_RETURN (-1);
     }
-#else
+#else  /* ! ACE_WIN32 && ! VXWORKS */
   switch (signum)
     {
 #if defined (SIGURG)
     case SIGURG:
 #if defined (F_SETOWN)
       if (ACE_OS::fcntl (this->handle_, F_SETOWN, 0) == -1)
-	return -1;
+        return -1;
       break;
 #else
       return -1;
 #endif /* F_SETOWN */
 #endif /* SIGURG */
-#if defined (SIGIO)		// <==
+#if defined (SIGIO)             // <==
     case SIGIO:
 #if defined (F_SETOWN) && defined (FASYNC)
       if (ACE_OS::fcntl (this->handle_, F_SETOWN, 0) == -1)
-	return -1;
+        return -1;
       if (ACE::clr_flags (this->handle_, FASYNC) == -1)
-	return -1;
+        return -1;
       break;
 #else
       return -1;
 #endif /* F_SETOWN && FASYNC */
 #else  // <==
-      return -1;		// <==
+      return -1;                // <==
 #endif /* SIGIO <== */
     case ACE_NONBLOCK:
       if (ACE::clr_flags (this->handle_, ACE_NONBLOCK) == -1)
-	return -1;
+        return -1;
       break;
     default:
       return -1;
     }
-#endif /* !ACE_WIN32 */
   return 0;
+#endif /* ! ACE_WIN32 && ! VXWORKS */
 }
-
