@@ -30,10 +30,11 @@ To build the test files, type 'make' at the command line. The TAO IDL
 compiler will open each IDL file in the directory and generate code
 that will then be compiled by the C++ compiler on your platform.
 
-To run the test, type 'main' at the command line.  A message will be
-output saying that the build had no errors. To test the client/server
-functionality of the various IDL types and operations, see the test
-suite in ACE_wrappers/TAO/tests/Param_Test.
+To run the test, type 'main' at the command line. The generation of
+correct IOR prefixes in pragma.idl is checked in the body of main().
+The rest of the .idl files need only to build cleanly. To test the 
+client/server functionality of the various IDL types and operations, 
+see the test suite in ACE_wrappers/TAO/tests/Param_Test.
 
 The generated code from reopened_modules.idl is not included in the
 Makefile per se. Platforms without namespaces cannot handle
