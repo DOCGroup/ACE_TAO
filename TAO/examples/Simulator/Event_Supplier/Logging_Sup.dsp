@@ -89,13 +89,6 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\DOVE_Supplier.cpp
-
-!IF  "$(CFG)" == "Logging_Sup - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Logging_Sup - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -139,7 +132,7 @@ InputName=NavWeap
 
 BuildCmds= \
 	xcopy ..\$(InputName).idl \
-	..\..\..\..\tao_idl\tao_idl $(InputName).idl \
+	..\..\..\..\..\bin\tao_idl $(InputName).idl \
 	
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
