@@ -1,3 +1,11 @@
+Mon Aug 26 18:21:34 UTC 2002  Justin Michel  <michel_j@ociweb.com>
+        
+        * ace/Timer_Wheel_T.cpp:
+        * ace/Timer_Wheel_T.h:
+        * tests/Timer_Queue_Test.cpp:
+
+          New and improved timer wheel implementation. 
+
 Mon Aug 26 09:51:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/FlReactor.{h,cpp}:
