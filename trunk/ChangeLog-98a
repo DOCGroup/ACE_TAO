@@ -6,7 +6,10 @@ Sun Feb 08 12:06:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU: protected ACE_ROOT...
           additions to INCLDIRS and LDFLAGS so they're only added once.
-          Thanks to James CE Johnson <jcej@lads.com> for the patch.
+          Thanks to James CE Johnson <jcej@lads.com> for this addition.
+
+        * ace/config-linux-common.h: added ACE_HAS_TERM_IOCTLS.  Thanks
+          to James CE Johnson <jcej@lads.com> for this addition.
 
 Sun Feb  8 01:45:59 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
