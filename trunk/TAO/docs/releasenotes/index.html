@@ -115,7 +115,7 @@ Point of contact: <A HREF="mailto:gokhale@research.bell-labs.com">Aniruddha Gokh
          files rather than the paths of their corresponding IDL files
          has been fixed. tao_idl now generates #include path names
          that are derived from the IDL files that are #include'd in
-         the main idl file. 
+         the main idl file.
 
       <LI>Added options to IDL compiler to specify file name endings
           for the IDL-generated stubs, skeletons and the various
@@ -383,7 +383,7 @@ slot where the servant is registered is in the Object Key.
 <H3>
 <A NAME="nservices"></A>CORBA Naming Service</H3>
 Point of contact: <A HREF="mailto:marina@cs.wustl.edu">Marina
-Spivak</A> 
+Spivak</A>
 
 <P>Current status (as of Sep 28):
 <UL>
@@ -646,6 +646,43 @@ Evolve into a testbed for discovering sources of performance non-determinism
 </UL>
 
 <HR>
+<P><A NAME="ace"></A><B>CORBA Time Service</B>
+<P>Point of contact: <A HREF="mailto:vishal@cs.wustl.edu">Vishal Kachroo</A>
+<P>TAO Time Service allows clients to connect to the Time Service Clerks
+running on their machines and get globally synchronized time. This time
+is calculated from the time obtained from various servers running on multiple
+machines in the network.
+<P>Current status (as of 1st Jan 1999):
+<UL>
+<LI>
+Implementation of a Distributed CORBA Time Service without using the Implementation
+Repository is complete.</LI>
+</UL>
+Work in progress
+<UL>
+<LI>
+Integrating the Implementation Repository with the Time Service. This allows
+the Time Servers and Clerks to be activated on demand.</LI>
+
+<LI>
+Adding tests for the various options in the service.</LI>
+</UL>
+Future work:
+<UL>
+<LI>
+Currently the average of the time obtained from the various servers is
+considered the global notion of time. A better distributed time synchronization
+algorithm can be used in the future.</LI>
+
+<LI>
+Implementation of the Timer Event Service.</LI>
+</UL>
+For OMG's documentation on the Time Service please read&nbsp; <A HREF="ftp://ftp.omg.org/pub/docs/formal/97-02-22.pdf">The
+Time Service Specification.</A>
+<H3>
+
+<HR></H3>
+
 <H3>
 <A NAME="ace"></A>ORB-related ACE Changes</H3>
 Points of contact: <A HREF="mailto:nanbor@cs.wustl.edu">Nanbor Wang</A>
