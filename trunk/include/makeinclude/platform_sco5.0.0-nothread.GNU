@@ -1,14 +1,12 @@
-# According to Bryon G. Rigg <bgrigg@opus.bcbnet.com>, this file
-# should allow ACE to be built on Linux.
+# SCO v5.0.2; gcc version 2.7-95q4(Skunkware96 distribution from media images)
 
 CC              = gcc
-# for threads
-# for no threads
-#CXX		= gcc -fno-implicit-templates -w -fno-strict-prototypes
 CXX		= g++
 CFLAGS		+= -b elf -w -O2
-CCFLAGS		+= -b elf -Xpg4plus -O2 -fno-implicit-templates -I ${MITOSYS_DIR}/socketrpc/netsel -I ${MITOSYS_DIR}/socketrpc -I ${MITOSYS_DIR}/librerias/include -I/usr/local/lib/g++-include
+CCFLAGS		+= -b elf -w -O2 -Xpg4plus -fno-implicit-templates \
+		   -I/usr/progressive/lib/g++-include
 DLD             = $(CXX)
+LD		= $(CXX)
 LIBS            = -lsocket
 PIC             = -fpic -shared
 AR              = ar
