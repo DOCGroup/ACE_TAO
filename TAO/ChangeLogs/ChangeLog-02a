@@ -1,3 +1,8 @@
+Mon Apr 16 13:34:31 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* examples/PluggableUDP/DIOP/README: Generalize this a bit so that
+	  it fits in better with the ACE+TAO context.
+
 Mon Apr 16 13:13:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * docs/releasenotes/index.html:
