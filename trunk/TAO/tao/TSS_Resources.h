@@ -25,7 +25,7 @@
 
 #include "tao/TAO_Singleton.h"
 #include "tao/Environment.h"
-
+#include "tao/TAO_Export.h"
 
 /**
  * @class TAO_TSS_Resources
