@@ -1087,6 +1087,8 @@ ACE_Reactor::remove_handler (const ACE_Sig_Set &sigset)
     if (sigset.is_member (s) 
         && this->signal_handler_->remove_handler (s) == -1)
       result = -1;
+#else
+  ACE_UNUSED_ARG (sigset);
 #endif /* NSIG */
 
   return result;    
