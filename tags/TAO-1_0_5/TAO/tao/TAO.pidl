@@ -1,0 +1,48 @@
+//
+// $Id$
+//
+// ================================================================
+//
+// = LIBRARY
+//   TAO
+//
+// = FILENAME
+//   TAO.pidl
+//
+// = DESCRIPTION
+//   This file contains TAO-specific idl interfaces (not part
+//   of CORBA 2.3).
+//   This file was used to generate the code in TAO{C,S,S_T}.{h,i,cpp}
+//   The code is then hand-crafted to compile it inside the ORB, avoid
+//   cyclic dependencies and enforce the locality constraints on
+//   certain objects.
+//
+// ================================================================
+
+#ifndef TAO_TAO_IDL
+#define TAO_TAO_IDL
+
+#include "Policy.pidl"
+
+module TAO
+{
+  typedef short PrioritySelectionMode;
+  const PrioritySelectionMode USE_NO_PRIORITY     = 0;
+  const PrioritySelectionMode USE_THREAD_PRIORITY = 1;
+  const PrioritySelectionMode USE_PRIORITY_RANGE  = 2;
+
+  struct PrioritySpecification
+  {
+    PrioritySelectionMode mode;
+    short min_priority;
+    short max_priority;
+  };
+
+  const CORBA::PolicyType CLIENT_PRIORITY_POLICY_TYPE = 0x54410000;
+  interface ClientPriorityPolicy : CORBA::Policy {
+    readonly attribute PrioritySpecification priority_specification;
+  };
+};
+#pragma prefix ""
+
+#endif /* TAO_TAO_IDL */
