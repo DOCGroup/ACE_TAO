@@ -1,3 +1,8 @@
+Mon Jun 19 13:29:22 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Load_Balancing_persistent/README (Usage): Updated the
+	  README file with more information.
+
 Mon Jun 19 11:29:54 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Content_Server: Added README files for the
