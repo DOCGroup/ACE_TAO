@@ -1,19 +1,24 @@
+Wed Aug 28 06:06:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Invocation.h:
+          Fixed doxygen warnings
+
 Tue Aug 27 18:31:53 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
-	* tao/Transport.cpp: Made the methods purge_entry () and make_idle 
+	* tao/Transport.cpp: Made the methods purge_entry () and make_idle
 	  () more readable. Instead of checking whether the hash_map entry
 	  is available within the transport classes, just defer that
-	  decision to the Transport_Cache_Manager classes. 
-	
+	  decision to the Transport_Cache_Manager classes.
+
 	* tao/Transport_Cache_Manager.cpp:
 	* tao/Transport_Cache_Manager.inl: The make_idle () and
 	  purge_entry () methods now use the classical double-checked
-	  locking optimization pattern before calling the actual 
-	  implementations. 
+	  locking optimization pattern before calling the actual
+	  implementations.
 
 	  This fixes [BUG 1276]. Thanks to Carlos O'Ryan
 	  <coryan@atdesk.com> for supplying the patches.
-		
+
 Tue Aug 27 15:56:05 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/Callback/server_i.cpp (test_request):
@@ -35,16 +40,16 @@ Tue Aug 27 16:22:27 2002  Jeff Parsons <parsons@cs.wustl.edu>
 Tue Aug 27 15:41:57 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tests/ORB_shutdown/server.bor:
-	* tests/ORB_shutdown/Makefile.bor: Added these files. 
-	
+	* tests/ORB_shutdown/Makefile.bor: Added these files.
+
 	* tests/Makefile: Added the new test for the daily builds to pick
-	  up.  
-	
+	  up.
+
 Tue Aug 27 15:48:17 2002  Irfan Pyarali  <irfan@oomworks.com>
 
         Thanks to Christian Klutz <cklutz@gmx.net> for reporting the bug
 	that resulted in the following changes.
-  
+
 	* tao/PortableServer/PortableServer_PolicyFactory.cpp: New class
 	  for creating POA Policies.
 
@@ -52,7 +57,7 @@ Tue Aug 27 15:48:17 2002  Irfan Pyarali  <irfan@oomworks.com>
 	  initialization class that adds TAO_PortableServer_PolicyFactory
 	  as a factory for POA Policies.
 
-	* tao/PortableServer/PortableServer.cpp (init): Registered 
+	* tao/PortableServer/PortableServer.cpp (init): Registered
 	  TAO_PortableServer_ORBInitializer with the PortableInterceptor.
 
 	* tao/PortableServer/POA_Policies.cpp (create): Added create
@@ -61,7 +66,7 @@ Tue Aug 27 15:48:17 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests/POA/Policies: This program tests the construction of POA
 	  policies, both through the generic ORB::create_policy interface
-	  and the PortableServer specific interfaces.  
+	  and the PortableServer specific interfaces.
 
 	  The following files were added:
 
@@ -78,7 +83,7 @@ Tue Aug 27 15:48:17 2002  Irfan Pyarali  <irfan@oomworks.com>
 	  - tests/TAO_Tests.dsw
 	  - tests/POA/Makefile
 	  - tests/POA/Makefile.bor
-	  - tests/POA/README		
+	  - tests/POA/README
 	  - $ACE_ROOT/bin/auto_run_tests.lst
 
 	* tao/PortableServer: Added new files
@@ -98,13 +103,13 @@ Tue Aug 27 12:42:58 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 Tue Aug 27 12:40:12 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
-	Fix for [BUG 1265]. 
-	
+	Fix for [BUG 1265].
+
 	* tao/Adapter.cpp:
 	* tao/Adapter.h: Methods check_close () and close () have an empty
 	  ACE_THROW_SPEC (()) to indicate that no exceptions pass through
-	  to the higher layer. 
-	  
+	  to the higher layer.
+
 	* tao/ORB_Core.h:
 	* tao/ORB_Core.cpp (shutdown): Applied the patch in BUG 1265 which
 	  basically releases the mutex before calling actual close () on
@@ -115,10 +120,10 @@ Tue Aug 27 12:40:12 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 
   	  Please see the discussions in BUG 1265 and chapter 2 of
 	  "Exceptional C++" by Herb Sutter for details on why this is a
-	  good idea. 
+	  good idea.
 
 	* tao/ORB.cpp (shutdown): Added a comment as to why we cannot lock
-	  exceptions within this method. 
+	  exceptions within this method.
 
 Tue Aug 27 10:22:50 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
@@ -139,8 +144,8 @@ Tue Aug 27 10:03:57 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	* tests/ORB_shutdown/server.dsp (BuildCmds): A simple test to
 	  replicate the problem outlined in BUG 1265.
 
-	  Sorry folks, my mail id is long and I cant help it :(. 
-	
+	  Sorry folks, my mail id is long and I cant help it :(.
+
 Mon Aug 26 20:34:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_interface.cpp:

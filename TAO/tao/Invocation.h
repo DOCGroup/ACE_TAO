@@ -140,12 +140,12 @@ public:
   int perform_call (TAO_Transport_Descriptor_Interface &desc
                     ACE_ENV_ARG_DECL);
 
-  /// Dynamically allocate @var inconsistent_policies_ PolicyList.
+  /// Dynamically allocate inconsistent_policies_ PolicyList.
   void init_inconsistent_policies (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Return PolicyList stored in \param inconsistent_policies_ and
-  /// give up its ownership.  User must deallocate memory.
+  /// Return PolicyList stored in inconsistent_policies_ and give up its
+  /// ownership.  User must deallocate memory.
   CORBA::PolicyList *get_inconsistent_policies (void);
 
   /**
