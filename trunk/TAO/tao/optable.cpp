@@ -154,7 +154,8 @@ TAO_Operation_Table_Parameters::lookup_strategy (TAO_Operation_Table_Parameters:
   this->type_ = s;
 }
 
-TAO_Operation_Table_Parameters::DEMUX_STRATEGY TAO_Operation_Table_Parameters::lookup_strategy (void) const
+TAO_Operation_Table_Parameters::DEMUX_STRATEGY 
+TAO_Operation_Table_Parameters::lookup_strategy (void) const
 {
   return this->type_;
 }

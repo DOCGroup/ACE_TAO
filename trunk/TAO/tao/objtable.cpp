@@ -1,16 +1,18 @@
 #include "objtable.h"
 
 // Template Specialization for char*
-int ACE_Hash_Map_Manager<const char*, CORBA_Object_ptr,ACE_SYNCH_RW_MUTEX>::equal(const char* const&id1,
-												                                  const char* const&id2)
+int 
+ACE_Hash_Map_Manager<const char *, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>::equal (const char *const &id1,
+												                                  const char *const &id2)
 {
-   return strcmp(id1, id2) == 0;
+  return ACE_OS::strcmp (id1, id2) == 0;
 }
 
-// Template Specialization for char*
-size_t ACE_Hash_Map_Manager<const char*, CORBA_Object_ptr,ACE_SYNCH_RW_MUTEX>::hash(const char* const&ext_id)
+// Template Specialization for char *
+u_long
+ACE_Hash_Map_Manager<const char *, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>::hash (const char *const &ext_id)
 {
-   return ACE::hash_pjw (ext_id);
+  return ACE::hash_pjw (ext_id);
 }
 
 TAO_Dynamic_Hash_ObjTable::TAO_Dynamic_Hash_ObjTable (CORBA_ULong size)
@@ -74,6 +76,7 @@ TAO_Linear_ObjTable::bind (const CORBA_OctetSeq &key,
       this->next_++;
       return 0;
     }
+
   return -1; // error
 }
 
@@ -81,8 +84,6 @@ int
 TAO_Linear_ObjTable::find (const CORBA_OctetSeq &key,
 			   CORBA_Object_ptr &obj)
 {
-
-
   ACE_ASSERT (this->next_ <= this->tablesize_);
 
   for (CORBA_ULong i = 0;
@@ -97,14 +98,14 @@ TAO_Linear_ObjTable::find (const CORBA_OctetSeq &key,
   return -1;  // not found
 }
 
-TAO_Linear_ObjTable_Entry::TAO_Linear_ObjTable_Entry(void)
+TAO_Linear_ObjTable_Entry::TAO_Linear_ObjTable_Entry (void)
 {
   this->key.buffer = 0;
   this->key.length = this->key.maximum = 0;
   this->obj = 0;
 }
 
-TAO_Linear_ObjTable_Entry::~TAO_Linear_ObjTable_Entry ()
+TAO_Linear_ObjTable_Entry::~TAO_Linear_ObjTable_Entry (void)
 {
   delete [] this->key.buffer;
   this->key.length = this->key.maximum = 0;
