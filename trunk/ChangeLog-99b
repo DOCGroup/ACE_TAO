@@ -1,3 +1,7 @@
+Fri Mar  5 11:05:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Removed ACE_THREAD_GUARD*.
+
 Fri Mar  5 03:25:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-psos-{diab,tm}.h: Removed
