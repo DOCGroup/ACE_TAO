@@ -152,6 +152,9 @@ private:
   int shutdown_;
   // Flag to tell server to shutdown.
 
+  int quiet_;
+  // If set the test goes into quiet mode
+
   CORBA::ORB_var orb_;
   // Remember our orb, must show up before the other objects to
   // shutdown in the proper order.

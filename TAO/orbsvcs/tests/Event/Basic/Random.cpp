@@ -37,9 +37,11 @@ deactivate_servant (PortableServer::Servant servant,
 
 RND_Driver::RND_Driver (void)
   :  timer_ (this),
+     supplier_ (0),
      nsuppliers_ (4),
      nconsumers_ (4),
-     max_recursion_ (1)
+     max_recursion_ (1),
+     verbose_ (0)
 {
   TAO_EC_Default_Factory::init_svcs ();
 }
@@ -100,6 +102,12 @@ RND_Driver::run (int argc, char *argv[])
                     this->max_recursion_ = n;
                   arg_shifter.consume_arg ();
                 }
+            }
+          else if (ACE_OS::strcasecmp (arg, "-verbose") == 0)
+            {
+              arg_shifter.consume_arg ();
+
+              this->verbose_ = 1;
             }
           else
             arg_shifter.ignore_arg ();
@@ -205,7 +213,7 @@ RND_Driver::run (int argc, char *argv[])
       for (int j = 0; j != this->nsuppliers_; ++j)
         {
           ACE_NEW_RETURN (this->suppliers_[j],
-                          RND_Supplier,
+                          RND_Supplier (this->verbose_),
                           1);
           this->suppliers_[j]->activate ();
 
@@ -553,7 +561,8 @@ RND_Supplier::svc (void)
         {
         }
       ACE_ENDTRY;
-      if (i * 100 / niterations >= percent)
+      if (this->verbose_ 
+          && i * 100 / niterations >= percent)
         {
           ACE_DEBUG ((LM_DEBUG, "Thread %t %d%%\n", percent));
           percent += 10;

@@ -22,6 +22,7 @@ $svnsflags = " -f $iorfile";
 $clnsflags = " -f $iorfile";
 $clflags = "";
 $svflags = "";
+$quietflag = "-q";
 $liteflag = "";
 $svliteflag = "";
 $clliteflag = "";
@@ -33,7 +34,8 @@ for ($i = 0; $i <= $#ARGV; $i++)
   {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
-      print "run_test [-h] [-n num] [-sleeptime t] [-debug] [-release] [-orblite]\n";
+      print "run_test [-h] [-n num] [-sleeptime t]",
+	" [-debug] [-release] [-orblite] [-verbose]\n";
       print "\n";
       print "-h                  -- prints this information\n";
       print "-n num              -- client uses <num> iterations\n";
@@ -72,6 +74,11 @@ for ($i = 0; $i <= $#ARGV; $i++)
       $liteflag = "uselite";
       last SWITCH;
     }
+    if ($ARGV[$i] eq "-verbose")
+    {
+      $quietflag = "";
+      last SWITCH;
+    }
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";
   }
 }
@@ -105,7 +112,7 @@ if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
 }
 
 $CL = Process::Create ($exepref . "client".$EXE_EXT,
-                       " $clflags $clnsflags $clliteflag -x");
+                       " $quietflag $clflags $clnsflags $clliteflag -x");
 
 $client = $CL->TimedWait (120);
 if ($client == -1) {
@@ -169,7 +176,7 @@ if ($OSNAME ne "MSWin32")
   }
 
   $CL = Process::Create ($exepref . "client".$EXE_EXT,
-                         " $clflags $clnsflags $clliteflag -x");
+                         " $quietflag $clflags $clnsflags $clliteflag -x");
 
   $client = $CL->TimedWait (120);
   if ($client == -1) {
@@ -228,7 +235,7 @@ if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
 }
 
 $CL = Process::Create ($exepref . "client".$EXE_EXT,
-                       " $clflags $clnsflags -x");
+                       " $quietflag $clflags $clnsflags -x");
 
 $client = $CL->TimedWait (120);
 if ($client == -1) {

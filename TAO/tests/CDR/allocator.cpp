@@ -76,9 +76,10 @@ main (int argc, char *argv[])
   int max_fragment_size = 1024;
   int max_arguments = 16;
   int max_argument_size = 1024;
+  int quiet = 0;
   ACE_RANDR_TYPE seed = time(0);
 
-  ACE_Get_Opt get_opt (argc, argv, "tn:f:m:s:a:b:r:");
+  ACE_Get_Opt get_opt (argc, argv, "tn:f:m:s:a:b:r:q");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -108,6 +109,9 @@ main (int argc, char *argv[])
           break;
         case 'b':
           max_argument_size = ACE_OS::atoi (get_opt.optarg);
+          break;
+        case 'q':
+          quiet = 1;
           break;
         case '?':
         default:
@@ -183,8 +187,10 @@ main (int argc, char *argv[])
       usecs *= ACE_static_cast (ACE_UINT32, ACE_ONE_SECOND_IN_USECS);
       usecs += tv.usec ();
       double average = ACE_U64_TO_U32(usecs) / repeat;
-      ACE_OS::printf ("AVE: %d %f\n",
-                      i, average);
+
+      if (!quiet)
+        ACE_OS::printf ("AVE: %d %f\n",
+                        i, average);
 
     }
   return 0;

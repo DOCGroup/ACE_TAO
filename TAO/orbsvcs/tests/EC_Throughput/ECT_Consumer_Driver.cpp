@@ -65,20 +65,23 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
       if (this->parse_args (argc, argv))
         return 1;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Execution parameters:\n"
-                  "  consumers = <%d>\n"
-                  "  suppliers = <%d>\n"
-                  "  type_start = <%d>\n"
-                  "  type count = <%d>\n"
-                  "  pid file name = <%s>\n",
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Execution parameters:\n"
+                      "  consumers = <%d>\n"
+                      "  suppliers = <%d>\n"
+                      "  type_start = <%d>\n"
+                      "  type count = <%d>\n"
+                      "  pid file name = <%s>\n",
 
-                  this->n_consumers_,
-                  this->n_suppliers_,
-                  this->type_start_,
-                  this->type_start_,
+                      this->n_consumers_,
+                      this->n_suppliers_,
+                      this->type_start_,
+                      this->type_start_,
 
-                  this->pid_file_name_?this->pid_file_name_:"nil") );
+                      this->pid_file_name_?this->pid_file_name_:"nil") );
+        }
 
       if (this->pid_file_name_ != 0)
         {

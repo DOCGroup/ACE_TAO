@@ -253,7 +253,7 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
           ACE_CHECK;
         }
 
-        // A separate thread could have connected siomultaneously,
+        // A separate thread could have connected simultaneously,
         // this is probably an application error, handle it as
         // gracefully as possible
         if (this->is_connected_i ())

@@ -335,7 +335,27 @@ void
 EC_Observer::dump_results (void)
 {
   ACE_DEBUG ((LM_DEBUG, "===== Results for %d =====\n", this->id_));
-  this->EC_Driver::dump_results ();
+
+  ACE_Throughput_Stats throughput;
+  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  char buf[BUFSIZ];
+  for (int j = 0; j < this->n_consumers_; ++j)
+    {
+      this->consumers_[j]->accumulate (throughput);
+    }
+  ACE_DEBUG ((LM_DEBUG, "\n"));
+
+  ACE_Throughput_Stats suppliers;
+  for (int i = 0; i < this->n_suppliers_; ++i)
+    {
+      this->suppliers_[i]->accumulate (suppliers);
+    }
+
+  ACE_DEBUG ((LM_DEBUG, "\nTotals:\n"));
+  throughput.dump_results ("EC_Consumer/totals", gsf);
+
+  ACE_DEBUG ((LM_DEBUG, "\n"));
+  suppliers.dump_results ("EC_Supplier/totals", gsf);
 }
 
 void

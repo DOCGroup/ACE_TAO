@@ -39,7 +39,7 @@ if ($T->TimedWait (60) == -1) {
 
 print STDERR "\n\nShutdown EC with clients still attached\n";
 $T = Process::Create ($EXEPREFIX . "Shutdown".$EXE_EXT,
-                      " -verbose -suppliers 5 -consumers 5");
+                      " -suppliers 5 -consumers 5");
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
   $status = 1;

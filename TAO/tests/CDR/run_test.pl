@@ -12,9 +12,9 @@ use Cwd;
 $brace="\#\#\#\#\#";
 %tests = ("basic_types" => "-n 256 -l 10",
 	  "tc" => "",
-	  "growth" => "-l 64 -h 256 -s 4 -n 10",
+	  "growth" => "-l 64 -h 256 -s 4 -n 10 -q",
 	  "alignment" => "",
-	  "allocator" => "");
+	  "allocator" => "-q");
 $test = "";
 $args = "";
 $| = 1;
@@ -25,7 +25,7 @@ ACE::checkForTarget(getcwd());
 sub run_test
 {
     #my $test = shift (@tests);
-    my $args = shift (@argslist);
+    #my $args = shift (@argslist);
 
     print STDERR "\n$brace $test $args test BEGUN\n";
     $TST = Process::Create  ($EXEPREFIX."$test".$EXE_EXT,

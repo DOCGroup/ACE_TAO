@@ -147,7 +147,8 @@ test_poas (CORBA::ORB_ptr orb,
                                                       ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     PortableServer::ObjectId_var id = root_poa->reference_to_id (obj.in (),
                                                                  ACE_TRY_ENV);
@@ -166,7 +167,8 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     PortableServer::Servant servant_from_reference = root_poa->reference_to_servant (obj.in (),
                                                                                      ACE_TRY_ENV);
@@ -188,7 +190,8 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     obj = servant._this (ACE_TRY_ENV);
     ACE_CHECK;
@@ -197,7 +200,8 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     PortableServer::ObjectId_var id_from_servant = root_poa->servant_to_id (&servant,
                                                                             ACE_TRY_ENV);
@@ -243,7 +247,8 @@ test_poas (CORBA::ORB_ptr orb,
                                                       ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     obj = root_poa->create_reference_with_id (id.in (),
                                               "IDL:test:1.0",
@@ -254,7 +259,8 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     root_poa->deactivate_object (id.in (),
                                  ACE_TRY_ENV);
@@ -272,7 +278,8 @@ test_poas (CORBA::ORB_ptr orb,
                                                       ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     PortableServer::ObjectId_var id = first_poa->reference_to_id (obj.in (),
                                                                   ACE_TRY_ENV);
@@ -291,7 +298,8 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     PortableServer::Servant servant_from_reference = first_poa->reference_to_servant (obj.in (),
                                                                                       ACE_TRY_ENV);
@@ -343,7 +351,8 @@ test_poas (CORBA::ORB_ptr orb,
                                                       ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     obj = first_poa->create_reference_with_id (id.in (),
                                                "IDL:test:1.0",
@@ -354,7 +363,8 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     first_poa->deactivate_object (id.in (),
                                   ACE_TRY_ENV);
@@ -372,7 +382,8 @@ test_poas (CORBA::ORB_ptr orb,
                                                       ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     PortableServer::ObjectId_var id = second_poa->reference_to_id (obj.in (),
                                                                    ACE_TRY_ENV);
@@ -391,7 +402,8 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     PortableServer::Servant servant_from_reference = second_poa->reference_to_servant (obj.in (),
                                                                                        ACE_TRY_ENV);
@@ -413,7 +425,8 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     obj = servant._this (ACE_TRY_ENV);
     ACE_CHECK;
@@ -422,7 +435,8 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     PortableServer::ObjectId_var id_from_servant = second_poa->servant_to_id (&servant,
                                                                               ACE_TRY_ENV);
@@ -468,7 +482,8 @@ test_poas (CORBA::ORB_ptr orb,
                                                       ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     obj = second_poa->create_reference_with_id (id.in (),
                                                 "IDL:test:1.0",
@@ -479,7 +494,8 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     second_poa->deactivate_object (id.in (),
                                    ACE_TRY_ENV);
@@ -499,14 +515,16 @@ test_poas (CORBA::ORB_ptr orb,
                                                       ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     PortableServer::ObjectId_var id_from_reference = third_poa->reference_to_id (obj.in (),
                                                                                  ACE_TRY_ENV);
     ACE_CHECK;
 
     string = PortableServer::ObjectId_to_string (id_from_reference.in ());
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     ACE_ASSERT (id_from_reference.in () == id.in ());
 
@@ -523,7 +541,8 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     PortableServer::Servant servant_from_reference = third_poa->reference_to_servant (obj.in (),
                                                                                       ACE_TRY_ENV);
@@ -545,7 +564,8 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     obj = servant._this (ACE_TRY_ENV);
     ACE_CHECK;
@@ -554,14 +574,16 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     PortableServer::ObjectId_var id_from_servant = third_poa->servant_to_id (&servant,
                                                                              ACE_TRY_ENV);
     ACE_CHECK;
 
     string = PortableServer::ObjectId_to_string (id_from_servant.in ());
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     ACE_ASSERT (id_from_servant.in () == id.in ());
 
@@ -601,14 +623,16 @@ test_poas (CORBA::ORB_ptr orb,
                                                       ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     PortableServer::ObjectId_var id_from_reference = forth_poa->reference_to_id (obj.in (),
                                                                                  ACE_TRY_ENV);
     ACE_CHECK;
 
     string = PortableServer::ObjectId_to_string (id_from_reference.in ());
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     ACE_ASSERT (id_from_reference.in () == id.in ());
 
@@ -625,7 +649,8 @@ test_poas (CORBA::ORB_ptr orb,
                                     ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
     PortableServer::Servant servant_from_reference = forth_poa->reference_to_servant (obj.in (),
                                                                                       ACE_TRY_ENV);

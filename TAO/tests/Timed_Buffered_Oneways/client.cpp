@@ -285,11 +285,12 @@ main (int argc, char **argv)
 
       for (CORBA::ULong i = 1; i <= iterations; ++i)
         {
-          // Invoke the oneway method.
-          ACE_DEBUG ((LM_DEBUG,
-                      "client: Iteration %d @ %T\n",
-                      i));
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "client: Iteration %d @ %T\n",
+                        i));
 
+          // Invoke the oneway method.
           test_object->method (i,
                                data,
                                work,

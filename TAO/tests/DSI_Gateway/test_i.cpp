@@ -20,16 +20,19 @@ Simple_Server_i::test_method (CORBA::Long x,
   ACE_NEW_RETURN (tmp, Structure (the_in_structure), -1);
   the_out_structure = tmp;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Simpler_Server_i ====\n"
-              "    x = %d\n"
-              "    i = %d\n"
-              "    length = %d\n"
-              "    name = <%s>\n",
-              x,
-              the_in_structure.i,
-              the_in_structure.seq.length (),
-              name));
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Simpler_Server_i ====\n"
+                  "    x = %d\n"
+                  "    i = %d\n"
+                  "    length = %d\n"
+                  "    name = <%s>\n",
+                  x,
+                  the_in_structure.i,
+                  the_in_structure.seq.length (),
+                  name));
+    }
 
   return x;
 }

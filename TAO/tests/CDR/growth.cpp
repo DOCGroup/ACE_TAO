@@ -66,8 +66,9 @@ main (int argc, char *argv[])
   int low = 64;
   int hi = 4096;
   int s = 4;
+  int quiet = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, "dn:l:h:s:");
+  ACE_Get_Opt get_opt (argc, argv, "dn:l:h:s:q");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -88,6 +89,9 @@ main (int argc, char *argv[])
           break;
         case 's':
           s = ACE_OS::atoi (get_opt.optarg);
+          break;
+        case 'q':
+          quiet = 1;
           break;
         case '?':
         default:
@@ -151,8 +155,9 @@ main (int argc, char *argv[])
 
       double write_average = ACE_U64_TO_U32(wusecs) / m;
       double read_average = ACE_U64_TO_U32(rusecs) / m;
-      ACE_OS::printf ("AVE: %d %f %f\n",
-                      x, write_average, read_average);
+      if (!quiet)
+        ACE_OS::printf ("AVE: %d %f %f\n",
+                        x, write_average, read_average);
     }
   return 0;
 }

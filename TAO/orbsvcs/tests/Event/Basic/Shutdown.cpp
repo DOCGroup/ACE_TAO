@@ -16,6 +16,8 @@ main (int argc, char *argv [])
 // ****************************************************************
 
 EC_Shutdown::EC_Shutdown (void)
+  :  consumer_disconnects_ (0),
+     supplier_disconnects_ (0)
 {
 }
 
@@ -57,20 +59,33 @@ EC_Shutdown::execute_test (CORBA::Environment& ACE_TRY_ENV)
 void
 EC_Shutdown::dump_results (void)
 {
+  if (this->consumer_disconnects_ != this->n_consumers_)
+    ACE_ERROR ((LM_ERROR,
+                "Unexpected number (%d) of consumers disconnected\n",
+                this->consumer_disconnects_));
+
+  if (this->supplier_disconnects_ != this->n_suppliers_)
+    ACE_ERROR ((LM_ERROR,
+                "Unexpected number (%d) of suppliers disconnected\n",
+                this->supplier_disconnects_));
 }
 
 void
 EC_Shutdown::consumer_disconnect (void* cookie,
                                   CORBA::Environment&)
 {
-  ACE_DEBUG ((LM_DEBUG, "Consumer %x has been disconnected\n", cookie));
+  this->consumer_disconnects_++;
+  if (this->verbose ())
+    ACE_DEBUG ((LM_DEBUG, "Consumer %x has been disconnected\n", cookie));
 }
 
 void
 EC_Shutdown::supplier_disconnect (void* cookie,
                                   CORBA::Environment&)
 {
-  ACE_DEBUG ((LM_DEBUG, "Supplier %x has been disconnected\n", cookie));
+  this->supplier_disconnects_++;
+  if (this->verbose ())
+    ACE_DEBUG ((LM_DEBUG, "Supplier %x has been disconnected\n", cookie));
 }
 
 
