@@ -465,19 +465,20 @@ void TAO_FTEC_Event_Channel_Impl::push (
 
 void TAO_FTEC_Event_Channel_Impl::get_state (
                                         FtRtecEventChannelAdmin::EventChannelState & state
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+                                        ACE_ENV_ARG_DECL
                                         )
 {
   FtEventServiceInterceptor::instance()->get_state(state.cached_operation_results);
-  this->supplier_admin()->get_state(state.supplier_admin_state);
-  this->consumer_admin()->get_state(state.consumer_admin_state);
+  this->supplier_admin()->get_state(state.supplier_admin_state ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  this->consumer_admin()->get_state(state.consumer_admin_state ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 
 
 void TAO_FTEC_Event_Channel_Impl::set_state (const FTRT::State & stat
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+                                             ACE_ENV_ARG_DECL)
 {
   FtRtecEventChannelAdmin::EventChannelState state;
 
@@ -485,8 +486,10 @@ void TAO_FTEC_Event_Channel_Impl::set_state (const FTRT::State & stat
   cdr >> state;
 
   FtEventServiceInterceptor::instance()->set_state(state.cached_operation_results);
-  this->supplier_admin()->set_state(state.supplier_admin_state);
-  this->consumer_admin()->set_state(state.consumer_admin_state);
+  this->supplier_admin()->set_state(state.supplier_admin_state ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  this->consumer_admin()->set_state(state.consumer_admin_state ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 
@@ -494,7 +497,7 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s
                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException, FTRT::InvalidUpdate))
 {
-  FTRTEC::Replication_Service::instance()->check_validity(ACE_ENV_ARG_PARAMETER);
+  FTRTEC::Replication_Service::instance()->check_validity(ACE_ENV_SINGLE_ARG_PARAMETER);
 
   if (!Request_Context_Repository().is_executed_request()) {
     TAO_InputCDR cdr((const char*)s.get_buffer(), s.length());
@@ -528,8 +531,8 @@ TAO_FTEC_ProxyPushSupplier*
 TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const PortableServer::ObjectId& id)
 {
   ACE_TRY_NEW_ENV {
-    PortableServer::POA_var poa= consumer_poa(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    PortableServer::POA_var poa = consumer_poa();
+
     PortableServer::Servant servant = poa->id_to_servant(id
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
@@ -551,8 +554,8 @@ TAO_FTEC_ProxyPushConsumer*
 TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(const PortableServer::ObjectId& id)
 {
   ACE_TRY_NEW_ENV {
-    PortableServer::POA_var poa= supplier_poa(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    PortableServer::POA_var poa= supplier_poa();
+
     PortableServer::Servant servant = poa->id_to_servant(id
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
