@@ -1,3 +1,13 @@
+Mon Nov 20 00:12:28 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableInterceptor.i
+	  (receive_reply, receive_exception, send_reply, send_exception):
+
+	  Changed "for" loop logic to count up instead of counting down,
+	  yet still invoke the interceptors in reverse order.  This fixes
+	  some "expression always true" warnings related to the fact that
+	  an unsigned int is always greater than or equal to zero.
+
 Sun Nov 19 23:46:07 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORBInitInfo.cpp (_tao_QueryInterface):
