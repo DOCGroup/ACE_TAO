@@ -1,3 +1,14 @@
+Thu Feb 17 14:15:42 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Protocol.h: Removed accidental use
+	of C++ exceptions plus changes to make VC6 happy.
+
+	* protocols/ace/RMCast/RMCast.mpc: Removed `exceptions'
+	from the list of prerequisites.
+
+	* examples/RMCast/Send_Msg/Receiver.cpp: Got rid of
+	repetitive `i' uses in for-loops. VC6 can't handle that.
+
 Thu Feb 17 09:48:03 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* protocols/ace/RMCast/RMCast.mpc:
