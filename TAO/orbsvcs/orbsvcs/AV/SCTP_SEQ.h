@@ -14,8 +14,10 @@
 #define TAO_AV_SCTP_SEQ_H
 #include /**/ "ace/pre.h"
 
-
 #include "ace/OS.h"
+
+#if defined (ACE_HAS_SCTP)
+
 #include "ace/Auto_Ptr.h"
 #include "Protocol_Factory.h"
 #include "ace/SOCK_SEQPACK_Association.h"
@@ -57,7 +59,7 @@ class TAO_AV_SCTP_SEQ_Flow_Handler;
 
 /**
  * @class TAO_AV_SCTP_SEQ_Transport
- * @brief A transport abstraction for udp sockets. 
+ * @brief A transport abstraction for udp sockets.
  *        Uses the ACE_SOCK_Dgram to send the data.
  */
 class TAO_AV_Export TAO_AV_SCTP_SEQ_Transport
@@ -108,7 +110,7 @@ public:
                         ACE_Time_Value *s = 0);
 
   TAO_AV_SCTP_SEQ_Flow_Handler *handler (void) { return this->handler_; }
-  
+
 protected:
   TAO_AV_SCTP_SEQ_Flow_Handler *handler_;
   ACE_Addr *addr_;
@@ -160,7 +162,7 @@ class TAO_AV_SCTP_SEQ_Base_Acceptor  :public ACE_Acceptor <TAO_AV_SCTP_SEQ_Flow_
 
 /**
  * @class TAO_AV_SCTP_SEQ_Acceptor
- * @brief 
+ * @brief
  */
 class TAO_AV_Export TAO_AV_SCTP_SEQ_Acceptor
    :public TAO_AV_Acceptor
@@ -174,14 +176,14 @@ public:
                     TAO_AV_Flow_Protocol_Factory *factory,
                     TAO_AV_Core::Flow_Component flow_comp =
 		    TAO_AV_Core::TAO_AV_DATA);
-  
+
   virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
                             TAO_AV_Core *av_core,
                             TAO_FlowSpec_Entry *entry,
                             TAO_AV_Flow_Protocol_Factory *factory,
                             TAO_AV_Core::Flow_Component flow_comp =
 			    TAO_AV_Core::TAO_AV_DATA);
-  
+
   virtual int close (void);
   virtual int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler);
 
@@ -267,7 +269,7 @@ public:
 
   virtual int send_frame (const char*buf,
                           size_t len);
-  
+
   /// end the stream.
   virtual int destroy (void);
 
@@ -301,5 +303,8 @@ ACE_STATIC_SVC_DECLARE (TAO_AV_SCTP_SEQ_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_SCTP_SEQ_Factory)
 
 
+#endif // ACE_HAS_SCTP
+
 #include /**/ "ace/post.h"
+
 #endif /* TAO_AV_SCTP_SEQ_H */
