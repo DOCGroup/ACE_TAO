@@ -72,6 +72,9 @@ public:
 
 private:
 
+  CORBA::ORB_var orb_;
+  // My orb.
+
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
 
@@ -99,9 +102,6 @@ private:
 
   int register_with_ir_;
   // Register with the Implementation Repository.
-
-  CORBA::ORB_var orb_;
-  // My orb.
 
   int argc_;
   // Number of command line arguments.
