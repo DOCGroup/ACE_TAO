@@ -134,7 +134,7 @@ IIOP_ServerRequest::parse_header_lite (CORBA::Environment &env)
     {
       this->object_key_.replace (key_length, key_length,
                                  (CORBA::Octet*)input.rd_ptr (),
-                                 CORBA::B_FALSE);
+                                 0);
       input.skip_bytes (key_length);
     }
 

@@ -314,7 +314,7 @@ TAO_GIOP_Invocation::write_request_header_std
   this->out_stream_ << *key;
   this->out_stream_ << opname;
   this->out_stream_ << principal;
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 CORBA::Boolean
@@ -330,7 +330,7 @@ TAO_GIOP_Invocation::write_request_header_lite
   this->out_stream_ << is_roundtrip;
   this->out_stream_ << *key;
   this->out_stream_ << opname;
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 CORBA::Boolean
