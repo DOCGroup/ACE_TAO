@@ -4,6 +4,7 @@
 #define TAO_SEQUENCE_T_C
 
 #include "tao/Sequence_T.h"
+#include "tao/varout.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Sequence_T.i"
@@ -193,9 +194,9 @@ TAO_Bounded_Sequence<T, MAX>::_deallocate_buffer (void)
 // class TAO_Object_Manager
 // *************************************************************
 
-template <class T, class T_var>
-TAO_Object_Manager<T,T_var>&
-TAO_Object_Manager<T,T_var>::operator= (const TAO_Object_Manager<T,T_var> &rhs)
+template <class T, class T_var> TAO_Object_Manager<T,T_var>&
+TAO_Object_Manager<T,T_var>::
+    operator= (const TAO_Object_Manager<T,T_var> &rhs)
 {
   if (this == &rhs)
     return *this;
@@ -207,6 +208,21 @@ TAO_Object_Manager<T,T_var>::operator= (const TAO_Object_Manager<T,T_var> &rhs)
     }
   else
     *this->ptr_ = *rhs.ptr_;
+
+  return *this;
+}
+
+template <class T, class T_var> TAO_Object_Manager<T,T_var>&
+TAO_Object_Manager<T,T_var>::
+    operator= (const TAO_Object_Field_T<T,T_var> &rhs)
+{
+  if (this->release_)
+    {
+      CORBA::release (*this->ptr_);
+      *this->ptr_ = T::_duplicate (rhs.in ());
+    }
+  else
+    *this->ptr_ = rhs.in ();
 
   return *this;
 }
