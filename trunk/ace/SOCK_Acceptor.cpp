@@ -74,7 +74,7 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
   if (ACE_SOCK::open (SOCK_STREAM, protocol_family, 
 		      protocol, reuse_addr) == -1)
     error = 1;
-  else if (&local_sap == &ACE_Addr::sap_any 
+  else if (local_sap == ACE_Addr::sap_any 
 	   && protocol_family == PF_INET)
     {
       if (ACE::bind_port (this->get_handle ()) == -1)

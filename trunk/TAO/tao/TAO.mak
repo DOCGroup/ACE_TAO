@@ -1023,6 +1023,8 @@ DEP_CPP_CONNE=\
 	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Dynamic.h"\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
+	{$(INCLUDE)}"\ace\Dynamic_Service.cpp"\
+	{$(INCLUDE)}"\ace\Dynamic_Service.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
@@ -1077,6 +1079,8 @@ DEP_CPP_CONNE=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -3495,6 +3499,8 @@ DEP_CPP_IIOPOR=\
 	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Dynamic.h"\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
+	{$(INCLUDE)}"\ace\Dynamic_Service.cpp"\
+	{$(INCLUDE)}"\ace\Dynamic_Service.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
@@ -3549,6 +3555,8 @@ DEP_CPP_IIOPOR=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -6805,6 +6813,8 @@ DEP_CPP_TAO_I=\
 	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Dynamic.h"\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
+	{$(INCLUDE)}"\ace\Dynamic_Service.cpp"\
+	{$(INCLUDE)}"\ace\Dynamic_Service.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\

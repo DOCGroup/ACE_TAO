@@ -67,7 +67,7 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
     }
 
   // If port is not specified, bind to any port
-  if (&address == &ACE_Addr::sap_any &&
+  if (address == ACE_Addr::sap_any &&
       ACE::bind_port (this->listen_handle_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE::bind_port"), -1);
 

@@ -23,6 +23,7 @@
   class ACE_Mutex;
   class ACE_Null_Mutex;
   class ACE_Thread_Mutex;
+  class ACE_Mutex;
   class ACE_Recursive_Thread_Mutex;
   class ACE_RW_Thread_Mutex;
 #endif /* ACE_MT_SAFE */

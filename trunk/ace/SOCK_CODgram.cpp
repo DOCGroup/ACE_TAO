@@ -58,7 +58,7 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
     {
       int error = 0;
 
-      if (&local == &ACE_Addr::sap_any && &remote == &ACE_Addr::sap_any)
+      if (local == ACE_Addr::sap_any && remote == ACE_Addr::sap_any)
 	{
 	  // Assign an arbitrary port number from the transient range!!
 
@@ -67,14 +67,14 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
 	    error = 1;
 	}
       // We are binding just the local address. 
-      else if (&local != &ACE_Addr::sap_any && &remote == &ACE_Addr::sap_any)
+      else if (local != ACE_Addr::sap_any && remote == ACE_Addr::sap_any)
 	{
 	  if (ACE_OS::bind (this->get_handle (), (sockaddr *) local.get_addr (), 
 		      local.get_size ()) == -1)
 	    error = 1;
 	}
       // We are connecting to the remote address. 
-      else if (&local == &ACE_Addr::sap_any && &remote != &ACE_Addr::sap_any)
+      else if (local == ACE_Addr::sap_any && remote != ACE_Addr::sap_any)
 	{
 	  if (ACE_OS::connect (this->get_handle (), (sockaddr *) remote.get_addr (), 
 			 remote.get_size ()) == -1)

@@ -298,7 +298,7 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
       req.qlen = qlen;
       req.addr.maxlen = remote_sap.get_size ();
 
-      if (&remote_sap == &ACE_Addr::sap_any)
+      if (remote_sap == ACE_Addr::sap_any)
 	// Note that if addr.len == 0 then ACE_TLI selects the port number.
 	req.addr.len = 0;
       else

@@ -68,7 +68,7 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
   ACE_TRACE ("ACE_SOCK_Dgram::shared_open");
   int error = 0;
 
-  if (&local == &ACE_Addr::sap_any && protocol_family == PF_INET)
+  if (local == ACE_Addr::sap_any && protocol_family == PF_INET)
     {
       if (ACE::bind_port (this->get_handle ()) == -1)
         error = 1;

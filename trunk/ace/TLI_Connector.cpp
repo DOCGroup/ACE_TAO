@@ -51,7 +51,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
   else // Borrow the handle from the NEW_STREAM. 
     this->set_handle (new_stream.get_handle ());
 
-  if (&local_sap != &ACE_Addr::sap_any)
+  if (local_sap != ACE_Addr::sap_any)
     {
       // Bind the local endpoint to a specific addr.
 

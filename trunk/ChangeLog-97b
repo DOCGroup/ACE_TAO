@@ -1,3 +1,27 @@
+Thu Nov 06 22:13:01 1997    <irfan@TWOSTEP>
+
+	* ace: Changed the comparison &local_sap == &ACE_Addr::sap_any to
+ 	  local_sap == ACE_Addr::sap_any.  Thanks to Steve Coy
+ 	  <stevec@magna.com.au> for pointing out that the default
+ 	  parameter const ACE_Addr &local_sap = ACE_Addr::sap_any will
+ 	  cause a copy of sap_any to be made and passed to the method,
+ 	  invalidating the memory address comparison.
+ 	
+	  The following files were effected:
+
+	  Asynch_Acceptor.cpp
+ 	  SOCK_Acceptor.cpp 
+	  SOCK_CODgram.cpp 
+	  SOCK_Dgram.cpp
+ 	  TLI_Acceptor.cpp 
+	  TLI_Connector.cpp
+
+	* ace/Addr.cpp: Made sure that the type and size of
+ 	  ACE_Addr::sap_any does not match the type and size of any other
+ 	  Addr type.  This is necessary for local_addr==ACE_Addr::sap_any
+ 	  to return 0 when local_addr is anything other than
+ 	  ACE_Addr::sap_any.
+
 Thu Nov  6 19:40:41 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Object_Manager: Added support for
