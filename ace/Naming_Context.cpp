@@ -65,7 +65,8 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
   // Perform factory operation to select appropriate type of
   // Name_Space subclass.
 
-#if defined (ACE_WIN32)
+#if 0
+//#if defined (ACE_WIN32)
   // Use ACE_Registry
   ACE_NEW_RETURN (this->name_space_, ACE_Registry_Name_Space (this->name_options_), -1);
 #else
