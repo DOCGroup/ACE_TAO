@@ -5,7 +5,8 @@ Fri Oct 31 10:14:56 2003  Chad Elliott  <elliott_c@ociweb.com>
 
           Added a missing break from the loop to remove trailing whitespace
           from constant strings.  The result from the missing break is that
-          the string would get chopped in the middle if it had a space.
+          the string would get chopped in the middle if it had a space. Thanks
+          to Onopin V. Mikhail <kool@garant.ru> for reporting the problem.
 
 Fri Oct 31 08:50:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
