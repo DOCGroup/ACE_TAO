@@ -1,3 +1,10 @@
+Wed May 17 12:11:17 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/default_resource.cpp (allocate_reactor_impl):
+
+          Changed a check for ACE_HAS_WINCE to ACE_LACKS_MSG_WMFO
+          so Pharlap is also covered.  
+
 Wed May 17 12:30:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_union.cpp:

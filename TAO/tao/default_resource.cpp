@@ -693,9 +693,9 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
       break;
 
     case TAO_REACTOR_WFMO:
-#if defined(ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined(ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
       ACE_NEW_RETURN (impl, ACE_WFMO_Reactor, 0);
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
       break;
 
     case TAO_REACTOR_MSGWFMO:
