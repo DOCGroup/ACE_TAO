@@ -32,7 +32,7 @@ main (int, char *[])
 
   const int ITERATIONS = 5;
   char buffer[ITERATIONS][BUFSIZ];
-  QUEUE queue;
+  QUEUE queue (32 * 1024);
   int i;
 
   for (i = 0; i < ITERATIONS; i++)
@@ -43,7 +43,7 @@ main (int, char *[])
       ACE_NEW_RETURN (entry, ACE_Message_Block (buffer[i], sizeof buffer[i]), -1);
 
       if (queue.enqueue (entry) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "QUEUE::enqueue\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "QUEUE::enqueue\n"), -1);
     }
 
   ACE_DEBUG ((LM_DEBUG, "\nForward Iterations\n"));
@@ -51,8 +51,8 @@ main (int, char *[])
     ITERATOR iterator (queue);
 
     for (ACE_Message_Block *entry = 0;
-	 iterator.next (entry) != 0;
-	 iterator.advance ())
+         iterator.next (entry) != 0;
+         iterator.advance ())
       ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
   }
 
@@ -61,8 +61,8 @@ main (int, char *[])
     REVERSE_ITERATOR iterator (queue);
 
     for (ACE_Message_Block *entry = 0;
-	 iterator.next (entry) != 0;
-	 iterator.advance ())
+         iterator.next (entry) != 0;
+         iterator.advance ())
       ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
   }
 
@@ -71,8 +71,8 @@ main (int, char *[])
     QUEUE::ITERATOR iterator (queue);
 
     for (ACE_Message_Block *entry = 0;
-	 iterator.next (entry) != 0;
-	 iterator.advance ())
+         iterator.next (entry) != 0;
+         iterator.advance ())
       ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
   }
 
@@ -81,8 +81,8 @@ main (int, char *[])
     QUEUE::REVERSE_ITERATOR iterator (queue);
 
     for (ACE_Message_Block *entry = 0;
-	 iterator.next (entry) != 0;
-	 iterator.advance ())
+         iterator.next (entry) != 0;
+         iterator.advance ())
       ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
   }
 
@@ -97,4 +97,3 @@ template class ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>;
 #pragma instantiate ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>
 #pragma instantiate ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
