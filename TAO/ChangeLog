@@ -1,3 +1,12 @@
+Wed Oct 29 20:39:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_cs.h:
+	* TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_ss.h:
+
+	  Fixed fuzz errors.
+
 Wed Oct 29 20:36:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h:
