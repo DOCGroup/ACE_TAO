@@ -167,7 +167,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint_i(
           int status =
             this->endpoint_from_profile (invocation,
                                          ACE_TRY_ENV);
-          ACE_CHECK;
+          ACE_CHECK_RETURN (-1);
 
           if (status == 1)
             return 1;

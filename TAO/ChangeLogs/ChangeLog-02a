@@ -1,3 +1,11 @@
+Wed Nov  7 13:12:01 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+
+          Use ACE_CHECK_RETURN in
+          TAO_FT_Invocation_Endpoint_Selector::select_endpoint_i() instead
+          of ACE_CHECK.
+
 Tue Nov  6 16:51:28 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ORB_Core.cpp :
