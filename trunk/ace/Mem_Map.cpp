@@ -58,6 +58,15 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
                      LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map_it");
+
+#if defined (ACE_LACKS_AUTO_MMAP_REPLACEMENT)
+  // If the system does not replace any previous mappings, then
+  // unmap() before (potentially) mapping to the same location.
+  int unmap_result = this->unmap ();
+  if (unmap_result != 0)
+    return unmap_result;
+#endif /* ACE_LACKS_AUTO_MMAP_REMAPPING */
+  
   this->base_addr_ = addr;
   this->handle_ = handle;
 

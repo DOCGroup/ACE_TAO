@@ -1,3 +1,13 @@
+1999-01-29  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Mem_Map.cpp (map_it): NT makes no claims about replacing
+	  previous mapping at the specified address.  Therefore, I have
+	  added a new macro ACE_LACKS_AUTO_MMAP_REPLACEMENT which is
+	  defined if there is no system support for replacing any previous
+	  mappings. In this case, we unmap() before (potentially) mapping
+	  to the same location.  ACE_LACKS_AUTO_MMAP_REPLACEMENT is
+	  defined on NT.
+
 Fri Jan 29 17:40:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* websvcs/lib/URL_Addr.h: 
