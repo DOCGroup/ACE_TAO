@@ -9,6 +9,8 @@
 #include "Server_Logging_Handler.h"
 #include "Logging_Strategy.h"
 
+ACE_RCSID(servers, main, "$Id$")
+
 int
 main (int argc, char *argv[])
 {

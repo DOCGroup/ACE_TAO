@@ -1,10 +1,13 @@
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
+
 #include "ace/SString.h"
 #include "ace/Containers.h"
 #include "ace/Get_Opt.h"
 #include "TS_Server_Handler.h"
+
+ACE_RCSID(lib, TS_Server_Handler, "$Id$")
 
 int
 ACE_TS_Server_Acceptor::parse_args (int argc, char *argv[])

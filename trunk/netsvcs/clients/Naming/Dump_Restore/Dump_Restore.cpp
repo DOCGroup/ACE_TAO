@@ -6,6 +6,8 @@
 #include "ace/streams.h"
 #include "Dump_Restore.h"
 
+ACE_RCSID(Dump_Restore, Dump_Restore, "$Id$")
+
 Dump_Restore::Dump_Restore (int argc, char *argv[])
   : infile_ (0)
 {

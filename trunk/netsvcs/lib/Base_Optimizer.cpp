@@ -1,11 +1,13 @@
 // $Id$
 
+#if !defined (BASE_OPTIMIZER_CPP)
+#define BASE_OPTIMIZER_CPP
+
 #define ACE_BUILD_DLL
 
 #include "Base_Optimizer.h"
 
-#if !defined (BASE_OPTIMIZER_CPP)
-#define BASE_OPTIMIZER_CPP
+ACE_RCSID(lib, Base_Optimizer, "$Id$")
 
 template<class Base, class Member>
 Base_Optimizer<Base, Member>::Base_Optimizer (void)

@@ -1,11 +1,12 @@
-#include "ace/OS.h"
 // $Id$
 
-
+#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 #include "ace/Local_Tokens.h"
 #include "ace/Remote_Tokens.h"
 #include "ace/Thread_Manager.h"
+
+ACE_RCSID(collection, rw_locks, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

@@ -1,11 +1,13 @@
-// Name_Handler.cpp
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
+
 #include "ace/Containers.h"
 #include "ace/Get_Opt.h"
-#include "Name_Handler.h"
 #include "ace/Singleton.h"
+#include "Name_Handler.h"
+
+ACE_RCSID(lib, Name_Handler, "$Id$")
 
 // Simple macro that does bitwise AND -- useful in table lookup
 #define ACE_TABLE_MAP(INDEX, MASK) (INDEX & MASK)

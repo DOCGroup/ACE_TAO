@@ -27,6 +27,8 @@
 #include "ace/Map_Manager.h"
 #include "ace/Service_Config.h"
 
+ACE_RCSID(manual, manual, "$Id$")
+
 typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
 
 class STDIN_Token : public ACE_Event_Handler
