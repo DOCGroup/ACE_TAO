@@ -12,10 +12,11 @@
 /// container glue code.
 /// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-#include "[idl-basename]GS.h"
+#include "[idl-basename]_svnt.h"
+#include "Cookies.h"
 
 #if !defined (__ACE_INLINE__)
-# include "[idl-basename]GS.inl"
+# include "[idl-basename]_svnt.inl"
 #endif /* __ACE_INLINE__ */
 
 //////////////////////////////////////////////////////////////////
@@ -64,73 +65,6 @@ template class TAO::Utils::Servant_Var<[facet type]>;
 // Component specific context implementation
 //////////////////////////////////////////////////////////////////
 
-void *
-[ciao module name]::[component name]_Context::_tao_QueryInterface (ptr_arith_t type)
-{
-  void *retv = 0;
-
-  if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
-              &CCM_[component name]_Context::_tao_class_id)
-            )
-    {
-      retv = ACE_reinterpret_cast (void*, this); // Does this look right?
-    }
-  else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
-              &::Components::SessionContext::_tao_class_id)
-            )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (
-                Components::SessionContext_ptr,
-                this
-              )
-          );
-    }
-  else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
-              &::Components::CCMContext::_tao_class_id)
-            )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (
-                Components::CCMContext_ptr,
-                this
-              )
-          );
-    }
-  else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
-               &CORBA::Object::_tao_class_id)
-             )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
-    }
-
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-
-  return retv;
-}
-
-const char*
-[ciao module name]::[component name]_Context::_interface_repository_id (void) const
-{
-  // replay to
-  return CCM_[component]_Context::_interface_repository_id ();
-}
-
 ##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
 ##  if ([receptacle name] is a multiplex ('uses multiple') receptacle)
     // [receptacle name]Connections typedef'ed as a sequence of
@@ -145,13 +79,15 @@ const char*
     new [receptacle name]Connections (this->ciao_muses_[receptacle name]_.current_size ());
 
   CORBA::ULong i = 0;
-  CIAO::Active_Objref_Map::iterator end = this->ciso_muses_[receptacle name]_.end ();
-  for (CIAO::Active_Objref_Map::iterator iter = this->ciso_muses_[receptacle name]_.begin ();
+  ACE_Active_Map_Manager<[uses type]_var>::iterator
+    end = this->ciso_muses_[receptacle name]_.end ();
+  for (ACE_Active_Map_Manager<[uses type]_var>::iterator
+         iter = this->ciso_muses_[receptacle name]_.begin ();
        iter != end;
        ++iter)
     {
-      CIAO::Active_Objref_Map::ENTRY &entry = *iter;
-      retv[i].objref = [uses type]::_narrow (entry.in_id_.in ());
+      ACE_Active_Map_Manager<[uses type]_var>::ENTRY &entry = *iter;
+      retv[i].objref = [uses type]::_narrow (entry.int_id_.in ());
       retv[i].ck = new CIAO::Map_Key_Cookie (entry.ext_id_);
       ++i;
     }
@@ -170,15 +106,17 @@ void
   this->ciao_emits_[event name]_consumer_->push_[event name] (ev
                                                               ACE_ENV_ARG_PARAMETER);
 ##  else [event name] belongs to a 'publishes' port
-  CIAO::Active_Objref_Map::iterator end = this->ciao_publishes_[event name]_map_.end ();
-  for (CIAO::Active_Objref_Map::iterator iter = this->ciao_publishes_[event name]_map_.begin ();
+  ACE_Active_Map_Manager<[eventtype]Consumer_var>::iterator
+    end = this->ciao_publishes_[event name]_map_.end ();
+  for (ACE_Active_Map_Manager<[eventtype]Consumer_var>::iterator
+         iter = this->ciao_publishes_[event name]_map_.begin ();
        iter != end;
        ++iter)
     {
-      CIAO::Active_Objref_Map::ENTRY &entry = *iter;
-      [eventtype]Consumer_var c = [eventtype]Consumer::_narrow (entry.in_id_.in ());
-      c->push_[event name] (ev
-                            ACE_ENV_ARG_PARAMETER);
+      ACE_Active_Map_Manager<[eventtype]Consumer_var>::ENTRY &entry = *iter;
+      [eventtype]Consumer_var c = [eventtype]Consumer::_narrow (entry.int_id_.in ());
+      c->push_[eventtype] (ev
+                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 ##  endif [event name]
@@ -186,6 +124,130 @@ void
 
 ##end foreach [event name] with [eventtype]
 
+
+// Operations for publishes interfaces.
+##foreach [publish name] with [eventtype] in (list of all publishers) generate:
+ACE_INLINE ::Components::Cookie_ptr
+[ciao module name]::[component name]_Context::subscribe_[publish name] ([eventtype]Consumer_ptr c
+                                                                        ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Components::ExceededConnectionLimit))
+{
+  if (CORBA::is_nil (c))
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+
+  ACE_Active_Map_Manager_Key key;
+  this->ciao_publishes_[publish name]_map_.bind (c,
+                                                 key);
+
+  ::Components::Cookie_var retv = new CIAO::Map_Key_Cookie (key);
+  return retv._retn ();
+}
+
+ACE_INLINE [eventtype]Consumer_ptr
+[ciao module name]::[component name]_Context::unsubscribe_[publish name] (::Components::Cookie_ptr ck
+                            ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Components::InvalidConnection))
+{
+  [eventtype]Consumer_var retv;
+
+  ACE_Active_Map_Manager_Key key;
+  if (ck == 0 ||
+      CIAO::Map_Key_Cookie::extract (ck, key) == -1)
+    ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+
+  if (this->ciao_publishes_[publish name]_map_.unbind (key,
+                                                       retv) != 0)
+    ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+
+  return retv._retn ();
+}
+
+##end foreach [publish name] with [eventtype]
+
+##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+
+##  if [receptacle name] is a simplex receptacle ('uses')
+
+ACE_INLINE [uses type]_ptr
+[ciao module name]::[component name]_Context::get_connection_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return [uses type]::_duplicate (this->ciao_uses_[receptacle name]_.in ());
+}
+
+// Simplex [receptacle name] connection management operations
+ACE_INLINE void
+[ciao module name]::[component name]_Context::connect_[receptacle name] ([uses type]_ptr c
+                                                                         ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Components::AlreadyConnected,
+                   ::Components::InvalidConnection))
+{
+  if (! CORBA::is_nil (this->ciao_uses_[receptacle name]_.in ()))
+    ACE_THROW (::Components::AlreadyConnected ());
+
+  if (CORBA::is_nil (c))
+    ACE_THROW (::Components::InvalidConnection ());
+
+  // When do we throw InvalidConnection exception?
+  this->ciao_uses_[receptacle name]_ = [uses type]::_duplicate (c);
+}
+
+ACE_INLINE [uses type]_ptr
+[ciao module name]::[component name]_Context::disconnect_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Components::NoConnection))
+{
+  if (CORBA::is_nil (this->ciao_uses_[receptacle name]_.in ()))
+    ACE_THROW (::Components::NoConnection ());
+
+  return this->ciao_uses_[receptacle name]_.retn ();
+}
+
+##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+// Multiplex [receptacle name] connection management operations
+ACE_INLINE ::Components::Cookie_ptr
+[ciao module name]::[component name]_Context::connect_[receptacle name] ([uses type]_ptr c
+                                                                         ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::ExceedConnectionLimit,
+                       ::Components::InvalidConnection))
+{
+  if (CORBA::is_nil (c))
+    ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+
+  ACE_Active_Map_Manager_Key key;
+  this->ciao_muses_[receptacle name]_.bind (c,
+                                            key);
+
+  ::Components::Cookie_var retv = new CIAO::Map_Key_Cookie (key);
+  return retv._retn ();
+}
+
+ACE_INLINE [uses type]_ptr
+[ciao module name]::[component name]_Context::disconnect_[receptacle name] (::Components::Cookie_ptr ck
+                                                                            ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Components::InvalidConnection))
+{
+  [uses type]_var retv;
+
+  ACE_Active_Map_Manager_Key key;
+  if (ck == 0 ||
+      CIAO::Map_Key_Cookie::extract (ck, key) == -1)
+    ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+
+  if (this->ciao_muses_[receptacle name]_.unbind (key,
+                                                  retv) != 0)
+    ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+
+  return retv._retn ();
+}
+
+##  endif [receptacle name]
+##end foreach [receptacle name] with [uses type]
 
 // Operations for ::Components::SessionContext interface
 CORBA::Object_ptr
@@ -216,13 +278,6 @@ CORBA::Object_ptr
 //////////////////////////////////////////////////////////////////
 // Component Servant Glue code implementation
 //////////////////////////////////////////////////////////////////
-
-##foreach [operation] in all supported interfaces of own component and all inherited components
-
-    // Generate the [operation] here.
-
-
-##end
 
 // Operations for provides interfaces.
 ##foreach [facet name] with [facet type] in (list of all provided interfaces) generate:
@@ -430,12 +485,20 @@ CORBA::Boolean
 ##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
   if (ACE_OS_String::strcmp (name, "[receptacle name]") == 0)
     {
+      [uses type]_var _ciao_conn =
+        [uses type]::_narrow (connection
+                              ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (CORBA::is_nil (_ciao_conn.in ()))
+        ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+
 ##  if [receptacle name] is a simplex receptacle ('uses')
-      this->connect_[receptacle name] (connection
+      this->connect_[receptacle name] (_caio_conn.in ()
                                        ACE_ENV_ARG_PARAMETER);
       return 0;
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
-      return this->connect_[receptacle name] (connection
+      return this->connect_[receptacle name] (_ciao_conn.in ()
                                               ACE_ENV_ARG_PARAMETER);
 ##  endif [receptacle name]
     }
@@ -601,8 +664,16 @@ CORBA::Object_ptr
 ##foreach [publish name] with [eventtype] in (list of all publishers) generate:
   if (ACE_OS_String::strcmp (publisher_name, "[publish name]") == 0)
     {
-      return this->subscribe_[publish name] (subscriber
-                                             ACE_ENV_ARG_PARAMTER);
+      [eventtype]Consumer_var _ciao_consumer =
+        [eventtype]Consumer::_narrow (subscriber
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (CORBA::is_nil (_ciao_consumer.in ()))
+        ACE_THROW_RETURN (Components::InvalidConnection (), 0);
+
+      return this->subscribe_[publish name] (_ciao_consumer.in ()
+                                             ACE_ENV_ARG_PARAMETER);
     }
 ##end foreach [publish name] with [eventtype]
 
@@ -625,7 +696,7 @@ CORBA::Object_ptr
   if (ACE_OS_String::strcmp (publisher_name, "[publish name]") == 0)
     {
       return this->unsubscribe_[publish name] (ck
-                                               ACE_ENV_ARG_PARAMTER);
+                                               ACE_ENV_ARG_PARAMETER);
     }
 ##end foreach [publish name] with [eventtype]
 
@@ -643,18 +714,26 @@ void
 {
   // @@ We can omit this if clause if there's no emitter in this component.
   if (emitter_name == 0)
-    ACE_THROW_RETURN (Components::InvalidName (), 0);
+    ACE_THROW (Components::InvalidName ());
 
 ##foreach [emit name] with [eventtype] in (list of all emitters) generate:
   if (ACE_OS_String::strcmp (emitter_name, "[emit name]") == 0)
     {
-      this->connect_[emit name] (consumer
-                                 ACE_ENV_ARG_PARAMTER);
+      [eventtype]Consumer_var _ciao_consumer =
+        [eventtype]Consumer::_narrow (consumer
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      if (CORBA::is_nil (_ciao_consumer.in ()))
+        ACE_THROW (Components::InvalidConnection);
+
+      this->connect_[emit name] (_ciao_consumer.in ()
+                                 ACE_ENV_ARG_PARAMETER);
       return;
     }
 ##end foreach [emit name] with [eventtype]
 
-  ACE_THROW_RETURN (Components::InvalidName (), 0);
+  ACE_THROW (Components::InvalidName ());
 }
 
 ::Components::EventConsumerBase_ptr
@@ -671,7 +750,7 @@ void
 ##foreach [emit name] with [eventtype] in (list of all emitters) generate:
   if (ACE_OS_String::strcmp (source_name, "[emit name]") == 0)
     {
-      return this->disconnect_[emit name] (ACE_ENV_SINGLE_ARG_PARAMTER);
+      return this->disconnect_[emit name] (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 ##end foreach [emit name] with [eventtype]
 
@@ -777,6 +856,7 @@ void
 
   // Need to add interfaces in the Context class to gather the information.
   // Or we can just relay it to the Context object.
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 ::Components::PublisherDescriptions *
@@ -789,6 +869,7 @@ void
 
   // Need to add interfaces in the Context class to gather the information.
   // Or we can just relay it to the Context object.
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 // Operations for CCMObject interface
@@ -840,7 +921,7 @@ void
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::Components::ComponentPortDescription_var retv =
-    new ::Components::ComponentPortDescription;
+    new OBV_Components::ComponentPortDescription;
 
   ::Components::FacetDescriptions_var facets_desc
       = this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -906,7 +987,7 @@ CORBA::Object_ptr
 //////////////////////////////////////////////////////////////////
 
 [component name]_ptr
-[ciao module name]::[home name]_Servant::_ciao_create_helper (::Components::EnterpriseComponent_ptr c
+[ciao module name]::[home name]_Servant::_ciao_create_helper (::Components::EnterpriseComponent_ptr com
                                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CreateFailure))
@@ -920,13 +1001,14 @@ CORBA::Object_ptr
                                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  ::Components::[home name]_var home = ::Components::[home name]::_narrow (hobj.in ()
-                                                                           ACE_ENV_ARG_PARAMETER);
+  [home name]_var home = [home name]::_narrow (hobj.in ()
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CIAO_[component name]_Servant *svt = new CIAO_[component name]_Servant (hw.in (),
-                                                                          home.in (),
-                                                                          this->container_);
+  [ciao module name]::[component name]_Servant *svt =
+    new [ciao module name]::[component name]_Servant (hw.in (),
+                                                      home.in (),
+                                                      this->container_);
   return svt->_ciao_activate_component (ACE_ENV_ARG_PARAMETER);
 }
 
@@ -955,7 +1037,7 @@ void
                    Components::RemoveFailure))
 {
   if (CORBA::is_nil (comp))
-    ACE_THROW (CORBA::INTERNAL (), 0); // What is the right exception to throw here?
+    ACE_THROW (CORBA::INTERNAL ()); // What is the right exception to throw here?
 
   comp->remove (ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

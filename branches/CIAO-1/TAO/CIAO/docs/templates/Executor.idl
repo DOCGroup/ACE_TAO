@@ -28,10 +28,27 @@
                                 // For various definitions of container
                                 // internal/callback interfaces
 #include "[component_idl].idl"  // Original component IDL definition
+// @@ We may need to include other *E.idl here....  Can't figure out
+// if we can do this automagically or not.
 
 ##if there are module definitions, preserve them all
 module [module_name] {
 ##endif
+
+////////////////////////////////////////////////////////////////////
+//// * Iterate thru all supported interface types
+////   It's possible that we need to put some of the common supported
+////   interface definitions into a separate compilation unit.  How do we
+////   specify that in CCIDL?  I haven't figured that out.  Perhaps
+////   allowing CCIDL to compile files that contain no component
+////   definition?
+##foreach [interface_type] in (types of all supported interface) generate:
+
+  local interface CCM_[interface_type] : [interface_type]
+  {
+  };
+
+##end foreach [interface_type]
 
 ////////////////////////////////////////////////////////////////////
 //// * Iterate thru all facet ('provides' interface) interface types
@@ -124,13 +141,19 @@ module [module_name] {
 
   };
 
-  // Component Context Interface
+  /**
+   * Component Context Interface
+   *
+   * Notice that we are taking a shortcut here to inherit the
+   * component-specific context from SessionContext directly instead
+   * of CCMContext.
+   */
   local interface CCM_[component basename]_Context
     :
 ##  if [component basename] inherits from [parent component name]
       CCM_[parent component name]_Context
 ##  else
-      ::Components:CCMContext
+      ::Components:SessionContext
 ##  endif
   {
 
@@ -176,12 +199,12 @@ module [module_name] {
 ## end foreach opeartion
 
 ##foreach [factory name]  in (all factory operations defined in [home basename])
-    ::Enterprise::EnterpriseComponent [factory name] (....)
+    ::Components::EnterpriseComponent [factory name] (....)
       raise (Components::CreateFailure, ....);
 ##end foreach [factory name]
 
 ##foreach [finder name]  in (all finder operations defined in [home basename])
-    ::Enterprise::EnterpriseComponent [finder name] (....)
+    ::Components::EnterpriseComponent [finder name] (....)
       raise (Components::FinderFailure, ....);
 ##end foreach [finder name]
   };

@@ -1,3 +1,40 @@
+Wed Mar 12 23:29:27 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_component_mpc.pl: Fixed an incomplete library
+	  expansion and added a flag to specify library path
+	  dependencies.
+
+	* docs/releasenotes.html: Updated the status of single component
+	  deployment capability.  I forgot to do that when it was done.
+
+	* examples/handcrafted/Display/NOTE: Added directions on how to
+	  generate various mpc files.
+
+	* examples/handcrafted/Display/GPS/GPS.mpc:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/RateGen/RateGen.mpc: Regenerated
+	  MPC files to fix incomplete dependent library names and to add
+	  library path dependencies.
+
+	* examples/handcrafted/Display/HUDisplay.idl:
+	* examples/handcrafted/Display/RateGen/RateGen.idl:
+	* examples/handcrafted/Display/HUDisplayE.idl:
+	* examples/handcrafted/Display/RateGen/RateGenE.idl: Moved the
+	  opmode interface definition from RateGen.idl back to
+	  HUDisplay.idl.  This interface is a supported interface of
+	  RateGen but it should be viewed as a shared interface.
+
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.inl: Added
+	  more handcrafted servant glue code for RateGen component.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* docs/templates/Executor.idl:  Updated and fixed CIDL template
+	  code based on results from using these templates manually.
+
 Wed Mar 12 00:03:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/HUDisplay_svnt.h:

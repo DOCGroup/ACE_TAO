@@ -8,10 +8,25 @@
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 
+#ifndef HUDISPLAY_IDL
+#define HUDISPLAY_IDL
+
 #include "ciao/CCM_Component.idl"
 
 module HUDisplay
 {
+  /**
+   * @brief interface opmode defines the "operation mode" interface.
+   */
+  interface opmode
+  {
+    void start ();
+
+    void stop ();
+
+    boolean active ();
+  };
+
   /**
    * @brief a timed event that happens at some fix rate.
    */
@@ -28,3 +43,5 @@ module HUDisplay
     long pos ();
   };
 };
+
+#endif /* HUDISPLAY_IDL */
