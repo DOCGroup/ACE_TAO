@@ -1,0 +1,10 @@
+//
+// $Id test.idl,v 1.1 1999/06/19 22:39:53 coryan Exp$
+//
+
+interface Simple_Server
+{
+  long test_method (in long x);
+
+  oneway void shutdown ();
+};
