@@ -320,6 +320,7 @@ const size_t TAO_DEFAULT_ORB_TABLE_SIZE = 16;
  */
 #define TAO_ENV_DECLARE_NEW_ENV \
     TAO_ENV_EMIT_CODE(ACE_DECLARE_NEW_CORBA_ENV)
+//@}
 
 #if !defined (TAO_HAS_EXCEPTIONS)
 // This thing can be moved into the above when we drop TAO_ENV_BKWD_COMPAT.
