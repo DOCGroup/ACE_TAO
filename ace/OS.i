@@ -4049,11 +4049,13 @@ ACE_INLINE int
 ACE_OS::clock_gettime (clockid_t clockid, struct timespec *ts)
 {
   // ACE_TRACE ("ACE_OS::clock_gettime");
-#if defined ACE_HAS_POSIX_TIME
+#if defined (ACE_HAS_CLOCK_GETTIME)
   ACE_OSCALL_RETURN (::clock_gettime (clockid, ts), int, -1);
 #else
+  ACE_UNUSED_ARG (clockid);
+  ACE_UNUSED_ARG (ts);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_POSIX_TIME */
+#endif /* ACE_HAS_CLOCK_GETTIME */
 }
 
 ACE_INLINE ACE_Time_Value
