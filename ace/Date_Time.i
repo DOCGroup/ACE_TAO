@@ -3,22 +3,45 @@
 
 // Date_Time.i
 
-// constructor with init values, no check for validy
+ASYS_INLINE void
+ACE_Date_Time::update (void)
+{
+  ACE_TRACE ("ACE_Date_Time::update");
+
+  time_t time;
+  ACE_OS::time (&time);
+  struct tm *tm_time = ACE_OS::localtime (&time);
+  this->date_ = tm_time->tm_mday;
+  this->month_ = tm_time->tm_mon; 
+  this->year_ = tm_time->tm_year;
+  this->hour_ = tm_time->tm_hour;
+  this->minute_ = tm_time->tm_min;
+  this->second_ = tm_time->tm_sec;
+}
+
 ASYS_INLINE
-ACE_Date_Time::ACE_Date_Time(long day,
-			     long month,
-			     long year,
-			     long hour,
-			     long minute,
-			     long second,
-			     long microsec)
-: day_ (day),
-  month_ (month),
-  year_ (year),
-  hour_ (hour),
-  minute_ (minute),
-  second_ (second),
-  microsec_ (microsec)
+ACE_Date_Time::ACE_Date_Time (void)
+{
+  ACE_TRACE ("ACE_Date_Time::ACE_Date_Time");
+  this->update ();
+}
+
+// Constructor with init values, no check for validy
+ASYS_INLINE
+ACE_Date_Time::ACE_Date_Time (long day,
+			      long month,
+			      long year,
+			      long hour,
+			      long minute,
+			      long second,
+			      long microsec)
+  : day_ (day), 
+    month_ (month),
+    year_ (year),
+    hour_ (hour),
+    minute_ (minute),
+    second_ (second),
+    microsec_ (microsec)
 {
   ACE_TRACE ("ACE_Date_Time::ACE_Date_Time");
 }

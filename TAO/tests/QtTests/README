@@ -16,8 +16,8 @@ $ server -o foo.ior
 $ client -k file://foo.ior
 
 Note: this test only does something useful if the user has the Qt
-library installed. He should enable the build of the QtReactor by
-initilasing qt_reactor. The path should point to the Qt/bin area so
+library installed.  You should enable the build of the QtReactor by
+initializing qt_reactor. The path should point to the Qt/bin area so
 that the moc could be accessed by the Makefile.
 
 ---------------------------------------------------------------------
