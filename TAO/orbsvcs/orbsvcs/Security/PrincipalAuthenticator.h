@@ -31,6 +31,8 @@ typedef TAO_PrincipalAuthenticator *TAO_PrincipalAuthenticator_ptr;
 class TAO_PrincipalAuthenticator_var;
 class TAO_PrincipalAuthenticator_Impl;
 
+class TAO_SecurityManager;
+
 /**
  * @class TAO_PrincipalAuthenticator
  *
@@ -47,7 +49,7 @@ class TAO_Security_Export TAO_PrincipalAuthenticator
 public:
 
   /// Constructor
-  TAO_PrincipalAuthenticator (void/* const Security::MechanismTypeList &mechanisms */);
+  TAO_PrincipalAuthenticator (TAO_SecurityManager *manager);
 
   /**
    * @name SecurityLevel2::PrincipalAuthenticator Methods
@@ -155,6 +157,10 @@ private:
 
   /// Array of registered security mechanism-specific Vaults.
   ACE_Array_Base<void *> vaults_;
+
+  /// Pointer to the SecurityManager that "owns" this
+  /// PrincipalAuthenticator.
+  TAO_SecurityManager * security_manager_;
 
 };
 

@@ -1,3 +1,40 @@
+Wed Jan 16 20:08:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator.h:
+
+	  Cache a reference to the SecurityManager passed in as a
+	  parameter to the constructor.
+
+	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator.cpp
+	  (authenticate, continue_authentication):
+
+  	  Register authenticated credentials with the SecurityManager's
+	  "own credentials" list.
+
+	* orbsvcs/orbsvcs/Security/SecurityManager.h:
+
+	  Added an "own_credentials" attribute.  All credentials
+	  authenticated by the PrincipalAuthenticator will be stored in
+	  it.
+
+	* orbsvcs/orbsvcs/Security/SecurityManager.cpp
+	  (principal_authenticator):
+
+	  Pass a pointer to the SecurityManager to the
+	  PrincipalAuthenticator's constructor so that the
+	  PrincipalAuthenticator may call back some of the
+	  SecurityManager's methods.
+
+	  (own_credentials, remove_own_credentials):
+
+	  Implemented these SecurityLevel2::SecurityManager methods.
+
+	  (add_own_credentials):
+
+	  New TAO-specific method used internally by the
+	  PrincipalAuthenticator to register authenticated credentials
+	  with SecurityManager's "own credentials" list.
+
 Wed Jan 16 21:26:14 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
