@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/ORB_Core.h"
+#include "tao/ORB_Table.h"
 
 #include "ace/Env_Value_T.h"
 #include "ace/Arg_Shifter.h"
@@ -534,6 +535,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
           // Construct an argument that would be equivalent to
           // "-ORBInitRef TradingService=....."
+
+          ACE_CString init_ref =
+            ACE_CString (TAO_OBJID_TRADINGSERVICE) +
+            ACE_CString ('=') +
+            ACE_CString (current_arg);
 
           ACE_CString object_id (TAO_OBJID_TRADINGSERVICE);
           ACE_CString IOR (current_arg);
@@ -2627,100 +2633,6 @@ TAO_TSS_Resources::~TAO_TSS_Resources (void)
 
 // ****************************************************************
 
-TAO_ORB_Table::TAO_ORB_Table (void)
-  : table_ (),
-    first_orb_ (0)
-{
-}
-
-TAO_ORB_Table::~TAO_ORB_Table (void)
-{
-  for (Iterator i = this->begin ();
-       i != this->end ();
-       ++i)
-    {
-      // Destroy the ORB_Core
-      (*i).int_id_->_decr_refcnt ();
-    }
-  this->table_.close ();
-}
-
-TAO_ORB_Table::Iterator
-TAO_ORB_Table::begin (void)
-{
-  return this->table_.begin ();
-}
-
-TAO_ORB_Table::Iterator
-TAO_ORB_Table::end (void)
-{
-  return this->table_.end ();
-}
-
-int
-TAO_ORB_Table::bind (const char *orb_id,
-                     TAO_ORB_Core *orb_core)
-{
-  // Make sure that the supplied ORB core pointer is valid,
-  // i.e. non-zero.
-  if (orb_core == 0)
-    {
-      errno = EINVAL;
-      return -1;
-    };
-
-  ACE_CString id (orb_id);
-
-  int result = this->table_.bind (id, orb_core);
-  if (result == 0)
-    {
-      // The ORB table now owns the ORB Core.  As such, the reference
-      // count on the ORB Core is *not* increased.
-
-      // Similarly, only set the "first_orb_" member if the given ORB
-      // Core was successfully added to the ORB table.
-      if (this->first_orb_ == 0)
-        this->first_orb_ = orb_core;
-    }
-
-  return result;
-}
-
-TAO_ORB_Core *
-TAO_ORB_Table::find (const char *orb_id)
-{
-  TAO_ORB_Core *found = 0;
-  ACE_CString id (orb_id);
-  this->table_.find (id, found);
-  return found;
-}
-
-int
-TAO_ORB_Table::unbind (const char *orb_id)
-{
-  ACE_CString id (orb_id);
-  TAO_ORB_Core *orb_core;
-  int result = this->table_.unbind (id, orb_core);
-  if (result == 0)
-    {
-      if (orb_core == this->first_orb_)
-        {
-          Iterator begin = this->begin ();
-          Iterator end = this->end ();
-          if (begin != end)
-            this->first_orb_ = (*begin).int_id_;
-          else
-            this->first_orb_ = 0;
-        }
-
-      orb_core->_decr_refcnt ();
-    }
-
-  return result;
-}
-
-// ****************************************************************
-
 TAO_Export TAO_ORB_Core *
 TAO_ORB_Core_instance (void)
 {
@@ -2782,13 +2694,6 @@ template class TAO_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_TSS_Resources>;
 template class ACE_TSS<TAO_ORB_Core_TSS_Resources>;
 
-template class TAO_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>;
-template class ACE_Map_Entry<ACE_CString,TAO_ORB_Core*>;
-template class ACE_Map_Manager<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
-template class ACE_Map_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
-
 template class ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<ACE_CString,ACE_CString,ACE_Null_Mutex>;
@@ -2815,13 +2720,6 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<
 #pragma instantiate TAO_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_TSS_Resources>
 #pragma instantiate ACE_TSS<TAO_ORB_Core_TSS_Resources>
-
-#pragma instantiate TAO_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Entry<ACE_CString,TAO_ORB_Core*>
-#pragma instantiate ACE_Map_Manager<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>
 
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString,ACE_CString,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>

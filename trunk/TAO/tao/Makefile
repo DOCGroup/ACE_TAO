@@ -50,6 +50,7 @@ PUB_HDRS = \
   Server_Strategy_Factory \
   Client_Strategy_Factory \
   ORB_Core \
+  ORB_Table \
   Leader_Follower \
   Reactor_Holder \
   Single_Reactor \
@@ -171,6 +172,7 @@ ORB_CORE_FILES = \
   DynamicC \
   Smart_Proxies \
   ORB_Core \
+  ORB_Table \
   Leader_Follower \
   Reactor_Registry \
   Single_Reactor \

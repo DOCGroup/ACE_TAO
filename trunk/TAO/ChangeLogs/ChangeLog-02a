@@ -1,3 +1,39 @@
+Wed Sep 13 15:54:47 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Acceptor_Impl.h:
+
+	  Include "tao/corbafwd.h" to pull in declaration of
+	  CORBA::Boolean.  Forward declare TAO_ORB_Core since some class
+	  methods declared in this header take TAO_ORB_Core pointer
+	  arguments.
+	
+	* tao/Acceptor_Impl.cpp:
+
+	  Include "tao/ORB_Table.h" to pull in the TAO_ORB_Table
+	  declaration.
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.i:
+	* tao/ORB_Table.h:
+	* tao/ORB_Table.cpp:
+	* tao/ORB_Table.inl:
+
+	  Moved TAO_ORB_Table implementation from `ORB_Core.*' to the
+	  newly added `ORB_Table' source files.
+
+	* tao/Makefile:
+	* tao/Makefile.am:
+	* tao/Makefile.bor:
+	* tao/TAO.dsp:
+
+	  Added the new `ORB_Table.*' files to the list of sources.
+	
+	* tests/ORB_init/ORB_init.cpp (main):
+
+	  Initialize another ORB but don't explicitly destroy it to allow
+	  testing of TAO's internal ORB table resource clean-up.
+
 Wed Sep 13 15:19:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/IIOP_Transport.cpp:

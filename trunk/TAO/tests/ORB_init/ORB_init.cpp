@@ -9,12 +9,14 @@ ACE_RCSID(ORB_init, ORB_init, "$Id$")
 // Do not attempt to narrow the object represented by this IOR, nor
 // should you modify the IOR unless you replace it with another
 // valid one!
-static const char *IOR =
-"IOR:010000001600000049444c3a43756269745f466163746f72793a312e30000000010000000000000090000000010101001500000062616d627563612e63732e777573746c2e65647500005c0d2d00000014010f004e5550000000130000000001000000006368696c645f706f61000000000001000000666163746f727900000003000000000000000800000001000000004f415401000000140000000100000001000100000000000901010000000000004f41540400000001000000";
+static const char IOR[] =
+"IOR:010000001600000049444c3a43756269745f466163746f72793a312e30000000010000000000000090000000010102cd14000000616e647572696c2e6563652e7563692e6564750057fecdcd2d00000014010f004e5550000000130000000001000000006368696c645f706f61000000000001000000666163746f7279cdcdcd03000000000000000800000001cdcdcd004f4154010000001400000001cdcdcd01000100000000000901010000000000004f41540400000001cd0000";
 
 int
 main (int argc, char *argv[])
 {
+  CORBA::ORB_var orb;
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -40,7 +42,7 @@ main (int argc, char *argv[])
       // used in that scope.
       // -------------------------------------------------------------
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, orbid, ACE_TRY_ENV);
+      orb = CORBA::ORB_init (argc, argv, orbid, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // This isn't portable, but TAO implements an ORB_ptr as a
@@ -115,6 +117,19 @@ main (int argc, char *argv[])
 
       CORBA::Object_var object =
         orb->string_to_object (IOR, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // -------------------------------------------------------------
+      // Initialize another two ORBs but don't explicitly destroy them
+      // to allow testing of TAO's internal ORB table resource
+      // clean-up.
+      // -------------------------------------------------------------
+      CORBA::ORB_var orb2 =
+        CORBA::ORB_init (argc, argv, "ORB number 2", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::ORB_var orb3 =
+        CORBA::ORB_init (argc, argv, "ORB number 3", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // -------------------------------------------------------------
