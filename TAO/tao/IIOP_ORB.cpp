@@ -275,11 +275,12 @@ iiop_string_to_object (CORBA::String string,
   TAO_ServantBase *servant =
     TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (data);
 
+  // This will increase the ref_count on data by one
   CORBA_Object *obj = new CORBA_Object (data, servant, servant != 0);
 
-  // Clean up in case of error
-  if (obj == 0)
-    data->Release ();
+  // Set the ref_count on data to 1, which is correct, because only
+  // obj has now a reference to it.
+  data->Release ();
 
   return obj;
 }
