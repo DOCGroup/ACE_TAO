@@ -249,9 +249,9 @@ namespace
   {
   public:
     SetAttributeEmitter (ostream& os_,
-                         ReturnTypeNameEmitter* return_type_name_emitter)
+                         INArgTypeNameEmitter* param_type_name_emitter)
       : SourceEmitterBase (os_),
-        AttributeDecl (return_type_name_emitter)
+        AttributeDecl (param_type_name_emitter)
     {
     }
 
@@ -2617,11 +2617,7 @@ ServantSourceEmitter::generate (TranslationUnitPtr const& u)
   ArgNameEmitter arg_name (os);
 
   GetAttributeEmitter get_attribute_emitter (os, &return_type_name);
-  SetAttributeEmitter set_attribute_emitter (os, &return_type_name);
-
-  /* @@ (diego) (used internally)
-  OperationExecEmitter operation_exec_emitter (os, &arg_name);
-  */
+  SetAttributeEmitter set_attribute_emitter (os, &inarg_type_name);
 
   OperationEmitter operation_emitter (os,
                                       &return_type_name,

@@ -213,9 +213,9 @@ namespace
   {
   public:
     SetAttributeEmitter (ostream& os_,
-                         ReturnTypeNameEmitter* return_type_name_emitter)
+                         INArgTypeNameEmitter* param_type_name_emitter)
       : HeaderEmitterBase (os_),
-        AttributeDecl (return_type_name_emitter)
+        AttributeDecl (param_type_name_emitter)
     {
     }
 
@@ -1584,7 +1584,7 @@ ServantHeaderEmitter::generate (TranslationUnitPtr const& u)
   INOUTArgTypeNameEmitter inoutarg_type_name (os);
 
   GetAttributeEmitter get_attribute_emitter (os, &return_type_name);
-  SetAttributeEmitter set_attribute_emitter (os, &return_type_name);
+  SetAttributeEmitter set_attribute_emitter (os, &inarg_type_name);
 
   OperationEmitter operation_emitter (os,
                                       &return_type_name,

@@ -1,3 +1,15 @@
+Tue Aug 26 09:27:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Changed the constructor of SetAttributeEmitter to take
+          INArgTypeNameEmitter as a delegate instead of 
+          ReturnTypeNameEmitter, which was previously the case, causing
+          the code generation to emit the return type char* instead
+          of the correct IN argument type const char*. Thanks to
+          Roland Schimmack <SC@ProCom.de> for reporting the bug.
+
 Mon Aug 25 09:47:19 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h: Fixed a
