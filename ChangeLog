@@ -1,3 +1,10 @@
+Fri Jan 23 09:36:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Object_Manager.cpp:
+          CBuilderX Preview defines _MSC_VER and __BORLANDC__ so only use
+          _CrtSetReportMode when _MSC_VER is defined and not __BORLANDC__.
+          Borland isn't making thing easier to maintain.
+
 Fri Jan 23 09:30:45 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-borland-common.h:
