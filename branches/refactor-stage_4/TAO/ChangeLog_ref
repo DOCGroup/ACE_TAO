@@ -1,3 +1,15 @@
+Sat Jul 12 18:42:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_arg_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_visitor_arg_tmplinst.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst.h:
+
+          Finished generation of explicit template instantiations for
+          argument helper template classes on the stub side.
+
 Sat Jul 12 14:14:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Basic_Arguments.cpp:
@@ -16,11 +28,13 @@ Sat Jul 12 14:14:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sat Jul 12 11:35:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
+        * TAO_IDL/be/be_visitor_tmplinst.cpp:
+        * TAO_IDL/be_include/be_visitor_tmplinst.h:
         * TAO_IDL/be/be_visitor_arg_tmplinst.cpp:
         * TAO_IDL/be_include/be_visitor_arg_tmplinst.h:
 
           New files, to generate explicit template instantiations
-          for individual argument helper classes.
+          for argument traits classes and individual argument helper classes.
 
         * TAO_IDL/TAO_IDL_BE_DLL.dsp:
         * TAO_IDL/TAO_IDL_BE_LIB.dsp:
