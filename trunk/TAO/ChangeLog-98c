@@ -1,3 +1,35 @@
+Sun Dec  6 00:43:46 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading/Dir_Service.idl:
+	* examples/POA/On_Demand_Loading/Dir_Service.{h,cpp}:
+
+	  The servant library idl interface and files.
+	
+	* examples/POA/On_Demand_Loading/Servant_Activator.{h,cpp}:
+
+	  This file is the servant_manager activator interface.
+	
+	* examples/POA/On_Demand_Loading/server.cpp:
+
+	  This is the server process.
+	
+	* examples/POA/On_Demand_Loading/client.cpp:
+
+	  This is the client process.
+	
+	* examples/POA/On_Demand_Loading/generic_servant_export.h:	
+
+	  Generated and needed for the defining a servant class.
+	
+	* examples/POA/On_Demand_Loading/Makefile.Client:
+	* examples/POA/On_Demand_Loading/Makefile.DirService:
+	* examples/POA/On_Demand_Loading/Makefile:
+
+	  The makefiles needed for the test.
+
+	  Added the above files to the repository. This test example loads
+	  an servant library on demand and associates a servant with an object.
+	
 Sat Dec  5 22:10:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Typecode.cpp (private_equal_struct,private_equal_except):
