@@ -1,3 +1,11 @@
+Fri Jan 15 14:40:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SOCK_IO,
+	  ace/SOCK_Dgram: Modified the recv(iovec *) and recvv(iovec *)
+	  methods so that they use select() to avoid spinning if no data
+ 	  is available.  Thanks to Mike Goldman <whig@by.net> for this
+ 	  fix.
+
 Fri Jan 15 14:23:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Service_Repository.cpp (fini): Fixed a typo.

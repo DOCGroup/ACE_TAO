@@ -28,10 +28,34 @@ ACE_SOCK_Dgram::dump (void) const
 ssize_t
 ACE_SOCK_Dgram::recv (iovec *io_vec, 
 		      ACE_Addr &addr, 
-		      int flags) const
+		      int flags,
+                      const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
 #if defined (FIONREAD)
+  ACE_Handle_Set handle_set;
+  handle_set.reset ();
+  handle_set.set_bit (this->get_handle ());
+
+  // Check the status of the current socket to make sure there's data
+  // to recv (or time out).
+  switch (ACE_OS::select (int (this->get_handle ()) + 1,
+                          handle_set,
+                          0, 0,
+                          timeout))
+    {
+    case -1:
+      return -1;
+      /* NOTREACHED */
+    case 0:
+      errno = ETIME;
+      return -1;
+      /* NOTREACHED */
+    default:
+      // Goes fine, fallthrough to get data
+      break;
+    }
+
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int addr_len = addr.get_size ();
   u_long inlen;
@@ -41,8 +65,9 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
     return -1;
   else if (inlen > 0)
     {
-      ACE_NEW_RETURN (io_vec->iov_base, char[inlen], -1);
-
+      ACE_NEW_RETURN (io_vec->iov_base,
+                      char[inlen],
+                      -1);
       io_vec->iov_len = ACE_OS::recvfrom (this->get_handle (),
                                           (char *) io_vec->iov_base, 
                                           inlen, 

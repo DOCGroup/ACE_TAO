@@ -3,6 +3,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/SOCK_IO.h"
+#include "ace/Handle_Set.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_IO.i"
@@ -24,10 +25,33 @@ ACE_SOCK_IO::dump (void) const
 // returns the number of bytes read.
 
 ssize_t
-ACE_SOCK_IO::recvv (iovec *io_vec)
+ACE_SOCK_IO::recvv (iovec *io_vec,
+                    const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_SOCK_IO::recvv");
 #if defined (FIONREAD)
+  ACE_Handle_Set handle_set;
+  handle_set.reset ();
+  handle_set.set_bit (this->get_handle ());
+
+  // Check the status of the current socket.
+  switch (ACE_OS::select (int (this->get_handle ()) + 1,
+                         handle_set,
+                         0, 0,
+                         timeout))
+    {
+    case -1:
+      return -1;
+      /* NOTREACHED */
+    case 0:
+      errno = ETIME;
+      return -1;
+      /* NOTREACHED */
+    default:
+      // Goes fine, fallthrough to get data
+      break;
+    }
+
   u_long inlen;
 
   if (ACE_OS::ioctl (this->get_handle (), FIONREAD,
