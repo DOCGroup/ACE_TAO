@@ -276,7 +276,7 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
   size_t entries_to_remove 
     = ACE_MAX (1, ACE_static_cast(ssize_t, 
                                   ACE_static_cast(double, purge_percent) 
-                                  / 100 * current_map_size));
+                                  / 100 * available_entries));
 
   if (entries_to_remove >= available_entries  || 
       entries_to_remove == 0)
