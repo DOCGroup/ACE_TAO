@@ -4,8 +4,8 @@
 
 CXX_VERSION := $(shell $(CXX) -dumpversion)
 
-# If no option has been specified, try to enable implicit_templates based
-# on the version of the compiler.
+# If no option has been specified, try to enable templates based on the
+# version of the compiler.
 #
 ifeq ($(templates),)
   ifeq (2.95,$(findstring 2.95,$(CXX_VERSION)))
@@ -23,8 +23,7 @@ ifeq ($(templates),)
   endif
 endif
 
-# User didn't specify and we couldn't guess if this version of the compiler
-# works fine with implicit template instantiation. Turn if off.
+# Turn on the proper flags for explicit template instantiation.
 #
 ifeq ("$(templates)","explicit")
   ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.

@@ -7,13 +7,26 @@ exceptions = 0
 optimize = 1
 threads = 1
 
+# I(kitty) don't know anything about this compiler. Making it explicit.
+#
+templates = "explicit"
+
+# Turn on the proper flags for explicit template instantiation.
+#
+ifeq ("$(templates)","explicit")
+  ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
+    TEMPLATES_FLAG=-tnone
+  endif
+  CPPFLAGS += -DACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+  LDFLAGS  += --no_auto_instantiation
+endif
+
 CC       = gcx
 CXX      = $(CC)
-CCFLAGS  += $(CFLAGS) --no_rtti -tnone
+CCFLAGS  += $(CFLAGS) --no_rtti $(TEMPLATES_FLAG)
 DCFLAGS  += -g
 DLD      = $(CXX)
 LD       = $(CXX)
-LDFLAGS  = --no_auto_instantiation
 LIBS     += -lsocket -ldl -lgen -lnsl -lposix4
 OCFLAGS  += -OL -OM
 PIC      = -PIC

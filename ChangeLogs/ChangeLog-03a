@@ -1,3 +1,19 @@
+Sun Apr  7 05:27:35 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_g++_common.GNU:
+
+          Fixed a comment from the previous checkin.
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+        * include/makeinclude/platform_sunos5_ghs.GNU:
+        * include/makeinclude/platform_sunos5_kcc.GNU:
+
+          Changed these files to the new template instantiation mechanism.
+
+        * tests/test_config.h:
+
+          Added missing definition for the template member.
+
 Sun Apr  7 04:22:19 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU(templates):
