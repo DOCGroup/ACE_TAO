@@ -592,7 +592,9 @@ ACE_OS::set_sched_params (const ACE_Scheduling_Params &scheduling_params)
 
 #elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
   // Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
-  // providing this code for 1003.1C PThreads
+  // providing this code for 1003.1C PThreads.  Please note that this
+  // has only been tested for POSIX 1003.1C threads, and may cause problems
+  // with other PThreads flavors!
 
   struct sched_param param;
   int policy, result;
