@@ -1,3 +1,9 @@
+Thu Jan 21 13:05:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * docs/tutorials/Makefile:  Removed include .depend to allow the
+          whole set of tutorials to be built from the top.  Thanks to James
+          Johnson for guiding this fix.
+
 Wed Jan 20 19:47:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.{h,i,cpp} (fopen): Reimplement fopen using Win32 APIs so
