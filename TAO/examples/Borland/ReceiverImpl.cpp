@@ -2,8 +2,8 @@
 //---------------------------------------------------------------------------
 #include "pch.h"
 #pragma hdrstop
-#include "ReceiverImpl.h"
 #include "ChatClientWnd.h"
+#include "ReceiverImpl.h"
 //---------------------------------------------------------------------------
 TReceiverImplementation::TReceiverImplementation ()
   : orb_ (0)
