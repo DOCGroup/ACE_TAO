@@ -3,7 +3,7 @@ Tue Oct 24 23:14:55 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/OS_String.cpp:
         * ace/config-win32-borland.h:
 
-          Added ACE_LACKS_WCSDUP to do something similar to 
+          Added ACE_LACKS_WCSDUP to do something similar to
           ACE_HAS_STRDUP_EMULATION.  Added this to Borland's config,
 
           Also fixed several warnings in OS_String's emulation
@@ -12,9 +12,9 @@ Tue Oct 24 23:14:55 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/Object_Manager.cpp:
 
           Added code in the Object Manager to disable some of the
-          error windows that pops up in Win32 apps.  If 
-          ACE_DISABLE_WIN32_ERROR_WINDOWS is defined, then 
-          ACE_ASSERT's and Access Violations will not pop up 
+          error windows that pops up in Win32 apps.  If
+          ACE_DISABLE_WIN32_ERROR_WINDOWS is defined, then
+          ACE_ASSERT's and Access Violations will not pop up
           error box's anymore.  This was mainly added for auto
           build purposes.
 
@@ -22,10 +22,23 @@ Tue Oct 24 23:14:55 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Changed ACE_TEXT's to ACE_LIB_TEXT.
 
+        * ace/WFMO_Reactor.cpp:
+
+          In ACE_WFMO_Reactor_Notify::purge_pending_notifications
+          there was an instance of this type of code:
+
+          for (size_t index = 0; index < ....)
+          ...
+          for (index = 0; index ....)
+
+          On Borland, the index is scoped within the for loop, so
+          the second use of it produces an error.  I moved the
+          declaration outside of the loop to fix this.
+
 Tue Oct 24 23:40:33 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/SString_Test.cpp (main): Added tests for string
-	  assignments.
+        * tests/SString_Test.cpp (main): Added tests for string
+          assignments.
 
 Tue Oct 24 19:30:16 2000  Steve Huston  <shuston@riverace.com>
 
@@ -34,14 +47,14 @@ Tue Oct 24 19:30:16 2000  Steve Huston  <shuston@riverace.com>
 
 Tue Oct 24 13:54:49 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Makefile (TEMPLATE_FILES):
+        * ace/Makefile (TEMPLATE_FILES):
 
-	  Added missing Test_and_Set source file to the list.
+          Added missing Test_and_Set source file to the list.
 
-	* ace/Makefile.am (libACE_Utils_la_SOURCES, HEADER_FILES,
-	  INLINE_FILES, TEMPLATE_FILES):
+        * ace/Makefile.am (libACE_Utils_la_SOURCES, HEADER_FILES,
+          INLINE_FILES, TEMPLATE_FILES):
 
-	  Updated these lists of sources with the newly added sources.
+          Updated these lists of sources with the newly added sources.
 
 Tue Oct 24 12:30:47 2000  Steve Huston  <shuston@riverace.com>
 
@@ -88,28 +101,28 @@ Tue Oct 24 12:05:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
 Tue Oct 24 09:27:04 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/Test_and_Set.cpp: 
-	  Removed the repeated inclusion of the header file.
-	  Thanks to Darrell.
+        * ace/Test_and_Set.cpp:
+          Removed the repeated inclusion of the header file.
+          Thanks to Darrell.
 
 Tue Oct 24 03:24:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
-	* ace/Basic_Types.h:
-	* ace/config-win32-common.h:
+        * ace/Basic_Types.h:
+        * ace/config-win32-common.h:
 
-	  Moved the code that defines ACE_SIZEOF_WCHAR to the config file,
-	  so it is easier to add it to other platforms.
+          Moved the code that defines ACE_SIZEOF_WCHAR to the config file,
+          so it is easier to add it to other platforms.
 
-	* ace/config-linux-common.h:
+        * ace/config-linux-common.h:
 
-	  Added ACE_SIZEOF_WCHAR, ACE_LACKS_ITOW, ACE_LACKS_WCSICMP, and
-	  ACE_LACKS_WCSNICMP definitions.
+          Added ACE_SIZEOF_WCHAR, ACE_LACKS_ITOW, ACE_LACKS_WCSICMP, and
+          ACE_LACKS_WCSNICMP definitions.
 
-	* ace/Synch.h:
+        * ace/Synch.h:
 
-	  Moved the ACE_LEGACY_MODE includes further down in the file.  It
-	  was producing errors the way it was, since Test_and_Set needed
-	  the Guard classes defined before it was included.
+          Moved the ACE_LEGACY_MODE includes further down in the file.  It
+          was producing errors the way it was, since Test_and_Set needed
+          the Guard classes defined before it was included.
 
 Mon Oct 23 15:31:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
