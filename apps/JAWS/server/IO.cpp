@@ -139,10 +139,10 @@ JAWS_Synch_IO::transmit_file (const char *filename,
           iov[iovcnt].iov_len = trailer_size;
           iovcnt++;
         }
-      if (ACE_OS::writev (this->handle_, iov, iovcnt) == 0)
-        this->handler_->transmit_file_complete ();
-      else
+      if (ACE_OS::writev (this->handle_, iov, iovcnt) < 0)
         result = -1;
+      else
+        this->handler_->transmit_file_complete ();
 #endif
     }
 

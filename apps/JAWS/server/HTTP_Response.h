@@ -62,15 +62,15 @@ private:
   // creates the appropriate header information for responses.
 
 private:
-  // James, please document this.
-
   JAWS_IO &io_;
   HTTP_Request &request_;
+  // The IO and Request objects associated with this re
 
   char *HTTP_HEADER;
   char *HTTP_TRAILER;
   int HTTP_HEADER_LENGTH;
   int HTTP_TRAILER_LENGTH;
+  // HTTP Headers and trailers.
 };
 
 #endif /* HTTP_RESPONSE_H */
