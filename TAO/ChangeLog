@@ -1,3 +1,13 @@
+Tue Nov  4 20:40:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * TAO_IDL/include/ast_union_label.h:
+        * TAO_IDL/include/utl_idlist.h:
+        * TAO_IDL/include/utl_string.h:
+        * TAO_IDL/include/utl_strlist.h:
+          Changed #include from streams.h to iosfwd.h.  This fixes the
+          current compilation problems on SeSU inlined builds complaining
+          about 'ceil' and 'floor' already declared in this scope.
+
 Tue Nov  4 18:26:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/AV/FlowSpec_Entry.i:

@@ -76,7 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //       public virtual inheritance.
 
 #include "utl_list.h"
-#include "ace/streams.h"
+#include "ace/iosfwd.h"
 
 class Identifier;
 

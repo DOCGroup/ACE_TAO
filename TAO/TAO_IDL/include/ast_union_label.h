@@ -68,7 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_UNION_LABEL_AST_UNION_LABEL_HH
 
 #include "TAO_IDL_FE_Export.h"
-#include "ace/streams.h"
+#include "ace/iosfwd.h"
 
 class AST_Expression;
 class ast_visitor;
