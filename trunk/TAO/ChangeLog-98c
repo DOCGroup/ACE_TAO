@@ -1,3 +1,9 @@
+Tue May 22 09:32:41 1997  Brian Mendel  <bmendel@mdc.com>
+
+        * IIOP/lib/cdr.h: Deleted #define old_value ACE_INLINE and
+        #define ACE_INLINE old_value lines. Added #undefs for ACE_INLINE
+        prior to redefines.  Changes required to compile on Windows NT.
+
 Tue May 20 14:47:46 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* IIOP/test/cubitS.h: Removed forward decl of
