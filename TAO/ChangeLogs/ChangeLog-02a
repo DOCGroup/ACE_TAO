@@ -1,3 +1,9 @@
+Wed Jan 23 06:43:27  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.cpp:
+
+          Added missing include files.
+
 Wed Jan 23 06:24:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp (create): 
