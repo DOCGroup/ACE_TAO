@@ -918,7 +918,7 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
 ACE_INLINE int
 ACE_OS::pipe (ACE_HANDLE fds[])
 {
-#if (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_pipe (fds), int, -1);
 # elif !defined (ACE_HAS_WINCE) && !defined (__IBMCPP__)
   ACE_OS_TRACE ("ACE_OS::pipe");
@@ -1219,7 +1219,7 @@ ACE_OS::rename (const ACE_TCHAR *old_name,
                 const ACE_TCHAR *new_name,
                 int flags)
 {
-#if (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE)
   ACE_UNUSED_ARG (flags);
   ACE_OSCALL_RETURN (::pace_rename (old_name, new_name), int, -1);
 # elif (ACE_LACKS_RENAME)
