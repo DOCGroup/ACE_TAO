@@ -182,9 +182,9 @@ if ($simulated) {
   $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica5_ior -f file://$replica6_ior -c testscript");
 }else{
   print "\nTEST: Preparing IOGR based test.\n" if ($verbose);
-  $CL1 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_iogr -c testscript");
-  $CL2 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica2_iogr -c testscript");
-  $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica3_iogr -c testscript");
+  $CL1 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_iogr -c testscript");
+  $CL2 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica2_iogr -c testscript");
+  $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica3_iogr -c testscript");
 }
 
 #######################

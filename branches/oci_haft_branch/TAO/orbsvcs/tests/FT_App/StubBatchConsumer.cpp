@@ -74,22 +74,22 @@ int StubBatchConsumer::init (CORBA::ORB_var & orb, ::FT::FaultNotifier_var & not
 
   PortableServer::POAManager_var poa_manager =
     this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Register with the POA.
 
   this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // find my identity as an object
 
   CORBA::Object_var this_obj =
     this->poa_->id_to_reference (object_id_.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_nil();
 

@@ -924,7 +924,6 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
               if (pfile != 0)
                 mp.give_profile (pfile);
             }
-
           // Make sure we got some profiles!
           if (mp.profile_count () != profile_count)
             {
@@ -934,7 +933,9 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
                                  ACE_LIB_TEXT ("TAO (%P|%t) ERROR: Could not create all ")
                                  ACE_LIB_TEXT ("profiles while extracting object\n")
                                  ACE_LIB_TEXT ("TAO (%P|%t) ERROR: reference from the ")
-                                 ACE_LIB_TEXT ("CDR stream.\n")),
+                                 ACE_LIB_TEXT ("CDR stream.[%u | %u]\n"),
+                                 ACE_static_cast (unsigned, mp.profile_count()),
+                                 ACE_static_cast (unsigned, profile_count) ),
                                 0);
             }
 

@@ -217,7 +217,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
             criteria.in(),
             factory_creation_id
             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ACE_CHECK_RETURN (-1);
         }
       }
     }

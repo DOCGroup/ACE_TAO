@@ -156,15 +156,22 @@ void TAO::Fault_Detector_i::notify()
     }
     ACE_TRY_NEW_ENV
     {
-ACE_ERROR ((LM_ERROR,
-"call Fault Detector push Structured Event.\n"
-));
+      if (TAO_debug_level > 5)
+      {
+        ACE_ERROR ((LM_ERROR,
+        "call Fault Detector push Structured Event.\n"
+        ));
+      }
       this->notifier_->push_structured_fault(vEvent.in()
         ACE_ENV_ARG_PARAMETER);
-ACE_ERROR ((LM_ERROR,
-"return from Fault Detector push Structured Event.\n"
-));
       ACE_TRY_CHECK;
+      if (TAO_debug_level > 5)
+      {
+
+        ACE_ERROR ((LM_ERROR,
+        "return from Fault Detector push Structured Event.\n"
+        ));
+      }
     }
     ACE_CATCHANY
     {

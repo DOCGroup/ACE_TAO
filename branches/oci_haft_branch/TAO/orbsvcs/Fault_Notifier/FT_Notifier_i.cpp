@@ -207,7 +207,7 @@ int TAO::FT_FaultNotifier_i::fini (ACE_ENV_SINGLE_ARG_DECL)
     ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG,
-        "FaultNotifier Can't unregistered from ReplicationManager.\n"
+        "FaultNotifier Can't unregister from ReplicationManager.\n"
         ));
       // complain, but otherwise ignore this error
       // RM may be down.
@@ -251,26 +251,26 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
 
   PortableServer::POAManager_var poa_manager =
     this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   // Register with the POA.
 
   this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   // find my IOR
 
   CORBA::Object_var this_obj =
     this->poa_->id_to_reference (object_id_.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   this->ior_ = this->orb_->object_to_string (this_obj.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
 
   ////////////////////////////////////////////////
@@ -278,7 +278,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory =
     TAO_Notify_EventChannelFactory_i::create (poa_.in ()
     ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
   CosNotification::QoSProperties initial_qos;
   CosNotification::AdminProperties initial_admin;
   this->notify_channel_ =
@@ -286,16 +286,16 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
     initial_admin,
     channel_id_
     ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   this->filter_factory_ = this->notify_channel_->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   ///////////////////////////
   // Producer registration
 
   this->supplier_admin_ = this->notify_channel_->default_supplier_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   ::CosNotifyChannelAdmin::ProxyID proxyId = 0;
 
@@ -306,12 +306,12 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
       ::CosNotifyChannelAdmin::STRUCTURED_EVENT,
       proxyId
       ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   structured_proxy_push_consumer_
     = ::CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow(consumer
       ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
   if (CORBA::is_nil (this->structured_proxy_push_consumer_))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -325,7 +325,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
 
   this->structured_proxy_push_consumer_->connect_structured_push_supplier (stubPushSupplier.in()
      ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   ////////////////////
   // Sequence producer
@@ -353,13 +353,13 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
 
   this->sequence_proxy_push_consumer_->connect_sequence_push_supplier (stubSeqPushSupplier.in()
     ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
   ///////////////////////////
   // Consumer registration
 
   // find the channel administrator for consumers
   this->consumer_admin_ = this->notify_channel_->default_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN(-1);
   if (CORBA::is_nil (this->consumer_admin_))
   {
     ACE_ERROR ((LM_ERROR,
@@ -439,7 +439,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
 
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (-1);
 
       if (CORBA::is_nil(naming_obj.in ())){
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -449,7 +449,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
 
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (-1);
       if (CORBA::is_nil(this->naming_context_))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -461,7 +461,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
 
       this->naming_context_->rebind (this->this_name_, this_obj.in()  //CORBA::Object::_duplicate(this_obj)
                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (-1);
     }
   }
 

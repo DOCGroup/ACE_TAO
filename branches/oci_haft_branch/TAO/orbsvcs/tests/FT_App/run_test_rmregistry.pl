@@ -132,6 +132,9 @@ my($location2) = "bree";
 my($location3) = "rivendell";
 my($location4) = "rohan";
 
+my ($rm_endpoint) = "-ORBEndpoint iiop://localhost:2833";
+my ($rm_initref) = "-ORBInitRef ReplicationManager=corbaloc::localhost:2833/ReplicationManager";
+
 #define temp files
 my($rm_ior) = PerlACE::LocalFile ("rm.ior");
 my($factory1_ior) = PerlACE::LocalFile ("factory1.ior");
@@ -168,12 +171,12 @@ unlink $client_data;
 
 my($status) = 0;
 
-my($RM) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager$build_directory/FT_ReplicationManager", "-o $rm_ior");
-my($RMC) = new PerlACE::Process (".$build_directory/replmgr_controller", "-k file://$rm_ior -x");
-my($FAC1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -ORBInitRef ReplicationManager=file://$rm_ior -l $location1 -i $role1 -q");
-my($FAC2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -ORBInitRef ReplicationManager=file://$rm_ior -l $location2 -i $role1 -i $role2 -i $role3 -q -u");
-my($FAC3) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory3_ior -ORBInitRef ReplicationManager=file://$rm_ior -l $location3 -i $role2 -q -u");
-my($CTR) = new PerlACE::Process (".$build_directory/ft_create", "-ORBInitRef ReplicationManager=file://$rm_ior -r $role1 -r $role2 -r $role1 -u $role3");
+my($RM) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager$build_directory/FT_ReplicationManager", "-o $rm_ior $rm_endpoint");
+my($RMC) = new PerlACE::Process (".$build_directory/replmgr_controller", "$rm_initref -x");
+my($FAC1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior $rm_initref -l $location1 -i $role1 -q");
+my($FAC2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior $rm_initref -l $location2 -i $role1 -i $role2 -i $role3 -q -u");
+my($FAC3) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory3_ior $rm_initref -l $location3 -i $role2 -q -u");
+my($CTR) = new PerlACE::Process (".$build_directory/ft_create", "$rm_initref -r $role1 -r $role2 -r $role1 -u $role3");
 
 my($CL1);
 my($CL2);
@@ -185,9 +188,9 @@ if ($simulated) {
   $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica5_ior -f file://$replica6_ior -c testscript");
 }else{
   print "\nTEST: Preparing IOGR based test.\n" if ($verbose);
-  $CL1 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_iogr -c testscript");
-  $CL2 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica2_iogr -c testscript");
-  $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica3_iogr -c testscript");
+  $CL1 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_iogr -c testscript");
+  $CL2 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica2_iogr -c testscript");
+  $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica3_iogr -c testscript");
 }
 
 #######################
