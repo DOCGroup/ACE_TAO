@@ -1,3 +1,10 @@
+Fri Jan 16 14:10:09 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Advanced/ch_8_and_10/server.cpp:
+	  Moved function call outside assert. This fixes a warning in the
+	  release builds and the function call is also then done in a release
+	  build.
+
 Fri Jan 16 13:53:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
