@@ -47,7 +47,7 @@ sub TimedWait
 {
   my $self = shift;
   my $maxtime = shift;
-  Win32::Process::Wait ($self->[0], $maxtime);
+  Win32::Process::Wait ($self->[0], $maxtime * 1000);
   # @@ TODO figure out if we exit because of a timeout and return -1
   # in that case.
   return 0;
