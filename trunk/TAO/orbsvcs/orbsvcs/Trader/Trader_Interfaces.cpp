@@ -82,7 +82,11 @@ query (const char *type,
   // redundant results and infinite loops.
   CosTrading::Admin::OctetSeq* request_id = 0;
   if (this->seen_request_id (policies, request_id, env))
-    return;
+    {
+      returned_offers = new CosTrading::OfferSeq;
+      returned_limits_applied = new CosTrading::PolicyNameSeq;
+      return;
+    }
   TAO_CHECK_ENV_RETURN_VOID (env);
 
   // The presence of a link interface determines whether we should
