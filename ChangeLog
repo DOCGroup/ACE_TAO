@@ -1,3 +1,8 @@
+Mon Oct 18 17:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-dmc.h:
+          Improved Digital Mars C++ support
+
 Mon Oct 18 12:15:14 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/C++NPv2/display_logfile.cpp: Wide-char fixes.
@@ -7,7 +12,7 @@ Mon Oct 18 18:34:55 2004  Olli Savia  <ops@iki.fi>
         * ace/os_include/os_signal.h:
           Removed unneeded LynxOS specific pthread_sigmask
           protoype declaration.
-        
+
 Fri Oct 15 18:50:19 2004  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_Thread.cpp: In places where the old ace_result_ part of
