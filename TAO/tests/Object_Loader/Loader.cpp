@@ -15,6 +15,8 @@ Loader::Loader (void)
 
 CORBA::Object_ptr
 Loader::create_object (CORBA::ORB_ptr orb,
+                       int,
+                       char * [],
                        CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {

@@ -31,6 +31,8 @@ public:
   // ctor
 
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+                                           int argc,
+                                           char *argv [],
                                            CORBA::Environment &)
     ACE_THROW_SPEC (());
   // Create a new instance

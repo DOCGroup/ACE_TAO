@@ -1,29 +1,49 @@
+Tue Aug 15 10:23:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp : 
+	  Added a missing header file.
+
+	* tests/Object_Loader/Loader.h   : 
+	* tests/Object_Loader/Loader.cpp : 
+	  Changed the signatur of create_object () to comply with the
+	  changes done in Object_Loader.h.
+	
+Tue Aug 15 09:42:13 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp :
+	  Corrected a typo.
+
+Tue Aug 15 08:46:01 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/Trading_Service/Trading_Service.h :
+	  Made some minor formatting changes.
+
 Mon Aug 14 18:25:48 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/TAO_Service/README: 
+	* orbsvcs/TAO_Service/README:
 	  Modified to include the entries for Trading Service too.
-	
-	* orbsvcs/TAO_Service/svc.conf: 
-	  Added two commented entries which can be used to load and unload
-	  the trading service. 
 
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp : 
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.h   : 
+	* orbsvcs/TAO_Service/svc.conf:
+	  Added two commented entries which can be used to load and unload
+	  the trading service.
+
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp :
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.h   :
 
 	  Added the new interface and implementation so that the Trading
 	  Servcie can be loaded dynamically with the help of service config
 	  file. Initialization is working fine but there are problems with
 	  the unloading of the trading service (to be fixed).
-	
-	* orbsvcs/Trading_Service/Trading_Service.h   : 
-	* orbsvcs/Trading_Service/Trading_Service.cpp : 
+
+	* orbsvcs/Trading_Service/Trading_Service.h   :
+	* orbsvcs/Trading_Service/Trading_Service.cpp :
 
 	  Moved code around between Trading_Service.{h,cpp} and
 	  Trading_Loader.{h,cpp} so that the initialization and removal
 	  code for the Trading service is now in Trading_Loader.cpp and
 	  calls to these functions in Trading_Loader.cpp are made as
-	  necessary from Trading_Service.cpp. 
-	
+	  necessary from Trading_Service.cpp.
+
 Mon Aug 14 18:07:41 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/IFR_Service/Makefile (IFR_Service):
