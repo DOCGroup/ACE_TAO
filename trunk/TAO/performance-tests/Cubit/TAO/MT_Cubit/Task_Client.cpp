@@ -632,8 +632,7 @@ Client::get_cubit (void)
 
       if (my_ior == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Must specify valid factory ior key with -k option,"
-                           " naming service, or ior filename\n"),
+                           "Must specify valid ior filename with -f option\n"),
                           -1);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -642,14 +641,15 @@ Client::get_cubit (void)
 
       objref = this->orb_->string_to_object (my_ior,
                                              TAO_TRY_ENV);
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t)  String_to_object success\n"));
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (objref.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%t) string_to_object or NameService->resolve() Failed!\n"),
+                           " (%t) string_to_object Failed!\n"),
                           -1);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t)  String_to_object success\n"));
 
       // Narrow the CORBA::Object reference to the stub object,
       // checking the type along the way using _is_a.
