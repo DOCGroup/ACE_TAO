@@ -161,7 +161,7 @@ ACE::strnew (const char *s)
     return ACE_OS::strcpy (t, s);
 }
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && defined (ACE_HAS_UNICODE)
 ASYS_INLINE wchar_t *
 ACE::strnew (const wchar_t *s)
 {
@@ -172,4 +172,4 @@ ACE::strnew (const wchar_t *s)
   else
     return ACE_OS::strcpy (t, s);
 }
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && ACE_HAS_UNICODE */

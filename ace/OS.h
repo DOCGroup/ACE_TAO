@@ -562,13 +562,13 @@ enum ACE_Recyclable_State
 
 // First, we define how to properly export/import objects.
 # if defined (ACE_WIN32) /* Only Win32 needs special treatment. */
-#   if defined(_MSC_VER) || defined(__BORLANDC__)
+#   if defined(_MSC_VER) || defined(__BORLANDC__) || defined (__IBMCPP__)
 /*  Microsoft, Borland: */
 #     define ACE_Proper_Export_Flag __declspec (dllexport)
 #     define ACE_Proper_Import_Flag __declspec (dllimport)
 #     define ACE_EXPORT_SINGLETON_DECLARATION(T)  template class __declspec (dllexport) T
 #     define ACE_IMPORT_SINGLETON_DECLARATION(T)  extern template class T
-#   else /* defined(_MSC_VER) || defined(__BORLANDC__) */
+#   else /* defined (_MSC_VER) || defined (__BORLANDC__) || defined (__IBMCPP__) */
 /* Non-Microsoft, non-Borland: */
 #     define ACE_Proper_Export_Flag _export
 #     define ACE_Proper_Import_Flag _import
@@ -3113,6 +3113,10 @@ typedef void (*ACE_SignalHandlerV)(...);
 #         define ACE_SEH_EXCEPT(X) while (0)
 #         define ACE_SEH_FINALLY if (1)
 #       endif
+#     elif defined (__IBMCPP__) && (__IBMCPP__ >= 400) 
+#         define ACE_SEH_TRY if (1)
+#         define ACE_SEH_EXCEPT(X) while (0) 
+#         define ACE_SEH_FINALLY if (1)
 #     else
 #       define ACE_SEH_TRY __try
 #       define ACE_SEH_EXCEPT(X) __except(X)

@@ -230,7 +230,8 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 //
 // In the beginning (Jan. 1, 1601), there was no time and no computer.
 // And Bill said: "Let there be time," and there was time....
-const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew = ACE_INT64_LITERAL (0x19db1ded53e8000);
+const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew =
+ACE_INT64_LITERAL (0x19db1ded53e8000);
 
 ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 {
@@ -241,8 +242,11 @@ ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 void ACE_Time_Value::set (const FILETIME &file_time)
 {
   //  Initializes the ACE_Time_Value object from a Win32 FILETIME
-  ULARGE_INTEGER _100ns = {file_time.dwLowDateTime,
-                           file_time.dwHighDateTime};
+  ULARGE_INTEGER _100ns = 
+  {
+    file_time.dwLowDateTime,
+    file_time.dwHighDateTime
+  };
   _100ns.QuadPart -= ACE_Time_Value::FILETIME_to_timval_skew;
 
   // Convert 100ns units to seconds;
@@ -531,7 +535,8 @@ ACE_OS::uname (struct utsname *name)
   ACE_TRACE ("ACE_OS::uname");
 # if defined (ACE_WIN32)
   size_t maxnamelen = sizeof name->nodename;
-  ACE_OS::strcpy (name->sysname, ACE_TEXT ("Win32"));
+  ACE_OS::strcpy (name->sysname,
+                  ACE_TEXT ("Win32"));
 
   OSVERSIONINFO vinfo;
   vinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -909,7 +914,8 @@ ACE_TRACE ("ACE_OS::mutex_lock_cleanup");
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 FILE *
-ACE_OS::fopen (const char *filename, const char *mode)
+ACE_OS::fopen (const char *filename,
+               const char *mode)
 {
   ACE_TRACE ("ACE_OS::fopen");
   int hmode = _O_TEXT;
@@ -939,7 +945,7 @@ ACE_OS::fopen (const char *filename, const char *mode)
 }
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && defined (ACE_HAS_UNICODE)
 FILE *
 ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 {
@@ -973,7 +979,7 @@ ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
   return NULL;
 #   endif /* !ACE_HAS_WINCE */
 }
-# endif /* ACE_WIN32 */
+# endif /* ACE_WIN32 && ACE_HAS_UNICODE */
 
 #if !defined (ACE_HAS_WINCE)
 
@@ -2392,8 +2398,7 @@ ACE_Thread_Adapter::inherit_log_msg (void)
 #if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 #define ACE_ENDTHREADEX(STATUS) ::_endthreadex ()
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
-      ::_beginthreadex (STACK, (void *) STACKSIZE, (unsigned int) ENTRYPOINT, (unsigned int *) THR_ID)
-#else
+       (*THR_ID = ::_beginthreadex ((void(_Optlink*)(void*))ENTRY_POINT, STACK, STACKSIZE, ARGS), *THR_ID)
 #define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       ::_beginthreadex (STACK, STACKSIZE, (unsigned (__stdcall *) (void *)) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID)
