@@ -7268,32 +7268,8 @@ AC_CONFIG_FILES([
   ace-config
   ace-config.1
   aceConf.sh
-  Makefile
-  ace/Makefile
-  ace/RMCast/Makefile
-  ace/QoS/Makefile
-  ace/SSL/Makefile
-  apps/Makefile
-  apps/gperf/Makefile
-  apps/gperf/src/Makefile
-  netsvcs/Makefile
-  netsvcs/lib/Makefile
-  netsvcs/clients/Makefile
-  netsvcs/clients/Logger/Makefile
-  netsvcs/clients/Naming/Makefile
-  netsvcs/clients/Naming/Client/Makefile
-  netsvcs/clients/Naming/Dump_Restore/Makefile
-  netsvcs/clients/Tokens/Makefile
-  netsvcs/clients/Tokens/collection/Makefile
-  netsvcs/clients/Tokens/deadlock/Makefile
-  netsvcs/clients/Tokens/invariant/Makefile
-  netsvcs/clients/Tokens/manual/Makefile
-  netsvcs/clients/Tokens/mutex/Makefile
-  netsvcs/clients/Tokens/rw_lock/Makefile
-  netsvcs/servers/Makefile
-  tests/Makefile
-  tests/SSL/Makefile
 ])
+m4_include([configure.ac.Makefiles])
 
 dnl Note that the "ACE_VERSION" in the message below is an M4 macro
 dnl that expands to the version of ACE being configured.
