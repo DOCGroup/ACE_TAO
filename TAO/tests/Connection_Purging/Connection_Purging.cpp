@@ -9,7 +9,9 @@
 //     Connection_Purging.cpp
 //
 // = DESCRIPTION
-//     This program tests automatic purging in TAO.
+//     This program tests automatic purging in TAO. Collocation is off 
+//     which helps us test the usage and purging of handles from the 
+//     connection cache.
 //
 // = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
@@ -17,11 +19,10 @@
 //
 //=========================================================================
 
-#include "testS.h"
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 #include "ace/Handle_Gobbler.h"
-#include "ace/Get_Opt.h"
+#include "testS.h"
 
 struct arguments
 {
@@ -36,9 +37,14 @@ struct Info
   CORBA::String_var ior;
 };
 
-static size_t keep_handles_available = 10;
-static size_t iterations = 20;
-static size_t remote_calls = 2;
+
+// Note: The handles available may seem more than the iterations but
+// bear in mind that the server and client are in the same process and
+// that per RMI uses up two handles atleast and also that the ORB creation
+// uses up a descriptor atleast.
+static size_t keep_handles_available = 35;
+static size_t iterations = 30;
+static size_t remote_calls = 1;
 static Info *info = 0;
 static int debug = 0;
 static int go_to_next_orb = 0;
@@ -105,7 +111,7 @@ Server_Task::svc (void)
           while (!go_to_next_orb)
             this->info_[i].orb->perform_work ();
 
-          go_to_next_orb = 0;
+            go_to_next_orb = 0;
         }
     }
 
@@ -272,32 +278,78 @@ void
 invoke_remote_calls (CORBA::ORB_ptr client_orb)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+    
+  ACE_TRY 
     {
       for (size_t j = 0;
            j < remote_calls;
            ++j)
         {
+          if (debug)
+            ACE_DEBUG ((LM_DEBUG, "remote_call %d\n", j));
+
           for (size_t i = 0;
                i < iterations;
                ++i)
             {
+              if (debug)
+                ACE_DEBUG ((LM_DEBUG, "invoke_remote_calls::iteration %d\n", i));
+
               CORBA::Object_var object =
                 client_orb->string_to_object (info[i].ior.in (),
                                               ACE_TRY_ENV);
               ACE_TRY_CHECK;
-
+                  
               test_var test_object =
                 test::_narrow (object.in (),
-                               ACE_TRY_ENV);
+                                   ACE_TRY_ENV);
               ACE_TRY_CHECK;
+ 
+              size_t invoke_exception = 0;
+              for (int try_invoke = 0; try_invoke < 3; ++try_invoke)
+                {
+                  ACE_TRY_EX (try_again_block)
+                    {
+                      invoke_exception = 0;
+                      test_object->method (ACE_TRY_ENV);
+                      ACE_TRY_CHECK_EX (try_again_block);
+                    }
+                  ACE_CATCHANY
+                    {
+                      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "invoke_remote_calls::Exception!");
 
-              test_object->method (ACE_TRY_ENV);
-              ACE_TRY_CHECK;
+                      if (debug)
+                        ACE_DEBUG ((LM_DEBUG, "Trying again...invoke_remote_calls::iteration %d\n", i));
+
+                      invoke_exception = 1;
+                    }
+                  ACE_ENDTRY;
+
+                  if (invoke_exception != 0)
+                    continue;
+                  else
+                    break;
+                }
+
+              if (invoke_exception == 1)
+                ACE_ASSERT (0);
             }
         }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception in invoke_remote_calls on client side");
+      ACE_ASSERT (0);
+    }
+  ACE_ENDTRY;
+}
 
+void
+orbs_shutdown (void)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
       for (size_t i = 0;
            i < iterations;
            ++i)
@@ -305,46 +357,32 @@ invoke_remote_calls (CORBA::ORB_ptr client_orb)
           info[i].orb->shutdown (1,
                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
+          
         }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception in running client side");
-      ACE_ASSERT (0);
-    }
-  ACE_ENDTRY;
-}
-
-void
-cleanup (void)
-{
-  for (size_t i = 0;
-       i < iterations;
-       ++i)
-    {
-      ACE_DECLARE_NEW_CORBA_ENV;
-
-      ACE_TRY
+     
+      for (i = 0;
+           i < iterations;
+           ++i)
         {
           info[i].root_poa->destroy (1,
                                      1,
                                      ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception in cleaning up");
-          ACE_ASSERT (0);
-        }
-      ACE_ENDTRY;
     }
-
+  ACE_CATCHANY
+     {
+       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception in shutting orbs");
+       ACE_ASSERT (0);
+     }
+  ACE_ENDTRY;
+  
   delete[] info;
 }
 
 int
 main (int argc,
-      char **argv)
+      char *argv [])
 {
   int argc_copy = argc;
   char **argv_copy = 0;
@@ -395,8 +433,7 @@ main (int argc,
   ACE_ASSERT (result == 0);
 
   invoke_remote_calls (client_orb.in ());
-
-  cleanup ();
+  orbs_shutdown ();
 
   return 0;
 }
