@@ -6,15 +6,14 @@
  *
  * $Id$
  *
- * This is the implementation of the
- * PortableInterceptor::ObjectReferenceTemplate ValueType.
+ * This is the implementation of the TAO_ObjectReferenceTemplate_Adapter
  *
- * @author Priyanka Gontla <gontla_p@ociweb.com>
+ * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
 
-#ifndef TAO_OBJECT_REFERENCE_TEMPLATE_I_H
-#define TAO_OBJECT_REFERENCE_TEMPLATE_I_H
+#ifndef TAO_OBJECT_REFERENCE_TEMPLATE_ADAPTER_IMPL_H
+#define TAO_OBJECT_REFERENCE_TEMPLATE_ADAPTER_IMPL_H
 
 #include /**/ "ace/pre.h"
 
@@ -25,7 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/ObjectReferenceTemplate_Adapter.h"
-#include "Default_ORTC.h"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate_i.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -43,28 +42,21 @@ class TAO_POA;
  *        interface.
  */
 class TAO_ORT_Export TAO_ObjectReferenceTemplate_Adapter_Impl
-  : public TAO_ObjectReferenceTemplate_Adapter,
-    public virtual OBV_TAO_Default_ORT::ObjectReferenceTemplate,
-    public virtual CORBA::DefaultValueRefCountBase
+  : public TAO_ObjectReferenceTemplate_Adapter
 {
 public:
   TAO_ObjectReferenceTemplate_Adapter_Impl();
 
-  /// Constructor
+  /// Activate this adapter
   virtual int activate (const char *server_id,
                         const char *orb_id,
                         PortableInterceptor::AdapterName *adapter_name,
-                        TAO_POA *poa);
+                        TAO_POA *poa
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  TAO_ObjectReferenceTemplate_Adapter_Impl (const char *server_id,
-                                            const char *orb_id,
-                                            PortableInterceptor::AdapterName *,
-                                            TAO_POA *poa);
-
-  virtual int destroy (void);
-
-  virtual int activate (PortableInterceptor::ObjectReferenceFactory *current_factory,
-                        TAO_POA *poa);
+  /// Set a different ort_factory to be used.
+  virtual int set_obj_ref_factory (PortableInterceptor::ObjectReferenceFactory *current_factory
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * @name PortableInterceptor::ObjectReferenceTemplate Methods
@@ -127,11 +119,14 @@ protected:
 
 private:
 
-  const char *server_id_;
-  const char *orb_id_;
-  PortableInterceptor::AdapterName_var adapter_name_;
-  TAO_POA *poa_;
+  /// The ORT Template, this is the factory and its identify
+  PortableInterceptor::ObjectReferenceTemplate_var ort_template_;
 
+  /// The ORT Factory
+  PortableInterceptor::ObjectReferenceFactory_var ort_factory_;
+
+  /// TAO specific ORT Template
+  TAO_ObjectReferenceTemplate* tao_ort_template;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
@@ -144,4 +139,4 @@ private:
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_OBJECT_REFERENCE_TEMPLATE_I_H */
+#endif /* TAO_OBJECT_REFERENCE_TEMPLATE_ADAPTER_IMPL_H */
