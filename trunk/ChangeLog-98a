@@ -7,8 +7,9 @@ Mon Feb 02 21:26:30 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_osf1_4.0.GNU: added suppression of
           warning 610, nonoverriding_function_decl.
 
-        * ace/config-chorus.h,config-freebsd*.h: migrated to
-          config-g++-common.h.
+        * ace/config-chorus.h,config-freebsd*.h,,config-hpux-10.x-g++.h,
+          config-irix{5.3,6.x}-g++.h:
+          migrated to config-g++-common.h.
 
         * examples/Reactor/Misc/test_event_handler_t.cpp: renamed
           ACE_Sig_Handler to ACE_Test_Sig_Handler to avoid collision
@@ -29,28 +30,28 @@ Mon Feb 02 14:40:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 Fri Jan 30 02:42:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h (ACE_NOTSUP_RETURN): Moved its definition to the end of
-	  this file where __TEXT has already been defined.  WinCE needs to
-	  use wchar.
+        * ace/OS.h (ACE_NOTSUP_RETURN): Moved its definition to the end of
+          this file where __TEXT has already been defined.  WinCE needs to
+          use wchar.
 
-	  (struct utsname): Moved this definition after all datatypes are
-	  filled in.  Reverted my previous changed on it.
+          (struct utsname): Moved this definition after all datatypes are
+          filled in.  Reverted my previous changed on it.
 
-	  Win32 only: Added wchar version of ACE_OS::{perror,fprintf,
-	  vsprintf,sprintf}.
+          Win32 only: Added wchar version of ACE_OS::{perror,fprintf,
+          vsprintf,sprintf}.
 
-	  Windows CE only:  Undefined some char version function in class
-	  ACE_OS.  They are of no use on CE anyway.
+          Windows CE only:  Undefined some char version function in class
+          ACE_OS.  They are of no use on CE anyway.
 
-	* ace/OS.i (fdopen): Added wchar version of ACE_OS::fdopen, it is
- 	  only available on Win32.
+        * ace/OS.i (fdopen): Added wchar version of ACE_OS::fdopen, it is
+          only available on Win32.
 
-	  Windows CE only:  Added implementation for c-styled file
-	  functions.  Type FILE * is mapped to Win32 HANLDE under the hood
-	  and Win32 API's are used to emulate these functions.
+          Windows CE only:  Added implementation for c-styled file
+          functions.  Type FILE * is mapped to Win32 HANLDE under the hood
+          and Win32 API's are used to emulate these functions.
 
-	* ace/OS.cpp: Removed some char version functions and added some
-	  wchar functions.
+        * ace/OS.cpp: Removed some char version functions and added some
+          wchar functions.
 
 Sun Feb 01 15:12:49 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -64,8 +65,8 @@ Sun Feb 01 15:12:49 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 1998-02-01  Nanbor Wang  <nanbor@fennec.wolfpack.cs.wustl.edu>
 
-	* ace/OS.h (struct utsname): Separated WCE's definition from
-	  ACE_LACKS_UTSNAME_T bacause VxWorks doesn't have TCHAR type.
+        * ace/OS.h (struct utsname): Separated WCE's definition from
+          ACE_LACKS_UTSNAME_T bacause VxWorks doesn't have TCHAR type.
 
 Sun Feb 01 12:09:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -82,7 +83,7 @@ Sun Feb 01 12:09:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Jan 30 15:35:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* ace/Containers.{cpp,h,i} : added class templates
+        * ace/Containers.{cpp,h,i} : added class templates
           ACE_Ordered_MultiSet and ACE_Ordered_MultiSet_Iterator
           which respectively implement abstractions for containment
           of and iteration over an ordered set that allows multiple
@@ -90,12 +91,12 @@ Fri Jan 30 15:35:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 Fri Jan 30 02:42:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (uname): Made it comform with Unicode.
+        * ace/OS.cpp (uname): Made it comform with Unicode.
 
-	* ace/OS.h (struct utsname): Changed the internal string type to
- 	  TCHAR.
+        * ace/OS.h (struct utsname): Changed the internal string type to
+          TCHAR.
 
-	* ace/OS.i (gettimeofday): Added Windows CE implementation.
+        * ace/OS.i (gettimeofday): Added Windows CE implementation.
 
 Thu Jan 29 21:02:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -115,27 +116,27 @@ Thu Jan 29 20:28:30 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Jan 29 16:17:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (open): Always close down the logger connection
-	  before changing the setting.  Added codes to allow resetting
-	  logging endpoint back to STDERR from LOGGER.
+        * ace/Log_Msg.cpp (open): Always close down the logger connection
+          before changing the setting.  Added codes to allow resetting
+          logging endpoint back to STDERR from LOGGER.
 
-	* ace/OS.h (ACE_DEFAULT_LOGGER_KEY):  Changed to localhost:10012
-	  so it can be used in both netsvcs/lib/ and netsvcs/client/.
+        * ace/OS.h (ACE_DEFAULT_LOGGER_KEY):  Changed to localhost:10012
+          so it can be used in both netsvcs/lib/ and netsvcs/client/.
 
-	* netsvcs/client/Logger/indirect_logger.cpp: Added code to reset
-	  logging endpoint back to stderr.
+        * netsvcs/client/Logger/indirect_logger.cpp: Added code to reset
+          logging endpoint back to stderr.
 
-	* netsvcs/lib/Client_Logging_Handler.cpp
-	  (ACE_Client_Logging_Acceptor):  Changed to initialize
-	  logger_key_ with ACE_DEFAULT_LOGGER_KEY.
+        * netsvcs/lib/Client_Logging_Handler.cpp
+          (ACE_Client_Logging_Acceptor):  Changed to initialize
+          logger_key_ with ACE_DEFAULT_LOGGER_KEY.
 
-	* netsvcs/lib/Client_Logging_Handler.h: Removed DEFAULT_LOGGER_KEY
-	  definition.
+        * netsvcs/lib/Client_Logging_Handler.h: Removed DEFAULT_LOGGER_KEY
+          definition.
 
 Thu Jan 29 12:32:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/platform_irix6.x-sgic++.GNU:
-	  Added support for debugging, somehow the DCCFLAGS were missing.
+        * include/makeinclude/platform_irix6.x-sgic++.GNU:
+          Added support for debugging, somehow the DCCFLAGS were missing.
 
 Thu Jan 29 10:52:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
