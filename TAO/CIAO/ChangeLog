@@ -1,3 +1,9 @@
+Wed Nov  3 22:32:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* CIDLC/ServantSourceGenerator.cpp (namespace): 
+
+	  VC6 error fixes. Grr...!
+
 Wed Nov  3 12:38:21 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/Update_Plan.cpp:
