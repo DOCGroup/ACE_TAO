@@ -54,7 +54,7 @@ task (-> sp ace_main), then the unload will succeed.  However, then
 we need a way to tell when the test is done.  OS::thr_join () could
 probably be used, but it first has to be implemented for VxWorks.
 
-All of the tests on VxWorks (g++ 2.7.2/VxWorks 5.3.1) pass, with
+As of ACE 4.3, all of the tests on g++ 2.7.2/VxWorks 5.3.1 pass, with
 these exceptions:
 
     Buffer_Stream_Test                      ENOTSUP: unknown
@@ -66,13 +66,15 @@ these exceptions:
     Process_Mutex_Test                      (not run: requires processes)
     Process_Strategy_Test                   (not run: requires processes)
     Reactor_Notify_Test                     unknown
+    SPIPE_Test                              ENOTSUP: ace_pipe_name not found
     Service_Config_Test                     failed: page fault
     Sigset_Ops_Test                         failed: line 109 assertion
     Time_Service_Test                       failed: uses spawn (fork)
     Tokens_Test                             (not run: uses fork)
 
-If you are able to determine the cause of failure of any of these
-tests, please let us know!
+If you are able to determine the cause of failure of Conn_Test or
+Reactor_Test, please let us know!  The other tests need to be fixed
+so that they fail gracefully on VxWorks.
 
 
 If you have any questions/suggestions, please send email to
