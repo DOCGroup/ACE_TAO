@@ -22,7 +22,7 @@ ACE_Handle_Set::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n[ ")));
 
 #if defined (ACE_WIN32)
-  for (ssize_t i = 0; i < this->mask_.fd_count + 1; i++) 
+  for (size_t i = 0; i < (size_t) this->mask_.fd_count + 1; i++) 
     ACE_DEBUG ((LM_DEBUG, ASYS_TEXT(" %x "), this->mask_.fd_array[i]));
 #else /* !ACE_WIN32 */
   for (ACE_HANDLE i = 0; i < this->max_handle_ + 1; i++) 
