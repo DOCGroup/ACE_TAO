@@ -283,7 +283,7 @@ get_protocols (const char *test_type,
   CORBA::Policy_var protocol_policy =
     rt_orb->create_client_protocol_policy (protocols
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =

@@ -349,7 +349,7 @@ Client::set_priority_bands (int debug
                         policies,
                         debug
                         ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
