@@ -120,9 +120,30 @@ EC_Master::run (int argc, char* argv[])
           }
       }
 
+      {
+        for (int i = 0; i != this->n_channels_; ++i)
+          {
+            this->channels_[i]->disconnect_clients (ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+            this->channels_[i]->shutdown_clients (ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+            this->channels_[i]->destroy_ec (ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+            this->channels_[i]->deactivate_ec (ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+            this->channels_[i]->cleanup_tasks ();
+            this->channels_[i]->cleanup_suppliers ();
+            this->channels_[i]->cleanup_consumers ();
+            this->channels_[i]->cleanup_ec ();
+          }
+      }
+
       this->root_poa_->destroy (1,
                                 1,
                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      this->orb_->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
    }
   ACE_CATCHANY

@@ -53,6 +53,17 @@ TAO_EC_Per_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer* consumer)
     return;
 
   this->consumer_ = 0;
+
+  ACE_TRY_NEW_ENV
+    {
+      this->shutdown (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // @@ Ignore exceptions
+    }
+  ACE_ENDTRY;
 }
 
 void

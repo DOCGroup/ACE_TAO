@@ -98,7 +98,7 @@ run_test (PortableServer::POA_ptr poa,
 
   Task task (event_channel.in (), use_callbacks);
 
-  if (task.activate (THR_BOUND|THR_NEW_LWP, 10) != 0)
+  if (task.activate (THR_BOUND|THR_NEW_LWP, 1) != 0)
     {
       ACE_ERROR ((LM_ERROR, "Cannot activate the tasks\n"));
     }

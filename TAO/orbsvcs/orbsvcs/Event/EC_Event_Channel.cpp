@@ -74,16 +74,6 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
 
 TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
 {
-  if (this->dispatching_ != 0)
-    this->dispatching_->shutdown ();
-  if (this->timeout_generator_ != 0)
-    this->timeout_generator_->shutdown ();
-
-  if (this->supplier_control_ != 0)
-    this->supplier_control_->shutdown ();
-  if (this->consumer_control_ != 0)
-    this->consumer_control_->shutdown ();
-
   this->factory_->destroy_dispatching (this->dispatching_);
   this->dispatching_ = 0;
   this->factory_->destroy_filter_builder (this->filter_builder_);
@@ -125,6 +115,8 @@ TAO_EC_Event_Channel::shutdown (CORBA::Environment& ACE_TRY_ENV)
 {
   this->dispatching_->shutdown ();
   this->timeout_generator_->shutdown ();
+  this->supplier_control_->shutdown ();
+  this->consumer_control_->shutdown ();
 
   PortableServer::POA_var consumer_poa =
     this->consumer_admin_->_default_POA (ACE_TRY_ENV);

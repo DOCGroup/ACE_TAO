@@ -269,6 +269,7 @@ Task::svc ()
   ACE_TRY_NEW_ENV
     {
       this->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

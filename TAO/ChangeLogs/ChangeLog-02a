@@ -1,133 +1,157 @@
+Tue Jan 25 19:01:33 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+          Fixed shutdown problem for the Timer Module.
+
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+          Fixed memory leak, if the supplier disconnects while some
+          consumers are still attached it has to shutdown() its filter to
+          clear the extra reference counts.
+
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.cpp:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.cpp:
+        * orbsvcs/tests/Event/Basic/Negation.cpp:
+        * orbsvcs/tests/Event/Basic/Observer.cpp:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+          Fixed several memory leaks in the tests, to verify that the
+          service is ok.
+
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+          Increased allowed execution time for one of the tests.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+          Cosmetic fixes
+
 Tue Jan 25 18:51:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/IDL_Test/interface.idl:
-	* tests/IDL_Test/generic_object.idl:
-	  Added tests for new forward declared interface rule
-	  mentioned below and for generic objects used as
-	  parameters in a request.
+        * tests/IDL_Test/interface.idl:
+        * tests/IDL_Test/generic_object.idl:
+          Added tests for new forward declared interface rule
+          mentioned below and for generic objects used as
+          parameters in a request.
 
 Tue Jan 25 18:19:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/tao_idl.cpp:
-	* TAO_IDL/ast/ast_interface_fwd.cpp:
-	* TAO_IDL/be/be_visitor_scope.cpp:
-	* TAO_IDL/be/be_visitor_factory.cpp:
-	* TAO_IDL/be/be_visitor_root/root.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd.cpp:
-	* TAO_IDL/be_include/be_visitor_interface_fwd.h:
-	  Modified files
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd.cpp:
+        * TAO_IDL/be_include/be_visitor_interface_fwd.h:
+          Modified files
 
-	* TAO_IDL/be_include/be_visitor_interface_fwd/cdr_op_ch.h:
-	* TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
-	  New files.
+        * TAO_IDL/be_include/be_visitor_interface_fwd/cdr_op_ch.h:
+        * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
+          New files.
 
-	  Changes to support code generation and C++ compilation
-	  for IDL files containing a forward declared interface
-	  that is not defined in the same file. The spec had
-	  required that the definition be present, but the rule
-	  was recently relaxed in CORBA 2.3.1 (99-10-07). If
-	  the full definition is not in some generated .cpp file
-	  that is included in the build, the C++ compiler will
-	  produce a link error. This closes Bugzilla entry #401.
+          Changes to support code generation and C++ compilation
+          for IDL files containing a forward declared interface
+          that is not defined in the same file. The spec had
+          required that the definition be present, but the rule
+          was recently relaxed in CORBA 2.3.1 (99-10-07). If
+          the full definition is not in some generated .cpp file
+          that is included in the build, the C++ compiler will
+          produce a link error. This closes Bugzilla entry #401.
 
 Tue Jan 25 14:23:04 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/pluggable_protocols/index.html:
+        * docs/pluggable_protocols/index.html:
 
-	  Updated/corrected some URLs.
+          Updated/corrected some URLs.
 
 Tue Jan 25 14:05:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Leader_Follower.h (TAO_LF_Client_Thread_Helper and
-	  TAO_LF_Leader_Thread_Helper): Auto-pointer like classes that
-	  help manage the leader follower object.
-	  TAO_LF_Client_Thread_Helper helps with set_client_thread and
-	  reset_client_thread while TAO_LF_Leader_Thread_Helper helps with
-	  set_leader_thread and reset_leader_thread.
+        * tao/Leader_Follower.h (TAO_LF_Client_Thread_Helper and
+          TAO_LF_Leader_Thread_Helper): Auto-pointer like classes that
+          help manage the leader follower object.
+          TAO_LF_Client_Thread_Helper helps with set_client_thread and
+          reset_client_thread while TAO_LF_Leader_Thread_Helper helps with
+          set_leader_thread and reset_leader_thread.
 
-	* tao/Wait_Strategy.cpp (TAO_Muxed_Wait_On_Leader_Follower::wait
-	  and TAO_Exclusive_Wait_On_Leader_Follower::wait):
+        * tao/Wait_Strategy.cpp (TAO_Muxed_Wait_On_Leader_Follower::wait
+          and TAO_Exclusive_Wait_On_Leader_Follower::wait):
 
-	  We now use guards to make sure that the leader follower object
-	  has consistent information even when errors occur.  Previously,
-	  there were many return and exceptional conditions where the
-	  leader follower object was left in an inconsistent state.
+          We now use guards to make sure that the leader follower object
+          has consistent information even when errors occur.  Previously,
+          there were many return and exceptional conditions where the
+          leader follower object was left in an inconsistent state.
 
 Tue Jan 25 12:17:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
-	  Missed some cases in the previous checkin of this file.
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+          Missed some cases in the previous checkin of this file.
 
 Tue Jan 25 10:38:31 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
-	  Fixed "unreachable statement" warnings on kai.
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+          Fixed "unreachable statement" warnings on kai.
 
 Tue Jan 25 02:07:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Simple/time/README: Added description on getting
-	  JACE.Misc.GetOpt.
+        * examples/Simple/time/README: Added description on getting
+          JACE.Misc.GetOpt.
 
-	* examples/Simple/time/Time_Client.java: Modified the Java client
-	  so that it, like C++ client, can use command line args to
-	  determine ways of acquiring Time objref.  This test now uses
-	  JACE.Misc.GetOpt (a complete JACE installation is not required.)
+        * examples/Simple/time/Time_Client.java: Modified the Java client
+          so that it, like C++ client, can use command line args to
+          determine ways of acquiring Time objref.  This test now uses
+          JACE.Misc.GetOpt (a complete JACE installation is not required.)
 
 Mon Jan 24 18:47:22 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/Options.html:
+        * docs/Options.html:
 
-	  Clarified what UID and GID in the documentation for the
-	  -ORBSetUID and -ORBSetGID options.
+          Clarified what UID and GID in the documentation for the
+          -ORBSetUID and -ORBSetGID options.
 
 Mon Jan 24 13:17:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
-	  Russell L. Carter <rcarter@pinyon.org> reported a bug when
-	  the return type of an operation is CORBA::Object. It turns
-	  out that CORBA::TypeCode, interface, forward declared interface,
-	  valuetype, and forward declared valuetype needed the same fix.
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+          Russell L. Carter <rcarter@pinyon.org> reported a bug when
+          the return type of an operation is CORBA::Object. It turns
+          out that CORBA::TypeCode, interface, forward declared interface,
+          valuetype, and forward declared valuetype needed the same fix.
 
 Sun Jan 23 18:15:32 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
-	* docs/releasenotes/index.html:
-	  Updated the release notes for the Logging Service
+        * docs/releasenotes/index.html:
+          Updated the release notes for the Logging Service
 
 Sun Jan 23 14:09:30 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/Options.html:
+        * docs/Options.html:
 
-	  Added descriptions of the newly added "-ORBSetUID" and
-	  "-ORBSetGID" ORB options.
+          Added descriptions of the newly added "-ORBSetUID" and
+          "-ORBSetGID" ORB options.
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  Added two new ORB options "-ORBSetUID" and "-ORBSetGID."  These
-	  options can be used to the set the effective user and group IDs,
-	  respectively.  This is useful when starting the ORB under the
-	  super-user but it is desired to run the ORB under different user
-	  and/or group IDs.  A typical use would be to start a TAO daemon,
-	  under the 'nobody' user via System V style initialization
-	  scripts.
+          Added two new ORB options "-ORBSetUID" and "-ORBSetGID."  These
+          options can be used to the set the effective user and group IDs,
+          respectively.  This is useful when starting the ORB under the
+          super-user but it is desired to run the ORB under different user
+          and/or group IDs.  A typical use would be to start a TAO daemon,
+          under the 'nobody' user via System V style initialization
+          scripts.
 
-	  Note that these options are only supported if the platform
-	  implements the setuid() and setgid() POSIX system calls.
+          Note that these options are only supported if the platform
+          implements the setuid() and setgid() POSIX system calls.
 
-	  In general, it is a good idea to only run the ORB with
-	  super-user privileges when necessary, e.g. when performing
-	  benchmarking experiments, and when access to the real-time
-	  scheduling class is needed.  If the ORB must be started via the
-	  super-user account, and the real-time scheduling class won't be
-	  used, than the ORB's effective user ID should at least be
-	  changed to an unprivileged one, such as 'nobody'.
+          In general, it is a good idea to only run the ORB with
+          super-user privileges when necessary, e.g. when performing
+          benchmarking experiments, and when access to the real-time
+          scheduling class is needed.  If the ORB must be started via the
+          super-user account, and the real-time scheduling class won't be
+          used, than the ORB's effective user ID should at least be
+          changed to an unprivileged one, such as 'nobody'.
 
 Sat Jan 22 21:08:07 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Renamed
-	  EC_SupplierFiltering.* to EC_Supplier_Filter.*.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp: Renamed
+          EC_SupplierFiltering.* to EC_Supplier_Filter.*.
 
 Sat Jan 22 18:25:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
