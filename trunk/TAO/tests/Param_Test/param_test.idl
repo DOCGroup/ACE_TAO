@@ -65,13 +65,13 @@ interface Param_Test
   // references...
   typedef sequence<short> Short_Seq;
   Short_Seq test_short_sequence (in Short_Seq s1,
-								 inout Short_Seq s2,
-								 out Short_Seq s3);
+                                 inout Short_Seq s2,
+                                 out Short_Seq s3);
 
   typedef sequence<short,32> Bounded_Short_Seq;
   Bounded_Short_Seq test_bounded_short_sequence (in Bounded_Short_Seq s1,
-										         inout Bounded_Short_Seq s2,
-   										         out Bounded_Short_Seq s3);
+                                                 inout Bounded_Short_Seq s2,
+                                                 out Bounded_Short_Seq s3);
 
   typedef sequence<long> Long_Seq;
   Long_Seq test_long_sequence (in Long_Seq s1,
@@ -120,8 +120,8 @@ interface Param_Test
 
 /*  typedef sequence<any, 32> Bounded_AnySeq;
   Bounded_AnySeq test_bounded_anyseq (in Bounded_AnySeq s1,
-									  inout Bounded_AnySeq s2,
-									  out Bounded_AnySeq s3);
+  inout Bounded_AnySeq s2,
+  out Bounded_AnySeq s3);
 */
 
   typedef string DUMMY;
@@ -159,6 +159,28 @@ interface Param_Test
 
   // Anys. We try to pump in all kinds of data types thru these Anys
   any test_any (in any a1, inout any a2, out any a3);
+
+  // arrays (fixed)
+  typedef long LongArray [10];
+
+  LongArray test_fixed_array (in LongArray l1,
+                              inout LongArray l2,
+                              out LongArray l3);
+
+  // arrays (variable)
+  typedef string StringArray [5];
+
+  StringArray test_var_array (in StringArray s1,
+                            inout StringArray s2,
+                            out StringArray s3);
+
+  // multidimensional arrays (fixed). The following will give rise to a 3
+  // dimensional array
+  typedef LongArray LongLongArray [4][5];
+
+  LongLongArray test_muldim_array (in LongLongArray l1,
+                                   inout LongLongArray l2,
+                                   out LongLongArray l3);
 
   // sequence of typecodes
   //  typedef sequence<TypeCode> TypeCodeSeq;
@@ -199,12 +221,6 @@ interface Param_Test
                          inout MYSTRING s2,
                          out MYSTRING s3);
 
-
-  // arrays (fixed)
-
-  // arrays (variable)
-
-  // multidimensional arrays (fixed)
 
   // more combinations to follow
   union U switch (long)

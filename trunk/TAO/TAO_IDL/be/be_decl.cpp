@@ -331,6 +331,7 @@ be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
 {
   static long buf [NAMEBUFSIZE / sizeof (long)];
   long slen;
+  long i;
 
   slen = ACE_OS::strlen (name) + 1; // 1 for NULL terminating
 
@@ -341,6 +342,9 @@ be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
   ACE_OS::memset (buf, '\0', arrlen*4);
   larr = buf;
   ACE_OS::memcpy (buf, name, arrlen*4);
+  for (i = 0; i < arrlen; i++)
+    larr [i] = ACE_HTONL (larr [i]);
+
 #if 0
   for (i=0; i < ACE_OS::strlen (name); i++)
     {
