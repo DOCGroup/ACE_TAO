@@ -313,6 +313,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   int std_profile_components = 0;
 #endif /* TAO_STD_PROFILE_COMPONENTS */
 
+  int linger = -1;
+
   // Copy command line parameter not to use original.
   ACE_Argv_Type_Converter command_line (argc, argv);
 
@@ -735,6 +737,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
+               (ACE_LIB_TEXT("-ORBLingerTimeout"))))
+        {
+          linger = ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBEndpoint"))))
         {
           // Each "endpoint" is of the form:
@@ -1070,6 +1079,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   this->orb_params ()->service_port (IMPLREPOSERVICE, ir_port);
 
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
+  this->orb_params ()->linger (linger);
   this->orb_params ()->nodelay (nodelay);
   if (rcv_sock_size >= 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);

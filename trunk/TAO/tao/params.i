@@ -49,6 +49,19 @@ TAO_ORB_Parameters::use_dotted_decimal_addresses (int x)
 }
 
 
+ACE_INLINE int
+TAO_ORB_Parameters::linger (void) const
+{
+  return this->linger_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::linger (int x)
+{
+  this->linger_ = x;
+}
+
+
 ACE_INLINE void
 TAO_ORB_Parameters::service_port (TAO_MCAST_SERVICEID service_id,
                                   CORBA::UShort port)
