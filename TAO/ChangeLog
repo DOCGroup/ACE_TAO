@@ -1,3 +1,9 @@
+Thu Sep  9 18:46:20 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/CosEC_RtEC_Based_lib.mpc:
+
+	  Changed project to inherit from event_skel.
+
 Thu Sep  9 18:30:56 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/Simple/time-date/Simple_time_date.mpc:
