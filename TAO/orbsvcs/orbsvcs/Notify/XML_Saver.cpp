@@ -163,7 +163,7 @@ namespace TAO_Notify
     {
       // not all ostreams know what to do with a CORBA::Long
       long lid = id;
-      ACE_OS::fprintf (out, "%s%s%d%s", TOPOLOGY_ID_NAME, "=\"", lid, "\"");
+      ACE_OS::fprintf (out, "%s%s%ld%s", TOPOLOGY_ID_NAME, "=\"", lid, "\"");
     }
 
     char * buffer = 0;
