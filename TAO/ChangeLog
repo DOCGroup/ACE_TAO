@@ -1,3 +1,10 @@
+Fri Oct 15 07:51:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/CosNaming.mpc:
+
+	  Fix tipo in last change, Naming/naming_export.h was added to
+	  Source_Files instead of Header_Files.
+
 Fri Oct 15 01:46:54 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/CosEvent.mpc:
