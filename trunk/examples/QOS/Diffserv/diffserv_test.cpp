@@ -14,6 +14,8 @@
 #include "ace/SOCK_CODgram.h"
 #include "ace/INET_Addr.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_unistd.h"
 
 #define IPDSFIELD_DSCP_DEFAULT  0x00
 #define IPDSFIELD_DSCP_CS1      0x08
@@ -61,7 +63,7 @@ int dscp [] =
     IPDSFIELD_DSCP_AF41    ,
     IPDSFIELD_DSCP_AF42    ,
     IPDSFIELD_DSCP_AF43    ,
-    IPDSFIELD_DSCP_EF      
+    IPDSFIELD_DSCP_EF
   };
 
 const char *dscp_char[]=
@@ -114,21 +116,21 @@ main(int argc , char *argv[])
     {
       opt = dscp[i] << 2;
       ret = sock.set_option(IPPROTO_IP, IP_TOS, (int *)&opt, (int)sizeof(opt) );
-      if(ret == -1){ 
-        ACE_DEBUG((LM_DEBUG, "setsockopt error: %m\n")); 
+      if(ret == -1){
+        ACE_DEBUG((LM_DEBUG, "setsockopt error: %m\n"));
       }
 
       for (int j=0; j<3; j++)
         {
           ret2 = sock.send(buf, ACE_OS::strlen(buf));
-          if(ret2 == -1){ 
-            ACE_DEBUG((LM_DEBUG, "send error: %m\n")); 
+          if(ret2 == -1){
+            ACE_DEBUG((LM_DEBUG, "send error: %m\n"));
           }
           printf("opt: %u dscp: %u, %s,  setsockopt returned: %d, send returned: %d\n", opt, opt >> 2, dscp_char[i], ret, ret2);
           ACE_OS::sleep(1);
         }
     }
 
-  ACE_OS::free(buf);  
+  ACE_OS::free(buf);
   return 0;
 }

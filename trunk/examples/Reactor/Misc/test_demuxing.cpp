@@ -13,6 +13,8 @@
 #include "ace/Task.h"
 #include "ace/Reactor_Notification_Strategy.h"
 #include "ace/Signal.h"
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Misc, test_demuxing, "$Id$")
 

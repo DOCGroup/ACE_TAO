@@ -6,6 +6,9 @@
 
 #include "ace/os_include/os_netdb.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Event_Handler.h"
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"
@@ -166,7 +169,7 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
       if (errno != EWOULDBLOCK) break;
       else if (message_index == 0) continue;
     } else {
-      if (mblk->size () == 0 
+      if (mblk->size () == 0
           && mblk->msg_type () == ACE_Message_Block::MB_STOP)
         { mblk->release (); break; }
       chunk[message_index] = mblk;

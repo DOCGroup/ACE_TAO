@@ -167,7 +167,7 @@ int handle_child (void)
 }
 // Listing 5
 // Listing 3 code/ch17
-int handle_parent (char *cmdLine)
+int handle_parent (ACE_TCHAR *cmdLine)
 {
   ACE_TRACE (ACE_TEXT ("::handle_parent"));
 

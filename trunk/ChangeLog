@@ -1,3 +1,59 @@
+Sun Jun 13 17:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Logging/Callback-2.h:
+        * examples/APG/Sockets/Basic_Robust.cpp:
+        * examples/APG/Sockets/Server.cpp:
+        * examples/C++NPv1/Logging_Client.cpp:
+        * examples/C++NPv2/Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/Logging_Handler.cpp:
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:
+        * examples/IPC_SAP/DEV_SAP/writer/writer.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-server.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.h:
+        * examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/NPServer.cpp:
+        * examples/Logger/client/logging_app.cpp:
+        * examples/Logger/simple-server/Logging_Handler.cpp:
+        * examples/OS/Process/imore.cpp:
+        * examples/QOS/Diffserv/diffserv_test.cpp:
+        * examples/RMCast/Send_File/Receiver.cpp:
+        * examples/RMCast/Send_File/Sender.cpp:
+        * examples/Reactor/Dgram/CODgram.cpp:
+        * examples/Reactor/FIFO/client.cpp:
+        * examples/Reactor/FIFO/server.cpp:
+        * examples/Reactor/Misc/test_demuxing.cpp:
+        * examples/Reactor/Proactor/test_cancel.cpp:
+        * examples/Reactor/Proactor/test_multiple_loops.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/WFMO_Reactor/Registry_Changes.cpp:
+          Added needed includes. I am working on changing checks for
+          ACE_LACKS_INLINE_FUNCTIONS by checks for __ACE_INLINE_ in ACE,
+          so that we can enabled/disable inlining completely in ACE. As a
+          result of this I reduced some header file dependencies and now
+          some tests need more includes. More of these changes will follow.
+
+        * examples/APG/Logging/Use_LogManager.cpp:
+        * examples/APG/Timers/PTimerDispatcher.cpp:
+        * examples/APG/Timers/TimerDispatcher.cpp:
+        * examples/C++NPv2/TP_Logging_Server.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
+        * examples/Logger/simple-server/server_loggerd.cpp:
+        * examples/Logger/Acceptor-server/server_loggerd.cpp:
+        * examples/Threads/auto_event.cpp:
+        * examples/Threads/tss2.cpp:
+          To make things easier to maintenance use the new
+          ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION macro to check
+          whether we need to explicit instantiate static template members.
+          This macro is set for the GNU compiler for AIX, HPUX and VxWorks.
+
+        * examples/APG/Shared_Memory/Hash_Map.cpp:
+        * examples/APG/Shared_Memory/Malloc.cpp:
+        * examples/APG/Shared_Memory/PI_Malloc.cpp:
+        * examples/APG/Shared_Memory/Pool_Growth.cpp:
+          Fixes for wchar builds
+
 Sun Jun 13 16:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_footprint_chart.sh:

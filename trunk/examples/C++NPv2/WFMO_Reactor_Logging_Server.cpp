@@ -11,11 +11,11 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Thread_Manager.h"
+#include "ace/OS_NS_string.h"
 
 #include "Reactor_Logging_Server.h"
 #include "Logging_Acceptor_Ex.h"
 #include "Logging_Event_Handler_Ex.h"
-
 
 class Quit_Handler : public ACE_Event_Handler {
 private:

@@ -5,6 +5,7 @@
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"
 #include "ace/Log_Record.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(simple_server, Logging_Handler, "$Id$")
 

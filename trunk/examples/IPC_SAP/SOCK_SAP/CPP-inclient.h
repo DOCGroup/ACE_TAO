@@ -8,6 +8,7 @@
 
 #include "ace/SOCK_Stream.h"
 #include "ace/Barrier.h"
+#include "ace/Time_Value.h"
 
 class Options
   // = TITLE

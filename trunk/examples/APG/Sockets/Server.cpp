@@ -6,6 +6,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Log_Msg.h"
+#include "ace/Time_Value.h"
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {

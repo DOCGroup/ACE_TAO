@@ -25,6 +25,7 @@
 #include "ace/Reactor.h"
 #include "ace/Registry.h"
 #include "ace/Auto_Event.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(WFMO_Reactor, Registry_Changes, "$Id$")
 

@@ -3,6 +3,8 @@
 #include "ace/Service_Config.h"
 #include "ace/FIFO_Recv_Msg.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stropts.h"
 
 ACE_RCSID(FIFO, server, "$Id$")
 
@@ -11,7 +13,7 @@ class FIFO_Recv_Handler : public ACE_Event_Handler
 public:
   FIFO_Recv_Handler (void);
   ~FIFO_Recv_Handler (void);
-  
+
   virtual ACE_HANDLE get_handle (void) const;
   virtual int handle_input (ACE_HANDLE fd);
 
@@ -29,12 +31,12 @@ FIFO_Recv_Handler::FIFO_Recv_Handler (void)
     ACE_ERROR ((LM_ERROR, "%p\n", "open"));
 
   // Register with the Reactor.
-  if (ACE_Reactor::instance ()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 }
 
-ACE_HANDLE 
+ACE_HANDLE
 FIFO_Recv_Handler::get_handle (void) const
 {
   return this->fifo_reader_.get_handle ();
@@ -50,7 +52,7 @@ int
 FIFO_Recv_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
-  
+
   ACE_DEBUG ((LM_DEBUG, "handle_input\n"));
 
   ACE_Str_Buf msg (buf, 0, sizeof buf);
@@ -68,14 +70,14 @@ FIFO_Recv_Handler::handle_input (ACE_HANDLE)
 	  // Do some work in here...
 	  ACE_DEBUG ((LM_DEBUG, "msg.buf = %s\n", msg.buf));
 	}
-      return 0;  
+      return 0;
     }
 }
 
-int 
+int
 main (int, char *argv[])
 {
-  ACE_Service_Config daemon (argv[0]); 
+  ACE_Service_Config daemon (argv[0]);
 
   FIFO_Recv_Handler fr_handler;
 
