@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID(be_visitor_typedef, 
-          typedef_ch, 
+ACE_RCSID(be_visitor_typedef,
+          typedef_ch,
           "$Id$")
 
 // ******************************************************
@@ -312,9 +312,9 @@ be_visitor_typedef_ch::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_typedef_ch::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_typedef_ch::visit_interface_fwd (be_interface_fwd *)
 {
-//  be_interface *fd = 
+//  be_interface *fd =
 //    be_interface::narrow_from_decl (node->full_definition ());
 //  return this->visit_interface (fd);
   return 0;
@@ -425,7 +425,7 @@ be_visitor_typedef_ch::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_sequence - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed \n"),
                             -1);
         }
     }
@@ -473,7 +473,7 @@ be_visitor_typedef_ch::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_structure - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed \n"),
                             -1);
         }
     }
@@ -519,7 +519,7 @@ be_visitor_typedef_ch::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_union - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed \n"),
                             -1);
         }
     }
@@ -574,4 +574,3 @@ be_visitor_typedef_ch::visit_valuetype (be_valuetype *node)
 
   return 0;
 }
-
