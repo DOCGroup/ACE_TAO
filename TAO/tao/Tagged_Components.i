@@ -87,8 +87,10 @@ TAO_Tagged_Components::components (void)
   return this->components_;
 }
 
-ACE_INLINE CORBA::Boolean 
-TAO_Tagged_Components::is_primary (void)
+#if (TAO_HAS_FT_CORBA == 1)
+
+ACE_INLINE CORBA::Boolean
+TAO_Tagged_Components::is_primary (void) const
 {
   return this->ft_tag_primary_;
 }
@@ -104,3 +106,5 @@ TAO_Tagged_Components::ft_group_tagged_component (void)
 {
   return this->ft_tagged_component_;
 }
+
+#endif /*TAO_HAS_FT_CORBA */

@@ -535,8 +535,8 @@ TAO_Stub::set_profile_from_primary (void)
   // For FT_CORBA we need to find the profile with FT_TAG_PRIMARY
   for (;;)
     {
-      TAO_Profile *profile = this->base_profile_.get_next ();
-      
+      TAO_Profile *profile = this->base_profiles_.get_next ();
+
       if (profile)
         {
           if (profile->is_primary ())
@@ -547,7 +547,7 @@ TAO_Stub::set_profile_from_primary (void)
               //    problem starts kicking in if the primary happens to be
               //    the last profile in a combined IOGR, we may run out of
               //    luck. So, we need a btter way to do this. But for the
-              //    present let us start with this 
+              //    present let us start with this
               this->set_profile_in_use_i (profile);
               break;
             }
@@ -560,22 +560,22 @@ TAO_Stub::set_profile_from_primary (void)
           //    with TAO_HAS_FT_CORBA = 1, has received an IOR from a
           //    non-compliant ORB. We cannot think this of an
           //    error. Rather we need to fall back on the normal
-          //    methodolody that we use. 
+          //    methodolody that we use.
 
           // So let us rewind our MProfile list and set the first one
           // as the starting point.
-          this->base_profile_.rewind ();
-          this->set_profile_in_use_i (base_profiles_.get_next ());
-          
+          this->base_profiles_.rewind ();
+          this->set_profile_in_use_i (this->base_profiles_.get_next ());
+
           // @@ All said and done, what if we receive an IOGR from a
-          //    FT-compliant ORB with no primaries? 
+          //    FT-compliant ORB with no primaries?
           //    Ans: The above usage of the first profile in the list
           //    as the start point would NOT be a mistake. We should
           //    get a LOCATION_FORWARD or some such thing to get to
           //    the primary.
         }
     }
-  
+
   return;
 }
 

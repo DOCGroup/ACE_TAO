@@ -974,6 +974,25 @@ SOURCE=.\Forwarding_Servant.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FT_CORBAC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Accept_State.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -2038,25 +2057,6 @@ SOURCE=.\POA.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableServerC.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\POAManager.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -2191,6 +2191,25 @@ SOURCE=.\PollableS.cpp
 # Begin Source File
 
 SOURCE=.\Pool_Per_Endpoint.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableServerC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3520,6 +3539,10 @@ SOURCE=.\Forwarding_Servant.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\FT_CORBAC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\giop.h
 # End Source File
 # Begin Source File
@@ -3724,10 +3747,6 @@ SOURCE=.\poa_macros.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableServerC.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\POAManager.h
 # End Source File
 # Begin Source File
@@ -3753,6 +3772,10 @@ SOURCE=.\PollableS.h
 # Begin Source File
 
 SOURCE=.\Pool_Per_Endpoint.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableServerC.h
 # End Source File
 # Begin Source File
 
@@ -4092,6 +4115,10 @@ SOURCE=.\Exception.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\FT_CORBAC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\giop.i
 # End Source File
 # Begin Source File
@@ -4228,10 +4255,6 @@ SOURCE=.\params.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableServerC.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\POAManager.i
 # End Source File
 # Begin Source File
@@ -4253,6 +4276,10 @@ SOURCE=.\PollableC.i
 # Begin Source File
 
 SOURCE=.\Pool_Per_Endpoint.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableServerC.i
 # End Source File
 # Begin Source File
 
