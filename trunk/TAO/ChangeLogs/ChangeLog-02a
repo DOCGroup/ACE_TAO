@@ -1,3 +1,9 @@
+Sat Jul 14 17:44:28 2001  Balachandran Natarajan <bala@cs.wustl.edu>
+
+	* tests/Param_Test/anyop.dsp (RSC): Looks like this has been
+	  broken for  a long time now. Fixed the dsp file so that we dont
+	  any errors during loading.
+
 Sat Jul 14 00:33:28 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * examples/PluggableUDP/tests/SimplePerformance/svc.conf:
@@ -94,13 +100,13 @@ Thu Jul 12 17:30:42 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
         * tao/ORB_Core.h:
         * tao/ORB_Core.i:
 
-          Removed the RTORB and RTCurrent from the hardcoded list of 
+          Removed the RTORB and RTCurrent from the hardcoded list of
           initial references.  Now, both get added dynamically when the
           RTCORBA library is loaded using the PortableInterceptors.
 
           This should fix a segfault that was reported by Max
           Voronoy <M.Voronoy@telesenskscl.com.ua> and investigated by
-          Ossama. 
+          Ossama.
 
         * tao/RTCORBA/RTCORBA.cpp:
         * tao/RTCORBA/RT_ORB.cpp:
@@ -126,7 +132,7 @@ Thu Jul 12 17:30:42 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
         * tests/RTCORBA/ORB_init/ORB_init.dsp:
         * tests/RTCORBA/ORB_init/README:
         * tests/RTCORBA/ORB_init/run_test.pl:
-          
+
           Added unit test to check for correct processing when
           instantiating multiple RT enabled ORBs.  Looking at some
           of the RT code indicated that there might be a problem,
@@ -138,7 +144,7 @@ Thu Jul 12 17:30:42 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
           Added check to automatically initialize RTCORBA if it
           has been linked in.  This should fix a common source
           of RTCORBA errors.  Thanks to Irfan for the suggestion.
-  
+
         * tests/RTCORBA/Private_Connection/svc.conf:
         * tests/RTCORBA/Server_Declared/server.conf:
         * tests/RTCORBA/Server_Declared/svc.conf:
@@ -160,7 +166,7 @@ Thu Jul 12 17:30:42 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
           Updated configuration files to remove RT_ORB initialization
           to test out the above change.
-          
+
 
 Thu Jul 12 15:10:52 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -174,7 +180,7 @@ Thu Jul 12 13:31:25 2001  Ossama Othman  <ossama@uci.edu>
 	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
 
 	  Corrected constructor signature to match the implementation.
-	
+
 	* orbsvcs/orbsvcs/Security/Security_PolicyFactory.cpp
 	  (create_policy):
 
@@ -404,7 +410,7 @@ Wed Jul 11 14:38:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 Wed Jul 11 13:49:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * utils/catior/catior.cpp:
-          Add support for printing DIOP (GIOP over UDP) profiles.  
+          Add support for printing DIOP (GIOP over UDP) profiles.
 
 Wed Jul 11 08:39:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -423,7 +429,7 @@ Wed Jul 11 02:19:59 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp: Remember the
 	  native priority of the invoking thread.  Once the invocation
 	  completes, restore the thread to the original native thread
-	  priority.  
+	  priority.
 
 	  Previously, when the priority was restored, it was done it terms
 	  of CORBA priority.  The problem with this approach was that in
@@ -433,17 +439,17 @@ Wed Jul 11 02:19:59 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  Therefore, remembering the original native priority will
 	  alleviate this problem.
 
-	* tao/Protocols_Hooks: 
+	* tao/Protocols_Hooks:
 	* tao/Default_Protocols_Hooks:
 	* tao/RT_Protocols_Hooks.cpp:
-	
+
 	  Expanded the priority interfaces on the Protocols_Hooks such
 	  that the user can obtain both the native and CORBA priorities.
 	  Also, the user can set both.
 
-	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp (select_endpoint): 
-	* tao/RTCORBA/RT_Current.cpp (the_priority): 
-	* tao/Strategies/Reactor_Per_Priority.cpp (reactor): 
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp (select_endpoint):
+	* tao/RTCORBA/RT_Current.cpp (the_priority):
+	* tao/Strategies/Reactor_Per_Priority.cpp (reactor):
 
 	  Changed to use new priority interfaces.
 
@@ -479,7 +485,7 @@ Tue Jul 10 13:09:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
 
           Corrected a generation of skel_export_macro to
-          stub_export_macro. Thanks to Alexander Rieger 
+          stub_export_macro. Thanks to Alexander Rieger
           <Alexander.Rieger@inka.de> for tracking this down.
 
 Tue Jul 10 11:51:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
