@@ -1,3 +1,9 @@
+Tue Feb 01 16:12:43 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release:
+
+	  A typo that created problems during tar ball creation.
+
 Tue Feb  1 19:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
@@ -17,9 +23,10 @@ Tue Feb 1 14:30:37 2005  Martin Corino  <mcorino@remedy.nl>
 
 	* ace/OS_NS_time.inl:
 
-	  Moved buflen check in ctime_r() to more global scope. This way we always
-	  get required behaviour even if OS *with* buflen arg behaves badly (i.e. VxWorks).
-
+	  Moved buflen check in ctime_r() to more global scope. This way
+	  we always get required behaviour even if OS *with* buflen arg
+	  behaves badly (i.e. VxWorks). 
+	
 Tue Feb  1 13:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace.mpc:

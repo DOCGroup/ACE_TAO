@@ -92,7 +92,7 @@ my $controlled_files = my $release_files = my $release_lib_files = '';
 my $release_tag_files = my $release_autoconf_files = '';
 my $release_filter = '\\( -name CVS -o -name build \\) -prune -o ' .
                      '! -name \'.\#*\' ! -name \'\#*\' ! -name \'*~\' ' .
-                     '! -name \'*.MAK\' !-name \'.cvsignore\' -print';
+                     '! -name \'*.MAK\' ! -name \'.cvsignore\' -print';
 my $update_versions = 0;
 my $create_zips = 1;
 
@@ -325,7 +325,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
           my $previous_beta = $beta_v - 1;
           $previous_version = "$major_v.$minor_v.$previous_beta";
 
-          &diff ('ACE_wrappers', "ACE-$previous_version", "$ace_tag");
+####          &diff ('ACE_wrappers', "ACE-$previous_version", "$ace_tag");
         }
       }
     }
@@ -344,7 +344,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
           my $previous_beta = $beta_v - 1;
           $previous_version = "$major_v.$minor_v.$previous_beta";
 
-          &diff ('ACE_wrappers/TAO', "TAO-$previous_version", "$tao_tag");
+####          &diff ('ACE_wrappers/TAO', "TAO-$previous_version", "$tao_tag");
         }
       }
     }
@@ -564,9 +564,9 @@ sub update_version_files () {
     if ("$exec_prefix") {
       print "CIAO version ${major_version}.${minor_version}.${beta_version}\n";
     } else {
-      &ex ("perl -pi -e 's/version =.*/version = $version/' " .
-           "../../bin/MakeProjectCreator/config/ciaoversion.mpb");
-      return 1 if $? >> 8;
+###     &ex ("perl -pi -e 's/version =.*/version = $version/' " .
+###           "../../bin/MakeProjectCreator/config/ciaoversion.mpb");
+###      return 1 if $? >> 8;
 
       open (CIAO_VERSION_H, "> ciao/Version.h")  ||
         die "$0: unable to open ciao/Version.h\n";
@@ -591,9 +591,9 @@ sub update_version_files () {
     if ("$exec_prefix") {
       print "TAO version ${major_version}.${minor_version}.${beta_version}\n";
     } else {
-      &ex ("perl -pi -e 's/version =.*/version = $version/' " .
-           "../bin/MakeProjectCreator/config/taoversion.mpb");
-      return 1 if $? >> 8;
+###      &ex ("perl -pi -e 's/version =.*/version = $version/' " .
+###         "../bin/MakeProjectCreator/config/taoversion.mpb");
+###      return 1 if $? >> 8;
 
       open (TAO_VERSION_H, "> tao/Version.h")  ||
         die "$0: unable to open tao/Version.h\n";
@@ -614,9 +614,9 @@ sub update_version_files () {
     if ("$exec_prefix") {
       print "ACE version ${major_version}.${minor_version}.${beta_version}\n";
     } else {
-      &ex ("perl -pi -e 's/version =.*/version = $version/' " .
-           "bin/MakeProjectCreator/config/aceversion.mpb");
-      return 1 if $? >> 8;
+##      &ex ("perl -pi -e 's/version =.*/version = $version/' " .
+##           "bin/MakeProjectCreator/config/aceversion.mpb");
+##      return 1 if $? >> 8;
 
       open (ACE_VERSION_H, "> ace/Version.h")  ||
         die "$0: unable to open ace/Version.h\n";
@@ -691,19 +691,19 @@ sub update_changelog () {
 
   if ($KIT eq 'TAO') {
   &ex ("cd ..; $cvs commit -m'$version' " .
-      "TAO/VERSION TAO/PROBLEM-REPORT-FORM TAO/ChangeLog $version_h $version_mpb && " .
-      "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
-      "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
+      "TAO/VERSION TAO/PROBLEM-REPORT-FORM TAO/ChangeLog $version_h && " .
+      "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h; " .
+      "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h");
   } elsif ($KIT eq 'CIAO') {
   &ex ("cd ../../; $cvs commit -m'$version' " .
        "TAO/CIAO/VERSION TAO/CIAO/PROBLEM-REPORT-FORM TAO/CIAO/ChangeLog $version_h $version_mpb && " .
-       "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
-       "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
+       "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h; " .
+       "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h");
   } else {
   &ex ("$cvs commit -m'$version' " .
        "VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb &&" .
-       "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
-       "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
+       "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h; " .
+       "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h");
   }
 
   return 1 if $? >> 8;
