@@ -57,7 +57,7 @@ OBJFILES = \
 	$(OBJDIR)\be_module.obj \
 	$(OBJDIR)\be_native.obj \
 	$(OBJDIR)\be_operation.obj \
-        $(OBJDIR)\be_operation_strategy.obj \
+	$(OBJDIR)\be_operation_strategy.obj \
 	$(OBJDIR)\be_predefined_type.obj \
 	$(OBJDIR)\be_produce.obj \
 	$(OBJDIR)\be_root.obj \
