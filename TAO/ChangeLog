@@ -1,3 +1,46 @@
+Mon Jun 14 07:04:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Content_Server/AMI_Iterator/client.cpp:
+        * examples/Content_Server/AMI_Observer/client.cpp:
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/client.cpp:
+        * examples/PluggableUDP/tests/Basic/UDP_Client_i.cpp:
+        * examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.cpp:
+        * examples/RTCORBA/Activity/Thread_Task.cpp:
+        * examples/Simple/Simple_util.cpp:
+        * examples/Simple/chat/Client_i.cpp:
+        * tests/AMH_Oneway/server.cpp:
+        * tests/AMI_Timeouts/timeout_client.cpp:
+        * tests/AMI_Timeouts/timeout_i.cpp:
+        * tests/Bug_1361_Regression/Server_Thread_Pool.cpp:
+        * tests/Bug_1551_Regression/Hello.cpp
+        * tests/Bug_1551_Regression/server.cpp
+        * tests/Connection_Purging/client.cpp
+        * tests/File_IO/server.cpp
+        * tests/Leader_Followers/client.cpp
+        * tests/LongUpcalls/AMI_Manager.cpp
+        * tests/LongUpcalls/Manager.cpp
+        * tests/MProfile/client.cpp
+        * tests/MProfile_Forwarding/client.cpp
+        * tests/MT_Timeout/Client_Task.cpp
+        * tests/POA/Object_Reactivation/Object_Reactivation.cpp
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp
+        * tests/RTCORBA/Client_Protocol/client.cpp
+        * tests/RTCORBA/Explicit_Binding/client.cpp
+        * tests/RTCORBA/Thread_Pool/client.cpp
+        * tests/RTCORBA/Thread_Pool/server.cpp
+        * tests/RTCORBA/Thread_Pool/test_i.cpp
+        * tests/RTScheduling/Thread_Cancel/test.cpp
+        * tests/Timed_Buffered_Oneways/client.cpp
+          Added needed includes
+
+        * examples/RTCORBA/Activity/Activity.cpp:
+          Use ACE_Reactor::timer_queue instead of the deprecated set_timer_queue
+
 Sun Jun 13 15:28:03 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * interop-tests/wchar/client.cpp:
@@ -16,7 +59,7 @@ Sun Jun 13 14:12:25 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           interfaces, since there is no skeleton class to inherit from.
 	  Thanks to Jiang Wei <jiangwei_1976@yahoo.com.cn> for reporting
 	  this bug.  Fixes bugid 1849.
-  
+
 Sun Jun 13 17:23:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
