@@ -108,7 +108,7 @@ public RTScheduling::Current,
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual ::RTScheduling::Current::IdType * 
-    id (ACE_ENV_ARG_DECL)
+    id (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   
   virtual ::CORBA::Policy_ptr 
