@@ -906,59 +906,51 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
 TAO_Stub *
 CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                                const char *type_id,
-                               CORBA::Environment &env)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->open () == -1)
-    {
-      env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
-      return 0;
-    }
+    ACE_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO), 0);
 
-  CORBA::String id;
+  CORBA::String id = 0;
 
   if (type_id)
     id = CORBA::string_copy (type_id);
-  else
-    id = 0;
+
+  TAO_Stub *stub = 0;
 
   // First we create a profile list, well actually a list of one!
   // @@ should go to the acceptor for this, the orb delegates to the acceptor
   // to create Profiles!
-  // We do not use ACE_NEW cause we want to return an exception if this
-  // fails.
 
-  // @@ Fred, please use ACE_NEW_THROW_EX and ACE_CHECK instead!
-  TAO_IIOP_Profile *pfile =
-    new TAO_IIOP_Profile (this->orb_core_->orb_params ()->host (),
-                          this->orb_core_->orb_params ()->addr ().get_port_number (),
-                          key,
-                          this->orb_core_->orb_params ()->addr ());
+  // @@ Fred, please change this code to use auto_ptr<> and
+  //    automatically deallocate the temporary objects. Alternatively
+  //    consider about using references ;-)
+  TAO_MProfile *mp;
+  ACE_NEW_THROW_EX (mp,
+                    TAO_MProfile (1),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
+  ACE_CHECK_RETURN (stub);
 
-  TAO_Stub *data = 0;
-  // @@ replace IIOP::Profile with something more appropriate!!
-  data = new TAO_Stub (id, pfile);
+  TAO_ORB_Parameters *orb_params =
+    this->orb_core_->orb_params ();
 
-  if (pfile == 0)
-    {
-      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-      return 0;
-    }
-  else
-    {
-      // We do not use ACE_NEW_RETURN or ACE_NEW since we need to
-      // deallocate pfile.
-      // @@ Fred, but you don't do this...
+  TAO_IIOP_Profile *pfile;
+  ACE_NEW_THROW_EX (pfile,
+                    TAO_IIOP_Profile (orb_params->host (),
+                                      orb_params->addr ().get_port_number (),
+                                      key,
+                                      orb_params->addr ()),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
+  ACE_CHECK_RETURN (stub);
 
-      // Plus we want to return an exception.  @@ If that's the only
-      // reason, then you can use ACE_NEW_THROW_EX and ACE_CHECK.
-      data = new TAO_Stub (id, pfile);
-      // pfile is given to TAO_Stub!
+  mp->give_profile (pfile);
+                    
+  ACE_NEW_THROW_EX (stub,
+                    TAO_Stub (id, mp, this->orb_core_),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
+  ACE_CHECK_RETURN (stub);
 
-      if (data == 0)
-        env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-    }
-
-  return data;
+  return stub;
 }
 
 // Create an objref
@@ -1461,7 +1453,7 @@ CORBA_ORB::iiop_string_to_object (const char *string,
   // Now make the TAO_Stub ...
   TAO_Stub *data;
   ACE_NEW_RETURN (data,
-                  TAO_Stub ((char *) 0, mp),
+                  TAO_Stub ((char *) 0, mp, this->orb_core_),
                   obj);
   // pfile refcount == 2
 
@@ -1542,7 +1534,7 @@ CORBA_ORB::iioploc_string_to_object (const char *string,
   // Now make the TAO_Stub ...
   TAO_Stub *data;
   ACE_NEW_RETURN (data,
-                  TAO_Stub ((char *) 0, mp),
+                  TAO_Stub ((char *) 0, mp, this->orb_core_),
                   CORBA::Object::_nil ());
 
   // Create the CORBA level proxy.

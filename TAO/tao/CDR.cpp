@@ -78,8 +78,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_CDR_Timeprobe_Description,
 
 TAO_OutputCDR::TAO_OutputCDR (size_t size,
                               int byte_order,
-			                        ACE_Allocator *buffer_allocator,
-			                        ACE_Allocator *data_block_allocator,
+                              ACE_Allocator *buffer_allocator,
+                              ACE_Allocator *data_block_allocator,
                               size_t memcpy_tradeoff)
   :  ACE_OutputCDR (size,
         byte_order,
@@ -99,8 +99,8 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
 TAO_OutputCDR::TAO_OutputCDR (char *data,
                               size_t size,
                               int byte_order,
-			                        ACE_Allocator *buffer_allocator,
-			                        ACE_Allocator *data_block_allocator,
+                              ACE_Allocator *buffer_allocator,
+                              ACE_Allocator *data_block_allocator,
                               size_t memcpy_tradeoff)
   :  ACE_OutputCDR (data,
         size,
@@ -128,10 +128,6 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
           : TAO_ORB_Core_instance ()->orb_params ()->cdr_memcpy_tradeoff ())
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
-}
-
-TAO_OutputCDR::~TAO_OutputCDR (void)
-{
 }
 
 CORBA::TypeCode::traverse_status
@@ -223,60 +219,10 @@ TAO_OutputCDR::append (CORBA::TypeCode_ptr tc,
 
 // ****************************************************************
 
-TAO_InputCDR::TAO_InputCDR (const char *buf,
-                            size_t bufsiz,
-                            int byte_order)
-  : ACE_InputCDR (buf,
-                  bufsiz,
-                  byte_order)
-{
-}
-
-TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
-                            int byte_order)
-  : ACE_InputCDR (bufsiz,
-                  byte_order)
-{
-}
-
-TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
-                            int byte_order)
-  : ACE_InputCDR (data,
-                  byte_order)
-{
-}
-
-TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
-                            int byte_order)
-  : ACE_InputCDR (data,
-                  byte_order)
-{
-}
-
-TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
-                            size_t size,
-                            ACE_CDR::Long offset)
-  : ACE_InputCDR (rhs,
-                  size,
-                  offset)
-{
-}
-
-TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
-                            size_t size)
-  : ACE_InputCDR (rhs,
-                  size)
-{
-}
-
-TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
-  : ACE_InputCDR (rhs)
-{
-}
-
 TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
                             ACE_Allocator* buffer_allocator,
-                            ACE_Allocator* data_block_allocator)
+                            ACE_Allocator* data_block_allocator,
+                            TAO_ORB_Core* orb_core)
   : ACE_InputCDR (rhs,
         buffer_allocator
           ? buffer_allocator
@@ -284,10 +230,6 @@ TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
         data_block_allocator
           ? data_block_allocator
           : TAO_ORB_Core_instance ()->output_cdr_dblock_allocator ())
-{
-}
-
-TAO_InputCDR::~TAO_InputCDR (void)
 {
 }
 

@@ -88,7 +88,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_is_a",
-      TAO_ORB_Core_instance ()
+      istub->orb_core ()
     );
 
 
@@ -163,7 +163,7 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_non_existent",
-      TAO_ORB_Core_instance ()
+      istub->orb_core ()
     );
 
 
@@ -295,7 +295,7 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_interface",
-      TAO_ORB_Core_instance ()
+      istub->orb_core ()
     );
 
   for (;;)
@@ -506,7 +506,8 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   // TAO_Stub will make a copy of mp!
   TAO_Stub *objdata;
   ACE_NEW_RETURN (objdata, TAO_Stub (type_hint._retn (),
-                                        mp.get ()), 0);
+                                     mp.get (),
+                                     cdr.orb_core ()), 0);
 
   if (objdata == 0)
     return 0;
@@ -514,7 +515,7 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   // Create a new CORBA_Object and give it the TAO_Stub just
   // created.
   TAO_ServantBase *servant =
-    TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (objdata);
+    objdata->orb_core ()->orb ()->_get_collocated_servant (objdata);
 
   ACE_NEW_RETURN (x, CORBA_Object (objdata, servant, servant != 0), 0);
 

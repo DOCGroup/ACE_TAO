@@ -47,6 +47,8 @@
 #include "tao/corbafwd.h"
 #include "tao/Typecode.h"
 
+class TAO_ORB_Core;
+
 class TAO_Export TAO_OutputCDR : public ACE_OutputCDR
 {
   //
@@ -157,22 +159,26 @@ public:
 
   TAO_InputCDR (const char* buf,
                 size_t bufsiz,
-                int byte_order = ACE_CDR_BYTE_ORDER);
+                int byte_order = ACE_CDR_BYTE_ORDER,
+                TAO_ORB_Core* orb_core = 0);
   // Create an input stream from an arbitrary buffer, care must be
   // exercised wrt alignment, because this contructor will *not* work
   // if the buffer is unproperly aligned.
 
   TAO_InputCDR (size_t bufsiz,
-                int byte_order = ACE_CDR_BYTE_ORDER);
+                int byte_order = ACE_CDR_BYTE_ORDER,
+                TAO_ORB_Core* orb_core = 0);
   // Create an empty input stream. The caller is responsible for
   // putting the right data and providing the right alignment.
 
   TAO_InputCDR (const ACE_Message_Block *data,
-                int byte_order = ACE_CDR_BYTE_ORDER);
+                int byte_order = ACE_CDR_BYTE_ORDER,
+                TAO_ORB_Core* orb_core = 0);
   // Create an input stream from an ACE_Message_Block
 
   TAO_InputCDR (ACE_Data_Block *data,
-                int byte_order = ACE_CDR_BYTE_ORDER);
+                int byte_order = ACE_CDR_BYTE_ORDER,
+                TAO_ORB_Core* orb_core = 0);
   // Create an input stream from an ACE_Data_Block
 
   TAO_InputCDR (const TAO_InputCDR& rhs);
@@ -198,7 +204,8 @@ public:
 
   TAO_InputCDR (const TAO_OutputCDR& rhs,
                 ACE_Allocator* buffer_allocator = 0,
-                ACE_Allocator* data_block_allocator = 0);
+                ACE_Allocator* data_block_allocator = 0,
+                TAO_ORB_Core* orb_core = 0);
   // Create an input CDR from an output CDR.
 
   ~TAO_InputCDR (void);
@@ -221,6 +228,13 @@ public:
         CORBA::default_environment ());
   // Skip the contents of the CDR stream based on information
   // described by <tc>; returning any errors in <TAO_IN_ENV>.
+
+  TAO_ORB_Core* orb_core (void) const;
+  // Accessor
+
+private:
+  TAO_ORB_Core* orb_core_;
+  // The ORB_Core, required to extract object references.
 };
 
 // This operators are too complex to be inline....

@@ -677,7 +677,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
     }
   *os << "\"" << node->local_name ()
       << "\"," << be_nl
-      << "TAO_ORB_Core_instance ()" << be_uidt_nl
+      << "istub->orb_core ()" << be_uidt_nl
       << ");" << be_uidt_nl;
 
   *os << "\n" << be_nl

@@ -39,27 +39,35 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
       new_addr = this->activate_server (0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      TAO_Stub *stub_obj = ACE_dynamic_cast (TAO_Stub *,
-                                             obj->_stubobj ());
+      // @@ Use auto_ptr<> to avoid memory leaks!
+      TAO_Stub *stub_obj = obj->_stubobj ();
       TAO_IIOP_Profile *iiop_pfile =
                 ACE_dynamic_cast (TAO_IIOP_Profile *,
                                   stub_obj->profile_in_use ());
 
-      TAO_IIOP_Profile *new_pfile;
+      TAO_MProfile *mp;
+      ACE_NEW_THROW_EX (mp,
+                        TAO_MProfile (1),
+                        CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+      TAO_Profile *new_pfile;
       // @@ Would new_addr->host_ be different from object_addr()?
       // if so I will add another ctor  fred
       ACE_NEW_RETURN (new_pfile,
                       TAO_IIOP_Profile (iiop_pfile->object_addr (),
                                         iiop_pfile->object_key ()),
-                      0);
+                      CORBA::Object::_nil ());
+      
+      mp->give_profile (new_pfile);
 
       // create new obj, pfile will be copied!
-      new_stub_obj = new TAO_Stub (stub_obj->type_id, new_pfile);
-
-      delete new_pfile;
+      new_stub_obj = new TAO_Stub (stub_obj->type_id,
+                                   mp,
+                                   stub_obj->orb_core ());
 
       if (new_stub_obj == 0)
-        return 0;
+        return CORBA::Object::_nil ();
     }
   ACE_CATCHANY
     {
@@ -67,7 +75,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
     }
   ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return new CORBA_Object (new_stub_obj,
                            obj->_servant ());

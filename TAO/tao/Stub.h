@@ -270,45 +270,20 @@ public:
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
                                 CORBA_Environment &TAO_IN_ENV =
                                       CORBA::default_environment ());
-  // XXX All objref representations should know how to marshal
-  // themselves.  That will involve ensuring that the IOR that gets
-  // marshaled talks a specific protocol, otherwise the target of a
-  // message would not be invoke using the objref it receives
-  // (compromising functionality in a very basic and mysterious
-  // mannter).  So for example an objref might need to create a proxy
-  // for itself rather than marshaling its own representation.  [ The
-  // IIOP engine does not need to worry about such issues since it
-  // only supports one protocol -- the problem won't show up.
-  // "Multiprotocol ORBs" will need to solve that problem though.  ]
+  // Implement the is_equivalent() method for the CORBA::Object
 
   // Our Constructors ...
 
-  TAO_Stub (char * repository_id);
-  // XXX All objref representations should know how to marshal
-  // themselves.  That will involve ensuring that the IOR that gets
-  // marshaled talks a specific protocol, otherwise the target of a
-  // message would not be invoke using the objref it receives
-  // (compromising functionality in a very basic and mysterious
-  // manner).  So for example an objref might need to create a proxy
-  // for itself rather than marshaling its own representation.  [ The
-  // IIOP engine does not need to worry about such issues since it
-  // only supports one protocol -- the problem won't show up.
-  // "Multiprotocol ORBs" will need to solve that problem though.  ]
+  TAO_Stub (char *repository_id,
+            TAO_MProfile *profiles,
+            TAO_ORB_Core *orb_core);
+  // Construct from a repository ID and a pointer to list of
+  // profiles. Assumes ownership of the profiles.
 
   TAO_Stub (char *repository_id,
-                   TAO_Profile *profile);
-  // degenerate case where only one profile is wanted.  This method
-  // is depricated and is here ONLY for compatibility with multiple
-  // profile unfriendly code!  The profile is given to the MProfile
-  // object.
-
-  TAO_Stub (char *repository_id,
-               TAO_MProfile *profiles);
+            TAO_MProfile &profiles,
+            TAO_ORB_Core *orb_core);
   // Construct from a repository ID and a list of profiles.
-
-  TAO_Stub (char *repository_id,
-                   TAO_MProfile &profiles);
-  // Construct from a repository ID and a profile ID.profile ID.
 
   // = Memory management.
   CORBA::ULong _incr_refcnt (void);
@@ -376,6 +351,9 @@ public:
   // THREAD SAFE
   // used to get the next profile after the one being used has
   // failed during the initial connect or send of the message!
+
+  TAO_ORB_Core* orb_core (void) const;
+  // Accessor
 
 protected:
   void put_params (CORBA_Environment &TAO_IN_ENV,
@@ -452,6 +430,9 @@ private:
 
   CORBA::Boolean first_locate_request_;
   // distinguishes the first from following calls
+
+  TAO_ORB_Core* orb_core_;
+  // The ORB
 
   // = Disallow copy constructor and assignment operator
   ACE_UNIMPLEMENTED_FUNC (TAO_Stub (const TAO_Stub &))
