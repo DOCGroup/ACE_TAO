@@ -325,7 +325,7 @@ Erik Margraf <erik@asgard.gud.siemens.co.at>
 Bryan Doerr <Bryan.S.Doerr@boeing.com>
 Adam Miller <adam@royalblueny.com>
 Thomas Jordan <ace@programmer.net>
-Keith Nicewarner <knicewar@erg.sri.com>
+Keith Nicewarner <knicewar@email.arc.nasa.gov>
 Frederic Andres <andres@rd.nacsis.ac.jp>
 Achint Sandhu <sandhu@nortelnetworks.com>
 Mitch Kuninsky <Mitch_Kuninsky@avid.com>
@@ -482,7 +482,7 @@ Olivier Lau <olivier_lau@srtelecom.com>
 Achim Stindt <stindt@conbis.de>
 Fredrik Lindahl <fredrik.lindahl@ausys.se>
 Joseph Weihs <joseph-w@Orbotech.Co.IL>
-Serge Kolgan <skolgan@dctd.saic.com>
+Serge Kolgan <skolgan@objectsciences.com>
 James Megquier <jmegq@bbn.com>
 Martin Krumpolec <krumpolec@asset.sk>
 Michael Thomas <Michael.Thomas@Australia.Boeing.com>
@@ -1664,9 +1664,14 @@ Mario Hofmann <Mario.Hofmann@SystemaGmbH.de>
 Bruce MacDonald <brucemac@netcomuk.co.uk>
 Jeffrey Graham <jgraham@titan.com>
 Otis Nyandoro <o.nyandoro@ee.wits.ac.za>
+Ray Limpus <ray.limpus@boeing.com>
 Dmitri Belogaj <belogaj@nentec.de>
 Will Christof <Will.Christof@krones.de>
-Ferran Boladeres Salvadó <bds@iis.fhg.de>
+Ferran Boladeres Salvad <bds@iis.fhg.de>
+Juan Carlos Montes Costa <jcmontes@saincotrafico.com>
+Edward Scott  <eas@prismtechnologies.com>
+Steve Spencer <sdssoftware@btopenworld.com>
+Fukasawa Mitsuo <fukasawa_mitsuo@nifty.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

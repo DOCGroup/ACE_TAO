@@ -97,7 +97,7 @@ ACE_WIN32_Proactor::close (void)
              &overlapped,
              0);  // poll
 
-          if (overlapped == 0)
+          if (overlapped == 0 || res == FALSE)
             break;
 
           ACE_WIN32_Asynch_Result *asynch_result =
