@@ -160,6 +160,16 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
+  // = STL styled iterator factory functions.
+
+  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> begin (void);
+  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> end (void);
+  // Return forward iterator.
+
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> rbegin (void);
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> rend (void);
+  // Return reverse iterator.
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
@@ -260,6 +270,9 @@ public:
   // = Initialization method.
   ACE_Map_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
 
+  ACE_Map_Iterator (ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &mi);
+  // Copy constructor. 
+
   // = Iteration methods.
 
   int next (ACE_Map_Entry<EXT_ID, INT_ID> *&next_entry);
@@ -276,11 +289,26 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
+  // = STL styled iteration, compare, and reference functions.
+
+  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator++ (void);
+  // Postfix advance.
+
+  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>& operator++ (int);
+  // Prefix advance.
+
+  ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void);
+  // Returns a reference to the interal element <this> is pointing to.
+
+  int operator== (ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &);
+  int operator!= (ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &);
+  // Check if two iterators point to the same position
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &map_man_;
+  ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> *map_man_;
   // Map we are iterating over.
 
   ssize_t next_;
@@ -295,6 +323,9 @@ class ACE_Map_Reverse_Iterator
 public:
   // = Initialization method.
   ACE_Map_Reverse_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
+
+  ACE_Map_Reverse_Iterator (ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &mi);
+  // Copy constructor. 
 
   // = Iteration methods.
 
@@ -312,11 +343,26 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
+  // = STL styled iteration, compare, and reference functions.
+
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator++ (void);
+  // Postfix advance.
+
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>& operator++ (int);
+  // Prefix advance.
+
+  ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void);
+  // Returns a reference to the interal element <this> is pointing to.
+
+  int operator== (ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &);
+  int operator!= (ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &);
+  // Check if two iterators point to the same position
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &map_man_;
+  ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> *map_man_;
   // Map we are iterating over.
 
   ssize_t next_;
