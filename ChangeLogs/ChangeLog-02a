@@ -1,3 +1,7 @@
+Fri Jun 09 02:34:07 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.i (floor and ceil): Added new methods.
+
 Thu Jun  8 20:58:17 2000  Darrell Brunsch <brunsch@uci.edu>
 
         Patched for IBM VAC++ 4.02 for WinNT applied on behalf of

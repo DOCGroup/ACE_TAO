@@ -2844,16 +2844,23 @@ TAO_POA::ObjectId_to_string (const PortableServer::ObjectId &id)
 CORBA::WChar *
 TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
 {
-  // Create space
-  CORBA::WChar* string = CORBA::wstring_alloc (id.length ());
+  // Compute resulting wide string's length, rounding it if id's
+  // length is not "aligned" on a CORBA::WChar.
+  CORBA::ULong string_length =
+    ACE_OS::ceil (double (id.length ()) / sizeof (CORBA::WChar));
+
+  // Create space.
+  CORBA::WChar* string = CORBA::wstring_alloc (string_length);
 
   // Copy the data
-  ACE_OS::memcpy (string, id.get_buffer (), id.length () * sizeof (CORBA::WChar));
+  ACE_OS::memcpy (string,
+                  id.get_buffer (),
+                  id.length ());
 
   // Null terminate the string
-  string[id.length ()] = '\0';
+  string[string_length] = '\0';
 
-  // Return string
+  // Return string.
   return string;
 }
 
