@@ -188,8 +188,8 @@ Video_Global::first_packet_send_to_network (int timeToUse)
   msghd->packetsn = htonl (this->packetsn ++);
   msghd->packetSize = htonl (packetSize + sizeof (* this->packet));
   
-  //  fprintf (stderr, "VS to send FIRST pkt %d of size %d.\n",
-  //       ntohl (msghd->packetsn), ntohl (msghd->packetSize));
+  fprintf (stderr, "VS to send FIRST pkt %d of size %d.\n",
+           ntohl (msghd->packetsn), ntohl (msghd->packetSize));
   
 
   {
@@ -349,9 +349,9 @@ Video_Global::first_packet_send_to_network (int timeToUse)
         offset += this->msgsize;
       }
   }
-  /*
-    fprintf (stderr, "sent = %d\n", sent);
-  */
+  
+  fprintf (stderr, "sent = %d\n", sent);
+  
   if (!sent) this->pkts_sent ++;
   return sent;
 }

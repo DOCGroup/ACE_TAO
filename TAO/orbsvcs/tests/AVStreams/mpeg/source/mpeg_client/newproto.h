@@ -29,7 +29,7 @@ void UIprocess(int cmdSocket);
 #include "mpeg_shared/routine.h"
 
 /* ctr.c */
-int CTRmain(void);
+int CTRmain(int argc,char **argv);
 
 /* ab.c */
 void ABinitBuf(int size);

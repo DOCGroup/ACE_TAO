@@ -234,7 +234,19 @@ CORBA::Boolean
 Video_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &the_spec,  
                                                           CORBA::Environment &env) 
 {
-  return CORBA::B_TRUE;
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_Server_StreamEndPoint::handle_connection_requested:() %s \n",
+              the_spec[0]));
+
+  char *server_string;
+
+  server_string = (const char *) the_spec [0];
+  CORBA::Boolean result;
+  result = VIDEO_CONTROL_I::instance ()->set_peer (server_string,env);
+  
+  the_spec.length (1);
+  the_spec [0]=server_string;
+
+  return result;
 }
 
 // ----------------------------------------------------------------------
@@ -350,9 +362,10 @@ Video_Server::initialize_orb (int argc,
 
   // activate the videocontrol, video_vdev and
   // video_server_streamendpoint objects under the child poa.
-  this->orb_manager_.activate_under_child_poa ("Video_Control",
-                                               VIDEO_CONTROL_I::instance (),
-                                               env);
+  CORBA::String_var video_control_ior =
+    this->orb_manager_.activate_under_child_poa ("Video_Control",
+                                                 VIDEO_CONTROL_I::instance (),
+                                                 env);
   TAO_CHECK_ENV_RETURN (env,-1);
   
   this->orb_manager_.activate_under_child_poa ("Video_VDev",
@@ -378,26 +391,34 @@ Video_Server::initialize_orb (int argc,
                                        env);
   TAO_CHECK_ENV_RETURN (env,
                         -1);
-  
+
+  // Enter the video control as a property of the Video_VDev
+
+  CORBA::Any video_control_property;
+  video_control_property <<= video_control_ior.in ();
+  this->video_vdev_->define_property ("Video_Control",
+                                     video_control_property,
+                                     env);
+  TAO_CHECK_ENV_RETURN (env,-1);
   //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   // Create a name for the video control object
-  CosNaming::Name video_control_name (1);
-  video_control_name.length (1);
-  video_control_name [0].id = CORBA::string_dup ("Video_Control");
+//   CosNaming::Name video_control_name (1);
+//   video_control_name.length (1);
+//   video_control_name [0].id = CORBA::string_dup ("Video_Control");
   
-  // Register the video control object with the naming server.
-  naming_context->bind (video_control_name,
-                        VIDEO_CONTROL_I::instance ()->_this (env),
-                        env);
+//   // Register the video control object with the naming server.
+//   naming_context->bind (video_control_name,
+//                         VIDEO_CONTROL_I::instance ()->_this (env),
+//                         env);
 
-  if (env.exception () != 0)
-    {
-      env.clear ();
-      naming_context->rebind (video_control_name,
-                              VIDEO_CONTROL_I::instance ()->_this (env),
-                              env);
-      TAO_CHECK_ENV_RETURN (env,-1);
-    }
+//   if (env.exception () != 0)
+//     {
+//       env.clear ();
+//       naming_context->rebind (video_control_name,
+//                               VIDEO_CONTROL_I::instance ()->_this (env),
+//                               env);
+//       TAO_CHECK_ENV_RETURN (env,-1);
+//     }
   
   CosNaming::Name video_vdev_name (1);
   video_vdev_name.length (1);
@@ -411,7 +432,7 @@ Video_Server::initialize_orb (int argc,
   if (env.exception () != 0)
     {
       env.clear ();
-      naming_context->rebind (video_control_name,
+      naming_context->rebind (video_vdev_name,
                               this->video_vdev_->_this (env),
                               env);
       TAO_CHECK_ENV_RETURN (env,-1);
@@ -430,7 +451,7 @@ Video_Server::initialize_orb (int argc,
   if (env.exception () != 0)
     {
       env.clear ();
-      naming_context->rebind (video_control_name,
+      naming_context->rebind (video_streamendpoint_name,
                               this->video_streamendpoint_->_this (env),
                               env);
       TAO_CHECK_ENV_RETURN (env,-1);

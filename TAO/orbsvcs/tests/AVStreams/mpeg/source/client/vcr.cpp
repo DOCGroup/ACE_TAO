@@ -466,7 +466,7 @@ int main(int argc, char ** argv)
 
   mainPid = getpid();
 
-  CTRmain();
+  CTRmain(argc,argv);
 
   return 0;
 }
