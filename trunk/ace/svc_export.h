@@ -23,7 +23,7 @@
 
 #if defined (ACE_SVC_HAS_DLL)
 #  if (ACE_SVC_HAS_DLL == 1)
-#    if defined (ACE_BUILD_SVC_DLL) || defined (ACE_Svc_BUILD_DLL)
+#    if defined (ACE_BUILD_SVC_DLL) || defined (ACE_SVC_BUILD_DLL)
 #      define ACE_Svc_Export ACE_Proper_Export_Flag
 #      define ACE_SVC_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
 #    else
