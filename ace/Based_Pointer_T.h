@@ -25,15 +25,15 @@
 // 'ACE_Based_Pointer<long>::operator ->' is 'long *' (i.e., not a UDT
 // or reference to a UDT.  Will produce errors if applied using infix
 // notation)"
-#pragma warning(disable: 4284)  
+#pragma warning(disable: 4284)
 #endif /* _MSC_VER */
 
-template <class CONCRETE> 
+template <class CONCRETE>
 class ACE_Based_Pointer_Basic
 {
   // = TITLE
   //   A proxy that keeps track of the relative offset of a "pointer"
-  //   from its base address. 
+  //   from its base address.
   //
   //   This class makes it possible to transparently use "pointers" in
   //   shared memory as easily as programming with pointers to local
@@ -46,7 +46,7 @@ public:
   // <ACE_BASED_POINTER_REPOSITORY> Singleton for the base address of
   // the memory region within which it is instantiated.  Two results
   // are possible:
-  // 
+  //
   // 1. An <ACE_*_Memory_Pool> has stored a base address/size pair and the
   //    new based-pointer instance is located between the base address and
   //    the base address + size - 1.  In this case, the repository
@@ -64,7 +64,7 @@ public:
   // <ACE_BASED_POINTER_REPOSITORY> Singleton for the base address of
   // the memory region within which it is instantiated.  Two results
   // are possible:
-  // 
+  //
   // 1. An <ACE_*_Memory_Pool> has stored a base address/size pair and the
   //    new based-pointer instance is located between the base address and
   //    the base address + size - 1.  In this case, the repository
@@ -78,6 +78,10 @@ public:
 
   ACE_Based_Pointer_Basic (const ACE_Based_Pointer_Basic<CONCRETE> &);
   // Copy constructor.
+
+  ACE_Based_Pointer_Basic (const void *base_addr, int overload);
+  // Constructor for know base address. <overload> is only used to
+  // resolve overload ambiguity.
 
   void operator = (CONCRETE *from);
   // Pseudo-assignment operator.
@@ -131,7 +135,7 @@ protected:
   // Keep track of our offset from the base pointer.
 };
 
-template <class CONCRETE> 
+template <class CONCRETE>
 class ACE_Based_Pointer : public ACE_Based_Pointer_Basic<CONCRETE>
 {
   // = TITLE
@@ -149,7 +153,11 @@ public:
   // details.
 
   ACE_Based_Pointer (CONCRETE *initial);
-  // Initialize this object using the <initial> pointer.  
+  // Initialize this object using the <initial> pointer.
+
+  ACE_Based_Pointer (const void *base_addr, int overload);
+  // Initialize this object with known <base_addr>.  <overload> is
+  // only used to resolve overload ambiguity.
 
   ACE_Based_Pointer (const ACE_Based_Pointer<CONCRETE> &);
   // Copy constructor (not implemented yet).
