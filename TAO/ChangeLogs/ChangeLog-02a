@@ -39,14 +39,15 @@ Thu Jan 17 16:02:50 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 Thu Jan 17 17:20:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/TAO_Static.dsp:
-	* tao/BiDir_GIOP/TAO_BiDir_GIOP.dsp: Added relevant files.
+	* tao/TAO_Static.dsp: Added the files the Policy_Validator.* 
+	* tao/BiDir_GIOP/TAO_BiDir_GIOP.dsp: Added the policy validator
+	  class files. 
 
 Thu Jan 17 17:09:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/TAO.dsp (SOURCE):
-	* tao/PortableServer/*.dsp: Modifies the files.
-
+	* tao/TAO.dsp (SOURCE): Added the files the Policy_Validator.* 
+	* tao/PortableServer/*.dsp: Removed the file Policy_Validator.*. 
+	  
 Thu Jan 17 17:04:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Acceptor_Impl.h: Removed the out_of_sockets_handler ()
