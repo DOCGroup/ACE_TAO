@@ -22,7 +22,7 @@
 
 extern int dsui_family_table;
 extern int federated_table_offset;
-extern family_t *federated_family_table[NUM_FAMILIES];
+extern family_t *federated_family_table[federated_NUM_FAMILIES];
 #define DSUI_INIT(identifier, enabled) dsui_init((identifier), (enabled))
 
 #endif

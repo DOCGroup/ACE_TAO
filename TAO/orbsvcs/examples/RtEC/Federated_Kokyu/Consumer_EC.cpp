@@ -108,7 +108,6 @@ main (int argc, char* argv[])
         consumer_impl1._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-
       RtecScheduler::handle_t consumer1_rt_info =
         kokyu_ec.register_consumer("consumer1",
                                    info,
@@ -146,7 +145,6 @@ main (int argc, char* argv[])
       ACE_OS::fprintf(ior_output_file, ior.in());
       ACE_OS::fclose(ior_output_file);
 
-
       // ****************************************************************
 
       // At this point the consumer and supplier are connected to the
@@ -168,7 +166,6 @@ main (int argc, char* argv[])
 
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
       DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
-
       EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance(), ds_cntl);
       ACE_Time_Value ticker (25);
       orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
@@ -184,7 +181,7 @@ main (int argc, char* argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Consumer_EC - Service");
       return 1;
     }
   ACE_ENDTRY;

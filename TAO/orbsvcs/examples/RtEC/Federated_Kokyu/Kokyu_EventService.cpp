@@ -277,7 +277,7 @@ main (int argc, char* argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Kokyu_EventService - Service");
       return 1;
     }
   ACE_ENDTRY;

@@ -54,7 +54,7 @@ family_t MAIN_GROUP = {
 };
 
 int federated_table_offset= 1;
-family_t *federated_family_table[NUM_FAMILIES] = {
+family_t *federated_family_table[federated_NUM_FAMILIES] = {
 	
 	&TEST_ONE,
 	&MAIN_GROUP,
