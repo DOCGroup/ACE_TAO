@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #include "PICurrent_ORBInitializer.h"
 
 
@@ -10,9 +8,11 @@
 #include "PICurrent.h"
 #include "ORBInitInfo.h"
 
+
 ACE_RCSID (TAO,
            PICurrent_ORBInitializer,
            "$Id$")
+
 
 void
 TAO_PICurrent_ORBInitializer::pre_init (
@@ -28,7 +28,7 @@ TAO_PICurrent_ORBInitializer::pre_init (
 
   TAO_PICurrent *tao_pi_current = 0;
   ACE_NEW_THROW_EX (tao_pi_current,
-                    TAO_PICurrent (orb_core),
+                    TAO_PICurrent,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -42,7 +42,7 @@ TAO_PICurrent_ORBInitializer::pre_init (
   // instance between all ORBs.
   info->register_initial_reference ("PICurrent",
                                     current.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Cache the downcasted pointer in the ORB Core.
