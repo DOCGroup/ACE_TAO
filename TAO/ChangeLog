@@ -1,3 +1,8 @@
+Wed Apr 16 13:57:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Reverted accidently committed test change.
+
 Wed Apr 16 01:41:20 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.idl (register_load_monitor):
