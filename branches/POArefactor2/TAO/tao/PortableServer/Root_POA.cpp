@@ -61,7 +61,7 @@
 
 ACE_RCSID (PortableServer,
            POA,
-           "$Id$")
+             "$Id$")
 
 // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
 // It's an array of octets representing ^t^a^o/0 in octal.
@@ -791,8 +791,8 @@ TAO_Root_POA::create_reference_with_id (const PortableServer::ObjectId &id,
 
 void
 TAO_Root_POA::destroy (CORBA::Boolean etherealize_objects,
-                  CORBA::Boolean wait_for_completion
-                  ACE_ENV_ARG_DECL)
+                       CORBA::Boolean wait_for_completion
+                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Lock access for the duration of this transaction.

@@ -1,4 +1,4 @@
-#include "tao/PortableServer/Regular_POA.h"
+#include "Regular_POA.h"
 
 ACE_RCSID (PortableServer,
            POA,

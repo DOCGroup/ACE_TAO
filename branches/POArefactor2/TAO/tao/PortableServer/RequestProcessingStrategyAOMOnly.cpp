@@ -1,11 +1,11 @@
 // -*- C++ -*-
 
 #include "tao/ORB_Constants.h"
-#include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
-#include "tao/PortableServer/ServantManagerC.h"
-#include "tao/PortableServer/Non_Servant_Upcall.h"
-#include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/Root_POA.h"
+#include "RequestProcessingStrategyAOMOnly.h"
+#include "ServantManagerC.h"
+#include "Non_Servant_Upcall.h"
+#include "Servant_Base.h"
+#include "Root_POA.h"
 
 ACE_RCSID (PortableServer,
            Request_Processing,

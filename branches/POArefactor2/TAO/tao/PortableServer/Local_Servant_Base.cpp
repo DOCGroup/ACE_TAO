@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/PortableServer/Local_Servant_Base.h"
+#include "Local_Servant_Base.h"
 #include "tao/SystemException.h"
 
 ACE_RCSID (PortableServer,

@@ -1,12 +1,12 @@
 // $Id$
 
-#include "tao/PortableServer/Object_Adapter.h"
-#include "tao/PortableServer/Servant_Upcall.h"
-#include "tao/PortableServer/Root_POA.h"
-#include "tao/PortableServer/Default_Servant_Dispatcher.h"
-#include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
-#include "tao/PortableServer/Active_Object_Map_Entry.h"
-#include "tao/PortableServer/ServantManagerC.h"
+#include "Object_Adapter.h"
+#include "Servant_Upcall.h"
+#include "Root_POA.h"
+#include "Default_Servant_Dispatcher.h"
+#include "Collocated_Object_Proxy_Broker.h"
+#include "Active_Object_Map_Entry.h"
+#include "ServantManagerC.h"
 
 // -- TAO Include --
 #include "tao/ORB.h"

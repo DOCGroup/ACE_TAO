@@ -55,10 +55,6 @@ namespace TAO
                                  1
                                  ACE_ENV_ARG_PARAMETER);
 
-          // Delete the child
-          delete child;
-          child = 0;
-
           return false;
         }
       ACE_ENDTRY;

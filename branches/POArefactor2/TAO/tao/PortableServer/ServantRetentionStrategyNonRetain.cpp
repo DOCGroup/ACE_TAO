@@ -9,12 +9,12 @@
  */
 //=============================================================================
 
-#include "tao/PortableServer/ServantRetentionStrategyNonRetain.h"
-#include "tao/PortableServer/Non_Servant_Upcall.h"
-#include "tao/PortableServer/Servant_Upcall.h"
-#include "tao/PortableServer/POA_Current_Impl.h"
-#include "tao/PortableServer/Root_POA.h"
-#include "tao/PortableServer/Servant_Base.h"
+#include "ServantRetentionStrategyNonRetain.h"
+#include "Non_Servant_Upcall.h"
+#include "Servant_Upcall.h"
+#include "POA_Current_Impl.h"
+#include "Root_POA.h"
+#include "Servant_Base.h"
 #include "tao/debug.h"
 
 ACE_RCSID (PortableServer,

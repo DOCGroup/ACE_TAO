@@ -34,8 +34,8 @@
 
 
 #include "PolicyS.h"
-#include "tao/PortableServer/Servant_Upcall.h"
-#include "tao/PortableServer/Operation_Table.h"
+#include "Servant_Upcall.h"
+#include "Operation_Table.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
@@ -49,9 +49,9 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/PortableInterceptor.h"
 #if TAO_HAS_INTERCEPTORS == 1
-#include "tao/PortableServer/PICurrent_Guard.h"
-#include "tao/PortableServer/ServerRequestInfo.h"
-#include "tao/PortableServer/ServerInterceptorAdapter.h"
+#include "PICurrent_Guard.h"
+#include "ServerRequestInfo.h"
+#include "ServerInterceptorAdapter.h"
 #include "tao/RequestInfo_Util.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 

@@ -1,3 +1,10 @@
+Wed Jan 26 19:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Adapter_Activator.cpp:
+          Reverted the change below, when the_activator() fails, we just call
+          destroy and the _var will make sure the refcount goes to zero and
+          the child poa gets deleted
+
 Wed Jan 26 19:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Adapter_Activator.cpp:
