@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.62 $)dnl
+AC_REVISION($Revision 0.63 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -3353,10 +3353,6 @@ AC_CHECK_FUNC(access, dnl
   ,
   AC_DEFINE(ACE_LACKS_ACCESS))
 
-AC_CHECK_FUNC(atexit, dnl
-  ,
-  AC_DEFINE(ACE_LACKS_ATEXIT))
-
 AC_CHECK_FUNC(bsearch, dnl
   ,
   AC_DEFINE(ACE_LACKS_BSEARCH))
@@ -3503,6 +3499,9 @@ AC_CHECK_FUNC(readv, , AC_DEFINE(ACE_LACKS_READV)) dnl
 AC_CHECK_FUNC(writev, , AC_DEFINE(ACE_LACKS_WRITEV)) dnl
 
 AC_CHECK_FUNC(set_t_errno, AC_DEFINE(ACE_HAS_SET_T_ERRNO),) dnl
+
+AC_CHECK_FUNC(sigsuspend, dnl
+  AC_DEFINE(ACE_HAS_SIGSUSPEND),)
 
 AC_CHECK_FUNC(sigtimedwait, dnl
   AC_DEFINE(ACE_HAS_SIGTIMEDWAIT),)
