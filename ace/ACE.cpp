@@ -966,13 +966,6 @@ ACE::recv_n_i (ACE_HANDLE handle,
       // Check EOF.
       if (n == 0)
         {
-          // If the bytes received is greater than zero, ie. if you
-          // had received anything in the  first iteration, then just
-          // return the bytes transferred. Thanks to Eyal Neuman for
-          // pointing this out.
-          if (bytes_transferred > 0)
-            return bytes_transferred;
-
           return 0;
         }
       // Check for other errors.

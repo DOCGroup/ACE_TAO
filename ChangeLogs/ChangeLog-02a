@@ -1,3 +1,10 @@
+Tue Sep  4 12:46:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/ACE.cpp: Reverted this change "Tue Sep  4 07:37:17 2001
+	  Balachandran Natarajan  <bala@cs.wustl.edu>". Thanks to Irfan
+	  for pointing that this change, changes the semantics of the
+	  methods. 
+
 Tue Sep  4 09:14:36 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/CDR_Stream.i:
