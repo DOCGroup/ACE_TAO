@@ -1,0 +1,103 @@
+// $Id$
+
+// This file contains the interface definitions for "Portable"
+// Interceptor support.
+
+// **********************************************************
+//   Notice that the Portable Interceptor specification
+//   is still under discussion in OMG and both the IDL
+//   and the implementation details in TAO will eventually
+//   change to conform with the PI spec in the future.
+// **********************************************************
+
+// Author (currently): Nanbor Wang <nanbor@cs.wustl.edu>
+
+#include <corba.pidl>
+#include <IOP.pidl>
+
+#pragma prefix "TAO"
+
+module PortableInterceptor
+{
+  interface Cookie
+    {
+      // Cookie's are used to pass information among interceptors
+      // within a invocation or an upcall.
+      string myname ();
+    };
+
+  typedef sequence<Cookie>  Cookies;
+  // Collections of Cookie's become Cookies'es.
+
+  interface RequestInfo
+    {
+      unsigned long get_request_id ();
+      /*
+      boolean set_request_id (in unsigned long rid);
+      // This method is disabled for now because I don't know
+      // the purpose of changing request id and how does it
+      // fit into TAO's current structure.
+      */
+
+      boolean response_expected ();
+      // This method will eventually changed to support
+      // AMI.
+
+      IOP::ServiceContextList get_service_contexts ();
+      boolean set_service_contexts (in IOP::ServiceContextList sc);
+      // Accessor/mutator for the service context list.
+
+      CORBA::Object get_object ();
+      // Get the object reference the targeting object.
+
+      string get_operation ();
+      // We don't allow changing operation for now.
+      // Otherwise, we'll change
+
+      CORBA::NVList get_arguments ();
+      boolean set_arguments (in CORBA::NVList args);
+      // Accessing and changing the operation arguments/return value.
+    };
+
+  interface Interceptor
+    {
+      // Base interface for Interceptors.
+      readonly attribute string name;
+    };
+
+  interface ServerRequestInterceptor : Interceptor
+    {
+      // Server side request interceptor definition.
+
+      void preinvoke (inout RequestInfo ri,
+                      inout Cookies ck);
+      // Interception pointer before invoking the servant method.
+
+      void postinvoke (inout RequestInfo ri,
+                       inout Cookies ck);
+      // Interception pointer after invoking the servant method.
+
+      void exception_occurred (inout RequestInfo ri,
+                               inout Cookies ck);
+      // Exception interception point.
+    };
+
+  interface ClientRequestInterceptor : Interceptor
+    {
+      // Client side interceptor.
+
+      void preinvoke (inout RequestInfo ri,
+                      inout Cookies ck);
+      // Before remote invocation.
+
+      void postinvoke (inout RequestInfo ri,
+                       inout Cookies ck);
+      // After returned from remote invocation.
+
+      void exception_occurred (inout RequestInfo ri,
+                               inout Cookies ck);
+      // Exception occurred.
+    };
+};
+
+#pragma prefix ""
