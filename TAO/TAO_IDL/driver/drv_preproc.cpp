@@ -133,6 +133,7 @@ DRV_cpp_init()
   DRV_cpp_putarg("-E");
   DRV_cpp_putarg("-DIDL");
   DRV_cpp_putarg("-I.");
+//  DRV_cpp_putarg("-I$(TAO_ROOT)/tao");
 }
 
 /*
@@ -463,8 +464,10 @@ DRV_check_for_include (const char* buf)
   // Terminate this string.
   file_name [i] = '\0';
 
-  // Store in the idl_global.
-  idl_global->add_to_included_idl_files (file_name);
+  // Store in the idl_global, unless it's "orb.idl" -
+  // we don't want to generate header includes for that.
+  if (ACE_OS::strcmp (file_name, "orb.idl"))
+    idl_global->add_to_included_idl_files (file_name);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
