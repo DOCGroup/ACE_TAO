@@ -1,3 +1,9 @@
+Fri Jul 14 22:56:29 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/utility.h (PACE_FAIL_RETURN):
+
+	  Defined.
+
 Fri Jul 14 22:41:53 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/fcntl.h:
