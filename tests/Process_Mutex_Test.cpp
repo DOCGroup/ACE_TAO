@@ -27,7 +27,6 @@
 
 ACE_RCSID(tests, Process_Mutex_Test, "$Id$")
 
-#if !defined (ACE_LACKS_FORK)
 static int release_mutex = 1;
 static int child_process = 0;
 static const char *mutex_name = ACE_DEFAULT_MUTEX;
@@ -123,21 +122,10 @@ acquire_release (void)
       ACE_ASSERT (mutex.release () == 0);
     }
 }
-#endif /* ! ACE_LACKS_FORK */
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-#if defined (ACE_LACKS_FORK)
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-
-  ACE_START_TEST (ACE_TEXT ("Process_Mutex_Test"));
-  ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("fork is not supported on this platform\n")));
-  ACE_END_TEST;
-#else  /* ! ACE_LACKS_FORK */
-
   parse_args (argc, argv);
 
   // Child process code.
@@ -153,8 +141,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 #     if !defined( ACE_HAS_SYSV_IPC) || defined( ACE_USES_MUTEX_FOR_PROCESS_MUTEX )
       // When Process_Mutex is pthreads based, then the owner of mutex destroys it
       // in destructor. This may disturb the other processes which still uses the
-      // mutex. It is safer then to hold the mutex in main process, and destroy it after 
-      // children finish. This is temporary solution, and in future pthread base 
+      // mutex. It is safer then to hold the mutex in main process, and destroy it after
+      // children finish. This is temporary solution, and in future pthread base
       // Process_Mutex shall control the destruction of mutex better.
       ACE_Process_Mutex mutex( ACE_TEXT_CHAR_TO_TCHAR( mutex_name ) );
 #     endif
@@ -215,7 +203,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_END_TEST;
     }
-#endif /* ! ACE_LACKS_FORK */
 
   return 0;
 }

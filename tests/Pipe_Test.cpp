@@ -25,7 +25,6 @@
 
 ACE_RCSID(tests, Pipe_Test, "$Id$")
 
-#if !defined (ACE_LACKS_FORK)
 static int close_pipe = 1;
 static int child_process = 0;
 static int iterations = ACE_MAX_ITERATIONS;
@@ -77,19 +76,10 @@ open (ACE_Pipe &pipe,
   if (close_pipe)
     pipe.close ();
 }
-#endif /* ! ACE_LACKS_FORK */
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-#if defined (ACE_LACKS_FORK)
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-
-  ACE_START_TEST (ACE_TEXT ("Pipe_Test"));
-  ACE_ERROR ((LM_INFO, ACE_TEXT ("fork is not supported on this platform\n")));
-  ACE_END_TEST;
-#else  /* ! ACE_LACKS_FORK */
   parse_args (argc, argv);
 
   if (child_process)
@@ -153,7 +143,6 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
       ACE_END_TEST;
     }
-#endif /* ! ACE_LACKS_FORK */
 
   return 0;
 }
