@@ -110,11 +110,11 @@ TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
 int
 TAO_Wait_On_Leader_Follower::wait (void)
 {
-  // @@ Do we need this code? (Alex).
-
   int result = 0;
 
 #if 0
+  // @@ Do we need this code? (Alex).
+
   ACE_Reactor *r = this->transport_->orb_core ()->reactor ();
   
   if (this->handler_reactor () != r)
