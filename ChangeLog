@@ -1,3 +1,8 @@
+Fri Nov 28 13:43:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Also check for Id string in the .bor files.
+
 Thu Nov 27 10:40:32 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Configuration_Import_Export.cpp (import_config): The
@@ -44,13 +49,13 @@ Wed Nov 26 12:10:22 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	* ace/POSIX_Proactor.cpp: Made the sig_handler() function static
 	  so that it won't "leak" out of ACE!
 
-	* tests/Log_Msg_Test.cpp (test_format_specs): 
+	* tests/Log_Msg_Test.cpp (test_format_specs):
 	* ace/Log_Msg.cpp (log): ACE_Log_Msg::log has a number of problems
-	  when ACE is built with ACE_USES_WCHAR  
+	  when ACE is built with ACE_USES_WCHAR
 	  1) %m needs to convert strerror to wide string
 	  2) %I should not use memset to set spaces in wide string
 	  3) recent modifications to remove dependencies on ACE_TRACE
-	     prevent %I from indenting 
+	     prevent %I from indenting
 	  Thanks to Duane Binder for these fixes.
 
 Wed Nov 26 12:15:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
