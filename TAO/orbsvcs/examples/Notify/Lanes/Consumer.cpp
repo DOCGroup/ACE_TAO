@@ -2,10 +2,6 @@
 
 #include "Consumer.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Consumer.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_NS_Consumer, "$id$")
 
 TAO_NS_Consumer::TAO_NS_Consumer (TAO_NS_ORB_Objects& orb_objects)

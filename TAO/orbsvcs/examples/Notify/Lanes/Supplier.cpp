@@ -2,10 +2,6 @@
 
 #include "Supplier.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Supplier.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_NS_Supplier, "$id$")
 
 #include "tao/ORB_Core.h"
