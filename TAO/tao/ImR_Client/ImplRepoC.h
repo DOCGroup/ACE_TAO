@@ -131,7 +131,7 @@ namespace ImplementationRepository
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:127
     
-    virtual CORBA::TypeCode_ptr _type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };
   
   // TAO_IDL - Generated from
@@ -189,7 +189,7 @@ namespace ImplementationRepository
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:127
     
-    virtual CORBA::TypeCode_ptr _type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };
   
   // TAO_IDL - Generated from
@@ -239,7 +239,7 @@ namespace ImplementationRepository
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:127
     
-    virtual CORBA::TypeCode_ptr _type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };
   
   // TAO_IDL - Generated from
@@ -1042,7 +1042,7 @@ TAO_IMR_Client_Export CORBA::Boolean operator>> (
 // TAO_IDL - Generated from
 // be\be_visitor_enum/cdr_op_ch.cpp:50
 
-TAO_IMR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::ActivationMode &);
+TAO_IMR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, ImplementationRepository::ActivationMode);
 TAO_IMR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::ActivationMode &);
 
 // TAO_IDL - Generated from
