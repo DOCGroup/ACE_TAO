@@ -708,8 +708,8 @@ get_outgoing_connections_i (const char * instname,
                     // and "consumer side port name".
                     if (retv[len].kind == Deployment::rtecEventPublisher ||
                         retv[len].kind == Deployment::rtecEventEmitter ||
-                        retv[len].kind == Deployment::cosEventPublisher ||
-                        retv[len].kind == Deployment::cosEventEmitter ||
+                        retv[len].kind == Deployment::ecEventPublisher ||
+                        retv[len].kind == Deployment::ecEventEmitter ||
                         retv[len].kind == Deployment::nsEventPublisher ||
                         retv[len].kind == Deployment::nsEventEmitter)
                       {

@@ -16,12 +16,6 @@
 
 module EC_Benchmark
 {
-  interface trigger
-    {
-      void start ();
-      void stop ();
-    };
-
   component Producer supports trigger
     {
       publishes TimeOut timeout;

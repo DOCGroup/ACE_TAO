@@ -203,22 +203,13 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
-    /*------- CIAO helper functions for building event channel connections ------/*
+    /*------- CIAO helper functions for building pub/sub service connection------/*
      *
      *---------------------------------------------------------------------------*/
 
-    void build_rtec_connection (const Deployment::Connection & connection
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((Deployment::InvalidConnection,
-                       CORBA::SystemException));
-
-    void build_ec_connection (const Deployment::Connection & connection
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((Deployment::InvalidConnection,
-                       CORBA::SystemException));
-
-    void build_ns_connection (const Deployment::Connection & connection
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    void build_event_connection (const Deployment::Connection & connection,
+                                 CIAO::EventServiceType type
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((Deployment::InvalidConnection,
                        CORBA::SystemException));
 

@@ -406,6 +406,8 @@ namespace Producer_Impl
       populate_port_tables (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
+
+      ACE_CString component_UUID_;
     };
   }
 

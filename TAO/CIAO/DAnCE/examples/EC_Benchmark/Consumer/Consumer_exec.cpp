@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ciao/CIAO_common.h"
-#include "BMDevice_exec.h"
+#include "Consumer_exec.h"
 
 #define DISPLACEMENT 256
 

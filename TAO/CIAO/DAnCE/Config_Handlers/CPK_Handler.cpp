@@ -20,8 +20,8 @@ process_CCMComponentPortKind (DOMNodeIterator * iter,
   char* event_consumer = XMLString::transcode (XStr ("EventConsumer"));
   char* rtec_event_emitter = XMLString::transcode (XStr ("rtecEventEmitter"));
   char* rtec_event_publisher = XMLString::transcode (XStr ("rtecEventPublisher"));
-  char* cos_event_emitter = XMLString::transcode (XStr ("cosEventEmitter"));
-  char* cos_event_publisher = XMLString::transcode (XStr ("cosEventPublisher"));
+  char* cos_event_emitter = XMLString::transcode (XStr ("ecEventEmitter"));
+  char* cos_event_publisher = XMLString::transcode (XStr ("ecEventPublisher"));
   char* ns_event_emitter = XMLString::transcode (XStr ("nsEventEmitter"));
   char* ns_event_publisher = XMLString::transcode (XStr ("nsEventPublisher"));
   char * temp = Utils::parse_string (iter);
@@ -66,11 +66,11 @@ process_CCMComponentPortKind (DOMNodeIterator * iter,
   // COS EC event supplier
   else if ((ACE_OS::strcmp (kind_str_tr, cos_event_emitter)) == 0)
     {
-      kind = Deployment::cosEventEmitter;
+      kind = Deployment::ecEventEmitter;
     }
   else if ((ACE_OS::strcmp (kind_str_tr, cos_event_publisher)) == 0)
     {
-      kind = Deployment::cosEventPublisher;
+      kind = Deployment::ecEventPublisher;
     }
   // NS event supplier
   else if ((ACE_OS::strcmp (kind_str_tr, ns_event_emitter)) == 0)
