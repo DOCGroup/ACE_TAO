@@ -17,19 +17,10 @@
 #if !defined (ACE_REGISTRY_H)
 #define ACE_REGISTRY_H
 
-#if !defined (NOMINMAX)
-#define NOMINMAX
-#define ACE_TURN_NOMINMAX_OFF
-#endif
-
 #include "ace/OS.h"
 
 #if defined (ACE_WIN32)
 // This only works on Win32 platforms
-
-#if !defined (VC_PLUS_PLUS_NESTED_CLASS_PROBLEM)
-#define VC_PLUS_PLUS_NESTED_CLASS_PROBLEM
-#endif
 
 #include "vector.h"
 #include "bstring.h"
