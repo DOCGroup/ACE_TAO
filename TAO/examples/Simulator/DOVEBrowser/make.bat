@@ -65,6 +65,12 @@ goto end
 :clean
 
 @del *.class
+@del Weapons.java
+@del WeaponsHelper.java
+@del WeaponsHolder.java
+@del Navigation.java
+@del NavigationHelper.java
+@del NavigationHolder.java
 @del RtecEventComm\*.java
 @del RtecEventComm\*.class
 @REM del RtecEventComm\EventChannelPackage\*.java

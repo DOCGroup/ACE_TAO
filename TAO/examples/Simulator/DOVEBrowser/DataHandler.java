@@ -16,8 +16,8 @@ import org.omg.CORBA.*;
 
 public interface DataHandler {
   
-  // entry point for an consumer to put data into the data handler
-  public void update (Any any_value);
+  // entry point for an consumer to put data event into the data handler
+  public void update (RtecEventComm.Event event);
   
   // get a list of the Observables names to allow selection
   public java.util.Enumeration getObservablesList ();

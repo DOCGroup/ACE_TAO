@@ -78,6 +78,8 @@ private:
   char **argv_;
   unsigned long total_messages_;
   char *input_file_name_;
+  unsigned long update_data_;
+  const char* schedule_file_name_;
 };
 
 #endif /* LOGGING_SUP_H */

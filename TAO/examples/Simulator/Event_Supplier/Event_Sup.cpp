@@ -252,6 +252,16 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
            (strcmp((*sched_data)->operation_name, "high_1") == 0)  ||
            (strcmp((*sched_data)->operation_name, "low_1") == 0))
       {
+        if ((strcmp((*sched_data)->operation_name, "high_20") == 0) ||
+            (strcmp((*sched_data)->operation_name, "high_1") == 0))
+          {
+            navigation_.criticality = 1;
+          }
+        else
+          {
+            navigation_.criticality = 0;
+          }
+
         navigation_.position_latitude = ACE_OS::rand() % 90;
         navigation_.position_longitude = ACE_OS::rand() % 180;
         navigation_.altitude = ACE_OS::rand() % 100;
@@ -259,16 +269,13 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
         navigation_.roll = (navigation_.roll >= 180) ? -180 : navigation_.roll + 1;
         navigation_.pitch =  (navigation_.pitch >= 90) ? -90 : navigation_.pitch + 1;
 
-        navigation_.utilization =            (*sched_data)->utilitzation;
-        navigation_.overhead =               (*sched_data)->overhead;
-        navigation_.arrival_time_secs =      0;
-        navigation_.arrival_time_usecs =     (*sched_data)->arrival_time;
-        navigation_.deadline_time_secs =     0;
-        navigation_.deadline_time_usecs =    (*sched_data)->deadline_time;
-        navigation_.completion_time_secs =   0;
-        navigation_.completion_time_usecs =  (*sched_data)->completion_time;
-        navigation_.computation_time_secs =  0;
-        navigation_.computation_time_usecs = (*sched_data)->computation_time;
+        navigation_.utilization =      (*sched_data)->utilitzation;
+        navigation_.overhead =         (*sched_data)->overhead;
+        navigation_.arrival_time =     (*sched_data)->arrival_time;
+        navigation_.deadline_time =    (*sched_data)->deadline_time;
+        navigation_.completion_time =  (*sched_data)->completion_time;
+        navigation_.computation_time = (*sched_data)->computation_time;
+        navigation_.update_data =      0;
 
 
         // because the scheduler data does not supply these values
@@ -282,6 +289,16 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
                 (strcmp((*sched_data)->operation_name, "high_5") == 0)  ||
                 (strcmp((*sched_data)->operation_name, "low_5") == 0))
       {
+        if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
+            (strcmp((*sched_data)->operation_name, "high_5") == 0))
+          {
+            weapons_.criticality = 1;
+          }
+        else
+          {
+            weapons_.criticality = 0;
+          }
+
         weapons_.number_of_weapons = 2;
         weapons_.weapon1_identifier = CORBA::string_alloc (30);
         strcpy (weapons_.weapon1_identifier,"Photon Torpedoes");
@@ -298,16 +315,13 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
         weapons_.weapon5_identifier = CORBA::string_alloc (1);
         strcpy (weapons_.weapon5_identifier, "");
         weapons_.weapon5_status = 0;
-        weapons_.utilization =     (*sched_data)->utilitzation;
+        weapons_.utilization =      (*sched_data)->utilitzation;
         weapons_.overhead =         (*sched_data)->overhead;
-        weapons_.arrival_time_secs =      0;
-        weapons_.arrival_time_usecs =     (*sched_data)->arrival_time;
-        weapons_.deadline_time_secs =     0;
-        weapons_.deadline_time_usecs =    (*sched_data)->deadline_time;
-        weapons_.completion_time_secs  =  0;
-        weapons_.completion_time_usecs =  (*sched_data)->completion_time;
-        weapons_.computation_time_secs =  0;
-        weapons_.computation_time_usecs = (*sched_data)->computation_time;
+        weapons_.arrival_time =     (*sched_data)->arrival_time;
+        weapons_.deadline_time =    (*sched_data)->deadline_time;
+        weapons_.completion_time =  (*sched_data)->completion_time;
+        weapons_.computation_time = (*sched_data)->computation_time;
+        weapons_.update_data =      0;
 
         // because the scheduler data does not supply these values
         weapons_.utilization = (double) (20.0 + ACE_OS::rand() % 10);

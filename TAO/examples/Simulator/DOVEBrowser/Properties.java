@@ -1,15 +1,13 @@
 // $Id$
 // 
 // = FILENAME
-//    DataHandler.java
+//    Properties.java
 //
 // = AUTHOR
 //    Michael Kircher (mk1@cs.wustl.edu)
 //
 // = DESCRIPTION
-//   This is the interface for data handling in the simulation demo
-//   using the Event Channel as transport media. Several observables
-//   are created to feed observer Java Beans.
+//    This class defines the possible data type values carried by events
 //
 // ============================================================================
 
