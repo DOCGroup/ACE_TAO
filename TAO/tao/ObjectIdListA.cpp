@@ -61,24 +61,6 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:743
 
-
-
-// TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
-
-static TAO::TypeCode::Alias<char const *,
-                            TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_ORB_ObjectId (
-    "IDL:omg.org/CORBA/ORB_ObjectId:1.0",
-    "ORB_ObjectId",
-    &CORBA::_tc_string);
-  
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr const _tc_ORB_ObjectId =
-    &_tao_tc_CORBA_ORB_ObjectId;
-}
-
 namespace TAO
 {
   namespace TypeCode

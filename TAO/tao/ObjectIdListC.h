@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be/be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_OBJECTIDLISTC_H_
 #define _TAO_IDL_ORIG_OBJECTIDLISTC_H_
@@ -69,25 +69,25 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be/be_visitor_module/module_ch.cpp:48
 
 namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:413
+  // be/be_visitor_typedef/typedef_ch.cpp:413
   
   typedef char * ORB_ObjectId;
   typedef CORBA::String_var ORB_ObjectId_var;
   typedef CORBA::String_out ORB_ObjectId_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ORB_ObjectId;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_sequence/sequence_ch.cpp:101
+  // be/be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_ORB_OBJECTIDLIST_CH_)
 #define _CORBA_ORB_OBJECTIDLIST_CH_
@@ -125,23 +125,25 @@ namespace CORBA
     ORB_ObjectIdList (const ORB_ObjectIdList &);
     ~ORB_ObjectIdList (void);
     
+    static void _tao_any_destructor (void *);
+    
     typedef ORB_ObjectIdList_var _var_type;
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ORB_ObjectIdList;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be/be_visitor_module/module_ch.cpp:66
 
 } // module CORBA
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:59
+// be/be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -149,7 +151,15 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/cdr_op_ch.cpp:71
+// be/be_visitor_sequence/any_op_ch.cpp:52
+
+TAO_Export void operator<<= (CORBA::Any &, const CORBA::ORB_ObjectIdList &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, CORBA::ORB_ObjectIdList*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ORB_ObjectIdList *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ORB_ObjectIdList *&);
+
+// TAO_IDL - Generated from
+// be/be_visitor_sequence/cdr_op_ch.cpp:71
 
 #if !defined _TAO_CDR_OP_CORBA_ORB_ObjectIdList_H_
 #define _TAO_CDR_OP_CORBA_ORB_ObjectIdList_H_
@@ -166,7 +176,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_ORB_ObjectIdList_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:969
+// be/be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "ObjectIdListC.inl"
