@@ -1,3 +1,22 @@
+Wed Feb 20 15:26:43 2002  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* apps/soreduce/Library.cpp:
+	* apps/soreduce/Library.h:
+	* apps/soreduce/Makefile:
+	* apps/soreduce/Obj_Module.cpp:
+	* apps/soreduce/Obj_Module.h:
+	* apps/soreduce/README:
+	* apps/soreduce/SO_Group.cpp:
+	* apps/soreduce/SO_Group.h:
+	* apps/soreduce/Sig_List.cpp:
+	* apps/soreduce/Sig_List.h:
+	* apps/soreduce/Signature.cpp:
+	* apps/soreduce/Signature.h:
+	* apps/soreduce/soreduce.cpp:
+	New application to assist in production of reduced footprint shared
+	libraries for specific collections of applications. For more details
+	see the enclosed README.
+	
 Wed Feb 20 14:18:14 2002  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* ace/Process.cpp:
