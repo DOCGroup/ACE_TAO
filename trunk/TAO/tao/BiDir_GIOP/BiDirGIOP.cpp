@@ -60,7 +60,8 @@ TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr orb,
 }
 
 void
-TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
+TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val
+                                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Is this true? Does the GIOP protocol version matter here?
