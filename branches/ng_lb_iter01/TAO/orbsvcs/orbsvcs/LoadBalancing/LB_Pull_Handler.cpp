@@ -33,7 +33,40 @@ TAO_LB_Pull_Handler::handle_timeout (
   {
     TAO_LB_ObjectGroup_Map_Entry *object_group = i->ext_id_;
 
-    
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, object_group->lock, 0);
+
+    if (entry->replica_infos.is_empty ())
+      // @@ What do we do if the set is empty?
+      continue;
+
+    TAO_LB_ReplicaInfo_Set::iterator begin =
+      object_group->replica_infos.begin ();
+
+    TAO_LB_ReplicaInfo_Set::iterator end =
+      object_group->replica_infos.end ();
+
+    // Now iterate over the replica set.
+
+      TAO_LB_ReplicaInfo *replica_info = (*i);
+
+      for (TAO_LB_ReplicaInfo_Set::iterator i = begin;
+           i != end;
+           ++i)
+        {
+          LoadBalancing::LoadList_var load =
+            (*i)->load_monitor->current_load (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+          // @@ Hardcode one load and don't bother checking the
+          // LoadId, for now.  (just to get things going)
+          if (d[CORBA::Long (0)].value > load[CORBA::Long (0)].value)
+            {
+              replica_info = *i;
+              d = (*i)->load_monitor->current_load (ACE_TRY_ENV);
+              ACE_CHECK_RETURN (CORBA::Object::_nil ());
+            }
+        }
+
   }
 
 
