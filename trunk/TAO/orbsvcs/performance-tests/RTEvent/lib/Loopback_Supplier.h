@@ -34,7 +34,8 @@ public:
    * publication.
    */
   Loopback_Supplier (CORBA::Long experiment_id,
-                     CORBA::Long response_type);
+                     CORBA::Long response_type,
+                     PortableServer::POA_ptr poa);
 
   /// Connect to the event channel
   void connect (RtecEventChannelAdmin::EventChannel_ptr ec
@@ -52,6 +53,8 @@ public:
    */
   virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
 private:
@@ -67,6 +70,9 @@ private:
 
   /// The proxy this object is connected to
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer_;
+
+  /// The default poa
+  PortableServer::POA_var default_POA_;
 };
 
 #endif /* TAO_RTEC_LOOPBACK_SUPPLIER_H */

@@ -39,7 +39,12 @@ SRCS = \
   Client_Group \
   ORB_Task \
   SyncScope_Setup \
-  Loopback_Pair
+  Loopback_Pair \
+  Client_Pair \
+  RTPOA_Setup \
+  PriorityBand_Setup \
+  Send_Task_Stopper \
+  ORB_Task_Activator
 
 TEMPLATE_SOURCES = \
   Servant_var \

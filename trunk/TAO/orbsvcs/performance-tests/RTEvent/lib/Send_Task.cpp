@@ -55,16 +55,23 @@ Send_Task::svc (void)
 
       this->barrier_->wait ();
 
-      RtecEventComm::EventSet event (1);
-      event.length (1);
-      event[0].header.type   = this->event_type_;
-      event[0].header.source = this->event_source_;
-      event[0].header.ttl    = 1;
-
-      ACE_Time_Value period (0, this->period_in_usecs_);
-
-      for (int i = 0; i != this->iterations_; ++i)
+      int start_i = 0;
+      if (this->iterations_ == 0)
         {
+          /// Starting from 1 results in an infinite loop, which is
+          /// exactly what we want, kind of hackish IMHO...
+          start_i = 1;
+        }
+      for (int i = start_i; i != this->iterations_; ++i)
+        {
+          RtecEventComm::EventSet event (1);
+          event.length (1);
+          event[0].header.type   = this->event_type_;
+          event[0].header.source = this->event_source_;
+          event[0].header.ttl    = 1;
+
+          ACE_Time_Value period (0, this->period_in_usecs_);
+
           ACE_OS::sleep (period);
           {
             ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);

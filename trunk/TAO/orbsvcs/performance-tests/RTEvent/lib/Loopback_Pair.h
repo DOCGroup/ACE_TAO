@@ -48,7 +48,9 @@ public:
    *
    */
   void init (CORBA::Long experiment_id,
-             CORBA::Long base_event_type);
+             CORBA::Long base_event_type,
+             PortableServer::POA_ptr supplier_poa,
+             PortableServer::POA_ptr consumer_poa);
 
   /// Connect to the event channel
   void connect (RtecEventChannelAdmin::EventChannel_ptr ec

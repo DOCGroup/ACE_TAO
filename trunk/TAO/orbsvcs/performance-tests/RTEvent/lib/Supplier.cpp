@@ -11,9 +11,11 @@
 ACE_RCSID(TAO_PERF_RTEC, Supplier, "$Id$")
 
 Supplier::Supplier (CORBA::Long experiment_id,
-                    CORBA::Long event_type)
+                    CORBA::Long event_type,
+                    PortableServer::POA_ptr poa)
   : experiment_id_ (experiment_id)
   , event_type_ (event_type)
+  , default_POA_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
@@ -103,4 +105,11 @@ Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->proxy_consumer_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
+}
+
+PortableServer::POA_ptr
+Supplier::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
