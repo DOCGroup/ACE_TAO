@@ -12,7 +12,11 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-SRC = LoadMonitor.cpp Push_Handler.cpp
+SRC = \
+  LoadMonitor.cpp \
+  Push_Handler.cpp \
+  Signal_Handler.cpp \
+  Monitor_Signal_Handler.cpp
 
 LDLIBS = \
   -lTAO_CosLoadBalancing \

@@ -93,7 +93,15 @@ SOURCE=.\LoadMonitor.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Monitor_Signal_Handler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Push_Handler.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Signal_Handler.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -101,7 +109,15 @@ SOURCE=.\Push_Handler.cpp
 # PROP Default_Filter "h"
 # Begin Source File
 
+SOURCE=.\Monitor_Signal_Handler.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Push_Handler.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Signal_Handler.h
 # End Source File
 # End Group
 # End Target
