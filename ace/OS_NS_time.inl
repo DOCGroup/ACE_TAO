@@ -458,7 +458,7 @@ ACE_OS::time (time_t *tloc)
 }
 
 // Linux won't compile unless we explicitly use a namespace here.
-#if defined (linux) || (defined (sun) && defined (__GNUG__))
+#if defined (__GNUG__)
 namespace ACE_OS {
   ACE_INLINE long
   timezone (void)

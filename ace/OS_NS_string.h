@@ -37,7 +37,7 @@
 class ACE_Time_Value;
 
 # if defined (ACE_LACKS_SYS_NERR)
-extern ACE_OS_Export int sys_nerr;
+extern ACE_Export int sys_nerr;
 # endif /* ACE_LACKS_SYS_NERR */
 
 namespace ACE_OS {

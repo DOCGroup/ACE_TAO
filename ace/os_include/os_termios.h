@@ -28,6 +28,10 @@
 #  include /**/ <termios.h>
 #endif /* !ACE_LACKS_TERMIOS_H */
 
+#if defined (HPUX)
+#  include /**/ <sys/modem.h>
+#endif /* HPUX */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
