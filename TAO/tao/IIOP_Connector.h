@@ -64,7 +64,7 @@ protected:
 
   virtual int check_prefix (const char *endpoint);
 
-  virtual const char object_key_delimiter (void) const;
+  virtual char object_key_delimiter (void) const;
 
 private:
   TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;

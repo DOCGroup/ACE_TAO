@@ -1,3 +1,13 @@
+Wed May 26 20:44:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Pluggable.h:
+	* tao/IIOP_Connector.h:
+	* tao/IIOP_Connector.cpp:
+	* tao/UIOP_Connector.h:
+	* tao/UIOP_Connector.cpp:
+	  Declaring a method with return type "const char" is superfluous,
+	  "char" is enough. Some compilers don't like that.
+
 Wed May 26 20:21:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Pluggable.cpp:
