@@ -1,3 +1,13 @@
+Sun Oct 12 08:42:32 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/tests/DSRT_MIF/MIF.cpp:
+	* Kokyu/tests/DSRT_MIF/Makefile: 
+	* Kokyu/tests/FIFO/test.cpp:
+	* Kokyu/tests/FIFO/README:	
+	* Kokyu/tests/EDF/README:	
+	* Kokyu/tests/EDF/test.cpp: Added more output info
+	  statements. Added README for the examples.
+
 Sat Oct 11 23:48:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/tao_other_tests.lst:
