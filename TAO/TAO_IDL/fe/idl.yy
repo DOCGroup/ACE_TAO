@@ -411,6 +411,7 @@ interface :
 	   */
 	  UTL_Scope* s = idl_global->scopes()->top();
 	  AST_Interface* m = AST_Interface::narrow_from_scope (s);
+	  m->inherited_name_clash ();
 	  UTL_StrList *p = m->pragmas ();
 	  if (p != 0)
 		p = (UTL_StrList*)p->copy ();
@@ -517,6 +518,7 @@ value_concrete_decl :
 	   */
 	  UTL_Scope* s = idl_global->scopes()->top();
 	  AST_Interface* m = AST_Interface::narrow_from_scope (s);
+	  m->inherited_name_clash ();
 	  UTL_StrList *p = m->pragmas ();
 	  if (p != 0) p = (UTL_StrList*)p->copy ();
 	  idl_global->set_pragmas (p);
@@ -570,7 +572,7 @@ value_abs_decl :
 	   */
 	  UTL_Scope* s = idl_global->scopes()->top();
 	  AST_Interface* m = AST_Interface::narrow_from_scope (s);
-          m->inherited_name_clash ();
+	  m->inherited_name_clash ();
 	  UTL_StrList *p = m->pragmas ();
 	  if (p != 0) p = (UTL_StrList*)p->copy ();
 	  idl_global->set_pragmas (p);
