@@ -9,13 +9,13 @@
 //    Cubit_Task.cpp
 //
 // = AUTHOR
-//    Andy Gokhale, Sumedh Mungee, and Sergio Flores-Gaitan
+//    Andy Gokhale, Sumedh Mungee, Sergio Flores-Gaitan
 //
 // ============================================================================
 
 #include "ace/Sched_Params.h"
-#include "server.h"
 #include "Globals.h"
+#include "Cubit_Task.h"
 
 Cubit_Task::Cubit_Task (void)
 {
@@ -123,24 +123,11 @@ Cubit_Task::initialize_orb (void)
           ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_, 1));
           GLOBALS::instance ()->ready_ = 1;
           GLOBALS::instance ()->ready_cnd_.broadcast ();
-
-          // @@ Naga, why don't we just wait until the end of this
-          // block to automatically release the guard?  Using
-          // release() here seems "ugly!"
-          ready_mon.release ();
-
-          if (GLOBALS::instance ()->barrier_ == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%t)Unable to create barrier\n"),
-                              -1);
         }
 
       if (GLOBALS::instance ()->use_name_service == 0)
         return 0;
-      // Initialize the naming services.  <init> should be able to be
-      // passed the command line arguments, but it isn't possible
-      // here, so use default values.
-      // @@ Naga, can you please explain why this isn't possible?!
+      // Initialize the TAO_Naming_Client.
       if (my_name_client_.init (orb_.in ()) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize "

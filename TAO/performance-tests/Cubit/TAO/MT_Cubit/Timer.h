@@ -4,7 +4,8 @@
 #if !defined (_MT_CUBIT_TIMER_H)
 #define _MT_CUBIT_TIMER_H
 
-#include "Task_Client.h"
+#include "ace/OS.h"
+#include "ace/High_Res_Timer.h"
 
 class MT_Cubit_Timer
 {

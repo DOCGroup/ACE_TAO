@@ -20,6 +20,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Synch_T.h"
 #include "ace/Sched_Params.h"
+#include "ace/Singleton.h"
 
 #if defined (VXWORKS) && defined (VME_DRIVER)
 #define VX_VME_INIT \
@@ -41,6 +42,18 @@ if (status != OK)\
 #define TIME_IN_MICROSEC(X) \
 (X * ACE_ONE_SECOND_IN_USECS)
 #endif /* !ACE_LACKS_FLOATING_POINT */
+
+#define THREAD_PER_RATE_OBJS 4
+// Number of cubit objects in the thread per rate test.
+
+#define TASK_ID_LEN 32
+// length of the task id ,used in vxworks.
+
+#define PRIORITY_INCR 25
+// added to ACE_THR_PRI_FIFO_DEF for non vxworks and non win32 platforms.
+
+#define TASKNAME_LEN 14
+// Length of the task name in the task control block for vxworks.
 
 class Globals
 {
@@ -97,13 +110,21 @@ public:
   // the orb.
 };
 
+// Make the globals a Singleton.
+typedef ACE_Singleton<Globals,ACE_Null_Mutex> GLOBALS;
+
 class MT_Priority
 {
   // = TITLE
-  //   @@ Naga, please fill in here...
+  //     Helper class to find high and low priorities for the
+  //     MT_Cubit application over multiple platforms.
   //
   // = DESCRIPTION
-  //   @@ Naga, please fill in here...
+  //     This class has 2 methods, one for the high priority and the
+  //     other for low priority.If the flag use_multiple_priority is
+  //     passed then multiple priorities are used for the low priority
+  //     threads.
+
 public:
   MT_Priority (void);
   // constructor.

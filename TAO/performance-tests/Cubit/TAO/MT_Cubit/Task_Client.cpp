@@ -129,9 +129,7 @@ Task_State::parse_args (int argc,char **argv)
     }
 
   if (thread_per_rate_ == 1)
-    // @@ Naga, can you please use the same symbolic constant that is
-    // used on the server side in place of this magic number?
-    thread_count_ = 4;
+    thread_count_ = THREAD_PER_RATE_OBJS;
 
   if (use_utilization_test_ == 1)
     {
@@ -194,19 +192,19 @@ Task_State::parse_args (int argc,char **argv)
                         -1);
     }
   else
-    ACE_NEW_RETURN (barrier_,
+    ACE_NEW_RETURN (this->barrier_,
                     ACE_Barrier (thread_count_),
                     -1);
-  ACE_NEW_RETURN (semaphore_,
+  ACE_NEW_RETURN (this->semaphore_,
                   ACE_Thread_Semaphore (0),
                   -1);
-  ACE_NEW_RETURN (latency_,
+  ACE_NEW_RETURN (this->latency_,
                   ACE_timer_t [thread_count_],
                   -1);
-  ACE_NEW_RETURN (global_jitter_array_,
+  ACE_NEW_RETURN (this->global_jitter_array_,
                   ACE_timer_t *[thread_count_],
                   -1);
-  ACE_NEW_RETURN (count_,
+  ACE_NEW_RETURN (this->count_,
                   u_int [thread_count_],
                   -1);
   return 0;
@@ -238,8 +236,16 @@ Client::Client (ACE_Thread_Manager *thread_manager,
   : ACE_MT (ACE_Task<ACE_MT_SYNCH> (thread_manager)),
     cubit_impl_ (0),
     ts_ (ts),
-    id_ (id)
+    id_ (id),
+    frequency_ (0),
+    naming_success_ (0)
 {
+}
+
+ACE_INLINE int
+Client::func (u_int i)
+{
+  return i - 117;
 }
 
 void
@@ -278,8 +284,7 @@ Client::get_low_priority_latency (void)
        i++)
     l += (ACE_timer_t) this->ts_->latency_[i];
 
-  // @@ Naga, can you please add a comment that explains what this
-  // computation is doing?
+  // Return the average latency for the low priority threads.
   return l / (ACE_timer_t) (this->ts_->thread_count_ - 1);
 }
 
@@ -410,17 +415,74 @@ Client::get_jitter (u_int id)
   return sqrt (jitter / (number_of_samples - 1));
 }
 
-int
-Client::svc (void)
+void
+Client::find_frequency (void)
 {
-  CORBA::ORB_var orb;
-  CORBA::Object_var objref (0);
-  CORBA::Object_var naming_obj (0);
-  CORBA::Environment env;
+    if (this->ts_->thread_per_rate_ == 0)
+      {
+        if (this->id_ == 0)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) I'm the high priority client, my id is %d.\n",
+                        this->id_));
+            this->frequency_ = CB_HIGH_PRIORITY_RATE;
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) I'm a low priority client, my id is %d.\n",
+                        this->id_));
+            this->frequency_ = CB_LOW_PRIORITY_RATE;
+          }
+      }
+    else
+      switch (this->id_)
+        {
+        case CB_20HZ_CONSUMER:
+          this->frequency_ = CB_20HZ_CONSUMER_RATE;
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) I'm a %u Hz frequency client, "
+                      "my id is %u.\n",
+                      CB_20HZ_CONSUMER_RATE,
+                      this->id_));
+          break;
+        case CB_10HZ_CONSUMER:
+          this->frequency_ = CB_10HZ_CONSUMER_RATE;
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) I'm a %u Hz frequency client, "
+                      "my id is %u.\n",
+                      CB_10HZ_CONSUMER_RATE,
+                      this->id_));
+          break;
+        case CB_5HZ_CONSUMER:
+          this->frequency_ = CB_5HZ_CONSUMER_RATE;
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) I'm a %u Hz frequency client, "
+                      "my id is %u.\n",
+                      CB_5HZ_CONSUMER_RATE,
+                      this->id_));
+          break;
+        case CB_1HZ_CONSUMER:
+          this->frequency_ = CB_1HZ_CONSUMER_RATE;
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) I'm a %u Hz frequency client, "
+                      "my id is %u.\n",
+                      CB_1HZ_CONSUMER_RATE,
+                      this->id_));
+          break;
+        default:
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) Invalid Thread ID!!!!\n",
+                      this->id_));
+        }
+}
 
-  ACE_timer_t frequency = 0.0;
-
-  ACE_DEBUG ((LM_DEBUG,
+int
+Client::init_orb (void)
+{
+  TAO_TRY
+    {
+      ACE_DEBUG ((LM_DEBUG,
               "I'm thread %t\n"));
 
   // Add "-ORBobjrefstyle url" argument to the argv vector for the orb
@@ -446,18 +508,11 @@ Client::svc (void)
   int argc = tmp_args2.argc ();
   char **argv = tmp_args2.argv ();
 
-  u_int naming_success = 0;
-
-  orb = CORBA::ORB_init (argc,
+  this->orb_ = CORBA::ORB_init (argc,
                          argv,
                          "internet",
-                         env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("ORB_init()\n");
-      return -1;
-    }
-
+                         TAO_TRY_ENV);
+  TAO_CHECK_ENV;
   if (this->id_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -479,145 +534,114 @@ Client::svc (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) ORB_init success\n"));
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Client::Orb_init ()");
+      return -1;
+    }
+  TAO_ENDTRY;
+  return 0;
+}
 
-  if (this->ts_->use_name_service_ != 0)
+int
+Client::get_cubit_from_naming (void)
+{
+  CORBA::Object_var objref (0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->ts_->lock_, -1));
+  TAO_TRY
     {
       // Initialize the naming services.
-      if (my_name_client_.init (orb.in (), argc, argv) != 0)
+      if (my_name_client_.init (this->orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
                            "the TAO_Naming_Client. \n"),
                           -1);
-    }
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->ts_->lock_, -1));
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Out of ACE_MT\n"));
 
-    if (this->ts_->thread_per_rate_ == 0)
-      {
-        if (this->id_ == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%t) I'm the high priority client, my id is %d.\n",
-                        this->id_));
-            frequency = CB_HIGH_PRIORITY_RATE;
-          }
-        else
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%t) I'm a low priority client, my id is %d.\n",
-                        this->id_));
-            frequency = CB_LOW_PRIORITY_RATE;
-          }
-      }
-    else
-      switch (this->id_)
+      // If the naming service was resolved successsfully ...
+      if (!CORBA::is_nil (this->my_name_client_.get_context ()))
         {
-        case CB_20HZ_CONSUMER:
-          frequency = CB_20HZ_CONSUMER_RATE;
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) I'm a %u Hz frequency client, "
-                      "my id is %u.\n",
-                      CB_20HZ_CONSUMER_RATE,
-                      this->id_));
-          break;
-        case CB_10HZ_CONSUMER:
-          frequency = CB_10HZ_CONSUMER_RATE;
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) I'm a %u Hz frequency client, "
-                      "my id is %u.\n",
-                      CB_10HZ_CONSUMER_RATE,
-                      this->id_));
-          break;
-        case CB_5HZ_CONSUMER:
-          frequency = CB_5HZ_CONSUMER_RATE;
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) I'm a %u Hz frequency client, "
-                      "my id is %u.\n",
-                      CB_5HZ_CONSUMER_RATE,
-                      this->id_));
-          break;
-        case CB_1HZ_CONSUMER:
-          frequency = CB_1HZ_CONSUMER_RATE;
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) I'm a %u Hz frequency client, "
-                      "my id is %u.\n",
-                      CB_1HZ_CONSUMER_RATE,
-                      this->id_));
-          break;
-        default:
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) Invalid Thread ID!!!!\n",
-                      this->id_));
+                      " (%t) ----- Using the NameService resolve() method"
+                      " to get cubit objects -----\n"));
+
+          // Construct the key for the name service lookup.
+          CosNaming::Name mt_cubit_context_name (1);
+          mt_cubit_context_name.length (1);
+          mt_cubit_context_name[0].id =
+            CORBA::string_dup ("MT_Cubit");
+
+          objref =
+            this->my_name_client_->resolve (mt_cubit_context_name,
+                                            TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          this->mt_cubit_context_ =
+            CosNaming::NamingContext::_narrow (objref.in (),
+                                               TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          char *buffer;
+          int l = ACE_OS::strlen (this->ts_->key_) + 3;
+          ACE_NEW_RETURN (buffer,
+                          char[l],
+                          -1);
+
+          ACE_OS::sprintf (buffer,
+                           "%s%02d",
+                           (char *) this->ts_->key_,
+                           this->id_);
+
+          // Construct the key for the name service lookup.
+          CosNaming::Name cubit_name (1);
+          cubit_name.length (1);
+          cubit_name[0].id = CORBA::string_dup (buffer);
+
+          objref = this->mt_cubit_context_->resolve (cubit_name,
+                                                     TAO_TRY_ENV);
+
+          if (TAO_TRY_ENV.exception () != 0
+              || CORBA::is_nil (objref.in ()))
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          " (%t) resolve() returned nil\n"));
+              TAO_TRY_ENV.print_exception 
+                ("Attempt to resolve() a cubit object"
+                 "using the name service Failed!\n");
+            }
+          else
+            {
+              this->naming_success_ = 1;
+              ACE_DEBUG ((LM_DEBUG,
+                          " (%t) Cubit object resolved to the name \"%s\".\n",
+                          buffer));
+            }
         }
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Client::get_cubit_from_naming");
+      return 1;
+    }
+  TAO_ENDTRY;
+}
 
-    TAO_TRY
-      {
-        // If the naming service was resolved successsfully ...
-        if (!CORBA::is_nil (this->my_name_client_.get_context ()))
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        " (%t) ----- Using the NameService resolve() method"
-                        " to get cubit objects -----\n"));
+int
+Client::get_cubit (void)
+{
+  int result;
+  CORBA::Object_var objref (0);
 
-            // Construct the key for the name service lookup.
-            CosNaming::Name mt_cubit_context_name (1);
-            mt_cubit_context_name.length (1);
-            mt_cubit_context_name[0].id =
-              CORBA::string_dup ("MT_Cubit");
-
-            objref =
-              this->my_name_client_->resolve (mt_cubit_context_name,
-                                              TAO_TRY_ENV);
-            TAO_CHECK_ENV;
-
-            this->mt_cubit_context_ =
-              CosNaming::NamingContext::_narrow (objref.in (),
-                                                 TAO_TRY_ENV);
-            TAO_CHECK_ENV;
-
-            char *buffer;
-            int l = ACE_OS::strlen (this->ts_->key_) + 3;
-            ACE_NEW_RETURN (buffer,
-                            char[l],
-                            -1);
-
-            ACE_OS::sprintf (buffer,
-                             "%s%02d",
-                             (char *) this->ts_->key_,
-                             this->id_);
-
-            // Construct the key for the name service lookup.
-            CosNaming::Name cubit_name (1);
-            cubit_name.length (1);
-            cubit_name[0].id = CORBA::string_dup (buffer);
-
-            objref = this->mt_cubit_context_->resolve (cubit_name,
-                                                       TAO_TRY_ENV);
-
-            if (TAO_TRY_ENV.exception () != 0
-                || CORBA::is_nil (objref.in ()))
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            " (%t) resolve() returned nil\n"));
-                TAO_TRY_ENV.print_exception 
-                  ("Attempt to resolve() a cubit object"
-                   "using the name service Failed!\n");
-              }
-            else
-              {
-                naming_success = 1;
-                ACE_DEBUG ((LM_DEBUG,
-                            " (%t) Cubit object resolved to the name \"%s\".\n",
-                            buffer));
-              }
-          }
-
-        if (naming_success == 0)
-          {
-            char *my_ior =
-              this->ts_->use_utilization_test_ == 1
+  TAO_TRY
+    {
+  if (this->ts_->use_name_service_ != 0)
+    result = this->get_cubit_from_naming ();
+  else
+    {
+      if (this->naming_success_ == 0)
+        {
+          char *my_ior =
+            this->ts_->use_utilization_test_ == 1
               ? this->ts_->one_ior_
               : this->ts_->iors_[this->id_];
 
@@ -647,7 +671,7 @@ Client::svc (void)
                                  "Must specify valid factory ior key with -k option,"
                                  " naming service, or ior filename\n"),
                                 -1);
-            objref = orb->string_to_object (my_ior,
+            objref = this->orb_->string_to_object (my_ior,
                                             TAO_TRY_ENV);
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t)  String_to_object success\n"));
@@ -677,68 +701,78 @@ Client::svc (void)
                     "(%t) Binding succeeded\n"));
 
         CORBA::String_var str =
-          orb->object_to_string (this->cubit_, TAO_TRY_ENV);
+          this->orb_->object_to_string (this->cubit_, TAO_TRY_ENV);
         TAO_CHECK_ENV;
 
         ACE_DEBUG ((LM_DEBUG,
                     "(%t) CUBIT OBJECT connected <%s>\n",
                     str.in ()));
+    }
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Client::get_cubit");
+      return 1;
+    }
+  TAO_ENDTRY;
+}
 
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%t) Waiting for other threads to "
-                    "finish binding..\n"));
-      }
-    TAO_CATCHANY
-      {
-        TAO_TRY_ENV.print_exception ("get_object");
-        return 1;
-      }
-    TAO_ENDTRY;
-  }
-
+int
+Client::svc (void)
+{
+  int result;
+  // initialize the ORB.
+  result = this->init_orb ();
+  if (result < 0)
+    return result;
+  // find the frequency of CORBA requests based on thread id.
+  this->find_frequency ();
+  // get the cubit object either from naming service or from the ior file.
+  result = this->get_cubit ();
+  if (result < 0)
+    return result;
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) Waiting for other threads to "
+              "finish binding..\n"));
   // Wait for all the client threads to be initialized before going
   // any further.
   this->ts_->barrier_->wait ();
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Everyone's done, here I go!!\n"));
-
   if (this->ts_->oneway_ == 1)
     ACE_DEBUG ((LM_DEBUG,
                 "(%t) **** USING ONEWAY CALLS ****\n"));
 
   // Perform the tests.
-  int result = this->run_tests (this->cubit_,
-                                this->ts_->loop_count_,
-                                this->id_,
-                                this->ts_->datatype_,
-                                frequency);
-
+  result = this->run_tests ();
+  if (result < 0)
+    return result;
+  // release the semaphore
   if (this->ts_->thread_per_rate_ == 1
       && this->id_ == this->ts_->thread_count_ - 1)
     this->ts_->semaphore_->release (this->ts_->thread_count_ - 1);
   else
     this->ts_->semaphore_->release ();
-
-  if (result == -1)
-    return -1;
-
-  if (this->ts_->shutdown_)
+  // shutdown the server if necessary.
+  TAO_TRY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) CALLING SHUTDOWN() ON THE SERVANT\n"));
-      this->cubit_->shutdown (env);
-
-      if (env.exception () != 0)
+      if (this->ts_->shutdown_)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "Shutdown of the server failed!\n"));
-          env.print_exception ("shutdown() call failed.\n");
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) CALLING SHUTDOWN() ON THE SERVANT\n"));
+          this->cubit_->shutdown (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
     }
-
+  TAO_CATCHANY
+    {
+     ACE_ERROR ((LM_ERROR,
+                      "Shutdown of the server failed!\n"));
+          TAO_TRY_ENV.print_exception ("shutdown() call failed.\n");
+    }
+  TAO_ENDTRY;
   // Delete dynamic memory
   CORBA::release (this->cubit_);
-
   return 0;
 }
 
@@ -913,7 +947,7 @@ Client::cube_struct (void)
 }
 
 int
-Client::make_calls (void)
+Client::make_request (void)
 {
   int result;
 
@@ -967,55 +1001,68 @@ Client::make_calls (void)
   return 0;
 }
 
-int
-Client::run_tests (Cubit_ptr cb,
-                   u_int loop_count,
-                   u_int thread_id,
-                   Cubit_Datatypes datatype,
-                   ACE_timer_t frequency)
+void
+Client::print_stats (void)
 {
-  // @@ Naga, can you please try to factor out code to reduce the size
-  // of this method?!
+  // Perform latency stats only if we are not running the utilization
+  // tests.
+  if (this->call_count_ > 0 
+      && this->ts_->use_utilization_test_ == 0)
+    {
+      if (this->error_count_ == 0)
+        {
+          ACE_timer_t calls_per_second =
+            TIME_IN_MICROSEC (this->call_count_) / this->latency_;
+
+          // Calculate average this->latency_.
+          this->latency_ = this->latency_/this->call_count_;
+
+          if (this->latency_ > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) cube average call ACE_OS::time\t= %A usec, \t"
+                          "%A calls/second\n",
+                          this->latency_,
+                          calls_per_second));
+              this->put_latency (this->my_jitter_array_,
+                                 TIME_IN_MICROSEC (this->latency_),
+                                 this->id_,
+                                 this->call_count_);
+            }
+          else
+            {
+              // Still we have to call this function to store a valid
+              // array pointer.
+              this->put_latency (this->my_jitter_array_,
+                                 0,
+                                 this->id_,
+                                 this->call_count_);
+
+              ACE_DEBUG ((LM_DEBUG,
+                          "*** Warning: Latency, %f, is less than or equal to zero."
+                          "  Precision may have been lost.\n, this->latency_"));
+            }
+        }
+      ACE_DEBUG ((LM_DEBUG,
+                  "%d calls, %d errors\n",
+                  this->call_count_,
+                  this->error_count_));
+    }
+}
+
+int
+Client::do_test (void)
+{
+  u_int i;
   int result;
-  CORBA::Environment env;
-  u_int i = 0;
-  u_int low_priority_client_count = this->ts_->thread_count_ - 1;
-  ACE_timer_t *my_jitter_array;
-
-  this->cubit_ = cb;
-
-  if (id_ == 0 
-      && this->ts_->thread_count_ > 1)
-    // @@ Naga, can you please generalize these magic numbers?
-    ACE_NEW_RETURN (my_jitter_array,
-                    ACE_timer_t [(loop_count/this->ts_->granularity_) * 30],
-                    -1);
-  else
-    ACE_NEW_RETURN (my_jitter_array,
-                    ACE_timer_t [loop_count/this->ts_->granularity_ * 15],
-                    -1);
-  ACE_timer_t latency = 0;
-  ACE_timer_t sleep_time = // usec
-    (1 / frequency) * ACE_ONE_SECOND_IN_USECS * this->ts_->granularity_; 
   ACE_timer_t delta = 0;
-
-  // Time to wait for utilization tests to know when to stop.
-  ACE_Time_Value max_wait_time (this->ts_->util_time_, 0);
-  ACE_Countdown_Time countdown (&max_wait_time);
-
-  MT_Cubit_Timer timer (this->ts_->granularity_);
-
-  // Elapsed time will be in microseconds.
-  ACE_Time_Value delta_t;
-
-  if (this->ts_->use_utilization_test_ == 1)
-    timer.start ();
-
-  // Make the calls in a loop.
+  u_int low_priority_client_count = this->ts_->thread_count_ - 1;
+  ACE_timer_t sleep_time = // usec
+    (1 / this->frequency_) * ACE_ONE_SECOND_IN_USECS * this->ts_->granularity_; 
 
   for (i = 0;
        // keep running for loop count, OR
-       i < loop_count 
+       i < this->ts_->loop_count_ 
        // keep running if we are the highest priority thread and at
        // least another lower client thread is running, OR
        || (id_ == 0 && this->ts_->thread_count_ > 1) 
@@ -1036,11 +1083,11 @@ Client::run_tests (Cubit_ptr cb,
                                        ? 0
                                        : sleep_time - delta));
           ACE_OS::sleep (tv);
-          timer.start ();
+          this->timer_->start ();
         }
       this->num_ = i;
-      // make calls to the server object depending on the datatype.
-      result = this->make_calls ();
+      // make a request to the server object depending on the datatype.
+      result = this->make_request ();
 
       if (result < 0)
         return 2;
@@ -1049,20 +1096,22 @@ Client::run_tests (Cubit_ptr cb,
       if ((i % this->ts_->granularity_) == this->ts_->granularity_ - 1 
           && this->ts_->use_utilization_test_ == 0)
         {
-          timer.stop ();
+          this->timer_->stop ();
 
           // Calculate time elapsed.
           ACE_timer_t real_time;
-          real_time = timer.get_elapsed ();
+          real_time = this->timer_->get_elapsed ();
 
-          // @@ Naga, can you please explain this computation?!
+          // Recalculate delta = 0.4 * elapsed_time + 0.6 *
+          // delta. This is used to adjust the sleeping time so that
+          // we make calls at the required frequency.
           delta = 
             (ACE_timer_t) 40 * fabs (TIME_IN_MICROSEC (real_time))
             / (ACE_timer_t) 100 + (ACE_timer_t) 60 * delta/ 100;
 
-          latency += real_time * this->ts_->granularity_;
+          this->latency_ += real_time * this->ts_->granularity_;
 
-          my_jitter_array [i/this->ts_->granularity_] =
+          this->my_jitter_array_ [i/this->ts_->granularity_] =
             TIME_IN_MICROSEC (real_time);
         } 
       if (this->ts_->thread_per_rate_ == 1 
@@ -1088,66 +1137,50 @@ Client::run_tests (Cubit_ptr cb,
           }
 
     } /* end of for () */
+  return 0;
+}
+
+int
+Client::run_tests (void)
+{
+  int result;
+  // %% Naga, This has to be replaced by ACE_Array .Thanx to Sergio for the idea.
+  if (id_ == 0 
+      && this->ts_->thread_count_ > 1)
+    ACE_NEW_RETURN (this->my_jitter_array_,
+                    ACE_timer_t [(this->ts_->loop_count_/this->ts_->granularity_)*30],
+                    -1);
+  else
+    ACE_NEW_RETURN (this->my_jitter_array_,
+                    ACE_timer_t [(this->ts_->loop_count_/this->ts_->granularity_)*15],
+                    -1);
+
+  // Time to wait for utilization tests to know when to stop.
+  ACE_Time_Value max_wait_time (this->ts_->util_time_, 0);
+  ACE_Countdown_Time countdown (&max_wait_time);
+
+  ACE_NEW_RETURN (this->timer_,
+                  MT_Cubit_Timer (this->ts_->granularity_),
+                  -1);
+  if (this->ts_->use_utilization_test_ == 1)
+    this->timer_->start ();
+
+  // Make the calls in a loop.
+  if ((result = this->do_test ()) != 0)
+    return result;
 
   if (id_ == 0)
     this->ts_->high_priority_loop_count_ =
       this->call_count_;
-
   if (this->ts_->use_utilization_test_ == 1)
     {
-      timer.stop ();
-      ACE_timer_t util_time = timer.get_elapsed ();
+      this->timer_->stop ();
+      ACE_timer_t util_time = this->timer_->get_elapsed ();
       this->ts_->util_test_time_ = util_time;
     }
-
-  // Perform latency stats only if we are not running the utilization
-  // tests.
-  if (this->call_count_ > 0 
-      && this->ts_->use_utilization_test_ == 0)
-    {
-      if (this->error_count_ == 0)
-        {
-          ACE_timer_t calls_per_second =
-            TIME_IN_MICROSEC (this->call_count_) / latency;
-
-          // Calculate average latency.
-          latency = latency/this->call_count_;
-
-          if (latency > 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) cube average call ACE_OS::time\t= %A usec, \t"
-                          "%A calls/second\n",
-                          latency,
-                          calls_per_second));
-              this->put_latency (my_jitter_array,
-                                 TIME_IN_MICROSEC (latency),
-                                 thread_id,
-                                 this->call_count_);
-            }
-          else
-            {
-              // Still we have to call this function to store a valid
-              // array pointer.
-              this->put_latency (my_jitter_array,
-                                 0,
-                                 thread_id,
-                                 this->call_count_);
-
-              ACE_DEBUG ((LM_DEBUG,
-                          "*** Warning: Latency, %f, is less than or equal to zero."
-                          "  Precision may have been lost.\n, latency"));
-            }
-        }
-      ACE_DEBUG ((LM_DEBUG,
-                  "%d calls, %d errors\n",
-                  this->call_count_,
-                  this->error_count_));
-    }
-
+  this->print_stats ();
   // Delete the dynamically allocated memory
-  delete [] my_jitter_array;
-
+  delete [] this->my_jitter_array_;
   return 0;
 }
 

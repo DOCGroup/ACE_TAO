@@ -10,7 +10,7 @@
 //    server.h
 //
 // = AUTHOR
-//    Andy Gokhale, Sumedh Mungee, and Sergio Flores-Gaitan
+//    Andy Gokhale, Sumedh Mungee,Sergio Flores-Gaitan and Nagarajan Surendran.
 //
 // ============================================================================
 
@@ -43,6 +43,7 @@
 #include "Task_Client.h"
 #include "Util_Thread.h"
 #include "Globals.h"
+#include "Cubit_Task.h"
 
 #if defined (VME_DRIVER)
 #include <hostLib.h>
@@ -50,82 +51,7 @@ extern "C" STATUS vmeDrv (void);
 extern "C" STATUS vmeDevCreate (char *);
 #endif /* VME_DRIVER */
 
-// Make the globals a Singleton.
-typedef ACE_Singleton<Globals,ACE_Null_Mutex> GLOBALS;
-
-// @@ Naga, can you please split this class into a separate file
-// called Cubit_Task.h?  It looks odd in a file called server.h!
-
-class Cubit_Task : public ACE_Task<ACE_MT_SYNCH>
-{
-  // = TITLE
-  //    Encapsulates an ORB for the Cubit application.
-public:
-  Cubit_Task (const char *args,
-              const char* orbname,
-              u_int num_of_objs,
-	      ACE_Thread_Manager *thr_mgr,
-	      u_int task_id);
-  // Constructor.
-
-  virtual int svc (void);
-  // Active Object entry point.
-
-  CORBA::String get_servant_ior (u_int index);
-  // @@ Naga, can you please comment this?
-
-protected:
-  Cubit_Task (void);
-  // No-op constructor.
-
-private:
-  int initialize_orb (void);
-  // Initialize the ORB, and POA.
-
-  int create_servants (void);
-  // Create the servants.
-
-  CORBA::String key_;
-  // All cubit objects will have this as prefix to its key.
-
-  char *orbname_;
-  // Name of the ORB.
-
-  char *orbargs_;
-  // ORB arguments.
-
-  u_int num_of_objs_;
-  // Number of objects we're managing.
-
-  CORBA::ORB_var orb_;
-  // Pointer to the ORB
-
-  Cubit_i **servants_;
-  // Array to hold the servants.
-
-  CORBA::String *servants_iors_;
-  // IOR strings of the servants.
-
-  //CosNaming::NamingContext_var naming_context_;
-  // Object reference to the naming service.
-
-  u_int task_id_;
-  // ID used for naming service object name.
-
-  CosNaming::NamingContext_var mt_cubit_context_;
-  // Context where all MT Cubit objects will be created.
-
-  TAO_ORB_Manager orb_manager_;
-  // The TAO ORB Manager.
-
-  TAO_Naming_Client my_name_client_;
-  // An instance of the name client used for resolving the factory
-  // objects.
-};
-
-// @@ Naga, why do we inherit this "public virtual?"  Isn't "virtual"
-// good enough?  
-class Server : public virtual MT_Priority
+class Server  
 {
   // = TITLE
   //     A multithreaded cubit server class.
@@ -194,7 +120,7 @@ private:
   // when there are more threads than priorities.
 
   u_int counter_;
-  // @@ Naga, can you please comment this?
+  // count of the number of priorities used within a grain.
 
   ACE_ARGV *high_argv_;
   // argv passed to the high priority servant.
@@ -204,8 +130,6 @@ private:
 
   MT_Priority priority_;
   // Priority helper object.
-  // @@ Naga, why do we both inherit from MT_Priority and also define
-  // an instance of it?
 };
 
 #endif /* SERVER_H */
