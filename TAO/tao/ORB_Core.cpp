@@ -1661,11 +1661,12 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
 }
 
 void
-TAO_ORB_Core::load_policy_validators (TAO_Policy_Validator &validator)
+TAO_ORB_Core::load_policy_validators (TAO_Policy_Validator &validator
+                                      ACE_ENV_ARG_DECL)
 {
   // Call the BiDir library if it has been loaded
   if (this->bidir_adapter_)
-    this->bidir_adapter_->load_policy_validators (validator);
+    this->bidir_adapter_->load_policy_validators (validator ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr

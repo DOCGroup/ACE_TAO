@@ -25,6 +25,12 @@ TAO_Policy_Validator::~TAO_Policy_Validator (void)
     }
 }
 
+TAO_ORB_Core & 
+TAO_Policy_Validator::orb_core() const
+{ 
+  return this->orb_core_;
+}
+
 void
 TAO_Policy_Validator::add_validator (TAO_Policy_Validator *validator)
 {
