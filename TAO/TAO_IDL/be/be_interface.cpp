@@ -1424,13 +1424,9 @@ be_interface::cleanup_gperf_temp_file (void)
   // Codegen singleton.
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-#if ! defined (linux)
-  // RedHat Linux 5.1/Intel core dumps if ss is deleted.
-
   // Delete the stream ptr.
   TAO_OutStream *ss = cg->gperf_input_stream ();
   delete ss;
-#endif /* ! linux */
 
   // Delete the temp file.
   ACE_OS::unlink (cg->gperf_input_filename ());
