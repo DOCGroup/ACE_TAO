@@ -51,6 +51,15 @@ class ACE_Export ACE_High_Res_Timer
   //     ACE_hrtime_t values.  If ACE_hrtime_t is not a 64-bit type
   //     (ACE_HAS_LONGLONG_T), then those calculations are more susceptible
   //     to overflow.  Those methods do _not_ check for overflow!
+  //
+  //     NOTE:  Gabe <begeddov@proaxis.com> raises this issue regarding
+  //     ACE_OS::gethrtime ():  on multi-processors, the processor that you
+  //     query for your timer.stop () value might not be the one you queried
+  //     for timer.stop ().  Its not clear how much divergence there would be,
+  //     if any.
+  //
+  //     This issue is not mentioned in the Solaris 2.5.1 gethrtime man
+  //     page.
 {
 public:
   // = Initialization method.
@@ -110,14 +119,14 @@ public:
   // calls to start_incr and stop_incr.
 
   void print_total (const char *message,
-		    const int iterations = 1,
-		    ACE_HANDLE handle = ACE_STDOUT);
+                    const int iterations = 1,
+                    ACE_HANDLE handle = ACE_STDOUT);
   // Print total time.  NOTE:  only use print_total ()
   // if incremental timings had been used!
 
   void print_ave (const char *message,
-		  const int iterations = 1,
-		  ACE_HANDLE handle = ACE_STDOUT);
+                  const int iterations = 1,
+                  ACE_HANDLE handle = ACE_STDOUT);
   // Print average time.
 
   void dump (void) const;
@@ -150,7 +159,7 @@ protected:
 
 private:
   static void hrtime_to_tv (ACE_Time_Value &tv,
-			    ACE_hrtime_t hrt);
+                            ACE_hrtime_t hrt);
   // Converts an <hrt> to <tv> using global_scale_factor_.
 
   static ACE_hrtime_t gettime ();
