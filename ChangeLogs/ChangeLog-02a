@@ -1,3 +1,26 @@
+Tue Oct 10 16:34:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32-common.h: Changed ACE_HAS_SVC_DLL to
+	  ACE_SVC_HAS_DLL and commented out its definition.  The default
+	  definition of ACE_SVC_HAS_DLL has been moved to
+	  ace/Svc_export.h.  The comment-out code here only serves as a
+	  reminder to users.  Thanks to McCurry <mccurry@my-deja.com> for
+	  pointing this out.
+
+	* netsvcs/lib/Base_Optimizer.cpp:  Removed redundant definition of
+	  ACE_BUILD_DLL.
+
+	* ace/ACE_export.h:
+	* ace/OS_Export.h:
+	  Added a new macro ACE_AS_STATIC_LIBS that controls the default
+	  value of ACE_OS_HAS_DLL and ACE_HAS_DLL so we can build static
+	  ACE library easily.
+
+	* ace/ace_lib.dsp:
+	* apps/gperf/src/gperf.dsp:
+	* apps/gperf/src/gperf_lib.dsp:  Changed to use ACE_AS_STATIC_LIBS
+	  for static configurations.
+
 Mon Oct 09 16:45:00 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/Makefile:

@@ -3,8 +3,6 @@
 #if !defined (BASE_OPTIMIZER_CPP)
 #define BASE_OPTIMIZER_CPP
 
-#define ACE_BUILD_DLL
-
 #include "Base_Optimizer.h"
 
 ACE_RCSID(lib, Base_Optimizer, "$Id$")
