@@ -1,3 +1,17 @@
+Thu Aug 26 16:45:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL3/Lookup/README:
+        * tests/IDL3/Lookup/lookup_test.idl:
+        * tests/IDL3/Lookup/lookup_test.mpc:
+        
+          New files, a test for the IDL compiler lookup of declarations
+          in base interfaces, valuetypes, components, and homes, and
+          in supported interfaces, referenced by the local name in the
+          derived IDL type. Thanks to Boris Kolpackov 
+          <boris@dre.vanderbilt.edu> for reporting the bug and for
+          providing an example IDL file that illustrates the various
+          cases.
+
 Thu Aug 26 13:24:40 2004  Gan Deng <gan.deng@vanderbilt.edu>
 
         * DAnCE/examples/BaiscSP/*.*:
