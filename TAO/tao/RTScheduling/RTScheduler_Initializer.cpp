@@ -34,13 +34,9 @@ void
   //
 
   // Create the RT_Current.
-    // @@ This is busted.  TAO_ORBInitInfo should do proper reference
-  //    counting.
 
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
-
-
 
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
                                                            ACE_ENV_ARG_PARAMETER);
@@ -60,12 +56,16 @@ void
 
   
   ACE_NEW_THROW_EX (this->current_,
-                    TAO_RTScheduler_Current (tao_info->orb_core ()),
+                    TAO_RTScheduler_Current,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
+  ACE_CHECK;
+
+  this->current_->init (tao_info->orb_core ()
+			ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_ptr current_obj = RTScheduling::Current::_narrow (this->current_
