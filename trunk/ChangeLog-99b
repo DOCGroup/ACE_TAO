@@ -1,3 +1,9 @@
+Thu Jul 22 15:12:18 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Codeset_IBM1047.{h,cpp}: wrapped with #ifdef ACE_MVS
+          so that the code doesn't occupy any space on platforms
+          other than MVS.
+
 Thu Jul 22 14:22:41 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Shared_Malloc/Malloc.cpp: fixed explicit
