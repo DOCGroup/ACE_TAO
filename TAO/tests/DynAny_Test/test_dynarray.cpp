@@ -93,12 +93,16 @@ Test_DynArray::run_test (void)
       CORBA::Any* out_any1 = ftc1.to_any (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       DynAnyTests::test_array_forany ta_out;
-      *out_any1 >>= ta_out;      
+      *out_any1 >>= ta_out; 
+      
       if (ta_out[(CORBA::ULong) 1] == data.m_long1)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
         ++this->error_count_;
+
+      // Created with NEW
+      delete out_any1;
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: set_elements/get_elements\n"));
@@ -122,6 +126,9 @@ Test_DynArray::run_test (void)
                    "++ OK ++\n"));
       else 
         ++this->error_count_;
+
+      // Created with NEW
+      delete as_out;
 
       fa1.destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;

@@ -121,7 +121,11 @@ TAO_DynArray_i::get_elements (CORBA::Environment& _env)
 
   // Initialize each Any.
   for (CORBA::ULong i = 0; i < length; i++)
-    (*elements)[i] = *this->da_members_[i]->to_any (_env);
+    {
+      CORBA::Any_ptr temp = this->da_members_[i]->to_any (_env);
+      (*elements)[i] = *temp;
+      delete temp;
+    }
 
   return elements;
 }
@@ -152,7 +156,6 @@ TAO_DynArray_i::set_elements (const AnySeq& value,
         this->da_members_[i] =
           TAO_DynAny_i::create_dyn_any (value[i],
                                         env);
-
       else
         {
           env.exception (new CORBA_DynAny::InvalidSeq);
@@ -268,6 +271,8 @@ TAO_DynArray_i::to_any (CORBA::Environment& _env)
       TAO_InputCDR field_cdr (field_mb);
 
       out_cdr.append (field_tc, &field_cdr, _env);
+
+      delete field_any;
     }
 
   TAO_InputCDR in_cdr (out_cdr);

@@ -131,7 +131,10 @@ TAO_DynStruct_i::get_members (CORBA::Environment& _env)
     {
       (*members)[i].id =
         CORBA::string_dup (this->type_.in ()->member_name (i));
-      (*members)[i].value = *this->da_members_[i]->to_any (_env);
+
+      CORBA::Any_ptr temp = this->da_members_[i]->to_any (_env);
+      (*members)[i].value = *temp;
+      delete temp;
     }
 
   return members;
@@ -268,6 +271,8 @@ TAO_DynStruct_i::to_any (CORBA::Environment& env)
       out_cdr.append (field_tc,
                       &field_cdr,
                       env);
+
+      delete field_any;
     }
 
   TAO_InputCDR in_cdr (out_cdr);

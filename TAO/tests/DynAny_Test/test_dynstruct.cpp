@@ -114,6 +114,9 @@ Test_DynStruct::run_test (void)
       else 
         ++this->error_count_;
 
+      // Created with NEW
+      delete out_any1;
+
       ACE_DEBUG ((LM_DEBUG,
                  "testing: current_member_name/current_member_kind\n"));
 
@@ -144,6 +147,10 @@ Test_DynStruct::run_test (void)
       TAO_CHECK_ENV;
       if (ACE_OS::strcmp ((*gm)[2].id, "es"))
         ++this->error_count_;
+
+      // Created with NEW
+      delete nvps;
+      delete gm;
 
       fa1.destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;

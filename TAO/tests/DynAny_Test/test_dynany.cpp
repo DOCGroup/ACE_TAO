@@ -70,7 +70,7 @@ Test_DynAny::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
-      d_out = data.m_double1;
+      d_out = data.m_double2;
       TAO_DynAny_i ftc1 (CORBA::_tc_double);
       CORBA::Any in_any1;
       in_any1 <<= data.m_double1;
@@ -80,6 +80,10 @@ Test_DynAny::run_test (void)
       CORBA::Any* out_any1 = ftc1.to_any (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       *out_any1 >>= d_out;
+
+      // value in DynAny_i created with NEW
+      delete out_any1;
+
       if (d_out == data.m_double1)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
@@ -101,7 +105,7 @@ Test_DynAny::run_test (void)
       CORBA_Any in (CORBA::_tc_TypeCode);
       TAO_DynAny_i fa2 (in);
       fa2.insert_typecode (data.m_typecode1, 
-                            TAO_TRY_ENV);
+                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
       CORBA::TypeCode_ptr tc_out = fa2.get_typecode (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -127,6 +131,10 @@ Test_DynAny::run_test (void)
       CORBA::Any* out_any2 = ftc2.to_any (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       *out_any2 >>= tc_out;
+
+      // value in DynAny_i created with NEW
+      delete out_any2;
+
       if (tc_out->equal(data.m_typecode1,
                         TAO_TRY_ENV))
         ACE_DEBUG ((LM_DEBUG,
