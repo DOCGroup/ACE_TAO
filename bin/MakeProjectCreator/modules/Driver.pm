@@ -204,10 +204,12 @@ sub run {
       my($generator) = $name->new($global, \@include, $template, \%ti);
       print "Generating output using " .
             ($file eq "" ? "default input" : $file) . "\n";
+      print "Start Time: " . scalar(localtime(time())) . "\n";
       if (!$generator->generate($file)) {
         print STDERR "Unable to process: $file\n";
         $status++;
       }
+      print "  End Time: " . scalar(localtime(time())) . "\n";
     }
   }
 
