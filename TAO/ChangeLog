@@ -1,3 +1,16 @@
+Sat Nov  1 11:30:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Cubit/TAO/DII_Cubit/Makefile
+	* performance-tests/Latency/DII/Makefile:
+	* performance-tests/Latency/DSI/Makefile:
+	* performance-tests/Sequence_Latency/DII/Makefile:
+	* performance-tests/Sequence_Latency/DSI/Makefile:
+	* performance-tests/Sequence_Latency/Deferred/Makefile:
+	* orbsvcs/examples/ORT/Makefile:
+	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+
+	  Do not compile if corba_messaging is turned off. 
+	
 Sat Nov  1 09:56:10 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/Kokyu/Service.cpp: Added fixes to get rid
