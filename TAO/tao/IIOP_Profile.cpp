@@ -270,7 +270,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
     }
 
   // The default port number.
-  const char def_port [] = ":683";
+  const char def_port [] = ":2809";
 
   // Length of port.
   CORBA::ULong length = 0;
@@ -282,37 +282,36 @@ TAO_IIOP_Profile::parse_string (const char *string,
   CORBA::ULong length_cp = 
     ACE_OS::strlen ((const char *)okd) + sizeof (def_port);
   
-  char *cp = CORBA::string_alloc (length_cp);
-
+  CORBA::String_var cp = CORBA::string_alloc (length_cp);
+  
   if (cp_pos == 0)
-    
     {
       // No host/port delimiter! Dont raise an exception. Use the
-      // default port No. 683
+      // default port No. 2809
       ACE_OS::strcpy (cp, def_port);
       ACE_OS::strcat (cp, okd);
      
       length = 
-        ACE_OS::strlen ((const char *)cp) - 
+        ACE_OS::strlen (cp.in ()) - 
         ACE_OS::strlen ((const char *)okd) -
         1;
       
       length_host = 
         ACE_OS::strlen (start) + 
         sizeof (def_port) - 
-        ACE_OS::strlen (cp) -1;
+        ACE_OS::strlen (cp.in ()) -1;
     }
   else
     {
       // The port is specified:
-      cp = cp_pos;
-      length = okd - (cp + 1);
-      length_host = cp - start;
+      cp = (const char *)cp_pos;
+      length = ACE_OS::strlen (cp.in ()) - ACE_OS::strlen ((const char *)okd) + 1;
+      length_host = ACE_OS::strlen ((const char *)start) - ACE_OS::strlen (cp.in ());
     }
-  
+
   CORBA::String_var tmp = CORBA::string_alloc (length);
   
-  ACE_OS::strncpy (tmp.inout (), cp + 1, length);
+  ACE_OS::strncpy (tmp.inout (), cp.in () + 1, length);
   tmp[length] = '\0';
   
   this->port_ = (CORBA::UShort) ACE_OS::atoi (tmp.in ());
