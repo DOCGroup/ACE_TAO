@@ -1,3 +1,17 @@
+Fri Feb 02 19:49:28 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* README:
+	  Added some more notes... But not completed yet.
+
+	* docs/CodingStyle.txt:
+	  Added file cotaining the coding style that should be used.
+
+	* examples/tank/Refiller.java:
+	* examples/tank/Bucket.java:
+	  Created new example that will show how to use perioric
+	  task as well as Asynchronous event handlers and other
+	  RT Java features.
+
 Fri Feb 02 00:59:59 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* benchmarks/RawSpeed:
