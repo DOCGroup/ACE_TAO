@@ -1,3 +1,11 @@
+Fri Aug 20 14:26:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * tests/Process_Mutex_Test.cpp:
+
+          Changed to use a separate logfile per child (based on PID like
+          in MEM_Stream_Test) because of concurrency problems in using a
+          single non-synchronized child logfile (at least under windows).
+
 Fri Aug 20 14:10:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * tests/MEM_Stream_Test.cpp:
