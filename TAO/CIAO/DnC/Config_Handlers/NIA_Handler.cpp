@@ -7,10 +7,6 @@
  *  @author Emre Turkay  <turkaye@dre.vanderbilt.edu>
  */
 //=====================================================================
-
-#ifndef NIA_HANDLER_C
-#define NIA_HANDLER_C
-
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
@@ -94,5 +90,3 @@ namespace CIAO
 
   }  // namespace Config_Handler
 }  // namespace CIAO
-
-#endif /* NIA_HANDLER_C */

@@ -1,8 +1,5 @@
 //$Id$
 
-#ifndef REQUIREMENT_HANDLER_C
-#define REQUIREMENT_HANDLER_C
-
 #include "Requirement_Handler.h"
 #include "Property_Handler.h"
 #include "tao/Exception.h"
@@ -61,5 +58,3 @@ CIAO::Config_Handler::Requirement_Handler::process_Requirement (DOMNodeIterator 
   // Copy sequence on to return struct
   ret_struct.property = properties;
 }
-
-#endif /* REQUIREMENT_HANDLER_C */

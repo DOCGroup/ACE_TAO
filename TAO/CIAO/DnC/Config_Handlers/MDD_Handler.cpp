@@ -1,8 +1,5 @@
 // $Id$
 
-#ifndef MDD_HANDLER_C
-#define MDD_HANDLER_C
-
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
@@ -139,5 +136,3 @@ namespace CIAO
 
   }
 }
-
-#endif /* MDD_HANDLER_C */

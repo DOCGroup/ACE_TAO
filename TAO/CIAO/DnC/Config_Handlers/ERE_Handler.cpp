@@ -1,8 +1,5 @@
 //$Id$
 
-#ifndef ERE_HANDLER_C
-#define ERE_HANDLER_C
-
 #include "ERE_Handler.h"
 #include "Utils.h"
 
@@ -28,5 +25,3 @@ process_ExternalReferenceEndpoint (DOMNodeIterator * iter,
   // Populate the structure
   ret_struct.location = Utils::parse_string (iter);
 }
-
-#endif /* ERE_HANDLER_C */

@@ -1,8 +1,5 @@
 // $Id$
 
-#ifndef PSPE_HANDLER_C
-#define PSPE_HANDLER_C
-
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
@@ -100,6 +97,3 @@ namespace CIAO
 
   }
 }
-
-#endif /* PSPE_HANDLER_C */
-
