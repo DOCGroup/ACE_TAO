@@ -43,7 +43,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/BiDir_GIOP/bidirgiop_export.h"
+#include "bidirgiop_export.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
