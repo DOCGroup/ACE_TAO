@@ -1,3 +1,10 @@
+Mon Jul  5 13:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+          In case we use an uuid to generate a temporary filename, add
+          the file_extension also to the filename. This fixes compile
+          problems in the Borland and MinGW builds
+
 Mon Jul  5 13:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Sequence_Latency/AMH_Single_Threaded/run_test.pl:
