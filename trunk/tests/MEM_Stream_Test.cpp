@@ -37,7 +37,7 @@ ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 #if (defined (ACE_HAS_THREADS) || !defined (ACE_LACKS_FORK)) && \
     (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#if defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)   // Win32, et al
+#if defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS) && !defined (WIN32) 
 #  define _TEST_USES_THREADS
 #else
 #  define _TEST_USES_PROCESSES
