@@ -1,3 +1,14 @@
+Thu Jun 15 21:18:06 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadBalancer.h:
+	* orbsvcs/LoadBalancer/LoadBalancer.cpp:
+
+	  Minor variable name update.
+
+	* orbsvcs/LoadBalancer/Makefile:
+
+	  Updated dependencies.
+
 Thu Jun 15 15:27:34 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
