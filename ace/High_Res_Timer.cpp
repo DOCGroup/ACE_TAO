@@ -28,6 +28,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
   // value.
   /* static */
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
+  
 #else  /* ! (ACE_HAS_PENTIUM || ACE_HAS_POWERPC_TIMER || \
              ACE_HAS_ALPHA_TIMER)  ||
           ACE_HAS_HI_RES_TIMER */
@@ -39,6 +40,12 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
              ACE_HAS_ALPHA_TIMER)  ||
           ACE_HAS_HI_RES_TIMER */
 
+// This is used to tell if the global_scale_factor_ has been
+// set, and if high resolution timers are supported.
+/* static */
+int ACE_High_Res_Timer::global_scale_factor_status_ = 0;
+
+
 ACE_UINT32
 ACE_High_Res_Timer::global_scale_factor ()
 {
@@ -48,7 +55,7 @@ ACE_High_Res_Timer::global_scale_factor ()
     ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
      defined (ghs) || defined (__GNUG__) || defined (__KCC))
   // Check if the global scale factor needs to be set, and do if so.
-  if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
+  if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
     {
       // Grab ACE's static object lock.  This doesn't have anything to
       // do with static objects; it's just a convenient lock to use.
@@ -56,14 +63,21 @@ ACE_High_Res_Timer::global_scale_factor ()
                                 *ACE_Static_Object_Lock::instance (), 0));
 
       // Double check
-      if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
+      if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
         {
 #         if defined (ACE_WIN32)
             LARGE_INTEGER freq;
             if (::QueryPerformanceFrequency (&freq))
               // We have a high-res timer
-              ACE_High_Res_Timer::global_scale_factor (ACE_static_cast (unsigned int,
-                                                                        freq.QuadPart / 1000000));
+              ACE_High_Res_Timer::global_scale_factor 
+                (ACE_static_cast (unsigned int, 
+                                  freq.QuadPart / ACE_ONE_SECOND_IN_USECS));
+            else
+              {
+                // High-Res timers not supported
+                ACE_High_Res_Timer::global_scale_factor_status_ = -1;  
+                return ACE_High_Res_Timer::global_scale_factor_;
+              }
 #         elif defined (linux) && (__alpha__)
             // Get the BogoMIPS from /proc.  It works fine on Alpha,
             // only.  For other CPUs, it will be necessary to
@@ -94,12 +108,14 @@ ACE_High_Res_Timer::global_scale_factor ()
             ACE_High_Res_Timer::calibrate ();
         }
     }
+
+  ACE_High_Res_Timer::global_scale_factor_status_ = 1;
 #endif /* (ACE_HAS_PENTIUM || ACE_HAS_POWERPC_TIMER || \
            ACE_HAS_ALPHA_TIMER) && \
           ! ACE_HAS_HIGH_RES_TIMER &&
           ((WIN32 && ! WINCE) || ghs || __GNUG__) */
 
-  return global_scale_factor_;
+  return ACE_High_Res_Timer::global_scale_factor_;
 }
 
 ACE_High_Res_Timer::ACE_High_Res_Timer (void)
