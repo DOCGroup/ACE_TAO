@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
-ACE_RCSID(ImplRepo_Service, tao_imr_i, "$Id$")
-
 // How many servers should we get at once?
 const size_t IR_LIST_CHUNK = 10;
 
