@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#	$Id: Makefile	1.1	10/18/96
 #
 #	Makefile for IOStream test client 
 #----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/iostream_client.o .obj/iostream_client. .shobj/iostream_client.o .shobj/iostream_client.: iostream_client.cpp \
+.obj/iostream_client.o .obj/iostream_client.so .shobj/iostream_client.o .shobj/iostream_client.so: iostream_client.cpp \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -49,24 +49,29 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Version.h \
- $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/IOStream.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/IOStream_T.h
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/IOStream_T.h \
+ $(ACE_ROOT)/ace/IOStream_T.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
