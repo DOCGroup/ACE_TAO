@@ -198,7 +198,7 @@ IorHandler::getCharacter (char *readPtr, int *offset)
 char *
 IorHandler::getString (char *readPtr, int givenLen)
 {
-  char parsedStr[MAX_IOR_FIELD_LEN];
+  static char parsedStr[MAX_IOR_FIELD_LEN];
   char octetPair[2];
   char parsedOctetPair[2];
   int intEquiv;
@@ -543,7 +543,7 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
 char *
 IorHandler::getIdlInterface (char *typeId, int *validTypeId)
 {
-  char idlInterface[MAX_TYPE_ID_LEN];
+  static char idlInterface[MAX_TYPE_ID_LEN];
   int lenInterface;
 
   // A sample type_id for an IDL interface name "EchoTests" is
