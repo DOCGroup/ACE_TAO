@@ -1,3 +1,10 @@
+Wed Nov 25 10:48:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Task.cpp: Fixed a bug whereby we weren't inheriting the
+ 	  group id correctly when joining a group of existing threads.
+  	  Thanks to Valery Arkhangorodsky <avalery@balisoft.com> for
+ 	  pointing this out.
+
 Tue Nov 24 03:50:09 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/DLL_Test.cpp: Renamed DLL_Wrapper_Test.cpp to
