@@ -196,5 +196,11 @@ TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
   ACE_UNUSED_ARG (context);
 
   // Delegate to user
-  this->invoke (&request, env);
+  this->invoke (&request);
+  if (request.response_expected ())
+    {
+      CORBA::Environment env2;
+      this->init_reply (env2);
+      this->dsi_marshal (env2);
+    }
 }

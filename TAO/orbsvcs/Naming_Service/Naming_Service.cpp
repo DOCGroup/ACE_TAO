@@ -87,11 +87,11 @@ Naming_Service::init (int argc,
                                          "child_poa",
                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       orb = this->orb_manager_.orb ();
       child_poa = this->orb_manager_.child_poa ();
-      
-      result = this->my_naming_server_.init (orb,
+
+      result = this->my_naming_server_.init (orb.in (),
                                              child_poa,
 					     argc,
 					     argv);
@@ -112,7 +112,7 @@ Naming_Service::init (int argc,
 
   if (result < 0)
     return result;
-  if (this->ior_output_file_ != 0) 
+  if (this->ior_output_file_ != 0)
     {
       CORBA::String_var str =
         this->my_naming_server_.naming_service_ior ();
