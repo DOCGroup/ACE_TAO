@@ -1,3 +1,16 @@
+Wed Dec  5 16:38:31 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/SString_Test.cpp:
+	* examples/Misc/test_sstring.cpp (main): Changed from ACE_WString
+	  to ACE_NS_WString so we can still initialize the test string
+	  from char strings.  We can no longer initialize ACE_WString's
+	  with char strings.  ACE_NS_WString maintains the old behavior,
+	  however.
+
+	* ace/SString.h:
+	* ace/SString.i: Added string contatenation operator
+	  ACE_NS_WString::operator+.
+
 Wed Dec  5 12:37:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* Removed all code to support Orbix and any references to it in

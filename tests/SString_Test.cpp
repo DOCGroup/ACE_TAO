@@ -154,18 +154,18 @@ main (int, ACE_TCHAR *[])
   }
 
   {
-    ACE_WString s0 (ACE_TEXT_WIDE ("hello"));
-    ACE_WString s1 (ACE_TEXT_WIDE ("hello"));
-    ACE_WString s2 (ACE_TEXT_WIDE ("world"));
-    ACE_WString s3 (ACE_TEXT_WIDE ("ll"));
-    ACE_WString s4 (ACE_TEXT_WIDE ("ello"));
-    ACE_WString s5 = s1 + ACE_TEXT_WIDE (" ") + s2;
+    ACE_NS_WString s0 ("hello");
+    ACE_NS_WString s1 ("hello");
+    ACE_NS_WString s2 ("world");
+    ACE_NS_WString s3 ("ll");
+    ACE_NS_WString s4 ("ello");
+    ACE_NS_WString s5 = s1 + " " + s2;
 
-    ACE_WSTRING_TYPE single_character = 'z';
-    ACE_WString single_character_string (single_character);
+    ACE_WCHAR_T single_character = 'z';
+    ACE_NS_WString single_character_string (single_character);
 
-    ACE_WString empty_string;
-    ACE_WString zero_size_string (s1.c_str (), 0, 0);
+    ACE_NS_WString empty_string;
+    ACE_NS_WString zero_size_string (s1.c_str (), 0, 0);
 
     // Not equal comparisons.
     ACE_ASSERT (s1 != s2);
@@ -200,7 +200,7 @@ main (int, ACE_TCHAR *[])
     ACE_ASSERT (s1.rfind ('l', 3) == 2);
 
     // Assignment.
-    ACE_WString s6;
+    ACE_NS_WString s6;
     s6 = s0;
     ACE_ASSERT (s6 == s0);
     s6 = s4;
