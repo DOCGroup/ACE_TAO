@@ -5,7 +5,7 @@ project (Config_Handlers) : taolib {
   sharedname = Config_Handers
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS
-  includes += $(XERCESCROOT)/include $(CIAO_ROOT)/DnC/
+  includes += $(XERCESCROOT)/include $(CIAO_ROOT)/DnC
   libpaths += $(XERCESCROOT)/lib $(ACE_ROOT)/lib
   libs     += xerces-c
 
