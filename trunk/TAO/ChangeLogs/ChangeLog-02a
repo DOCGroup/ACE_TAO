@@ -1,3 +1,9 @@
+Sat May 27 20:59:11 2000  Ossama Othman  <ossama@uci.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp: 
+
+	  Added missing "ace/Log_Msg.h" include.
+
 Sat May 27 18:58:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.h
