@@ -470,10 +470,6 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                   ACE_Thread_Descriptor,
                   -1);
 
-#if !defined (ACE_NO_THREAD_ADAPTER)
-  // @@ Defining ACE_NO_THREAD_ADAPTER here really doesn't make any
-  // sense.  If we don't have thread adapter, thread manager won't
-  // work then.
   ACE_Thread_Adapter *thread_args =
     new ACE_Thread_Adapter (func,
                             args,
@@ -485,7 +481,6 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
       delete new_thr_desc;
       return -1;
     }
-#endif /* ACE_NO_THREAD_ADAPTER */
 
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
   ACE_hthread_t thr_handle;
