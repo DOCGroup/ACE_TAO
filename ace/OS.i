@@ -1603,7 +1603,7 @@ ACE_OS::strncasecmp (const char *s,
 # if defined (ACE_LACKS_STRCASECMP)
   const char *scan1 = s;
   const char *scan2 = t;
-  ssize_t count = ssize_t (n);
+  ssize_t count = ssize_t (len);
 
   while (--count >= 0
          && *scan1 != 0
