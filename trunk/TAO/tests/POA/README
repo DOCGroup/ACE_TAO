@@ -70,3 +70,9 @@ Object Adapter (POA) interfaces and their usage scenarios.
                 This program tests the construction of POA policies,
                 both through the generic ORB::create_policy interface
                 and the PortableServer specific interfaces.
+
+        . MT_Servant_Locator
+
+                This program tests that multiple calls to the Servant
+                Locator can take place simultaneously.
+
