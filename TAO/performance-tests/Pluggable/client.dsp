@@ -134,7 +134,7 @@ InputPath=.\PP_Test.idl
 InputName=PP_Test
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 # End Custom Build
 
