@@ -5962,8 +5962,15 @@ ACE_OS::gethrtime (void)
       }
 
   return ACE_MAKE_QWORD (least, most);
+#elif defined (ACE_HAS_POWERPC) && defined (ghs)
+  // PowerPC w/ GreenHills compiler on VxWorks
+
+  unsigned long most;
+  unsigned long least;
+  return ACE_OS::readPPCTimeBase (most, least);
+
 #elif defined (ACE_HAS_CLOCK_GETTIME)
-  // e.g., VxWorks . . .
+  // e.g., VxWorks (besides POWERPC && GreenHills) . . .
   struct timespec ts;
 
   ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
