@@ -1,3 +1,10 @@
+Wed Jul 14 08:46:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* CCF/CCF/CIDL/CIDL.mpc:
+	* CCF/CCF/IDL2/IDL2.mpc:
+
+	  Fixed the MPC files that were busted.
+
 Tue Jul 13 09:49:50 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Updated release notes with
