@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Top-level Makefile for the TAO
+#       Top-level Makefile for the TAO
 #----------------------------------------------------------------------------
 
 #### The "release" targets can be used to create the ACE+TAO kit.  By
@@ -13,31 +13,31 @@
 #### "CHECK=-n" to the invocation.
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
-INFO	= README \
-	  VERSION
+INFO    = README \
+          VERSION
 
-DIRS	= tao \
-	  TAO_IDL \
-	  orbsvcs \
-	  examples \
-	  performance-tests \
-	  tests \
-	  utils
+DIRS    = tao \
+          TAO_IDL \
+          orbsvcs \
+          examples \
+          performance-tests \
+          tests \
+          utils
 
-CLONE	= Makefile \
-	  tao \
-	  TAO_IDL \
-	  orbsvcs \
-	  examples \
-	  performance-tests \
-	  tests \
-	  utils
+CLONE   = Makefile \
+          tao \
+          TAO_IDL \
+          orbsvcs \
+          examples \
+          performance-tests \
+          tests \
+          utils
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -57,34 +57,11 @@ clone:
 		(clone -s $(ACE_ROOT)/$$dir $$dir) \
 	done
 
-CONTROLLED_FILES = ChangeLog \
-		   TAO-INSTALL.html \
-		   TAO-inheritance.pdf.gz \
-		   TAO-inheritance.ps.gz \
-                   TAOACE.dsw \
-		   COPYING \
-		   COPYING.sun \
-		   release.chk \
-		   rules.tao.GNU \
-		   taoconfig.mk \
-		   docs \
-		   LICENSE.sun \
-		   Makefile \
-                   PROBLEM-REPORT-FORM \
-		   README \
-		   README.sun \
-		   tao \
-		   TAO_IDL \
-		   orbsvcs \
-		   examples \
-		   performance-tests \
-		   tests \
-		   utils \
-		   VERSION
+CONTROLLED_FILES = TAO
 
-RELEASE_FILES = $(addprefix TAO/,$(CONTROLLED_FILES)) \
+RELEASE_FILES = $(CONTROLLED_FILES)
                 TAO/INSTALL \
-		TAO/orbsvcs/README
+                TAO/orbsvcs/README
 
 .PHONY: INSTALL
 INSTALL: TAO-INSTALL.html
