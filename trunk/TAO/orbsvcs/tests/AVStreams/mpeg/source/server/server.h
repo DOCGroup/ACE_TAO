@@ -10,7 +10,7 @@
 //    server.h
 //
 // = DESCRIPTION
-//   @@ Please add a synopsis of this file.
+//     This defines the Audio/Video Server using TAO'S Audio/Video streaming service.
 //
 // = AUTHORS
 //    Sumedh Mungee (sumedh@cs.wustl.edu)
@@ -47,6 +47,27 @@
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "vs.h"
 
+class Audio_MMDevice
+  :public TAO_MMDevice
+{
+public:
+  Audio_MMDevice (TAO_AV_Endpoint_Process_Strategy *endpoint_strategy_);
+  // Default constructor
+
+    virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester, 
+                                                     AVStreams::VDev_out the_vdev, 
+                                                     AVStreams::streamQoS &the_qos, 
+                                                     CORBA::Boolean_out met_qos, 
+                                                     char *&named_vdev, 
+                                                     const AVStreams::flowSpec &the_spec,  
+                                                     CORBA::Environment &env);
+  // Called by StreamCtrl to create a "B" type streamandpoint and vdev
+
+  int connections (void);
+private:
+  int connections_;
+  // Number of active connections
+};
 
 class AV_Server_Sig_Handler 
   : public virtual ACE_Event_Handler
@@ -155,7 +176,8 @@ private:
   TAO_AV_Endpoint_Process_Strategy_B audio_process_strategy_;
   // The proces strategy for the audio.
 
-  TAO_MMDevice *audio_mmdevice_;
+  //  TAO_MMDevice *audio_mmdevice_;
+  Audio_MMDevice *audio_mmdevice_;
   // The audio server multimedia device
 
 };
