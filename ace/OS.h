@@ -5138,12 +5138,6 @@ public:
   void thr_mgr (ACE_Thread_Manager *tm);
   // Set the <ACE_Thread_Manager>.
 
-  void *status (void *s);
-  // Set the exit status.
-
-  void *status (void);
-  // Get the exit status.
-
   ~ACE_Thread_Exit (void);
   // Destructor calls the thread-specific exit hooks when a thread
   // exits.
@@ -5156,9 +5150,6 @@ public:
   // singleton.
 
 private:
-  void *status_;
-  // Exit status...
-
   ACE_Thread_Control thread_control_;
   // Automatically add/remove the thread from the
   // <ACE_Thread_Manager>.
