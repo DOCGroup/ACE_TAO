@@ -157,8 +157,8 @@ ACE_Handle_Set_Iterator::operator () (void)
 	this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
 
       return result;
-#endif /* ACE_WIN32 */
     }
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE void
