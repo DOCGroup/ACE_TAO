@@ -34,13 +34,13 @@ Sat Dec 12 15:15:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* tao/Pool_Per_Endpoint.cpp:
 	* tao/Reactor_Per_Priority.cpp:
 	* tao/Reply_Dispatcher.cpp:
-	* tao/Request.cpp: -> assert changed
+	* tao/Request.cpp:
 	* tao/Servant_Base.cpp:
 	* tao/skip.cpp:
 	* tao/Stub.cpp:
 	* tao/Stub.i:
 	* tao/TAO.cpp:
-	* tao/TAO_Mux_Strategy:
+	* tao/Transport_Mux_Strategy:
 	* tao/Typecode.cpp:
 	* tao/Valuebase.cpp:
 	* tao/Wait_Strategy.cpp:
