@@ -23,8 +23,8 @@
 #  purify           Purify all executables.
 #  quantify         Quantify all executables.
 #  static_libs_only Only build static libraries.
-#  shared_libs_only Only build shared libraries, but may be overridden in
-#                     individual Makefiles, e.g., in performance-tests/Misc.
+#  shared_libs_only Only build shared libraries.  Ignore if no SHLIBs are
+#                     specified by the  Makefile, as in performance-tests/Misc.
 #
 #  The following describes the ACE wrapper macros:
 #
@@ -150,12 +150,16 @@ ifeq ($(static_libs_only),0)
 endif # static_libs_only
 
 ifdef shared_libs_only
-  #### don't build static objects:
-  BUILD           = $(VSHLIB) $(SHLIBA) $(VBIN)
-  LIB             =
-  OBJDIRS         = .shobj
-  SHOBJ           = $(addsuffix .$(SOEXT),$(FILES))
-  VDIR            =
+  ifeq ($(SHLIB),)
+    #### Makefile only specifies static libs, so only build static libs.
+  else
+    #### don't build static objects:
+    BUILD           = $(VSHLIB) $(SHLIBA) $(VBIN)
+    LIB             =
+    OBJDIRS         = .shobj
+    SHOBJ           = $(addsuffix .$(SOEXT),$(FILES))
+    VDIR            =
+  endif # SHLIB
 else
 ifdef static_libs_only
   #### don't build shared objects:
