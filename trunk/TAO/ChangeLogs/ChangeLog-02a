@@ -1,3 +1,13 @@
+Mon Feb  5 15:57:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Object.cpp:
+        * tao/Object.h:
+
+          Moved the DII create_request methods inside the
+          minimum CORBA guards, along with other methods in
+          that class, and as is already the case in class
+          LocalObject.
+
 Mon Feb  5 15:13:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/Makefile:
