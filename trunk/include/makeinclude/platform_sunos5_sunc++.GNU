@@ -7,6 +7,14 @@
 #   inlining is disabled by default with Sun C++ 5.0.  If you'd like
 #   to try enabling it, comment out the "inline = 0" line below.
 #
+# To enable compilation of 64-bit binaries with Sun CC 5.0, a
+# platform_macros.GNU file such as this can be used:
+#     fast=1
+#     include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
+#     CCFLAGS += -xtarget=ultra2 -xarch=v9a #### CPU specific!
+# Please note that the xtarget and xarch settings are specific to
+# the target CPU.
+#
 # With slight modification, this file could be used with Sun C++ 4.1.
 # However, it's likely that you won't be able to build all of ACE
 # with Sun C++ 4.1.
