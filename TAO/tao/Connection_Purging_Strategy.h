@@ -12,11 +12,12 @@
 #define TAO_PURGING_STRATEGY_H
 #include "ace/pre.h"
 
+#include "corbafwd.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "corbafwd.h"
 
 class TAO_Cache_IntId;
 

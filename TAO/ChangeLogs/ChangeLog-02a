@@ -1,3 +1,13 @@
+Fri May 18 15:27:11 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Connection_Purging_Strategy.h:
+        * tao/LRU_Connection_Purging_Strategy.h:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.h:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.h:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.h:
+
+          Remove "pragma once" warnings.
+
 Fri May 18 15:14:49 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Transport_Cache_Manager.h:
