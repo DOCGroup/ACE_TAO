@@ -23,7 +23,7 @@ SERVERINFO=uname
 CLIENTS="mambo merengue lambada"
 #CLIENTS="lindy cumbia"
 CLIENTACCOUNT=sumedh
-CLIENTPASSWORD=msnbc!
+CLIENTPASSWORD=yourpasswd
 CLIENTINFO=uname
 TMPDIR=/tmp
 
