@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoexe {
+project(*client) : taoexe, portableserver {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
   includes += ../../idl
