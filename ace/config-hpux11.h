@@ -74,6 +74,9 @@
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
+// Compiler/platform has Dirent iterator functions.
+#define ACE_HAS_DIRENT
+
 // Platform supports getpagesize() call
 #define ACE_HAS_GETPAGESIZE
 // But we define this just to be safe
