@@ -1,3 +1,11 @@
+Thu Jan 24 15:48:01 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tao/TAO_Static.dsp:
+	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+	  
+	  Fixed worspaces regarding moving of the AMH_Response_Handler
+	  files.
+	
 Thu Jan 24 11:48:01 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
