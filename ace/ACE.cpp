@@ -1871,7 +1871,7 @@ ACE::get_ip_interfaces (size_t &count,
   // data type, but don't chance it which means allocation might be
   // larger than actually used
 
-  for (int i = 0; i < num_ifs; pcur++, i++) 
+  for (size_t i = 0; i < num_ifs; pcur++, i++) 
     {
       ACE_UINT32 tmp_addr; 
 
