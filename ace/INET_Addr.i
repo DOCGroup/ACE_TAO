@@ -31,21 +31,6 @@ ACE_INET_Addr::get_addr (void) const
   return (void *) &this->inet_addr_;
 }
 
-// Return the 4-byte IP address, converting it into host byte order.
-
-ACE_INLINE ACE_UINT32
-ACE_INET_Addr::get_ip_address (void) const
-{
-  ACE_TRACE ("ACE_INET_Addr::get_ip_address");
-#if defined (ACE_HAS_IPV6)
-  // XXXXX
-  printf("Error: get_ip_address not defined yet for IPv6 addressing\n");
-  return 0;
-#else
-  return ntohl (ACE_UINT32 (this->inet_addr_.sin_addr.s_addr));
-#endif
-}
-
 ACE_INLINE u_long
 ACE_INET_Addr::hash (void) const
 {
