@@ -79,12 +79,13 @@ UUID::from_string (const char  *string_rep)
   return true;
 }
 
+static const char *table = "0123456789abcdef";
+
 inline char *
 bytes_to_hex (const unsigned char *bytes,
               char  *dest,
               int   len)
 {
-  static const char *table = "0123456789abcdef";
   for (int i = 0; i < len; ++i)
   {
     *dest++ = table[bytes[i] >> 4];
