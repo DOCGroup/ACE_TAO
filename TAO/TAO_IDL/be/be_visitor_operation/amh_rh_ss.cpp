@@ -70,7 +70,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
 
   // Step 2 : Generate the params of the method
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_SH);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
   if (!visitor)
@@ -96,9 +96,9 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
 
   // Step 3: Generate actual code for the method
   *os << "{" << be_idt_nl
-      << "init_reply ();" << be_idt_nl;
+      << "init_reply ();" << be_nl;
 
-  marshal_params (node);
+  //marshal_params (node);
 
   *os << "send_reply ();" << be_uidt_nl
       << "}" << be_nl;
@@ -109,8 +109,60 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
 
 
 int
-be_visitor_amh_rh_operation_ss::marshal_params (be_operation *)
+be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
 {
-  // @@ TODO!!!
-  return 0;
+  if (node->nmembers () > 0)
+    {
+      // Initialize an iterator to iterate over our scope.
+      UTL_ScopeActiveIterator *si;
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (node,
+                                               UTL_Scope::IK_decls),
+                      -1);
+      
+      while (!si->is_done ())
+        {
+          AST_Decl *d = si->item ();
+          
+          if (d == 0)
+            {
+              delete si;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_scope::visit_scope - "
+                                 "bad node in this scope\n"),
+                                -1);
+              
+            }
+          be_decl *decl = be_decl::narrow_from_decl (d);
+
+          be_visitor_context ctx (*this->ctx_);
+          ctx.state (TAO_CodeGen::TAO_ARGUMENT_INVOKE_CS);
+          ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
+          be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
+          if (!visitor)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_operation_amh_sh::"
+                                 "visit_operation - "
+                                 "Bad visitor to return type\n"),
+                                -1);
+            }
+
+          if (decl->accept (visitor) == -1)
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_operation_sh::"
+                                 "visit_operation - "
+                                 "codegen for argument list failed\n"),
+                                -1);
+            }
+          
+          delete visitor;
+          si->next ();
+        }
+    }
+  
+  return 1;
 }

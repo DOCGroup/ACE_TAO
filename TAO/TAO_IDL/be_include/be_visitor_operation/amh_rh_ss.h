@@ -19,6 +19,9 @@
  * @brief This is a concrete visitor to generate the server source for
  *        AMH operations
  */
+
+#include "be_visitor_operation.h"
+
 class be_visitor_amh_rh_operation_ss : public be_visitor_operation
 {
  public:
@@ -26,7 +29,7 @@ class be_visitor_amh_rh_operation_ss : public be_visitor_operation
     
     ~be_visitor_amh_rh_operation_ss (void);
     
-    virtual int visit_operation (be_operation *node);
+    int visit_operation (be_operation *node);
 
  private:
     int marshal_params (be_operation *node);

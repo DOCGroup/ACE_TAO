@@ -55,8 +55,6 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << "\n// \t *** AMH-RH operation declaration starts here ***\n";
-
   be_interface *intf;
   intf = this->ctx_->attribute ()
     ? be_interface::narrow_from_scope (this->ctx_->attribute()->defined_in ())
@@ -95,7 +93,7 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
   *os << node->local_name();
 
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_SH);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
   if (!visitor)

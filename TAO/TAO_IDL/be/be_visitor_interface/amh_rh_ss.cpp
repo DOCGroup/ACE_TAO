@@ -16,6 +16,7 @@
 #include        "be.h"
 
 #include "be_visitor_interface.h"
+#include "be_visitor_operation/amh_rh_ss.h"
 
 be_visitor_amh_rh_interface_ss::be_visitor_amh_rh_interface_ss (be_visitor_context *ctx)
   : be_visitor_interface_ss (ctx)
@@ -24,6 +25,13 @@ be_visitor_amh_rh_interface_ss::be_visitor_amh_rh_interface_ss (be_visitor_conte
 
 be_visitor_amh_rh_interface_ss::~be_visitor_amh_rh_interface_ss (void)
 {
+}
+
+int
+be_visitor_amh_rh_interface_ss::visit_operation (be_operation *node)
+{
+  be_visitor_amh_rh_operation_ss amh_rh_op (this->ctx_);
+  return amh_rh_op.visit_operation (node);
 }
 
 int
