@@ -78,6 +78,8 @@ public:
    *                    cleaned up yet.
    * @param flags       Ignored.
    * @param perms       Ignored.
+   * @param protocol    (optional) If value is 0, default SOCK_STREAM
+   *                    protocol is selected by kernel (typically TCP).
    *
    * @return            Returns 0 if the connection succeeds. If it fails,
    *                    -1 is returned and errno contains a specific error
@@ -181,6 +183,8 @@ public:
    *                    cleaned up yet.
    * @param flags       Ignored.
    * @param perms       Ignored.
+   * @param protocol    (optional) If value is 0, default SOCK_STREAM
+   *                    protocol is selected by kernel (typically TCP).
    *
    * @return            Returns 0 if the connection succeeds. If it fails,
    *                    -1 is returned and errno contains a specific error

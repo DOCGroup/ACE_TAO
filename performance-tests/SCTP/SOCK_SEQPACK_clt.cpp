@@ -1,18 +1,5 @@
 // $Id$
 
-// On WIN32, math.h may contain template code,
-// which cannot be wrapped by 'extern "C"'
-#ifdef WIN32
-#include <math.h>
-#endif /* WIN32 */
-
-extern "C" {
-#ifndef WIN32
-#include <math.h>
-#endif /* WIN32 */
-#include <stdio.h>
-};
-
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/SOCK_SEQPACK_Connector.h"

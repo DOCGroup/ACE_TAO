@@ -85,6 +85,8 @@ public:
    *                    cleaned up yet.
    * @param flags       Ignored.
    * @param perms       Ignored.
+   * @param protocol    (optional) If value is 0, default SOCK_STREAM
+   *                    protocol is selected by kernel (typically TCP).
    *
    * @return            Returns 0 if the connection succeeds. If it fails,
    *                    -1 is returned and errno contains a specific error
@@ -99,6 +101,46 @@ public:
                       int perms = 0,
                       int protocol = 0);
 
+  /**
+   * Actively connect to a peer, producing a connected @c ACE_SOCK_SEQPACK_Association
+   * object if the connection succeeds.
+   *
+   * @param new_association  The @c ACE_SOCK_SEQPACK_Association object that will be connected
+   *                    to the peer.
+   * @param remote_sap  The address that we are trying to connect to.
+   *                    The protocol family of @c remote_sap is used for
+   *                    the connected socket. That is, if @c remote_sap
+   *                    contains an IPv6 address, a socket with family
+   *                    PF_INET6 will be used, else it will be PF_INET.
+   * @param timeout     Pointer to an @c ACE_Time_Value object with amount
+   *                    of time to wait to connect. If the pointer is 0
+   *                    then the call blocks until the connection attempt
+   *                    is complete, whether it succeeds or fails.  If
+   *                    *timeout == {0, 0} then the connection is done
+   *                    using nonblocking mode.  In this case, if the
+   *                    connection can't be made immediately, this method
+   *                    returns -1 and errno == EWOULDBLOCK.
+   *                    If *timeout > {0, 0} then this is the maximum amount
+   *                    of time to wait before timing out; if the specified
+   *                    amount of time passes before the connection is made,
+   *                    this method returns -1 and errno == ETIME. Note
+   *                    the difference between this case and when a blocking
+   *                    connect is attmpted that TCP times out - in the latter
+   *                    case, errno will be ETIMEDOUT.
+   * @param local_sap   (optional) The set of local addresses for SCTP to
+   *                    bind to.
+   * @param reuse_addr  (optional) If the value is 1, the local address
+   *                    (@c local_sap) is reused, even if it hasn't been
+   *                    cleaned up yet.
+   * @param flags       Ignored.
+   * @param perms       Ignored.
+   * @param protocol    (optional) If value is 0, default SOCK_STREAM
+   *                    protocol is selected by kernel (typically TCP).
+   *
+   * @return            Returns 0 if the connection succeeds. If it fails,
+   *                    -1 is returned and errno contains a specific error
+   *                    code.
+   */
   ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
                       const ACE_Addr &remote_sap,
                       const ACE_Time_Value *timeout,
@@ -142,6 +184,8 @@ public:
    *                    cleaned up yet.
    * @param flags       Ignored.
    * @param perms       Ignored.
+   * @param protocol    (optional) If value is 0, default SOCK_STREAM
+   *                    protocol is selected by kernel (typically TCP).
    *
    * @return            Returns 0 if the connection succeeds. If it fails,
    *                    -1 is returned and errno contains a specific error
@@ -155,6 +199,47 @@ public:
                int flags = 0,
                int perms = 0,
                int protocol = 0);
+
+  /**
+   * Actively connect to a peer, producing a connected @c ACE_SOCK_SEQPACK_Association
+   * object if the connection succeeds.
+   *
+   * @param new_association  The @c ACE_SOCK_SEQPACK_Association object that will be connected
+   *                    to the peer.
+   * @param remote_sap  The address that we are trying to connect to.
+   *                    The protocol family of @c remote_sap is used for
+   *                    the connected socket. That is, if @c remote_sap
+   *                    contains an IPv6 address, a socket with family
+   *                    PF_INET6 will be used, else it will be PF_INET.
+   * @param timeout     Pointer to an @c ACE_Time_Value object with amount
+   *                    of time to wait to connect. If the pointer is 0
+   *                    then the call blocks until the connection attempt
+   *                    is complete, whether it succeeds or fails.  If
+   *                    *timeout == {0, 0} then the connection is done
+   *                    using nonblocking mode.  In this case, if the
+   *                    connection can't be made immediately, this method
+   *                    returns -1 and errno == EWOULDBLOCK.
+   *                    If *timeout > {0, 0} then this is the maximum amount
+   *                    of time to wait before timing out; if the specified
+   *                    amount of time passes before the connection is made,
+   *                    this method returns -1 and errno == ETIME. Note
+   *                    the difference between this case and when a blocking
+   *                    connect is attmpted that TCP times out - in the latter
+   *                    case, errno will be ETIMEDOUT.
+   * @param local_sap   (optional) The set of local addresses for SCTP to
+   *                    bind to.
+   * @param reuse_addr  (optional) If the value is 1, the local address
+   *                    (@c local_sap) is reused, even if it hasn't been
+   *                    cleaned up yet.
+   * @param flags       Ignored.
+   * @param perms       Ignored.
+   * @param protocol    (optional) If value is 0, default SOCK_STREAM
+   *                    protocol is selected by kernel (typically TCP).
+   *
+   * @return            Returns 0 if the connection succeeds. If it fails,
+   *                    -1 is returned and errno contains a specific error
+   *                    code.
+   */
 
   int connect (ACE_SOCK_SEQPACK_Association &new_association,
                const ACE_Addr &remote_sap,
