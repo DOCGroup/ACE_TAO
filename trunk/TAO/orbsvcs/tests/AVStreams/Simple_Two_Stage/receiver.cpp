@@ -96,7 +96,8 @@ Receiver_Callback::dump_samples (const char* file)
 		  "Stats.dat cannot be opened \n"));
     }
   
-  for (int i = 0; i < stats_index; i++)
+  int i;
+  for (i = 0; i < stats_index; i++)
     {
       stats_.sample ((ACE_UINT64)stats [i]);
     }
