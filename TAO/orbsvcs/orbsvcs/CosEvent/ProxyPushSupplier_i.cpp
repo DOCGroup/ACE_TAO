@@ -69,8 +69,18 @@ TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set,
   for (CORBA::ULong i = 0;
        i < set.length ();
        ++i)
-    this->consumer_->push (set[i].data.any_value,
-                           ACE_TRY_ENV);
+    {
+      ACE_TRY
+        {
+          this->consumer_->push (set[i].data.any_value,
+                                 ACE_TRY_ENV);
+        }
+      ACE_CATCHANY
+        {
+          // Ignore the exception...
+        }
+      ACE_ENDTRY;
+    }
 }
 
 void
