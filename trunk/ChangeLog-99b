@@ -1,3 +1,17 @@
+Wed May 05 13:14:52 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp: Removed DllMain - Win32 does not have the gusto to
+          handle the initialization/finalization in this way. It causes
+          DLL dependency problems which result in early detachment of
+          winsock, and possible network data loss in some cases.
+
+        * ace/OS.cpp, Object_Manager.cpp: Clarified some comments regarding
+          multiple ACE_OS_Object_Manager and ACE_Object_Manager objects in
+          existence and how they're handled.
+
+        * tests/ACE_Init_Test.cpp: Always does ACE::init and ACE::fini now.
+          This is one example of how to handle a non-console program in Win32.
+
 Wed May 05 13:07:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/Makefile: replaced /bin/rm with $(RM) and removed clean
