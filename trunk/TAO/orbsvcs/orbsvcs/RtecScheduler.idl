@@ -65,7 +65,7 @@ module RtecScheduler
   typedef sequence<Dependency_Info> Dependency_Set;
 
   typedef long OS_Priority;
-  typedef long Sub_Priority;
+  typedef long Preemption_Subpriority;
   typedef long Preemption_Priority;
 
   struct RT_Info
@@ -122,14 +122,9 @@ module RtecScheduler
     // events generated from this RT_Info.
     OS_Priority priority;
 
-   // For ordering RT_Info's with equal priority.
-   Sub_Priority dynamic_subpriority;
-// this is not really a fixed attribute of the RT_Info,
-// but rather a value dynamically computed at run-time
-// TBD - remove this field
 
     // For ordering RT_Info's with equal priority.
-    Sub_Priority static_subpriority;
+    Preemption_Subpriority preemption_subpriority;
 
     // The queue number for this RT_Info.
     Preemption_Priority preemption_priority;
@@ -222,12 +217,12 @@ module RtecScheduler
 
     void priority (in handle_t handle,
                        out OS_Priority priority,
-                       out Sub_Priority subpriority,
+                       out Preemption_Subpriority p_subpriority,
                        out Preemption_Priority p_priority)
       raises (UNKNOWN_TASK, NOT_SCHEDULED);
     void entry_point_priority (in string entry_point,
                                out OS_Priority priority,
-                               out Sub_Priority subpriority,
+                               out Preemption_Subpriority p_subpriority,
                                out Preemption_Priority p_priority)
       raises (UNKNOWN_TASK, NOT_SCHEDULED);
     // Obtain the run time priorities.

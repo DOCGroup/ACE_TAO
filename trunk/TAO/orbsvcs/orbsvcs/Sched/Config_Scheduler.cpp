@@ -58,8 +58,7 @@ ACE_Config_Scheduler::create (const char * entry_point,
   rt_info[0]->quantum = ORBSVCS_Time::zero;
   rt_info[0]->threads = 0;
   rt_info[0]->priority = 0;
-  rt_info[0]->dynamic_subpriority = 0;
-  rt_info[0]->static_subpriority = 0;
+  rt_info[0]->preemption_subpriority = 0;
   rt_info[0]->preemption_priority = 0;
 
   RtecScheduler::handle_t handle = -1;
@@ -175,7 +174,7 @@ void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
 
 void ACE_Config_Scheduler::priority (RtecScheduler::handle_t handle,
                                      RtecScheduler::OS_Priority& priority,
-                                     RtecScheduler::Sub_Priority& subpriority,
+                                     RtecScheduler::Preemption_Subpriority& p_subpriority,
                                      RtecScheduler::Preemption_Priority& p_priority,
                                      CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
@@ -184,7 +183,7 @@ void ACE_Config_Scheduler::priority (RtecScheduler::handle_t handle,
 {
   ACE_UNUSED_ARG (_env);
 
-  if (impl->priority (handle, priority, subpriority, p_priority) == -1)
+  if (impl->priority (handle, priority, p_subpriority, p_priority) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "Config_Scheduler::priority - priority failed\n"));
@@ -194,7 +193,7 @@ void ACE_Config_Scheduler::priority (RtecScheduler::handle_t handle,
 
 void ACE_Config_Scheduler::entry_point_priority (const char * entry_point,
                                                  RtecScheduler::OS_Priority& priority,
-                                                 RtecScheduler::Sub_Priority& subpriority,
+                                                 RtecScheduler::Preemption_Subpriority& p_subpriority,
                                                  RtecScheduler::Preemption_Priority& p_priority,
                                                  CORBA::Environment &_env)
      TAO_THROW_SPEC((CORBA::SystemException,
@@ -202,7 +201,7 @@ void ACE_Config_Scheduler::entry_point_priority (const char * entry_point,
                      RtecScheduler::NOT_SCHEDULED))
 {
   this->priority (lookup (entry_point, _env),
-                  priority, subpriority, p_priority,
+                  priority, p_subpriority, p_priority,
                   _env);
 }
 

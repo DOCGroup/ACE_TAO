@@ -237,10 +237,9 @@ void ACE_Scheduler::export(RT_Info& info, FILE* file)
 
     }
 
-  (void) ACE_OS::fprintf (file, "# end dependencies\n%d\n%d\n%d\n\n",
+  (void) ACE_OS::fprintf (file, "# end dependencies\n%d\n%d\n\n",
                           info.priority,
-                          info.dynamic_subpriority,
-                          info.static_subpriority);
+                          info.preemption_subpriority);
 
 
 }

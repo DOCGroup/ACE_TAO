@@ -79,7 +79,7 @@ ACE_ES_Dispatch_Request::ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consu
 ACE_INLINE void
 ACE_ES_Dispatch_Request::set (ACE_ES_Dispatching_Base *dispatching_module,
 			      RtecScheduler::OS_Priority preemption_priority,
-			      RtecScheduler::Sub_Priority sub_priority)
+			      RtecScheduler::Preemption_Subpriority sub_priority)
 {
   dispatching_module_ = dispatching_module;
   priority_ = preemption_priority;

@@ -40,8 +40,7 @@ public:
     RtecScheduler::Quantum quantum;
     CORBA::Long threads;
     RtecScheduler::OS_Priority priority;
-    RtecScheduler::Sub_Priority static_subpriority;
-    RtecScheduler::Sub_Priority dynamic_subpriority;
+    RtecScheduler::Preemption_Subpriority static_subpriority;
     RtecScheduler::Preemption_Priority preemption_priority;
     RtecScheduler::Info_Type info_type;
   };

@@ -477,16 +477,16 @@ public:
   // ctor: frame size is the number of microseconds in a complete
   //       dispatch frame (defaults to one million = one second).
 
-  virtual RtecScheduler::Sub_Priority 
+  virtual RtecScheduler::Preemption_Subpriority 
           runtime_subpriority (const ACE_Time_Value &current_time,
                                const ACE_Time_Value &deadline_time,
                                const ACE_Time_Value &execution_time,
-                               RtecScheduler::Sub_Priority static_subpriority) = 0;
+                               RtecScheduler::Preemption_Subpriority static_subpriority) = 0;
   // abstract method to compute the dispatch subpriority for an operation
 
-  virtual RtecScheduler::Sub_Priority 
+  virtual RtecScheduler::Preemption_Subpriority 
           response_function (const ACE_Time_Value &time_metric,
-                             RtecScheduler::Sub_Priority static_subpriority);
+                             RtecScheduler::Preemption_Subpriority static_subpriority);
   // response function for run time subpriority: stepwise linear function that
   // gives appoximately the same dispatching behavior as a hyperbolic function,
   // but does not require us to use floating point math.
@@ -525,11 +525,11 @@ public:
   //       dispatch frame (defaults to one million = one second).
 
 
-  virtual RtecScheduler::Sub_Priority 
+  virtual RtecScheduler::Preemption_Subpriority 
           runtime_subpriority (const ACE_Time_Value &current_time,
                                const ACE_Time_Value &deadline_time,
                                const ACE_Time_Value &execution_time,
-                               RtecScheduler::Sub_Priority static_subpriority);
+                               RtecScheduler::Preemption_Subpriority static_subpriority);
 };
 
 class TAO_ORBSVCS_Export ACE_Laxity_Subpriority_Strategy
@@ -542,11 +542,11 @@ public:
   //       dispatch frame (defaults to one million = one second).
 
 
-  virtual RtecScheduler::Sub_Priority 
+  virtual RtecScheduler::Preemption_Subpriority 
           runtime_subpriority (const ACE_Time_Value &current_time,
                                const ACE_Time_Value &deadline_time,
                                const ACE_Time_Value &execution_time,
-                               RtecScheduler::Sub_Priority static_subpriority);
+                               RtecScheduler::Preemption_Subpriority static_subpriority);
 };
 
 class TAO_ORBSVCS_Export ACE_Static_Subpriority_Strategy
@@ -554,11 +554,11 @@ class TAO_ORBSVCS_Export ACE_Static_Subpriority_Strategy
 {
 public:
 
-  virtual RtecScheduler::Sub_Priority 
+  virtual RtecScheduler::Preemption_Subpriority 
           runtime_subpriority (const ACE_Time_Value &current_time,
                                const ACE_Time_Value &deadline_time,
                                const ACE_Time_Value &execution_time,
-                               RtecScheduler::Sub_Priority static_subpriority);
+                               RtecScheduler::Preemption_Subpriority static_subpriority);
 };
 
 
