@@ -8,6 +8,8 @@
 #include "Benchmark_Performance.h"
 #include "Performance_Test.h"
 
+ACE_RCSID(Synch_Benchmarks, Performance_Test, "$Id$")
+
 Performance_Test::Performance_Test (void)
   : n_lwps_ (0),
     orig_n_lwps_ (0)

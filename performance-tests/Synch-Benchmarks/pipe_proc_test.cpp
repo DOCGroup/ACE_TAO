@@ -4,6 +4,8 @@
 #include "Options.h"
 #include "Benchmark_Performance.h"
 
+ACE_RCSID(Synch_Benchmarks, pipe_proc_test, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Svc_Export Pipe_Proc_Test : public Benchmark_Performance

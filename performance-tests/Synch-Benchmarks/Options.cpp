@@ -3,6 +3,8 @@
 #define  ACE_BUILD_SVC_DLL
 #include "Options.h"
 
+ACE_RCSID(Synch_Benchmarks, Options, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 // Manages the options.
 Options options;

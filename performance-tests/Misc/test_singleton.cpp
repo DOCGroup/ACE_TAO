@@ -32,6 +32,8 @@
 #include "ace/Synch.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID(Misc, test_singleton, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 static const int DEFAULT_ITERATIONS = 100000000;
