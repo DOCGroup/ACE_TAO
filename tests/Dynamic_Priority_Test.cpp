@@ -38,7 +38,7 @@
 //    numbers for the various queues under increasing numbers of messages.
 //    In the first test, the consumer is passed the filled queue and a string
 //    with the expected order in which the messages should dequeue.  In the
-//    second test, measurements are made as non-intrusive as possible, with 
+//    second test, measurements are made as non-intrusive as possible, with
 //    no ordering checks.
 //
 // = AUTHOR
@@ -88,7 +88,7 @@ static const char laxity_receipt_order [] = "hfgedbcapnomljki";
 
 // fast and slow execution time values (sec, usec),
 // kept very small to allow comparison of deadline,
-// laxity, and static strategies across a very wide 
+// laxity, and static strategies across a very wide
 // range of message counts.
 static const ACE_Time_Value fast_execution (0, 1);
 static const ACE_Time_Value slow_execution (0, 2);
@@ -110,9 +110,9 @@ static int LOAD_STEP = 20;
 
 // time offsets for a minute in the past (for the best case test) and
 // two seconds in the future (for the worst case and randomized tests)
-const static ACE_Time_Value far_past_offset (-60, 0);
-const static ACE_Time_Value near_future_offset (2, 0);
-const static ACE_Time_Value offset_step (0, 5);
+static const ACE_Time_Value far_past_offset (-60, 0);
+static const ACE_Time_Value near_future_offset (2, 0);
+static const ACE_Time_Value offset_step (0, 5);
 
 // The order consumer dequeues a message from the passed Message_Queue,
 // and checks its data character against the passed string of characters
@@ -148,7 +148,7 @@ order_consumer (void * args)
     if (result == -1)
     {
       break;
-	}
+        }
 
     local_count++;
 
@@ -307,8 +307,8 @@ int  run_order_test (ACE_Message_Queue<ACE_MT_SYNCH>* msg_queue, const char *sen
 }
 
 
-// The performance consumer starts a timer, dequeues all messages from the 
-// passed Message_Queue, stops the timer, and reports the number of 
+// The performance consumer starts a timer, dequeues all messages from the
+// passed Message_Queue, stops the timer, and reports the number of
 // dequeued messages, the elapsed time, and the average time per message.
 
 static void *
@@ -338,8 +338,8 @@ performance_consumer (void * args)
     {
       break;
     }
-    
-    //	ACE_ASSERT ('a' == *mb->rd_ptr ());
+
+    //  ACE_ASSERT ('a' == *mb->rd_ptr ());
   }
 
   // stop timer, obtain and report its elapsed time
@@ -358,7 +358,7 @@ performance_consumer (void * args)
 
 // The performance producer starts a timer, enqueues the passed messages setting the
 // read pointer of each message to the first character position in the passed string,
-// stops the timer, and reports the number of enqueued messages, the elapsed time, 
+// stops the timer, and reports the number of enqueued messages, the elapsed time,
 // and the average time per message.
 
 static void *
@@ -379,7 +379,7 @@ performance_producer (void *args)
   timer.reset ();
   timer.start ();
 
-  // iterate through the message block array, setting the character under 
+  // iterate through the message block array, setting the character under
   // the current message block's read pointer to null before enqueueing
   // the message block.
   int local_count = 0;
@@ -416,18 +416,18 @@ performance_producer (void *args)
 }
 
 int  run_performance_test (u_int min_load, u_int max_load, u_int load_step,
-			   Test_Type test_type)
+                           Test_Type test_type)
 {
   ArgStruct supplier_args, consumer_args;   // supplier and consumer argument strings
   u_int load = 0;                           // message load
   ACE_Time_Value *time_offsets;             // pointer to array of time offsets
   ACE_Time_Value current_time;              // current time value
   u_int shuffle_index;                      // used to shuffle arrays
-  int random_int;                           // also used to shuffle arrays
+  int random_int = 0;                       // also used to shuffle arrays
   ACE_Message_Block *temp_block;            // temporary message block pointer
   ACE_Time_Value temp_time;                 // temporary time value
 
-  // build a static queue, a deadline based dynamic 
+  // build a static queue, a deadline based dynamic
   // queue, and a laxity based dynamic queue
 
   ACE_Message_Queue<ACE_MT_SYNCH> *static_queue = 0;
@@ -453,22 +453,22 @@ int  run_performance_test (u_int min_load, u_int max_load, u_int load_step,
     case BEST:
 
       ACE_DEBUG ((LM_INFO,
-	          "\n\nenqueued, best static time, best static avg, "
+                  "\n\nenqueued, best static time, best static avg, "
                   "dequeued, best static time, best static avg, "
-	          "enqueued, best deadline time, best deadline avg, "
+                  "enqueued, best deadline time, best deadline avg, "
                   "dequeued, best deadline time, best deadline avg, "
-	          "enqueued, best laxity time, best laxity avg, "
+                  "enqueued, best laxity time, best laxity avg, "
                   "dequeued, best laxity time, best laxity avg\n"));
       break;
 
     case WORST:
 
       ACE_DEBUG ((LM_INFO,
-	          "\n\nenqueued, worst static time, worst static avg, "
+                  "\n\nenqueued, worst static time, worst static avg, "
                   "dequeued, worst static time, worst static avg, "
-	          "enqueued, worst deadline time, worst deadline avg, "
+                  "enqueued, worst deadline time, worst deadline avg, "
                   "dequeued, worst deadline time, worst deadline avg, "
-	          "enqueued, worst laxity time, worst laxity avg, "
+                  "enqueued, worst laxity time, worst laxity avg, "
                   "dequeued, worst laxity time, worst laxity avg\n"));
 
       break;
@@ -476,11 +476,11 @@ int  run_performance_test (u_int min_load, u_int max_load, u_int load_step,
     case RANDOM:
 
       ACE_DEBUG ((LM_INFO,
-	          "\n\nenqueued, random static time, random static avg, "
+                  "\n\nenqueued, random static time, random static avg, "
                   "dequeued, random static time, random static avg, "
-	          "enqueued, random deadline time, random deadline avg, "
+                  "enqueued, random deadline time, random deadline avg, "
                   "dequeued, random deadline time, random deadline avg, "
-	          "enqueued, random laxity time, random laxity avg, "
+                  "enqueued, random laxity time, random laxity avg, "
                   "dequeued, random laxity time, random laxity avg\n"));
       break;
 
@@ -500,7 +500,7 @@ int  run_performance_test (u_int min_load, u_int max_load, u_int load_step,
 
     // allocate message blocks, fill in pointer array, set static information
     ACE_NEW_RETURN (supplier_args.array_, ACE_Message_Block * [load], -1);
-   
+
     // allocate array of timing offsets
     ACE_NEW_RETURN (time_offsets, ACE_Time_Value [load], -1);
 
@@ -543,7 +543,7 @@ int  run_performance_test (u_int min_load, u_int max_load, u_int load_step,
           // assign static (minimal) message priority in ascending order
           supplier_args.array_[i]->msg_priority (i);
 
-          // assign time to deadline in descending order 
+          // assign time to deadline in descending order
           // (puts dynamic priority in ascending order)
           time_offsets [i] = time_offsets [i - 1] - offset_step;
         }
@@ -560,7 +560,7 @@ int  run_performance_test (u_int min_load, u_int max_load, u_int load_step,
           // assign static (minimal) message priority in ascending order
           supplier_args.array_[i]->msg_priority (i);
 
-          // assign time to deadline in descending order 
+          // assign time to deadline in descending order
           // (puts dynamic priority in ascending order)
           time_offsets [i] = time_offsets [i - 1] - offset_step;
         }
@@ -602,7 +602,7 @@ int  run_performance_test (u_int min_load, u_int max_load, u_int load_step,
 
       default:
 
-		ACE_ERROR_RETURN ((LM_ERROR, "unknown test type %d", test_type), -1);
+                ACE_ERROR_RETURN ((LM_ERROR, "unknown test type %d", test_type), -1);
     }
 
     // Set absolute time of deadline associated with each message.
@@ -708,8 +708,8 @@ main (int, ASYS_TCHAR *[])
   delete test_queue;
 #endif /* VXWORKS */
 
-  // For each of an increasing number of message loads, run the same performance 
-  // test (best case, worst case, and randomized, over each kind of queue 
+  // For each of an increasing number of message loads, run the same performance
+  // test (best case, worst case, and randomized, over each kind of queue
   run_performance_test (MIN_LOAD, MAX_LOAD, LOAD_STEP, BEST);
   run_performance_test (MIN_LOAD, MAX_LOAD, LOAD_STEP, WORST);
   run_performance_test (MIN_LOAD, MAX_LOAD, LOAD_STEP, RANDOM);
@@ -717,5 +717,3 @@ main (int, ASYS_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-
-
