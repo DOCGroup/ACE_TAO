@@ -475,7 +475,7 @@ TAO_SHMIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
   // Cannot deal with errors, and therefore they are ignored.
-  this->transport ()->send_buffered_messages ();
+  this->transport ()->send_buffered_messages (max_wait_time);
 
   return 0;
 }
