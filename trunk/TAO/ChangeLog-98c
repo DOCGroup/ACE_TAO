@@ -1,61 +1,66 @@
+Wed Dec 02 11:03:17 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+          removed a few debugging printouts.
+
 Wed Dec  2 09:17:34 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_helper.cpp (TAO_OutStream::gen_ifdef_AHETI):
+        * TAO_IDL/be/be_helper.cpp (TAO_OutStream::gen_ifdef_AHETI):
 
-	  We were checking if the TAO_LACKS_TEMPLATE_SPECIALIZATION macro
-	  is defined or not. Such a macro is not defined anywhere in ACE
-	  or TAO. The correct macro o be used here is
-	  ACE_HAS_TEMPLATE_SPECIALIZATION. Thanks to Peter Nordlund
-	  (petern@nada.kth.se) for noticing this.
+          We were checking if the TAO_LACKS_TEMPLATE_SPECIALIZATION macro
+          is defined or not. Such a macro is not defined anywhere in ACE
+          or TAO. The correct macro o be used here is
+          ACE_HAS_TEMPLATE_SPECIALIZATION. Thanks to Peter Nordlund
+          (petern@nada.kth.se) for noticing this.
 
-	* TAO_IDL/be/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ci.cpp:
 
-	  In the generated _reset (void) method, we now zero out the
-	  underlying union. In some specific cases, without this zeroing
-	  out, we were getting segmentation faults. Thanks to Ron Barack
-	  (rab@terminal.cz) for reporting the problem and suggesting the
-	  fix.
+          In the generated _reset (void) method, we now zero out the
+          underlying union. In some specific cases, without this zeroing
+          out, we were getting segmentation faults. Thanks to Ron Barack
+          (rab@terminal.cz) for reporting the problem and suggesting the
+          fix.
 
-	* tao/DynAnyC.{h, cpp}: 
+        * tao/DynAnyC.{h, cpp}:
 
-	  Used ACE_HAS_TEMPLATE_SPECIALIZATION in place of
-	  TAO_LACKS_TEMPLATE_SPECIALIZATION.
-	
-	* tao/TypeCode.cpp (private_member_label):
+          Used ACE_HAS_TEMPLATE_SPECIALIZATION in place of
+          TAO_LACKS_TEMPLATE_SPECIALIZATION.
 
-	  Used TAO_CATCHANY_SYS instead of TAO_CATCHANY. The latter was
-	  giving "undefined __env" error. 
+        * tao/TypeCode.cpp (private_member_label):
 
-	* tao/Exception.cpp (item): 
+          Used TAO_CATCHANY_SYS instead of TAO_CATCHANY. The latter was
+          giving "undefined __env" error.
 
-	  Used TAO_THROW_ENV_RETURN instead of TAO_THROW_ENV because a
-	  return value was expected.
+        * tao/Exception.cpp (item):
+
+          Used TAO_THROW_ENV_RETURN instead of TAO_THROW_ENV because a
+          return value was expected.
 
 Wed Dec 02 03:31:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/try_macros.h: Added TAO_CHECK_CONDITION_ENV_RETURN and
-	  TAO_CHECK_CONDITION_ENV_RETURN_VOID macros.  These two macros
-	  work with TAO's simulated exception by checking the specified
-	  CORBA_Exception for exception and also a user specified
-	  condition.
+        * tao/try_macros.h: Added TAO_CHECK_CONDITION_ENV_RETURN and
+          TAO_CHECK_CONDITION_ENV_RETURN_VOID macros.  These two macros
+          work with TAO's simulated exception by checking the specified
+          CORBA_Exception for exception and also a user specified
+          condition.
 
-	* CDR.i:
-	* Exception.cpp:
-	* Marshal.i:
-	* Typecode.cpp:
-	* decode.cpp:
-	* deep_free.cpp: Integrated exception handling macros into TAO in
-	  order to document the code better and to unify TAO's behavior
-	  with or without native exception support.  The code got modified
-	  according to how it would work with native exception enabled.
-	  I don't expect to finish integrating the macros in a short
-	  time.
+        * CDR.i:
+        * Exception.cpp:
+        * Marshal.i:
+        * Typecode.cpp:
+        * decode.cpp:
+        * deep_free.cpp: Integrated exception handling macros into TAO in
+          order to document the code better and to unify TAO's behavior
+          with or without native exception support.  The code got modified
+          according to how it would work with native exception enabled.
+          I don't expect to finish integrating the macros in a short
+          time.
 
 Wed Dec  2 01:48:54 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
-	* performance-tests/Thruput/TAO/utils.cpp: fixed the problem with
-	the displaying of wierd numbers to the screen.  utils.cpp now used
-	ACE_Profile_Timer instead of using struct rusage directly.
+        * performance-tests/Thruput/TAO/utils.cpp: fixed the problem with
+        the displaying of wierd numbers to the screen.  utils.cpp now used
+        ACE_Profile_Timer instead of using struct rusage directly.
 
 Tue Dec 01 15:32:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
