@@ -1,3 +1,12 @@
+Tue Dec 21 08:34:03 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile (TAO_ORBSVCS_SRCS): removed
+          ID_Pool_T because it doesn't need to be compiled.
+          ID_Pool_T.cpp only contains template class member functions.
+
+        * orbsvcs/orbsvcs/Notify/ID_Pool_T.cpp: added protection
+          against multiple inclusion.
+
 Mon Dec 20 21:14:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/Makefile (DIRS): added Notify_Service.
