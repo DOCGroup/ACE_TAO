@@ -1,3 +1,19 @@
+Mon May  7 15:21:43 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Object_Ref_Table.h:
+	* tao/Object_Ref_Table.cpp (destroy):
+
+	  Added a new destroy() method to explicity release the object
+	  references held in the object reference table.  This method will
+	  be called on ORB shutdown.
+
+	* tao/ORB_Core.cpp (shutdown):
+
+	  Explicitly destroy the object reference table since it contains
+	  references to objects, which themselves may contain reference to
+	  this ORB.  This fixes some problems with cyclic ORB lifetime
+	  dependency problems.
+
 Mon May  7 14:54:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Stub.h:
@@ -7,7 +23,7 @@ Mon May  7 14:54:48 2001  Carlos O'Ryan  <coryan@uci.edu>
           has reared its ugly head once again.
           However, I think I finally nailed it: the ORB_Core was reference
           counted by each object reference (via TAO_Stub), but the
-          reference count was descremented in the TAO_Stub destructor
+          reference count was decremented in the TAO_Stub destructor
           *before* the TAO_Profiles were destroyed.
           This also fixes the crashes in Big_Oneways and Big_Twoways
           tests.
@@ -549,20 +565,9 @@ Mon Apr 30 11:23:45 2001  Ossama Othman  <ossama@uci.edu>
           the new TAO_Cache_IntId::relinquish_transport() method.  This
           change removes two locks from the critical path.  [Bug 878]
 
-<<<<<<< ChangeLog
-        * tao/IIOP_Endpoint.cpp (hash):
-=======
         * tao/Cache_Entries.h (relinquish_transport):
         * tao/Cache_Entries.inl (relinquish_transport):
->>>>>>> 1.3407
 
-<<<<<<< ChangeLog
-          Improved the speed of this hash operation by basing the hash on
-          the IP address of the peer instead of computing a hash that
-          involves some string operations (ACE::hash_pjw()).  Since this
-          hash method is called on each invocation, i.e. in the critical
-          path, a performance improvement should be noticeable.
-=======
           New method that causes the given TAO_Cache_IntId to relinquish
           ownership of the TAO_Transport associated with it.  This method
           exists to get around some inflexibility in the
@@ -583,7 +588,6 @@ Mon Apr 30 11:23:45 2001  Ossama Othman  <ossama@uci.edu>
           involves some string operations (ACE::hash_pjw()).  Since this
           hash method is called on each invocation, i.e. in the critical
           path, a performance improvement should be noticeable.
->>>>>>> 1.3407
 
         * tao/PortableServer/Servant_Base.cpp:
 
