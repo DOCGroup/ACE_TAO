@@ -1,3 +1,8 @@
+Fri Aug 20 10:36:57 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/Wait_On_LF_No_Upcall.h: Fix fuzz build errors from missing
+	  /**/ on pre.h/post.h includes.
+
 Fri Aug 19 14:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
