@@ -7,10 +7,10 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_MESSAGINGC_H_
-#define _TAO_IDL_MESSAGINGC_H_
-#include "ace/pre.h"
+#ifndef _TAO_IDL_ORIG_MESSAGINGC_H_
+#define _TAO_IDL_ORIG_MESSAGINGC_H_
 
+#include "ace/pre.h"
 #include "tao/orbconf.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -193,7 +193,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_REBINDPOLICY_CH_)
 #define _MESSAGING_REBINDPOLICY_CH_
 
-  class TAO_Export RebindPolicy: public virtual CORBA::Policy
+class TAO_Export RebindPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -316,7 +316,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY_CH_)
 #define _MESSAGING_SYNCSCOPEPOLICY_CH_
 
-  class TAO_Export SyncScopePolicy: public virtual CORBA::Policy
+class TAO_Export SyncScopePolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -489,7 +489,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_REQUESTPRIORITYPOLICY_CH_)
 #define _MESSAGING_REQUESTPRIORITYPOLICY_CH_
 
-  class TAO_Export RequestPriorityPolicy: public virtual CORBA::Policy
+class TAO_Export RequestPriorityPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -608,7 +608,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_REPLYPRIORITYPOLICY_CH_)
 #define _MESSAGING_REPLYPRIORITYPOLICY_CH_
 
-  class TAO_Export ReplyPriorityPolicy: public virtual CORBA::Policy
+class TAO_Export ReplyPriorityPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -731,7 +731,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY_CH_)
 #define _MESSAGING_REQUESTSTARTTIMEPOLICY_CH_
 
-  class TAO_Export RequestStartTimePolicy: public virtual CORBA::Policy
+class TAO_Export RequestStartTimePolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -854,7 +854,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_REQUESTENDTIMEPOLICY_CH_)
 #define _MESSAGING_REQUESTENDTIMEPOLICY_CH_
 
-  class TAO_Export RequestEndTimePolicy: public virtual CORBA::Policy
+class TAO_Export RequestEndTimePolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -977,7 +977,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY_CH_)
 #define _MESSAGING_REPLYSTARTTIMEPOLICY_CH_
 
-  class TAO_Export ReplyStartTimePolicy: public virtual CORBA::Policy
+class TAO_Export ReplyStartTimePolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1100,7 +1100,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_REPLYENDTIMEPOLICY_CH_)
 #define _MESSAGING_REPLYENDTIMEPOLICY_CH_
 
-  class TAO_Export ReplyEndTimePolicy: public virtual CORBA::Policy
+class TAO_Export ReplyEndTimePolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1223,7 +1223,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY_CH_)
 #define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY_CH_
 
-  class TAO_Export RelativeRequestTimeoutPolicy: public virtual CORBA::Policy
+class TAO_Export RelativeRequestTimeoutPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1346,7 +1346,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY_CH_
 
-  class TAO_Export RelativeRoundtripTimeoutPolicy: public virtual CORBA::Policy
+class TAO_Export RelativeRoundtripTimeoutPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1519,7 +1519,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_ROUTINGPOLICY_CH_)
 #define _MESSAGING_ROUTINGPOLICY_CH_
 
-  class TAO_Export RoutingPolicy: public virtual CORBA::Policy
+class TAO_Export RoutingPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1642,7 +1642,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_MAXHOPSPOLICY_CH_)
 #define _MESSAGING_MAXHOPSPOLICY_CH_
 
-  class TAO_Export MaxHopsPolicy: public virtual CORBA::Policy
+class TAO_Export MaxHopsPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1765,7 +1765,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_QUEUEORDERPOLICY_CH_)
 #define _MESSAGING_QUEUEORDERPOLICY_CH_
 
-  class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
+class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2156,7 +2156,7 @@ TAO_NAMESPACE  Messaging
 
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
-  // valuetype class
+// valuetype class
   class ExceptionHolder;
   typedef ExceptionHolder *ExceptionHolder_ptr;
 
@@ -2404,6 +2404,7 @@ TAO_NAMESPACE  Messaging
 
 #endif /* end #if !defined */
 
+
 #if !defined (_MESSAGING_REPLYHANDLER___PTR_CH_)
 #define _MESSAGING_REPLYHANDLER___PTR_CH_
 
@@ -2472,7 +2473,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_REPLYHANDLER_CH_)
 #define _MESSAGING_REPLYHANDLER_CH_
 
-  class TAO_Export ReplyHandler : public virtual CORBA_Object
+class TAO_Export ReplyHandler : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2588,157 +2589,45 @@ class TAO_Export TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter
 
 #endif /* TAO_HAS_SMART_PROXIES */
 
+
 #endif /* end #if !defined */
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplyHandler;
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
-#if (TAO_HAS_AMI_POLLER == 1)
-
-// valuetype class
-  class Poller;
-  typedef Poller *Poller_ptr;
-
-#if !defined (_MESSAGING_POLLER___VAR_CH_)
-#define _MESSAGING_POLLER___VAR_CH_
-
-  class TAO_Export Poller_var
-  {
-  public:
-    Poller_var (void); // default constructor
-    Poller_var (Poller*);
-    Poller_var (const Poller*); // (TAO extension)
-    Poller_var (const Poller_var &); // copy constructor
-    ~Poller_var (void); // destructor
-
-    Poller_var &operator= (Poller*);
-    Poller_var &operator= (const Poller_var &);
-    Poller* operator-> (void) const;
-
-    operator const Poller* () const;
-    operator Poller* ();
-    // in, inout, out, _retn
-    Poller* in (void) const;
-    Poller* &inout (void);
-    Poller* &out (void);
-    Poller* _retn (void);
-    Poller* ptr (void) const;
-
-  private:
-    Poller* ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_POLLER___OUT_CH_)
-#define _MESSAGING_POLLER___OUT_CH_
-
-  class TAO_Export Poller_out
-  {
-  public:
-    Poller_out (Poller* &);
-    Poller_out (Poller_var &);
-    Poller_out (const Poller_out &);
-    Poller_out &operator= (const Poller_out &);
-    Poller_out &operator= (const Poller_var &);
-    Poller_out &operator= (Poller*);
-    operator Poller* &();
-    Poller* &ptr (void);
-    Poller* operator-> (void);
-
-  private:
-    Poller* &ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_POLLER___INIT_CH_)
-#define _MESSAGING_POLLER___INIT_CH_
-
-  class TAO_Export Poller_init : public CORBA_ValueFactoryBase
-  {
-  public:
-    virtual ~Poller_init ();
-    virtual const char* tao_repository_id ();
-
-    // create () goes here
-
-  };
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_POLLER_CH_)
-#define _MESSAGING_POLLER_CH_
-
-  class TAO_Export Poller : public virtual CORBA_ValueBase
-  {
-  public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef Poller* _ptr_type;
-    typedef Poller_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    static Poller* _downcast (CORBA::ValueBase* );
-    // The address of static _downcast is implicit used as type id
-
-    // (TAO extensions or internals)
-    static CORBA::Boolean _tao_unmarshal (TAO_InputCDR &, Poller *&);
-    virtual const char* _tao_obv_repository_id () const;
-    static const char* _tao_obv_static_repository_id ();
-  public:
-    virtual CORBA::Object_ptr operation_target (    CORBA::Environment &ACE_TRY_ENV =
-      TAO_default_environment ()) = 0;
-    virtual char * operation_name (    CORBA::Environment &ACE_TRY_ENV =
-      TAO_default_environment ()) = 0;
-    virtual Messaging::ReplyHandler_ptr associated_handler (    CORBA::Environment &ACE_TRY_ENV =
-      TAO_default_environment ()) = 0;
-    virtual void associated_handler (Messaging::ReplyHandler_ptr,
-    CORBA::Environment &ACE_TRY_ENV =
-      TAO_default_environment ()) = 0;
-    virtual CORBA::Boolean is_from_poller (    CORBA::Environment &ACE_TRY_ENV =
-      TAO_default_environment ()) = 0;
-    virtual void target (CORBA::Object_ptr) = 0;    // set
-    virtual CORBA::Object_ptr target (void) const = 0;     // get method
-
-    virtual void op_name (char *) = 0;     // set
-    virtual void op_name (const char *) = 0;     // set
-    virtual void op_name (const CORBA::String_var&) = 0;     // set
-    virtual const char *op_name (void) const = 0;     // get method
-
-
-  protected:
-    Poller ();           // default constructor
-    virtual ~Poller ();
-
-    // TAO internals
-    virtual void *_tao_obv_narrow (ptr_arith_t);
-    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
-    virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-
-  private:
-    Poller (const Poller &);
-    void operator= (const Poller &);
-
-  protected:
-    virtual CORBA::Boolean _tao_marshal__Messaging_Poller (TAO_OutputCDR &) = 0;
-    virtual CORBA::Boolean _tao_unmarshal__Messaging_Poller (TAO_InputCDR &) = 0;
-
-  };
-
-#endif /* end #if !defined */
-
-#endif /* TAO_HAS_AMI_POLLER == 1 */
-
 }
 TAO_NAMESPACE_CLOSE // module Messaging
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+// Typedef for the Reply Handler Skeleton.
+// This is handcrafted not generated by the IDL compiler.
+
+class TAO_InputCDR;
+
+enum TAO_AMI_Reply_Status
+{
+  TAO_AMI_REPLY_OK,
+  // Reply is normal.
+
+  TAO_AMI_REPLY_NOT_OK,
+  // Reply is not normal and no exceptions
+
+  TAO_AMI_REPLY_USER_EXCEPTION,
+  // An user exception was raised.
+
+  TAO_AMI_REPLY_SYSTEM_EXCEPTION
+  // An system exception was raised.
+};
+
+
+#if (TAO_HAS_AMI_CALLBACK == 1)
+
+typedef void (*TAO_Reply_Handler_Skeleton)(
+    TAO_InputCDR &,
+    Messaging::ReplyHandler *,
+    CORBA::ULong reply_status,
+    CORBA::Environment &
+    );
 
 TAO_NAMESPACE  OBV_Messaging
 {
@@ -2747,7 +2636,7 @@ TAO_NAMESPACE  OBV_Messaging
 #define _MESSAGING_EXCEPTIONHOLDER___OBV_CH_
 
   // OBV_ class
-  class ExceptionHolder : public virtual Messaging::ExceptionHolder
+  class TAO_Export ExceptionHolder : public virtual Messaging::ExceptionHolder
   {
   public:
     virtual void is_system_exception (CORBA::Boolean);    // set
@@ -2780,71 +2669,8 @@ TAO_NAMESPACE  OBV_Messaging
 
 #endif /* end #if !defined */
 
-
-#if !defined (_MESSAGING_POLLER___OBV_CH_)
-#define _MESSAGING_POLLER___OBV_CH_
-
-  // OBV_ class
-  class Poller : public virtual Messaging::Poller
-  {
-  public:
-    virtual void target (CORBA::Object_ptr);    // set
-    virtual CORBA::Object_ptr target (void) const;     // get method
-
-    virtual void op_name (char *);     // set
-    virtual void op_name (const char *);     // set
-    virtual void op_name (const CORBA::String_var&);     // set
-    virtual const char *op_name (void) const;     // get method
-
-
-  protected:
-    virtual CORBA::Boolean _tao_marshal__Messaging_Poller (TAO_OutputCDR &);
-    virtual CORBA::Boolean _tao_unmarshal__Messaging_Poller (TAO_InputCDR &);
-    CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &);
-    CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &);
-
-
-  private:
-        CORBA::Object_var _pd_target;
-    TAO_String_Manager _pd_op_name;
-  };
-
-#endif /* end #if !defined */
-
 }
 TAO_NAMESPACE_CLOSE
-
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
-
-// Typedef for the Reply Handler Skeleton.
-// This is handcrafted not generated by the IDL compiler.
-
-class TAO_InputCDR;
-
-enum TAO_AMI_Reply_Status
-{
-  TAO_AMI_REPLY_OK,
-  // Reply is normal.
-
-  TAO_AMI_REPLY_NOT_OK,
-  // Reply is not normal and no exceptions
-
-  TAO_AMI_REPLY_USER_EXCEPTION,
-  // An user exception was raised.
-
-  TAO_AMI_REPLY_SYSTEM_EXCEPTION
-  // An system exception was raised.
-};
-
-
-#if (TAO_HAS_AMI_CALLBACK == 1)
-
-typedef void (*TAO_Reply_Handler_Skeleton)(
-    TAO_InputCDR &,
-    Messaging::ReplyHandler *,
-    CORBA::ULong reply_status,
-    CORBA::Environment &
-    );
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 */
 
@@ -2935,23 +2761,8 @@ TAO_Export CORBA::Boolean operator>> (
 
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ExceptionHolder &);
-
-#if !defined _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_H_
-#define _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_H_
-
-TAO_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const Messaging::ExceptionHolder::_tao_seq_Octet &
-  );
-TAO_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    Messaging::ExceptionHolder::_tao_seq_Octet &
-  );
-
-#endif /* _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_H_ */
-
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder *); //
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ExceptionHolder *&);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ReplyHandler_ptr );
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ReplyHandler_ptr &);
 
@@ -2970,4 +2781,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ReplyHandler_pt
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
+#include "ace/post.h"
 #endif /* ifndef */
