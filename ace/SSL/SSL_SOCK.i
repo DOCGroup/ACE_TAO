@@ -1,6 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
+#include "ace/OS_NS_sys_socket.h"
+
 ASYS_INLINE void
 ACE_SSL_SOCK::set_handle (ACE_HANDLE fd)
 {
