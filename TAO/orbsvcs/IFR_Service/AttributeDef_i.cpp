@@ -133,7 +133,7 @@ TAO_AttributeDef_i::type_def_i (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (CORBA_IDLType::_nil ());
 
   CORBA_IDLType_var retval = CORBA_IDLType::_narrow (obj.in (),
-                                                 ACE_TRY_ENV);
+                                                     ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA_IDLType::_nil ());
 
   return retval._retn ();
@@ -486,7 +486,7 @@ TAO_AttributeDef_i::get_exceptions (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK_RETURN (0);
 
       retval[i] = CORBA_ExceptionDef::_narrow (obj.in (),
-                                            ACE_TRY_ENV);
+                                               ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
 
@@ -563,7 +563,7 @@ TAO_AttributeDef_i::put_exceptions (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK_RETURN (0);
 
       retval[i] = CORBA_ExceptionDef::_narrow (obj.in (),
-                                            ACE_TRY_ENV);
+                                               ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
 

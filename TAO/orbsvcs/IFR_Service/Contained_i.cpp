@@ -319,7 +319,7 @@ TAO_Contained_i::defined_in_i (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (CORBA_Container::_nil ());
 
   CORBA_Container_var retval = CORBA_Container::_narrow (obj.in (),
-                                                     ACE_TRY_ENV);
+                                                         ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA_Container::_nil ());
 
   return retval._retn ();

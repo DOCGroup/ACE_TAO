@@ -224,7 +224,7 @@ TAO_InterfaceDef_i::base_interfaces_i (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK_RETURN (0);
 
       retval[i] = CORBA_InterfaceDef::_narrow (obj.in (),
-                                             ACE_TRY_ENV);
+                                               ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
 
@@ -739,7 +739,7 @@ TAO_InterfaceDef_i::create_attribute_i (
 
   CORBA_AttributeDef_var retval =
     CORBA_AttributeDef::_narrow (obj.in (),
-                               ACE_TRY_ENV);
+                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA_AttributeDef::_nil ());
 
   return retval._retn ();
@@ -939,7 +939,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
 
   CORBA_OperationDef_var retval =
     CORBA_OperationDef::_narrow (obj.in (),
-                               ACE_TRY_ENV);
+                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA_OperationDef::_nil ());
 
   return retval._retn ();

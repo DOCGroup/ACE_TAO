@@ -244,7 +244,7 @@ TAO_ExceptionDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK_RETURN (0);
     
       retval[k].type_def = CORBA_IDLType::_narrow (obj.in (),
-                                                 ACE_TRY_ENV);
+                                                   ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),

@@ -59,37 +59,11 @@ TAO_TypeCodeFactory_i::create_struct_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_OutputCDR cdr;
-
-  cdr << TAO_ENCAP_BYTE_ORDER;
-
-  cdr << id;
-
-  cdr << name;
-
-  // Number of members..
-  CORBA::ULong len = members.length ();
-  cdr << len;
-
-  for (CORBA::ULong index = 0; index < len; ++index)
-    {
-      cdr << members[index].name;
-
-      cdr << members[index].type.in ();
-    }
-
-  CORBA::TypeCode_ptr struct_typecode = 
-    CORBA::TypeCode::_nil ();
-  ACE_NEW_THROW_EX (struct_typecode,
-                    CORBA_TypeCode (CORBA::tk_struct,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return struct_typecode;
+  return this->struct_except_tc_common (id,
+                                        name,
+                                        members,
+                                        CORBA::tk_struct,
+                                        ACE_TRY_ENV);
 }
 
 CORBA::TypeCode_ptr 
@@ -102,6 +76,164 @@ TAO_TypeCodeFactory_i::create_union_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (name != 0 && !this->valid_name (name))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (15,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  if (id != 0 && !this->valid_id (id))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (16,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  CORBA::Boolean good_disc_type = 
+    this->valid_disc_type (discriminator_type,
+                           ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  if (!good_disc_type)
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (20,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  CORBA::ULong len = members.length ();
+  CORBA::ULong dups = 0;
+  CORBA::ULong raw_default_index = ACE_UINT32_MAX;
+  CORBA::Long default_index = -1;
+  CORBA::Octet value = ACE_OCTET_MAX;
+  CORBA::TypeCode_ptr tc_holder = CORBA::TypeCode::_nil ();
+  CORBA::Boolean valid_member = 1;
+  const char *member_name = 0;
+  ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
+  
+  // No getting around iterating over the members twice. We have
+  // to do it once *before* the overall length is written to the
+  // CDR stream, to know by how much, if any, the number of members
+  // differs from the number of labels.
+  for (CORBA::ULong i = 0; i < len; ++i)
+    {
+      member_name = members[i].name;
+      int trybind_status = 0;
+
+      if (i > 0)
+        {
+          // Is this a duplicate case label? If so, we have to adjust
+          // the 'length' we encode - a member gets encoded only once.
+          if (ACE_OS::strcmp (member_name, 
+                              members[i - 1].name) 
+               == 0)
+            {
+              CORBA::Boolean equiv =
+                members[i].type.in ()->equivalent (members[i - 1].type.in (),
+                                                   ACE_TRY_ENV);
+              ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+              // If adjacent names are the same and their types are equivalent,
+              // then they are duplicate case labels. If the types are not
+              // equivalent, then they are separate members with the same name,
+              // which is not allowed.
+              if (equiv)
+                {
+                  ++dups;
+                }
+              else
+                {
+                  ACE_THROW_RETURN (CORBA::BAD_PARAM (17,
+                                                      CORBA::COMPLETED_NO),
+                                    CORBA::TypeCode::_nil ());
+                }
+            }
+          else
+            {
+              // Only if we do not have a duplicate case label do we
+              // check for a duplicate member name.
+              ACE_CString ext_id (member_name);
+              int int_id = 0;
+
+              trybind_status = map.trybind (ext_id, int_id);
+            }
+        }
+      else
+        {
+          ACE_CString ext_id (member_name);
+          int int_id = 0;
+
+          trybind_status = map.trybind (ext_id, int_id);
+        }
+
+      // Duplicate member name?
+      if (trybind_status != 0)
+        {
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (17,
+                                              CORBA::COMPLETED_NO),
+                            CORBA::TypeCode::_nil ());
+        }
+
+      tc_holder = members[i].type.in ();
+
+      // Valid member type?
+      valid_member = this->valid_content_type (tc_holder,
+                                               ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+      if (!valid_member)
+        {
+          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (2,
+                                                 CORBA::COMPLETED_NO),
+                            CORBA::TypeCode::_nil ());
+        }
+
+      // Reset the default index, if we have a default case label.
+      if ((members[i].label >>= CORBA::Any::to_octet (value)) == 1)
+        {
+          if (value == 0)
+            {
+              raw_default_index = i;
+              // Only the multiple labels that come before the
+              // default label affect its adjusted value.
+              default_index = ACE_static_cast (CORBA::Long, i - dups);
+            }
+        }
+      else
+        {
+          // Else check that the label type is equivalent to the
+          // given discriminator type.
+          CORBA::TypeCode_var tmp = members[i].label.type ();
+
+          CORBA::Boolean equiv =
+            discriminator_type->equivalent (tmp.in (),
+                                            ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+          if (!equiv)
+            {
+              ACE_THROW_RETURN (CORBA::BAD_PARAM (19,
+                                                  CORBA::COMPLETED_NO),
+                                CORBA::TypeCode::_nil ());
+            }
+        }
+    }
+
+  CORBA::Boolean unique_labels =
+    this->unique_label_values (members,
+                               discriminator_type,
+                               raw_default_index,
+                               ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  if (!unique_labels)
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (18,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
   TAO_OutputCDR cdr;
 
   cdr << TAO_ENCAP_BYTE_ORDER;
@@ -112,44 +244,11 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
   cdr << discriminator_type;
 
-  CORBA::ULong len = members.length ();
-  CORBA::ULong dups = 0;
-  CORBA::Long default_index = -1;
-  CORBA::Long raw_default_index = -1;
-  CORBA::Octet value = ACE_OCTET_MAX;
-
-  for (CORBA::ULong i = 0; i < len; ++i)
-    {
-      if (i > 0)
-        {
-          // Is this a duplicate case label? If so, we have to adjust
-          // the 'length' we encode - a member gets encoded only once.
-          if (ACE_OS::strcmp (members[i].name, 
-                              members[i - 1].name) 
-               == 0)
-            {
-              ++dups;
-            }
-        }
-
-      // Reset the default index, if we have a default case label.
-      if ((members[i].label >>= CORBA::Any::to_octet (value)) == 1)
-        {
-          if (value == 0)
-            {
-              raw_default_index = ACE_static_cast (CORBA::Long, i);
-              // Only the multiple labels that come before the
-              // default label affect its adjusted value.
-              default_index = ACE_static_cast (CORBA::Long, i - dups);
-            }
-        }
-    }
-
   cdr << default_index;
 
   cdr << len - dups;
 
-  for (CORBA::ULong index = 0; index < len; index++)
+  for (CORBA::ULong index = 0; index < len; ++index)
     {
       if (index > 0)
         {
@@ -163,8 +262,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
             }
         }
 
-      if (raw_default_index >= 0
-          && index == ACE_static_cast (CORBA::ULong, raw_default_index))
+      if (raw_default_index >= 0 && index == raw_default_index)
         {
           // This is the default label - we have to find a legal value.
           CORBA::TCKind kind = discriminator_type->kind (ACE_TRY_ENV);
@@ -218,6 +316,20 @@ TAO_TypeCodeFactory_i::create_enum_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (name != 0 && !this->valid_name (name))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (15,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  if (id != 0 && !this->valid_id (id))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (16,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
   TAO_OutputCDR cdr;
 
   cdr << TAO_ENCAP_BYTE_ORDER;
@@ -230,8 +342,21 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
   cdr << len;
 
+  ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
+  
   for (CORBA::ULong index = 0; index < len; ++index)
     {
+      ACE_CString ext_id (members[index]);
+      int int_id = 0;
+
+      // Is there a duplicate member name?
+      if (map.trybind (ext_id, int_id) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (17,
+                                              CORBA::COMPLETED_NO),
+                            CORBA::TypeCode::_nil ());
+        }
+
       cdr << members[index];
     }
 
@@ -258,6 +383,32 @@ TAO_TypeCodeFactory_i::create_alias_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (name != 0 && !this->valid_name (name))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (15,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  if (id != 0 && !this->valid_id (id))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (16,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  CORBA::Boolean valid_content =
+    this->valid_content_type (original_type,
+                              ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  if (!valid_content)
+    {
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (2,
+                                             CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
   TAO_OutputCDR cdr;
 
   cdr << TAO_ENCAP_BYTE_ORDER;
@@ -292,40 +443,11 @@ TAO_TypeCodeFactory_i::create_exception_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_OutputCDR cdr;
-
-  cdr << TAO_ENCAP_BYTE_ORDER;
-
-  cdr << id;
-
-  cdr << name;
-
-  // Number of members..
-  CORBA::ULong len = members.length ();
-  cdr << len;
-
-  for (CORBA::ULong index = 0; index < len; ++index)
-    {
-      // Get the first member which is a string..
-      CORBA_StructMember struct_member = members[index];
-
-      cdr << struct_member.name;
-
-      cdr << struct_member.type.in ();
-    }
-
-  CORBA::TypeCode_ptr exception_typecode = 
-    CORBA::TypeCode::_nil ();
-  ACE_NEW_THROW_EX (exception_typecode,
-                    CORBA_TypeCode (CORBA::tk_except,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
-                                    0,
-                                    0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  return exception_typecode;
+  return this->struct_except_tc_common (id,
+                                        name,
+                                        members,
+                                        CORBA::tk_except,
+                                        ACE_TRY_ENV);
 }
 
 CORBA::TypeCode_ptr
@@ -416,6 +538,18 @@ TAO_TypeCodeFactory_i::create_sequence_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CORBA::Boolean valid_element =
+    this->valid_content_type (element_type,
+                              ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  if (!valid_element)
+    {
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (2,
+                                             CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
   TAO_OutputCDR cdr;
 
   cdr << TAO_ENCAP_BYTE_ORDER;
@@ -446,6 +580,18 @@ TAO_TypeCodeFactory_i::create_array_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CORBA::Boolean valid_element =
+    this->valid_content_type (element_type,
+                              ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  if (!valid_element)
+    {
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (2,
+                                             CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
   TAO_OutputCDR cdr;
 
   cdr << TAO_ENCAP_BYTE_ORDER;
@@ -492,6 +638,33 @@ TAO_TypeCodeFactory_i::create_value_box_tc (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (name != 0 && !this->valid_name (name))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (15,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  // Repo id may not be null for valueboxtype.
+  if (id == 0 || !this->valid_id (id))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (16,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  CORBA::Boolean valid_content =
+    this->valid_content_type (boxed_type,
+                              ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  if (!valid_content)
+    {
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (2,
+                                             CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
   TAO_OutputCDR cdr;
 
   cdr << TAO_ENCAP_BYTE_ORDER;
@@ -635,7 +808,6 @@ TAO_TypeCodeFactory_i::compute_default_label (
   dv.ulonglong_val = 0;
 #endif /* ACE_LACKS_LONGLONG_T */
   dv.enum_val = 0;
-
 
   CORBA::ULong len = members.length ();
   int success = 0;
@@ -789,6 +961,21 @@ TAO_TypeCodeFactory_i::create_tc_common (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (name != 0 && !this->valid_name (name))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (15,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  // Repo id may not be null for object or native type.
+  if (id == 0 || !this->valid_id (id))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (16,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
   TAO_OutputCDR cdr;
 
   cdr << TAO_ENCAP_BYTE_ORDER;
@@ -811,4 +998,382 @@ TAO_TypeCodeFactory_i::create_tc_common (
 
   return result;
 }
+
+CORBA::TypeCode_ptr 
+TAO_TypeCodeFactory_i::struct_except_tc_common (
+    const char *id,
+    const char *name,
+    const CORBA_StructMemberSeq &members,
+    CORBA::TCKind kind,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  if (name != 0 && !this->valid_name (name))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (15,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  // Repo id may not be null for an exception.
+  if ((id == 0 && kind == CORBA::tk_except)
+      || (id != 0 && !this->valid_id (id)))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (16,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  TAO_OutputCDR cdr;
+
+  cdr << TAO_ENCAP_BYTE_ORDER;
+
+  cdr << id;
+
+  cdr << name;
+
+  // Number of members..
+  CORBA::ULong len = members.length ();
+
+  cdr << len;
+
+  CORBA::TypeCode_ptr tc_holder = CORBA::TypeCode::_nil ();
+  CORBA::Boolean valid_member = 1;
+  const char *member_name = 0;
+  ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
+
+  for (CORBA::ULong index = 0; index < len; ++index)
+    {
+      // Valid member type?
+      tc_holder = members[index].type.in ();
+
+      valid_member = this->valid_content_type (tc_holder,
+                                               ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+      if (!valid_member)
+        {
+          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (2,
+                                                 CORBA::COMPLETED_NO),
+                            CORBA::TypeCode::_nil ());
+        }
+
+      member_name = members[index].name;
+
+      if (member_name == 0 || !this->valid_name (member_name))
+        {
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (15,
+                                              CORBA::COMPLETED_NO),
+                            CORBA::TypeCode::_nil ());
+        }
+
+      ACE_CString ext_id (member_name);
+      int int_id = 0;
+
+      // Is there a duplicate member name?
+      if (map.trybind (ext_id, int_id) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (17,
+                                              CORBA::COMPLETED_NO),
+                            CORBA::TypeCode::_nil ());
+        }
+
+      cdr << member_name;
+
+      cdr << tc_holder;
+    }
+
+  CORBA::TypeCode_ptr new_typecode = 
+    CORBA::TypeCode::_nil ();
+  ACE_NEW_THROW_EX (new_typecode,
+                    CORBA_TypeCode (kind,
+                                    cdr.total_length (),
+                                    cdr.buffer (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  return new_typecode;
+}
+
+CORBA::Boolean 
+TAO_TypeCodeFactory_i::valid_name (const char *name)
+{
+  if (!isalpha (*name))
+    {
+      return 0;
+    }
+
+  const char *tmp = name + 1;
+
+  for (; *tmp; ++tmp)
+    {
+      if (isalnum (*tmp) || *tmp == '_')
+        {
+          continue;
+        }
+      else
+        {
+          return 0;
+        }
+    }
+
+  return 1;
+}
+
+CORBA::Boolean 
+TAO_TypeCodeFactory_i::valid_id (const char *id)
+{
+  ACE_CString safety (id);
+
+  int pos = safety.find (':');
+
+  if (pos == ACE_CString::npos)
+    {
+      return 0;
+    }
+
+  ACE_CString format (safety.substr (0, pos));
+
+  if (format == "IDL" 
+      || format == "RMI" 
+      || format == "DCE" 
+      || format == "LOCAL")
+    {
+      return 1;
+    }
+
+  return 0;
+}
+
+CORBA::Boolean 
+TAO_TypeCodeFactory_i::valid_content_type (CORBA::TypeCode_ptr tc,
+                                           CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  if (kind == CORBA::tk_null
+      || kind == CORBA::tk_void
+      || kind == CORBA::tk_except)
+    {
+      return 0;
+    }
+
+  return 1;
+}
+
+CORBA::Boolean 
+TAO_TypeCodeFactory_i::unique_label_values (const CORBA_UnionMemberSeq &members,
+                                            CORBA::TypeCode_ptr disc_tc,
+                                            CORBA::ULong default_index_slot,
+                                            CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA::TCKind disc_kind = disc_tc->kind (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  CORBA::ULong length = members.length ();
+
+  // We have already checked for valid discriminator type
+  // and valid label types, so we won't check for any of that here.
+
+  struct label_types
+  {
+    CORBA::Char char_val;
+    CORBA::WChar wchar_val;
+    CORBA::Boolean bool_val;
+    CORBA::Short short_val;
+    CORBA::UShort ushort_val;
+    CORBA::Long long_val;
+    CORBA::ULong ulong_val;
+    CORBA::ULong enum_val;
+    // TODO - handle (u)longlong types
+  } s;
+
+  s.char_val = 0;
+  s.wchar_val = 0;
+  s.bool_val = 0;
+  s.short_val = 0;
+  s.ushort_val = 0;
+  s.long_val = 0;
+  s.ulong_val = 0;
+  s.enum_val = 0;
+
+  // Two cases - one for signed and one for unsigned discriminator types.
+  if (disc_kind == CORBA::tk_long
+      || disc_kind == CORBA::tk_short)
+    {
+      ACE_Bounded_Set<CORBA::Long> checker (length);
+
+      for (CORBA::ULong i = 0; i < length; ++i)
+        {
+          if (i == default_index_slot)
+            {
+              continue;
+            }
+
+          switch (disc_kind)
+          {
+            case CORBA::tk_long:
+              members[i].label >>= s.long_val;
+
+              if (checker.insert (s.long_val) != 0)
+                {
+                  return 0;
+                }
+
+              break;
+            case CORBA::tk_short:
+              members[i].label >>= s.short_val;
+
+              if (checker.insert (s.short_val) != 0)
+                {
+                  return 0;
+                }
+
+              break;
+            default:
+              break;
+          }
+        }
+    }
+  else
+    {
+      ACE_Bounded_Set<CORBA::ULong> checker (length);
+
+      for (CORBA::ULong i = 0; i < length; ++i)
+        {
+          if (i == default_index_slot)
+            {
+              continue;
+            }
+
+          switch (disc_kind)
+          {
+            case CORBA::tk_boolean:
+              members[i].label >>= CORBA::Any::to_boolean (s.bool_val);
+
+              if (checker.insert (s.bool_val) != 0)
+                {
+                  return 0;
+                }
+
+              break;
+            case CORBA::tk_char:
+              members[i].label >>= CORBA::Any::to_char (s.char_val);
+
+              if (checker.insert (s.char_val) != 0)
+                {
+                  return 0;
+                }
+
+              break;
+            case CORBA::tk_wchar:
+              members[i].label >>= CORBA::Any::to_wchar (s.wchar_val);
+
+              if (checker.insert (s.wchar_val) != 0)
+                {
+                  return 0;
+                }
+
+              break;
+            case CORBA::tk_ushort:
+              members[i].label >>= s.ushort_val;
+
+              if (checker.insert (s.short_val) != 0)
+                {
+                  return 0;
+                }
+
+              break;
+            case CORBA::tk_ulong:
+              members[i].label >>= s.ulong_val;
+
+              if (checker.insert (s.ulong_val) != 0)
+                {
+                  return 0;
+                }
+
+              break;
+            case CORBA::tk_enum:
+            {
+              TAO_InputCDR cdr (members[i].label._tao_get_cdr (),
+                                members[i].label._tao_byte_order ());
+              cdr.read_ulong (s.enum_val);
+
+              if (checker.insert (s.enum_val) != 0)
+                {
+                  return 0;
+                }
+
+              break;
+            }
+            default:
+              break;
+          }
+        }
+    }
+
+  return 1;
+}
+
+CORBA::Boolean 
+TAO_TypeCodeFactory_i::valid_disc_type (CORBA::TypeCode_ptr tc,
+                                        CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  if (kind == CORBA::tk_enum
+      || kind == CORBA::tk_ulong
+      || kind == CORBA::tk_long
+      || kind == CORBA::tk_ushort
+      || kind == CORBA::tk_short
+      || kind == CORBA::tk_char
+      || kind == CORBA::tk_wchar
+      || kind == CORBA::tk_boolean
+      || kind == CORBA::tk_longlong
+      || kind == CORBA::tk_ulonglong)
+    {
+      return 1;
+    }
+
+  return 0;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Hash_Map_Entry<ACE_CString, int>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Equal_To<ACE_CString>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash<ACE_CString>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex>;
+template class ACE_Hash_Map_With_Allocator<ACE_CString, int>;
+template class ACE_Bounded_Set<CORBA::Long>;
+template class ACE_Bounded_Set<CORBA::ULong>;
+template class ACE_Bounded_Set_Iterator<CORBA::Long>;
+template class ACE_Bounded_Set_Iterator<CORBA::ULong>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, int>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Equal_To<ACE_CString>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash<ACE_CString>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_With_Allocator<ACE_CString, int>
+#pragma instantiate ACE_Bounded_Set<CORBA::Long>
+#pragma instantiate ACE_Bounded_Set<CORBA::ULong>
+#pragma instantiate ACE_Bounded_Set_Iterator<CORBA::Long>
+#pragma instantiate ACE_Bounded_Set_Iterator<CORBA::ULong>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

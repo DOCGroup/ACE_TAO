@@ -16,36 +16,67 @@ int main(int argc, char *argv[])
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::TypeCode_ptr iface_tc = 
+      CORBA::TypeCode_var iface_tc = 
         orb->create_interface_tc (CORBA::string_dup ("IDL:iface:1.0"),
                                   CORBA::string_dup ("iface"),
                                   ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::ULong length = 2;
+      CORBA::ULong length = 5;
 
-      CORBA::StructMemberSeq foo_members (length);
+      CORBA::UnionMemberSeq foo_members (length);
       foo_members.length (length);
 
+      // The first three members are multiple case labels for a
+      // single string member. The label values are not in order
+      // or consecutive.
+
       foo_members[0].name = CORBA::string_dup ("foo_str_member");
+
+      // The type member of the UnionMember takes ownership.
       foo_members[0].type = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
 
       // Not needed for ORB-created typecodes 
       // (see CORBA 2.4.2 section 10.7.3).
       foo_members[0].type_def = CORBA::IDLType::_nil ();
+      CORBA::Short label_value = -3;
+      foo_members[0].label <<= label_value;
 
-      foo_members[1].name = CORBA::string_dup ("foo_iface_member");
-
-      // StructMember.type takes ownership.
-      foo_members[1].type = iface_tc;
-
+      foo_members[1].name = CORBA::string_dup ("foo_str_member");
+      foo_members[1].type = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
       foo_members[1].type_def = CORBA::IDLType::_nil ();
+      label_value = 4;
+      foo_members[1].label <<= label_value;
 
-      CORBA::TypeCode_ptr foo_tc = orb->create_struct_tc ("IDL:foo:1.0",
+      foo_members[2].name = CORBA::string_dup ("foo_str_member");
+      foo_members[2].type = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
+      foo_members[2].type_def = CORBA::IDLType::_nil ();
+      label_value = -1;
+      foo_members[2].label <<= label_value;
+
+      // The default member.
+      foo_members[3].name = CORBA::string_dup ("foo_iface_member");
+      foo_members[3].type = CORBA::TypeCode::_duplicate (iface_tc.in ());
+      foo_members[3].type_def = CORBA::IDLType::_nil ();
+      CORBA::Octet default_label_value = 0;
+      foo_members[3].label <<= CORBA::Any::from_octet (default_label_value);
+
+      // The last member is the same type as the previous one, but has
+      // a different name.
+      foo_members[4].name = CORBA::string_dup ("foo_iface_member2");
+      foo_members[4].type = CORBA::TypeCode::_duplicate (iface_tc.in ());
+      foo_members[4].type_def = CORBA::IDLType::_nil ();
+      label_value = 0;
+      foo_members[4].label <<= label_value;
+
+      CORBA::TypeCode_ptr foo_tc = orb->create_union_tc ("IDL:foo:1.0",
                                                           "foo",
+                                                          CORBA::_tc_short,
                                                           foo_members,
                                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      length = 2;
 
       CORBA::StructMemberSeq bar_members (length);
       bar_members.length (length);
