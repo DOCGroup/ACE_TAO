@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="ACE static library" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 6.00
+# Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (ALPHA) Static Library" 0x0604
@@ -40,7 +40,6 @@ CFG=ACE static library - Win32 Alpha Unicode Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-# PROP WCE_Configuration "H/PC Ver. 2.00"
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
 
@@ -87,8 +86,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
 LIB32=link.exe -lib
-# ADD BASE LIB32  /nologo /out:".\libace-r.lib"
-# ADD LIB32  /nologo /out:".\aces.lib"
+# ADD BASE LIB32 /nologo /out:".\libace-r.lib"
+# ADD LIB32 /nologo /out:".\aces.lib"
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
 
@@ -111,8 +110,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
 LIB32=link.exe -lib
-# ADD BASE LIB32  /nologo /out:".\libace.lib"
-# ADD LIB32  /nologo /out:".\acesud.lib"
+# ADD BASE LIB32 /nologo /out:".\libace.lib"
+# ADD LIB32 /nologo /out:".\acesud.lib"
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
 
@@ -135,8 +134,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
 LIB32=link.exe -lib
-# ADD BASE LIB32  /nologo /out:".\libace-r.lib"
-# ADD LIB32  /nologo /out:".\acesu.lib"
+# ADD BASE LIB32 /nologo /out:".\libace-r.lib"
+# ADD LIB32 /nologo /out:".\acesu.lib"
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
 
@@ -175,7 +174,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /O1 /I "..\STL" /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /YX /FD WIN32" /c
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "_WINDOWS" /D "WIN32"" /FD /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "_WINDOWS" /FD /D "WIN32" " /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -221,7 +220,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /O1 /I "..\STL" /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /YX /FD WIN32" /c
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /D "WIN32"" /FD /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /FD /D "WIN32" " /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -632,6 +631,29 @@ SOURCE=.\DEV_IO.cpp
 # Begin Source File
 
 SOURCE=.\Dirent.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DLL.cpp
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
 
@@ -3841,6 +3863,10 @@ SOURCE=.\DEV_IO.h
 # Begin Source File
 
 SOURCE=.\Dirent.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DLL.h
 # End Source File
 # Begin Source File
 
