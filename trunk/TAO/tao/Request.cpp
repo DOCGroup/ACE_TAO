@@ -83,7 +83,8 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
     contexts_ (0),
     ctx_ (0),
     refcount_ (1),
-    lazy_evaluation_ (0)
+    lazy_evaluation_ (0),
+    response_received_ (0)
 {
   target_ = CORBA::Object::_duplicate (obj);
   opname_ = CORBA::string_dup (op);
@@ -160,7 +161,7 @@ CORBA_Request::send_deferred (CORBA::Environment &ACE_TRY_ENV)
 void
 CORBA_Request::get_response (CORBA::Environment &ACE_TRY_ENV)
 {
-  while (!this->response_received_ && this->orb_->work_pending ())
+  while (!this->response_received_)
     {
       (void) this->orb_->perform_work ();
     }
