@@ -1,3 +1,14 @@
+Mon Mar 22 11:14:16 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+	* m4/platform.m4
+	Moved known platform specific macro checks from `configure.in'
+	to `platform.m4'.
+
+	* tests/Makefile.am:
+	Updated to build the DLL_Test shared library.  Support for the
+	test is still broken (my fault :).
+
 Mon Mar 22 09:42:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-subsets.html: added current status section.
