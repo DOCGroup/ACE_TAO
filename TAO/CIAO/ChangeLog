@@ -1,3 +1,10 @@
+Fri Sep 17 16:46:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/CIDLC.sln:
+        
+          Added the 5 projects from CCF.sln so the CIDL compiler can be
+          built from scratch in a single MSVC 7.1 Solution.
+
 Fri Sep 17 08:27:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/ciao/Context_Impl_Base.cpp:
