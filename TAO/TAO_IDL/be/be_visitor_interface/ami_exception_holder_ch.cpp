@@ -140,10 +140,10 @@ be_visitor_interface_ami_exception_holder_ch::visit_interface (be_interface *nod
               if (((AST_Operation *)op)->exceptions ())
                 {
                   UTL_ExceptList *exceptions = (UTL_ExceptList *)((AST_Operation *)op)->exceptions ()->copy ();
-                  op_vt->add_exceptions_x (exceptions);
+                  op_vt->be_add_exceptions (exceptions);
                 }
 
-              excep_holder_vt->add_operation_x (op_vt);
+              excep_holder_vt->be_add_operation (op_vt);
             }
           si->next ();
         } // end of while loop

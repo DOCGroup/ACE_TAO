@@ -675,6 +675,13 @@ AST_Module::has_nested_valuetype ()
   return pd_has_nested_valuetype;
 }
 
+int
+AST_Module::be_add_interface (AST_Interface *i)
+{
+  this->fe_add_interface (i);
+  return 0;
+}
+
 /*
  * Narrowing methods
  */

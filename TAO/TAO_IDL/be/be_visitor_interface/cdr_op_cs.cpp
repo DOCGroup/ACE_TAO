@@ -47,6 +47,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   if (node->cli_stub_cdr_op_gen () || node->imported ())
     return 0;
 
+#if 0
   int i;
   int to_do;
 
@@ -72,7 +73,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
                              "(%N:%l) be_visitor_interface_cdr_op_cs::visit_interface - "
                              "codegen failed - invalid state\n"), -1);
         }
-
+#endif /* 0 */
       // set the substate as generating code for the types defined in our scope
       this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
       // all we have to do is to visit the scope and generate code
@@ -86,6 +87,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
       node->cli_stub_cdr_op_gen (1);
 
+#if 0
       switch (i)
         {
         case 0:
@@ -99,6 +101,6 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
                              "codegen failed - invalid state\n"), -1);
         }
     } // for 
-
+#endif /* 0 */
   return 0;
 }

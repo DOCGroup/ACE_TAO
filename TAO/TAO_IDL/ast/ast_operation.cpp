@@ -143,7 +143,7 @@ AST_Operation::fe_add_context(UTL_StrList *t)
 }
 
 UTL_ExceptList *
-AST_Operation::add_exceptions_x (UTL_ExceptList *t)
+AST_Operation::be_add_exceptions (UTL_ExceptList *t)
 {
   if (pd_exceptions)
       idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES, this);

@@ -52,8 +52,8 @@ be_visitor_interface_cdr_op_ch::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+#if 0
   int i;
-
   int to_do;
 
   // Decide how much code to produce
@@ -123,7 +123,7 @@ be_visitor_interface_cdr_op_ch::visit_interface (be_interface *node)
                              "codegen failed - invalid state\n"), -1);
         }
 
-
+#endif 0
       // generate the CDR << and >> operator declarations
       os->indent ();
       *os << "CORBA::Boolean " << idl_global->stub_export_macro () << be_nl
@@ -147,7 +147,7 @@ be_visitor_interface_cdr_op_ch::visit_interface (be_interface *node)
 
 
       node->cli_hdr_cdr_op_gen (1);
-
+#if 0
       switch (i)
         {
         case 0:
@@ -160,6 +160,6 @@ be_visitor_interface_cdr_op_ch::visit_interface (be_interface *node)
                              "codegen failed - invalid state\n"), -1);
         }
     } // for 
-
+#endif /* 0 */
   return 0;
 }

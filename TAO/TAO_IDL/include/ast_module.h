@@ -101,6 +101,9 @@ public:
   void set_has_nested_valuetype ();
   idl_bool has_nested_valuetype ();
 
+  // Allows adding an interface to a later point
+  int be_add_interface (AST_Interface *i);
+
 private:
   friend void fe_populate(AST_Module *m);
   friend int tao_yyparse();

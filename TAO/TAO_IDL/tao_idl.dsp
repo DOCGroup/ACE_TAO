@@ -861,6 +861,21 @@ SOURCE=.\be\be_interface_fwd.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_interface_strategy.cpp
+
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_module.cpp
 
 !IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
@@ -2186,6 +2201,10 @@ SOURCE=.\be_include\be_interface.h
 # Begin Source File
 
 SOURCE=.\be_include\be_interface_fwd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_interface_strategy.h
 # End Source File
 # Begin Source File
 
