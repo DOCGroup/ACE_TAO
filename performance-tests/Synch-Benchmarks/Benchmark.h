@@ -13,7 +13,7 @@
 extern int buffer;
 extern ACE_Svc_Export int synch_count;
 
-class ACE_Svc_Export Benchmark : public Benchmark_Base
+class ACE_Svc_Export Benchmark_Performance : public Benchmark_Performance_Test_Base
 {
   // TITLE
   //   Base class for all the timing tests.
@@ -23,7 +23,7 @@ public:
   virtual int init (int, char *[]);
   virtual int info (char **, size_t) const;
   virtual int fini (void);
-  static void *svc_run (Benchmark *bp);
+  static void *svc_run (Benchmark_Performance *bp);
 
   // = Set/get flag that controls how the tests are shut down
   // gracefully.

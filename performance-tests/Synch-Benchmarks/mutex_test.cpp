@@ -7,7 +7,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-class ACE_Svc_Export Mutex_Test : public Benchmark
+class ACE_Svc_Export Mutex_Test : public Benchmark_Performance
 {
 public:
   virtual int svc (void);
@@ -37,7 +37,7 @@ Mutex_Test::svc (void)
   return 0;
 }
 
-ACE_SVC_FACTORY_DECLARE (Mutex_Test) 
+ACE_SVC_FACTORY_DECLARE (Mutex_Test)
 ACE_SVC_FACTORY_DEFINE  (Mutex_Test)
 
 // ACE_Service_Object_Type mut (&mutex_test, "Mutex_Test");

@@ -11,46 +11,46 @@ int buffer;
 
 // Initialize the static variables.
 /* static */
-sig_atomic_t Benchmark::done_ = 0;
+sig_atomic_t Benchmark_Performance::done_ = 0;
 
 sig_atomic_t
-Benchmark::done (void)
+Benchmark_Performance::done (void)
 {
-  return Benchmark::done_;
+  return Benchmark_Performance::done_;
 }
 
 void
-Benchmark::done (sig_atomic_t d)
+Benchmark_Performance::done (sig_atomic_t d)
 {
-  Benchmark::done_ = d;
+  Benchmark_Performance::done_ = d;
 }
 
 int
-Benchmark::svc (void)
+Benchmark_Performance::svc (void)
 {
   return -1;
 }
 
 int
-Benchmark::init (int, char **)
+Benchmark_Performance::init (int, char **)
 {
   return 1;
 }
 
 int
-Benchmark::info (char **, size_t) const
+Benchmark_Performance::info (char **, size_t) const
 {
   return -1;
 }
 
 int
-Benchmark::fini (void)
+Benchmark_Performance::fini (void)
 {
   return -1;
 }
 
 void *
-Benchmark::svc_run (Benchmark *bp)
+Benchmark_Performance::svc_run (Benchmark_Performance *bp)
 {
   return (void *) (bp->svc () == -1 ? -1 : 0);
 }
