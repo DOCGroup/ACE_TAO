@@ -1,3 +1,8 @@
+Fri Aug  4 18:50:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/corba.h: Rectified spelling mistake in checking whether
+	 the smart proxy feature was available.
+	
 Fri Aug  4 15:49:26 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Latency/Makefile:
