@@ -63,7 +63,7 @@ namespace CCF
 
               fs::ifstream ifs;
               ifs.exceptions (ios_base::badbit | ios_base::failbit);
-              ifs.open (file_path);
+              ifs.open (file_path, std::ios_base::in);
 
               //@@ for some reason ifs throws exception if I don't reset it to
               //   original state. It probably has something to do with call to
