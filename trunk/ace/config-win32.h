@@ -169,12 +169,14 @@
 // does not suit your need, you can disable the behavior by defining
 // ACE_HAS_NONSTATIC_OBJECT_MANAGER to 0.
 //
-// MFC users: Since the main function is defined withing MFC library,
-// you'll need to instantiate the ACE_Object_Manager by doing either,
+// MFC users: the main function is defined withing MFC library.
+// Therefore, you'll need to instantiate the ACE_Object_Manager by
+// either:
 //
-// 1. Using static object manager (as described above.)
+// 1. Using static object manager (as described above).
 // 2. Instantiate Object Manager in your CApplication derived class
 //    and define ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.
+//
 //
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 # define ACE_HAS_NONSTATIC_OBJECT_MANAGER

@@ -176,8 +176,10 @@ class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
   //     Instead of creating a static ACE_Object_Manager, or creating
   //     it on the stack of main (), another alternative is to #define
   //     ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.  With that
-  //     #define, the application _must_ call ACE::init () at the
-  //     start of the program, and call ACE::fini () at the end.
+  //     #define, the application must create the ACE_Object_Manager.
+  //     The recommended way is to call ACE::init () at the start of the
+  //     program, and call ACE::fini () at the end.  Alternatively, the
+  //     application could explicity construct an ACE_Object_Manager.
 
 public:
   virtual int init (void);
