@@ -110,10 +110,10 @@ TAO_DynArray_i::init (CORBA_TypeCode_ptr tc,
 
   this->init_common ();
 
-  CORBA::TypeCode_var elemtype = tc->content_type (ACE_TRY_ENV);
+  CORBA::TypeCode_var elemtype = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
-  for (CORBA::ULong i = 0; i < numfields; i++)
+  for (CORBA::ULong i = 0; i < numfields; ++i)
     {
       // Recursively initialize each element.
       this->da_members_[i] = TAO_DynAnyFactory::make_dyn_any (elemtype.in (),
