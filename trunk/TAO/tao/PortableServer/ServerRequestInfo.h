@@ -34,9 +34,9 @@
 #include "tao/Service_Context.h"
 #include "tao/TAO_Server_Request.h"
 
-#include "Object_Adapter.h"
+#include "tao/PortableServer/Object_Adapter.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -104,14 +104,12 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
-#if TAO_HAS_CORBA_MESSAGING == 1
   /// Return the sync_scope policy value for the current one-way
   /// operation.  If the operation is not a one-way, a
   /// CORBA::BAD_INV_ORDER exception is thrown.
   virtual Messaging::SyncScope sync_scope (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-#endif  /* TAO_HAS_CORBA_MESSAGING */
 
   /// Return the reply status for the current request.  Statuses can
   /// be PortableInterceptor::SUCCESSFUL, SYSTEM_EXCEPTION,
