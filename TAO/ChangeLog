@@ -1,3 +1,10 @@
+Thu Aug 22 15:24:06 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
+
+	  On Solaris, include <sys/loadavg.h> to pull in the getloadavg()
+	  prototype.
+
 Thu Aug 22 14:06:06 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\PortableServer\POA.cpp (id_to_servant_i and
