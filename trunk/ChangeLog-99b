@@ -8,6 +8,9 @@ Tue Mar 02 21:17:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/IOStream_T.h: fixed a couple more line breaks.
 
+        * Makefile: added support for suppressing man page regeneration
+          on make release command line.
+
 Tue Mar 02 14:43:29 1999  Steve Huston  <shuston@riverace.com>
 
        * ace/Map_T.(h i): Qualified types inherited from template base
