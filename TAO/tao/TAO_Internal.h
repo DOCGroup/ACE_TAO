@@ -69,7 +69,7 @@ private:
    * @a ignore_default_svc_conf_file to non-zero and use
    * default_svc_conf_entries() before calling open_services().
    * In addition, you can @a skip_service_config_open altogether,
-   * which is important if the ORB is linked in via the \param
+   * which is important if the ORB is linked in via the
    * ACE_Service_Configurator, which is non-reentrant.
    */
   static int open_services_i (int &argc,
