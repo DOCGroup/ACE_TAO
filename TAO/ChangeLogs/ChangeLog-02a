@@ -14,8 +14,6 @@ Fri Sep 29 11:30:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Added the new files to
 	  the Makefile.
 
-
-
 Fri Sep 29 11:14:52 2000 Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/TAO.dsp:
