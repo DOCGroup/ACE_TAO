@@ -76,6 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_bool.h"
 #include "ast_expression.h"
 #include "ast_predefined_type.h"
+#include "ast_component.h"
 #include "utl_stack.h"
 
 class AST_Root;
@@ -528,6 +529,11 @@ public:
   ACE_Hash_Map_Manager<ACE_CString, char *, ACE_Null_Mutex> &
   file_prefixes (void);
   // Accessor for the IDL keyword container.
+  
+  void create_uses_multiple_stuff (AST_Component *c,
+                                   AST_Component::port_description &pd);
+  // We must do this in the front end since the executor
+  // mapping IDL will have these data types.
 
 private:
   // Data
