@@ -789,7 +789,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Strategy_Acceptor 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_signal (int, siginfo_t *, ucontext_t *)
 {
-  ACE_Reactor::end_event_loop ();
+  ACE_Reactor::instance()->end_reactor_event_loop ();
   return 0;
 }
 
