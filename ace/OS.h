@@ -1009,9 +1009,14 @@ class ACE_Export ACE_Time_Value
   //     <cond_timedwait>.  ACE_Time_Value help make the use of these
   //     mechanisms portable across OS platforms,
 public:
+
   // = Useful constants.
+
   static const ACE_Time_Value zero;
   // Constant "0".
+
+  static const ACE_Time_Value max;
+  // Constant for maximum time representable.
 
   // = Initialization methods.
 

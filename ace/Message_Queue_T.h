@@ -408,13 +408,16 @@ class ACE_Dynamic_Message_Queue : public ACE_Message_Queue<ACE_SYNCH_USE>
   //     PT = Pending messages Tail
   //
   //     Caveat: the virtual methods enqueue_tail, enqueue_head,
-  //             and peek_dequeue_head were made private, but for some
-  //             compilers it is possible to gain access to these methods
-  //             through base class pointers: achieving this may result in
-  //             highly unpredictable results, as expectations about
-  //             where a message starts or remains between method
-  //             invocations may not hold for a dynamically managed
-  //             message queue.
+  //             and peek_dequeue_head have semantics for the static
+  //             message queues that cannot be guaranteed for dynamic
+  //             message queues.  The peek_dequeue_head method just
+  //             calls the base class method, while the two enqueue
+  //             methods call the priority enqueue method.  The
+  //             order of messages in the dynamic queue is a function
+  //             of message deadlines and how long they are in the
+  //             queues.  You can manipulate these in some cases to
+  //             ensure the correct semantics, but that is not a
+  //             very stable or portable approach (discouraged).
   //
 public:
   // = Initialization and termination methods.
@@ -445,6 +448,21 @@ public:
 
   virtual void dump (void) const;
   // Dump the state of the queue.
+
+  virtual int enqueue_tail (ACE_Message_Block *new_item,
+                            ACE_Time_Value *timeout = 0);
+  // just call priority enqueue method: tail enqueue semantics for dynamic
+  // message queues are unstable: the message may or may not be where
+  // it was placed after the queue is refreshed prior to the next
+  // enqueue or dequeue operation.
+
+  virtual int enqueue_head (ACE_Message_Block *new_item,
+                            ACE_Time_Value *timeout = 0);
+  // just call priority enqueue method: head enqueue semantics for dynamic
+  // message queues are unstable: the message may or may not be where
+  // it was placed after the queue is refreshed prior to the next
+  // enqueue or dequeue operation.
+
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
@@ -518,13 +536,6 @@ private:
                                  ACE_Time_Value *timeout = 0);
   // private method to hide public base class method: just calls base class method
 
-  virtual int enqueue_tail (ACE_Message_Block *new_item,
-                            ACE_Time_Value *timeout = 0);
-  // private method to hide public base class method: just calls base class method
-
-  virtual int enqueue_head (ACE_Message_Block *new_item,
-                            ACE_Time_Value *timeout = 0);
-  // private method to hide public base class method: just calls base class method
 };
 
 template <ACE_SYNCH_DECL>

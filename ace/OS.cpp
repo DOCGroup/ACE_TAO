@@ -65,6 +65,10 @@ ACE_OS::netdb_release (void)
 // Static constant representing `zero-time'.
 const ACE_Time_Value ACE_Time_Value::zero;
 
+// Static constant representing `maximum-time'.
+const ACE_Time_Value ACE_Time_Value::max (LONG_MAX, 
+                                          ACE_ONE_SECOND_IN_USECS - 1);
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 
 // Initializes the ACE_Time_Value object from a timeval.
