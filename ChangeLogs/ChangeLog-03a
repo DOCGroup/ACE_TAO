@@ -1,3 +1,14 @@
+Thu Oct 26 04:00:00 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/OS.i:
+	* ace/OS.cpp:
+	* ace/OS_Dirent.inl:
+          Fixing more ACE_HAS_PACE over NT. Most fixes just skip the
+	  PACE call. NT doesn't implement much of posix and so
+	  many ACE calls will skip pace until PACE/WINNT emulates
+	  more posix functionality.
+
 Wed Oct 25 20:38:33 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/SSL/ACE_SSL.dsp:
