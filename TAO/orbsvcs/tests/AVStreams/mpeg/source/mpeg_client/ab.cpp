@@ -38,6 +38,7 @@
 #include <stropts.h>
 #include <sys/conf.h>
 #endif
+
 #include "../include/common.h"
 #include "newproto.h"
 #include "global.h"
