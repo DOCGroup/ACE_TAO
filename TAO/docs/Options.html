@@ -8,7 +8,7 @@
 <H1 ALIGN=CENTER>Options for TAO Components</H1>
 
 <H2>Overview</H2>
-
+<blockquote>
 <P>Certain components in TAO such as the ORB Core or object adapter
 can be tuned by users by providing value for options to them.  These
 options are commonly specified as strings (<EM>e.g.</EM>, passed on
@@ -22,11 +22,13 @@ initialization method will <b>NOT</b> consume, <EM>i.e.</EM> ,remove
 from the vector, any options that it recognizes.  Rather, it will
 leave those options intact, and it will also simply ignore any options
 is does not recognize as its own.</P>
+</blockquote>
 
 <H2>Types of Options</H2>
 
 <H2>Roadmap</H2>
 
+<blockquote>
 <P>The following components</P>
 
 <UL>
@@ -36,11 +38,11 @@ is does not recognize as its own.</P>
   <LI><A HREF="#DefaultServer"><CODE>TAO_Default_Server_Strategy_Factory</CODE></A>
   <LI><A HREF="#DefaultClient" TARGET="_top"><CODE>TAO_Default_Client_Strategy_Factory</CODE></A>
 </UL>
+</blockquote>
 
 <H2>Options</H2>
 
-<P>&nbsp;</P>
-
+<blockquote>
 <H3><CODE>CORBA::ORB</CODE><A NAME="ORB"></A></H3>
 
 <P><TABLE BORDER="2" WIDTH="100%" HEIGHT="96" CELLSPACING="2" CELLPADDING=
@@ -67,7 +69,7 @@ with the host named <I><EM>hostname</EM></I>.</TD></TR>
 <TD><CODE>-ORBport</CODE> <EM>portspec</EM></TD>
 <TD>Tells the Object Adapter to listen for requests on the port specified by
 <I><EM>portspec</EM></I>, which can be a name as found in <TT>/etc/services</TT>
-or a number. The default is <TT>5001</TT>.</TD></TR>
+or a number. The default is <TT>10013</TT>.</TD></TR>
 <TR>
 <TD><CODE>-ORBobjrefstyle</CODE> <EM>which</EM></TD>
 <TD>Specifies the user-visible style of object references. The range of values
@@ -93,6 +95,12 @@ If not specified, the system-dependent default is used.</TD></TR>
 <TD><CODE>-OAthread</CODE></TD>
 <TD>Specify a thread-per-connection concurrency policy be utilized in processing
 requests.</TD></TR>
+<TR>
+<TD><CODE>-ORBnameserviceport</CODE> <EM>portspec</EM></TD>
+<TD>Specifies which port the Naming Service is listening on.</TD></TR>
+<TR>
+<TD><CODE>-ORBnameserviceior</CODE> <EM>ior</EM></TD>
+<TD>Specifies the IOR for the Naming Service.</TD></TR>
 </TABLE>
 </P>
 
@@ -157,6 +165,7 @@ or <CODE>user</CODE>.</TD></TR>
 <BLOCKQUOTE>
   <P>There are currently no options for the <CODE>TAO_Default_Client_Strategy_Factory</CODE>.</P>
 </BLOCKQUOTE>
+</blockquote>
 
 <P><HR ALIGN=LEFT></P>
 
