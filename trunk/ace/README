@@ -69,6 +69,7 @@ ACE_HAS_INLINED_OSCALLS			Inline all the static class OS methods to remove call 
 ACE_HAS_IP_MULTICAST			Platform supports IP multicast
 ACE_HAS_IRIX_GETTIMEOFDAY		Denotes that IRIX 5.3 has second argument to gettimeofday() which is variable ... 
 ACE_HAS_IRIX62_THREADS			Platform supports the very odd IRIX 6.2 threads...
+ACE_HAS_NONSTATIC_OBJECT_MANAGER	Causes the ACE_Object_Manager instance to be created in main (), instead of as a static (global) instance.
 ACE_HAS_THR_KEYDELETE			Platform supports thr_keydelete (e.g,. UNIXWARE)
 ACE_HAS_THR_MINSTACK			Platform calls thr_minstack() rather than thr_min_stack() (e.g., Tandem).
 ACE_HAS_LIMITED_RUSAGE_T		The rusage_t structure has only two fields.
@@ -110,7 +111,6 @@ ACE_HAS_PTHREAD_YIELD_VOIDPTR		pthread_yield() takes a void pointer arg.
 ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS	Platform will recurse infinitely on thread exits from TSS cleanup routines (e.g., AIX).  
 ACE_HAS_REENTRANT_FUNCTIONS 		Platform supports reentrant functions (i.e., all the POSIX *_r functions).
 ACE_HAS_REGEX				Platform supports the POSIX regular expression library
-ACE_HAS_RENAMED_MAIN			Renames "main (int, char *[])" to ace_main (int, char *[]), for platforms such as g++/VxWorks that don't allow main
 ACE_HAS_SELECT_H			Platform has special header for select().
 ACE_HAS_SEMUN				Compiler/platform defines a union semun for SysV shared memory
 ACE_HAS_SET_T_ERRNO			Platform has a function to set t_errno (e.g., Tandem).
@@ -247,6 +247,7 @@ ACE_LACKS_UCONTEXT_H			Platform lacks the ucontext.h file
 ACE_LACKS_UNIX_DOMAIN_SOCKETS		ACE platform has no UNIX domain sockets
 ACE_LACKS_UNIX_SIGNALS			Platform lacks full signal support (e.g., Win32 and Chorus).
 ACE_LACKS_UTSNAME_T			Platform lacks struct utsname (e.g., Win32 and VxWorks)
+ACE_MAIN				Renames "main (int, char *[])" to ace_main (int, char *[]), for platforms such as g++/VxWorks that don't allow main.  Requires the use of ACE_HAS_NONSTATIC_OBJECT_MANAGER.
 ACE_MT_SAFE				Compile using multi-thread libraries
 ACE_NDEBUG				Turns off debugging features
 ACE_NEEDS_DEV_IO_CONVERSION		Necessary with some compilers
