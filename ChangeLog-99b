@@ -1,5 +1,7 @@
 Sun Jan 24 20:25:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/Active_Map_Manager.i (operator==): operator== must be const.
+
 	* ace/Map_Manager: Renamed methods that may become identical if
  	  INT_ID is the same as size_t.  Thanks to Ossama for helping with
  	  this.
