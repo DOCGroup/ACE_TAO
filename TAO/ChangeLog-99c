@@ -1,12 +1,17 @@
+Thu Mar 18 16:43:44 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/client.cpp (execute): fixed NT
+	warnings in two Naming Service tests.
+
 Thu Mar 18 15:41:08 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * orbsvcs/tests/ImplRepo/run_test.pl: Fixed spelling error 
+        * orbsvcs/tests/ImplRepo/run_test.pl: Fixed spelling error
           and reorganized both_ir test.
 
 Thu Mar 18 12:32:02 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/client.cpp
-	  (test_delete_property, test_get_property_value): 
+	  (test_delete_property, test_get_property_value):
 	  Fixed warnings about unused arguments.  Fixed conversion from
 	  `CORBA_Object_var' to non-scalar type `CORBA_Any::to_object'
 	  problem.  Thanks to Jeff for helping me out on this.
