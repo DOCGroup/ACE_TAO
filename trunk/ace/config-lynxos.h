@@ -196,6 +196,6 @@
 #define ACE_PAGE_SIZE 4096
 
 extern "C" 
-int getopt(int, char *const *, cons char *);
+int getopt(int, char *const *, const char *);
 
 #endif /* ACE_CONFIG_H */
