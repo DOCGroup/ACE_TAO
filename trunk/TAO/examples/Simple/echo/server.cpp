@@ -13,7 +13,6 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\techo server\n\n"));
-
   TAO_TRY
     {
       if (server.init (argc, argv, TAO_TRY_ENV) == -1)

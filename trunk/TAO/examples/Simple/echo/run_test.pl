@@ -10,9 +10,8 @@ require Process;
 
 
 $SV = Process::Create ("server$Process::EXE_EXT", " ");
-
-sleep($ACE::sleeptime);
-$status  = system ("client$Process::EXE_EXT  -x");
+sleep ($ACE::sleeptime);
+$status = system ("client$Process::EXE_EXT  -x");
 
 $SV->Kill (); $SV->Wait ();
 
