@@ -6,6 +6,10 @@ Tue Feb 18 11:43:04 1997  David L. Levine  <levine@cs.wustl.edu>
 	* tests/Reactor_Notify_Test.cpp (main): added shutdown flag so
 	  that normal termination reaches ACE_END_TEST.
 
+	* tests/Reactors_Test.cpp (worker): changed "timeout" message to
+	  "Reactor shutdown" because that indicates normal termination,
+	   and won't fool the one-button test.
+
 	* examples/Mem_Map/IO-tests/test_io.cpp (main): added
           ACE_UNUSED_ARG (sa);.
 
