@@ -29,7 +29,7 @@ ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES
                                         Win32 only.  Users want to use
                                         a predefined security
                                         attributes defined in
-                                        ACE_OS::default_win32_security_attributes
+                                      ACE_OS::default_win32_security_attributes
                                         as the default security
                                         object.
 ACE_DISABLE_DEBUG_DLL_CHECK             Define this if you don't want
@@ -44,11 +44,22 @@ ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
                                         ACE_HAS_NONSTATIC_OBJECT_MANAGER.
                                         Usually used with MFC
                                         applications.
+ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO     Platform does not initialize
+                                        sockaddr_in::sin_zero field in
+                                        calls to getpeername() and
+                                        getsockname().  As a result,
+                                        memcmp()-based equality
+                                        comparison can fail despite
+                                        the fact two sockaddr_in
+                                        instances refer to the same
+                                        addr characteristics.
 ACE_MAIN                                Renames "main (int, char *[])",
                                         for platforms such as g++/VxWorks
                                         that don't allow "main".  Requires
                                         the use of
                                         ACE_HAS_NONSTATIC_OBJECT_MANAGER.
+ACE_MKDIR_LACKS_MODE                    This platform has a mkdir function with
+                                        a mode argument
 ACE_MT_SAFE                             Compile using multi-thread libraries
 ACE_NDEBUG                              Turns off debugging features
 ACE_NEW_THROWS_EXCEPTIONS               Compiler's 'new' throws exception on
@@ -56,11 +67,14 @@ ACE_NEW_THROWS_EXCEPTIONS               Compiler's 'new' throws exception on
 ACE_NLOGGING                            Turns off the LM_DEBUG and
                                         LM_ERROR logging macros...
 ACE_NTRACE                              Turns off the tracing feature when = 1.
-ACE_HAS_TRACE                           Defined when ACE_NTRACE=0 to help support
-                                        tracing.  Can also be defined by users who
-                                        implement their own tracing macros based on
-                                        ACE_TRACE_IMPL.  Not defining it helps reduce
-                                        footprint by not requiring applications to
+ACE_HAS_TRACE                           Defined when ACE_NTRACE=0 to
+                                        help support tracing.  Can
+                                        also be defined by users who
+                                        implement their own tracing
+                                        macros based on
+                                        ACE_TRACE_IMPL.  Not defining
+                                        it helps reduce footprint by
+                                        not requiring applications to
                                         link in Trace.o.
 ACE_PAGE_SIZE                           Defines the page size of the
                                         system (not used on Win32 or
@@ -90,16 +104,20 @@ ACE_USES_ASM_SYMBOL_IN_DLSYM            Platform uses assembly symbols
 ACE_USES_STATIC_MFC                     When linking MFC as a static library is desired
 ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB   Platform has its standard c++
                                         library in the namespace std.
-ACE_USES_EXPLICIT_STD_NAMESPACE         Set this when ::fclose doesn't work and you
-                                        have to explicitly specify the std namespace.
-                                        This is needed with the Borland 6 and earlier
+ACE_USES_EXPLICIT_STD_NAMESPACE         Set this when ::fclose doesn't
+                                        work and you have to
+                                        explicitly specify the std
+                                        namespace.   This is needed
+                                        with the Borland 6 and earlier
                                         compilers.
 ACE_USES_GPROF                          ACE calls getitimer before spawning
-                                        a new thread and setitimer after spawning
-                                        the thread in order to overcome the problems
-                                        of gprof with multithreaded applications.
-                                        It uses the idea from
-                                        http://sam.zoy.org/writings/programming/gprof.html
+                                        a new thread and setitimer
+                                        after spawning the thread in
+                                        order to overcome the problems
+                                        of gprof with multithreaded
+                                        applications.  It uses the
+                                        idea from
+                             http://sam.zoy.org/writings/programming/gprof.html
 ACE_WSOCK_VERSION                       A parameter list indicating
                                         the version of WinSock (e.g.,
                                         "1, 1" is version 1.1).
@@ -385,6 +403,12 @@ ACE_HAS_MUTEX_TIMEOUTS                  Compiler supports timed mutex
                                         acquisitions
                                         (e.g. pthread_mutex_timedlock()).
 ACE_HAS_NEW_NOTHROW                     Compiler offers new (nothrow).
+ACE_HAS_NONCONST_CHDIR                  Platform uses non-const char *
+                                        in call to chdir
+ACE_HAS_NONCONST_OPENDIR                Platform uses non-const char *
+                                        in call to opendir
+ACE_HAS_NONCONST_UNLINK                 Platform uses non-const char *
+                                        in call to unlink
 ACE_HAS_NONCONST_GETBY                  Platform uses non-const char *
                                         in calls to gethostbyaddr,
                                         gethostbyname, getservbyname
@@ -402,6 +426,8 @@ ACE_HAS_NONCONST_SENDMSG		Platform omits const qualifier
 ACE_HAS_NONCONST_SETRLIMIT              Platform omits const qualifier
 					from rlimit parameter in setrlimit()
 					prototype.
+ACE_HAS_NONCONST_STAT                   Platform's stat function has non const
+                                        name argument
 ACE_HAS_NONCONST_SWAB                   Platform's swab function has non
                                         const src argument
 ACE_HAS_NONCONST_WRITEV                 Platform omits const qualifier from
@@ -409,6 +435,9 @@ ACE_HAS_NONCONST_WRITEV                 Platform omits const qualifier from
 ACE_HAS_OLD_MALLOC                      Compiler/platform uses old
                                         malloc()/free() prototypes
                                         (ugh)
+ACE_HAS_ONLY_SCHED_FIFO                 Platform, e.g., HP NonStop OSS,
+                                        only supports SCHED_FIFO
+                                        POSIX scheduling policy.
 ACE_HAS_ONLY_SCHED_OTHER                Platform, e.g., Solaris 2.5,
                                         only supports SCHED_OTHER
                                         POSIX scheduling policy.
@@ -443,6 +472,11 @@ ACE_HAS_POSIX_SEM                       Platform supports POSIX
                                         in <unistd.h>
 ACE_HAS_POSIX_TIME                      Platform supports the POSIX
                                         struct timespec type
+ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO
+                                        LynxOS defines THREAD_CANCELLED macro
+                                        in system headers. This macro must be
+                                        undefined to avoid compilation errors
+                                        in TAO code.
 ACE_HAS_PROC_FS                         Platform supports the /proc
                                         file system and defines tid_t
                                         in <sys/procfs.h>
@@ -474,6 +508,9 @@ ACE_HAS_PTHREAD_PROCESS_ENUM            pthread.h declares an enum with
                                         PTHREAD_PROCESS_PRIVATE and
                                         PTHREAD_PROCESS_SHARED values.
 ACE_HAS_PTHREAD_SETSTACK                Platform has pthread_attr_setstack().
+ACE_HAS_PTHREAD_NP_H                    Platform has <pthread_np.h>  FreeBSD
+                                        declares non-portable (*_np) pthread
+                                        functions in this header.
 ACE_HAS_PURIFY                          Purify'ing.  Set by wrapper_macros.GNU.
 ACE_HAS_QUANTIFY                        Quantify'ing.  Set by wrapper_macros.GNU.
 ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS    Platform will recurse
@@ -535,6 +572,8 @@ ACE_HAS_SOCKADDR_MSG_NAME               Platform requires (struct
 ACE_HAS_SOCKLEN_T                       Platform provides socklen_t
                                         type, such as Linux with
                                         glibc2.
+ACE_HAS_SOCK_BUF_SIZE_MAX               Platform limits the maximum socket
+                                        message size.
 ACE_HAS_SPARCWORKS_401_SIGNALS          Compiler has brain-damaged
                                         SPARCwork SunOS 4.x signal
                                         prototype...
@@ -684,7 +723,6 @@ ACE_HAS_WINSOCK2                        The Win32 platform supports
                                         WinSock 2.0
 ACE_HAS_XLI                             Platform has the XLI version
                                         of TLI
-ACE_HAS_XT                              Platform has Xt and Motif
 ACE_HAS_XTI                             Platform has XTI
                                         (X/Open-standardized superset
                                         of TLI).  Implies ACE_HAS_TLI
@@ -693,6 +731,9 @@ ACE_HAS_XTI                             Platform has XTI
 ACE_INITIALIZE_MEMORY_BEFORE_USE        Memory is explicitly initialized before
                                         use. Useful when using a profiler like
                                         purify or valgrind
+ACE_HRTIME_T_IS_BASIC_TYPE              ACE_hrtime_t is a basic type that
+                                        doesn't require ACE_U64_TO_U32
+                                        conversion
 ACE_LACKS_ACCESS                        Platform lacks access() (e.g.,
                                         VxWorks and Chorus)
 ACE_LACKS_ACE_IOSTREAM                  Platform can not build
@@ -741,6 +782,7 @@ ACE_LACKS_CONDATTR_PSHARED              Platform has no implementation
                                         even though it supports
                                         pthreads!
 ACE_LACKS_DIFFTIME                      Platform lacks difftime() implementation
+ACE_LACKS_DUP2                          Platform lacks dup2().
 ACE_LACKS_FCNTL                         Platform lacks POSIX-style fcntl ().
 ACE_LACKS_FSYNC                         Platform lacks fsync().
 ACE_LACKS_INLINE_FUNCTIONS              Platform can't handle "inline"
@@ -765,6 +807,8 @@ ACE_LACKS_GETPGID                       Platform lacks getpgid() call
 ACE_LACKS_GETSERVBYNAME                 Platforms lacks
                                         getservbyname() (e.g., VxWorks
                                         and Chorus).
+ACE_LACKS_GETIPNODEBYADDR		Platform lacks getipnodebyaddr().
+ACE_LACKS_GETIPNODEBYNAME		Platform lacks getipnodebyname().
 ACE_LACKS_INET_ATON                     Platform lacks the inet_aton()
                                         function.
 ACE_LACKS_INET_ATON_PROTOTYPE           Platform/compiler lacks the
@@ -918,6 +962,7 @@ ACE_LACKS_SENDMSG                       Platform lacks sendmsg()
 ACE_LACKS_SI_ADDR                       Platform lacks the si_addr
                                         field of siginfo_t (e.g.,
                                         VxWorks and HP/UX 10.x)
+ACE_LACKS_SYMLINKS                      Platform lacks symbolic links
 ACE_LACKS_SYSV_SHMEM                    Platform lacks System V shared
                                         memory (e.g., Win32 and
                                         VxWorks)
@@ -945,8 +990,6 @@ ACE_LACKS_SYSCALL                       Platform doesn't have
                                         syscall() prototype
 ACE_LACKS_T_ERRNO                       Header files lack t_errno for
                                         TLI
-ACE_LACKS_TCP_H                         Platform doesn't have
-                                        netinet/tcp.h
 ACE_LACKS_TCP_NODELAY                   OS does not support TCP_NODELAY.
 ACE_LACKS_TELLDIR                       Platform uses ACE_HAS_DIRENT
                                         but does not have telldir ().
@@ -974,6 +1017,7 @@ ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS        Compiler does not have
                                         operator>> (istream &, signed char *)
 ACE_LACKS_UCONTEXT_H                    Platform lacks the ucontext.h
                                         file
+ACE_LACKS_UMASK                         Platform lacks umask function
 ACE_LACKS_UNBUFFERED_STREAMBUF          Platform lacks streambuf
                                         "unbuffered ()".
 ACE_LACKS_UNISTD_H                      Platform lacks the unistd.h
@@ -985,15 +1029,17 @@ ACE_LACKS_UNIX_SIGNALS                  Platform lacks full signal
                                         Chorus).
 ACE_LACKS_UTSNAME_T                     Platform lacks struct utsname
                                         (e.g., Win32 and VxWorks)
+ACE_LACKS_WAIT                          The platform lacks wait
 ACE_LACKS_WILDCARD_BIND                 The bind() call will not
                                         select the port if it's 0.
 
 ACE_LACKS_WRITEV                        Platform doesn't define
                                         writev, so use our own
 
-ACE_LEGACY_MODE                         When defined, it will enable some code that is
-                                        used to provide some support for backwards
-                                        compatibility.
+ACE_LEGACY_MODE                         When defined, it will enable
+                                        some code that is used to
+                                        provide some support for
+                                        backwards compatibility.
 
 ACE_NEEDS_DEV_IO_CONVERSION             Necessary with some compilers
                                         to pass ACE_TTY_IO as
@@ -1006,7 +1052,8 @@ ACE_NEEDS_FUNC_DEFINITIONS              Compiler requires a definition
                                         compiler needs this, in
                                         template classes, with
                                         ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA.
-ACE_NEEDS_HUGE_THREAD_STACKSIZE         Required by platforms with small default stacks.
+ACE_NEEDS_HUGE_THREAD_STACKSIZE         Required by platforms with
+                                        small default stacks.
 ACE_NEEDS_LWP_PRIO_SET                  OS has LWPs, and when the
                                         priority of a bound thread is
                                         set, then the LWP priority
@@ -1022,15 +1069,22 @@ ACE_NO_WIN32_LEAN_AND_MEAN              If this is set, then ACE does not
                                         code that uses non-lean Win32
                                         facilities such as COM.
 
-ACE_ONLY_LATEST_AND_GREATEST            A macro that indicates that the "latest and greatest"
-                                        features of ACE/TAO should be turned on.  It has been
-                                        replaced by ACE_LEGACY_MODE, which has the opposite
-                                        meaning but serves the same purpose.
+ACE_ONLY_LATEST_AND_GREATEST            A macro that indicates that
+                                        the "latest and greatest"
+                                        features of ACE/TAO should be
+                                        turned on.  It has been
+                                        replaced by ACE_LEGACY_MODE,
+                                        which has the opposite meaning
+                                        but serves the same purpose.
 
-ACE_WSTRING_HAS_USHORT_SUPPORT          If a platform has wchar_t as a separate type,
-                                        then ACE_WString doesn't have a constructor that
-                                        understands an ACE_USHORT16 string.  So this
-                                        macro enables one. (mostly used my ACE Name Space).
+ACE_WSTRING_HAS_USHORT_SUPPORT          If a platform has wchar_t as a
+                                        separate type, then
+                                        ACE_WString doesn't have a
+                                        constructor that understands
+                                        an ACE_USHORT16 string.  So
+                                        this macro enables
+                                        one. (mostly used my ACE Name
+                                        Space).
 
 ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
                                         Under QNX/RTP the objects preallocated
@@ -1046,25 +1100,35 @@ ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
 ACE_LACKS_MEMBER_TEMPLATES              Compiler does not support
                                         member template feature.
 
+ACE_LACKS_DEPRECATED_MACROS             When this define is set, macros which
+                                        are deprecated are not defined. Usefull
+                                        to check whether deprecated macros are
+                                        not used anymore.
+
 ----------------------------------------
 
 The following macros determine the svc.conf file format ACE uses.
 
 Macro                                   Description
 -----                                   -----------
-ACE_HAS_CLASSIC_SVC_CONF                This macro forces ACE to use the classic
-                                        svc.conf format.
+ACE_HAS_CLASSIC_SVC_CONF                This macro forces ACE to use
+                                        the classic svc.conf format.
 
 ACE_HAS_XML_SVC_CONF                    This macro forces ACE to use the XML
                                         svc.conf format.
 
-ACE_USES_CLASSIC_SVC_CONF               This macro should be defined as 0 or 1, depending
-                                        on the preferred svc.conf file format.
-                                        Defining this macro to 0 means ACE will use XML
-                                        svc.conf file format.  Defining it to 1 will
-                                        force ACE to use the classic svc.conf format.
-                                        ** This macro takes precedence over previous
-                                        ** two macros.
+ACE_USES_CLASSIC_SVC_CONF               This macro should be defined
+                                        as 0 or 1, depending on the
+                                        preferred svc.conf file
+                                        format.  Defining this macro
+                                        to 0 means ACE will use XML
+                                        svc.conf file format.
+                                        Defining it to 1 will force
+                                        ACE to use the classic
+                                        svc.conf format.
+                                        ** This macro takes precedence
+                                        ** over previous two macros.
+
 ----------------------------------------
 The following is a partial list of where some of these macros are used
 in the code.  This list was originally compiled by Jam Hamidi
@@ -1646,18 +1710,6 @@ ACE_USES_GPROF:
     When using gprof mainly on Linux, #define ACE_USES_GPROF
     will add calls to getitimer/setitimer in order to initialize profile
     timer and overcome the problem of gprof with multithreaded applications.
-ACE_HAS_QT:
-----------------------------
-  Used in:
-    ace/QtReactor.cpp
-    ace/QtReactor.h
-    tests/QtReactor_Test.cpp
-    tests/QtReactor_Test.h
-    TAO/tao/qt_resource.h
-    TAO/tao/qt_resource.cpp
-    TAO/tests/QtTests/*
-  Notes:
-    Turns on integration with Qt.
 
 ACE_QTREACTOR_CLEAR_PENDING_EVENTS:
 ----------------------------
