@@ -74,6 +74,8 @@ Fri Aug 28 11:19:04 1998  David L. Levine  <levine@cs.wustl.edu>
             tao/Union.h
             tao/ORB.i              <==== CORBA::string_free () defined here
 
+          Thanks to Carlos for suggesting the fix.
+
         * utils/Ior-Parser/ior-handler.cpp (interpretIor): removed
           unused local "nullOctet".
 
