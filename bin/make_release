@@ -340,12 +340,14 @@ sub diff () {
     my $module = $kit eq 'ace'  ?  'ACE_wrappers'  :  'ACE_wrappers/TAO';
 
     if ("$exec_prefix") {
-      print "nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag $module | " .
+      print "nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag " .
+              "$module 2>/dev/null | " .
             "nice -15 sed 's%ACE_wrappers-repository/%ACE_wrappers/%g' | " .
             "nice -15 $gzip -9 > diffs/$previous_tag-$tag.diff.gz &";
     } else {
       system ("sleep 60; " .
-              "nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag $module | " .
+              "nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag " .
+                "$module 2>/dev/null | " .
               "nice -15 sed 's%ACE_wrappers-repository/%ACE_wrappers/%g' | " .
               "nice -15 $gzip -9 > diffs/$previous_tag-$tag.diff.gz &");
     }
