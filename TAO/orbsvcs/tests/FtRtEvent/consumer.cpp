@@ -25,17 +25,14 @@ RtecEventChannelAdmin::EventChannel_ptr
 get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
     FtRtecEventChannelAdmin::EventChannel_var channel;
-    ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("gi:"));
+    ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("hi:n"));
     int opt;
-    int use_gateway = 0;
+    int use_gateway = 1;
 
     while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
       {
-      case 'g':
-         use_gateway = 1;
-         break;
       case 'i':
         {
           CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ()
@@ -46,6 +43,18 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
           ACE_CHECK;
         }
         break;
+      case 'n':
+         use_gateway = 0;
+         break;
+      case 'h':
+      case '?':
+        ACE_DEBUG((LM_DEBUG,
+                   ACE_LIB_TEXT("Usage: %s ")
+                   ACE_LIB_TEXT("-i ftrt_eventchannel_ior\n")
+                   ACE_LIB_TEXT("-n       do not use gateway\n")
+                   ACE_LIB_TEXT("\n"),
+                      argv[0]));
+        return 0;
       }
     }
 

@@ -65,7 +65,7 @@ GroupInfoPublisherBase::update(const FTRT::ManagerInfoList & info_list,
   primary_ = (my_position == 0);
 
   /// create the object group
-  int len = info_list.length();
+  size_t len = info_list.length();
 
   TAO_IOP::TAO_IOR_Manipulation::IORList iors;
   iors.length(len);

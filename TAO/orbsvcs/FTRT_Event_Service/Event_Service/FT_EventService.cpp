@@ -45,8 +45,8 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
     ACE_Argv_Type_Converter command(argc, argv);
 
     // Initialize ORB.
-    orb_ = CORBA::ORB_init (command.get_argc(), 
-                            command.get_ASCII_argv(), 
+    orb_ = CORBA::ORB_init (command.get_argc(),
+                            command.get_ASCII_argv(),
                             "" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 

@@ -25,17 +25,14 @@ RtecEventChannelAdmin::EventChannel_ptr
 get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
     FtRtecEventChannelAdmin::EventChannel_var channel;
-    ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("gi:"));
+    ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("hi:nt:?"));
     int opt;
-    int use_gateway = 0;
+    int use_gateway = 1;
 
     while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
       {
-      case 'g':
-         use_gateway = 1;
-         break;
       case 'i':
         {
           CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ()
@@ -46,12 +43,29 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
           ACE_CHECK;
         }
         break;
+      case 'n':
+        use_gateway = 0;
+        break;
+      case 't':
+        timer_interval.set(atof(get_opt.opt_arg ()));
+      case 'h':
+      case '?':
+        ACE_DEBUG((LM_DEBUG,
+                   ACE_LIB_TEXT("Usage: %s ")
+                   ACE_LIB_TEXT("-i ftrt_eventchannel_ior\n")
+                   ACE_LIB_TEXT("-n       do not use gateway\n")
+                   ACE_LIB_TEXT("-t time  Time interval in seconds between events (default 1.0)\n")
+                   ACE_LIB_TEXT("\n"),
+                      argv[0]));
+        return 0;
+
       }
     }
 
 
     if (CORBA::is_nil(channel.in()))
     {
+      /// Find the FTRTEC from the Naming Service
       CosNaming::Name name(1);
       name.length(1);
       name[0].id = CORBA::string_dup("FT_EventService");
@@ -69,6 +83,7 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 
     if (use_gateway)
     {
+      // use local gateway to communicate with FTRTEC
       gateway.reset(new TAO_FTRTEC::FTEC_Gateway(orb.in(), channel.in()));
       return gateway->_this();
     }
@@ -92,7 +107,7 @@ int main(int argc, ACE_TCHAR** argv)
 
 
     if (CORBA::is_nil(channel.in()))
-      ACE_ERROR_RETURN((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
+       return -1;
 
     PortableServer::POA_var poa =
       resolve_init<PortableServer::POA>(orb.in(), "RootPOA"
@@ -104,11 +119,6 @@ int main(int argc, ACE_TCHAR** argv)
 
     mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
-
-
-    if (argc == 2) {
-      timer_interval.set(atof(argv[1]));
-    }
 
     PushSupplier_impl push_supplier(orb.in());
     if (push_supplier.init(channel.in() ACE_ENV_ARG_PARAMETER) == -1)
