@@ -1,8 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-// The following configuration file is designed to work for pSOSystem V2.2.2,
-// using the Diab Data D-C++ 4.2a compiler (or a later version)
+// The following configuration file is designed to work for pSOSystem V2.2.1,
+// using the Diab Data D-C++ 4.2 p3 compiler (or a later version)
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -18,12 +18,6 @@
 
 #define ACE_LACKS_DIFFTIME
 
-#define ACE_LACKS_FCNTL
-
-#define ACE_LACKS_FILELOCKS
-
-#define ACE_LACKS_FSYNC
-
 #define ACE_LACKS_INLINE_FUNCTIONS
 
 #define ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER
@@ -32,9 +26,24 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-#define ACE_PSOS_LACKS_PREPC
 
-#define ACE_PSOS_HAS_TIME
+// Don't use RCSID
+#if !defined (ACE_USE_RCSID)
+#define ACE_USE_RCSID 0
+#endif /* #if !defined (ACE_USE_RCSID) */
+
+#define ACE_LACKS_ASSERT_MACRO
+
+#define ACE_LACKS_SIGSET
+#define ACE_LACKS_SIGACTION
+#define ACE_LACKS_FCNTL
+#define ACE_LACKS_FILELOCKS
+#define ACE_LACKS_TRUNCATE
+#define ACE_LACKS_PRAGMA_ONCE
+#define ACE_NLOGGING
+#define ACE_NDEBUG
+
+#define ACE_PSOS_LACKS_PREPC
 
 #define ACE_HAS_STRDUP_EMULATION
 
@@ -42,11 +51,9 @@
 
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
-#define ACE_HAS_BROKEN_EXPLICIT_TYPECAST_OPERATOR_INVOCATION
-
 #define ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS
 
-#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+#define ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR
 
 # define ACE_HAS_BROKEN_NOOP_DTORS
 
@@ -56,25 +63,18 @@
 # define ACE_LACKS_SEEKDIR
 # define ACE_LACKS_REWINDDIR
 
-#define ACE_LACKS_TRUNCATE
+# define ACE_THREADS_DONT_INHERIT_LOG_MSG
 
 // Template instantiation definitions
 // #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_FILE
 #define ACE_TEMPLATES_REQUIRE_SOURCE
-
-// IO Streams stuff
-// #define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
-#define ACE_LACKS_IOSTREAM_TOTALLY
-#define ACE_LACKS_ACE_IOSTREAM
-#define ACE_LACKS_IOSTREAM_FX
-#define ACE_DEFAULT_LOG_STREAM 0
-#define ostream FILE
+#define ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE
 
 #define ACE_LACKS_HRTIME_T
 
 // #define ACE_LACKS_EVENT_T
 
-#define ACE_HAS_VERBOSE_NOTSUP
+// #define ACE_HAS_VERBOSE_NOTSUP
 
 #define ACE_LACKS_MEMORY_H
 
@@ -97,10 +97,10 @@
 #define ACE_LACKS_READV
 
 // rename the main entry point
-#define ACE_MAIN extern "C" void root
+// #define ACE_MAIN extern "C" void root
 
 // All this was commented out for the single threaded port
-
+/*
 #define ACE_HAS_THREADS
 
 #if !defined (ACE_MT_SAFE)
@@ -112,8 +112,9 @@
 #define ACE_DEFAULT_THREAD_KEYS 256
 
 #define ACE_LACKS_COND_T
-
 // #define ACE_HAS_TSS_EMULATION
+
+*/
 
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 
@@ -140,9 +141,9 @@
 
 #define ACE_HAS_SIGWAIT
 
-#define ACE_HAS_SIG_ATOMIC_T
+//#define ACE_HAS_SIG_ATOMIC_T
 
-#define ACE_HAS_STRERROR
+// #define ACE_HAS_STRERROR
 
 #define ACE_LACKS_ACCESS
 
@@ -150,13 +151,21 @@
 
 #define ACE_LACKS_GETSERVBYNAME
 
+// IO Streams stuff
+/* #define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+#define ACE_LACKS_IOSTREAM_TOTALLY
+#define ACE_LACKS_ACE_IOSTREAM
+#define ACE_LACKS_IOSTREAM_FX
+#define ACE_DEFAULT_LOG_STREAM 0
+#define ostream FILE
+
+#define ACE_LACKS_IOSTREAM_FX
+
 #define ACE_LACKS_KEY_T
 
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
 #define ACE_LACKS_LONGLONG_T
-
-#define ACE_LACKS_LSTAT
 
 #define ACE_LACKS_MADVISE
 
@@ -170,9 +179,9 @@
 
 #define ACE_LACKS_PWD_FUNCTIONS
 
-#define ACE_LACKS_READLINK
-
 #define ACE_LACKS_RLIMIT
+
+#define ACE_LACKS_RPC_H
 
 #define ACE_LACKS_RWLOCK_T
 
@@ -194,7 +203,7 @@
 
 #define ACE_LACKS_SYSV_SHMEM
 
-#define ACE_LACKS_SYS_NERR
+// #define ACE_LACKS_SYS_NERR
 
 #define ACE_LACKS_SYS_TYPES_H
 
@@ -215,13 +224,7 @@
 
 #define ACE_PSOS_CANT_USE_SYS_TYPES
 
-// #define ACE_PSOS_LACKS_PHILE
-
-#define ACE_PSOS_HAS_C_LIBRARY
-
-#define ACE_PSOS_SNARFS_HEADER_INFO
-
-#define ACE_PSOS_LACKS_ARGC_ARGV
+// #define ACE_PSOS_SNARFS_HEADER_INFO
 
 #if !defined (ACE_PSOS)
 #define ACE_PSOS
@@ -230,5 +233,11 @@
 #if !defined (ACE_PSOS_TBD)
 #define ACE_PSOS_TBD
 #endif /* ACE_PSOS_TBD */
+
 #define ACE_LACKS_MKFIFO
+
+#define ACE_LACKS_MALLOC_H
+
+#define ACE_PSOS_DIAB_MIPS
+
 #endif /* ACE_CONFIG_H */

@@ -126,7 +126,11 @@ open_new_endpoint (ACE_HANDLE listen_handle, const char dev[],
   ACE_TRACE ("open_new_endpoint");
   ACE_HANDLE fd;
 
+#if defined (ACE_PSOS)
+  if ((fd = ACE_OS::t_open ((char *) dev, S_IRUSR | S_IWUSR, 0)) == ACE_INVALID_HANDLE
+#else
   if ((fd = ACE_OS::t_open ((char *) dev, O_RDWR, 0)) == ACE_INVALID_HANDLE
+#endif
       || ACE_OS::t_bind (fd, 0, 0) == ACE_INVALID_HANDLE)
     fd = ACE_INVALID_HANDLE;
 #if defined (I_PUSH)
