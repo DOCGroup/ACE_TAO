@@ -45,8 +45,6 @@ be_visitor_ami_pre_proc::~be_visitor_ami_pre_proc (void)
 int
 be_visitor_ami_pre_proc::visit_root (be_root *node)
 {
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_root\n"));
-
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -63,7 +61,6 @@ be_visitor_ami_pre_proc::visit_module (be_module *node)
 {
   if (!node->imported ())
     {
-      ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_module\n"));
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -81,8 +78,6 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
 {
   if (!node->imported ())
     {
-      ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_interface\n"));
-
       AST_Module *module = AST_Module::narrow_from_scope (node->defined_in ());
       if (!module)
       { 
@@ -166,8 +161,6 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
 int 
 be_visitor_ami_pre_proc::visit_operation (be_operation *node)
 {
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_operation\n"));
-
   if (node->flags () == AST_Operation::OP_oneway)
     // We do nothing for oneways!
     return 0;
@@ -206,8 +199,6 @@ be_visitor_ami_pre_proc::visit_operation (be_operation *node)
 int
 be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
 {
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_attribute\n"));
-
   // Temporerily generate the set operation.
   be_operation *set_operation = 
     this->generate_set_operation (node);
@@ -246,8 +237,6 @@ be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
 be_valuetype *
 be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
 {
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_exception_holder\n"));
-
   // Create a virtual module named "Messaging" and an valuetype "ExceptionHolder"
   // from which we inherit.
   UTL_ScopedName *inherit_name = 
@@ -361,8 +350,6 @@ be_interface *
 be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                                                be_valuetype *excep_holder)
 {
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_reply_handler\n"));
-
   // Create a virtual module named "Messaging" and an interface "ReplyHandler"
   // from which we inherit.
   UTL_ScopedName *inherit_name = 
@@ -487,8 +474,6 @@ be_visitor_ami_pre_proc::create_raise_operation (be_decl *node,
                                                  be_valuetype *excep_holder,
                                                  Operation_Kind operation_kind)
 {
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_raise_operation\n"));
-
   be_operation *orig_op = 0;
   if (operation_kind == NORMAL)
     {
@@ -567,8 +552,6 @@ be_operation *
 be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
                                                   int for_arguments)
 {
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_sendc_operation\n"));
-
   if (node->flags () == AST_Operation::OP_oneway)
     // We do nothing for oneways!
     return 0;
@@ -689,7 +672,6 @@ int
 be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node,
                                                          be_interface *reply_handler)
 {
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_reply_handler_operation\n"));
   if (!node)
     return -1;
 
@@ -806,8 +788,6 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
                                                  be_interface *reply_handler,
                                                  be_valuetype *excep_holder)
 {
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_excep_operation\n"));
-
   if (!node)
     return -1;
 
@@ -870,7 +850,6 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
 int
 be_visitor_ami_pre_proc::visit_scope (be_scope *node)
 {
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_scope\n"));
   // proceed if the number of members in our scope is greater than 0
   if (node->nmembers () > 0)
     {
@@ -911,10 +890,6 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
         delete si;
       }
 
-
-      ACE_DEBUG ((LM_DEBUG, 
-                  "be_visitor_ami_pre_proc::visit_scope - %d elements\n",
-                  number_of_elements));
 
       int elem_number = 0;
       
