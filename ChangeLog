@@ -1,3 +1,10 @@
+Sat Nov 20 18:12:55 UTC 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/OS_NS_Thread.inl:
+
+	  Fixes for thr_getprio () on Win32. Thanks to Abhi <abhi at
+	  qualcomm.com> for motivating this fix.
+
 Sat Nov 20 07:40:48 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* ace/DLL.cpp:

@@ -3698,11 +3698,26 @@ ACE_OS::thr_getprio (ACE_hthread_t id, int &priority, int &policy)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (id, &priority), result), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
+  ACE_Errno_Guard error (errno);
+
+  if (*data == 0 && (error = ::GetLastError ()) != NO_ERROR)
+    return -1;
+
   priority = ::GetThreadPriority (id);
-  if (priority == THREAD_PRIORITY_ERROR_RETURN)
+
+  if (priority == THREAD_PRIORITY_ERROR_RETURN
+      && (error = ::GetLastError ()) != NO_ERROR)
     ACE_FAIL_RETURN (-1);
-  else
-    return 0;
+
+  policy =
+    ((::GetPriorityClass (id)) ==
+     REALTIME_PRIORITY_CLASS) ? ACE_SCHED_FIFO : ACE_SCHED_OTHER;
+
+  if (policy == 0 && (error = ::GetLastError ()) != NO_ERROR)
+    ACE_FAIL_RETURN (-1);
+
+
+  return 0;
 # elif defined (ACE_PSOS)
   // passing a 0 in the second argument does not alter task priority,
   // third arg gets existing one
