@@ -1,3 +1,23 @@
+Thu Aug 19 20:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_pre_docall_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/compiled_marshal_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
+	  Return types which are allocated on the heap in the stub (all
+	  variable-size data types plus arrays) would leak memory if
+	  there were an exception during invocation or demarshaling. Now
+	  all these types are eclosed in a _var between 
+	  'ACE_NEW_RETURN (...);' and 'return ...;'. Thanks to
+	  Eugene Surovegin <ebs@glasnet.ru>, whose example showed
+	  the tip of the iceberg.
+
 Thu Aug 19 18:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs\orbsvcs\Sched\Reconfig_Scheduler_T.cpp: modified uses of
