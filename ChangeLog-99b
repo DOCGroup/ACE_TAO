@@ -10,6 +10,9 @@ Wed Apr 07 09:54:28 1999  David L. Levine  <levine@cs.wustl.edu>
           for suggesting this, because the VxWorks semaphores that
           ACE uses for mutexes are recursive.
 
+        * ace/Synch.i (set_thread_id): added ACE_UNUSED_ARG (t), with
+          ACE_HAS_RECURSIVE_MUTEXES.
+
 Wed Apr 07 09:37:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.0.GNU: disable warning
