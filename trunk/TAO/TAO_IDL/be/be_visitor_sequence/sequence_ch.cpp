@@ -157,18 +157,47 @@ be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
       break;
     default: // not a managed type
       if (node->unbounded ())
-      {
-          // @@ This needs to be fixed. (Michael)
-          be_predefined_type * bpt = 
-            be_predefined_type::narrow_from_decl (node->base_type());
-          if (bpt)
-          {
-            if (bpt->pt() != AST_PredefinedType::PT_octet)
-              this->gen_unbounded_sequence (node);
-          }
-          else
-            this->gen_unbounded_sequence (node);
-      }
+	{
+#if 1
+	  // TAO provides extensions for octet sequences, first find out
+	  // if the base type is an octet (or an alias for octet)
+	  be_predefined_type *predef = 0;
+	  if (bt->base_node_type () == AST_Type::NT_pre_defined)
+	    {
+	      be_typedef* alias = 
+		be_typedef::narrow_from_decl (bt);
+	      
+	      if (alias == 0)
+		{
+		  predef =
+		    be_predefined_type::narrow_from_decl (bt);
+		}
+	      else
+		{
+		  predef = be_predefined_type::narrow_from_decl
+		    (alias->primitive_base_type ());
+		}
+	    }
+	  if (predef != 0)
+	    {
+	      if (predef->pt() != AST_PredefinedType::PT_octet)
+		this->gen_unbounded_sequence (node);
+	    }
+	  else
+	    this->gen_unbounded_sequence (node);
+#else
+	  // @@ This needs to be fixed. (Michael)
+	  be_predefined_type * bpt = 
+	    be_predefined_type::narrow_from_decl (node->base_type());
+	  if (bpt)
+	    {
+	      if (bpt->pt() != AST_PredefinedType::PT_octet)
+		this->gen_unbounded_sequence (node);
+	    }
+	  else
+	    this->gen_unbounded_sequence (node);
+#endif
+	}
       else
         this->gen_bounded_sequence (node);
       break;
