@@ -20,9 +20,9 @@ Thu Mar 14 12:03:21 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Make sure the peer TAO_PICurrent_Impl object no longer considers
 	  this TAO_PICurrent_Impl its peer since this object will no
-	  longer exist once this destructor completes execution..  Thanks
-	  to Jeffrey Shaffer <jeffs@integ.com> for reporting the problem,
-	  and for confirming that this fix works.
+	  longer exist once this destructor completes execution.  Fixes a
+	  seg fault.  Thanks  to Jeffrey Shaffer <jeffs@integ.com> for
+	  reporting the problem, and for confirming that this fix works.
 
 Thu Mar 14 13:50:59 2002  Chad Elliott  <elliott_c@ociweb.com>
 
