@@ -2567,7 +2567,7 @@ typedef unsigned int size_t;
 
 # if defined (ACE_NEEDS_SCHED_H)
 #   include /**/ <sched.h>
-# endif /* ACE_LACKS_SCHED_H */
+# endif /* ACE_NEEDS_SCHED_H */
 
 # if defined (ACE_HAS_WINCE)
 #   define islower iswlower
@@ -4429,7 +4429,7 @@ private:
   // destructor and has no friends.
 };
 
-class ACE_Export ACE_Thread_Control
+qqclass ACE_Export ACE_Thread_Control
 {
   // = TITLE
   //     Used to keep track of a thread's activities within its entry
