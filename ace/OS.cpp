@@ -3454,7 +3454,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
 # endif /* ACE_WIN32 */
 }
 
-# if defined (ACE_NEEDS_WRITEV)
+# if defined (ACE_LACKS_WRITEV)
 
 // "Fake" writev for operating systems without it.  Note that this is
 // thread-safe.
@@ -3496,9 +3496,9 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 #   endif /* !defined (ACE_HAS_ALLOCA) */
   return result;
 }
-# endif /* ACE_NEEDS_WRITEV */
+# endif /* ACE_LACKS_WRITEV */
 
-# if defined (ACE_NEEDS_READV)
+# if defined (ACE_LACKS_READV)
 
 // "Fake" readv for operating systems without it.  Note that this is
 // thread-safe.
@@ -3552,7 +3552,7 @@ readv (ACE_HANDLE handle,
 #   endif /* !defined (ACE_HAS_ALLOCA) */
   return length;
 }
-# endif /* ACE_NEEDS_READV */
+# endif /* ACE_LACKS_READV */
 
 # if defined (ACE_NEEDS_FTRUNCATE)
 extern "C" int

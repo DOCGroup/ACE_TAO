@@ -213,7 +213,7 @@
 #define ACE_LACKS_UTSNAME_T
 
 // #define ACE_MALLOC_ALIGN 8
-// #define ACE_NEEDS_SYSTIME_H
+// #define ACE_LACKS_SYSTIME_H
 
 #define ACE_PAGE_SIZE 4096
 

@@ -12,7 +12,7 @@
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #define ACE_HAS_CHARPTR_SPRINTF
-#define ACE_NEEDS_SYSTIME_H
+#define ACE_LACKS_SYSTIME_H
 #define ACE_HAS_UNION_WAIT
 
 // Special addition to handle sunOS 4.1 which is unable to

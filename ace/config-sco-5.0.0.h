@@ -99,7 +99,7 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_UCONTEXT_T
 
-#define ACE_NEEDS_SYSTIME_H
+#define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_STRCASECMP
 
 // #define      ACE_HAS_POSIX_TIME

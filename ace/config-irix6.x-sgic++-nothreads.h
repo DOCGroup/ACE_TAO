@@ -123,7 +123,7 @@
 // Platform supports POSIX timers via timestruc_t.
 #define ACE_HAS_POSIX_TIME
 // #define ACE_HAS_SVR4_TIME
-#define ACE_NEEDS_SYSTIME_H
+#define ACE_LACKS_SYSTIME_H
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
@@ -185,7 +185,7 @@
 #define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 #endif /* _COMPILER_VERSION >= 720 */
 #define ACE_TEMPLATES_REQUIRE_SOURCE
-#define ACE_REQUIRES_FUNC_DEFINITIONS
+#define ACE_NEEDS_FUNC_DEFINITIONS
 
 // Platform supports exceptions. Under 6.2 this requires an extra flag
 // for the compiler, don't worry is already there in

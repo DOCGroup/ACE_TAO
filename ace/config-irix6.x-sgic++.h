@@ -49,7 +49,7 @@
 #define ACE_LACKS_COND_TIMEDWAIT_RESET 1
 
 // Scheduling functions are declared in <sched.h>
-#define ACE_NEEDS_SCHED_H
+#define ACE_LACKS_SCHED_H
 
 // Compile using multi-thread libraries
 #if !defined (ACE_MT_SAFE)
