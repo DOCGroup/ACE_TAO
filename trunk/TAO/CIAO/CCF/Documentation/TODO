@@ -48,7 +48,7 @@ Legend:
    since scoped name in general case denotes a bunch of declarations. 
    Same for TypePrefix.
    
-@@ Perhaps add reference to declaration table to every SyntaxTree::Node 
+%% Perhaps add reference to declaration table to every SyntaxTree::Node 
    (and not just scopes).
 
 @@ Replace all i++ with ++i.
@@ -63,7 +63,7 @@ Legend:
 
 @%++ XML indentation buffer
 
-@@+++ Anonymous types and typedef's model (2)
+@%+++ Anonymous types and typedef's model (2)
 
 @@+++ Introduction (injection) of names into scope
 
@@ -79,9 +79,9 @@ Legend:
 
 %% IDL feature: built-in types
 
-@@ IDL feature: sequences; depends on 2,3
+@% IDL feature: sequences; depends on 2,3
 
-@@ IDL feature: struct
+%% IDL feature: struct
 
 @% IDL feature: oprations (completion)
 

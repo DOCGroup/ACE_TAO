@@ -38,7 +38,7 @@ namespace CCF
 
       public:
         InterfaceDeclPtr
-        type ()
+        type () const
         {
           return type_.resolve ();
         }
@@ -86,7 +86,7 @@ namespace CCF
 
       public:
         TypeDeclPtr
-        type ()
+        type () const
         {
           return type_.resolve ();
         }
@@ -132,7 +132,7 @@ namespace CCF
 
       public:
         TypeDeclPtr
-        type ()
+        type () const
         {
           return type_.resolve ();
         }
@@ -179,7 +179,7 @@ namespace CCF
 
       public:
         TypeDeclPtr
-        type ()
+        type () const
         {
           return type_.resolve ();
         }
@@ -226,7 +226,7 @@ namespace CCF
 
       public:
         TypeDeclPtr
-        type ()
+        type () const
         {
           return type_.resolve ();
         }

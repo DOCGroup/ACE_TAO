@@ -405,7 +405,7 @@ namespace
     traverse (ConsumesDeclPtr const& p)
     {
       os << "void push_" << p->name ().simple () << " ("
-         << "in " << p->type()->name () << " ev);";
+         << "in " << p->type ()->name () << " ev);";
     }
 
     virtual void

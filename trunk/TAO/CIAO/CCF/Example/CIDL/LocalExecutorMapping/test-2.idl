@@ -14,13 +14,23 @@ module M2
   };
 
   typedef sequence<octet> OctetSeq;
+
+  struct S
+  {
+    long l;
+    OctetSeq octet_seq;
+  };
+  
+  typedef sequence<S> S_Seq;
   
   home H2 : M1::H1 manages C2
   {
     attribute long l;
     attribute M::I i;
     attribute OctetSeq seq;
-    void foo (in long l, inout boolean b, out long ol, in M::I i, out unsigned long long ull);
+    attribute S_Seq s_seq;
+    
+    void foo (in long l, inout boolean b, out long ol, in M::I i, out unsigned long long ull, inout S_Seq s_seq);
     factory new (in long l, in OctetSeq s);
   };
 };

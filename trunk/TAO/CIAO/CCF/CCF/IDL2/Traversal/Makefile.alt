@@ -13,9 +13,11 @@ $(call include, $(UTILITY_ROOT)/BuildRules/Object.pre.rules)
 cxx_translation_units := BuiltIn.cpp     \
                          Elements.cpp    \
                          Interface.cpp   \
+                         Member.cpp      \
                          Module.cpp      \
                          Operation.cpp   \
                          Sequence.cpp    \
+                         Struct.cpp      \
                          Translation.cpp
 
 
