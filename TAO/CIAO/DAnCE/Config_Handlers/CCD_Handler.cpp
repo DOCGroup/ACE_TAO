@@ -170,14 +170,14 @@ namespace CIAO
        }
      
      total = src.idlFile.length ();
-     for (size_t j = 0; i < total; ++j)
+     for (size_t j = 0; j < total; ++j)
        {
          XMLSchema::string< char > curr ((src.idlFile[j]));
          cid.add_idlFile (curr);
        }
 
      total = src.configProperty.length ();
-     for (size_t k = 0; i < total; ++k)
+     for (size_t k = 0; k < total; ++k)
        {
          cid.add_configProperty (
            Property_Handler::get_property (
@@ -185,7 +185,7 @@ namespace CIAO
        }
      
      total = src.port.length ();
-     for (size_t l = 0; i < total; ++l)
+     for (size_t l = 0; l < total; ++l)
        {
          cid.add_port (
            CPD_Handler::component_port_description (
