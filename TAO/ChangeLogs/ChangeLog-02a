@@ -1,3 +1,8 @@
+Sat Mar 17 10:23:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/BiDirectional/test_i.cpp: Changed connection_cache () as
+	  transport_cache () 
+
 Sat Mar 17 09:55:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Client_Leaks/Makefile: Fixed dependencies
