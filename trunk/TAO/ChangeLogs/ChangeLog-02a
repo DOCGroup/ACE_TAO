@@ -1,3 +1,10 @@
+Sun Jul 09 15:51:46 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/RTCorba/Multiple_Endpoints/
+          {Endpoint_Per_Priority,Orb_Per_Priority,Single_Endpoint}/Makefile:
+          regenerated dependencies, this time without generated test*
+          files in each directory.
+
 Sun Jul  9 06:31:38 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/Quoter/client.cpp:
