@@ -23,10 +23,6 @@
 #include "tao/corbafwd.h"
 #include "tao/Pluggable.h"
 
-// @@ Fred, this definitions are of very little use, can you make them
-//    local to the Profile class so we don't pollute the global
-//    namespace
-typedef TAO_Profile *TAO_Profile_ptr;
 typedef CORBA::ULong TAO_PHandle;
 
 class TAO_Export TAO_MProfile
@@ -72,26 +68,26 @@ public:
   // NOT THREAD SAFE
 
   int grow (CORBA::ULong sz);
-  // increate the number of profiles this object can hold.
+  // increase the number of profiles this object can hold.
   // NOT THREAD SAFE
 
-  TAO_Profile_ptr get_cnext (void);
+  TAO_Profile *get_cnext (void);
   // Treat as a circular list.
 
-  TAO_Profile_ptr get_next (void);
+  TAO_Profile *get_next (void);
   // Get next profile in list, return 0 at end of list.
 
-  TAO_Profile_ptr get_cprev (void);
+  TAO_Profile *get_cprev (void);
   // Assume a circular list of profiles.
 
-  TAO_Profile_ptr get_prev (void);
+  TAO_Profile *get_prev (void);
   // Get previous profile, stop at beginning of list and return 0.
 
-  TAO_Profile_ptr get_current_profile (void);
+  TAO_Profile *get_current_profile (void);
   // Return a pointer to the current profile, will not increment
   // reference pointer.
 
-  TAO_Profile_ptr get_profile (TAO_PHandle handle);
+  TAO_Profile *get_profile (TAO_PHandle handle);
   // Return a pointer to the profile referenced by handle void.
 
   // rem_profile (TAO_PHandle handle); let's wait.
@@ -113,13 +109,23 @@ public:
   void rewind (void);
   // Sets the current slot back to 0.
 
-  int add_profile (TAO_Profile_ptr pfile);
+  int add_profile (TAO_Profile *pfile);
   // Return the index of this entry or -1 if it can not be added.
   // reference count on profile in incremented!
 
-  int give_profile (TAO_Profile_ptr pfile);
+  int give_profile (TAO_Profile *pfile);
   // Return the index of this entry or -1 if it can not be added.
   // this object assumes ownership of this profile!!
+
+  int add_profiles (TAO_MProfile *pfiles);
+  // append the profiles in pfiles to this object.  The count
+  // will be incremented on the individual profile objects.
+
+  int remove_profile (const TAO_Profile *pfile);
+  // remove from this MProfile any profiles which also appear in pfiles.
+
+  int remove_profiles (const TAO_MProfile *pfiles);
+  // remove from this MProfile any profiles which also appear in pfiles.
 
   void forward_from (TAO_MProfile *mprofiles);
   // Set a pointer to the MProfile whose 'current' TAO_Profile was
@@ -128,21 +134,20 @@ public:
   TAO_MProfile *forward_from (void);
   // Returns a pointer to the profile which was forwarded.
 
-  CORBA::Boolean is_equivalent (TAO_MProfile *first,
-                                TAO_MProfile *second,
-                                CORBA::Environment &env);
+  CORBA::Boolean is_equivalent (const TAO_MProfile *rhs);
   // Returns true of there is at least one profile in first which
-  // is_equivalent with at least one profile in second.  @@ FRED: The
-  // lost should be locked for this!
+  // is_equivalent with at least one profile in second.
+  // NON-THREAD SAFE, relies on some other entity to guarentee
+  // the profiles will not change during the call.
 
   CORBA::ULong hash (CORBA::ULong max,
                      CORBA::Environment &env);
   // use all registered profiles.  The hash() method is called on each
   // profile and the results are averaged together.
-  // @@ FRED: The list should be locked for this!
+  // NON-THREAD SAFE.
 
 protected:
-  TAO_Profile_ptr *pfiles (void) const;
+  TAO_Profile **pfiles (void) const;
   // return the complete list of profiles, this object retains
   // ownership!
 
@@ -161,7 +166,7 @@ private:
   // received the relocate message.  The actual profile what was
   // forwarded will be forward_from_->get_current_profile ()
 
-  TAO_Profile_ptr *pfiles_;
+  TAO_Profile **pfiles_;
   // Actual list of profiles.
 
   TAO_PHandle current_;
@@ -176,6 +181,6 @@ private:
 
 #if defined (__ACE_INLINE__)
 # include "tao/MProfile.i"
-#endif /* __ACE_INLINE__ */
+#endif /*__ACE_INLINE__ */
 
-#endif /* TAO_MPROFILE_H */
+#endif /*TAO_MPROFILE_H */

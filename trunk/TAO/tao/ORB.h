@@ -24,6 +24,7 @@
 #include "tao/Exception.h"
 #include "tao/IOR_LookupTable.h"
 #include "tao/Services.h"
+#include "IORManipulation.h"
 
 // IRIX needs this for the throw specs
 #include "tao/PolicyC.h"
@@ -632,6 +633,9 @@ protected:
   CORBA_Object_ptr resolve_policy_current (CORBA::Environment&);
   // Resolve the Policy Current for this thread.
 
+  CORBA_Object_ptr resolve_ior_manipulation (CORBA::Environment&);
+  // Resolve the IOR Manipulation reference for this ORB.
+
   int run (ACE_Time_Value *tv,
            int break_on_timeouts);
   // Implements the run routine
@@ -722,6 +726,10 @@ private:
 
   TAO_IOR_LookupTable lookup_table_;
   // Table of ObjectID->IOR mappings.
+
+  TAO_IOR_Manipulation_impl ior_manipulation_;
+  // object used for manipulation profiles in an object reference, that
+  // is an IOR.
 
   CORBA::Boolean use_omg_ior_format_;
   // Decides whether to use the URL notation or to use IOR notation.

@@ -252,8 +252,7 @@ public:
   // Obtain the object key, return 0 if the profile cannot be parsed.
   // The memory is owned by the caller!
 
-  virtual CORBA::Boolean is_equivalent (TAO_Profile* other_profile,
-                                        CORBA::Environment &env) = 0;
+  virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile) = 0;
   // Return true if this profile is equivalent to other_profile.  Two
   // profiles are equivalent iff their key, port, host, object_key and
   // version are the same.
@@ -318,8 +317,7 @@ public:
   virtual int encode (TAO_OutputCDR &stream) const;
   virtual const TAO_ObjectKey &object_key (void) const;
   virtual TAO_ObjectKey *_key (void) const;
-  virtual CORBA::Boolean is_equivalent (TAO_Profile* other_profile,
-                                        CORBA::Environment &env);
+  virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
   virtual CORBA::ULong hash (CORBA::ULong max,
                              CORBA::Environment &env);
   virtual int addr_to_string(char *buffer, size_t length);
