@@ -1,3 +1,21 @@
+Thu Mar 12 02:19:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.cpp (upcall): In the Select_Reactor, when it
+ 	  upcalls to an event_handler which returns a -1, the
+ 	  Select_Reactor only clears the specific mask bit for the
+ 	  handler.  For example, for a call to
+ 	  Event_Handler::handle_input() which returns -1, the
+ 	  Select_Reactor clears the READ_MASK bit.
+
+	  In the WFMO_Reactor, if any handler returns a -1, then it clears
+ 	  ALL of the mask bits for the event handler. 
+
+	  So, fixed WFMO_Reactor so that it works like Select_Reactor in
+ 	  this regard.
+
+	  Thanks to Jonathan Biggar <jon@floorboard.com> for pointing this
+ 	  discrepancy out.
+
 Wed Mar 11 15:20:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i (thr_getspecific): Added comments to the code to
