@@ -17,7 +17,7 @@ TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: !ST
 TAO/performance-tests/Single_Threaded_Latency/run_test.pl
 TAO/performance-tests/Thread_Pool_Latency/run_test.pl: !ST
 TAO/performance-tests/Thread_Per_Connection_Latency/run_test.pl: !ST
-TAO/performance-tests/AMI_Latency/run_test.pl: !MINIMUM
+TAO/performance-tests/AMI_Latency/run_test.pl: !MINIMUM !ST
 TAO/performance-tests/DSI_Latency/run_test.pl: !MINIMUM
 TAO/performance-tests/DII_Latency/run_test.pl: !MINIMUM
 TAO/performance-tests/Deferred_Latency/run_test.pl: !MINIMUM
@@ -27,7 +27,7 @@ TAO/performance-tests/Throughput/run_test.pl
 TAO/performance-tests/POA/Object_Creation_And_Registration/run_test.pl
 TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: !MINIMUM
 TAO/tests/AMI/run_test.pl: !MINIMUM
-TAO/tests/AMI_Timeouts/run_test.pl: !MINIMUM
+TAO/tests/AMI_Timeouts/run_test.pl: !MINIMUM !ST
 
 TAO/tests/OctetSeq/run_test.pl
 TAO/tests/OctetSeq/run_test1.pl: !STATIC
