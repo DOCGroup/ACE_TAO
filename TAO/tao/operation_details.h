@@ -141,9 +141,11 @@ public:
    * the list of parameters passed by the operation, exceptions
    * declared for the operation, and the result when available.
    */
-  bool parameter_list (Dynamic::ParameterList &);
   bool exception_list (Dynamic::ExceptionList &);
+#if TAO_HAS_INTERCEPTORS == 1
+  bool parameter_list (Dynamic::ParameterList &);
   bool result (CORBA::Any *);
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
   //@}
 
   /// Accessors for the argumet list

@@ -71,7 +71,7 @@ namespace TAO
 
     return safe_parameter_list._retn ();
   }
-#endif /*TAO_HAS_INTERCEPTORS*/
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
   Invocation_Status
   DII_Invocation::remote_invocation (ACE_Time_Value *max_wait_time
@@ -218,7 +218,7 @@ namespace TAO
 
     return safe_parameter_list._retn ();
   }
-#endif /*TAO_HAS_INTERCEPTORS*/
+#endif /* TAO_HAS_INTERCEPTORS == 1*/
 
   Invocation_Status
   DII_Deferred_Invocation::remote_invocation (

@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
 #include "tao/TAO_Export.h"
 
 namespace Dynamic
@@ -50,8 +51,10 @@ namespace TAO
     virtual ~Argument (void);
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+#if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
     virtual void interceptor_result (CORBA::Any *);
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
   };
 
 }
