@@ -1,3 +1,11 @@
+Fri Nov 14 17:48:14 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* orbsvcs/bin/Naming_Service/CosNaming_i.cpp: 
+	  Fixed problem with the new Environment parameter for _narrow ().
+
+	* orbsvcs/bin/Naming_Service/Makefile: 
+	  No need to include rules.bin.GNU.
+
 Fri Nov 14 17:08:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/iiopobj.cpp: Make sure that host is set to 0 in all the
