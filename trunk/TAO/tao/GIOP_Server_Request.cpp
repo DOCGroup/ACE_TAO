@@ -297,10 +297,12 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
   // invocation. So *theoratically* there should not be a problem. 
   reply_params.request_id_ = this->request_id_;
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   if (this->lazy_evaluation_ == 0 || this->params_ == 0)
     reply_params.params_ = 0;
   else
     reply_params.params_ = this->params_;
+#endif /*TAO_HAS_MINIMUM_CORBA */
 
   // Pass in the service context
   reply_params.service_context_notowned (&this->service_info_);
@@ -377,7 +379,11 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
   // Construct our reply generator
   TAO_Pluggable_Reply_Params reply_params;
   reply_params.request_id_ = this->request_id_;
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   reply_params.params_ = 0;  
+#endif /*TAO_HAS_MINIMUM_CORBA*/
+
   reply_params.svc_ctx_.length (0);
 
   // Pass in the service context
