@@ -1,3 +1,10 @@
+Thu Jul 29 08:39:17 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_redef.cpp:
+        
+          Fixed bug in handling forward declared eventtypes, which
+          was causing bogus "illegal redefinition" errors.
+
 Wed Jul 28 00:03:42 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test.idl
