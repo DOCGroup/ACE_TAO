@@ -162,14 +162,14 @@ private:
     Endpoint ();
     Endpoint (ACE_TString h, CORBA::UShort p);
     Endpoint (Endpoint &);
-    void operator= (Endpoint &);
+    void operator= (const Endpoint &);
     ACE_TString host;
     CORBA::UShort port;
   };
   
-  Endpoint ImplRepo_i::activate_server_i (const char *server,
-                                          const int check_startup,
-                                          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+  Endpoint activate_server_i (const char *server,
+                              const int check_startup,
+                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound,
                      ImplementationRepository::Administration::CannotActivate));
@@ -206,7 +206,7 @@ private:
   char **argv_;
   // The command line arguments.
   
-  friend IR_Forwarder;
+  friend class IR_Forwarder;
 };
 
 class IR_Forwarder: public PortableServer::DynamicImplementation
