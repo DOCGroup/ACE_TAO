@@ -3808,7 +3808,10 @@ struct utsname
 // Increase the range of "address families".  Please note that this
 // must appear _after_ the include of sys/socket.h, for the AF_FILE
 // definition on Linux/glibc2.
+#if !defined (AF_ANY)
 # define AF_ANY (-1)
+#endif /* AF_ANY */
+
 # define AF_SPIPE (AF_MAX + 1)
 # if !defined (AF_FILE)
 #   define AF_FILE (AF_MAX + 2)
