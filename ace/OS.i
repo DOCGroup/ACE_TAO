@@ -9231,7 +9231,7 @@ ACE_OS::dlerror (void)
                           ::GetLastError (),
                           0,
                           buf,
-                          sizeof buf,
+                          sizeof buf / sizeof buf[0],
                           NULL);
 #   endif /* ACE_HAS_PHARLAP */
   return buf;

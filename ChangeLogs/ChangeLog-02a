@@ -1,3 +1,17 @@
+Tue Apr 25 00:02:08 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS.i (dlerror): Changed sizeof buf to sizeof buf / sizeof buf[0]
+	  to avoid over-allocating a buffer in the
+ 	  ACE_TEXT_FormateMessage() function.  Thanks to Valery
+ 	  Arkhangorodsky <valerya@servicesoft.com> for reporting this.
+
+	* ace/Service_Repository.cpp: The fini() method was claiming
+	  it was the close() method.  Likewise, changed the close() method
+ 	  so that it keeps decrementing the current_size each time through
+ 	  the look to allow checking the respository size or doing other
+ 	  work from inside the fini() call.  Thanks to Valery
+ 	  Arkhangorodsky <valerya@servicesoft.com> for reporting this.
+
 Mon Apr 24 17:44:21 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Object_Manager.cpp:

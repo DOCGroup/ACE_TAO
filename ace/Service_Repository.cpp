@@ -122,7 +122,7 @@ ACE_Service_Repository::ACE_Service_Repository (int size)
 int
 ACE_Service_Repository::fini (void)
 {
-  ACE_TRACE ("ACE_Service_Repository::close");
+  ACE_TRACE ("ACE_Service_Repository::fini");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (this->service_vector_ != 0)
@@ -171,6 +171,7 @@ ACE_Service_Repository::close (void)
           ACE_Service_Type *s = ACE_const_cast (ACE_Service_Type *,
                                                 this->service_vector_[i]);
           delete s;
+          --this->current_size_;
         }
 
       delete [] this->service_vector_;
