@@ -1,3 +1,8 @@
+Mon Mar 22 17:32:19 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* tao/ORB.cpp (multicast_query): Removed an unnecessary ACE_DEBUG. 
+	  Moved the dgram.close () up. 
+
 Mon Mar 22 17:15:20 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tao/tao.dsp: Added IOR_LookupTable files.
