@@ -1,3 +1,11 @@
+Tue Apr 22 09:28:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+
+          Made a fix for strings and wstrings similar to
+
+          Mon Apr 21 14:09:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Tue Apr 22 09:10:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Seq_Var_T.cpp: Fixed a wroong inclusion of inlined file.

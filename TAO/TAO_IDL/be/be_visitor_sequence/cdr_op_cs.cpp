@@ -594,7 +594,10 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
         case AST_Decl::NT_string:
         case AST_Decl::NT_wstring:
           {
-            be_string *str = be_string::narrow_from_decl (bt);
+            be_string *str =
+              be_string::narrow_from_decl (
+                  td == 0 ? bt : td->primitive_base_type ()
+                );
 
             if (!str)
               {
