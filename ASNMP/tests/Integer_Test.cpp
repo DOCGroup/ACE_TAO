@@ -68,7 +68,7 @@ static short si = 32768;
 
 static void TestInteger32()
 {
-
+#if !defined (ACE_WIN32)
    // constructors
    SnmpInt32 i1;
    ACE_ASSERT(i1 == def);
@@ -114,6 +114,7 @@ static void TestInteger32()
   ACE_ASSERT(i1 == us);
   i1 = si; // unsigned short
   ACE_ASSERT(i1 == si);
+ #endif /*ACE_WIN32*/
 }
 
 /*
