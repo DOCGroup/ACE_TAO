@@ -4351,6 +4351,14 @@ private:
 #endif /* ! VXWORKS */
 };
 
+#else   /* ! ACE_HAS_TSS_EMULATION */
+# if defined (TLS_MINIMUM_AVAILABLE)
+    // WIN32 platforms define TLS_MINIMUM_AVAILABLE natively.
+#   define ACE_DEFAULT_THREAD_KEYS TLS_MINIMUM_AVAILABLE
+# endif /* TSL_MINIMUM_AVAILABLE */
+
+#endif /* ACE_HAS_TSS_EMULATION */
+
 // Support non-scalar thread keys, such as with some POSIX
 // implementations, e.g., MVS.
 #if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
@@ -4360,14 +4368,6 @@ private:
 #else
 # define ACE_KEY_INDEX(OBJ,KEY) u_int OBJ = KEY
 #endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
-
-#else   /* ! ACE_HAS_TSS_EMULATION */
-# if defined (TLS_MINIMUM_AVAILABLE)
-    // WIN32 platforms define TLS_MINIMUM_AVAILABLE natively.
-#   define ACE_DEFAULT_THREAD_KEYS TLS_MINIMUM_AVAILABLE
-# endif /* TSL_MINIMUM_AVAILABLE */
-
-#endif /* ACE_HAS_TSS_EMULATION */
 
 // A useful abstraction for expressions involving operator new since
 // we can change memory allocation error handling policies (e.g.,
