@@ -3293,7 +3293,7 @@ TAO_MMDevice::TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy)
 }
 
 TAO_MMDevice::TAO_MMDevice (TAO_MMDevice const &mm_device)
-  :TAO_PropertySet (mm_device)
+  : TAO_PropertySet (mm_device)
 {
   //no-op
 }
