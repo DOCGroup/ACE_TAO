@@ -1,3 +1,22 @@
+Thu Feb  3 13:40:42 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp: 
+	  
+	  Fixed all the TAO_ exception macros to ACE_ exception macros.
+	
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Makefile: 
+	  
+	  Added libAVSvc to the LDLIBS and -DTAO_ORBSVCS_HAS_Trader to the
+	  Makefile so that the TAO_String_Hash_Key class doesn't get defined
+	  twice.
+
+        Thanks to Alex Luk <fluk7@ie.cuhk.edu.hk> and Kenneth Osenbroch
+        <kennetho@stud.cs.uit.no> for reporting this.
+	
 Thu Feb  3 10:31:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile:
