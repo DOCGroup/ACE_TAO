@@ -1,3 +1,9 @@
+Mon Jul 28 19:23:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/WFMO_Reactor.cpp:
+          Added ACE_UNUSED_ARG to dump to silence a warning when
+          ACE_HAS_DUMP is not defined.
+
 Mon Jul 28 18:29:38 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/RB_Tree.cpp:
