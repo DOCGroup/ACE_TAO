@@ -1,3 +1,42 @@
+Wed Mar 19 14:30:43 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connector_Registry.cpp: Removed preconnect () completely
+	  from the code.
+
+	* tao/ORB_Core.cpp: Implemented the initialize_object () for
+	  non-local and non-collocated cases. 
+
+	* tao/Object.h:
+	* tao/Object.cpp (Object): 
+	* tao/Object.i: Made the following changes
+
+	  - Changed the constructor that took a const IOP::IOR_var to take
+	    a pointer to IOP::IOR. The pointer would be owned by
+	    CORBA::Object class and released at the end of its
+	    lifetime. It may be possible for us to release the memory
+	    owned by IOR_var if needed after the complete evaluation is
+	    done. At this point of time it is future work. 
+
+	  - Added a new method is_evaluated () which returns the status of
+	    the evaluation done on the IOR.
+
+	  - Added a non-const version of _stubobj ().
+
+	  - In the main constructor we set the ORB_Core if it is null
+	    before calling the resource factory to create the refcount
+	    lock. 
+
+	  - In the method is_nil_i () we now use the ORB_Core to access
+	    new definitions instead of going through the stub object. This
+	    would prevent accidental evaluation of IOR while calling
+	    is_nil () from the stubs or skeletons. 
+
+	  - Completed implementation of tao_object_initialize () for
+	    non-local and non-collocated objects. 
+
+	  With this checkin the Hello test and IORsize test work fine. 
+
+	
 Fri Mar  7 13:29:43 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Object.cpp:

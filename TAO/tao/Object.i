@@ -90,6 +90,14 @@ CORBA::Object::_stubobj (void) const
   return this->protocol_proxy_;
 }
 
+
+
+ACE_INLINE CORBA::Boolean
+CORBA::Object::is_evaluated (void) const
+{
+  return this->is_evaluated_;
+}
+
 // *************************************************************
 // Inline operations for class CORBA::Object_var
 // *************************************************************

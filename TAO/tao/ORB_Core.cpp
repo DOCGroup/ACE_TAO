@@ -1646,7 +1646,6 @@ CORBA::Long
 TAO_ORB_Core::initialize_object (TAO_Stub *stub,
                                  CORBA::Object_ptr obj)
 {
-  /*
   {
     // @@ Ossama: maybe we need another lock for the table, to
     //    reduce contention on the Static_Object_Lock below, if so
@@ -1667,21 +1666,10 @@ TAO_ORB_Core::initialize_object (TAO_Stub *stub,
                                               other_core,
                                               obj);
         if (retval != -1)
-          return retval;
+          return 1;
       }
   }
 
-  // @@ We should thow CORBA::NO_MEMORY in platforms with exceptions,
-  // but we are stuck in platforms without exceptions!
-  CORBA::Object_ptr x;
-
-  // The constructor sets the proxy broker as the
-  // Remote one.
-  ACE_NEW_RETURN (x,
-                  CORBA::Object (stub, 0),
-                  0);
-  return x;
-  */
   return 0;
 }
 

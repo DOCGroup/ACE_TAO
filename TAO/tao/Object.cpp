@@ -56,8 +56,11 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
   /// requirement.
   ACE_ASSERT (this->protocol_proxy_ != 0);
 
+  if (this->orb_core_ == 0)
+    this->orb_core_ = this->protocol_proxy_->orb_core ();
+
   this->refcount_lock_ =
-    this->protocol_proxy_->orb_core ()->resource_factory ()->create_corba_object_lock ();
+    this->orb_core_->resource_factory ()->create_corba_object_lock ();
 
   // If the object is collocated then set the broker using the
   // factory otherwise use the remote proxy broker.
@@ -68,7 +71,7 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
     this->proxy_broker_ = the_tao_remote_object_proxy_broker ();
 }
 
-CORBA::Object::Object (const IOP::IOR_var &ior,
+CORBA::Object::Object (IOP::IOR *ior,
                        TAO_ORB_Core *orb_core)
   : is_collocated_ (0)
     , servant_ (0)
@@ -219,6 +222,13 @@ CORBA::Object::_is_local (void) const
   return this->is_local_;
 }
 
+TAO_Stub *
+CORBA::Object::_stubobj (void)
+{
+  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  return this->protocol_proxy_;
+}
+
 CORBA::ULong
 CORBA::Object::_hash (CORBA::ULong maximum
                       ACE_ENV_ARG_DECL)
@@ -320,9 +330,9 @@ CORBA::Boolean
 CORBA::Object::is_nil_i (CORBA::Object_ptr obj)
 {
   // To accomodate new definitions.
-  if (obj->_stubobj ())
+  if (obj->orb_core_)
     {
-      return obj->_stubobj ()->orb_core ()->object_is_nil (obj);
+      return obj->orb_core_->object_is_nil (obj);
     }
 
   return 0;
@@ -667,7 +677,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
     obj->ior_->profiles.length ();
 
   // Assumption is that after calling this method, folks should test
-  // for protocol_procy_ or whatever to make sure that things have
+  // for protocol_proxy_ or whatever to make sure that things have
   // been initialized!
   if (profile_count == 0)
     return;
@@ -689,6 +699,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
     }
 
   TAO_Stub *objdata = 0;
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -698,8 +709,25 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 
       for (CORBA::ULong i = 0; i != profile_count; ++i)
         {
-          TAO_Profile *pfile = 0;
-          //connector_registry->create_profile (obj->ior_->profiles.);
+          IOP::TaggedProfile &tpfile =
+            obj->ior_->profiles[i];
+
+          // NOTE: This is a place for optimizations. Here we have an
+          // 2 allocations and 2 copies. Future optimizations should
+          // target this place.
+          TAO_OutputCDR o_cdr;
+
+          o_cdr << tpfile;
+
+          TAO_InputCDR cdr (o_cdr,
+                            orb_core->input_cdr_buffer_allocator (),
+                            orb_core->input_cdr_dblock_allocator (),
+                            orb_core->input_cdr_msgblock_allocator (),
+                            orb_core);
+
+          TAO_Profile *pfile =
+            connector_registry->create_profile (cdr);
+
           if (pfile != 0)
             mp.give_profile (pfile);
         }
@@ -710,18 +738,18 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
           // @@ This occurs when profile creation fails when decoding the
           //    profile from the IOR.
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("TAO (%P|%t) ERROR: Could not create all ")
+                      ACE_LIB_TEXT ("TAO (%P|%t) ERROR: XXXXX Could not create all ")
                       ACE_LIB_TEXT ("profiles while extracting object\n")
                       ACE_LIB_TEXT ("TAO (%P|%t) ERROR: reference from the ")
                       ACE_LIB_TEXT ("CDR stream.\n")));
         }
 
 
-      /*      objdata =
-        orb_core->create_stub (type_hint.in (),
+      objdata =
+        orb_core->create_stub (obj->ior_->type_id.in (),
                                mp
                                ACE_ENV_ARG_PARAMETER);
-                               ACE_TRY_CHECK; */
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -741,14 +769,13 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
   int retval =
     orb_core->initialize_object (safe_objdata.get (),
                                  obj);
-  if (retval == -1)
-    return;
-
-  obj->protocol_proxy_ = objdata;
+  if (retval == 0)
+    obj->protocol_proxy_ = objdata;
 
   // Transfer ownership to the CORBA::Object
   (void) safe_objdata.release ();
 
+  obj->is_evaluated_ = 1;
   return;
 }
 
@@ -773,7 +800,6 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
       if (orb_core->resource_factory ()->resource_usage_strategy () ==
           TAO_Resource_Factory::TAO_LAZY)
         lazy_strategy = 1;
-      cout << "Amba here " << endl;
     }
 
   if (!lazy_strategy)
@@ -874,15 +900,15 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
   else
     {
       // Lazy strategy!
-      IOP::IOR ior;
+      IOP::IOR *ior = 0;
 
-      cdr >> ior;
+      ACE_NEW_RETURN (ior,
+                      IOP::IOR (),
+                      0);
 
-      // Maken IOR_var that can be use to initialize the CORBA::Object
-      IOP::IOR_var ior_var (&ior);
-
+      cdr >> *ior;
       ACE_NEW_RETURN (x,
-                      CORBA::Object (ior_var,
+                      CORBA::Object (ior,
                                      orb_core),
                       0);
     }
