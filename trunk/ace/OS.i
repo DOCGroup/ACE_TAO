@@ -441,7 +441,9 @@ operator - (const ACE_Time_Value &tv1,
 // UNIX.
 extern "C" int t_getname (int, struct netbuf *, int);
 extern "C" int isastream (int);
+#if !defined (ACE_HAS_GETRUSAGE_PROTO)
 extern "C" int getrusage (int who, struct rusage *rusage);
+#endif /* ! ACE_HAS_GETRUSAGE_PROTO */
 
 #if defined (ACE_LACKS_SYSCALL)
 extern "C" int syscall (int, ACE_HANDLE, struct rusage *);
