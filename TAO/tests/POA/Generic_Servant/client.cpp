@@ -160,18 +160,18 @@ main (int argc, char **argv)
   CORBA::Long result = 0;
   int i = 0;
 
-  if (oneway)
-    for (i = 0; i < iterations; i++ && env.exception () == 0)
-      {
+  for (i = 0; i < iterations && env.exception () == 0; i++)
+    {
+      if (oneway)
         // Invoke the doit() method of the foo reference.
         foo->simply_doit (env);
-      }
-  else
-    for (i = 0; i < iterations; i++ && env.exception () == 0)
-      {
+      else
         // Invoke the doit() method of the foo reference.
         result = foo->doit (env);
-      }
+
+      ACE_OS::sleep (1);
+    }
+
   // stop the timer.
   timer.stop ();
   timer.elapsed_time (elapsed_time);
