@@ -791,7 +791,7 @@ TAO_GIOP::message_name (TAO_GIOP::Message_Type which)
     "MessageError (either)"
   };
 
-  int i = (int) which;
+  int i = (int) which + 1;
   // Add one since EndOfFile is -1.
 
   if (i > (int) (sizeof (msgnames) / sizeof (msgnames[0])))
