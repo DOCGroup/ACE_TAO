@@ -93,7 +93,9 @@ namespace CIAO
   typedef ::PortableServer::Servant (*ServantFactory)
     (::Components::HomeExecutorBase_ptr p,
      ::CIAO::Session_Container *c
-     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
+    , CORBA::Environment &);
+#endif;
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                   HomeFactory,
