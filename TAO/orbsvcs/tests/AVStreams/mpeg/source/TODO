@@ -12,6 +12,7 @@ Bugs
 - vs, as don't die as a result of the above
 - server segfaults if addr is already in use
 
+
 - IF peer i.e client aborts connection for some reason the as and vs
 processes should die. It currently prints the message peer probably
 aborted connection in which case we can try to exit the process.
@@ -39,3 +40,7 @@ Things to do
 - Need to modularize Audio_Server
 
 - Seperate command parsing in its own class
+
+Naga:
+----
+* handle leaks on the server side. 
