@@ -8,6 +8,7 @@ Sun Sep 27 00:58:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Sun Sep 27 00:02:57 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Object_Table and POA: 
+
 	  - Added no-op destructors to all class. g++ was having problems.
 	  
 	  - Moved the Hash_Map_Manager template specialization to the .i
@@ -20,6 +21,13 @@ Sun Sep 27 00:02:57 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  - Changed the object id in the SYSTEM_ID case so that it now
  	    contains the binary values for the index and the generation
  	    count.  This should make the parsing of the id faster.
+
+	  - Made sure that the POA policies are getting registered with
+ 	    the RootPOA rather than the creator POA.  This allows implicit
+ 	    activation of the policies.
+
+	  - There was a bug in create_object_id which was fixed by moving
+ 	    <next_> along if index is not reused.
 
 Sat Sep 26 20:25:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

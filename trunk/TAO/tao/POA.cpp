@@ -133,11 +133,13 @@ TAO_Thread_Policy::policy_type (CORBA::Environment &env)
   return 0;
 }
 
+/*
 PortableServer::POA_ptr
 TAO_Thread_Policy::_default_POA (CORBA::Environment &env)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
+*/
 
 TAO_Lifespan_Policy::TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue value,
                                           PortableServer::POA_ptr poa)
@@ -203,11 +205,13 @@ TAO_Lifespan_Policy::policy_type (CORBA::Environment &env)
   return 0;
 }
 
+/*
 PortableServer::POA_ptr
 TAO_Lifespan_Policy::_default_POA (CORBA::Environment &env)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
+*/
 
 TAO_Id_Uniqueness_Policy::TAO_Id_Uniqueness_Policy (PortableServer::IdUniquenessPolicyValue value,
                                                     PortableServer::POA_ptr poa)
@@ -273,11 +277,13 @@ TAO_Id_Uniqueness_Policy::policy_type (CORBA::Environment &env)
   return 0;
 }
 
+/*
 PortableServer::POA_ptr
 TAO_Id_Uniqueness_Policy::_default_POA (CORBA::Environment &env)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
+*/
 
 TAO_Id_Assignment_Policy::TAO_Id_Assignment_Policy (PortableServer::IdAssignmentPolicyValue value,
                                                     PortableServer::POA_ptr poa)
@@ -343,11 +349,13 @@ TAO_Id_Assignment_Policy::policy_type (CORBA::Environment &env)
   return 0;
 }
 
+/*
 PortableServer::POA_ptr
 TAO_Id_Assignment_Policy::_default_POA (CORBA::Environment &env)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
+*/
 
 TAO_Implicit_Activation_Policy::TAO_Implicit_Activation_Policy (PortableServer::ImplicitActivationPolicyValue value,
                                                                 PortableServer::POA_ptr poa)
@@ -413,11 +421,13 @@ TAO_Implicit_Activation_Policy::policy_type (CORBA::Environment &env)
   return 0;
 }
 
+/*
 PortableServer::POA_ptr
 TAO_Implicit_Activation_Policy::_default_POA (CORBA::Environment &env)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
+*/
 
 TAO_Servant_Retention_Policy::TAO_Servant_Retention_Policy (PortableServer::ServantRetentionPolicyValue value,
                                                             PortableServer::POA_ptr poa)
@@ -483,11 +493,13 @@ TAO_Servant_Retention_Policy::policy_type (CORBA::Environment &env)
   return 0;
 }
 
+/*
 PortableServer::POA_ptr
 TAO_Servant_Retention_Policy::_default_POA (CORBA::Environment &env)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
+*/
 
 TAO_Request_Processing_Policy::TAO_Request_Processing_Policy (PortableServer::RequestProcessingPolicyValue value,
                                                               PortableServer::POA_ptr poa)
@@ -553,11 +565,13 @@ TAO_Request_Processing_Policy::policy_type (CORBA::Environment &env)
   return 0;
 }
 
+/*
 PortableServer::POA_ptr
 TAO_Request_Processing_Policy::_default_POA (CORBA::Environment &env)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
+*/
 
 // **************************************************
 //
@@ -629,11 +643,13 @@ TAO_Synchronization_Policy::policy_type (CORBA::Environment &env)
   return 0;
 }
 
+/*
 PortableServer::POA_ptr
 TAO_Synchronization_Policy::_default_POA (CORBA::Environment &env)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
+*/
 
 TAO_POA_Policies::TAO_POA_Policies (void)
   :  thread_ (PortableServer::ORB_CTRL_MODEL),
