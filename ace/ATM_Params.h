@@ -26,10 +26,12 @@
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
 #include "ace/TLI.h"
+#define ATM_PROTOCOL_DEFAULT 0
 typedef struct t_info Param_Info;
 typedef struct netbuf Param_Udata;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
 #include "ace/SOCK.h"
+#define ATM_PROTOCOL_DEFAULT ATMPROTO_AAL5
 #define ACE_XTI_ATM_DEVICE ""
 typedef int Param_Info;
 typedef int Param_Udata;
@@ -51,7 +53,7 @@ public:
                   Param_Udata *udata = 0,
                   int oflag = O_RDWR,
                   int protocol_family = AF_ATM,
-                  int protocol = ATMPROTO_AAL5,
+                  int protocol = ATM_PROTOCOL_DEFAULT,
                   int type = SOCK_RAW,
                   ACE_Protocol_Info *protocol_info = 0,
                   ACE_SOCK_GROUP g = 0,

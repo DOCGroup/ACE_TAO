@@ -29,33 +29,6 @@
 // just map to WS2 GQOS struct
 typedef ACE_QoS ATM_QoS;
 #elif defined (ACE_HAS_FORE_ATM_XTI)
-// typedef enum {
-//   BEST_EFFORT,
-//   CONTROLLED_LOAD,
-//   GUARANTEED
-// } SERVICETYPE;
-
-// typedef struct _flowspec {
-//   int TokeRate;
-//   int TokenBucketSize;
-//   int PeakBandwidth;
-//   int Latency;
-//   int DelayVariation;
-//   SERVICETYPE ServiceType;
-//   int MaxSduSize;
-//   int MinimumPolicedSize;
-// } FLOWSPEC;
-
-// typedef struct _BUF {
-//   ulong len;
-//   char *buf;
-// } BUF;
-
-// typedef struct _QualityOfService {
-//   FLOWSPEC SendingFlowspec;
-//   FLOWSPEC ReceivingFlowspec;
-//   BUF ProviderSpecific;
-// } ATM_QoS;
 typedef struct netbuf ATM_QoS;
 #else
 typedef int ATM_QoS;
@@ -97,11 +70,8 @@ public:
   ATM_QoS get_qos (void);
   // Get ATM_QoS struct.
 
-  ACE_QoS_Params get_option_params( void );
-  // Get ACE QoS option parameters.
-
-	void dump (void) const;
-	// Dump the state of an object.
+  void dump (void) const;
+  // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
