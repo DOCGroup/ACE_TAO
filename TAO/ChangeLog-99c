@@ -1,3 +1,10 @@
+Sun Sep 05 08:28:51 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp (visit_interface):
+          added " || defined (ACE_HAS_GNU_REPO)" to explicit instantiation
+          preprocessor test.  With ACE_HAS_GNU_REPO, g++ 2.91.66 fails to
+          instantiate TAO_Object_Field_T on its own. [Bug 248]
+
 Sun Sep 05 08:22:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp,
