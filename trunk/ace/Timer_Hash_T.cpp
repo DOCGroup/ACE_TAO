@@ -17,8 +17,12 @@ ACE_RCSID(ace, Timer_Hash_T, "$Id$")
 
 struct Hash_Token
 {
-  Hash_Token (const void *act, size_t pos, long orig_id)
-    : act_ (act), pos_ (pos), orig_id_ (orig_id)
+  Hash_Token (const void *act,
+              size_t pos,
+              long orig_id)
+    : act_ (act),
+      pos_ (pos),
+      orig_id_ (orig_id)
   {}
 
   const void *act_;
@@ -50,9 +54,9 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::timeout (ACE_Timer_Queue_T<ACE_Event_Handler *,
                                                                        ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
                                                                        ACE_Null_Mutex> &timer_queue,
-                                                     ACE_Event_Handler *handler,
-                                                     const void *arg,
-                                                     const ACE_Time_Value &cur_time)
+                                                         ACE_Event_Handler *handler,
+                                                         const void *arg,
+                                                         const ACE_Time_Value &cur_time)
 {
   ACE_UNUSED_ARG (timer_queue);
 
