@@ -174,7 +174,7 @@ public:
   // used to cancel the timer before it expires.  Returns -1 on
   // failure.
 
-  virtual int reset_interval (const long timer_id, 
+  virtual int reset_interval (long timer_id, 
                               const ACE_Time_Value &interval);
   // Resets the interval of the timer represented by <timer_id> to
   // <interval>, which is specified in relative time to the current
