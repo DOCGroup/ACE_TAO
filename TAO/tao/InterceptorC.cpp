@@ -31,10 +31,21 @@ PortableInterceptor::Cookie_ptr PortableInterceptor::Cookie::_narrow (
         || (servant = obj->_servant()->_downcast ("IDL:TAO/PortableInterceptor/Cookie:1.0")) == 0
       )
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableInterceptor::Cookie::_nil ());
-  return new POA_PortableInterceptor::_tao_direct_collocated_Cookie(
-      ACE_reinterpret_cast (POA_PortableInterceptor::Cookie_ptr, servant),
-      0
+
+  PortableInterceptor::Cookie_ptr retval = 
+    PortableInterceptor::Cookie::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableInterceptor::_tao_direct_collocated_Cookie (
+          ACE_reinterpret_cast (POA_PortableInterceptor::Cookie_ptr, 
+                                servant),
+          0
+        ),
+      PortableInterceptor::Cookie::_nil ()
     );
+
+  return retval;
 }
 
 PortableInterceptor::Cookie_ptr
@@ -235,10 +246,21 @@ PortableInterceptor::Interceptor_ptr PortableInterceptor::Interceptor::_narrow (
         || (servant = obj->_servant()->_downcast ("IDL:TAO/PortableInterceptor/Interceptor:1.0")) == 0
       )
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableInterceptor::Interceptor::_nil ());
-  return new POA_PortableInterceptor::_tao_direct_collocated_Interceptor(
-      ACE_reinterpret_cast (POA_PortableInterceptor::Interceptor_ptr, servant),
-      0
+
+  PortableInterceptor::Interceptor_ptr retval = 
+    PortableInterceptor::Interceptor::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableInterceptor::_tao_direct_collocated_Interceptor (
+          ACE_reinterpret_cast (POA_PortableInterceptor::Interceptor_ptr, 
+                                servant),
+          0
+        ),
+      PortableInterceptor::Interceptor::_nil ()
     );
+
+  return retval;
 }
 
 PortableInterceptor::Interceptor_ptr
@@ -292,10 +314,21 @@ PortableInterceptor::ServerRequestInterceptor_ptr PortableInterceptor::ServerReq
         || (servant = obj->_servant()->_downcast ("IDL:TAO/PortableInterceptor/ServerRequestInterceptor:1.0")) == 0
       )
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableInterceptor::ServerRequestInterceptor::_nil ());
-  return new POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor(
-      ACE_reinterpret_cast (POA_PortableInterceptor::ServerRequestInterceptor_ptr, servant),
-      0
+
+  PortableInterceptor::ServerRequestInterceptor_ptr retval = 
+    PortableInterceptor::ServerRequestInterceptor::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor (
+          ACE_reinterpret_cast (POA_PortableInterceptor::ServerRequestInterceptor_ptr, 
+                                servant),
+          0
+        ),
+      PortableInterceptor::ServerRequestInterceptor::_nil ()
     );
+
+  return retval;
 }
 
 PortableInterceptor::ServerRequestInterceptor_ptr
@@ -350,10 +383,21 @@ PortableInterceptor::ClientRequestInterceptor_ptr PortableInterceptor::ClientReq
         || (servant = obj->_servant()->_downcast ("IDL:TAO/PortableInterceptor/ClientRequestInterceptor:1.0")) == 0
       )
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableInterceptor::ClientRequestInterceptor::_nil ());
-  return new POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor(
-      ACE_reinterpret_cast (POA_PortableInterceptor::ClientRequestInterceptor_ptr, servant),
-      0
+
+  PortableInterceptor::ClientRequestInterceptor_ptr retval = 
+    PortableInterceptor::ClientRequestInterceptor::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor (
+          ACE_reinterpret_cast (POA_PortableInterceptor::ClientRequestInterceptor_ptr, 
+                                servant),
+          0
+        ),
+      PortableInterceptor::ClientRequestInterceptor::_nil ()
     );
+
+  return retval;
 }
 
 PortableInterceptor::ClientRequestInterceptor_ptr

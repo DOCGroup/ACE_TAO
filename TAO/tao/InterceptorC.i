@@ -366,7 +366,7 @@ ACE_INLINE
 PortableInterceptor::Cookies_var::Cookies_var (const PortableInterceptor::Cookies_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new PortableInterceptor::Cookies(*p.ptr_);
+    ACE_NEW (this->ptr_, PortableInterceptor::Cookies(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -391,7 +391,9 @@ PortableInterceptor::Cookies_var::operator= (const PortableInterceptor::Cookies_
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new PortableInterceptor::Cookies (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    PortableInterceptor::Cookies (*p.ptr_), 
+		    *this);
   }
   return *this;
 }

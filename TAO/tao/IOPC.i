@@ -18,7 +18,8 @@ ACE_INLINE
 IOP::TaggedProfile_var::TaggedProfile_var (const IOP::TaggedProfile_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new IOP::TaggedProfile(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             IOP::TaggedProfile(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -43,7 +44,9 @@ IOP::TaggedProfile_var::operator= (const IOP::TaggedProfile_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new IOP::TaggedProfile (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    IOP::TaggedProfile (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -187,7 +190,8 @@ ACE_INLINE
 IOP::IOR_var::IOR_var (const IOP::IOR_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new IOP::IOR(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             IOP::IOR(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -212,7 +216,9 @@ IOP::IOR_var::operator= (const IOP::IOR_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new IOP::IOR (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    IOP::IOR (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -356,7 +362,8 @@ ACE_INLINE
 IOP::TaggedComponent_var::TaggedComponent_var (const IOP::TaggedComponent_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new IOP::TaggedComponent(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             IOP::TaggedComponent(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -381,7 +388,9 @@ IOP::TaggedComponent_var::operator= (const IOP::TaggedComponent_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new IOP::TaggedComponent (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    IOP::TaggedComponent (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -525,7 +534,8 @@ ACE_INLINE
 IOP::MultipleComponentProfile_var::MultipleComponentProfile_var (const IOP::MultipleComponentProfile_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new IOP::MultipleComponentProfile(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             IOP::MultipleComponentProfile(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -550,7 +560,9 @@ IOP::MultipleComponentProfile_var::operator= (const IOP::MultipleComponentProfil
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new IOP::MultipleComponentProfile (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    IOP::MultipleComponentProfile (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -706,7 +718,8 @@ ACE_INLINE
 IOP::ServiceContext_var::ServiceContext_var (const IOP::ServiceContext_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new IOP::ServiceContext(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             IOP::ServiceContext(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -731,7 +744,9 @@ IOP::ServiceContext_var::operator= (const IOP::ServiceContext_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new IOP::ServiceContext (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    IOP::ServiceContext (*p.ptr_),
+		    *this);
   }
   return *this;
 }
@@ -875,7 +890,8 @@ ACE_INLINE
 IOP::ServiceContextList_var::ServiceContextList_var (const IOP::ServiceContextList_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new IOP::ServiceContextList(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             IOP::ServiceContextList(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -900,7 +916,9 @@ IOP::ServiceContextList_var::operator= (const IOP::ServiceContextList_var &p) //
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new IOP::ServiceContextList (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    IOP::ServiceContextList (*p.ptr_), 
+		    *this);
   }
   return *this;
 }

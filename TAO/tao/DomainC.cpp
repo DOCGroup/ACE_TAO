@@ -59,12 +59,29 @@ CORBA_DomainManager_ptr CORBA_DomainManager::_unchecked_narrow (
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/DomainManager:1.0");
+
+  CORBA_DomainManager_ptr retval = CORBA_DomainManager::_nil ();
+
   if (servant == 0)
-    return new CORBA_DomainManager(stub);
-  return new POA_CORBA::_tao_collocated_DomainManager(
-      ACE_reinterpret_cast(POA_CORBA::DomainManager_ptr, servant),
-      stub
-    );
+    {
+      ACE_NEW_RETURN (retval,
+                      CORBA_DomainManager (stub),
+                      CORBA_DomainManager::_nil ());
+    }
+  else
+    {
+      ACE_NEW_RETURN (
+          retval,
+          POA_CORBA::_tao_collocated_DomainManager (
+              ACE_reinterpret_cast (POA_CORBA::DomainManager_ptr, 
+                                    servant),
+              stub
+            ),
+          CORBA_DomainManager::_nil ()
+        );
+    }
+
+  return retval;
 }
 
 CORBA_DomainManager_ptr
@@ -162,18 +179,35 @@ CORBA::ConstructionPolicy_ptr CORBA::ConstructionPolicy::_narrow (
   TAO_Stub* stub = obj->_stubobj ();
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/ConstructionPolicy:1.0");
+
+  CORBA::ConstructionPolicy_ptr retval = 
+    CORBA::ConstructionPolicy::_nil ();
+
 #if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::ConstructionPolicy::_nil ());
 #else
   stub->_incr_refcnt ();
   if (servant == 0)
-    return new CORBA::ConstructionPolicy(stub);
+    {
+      ACE_NEW_RETURN (retval,
+                      CORBA::ConstructionPolicy (stub),
+                      CORBA::ConstructionPolicy::_nil ());
+
+      return retval;
+    }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  return new POA_CORBA::_tao_collocated_ConstructionPolicy(
-      ACE_reinterpret_cast(POA_CORBA::ConstructionPolicy_ptr, servant),
-      stub
+  ACE_NEW_RETURN (
+      retval,
+      POA_CORBA::_tao_collocated_ConstructionPolicy (
+          ACE_reinterpret_cast (POA_CORBA::ConstructionPolicy_ptr, 
+                                servant), 
+          stub
+        ),
+      CORBA::ConstructionPolicy::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::ConstructionPolicy_ptr

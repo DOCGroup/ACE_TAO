@@ -49,11 +49,29 @@ CORBA_Pollable_ptr CORBA_Pollable::_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/Pollable:1.0");
   if (servant == 0)
-    return new CORBA_Pollable(stub);
-  return new POA_CORBA::_tao_collocated_Pollable(
-      ACE_reinterpret_cast(POA_CORBA::Pollable_ptr, servant),
-      stub
+    {
+      CORBA_Pollable_ptr rval = CORBA_Pollable::_nil ();
+      
+      ACE_NEW_RETURN (rval,
+                      CORBA_Pollable (stub),  
+                      CORBA_Pollable::_nil ());
+                     
+      return rval; 
+    }
+
+  CORBA_Pollable_ptr retval = CORBA_Pollable::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_CORBA::_tao_collocated_Pollable (
+          ACE_reinterpret_cast (POA_CORBA::Pollable_ptr, 
+                                servant),
+          stub
+        ),
+      CORBA_Pollable::_nil ()
     );
+
+  return retval;
 }
 
 CORBA_Pollable_ptr CORBA_Pollable::_unchecked_narrow (
@@ -69,11 +87,29 @@ CORBA_Pollable_ptr CORBA_Pollable::_unchecked_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/Pollable:1.0");
   if (servant == 0)
-    return new CORBA_Pollable(stub);
-  return new POA_CORBA::_tao_collocated_Pollable(
-      ACE_reinterpret_cast(POA_CORBA::Pollable_ptr, servant),
-      stub
+    {
+      CORBA_Pollable_ptr rval = CORBA_Pollable::_nil ();
+      
+      ACE_NEW_RETURN (rval,
+                      CORBA_Pollable (stub),  
+                      CORBA_Pollable::_nil ());
+                     
+      return rval; 
+    }
+
+  CORBA_Pollable_ptr retval = CORBA_Pollable::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_CORBA::_tao_collocated_Pollable (
+          ACE_reinterpret_cast (POA_CORBA::Pollable_ptr, 
+                                servant),
+          stub
+        ),
+      CORBA_Pollable::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean CORBA_Pollable::is_ready (
@@ -211,11 +247,29 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/DIIPollable:1.0");
   if (servant == 0)
-    return new CORBA::DIIPollable(stub);
-  return new POA_CORBA::_tao_collocated_DIIPollable(
-      ACE_reinterpret_cast(POA_CORBA::DIIPollable_ptr, servant),
-      stub
+    {
+      CORBA::DIIPollable_ptr rval = CORBA_Pollable::_nil ();
+      
+      ACE_NEW_RETURN (rval,
+                      CORBA::DIIPollable (stub),  
+                      CORBA::DIIPollable::_nil ());
+                     
+      return rval; 
+    }
+
+  CORBA::DIIPollable_ptr retval = CORBA::DIIPollable::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_CORBA::_tao_collocated_DIIPollable (
+          ACE_reinterpret_cast (POA_CORBA::DIIPollable_ptr, 
+                                servant),
+          stub
+        ),
+      CORBA::DIIPollable::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::DIIPollable_ptr CORBA::DIIPollable::_unchecked_narrow (
@@ -231,11 +285,29 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_unchecked_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/DIIPollable:1.0");
   if (servant == 0)
-    return new CORBA::DIIPollable(stub);
-  return new POA_CORBA::_tao_collocated_DIIPollable(
-      ACE_reinterpret_cast(POA_CORBA::DIIPollable_ptr, servant),
-      stub
+    {
+      CORBA::DIIPollable_ptr rval = CORBA_Pollable::_nil ();
+      
+      ACE_NEW_RETURN (rval,
+                      CORBA::DIIPollable (stub),  
+                      CORBA::DIIPollable::_nil ());
+                     
+      return rval; 
+    }
+
+  CORBA::DIIPollable_ptr retval = CORBA::DIIPollable::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_CORBA::_tao_collocated_DIIPollable (
+          ACE_reinterpret_cast (POA_CORBA::DIIPollable_ptr, 
+                                servant),
+          stub
+        ),
+      CORBA::DIIPollable::_nil ()
     );
+
+  return retval;
 }
 
 CORBA::Boolean CORBA::DIIPollable::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -271,11 +343,29 @@ CORBA_PollableSet_ptr CORBA_PollableSet::_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/PollableSet:1.0");
   if (servant == 0)
-    return new CORBA_PollableSet(stub);
-  return new POA_CORBA::_tao_collocated_PollableSet(
-      ACE_reinterpret_cast(POA_CORBA::PollableSet_ptr, servant),
-      stub
+    {
+      CORBA_PollableSet_ptr rval = CORBA_PollableSet::_nil ();
+      
+      ACE_NEW_RETURN (rval,
+                      CORBA_PollableSet (stub),  
+                      CORBA_PollableSet::_nil ());
+                     
+      return rval; 
+    }
+
+  CORBA_PollableSet_ptr retval = CORBA_PollableSet::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_CORBA::_tao_collocated_PollableSet (
+          ACE_reinterpret_cast (POA_CORBA::PollableSet_ptr, 
+                                servant),
+          stub
+        ),
+      CORBA_PollableSet::_nil ()
     );
+
+  return retval;
 }
 
 CORBA_PollableSet_ptr CORBA_PollableSet::_unchecked_narrow (
@@ -291,11 +381,29 @@ CORBA_PollableSet_ptr CORBA_PollableSet::_unchecked_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/PollableSet:1.0");
   if (servant == 0)
-    return new CORBA_PollableSet(stub);
-  return new POA_CORBA::_tao_collocated_PollableSet(
-      ACE_reinterpret_cast(POA_CORBA::PollableSet_ptr, servant),
-      stub
+    {
+      CORBA_PollableSet_ptr rval = CORBA_PollableSet::_nil ();
+      
+      ACE_NEW_RETURN (rval,
+                      CORBA_PollableSet (stub),  
+                      CORBA_PollableSet::_nil ());
+                     
+      return rval; 
+    }
+
+  CORBA_PollableSet_ptr retval = CORBA_PollableSet::_nil ();
+
+  ACE_NEW_RETURN (
+      retval,
+      POA_CORBA::_tao_collocated_PollableSet (
+          ACE_reinterpret_cast (POA_CORBA::PollableSet_ptr, 
+                                servant),
+          stub
+        ),
+      CORBA_PollableSet::_nil ()
     );
+
+  return retval;
 }
 
 // default constructor
@@ -343,7 +451,13 @@ void CORBA_PollableSet::NoPossiblePollable::_raise ()
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_PollableSet::NoPossiblePollable::_alloc (void)
 {
-  return new CORBA_PollableSet::NoPossiblePollable;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_PollableSet::NoPossiblePollable
+                  0);
+
+  return retval;
 }
 
 static const CORBA::Long _oc_CORBA_PollableSet_NoPossiblePollable[] =
@@ -401,7 +515,13 @@ void CORBA_PollableSet::UnknownPollable::_raise ()
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_PollableSet::UnknownPollable::_alloc (void)
 {
-  return new CORBA_PollableSet::UnknownPollable;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_PollableSet::UnknownPollable
+                  0);
+
+  return retval;
 }
 
 static const CORBA::Long _oc_CORBA_PollableSet_UnknownPollable[] =
@@ -864,7 +984,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_PollableSet_ptr &_
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA_PollableSet::NoPossiblePollable &_tao_elem) // copying
 {
-  CORBA_PollableSet::NoPossiblePollable *_tao_any_val = new CORBA_PollableSet::NoPossiblePollable (_tao_elem);
+  CORBA_PollableSet::NoPossiblePollable *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           CORBA_PollableSet::NoPossiblePollable (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -929,7 +1051,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_PollableSet::NoPos
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA_PollableSet::UnknownPollable &_tao_elem) // copying
 {
-  CORBA_PollableSet::UnknownPollable *_tao_any_val = new CORBA_PollableSet::UnknownPollable (_tao_elem);
+  CORBA_PollableSet::UnknownPollable *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           CORBA_PollableSet::UnknownPollable (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {

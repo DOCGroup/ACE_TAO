@@ -400,7 +400,8 @@ ACE_INLINE
 Messaging::PriorityRange_var::PriorityRange_var (const Messaging::PriorityRange_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new Messaging::PriorityRange(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             Messaging::PriorityRange(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -425,7 +426,9 @@ Messaging::PriorityRange_var::operator= (const Messaging::PriorityRange_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new Messaging::PriorityRange (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    Messaging::PriorityRange (*p.ptr_),
+		    *this);
   }
   return *this;
 }
@@ -2005,7 +2008,8 @@ ACE_INLINE
 Messaging::RoutingTypeRange_var::RoutingTypeRange_var (const Messaging::RoutingTypeRange_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new Messaging::RoutingTypeRange(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             Messaging::RoutingTypeRange(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -2030,7 +2034,9 @@ Messaging::RoutingTypeRange_var::operator= (const Messaging::RoutingTypeRange_va
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new Messaging::RoutingTypeRange (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    Messaging::RoutingTypeRange (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -2675,7 +2681,8 @@ ACE_INLINE
 Messaging::PolicyValue_var::PolicyValue_var (const Messaging::PolicyValue_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new Messaging::PolicyValue(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             Messaging::PolicyValue(*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -2700,7 +2707,9 @@ Messaging::PolicyValue_var::operator= (const Messaging::PolicyValue_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new Messaging::PolicyValue (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    Messaging::PolicyValue (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -2844,7 +2853,8 @@ ACE_INLINE
 Messaging::PolicyValueSeq_var::PolicyValueSeq_var (const Messaging::PolicyValueSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new Messaging::PolicyValueSeq(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             Messaging::PolicyValueSeq (*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -2869,7 +2879,9 @@ Messaging::PolicyValueSeq_var::operator= (const Messaging::PolicyValueSeq_var &p
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new Messaging::PolicyValueSeq (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    Messaging::PolicyValueSeq (*p.ptr_), 
+		    *this);
   }
   return *this;
 }
@@ -3026,7 +3038,8 @@ ACE_INLINE
 Messaging::ExceptionHolder_var::ExceptionHolder_var (const Messaging::ExceptionHolder_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new Messaging::ExceptionHolder(*p.ptr_);
+    ACE_NEW (this->ptr_, 
+             Messaging::ExceptionHolder (*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -3051,7 +3064,9 @@ Messaging::ExceptionHolder_var::operator= (const Messaging::ExceptionHolder_var 
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new Messaging::ExceptionHolder (*p.ptr_);
+    ACE_NEW_RETURN (this->ptr_, 
+                    Messaging::ExceptionHolder (*p.ptr_),
+		    *this);
   }
   return *this;
 }

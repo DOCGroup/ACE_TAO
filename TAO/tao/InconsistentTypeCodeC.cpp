@@ -80,7 +80,13 @@ void CORBA_ORB_InconsistentTypeCode::_raise ()
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_ORB_InconsistentTypeCode::_alloc (void)
 {
-  return new CORBA_ORB_InconsistentTypeCode;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_ORB_InconsistentTypeCode,
+                  0);
+
+  return retval;
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

@@ -65,7 +65,16 @@ POA_TAO_IOP::TAO_IOR_Manipulation::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation (this, stub);
+
+  TAO_IOP::TAO_IOR_Manipulation *retval =
+    TAO_IOP::TAO_IOR_Manipulation::_nil ();
+
+  ACE_NEW_RETURN (retval,
+                  POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation (this, 
+                                                                     stub),
+                  TAO_IOP::TAO_IOR_Manipulation::_nil ());
+
+  return retval;
 }
 
 void*
@@ -76,10 +85,17 @@ POA_TAO_IOP::TAO_IOR_Manipulation::_create_collocated_objref (
 {
   ACE_UNUSED_ARG (type);
   if (!strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation:1.0",repository_id))
-    return ACE_static_cast (
-        TAO_IOP::TAO_IOR_Manipulation_ptr,
-        new POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation (this, stub)
-      );
+    {      
+      TAO_IOP::TAO_IOR_Manipulation *retval =
+        TAO_IOP::TAO_IOR_Manipulation::_nil ();
+
+      ACE_NEW_RETURN (retval,
+                      POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation (this, 
+                                                                         stub),
+                      TAO_IOP::TAO_IOR_Manipulation::_nil ());
+
+      return retval;
+    }
   return 0;
 }
 

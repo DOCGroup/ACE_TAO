@@ -57,7 +57,13 @@ void CORBA_WrongTransaction::_raise ()
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_WrongTransaction::_alloc (void)
 {
-  return new CORBA_WrongTransaction;
+  CORBA::Exception *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  CORBA_WrongTransaction,
+                  0);
+
+  return retval;
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
