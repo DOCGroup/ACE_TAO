@@ -1,6 +1,65 @@
+Mon Apr 28 10:54:02 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* configure.ac:
+
+	  Updated copyright notice to include UCI and Vanderbilt DOC
+	  groups.  This is consistent with the notice in the COPYING
+	  file.
+
+	  Do not AC_DEFINE the _POSIX_PTHREAD_SEMANTICS feature test
+	  macros.  It should be defined on the command line instead of in
+	  the generated configuration header.  Addresses potential
+	  compile-time problems in applications that include system
+	  headers before ACE headers.
+
+	  Optimization flags set by the `configure' script are now placed
+	  before the user defined C++ flags (i.e. $CXXFLAGS).  This allows
+	  users to override flags set by the `configure' script.  Thanks
+	  to Braden McDaniel <bmcdaniel@objectsciences.com> for pointing
+	  out that user flags could be potentially overridden.
+
+	  Added support for UnixWare 7.1 from Oleg Terletsky
+	  <oterletsky@comcast.net>.
+
+	* Makefile.am (AUTOMAKE_OPTIONS):
+
+	  Set the minimum Automake version in this file to allow older
+	  Automake versions, i.e. those that do not understand options set
+	  in the AM_INIT_AUTOMAKE autoconf macro, to detect the
+	  requirement.
+
+	  Set the Automake strictness to "foreign" so that the `NEWS' file
+	  will no longer be required.  We currently don't use a `NEWS'
+	  file.
+
+	  Thanks to Braden McDaniel <bmcdaniel@objectsciences.com> for
+	  suggesting these changes.
+
+	* ace/OS.h (howmany):
+
+	  In addition to LynxOS, define this macro for UnixWare 7.1.
+	  Thanks to Oleg Terletsky <oterletsky@comcast.net> for providing
+	  the fix.
+
+	* bin/bootstrap:
+
+	  No longer a need to create a dummy `NEWS' file.
+
+	* m4/compiler.m4:
+	* m4/config_h.m4:
+	* m4/platform.m4:
+
+	  Added support for UnixWare 7.1 from Oleg Terletsky
+	  <oterletsky@comcast.net>.
+
+	  Do not AC_DEFINE feature test macros (e.g. _HPUX_SOURCE) in the
+	  generated config header.  Instead define them on the command
+	  line.  Addresses potential compile-time problems in applications
+	  that include system headers before ACE headers.
+
 Mon Apr 28 13:45:03 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\Hash_Map_Bucket_Iterator_Test.cpp (ACE_TMAIN): 
+	* tests\Hash_Map_Bucket_Iterator_Test.cpp (ACE_TMAIN):
 
 	  Added debugging statements.
 
@@ -42,7 +101,7 @@ Mon Apr 28 15:06:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Comment metrics output so it won't confuse the tao_idl
           compiler, that uses CXX as the preprocessor by default.
 
-        * bin/generate_compile_stats.sh: 
+        * bin/generate_compile_stats.sh:
           Add a new "targets" parameter that allows users to generate
           a targets file created with the --dry-run option.  This way
           even if something fails to compile, you still get a list of
@@ -51,9 +110,9 @@ Mon Apr 28 15:06:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 Mon Apr 28 08:44:43 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/Kokyu_DLL.dsp:
-	* Kokyu/Kokyu_Static.dsp: 
+	* Kokyu/Kokyu_Static.dsp:
 	  Updated projects to include DSRT work.
-	
+
 	* Kokyu/DSRT_Schedulers.cpp:
 	* Kokyu/DSRT_Scheduler_Impl.cpp: Fixed some compiler errors on
 	  MSVC++. Thanks to Simon McQueen for pointing this out.

@@ -12,12 +12,12 @@ AC_INIT([ACE],[TEST-VERSION],[ace-bugs@cs.wustl.edu],[ace])
 AC_REVISION([$Id$])
 
 AC_COPYRIGHT([ACE(TM) and TAO(TM) are copyrighted by Douglas C. Schmidt and
-his research group at Washington University, Copyright (c) 1993-2003,
-all rights reserved.  Since ACE and TAO are open-source, free
-software, you are free to use, modify, and distribute the ACE and TAO
-source code and object code produced from the source, as long as you
-include this copyright statement along with code built using ACE and
-TAO.
+his research group at Washington University, University of California,
+Irvine, andVanderbilt University Copyright (c) 1993-2003, all rights
+reserved.  Since ACE and TAO are open-source, free software, you are
+free to use, modify, and distribute the ACE and TAO source code and
+object code produced from the source, as long as you include this
+copyright statement along with code built using ACE and TAO.
 
 Please see the file `COPYING' in the top level ACE directory for
 additional details.])
@@ -398,6 +398,8 @@ AC_SEARCH_LIBS([clock_gettime],
 
 dnl SECTION 5: checks for header files
 
+dnl Set known platform specific flags
+ACE_SET_PLATFORM_MACROS
 
 dnl Check for dirent headers
 AC_HEADER_DIRENT
@@ -451,6 +453,10 @@ AC_CHECK_HEADER([sys/msg.h],
      [ace_cv_lib_broken_msg_h],
      [
       AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifdef UNIXWARE_7_1
+#  define _KMEMUSER
+#endif
+
 #include <sys/msg.h>
         ]],[[
          struct msg ace_msg;
@@ -460,6 +466,9 @@ AC_CHECK_HEADER([sys/msg.h],
          AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifndef _KERNEL
 # define _KERNEL
+# ifdef UNIXWARE_7_1
+#   define _KMEMUSER
+# endif
 #endif
 #include <sys/msg.h>
            ]],
@@ -3398,7 +3407,14 @@ AC_CHECK_FUNC([difftime],
   [AC_DEFINE([ACE_LACKS_DIFFTIME])])
 
 dnl Check for 64 bit llseek() or lseek64()
-ACE_CHECK_LSEEK64
+case "$host" in
+  *UnixWare7*)
+    dnl Skip the check
+    ;;
+  *)
+    ACE_CHECK_LSEEK64
+    ;;
+esac
 
 AC_CHECK_FUNC([bind],
   [
@@ -6616,7 +6632,7 @@ dnl        the UNIX International threads library was detected.
   ACE_CPPFLAGS="$ACE_CPPFLAGS $ACE_THR_CPPFLAGS"
   if test "$ace_has_pthreads" = yes &&
      test "$ace_has_sthreads" != yes; then
-   AC_DEFINE([_POSIX_PTHREAD_SEMANTICS])
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX_PTHREAD_SEMANTICS"
   fi dnl test "$ace_has_pthreads" = yes
 
   if test "$ace_has_pthreads" = yes; then
@@ -7011,9 +7027,6 @@ dnl
 dnl SECTION 15: Final checks
 dnl
 
-dnl Set known platform specific flags
-ACE_SET_PLATFORM_MACROS
-
 dnl Make final substitutions and defines
 if test "$ace_u_long_long_typedef_set" = yes; then
   AC_DEFINE_UNQUOTED([ACE_UINT64_TYPEDEF], [$ACE_UINT64])
@@ -7028,8 +7041,8 @@ dnl in order for X11 related files to be compiled properly.
 if test "$ace_user_enable_optimize"; then
   dnl We want OCXXFLAGS to be on the end, so we use CXXFLAGS,
   dnl not ACE_CXXFLAGS!
-  CXXFLAGS="$CXXFLAGS $OCXXFLAGS"
-  CFLAGS="$CFLAGS $OCFLAGS"
+  CXXFLAGS="$OCXXFLAGS $CXXFLAGS"
+  CFLAGS="$OCFLAGS $CFLAGS"
 fi
 CXXFLAGS="$ACE_CXXFLAGS $X_CFLAGS $CXXFLAGS"
 CFLAGS="$ACE_CFLAGS $X_CFLAGS $CFLAGS"
