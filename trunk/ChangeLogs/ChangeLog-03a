@@ -1,3 +1,11 @@
+Wed Jan 23 16:14:43  Boris Kolpackov  <bosk@ipmce.ru>
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU
+
+	  Added work around for famous Sun CC "pure virtual function called"
+	  bug. Unfortunately this involves introduction of yet another #define.
+	  See TAO/tao/ValueBase.h for more information.
+	
 Tue Jan 22 21:27:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/ace_dll.vcp: Add Frameork_Component.* to the builds. Thanks
