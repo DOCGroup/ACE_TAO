@@ -1,3 +1,17 @@
+Thu Jul 30 15:38:52 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Made some debugging
+	  messages dependent on TAO_debug_level
+
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: Made some debugging
+	  messages dependent on TAO_debug_level
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp: Made some debugging messages
+	  dependent on TAO_debug_level.
+
+	* tao/ORB.cpp: Made some debugging messages dependent on
+	  TAO_debug_level.
+
 Thu Jul 30 13:46:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Concurrency/Makefile: 
