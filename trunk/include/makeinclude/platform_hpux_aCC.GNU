@@ -21,7 +21,8 @@ HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= /bin/cc
 CXX		= /opt/aCC/bin/aCC
-CCFLAGS		+= $(CFLAGS) -D_THREAD_SAFE -D_REENTRANT -DHPUX_VERS=$(HPUX_VERS)
+# Suppres warning 829 (string literal to char * is deprecated)
+CCFLAGS		+= $(CFLAGS) -D_THREAD_SAFE -D_REENTRANT -DHPUX_VERS=$(HPUX_VERS) +W829
 DCFLAGS		+= -g
 DLD		= $(CXX) $(CCFLAGS)
 LD		= $(CXX) $(CCFLAGS)
