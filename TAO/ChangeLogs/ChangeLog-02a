@@ -1,3 +1,9 @@
+Fri Nov 10 10:12:29 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/Strategies/TAO_Strategies.dsp:
+
+          Fixed the include paths in the Release configuration.
+
 Fri Nov 10 08:59:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao_idl/be/be_visitor_argument/request_info_sh.cpp:
