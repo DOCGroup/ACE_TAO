@@ -1,7 +1,12 @@
+Thu Jun 10 15:24:21 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: Added the inclusion of ace/Object_Manager.h
+	  because of the use of ACE_Static_Object_Lock.
+
 Thu Jun 10 15:27:39 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Consumer_Handler.h (class
-	  Consumer_Handler): 
+	  Consumer_Handler):
 	  Made the stock_name_ member const char* from char* to take care
 	  of Sun C++ 5.0 compiler warnings.
 
@@ -11,16 +16,16 @@ Thu Jun 10 14:54:30 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp
 	* TAO_DIL/be/be_visitor_sequence/sequence_cs.cpp : Fix for scoped
 	names on NT. NT does not accept scoped names in header files.
-	
+
 
 Thu Jun 10 14:19:02 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/Server_Manager.cpp (create_poa): 
+	* examples/POA/On_Demand_Loading/Server_Manager.cpp (create_poa):
 	  Removed typecast warning and changed the return value to 0 from
 	  -1.
-	
+
 	* examples/POA/On_Demand_Loading/README:
-	  Explicitly mentioned that by default Generic_Servant is used and 
+	  Explicitly mentioned that by default Generic_Servant is used and
 	  hence needs to be built before running this example using
 	  run_test.pl.
 
@@ -33,8 +38,8 @@ Thu Jun 10 14:13:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  and multiple calls from the same be_typedef object to
 	  nested_type_name() in the same stream output statement.
 	  This generates incorrect code because nested_type_name()
-	  contains static buffers, and the order of evaluations 
-	  within a chained stream output statement is not guaranteed, 
+	  contains static buffers, and the order of evaluations
+	  within a chained stream output statement is not guaranteed,
 	  only the order of output. Thanks to Carlos for explaining
 	  why my fix to this last worked, and to
 	  Schuderer Christian <Christian.Schuderer@erl9.siemens.de>
