@@ -23,6 +23,8 @@ Sun Mar 14 14:13:22 19	99  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
  	and for	platforms lacking Ulonglong, called the constructor of
 	ACE_U_LongLong.
 
+	(handle_timeout): Added the ACE_UINT64_LITERAL () to fix an NT warning.
+
 Sat Mar 13 23:35:01 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
