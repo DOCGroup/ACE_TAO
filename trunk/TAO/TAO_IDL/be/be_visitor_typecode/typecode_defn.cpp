@@ -3279,7 +3279,7 @@ be_visitor_typecode_defn::compute_encap_length (be_valuetype *node)
     {
       // Got non-abstract base valuetype.
 
-      this->computed_encap_len_ = 0;
+      this->computed_tc_size_ = 0;
 
       be_valuetype *vt = be_valuetype::narrow_from_decl(node->inherits ()[0]);
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
@@ -3294,7 +3294,7 @@ be_visitor_typecode_defn::compute_encap_length (be_valuetype *node)
       // revert the state to what it was before
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
 
-      encap_len += this->computed_encap_len_;
+      encap_len += this->computed_tc_size_;
     }
   else
     {
