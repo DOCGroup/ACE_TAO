@@ -10,6 +10,11 @@
   <li>Need to verify predefined entities are working correctly.  Check
       out the SAXPrint example.
 
+  <li>Currently, replacement of parameterized reference (PEReference) is
+      not working.
+
+  <li>The parser currently does not interpret namespace.
+
 </ul>
 
 
