@@ -1,3 +1,9 @@
+Fri Aug 07 02:06:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MsgQueue_Water_Mark_Test.{dsp,cpp}: Added a new test to
+ 	  make sure the water mark stuff works.  It still needs to be
+ 	  clean up to compile with g++.
+
 Fri Aug 07 01:00:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Strategies_T.i (operator==): Added a method to compare a
