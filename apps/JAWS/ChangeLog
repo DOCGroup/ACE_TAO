@@ -1,3 +1,8 @@
+Mon Jul 22 16:55:00 1997  Chris Cleeland <cleeland@cs.wustl.edu>
+
+	* Changed references to WRAPPER_ROOT to ACE_ROOT in every
+	  place except ChangeLog entries.
+
 Mon Jul 21 15:09:03 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* server/HTTP_Server.{h,cpp}: Got rid of Solaris specific
