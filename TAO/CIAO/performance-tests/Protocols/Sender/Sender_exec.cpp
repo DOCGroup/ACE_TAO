@@ -183,7 +183,7 @@ Worker::Worker (CORBA::ORB_ptr orb,
     TAO_Protocol_Properties_Factory::create_transport_protocol_property (protocols[0].protocol_type,
                                                                          orb->orb_core ());
 
-  if (protocols[0].protocol_type == TAO_TAG_UDP_PROFILE)
+  if (protocols[0].protocol_type == TAO_TAG_DIOP_PROFILE)
     {
       RTCORBA::UserDatagramProtocolProperties_var udp_test_transport_protocol_properties =
         RTCORBA::UserDatagramProtocolProperties::_narrow (test_transport_protocol_properties.in ());
@@ -392,7 +392,7 @@ Worker::setup (void)
   const char *test_protocol = 0;
   if (this->test_protocol_tag_ == IOP::TAG_INTERNET_IOP)
     test_protocol = "IIOP";
-  else if (this->test_protocol_tag_ == TAO_TAG_UDP_PROFILE)
+  else if (this->test_protocol_tag_ == TAO_TAG_DIOP_PROFILE)
     test_protocol = "DIOP";
   else if (this->test_protocol_tag_ == TAO_TAG_SCIOP_PROFILE)
     test_protocol = "SCIOP";
@@ -541,7 +541,7 @@ Worker::run (void)
   // This call is used to ensure that all the THROUGHPUT related data
   // has reached the server.
   if (this->test_type_ == ::Protocols::Sender_Controller::THROUGHPUT &&
-      this->test_protocol_tag_ != TAO_TAG_UDP_PROFILE)
+      this->test_protocol_tag_ != TAO_TAG_DIOP_PROFILE)
     {
       this->test_->twoway_sync ();
     }

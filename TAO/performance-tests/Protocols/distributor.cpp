@@ -34,11 +34,11 @@ parse_args (int argc, char **argv)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage: %s\n"
                            "\t-f <ior_file> (defaults to %s)\n"
-			   "\t-k <ior> (defaults to %s)\n"
+                           "\t-k <ior> (defaults to %s)\n"
                            "\n",
                            argv[0],
                            ior_file,
-			   ior),
+                           ior),
                           -1);
       }
 
@@ -52,17 +52,17 @@ class test_i :
 public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa,
-	  RTCORBA::RTORB_ptr rtorb,
-	  CORBA::PolicyManager_ptr policy_manager,
-	  test_ptr receiver);
+          RTCORBA::RTORB_ptr rtorb,
+          CORBA::PolicyManager_ptr policy_manager,
+          test_ptr receiver);
 
   ~test_i (void);
 
   void start_test (CORBA::Long session_id,
-		   const char *protocol,
-		   CORBA::ULong invocation_rate,
-		   CORBA::ULong message_size,		  
-		   CORBA::ULong iterations
+                   const char *protocol,
+                   CORBA::ULong invocation_rate,
+                   CORBA::ULong message_size,
+                   CORBA::ULong iterations
                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -76,15 +76,15 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void oneway_method (CORBA::Long session_id,
-		      CORBA::ULong iteration,
-		      const ::test::octets &payload
-		      ACE_ENV_ARG_DECL)
+                      CORBA::ULong iteration,
+                      const ::test::octets &payload
+                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void twoway_method (CORBA::Long &session_id,
-		      CORBA::ULong &iteration,
-		      ::test::octets &payload
-		      ACE_ENV_ARG_DECL)
+                      CORBA::ULong &iteration,
+                      ::test::octets &payload
+                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (ACE_ENV_SINGLE_ARG_DECL)
@@ -98,16 +98,16 @@ private:
   RTCORBA::RTORB_var rtorb_;
   CORBA::PolicyManager_var policy_manager_;
   test_var receiver_;
-  
+
   CORBA::PolicyList base_protocol_policy_;
   CORBA::PolicyList test_protocol_policy_;
 };
 
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa,
-		RTCORBA::RTORB_ptr rtorb,
-		CORBA::PolicyManager_ptr policy_manager,
-		test_ptr receiver)
+                RTCORBA::RTORB_ptr rtorb,
+                CORBA::PolicyManager_ptr policy_manager,
+                test_ptr receiver)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     rtorb_ (RTCORBA::RTORB::_duplicate (rtorb)),
@@ -116,7 +116,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 {
   // Base protocol is used for setting up and tearing down the test.
   this->base_protocol_policy_.length (1);
-  
+
   // Test protocol is the one being tested.
   this->test_protocol_policy_.length (1);
 
@@ -141,10 +141,10 @@ test_i::~test_i (void)
 
 void
 test_i::start_test (CORBA::Long session_id,
-		    const char *protocol,
-		    CORBA::ULong invocation_rate,
-		    CORBA::ULong message_size,		  
-		    CORBA::ULong iterations
+                    const char *protocol,
+                    CORBA::ULong invocation_rate,
+                    CORBA::ULong message_size,
+                    CORBA::ULong iterations
                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -158,7 +158,7 @@ test_i::start_test (CORBA::Long session_id,
   if (ACE_OS::strcmp (protocol, "DIOP") == 0)
     {
       if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is DIOP\n"));
-      protocols[0].protocol_type = TAO_TAG_UDP_PROFILE;
+      protocols[0].protocol_type = TAO_TAG_DIOP_PROFILE;
     }
   else if (ACE_OS::strcmp (protocol, "SCIOP") == 0)
     {
@@ -189,31 +189,31 @@ test_i::start_test (CORBA::Long session_id,
     test_protocol_setup:
 
       ACE_TRY_EX (B1)
-	{
-	  // Send a message to ensure that the connection is setup.
-	  this->receiver_->oneway_sync (ACE_ENV_SINGLE_ARG_PARAMETER);
-	  ACE_TRY_CHECK_EX (B1);
+        {
+          // Send a message to ensure that the connection is setup.
+          this->receiver_->oneway_sync (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (B1);
 
-	  goto test_protocol_success;
-	}
+          goto test_protocol_success;
+        }
       ACE_CATCH (CORBA::TRANSIENT, exception)
-	{
-	  ++j;
-	  
-	  if (j < number_of_connection_attempts)
-	    {
-	      ACE_OS::sleep (1);
-	      goto test_protocol_setup;
-	    }
-	}
+        {
+          ++j;
+
+          if (j < number_of_connection_attempts)
+            {
+              ACE_OS::sleep (1);
+              goto test_protocol_setup;
+            }
+        }
       ACE_ENDTRY;
 
-      ACE_ERROR ((LM_ERROR, 
-		  "Cannot setup test protocol\n"));
+      ACE_ERROR ((LM_ERROR,
+                  "Cannot setup test protocol\n"));
 
       ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
-				   CORBA::COMPLETED_NO));
-    }  
+                                   CORBA::COMPLETED_NO));
+    }
 
  test_protocol_success:
 
@@ -232,36 +232,36 @@ test_i::start_test (CORBA::Long session_id,
     base_protocol_setup:
 
       ACE_TRY_EX (B2)
-	{
-	  // Let the server know what to expect..
-	  this->receiver_->start_test (session_id,
-				       protocol,
-				       invocation_rate,
-				       message_size,
-				       iterations
-				       ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK_EX (B2);
+        {
+          // Let the server know what to expect..
+          this->receiver_->start_test (session_id,
+                                       protocol,
+                                       invocation_rate,
+                                       message_size,
+                                       iterations
+                                       ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (B2);
 
-	  goto base_protocol_success;
-	}
+          goto base_protocol_success;
+        }
       ACE_CATCH (CORBA::TRANSIENT, exception)
-	{
-	  ACE_OS::sleep (1);
+        {
+          ACE_OS::sleep (1);
 
-	  if (k < number_of_connection_attempts)
-	    {
-	      ACE_OS::sleep (1);
-	      goto base_protocol_setup;
-	    }
-	}
+          if (k < number_of_connection_attempts)
+            {
+              ACE_OS::sleep (1);
+              goto base_protocol_setup;
+            }
+        }
       ACE_ENDTRY;
 
-      ACE_ERROR ((LM_ERROR, 
-		  "Cannot setup base protocol\n"));
+      ACE_ERROR ((LM_ERROR,
+                  "Cannot setup base protocol\n"));
 
       ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
-				   CORBA::COMPLETED_NO));
-    }  
+                                   CORBA::COMPLETED_NO));
+    }
 
  base_protocol_success:
 
@@ -304,29 +304,29 @@ test_i::twoway_sync (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 test_i::oneway_method (CORBA::Long session_id,
-		       CORBA::ULong iteration,
-		       const ::test::octets &payload
-		       ACE_ENV_ARG_DECL)
+                       CORBA::ULong iteration,
+                       const ::test::octets &payload
+                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->receiver_->oneway_method (session_id,
-				  iteration,
-				  payload
-				  ACE_ENV_ARG_PARAMETER);
+                                  iteration,
+                                  payload
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 test_i::twoway_method (CORBA::Long &session_id,
-		       CORBA::ULong &iteration,
-		       ::test::octets &payload
-		       ACE_ENV_ARG_DECL)
+                       CORBA::ULong &iteration,
+                       ::test::octets &payload
+                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->receiver_->twoway_method (session_id,
-				  iteration,
-				  payload
-				  ACE_ENV_ARG_PARAMETER);
+                                  iteration,
+                                  payload
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -410,11 +410,11 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       test_i *servant =
-	new test_i (orb.in (),
-		    root_poa.in (),
-		    rtorb.in (),
-		    policy_manager.in (),		      
-		    receiver.in ());
+        new test_i (orb.in (),
+                    root_poa.in (),
+                    rtorb.in (),
+                    policy_manager.in (),
+                    receiver.in ());
       PortableServer::ServantBase_var safe_servant (servant);
       ACE_UNUSED_ARG (safe_servant);
 

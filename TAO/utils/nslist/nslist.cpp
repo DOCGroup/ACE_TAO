@@ -41,10 +41,10 @@ get_tag_name (CORBA::ULong tag, ACE_CString& tag_string)
       tag_string = "UIOP";
   else if (tag == TAO_TAG_SHMEM_PROFILE)
       tag_string = "SHMEM";
-#ifdef TAO_TAG_UDP_PROFILE
-  else if (tag == TAO_TAG_UDP_PROFILE)
+#ifdef TAO_TAG_DIOP_PROFILE
+  else if (tag == TAO_TAG_DIOP_PROFILE)
       tag_string = "GIOP over UDP";
-#endif /* TAO_TAG_UDP_PROFILE */
+#endif /* TAO_TAG_DIOP_PROFILE */
   else
       tag_string = "Unknown tag: " + tag;
 }

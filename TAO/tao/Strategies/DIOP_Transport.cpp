@@ -31,7 +31,7 @@ ACE_RCSID (tao, DIOP_Transport, "$Id$")
 TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
                                         CORBA::Boolean flag)
-  : TAO_Transport (TAO_TAG_UDP_PROFILE,
+  : TAO_Transport (TAO_TAG_DIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)

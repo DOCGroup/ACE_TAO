@@ -18,7 +18,7 @@ ACE_RCSID (Strategies,
 static const char prefix_[] = "diop";
 
 TAO_DIOP_Protocol_Factory::TAO_DIOP_Protocol_Factory (void)
-  :  TAO_Protocol_Factory (TAO_TAG_UDP_PROFILE),
+  :  TAO_Protocol_Factory (TAO_TAG_DIOP_PROFILE),
      major_ (TAO_DEF_GIOP_MAJOR),
      minor_ (TAO_DEF_GIOP_MINOR)
 {

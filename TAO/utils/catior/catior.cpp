@@ -298,7 +298,7 @@ catior (char* str
             continue_decoding = cat_shmiop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
-        else if (tag == TAO_TAG_UDP_PROFILE)
+        else if (tag == TAO_TAG_DIOP_PROFILE)
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding =  cat_profile_helper(stream, "DIOP (GIOP over UDP)");
@@ -644,7 +644,7 @@ cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
               "%I endpoint: %s:%u\n",ei.host.in(),(unsigned short)ei.port));
   return 1;
 }
-#endif 
+#endif
 
 static CORBA::Boolean
 cat_tag_policies (TAO_InputCDR& stream) {

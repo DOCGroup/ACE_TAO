@@ -171,7 +171,7 @@ main (int argc, char *argv[])
 
       CORBA::ULong test_protocol_tag = IOP::TAG_INTERNET_IOP;
       if (ACE_OS::strcmp (test_protocol, "DIOP") == 0)
-        test_protocol_tag = TAO_TAG_UDP_PROFILE;
+        test_protocol_tag = TAO_TAG_DIOP_PROFILE;
       else if (ACE_OS::strcmp (test_protocol, "SCIOP") == 0)
         test_protocol_tag = TAO_TAG_SCIOP_PROFILE;
 
