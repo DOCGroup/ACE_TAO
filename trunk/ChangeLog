@@ -1,4 +1,9 @@
-Thu Sep 26 13:48:26 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+Thu Sep 26 21:52:05 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* THANKS: Added Erich Hochmuth" <erich_hochmuth@hotmail.com> to
+	  the hall of fame.  
+
+Thu Sep 26 13:48:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/TP_Reactor.cpp (remove_handler): Make a check for the return
 	  value from the remove_handler_i () call before calling
