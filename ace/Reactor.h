@@ -526,10 +526,12 @@ public:
 
   /**
    * Purge any notifications pending in this reactor for the specified
-   * <ACE_Event_Handler> object. Returns the number of notifications
-   * purged. Returns -1 on error.
+   * <ACE_Event_Handler> object. If <eh> == 0, all notifications for all
+   * handlers are removed (but not any notifications posted just to wake up
+   * the reactor itself). Returns the number of notifications purged.
+   * Returns -1 on error.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler * = 0);
+  virtual int purge_pending_notifications (ACE_Event_Handler *);
 
   // = Assorted helper methods.
 
