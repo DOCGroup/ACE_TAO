@@ -50,25 +50,6 @@ TAO_CodeGen::TAO_CodeGen (void)
     curr_os_ (0),
     visitor_factory_ (0)
 {
-  // Initialize the anyop streams here so we won't have to fuss
-  // with it in the visitors.
-  if (be_global->gen_anyop_files ())
-    {
-      int status = 0;
-
-      status =
-        this->start_anyop_source (
-                  be_global->be_get_anyop_source_fname ()
-                );
-
-      if (status == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                             "(%N:%l) TAO_CodeGen::"
-                             "TAO_CodeGen - "
-                             "Error opening anyop source file\n"));
-        }
-    }
 }
 
 // destructor
@@ -304,6 +285,25 @@ TAO_CodeGen::start_client_stubs (const char *fname)
 {
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
+
+  // Initialize the anyop streams here, if the option is set.
+  if (be_global->gen_anyop_files ())
+    {
+      int status = 0;
+
+      status =
+        this->start_anyop_source (
+                  be_global->be_get_anyop_source_fname ()
+                );
+
+      if (status == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                             "(%N:%l) TAO_CodeGen::"
+                             "TAO_CodeGen - "
+                             "Error opening anyop source file\n"));
+        }
+    }
 
   // Retrieve a specialized instance.
   this->client_stubs_ = factory->make_outstream ();
