@@ -25,6 +25,10 @@ Below is the list of player classes:
    'ConcreteImplementor' which uses ACE_Hash_Map_Manager to implement
    NamingContext functionality.
 
+ * A set of classes implementing a persistent version of the Naming
+   Context functionality.  These are the classes in
+   Shared_Hash_Map_T.{h, cpp}, and Persistent* files.
+
 The class structure described above makes it easy to:
 
 1) Create and plug different Naming Service implementations by

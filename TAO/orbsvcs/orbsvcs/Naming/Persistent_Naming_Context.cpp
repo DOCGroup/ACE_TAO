@@ -480,8 +480,11 @@ TAO_Persistent_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
                    this->poa_id_.c_str (),
                    (*this->counter_)++);
 
-  ACE_DEBUG ((LM_DEBUG, "The poa id of the newly created context is: %s \n", poa_id));
-  ACE_DEBUG ((LM_DEBUG, "The new value of the counter is: %d\n", (*counter_)));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "Created a new Naming Context with poa_id %s and counter %d\n",
+                poa_id,
+                (*counter_)));
 
   ACE_NEW_THROW_EX (c,
                     TAO_Naming_Context,
