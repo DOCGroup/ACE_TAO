@@ -70,7 +70,7 @@ all: $(IDL_SRC) server client
 
 $(IDL_SRC): cubit.idl
 	$(CHORUS_BINDIR)/chic $(IDLFLAGS) cubit.idl
-	-/bin/mv cubit.C cubit.cpp
+	-mv cubit.C cubit.cpp
 
 server: $(addprefix $(VDIR),$(SVR_OBJS))
 	$(LINK.cc) -o server $(addprefix $(VDIR),$(SVR_OBJS)) $(LDFLAGS) $(ITIIOP) $(ITSRV) $(VLDLIBS) $(POSTLINK)
@@ -79,7 +79,7 @@ client: $(addprefix $(VDIR),$(CLT_OBJS))
 	$(LINK.cc) -o client $(addprefix $(VDIR),$(CLT_OBJS)) $(LDFLAGS) $(ITIIOP) $(ITCLT) $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf cubit.cpp cubit.H sk_cubit.C sk_cubit.H server client
+	-$(RM) cubit.cpp cubit.H sk_cubit.C sk_cubit.H server client
 
 #----------------------------------------------------------------------------
 #	Dependencies

@@ -85,11 +85,8 @@ vs:$(addprefix $(VDIR),$(AV_VS_OBJS))
 as:$(addprefix $(VDIR),$(AV_AS_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-clean:
-	-/bin/rm -rf *.o Log obj.* core Templates.DB .make.state
-
 realclean: clean
-	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) \
+	-$(RM) $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) \
 	$(addsuffix _T.h, $(IDL_FILES)) $(addsuffix _T.i, $(IDL_FILES)) $(addsuffix _T.cpp, $(IDL_FILES))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
