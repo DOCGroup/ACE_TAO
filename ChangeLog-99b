@@ -1,3 +1,10 @@
+Tue Jan 12 21:25:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/SOCK_IO.{h,i}:
+	* ace/SOCK_Stream.{h,i} (sendv_n/recvv_n): Moved these functions
+	  from SOCK_IO to SOCK_Stream where it makes more sense to have
+	  the semantic of sending/receiving <n> bytes.
+
 Tue Jan 12 19:52:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Added more info on dynamically linking
