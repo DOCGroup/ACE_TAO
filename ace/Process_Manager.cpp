@@ -340,6 +340,7 @@ ACE_Process_Manager::handle_close (ACE_HANDLE handle,
                                    ACE_Reactor_Mask)
 {
   ACE_TRACE ("ACE_Process_Manager::handle_close");
+  ACE_UNUSED_ARG (handle);
 
   ACE_ASSERT (handle == this->dummy_handle_);
 

@@ -475,7 +475,8 @@ public:
   // = Additional utility methods.
 
   void reset (void);
-  // Reset the <ACE_Unbounded_Queue> to be empty.
+  // Reset the <ACE_Unbounded_Queue> to be empty and release all its
+  // dynamically allocated resources.
 
   int get (T *&item, size_t slot = 0) const;
   // Get the <slot>th element in the set.  Returns -1 if the element
