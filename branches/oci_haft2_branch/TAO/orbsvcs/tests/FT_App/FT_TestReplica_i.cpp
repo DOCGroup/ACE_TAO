@@ -95,11 +95,14 @@ namespace
 // class FT_TestReplica_i construction/destruction
 
 FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, const char * name, unsigned long factory_id)
-  : factory_(factory)
-  , name_(name)
-  , factory_id_(factory_id)
-  , death_pending_(FT_TEST::TestReplica::NOT_YET)
-  , verbose_(1)
+  : death_pending_ (FT_TEST::TestReplica::NOT_YET)
+  , verbose_ (1)
+  , name_ (name)
+  , factory_id_ (factory_id)
+  , factory_ (factory)
+  , orb_ (0)
+  , poa_ (0)
+  , object_id_ (0)
 {
 //  std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Construct" << std::endl;
 }
@@ -133,6 +136,8 @@ const char * FT_TestReplica_i::repository_id()
 int
 FT_TestReplica_i::parse_args (int argc, char *argv[])
 {
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
   return 0;
 }
 
@@ -150,7 +155,7 @@ unsigned long FT_TestReplica_i::factory_id()const
 
 ::PortableServer::POA_ptr FT_TestReplica_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
-  return ::PortableServer::POA::_duplicate(this->poa_ ACE_ENV_ARG_PARAMETER);
+  return ::PortableServer::POA::_duplicate(this->poa_.in () ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ObjectId FT_TestReplica_i::object_id()const
@@ -186,7 +191,7 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
   ACE_CHECK_RETURN (-1);
 
-  if (CORBA::is_nil(this->poa_))
+  if (CORBA::is_nil(this->poa_.in ()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
@@ -304,6 +309,10 @@ void FT_TestReplica_i::tao_update_object_group (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (iogr);
+  ACE_UNUSED_ARG (version);
+  ACE_UNUSED_ARG (is_primary);
+
   ACE_THROW (CORBA::NO_IMPLEMENT());
 }
 

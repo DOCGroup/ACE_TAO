@@ -13,11 +13,13 @@
 //
 #ifndef FT_TESTREPLICA_I_H_
 #define FT_TESTREPLICA_I_H_
+#include /**/ <ace/pre.h>
+
+#include <ace/ACE.h>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ <ace/pre.h>
 #include "FT_TestReplicaS.h"
 
 ////////////////////
