@@ -1,3 +1,15 @@
+Tue Apr 10 02:19:02 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	* tests/RTCORBA/Banded_Connections/run_test.pl:
+	* tests/RTCORBA/Client_Protocol/run_test.pl:
+	* tests/RTCORBA/Explicit_Binding/run_test.pl:
+	* tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+	* tests/RTCORBA/Server_Protocol/run_test.pl:
+	  Changed to use the nw <PerlACE::check_n_cleanup_files> so that
+	  we not only removed unwanted mmap files but also noticed that
+	  they are not being cleaned up.
+
 Tue Apr 10 01:27:16 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp (handle_close): The

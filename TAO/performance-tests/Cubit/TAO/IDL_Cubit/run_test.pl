@@ -79,7 +79,7 @@ sub run_test_helper ()
 
     my $client = $CL->SpawnWaitKill (120);
     my $server = $SV->WaitKill (30);
-    
+
     unlink $iorfile;
 
     if ($server != 0) {
@@ -135,13 +135,13 @@ if ($OSNAME ne "MSWin32") {
 print STDERR "============================================================\n";
 print STDERR "Running IDL_Cubit with the SHMIOP protocol.\n\n";
 
-$SV->Arguments ($svflags . $svnsflags 
+$SV->Arguments ($svflags . $svnsflags
                 . " -ORBEndpoint shmiop:// -ORBSvcconf $server_shmiop_conf ");
 $CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
 
 run_test_helper ();
 
 # Clean up SHMIOP files
-unlink glob ("server_shmiop_*");
+PerlACE::check_n_cleanup_files ("server_shmiop_*");
 
 exit $status;
