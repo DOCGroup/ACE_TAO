@@ -21,7 +21,7 @@ static const CORBA::Long _oc_PortableInterceptor_RepositoryId[] =
   TAO_ENCAP_BYTE_ORDER, // byte order
   41, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x496e7465), ACE_NTOHL (0x72636570), ACE_NTOHL (0x746f722f), ACE_NTOHL (0x5265706f), ACE_NTOHL (0x7369746f), ACE_NTOHL (0x72794964), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:PortableInterceptor/RepositoryId:1.0
   13, ACE_NTOHL (0x5265706f), ACE_NTOHL (0x7369746f), ACE_NTOHL (0x72794964), ACE_NTOHL (0x0),  // name = RepositoryId
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_RepositoryId (CORBA::tk_alias, sizeof (_oc_PortableInterceptor_RepositoryId), (char *) &_oc_PortableInterceptor_RepositoryId, 0, sizeof (PortableInterceptor::RepositoryId));
@@ -40,30 +40,30 @@ TAO_NAMESPACE_END
 PortableInterceptor::OctetSeq::OctetSeq (void)
 {}
 PortableInterceptor::OctetSeq::OctetSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 PortableInterceptor::OctetSeq::OctetSeq (CORBA::ULong max, CORBA::ULong length, CORBA::Octet *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 PortableInterceptor::OctetSeq::OctetSeq (const OctetSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 PortableInterceptor::OctetSeq::~OctetSeq (void) // dtor
@@ -106,30 +106,30 @@ TAO_NAMESPACE_END
 PortableInterceptor::StringSeq::StringSeq (void)
 {}
 PortableInterceptor::StringSeq::StringSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 PortableInterceptor::StringSeq::StringSeq (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 PortableInterceptor::StringSeq::StringSeq (const StringSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 PortableInterceptor::StringSeq::~StringSeq (void) // dtor
@@ -151,7 +151,7 @@ static const CORBA::Long _oc_PortableInterceptor_StringSeq[] =
   CORBA::tk_sequence, // typecode kind
   16, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
     0U,
 
@@ -213,11 +213,11 @@ PortableInterceptor::Interceptor_ptr PortableInterceptor::Interceptor::_unchecke
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::PortableInterceptor::Interceptor (stub), Interceptor::_nil ());
-     
+
       return default_proxy;
-      
+
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -248,15 +248,15 @@ char * PortableInterceptor::Interceptor::name (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::String_var _tao_safe_retval;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_name",
@@ -271,7 +271,7 @@ char * PortableInterceptor::Interceptor::name (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -295,7 +295,7 @@ char * PortableInterceptor::Interceptor::name (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -320,7 +320,7 @@ void *PortableInterceptor::Interceptor::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -666,7 +666,7 @@ PortableInterceptor::Current_ptr PortableInterceptor::Current::_unchecked_narrow
         return default_proxy;
 
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -699,20 +699,20 @@ CORBA::Any * PortableInterceptor::Current::get_slot (
     PortableInterceptor::InvalidSlot
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_Current_get_slot_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_Current_get_slot_exceptiondata [] =
   {
     {PortableInterceptor::_tc_InvalidSlot, PortableInterceptor::InvalidSlot::_alloc}
   };
 
   CORBA::Any *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, CORBA::Any, _tao_retval);
   CORBA::Any_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -729,7 +729,7 @@ CORBA::Any * PortableInterceptor::Current::get_slot (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -759,7 +759,7 @@ CORBA::Any * PortableInterceptor::Current::get_slot (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -774,20 +774,20 @@ void PortableInterceptor::Current::set_slot (
     PortableInterceptor::InvalidSlot
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_Current_set_slot_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_Current_set_slot_exceptiondata [] =
   {
     {PortableInterceptor::_tc_InvalidSlot, PortableInterceptor::InvalidSlot::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "set_slot",
@@ -802,7 +802,7 @@ void PortableInterceptor::Current::set_slot (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -825,7 +825,7 @@ void PortableInterceptor::Current::set_slot (
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
       break;
-      
+
     }
 
 }
@@ -863,7 +863,7 @@ void *PortableInterceptor::Current::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -886,15 +886,15 @@ const char* PortableInterceptor::Current::_interface_repository_id (void) const
   TAO_NAMESPACE_BEGIN (PortableInterceptor)
   TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Current, &_tc_TAO_tc_PortableInterceptor_Current)
   TAO_NAMESPACE_END
-    
+
   // default constructor
   PortableInterceptor::RequestInfo::RequestInfo (void)
   {}
-  
+
   // destructor
   PortableInterceptor::RequestInfo::~RequestInfo (void)
   {}
-  
+
   void PortableInterceptor::RequestInfo::_tao_any_destructor (void *x)
   {
     RequestInfo *tmp = ACE_static_cast (RequestInfo*,x);
@@ -917,7 +917,7 @@ const char* PortableInterceptor::Current::_interface_repository_id (void) const
       }
     return RequestInfo::_unchecked_narrow (obj, ACE_TRY_ENV);
   }
-  
+
   PortableInterceptor::RequestInfo_ptr PortableInterceptor::RequestInfo::_unchecked_narrow (
       CORBA::Object_ptr obj,
       CORBA::Environment &
@@ -941,7 +941,7 @@ const char* PortableInterceptor::Current::_interface_repository_id (void) const
           return default_proxy;
 
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -972,15 +972,15 @@ CORBA::ULong PortableInterceptor::RequestInfo::request_id (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::ULong _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_request_id",
@@ -995,7 +995,7 @@ CORBA::ULong PortableInterceptor::RequestInfo::request_id (
       ACE_CHECK_RETURN  (_tao_retval);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1019,7 +1019,7 @@ CORBA::ULong PortableInterceptor::RequestInfo::request_id (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     break;
-    
+
   }
 return _tao_retval;
 }
@@ -1031,15 +1031,15 @@ char * PortableInterceptor::RequestInfo::operation (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::String_var _tao_safe_retval;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_operation",
@@ -1054,7 +1054,7 @@ char * PortableInterceptor::RequestInfo::operation (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1078,27 +1078,25 @@ char * PortableInterceptor::RequestInfo::operation (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
 
-Dynamic::ParameterList * PortableInterceptor::RequestInfo::arguments (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+Dynamic::ParameterList * PortableInterceptor::RequestInfo::arguments (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
-  
+  TAO_ENV_ARG_DEFN;
   Dynamic::ParameterList *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, Dynamic::ParameterList, _tao_retval);
   Dynamic::ParameterList_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1114,7 +1112,7 @@ Dynamic::ParameterList * PortableInterceptor::RequestInfo::arguments (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1138,27 +1136,25 @@ Dynamic::ParameterList * PortableInterceptor::RequestInfo::arguments (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
 
-Dynamic::ExceptionList * PortableInterceptor::RequestInfo::exceptions (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+Dynamic::ExceptionList * PortableInterceptor::RequestInfo::exceptions (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
-  
+  TAO_ENV_ARG_DEFN;
   Dynamic::ExceptionList *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, Dynamic::ExceptionList, _tao_retval);
   Dynamic::ExceptionList_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1175,7 +1171,7 @@ Dynamic::ExceptionList * PortableInterceptor::RequestInfo::exceptions (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1199,7 +1195,7 @@ Dynamic::ExceptionList * PortableInterceptor::RequestInfo::exceptions (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -1211,15 +1207,15 @@ Dynamic::ContextList * PortableInterceptor::RequestInfo::contexts (
     CORBA::SystemException
   ))
 {
-  
+
   Dynamic::ContextList *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, Dynamic::ContextList, _tao_retval);
   Dynamic::ContextList_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1236,7 +1232,7 @@ Dynamic::ContextList * PortableInterceptor::RequestInfo::contexts (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1260,7 +1256,7 @@ Dynamic::ContextList * PortableInterceptor::RequestInfo::contexts (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -1272,15 +1268,15 @@ Dynamic::RequestContext * PortableInterceptor::RequestInfo::operation_context (
     CORBA::SystemException
   ))
 {
-  
+
   Dynamic::RequestContext *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, Dynamic::RequestContext, _tao_retval);
   Dynamic::RequestContext_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1297,7 +1293,7 @@ Dynamic::RequestContext * PortableInterceptor::RequestInfo::operation_context (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1321,27 +1317,25 @@ Dynamic::RequestContext * PortableInterceptor::RequestInfo::operation_context (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
 
-CORBA::Any * PortableInterceptor::RequestInfo::result (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+CORBA::Any * PortableInterceptor::RequestInfo::result (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
-  
+  TAO_ENV_ARG_DEFN;
   CORBA::Any *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, CORBA::Any, _tao_retval);
   CORBA::Any_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1358,7 +1352,7 @@ CORBA::Any * PortableInterceptor::RequestInfo::result (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1382,7 +1376,7 @@ CORBA::Any * PortableInterceptor::RequestInfo::result (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -1394,15 +1388,15 @@ CORBA::Boolean PortableInterceptor::RequestInfo::response_expected (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Boolean _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_response_expected",
@@ -1416,7 +1410,7 @@ CORBA::Boolean PortableInterceptor::RequestInfo::response_expected (
       ACE_CHECK_RETURN  (_tao_retval);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1440,7 +1434,7 @@ CORBA::Boolean PortableInterceptor::RequestInfo::response_expected (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     break;
-    
+
   }
 return _tao_retval;
 }
@@ -1452,15 +1446,15 @@ Messaging::SyncScope PortableInterceptor::RequestInfo::sync_scope (
     CORBA::SystemException
   ))
 {
-  
+
   Messaging::SyncScope _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_sync_scope",
@@ -1475,7 +1469,7 @@ Messaging::SyncScope PortableInterceptor::RequestInfo::sync_scope (
       ACE_CHECK_RETURN  (_tao_retval);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1499,7 +1493,7 @@ Messaging::SyncScope PortableInterceptor::RequestInfo::sync_scope (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     break;
-    
+
   }
 return _tao_retval;
 }
@@ -1511,15 +1505,15 @@ PortableInterceptor::ReplyStatus PortableInterceptor::RequestInfo::reply_status 
     CORBA::SystemException
   ))
 {
-  
+
   PortableInterceptor::ReplyStatus _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_reply_status",
@@ -1534,7 +1528,7 @@ PortableInterceptor::ReplyStatus PortableInterceptor::RequestInfo::reply_status 
       ACE_CHECK_RETURN  (_tao_retval);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1558,7 +1552,7 @@ PortableInterceptor::ReplyStatus PortableInterceptor::RequestInfo::reply_status 
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     break;
-    
+
   }
 return _tao_retval;
 }
@@ -1570,16 +1564,16 @@ CORBA::Object_ptr PortableInterceptor::RequestInfo::forward_reference (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
   CORBA::Object_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_forward_reference",
@@ -1594,7 +1588,7 @@ CORBA::Object_ptr PortableInterceptor::RequestInfo::forward_reference (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1618,7 +1612,7 @@ CORBA::Object_ptr PortableInterceptor::RequestInfo::forward_reference (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -1632,20 +1626,20 @@ CORBA::Any * PortableInterceptor::RequestInfo::get_slot (
     PortableInterceptor::InvalidSlot
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_RequestInfo_get_slot_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_RequestInfo_get_slot_exceptiondata [] =
   {
     {PortableInterceptor::_tc_InvalidSlot, PortableInterceptor::InvalidSlot::_alloc}
   };
 
   CORBA::Any *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, CORBA::Any, _tao_retval);
   CORBA::Any_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1661,7 +1655,7 @@ CORBA::Any * PortableInterceptor::RequestInfo::get_slot (
       _tao_call.start (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1691,7 +1685,7 @@ CORBA::Any * PortableInterceptor::RequestInfo::get_slot (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -1704,14 +1698,14 @@ IOP::ServiceContext * PortableInterceptor::RequestInfo::get_request_service_cont
     CORBA::SystemException
   ))
 {
-  
+
   IOP::ServiceContext *_tao_retval = 0;
-  
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, IOP::ServiceContext, _tao_retval);
   IOP::ServiceContext_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1728,7 +1722,7 @@ IOP::ServiceContext * PortableInterceptor::RequestInfo::get_request_service_cont
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1758,7 +1752,7 @@ IOP::ServiceContext * PortableInterceptor::RequestInfo::get_request_service_cont
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -1771,14 +1765,14 @@ IOP::ServiceContext * PortableInterceptor::RequestInfo::get_reply_service_contex
     CORBA::SystemException
   ))
 {
-  
+
   IOP::ServiceContext *_tao_retval = 0;
-  
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, IOP::ServiceContext, _tao_retval);
   IOP::ServiceContext_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1794,7 +1788,7 @@ IOP::ServiceContext * PortableInterceptor::RequestInfo::get_reply_service_contex
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -1824,7 +1818,7 @@ IOP::ServiceContext * PortableInterceptor::RequestInfo::get_reply_service_contex
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -1849,7 +1843,7 @@ void *PortableInterceptor::RequestInfo::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -1927,7 +1921,7 @@ PortableInterceptor::ClientRequestInfo_ptr PortableInterceptor::ClientRequestInf
         return default_proxy;
 
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -1958,16 +1952,16 @@ CORBA::Object_ptr PortableInterceptor::ClientRequestInfo::target (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
   CORBA::Object_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_target",
@@ -1982,7 +1976,7 @@ CORBA::Object_ptr PortableInterceptor::ClientRequestInfo::target (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2006,7 +2000,7 @@ CORBA::Object_ptr PortableInterceptor::ClientRequestInfo::target (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -2018,16 +2012,16 @@ CORBA::Object_ptr PortableInterceptor::ClientRequestInfo::effective_target (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
   CORBA::Object_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_effective_target",
@@ -2041,7 +2035,7 @@ CORBA::Object_ptr PortableInterceptor::ClientRequestInfo::effective_target (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2065,7 +2059,7 @@ CORBA::Object_ptr PortableInterceptor::ClientRequestInfo::effective_target (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -2077,14 +2071,14 @@ IOP::TaggedProfile * PortableInterceptor::ClientRequestInfo::effective_profile (
     CORBA::SystemException
   ))
 {
-  
+
   IOP::TaggedProfile *_tao_retval = 0;
-  
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, IOP::TaggedProfile, _tao_retval);
   IOP::TaggedProfile_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2101,7 +2095,7 @@ IOP::TaggedProfile * PortableInterceptor::ClientRequestInfo::effective_profile (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2125,7 +2119,7 @@ IOP::TaggedProfile * PortableInterceptor::ClientRequestInfo::effective_profile (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -2137,15 +2131,15 @@ CORBA::Any * PortableInterceptor::ClientRequestInfo::received_exception (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Any *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, CORBA::Any, _tao_retval);
   CORBA::Any_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2162,7 +2156,7 @@ CORBA::Any * PortableInterceptor::ClientRequestInfo::received_exception (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2186,7 +2180,7 @@ CORBA::Any * PortableInterceptor::ClientRequestInfo::received_exception (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -2198,15 +2192,15 @@ char * PortableInterceptor::ClientRequestInfo::received_exception_id (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::String_var _tao_safe_retval;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_received_exception_id",
@@ -2220,7 +2214,7 @@ char * PortableInterceptor::ClientRequestInfo::received_exception_id (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2244,7 +2238,7 @@ char * PortableInterceptor::ClientRequestInfo::received_exception_id (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -2257,14 +2251,14 @@ IOP::TaggedComponent * PortableInterceptor::ClientRequestInfo::get_effective_com
     CORBA::SystemException
   ))
 {
-  
+
   IOP::TaggedComponent *_tao_retval = 0;
-  
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, IOP::TaggedComponent, _tao_retval);
   IOP::TaggedComponent_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2281,7 +2275,7 @@ IOP::TaggedComponent * PortableInterceptor::ClientRequestInfo::get_effective_com
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2311,7 +2305,7 @@ IOP::TaggedComponent * PortableInterceptor::ClientRequestInfo::get_effective_com
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -2324,16 +2318,16 @@ CORBA::Policy_ptr PortableInterceptor::ClientRequestInfo::get_request_policy (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Policy_ptr _tao_retval = CORBA::Policy::_nil ();
   CORBA::Policy_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "get_request_policy",
@@ -2347,7 +2341,7 @@ CORBA::Policy_ptr PortableInterceptor::ClientRequestInfo::get_request_policy (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2377,7 +2371,7 @@ CORBA::Policy_ptr PortableInterceptor::ClientRequestInfo::get_request_policy (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -2391,15 +2385,15 @@ void PortableInterceptor::ClientRequestInfo::add_request_service_context (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "add_request_service_context",
@@ -2413,7 +2407,7 @@ void PortableInterceptor::ClientRequestInfo::add_request_service_context (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2435,9 +2429,9 @@ void PortableInterceptor::ClientRequestInfo::add_request_service_context (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -2475,7 +2469,7 @@ void *PortableInterceptor::ClientRequestInfo::_tao_QueryInterface (ptr_arith_t t
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -2498,15 +2492,15 @@ const char* PortableInterceptor::ClientRequestInfo::_interface_repository_id (vo
   TAO_NAMESPACE_BEGIN (PortableInterceptor)
   TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ClientRequestInfo, &_tc_TAO_tc_PortableInterceptor_ClientRequestInfo)
   TAO_NAMESPACE_END
-    
+
   // default constructor
   PortableInterceptor::ServerRequestInfo::ServerRequestInfo (void)
   {}
-  
+
   // destructor
   PortableInterceptor::ServerRequestInfo::~ServerRequestInfo (void)
   {}
-  
+
   void PortableInterceptor::ServerRequestInfo::_tao_any_destructor (void *x)
   {
     ServerRequestInfo *tmp = ACE_static_cast (ServerRequestInfo*,x);
@@ -2529,7 +2523,7 @@ const char* PortableInterceptor::ClientRequestInfo::_interface_repository_id (vo
       }
     return ServerRequestInfo::_unchecked_narrow (obj, ACE_TRY_ENV);
   }
-  
+
   PortableInterceptor::ServerRequestInfo_ptr PortableInterceptor::ServerRequestInfo::_unchecked_narrow (
       CORBA::Object_ptr obj,
       CORBA::Environment &
@@ -2553,7 +2547,7 @@ const char* PortableInterceptor::ClientRequestInfo::_interface_repository_id (vo
           return default_proxy;
 
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -2584,15 +2578,15 @@ CORBA::Any * PortableInterceptor::ServerRequestInfo::sending_exception (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Any *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, CORBA::Any, _tao_retval);
   CORBA::Any_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2609,7 +2603,7 @@ CORBA::Any * PortableInterceptor::ServerRequestInfo::sending_exception (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2633,7 +2627,7 @@ CORBA::Any * PortableInterceptor::ServerRequestInfo::sending_exception (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -2645,15 +2639,15 @@ PortableInterceptor::OctetSeq * PortableInterceptor::ServerRequestInfo::object_i
     CORBA::SystemException
   ))
 {
-  
+
   PortableInterceptor::OctetSeq *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, PortableInterceptor::OctetSeq, _tao_retval);
   PortableInterceptor::OctetSeq_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2669,7 +2663,7 @@ PortableInterceptor::OctetSeq * PortableInterceptor::ServerRequestInfo::object_i
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2693,7 +2687,7 @@ PortableInterceptor::OctetSeq * PortableInterceptor::ServerRequestInfo::object_i
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -2705,15 +2699,15 @@ PortableInterceptor::OctetSeq * PortableInterceptor::ServerRequestInfo::adapter_
     CORBA::SystemException
   ))
 {
-  
+
   PortableInterceptor::OctetSeq *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, PortableInterceptor::OctetSeq, _tao_retval);
   PortableInterceptor::OctetSeq_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -2730,7 +2724,7 @@ PortableInterceptor::OctetSeq * PortableInterceptor::ServerRequestInfo::adapter_
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2754,7 +2748,7 @@ PortableInterceptor::OctetSeq * PortableInterceptor::ServerRequestInfo::adapter_
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -2766,15 +2760,15 @@ char * PortableInterceptor::ServerRequestInfo::target_most_derived_interface (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::String_var _tao_safe_retval;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_target_most_derived_interface",
@@ -2788,7 +2782,7 @@ char * PortableInterceptor::ServerRequestInfo::target_most_derived_interface (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2812,7 +2806,7 @@ char * PortableInterceptor::ServerRequestInfo::target_most_derived_interface (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -2825,16 +2819,16 @@ CORBA::Policy_ptr PortableInterceptor::ServerRequestInfo::get_server_policy (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Policy_ptr _tao_retval = CORBA::Policy::_nil ();
   CORBA::Policy_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "get_server_policy",
@@ -2849,7 +2843,7 @@ CORBA::Policy_ptr PortableInterceptor::ServerRequestInfo::get_server_policy (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2879,7 +2873,7 @@ CORBA::Policy_ptr PortableInterceptor::ServerRequestInfo::get_server_policy (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -2894,20 +2888,20 @@ void PortableInterceptor::ServerRequestInfo::set_slot (
     PortableInterceptor::InvalidSlot
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_ServerRequestInfo_set_slot_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_ServerRequestInfo_set_slot_exceptiondata [] =
   {
     {PortableInterceptor::_tc_InvalidSlot, PortableInterceptor::InvalidSlot::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "set_slot",
@@ -2922,7 +2916,7 @@ void PortableInterceptor::ServerRequestInfo::set_slot (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -2944,9 +2938,9 @@ void PortableInterceptor::ServerRequestInfo::set_slot (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -2959,15 +2953,15 @@ CORBA::Boolean PortableInterceptor::ServerRequestInfo::target_is_a (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Boolean _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "target_is_a",
@@ -2982,7 +2976,7 @@ CORBA::Boolean PortableInterceptor::ServerRequestInfo::target_is_a (
       ACE_CHECK_RETURN  (_tao_retval);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -3012,7 +3006,7 @@ CORBA::Boolean PortableInterceptor::ServerRequestInfo::target_is_a (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     break;
-    
+
   }
 return _tao_retval;
 }
@@ -3026,15 +3020,15 @@ void PortableInterceptor::ServerRequestInfo::add_reply_service_context (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "add_reply_service_context",
@@ -3048,7 +3042,7 @@ void PortableInterceptor::ServerRequestInfo::add_reply_service_context (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -3070,9 +3064,9 @@ void PortableInterceptor::ServerRequestInfo::add_reply_service_context (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -3110,7 +3104,7 @@ void *PortableInterceptor::ServerRequestInfo::_tao_QueryInterface (ptr_arith_t t
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -3133,15 +3127,15 @@ const char* PortableInterceptor::ServerRequestInfo::_interface_repository_id (vo
   TAO_NAMESPACE_BEGIN (PortableInterceptor)
   TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServerRequestInfo, &_tc_TAO_tc_PortableInterceptor_ServerRequestInfo)
   TAO_NAMESPACE_END
-    
+
   // default constructor
   PortableInterceptor::ClientRequestInterceptor::ClientRequestInterceptor (void)
   {}
-  
+
   // destructor
   PortableInterceptor::ClientRequestInterceptor::~ClientRequestInterceptor (void)
   {}
-  
+
   void PortableInterceptor::ClientRequestInterceptor::_tao_any_destructor (void *x)
   {
     ClientRequestInterceptor *tmp = ACE_static_cast (ClientRequestInterceptor*,x);
@@ -3164,7 +3158,7 @@ const char* PortableInterceptor::ServerRequestInfo::_interface_repository_id (vo
       }
     return ClientRequestInterceptor::_unchecked_narrow (obj, ACE_TRY_ENV);
   }
-  
+
   PortableInterceptor::ClientRequestInterceptor_ptr PortableInterceptor::ClientRequestInterceptor::_unchecked_narrow (
       CORBA::Object_ptr obj,
       CORBA::Environment &
@@ -3188,7 +3182,7 @@ const char* PortableInterceptor::ServerRequestInfo::_interface_repository_id (vo
           return default_proxy;
 
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -3221,20 +3215,20 @@ void PortableInterceptor::ClientRequestInterceptor::send_request (
     PortableInterceptor::ForwardRequest
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_ClientRequestInterceptor_send_request_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_ClientRequestInterceptor_send_request_exceptiondata [] =
   {
     {PortableInterceptor::_tc_ForwardRequest, PortableInterceptor::ForwardRequest::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "send_request",
@@ -3248,7 +3242,7 @@ void PortableInterceptor::ClientRequestInterceptor::send_request (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -3269,9 +3263,9 @@ void PortableInterceptor::ClientRequestInterceptor::send_request (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -3284,15 +3278,15 @@ void PortableInterceptor::ClientRequestInterceptor::send_poll (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "send_poll",
@@ -3307,7 +3301,7 @@ void PortableInterceptor::ClientRequestInterceptor::send_poll (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -3328,9 +3322,9 @@ void PortableInterceptor::ClientRequestInterceptor::send_poll (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -3343,15 +3337,15 @@ void PortableInterceptor::ClientRequestInterceptor::receive_reply (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "receive_reply",
@@ -3366,7 +3360,7 @@ void PortableInterceptor::ClientRequestInterceptor::receive_reply (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -3387,9 +3381,9 @@ void PortableInterceptor::ClientRequestInterceptor::receive_reply (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -3403,20 +3397,20 @@ void PortableInterceptor::ClientRequestInterceptor::receive_exception (
     PortableInterceptor::ForwardRequest
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_ClientRequestInterceptor_receive_exception_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_ClientRequestInterceptor_receive_exception_exceptiondata [] =
   {
     {PortableInterceptor::_tc_ForwardRequest, PortableInterceptor::ForwardRequest::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "receive_exception",
@@ -3431,7 +3425,7 @@ void PortableInterceptor::ClientRequestInterceptor::receive_exception (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -3452,9 +3446,9 @@ void PortableInterceptor::ClientRequestInterceptor::receive_exception (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -3468,20 +3462,20 @@ void PortableInterceptor::ClientRequestInterceptor::receive_other (
     PortableInterceptor::ForwardRequest
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_ClientRequestInterceptor_receive_other_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_ClientRequestInterceptor_receive_other_exceptiondata [] =
   {
     {PortableInterceptor::_tc_ForwardRequest, PortableInterceptor::ForwardRequest::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "receive_other",
@@ -3496,7 +3490,7 @@ void PortableInterceptor::ClientRequestInterceptor::receive_other (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -3517,9 +3511,9 @@ void PortableInterceptor::ClientRequestInterceptor::receive_other (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -3557,7 +3551,7 @@ void *PortableInterceptor::ClientRequestInterceptor::_tao_QueryInterface (ptr_ar
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -3635,7 +3629,7 @@ PortableInterceptor::ServerRequestInterceptor_ptr PortableInterceptor::ServerReq
         return default_proxy;
 
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -3668,20 +3662,20 @@ void PortableInterceptor::ServerRequestInterceptor::receive_request_service_cont
     PortableInterceptor::ForwardRequest
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_ServerRequestInterceptor_receive_request_service_contexts_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_ServerRequestInterceptor_receive_request_service_contexts_exceptiondata [] =
   {
     {PortableInterceptor::_tc_ForwardRequest, PortableInterceptor::ForwardRequest::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "receive_request_service_contexts",
@@ -3696,7 +3690,7 @@ void PortableInterceptor::ServerRequestInterceptor::receive_request_service_cont
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -3717,9 +3711,9 @@ void PortableInterceptor::ServerRequestInterceptor::receive_request_service_cont
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -3733,20 +3727,20 @@ void PortableInterceptor::ServerRequestInterceptor::receive_request (
     PortableInterceptor::ForwardRequest
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_ServerRequestInterceptor_receive_request_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_ServerRequestInterceptor_receive_request_exceptiondata [] =
   {
     {PortableInterceptor::_tc_ForwardRequest, PortableInterceptor::ForwardRequest::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "receive_request",
@@ -3761,7 +3755,7 @@ void PortableInterceptor::ServerRequestInterceptor::receive_request (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -3782,9 +3776,9 @@ void PortableInterceptor::ServerRequestInterceptor::receive_request (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -3797,15 +3791,15 @@ void PortableInterceptor::ServerRequestInterceptor::send_reply (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "send_reply",
@@ -3820,7 +3814,7 @@ void PortableInterceptor::ServerRequestInterceptor::send_reply (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -3841,9 +3835,9 @@ void PortableInterceptor::ServerRequestInterceptor::send_reply (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -3857,20 +3851,20 @@ void PortableInterceptor::ServerRequestInterceptor::send_exception (
     PortableInterceptor::ForwardRequest
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_ServerRequestInterceptor_send_exception_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_ServerRequestInterceptor_send_exception_exceptiondata [] =
   {
     {PortableInterceptor::_tc_ForwardRequest, PortableInterceptor::ForwardRequest::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "send_exception",
@@ -3885,7 +3879,7 @@ void PortableInterceptor::ServerRequestInterceptor::send_exception (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -3906,9 +3900,9 @@ void PortableInterceptor::ServerRequestInterceptor::send_exception (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -3922,20 +3916,20 @@ void PortableInterceptor::ServerRequestInterceptor::send_other (
     PortableInterceptor::ForwardRequest
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_ServerRequestInterceptor_send_other_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_ServerRequestInterceptor_send_other_exceptiondata [] =
   {
     {PortableInterceptor::_tc_ForwardRequest, PortableInterceptor::ForwardRequest::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "send_other",
@@ -3950,7 +3944,7 @@ void PortableInterceptor::ServerRequestInterceptor::send_other (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -3971,9 +3965,9 @@ void PortableInterceptor::ServerRequestInterceptor::send_other (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -4011,7 +4005,7 @@ void *PortableInterceptor::ServerRequestInterceptor::_tao_QueryInterface (ptr_ar
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -4089,7 +4083,7 @@ PortableInterceptor::IORInfo_ptr PortableInterceptor::IORInfo::_unchecked_narrow
         return default_proxy;
 
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -4121,16 +4115,16 @@ CORBA::Policy_ptr PortableInterceptor::IORInfo::get_effective_policy (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Policy_ptr _tao_retval = CORBA::Policy::_nil ();
   CORBA::Policy_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "get_effective_policy",
@@ -4145,7 +4139,7 @@ CORBA::Policy_ptr PortableInterceptor::IORInfo::get_effective_policy (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -4175,7 +4169,7 @@ CORBA::Policy_ptr PortableInterceptor::IORInfo::get_effective_policy (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -4188,15 +4182,15 @@ void PortableInterceptor::IORInfo::add_ior_component (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "add_ior_component",
@@ -4211,7 +4205,7 @@ void PortableInterceptor::IORInfo::add_ior_component (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -4232,9 +4226,9 @@ void PortableInterceptor::IORInfo::add_ior_component (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -4248,15 +4242,15 @@ void PortableInterceptor::IORInfo::add_ior_component_to_profile (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "add_ior_component_to_profile",
@@ -4271,7 +4265,7 @@ void PortableInterceptor::IORInfo::add_ior_component_to_profile (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -4293,9 +4287,9 @@ void PortableInterceptor::IORInfo::add_ior_component_to_profile (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -4320,7 +4314,7 @@ void *PortableInterceptor::IORInfo::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -4343,15 +4337,15 @@ const char* PortableInterceptor::IORInfo::_interface_repository_id (void) const
   TAO_NAMESPACE_BEGIN (PortableInterceptor)
   TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_IORInfo, &_tc_TAO_tc_PortableInterceptor_IORInfo)
   TAO_NAMESPACE_END
-    
+
   // default constructor
   PortableInterceptor::IORInterceptor::IORInterceptor (void)
   {}
-  
+
   // destructor
   PortableInterceptor::IORInterceptor::~IORInterceptor (void)
   {}
-  
+
   void PortableInterceptor::IORInterceptor::_tao_any_destructor (void *x)
   {
     IORInterceptor *tmp = ACE_static_cast (IORInterceptor*,x);
@@ -4374,7 +4368,7 @@ const char* PortableInterceptor::IORInfo::_interface_repository_id (void) const
       }
     return IORInterceptor::_unchecked_narrow (obj, ACE_TRY_ENV);
   }
-  
+
   PortableInterceptor::IORInterceptor_ptr PortableInterceptor::IORInterceptor::_unchecked_narrow (
       CORBA::Object_ptr obj,
       CORBA::Environment &
@@ -4397,7 +4391,7 @@ const char* PortableInterceptor::IORInfo::_interface_repository_id (void) const
           ACE_NEW_RETURN (default_proxy, ::PortableInterceptor::IORInterceptor (stub), IORInterceptor::_nil ());
           return default_proxy;
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -4429,15 +4423,15 @@ void PortableInterceptor::IORInterceptor::establish_components (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "establish_components",
@@ -4452,7 +4446,7 @@ void PortableInterceptor::IORInterceptor::establish_components (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -4473,9 +4467,9 @@ void PortableInterceptor::IORInterceptor::establish_components (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -4513,7 +4507,7 @@ void *PortableInterceptor::IORInterceptor::_tao_QueryInterface (ptr_arith_t type
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -4591,7 +4585,7 @@ PortableInterceptor::PolicyFactory_ptr PortableInterceptor::PolicyFactory::_unch
         return default_proxy;
 
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -4625,21 +4619,21 @@ CORBA::Policy_ptr PortableInterceptor::PolicyFactory::create_policy (
     CORBA::PolicyError
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_PolicyFactory_create_policy_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_PolicyFactory_create_policy_exceptiondata [] =
   {
     {CORBA::_tc_PolicyError, CORBA::PolicyError::_alloc}
   };
 
   CORBA::Policy_ptr _tao_retval = CORBA::Policy::_nil ();
   CORBA::Policy_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_policy",
@@ -4654,7 +4648,7 @@ CORBA::Policy_ptr PortableInterceptor::PolicyFactory::create_policy (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -4685,7 +4679,7 @@ CORBA::Policy_ptr PortableInterceptor::PolicyFactory::create_policy (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -4710,7 +4704,7 @@ void *PortableInterceptor::PolicyFactory::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -4788,7 +4782,7 @@ PortableInterceptor::ORBInitInfo_ptr PortableInterceptor::ORBInitInfo::_unchecke
         return default_proxy;
 
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -4817,7 +4811,7 @@ static const CORBA::Long _oc_PortableInterceptor_ORBInitInfo_ObjectId[] =
   TAO_ENCAP_BYTE_ORDER, // byte order
   49, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x496e7465), ACE_NTOHL (0x72636570), ACE_NTOHL (0x746f722f), ACE_NTOHL (0x4f524249), ACE_NTOHL (0x6e697449), ACE_NTOHL (0x6e666f2f), ACE_NTOHL (0x4f626a65), ACE_NTOHL (0x63744964), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:PortableInterceptor/ORBInitInfo/ObjectId:1.0
   9, ACE_NTOHL (0x4f626a65), ACE_NTOHL (0x63744964), ACE_NTOHL (0x0),  // name = ObjectId
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBInitInfo_ObjectId (CORBA::tk_alias, sizeof (_oc_PortableInterceptor_ORBInitInfo_ObjectId), (char *) &_oc_PortableInterceptor_ORBInitInfo_ObjectId, 0, sizeof (PortableInterceptor::ORBInitInfo::ObjectId));
@@ -4918,7 +4912,7 @@ static const CORBA::Long _oc_PortableInterceptor_ORBInitInfo_DuplicateName[] =
   14, ACE_NTOHL (0x4475706c), ACE_NTOHL (0x69636174), ACE_NTOHL (0x654e616d), ACE_NTOHL (0x65000000),  // name = DuplicateName
   1, // member count
   5, ACE_NTOHL (0x6e616d65), ACE_NTOHL (0x0),  // name = name
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBInitInfo_DuplicateName (CORBA::tk_except, sizeof (_oc_PortableInterceptor_ORBInitInfo_DuplicateName), (char *) &_oc_PortableInterceptor_ORBInitInfo_DuplicateName, 0, sizeof (PortableInterceptor::ORBInitInfo::DuplicateName));
@@ -5033,15 +5027,15 @@ PortableInterceptor::StringSeq * PortableInterceptor::ORBInitInfo::arguments (
     CORBA::SystemException
   ))
 {
-  
+
   PortableInterceptor::StringSeq *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, PortableInterceptor::StringSeq, _tao_retval);
   PortableInterceptor::StringSeq_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -5058,7 +5052,7 @@ PortableInterceptor::StringSeq * PortableInterceptor::ORBInitInfo::arguments (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -5082,7 +5076,7 @@ PortableInterceptor::StringSeq * PortableInterceptor::ORBInitInfo::arguments (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -5094,15 +5088,15 @@ char * PortableInterceptor::ORBInitInfo::orb_id (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::String_var _tao_safe_retval;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_orb_id",
@@ -5117,7 +5111,7 @@ char * PortableInterceptor::ORBInitInfo::orb_id (
       ACE_CHECK_RETURN (0);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -5141,7 +5135,7 @@ char * PortableInterceptor::ORBInitInfo::orb_id (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
     break;
-    
+
   }
 return _tao_safe_retval._retn ();
 }
@@ -5156,20 +5150,20 @@ void PortableInterceptor::ORBInitInfo::register_initial_reference (
     PortableInterceptor::ORBInitInfo::InvalidName
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_ORBInitInfo_register_initial_reference_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_ORBInitInfo_register_initial_reference_exceptiondata [] =
   {
     {PortableInterceptor::ORBInitInfo::_tc_InvalidName, PortableInterceptor::ORBInitInfo::InvalidName::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "register_initial_reference",
@@ -5184,7 +5178,7 @@ void PortableInterceptor::ORBInitInfo::register_initial_reference (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -5206,9 +5200,9 @@ void PortableInterceptor::ORBInitInfo::register_initial_reference (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -5222,20 +5216,20 @@ void PortableInterceptor::ORBInitInfo::resolve_initial_references (
     PortableInterceptor::ORBInitInfo::InvalidName
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_ORBInitInfo_resolve_initial_references_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_ORBInitInfo_resolve_initial_references_exceptiondata [] =
   {
     {PortableInterceptor::ORBInitInfo::_tc_InvalidName, PortableInterceptor::ORBInitInfo::InvalidName::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "resolve_initial_references",
@@ -5250,7 +5244,7 @@ void PortableInterceptor::ORBInitInfo::resolve_initial_references (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -5271,9 +5265,9 @@ void PortableInterceptor::ORBInitInfo::resolve_initial_references (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -5287,20 +5281,20 @@ void PortableInterceptor::ORBInitInfo::add_client_request_interceptor (
     PortableInterceptor::ORBInitInfo::DuplicateName
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_ORBInitInfo_add_client_request_interceptor_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_ORBInitInfo_add_client_request_interceptor_exceptiondata [] =
   {
     {PortableInterceptor::ORBInitInfo::_tc_DuplicateName, PortableInterceptor::ORBInitInfo::DuplicateName::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "add_client_request_interceptor",
@@ -5315,7 +5309,7 @@ void PortableInterceptor::ORBInitInfo::add_client_request_interceptor (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -5336,9 +5330,9 @@ void PortableInterceptor::ORBInitInfo::add_client_request_interceptor (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -5352,20 +5346,20 @@ void PortableInterceptor::ORBInitInfo::add_server_request_interceptor (
     PortableInterceptor::ORBInitInfo::DuplicateName
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_ORBInitInfo_add_server_request_interceptor_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_ORBInitInfo_add_server_request_interceptor_exceptiondata [] =
   {
     {PortableInterceptor::ORBInitInfo::_tc_DuplicateName, PortableInterceptor::ORBInitInfo::DuplicateName::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "add_server_request_interceptor",
@@ -5380,7 +5374,7 @@ void PortableInterceptor::ORBInitInfo::add_server_request_interceptor (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -5402,7 +5396,7 @@ void PortableInterceptor::ORBInitInfo::add_server_request_interceptor (
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
       break;
-      
+
     }
 
 }
@@ -5416,20 +5410,20 @@ void PortableInterceptor::ORBInitInfo::add_ior_interceptor (
     PortableInterceptor::ORBInitInfo::DuplicateName
   ))
 {
-  
-  static TAO_Exception_Data _tao_PortableInterceptor_ORBInitInfo_add_ior_interceptor_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_PortableInterceptor_ORBInitInfo_add_ior_interceptor_exceptiondata [] =
   {
     {PortableInterceptor::ORBInitInfo::_tc_DuplicateName, PortableInterceptor::ORBInitInfo::DuplicateName::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "add_ior_interceptor",
@@ -5444,7 +5438,7 @@ void PortableInterceptor::ORBInitInfo::add_ior_interceptor (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -5465,9 +5459,9 @@ void PortableInterceptor::ORBInitInfo::add_ior_interceptor (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -5479,15 +5473,15 @@ PortableInterceptor::SlotId PortableInterceptor::ORBInitInfo::allocate_slot_id (
     CORBA::SystemException
   ))
 {
-  
+
   PortableInterceptor::SlotId _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "allocate_slot_id",
@@ -5502,7 +5496,7 @@ PortableInterceptor::SlotId PortableInterceptor::ORBInitInfo::allocate_slot_id (
       ACE_CHECK_RETURN  (_tao_retval);
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -5526,7 +5520,7 @@ PortableInterceptor::SlotId PortableInterceptor::ORBInitInfo::allocate_slot_id (
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     break;
-    
+
   }
 return _tao_retval;
 }
@@ -5540,15 +5534,15 @@ void PortableInterceptor::ORBInitInfo::register_policy_factory (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "register_policy_factory",
@@ -5563,7 +5557,7 @@ void PortableInterceptor::ORBInitInfo::register_policy_factory (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -5585,9 +5579,9 @@ void PortableInterceptor::ORBInitInfo::register_policy_factory (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -5612,7 +5606,7 @@ void *PortableInterceptor::ORBInitInfo::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -5635,15 +5629,15 @@ const char* PortableInterceptor::ORBInitInfo::_interface_repository_id (void) co
   TAO_NAMESPACE_BEGIN (PortableInterceptor)
   TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ORBInitInfo, &_tc_TAO_tc_PortableInterceptor_ORBInitInfo)
   TAO_NAMESPACE_END
-    
+
   // default constructor
   PortableInterceptor::ORBInitializer::ORBInitializer (void)
   {}
-  
+
   // destructor
   PortableInterceptor::ORBInitializer::~ORBInitializer (void)
   {}
-  
+
   void PortableInterceptor::ORBInitializer::_tao_any_destructor (void *x)
   {
     ORBInitializer *tmp = ACE_static_cast (ORBInitializer*,x);
@@ -5666,7 +5660,7 @@ const char* PortableInterceptor::ORBInitInfo::_interface_repository_id (void) co
       }
     return ORBInitializer::_unchecked_narrow (obj, ACE_TRY_ENV);
   }
-  
+
   PortableInterceptor::ORBInitializer_ptr PortableInterceptor::ORBInitializer::_unchecked_narrow (
       CORBA::Object_ptr obj,
       CORBA::Environment &
@@ -5690,7 +5684,7 @@ const char* PortableInterceptor::ORBInitInfo::_interface_repository_id (void) co
           return default_proxy;
 
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -5722,15 +5716,15 @@ void PortableInterceptor::ORBInitializer::pre_init (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "pre_init",
@@ -5745,7 +5739,7 @@ void PortableInterceptor::ORBInitializer::pre_init (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -5766,9 +5760,9 @@ void PortableInterceptor::ORBInitializer::pre_init (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -5781,15 +5775,15 @@ void PortableInterceptor::ORBInitializer::post_init (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "post_init",
@@ -5804,7 +5798,7 @@ void PortableInterceptor::ORBInitializer::post_init (
       ACE_CHECK;
 
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-      
+
       _tao_call.prepare_header (
           ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV
         );
@@ -5825,9 +5819,9 @@ void PortableInterceptor::ORBInitializer::post_init (
       {
         ACE_THROW (CORBA::UNKNOWN(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
       }
-      
+
       break;
-      
+
     }
 
 }
@@ -5852,7 +5846,7 @@ void *PortableInterceptor::ORBInitializer::_tao_QueryInterface (ptr_arith_t type
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -6062,7 +6056,7 @@ void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::Interceptor_ptr _ta
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        PortableInterceptor::_tc_Interceptor, 
+        PortableInterceptor::_tc_Interceptor,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -6300,7 +6294,7 @@ void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::Current_ptr _tao_el
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        PortableInterceptor::_tc_Current, 
+        PortableInterceptor::_tc_Current,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -6362,7 +6356,7 @@ void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::RequestInfo_ptr _ta
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        PortableInterceptor::_tc_RequestInfo, 
+        PortableInterceptor::_tc_RequestInfo,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -6424,7 +6418,7 @@ void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::ClientRequestInfo_p
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        PortableInterceptor::_tc_ClientRequestInfo, 
+        PortableInterceptor::_tc_ClientRequestInfo,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -6486,7 +6480,7 @@ void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::ServerRequestInfo_p
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        PortableInterceptor::_tc_ServerRequestInfo, 
+        PortableInterceptor::_tc_ServerRequestInfo,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -6548,7 +6542,7 @@ void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::ClientRequestInterc
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        PortableInterceptor::_tc_ClientRequestInterceptor, 
+        PortableInterceptor::_tc_ClientRequestInterceptor,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -6610,7 +6604,7 @@ void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::ServerRequestInterc
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        PortableInterceptor::_tc_ServerRequestInterceptor, 
+        PortableInterceptor::_tc_ServerRequestInterceptor,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -6672,7 +6666,7 @@ void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::IORInfo_ptr _tao_el
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        PortableInterceptor::_tc_IORInfo, 
+        PortableInterceptor::_tc_IORInfo,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -6734,7 +6728,7 @@ void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::IORInterceptor_ptr 
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        PortableInterceptor::_tc_IORInterceptor, 
+        PortableInterceptor::_tc_IORInterceptor,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -6796,7 +6790,7 @@ void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::PolicyFactory_ptr _
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        PortableInterceptor::_tc_PolicyFactory, 
+        PortableInterceptor::_tc_PolicyFactory,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -6858,7 +6852,7 @@ void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::ORBInitInfo_ptr _ta
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        PortableInterceptor::_tc_ORBInitInfo, 
+        PortableInterceptor::_tc_ORBInitInfo,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -7096,7 +7090,7 @@ void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::ORBInitializer_ptr 
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        PortableInterceptor::_tc_ORBInitializer, 
+        PortableInterceptor::_tc_ORBInitializer,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -7157,20 +7151,20 @@ CORBA::Boolean operator<< (
   if (strm << _tao_sequence.length ())
   {
     // encode all elements
-    
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (PortableInterceptor::OctetSeq *)&_tao_sequence);
       if (oseq->mb ())
         return strm.write_octet_array_mb (oseq->mb ());
       else
         return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
-    
+
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
@@ -7187,14 +7181,14 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
-    
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
       oseq->replace (_tao_seq_len, strm.start ());
       oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
@@ -7203,10 +7197,10 @@ CORBA::Boolean operator>> (
     }
     else
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-    
+
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
@@ -7241,7 +7235,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
