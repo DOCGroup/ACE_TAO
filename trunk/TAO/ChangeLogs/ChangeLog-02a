@@ -1,6 +1,11 @@
+Fri Apr 26 19:15:05 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/IFRService.dsp:
+	  Made changes to the .dsp file for WIN32 Release.
+
 Fri Apr 26 19:06:34 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
-	* TAO_ACE.dsw:
+	* TAOACE.dsw:
 	* orbsvcs/IFR_Service/IFR_Service.dsp:
 	* orbsvcs/orbsvcs/IFRService.dsp:
 	* orbsvcs/orbsvcs/IFRService.dsw:
