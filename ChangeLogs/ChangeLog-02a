@@ -1,3 +1,8 @@
+Tue Jan 19 13:33:08 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * ace/ATM_Addr.cpp, ATM_QoS.cpp:
+          Fixing format characters for ACE_Log_Msg::log() method.
+
 Tue Jan 18 20:56:58 2000  Ossama Othman  <ossama@uci.edu>
 
 	* THANKS:
