@@ -1,10 +1,8 @@
 // $Id$
 
-
 // Portions of this file are:
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
-//
 
 #include "tao/Any.h"
 #include "tao/Typecode.h"
@@ -18,7 +16,9 @@
 # include "tao/Any.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Any, "$Id$")
+ACE_RCSID (tao,
+           Any,
+           "$Id$")
 
 
 CORBA::TypeCode_ptr
@@ -27,7 +27,7 @@ CORBA_Any::type (void) const
   return CORBA::TypeCode::_duplicate (this->type_.in ());
 }
 
-// Will replace if the typecode arg is an alias for the existing one -
+// Will replace if the TypeCode arg is an alias for the existing one -
 // otherwise raises an exception.
 
 void
@@ -561,8 +561,9 @@ CORBA_Any::operator<<= (const CORBA_Exception &exception)
   ACE_CATCHANY
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Exception in CORBA::Exception insertion\n")));
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::Exception ")
+                             ACE_TEXT ("insertion\n"));
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -591,8 +592,9 @@ CORBA_Any::operator<<= (CORBA_Exception *exception)
   ACE_CATCHANY
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Exception in CORBA::Exception insertion\n")));
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::Exception ")
+                             ACE_TEXT ("insertion\n"));
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -760,8 +762,10 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::Short extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::Short ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -792,8 +796,10 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::UShort extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::UShort ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -824,8 +830,10 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::Long extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::Long ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -856,8 +864,10 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::ULong extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::ULong ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -888,8 +898,10 @@ CORBA_Any::operator>>= (CORBA::LongLong &l) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::LongLong extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::LongLong ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -929,8 +941,10 @@ CORBA_Any::operator>>= (CORBA::ULongLong &l) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::ULongLong extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::ULongLong ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -961,8 +975,10 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::Float extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::Float ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -993,8 +1009,10 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::Double extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::Double ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1025,8 +1043,10 @@ CORBA_Any::operator>>= (CORBA::LongDouble &ld) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::LongDouble extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::LongDouble ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1059,8 +1079,10 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::Any extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::Any ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1103,11 +1125,12 @@ CORBA_Any::operator>>= (const CORBA::Any *&a) const
               return 0;
             }
 
-          ACE_const_cast(CORBA::Any*,
-                         this)->_tao_replace (CORBA::_tc_any,
-                                              1,
-                                              ACE_static_cast(CORBA::Any*,tmp),
-                                              CORBA::Any::_tao_any_destructor);
+          ACE_const_cast(
+            CORBA::Any*,
+            this)->_tao_replace (CORBA::_tc_any,
+                                 1,
+                                 ACE_static_cast (CORBA::Any *, tmp),
+                                 CORBA::Any::_tao_any_destructor);
 
           ACE_const_cast (CORBA::Any *&, a) = tmp._retn ();
           return 1;
@@ -1116,10 +1139,9 @@ CORBA_Any::operator>>= (const CORBA::Any *&a) const
   ACE_CATCHANY
     {
       if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Exception in CORBA::Any extraction\n")));
-        }
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::Any ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1148,7 +1170,7 @@ CORBA_Any::operator>>= (const char *&s) const
 
       if (this->any_owns_data_ && this->value_)
         {
-          s = ACE_static_cast (char *,this->value_);
+          s = ACE_static_cast (char *, this->value_);
           return 1;
         }
 
@@ -1183,14 +1205,14 @@ CORBA_Any::operator>>= (const char *&s) const
 void
 CORBA_Any::_tao_any_string_destructor (void *x)
 {
-  char *tmp = ACE_static_cast (char*,x);
+  char *tmp = ACE_static_cast (char *, x);
   CORBA::string_free (tmp);
 }
 
 void
 CORBA::Any::_tao_any_wstring_destructor (void *x)
 {
-  CORBA::WChar *tmp = ACE_static_cast (CORBA::WChar*,x);
+  CORBA::WChar *tmp = ACE_static_cast (CORBA::WChar *, x);
   CORBA::wstring_free (tmp);
 }
 
@@ -1215,7 +1237,7 @@ CORBA_Any::operator>>= (const CORBA::WChar *&s) const
 
       if (this->any_owns_data_ && this->value_)
         {
-          s = ACE_static_cast (CORBA::WChar *,this->value_);
+          s = ACE_static_cast (CORBA::WChar *, this->value_);
           return 1;
         }
 
@@ -1239,8 +1261,10 @@ CORBA_Any::operator>>= (const CORBA::WChar *&s) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in unbounded wstring extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in unbounded wstring ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1250,7 +1274,7 @@ CORBA_Any::operator>>= (const CORBA::WChar *&s) const
 void
 CORBA::Any::_tao_any_tc_destructor (void *x)
 {
-  CORBA::TypeCode_ptr tmp = ACE_static_cast (CORBA::TypeCode_ptr,x);
+  CORBA::TypeCode_ptr tmp = ACE_static_cast (CORBA::TypeCode_ptr, x);
   CORBA::release (tmp);
 }
 
@@ -1297,8 +1321,10 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::TypeCode_ptr extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::TypeCode_ptr ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1331,8 +1357,10 @@ CORBA_Any::operator>>= (to_boolean b) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::Boolean extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::Boolean ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1363,8 +1391,10 @@ CORBA_Any::operator>>= (to_octet o) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::Octet extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::Octet ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1395,8 +1425,10 @@ CORBA_Any::operator>>= (to_char c) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::Char extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::Char ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1427,8 +1459,10 @@ CORBA_Any::operator>>= (to_wchar wc) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::WChar extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::WChar ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1473,7 +1507,7 @@ CORBA_Any::operator>>= (to_string s) const
 
       if (this->any_owns_data_ && this->value_)
         {
-          s.val_ = ACE_static_cast (char*,this->value_);
+          s.val_ = ACE_static_cast (char *, this->value_);
           return 1;
         }
 
@@ -1490,7 +1524,7 @@ CORBA_Any::operator>>= (to_string s) const
                                                    this);
       non_const_this->_tao_replace (CORBA::_tc_string,
                                     1,
-                                    ACE_static_cast(char*,tmp),
+                                    ACE_static_cast (char *, tmp),
                                     CORBA::Any::_tao_any_string_destructor);
 
       s.val_ = tmp._retn ();
@@ -1498,8 +1532,10 @@ CORBA_Any::operator>>= (to_string s) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in bounded string extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in bounded string ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1544,7 +1580,7 @@ CORBA_Any::operator>>= (to_wstring ws) const
 
       if (this->any_owns_data_ && this->value_)
         {
-          ws.val_ = ACE_static_cast(CORBA::WChar *, this->value_);
+          ws.val_ = ACE_static_cast (CORBA::WChar *, this->value_);
           return 1;
         }
 
@@ -1559,9 +1595,9 @@ CORBA_Any::operator>>= (to_wstring ws) const
 
       CORBA::Any *non_const_this = ACE_const_cast (CORBA::Any*,
                                                    this);
-      non_const_this->_tao_replace (CORBA::_tc_string,
+      non_const_this->_tao_replace (CORBA::_tc_wstring,
                                     1,
-                                    ACE_static_cast(CORBA::WChar*,tmp),
+                                    ACE_static_cast (CORBA::WChar *, tmp),
                                     CORBA::Any::_tao_any_wstring_destructor);
 
       ws.val_ = tmp._retn ();
@@ -1569,8 +1605,10 @@ CORBA_Any::operator>>= (to_wstring ws) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in bounded wstring extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in bounded wstring ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1641,8 +1679,10 @@ CORBA_Any::operator>>= (to_object obj) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::Object_ptr extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::Object_ptr ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1693,8 +1733,10 @@ CORBA_Any::operator>>= (to_abstract_base obj) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::AbstractBase extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::AbstractBase ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1739,8 +1781,10 @@ CORBA_Any::operator>>= (to_value obj) const
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Exception in CORBA::ValueBase extraction\n")));
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("Exception in CORBA::ValueBase ")
+                             ACE_TEXT ("extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1815,8 +1859,7 @@ operator<< (TAO_OutputCDR& cdr,
 }
 
 CORBA::Boolean
-operator>> (TAO_InputCDR &cdr,
-            CORBA::Any &x)
+operator>> (TAO_InputCDR &cdr, CORBA::Any &x)
 {
   CORBA::TypeCode_var tc;
 
@@ -1837,7 +1880,9 @@ operator>> (TAO_InputCDR &cdr,
 
       // Skip over the next aregument.
       CORBA::TypeCode::traverse_status status =
-        TAO_Marshal_Object::perform_skip (tc.in (), &cdr ACE_ENV_ARG_PARAMETER);
+        TAO_Marshal_Object::perform_skip (tc.in (),
+                                          &cdr
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
