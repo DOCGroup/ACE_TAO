@@ -1,7 +1,7 @@
 Sat Nov 21 14:32:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/DLL: Cleaned up the DLL logic to handle "close on
-	  destruction" properly.
+        * ace/DLL: Cleaned up the DLL logic to handle "close on
+          destruction" properly.
 
 Sat Nov 21 08:34:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -9,6 +9,8 @@ Sat Nov 21 08:34:44 1998  David L. Levine  <levine@cs.wustl.edu>
           use only.  If IP_ADD_MEMBERSHIP isn't defined, ACE defines
           ACE_LACKS_IP_ADD_MEMBERSHIP for subsequent use in
           determining whether to define ip_mreq.
+
+        * bin/html-windex: updated to match Doug's ~/bin version.
 
 Fri Nov 20 00:58:35 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
