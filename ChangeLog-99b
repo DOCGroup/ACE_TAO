@@ -1,3 +1,10 @@
+Sat Oct  2 12:50:43 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* ace/INET_Addr: Previous, it was not possible to specify the
+	  proto argument in the ACE_INET_Addr constructor because it was
+ 	  hard-coded to "tcp".  Now, this can be passed as a parameter.
+  	  Thanks to Jaymes Galvin <galvinj@agcs.com> for this suggestion.
+
 Fri Oct  1 14:44:12 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/OS.h : Added the Winsock2 GQOS related #defines to this
