@@ -1,5 +1,20 @@
 Fri Dec  5 11:42:25 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/iiopobj.cpp (set): Changed the IIOP::Profile::set() methods
+ 	which take an ACE_INET_Addr to retrieve the host IP address rather
+ 	than host name for storage in the profile.  This is motivated by
+ 	the following situation: machine has 3 interfaces (not including
+ 	loopback), and it is desired that clients and servers communicate
+ 	across only one interface.
+  	
+	When our IDL_Cubit example's factory created new Cubit instances,
+ 	the set() method would set the host name for that IIOP::Profile to
+ 	whatever ACE_INET_Addr::get_host_name() returned.  In this case,
+ 	the IP addr for interface 3 (which is not the primary interface)
+ 	would return a *LIST* of names in which the first name was that of
+ 	the primary interface.  Thus, the IP address used by the client
+ 	would be wrong.
+
 	* tao/object.h: Minor corrections to header comments.
 
 	* tao/{orb_core,orbobj}.{h,cpp}: Moved server_factory and
