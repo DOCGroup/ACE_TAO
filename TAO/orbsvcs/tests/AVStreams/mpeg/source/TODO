@@ -1,32 +1,45 @@
 $Id$
 
-Naga, lets write the status of these things in this list, and keep it
-updated.
-
 Things to do
 ------------
 
 "Simple" things
 
 - Remove kerberos warnings
+
 - Seg fault wile exiting
   Destructor of reactor crashes the server
+
 - Parent-Child relationship
+
 - rttag is enabled with -r
   does it work ?
+
 - rename Mpeg_Server to AV_Server
+
 - Make #define's into enums in common.h/globals.h
+
 - Change handle_input to handle_connection in
   Mpeg_Svc_Handler
+
 - Video_Sig_Handler is in Mpeg_Server -- needs to be moved to Video_Server
+
 - Split up VIDEO_FAST into two commands - VIDEO_FAST_{FORWARD,BACKWARD}
+
 - create a helper class for video, and put FBread et al in that
+
 - try compiling ACE and the application with fast=1 to see if
   performance improves
+
 - Rename "play", "play_send" etc. appropriately
+
+
 
 "Not-so-simple" things 
 
+
 - Logic for Video_Server is convoluted!!
+
 - Need to modularize Audio_Server
+
 - Seperate command parsing in its own class
