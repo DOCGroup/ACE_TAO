@@ -104,21 +104,26 @@ private:
 int
 ACE_Log_Msg_Manager::open ()
 {
+#if !defined (VXWORKS)
   if (ACE_Log_Msg_Manager::instances_ == 0)
     {
       ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::instances_, ACE_Log_Msg_Set, 0);
     }
+#endif /* ! VXWORKS */
+
   return 1;
 }
 
 void
 ACE_Log_Msg::close ()
 {
+#if !defined (VXWORKS)
   // Please note that this will be called by a statement that is
   // harded coded into the ACE_Object_Manager's shutdown sequence,
   // in its destructor.
 
   ACE_Log_Msg_Manager::close ();
+#endif /* ! VXWORKS */
 }
 
 ACE_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
