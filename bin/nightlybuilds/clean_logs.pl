@@ -44,6 +44,7 @@ if (!defined @dirs) {
 }
 
 foreach $dir (@dirs) {
+    my @existing;
     $d = new DirHandle ($dir);
 
     if (defined $d) {
