@@ -11,7 +11,7 @@ ACE_INLINE ACE_Service_Object_Ptr::ACE_Service_Object_Ptr (ACE_Service_Object *s
 ACE_INLINE ACE_Service_Object_Ptr::~ACE_Service_Object_Ptr (void) 
 { 
   this->service_object_->fini ();
-  this->service_object_->destroy ();
+  delete this->service_object_;
 }
 
 ACE_INLINE ACE_Service_Object *
