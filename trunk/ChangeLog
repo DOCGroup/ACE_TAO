@@ -1,3 +1,15 @@
+Fri Apr 26 07:42:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IOStream_Test.cpp:
+          Corrected the debug output string of server received so that
+          the formatting is the same as client received. Thanks to
+          Soeren Gerlach for reporting this.
+
+        * examples/Reactor/WFMO_Reactor/Talker.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/Proactor/test_proactor2.cpp:
+          Fixed BCB compile warnings
+
 Thu Apr 25 17:34:31 2002  Steve Huston  <shuston@riverace.com>
 
         * bin/auto_compile: When doing 'realclean', do them in reverse
