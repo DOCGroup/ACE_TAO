@@ -6,13 +6,13 @@
     <link rev=made href="mailto:levine@cs.wustl.edu">
   </head>
 
-<BODY text = "#000000"
+<body text = "#000000"
 link="#000fff"
 vlink="#ff0f0f"
 bgcolor="#ffffff">
 
 <hr>
-  <h3>ACE Software Development Guidelines</h3>
+<h3>ACE Software Development Guidelines</h3>
 
 <ul>
   <li><strong>General</strong><p>
@@ -82,6 +82,10 @@ bgcolor="#ffffff">
         unless absolutely necessary.  Not all ACE platforms support them.
         Therefore, wherever they are used, ACE_LACKS_FLOATING_POINT
         conditional code must be also be used.<p>
+
+    <li>Avoid including the string ``Error'' in a source code filename.
+        GNU Make's error messages start with ``Error''.  So, it's much
+        easier to search for errors if filenames don't contain ``Error''.<p>
   </ul>
 
   <li><strong>Code Documentation</strong><p>
@@ -226,8 +230,8 @@ bgcolor="#ffffff">
         <code>#endif</code> for the optimization to be effective and
         correct.<p>
 
-    <li><P>Files that contain parametric classes should follow this style:
-      <PRE>
+    <li><p>Files that contain parametric classes should follow this style:
+      <pre>
       #ifndef FOO_T_H
       #define FOO_T_H
 
@@ -251,14 +255,14 @@ bgcolor="#ffffff">
       #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
       #endif /* FOO_T_H */
-</PRE></P>
-      <P>
+</pre></p>
+      <p>
       Notice that some compilers need to see the code of the template,
-      hence the <CODE>.cpp</CODE> file must be included from the
+      hence the <code>.cpp</code> file must be included from the
       header file.
-      </P>
-      <P>
-      To avoid multiple inclusions of the <CODE>.cpp</CODE> file it
+      </p>
+      <p>
+      To avoid multiple inclusions of the <code>.cpp</code> file it
       should also be protected as in:
       <pre>
       #ifndef FOO_T_C
@@ -279,13 +283,12 @@ bgcolor="#ffffff">
 
       #endif /* FOO_T_H */
 </pre></p>
-      <P>
-      Finally you may want to include the template header file from a
+      <p>Finally, you may want to include the template header file from a
       non-template header file (check
-      <CODE>$ACE_ROOT/ace/Synch.h</CODE>); in such a case the template
+      <code>$ACE_ROOT/ace/Synch.h</code>); in such a case the template
       header should be included <strong>after</strong> the inline
-      function definitions, as in:</P>
-      <P><PRE>
+      function definitions, as in:</p>
+      <p><pre>
       #ifndef FOO_H
       #define FOO_H
 
@@ -303,8 +306,13 @@ bgcolor="#ffffff">
       #include "Foo_T.h"
 
       #endif /* FOO_H */
-</PRE></P>
+</pre></p>
     </li>
+
+    <li>Avoid <code>#include &lt;math.h&gt;</code> if at all possible.
+      The <code>/usr/include/math.h</code> on SunOS 5.5.1 through 5.7
+      defines a struct name <strong>exception</strong>, which complicates
+      use of exception.<p>
   </ul>
 
   <li><strong>C++ Syntax and Constructs</strong><p>
@@ -585,12 +593,10 @@ bgcolor="#ffffff">
     <li>Functions should always return -1 to indicate failure, and
         0 or greater to indicate success.<p>
 
-    <li><P>Separate the code of your templates from the code for
+    <li>Separate the code of your templates from the code for
         non-parametric classes: some compilers get confused when
-        template and non-template code is mixed in the same file.
-      </P>
+        template and non-template code is mixed in the same file.<p>
     </li>
-
   </ul>
 
   <li><strong>I/O</strong><p>
@@ -768,18 +774,15 @@ bgcolor="#ffffff">
       </ul><p>
 
   <li><strong>Compilation</strong><p>
-
   <ul>
-
-    <li> Whenever you add a new test or example to ACE or TAO, make
-         sure that you modify the makefile or project file in the
-         parent directory.  This will make sure that your code gets
-         compiled on a regular basis. In some cases, this also applies
-         to MSVC project files. <p>
-
-      </ul><p>
-
+    <li>Whenever you add a new test or example to ACE or TAO, make
+        sure that you modify the Makefile or project file in the
+        parent directory.  This will make sure that your code gets
+        compiled on a regular basis.  In some cases, this also applies
+        to MSVC project files.<p>
+  </ul><p>
 </ul>
+
 
 <hr>
 <h3><a href="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">ACE</a>
@@ -1002,7 +1005,7 @@ bgcolor="#ffffff">
   Design Rules</a></h3>
 
 
-<hr> <P>
+<hr><p>
   <font size=-1>
     Last modified <!--#echo var="LAST_MODIFIED" -->.<p>
   </font>
