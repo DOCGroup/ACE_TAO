@@ -560,11 +560,11 @@ ACE_OS::uname (struct utsname *name)
 
   SYSTEM_INFO sinfo;
 #   if defined (ACE_HAS_PHARLAP)
-  // PharLap doesn't do GetSystemInfo.  What's really wanted is the CPU
-  // architecture, so we can get that with EtsGetSystemInfo. Fill in what's
-  // wanted in the SYSTEM_INFO structure, and carry on. Note that the
-  // CPU type values in EK_KERNELINFO have the same values are the ones
-  // defined for SYSTEM_INFO.
+  // PharLap doesn't do GetSystemInfo.  What's really wanted is the
+  // CPU architecture, so we can get that with EtsGetSystemInfo. Fill
+  // in what's wanted in the SYSTEM_INFO structure, and carry on. Note
+  // that the CPU type values in EK_KERNELINFO have the same values
+  // are the ones defined for SYSTEM_INFO.
   EK_KERNELINFO ets_kern;
   EK_SYSTEMINFO ets_sys;
   EtsGetSystemInfo (&ets_kern, &ets_sys);
@@ -578,99 +578,99 @@ ACE_OS::uname (struct utsname *name)
 #   endif /* ACE_HAS_PHARLAP */
 
   if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
-  {
-    // Get information from the two structures
-    ACE_OS::sprintf (name->release,
-#   if defined (ACE_HAS_WINCE)
-                     ACE_TEXT ("Windows CE %d.%d"),
-#   else
-                     ACE_TEXT ("Windows NT %d.%d"),
-#   endif /* ACE_HAS_WINCE */
-                     vinfo.dwMajorVersion,
-                     vinfo.dwMinorVersion);
-    ACE_OS::sprintf (name->version,
-                     ACE_TEXT ("Build %d %s"),
-                     vinfo.dwBuildNumber,
-                     vinfo.szCSDVersion);
-
-    // We have to make sure that the size of (processor + subtype) is
-    // not greater than the size of name->machine.  So we give half
-    // the space to the processor and half the space to subtype.  The
-    // -1 is necessary for because of the space between processor and
-    // subtype in the machine name.
-    const int bufsize = ((sizeof (name->machine) / sizeof (ACE_TCHAR)) / 2) - 1;
-    ACE_TCHAR processor[bufsize] = ACE_TEXT ("Unknown");
-    ACE_TCHAR subtype[bufsize] = ACE_TEXT ("Unknown");
-
-    WORD arch = sinfo.wProcessorArchitecture;
-
-    switch (arch)
     {
-    case PROCESSOR_ARCHITECTURE_INTEL:
-      ACE_OS::strcpy (processor, ACE_TEXT ("Intel"));
-      if (sinfo.wProcessorLevel == 3)
-        ACE_OS::strcpy (subtype, ACE_TEXT ("80386"));
-      else if (sinfo.wProcessorLevel == 4)
-        ACE_OS::strcpy (subtype, ACE_TEXT ("80486"));
-      else if (sinfo.wProcessorLevel == 5)
-        ACE_OS::strcpy (subtype, ACE_TEXT ("Pentium"));
-      else if (sinfo.wProcessorLevel == 6)
-        ACE_OS::strcpy (subtype, ACE_TEXT ("Pentium Pro"));
-      else if (sinfo.wProcessorLevel == 7)  // I'm guessing here
-        ACE_OS::strcpy (subtype, ACE_TEXT ("Pentium II"));
-      break;
-    case PROCESSOR_ARCHITECTURE_MIPS:
-      ACE_OS::strcpy (processor, ACE_TEXT ("MIPS"));
-      ACE_OS::strcpy (subtype, ACE_TEXT ("R4000"));
-      break;
-    case PROCESSOR_ARCHITECTURE_ALPHA:
-      ACE_OS::strcpy (processor, ACE_TEXT ("Alpha"));
-      ACE_OS::sprintf (subtype, ACE_TEXT ("%d"), sinfo.wProcessorLevel);
-      break;
-    case PROCESSOR_ARCHITECTURE_PPC:
-      ACE_OS::strcpy (processor, ACE_TEXT ("PPC"));
-      if (sinfo.wProcessorLevel == 1)
-        ACE_OS::strcpy (subtype, ACE_TEXT ("601"));
-      else if (sinfo.wProcessorLevel == 3)
-        ACE_OS::strcpy (subtype, ACE_TEXT ("603"));
-      else if (sinfo.wProcessorLevel == 4)
-        ACE_OS::strcpy (subtype, ACE_TEXT ("604"));
-      else if (sinfo.wProcessorLevel == 6)
-        ACE_OS::strcpy (subtype, ACE_TEXT ("603+"));
-      else if (sinfo.wProcessorLevel == 9)
-        ACE_OS::strcpy (subtype, ACE_TEXT ("804+"));
-      else if (sinfo.wProcessorLevel == 20)
-        ACE_OS::strcpy (subtype, ACE_TEXT ("620"));
-      break;
-    case PROCESSOR_ARCHITECTURE_UNKNOWN:
-    default:
-      // @@ We could provide WinCE specific info here.  But let's
-      //    defer that to some later point.
-      ACE_OS::strcpy (processor, ACE_TEXT ("Unknown"));
-      break;
-    }
-    ACE_OS::sprintf(name->machine, ACE_TEXT ("%s %s"), processor, subtype);
-  }
-  else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS)
-  {
-    // Get Windows 95 Information
-    ACE_OS::strcpy (name->release, ACE_TEXT ("Windows 95"));
-    ACE_OS::sprintf (name->version, ACE_TEXT ("%d"), LOWORD (vinfo.dwBuildNumber));
-    if (sinfo.dwProcessorType == PROCESSOR_INTEL_386)
-      ACE_OS::strcpy (name->machine, ACE_TEXT ("Intel 80386"));
-    else if (sinfo.dwProcessorType == PROCESSOR_INTEL_486)
-      ACE_OS::strcpy (name->machine, ACE_TEXT ("Intel 80486"));
-    else if (sinfo.dwProcessorType == PROCESSOR_INTEL_PENTIUM)
-      ACE_OS::strcpy (name->machine, ACE_TEXT ("Intel Pentium"));
-  }
-  else
-  {
-    // We don't know what this is!
+      // Get information from the two structures
+      ACE_OS::sprintf (name->release,
+#   if defined (ACE_HAS_WINCE)
+                       ACE_TEXT ("Windows CE %d.%d"),
+#   else
+                       ACE_TEXT ("Windows NT %d.%d"),
+#   endif /* ACE_HAS_WINCE */
+                       vinfo.dwMajorVersion,
+                       vinfo.dwMinorVersion);
+      ACE_OS::sprintf (name->version,
+                       ACE_TEXT ("Build %d %s"),
+                       vinfo.dwBuildNumber,
+                       vinfo.szCSDVersion);
 
-    ACE_OS::strcpy (name->release, ACE_TEXT ("???"));
-    ACE_OS::strcpy (name->version, ACE_TEXT ("???"));
-    ACE_OS::strcpy (name->machine, ACE_TEXT ("???"));
-  }
+      // We have to make sure that the size of (processor + subtype)
+      // is not greater than the size of name->machine.  So we give
+      // half the space to the processor and half the space to
+      // subtype.  The -1 is necessary for because of the space
+      // between processor and subtype in the machine name.
+      const int bufsize = ((sizeof (name->machine) / sizeof (ACE_TCHAR)) / 2) - 1;
+      ACE_TCHAR processor[bufsize] = ACE_TEXT ("Unknown");
+      ACE_TCHAR subtype[bufsize] = ACE_TEXT ("Unknown");
+
+      WORD arch = sinfo.wProcessorArchitecture;
+
+      switch (arch)
+        {
+        case PROCESSOR_ARCHITECTURE_INTEL:
+          ACE_OS::strcpy (processor, ACE_TEXT ("Intel"));
+          if (sinfo.wProcessorLevel == 3)
+            ACE_OS::strcpy (subtype, ACE_TEXT ("80386"));
+          else if (sinfo.wProcessorLevel == 4)
+            ACE_OS::strcpy (subtype, ACE_TEXT ("80486"));
+          else if (sinfo.wProcessorLevel == 5)
+            ACE_OS::strcpy (subtype, ACE_TEXT ("Pentium"));
+          else if (sinfo.wProcessorLevel == 6)
+            ACE_OS::strcpy (subtype, ACE_TEXT ("Pentium Pro"));
+          else if (sinfo.wProcessorLevel == 7)  // I'm guessing here
+            ACE_OS::strcpy (subtype, ACE_TEXT ("Pentium II"));
+          break;
+        case PROCESSOR_ARCHITECTURE_MIPS:
+          ACE_OS::strcpy (processor, ACE_TEXT ("MIPS"));
+          ACE_OS::strcpy (subtype, ACE_TEXT ("R4000"));
+          break;
+        case PROCESSOR_ARCHITECTURE_ALPHA:
+          ACE_OS::strcpy (processor, ACE_TEXT ("Alpha"));
+          ACE_OS::sprintf (subtype, ACE_TEXT ("%d"), sinfo.wProcessorLevel);
+          break;
+        case PROCESSOR_ARCHITECTURE_PPC:
+          ACE_OS::strcpy (processor, ACE_TEXT ("PPC"));
+          if (sinfo.wProcessorLevel == 1)
+            ACE_OS::strcpy (subtype, ACE_TEXT ("601"));
+          else if (sinfo.wProcessorLevel == 3)
+            ACE_OS::strcpy (subtype, ACE_TEXT ("603"));
+          else if (sinfo.wProcessorLevel == 4)
+            ACE_OS::strcpy (subtype, ACE_TEXT ("604"));
+          else if (sinfo.wProcessorLevel == 6)
+            ACE_OS::strcpy (subtype, ACE_TEXT ("603+"));
+          else if (sinfo.wProcessorLevel == 9)
+            ACE_OS::strcpy (subtype, ACE_TEXT ("804+"));
+          else if (sinfo.wProcessorLevel == 20)
+            ACE_OS::strcpy (subtype, ACE_TEXT ("620"));
+          break;
+        case PROCESSOR_ARCHITECTURE_UNKNOWN:
+        default:
+          // @@ We could provide WinCE specific info here.  But let's
+          //    defer that to some later point.
+          ACE_OS::strcpy (processor, ACE_TEXT ("Unknown"));
+          break;
+        }
+      ACE_OS::sprintf (name->machine, ACE_TEXT ("%s %s"), processor, subtype);
+    }
+  else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS)
+    {
+      // Get Windows 95 Information
+      ACE_OS::strcpy (name->release, ACE_TEXT ("Windows 95"));
+      ACE_OS::sprintf (name->version, ACE_TEXT ("%d"), LOWORD (vinfo.dwBuildNumber));
+      if (sinfo.dwProcessorType == PROCESSOR_INTEL_386)
+        ACE_OS::strcpy (name->machine, ACE_TEXT ("Intel 80386"));
+      else if (sinfo.dwProcessorType == PROCESSOR_INTEL_486)
+        ACE_OS::strcpy (name->machine, ACE_TEXT ("Intel 80486"));
+      else if (sinfo.dwProcessorType == PROCESSOR_INTEL_PENTIUM)
+        ACE_OS::strcpy (name->machine, ACE_TEXT ("Intel Pentium"));
+    }
+  else
+    {
+      // We don't know what this is!
+
+      ACE_OS::strcpy (name->release, ACE_TEXT ("???"));
+      ACE_OS::strcpy (name->version, ACE_TEXT ("???"));
+      ACE_OS::strcpy (name->machine, ACE_TEXT ("???"));
+    }
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
 # elif defined (VXWORKS)
