@@ -12346,14 +12346,12 @@ ACE_OS::opendir (const char *filename)
   result = ::open_dir (ACE_const_cast (char *, filename), dir);
 #endif /* defined ACE_PSOS_DIAB_PPC */
   if (0 == result)
-  {
     return dir;
-  }
   else
-  {
-    errno = result;
-    return 0;
-  }
+    {
+      errno = result;
+      return 0;
+    }
 
 #  else /* ! defined (ACE_PSOS) */
   // VxWorks' ::opendir () is declared with a non-const argument.
@@ -12378,9 +12376,7 @@ ACE_OS::closedir (DIR *d)
 #endif /* defined ACE_PSOS_DIAB_PPC */
   delete d;
   if (result != 0)
-  {
     errno = result;
-  }
 #  else /* ! defined (ACE_PSOS) */
   ::closedir (d);
 #  endif /* ! defined (ACE_PSOS) */
