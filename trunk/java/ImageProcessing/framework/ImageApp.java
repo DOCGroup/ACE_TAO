@@ -173,44 +173,51 @@ public class ImageApp extends Applet
     // Check if the filename has been previously specified and
     // if not then check if the user has specified the name of the
     // config file
-    if (this.configFile_ == null) {
+    if (this.configFile_ == null) 
       this.configFile_ = getParameter ("configFile");
-      System.out.println ("Configuration File (1): " + this.configFile_);
-    }
-    if (this.configFile_ == null)
-      this.configFile_ = "http://www.cs.wustl.edu/~pjain/java/ACE_wrappers/java/ImageProcessing/framework/filter.conf";
 
-    URL url;
-    String configInfo= null;
-    try
-      {
-	System.out.println ("Configuration File: " + this.configFile_);
-	// Create a new URL
-	url = new URL (this.configFile_);
+      /*
+      if (this.configFile_ == null)
+	this.configFile_ = "http://www.cs.wustl.edu/~pjain/java/ACE_wrappers/java/ImageProcessing/framework/filter.conf";
+	*/
 
-	// Get the input stream and pipe it to a DataInputStream
-	DataInputStream iStream = new DataInputStream (url.openStream ());
+    String configInfo = null;
 
-	// Create a buffer to hold all the data we get
-	StringBuffer tempBuf = new StringBuffer ();
-	// Keep reading the data until we are done
-	String tempString = iStream.readLine ();
-	while (tempString != null)
+    // Only get the file as a URL if it was specified as a parameter!
+    if ((this.configFile_ == null) || (!this.configFile_.startsWith("http://"))) {
+
+      URL url;
+
+      try
+	{
+	  System.out.println ("Configuration File: " + this.configFile_);
+	  // Create a new URL
+	  url = new URL (this.configFile_);
+
+	  // Get the input stream and pipe it to a DataInputStream
+	  DataInputStream iStream = new DataInputStream (url.openStream ());
+
+	  // Create a buffer to hold all the data we get
+	  StringBuffer tempBuf = new StringBuffer ();
+	  // Keep reading the data until we are done
+	  String tempString = iStream.readLine ();
+	  while (tempString != null)
 	  {
 	    tempBuf.append (tempString);
 	    tempBuf.append (" ");
 	    tempString = iStream.readLine ();
 	  }
-	configInfo = tempBuf.toString ();
-      }
-    catch (MalformedURLException e)
-      {
-	System.err.println (e);
-      }
-    catch (IOException e)
-      {
-	System.err.println (e);
-      }
+	  configInfo = tempBuf.toString ();
+	}
+      catch (MalformedURLException e)
+	{
+	  System.err.println (e);
+	}
+      catch (IOException e)
+	{
+	  System.err.println (e);
+	}
+    }
 
     if (configInfo != null)
       {
