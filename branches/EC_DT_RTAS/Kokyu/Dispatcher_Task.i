@@ -54,7 +54,7 @@ ACE_INLINE
 int
 Dispatcher_Task::enqueue_i (Dispatch_Queue_Item *qitem)
 {
-#ifdef KOKYU_HAS_RELEASE_GUARD
+#if defined (KOKYU_HAS_RELEASE_GUARD)
   //update release time
   //TODO: want release time before or after enqueuing call?
   ACE_Time_Value release = ACE_OS::gettimeofday();
@@ -63,15 +63,17 @@ Dispatcher_Task::enqueue_i (Dispatch_Queue_Item *qitem)
   this->putq (qitem);
   //@BT INSTRUMENT with event ID: EVENT_ENQUEUED Measure time from
   //event enqueue into dispatch queue to actual dispatch
-  ACE_Time_Value tv = ACE_OS::gettimeofday();
 
+#if defined (ACE_HAS_DSUI)
   // Grab msg queue associated with this task (ace/Task_T.h)
   // Get the msg count
-  ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue() (%t) : event enqueue at %u\n",tv.msec()));
+  ACE_Time_Value tv = ACE_OS::gettimeofday();
+  ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue_i() (%t) : event enqueue at %u\n",tv.msec()));
   Kokyu::Object_Counter::object_id oid = qitem->command()->getID();
   DSUI_EVENT_LOG (DISP_TASK_FAM, ENQUEUE_QUEUE_LEVEL, this->msg_queue()->message_count(), sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
+#endif //ACE_HAS_DSUI
 
-#ifdef KOKYU_HAS_RELEASE_GUARD
+#if defined (KOKYU_HAS_RELEASE_GUARD)
   //if qos_info is not in map, this should add it
   this->releases_.rebind(qitem->qos_info(),release.msec());
 #endif //KOKYU_HAS_RELEASE_GUARD

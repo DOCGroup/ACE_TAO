@@ -9,11 +9,11 @@
 #include "Dispatcher_Task.i"
 #endif /* __ACE_INLINE__ */
 
-#if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
+#if defined (ACE_HAS_DSUI)
 #include "kokyu_config.h"
 #include "kokyu_dsui_families.h"
 #include <dsui.h>
-#endif /* ACE_HAS_DSUI */
+#endif // ACE_HAS_DSUI
 
 ACE_RCSID(Kokyu, Dispatcher_Task, "$Id$")
 
@@ -125,8 +125,10 @@ Dispatcher_Task::svc (void)
       Dispatch_Queue_Item *qitem =
         ACE_dynamic_cast(Dispatch_Queue_Item*, mb);
 
+#if defined (ACE_HAS_DSUI)
       Kokyu::Object_Counter::object_id oid = qitem->command()->getID();
       DSUI_EVENT_LOG (DISP_TASK_FAM, ENQUEUE_QUEUE_LEVEL, this->msg_queue()->message_count(), sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
+#endif //ACE_HAS_DSUI
 
       if (qitem == 0)
         {
@@ -136,6 +138,7 @@ Dispatcher_Task::svc (void)
 
       Dispatch_Command* command = qitem->command ();
 
+#if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_DEQUEUED Measure time
       //between event released (enqueued) and dispatched
       DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEQUEUED, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
@@ -147,15 +150,18 @@ Dispatcher_Task::svc (void)
 
       tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : beginning event dispatch at %u\n",tv.msec()));
+#endif //ACE_HAS_DSUI
 
       int result = command->execute ();
 
+#if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_FINISHED_DISPATCHING
       //Measure time to actually dispatch event
       DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_FINISHED_DISPATCHING, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 
       tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : end event dispatch at %u\n",tv.msec()));
+#endif //ACE_HAS_DSUI
 
       if (command->can_be_deleted ())
         command->destroy ();
@@ -209,6 +215,7 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
       //defer until last release time + period
       this->deferrer_.dispatch(qitem);
 
+#if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_DEFERRED Measure delay
       //between original dispatch and dispatch because of RG
       Kokyu::Object_Counter::object_id oid = cmd->getID();
@@ -216,6 +223,7 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
 
       ACE_Time_Value tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue() (%t) : event deferred at %u\n",tv.msec()));
+#endif //ACE_HAS_DSUI
     }
   else
     {

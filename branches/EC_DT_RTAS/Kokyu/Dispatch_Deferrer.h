@@ -16,10 +16,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined KOKYU_HAS_RELEASE_GUARD
-
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
+
+#if defined KOKYU_HAS_RELEASE_GUARD
+
 #include "ace/Event_Handler.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Synch_T.h"
