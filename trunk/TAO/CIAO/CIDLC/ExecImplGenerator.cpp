@@ -134,6 +134,7 @@ ExecImplGenerator::compute_export_macro (const fs::path& file_path)
     // Modify a copy of the filename string.
     export_macro_ = file_name_;
 
+
     // Convert filename string to upper case.
     transform (export_macro_.begin (),
                export_macro_.end (),
@@ -143,7 +144,7 @@ ExecImplGenerator::compute_export_macro (const fs::path& file_path)
     // Replace the suffix.
     export_macro_ =
       regex::perl_s (export_macro_,
-                     "/(\\.(IDL|CIDL))?$/_EXEC_Export/");
+                     "/(\\.(IDL|CIDL|CDL))?$/_EXEC_Export/");
 
     // Replace any remaining '.' in the string with '_'.
     export_macro_ = regex::perl_s (export_macro_,

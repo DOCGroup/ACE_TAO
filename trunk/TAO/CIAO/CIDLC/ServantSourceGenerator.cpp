@@ -789,14 +789,15 @@ namespace
            << STRS[ENV_SNGL_SRC] << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
-           << u.scoped_name () << "Connections *tmp_retv;"
+           << u.scoped_name () << "Connections *tmp_retv = 0;"
            << "ACE_NEW_THROW_EX (" << endl
            << "tmp_retv," << endl
-           << u.scoped_name () << "Connections (this->ciao_uses_"
+           << u.scoped_name () << "Connections (" << endl
+           << "this->ciao_uses_"
            << u.name () << "_.current_size ())," << endl
            << "CORBA::NO_MEMORY ());" << endl << endl
            << u.scoped_name () << "Connections_var retv"
-           << " = tmp_retv ;" << endl
+           << " = tmp_retv;" << endl
            << "retv->length (this->ciao_uses_" << u.name ()
            << "_.current_size ());" << endl;
 
@@ -835,7 +836,7 @@ namespace
         os << "return retv._retn ();" << endl
            << "}";
 
-        os << "::Components::Cookie *" << endl
+        os << STRS[COMP_CK] << " *" << endl
            << scope_.name () << "_Context::connect_"
            << u.name () << " (" << endl;
 
@@ -870,13 +871,14 @@ namespace
 
         os << "conn._retn ();" << endl;
 
-        os << "Components::Cookie_var retv;"
+        os << STRS[COMP_CK] << " * ck = 0;"
            << "ACE_NEW_THROW_EX (" << endl
-           << "retv.out ()," << endl
+           << "ck," << endl
            << "CIAO::Map_Key_Cookie (key)," << endl
            << "CORBA::NO_MEMORY ());" << endl;
+           
 
-        os << "return retv._retn ();" << endl
+        os << "return ck;" << endl
            << "}";
 
         Traversal::MultiUserData::belongs (u, belongs_);
@@ -884,7 +886,7 @@ namespace
         os << "_ptr" << endl
            << scope_.name () << "_Context::disconnect_"
            << u.name () << " (" << endl
-           << "::Components::Cookie * ck" << endl
+           << STRS[COMP_CK] << " * ck" << endl
            << STRS[ENV_SRC] << ")" << endl
            << STRS[EXCP_START] << endl
            << STRS[EXCP_SYS] << "," << endl
@@ -1007,9 +1009,12 @@ namespace
            << "this->ciao_publishes_" << p.name ()
            << "_map_.bind (sub.in (), key);"
            << "sub._retn ();" << endl
-           << STRS[COMP_CK] << "_var retv = "
-           << "new ::CIAO::Map_Key_Cookie (key);"
-           << "return retv._retn ();" << endl
+           << STRS[COMP_CK] << " * retv = 0;"
+           << "ACE_NEW_THROW_EX (" << endl
+           << "retv," << endl
+           << "::CIAO::Map_Key_Cookie (key)," << endl
+           << "CORBA::NO_MEMORY ());" << endl
+           << "return retv;" << endl
            << "}";
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -1535,7 +1540,7 @@ namespace
       virtual void
       traverse (SemanticGraph::MultiUser& u)
       {
-        os << "::Components::Cookie *" << endl
+        os << STRS[COMP_CK] << " *" << endl
            << scope_.name () << "_Servant::connect_"
            << u.name () << " (" << endl;
 
@@ -1559,7 +1564,7 @@ namespace
         os << "_ptr" << endl
            << scope_.name () << "_Servant::disconnect_"
            << u.name () << " (" << endl
-           << "::Components::Cookie * ck" << endl
+           << STRS[COMP_CK] << " * ck" << endl
            << STRS[ENV_SRC] << ")" << endl
            << STRS[EXCP_START] << endl
            << STRS[EXCP_SYS] << "," << endl
@@ -2282,6 +2287,18 @@ namespace
           Traversal::EventType event_type;
           consumer_belongs.node_traverser (event_type);
 
+          Traversal::Inherits inherits;
+          inherits.node_traverser (event_type);
+          event_type.edge_traverser (inherits);
+
+          Traversal::Supports supports;
+          supports.node_traverser (event_type);
+          event_type.edge_traverser (supports);
+          
+          // (JP) The above two need front end support,
+          // and we need to check for private members
+          // as well.
+
           Traversal::Defines defines;
           event_type.edge_traverser (defines);
 
@@ -2440,8 +2457,9 @@ namespace
          << "  : ACE_NESTED_CLASS (CIAO, Servant_Impl_Base (c))," << endl
          << "  comp_svnt_base (exe, c)" << endl
          << "{"
-         << "this->context_ = "
-         << "new " << t.name () << "_Context (h, c, this);" << endl;
+         << "ACE_NEW (" << endl
+         << "this->context_," << endl
+         << t.name () << "_Context (h, c, this));" << endl;
 
       // Generate the macro to register a value factory for each
       // eventtype consumed.
