@@ -169,7 +169,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
     }
   else
     {
-      if (bt->imported () && bt->cli_inline_gen())
+      if (bt->imported () || bt->cli_inline_gen())
         {
           // Code below is generated in another file.
           return 0;
@@ -178,42 +178,49 @@ be_visitor_typedef_ci::visit_array (be_array *node)
       // generate the inline code for alloc, dup, copy, and free methods
 
       // alloc method
-      os->indent ();
-      *os << "ACE_INLINE " << tdef->name () << "_slice *" << be_nl;
+      *os << be_nl
+          << "ACE_INLINE " << be_nl
+          << tdef->name () << "_slice *" << be_nl;
       *os << tdef->name () << "_alloc (void)" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "return " << bt->name () << "_alloc ();" << be_uidt_nl;
-      *os << "}\n\n";
+      *os << "}" << be_nl << be_nl;
 
       // dup method
-      os->indent ();
-      *os << "ACE_INLINE " << tdef->name () << "_slice *" << be_nl;
-      *os << tdef->name () << "_dup (const " << tdef->name ()
-          << "_slice *_tao_src)" << be_nl;
+      *os << "ACE_INLINE " << be_nl
+          << tdef->name () << "_slice *" << be_nl;
+      *os << tdef->name () << "_dup (" << be_idt << be_idt_nl
+          << "const " << tdef->name ()
+          << "_slice *_tao_src" << be_uidt_nl
+          << ")" << be_uidt_nl;
       *os << "{" << be_idt_nl;
       *os << "return " << bt->name () << "_dup (_tao_src);" << be_uidt_nl;
-      *os << "}\n\n";
+      *os << "}" << be_nl << be_nl;
 
       // copy method
-      os->indent ();
-      *os << "ACE_INLINE void" << be_nl;
-      *os << tdef->name () << "_copy (" << tdef->name ()
-          << "_slice *_tao_dest, const " << tdef->name ()
-          << "_slice *_tao_src)" << be_nl;
+      *os << "ACE_INLINE" << be_nl
+          << "void" << be_nl;
+      *os << tdef->name () << "_copy (" << be_idt << be_idt_nl
+          << tdef->name ()
+          << "_slice *_tao_dest," << be_nl
+          << "const " << tdef->name () << "_slice *_tao_src" << be_uidt_nl
+          << ")" << be_uidt_nl;
       *os << "{" << be_idt_nl;
       *os << bt->name () << "_copy (_tao_dest, _tao_src);" << be_uidt_nl;
-      *os << "}\n\n";
+      *os << "}" << be_nl << be_nl;
 
       // free method
-      os->indent ();
-      *os << "ACE_INLINE void" << be_nl;
-      *os << tdef->name () << "_free (" << tdef->name ()
-          << "_slice *_tao_src)" << be_nl;
+      *os << "ACE_INLINE" << be_nl
+          << "void" << be_nl;
+      *os << tdef->name () << "_free (" << be_idt << be_idt_nl
+          << tdef->name () << "_slice *_tao_src" << be_uidt_nl
+          << ")" << be_uidt_nl;
       *os << "{" << be_idt_nl;
       *os << bt->name () << "_free (_tao_src);" << be_uidt_nl;
-      *os << "}\n\n";
+      *os << "}" << be_nl << be_nl;
     }
 
+  bt->cli_inline_gen (I_TRUE);
   return 0;
 }
 

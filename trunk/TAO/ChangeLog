@@ -1,3 +1,32 @@
+Sun May 23 14:46:52 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        
+          Reverted changed just made in
+          
+          Sun May 23 14:00:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          For some reason, the leading '::' before an operation name
+          in *C.cpp confuses MSVC 7.1 about the preceding return type
+          declaration, if it is itself a scoped name.
+          
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp:
+        
+          Fixed duplicate generation of the definition of array helper
+          methods - the check to exclude generation when the array
+          in question is from an included file had a hole in it.
+          Thanks to Thomas Groth <groth.th@nord-com.net> for sending
+          in the example pair of IDL files that demonstrated the
+          problem.
+          
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        
+          Fixed implied IDL generation of reply handler interface to
+          have the scoped name correctly set, so it in turn generates
+          correctly when used as the first argument in the sendc_*
+          method.
+
 Sun May 23 14:00:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument/argument.cpp:
