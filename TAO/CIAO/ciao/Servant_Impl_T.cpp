@@ -13,9 +13,11 @@ namespace CIAO
             typename CONTEXT>
   Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::Servant_Impl (
       EXEC * exe,
+      Components::CCMHome_ptr home,
+      Home_Servant_Impl_Base *home_servant,
       Session_Container * c
     )
-    : Servant_Impl_Base (c),
+    : Servant_Impl_Base (home, home_servant, c),
       executor_ (EXEC::_duplicate (exe))
   {
   }

@@ -28,6 +28,9 @@
 #include "CCM_EventC.h"
 #include "CIAO_Server_Export.h"
 #include "CCM_ComponentS.h"
+#include "CCM_ContainerS.h"
+#include "Home_Servant_Impl_Base.h"
+#include "Servant_Activator.h"
 
 namespace CIAO
 {
@@ -47,7 +50,9 @@ namespace CIAO
   public:
     explicit Servant_Impl_Base (void);
 
-    Servant_Impl_Base (Session_Container * c);
+    Servant_Impl_Base (Components::CCMHome_ptr home,
+                       Home_Servant_Impl_Base *home_servant,
+                       Session_Container * c);
 
     virtual ~Servant_Impl_Base (void);
 
@@ -205,6 +210,8 @@ namespace CIAO
 
     FacetTable facet_table_;
     ConsumerTable consumer_table_;
+    Components::CCMHome_var home_;
+    Home_Servant_Impl_Base *home_servant_;
     Session_Container * container_;
   };
 }
