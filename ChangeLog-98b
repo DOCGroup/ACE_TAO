@@ -1,3 +1,10 @@
+Sun Oct 05 03:49:09 PDT 1998  James Hu <jxh@entera.com>
+
+        * ace/Asynch_Accept.*
+        * ace/Asynch_IO.*
+          Made some small modifications to support passing in and
+          retrieving an ACT when performing asynchronous accept.
+
 Sun Oct 04 22:07:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-fsu-pthread.h,config-hpux-10.x.h,config-lynxos.h,
