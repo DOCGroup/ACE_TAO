@@ -1,3 +1,4 @@
+// $Id$
 project(Static_Assembly_Parser) : ciao_server, acexml, rtcorba{
   libs += CIAO_XML_Helpers
   libpaths += ../XML_Helpers
