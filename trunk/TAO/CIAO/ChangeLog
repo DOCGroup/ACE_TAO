@@ -1,3 +1,9 @@
+Sun Sep 19 19:12:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Deployment.idl:
+
+	  Fixed variable name that differ by case from the data type.
+
 Fri Sep 17 16:46:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/CIDLC.sln:
