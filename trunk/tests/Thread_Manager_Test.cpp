@@ -35,6 +35,21 @@ USELIB("..\ace\aced.lib");
 
 #include "Thread_Manager_Test.h"
 
+class ACE_Export ACE_Hash<ACE_hthread_t>
+{
+  // = TITLE
+  //     Function object for hashing an ACE_hthread_t.
+public:
+  u_long operator () (const ACE_hthread_t &t_id) const;
+};
+
+u_long
+ACE_Hash<ACE_hthread_t>::operator () (const ACE_hthread_t &t_id) const
+{
+  return ACE::hash_pjw (ACE_reinterpret_cast (const char *, &t_id),
+                        sizeof t_id);
+}
+
 // Each thread keeps track of whether it has been signalled by using a
 // global hash map.  See comment below about why it's allocated
 // dynamically.
@@ -130,29 +145,41 @@ static const int DEFAULT_THREADS = ACE_MAX_THREADS;
 static const int DEFAULT_ITERATIONS = 10000;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Equal_To<ACE_hthread_t>;
 template class ACE_Hash_Map_Entry<ACE_hthread_t, sig_atomic_t>;
 template class ACE_Hash_Map_Manager_Ex<ACE_hthread_t,
-                                       sig_atomic_t,
-                                       ACE_Hash<ACE_hthread_t>,
-                                       ACE_Equal_To<ACE_hthread_t>,
-                                       ACE_Null_Mutex>;
+  sig_atomic_t,
+  ACE_Hash<ACE_hthread_t>,
+  ACE_Equal_To<ACE_hthread_t>,
+  ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_hthread_t,
-                                             sig_atomic_t,
-                                             ACE_Hash<ACE_hthread_t>,
-                                             ACE_Equal_To<ACE_hthread_t>,
-                                             ACE_Null_Mutex>;
+  sig_atomic_t,
+  ACE_Hash<ACE_hthread_t>,
+  ACE_Equal_To<ACE_hthread_t>,
+  ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_hthread_t,
+  sig_atomic_t,
+  ACE_Hash<ACE_hthread_t>,
+  ACE_Equal_To<ACE_hthread_t>,
+  ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Equal_To<ACE_hthread_t>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_hthread_t, sig_atomic_t>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_hthread_t,
-                                            sig_atomic_t,
-                                            ACE_Hash<ACE_hthread_t>,
-                                            ACE_Equal_To<ACE_hthread_t>,
-                                            ACE_Null_Mutex>
+  sig_atomic_t,
+  ACE_Hash<ACE_hthread_t>,
+  ACE_Equal_To<ACE_hthread_t>,
+  ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_hthread_t,
-                                                  sig_atomic_t,
-                                                  ACE_Hash<ACE_hthread_t>,
-                                                  ACE_Equal_To<ACE_hthread_t>,
-                                                  ACE_Null_Mutex>
+  sig_atomic_t,
+  ACE_Hash<ACE_hthread_t>,
+  ACE_Equal_To<ACE_hthread_t>,
+  ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_hthread_t,
+  sig_atomic_t,
+  ACE_Hash<ACE_hthread_t>,
+  ACE_Equal_To<ACE_hthread_t>,
+  ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_THREADS */
@@ -266,7 +293,7 @@ main (int, ASYS_TCHAR *[])
     ACE_ASSERT (errno == ENOTSUP);
 #endif /* ACE_HAS_WTHREADS */
 
-  // Wait for 1 more second and then cancel all the threads.
+  // Wait and then cancel all the threads.
   ACE_OS::sleep (ACE_Time_Value (2));
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) cancelling group\n")));
