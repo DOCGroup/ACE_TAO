@@ -148,7 +148,7 @@ protected:
   GEN_IR_OBJECT (UsesDef)
 
 #define GEN_IR_OBJECT(name) \
-  POA_IR:: ## name ## _tie<TAO_ ## name ## _i> * ## name ## _servant_; \
+  POA_IR:: name ## _tie<TAO_ ## name ## _i> * name ## _servant_; \
   PortableServer::POA_var name ## _poa_;
 
   CONCRETE_IR_OBJECT_TYPES

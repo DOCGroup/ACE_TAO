@@ -793,27 +793,27 @@ TAO_Repository_i::create_servants_and_poas (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (-1);
 
 #define GEN_IR_OBJECT(name) \
-  this-> ## name ## _poa_ = \
+  this-> name ## _poa_ = \
     this->root_poa_->create_POA (#name "_poa", \
                                  poa_manager.in (), \
                                  policies \
                                  ACE_ENV_ARG_PARAMETER); \
   ACE_CHECK_RETURN (-1); \
-  TAO_ ## name ## _i * ## name ## _impl = 0; \
+  TAO_ ## name ## _i * name ## _impl = 0; \
   ACE_NEW_RETURN (name ## _impl, \
                   TAO_ ## name ## _i (this), \
                   -1); \
-  ACE_NEW_RETURN (this-> ## name ## _servant_, \
-                  POA_CORBA:: ## name ## _tie<TAO_ ## name ## _i> ( \
+  ACE_NEW_RETURN (this-> name ## _servant_, \
+                  POA_CORBA:: name ## _tie<TAO_ ## name ## _i> ( \
                       name ## _impl, \
-                      this-> ## name ## _poa_, \
+                      this-> name ## _poa_.in (), \
                       1 \
                     ), \
                   -1); \
   PortableServer::ServantBase_var name ## _safety ( \
-      this-> ## name ## _servant_ \
+      this-> name ## _servant_ \
     ); \
-  this-> ## name ## _poa_->set_servant (this-> ## name ## _servant_ \
+  this-> name ## _poa_->set_servant (this-> name ## _servant_ \
                                         ACE_ENV_ARG_PARAMETER); \
   ACE_CHECK_RETURN (-1);
 
@@ -892,7 +892,7 @@ TAO_Repository_i::select_container (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_Module:
       return this->ModuleDef_servant_->_tied_object ();
     case CORBA::dk_Repository:
-      return ACE_const_cast (TAO_Container_i *, this);
+      return ACE_const_cast (TAO_Repository_i *, this);
     case CORBA::dk_Struct:
       return this->StructDef_servant_->_tied_object ();
     case CORBA::dk_Union:

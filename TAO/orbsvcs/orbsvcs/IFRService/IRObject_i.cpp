@@ -31,6 +31,7 @@ TAO_IRObject_i::section_key (ACE_Configuration_Section_Key &key)
 
 void
 TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid =
     this->repo_->poa_current ()->get_object_id ();

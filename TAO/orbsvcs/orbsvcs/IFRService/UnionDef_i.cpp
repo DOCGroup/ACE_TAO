@@ -251,8 +251,6 @@ TAO_UnionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_TString name, path;
   ACE_Configuration_Section_Key next_key, entry_key;
-  u_int kind = 0;
-  CORBA::DefinitionKind def_kind = CORBA::dk_none;
   CORBA::Object_var obj;
   TAO_IDLType_i *impl = 0;
 

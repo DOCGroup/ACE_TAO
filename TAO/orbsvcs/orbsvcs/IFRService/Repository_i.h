@@ -358,13 +358,80 @@ protected:
   GEN_IR_OBJECT (WstringDef)
 
 #define GEN_IR_OBJECT(name) \
-  POA_CORBA:: ## name ## _tie<TAO_ ## name ## _i> * ## name ## _servant_; \
+  POA_CORBA:: name ## _tie<TAO_ ## name ## _i> * name ## _servant_; \
   PortableServer::POA_var name ## _poa_;
 
   CONCRETE_IR_OBJECT_TYPES
 
 #undef GEN_IR_OBJECT
 
+/*
+POA_CORBA::AbstractInterfaceDef_tie<TAO_AbstractInterfaceDef_i> *AbstractInterfaceDef_servant_;
+PortableServer::POA_var AbstractInterfaceDef_poa_;
+
+POA_CORBA::AliasDef_tie<TAO_AliasDef_i> *AliasDef_servant_;
+PortableServer::POA_var AliasDef_poa_;
+
+POA_CORBA::ArrayDef_tie<TAO_ArrayDef_i> *ArrayDef_servant_;
+PortableServer::POA_var ArrayDef_poa_;
+
+POA_CORBA::AttributeDef_tie<TAO_AttributeDef_i> *AttributeDef_servant_;
+PortableServer::POA_var AttributeDef_poa_;
+
+POA_CORBA::ConstantDef_tie<TAO_ConstantDef_i> *ConstantDef_servant_;
+PortableServer::POA_var ConstantDef_poa_;
+
+POA_CORBA::EnumDef_tie<TAO_EnumDef_i> *EnumDef_servant_;
+PortableServer::POA_var EnumDef_poa_;
+
+POA_CORBA::ExceptionDef_tie<TAO_ExceptionDef_i> *ExceptionDef_servant_;
+PortableServer::POA_var ExceptionDef_poa_;
+
+POA_CORBA::FixedDef_tie<TAO_FixedDef_i> *FixedDef_servant_;
+PortableServer::POA_var FixedDef_poa_;
+
+POA_CORBA::InterfaceDef_tie<TAO_InterfaceDef_i> *InterfaceDef_servant_;
+PortableServer::POA_var InterfaceDef_poa_;
+
+POA_CORBA::LocalInterfaceDef_tie<TAO_LocalInterfaceDef_i> *LocalInterfaceDef_servant_;
+PortableServer::POA_var LocalInterfaceDef_poa_;
+
+POA_CORBA::ModuleDef_tie<TAO_ModuleDef_i> *ModuleDef_servant_;
+PortableServer::POA_var ModuleDef_poa_;
+
+POA_CORBA::NativeDef_tie<TAO_NativeDef_i> *NativeDef_servant_;
+PortableServer::POA_var NativeDef_poa_;
+
+POA_CORBA::OperationDef_tie<TAO_OperationDef_i> *OperationDef_servant_;
+PortableServer::POA_var OperationDef_poa_;
+
+POA_CORBA::PrimitiveDef_tie<TAO_PrimitiveDef_i> *PrimitiveDef_servant_;
+PortableServer::POA_var PrimitiveDef_poa_;
+
+POA_CORBA::SequenceDef_tie<TAO_SequenceDef_i> *SequenceDef_servant_;
+PortableServer::POA_var SequenceDef_poa_;
+
+POA_CORBA::StringDef_tie<TAO_StringDef_i> *StringDef_servant_;
+PortableServer::POA_var StringDef_poa_;
+
+POA_CORBA::StructDef_tie<TAO_StructDef_i> *StructDef_servant_;
+PortableServer::POA_var StructDef_poa_;
+
+POA_CORBA::UnionDef_tie<TAO_UnionDef_i> *UnionDef_servant_;
+PortableServer::POA_var UnionDef_poa_;
+
+POA_CORBA::ValueBoxDef_tie<TAO_ValueBoxDef_i> *ValueBoxDef_servant_;
+PortableServer::POA_var ValueBoxDef_poa_;
+
+POA_CORBA::ValueDef_tie<TAO_ValueDef_i> *ValueDef_servant_;
+PortableServer::POA_var ValueDef_poa_;
+
+POA_CORBA::ValueMemberDef_tie<TAO_ValueMemberDef_i> *ValueMemberDef_servant_;
+PortableServer::POA_var ValueMemberDef_poa_;
+
+POA_CORBA::WstringDef_tie<TAO_WstringDef_i> *WstringDef_servant_;
+PortableServer::POA_var WstringDef_poa_;
+*/
 private:
   static const char *TAO_IFR_primitive_kinds[];
   // Set of strings corresponding to the CORBA::PrimitiveKind
