@@ -42,6 +42,7 @@
 #define ACE_HAS_CHARPTR_DL
 //#define ACE_USES_ASM_SYMBOL_IN_DLSYM
 #define ACE_LACKS_SIGSET
+#define ACE_NEEDS_SCHED_H
 
 // Use of <malloc.h> is deprecated.
 #define ACE_LACKS_MALLOC_H
