@@ -73,6 +73,9 @@ $results_directory = "results";
      "thread-nolanes",
      "thread-lanes-increase",
      "thread-lanes-decrease",
+     "thread-nolanes-with-slack",
+     "thread-lanes-increase-with-slack",
+     "thread-lanes-decrease-with-slack",
      );
 
 for $pool_priority (@pool_priorities)
@@ -292,7 +295,7 @@ for $test (@configurations)
     #
     # setup work test
     #
-    elsif ($test->{description} eq "work")
+    if ($test->{description} eq "work")
     {
 	$i = 0;
 	for $work (@works)
@@ -307,7 +310,7 @@ for $test (@configurations)
     #
     # setup rates test
     #
-    if ($test->{description} eq "rates")
+    elsif ($test->{description} eq "rates")
     {
         $i = 0;
         for $rate (@rates)
@@ -410,7 +413,7 @@ for $test (@configurations)
     #
     # setup thread-lanes-increase test
     #
-    elsif ($test->{description} eq "thread-lanes-increase")
+    elsif ($test->{description} eq "thread-lanes-increase" or
            $test->{description} eq "thread-lanes-increase-with-slack")
     {
         $client_args = "-t $time_for_test -z $max_throughput_timeout";
@@ -437,7 +440,7 @@ for $test (@configurations)
     #
     # setup thread-lanes-decrease test
     #
-    elsif ($test->{description} eq "thread-lanes-decrease")
+    elsif ($test->{description} eq "thread-lanes-decrease" or
            $test->{description} eq "thread-lanes-decrease-with-slack")
     {
         $client_args = "-t $time_for_test -z $max_throughput_timeout";
