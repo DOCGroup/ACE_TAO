@@ -643,41 +643,6 @@ ACE_OS::setsid (void)
 #endif /* VXWORKS */
 }
 
-ACE_INLINE int 
-ACE_OS::strcasecmp (const char *s, const char *t)
-{
-  // ACE_TRACE ("ACE_OS::strcasecmp");
-#if defined (ACE_LACKS_STRCASECMP)
-  // Handles most of what the BSD version does, but does not indicate
-  // lexicographic ordering if the strings are unequal.  Just
-  // indicates equal (ignoring case) by return value == 0, else not
-  // equal.
-  int result = 0;
-
-  if (strlen(s) != strlen(t))
-    {
-      result = 1;
-    }
-   else
-     {
-       while (*s != '\0' && *t != '\0') 
-         {
-           if (tolower (*s) != tolower (*t)) 
-             {
-               result = ((tolower (*s) < tolower (*t)) ? -1 : 1);
-               break;
-             }
-
-           ++s; ++t;
-         }
-     }
- 
-   return result; // == 0 for match, else 1
-#else
-  return ::strcasecmp (s, t);
-#endif /* ACE_LACKS_STRCASECMP */
-}
-
 ACE_INLINE mode_t 
 ACE_OS::umask (mode_t cmask)
 {
@@ -1117,6 +1082,43 @@ ACE_OS::strlen (const char *s)
   // ACE_TRACE ("ACE_OS::strlen");
   return ::strlen (s);
 }
+
+#if !defined (ACE_WIN32)
+ACE_INLINE int 
+ACE_OS::strcasecmp (const char *s, const char *t)
+{
+  // ACE_TRACE ("ACE_OS::strcasecmp");
+#if defined (ACE_LACKS_STRCASECMP)
+  // Handles most of what the BSD version does, but does not indicate
+  // lexicographic ordering if the strings are unequal.  Just
+  // indicates equal (ignoring case) by return value == 0, else not
+  // equal.
+  int result = 0;
+
+  if (strlen(s) != strlen(t))
+    {
+      result = 1;
+    }
+   else
+     {
+       while (*s != '\0' && *t != '\0') 
+         {
+           if (tolower (*s) != tolower (*t)) 
+             {
+               result = ((tolower (*s) < tolower (*t)) ? -1 : 1);
+               break;
+             }
+
+           ++s; ++t;
+         }
+     }
+ 
+   return result; // == 0 for match, else 1
+#else
+  return ::strcasecmp (s, t);
+#endif /* ACE_LACKS_STRCASECMP */
+}
+#endif /* ! ACE_WIN32 */
 
 ACE_INLINE int 
 ACE_OS::strncmp (const char *s, const char *t, size_t len)
