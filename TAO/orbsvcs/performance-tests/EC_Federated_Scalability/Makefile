@@ -50,7 +50,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), Test$(ext))
+	-$(RM) $(foreach ext, $(IDL_EXT), Control$(ext))
 
 #----------------------------------------------------------------------------
 #       Dependencies
