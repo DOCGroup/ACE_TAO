@@ -2,7 +2,7 @@ Mon Feb 14 10:16:15 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Acceptor_Registry.h:
 
-	  Removed inclusion extraneous headers.
+	  Removed inclusion of extraneous headers.
 
 	* tao/Makefile:
 
