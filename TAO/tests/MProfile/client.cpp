@@ -108,6 +108,7 @@ main (int argc, char *argv[])
         }
 
       run_test (server.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
