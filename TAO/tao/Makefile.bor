@@ -79,6 +79,7 @@ OBJFILES = \
 	$(OBJDIR)\Default_Thread_Lane_Resources_Manager.obj \
 	$(OBJDIR)\DomainC.obj \
 	$(OBJDIR)\DynamicC.obj \
+	$(OBJDIR)\DynamicA.obj \
 	$(OBJDIR)\Dynamic_Adapter.obj \
    $(OBJDIR)\Dynamic_ParameterC.obj \
 	$(OBJDIR)\Encodable.obj \
@@ -148,6 +149,7 @@ OBJFILES = \
 	$(OBJDIR)\Marshal.obj \
 	$(OBJDIR)\MCAST_Parser.obj \
    $(OBJDIR)\Messaging_PolicyValueC.obj \
+   $(OBJDIR)\Messaging_PolicyValueA.obj \
    $(OBJDIR)\Messaging_SyncScopeC.obj \
 	$(OBJDIR)\Muxed_TMS.obj \
 	$(OBJDIR)\NVList.obj \
@@ -166,6 +168,7 @@ OBJFILES = \
 	$(OBJDIR)\Object_Proxy_Impl.obj \
 	$(OBJDIR)\Object_Ref_Table.obj \
 	$(OBJDIR)\OctetSeqC.obj \
+	$(OBJDIR)\OctetSeqA.obj \
    $(OBJDIR)\ParameterMode.obj \
 	$(OBJDIR)\Parser_Registry.obj \
 	$(OBJDIR)\PICurrent.obj \
@@ -174,6 +177,7 @@ OBJFILES = \
 	$(OBJDIR)\Pluggable_Messaging.obj \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \
 	$(OBJDIR)\Policy_ForwardC.obj \
+	$(OBJDIR)\Policy_ForwardA.obj \
 	$(OBJDIR)\PolicyC.obj \
 	$(OBJDIR)\PolicyA.obj \
 	$(OBJDIR)\PolicyFactory_Registry.obj \
@@ -205,9 +209,11 @@ OBJFILES = \
 	$(OBJDIR)\Service_Callbacks.obj \
 	$(OBJDIR)\Service_Context.obj \
 	$(OBJDIR)\ServicesC.obj \
+	$(OBJDIR)\ServicesA.obj \
 	$(OBJDIR)\Services_Activate.obj \
 	$(OBJDIR)\Special_Basic_Arguments.obj \
 	$(OBJDIR)\StringSeqC.obj \
+	$(OBJDIR)\StringSeqA.obj \
 	$(OBJDIR)\Stub.obj \
 	$(OBJDIR)\Stub_Factory.obj \
 	$(OBJDIR)\Sync_Strategies.obj \

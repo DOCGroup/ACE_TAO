@@ -638,43 +638,6 @@ namespace TAO
 };
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::PolicyError &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyError*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PolicyError *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::PolicyError *&);
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::InvalidPolicies &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::InvalidPolicies*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::InvalidPolicies *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::InvalidPolicies *&);
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, CORBA::Policy_ptr); // copying
-TAO_Export void operator<<= (CORBA::Any &, CORBA::Policy_ptr *); // non-copying
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Policy_ptr &);
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyManager_ptr); // copying
-TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyManager_ptr *); // non-copying
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PolicyManager_ptr &);
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyCurrent_ptr); // copying
-TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyCurrent_ptr *); // non-copying
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PolicyCurrent_ptr &);
-
-// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__

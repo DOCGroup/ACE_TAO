@@ -25,40 +25,21 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// TAO_IDL - Generated from
+// be/be_codegen.cpp:848
+
+#ifndef _TAO_IDL_ORIG_OCTETSEQA_ANYOP_H_
+#define _TAO_IDL_ORIG_OCTETSEQA_ANYOP_H_
+
+
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/any_op_ch.cpp:52
 
-#if !defined _TAO_CDR_OP_CORBA_StringSeq_I_
-#define _TAO_CDR_OP_CORBA_StringSeq_I_
+ void operator<<= (CORBA::Any &, const CORBA::OctetSeq &); // copying version
+ void operator<<= (CORBA::Any &, CORBA::OctetSeq*); // noncopying version
+ CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OctetSeq *&); // deprecated
+ CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OctetSeq *&);
 
-CORBA::Boolean TAO_Export operator<< (
-    TAO_OutputCDR &,
-    const CORBA::StringSeq &
-  );
-
-CORBA::Boolean TAO_Export operator>> (
-    TAO_InputCDR &,
-    CORBA::StringSeq &
-  );
-
-#endif /* _TAO_CDR_OP_CORBA_StringSeq_I_ */
-
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ci.cpp:81
-
-#if !defined _TAO_CDR_OP_CORBA_WStringSeq_I_
-#define _TAO_CDR_OP_CORBA_WStringSeq_I_
-
-CORBA::Boolean TAO_Export operator<< (
-    TAO_OutputCDR &,
-    const CORBA::WStringSeq &
-  );
-
-CORBA::Boolean TAO_Export operator>> (
-    TAO_InputCDR &,
-    CORBA::WStringSeq &
-  );
-
-#endif /* _TAO_CDR_OP_CORBA_WStringSeq_I_ */
+#endif /* ifndef */
 

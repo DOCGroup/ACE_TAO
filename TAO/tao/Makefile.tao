@@ -160,6 +160,7 @@ ORB_CORE_FILES = \
   ObjectIdListC \
   ORB \
   Policy_ForwardC \
+  Policy_ForwardA \
   PolicyC \
   PolicyA \
   Policy_Validator \
@@ -202,10 +203,13 @@ ORB_CORE_FILES = \
   PICurrent \
   PICurrent_ORBInitializer \
   DynamicC \
+  DynamicA \
   Dynamic_ParameterC \
   ParameterMode \
   OctetSeqC \
+  OctetSeqA \
   StringSeqC \
+  StringSeqA \
   Codeset_Manager \
   Codeset_Translator_Factory \
   ORB_Core \
@@ -372,6 +376,7 @@ ifeq ($(minimum_corba),0)
 
 ORB_CORE_FILES += \
   ServicesC \
+  ServicesA \
   NVList \
   Dynamic_Adapter
 
@@ -382,7 +387,8 @@ ifeq ($(corba_messaging),1)
 ORB_CORE_FILES += \
   Policy_Manager \
   Buffering_Constraint_Policy \
-  Messaging_PolicyValueC
+  Messaging_PolicyValueC \
+  Messaging_PolicyValueA 
 
 endif # corba_messaging
 

@@ -26,12 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
+// be/be_codegen.cpp:338
 
 
 #include "ServicesC.h"
-#include "tao/Any_Dual_Impl_T.h"
-#include "Typecode.h"
+#include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -42,7 +41,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
+// be/be_visitor_arg_traits.cpp:62
 
 // Arg traits specializations.
 namespace TAO
@@ -50,7 +49,7 @@ namespace TAO
 };
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_ServiceType[] =
 {
@@ -88,7 +87,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_ServiceOption[] =
 {
@@ -127,7 +126,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_ServiceDetailType[] =
 {
@@ -168,7 +167,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_ServiceDetail[] =
 {
@@ -264,7 +263,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
+// be/be_visitor_structure/structure_cs.cpp:66
 
 void 
 CORBA::ServiceDetail::_tao_any_destructor (
@@ -277,7 +276,7 @@ CORBA::ServiceDetail::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_ServiceInformation[] =
 {
@@ -437,7 +436,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
+// be/be_visitor_structure/structure_cs.cpp:66
 
 void 
 CORBA::ServiceInformation::_tao_any_destructor (
@@ -450,7 +449,7 @@ CORBA::ServiceInformation::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEOPTION__CS_)
 #define _CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEOPTION__CS_
@@ -503,7 +502,7 @@ void CORBA::ServiceInformation::_tao_seq_CORBA_ServiceOption_::_tao_any_destruct
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEDETAIL__CS_)
 #define _CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEDETAIL__CS_
@@ -555,124 +554,8 @@ void CORBA::ServiceInformation::_tao_seq_CORBA_ServiceDetail_::_tao_any_destruct
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::ServiceDetail &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<CORBA::ServiceDetail>::insert_copy (
-      _tao_any,
-      CORBA::ServiceDetail::_tao_any_destructor,
-      CORBA::_tc_ServiceDetail,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    CORBA::ServiceDetail *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<CORBA::ServiceDetail>::insert (
-      _tao_any,
-      CORBA::ServiceDetail::_tao_any_destructor,
-      CORBA::_tc_ServiceDetail,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    CORBA::ServiceDetail *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast (
-      const CORBA::ServiceDetail *&,
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const CORBA::ServiceDetail *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<CORBA::ServiceDetail>::extract (
-        _tao_any,
-        CORBA::ServiceDetail::_tao_any_destructor,
-        CORBA::_tc_ServiceDetail,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::ServiceInformation &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<CORBA::ServiceInformation>::insert_copy (
-      _tao_any,
-      CORBA::ServiceInformation::_tao_any_destructor,
-      CORBA::_tc_ServiceInformation,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    CORBA::ServiceInformation *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<CORBA::ServiceInformation>::insert (
-      _tao_any,
-      CORBA::ServiceInformation::_tao_any_destructor,
-      CORBA::_tc_ServiceInformation,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    CORBA::ServiceInformation *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast (
-      const CORBA::ServiceInformation *&,
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const CORBA::ServiceInformation *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<CORBA::ServiceInformation>::extract (
-        _tao_any,
-        CORBA::ServiceInformation::_tao_any_destructor,
-        CORBA::_tc_ServiceInformation,
-        _tao_elem
-      );
-}
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
+// be/be_visitor_sequence/cdr_op_cs.cpp:95
 
 #if !defined _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceOption__CPP_
 #define _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceOption__CPP_
@@ -730,7 +613,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceOption__CPP_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
+// be/be_visitor_sequence/cdr_op_cs.cpp:95
 
 #if !defined _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceDetail__CPP_
 #define _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceDetail__CPP_
@@ -802,7 +685,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceDetail__CPP_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
+// be/be_visitor_root/root.cpp:1725
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -822,13 +705,8 @@ CORBA::Boolean operator>> (
         CORBA::ServiceDetail_var
       >;
 
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::ServiceDetail
-      >;
-
-#if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEOPTION__CS_)
-#define _CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEOPTION__CS_
+#if !defined (_CORBA_ULONG__EXPLICIT_CS_)
+#define _CORBA_ULONG__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
@@ -837,13 +715,8 @@ CORBA::Boolean operator>> (
 
 #endif /* end #if !defined */
 
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::ServiceInformation::_tao_seq_CORBA_ServiceOption_
-      >;
-
-#if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEDETAIL__CS_)
-#define _CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEDETAIL__CS_
+#if !defined (_CORBA_SERVICEDETAIL__EXPLICIT_CS_)
+#define _CORBA_SERVICEDETAIL__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
@@ -851,11 +724,6 @@ CORBA::Boolean operator>> (
       >;
 
 #endif /* end #if !defined */
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::ServiceInformation::_tao_seq_CORBA_ServiceDetail_
-      >;
 
   template class
     TAO_Var_Var_T<
@@ -871,11 +739,6 @@ CORBA::Boolean operator>> (
     TAO_Out_T<
         CORBA::ServiceInformation,
         CORBA::ServiceInformation_var
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::ServiceInformation
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -896,13 +759,8 @@ CORBA::Boolean operator>> (
         CORBA::ServiceDetail_var \
       >
 
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::ServiceDetail \
-      >
-
-#if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEOPTION__CS_)
-#define _CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEOPTION__CS_
+#if !defined (_CORBA_ULONG__EXPLICIT_CS_)
+#define _CORBA_ULONG__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \
@@ -911,13 +769,8 @@ CORBA::Boolean operator>> (
 
 #endif /* end #if !defined */
 
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::ServiceInformation::_tao_seq_CORBA_ServiceOption_ \
-      >
-
-#if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEDETAIL__CS_)
-#define _CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEDETAIL__CS_
+#if !defined (_CORBA_SERVICEDETAIL__EXPLICIT_CS_)
+#define _CORBA_SERVICEDETAIL__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \
@@ -925,11 +778,6 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::ServiceInformation::_tao_seq_CORBA_ServiceDetail_ \
-      >
 
 # pragma instantiate \
     TAO_Var_Var_T< \
@@ -945,11 +793,6 @@ CORBA::Boolean operator>> (
     TAO_Out_T< \
         CORBA::ServiceInformation, \
         CORBA::ServiceInformation_var \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::ServiceInformation \
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

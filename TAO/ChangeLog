@@ -1,3 +1,55 @@
+Sun Nov 16 09:46:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Dynamic.pidl:
+	* tao/Messaging_PolicyValue.pidl:
+	* tao/Policy_Forward.pidl:
+	* tao/OctetSeq.pidl:
+	* tao/Services.pidl:
+	* tao/StringSeq.pidl:
+	* tao/TAO.pidl:	
+
+	  Added the new option to needed to regenerate code.
+	  
+        * tao/DynamicA.cpp:
+	* tao/DynamicA.h:
+	* tao/Messaging_PolicyValueA.cpp:
+	* tao/Messaging_PolicyValueA.h:
+	* tao/OctetSeqA.cpp:
+	* tao/OctetSeqA.h:
+	* tao/Policy_ForwardA.cpp:
+	* tao/Policy_ForwardA.h:	
+	* tao/ServicesA.cpp:
+	* tao/ServicesA.h:
+	* tao/StringSeqA.cpp:
+	* tao/StringSeqA.h:
+
+	  New files that have the Any operators declared and defined
+	  elsewhere.
+
+	* tao/DynamicC.cpp:
+	* tao/DynamicC.h:
+	* tao/Messaging_PolicyValueC.cpp:
+	* tao/Messaging_PolicyValueC.i:
+	* tao/OctetSeqC.cpp:
+	* tao/OctetSeqC.i:
+	* tao/Policy_ForwardC.cpp:
+	* tao/Policy_ForwardC.i:
+	* tao/ServicesC.cpp:
+	* tao/ServicesC.i:
+	* tao/StringSeqC.cpp:
+	* tao/StringSeqC.h:
+	* tao/StringSeqC.i:
+
+	  Regenerated code since the Any operators have been moved from
+	  the above files. 
+
+	* tao/Makefile.bor:
+	* tao/Makefile.tao:
+	* tao/tao.mpc:
+
+	  Added the new files which has the Any operators for
+	  compilation. 
+
 Sun Nov 16 13:23:42 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/ImplRepo_Service/ImplRepo.bor:
