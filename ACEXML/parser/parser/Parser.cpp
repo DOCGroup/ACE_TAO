@@ -1216,8 +1216,69 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
 int
 ACEXML_Parser::parse_element_decl (ACEXML_Env &xmlenv)
 {
-  xmlenv.exception (new ACEXML_SAXNotSupportedException ());
-  return -1;
+  if (this->get () != 'E' ||
+      this->get () != 'L' ||
+      this->get () != 'E' ||
+      this->get () != 'M' ||
+      this->get () != 'E' ||
+      this->get () != 'N' ||
+      this->get () != 'T' ||
+      this->skip_whitespace_count () == 0)
+    {
+      xmlenv.exception (new ACEXML_SAXParseException ("Expecting keyword `ELEMENT'"));
+      return -1;
+    }
+
+  ACEXML_Char *element_name = this->read_name ();
+  if (element_name == 0)
+    {
+      xmlenv.exception (new ACEXML_SAXParseException
+                        ("Error reading element name while defining ELEMENT."));
+      return -1;
+    }
+
+  ACEXML_Char nextch ;
+  this->skip_whitespace_count (&nextch);
+
+  switch (nextch)
+    {
+    case 'E':                   // EMPTY
+      if (this->get () != 'E' ||
+          this->get () != 'M' ||
+          this->get () != 'P' ||
+          this->get () != 'T' ||
+          this->get () != 'Y')
+        {
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Expecting keyword `EMPTY' in ELEMENT definition."));
+          return -1;
+        }
+      break;
+    case 'A':                   // ANY
+      if (this->get () != 'A' ||
+          this->get () != 'N' ||
+          this->get () != 'Y')
+        {
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Expecting keyword `ANY' in ELEMENT definition."));
+          return -1;
+        }
+      break;
+    case '#':                   // MIXED with #PCDATA
+      break;
+    case '(':                   // children
+      this->parse_children_definition ();
+      break;
+    default:                    // error
+      xmlenv.exception (new ACEXML_SAXParseException
+                        ("Error reading ELEMENT definition."));
+      return -1;
+    }
+  if (this->skip_whitespace () != '>')
+      xmlenv.exception (new ACEXML_SAXParseException
+                        ("Expecting '>' in ELEMENT definition."));
+      return -1;
+  return 0;
 }
 
 int
@@ -1356,8 +1417,330 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
 int
 ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
 {
-  xmlenv.exception (new ACEXML_SAXNotSupportedException ());
-  return -1;
+  if (this->get () != 'A' ||
+      this->get () != 'T' ||
+      this->get () != 'T' ||
+      this->get () != 'L' ||
+      this->get () != 'I' ||
+      this->get () != 'S' ||
+      this->get () != 'T' ||
+      this->skip_whitespace_count () == 0)
+    {
+      xmlenv.exception (new ACEXML_SAXParseException ("Expecting keyword `ATTLIST'"));
+      return -1;
+    }
+
+  ACEXML_Char *element_name = this->read_name ();
+  if (element_name == 0)
+    {
+      xmlenv.exception (new ACEXML_SAXParseException
+                        ("Error reading element name while defining ATTLIST."));
+      return -1;
+    }
+
+  ACEXML_Char nextch = this->skip_whitespace (0);
+
+  // Parse AttDef*
+  while (nextch != '>')
+    {
+      // Parse attribute name
+      ACEXML_Char *att_name = this->read_name (nextch);
+      if (att_name == 0)
+        {
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Error reading attribute name while defining ATTLIST."));
+          return -1;
+        }
+
+      /*
+      Parse AttType:
+      Possible keywords:
+        CDATA                   // StringType
+        ID                      // TokenizedType
+        IDREF
+        IDREFS
+        ENTITY
+        ENTITIES
+        NMTOKEN
+        NMTOKENS
+        NOTATION                // EnumeratedType - NotationTYpe
+        (                       // EnumeratedType - Enumeration
+      */
+      nextch = this->skip_whitespace (0);
+      switch (nextch)
+        {
+        case 'C':               // CDATA
+          if (this->get () != 'D' ||
+              this->get () != 'A' ||
+              this->get () != 'T' ||
+              this->get () != 'A' ||
+              this->skip_whitespace_count () == 0)
+            {
+              xmlenv.exception (new ACEXML_SAXParseException
+                                ("Expecting keyword `CDATA' while defining ATTLIST."));
+              return -1;
+            }
+          // Else, we have successfully identified the type of the attribute as CDATA
+          // @@ Set up validator appropriately here.
+          break;
+        case 'I':               // ID, IDREF, or, IDREFS
+          if (this->get () == 'D')
+            {
+              if (this->skip_whitespace_count (&nextch) > 0)
+                {
+                  // We have successfully identified the type of the attribute as ID
+                  // @@ Set up validator as such.
+                  break;
+                }
+              if (this->get () == 'R' &&
+                  this->get () == 'E' &&
+                  this->get () == 'F')
+                {
+                  if (this->skip_whitespace_count (&nextch) > 0)
+                    {
+                      // We have successfully identified the type of
+                      // the attribute as IDREF
+                      // @@ Set up validator as such.
+                      break;
+                    }
+                  else if (nextch == 'S' &&
+                           this->get () && // consume the 'S'
+                           this->skip_whitespace_count () != 0)
+                    {
+                      // We have successfully identified the type of
+                      // the attribute as IDREFS
+                      // @@ Set up validator as such.
+                      break;
+                    }
+                }
+            }
+          // Admittedly, this error message is not precise enough
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Expecting keyword `ID', `IDREF', or `IDREFS' while defining ATTLIST."));
+          return -1;
+        case 'E':               // ENTITY or ENTITIES
+          if (this->get () == 'N' &&
+              this->get () == 'T' &&
+              this->get () == 'I' &&
+              this->get () == 'T')
+            {
+              nextch = this->get ();
+              if (nextch == 'Y')
+                {
+                  // We have successfully identified the type of
+                  // the attribute as ENTITY
+                  // @@ Set up validator as such.
+                }
+              else if (nextch == 'I'&&
+                       this->get () == 'E' &&
+                       this->get () == 'S')
+                {
+                  // We have successfully identified the type of
+                  // the attribute as ENTITIES
+                  // @@ Set up validator as such.
+                }
+              if (this->skip_whitespace_count () > 0)
+                {
+                  // success
+                  break;
+                }
+            }
+          // Admittedly, this error message is not precise enough
+          xmlenv.exception (new ACEXML_SAXParseException
+                            ("Expecting keyword `ENTITY', or `ENTITIES' while defining ATTLIST."));
+          return -1;
+        case 'N':               // NMTOKEN, NMTOKENS, or, NOTATION
+          nextch = this->get ();
+          if (nextch != 'M' || nextch != 'O')
+            {
+              xmlenv.exception (new ACEXML_SAXParseException
+                                ("Expecting keyword `NMTOKEN', `NMTOKENS', or `NOTATION' while defining ATTLIST."));
+              return -1;
+            }
+          if (nextch == 'M')
+            {
+              if (this->get () == 'T' &&
+                  this->get () == 'O' &&
+                  this->get () == 'K' &&
+                  this->get () == 'E' &&
+                  this->get () == 'N')
+                {
+                  if (this->skip_whitespace_count (&nextch) > 0)
+                    {
+                      // We have successfully identified the type of
+                      // the attribute as NMTOKEN
+                      // @@ Set up validator as such.
+                      break;
+                    }
+                  else if (nextch == 'S' && this->skip_whitespace_count () > 0)
+                    {
+                      // We have successfully identified the type of
+                      // the attribute as NMTOKENS
+                      // @@ Set up validator as such.
+                      break;
+                    }
+                }
+              xmlenv.exception (new ACEXML_SAXParseException
+                                ("Expecting keyword `NMTOKEN' or `NMTOKENS' while defining ATTLIST."));
+              return -1;
+            }
+          else                  // NOTATION
+            {
+              if (this->get () != 'T' ||
+                  this->get () != 'A' ||
+                  this->get () != 'T' ||
+                  this->get () != 'I' ||
+                  this->get () != 'O' ||
+                  this->get () != 'N' ||
+                  this->skip_whitespace_count () == 0)
+                {
+                  xmlenv.exception (new ACEXML_SAXParseException
+                                    ("Expecting keyword `NOTATION' while defining ATTLIST."));
+                  return -1;
+                }
+
+              if (this->get () != '(')
+                {
+                  xmlenv.exception (new ACEXML_SAXParseException
+                                    ("Expecting `(' following NOTATION while defining ATTLIST."));
+                  return -1;
+                }
+
+              this->skip_whitespace_count ();
+
+              do {
+                ACEXML_Char *notation_name = this->read_name ();
+                if (notation_name == 0)
+                  {
+                    xmlenv.exception (new ACEXML_SAXParseException
+                                      ("Error reading NOTATION name while defining ATTLIST."));
+                    return -1;
+                  }
+                // @@ get another notation name, set up validator as such
+                this->skip_whitespace_count (&nextch);
+              } while (nextch != ')');
+
+              this->get ();     // consume the closing paren.
+              this->skip_whitespace_count ();
+            }
+          break;
+        case '(':               // EnumeratedType - Enumeration
+          this->skip_whitespace_count ();
+
+          do {
+            ACEXML_Char *token_name = this->read_name (); // @@ need a special read_nmtoken?
+            if (notation_name == 0)
+              {
+                xmlenv.exception (new ACEXML_SAXParseException
+                                  ("Error reading enumerated nmtoken name while defining ATTLIST."));
+                return -1;
+              }
+            // @@ get another nmtoken, set up validator as such
+            this->skip_whitespace_count (&nextch);
+          } while (nextch != ')');
+
+          this->get ();     // consume the closing paren.
+          this->skip_whitespace_count ();
+          break;
+        default:
+          {
+            xmlenv.exception (new ACEXML_SAXParseException
+                              ("Invalid Attribute Type while defining ATTLIST."));
+            return -1;
+          }
+          break;
+        }
+
+
+      /*
+      Parse DefaultDecl:
+        #REQUIRED
+        #IMPLIED
+        #FIXED
+        quoted string           // #FIXED
+      */
+      nextch = this->peek ();
+      switch (nextch)
+        {
+        case '#':
+          this->get ();         // consume the '#'
+          switch (this->get ())
+            {
+            case 'R':
+              if (this->get () != 'E' ||
+                  this->get () != 'Q' ||
+                  this->get () != 'U' ||
+                  this->get () != 'I' ||
+                  this->get () != 'R' ||
+                  this->get () != 'E' ||
+                  this->get () != 'D')
+                {
+                  xmlenv.exception (new ACEXML_SAXParseException
+                                    ("Expecting keyword `#REQUIRED' while defining ATTLIST."));
+                  return -1;
+                }
+              // We now know this attribute is required
+              // @@ Set up the validator as such.
+              break;
+            case 'I':
+              if (this->get () != 'M' ||
+                  this->get () != 'P' ||
+                  this->get () != 'L' ||
+                  this->get () != 'I' ||
+                  this->get () != 'E' ||
+                  this->get () != 'D')
+                {
+                  xmlenv.exception (new ACEXML_SAXParseException
+                                    ("Expecting keyword `#IMPLIED' while defining ATTLIST."));
+                  return -1;
+                }
+              // We now know this attribute is impleid.
+              // @@ Set up the validator as such.
+              break;
+            case 'F':
+              if (this->get () != 'I' ||
+                  this->get () != 'X' ||
+                  this->get () != 'E' ||
+                  this->get () != 'D' ||
+                  this->skip_whitespace_count () == 0)
+                {
+                  xmlenv.exception (new ACEXML_SAXParseException
+                                    ("Expecting keyword `#FIXED' while defining ATTLIST."));
+                  return -1;
+                }
+              // We now know this attribute is fixed.
+
+              ACEXML_Char *fixed_attr;
+              if (this->get_quoted_string (fixed_attr) != 0)
+                {
+                  xmlenv.exception (new ACEXML_SAXParseException
+                                    ("Error parsing `#FIXED' attribute value while defining ATTLIST."));
+                  return -1;
+                }
+              // @@ set up validator
+              break;
+            default:
+              break;
+            }
+          break;
+        case '\'':
+        case '"':
+          ACEXML_Char *fixed_attr;
+          if (this->get_quoted_string (fixed_attr) != 0)
+            {
+              xmlenv.exception (new ACEXML_SAXParseException
+                                ("Error parsing `#FIXED' attribute value while defining ATTLIST."));
+              return -1;
+            }
+          // @@ set up validator
+          break;
+        default:
+          break;
+        }
+      this->skip_whitespace_count (nextch);
+    };
+
+  return 0;
 }
 
 int
