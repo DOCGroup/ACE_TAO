@@ -1,3 +1,13 @@
+Mon Mar 12 10:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tao/Wait_On_Leader_Follower.cpp:
+	  
+	  When timeouts were specified and the connection was closed before the timer
+	  expired or the reply arrived we returned no error, thereby letting the client
+	  believe that the request was actually sucessful. This fixes the problem
+	  by returning -1 in  TAO_Wait_On_Leader_Follower::wait () in such cases.
+	  Thanks to Jeffrey J. Persch <hyperslug@yahoo.com> for sending us this patch.
+
 Sun Mar 11 16:33:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/PluggableUDP/tests/UDP_i.cpp: Changed Thread_Mutex in
