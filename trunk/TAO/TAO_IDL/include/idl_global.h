@@ -471,6 +471,16 @@ public:
   // to be kept. Default  is current directory from which the
   // <tao_idl> is called.
 
+  virtual void temp_dir (const char* s);
+  // Set the directory where the IDL compiler can keep all its temp
+  // files. By default, IDL compiler looks for TEMP env variable and
+  // if it is not set,  "/tmp/" is assigned.
+
+  virtual const char* temp_dir (void) const;
+  // Get the directory where the IDL compiler can keep all its temp
+  // files. By default, IDL compiler looks for TEMP env variable and
+  // if it is not set,  "/tmp/" is assigned.
+
   virtual void gperf_path (const char* s);
   // Set the path for the perfect hashing program (GPERF).
 
@@ -622,11 +632,16 @@ private:
   // is $ACE_ROOT/bin/gperf.
   char* gperf_path_;
 
+
+  char* output_dir_;
   // Directory where all the IDL-Compiler-Generated files are to be
   // kept. Default value is 0 for this string which means the current
   // directory from which the <tao_idl> is called.
-  char* output_dir_;
-
+  
+  char* temp_dir_;
+  // Temp directory where which we can rewsolve in drv_preproc.cpp by
+  // checking for  TEMP env variable otherwise we assign to /tmp/.
+  
   idl_bool any_support_;
   // do we support Any operators?
 

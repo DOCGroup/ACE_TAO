@@ -123,6 +123,7 @@ IDL_GlobalData::IDL_GlobalData (void)
       server_template_inline_ending_ (ACE::strnew ("S_T.i")),
       gperf_path_ (0),
       output_dir_ (0),
+      temp_dir_ (0),
       any_support_ (I_TRUE),
       tc_support_ (I_TRUE),
       compiled_marshaling_ (I_TRUE),
@@ -1170,6 +1171,31 @@ const char*
 IDL_GlobalData::output_dir (void) const
 {
   return this->output_dir_;
+}
+
+void
+IDL_GlobalData::temp_dir (const char* s)
+{
+  // Delete the old pointer.
+  delete [] this->temp_dir_;
+  
+  // Allocate memory, 1 for the end of string.
+  ACE_NEW_RETURN (this->temp_dir_,
+                  char [ACE_OS::strlen (s) + 
+                       ACE_OS::strlen (ACE_DIRECTORY_SEPARATOR_STR_A) +
+                       1]);
+  
+  // Copy the strings.
+  ACE_OS::sprintf (this->temp_dir_,
+                   "%s%s",
+                   s,
+                   ACE_DIRECTORY_SEPARATOR_STR_A);
+}
+
+const char*
+IDL_GlobalData::temp_dir (void) const
+{
+  return this->temp_dir_;
 }
 
 void

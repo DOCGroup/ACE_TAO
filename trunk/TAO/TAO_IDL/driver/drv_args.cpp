@@ -348,7 +348,7 @@ DRV_parse_args (long ac, char **av)
               i++;
               break;
 
-              // Switching between "'s and <'s when we generate
+              // Switching between ""s and <>'s when we generate
               // #include statements for the standard files (e.g. tao/corba.h)
             case 'i':
               if (av[i][2] == 'c')
@@ -375,7 +375,13 @@ DRV_parse_args (long ac, char **av)
               idl_global->output_dir (av [i+1]);
               i++;
               break;
-
+            
+              // Temp directory for the IDL compiler to keep its files.               
+            case 't':
+              idl_global->temp_dir (av [i+1]);
+              i++;
+              break;
+              
             case 'D':
             case 'U':
             case 'I':
@@ -670,6 +676,19 @@ DRV_parse_args (long ac, char **av)
     {
       cerr << GTDEVEL ("Bad Combination -St and -Go \n");
       ACE_OS::exit (99);
+    }
+  
+  // Make sure the output directory is valid.
+  if (idl_global->temp_dir () == 0)
+    {
+      const char* tmpdir = getenv (ACE_DEFAULT_TEMP_DIR_ENV);
+              
+      if (tmpdir != 0)
+        idl_global->temp_dir (tmpdir);
+      else
+        idl_global->temp_dir (ACE_DIRECTORY_SEPARATOR_STR_A
+                              "tmp"
+                              ACE_DIRECTORY_SEPARATOR_STR_A);
     }
 }
 
