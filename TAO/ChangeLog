@@ -1,3 +1,12 @@
+Wed Feb 18 09:32:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/examples/LoadBalancing/RPS_Monitor.cpp:
+	* orbsvcs/examples/LoadBalancing/StockFactory.cpp:
+	  Added missing includes to fix compile problems with BCB
+
+	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+	  Fixed compile problem in BCB build.
+
 Wed Feb 18 09:02:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
@@ -10,6 +19,10 @@ Wed Feb 18 09:02:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.h:
+	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.pidl:
 	  Fixed include paths
 
 Tue Feb 17 17:03:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
