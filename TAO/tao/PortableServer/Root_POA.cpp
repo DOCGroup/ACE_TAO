@@ -235,7 +235,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 1)
   // If this is the RootPOA, set the value of the ImplicitActivationPolicy
   // to IMPLICIT_ACTIVATION since it is impossible to pass the policy
   // as it is not compiled into the library.
@@ -250,7 +250,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
       this->cached_policies_.implicit_activation
         (PortableServer::IMPLICIT_ACTIVATION);
     }
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 1 */
 
   // Set the active strategies to be used by this POA
   this->active_policy_strategies_.update (this->cached_policies_,
