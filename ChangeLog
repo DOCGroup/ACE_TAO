@@ -1,3 +1,12 @@
+Sat Apr 29 19:17:25 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace-dll.icc:
+	* ace_dll.dsp:
+	* ace_lib.dsp:
+
+	  These files still referred to the deprecated `inc_user_config.h'
+	  header.  The header is now called `config-all.h'.
+
 Sat Apr 29 19:09:00 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/QoS_Manager.h:
