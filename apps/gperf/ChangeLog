@@ -1,3 +1,10 @@
+Tue Aug 31 14:47:06 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* Makefile:
+	  Fix for Bug#:250 - The Makefile now uses ACE's build commands.
+	  This also gets rid of the build warning on egcs when compiling
+	  with repo=1. Thanks to David, Ossama, Bala and Yamuna.
+
 Thu Jul  1 09:31:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Makefile:
@@ -18,7 +25,7 @@ Wed Jun 23 07:24:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  reporting this.
 
 Fri Jun 18 16:54:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
-  
+
 	* apps/gperf/src/Key_List.cpp (output_lookup_array): Prefixed
 	  debug message with "GPERF".
 
@@ -68,7 +75,7 @@ Sat Jun  5 23:17:39 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 Tue May  4 14:24:27 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Options.cpp (parse_args): Removed %a flag from -v option and
-	  used ACE_OS::exit (0) instead. 
+	  used ACE_OS::exit (0) instead.
 
 Mon Apr 26 15:42:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
@@ -94,14 +101,14 @@ Sun Apr 25 16:13:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* COPYING: Updated to GPL version 2.
 
 Sat Apr 24 18:18:35 1999  Ossama Othman  <othman@cs.wustl.edu>
-	
+
 	* gperf.1:
 	* gperf.info:
 	* gperf.texi: Added missing quote, cosmetic fix, regenerated
  	  gperf.info.
-	
+
 	* src/Key_List.cpp
-	* src/Options.h: 
+	* src/Options.h:
 	* src/Options.cpp: Merged Cygnus patch that allows the user to
  	  specify a default fill expression/value in the keyword table.
   	  Updated help message with new `-F' option.  Made some cosmetic
@@ -110,7 +117,7 @@ Sat Apr 24 18:18:35 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* tests/test.cpp: Minor spelling correction in comment
 
 	* tests/test-6.exp: Updated with new expected gperf output.
-	
+
 Mon Nov  9 23:37:09 1998  Vishal Kachroo <vishal@cs.wustl.edu>
 
 	* src/Key_List.cpp: Fixed the problem with Binary and Linear
@@ -122,13 +129,13 @@ Sat Oct 10 18:40:56 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
  	  into test-6.exp. This test was failing because it didn't have
  	  the -b option previously. Thanks to David for reporting the
  	  failure of tests.
-	
+
 	* src/Options.cpp : Changed the option case 'h' to include the
  	  following line " -b/t Code for Linear Search".
 
 Fri Oct  9 01:06:56 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* src/Options.cpp : 
+	* src/Options.cpp :
 	* src/Key_List.cpp (output_linear_search_function): Changed option
  	  -z to -b for generating linear search. Removed <len> parameter
  	  from the lookup code. We dont need <len> in the generated code
