@@ -6,7 +6,9 @@
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/debug.h"
 
-ACE_RCSID (tao, DLL_ORB, "$Id$")
+ACE_RCSID (tao,
+           DLL_ORB,
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "tao/DLL_ORB.inl"
@@ -26,6 +28,16 @@ TAO_DLL_ORB::~TAO_DLL_ORB (void)
 int
 TAO_DLL_ORB::init (int argc, ACE_TCHAR *argv[])
 {
+  // This class is deprecated.  See the class documentation in
+  // DLL_ORB.h for details explaining why this is so.
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_WARNING,
+                ACE_LIB_TEXT ("TAO (%P|%t) - The TAO_DLL_ORB class is ")
+                ACE_LIB_TEXT ("deprecated.  See the class documentation\n")
+                ACE_LIB_TEXT ("TAO (%P|%t) - `tao/DLL_ORB.h' for details ")
+                ACE_LIB_TEXT ("explaining why this is so.\n")));
+
+
   // Make sure TAO's singleton manager is initialized, and set to not
   // register itself with the ACE_Object_Manager since it is under the
   // control of the Service Configurator.
@@ -39,23 +51,16 @@ TAO_DLL_ORB::init (int argc, ACE_TCHAR *argv[])
     {
       ACE_ARGV new_argv;
 
-      // Respect the argc supplied by the user instead of the one
-      // calculated by the ACE_ARGV class.  Also, add two to the new
-      // argc since "dummy -ORBSkipServiceConfigOpen" is being added
-      // to the argv vector.
-      int new_argc = argc + 2;
-
-      // Prevent the ORB from opening the Service Configurator file
-      // again since the Service Configurator file is already in the
-      // process of being opened.
-      if (new_argv.add (ACE_TEXT ("dummy -ORBSkipServiceConfigOpen")) == -1
+      if (new_argv.add (ACE_TEXT ("dummy")) == -1
           || new_argv.add (argv) == -1)
         return -1;
+
+      int new_argc = new_argv.argc ();
 
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (new_argc,
                                     new_argv.argv (),
-                                    0,
+                                    "",
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

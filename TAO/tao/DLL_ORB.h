@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *   Header file for the TAO_DLL_ORB helper class.
+ *  Header file for the TAO_DLL_ORB helper class.
  *
  *
  *  @author  Ossama Othman <ossama@uci.edu>
@@ -30,18 +30,20 @@
 /**
  * @class TAO_DLL_ORB
  *
- * @brief Manager for TAO library services and singleton cleanup.
+ * @brief Helper class that initializes an ORB when an instance of
+ *        this class is dynamically loaded.
  *
- * The <TAO_Singleton_Manager> is basically simplified version of
- * the ACE_Object_Manager.  It is designed specifically to
- * manage singletons created by TAO.  For example, Singleton
- * instances created by TAO will be automatically registered
- * with the Singleton instance of this Singleton Manager.
- * This class is necessary to ensure that TAO-specific
- * Singletons are centrally isolated.  The idea is that
- * destruction of the instance of the <TAO_Singleton_Manager>
- * triggers destruction of all objects/services registered with
- * it.
+ * This class is deprecated.  While it does demonstrate how to
+ * initialize an ORB in a dynamically loaded object, the fact that it
+ * is located in the TAO library forces the TAO library to be linked
+ * to the application binary.  This prevents TAO from being completely
+ * decoupled from an application when dynamic loading is used, hence
+ * defeating the purpose of dynamically loading the object!
+ * @par
+ * For an example of how to dynamically load an ORB (actually initialize
+ * an ORB inside a dynamically loaded object) that is completely
+ * decoupled from an application binary see the TAO/tests/DLL_ORB
+ * test.
  */
 class TAO_Export TAO_DLL_ORB : public ACE_Task_Base
 {

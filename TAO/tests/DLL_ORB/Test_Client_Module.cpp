@@ -108,7 +108,7 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (this->test_.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test reference <%s>\n",
+                             ACE_TEXT ("Nil Test reference <%s>\n"),
                              ior),
                             1);
         }
@@ -158,11 +158,20 @@ Test_Client_Module::fini (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
+  // This is a bit of a hack.  The ORB Core's lifetime is tied to the
+  // lifetime of an object reference.  We need to wipe out all object
+  // references before we call fini() on the TAO_Singleton_Manager.
+  //
+  // Note that this is only necessary if the default resource factory
+  // is used, i.e. one isn't explicitly loaded prior to initializing
+  // the ORB.
+  (void) this->test_.out ();
+
   // ------------------------------------------------------------
   // Pre-Test_Client_Module termination steps.
   // ------------------------------------------------------------
-  // Explicitly clean up singletons created by TAO before
-  // unloading this module.
+  // Explicitly clean up singletons and other objects created by TAO
+  // before unloading this module.
   if (TAO_Singleton_Manager::instance ()->fini () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Test_Client_Module::fini -- ORB pre-termination "
