@@ -29,7 +29,9 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32))
+#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || \
+        (defined (ACE_WIN32) && \
+         defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)))
 
 // Global pattern
 static ACE_UPIPE_Addr addr (ACE_TEXT ("pattern"));
@@ -138,14 +140,17 @@ acceptor (void *args)
   ACE_DEBUG ((LM_DEBUG, "(%t) exiting thread\n"));
   return 0;
 }
-#endif /* ACE_HAS_THREADS && defined ACE_HAS_STREAM_PIPES || ACE_WIN32 */
+#endif /* ACE_HAS_THREADS && defined ACE_HAS_STREAM_PIPES || (ACE_WIN32&&NT4)*/
 
 int
 main (int, char *[])
 {
   ACE_START_TEST ("UPIPE_SAP_Test");
 
-#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32))
+#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || \
+        (defined (ACE_WIN32) && \
+         defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)))
+
   ACE_UPIPE_Acceptor acc (addr);
 
   // Spawn a acceptor thread.
@@ -173,11 +178,9 @@ main (int, char *[])
 #if !defined (ACE_HAS_THREADS)
   ACE_ERROR ((LM_INFO, "threads not supported on this platform\n"));
 #else
-#if !defined (ACE_HAS_STREAM_PIPES) && !defined (ACE_WIN32)
   ACE_ERROR ((LM_INFO, "UPIPE is not supported on this platform\n"));
-#endif /* !defined (ACE_HAS_STREAM_PIPES) && ! defined (ACE_WIN32) */
 #endif /* !defined (ACE_HAS_THREADS) */
-#endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)) */
+#endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32) && NT4) */
 
   ACE_END_TEST;
   return 0;
