@@ -568,7 +568,7 @@ sub Build_Config
         ($Project_File, $Project_Name) = split /,\s*/, $Bname;
         chdir ("$ENV{ACE_ROOT}/$Project_Dir");
         $Command_Line =  "msdev.com $Project_File /MAKE \"$Project_Name - $Config\" /USEENV $Build_Cmd /Y3";
-        print "Auto_compiling $Project_File : $Project_Name - $Config\n"
+        print "Auto_compiling $Project_File : $Project_Name - $Config\n";
         if ( $Debug == 0 )
         {
             $Status =
