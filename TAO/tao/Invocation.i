@@ -25,11 +25,9 @@ TAO_GIOP_Twoway_Invocation (IIOP_Object *data,
 			    const char *operation,
 			    TAO_ORB_Core *orb_core)
   : TAO_GIOP_Invocation (data, operation, orb_core),
-    inp_stream_ (CDR::DEFAULT_BUFSIZE,
+    inp_stream_ (orb_core->create_input_cdr_data_block (CDR::DEFAULT_BUFSIZE),
                  TAO_ENCAP_BYTE_ORDER,
-                 TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
-                 orb_core->input_cdr_buffer_allocator (),
-                 orb_core->input_cdr_dblock_allocator ())
+                 TAO_Marshal::DEFAULT_MARSHAL_FACTORY)
 {
 }
 
@@ -83,7 +81,7 @@ TAO_GIOP_Locate_Request_Invocation::
 TAO_GIOP_Locate_Request_Invocation (IIOP_Object *data,
 				    TAO_ORB_Core *orb_core)
   : TAO_GIOP_Invocation (data, 0, orb_core),
-    inp_stream_ (CDR::DEFAULT_BUFSIZE)
+    inp_stream_ (orb_core->create_input_cdr_data_block (CDR::DEFAULT_BUFSIZE))
 {
 }
 

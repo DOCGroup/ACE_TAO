@@ -250,6 +250,10 @@ public:
   // This allocator is always TSS and has no locks. It is intended for
   // allocating the buffers used in *outgoing* CDR streams.
 
+  ACE_Data_Block *create_input_cdr_data_block (size_t size);
+  // The Message Blocks used for input CDRs must have appropiate
+  // locking strategies.
+
   CORBA_Environment *default_environment (void) const;
   void default_environment (CORBA_Environment*);
   // The thread has a default environment to simplify porting between
@@ -531,6 +535,10 @@ public:
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
   // Access the input CDR allocators.
 
+  ACE_Data_Block *create_input_cdr_data_block (size_t size);
+  // The Message Blocks used for input CDRs must have appropiate
+  // locking strategies.
+
   // @@ I suspect that putting these structs inside of this class is
   // going to break some compilers (e.g., HP/YUX) when you try to use
   // this stuff with the ACE_Singletons below.  I suggest you move
@@ -613,6 +621,7 @@ public:
     ACE_Allocator *input_cdr_dblock_allocator_;
     ACE_Allocator *input_cdr_buffer_allocator_;
     // The allocators for the input CDR streams.
+
   };
 
 protected:

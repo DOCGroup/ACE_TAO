@@ -1,3 +1,22 @@
+Tue Oct 13 23:03:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.h: 
+	* tao/ORB_Core.i: 
+	* tao/ORB_Core.cpp: 
+	* tao/Invocation.i: 
+	* tao/Connect.cpp: 
+	* tao/CDR.h: 
+	* tao/CDR.cpp: 
+	  The input CDR can be created using a user provided data block,
+	  this is used to select the right kind of locking for the
+	  Data_Block reference count.
+	  The ORB_Core acts as a Factory of Data_Blocks, selecting the
+	  right type according to the -ORBinputcdrallocator option.
+
+	* orbsvcs/Event_Service/svc.conf: 
+	  Use the appropiate allocator for the EC, because it shares the
+	  CDR buffers between several threads (to minimize data copying).
+
 Tue Oct 13 22:15:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp (svc): Must set the

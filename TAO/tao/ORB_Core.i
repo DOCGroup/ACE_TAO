@@ -157,6 +157,12 @@ TAO_ORB_Core::default_environment (CORBA_Environment* env)
   this->default_environment_ = env;
 }
 
+ACE_INLINE ACE_Data_Block*
+TAO_ORB_Core::create_input_cdr_data_block (size_t size)
+{
+  return this->resource_factory ()->create_input_cdr_data_block (size);
+}
+
 // ****************************************************************
 
 ACE_INLINE void
