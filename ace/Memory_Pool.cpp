@@ -191,13 +191,33 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
     }
 
   if (backing_store_name == 0)
-    // Only create a new unique filename for the backing store file
-    // if the user didn't supply one...
-    backing_store_name = ACE_DEFAULT_BACKING_STORE; // from "ace/OS.h"
+    {
+      // Only create a new unique filename for the backing store file
+      // if the user didn't supply one...
+#if defined (ACE_DEFAULT_BACKING_STORE)
+      // Create a temporary file.
+      ACE_OS::strcpy (this->backing_store_name_,
+                      ACE_DEFAULT_BACKING_STORE);
+#else /* ACE_DEFAULT_BACKING_STORE */
+      if (ACE::get_temp_dir (this->backing_store_name_, 
+                             MAXPATHLEN - 17) == -1) // -17 for ace-malloc-XXXXXX
+        {
+          ACE_ERROR ((LM_ERROR, 
+                      "Temporary path too long, "
+                      "defaulting to current directory\n"));
+          this->backing_store_name_[0] = 0;
+        }
 
-  ACE_OS::strncpy (this->backing_store_name_,
-                   backing_store_name,
-                   (sizeof this->backing_store_name_ / sizeof (TCHAR)));
+      // Add the filename to the end
+      ACE_OS::strcat (this->backing_store_name_, 
+                      ACE_TEXT ("ace-malloc-XXXXXX"));
+  
+#endif /* ACE_DEFAULT_BACKING_STORE */
+    }
+  else
+    ACE_OS::strncpy (this->backing_store_name_,
+                     backing_store_name,
+                     (sizeof this->backing_store_name_ / sizeof (TCHAR)));
 
 #if !defined (ACE_WIN32) && !defined (CHORUS)
   if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)

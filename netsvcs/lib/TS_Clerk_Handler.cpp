@@ -292,7 +292,24 @@ ACE_TS_Clerk_Processor::ACE_TS_Clerk_Processor ()
   blocking_semantics_ (0),
   cur_sequence_num_ (0)
 {
-  ACE_OS::strcpy (poolname_, ACE_DEFAULT_BACKING_STORE);
+#if defined (ACE_DEFAULT_BACKING_STORE)
+  // Create a temporary file.
+  ACE_OS::strcpy (this->poolname_,
+                  ACE_DEFAULT_BACKING_STORE);
+#else /* ACE_DEFAULT_BACKING_STORE */
+  if (ACE::get_temp_dir (this->poolname_, 
+                         MAXPATHLEN - 17) == -1) // -17 for ace-malloc-XXXXXX
+    {
+      ACE_ERROR ((LM_ERROR, 
+                  "Temporary path too long, "
+                  "defaulting to current directory\n"));
+      this->poolname_[0] = 0;
+    }
+
+  // Add the filename to the end
+  ACE_OS::strcat (this->poolname_, "ace-malloc-XXXXXX");
+
+#endif /* ACE_DEFAULT_BACKING_STORE */
 }
 
 void

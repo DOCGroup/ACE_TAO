@@ -441,6 +441,13 @@ public:
   // returns a pointer to the file, else it returns a NULL
   // pointer. <type> specifies how the file should be open.
 
+  static int get_temp_dir (char *buffer, size_t buffer_len);
+  static int get_temp_dir (wchar_t *buffer, size_t buffer_len);
+  // Returns the temporary directory including the trailing slash in 
+  // <buffer>.  Returns the number of characters in the temp path (but 
+  // doesn't fill in <buffer> if it is not large enough).  Returns -1 
+  // for any other error.
+
   static ACE_HANDLE open_temp_file (const char *name,
                                     int mode,
                                     int perm = 0);

@@ -409,12 +409,26 @@ ACE_Name_Options::ACE_Name_Options (void)
     use_registry_ (0),
     nameserver_port_ (ACE_DEFAULT_SERVER_PORT),
     nameserver_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
-    namespace_dir_  (ACE_OS::strdup (ACE_DEFAULT_NAMESPACE_DIR)),
     process_name_ (0),
     database_ (ACE_OS::strdup (ACE_DEFAULT_LOCALNAME)),
     base_address_ (ACE_DEFAULT_BASE_ADDR)
 {
   ACE_TRACE ("ACE_Name_Options::ACE_Name_Options");
+
+#if defined (ACE_DEFAULT_NAMESPACE_DIR)
+  this->namespace_dir_ = ACE_OS::strdup (ACE_DEFAULT_NAMESPACE_DIR);
+#else /* ACE_DEFAULT_NAMESPACE_DIR */
+  this->namespace_dir_ = ACE_static_cast (TCHAR *, ACE_OS::malloc (MAXPATHLEN + 1));
+  
+  if (ACE::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1) 
+    {
+      ACE_ERROR ((LM_ERROR, 
+                  "Temporary path too long, "
+                  "defaulting to current directory\n"));
+      ACE_OS::strcat (this->namespace_dir_, ACE_TEXT ("."));
+      ACE_OS::strcat (this->namespace_dir_, ACE_DIRECTORY_SEPARATOR_STR);
+    }
+#endif /* ACE_DEFAULT_NAMESPACE_DIR */
 }
 
 ACE_Name_Options::~ACE_Name_Options (void)
