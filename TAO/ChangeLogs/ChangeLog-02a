@@ -1,12 +1,22 @@
+Tue Mar 13 14:13:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* rules.tao.GNU: Removed duplicate definition of -lTAO from
+	  TAO_CLNT_LIBS.
+
+	* orbsvcs/IFR_Service/Makefile.IFR_Service:
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+	* orbsvcs/tests/Notify/Basic/Makefile:  Fixed more Makefiles.
+
 Tue Mar 13 13:02:05 CST 2001 Chanaka Liyanaarachchi <chanaka@ociweb.com>
-	
+
         * utils/catior/catior.cpp: Removed tab charactres from the
           previous change.
-	
+
 Tue Mar 13 12:38:19 CST 2001 Chanaka Liyanaarachchi <chanaka@ociweb.com>
-        
+
         * tao/TAO_Internal.cpp: Removed tab characters from the previous
-          change.  
+          change.
 
 Tue Mar 13 12:18:52 CST 2001 Chanaka Liyanaarachchi <chanaka@ociweb.com>
 
@@ -22,21 +32,21 @@ Tue Mar 13 12:18:06 CST 2001 Chanaka Liyanaarachchi <chanaka@ociweb.com>
 
 Tue Mar 13 11:59:45 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.h: 
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp: 	
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/ditributer.h: 	
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/ditributer.cpp: 	
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.h: 	
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.h:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/ditributer.h:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/ditributer.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.h:
 	* orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile: 		
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
 	* orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/README: 			
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/README:
 	* orbsvcs/tests/AVStreams/Makefile: Created a new test,
 	  Simple_Three_Stage. It consists of a sender that sends data,
 	  read from a file, to the distributer at a specified rate .The
 	  distributer in turn sends the data to the receiver. The receiver
-	  writes the data to a file.  
-	
+	  writes the data to a file.
+
 Tue Mar 13 11:59:45 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
@@ -56,7 +66,7 @@ Tue Mar 13 11:59:45 2001  Craig Rodrigues <crodrigu@bbn.com>
 Tue Mar 13 06:48:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp: Tried to apply a fix that Chris
-	  Kolhloff had suggested. 
+	  Kolhloff had suggested.
 
 Mon Mar 12 23:40:09 2001  Carlos O'Ryan  <coryan@uci.edu>
 

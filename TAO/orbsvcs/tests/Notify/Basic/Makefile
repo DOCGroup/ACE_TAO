@@ -29,7 +29,7 @@ endif # Naming
 endif # Notify
 
 PSRC=$(addsuffix .cpp,$(BIN)) Updates.cpp
-LDLIBS = -lNotifyTests -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_IORTable -lTAO_PortableServer
+LDLIBS = -lNotifyTests -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_IORTable -lTAO_PortableServer -lTAO
 CPPFLAGS += -I../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
 
@@ -61,7 +61,7 @@ ifeq (Notify,$(findstring Notify,$(TAO_ORBSVCS)))
 all: Updates
 
 Updates: $(addprefix $(VDIR),Updates.o)
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_CosNotification -lTAO_CosNaming $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 endif # Notify
 
 #----------------------------------------------------------------------------
