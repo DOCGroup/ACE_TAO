@@ -305,6 +305,55 @@ Thu Dec  7 17:36:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/*/Makefile:
 	* */Makefile:Updated dependencies.
 
+Thu Dec  7 19:48:42 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Latency/control.cpp: 
+	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 
+	* orbsvcs/tests/AVStreams/Latency/ping.cpp: 
+
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.h: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.h: 
+
+	* orbsvcs/tests/AVStreams/Multicast/server.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast/server.h: 
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast/ftp.h: 
+
+	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 
+	* orbsvcs/tests/AVStreams/Pluggable/server.h: 
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.h: 
+
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.h: 
+	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp: 
+	* orbsvcs/tests/AVStreams/Full_Profile/server.h: 
+
+	* orbsvcs/tests/AVStreams/benchmark/client.cpp: 
+	* orbsvcs/tests/AVStreams/benchmark/client.h: 
+	* orbsvcs/tests/AVStreams/benchmark/server.cpp: 
+	* orbsvcs/tests/AVStreams/benchmark/server.h: 
+	* orbsvcs/tests/AVStreams/benchmark/child.cpp: 
+	* orbsvcs/tests/AVStreams/benchmark/child.h: 
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: 
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h: 
+	* orbsvcs/orbsvcs/AV/AV_Core.h: 
+	  
+	  Removed the use of ORB_Manager	
+	
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp: 
+	  
+	  Moved the TAO_AV_Core class definitions to the newly added
+	  AV_Core.cpp 
+
+	* orbsvcs/orbsvcs/AV/Transport.i: 
+	* orbsvcs/orbsvcs/AV/Transport.cpp: 
+
+	  Moved the TAO_AV_Core class definitions to AV_Core.cpp
+	
 Thu Dec  7 11:59:28 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/Strategies/simple_test.idl:
