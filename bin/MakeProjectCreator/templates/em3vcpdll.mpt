@@ -37,7 +37,7 @@ Release {
 Debug {
   use_debug_libraries   = 1
   compile_flags         = /W3 /Zi /Od
-  defines               = DEBUG
+  defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   intermediate_dir      = Debug
   lib_modifier          = d

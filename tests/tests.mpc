@@ -165,6 +165,7 @@ project(CDR File Test) : aceexe {
   exename = CDR_File_Test
   Source_Files {
     CDR_File_Test.cpp
+    CE_fostream.cpp
   }
   Header_Files {
   }
