@@ -218,7 +218,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
   // show usage is requested
   if (optsMgr._usage) {
-    optsMgr._show_usage(cerr, ACE_TEXT ("server-opts"));
+    optsMgr._show_usage(stderr, ACE_TEXT ("server-opts"));
     return 1;
   }
 
@@ -231,7 +231,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
   // check that valid options were specified
   if (optsMgr._error) {
-    cerr << "ERROR: " << ACE_TEXT_ALWAYS_CHAR (optsMgr._error_message) << endl;
+    ACE_OS::fprintf (stderr, "ERROR: %s\n", ACE_TEXT_ALWAYS_CHAR (optsMgr._error_message));
     return 1;
   }
 
