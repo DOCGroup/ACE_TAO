@@ -31,6 +31,11 @@ Wed Oct 28 09:13:10 1998  David L. Levine  <levine@cs.wustl.edu>
           line argument is provided to run_tests.sh, and the argument
           is not a Chorus hostname.
 
+        * ace/Object_Manager.h: declare the ACE_Object_Manager_Base
+          methods to be public, instead of protected, for DEC CXX 5.6
+          (in addition to Diab for PSoS).  Thanks to Doug Anderson
+          <doug@clark.net> for suggesting this.
+
 Tue Oct 27 22:14:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.6 released.
