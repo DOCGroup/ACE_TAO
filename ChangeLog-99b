@@ -1,5 +1,14 @@
 Tue Aug 31 00:16:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Process.cpp: Need to #include "ace/Signal.h".
+
+	* Added a series of fixes that allow ACE to build and 
+	  run cleanly with SunC++ 5.0 and Solaris 7 even when debugging is
+ 	  NOT enabled.  These changes require moving the explicit template
+ 	  instantiations from the BOTTOM of the *.cpp files to near the
+ 	  top.  Thanks to Robert Shewan <rshew@peri.com> for reporting
+ 	  this.
+ 
 	* ace/Process_Manager.cpp: Fixed some warnings.  Thanks to
 	  Carlos for reporting this.
 

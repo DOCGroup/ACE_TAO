@@ -1,17 +1,5 @@
 /* -*- C++ -*- */
 // $Id$
-// ====================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    DynUnion_i.cpp
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ====================================================================
 
 #include "tao/DynAny_i.h"
 
@@ -19,6 +7,32 @@
 
 #include "tao/DynUnion_i.h"
 #include "tao/InconsistentTypeCodeC.h"
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class DU_Extractor<CORBA::Short>;
+template class DU_Extractor<CORBA::Long>;
+template class DU_Extractor<CORBA::UShort>;
+template class DU_Extractor<CORBA::ULong>;
+
+// For platforms without native 64-bit ints . . .
+#if !defined (ACE_LACKS_LONGLONG_T)
+template class DU_Extractor<CORBA::LongLong>;
+#endif /* ACE_LACKS_LONGLONG_T */
+
+template class DU_Extractor<CORBA::ULongLong>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate DU_Extractor<CORBA::Short>
+#pragma instantiate DU_Extractor<CORBA::Long>
+#pragma instantiate DU_Extractor<CORBA::UShort>
+#pragma instantiate DU_Extractor<CORBA::ULong>
+
+// For platforms without native 64-bit ints . . .
+#if !defined (ACE_LACKS_LONGLONG_T)
+#pragma instantiate DU_Extractor<CORBA::LongLong>
+#endif /* ACE_LACKS_LONGLONG_T */
+
+#pragma instantiate DU_Extractor<CORBA::ULongLong>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // Constructors and destructor
 
@@ -41,9 +55,7 @@ TAO_DynUnion_i::TAO_DynUnion_i (const CORBA_Any& any)
           ACE_TRY_CHECK;
         }
       else
-        {
-          ACE_THROW (CORBA_ORB_InconsistentTypeCode ());
-        }
+        ACE_THROW (CORBA_ORB_InconsistentTypeCode ());
     }
   ACE_CATCHANY
     {
@@ -65,23 +77,24 @@ TAO_DynUnion_i::TAO_DynUnion_i (CORBA_TypeCode_ptr tc)
       if (tk == CORBA::tk_union)
         {
           // Initialize the typecode holder
-          this->type_ = CORBA::TypeCode::_duplicate (tc);
+          this->type_ =
+            CORBA::TypeCode::_duplicate (tc);
 
-          CORBA::TypeCode_ptr disc_tc = tc->discriminator_type (ACE_TRY_ENV);
+          CORBA::TypeCode_ptr disc_tc =
+            tc->discriminator_type (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Get a typecode into the discriminator holder.
-          this->discriminator_ = TAO_DynAny_i::create_dyn_any (disc_tc,
-                                                               ACE_TRY_ENV);
+          this->discriminator_ =
+            TAO_DynAny_i::create_dyn_any (disc_tc,
+                                          ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // To be filled in by from_any() or assign().
           this->member_ = 0;
         }
       else
-        {
-          ACE_THROW (CORBA_ORB_InconsistentTypeCode ());
-        }
+        ACE_THROW (CORBA_ORB_InconsistentTypeCode ());
     }
   ACE_CATCHANY
     {
@@ -180,9 +193,7 @@ TAO_DynUnion_i::member_name (const char* member_name,
           // No sense doing anything if we're just "resetting" to the
           // current member.
           if (i == this->current_index_)
-            {
-              return;
-            }
+            return;
           else
             {
               CORBA_TypeCode_ptr member_type = 
@@ -2193,31 +2204,5 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
       ACE_CHECK;
     }
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class DU_Extractor<CORBA::Short>;
-template class DU_Extractor<CORBA::Long>;
-template class DU_Extractor<CORBA::UShort>;
-template class DU_Extractor<CORBA::ULong>;
-
-// For platforms without native 64-bit ints . . .
-#if !defined (ACE_LACKS_LONGLONG_T)
-template class DU_Extractor<CORBA::LongLong>;
-#endif /* ACE_LACKS_LONGLONG_T */
-
-template class DU_Extractor<CORBA::ULongLong>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate DU_Extractor<CORBA::Short>
-#pragma instantiate DU_Extractor<CORBA::Long>
-#pragma instantiate DU_Extractor<CORBA::UShort>
-#pragma instantiate DU_Extractor<CORBA::ULong>
-
-// For platforms without native 64-bit ints . . .
-#if !defined (ACE_LACKS_LONGLONG_T)
-#pragma instantiate DU_Extractor<CORBA::LongLong>
-#endif /* ACE_LACKS_LONGLONG_T */
-
-#pragma instantiate DU_Extractor<CORBA::ULongLong>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

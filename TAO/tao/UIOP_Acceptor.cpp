@@ -11,9 +11,8 @@
 //
 // = DESCRIPTION
 //
-//
 // = AUTHOR
-//     Fred Kuhns <fredk@cs.wustl.edu>
+//     Fred Kuhns <fredk@cs.wustl.edu> and
 //     Ossama Othman <othman@cs.wustl.edu>
 //
 // ============================================================================
@@ -31,7 +30,31 @@
 
 ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
 
-// ****************************************************************
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
+template class ACE_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
+template class ACE_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>;
+template class ACE_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>;
+template class ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler>;
+template class TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>;
+template class TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>;
+template class TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
+#pragma instantiate ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
+#pragma instantiate ACE_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
+#pragma instantiate ACE_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>
+#pragma instantiate ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler>
+#pragma instantiate TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>
+#pragma instantiate TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>
+#pragma instantiate TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
   : TAO_Acceptor (TAO_IOP_TAG_UNIX_IOP),
@@ -63,11 +86,9 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
   // we only make one
   int count = mprofile.profile_count ();
-  if ((mprofile.size () - count) < 1)
-    {
-      if (mprofile.grow (count + 1) == -1)
-        return -1;
-    }
+  if ((mprofile.size () - count) < 1
+      && mprofile.grow (count + 1) == -1)
+    return -1;
 
   TAO_UIOP_Profile *pfile = 0;
   ACE_NEW_RETURN (pfile,
@@ -100,12 +121,13 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 }
 
 int
-TAO_UIOP_Acceptor::is_collocated (const TAO_Profile* pfile)
+TAO_UIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
 {
   const TAO_UIOP_Profile *profile =
-    ACE_dynamic_cast(const TAO_UIOP_Profile*, pfile);
+    ACE_dynamic_cast (const TAO_UIOP_Profile *,
+                      pfile);
 
-  // for UNIX Files this is relatively cheap
+  // For UNIX Files this is relatively cheap.
   ACE_UNIX_Addr address;
   if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
     return 0;
@@ -144,14 +166,15 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     return -1;
 
   if (major >= 0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet, major),
-                                ACE_static_cast (CORBA::Octet, minor));
-
+    this->version_.set_version (ACE_static_cast (CORBA::Octet,
+                                                 major),
+                                ACE_static_cast (CORBA::Octet,
+                                                 minor));
   // Parse options
   if (this->parse_options (options) == -1)
     return -1;
-
-  return this->open_i (orb_core, address);
+  else
+    return this->open_i (orb_core, address);
 }
 
 int
@@ -162,16 +185,18 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
-  ACE_Auto_String_Free tempname (ACE_OS::tempnam (0, "TAO"));
+  ACE_Auto_String_Free tempname (ACE_OS::tempnam (0,
+                                                  "TAO"));
 
   if (tempname.get () == 0)
     return -1;
 
-  return this->open_i (orb_core, tempname.get ());
+  return this->open_i (orb_core,
+                       tempname.get ());
 }
 
 int
-TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
+TAO_UIOP_Acceptor::open_i (TAO_ORB_Core *orb_core,
                            const char *rendezvous)
 {
   this->orb_core_ = orb_core;
@@ -210,13 +235,10 @@ TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
   //    rendezvous point here
 
   if (TAO_debug_level > 5)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "\nTAO (%P|%t) UIOP_Acceptor::open_i - "
-                  "listening on: <%s>\n",
-                  addr.get_path_name ()));
-    }
-
+    ACE_DEBUG ((LM_DEBUG,
+                "\nTAO (%P|%t) UIOP_Acceptor::open_i - "
+                "listening on: <%s>\n",
+                addr.get_path_name ()));
   return 0;
 }
 
@@ -243,9 +265,9 @@ TAO_UIOP_Acceptor::rendezvous_point (ACE_UNIX_Addr &addr,
   // be able to communicate with the server since its point of
   // communication, the rendezvous point, was not found. On the other
   // hand, if an absolute path was used, the client would know exactly
-  // where to find the rendezvous point.  It is up to the user to
-  // make sure that a given UIOP endpoint is accessible by both the
-  // server and the client.
+  // where to find the rendezvous point.  It is up to the user to make
+  // sure that a given UIOP endpoint is accessible by both the server
+  // and the client.
 
   addr.set (rendezvous);
 
@@ -255,13 +277,11 @@ TAO_UIOP_Acceptor::rendezvous_point (ACE_UNIX_Addr &addr,
   // most UNIX domain socket rendezvous points can only be less than
   // 108 characters long.
   if (length < ACE_OS::strlen (rendezvous))
-    {
-      ACE_DEBUG ((LM_WARNING,
-                  "TAO (%P|%t) UIOP rendezvous point was truncated to <%s>\n"
-                  "since it was longer than %d characters long.\n",
-                  addr.get_path_name (),
-                  length));
-    }
+    ACE_DEBUG ((LM_WARNING,
+                "TAO (%P|%t) UIOP rendezvous point was truncated to <%s>\n"
+                "since it was longer than %d characters long.\n",
+                addr.get_path_name (),
+                length));
 }
 
 CORBA::ULong
@@ -284,22 +304,18 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
 
   size_t len = options.length ();
 
-
   const char option_delimiter = '&';
 
   // Count the number of options.
 
   CORBA::ULong option_count = 1;
-  // Number of endpoints in the string  (initialized to 1).
+  // Number of endpoints in the string (initialized to 1).
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
   for (size_t i = 0; i < len; ++i)
-    {
-      if (options[i] == option_delimiter)
-        option_count++;
-    }
-
+    if (options[i] == option_delimiter)
+      option_count++;
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -322,37 +338,32 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
         end = len - begin;  // Handle last endpoint differently
 
       if (end == begin)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "TAO (%P|%t) Zero length UIOP option.\n"),
-                            -1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "TAO (%P|%t) Zero length UIOP option.\n"),
+                          -1);
       else if (end != ACE_CString::npos)
         {
-          ACE_CString opt = options.substring (begin, end);
+          ACE_CString opt =
+            options.substring (begin, end);
 
           int slot = opt.find ("=");
 
-          if (slot == ACE_static_cast (int, len - 1) ||
-              slot == ACE_CString::npos)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "TAO (%P|%t) UIOP option <%s> is "
-                                 "missing a value.\n",
-                                 opt.c_str ()),
-                                -1);
-            }
+          if (slot == ACE_static_cast (int, len - 1) 
+              || slot == ACE_CString::npos)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "TAO (%P|%t) UIOP option <%s> is "
+                               "missing a value.\n",
+                               opt.c_str ()),
+                              -1);
 
           ACE_CString name = opt.substring (0, slot);
           ACE_CString value = opt.substring (slot + 1);
 
           if (name.length () == 0)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "TAO (%P|%t) Zero length UIOP "
-                                 "option name.\n"),
-                                -1);
-            }
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "TAO (%P|%t) Zero length UIOP "
+                               "option name.\n"),
+                              -1);
 
           if (name == "priority")
             {
@@ -362,61 +373,24 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
 
               if (corba_priority >= 0
                   /* && corba_priority < 32768 */)
-                {
-                  // priority_ and corba_priority will always be less
-                  // than 32768 since CORBA::Short is a signed 16 bit
-                  // integer.
-
-                  this->priority_ = corba_priority;
-                }
+                // priority_ and corba_priority will always be less
+                // than 32768 since CORBA::Short is a signed 16 bit
+                // integer.
+                this->priority_ = corba_priority;
               else
-                {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     "TAO (%P|%t) Invalid UIOP endpoint "
-                                     "priority: <%s>\n",
-                                     value.c_str ()),
-                                    -1);
-                }
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "TAO (%P|%t) Invalid UIOP endpoint "
+                                   "priority: <%s>\n",
+                                   value.c_str ()),
+                                  -1);
             }
           else
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "TAO (%P|%t) Invalid UIOP option: <%s>\n",
-                                 name.c_str ()),
-                                -1);
-            }
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "TAO (%P|%t) Invalid UIOP option: <%s>\n",
+                               name.c_str ()),
+                              -1);
         }
     }
-
   return 0;
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-template class ACE_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-template class ACE_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler>;
-template class TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>;
-template class TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>;
-template class TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>
-#pragma instantiate TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
 #endif  /* TAO_HAS_UIOP */

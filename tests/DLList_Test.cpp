@@ -21,6 +21,18 @@
 #include "ace/SString.h"
 #include "ace/Malloc.h"
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_DLList<STRING>;
+template class ACE_DLList_Iterator<STRING>;
+template class ACE_DLList_Reverse_Iterator<STRING>;
+template class ACE_Static_Allocator<8192>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_DLList<STRING>
+#pragma instantiate ACE_DLList_Iterator<STRING>
+#pragma instantiate ACE_DLList_Reverse_Iterator<STRING>
+#pragma instantiate ACE_Static_Allocator<8192>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
@@ -116,15 +128,3 @@ main (int, ASYS_TCHAR *[])
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_DLList<STRING>;
-template class ACE_DLList_Iterator<STRING>;
-template class ACE_DLList_Reverse_Iterator<STRING>;
-template class ACE_Static_Allocator<8192>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_DLList<STRING>
-#pragma instantiate ACE_DLList_Iterator<STRING>
-#pragma instantiate ACE_DLList_Reverse_Iterator<STRING>
-#pragma instantiate ACE_Static_Allocator<8192>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

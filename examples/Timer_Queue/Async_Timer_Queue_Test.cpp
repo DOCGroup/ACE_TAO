@@ -13,8 +13,9 @@
 //      using an <ACE_Timer_Heap>.
 //
 // = AUTHORS
-//    Douglas C. Schmidt and
-//    Sergio Flores-Gaitan
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu> and
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+//
 // ============================================================================
 
 #include "ace/Signal.h"
@@ -23,12 +24,22 @@
 
 #include "Async_Timer_Queue_Test.h"
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>;
+template class Command<Async_Timer_Queue, Async_Timer_Queue::ACTION>;
+template class Timer_Queue_Test_Driver<Async_Timer_Queue *, Async_Timer_Queue, Async_Timer_Queue::ACTION>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>
+#pragma instantiate Command<Async_Timer_Queue, Async_Timer_Queue::ACTION>
+#pragma instantiate Timer_Queue_Test_Driver<Async_Timer_Queue *, Async_Timer_Queue, Async_Timer_Queue::ACTION>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 ACE_RCSID(Timer_Queue, Async_Timer_Queue_Test, "$Id$")
 
 // Hook method that is called to handle the expiration of a timer.
 int
 Async_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
-			       const void *arg)
+                                     const void *arg)
 {
   // Print some information here (note that this is not strictly
   // signal-safe since the ACE logging mechanism uses functions that
@@ -89,7 +100,8 @@ Async_Timer_Queue::dump (void)
        iter.next ())
     iter.item ()->dump ();
 
-  ACE_DEBUG ((LM_DEBUG, "end dumping timer queue\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "end dumping timer queue\n"));
 }
 
 // Schedule a timer.
@@ -102,7 +114,8 @@ Async_Timer_Queue::schedule (u_int microsecs)
   // Create a new Event_Handler for our timer.
 
   ACE_Event_Handler *eh;
-  ACE_NEW (eh, Async_Timer_Handler);
+  ACE_NEW (eh,
+           Async_Timer_Handler);
 
   // Schedule the timer to run in the future.
   long tid = this->tq_.schedule
@@ -111,7 +124,9 @@ Async_Timer_Queue::schedule (u_int microsecs)
      ACE_OS::gettimeofday () + tv);
 
   if (tid == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "schedule_timer"));
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "schedule_timer"));
 }
 
 // Cancel a timer.
@@ -119,12 +134,16 @@ Async_Timer_Queue::schedule (u_int microsecs)
 void
 Async_Timer_Queue::cancel (long timer_id)
 {
-  ACE_DEBUG ((LM_DEBUG, "canceling %d\n", timer_id));
+  ACE_DEBUG ((LM_DEBUG,
+              "canceling %d\n",
+              timer_id));
 
   const void *act = 0;
 
   if (this->tq_.cancel (timer_id, &act) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "cancel_timer"));
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "cancel_timer"));
 
   // In this case, the act will be 0, but it could be a real pointer
   // in other cases.
@@ -161,26 +180,23 @@ Async_Timer_Queue::cancel_timer (void *argument)
 // signal handler using SIGINT, not from the driver.
 
 int
-Async_Timer_Queue::list_timer (void *argument)
+Async_Timer_Queue::list_timer (void *)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (argument);
-
   // Display an error message.
-  ACE_ERROR_RETURN ((LM_ERROR, "invalid input\n"), 0);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "invalid input\n"), 0);
 }
 
 // Dummy shutdown timer hook method.  The shutdown of the timer queue
 // is done with a signal handler using SIGQUIT, not from the driver.
 
 int
-Async_Timer_Queue::shutdown_timer (void *argument)
+Async_Timer_Queue::shutdown_timer (void *)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (argument);
-
   // Display an error message.
-  ACE_ERROR_RETURN ((LM_ERROR, "invalid input\n"), 0);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "invalid input\n"),
+                    0);
 }
 
 // Handler for the SIGINT and SIGQUIT signals.
@@ -188,7 +204,9 @@ Async_Timer_Queue::shutdown_timer (void *argument)
 static void
 signal_handler (int signum)
 {
-  ACE_DEBUG ((LM_DEBUG, "handling signal %S\n", signum));
+  ACE_DEBUG ((LM_DEBUG,
+              "handling signal %S\n",
+              signum));
 
   switch (signum)
     {
@@ -198,7 +216,9 @@ signal_handler (int signum)
       /* NOTREACHED */
 
     case SIGQUIT:
-      ACE_ERROR ((LM_ERROR, "shutting down on SIGQUIT%a\n", 1));
+      ACE_ERROR ((LM_ERROR,
+                  "shutting down on SIGQUIT%a\n",
+                  1));
       /* NOTREACHED */
       break;
     }
@@ -248,8 +268,9 @@ Async_Timer_Queue_Test_Driver::display_menu (void)
     "^C list timers\n"
     "^\\ exit program\n";
 
-  ACE_DEBUG ((LM_DEBUG, "%s", menu));
-
+  ACE_DEBUG ((LM_DEBUG,
+              "%s",
+              menu));
   return 0;
 }
 
@@ -263,35 +284,25 @@ Async_Timer_Queue_Test_Driver::init (void)
   // Initialize <Command> objects with their corresponding <Input_Task> methods.
   ACE_NEW_RETURN (schedule_cmd_,
 		  CMD (*Async_Timer_Queue::instance (),
-			   &Async_Timer_Queue::schedule_timer),
+                       &Async_Timer_Queue::schedule_timer),
 		  -1);
 
   ACE_NEW_RETURN (cancel_cmd_,
 		  CMD (*Async_Timer_Queue::instance (),
-			   &Async_Timer_Queue::cancel_timer),
+                       &Async_Timer_Queue::cancel_timer),
 		  -1);
 
   ACE_NEW_RETURN (list_cmd_,
 		  CMD (*Async_Timer_Queue::instance (),
-			   &Async_Timer_Queue::list_timer),
+                       &Async_Timer_Queue::list_timer),
 		  -1);
 
   ACE_NEW_RETURN (shutdown_cmd_,
 		  CMD (*Async_Timer_Queue::instance (),
-			   &Async_Timer_Queue::shutdown_timer),
+                       &Async_Timer_Queue::shutdown_timer),
 		  -1);
 
   register_signal_handlers ();
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>;
-template class Command<Async_Timer_Queue, Async_Timer_Queue::ACTION>;
-template class Timer_Queue_Test_Driver<Async_Timer_Queue *, Async_Timer_Queue, Async_Timer_Queue::ACTION>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>
-#pragma instantiate Command<Async_Timer_Queue, Async_Timer_Queue::ACTION>
-#pragma instantiate Timer_Queue_Test_Driver<Async_Timer_Queue *, Async_Timer_Queue, Async_Timer_Queue::ACTION>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -17,7 +17,7 @@
 //     own unique TSS object.
 //
 // = AUTHOR
-//    Detlef Becker
+//    Detlef Becker <Detlef.Becker@med.siemens.de>
 //
 // ============================================================================
 
@@ -31,9 +31,16 @@ ACE_RCSID(Threads, tss1, "$Id$")
 
 #include "thread_specific.h"
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_TSS<Errno>;
+template class Tester<ACE_MT_SYNCH>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_TSS<Errno>
+#pragma instantiate Tester<ACE_MT_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // (Sun C++ 4.2 with -O3 won't link if the following is not const.)
 static const int iterations = 100;
-
 
 // Static variables.
 ACE_MT (ACE_Thread_Mutex Errno::lock_);
@@ -71,14 +78,16 @@ public:
 template <ACE_SYNCH_DECL> int
 Tester<ACE_SYNCH_USE>::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) svc: setting error code to 1\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) svc: setting error code to 1\n"));
   TSS_Error->error (1);
 
   for (int i = 0; i < iterations; i++)
     // Print out every tenth iteration.
     if ((i % 10) == 1)
-      ACE_DEBUG ((LM_DEBUG, "(%t) error = %d\n", TSS_Error->error ()));
-
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) error = %d\n",
+                  TSS_Error->error ()));
   this->close ();
 
   return 0;
@@ -94,11 +103,15 @@ Tester<ACE_SYNCH_USE>::open (void *)
 template <ACE_SYNCH_DECL>
 int Tester<ACE_SYNCH_USE>::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) close running\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) close running\n"));
   close_started = 1;
-  ACE_DEBUG ((LM_DEBUG, "(%t) close: setting error code to 7\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) close: setting error code to 7\n"));
   TSS_Error->error (7);
-  ACE_DEBUG ((LM_DEBUG, "(%t) close: error = %d\n", TSS_Error->error ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) close: error = %d\n",
+              TSS_Error->error ()));
   close_started = 0;
   return 0;
 }
@@ -108,37 +121,36 @@ main (int, char *[])
 {
   Tester<ACE_MT_SYNCH> tester;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) main: setting error code to 3\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) main: setting error code to 3\n"));
   TSS_Error->error (3);
-  ACE_DEBUG ((LM_DEBUG, "(%t) main: error = %d\n", TSS_Error->error ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) main: error = %d\n",
+              TSS_Error->error ()));
 
   // Spawn off a thread and make test an Active Object.
   tester.open ();
 
   // Keep looping until <Tester::close> is called.
   while (!close_started)
-    ACE_DEBUG ((LM_DEBUG, "(%t) error = %d\n", TSS_Error->error ()));
+    ACE_DEBUG ((LM_DEBUG,
+                "(%t) error = %d\n",
+                TSS_Error->error ()));
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) main: setting error code to 4\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) main: setting error code to 4\n"));
   TSS_Error->error (4);
-  ACE_DEBUG ((LM_DEBUG, "(%t) main: error = %d\n", TSS_Error->error ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) main: error = %d\n",
+              TSS_Error->error ()));
 
   // Keep looping until <Tester::close> finishes.
   while (close_started != 0)
-    ACE_DEBUG ((LM_DEBUG, "(%t) error = %d\n", TSS_Error->error ()));
-
+    ACE_DEBUG ((LM_DEBUG,
+                "(%t) error = %d\n",
+                TSS_Error->error ()));
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_TSS<Errno>;
-template class Tester<ACE_MT_SYNCH>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_TSS<Errno>
-#pragma instantiate Tester<ACE_MT_SYNCH>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
 #else
 int
 main (int, char *[])

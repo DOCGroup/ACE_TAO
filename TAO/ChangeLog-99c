@@ -1,3 +1,12 @@
+Tue Aug 31 00:16:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Added a series of fixes that allow TAO to build and
+	  run cleanly with SunC++ 5.0 and Solaris 7 even when debugging is
+ 	  NOT enabled.  These changes require moving the explicit template
+ 	  instantiations from the BOTTOM of the *.cpp files to near the
+ 	  top.  Thanks to Robert Shewan <rshew@peri.com> for reporting
+ 	  this.
+	
 Tue Aug 31 9:25:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/TAO.dsp:

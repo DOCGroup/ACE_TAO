@@ -27,6 +27,22 @@
 
 ACE_RCSID(tests, Hash_Map_Manager_Test, "$Id$")
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Hash_Map_Entry<LPCTSTR, LPCTSTR>;
+template class ACE_Hash_Map_Manager_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
+template class ACE_Static_Allocator<String_Table_size>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Entry<LPCTSTR, LPCTSTR>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Static_Allocator<String_Table_size>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
@@ -204,19 +220,3 @@ main (int, ASYS_TCHAR *[])
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Entry<LPCTSTR, LPCTSTR>;
-template class ACE_Hash_Map_Manager_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
-template class ACE_Static_Allocator<String_Table_size>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Entry<LPCTSTR, LPCTSTR>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
-#pragma instantiate ACE_Static_Allocator<String_Table_size>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
