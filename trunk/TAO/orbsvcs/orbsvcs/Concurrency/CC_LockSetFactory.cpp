@@ -20,14 +20,16 @@
 // Default constructor
 CC_LockSetFactory::CC_LockSetFactory (void)
 {
-  // @@ Torben, can you please comment this code?
   ACE_NEW (this->lock_, ACE_Lock_Adapter<ACE_Thread_Mutex>);
+  // Acquire a lock to ensure only one client will be in the factory
+  // at any time
 }
 
 // Destructor.
 CC_LockSetFactory::~CC_LockSetFactory (void)
 {
   delete this->lock_;
+  // Delete the serialization lock
 }
 
 CosConcurrencyControl::LockSet_ptr

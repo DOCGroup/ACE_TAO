@@ -123,13 +123,23 @@ CosConcurrencyControl::lock_mode CC_Lock::GetMode (void)
 
 // The check of compatibility is a hard coded table statically
 // allocated.  This table must be changed if the number of lock modes
-// or their compatibility are changed. 5 = number of lock modes
-// @@ Torben, also please make sure to use an enum here, as well!
-
-CORBA::Boolean CC_Lock::compatible_[5][5] ={
-  {CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_FALSE},
-  {CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_FALSE},
-  {CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE},
-  {CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_TRUE},
-  {CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE}};
+// or their compatibility are changed. The table here looks different
+// from the table in the spec, this is due to the different ordering
+// of the lock modes in the table and in the enum in the IDL. The
+// first index in the array is the mode held by this lock and the
+// second index is the requested mode.
+//           Requested mode
+// Held mode  R  W  U IR IW
+//         R     X        X
+//         W  X  X  X  X  X
+//         U     X  X     X            X = conflict
+//        IR     X
+//        IW  X  X  X
+//
+CORBA::Boolean CC_Lock::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] ={
+  {CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_FALSE},
+  {CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE},
+  {CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_FALSE},
+  {CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_TRUE},
+  {CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_TRUE}};
 

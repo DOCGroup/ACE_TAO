@@ -52,8 +52,4 @@ private:
 
 };
 
-// @@ Torben, can you please add a comment as to why you need this
-// typedef?!
-typedef CC_LockSetFactory *CC_LockSetFactory_var;
-
 #endif /* _CC_LOCKSETFACTORY_H */
