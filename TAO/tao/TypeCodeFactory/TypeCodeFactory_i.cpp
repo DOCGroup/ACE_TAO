@@ -608,7 +608,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 {
   // One to hold the current default value, one to
   // hold the curent label's extracted value.
-  union disc_types
+  struct disc_types
   {
     CORBA::Char char_val;
     CORBA::WChar wchar_val;
@@ -617,47 +617,25 @@ TAO_TypeCodeFactory_i::compute_default_label (
     CORBA::UShort ushort_val;
     CORBA::Long long_val;
     CORBA::ULong ulong_val;
+#if !defined (ACE_LACKS_LONGLONG_T)
     CORBA::ULongLong ulonglong_val;
+#endif /* ACE_LACKS_LONGLONG_T */
     CORBA::ULong enum_val;
     // TODO - handle (u)longlong types
   } dv, u;
 
-  // To prevent 'may be uninitialized' warnings.
+  dv.char_val = 0;
+  dv.wchar_val = 0;
+  dv.bool_val = 0;
+  dv.short_val = ACE_INT16_MIN;
+  dv.ushort_val = 0;
+  dv.long_val = ACE_INT32_MIN;
+  dv.ulong_val = 0;
+#if !defined (ACE_LACKS_LONGLONG_T)
   dv.ulonglong_val = 0;
+#endif /* ACE_LACKS_LONGLONG_T */
+  dv.enum_val = 0;
 
-  // Set these to the minimum value they can have.
-  switch (kind)
-  {
-    case CORBA::tk_char:
-      dv.char_val = 0;
-      break;
-    case CORBA::tk_wchar:
-      dv.wchar_val = 0;
-      break;
-    case CORBA::tk_boolean:
-      dv.bool_val = 0;
-      break;
-    case CORBA::tk_short:
-      dv.short_val = ACE_INT16_MIN;
-      break;
-    case CORBA::tk_ushort:
-      dv.ushort_val = 0;
-      break;
-    case CORBA::tk_long:
-      dv.long_val = ACE_INT32_MIN;
-      break;
-    case CORBA::tk_ulong:
-      dv.ulong_val = 0;
-      break;
-    case CORBA::tk_ulonglong:
-      dv.ulonglong_val = 0;
-      break;
-    case CORBA::tk_enum:
-      dv.enum_val = 0;
-      break;
-    default:
-      break;
-  }
 
   CORBA::ULong len = members.length ();
   int success = 0;
@@ -668,7 +646,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
     {
       success = 1;
 
-      for (CORBA::ULong i = 0; i < len; i++)
+      for (CORBA::ULong i = 0; i < len; ++i)
         {
           // This is the one we're trying to find a legal value for.
           if (i == skip_slot)
@@ -733,6 +711,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
                   success = 0;
                 }
               break;
+#if !defined (ACE_LACKS_LONGLONG_T)
             case CORBA::tk_ulonglong:
               members[i].label >>= u.ulonglong_val;
               if (u.ulonglong_val == dv.ulonglong_val)
@@ -741,6 +720,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
                   success = 0;
                 }
               break;
+#endif /* ACE_LACKS_LONGLONG_T */
             case CORBA::tk_enum:
             {
               TAO_InputCDR cdr (members[i].label._tao_get_cdr (),
@@ -787,9 +767,11 @@ TAO_TypeCodeFactory_i::compute_default_label (
     case CORBA::tk_ulong:
       cdr << dv.ulong_val;
       break;
+#if !defined (ACE_LACKS_LONGLONG_T)
     case CORBA::tk_ulonglong:
       cdr << dv.ulonglong_val;
       break;
+#endif /* ACE_LACKS_LONGLONG_T */
     case CORBA::tk_enum:
       cdr << dv.enum_val;
       break;
