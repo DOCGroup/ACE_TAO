@@ -92,10 +92,6 @@
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
 
-// Denotes that IRIX 6.2 has second argument to gettimeofday()
-// which is variable ...
-#define ACE_HAS_IRIX_GETTIMEOFDAY
-
 // Denotes that GNU has cstring.h as standard
 // which redefines memchr()
 #define ACE_HAS_GNU_CSTRING_H

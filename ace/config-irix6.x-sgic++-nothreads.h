@@ -117,10 +117,6 @@
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
 
-// Denotes that Irix has second argument to gettimeofday() which is
-// variable (...)
-#define ACE_HAS_IRIX_GETTIMEOFDAY
-
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
 
