@@ -106,7 +106,7 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
   *os << "virtual ~" << class_name << " (void);" << be_nl;
 
   // operator[]
-  *os << "TAO_String_Manager operator[] (CORBA::ULong index) const;" << be_nl
+  *os << "TAO_SeqElem_String_Manager operator[] (CORBA::ULong index) const;" << be_nl
       << "// read-write accessor" << be_nl;
 
   // allocbuf

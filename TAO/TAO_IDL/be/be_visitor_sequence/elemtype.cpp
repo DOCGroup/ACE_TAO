@@ -202,7 +202,7 @@ be_visitor_sequence_elemtype::visit_string (be_string *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "TAO_String_Manager ";
+  *os << "TAO_SeqElem_String_Manager ";
   return 0;
 }
 

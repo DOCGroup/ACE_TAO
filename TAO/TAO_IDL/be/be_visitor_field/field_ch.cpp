@@ -320,6 +320,8 @@ be_visitor_field_ch::visit_string (be_string *node)
   os = this->ctx_->stream ();
   os->indent (); // start from current indentation level
   // set the right type;
+
+#if 0
   if (this->ctx_->alias ())
     {
       *os << this->ctx_->alias ()->nested_type_name (this->ctx_->scope ())
@@ -327,6 +329,8 @@ be_visitor_field_ch::visit_string (be_string *node)
     }
   else
     *os << "CORBA::String_var";
+#endif
+  *os << "TAO_String_Manager";
   return 0;
 }
 

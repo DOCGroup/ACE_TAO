@@ -84,8 +84,19 @@ A complete list of all modifications to TAO is available in the <A HREF="http://
 <A NAME="idl"></A>IDL Compiler</H3>
 Point of contact: <A HREF="mailto:gokhale@research.bell-labs.com">Aniruddha Gokhale</A>
 
-<P>Current status: (As of Dec 25, 1998.)
+<P>Current status: (As of Jan 03, 1999.)
 <UL>
+        <LI>
+        Generated code closely follows the C++ Mapping specified in
+        the latest C++ mapping for CORBA 2.3 (Document ptc/98-09-03).
+        </LI>
+
+     <LI>
+     Struct members of type strings and arrays of strings now use the
+     managed type instead of the _var type. This change was necessary
+     to conform to the IDL->C++ mapping.
+     </LI>
+
      <LI>
      Fixed a large number of problems with anonymous arrays and
      sequences inside structs and unions. The name of anonymous
@@ -157,10 +168,6 @@ Point of contact: <A HREF="mailto:gokhale@research.bell-labs.com">Aniruddha Gokh
       </LI>
 
 <LI>
-Anonymous arrays inside structs are supported. However, they are not yet
-supported inside unions.</LI>
-
-<LI>
 Perfect Hashed Operation Lookup Strategy has been added to the IDL Compiler.
 -P flag to the&nbsp;<tao_idl>enables the perfect hased lookup strategy.
 This strategy uses <A HREF="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">GPERF</A>,
@@ -169,16 +176,8 @@ Right now, GPERF works only on Solaris. Any work on porting GPERF to other
 platforms will be highly appreciated.&nbsp;</L1></LI>
 
 <LI>
-Support for Arrays is refined in terms of the code generated for parameters
-inside stubs and skeletons.</LI>
-
-<LI>
 Significantly improved the support for unions. The default case is yet
 to be handled.</LI>
-
-<LI>
-Added support for Arrays. Right now, support for typedefed arrays is in.
-Arrays inside unions not done yet.
 
 <LI>
 Added support for TIE classes. If the interfaces are defined inside modules,
@@ -205,23 +204,6 @@ similar to the stubs.</LI>
 Support for the "native" keyword added.</LI>
 
 <LI>
-Introduced tests for object references to TAO. Still incomplete.</LI>
-
-<LI>
-Param_Test example is able to test string sequences, fixed structs, variable
-sized structs and nested structs</LI>
-
-<LI>
-Param_Test test suite can now test fixed structs and string sequences.This
-needed bug fixes to TAO ORB core.</LI>
-
-<LI>
-A new test to test all the parameter passing modes for a number of data
-types has been added. At this point in time, it tests primitive types and
-strings. Other tests will be added. Bugs discovered thru these tests have
-been fixed.</LI>
-
-<LI>
 The problem of incorrect code generation for typedefs defined in an imported
 file is resolved.</LI>
 
@@ -240,28 +222,12 @@ in the encode/decode methods. The casting inside the stubs/skeletons work
 because the compiler has knowledge of both types.</LI>
 
 <LI>
-The compiler generates correct code for COSS Naming service and it runs
-properly. Correct code also gets generated for the Event Channel program</LI>
-
-<LI>
 Include files are handled properly. So are the definitions used inside
 the include files that are used in the currently parsed files.</LI>
 
 <LI>
-IN, INOUT, and OUT object reference parameters are now supported properly.
-We think the same approach should work for sequences, structs, and unions.</LI>
-
-<LI>
-Many IDL constructs supported including primitive types, typedefs, sequences,
-structures, and unions.</LI>
-
-<LI>
 Generates C++ stubs and skeletons that use TAO's <A HREF="http://www.cs.wustl.edu/~schmidt/HICSS-97.ps.gz">interpretive
 IIOP protocol engine</A>.</LI>
-
-<LI>
-Generated code closely follows the C++ Mapping specified in the POA Specification
-(ORBOS/97-05-15).</LI>
 
 <LI>
 Support dynamic libraries on NT, i.e., marking classes for DLL export was
