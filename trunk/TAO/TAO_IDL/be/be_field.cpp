@@ -37,9 +37,6 @@ be_field::be_field (AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p)
   // computes the fully scoped name
   compute_fullname ();
 
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
   // compute the flattened fully scoped name 
   compute_flatname ();
 }
@@ -53,19 +50,21 @@ int
 be_field::gen_client_header (void)
 {
   be_type *bt;  // the field type
+  be_state *s;  // code generation state
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   cg->node (this); // pass info thru singleton
+  cg->outstream (cg->client_header ());
+
   bt = be_type::narrow_from_decl (this->field_type ());
-  if ((bt == NULL) ||
-      ((bt != NULL) && (bt->be_type::gen_client_header () == -1)))
-    {
-      ACE_ERROR ((LM_ERROR, "be_field: error generating type\n"));
-      return -1;
-    }
-  return 0;
+
+  s = cg->make_state ();
+  if (s && bt)
+    return s->gen_code (bt, this); // no third parameter here
+  else
+    return -1;
 }
 
 // Generates the client-side stubs for the field
@@ -99,7 +98,7 @@ be_field::gen_client_inline (void)
   be_type *bt;
 
   bt = be_type::narrow_from_decl (this->field_type ());
-  return bt->be_type::gen_client_inline ();
+  return bt->gen_client_inline ();
 }
 
 // Generates the server-side inline
@@ -111,7 +110,7 @@ be_field::gen_server_inline (void)
 }
 
 int
-be_field::gen_typecode (void)
+be_field::gen_encapsulation (void)
 {
   TAO_OutStream *cs; // output stream
   TAO_NL  nl;        // end line
@@ -120,7 +119,7 @@ be_field::gen_typecode (void)
   long i, arrlen;
   long *arr;  // an array holding string names converted to array of longs
 
-  cs = cg->outstream ();
+  cs = cg->client_stubs ();
   cg->node (this); // pass ourselves in case we are needed
   cs->indent (); // start from whatever indentation level we were at
 
@@ -135,7 +134,7 @@ be_field::gen_typecode (void)
 
   // hand over code generation to our type node
   bt = be_type::narrow_from_decl (this->field_type ());
-  return bt->be_type::gen_typecode ();
+  return bt->gen_typecode ();
 }
 
 long
@@ -146,15 +145,13 @@ be_field::tc_encap_len (void)
       be_type *bt;
       long slen;
 
-      this->encap_len_ = 4; // hold the size of our name
-      this->encap_len_ += 4; // store the size of name
-      slen = ACE_OS::strlen (this->local_name ()->get_string ()) + 1; 
-      // + 1 for  NULL 
-      this->encap_len_ += 4 * (slen/4 + (slen%4 ? 1:0)); // storage for the name
+      // struct member is represented as the "name" followed by the typecode
+
+      this->encap_len_ = this->name_encap_len (); // for name
       
       // add to this, the size of our typecode
       bt = be_type::narrow_from_decl (this->field_type ());
-      this->encap_len_ += bt->be_type::tc_encap_len ();
+      this->encap_len_ += bt->tc_encap_len ();
     }
   return this->encap_len_;
 }

@@ -60,11 +60,11 @@ public:
   virtual int gen_server_inline (void);
   // Generates the server-side inlines for the scope
 
-  virtual int gen_typecode (void);
-  // generate the typecode
+  virtual int gen_encapsulation (void);
+  // encapsulation for parameters
 
   virtual long tc_encap_len (void);
-  // return the total byte length of ourselves represented as an encapsulation
+  // return length of encapsulation
 
   // Narrowing
   DEF_NARROW_METHODS1 (be_scope, UTL_Scope);

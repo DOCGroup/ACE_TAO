@@ -107,7 +107,7 @@ be_enum::gen_client_header (void)
 
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-      cg->push (TAO_CodeGen::TAO_ENUM);
+      cg->push (TAO_CodeGen::TAO_ENUM_CH);
 
       ch = cg->client_header ();
 
@@ -167,7 +167,7 @@ be_enum::gen_client_stubs (void)
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-      cg->push (TAO_CodeGen::TAO_STRUCT); // set current code gen state
+      cg->push (TAO_CodeGen::TAO_ENUM_CS); // set current code gen state
 
       cs = cg->client_stubs ();
       cg->outstream (cs);
@@ -178,9 +178,9 @@ be_enum::gen_client_stubs (void)
         nl; 
       *cs << "{\n";
       cs->incr_indent (0);
-      if (this->gen_typecode () == -1)
+      if (this->gen_encapsulation () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "Error generating typecode\n\n"));
+          ACE_ERROR ((LM_ERROR, "be_enum:Error generating encapsulation\n\n"));
           return -1;
         }
       cs->decr_indent ();
@@ -193,6 +193,7 @@ be_enum::gen_client_stubs (void)
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
       this->cli_stub_gen_;
+      cg->pop ();
     }
   return 0;
 }
@@ -229,8 +230,28 @@ be_enum::gen_server_inline (void)
   return 0;
 }
 
+// generate typecode.
+// Typecode for enum comprises the enumerated value followed by the
+// encapsulation of the parameters
+
 int
 be_enum::gen_typecode (void)
+{
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  *cs << "CORBA::tk_enum, // typecode kind" << nl;
+  *cs << this->tc_size () << ", // encapsulation length\n";
+  // now emit the encapsulation
+  return this->gen_encapsulation ();
+}
+
+int
+be_enum::gen_encapsulation (void)
 {
   TAO_OutStream *cs; // output stream
   TAO_NL  nl;        // end line
@@ -264,7 +285,7 @@ be_enum::gen_typecode (void)
   *cs << this->member_count () << ", // member count\n";
   cs->incr_indent (0);
   // hand over to the scope to generate the typecode for elements
-  if (be_scope::gen_typecode () == -1)
+  if (be_scope::gen_encapsulation () == -1)
     {
       ACE_ERROR ((LM_ERROR, "be_structure: cannot generate code for members\n"));
       return -1;
@@ -273,6 +294,16 @@ be_enum::gen_typecode (void)
   return 0;
 }
 
+// compute typecode size
+long
+be_enum::tc_size (void)
+{
+  // 4 bytes for enumeration, 4 bytes for storing encap length val, followed by the
+  // actual encapsulation length
+  return 4 + 4 + this->tc_encap_len ();
+}
+
+// return encapsulation length
 long
 be_enum::tc_encap_len (void)
 {
@@ -282,16 +313,10 @@ be_enum::tc_encap_len (void)
 
       this->encap_len_ = 4;  // holds the byte order flag
 
-      this->encap_len_ += 4; // store the size of repository ID
-      // compute bytes reqd to store repoID
-      slen = ACE_OS::strlen (this->repoID ()) + 1; // + 1 for NULL terminating char
-      this->encap_len_ += 4 * (slen/4 + (slen%4 ? 1:0)); // storage for the repoID
+      this->encap_len_ += this->repoID_encap_len (); // repoID storage
 
       // do the same thing for the local name
-      this->encap_len_ += 4; // store the size of name
-      slen = ACE_OS::strlen (this->local_name ()->get_string ()) + 1; 
-      // + 1 for  NULL 
-      this->encap_len_ += 4 * (slen/4 + (slen%4 ? 1:0)); // storage for the name
+      this->encap_len_ += this->name_encap_len ();
 
       this->encap_len_ += 4; // to hold the member count
 

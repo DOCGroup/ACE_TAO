@@ -38,9 +38,6 @@ be_module::be_module (UTL_ScopedName *n, UTL_StrList *p)
   // computes the fully scoped name
   compute_fullname ();
 
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
   // compute the flattened fully scoped name 
   compute_flatname ();
 }
@@ -58,9 +55,8 @@ int be_module::gen_client_header (void)
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_MODULE); // set the current code generation state
-
-  ch = cg->client_header ();
+  cg->push (TAO_CodeGen::TAO_MODULE_CH); // set the current code generation state
+  ch = cg->client_header (); // get the stream
 
   // XXXASG - Modules really map to namespace. We need to see if our target
   // compiler supports namespaces or not. For this release we opt to generate a
@@ -72,7 +68,6 @@ int be_module::gen_client_header (void)
   *ch << "class " << local_name ();
 
   // generate the body
-
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent (0);
@@ -97,7 +92,7 @@ int be_module::gen_client_stubs (void)
 {
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_MODULE); // set the current code generation state
+  cg->push (TAO_CodeGen::TAO_MODULE_CS); // set the current code generation state
 
   // gen code for elements in the scope
   if (be_scope::gen_client_stubs () == -1)
@@ -115,11 +110,11 @@ int be_module::gen_server_header (void)
 {
   TAO_OutStream *sh; // output stream
   TAO_NL  nl;        // end line
-
+  AST_Decl *d;
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_MODULE); // set the current code generation state
+  cg->push (TAO_CodeGen::TAO_MODULE_SH); // set the current code generation state
 
   sh = cg->server_header ();
 
@@ -127,8 +122,16 @@ int be_module::gen_server_header (void)
 
   sh->indent (); // start with whatever indentation level we are at
 
-  // now generate the class definition
-  *sh << "class POA_" << local_name () << nl;
+  // now generate the class definition. The prefix POA_ is prepended to our
+  // name only if we are the outermost module
+  d = ScopeAsDecl (this->defined_in ());
+  if (d->node_type () == AST_Decl::NT_root)
+    // we are outermost module
+    *sh << "class POA_" << local_name () << nl;
+  else
+    // we are inside another module
+    *sh << "class " << local_name () << nl;
+
   *sh << "{" << nl;
   *sh << "public:\n";
   sh->incr_indent (0);
@@ -148,14 +151,9 @@ int be_module::gen_server_header (void)
 
 int be_module::gen_server_skeletons (void)
 {
-  TAO_OutStream *ss; // output stream
-  TAO_NL  nl;        // end line
-
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_MODULE); // set the current code generation state
-
-  ss = cg->server_skeletons ();
+  cg->push (TAO_CodeGen::TAO_MODULE_SS); // set the current code generation state
 
   if (be_scope::gen_server_skeletons () == -1)
     {
@@ -173,12 +171,12 @@ be_module::gen_client_inline (void)
 {
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_MODULE); // set the current code generation state
+  cg->push (TAO_CodeGen::TAO_MODULE_CI); // set the current code generation state
 
   // gen code for elements in the scope
   if (be_scope::gen_client_inline () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_module::gen_client_stubs\n")); 
+      ACE_ERROR ((LM_ERROR, "be_module::gen_client_inline\n")); 
       ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
       return -1;
     }
@@ -191,7 +189,19 @@ be_module::gen_client_inline (void)
 int 
 be_module::gen_server_inline (void)
 {
-  // nothing to be done
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  cg->push (TAO_CodeGen::TAO_MODULE_SI); // set the current code generation state
+
+  // gen code for elements in the scope
+  if (be_scope::gen_server_inline () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_module::gen_server_inline\n")); 
+      ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
+      return -1;
+    }
+
+  cg->pop ();
   return 0;
 }
 

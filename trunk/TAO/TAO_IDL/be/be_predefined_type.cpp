@@ -4,7 +4,7 @@
 //    TAO IDL
 // 
 // = FILENAME
-//    be_constant.cpp
+//    be_predefined_type.cpp
 //
 // = DESCRIPTION
 //    Extension of class AST_PredefinedType that provides additional means for C++
@@ -33,6 +33,8 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
   : AST_PredefinedType (t, n, p),
     AST_Decl (AST_Decl::NT_pre_defined, n, p)
 {
+  // generate a new Scoped Name for us such that we belong to the CORBA
+  // namespace
   if (this->pt () != AST_PredefinedType::PT_void)
     {
 
@@ -111,7 +113,7 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
           break;
         default:
           {
-            new_name->nconc (this->name ());
+            new_name->nconc (new UTL_ScopedName (this->local_name (), NULL));
           }
         }
       this->set_name (new_name);
@@ -247,12 +249,6 @@ be_predefined_type::gen_client_header (void)
 
   ch = cg->client_header ();
 
-#if 0
-  if (idl_global->in_main_file ())
-    {
-      *ch << this->gen_corba_mapping ();
-    }
-#endif
   ch->indent ();
   *ch << this->name ();
   return 0;
@@ -269,10 +265,6 @@ be_predefined_type::gen_client_stubs (void)
 
   cs = cg->client_stubs ();
 
-  if (idl_global->in_main_file ())
-    {
-      *cs << this->gen_corba_mapping ();
-    }
   return 0;
 }
 
@@ -287,10 +279,6 @@ be_predefined_type::gen_server_header (void)
 
   sh = cg->server_header ();
 
-  if (idl_global->in_main_file ())
-    {
-      *sh << this->gen_corba_mapping ();
-    }
   return 0;
 }
 
@@ -305,10 +293,6 @@ be_predefined_type::gen_server_skeletons (void)
 
   ss = cg->server_skeletons ();
 
-  if (idl_global->in_main_file ())
-    {
-      *ss << this->gen_corba_mapping ();
-    }
   return 0;
 }
 
@@ -331,44 +315,68 @@ be_predefined_type::gen_server_inline (void)
 int
 be_predefined_type::gen_typecode (void)
 {
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from the current indentation level
+
+  switch (this->pt ())
+    {
+    case AST_PredefinedType::PT_void:
+      *cs << "CORBA::tk_void,\n\n";
+      break;
+    case AST_PredefinedType::PT_short:
+      *cs << "CORBA::tk_short,\n\n";
+      break;
+    case AST_PredefinedType::PT_ushort:
+      *cs << "CORBA::tk_ushort,\n\n";
+      break;
+    case AST_PredefinedType::PT_long:
+      *cs << "CORBA::tk_long,\n\n";
+      break;
+    case AST_PredefinedType::PT_ulong:
+      *cs << "CORBA::tk_ulong,\n\n";
+      break;
+    case AST_PredefinedType::PT_longlong:
+      *cs << "CORBA::tk_longlong,\n\n";
+      break;
+    case AST_PredefinedType::PT_ulonglong:
+      *cs << "CORBA::tk_ulonglong,\n\n";
+      break;
+    case AST_PredefinedType::PT_float:
+      *cs << "CORBA::tk_float,\n\n";
+      break;
+    case AST_PredefinedType::PT_double:
+      *cs << "CORBA::tk_double,\n\n";
+      break;
+    case AST_PredefinedType::PT_longdouble:
+      *cs << "CORBA::tk_longdouble,\n\n";
+      break;
+    case AST_PredefinedType::PT_boolean:
+      *cs << "CORBA::tk_boolean,\n\n";
+      break;
+    case AST_PredefinedType::PT_char:
+      *cs << "CORBA::tk_char,\n\n";
+      break;
+    case AST_PredefinedType::PT_octet:
+      *cs << "CORBA::tk_octet,\n\n";
+      break;
+    case AST_PredefinedType::PT_any:
+      *cs << "CORBA::tk_any,\n\n";
+      break;
+    case AST_PredefinedType::PT_wchar:
+      *cs << "CORBA::tk_wchar,\n\n";
+      break;
+    }
   return 0;
 }
 
-// Generates the client-side header information for the predefined type 
-const char *const
-be_predefined_type::gen_corba_mapping (void)
+long
+be_predefined_type::tc_size (void)
 {
-  switch (this->pt ())
-    {
-    case AST_PredefinedType::PT_long:
-      return "CORBA::Long";
-    case AST_PredefinedType::PT_ulong:
-      return "CORBA::ULong";
-    case AST_PredefinedType::PT_longlong:
-      return "CORBA::LongLong";
-    case AST_PredefinedType::PT_short:
-      return "CORBA::Short";
-    case AST_PredefinedType::PT_ushort:
-      return "CORBA::UShort";
-    case AST_PredefinedType::PT_float:
-      return "CORBA::Float";
-    case AST_PredefinedType::PT_double:
-      return "CORBA::Double";
-    case AST_PredefinedType::PT_longdouble:
-      return "CORBA::LongDouble";
-    case AST_PredefinedType::PT_char:
-      return "CORBA::Char";
-    case AST_PredefinedType::PT_wchar:
-      return "CORBA::WChar";
-    case AST_PredefinedType::PT_boolean:
-      return "CORBA::Boolean";
-    case AST_PredefinedType::PT_octet:
-      return "CORBA::Octet";
-    case AST_PredefinedType::PT_any:
-      return "CORBA::Any";
-    default:
-      return 0;
-    }
+  return 4; // for the enum value
 }
 
 // Narrowing

@@ -133,13 +133,39 @@ be_string::gen_server_inline (void)
 int
 be_string::gen_typecode (void)
 {
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  cs = cg->outstream ();
+  cs->indent (); // start from the current indentation level
+  // emit the enumeration
+  *cs << "CORBA::tk_string, " << nl;
+  return 0;
+}
+
+// compute typecode size
+long
+be_string::tc_size (void)
+{
+  // 4 bytes for enumeration, 4 bytes for storing string length
+  return 4 + 4;
+}
+
+int
+be_string::gen_encapsulation (void)
+{
   return 0;
 }
 
 long
 be_string::tc_encap_len (void)
 {
-  return 0;
+  if (this->encap_len_ == -1)
+    {
+      this->encap_len_ = 0; // no encapsulation
+    }
+  return this->encap_len_;
 }
 
 // Narrowing

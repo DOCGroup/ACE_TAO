@@ -35,45 +35,44 @@ public:
   be_type (AST_Decl::NodeType nt, UTL_ScopedName *n, UTL_StrList *p);
   // constructor
 
-  virtual int gen_client_header (void);
+  virtual int gen_client_header (void) = 0;
   // Generates the client-side header information for the type 
 
-  virtual int gen_client_stubs (void);
+  virtual int gen_client_stubs (void) = 0;
   // Generates the client-side stubs for the type
 
-  virtual int gen_server_header (void);
+  virtual int gen_server_header (void) = 0;
   // Generates the server-side header information for the type 
 
-  virtual int gen_server_skeletons (void);
+  virtual int gen_server_skeletons (void) = 0;
   // Generates the server-side skeletons for the type
 
-  virtual int gen_client_inline (void);
+  virtual int gen_client_inline (void)  = 0;
   // Generates the client-side inline for the type
 
-  virtual int gen_server_inline (void);
+  virtual int gen_server_inline (void) = 0;
   // Generates the server-side inlines for the type
 
-  virtual int gen_typecode (void);
-  // generate the typecode data structure
+  virtual int gen_typecode (void) = 0;
+  // generate the typecode description
 
-  virtual long tc_encap_len (void);
-  // return the total byte length of ourselves represented as an encapsulation
+  virtual long tc_size (void) = 0;
+  // return typecode size
+
+  UTL_ScopedName *tc_name (void);
+  // return the typecode name
 
   // Narrowing
   DEF_NARROW_METHODS2 (be_type, AST_Type, be_decl);
   DEF_NARROW_FROM_DECL (be_type);
 
-private: 
-  // helpers
-  int gen_predefined_type (void);
-  int gen_string (void);
-  int gen_array (void);
-  int gen_sequence (void);
-  int gen_enum (void);
-  int gen_struct (void);
-  int gen_union (void);
-  int gen_typedef (void);
-  int gen_interface (void);
+protected:
+  virtual void compute_tc_name (void);
+  // computes the fully scoped typecode name
+
+  UTL_ScopedName *tc_name_;
+  // typecode name
+
 };
 
-#endif
+#endif // end of if !defined

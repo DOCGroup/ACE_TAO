@@ -67,8 +67,14 @@ public:
   virtual int gen_typecode (void);
   // generate the typecode
 
+  virtual int gen_encapsulation (void);
+  // encapsulation for parameters
+
+  virtual long tc_size (void);
+  // return typecode size
+
   virtual long tc_encap_len (void);
-  // return the total byte length of ourselves represented as an encapsulation
+  // return length of encapsulation
 
   // Narrowing
   DEF_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type);

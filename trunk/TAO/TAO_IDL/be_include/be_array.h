@@ -56,14 +56,20 @@ public:
   virtual int gen_typecode (void);
   // generate the typecode
 
+  virtual int gen_encapsulation (void);
+  // encapsulation for parameters
+
+  virtual long tc_size (void);
+  // return typecode size
+
+  virtual long tc_encap_len (void);
+  // return length of encapsulation
+
   virtual int gen_forany_defn (void);
   // the forany class
 
   virtual int gen_forany_impl (void);
   // the forany impl
-
-  virtual long tc_encap_len (void);
-  // return the total byte length of ourselves represented as an encapsulation
 
   // Narrowing
   DEF_NARROW_METHODS2 (be_array, AST_Array, be_type);

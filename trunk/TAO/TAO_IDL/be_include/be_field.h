@@ -53,7 +53,7 @@ public:
   virtual int gen_server_inline (void);
   // Generates the server-side inlines for the field
 
-  virtual int gen_typecode (void);
+  virtual int gen_encapsulation (void);
   // generate the typecode
 
   virtual long tc_encap_len (void);

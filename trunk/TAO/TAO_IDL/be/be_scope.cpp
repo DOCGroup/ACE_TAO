@@ -304,7 +304,7 @@ be_scope::gen_server_inline (void)
 }
 
 int
-be_scope::gen_typecode (void)
+be_scope::gen_encapsulation (void)
 {
   UTL_ScopeActiveIterator *si;
   AST_Decl *d;
@@ -323,7 +323,7 @@ be_scope::gen_typecode (void)
 	  if (!d->imported ()) 
 	    {
               bd = be_decl::narrow_from_decl (d);
-              if (bd->gen_typecode () == -1)
+              if (bd->gen_encapsulation () == -1)
                 {
                   // failure
                   return -1;

@@ -147,7 +147,7 @@ be_union::gen_client_header (void)
   TAO_OutStream *ch; // output stream
   TAO_NL  nl;        // end line
   be_type *bt;       // type node
-  be_field *bf;      // field node
+  be_state *s;       // code generation state
 
   if (!this->cli_hdr_gen_)
     {
@@ -175,11 +175,11 @@ be_union::gen_client_header (void)
       // the discriminant type may have to be defined here if it was an enum
       // declaration inside of the union statement. 
 
-      cg->push (TAO_CodeGen::TAO_UNION_DISCTYPEDEFN); // set current code gen state
+      cg->push (TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CH); // set current code gen state
       bt = be_type::narrow_from_decl (this->disc_type ());
-      if ((bt == NULL) || 
-          ((bt != NULL) && 
-           (bt->be_type::gen_client_header () == -1)))
+
+      s  = cg->make_state (); // get the code gen object for the current state
+      if (!s || !bt || (s->gen_code (bt, this) == -1))
         {
           ACE_ERROR ((LM_ERROR, "be_union::gen_client_header\n")); 
           ACE_ERROR ((LM_ERROR, "Discriminant type generation failure\n"));
@@ -188,14 +188,8 @@ be_union::gen_client_header (void)
       cg->pop ();
   
       // now generate the public defn for the union branch members
-      cg->push (TAO_CodeGen::TAO_UNION_PUBLIC); // set current code gen state
+      cg->push (TAO_CodeGen::TAO_UNION_PUBLIC_CH); // set current code gen state
 
-      // generate set/get access methods for discriminant
-      ch->indent ();
-      *ch << "void _d (" << bt->name () << ");" << nl;
-      *ch << bt->name () << " _d (void) const;\n\n";
-
-      // the rest of the members.
       if (be_scope::gen_client_header () == -1)
         {
           ACE_ERROR ((LM_ERROR, "be_union::gen_client_header\n")); 
@@ -205,7 +199,7 @@ be_union::gen_client_header (void)
       cg->pop ();
 
       // now generate the private data members of the union
-      cg->push (TAO_CodeGen::TAO_UNION_PRIVATE); // set current code gen state
+      cg->push (TAO_CodeGen::TAO_UNION_PRIVATE_CH); // set current code gen state
       ch->decr_indent ();
       *ch << "private:\n";
       ch->incr_indent ();
@@ -241,7 +235,7 @@ be_union::gen_client_header (void)
       // ourself). The children have length greater than 2. Thus, if our name
       // length is 2 or less, we are outermost and our typecode decl must be
       // extern, else we are defined static inside the enclosing scope.
-      if (this->name ()->length () > 2)
+      if (this->is_nested ())
         {
           // we have a scoped name
           ch->indent ();
@@ -271,7 +265,7 @@ be_union::gen_client_stubs (void)
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-      cg->push (TAO_CodeGen::TAO_STRUCT); // set current code gen state
+      cg->push (TAO_CodeGen::TAO_UNION_PUBLIC_CS); // set current code gen state
 
       cs = cg->client_stubs ();
       cg->outstream (cs);
@@ -282,9 +276,9 @@ be_union::gen_client_stubs (void)
         nl; 
       *cs << "{\n";
       cs->incr_indent (0);
-      if (this->gen_typecode () == -1)
+      if (this->gen_encapsulation () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "Error generating typecode\n\n"));
+          ACE_ERROR ((LM_ERROR, "be_union:Error generating encapsulation\n\n"));
           return -1;
         }
       cs->decr_indent ();
@@ -297,6 +291,7 @@ be_union::gen_client_stubs (void)
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
       this->cli_stub_gen_;
+      cg->pop ();
     }
   return 0;
 }
@@ -319,6 +314,19 @@ be_union::gen_client_inline (void)
 {
   if (!this->cli_inline_gen_)
     {
+      // retrieve a singleton instance of the code generator
+      TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+      // now generate the implementation of the access methods
+      cg->push (TAO_CodeGen::TAO_UNION_PUBLIC_CI); // set current code gen state
+      if (be_scope::gen_client_inline () == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "be_union::gen_client_inline\n")); 
+          ACE_ERROR ((LM_ERROR, "accessor generation failure\n"));
+          return -1;
+        }
+      cg->pop ();
+
       if (this->gen_var_impl () == -1)
         {
           ACE_ERROR ((LM_ERROR, "be_union: _var impl code gen failed\n"));
@@ -327,11 +335,6 @@ be_union::gen_client_inline (void)
       if (this->size_type () == be_decl::VARIABLE && this->gen_out_impl () == -1)
         {
           ACE_ERROR ((LM_ERROR, "be_union: _out impl code gen failed\n"));
-          return -1;
-        }
-      if (be_scope::gen_client_inline () == -1)
-        {
-          ACE_ERROR ((LM_ERROR, "be_union: code gen failed for scope\n"));
           return -1;
         }
       this->cli_inline_gen_ = I_TRUE;
@@ -347,8 +350,34 @@ be_union::gen_server_inline (void)
   return 0;
 }
 
+// generate typecode.
+// Typecode for union comprises the enumerated value followed by the
+// encapsulation of the parameters
+
 int
 be_union::gen_typecode (void)
+{
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  *cs << "CORBA::tk_union, // typecode kind" << nl;
+  *cs << this->tc_size () << ", // encapsulation length\n";
+  // now emit the encapsulation
+  return this->gen_encapsulation ();
+}
+
+// generate encapsulation. 
+// An encapsulation for ourselves will be necessary when we are part of some
+// other IDL type and a typecode for that other type is being generated. This
+// will comprise our typecode kind. IDL types with parameters will additionally
+// have the encapsulation length and the entire typecode description
+
+int
+be_union::gen_encapsulation (void)
 {
   TAO_OutStream *cs; // output stream
   TAO_NL  nl;        // end line
@@ -357,7 +386,7 @@ be_union::gen_typecode (void)
   long *arr;  // an array holding string names converted to array of longs
   be_type *discrim;
 
-  cs = cg->outstream ();
+  cs = cg->client_stubs ();
   cs->indent (); // start from whatever indentation level we were at
 
   // XXXASG - byte order must be based on what m/c we are generating code -
@@ -382,9 +411,9 @@ be_union::gen_typecode (void)
 
   // generate typecode for discriminant
   discrim = be_type::narrow_from_decl (this->disc_type ());
-  if (discrim->be_type::gen_typecode () == -1)
+  if (discrim->gen_typecode () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_union: cannot generate code for discrim typecode\n"));
+      ACE_ERROR ((LM_ERROR, "be_union: cannot generate typecode for discriminant\n"));
       return -1;
     }
   
@@ -394,13 +423,22 @@ be_union::gen_typecode (void)
   *cs << this->member_count () << ", // member count\n";
   cs->incr_indent (0);
   // hand over to the scope to generate the typecode for elements
-  if (be_scope::gen_typecode () == -1)
+  if (be_scope::gen_encapsulation () == -1)
     {
       ACE_ERROR ((LM_ERROR, "be_union: cannot generate code for members\n"));
       return -1;
     }
   cs->decr_indent (0);
   return 0;
+}
+
+// compute typecode size
+long
+be_union::tc_size (void)
+{
+  // 4 bytes for enumeration, 4 bytes for storing encap length val, followed by the
+  // actual encapsulation length
+  return 4 + 4 + this->tc_encap_len ();
 }
 
 long
@@ -413,20 +451,14 @@ be_union::tc_encap_len (void)
 
       this->encap_len_ = 4;  // holds the byte order flag
 
-      this->encap_len_ += 4; // store the size of repository ID
-      // compute bytes reqd to store repoID
-      slen = ACE_OS::strlen (this->repoID ()) + 1; // + 1 for NULL terminating char
-      this->encap_len_ += 4 * (slen/4 + (slen%4 ? 1:0)); // storage for the repoID
+      this->encap_len_ += this->repoID_encap_len (); // for repoID
 
       // do the same thing for the local name
-      this->encap_len_ += 4; // store the size of name
-      slen = ACE_OS::strlen (this->local_name ()->get_string ()) + 1; 
-      // + 1 for  NULL 
-      this->encap_len_ += 4 * (slen/4 + (slen%4 ? 1:0)); // storage for the name
+      this->encap_len_ += this->name_encap_len (); // for name
 
       // add encapsulation size of discriminant typecode
       discrim = be_type::narrow_from_decl (this->disc_type ());
-      this->encap_len_ += discrim->be_type::tc_encap_len ();
+      this->encap_len_ += discrim->tc_encap_len ();
 
       this->encap_len_ += 4; // to hold the "default used" flag
       this->encap_len_ += 4; // to hold the member count

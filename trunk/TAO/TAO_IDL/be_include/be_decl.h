@@ -81,12 +81,6 @@ public:
   virtual int gen_server_inline (void) = 0;
   // Generates the server-side inlines for the decl
 
-  virtual int gen_typecode (void);
-  // generate the typecode data structure
-
-  virtual long tc_encap_len (void);
-  // return the total byte length of ourselves represented as an encapsulation
-
   virtual idl_bool lookup_seq_name (Identifier *);
   // lookup a name inside a list of generated seq names
 
@@ -108,8 +102,14 @@ public:
   const char *flatname (void);
   // return the flattened full scoped name
 
-  UTL_ScopedName *tc_name (void);
-  // return the typecode name
+  virtual idl_bool is_nested (void);
+  // determines if we are inside of a nested scope or not
+
+  virtual int gen_encapsulation (void);
+  // encapsulation of parameters
+
+  virtual long tc_encap_len (void);
+  // return length of encapsulation
 
   // Narrowing
   DEF_NARROW_METHODS1 (be_decl, AST_Decl);
@@ -124,15 +124,18 @@ protected:
   virtual void compute_fullname (void);
   // computes the fully scoped name
 
-  virtual void compute_tc_name (void);
-  // computes the fully scoped typecode name
-
   virtual void compute_flatname (void);
   // compute the flattened fully scoped name 
 
   virtual int tc_name2long (const char *name, long *&, long &);
   // name represented as a padded array of longs
  
+  virtual long repoID_encap_len (void);
+  // return encapsulation length required to hold repository ID
+
+  virtual long name_encap_len (void);
+  // return encapsulation length required to hold IDL name
+
   // variables that indicate if the code generation for that node is already
   // been done. This way we avoid regenerating same code.
   idl_bool cli_hdr_gen_;
@@ -154,14 +157,12 @@ protected:
   char *repoID_;
   // repository ID
 
-  UTL_ScopedName *tc_name_;
-  // typecode name
-
   SIZE_TYPE size_type_;
   // whether we are fixed or variable size (by default fixed)
 
   long encap_len_;
   // encapsulation length - required for typecodes
+
 };
 
 #endif // if !defined

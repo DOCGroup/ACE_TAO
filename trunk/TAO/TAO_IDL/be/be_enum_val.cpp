@@ -39,9 +39,6 @@ be_enum_val::be_enum_val (unsigned long v, UTL_ScopedName *n, UTL_StrList *p)
   // computes the fully scoped name
   compute_fullname ();
 
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
   // compute the flattened fully scoped name 
   compute_flatname ();
 }
@@ -105,7 +102,7 @@ be_enum_val::gen_server_inline (void)
 }
 
 int
-be_enum_val::gen_typecode (void)
+be_enum_val::gen_encapsulation (void)
 {
   TAO_OutStream *cs; // output stream
   TAO_NL  nl;        // end line
@@ -114,7 +111,7 @@ be_enum_val::gen_typecode (void)
   long i, arrlen;
   long *arr;  // an array holding string names converted to array of longs
 
-  cs = cg->outstream ();
+  cs = cg->client_stubs ();
   cg->node (this); // pass ourselves in case we are needed
   cs->indent (); // start from whatever indentation level we were at
 
@@ -134,12 +131,7 @@ be_enum_val::tc_encap_len (void)
 {
   if (this->encap_len_ == -1) // not computed yet
     {
-      long slen;
-
-      this->encap_len_ = 4; // store the size of name
-      slen = ACE_OS::strlen (this->local_name ()->get_string ()) + 1; 
-      // + 1 for  NULL 
-      this->encap_len_ += 4 * (slen/4 + (slen%4 ? 1:0)); // storage for the name
+      this->encap_len_ = this->name_encap_len (); // for name
     }
 
   return this->encap_len_;

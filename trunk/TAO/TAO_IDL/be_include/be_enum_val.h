@@ -54,11 +54,11 @@ public:
   virtual int gen_server_inline (void);
   // Generates the server-side inlines for the EnumVal
 
-  virtual int gen_typecode (void);
+  virtual int gen_encapsulation (void);
   // generate the typecode
 
   virtual long tc_encap_len (void);
-  // return the total byte length of ourselves represented as an encapsulation
+  // return length of encapsulation
 
   // Narrowing
   DEF_NARROW_METHODS2 (be_enum_val, AST_EnumVal, be_decl);
