@@ -125,7 +125,8 @@ public:
 protected:
   // = These are the helper methods used by other methods.
   
-  CosNaming::NamingContext_ptr get_context (const CosNaming::Name &name);
+  CosNaming::NamingContext_ptr get_context (const CosNaming::Name &name,
+					    CORBA::Environment &_env);
   // This is used by methods that need to resolve a compound name to
   // get the reference to the target context before performing the
   // actual operation (e.g. bind, unbind, etc.)  Takes a full name
