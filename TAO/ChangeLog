@@ -1,3 +1,11 @@
+Sat Sep 25 14:08:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/PortableServer.mpc:
+
+	  Fix for the compilation errors that shows up on the
+	  scoreboard. This was essentially due to misuse of gendir
+	  keyword. 
+
 Sat Sep 25 09:54:29 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/value_traits.hpp:
