@@ -1,13 +1,18 @@
+Sun Jan 10 09:18:41 1999  Martin Krumpolec <krumpo@pobox.sk>
+
+        * ace/Log_Msg.cpp (log): only re-enable tracing if it had
+          not been explicitly disabled.
+
 Sun Jan 10 01:06:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (log): Change call from exit() to abort().
+        * ace/Log_Msg.cpp (log): Change call from exit() to abort().
 
-	* ace/OS.i (abort): Added new function.
+        * ace/OS.i (abort): Added new function.
 
 Sat Jan  9 22:05:07 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/tao_env.pl: A new perl script that help you translate _env
-	  to TAO_IN_ENV.
+        * bin/tao_env.pl: A new perl script that help you translate _env
+          to TAO_IN_ENV.
 
 Sat Jan 09 10:53:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
