@@ -1,3 +1,8 @@
+Wed Jan 31 22:01:00 2001  Rick Stille  <stille_r@ociweb.com>
+        * ace/OS.cpp(operator FILETIME): Corrected an error in the Jan 26 GHS
+          revision. The term "ACE_Time_Value::FILETIME_to_timval_skew" had been
+          omitted from the calculation.
+
 Wed Jan 31 18:43:26 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* tests/Message_Queue_Test_Ex.cpp (single_thread_performance_test):
