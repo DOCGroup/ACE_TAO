@@ -159,15 +159,15 @@ SLevel1_Server_i::create_check_cert ()
   unsigned char *locality = ACE_reinterpret_cast (unsigned char *,
                                                  signed_locality);
 
-  char *signed_org = ACE_const_cast (char *, "DOC Group");
+  char *signed_org = ACE_const_cast (char *, "TAO+OCI");
   unsigned char *org = ACE_reinterpret_cast (unsigned char *,
                                              signed_org);
 
-  char *signed_orgunit = ACE_const_cast (char *, "UCI");
+  char *signed_orgunit = ACE_const_cast (char *, "OCI");
   unsigned char *orgunit = ACE_reinterpret_cast (unsigned char *,
                                                   signed_orgunit);
 
-  char *signed_name = ACE_const_cast (char *, "priyanka");
+  char *signed_name = ACE_const_cast (char *, "Priyanka");
   unsigned char *common_name = ACE_reinterpret_cast (unsigned char *,
                                                      signed_name);
 
