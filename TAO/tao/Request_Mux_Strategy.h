@@ -6,27 +6,27 @@
 //     TAO
 //
 // = FILENAME
-//     IIOP_RMS.h
+//     Request_Mux_Strategy.h
 //
 // = DESCRIPTION
-//     IIOP Request Multiplexing Strategies.
+//     IIOP Request Mux Strategies.
 //
 // = AUTHOR
 //     Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
 // ============================================================================
 
-#ifndef TAO_IIOP_RMS_H
-#define TAO_IIOP_RMS_H
+#ifndef TAO_REQUEST_MUX_STRATEGY_H
+#define TAO_REQUEST_MUX_STRATEGY_H
 
 #include "tao/CDR.h"
 
 // Forward declarations.
 
-class TAO_IIOP_Reply_Dispatcher;
+class TAO_Reply_Dispatcher;
 
 
-class TAO_Export TAO_IIOP_Request_Multiplexing_Strategy
+class TAO_Export TAO_Request_Mux_Strategy
 {
   // = TITLE
   // 
@@ -38,10 +38,10 @@ class TAO_Export TAO_IIOP_Request_Multiplexing_Strategy
   // 
   
 public:
-  TAO_IIOP_Request_Multiplexing_Strategy (void);
+  TAO_Request_Mux_Strategy (void);
   // Base class constructor.
 
-  virtual ~TAO_IIOP_Request_Multiplexing_Strategy (void);
+  virtual ~TAO_Request_Mux_Strategy (void);
   // Base class destructor.
 
   virtual CORBA::ULong request_id (void)  = 0;
@@ -53,10 +53,10 @@ public:
   //   the AMI's.  
   
   virtual int bind_dispatcher (CORBA::ULong request_id,
-                               TAO_IIOP_Reply_Dispatcher *rh) = 0; 
+                               TAO_Reply_Dispatcher *rh) = 0; 
   // Bind the dispatcher with the request id.
   
-  virtual TAO_IIOP_Reply_Dispatcher* find_dispatcher (CORBA::ULong request_id) = 0;
+  virtual TAO_Reply_Dispatcher* find_dispatcher (CORBA::ULong request_id) = 0;
   // Find the Reply Dispatcher.
 
   // = "Factory methods" to obtain the CDR stream, in the Muxed case
@@ -79,7 +79,7 @@ protected:
   // the SMI and dynamically allocated in AMI.
 };
   
-class TAO_Export TAO_IIOP_Muxed_RMS : public  TAO_IIOP_Request_Multiplexing_Strategy
+class TAO_Export TAO_Muxed_RMS : public  TAO_Request_Mux_Strategy
 {
   // = TITLE
   //
@@ -89,10 +89,10 @@ class TAO_Export TAO_IIOP_Muxed_RMS : public  TAO_IIOP_Request_Multiplexing_Stra
   // 
 
 public:
-  TAO_IIOP_Muxed_RMS (void);
+  TAO_Muxed_RMS (void);
   // Constructor.
   
-  virtual ~TAO_IIOP_Muxed_RMS (void);
+  virtual ~TAO_Muxed_RMS (void);
   // Destructor.
 
   virtual CORBA::ULong request_id (void);
@@ -100,10 +100,10 @@ public:
   // invocation.  
 
   virtual int bind_dispatcher (CORBA::ULong request_id,
-                               TAO_IIOP_Reply_Dispatcher *rh);
+                               TAO_Reply_Dispatcher *rh);
   // Bind the dispatcher with the request id.
   
-  virtual TAO_IIOP_Reply_Dispatcher* find_dispatcher (CORBA::ULong request_id);
+  virtual TAO_Reply_Dispatcher* find_dispatcher (CORBA::ULong request_id);
   // Find the Reply Dispatcher.
   
   // virtual TAO_InputCDR *cdr_stream (void);
@@ -122,7 +122,7 @@ protected:
   // @@ HASH TABLE???
 };  
 
-class TAO_Export TAO_IIOP_Exclusive_RMS : public TAO_IIOP_Request_Multiplexing_Strategy
+class TAO_Export TAO_Exclusive_RMS : public TAO_Request_Mux_Strategy
 {
   // = TITLE
   //   
@@ -132,10 +132,10 @@ class TAO_Export TAO_IIOP_Exclusive_RMS : public TAO_IIOP_Request_Multiplexing_S
   // 
 
 public:
-  TAO_IIOP_Exclusive_RMS (void);
+  TAO_Exclusive_RMS (void);
   // Constructor.
   
-  virtual ~TAO_IIOP_Exclusive_RMS (void);
+  virtual ~TAO_Exclusive_RMS (void);
   // Destructor.
 
   virtual CORBA::ULong request_id (void);
@@ -144,10 +144,10 @@ public:
   // allow only one invocation over this connection at a time.
 
   virtual int bind_dispatcher (CORBA::ULong request_id,
-                               TAO_IIOP_Reply_Dispatcher *rh);
+                               TAO_Reply_Dispatcher *rh);
   // Bind the dispatcher with the request id.
   
-  virtual TAO_IIOP_Reply_Dispatcher* find_dispatcher (CORBA::ULong request_id);
+  virtual TAO_Reply_Dispatcher* find_dispatcher (CORBA::ULong request_id);
   // Find the Reply Dispatcher.
   
   // virtual TAO_InputCDR *get_cdr_stream (void);
@@ -166,7 +166,7 @@ protected:
   CORBA::ULong request_id_;
   // Request id for the current request.
   
-  TAO_IIOP_Reply_Dispatcher *rd_;
+  TAO_Reply_Dispatcher *rd_;
   // Reply Dispatcher corresponding to the request. 
 };  
-#endif /* IIOP_RMS_H */
+#endif /* REQUEST_MUX_STRATEGY_H */
