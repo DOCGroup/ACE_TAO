@@ -277,7 +277,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
 #if defined(ACE_HAS_PURIFY)
       // Only inititialize the buffer if we're compiling with Purify.
       // Otherwise, there is no real need to do so, especially since
-      // we can avoid the initialization overhead at run-time if we
+      // we can avoid the initialization overhead at runtime if we
       // are not compiling with Purify support.
       char repbuf[ACE_CDR::DEFAULT_BUFSIZE] = { 0 };
 #else
@@ -336,7 +336,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
   #if defined(ACE_HAS_PURIFY)
       // Only inititialize the buffer if we're compiling with Purify.
       // Otherwise, there is no real need to do so, especially since
-      // we can avoid the initialization overhead at run-time if we
+      // we can avoid the initialization overhead at runtime if we
       // are not compiling with Purify support.
       char repbuf[ACE_CDR::DEFAULT_BUFSIZE] = { 0 };
 #else

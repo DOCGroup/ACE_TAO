@@ -50,7 +50,7 @@ TAO_Interceptor_List::add_interceptor_i (
               // @@ This simple search algorithm isn't the greatest
               //    thing in the world, but since we only register
               //    interceptors when bootstrapping an ORB, there will
-              //    be no run-time penalty.
+              //    be no runtime penalty.
               //
               //    Another source of inefficiency is that
               //    Interceptors duplicate their name each time the
