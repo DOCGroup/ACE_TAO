@@ -1,3 +1,9 @@
+Tue Mar  6 13:41:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Handler.cpp (read_parse_message): 
+	* tao/GIOP_Message_Base.cpp: Made some aesthetic changes and fixed
+	  some comments.
+
 Tue Mar  6 13:25:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/PortableServer/ImplRepoC.cpp:

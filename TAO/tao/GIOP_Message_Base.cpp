@@ -203,12 +203,6 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
 int
 TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
 {
-  // Get the header length
-  const size_t header_len = TAO_GIOP_MESSAGE_HEADER_LEN ;
-
-  // Get the message size offset
-  const size_t offset = TAO_GIOP_MESSAGE_SIZE_OFFSET;
-
   // Ptr to first buffer.
   char *buf = (char *) stream.buffer ();
 
@@ -223,27 +217,27 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
   // this particular environment and that isn't handled by the
   // networking infrastructure (e.g., IPSEC).
 
-  CORBA::ULong bodylen = total_len - header_len;
+  CORBA::ULong bodylen = total_len - TAO_GIOP_MESSAGE_HEADER_LEN;
 
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
-  *ACE_reinterpret_cast (CORBA::ULong *, buf + offset) = bodylen;
+  *ACE_reinterpret_cast (CORBA::ULong *, buf +
+                         TAO_GIOP_MESSAGE_SIZE_OFFSET) = bodylen;
 #else
   if (!stream.do_byte_swap ())
     *ACE_reinterpret_cast (CORBA::ULong *,
-                           buf + offset) = bodylen;
+                           buf + TAO_GIOP_MESSAGE_SIZE_OFFSET) = bodylen;
   else
     ACE_CDR::swap_4 (ACE_reinterpret_cast (char *,
                                            &bodylen),
-                     buf + offset);
+                     buf + TAO_GIOP_MESSAGE_SIZE_OFFSET);
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
-
 
   if (TAO_debug_level > 2)
     {
       this->dump_msg ("send",
                       ACE_reinterpret_cast (u_char *,
                                             buf),
-                      bodylen);
+                      bodylen + TAO_GIOP_MESSAGE_HEADER_LEN);
     }
 
   return 0;
