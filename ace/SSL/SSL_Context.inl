@@ -17,7 +17,7 @@ ACE_SSL_Data_File::ACE_SSL_Data_File (const char *file_name,
 {
 }
 
-ACE_INLINE const char*
+ACE_INLINE const char *
 ACE_SSL_Data_File::file_name (void) const
 {
   return this->file_name_.c_str ();
@@ -31,10 +31,10 @@ ACE_SSL_Data_File::type (void) const
 
 // ****************************************************************
 
-ACE_INLINE ACE_SSL_Context*
+ACE_INLINE ACE_SSL_Context *
 ACE_SSL_Context::instance (void)
 {
-  return ACE_Singleton<ACE_SSL_Context,ACE_SYNCH_MUTEX>::instance ();
+  return ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::instance ();
 }
 
 ACE_INLINE void
@@ -85,4 +85,16 @@ ACE_INLINE int
 ACE_SSL_Context::default_verify_mode (void) const
 {
   return this->default_verify_mode_;
+}
+
+ACE_INLINE int
+ACE_SSL_Context::get_mode (void) const
+{
+  return this->mode_;
+}
+
+ACE_INLINE int
+ACE_SSL_Context::have_trusted_ca (void) const
+{
+  return this->have_ca_;
 }
