@@ -76,7 +76,6 @@ visit_field (be_field *node)
 int
 be_visitor_valuetype_field_ci::visit_array (be_array *node)
 {
-  TAO_OutStream *os; // output stream
   be_decl *ub =
     this->ctx_->node (); // get field node
   be_valuetype *bu =
@@ -97,7 +96,7 @@ be_visitor_valuetype_field_ci::visit_array (be_array *node)
                          "bad context information\n"
                          ), -1);
     }
-  os = this->ctx_->stream ();
+
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
       && bt->is_child (bu)) // bt is defined inside the valuetype
     {
@@ -171,7 +170,6 @@ be_visitor_valuetype_field_ci::visit_predefined_type (be_predefined_type *node)
 int
 be_visitor_valuetype_field_ci::visit_sequence (be_sequence *node)
 {
-  TAO_OutStream *os; // output stream
   be_decl *ub =
     this->ctx_->node (); // get field node
   be_valuetype *bu =
@@ -192,7 +190,6 @@ be_visitor_valuetype_field_ci::visit_sequence (be_sequence *node)
                          "bad context information\n"
                          ), -1);
     }
-  os = this->ctx_->stream ();
 
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
       && bt->is_child (bu)) // bt is defined inside the union
@@ -237,7 +234,6 @@ be_visitor_valuetype_field_ci::visit_string (be_string *node)
 int
 be_visitor_valuetype_field_ci::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os; // output stream
   be_decl *ub =
     this->ctx_->node (); // get field node
   be_valuetype *bu =
@@ -258,7 +254,6 @@ be_visitor_valuetype_field_ci::visit_structure (be_structure *node)
                          "bad context information\n"
                          ), -1);
     }
-  os = this->ctx_->stream ();
 
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
       && bt->is_child (bu)) // bt is defined inside the union
@@ -303,8 +298,6 @@ be_visitor_valuetype_field_ci::visit_typedef (be_typedef *node)
 int
 be_visitor_valuetype_field_ci::visit_union (be_union *node)
 {
-  cerr << "!u be_visitor_valuetype_field_ci::visit_union unimp.\n";
-  TAO_OutStream *os; // output stream
   be_decl *ub =
     this->ctx_->node (); // get field node
   be_valuetype *bu =
@@ -325,7 +318,6 @@ be_visitor_valuetype_field_ci::visit_union (be_union *node)
                          "bad context information\n"
                          ), -1);
     }
-  os = this->ctx_->stream ();
 
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
       && bt->is_child (bu)) // bt is defined inside the union
