@@ -1,3 +1,9 @@
+Wed Dec  1 09:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Fixed a few bugs introduced yesterday, not all strategies where added
+        to the service repository. Furthermore made serveral ObjectId
+        arguments const& so that we don't make a copy of it.
+
 Tue Nov 30 15:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.cpp (create_POA_i(:
