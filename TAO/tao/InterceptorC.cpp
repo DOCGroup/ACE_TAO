@@ -8,6 +8,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "tao/InterceptorS.h"
+#include "tao/varout.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/InterceptorC.i"
@@ -32,13 +33,13 @@ PortableInterceptor::Cookie_ptr PortableInterceptor::Cookie::_narrow (
       )
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableInterceptor::Cookie::_nil ());
 
-  PortableInterceptor::Cookie_ptr retval = 
+  PortableInterceptor::Cookie_ptr retval =
     PortableInterceptor::Cookie::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_PortableInterceptor::_tao_direct_collocated_Cookie (
-          ACE_reinterpret_cast (POA_PortableInterceptor::Cookie_ptr, 
+          ACE_reinterpret_cast (POA_PortableInterceptor::Cookie_ptr,
                                 servant),
           0
         ),
@@ -247,13 +248,13 @@ PortableInterceptor::Interceptor_ptr PortableInterceptor::Interceptor::_narrow (
       )
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableInterceptor::Interceptor::_nil ());
 
-  PortableInterceptor::Interceptor_ptr retval = 
+  PortableInterceptor::Interceptor_ptr retval =
     PortableInterceptor::Interceptor::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_PortableInterceptor::_tao_direct_collocated_Interceptor (
-          ACE_reinterpret_cast (POA_PortableInterceptor::Interceptor_ptr, 
+          ACE_reinterpret_cast (POA_PortableInterceptor::Interceptor_ptr,
                                 servant),
           0
         ),
@@ -315,13 +316,13 @@ PortableInterceptor::ServerRequestInterceptor_ptr PortableInterceptor::ServerReq
       )
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableInterceptor::ServerRequestInterceptor::_nil ());
 
-  PortableInterceptor::ServerRequestInterceptor_ptr retval = 
+  PortableInterceptor::ServerRequestInterceptor_ptr retval =
     PortableInterceptor::ServerRequestInterceptor::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor (
-          ACE_reinterpret_cast (POA_PortableInterceptor::ServerRequestInterceptor_ptr, 
+          ACE_reinterpret_cast (POA_PortableInterceptor::ServerRequestInterceptor_ptr,
                                 servant),
           0
         ),
@@ -384,13 +385,13 @@ PortableInterceptor::ClientRequestInterceptor_ptr PortableInterceptor::ClientReq
       )
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableInterceptor::ClientRequestInterceptor::_nil ());
 
-  PortableInterceptor::ClientRequestInterceptor_ptr retval = 
+  PortableInterceptor::ClientRequestInterceptor_ptr retval =
     PortableInterceptor::ClientRequestInterceptor::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor (
-          ACE_reinterpret_cast (POA_PortableInterceptor::ClientRequestInterceptor_ptr, 
+          ACE_reinterpret_cast (POA_PortableInterceptor::ClientRequestInterceptor_ptr,
                                 servant),
           0
         ),
