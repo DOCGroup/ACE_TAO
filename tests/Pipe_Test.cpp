@@ -119,6 +119,8 @@ main (int argc, ASYS_TCHAR *argv[])
       else
         options.command_line (ACE_TEXT ("Pipe_Test") ACE_PLATFORM_EXE_SUFFIX ACE_TEXT (" -c"));
 
+      ACE_exitcode status = 0;
+
       for (int i = 0; i < ::iterations; i++)
         {
           ACE_Process server;
@@ -129,7 +131,23 @@ main (int argc, ASYS_TCHAR *argv[])
                       server.getpid ()));
 
           // Wait for the process we just created to exit.
-          server.wait ();
+          server.wait (&status);
+
+          // Check if child exited without error.
+          if (WIFEXITED (status) != 0
+              && WEXITSTATUS (status) != 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Child of server %d finished with error "
+                          "exit status %d\n",
+                          server.getpid (),
+                          WEXITSTATUS (status)));
+
+              ACE_END_TEST;
+
+              exit (WEXITSTATUS (status));
+            }
+
           ACE_DEBUG ((LM_DEBUG, "Server %d finished\n", server.getpid ()));
         }
       ACE_END_TEST;
