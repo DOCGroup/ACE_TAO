@@ -1,3 +1,19 @@
+Mon Jul 19 13:21:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+        
+          - Added code generation for attributes. This closes
+            [BUGID:1880].
+          - Added code generation for oneway operations, since if
+            a SyncScope policy is set with the value SYNC_WITH_SERVER
+            or SYNC_WITH_TARGET, we will want the client to get
+            any system exceptions that may be thrown during execution.
+          - Removed visit_attribute() method. since it is never called.
+            Code generation for attributes is handled by a special
+            method that requires the response handler and the
+            exception holder to be passed in as well as the attribute.
+
 Mon Jul 19 11:08:29 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.cpp:

@@ -49,8 +49,7 @@ public:
 
   virtual int visit_operation (be_operation *node);
 
-  virtual int visit_attribute (be_attribute *node);
-
+  // @@@ (JP) I don't think this has to be overridden.
   virtual int visit_scope (be_scope *node);
 
 private:
@@ -59,12 +58,17 @@ private:
                                          be_valuetype *exception_holder);
 
   /// method to add memebers to the response handler interfaces
-  int add_rh_node_members ( be_interface *node,
-                            be_interface *response_handler,
-                            be_valuetype *exception_holder);
+  int add_rh_node_members (be_interface *node,
+                           be_interface *response_handler,
+                           be_valuetype *exception_holder);
 
   /// Create an operation with return, OUT and INOUT arguments
   int create_response_handler_operation (be_operation *node,
+                                         be_interface *response_handler,
+                                         be_valuetype *exception_holder);
+
+  /// Create the get_* operation associated with an attribute.
+  int create_response_handler_attribute (be_attribute *node,
                                          be_interface *response_handler,
                                          be_valuetype *exception_holder);
 
