@@ -1,3 +1,10 @@
+Wed Jul 07 18:26:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao: Fixed determination of collocation.  It is not necessary to
+	  have a servant for a object to be collocated.  A servant manager
+	  or a default servant will also do.  Now Nanbor needs to take
+	  advantage of these changes by changing _narrow appropriately.
+
 Wed Jul 07 16:25:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/corbafwd.h,Exception.cpp (_tao_errno,_info):

@@ -1624,14 +1624,22 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  // Create the CORBA level proxy.
-  TAO_ServantBase *servant = this->_get_collocated_servant (data);
+  // Figure out if the servant is collocated.
+  TAO_ServantBase *servant = 0;
+  TAO_SERVANT_LOCATION servant_location =
+    this->_get_collocated_servant (data,
+                                   servant);
 
-  // This will increase the ref_count on data by one
+  int collocated = 0;
+  if (servant_location != TAO_SERVANT_NOT_FOUND)
+    collocated = 1;
+
+  // Create the CORBA level proxy.  This will increase the ref_count
+  // on data by one
   ACE_NEW_THROW_EX (obj,
                     CORBA_Object (data,
                                   servant,
-                                  servant != 0),
+                                  collocated),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -1652,11 +1660,12 @@ CORBA_ORB::_optimize_collocation_objects (void) const
   return this->orb_core_->optimize_collocation_objects ();
 }
 
-TAO_ServantBase *
-CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
+TAO_SERVANT_LOCATION
+CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj,
+                                    TAO_ServantBase *&servant)
 {
   if (sobj == 0 || !this->_optimize_collocation_objects ())
-    return 0;
+    return TAO_SERVANT_NOT_FOUND;
 
   // @@ What about forwarding.  Which this approach we are never forwarded
   //    when we use collocation!
@@ -1670,7 +1679,7 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
       //    then we need to use that lock in the ORB_init() function.
 
       ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
-                                *ACE_Static_Object_Lock::instance (), 0));
+                                *ACE_Static_Object_Lock::instance (), TAO_SERVANT_NOT_FOUND));
 
       TAO_ORB_Table *table = TAO_ORB_Table::instance ();
       TAO_ORB_Table::Iterator end = table->end ();
@@ -1678,32 +1687,35 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
            i != end;
            ++i)
         {
-          TAO_ServantBase *servant =
+          TAO_SERVANT_LOCATION servant_location =
             this->_find_collocated_servant (sobj,
                                             (*i).int_id_,
+                                            servant,
                                             mprofile);
-          if (servant != 0)
-            return servant;
+          if (servant_location != TAO_SERVANT_NOT_FOUND)
+            return servant_location;
         }
 
       // If we don't find one by this point, we return 0.
-      return 0;
+      return TAO_SERVANT_NOT_FOUND;
     }
   else
     {
       return this->_find_collocated_servant (sobj,
                                              this->orb_core_,
+                                             servant,
                                              mprofile);
     }
 }
 
-TAO_ServantBase *
+TAO_SERVANT_LOCATION
 CORBA_ORB::_find_collocated_servant (TAO_Stub *sobj,
                                      TAO_ORB_Core *orb_core,
+                                     TAO_ServantBase *&servant,
                                      const TAO_MProfile &mprofile)
 {
   if (!orb_core->is_collocated (mprofile))
-    return 0;
+    return TAO_SERVANT_NOT_FOUND;
 
   TAO_Object_Adapter *oa = orb_core->object_adapter ();
 
@@ -1711,23 +1723,29 @@ CORBA_ORB::_find_collocated_servant (TAO_Stub *sobj,
        j != mprofile.profile_count ();
        ++j)
     {
-      const TAO_Profile* profile = mprofile.get_profile (j);
+      const TAO_Profile *profile = mprofile.get_profile (j);
       TAO_ObjectKey_var objkey = profile->_key ();
 
       ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
         {
-          PortableServer::Servant servant =
-            oa->find_servant (objkey.in (), ACE_TRY_ENV);
+          TAO_SERVANT_LOCATION servant_location =
+            oa->find_servant (objkey.in (),
+                              servant,
+                              ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          // Found collocated object.  Perhaps we can get around by
-          // simply setting the servant_orb, but let get this to work
-          // first.
+          if (servant_location != TAO_SERVANT_NOT_FOUND)
+            {
+              // Found collocated object.  Perhaps we can get around
+              // by simply setting the servant_orb, but let get this
+              // to work first.
 
-          // There could only be one ORB which is us.
-          sobj->servant_orb (CORBA::ORB::_duplicate (orb_core->orb ()));
-          return servant;
+              // There could only be one ORB which is us.
+              sobj->servant_orb (CORBA::ORB::_duplicate (orb_core->orb ()));
+
+              return servant_location;
+            }
         }
       ACE_CATCHANY
         {
@@ -1736,7 +1754,7 @@ CORBA_ORB::_find_collocated_servant (TAO_Stub *sobj,
       ACE_ENDTRY;
     }
 
-  return 0;
+  return TAO_SERVANT_NOT_FOUND;
 }
 
 // ****************************************************************

@@ -534,12 +534,18 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   if (objdata == 0)
     return 0;
 
-  // Create a new CORBA_Object and give it the TAO_Stub just
-  // created.
-  TAO_ServantBase *servant =
-    objdata->orb_core ()->orb ()->_get_collocated_servant (objdata);
+  // Figure out if the servant is collocated.
+  TAO_ServantBase *servant = 0;
+  TAO_SERVANT_LOCATION servant_location =
+    objdata->orb_core ()->orb ()->_get_collocated_servant (objdata,
+                                                           servant);
 
-  ACE_NEW_RETURN (x, CORBA_Object (objdata, servant, servant != 0), 0);
+  int collocated = 0;
+  if (servant_location != TAO_SERVANT_NOT_FOUND)
+    collocated = 1;
+
+  // Create a new CORBA_Object and give it the TAO_Stub just created.
+  ACE_NEW_RETURN (x, CORBA_Object (objdata, servant, collocated), 0);
 
   // the corba proxy would have already incremented the reference count on
   // the objdata. So we decrement it here by 1 so that the objdata is now

@@ -53,14 +53,16 @@ TAO_Object_Adapter::locate_servant (const TAO_ObjectKey &key,
                                  ACE_TRY_ENV);
 }
 
-ACE_INLINE PortableServer::Servant
+ACE_INLINE TAO_SERVANT_LOCATION
 TAO_Object_Adapter::find_servant (const TAO_ObjectKey &key,
+                                  PortableServer::Servant &servant,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), TAO_SERVANT_NOT_FOUND);
 
   return this->find_servant_i (key,
+                               servant,
                                ACE_TRY_ENV);
 }
 
