@@ -1,3 +1,9 @@
+Mon Mar 29 20:52:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Functor_String.h:
+
+	  Fixed a typo.
+
 Mon Mar 29 12:24:54 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* examples/Threads/manual_event.cpp (worker): 
