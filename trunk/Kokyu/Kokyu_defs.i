@@ -24,13 +24,4 @@ void Dispatch_Command::destroy (void)
   delete this;
 }
 
-ACE_INLINE
-non_copyable::non_copyable (void) 
-{
-}
-
-ACE_INLINE
-non_copyable::~non_copyable (void) 
-{}
-
 }

@@ -13,6 +13,7 @@
 #ifndef KOKYU_H
 #define KOKYU_H
 #include "ace/pre.h"
+#include "ace/Copy_Disabled.h"
 
 //#if !defined (ACE_LACKS_PRAGMA_ONCE)
 //# pragma once
@@ -47,7 +48,7 @@ namespace Kokyu
    * Dispatcher is the class that users will be using to achieve
    * dynamic dispatching of events in an event channel.
    */
-  class Kokyu_Export Dispatcher : private non_copyable
+  class Kokyu_Export Dispatcher : private ACE_Copy_Disabled
   {
   public:
     /// Dispatch a command object based on the qos info supplied.
@@ -81,7 +82,7 @@ namespace Kokyu
    * Factory class creates a dispatcher for EC and configures the
    * interface object with the appropriate implementation.
    */
-  class Kokyu_Export Dispatcher_Factory : private non_copyable
+  class Kokyu_Export Dispatcher_Factory : private ACE_Copy_Disabled
     {
     public:
       /**
