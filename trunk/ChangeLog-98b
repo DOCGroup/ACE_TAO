@@ -1,3 +1,9 @@
+Thu Oct 15 16:50:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.i (set_option): Need to convert the
+	  <optval> from char to int for Win32 because the shortest length
+	  of <optval> must be at least sizeof (int) on Win32.
+
 Thu Oct 15 16:40:41 1998  Steve Huston  <shuston@riverace.com>
 
 	* tests/Thread_Manager_Test.cpp: Allow suspend/resume to be tried on
