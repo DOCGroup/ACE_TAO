@@ -1,5 +1,6 @@
 Wed Feb 23 12:31:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
+	
+	* examples/Persistent_Grid/Grid_i.cpp:
 	* examples/Persistent_Grid/Simple_util.cpp: Fixed a warning on
 	  Linux egcs. 
 
