@@ -1,81 +1,88 @@
+Thu Nov 16 16:36:11 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/INS.html:
+          Removed brittle reference to the ACE_Hash_Map_Manager
+          documentation.  It was not particularly useful, and the document
+          can move around quite a bit.
+
 Thu Nov 16 18:21:23 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Makefile
-	* tests/RTCORBA/Makefile.bor
-	* tests/RTCORBA/RTCORBA_tests.dsw
-	* tests/RTCORBA/Banded_Connections/client.cpp
-	* tests/RTCORBA/Banded_Connections/client.dsp
-	* tests/RTCORBA/Banded_Connections/client.bor
-	* tests/RTCORBA/Banded_Connections/server.cpp
-	* tests/RTCORBA/Banded_Connections/server.bor
-	* tests/RTCORBA/Banded_Connections/server.dsp
-	* tests/RTCORBA/Banded_Connections/server.conf
-	* tests/RTCORBA/Banded_Connections/Makefile
-	* tests/RTCORBA/Banded_Connections/Makefile.bor
-	* tests/RTCORBA/Banded_Connections/README
-	* tests/RTCORBA/Banded_Connections/run_test.pl
-	* tests/RTCORBA/Banded_Connections/test.idl:
+        * tests/RTCORBA/Makefile
+        * tests/RTCORBA/Makefile.bor
+        * tests/RTCORBA/RTCORBA_tests.dsw
+        * tests/RTCORBA/Banded_Connections/client.cpp
+        * tests/RTCORBA/Banded_Connections/client.dsp
+        * tests/RTCORBA/Banded_Connections/client.bor
+        * tests/RTCORBA/Banded_Connections/server.cpp
+        * tests/RTCORBA/Banded_Connections/server.bor
+        * tests/RTCORBA/Banded_Connections/server.dsp
+        * tests/RTCORBA/Banded_Connections/server.conf
+        * tests/RTCORBA/Banded_Connections/Makefile
+        * tests/RTCORBA/Banded_Connections/Makefile.bor
+        * tests/RTCORBA/Banded_Connections/README
+        * tests/RTCORBA/Banded_Connections/run_test.pl
+        * tests/RTCORBA/Banded_Connections/test.idl:
 
-	  Added a test for RTCORBA::PriorityBandedConnectionPolicy.
-	
+          Added a test for RTCORBA::PriorityBandedConnectionPolicy.
+        
 Thu Nov 16 16:16:47 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
 
-	  Added Object_Ref_Table.* to these project files.
+          Added Object_Ref_Table.* to these project files.
 
 Thu Nov 16 14:50:04 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Object_Ref_Table.h:
-	* tao/Object_Ref_Table.cpp:
+        * tao/Object_Ref_Table.h:
+        * tao/Object_Ref_Table.cpp:
 
-	  New table to map ID to destringified object reference.  This
-	  table is used by the ORBInitInfo::register_initial_reference()
-	  method.
+          New table to map ID to destringified object reference.  This
+          table is used by the ORBInitInfo::register_initial_reference()
+          method.
 
-	  The class is necessary to allow local objects to be accessible
-	  via the resolve_initial_references() mechanism.  Since local
-	  object references cannot be stringified, they cannot be placed
-	  into the initial reference map that maps object key/name to
-	  stringified object reference.  Hence, another table was needed.
+          The class is necessary to allow local objects to be accessible
+          via the resolve_initial_references() mechanism.  Since local
+          object references cannot be stringified, they cannot be placed
+          into the initial reference map that maps object key/name to
+          stringified object reference.  Hence, another table was needed.
 
-	* tao/IORInfo.h:
-	* tao/ORBInitInfo.h:
+        * tao/IORInfo.h:
+        * tao/ORBInitInfo.h:
 
-	  Destructor is now protected to force instantiation on the heap
-	  since it is reference counted.
+          Destructor is now protected to force instantiation on the heap
+          since it is reference counted.
 
-	* tao/ORBInitInfo.cpp (register_initial_reference):
+        * tao/ORBInitInfo.cpp (register_initial_reference):
 
-	  Implemented this method using the newly added object reference
-	  table in the ORB.
+          Implemented this method using the newly added object reference
+          table in the ORB.
 
-	* tao/ORB_Core.h:
+        * tao/ORB_Core.h:
 
-	  Added TAO_Object_Ref_Table attribute.  References to such things
-	  as local objects are stored there.
+          Added TAO_Object_Ref_Table attribute.  References to such things
+          as local objects are stored there.
 
-	  Completed doxygenation of this header.
+          Completed doxygenation of this header.
 
-	* tao/ORB_Core.i (object_ref_table):
+        * tao/ORB_Core.i (object_ref_table):
 
-	  New accessor method to the underlying object reference table.
+          New accessor method to the underlying object reference table.
 
-	* tao/ORB_Core.cpp (TAO_ORB_Core):
+        * tao/ORB_Core.cpp (TAO_ORB_Core):
 
-	  Initialize the object reference table in the base member
-	  initializer list.
+          Initialize the object reference table in the base member
+          initializer list.
 
-	* tao/ORB.cpp (resolve_initial_references):
+        * tao/ORB.cpp (resolve_initial_references):
 
-	  Query the newly added object reference table in addition to the
-	  existing object reference resolution mechansims.
+          Query the newly added object reference table in addition to the
+          existing object reference resolution mechansims.
 
-	* tao/Makefile:
-	* tao/Makefile.bor:
+        * tao/Makefile:
+        * tao/Makefile.bor:
 
-	  Added Object_Ref_Table.* to these Makefiles.
+          Added Object_Ref_Table.* to these Makefiles.
 
 Thu Nov 16 13:19:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
