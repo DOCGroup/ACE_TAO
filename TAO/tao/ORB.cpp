@@ -13,6 +13,12 @@
 #include "tao/TAO_Internal.h"
 #include "tao/Timeprobe.h"
 
+#if 0
+#if !defined (__ACE_INLINE__)
+# include "tao/ORB.i"
+#endif /* ! __ACE_INLINE__ */
+#endif
+
 // COM's IUnknown support
 
 // {A201E4C7-F258-11ce-9598-0000C07CA898}

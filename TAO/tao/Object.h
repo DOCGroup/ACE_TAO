@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -195,5 +196,9 @@ public:
 private:
   CORBA::Object_ptr &ptr_;
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/Object.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* CORBA_OBJECT_H */

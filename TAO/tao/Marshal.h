@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -21,15 +22,15 @@
 
 CORBA::TypeCode::traverse_status
 DEEP_COPY (CORBA::TypeCode_ptr  param,
-	   const void *source,
-	   const void *dest,
-	   CORBA::Environment &env);
+           const void *source,
+           const void *dest,
+           CORBA::Environment &env);
 
 CORBA::TypeCode::traverse_status
 DEEP_FREE (CORBA::TypeCode_ptr  param,
-	   const void *source,
-	   const void *dest,
-	   CORBA::Environment &env);
+           const void *source,
+           const void *dest,
+           CORBA::Environment &env);
 
 // = Forward declarations.
 class TAO_Marshal_Object;
@@ -61,7 +62,7 @@ public:
   // destructor
 
   virtual TAO_Marshal_Object *make_marshal_object (CORBA::TypeCode_ptr tc,
-						  CORBA::Environment &env);
+                                                  CORBA::Environment &env);
   // Factory method that returns the appropriate marshal object.
 
 private:
@@ -518,5 +519,9 @@ public:
                                                   const void *,
                                                   CORBA::Environment &env);
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/Marshal.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_MARSHAL_H */
