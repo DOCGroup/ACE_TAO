@@ -99,7 +99,7 @@ while ( $#ARGV >= 0)
     shift;
 }
  
-if (!defined @configs) {
+if ($#configs < 0) {
     if (!defined $ENV{PIPPEN_CONFIGS}) {
         print STDERR "Error: No config specified\n";
         exit 1;
@@ -241,7 +241,7 @@ foreach my $project (keys %projects) {
                 print " \"$proj_config\"" if ($verbose);
                 my $name = $proj->DepOutputFile ($proj_config);
                            
-                %names->{$name} = $project;
+                %names->{lc $name} = $project;
                 @{%projects->{$project}->{CONFIGS}->{$proj_config}->{DEPS}} = split / /, $proj->Libs ($proj_config);
                 
                 if ($proj->UsesTAOIDL () == 1) {
@@ -269,7 +269,7 @@ foreach my $project (keys %projects) {
         print "        Before:", join (" ", @{%projects->{$project}->{CONFIGS}->{$config}->{DEPS}}), "\n" if ($verbose);
         my @newdeps;
         foreach my $dep (@{%projects->{$project}->{CONFIGS}->{$config}->{DEPS}}) {
-            if (defined %names->{$dep}) {
+            if (defined %names->{lc $dep}) {
                 push @newdeps, $dep;
             }
         }
@@ -292,8 +292,8 @@ do {
         foreach my $config (keys %{%projects->{$project}->{CONFIGS}}) {
             if (%projects->{$project}->{BUILD} == 1) {
                 foreach my $dep (@{%projects->{$project}->{CONFIGS}->{$config}->{DEPS}}) {
-                    if (%projects->{%names->{$dep}}->{BUILD} != 1) {
-                        %projects->{%names->{$dep}}->{BUILD} = 1;
+                    if (%projects->{%names->{lc $dep}}->{BUILD} != 1) {
+                        %projects->{%names->{lc $dep}}->{BUILD} = 1;
                         $finished = 0;
                     }
                 }
@@ -348,7 +348,7 @@ do {
                 if (%projects->{$project}->{CONFIGS}->{$config}->{DONE} != 1) {
                     my $depsleft = 0;
                     foreach my $dep (@{%projects->{$project}->{CONFIGS}->{$config}->{DEPS}}) {
-                        if (%projects->{%names->{$dep}}->{CONFIGS}->{$config}->{DONE} != 1) {
+                        if (%projects->{%names->{lc $dep}}->{CONFIGS}->{$config}->{DONE} != 1) {
                             ++$depsleft;
                         }
                     }

@@ -311,7 +311,7 @@ sub Load ()
                 
                 foreach my $lib (@libs) {
                     if ($lib =~ m/\.lib$/) {
-                        if (%{$self->{CONFIGS}}->{$config}->{LIBS} !~ m/$lib/) {
+                        if (%{$self->{CONFIGS}}->{$config}->{LIBS} !~ m/\Q$lib\E/) {
                             %{$self->{CONFIGS}}->{$config}->{LIBS} .= " $lib";
                         }
                         $found = 1;

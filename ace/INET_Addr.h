@@ -24,7 +24,7 @@
 #include "ace/Addr.h"
 
 #if defined(VXWORKS)
-#  include "inetLib.h"
+#  include /**/ "inetLib.h"
 #endif /* VXWORKS */
 
 /**
