@@ -24,7 +24,7 @@ unlink $am_ior;
 
 
 # CIAO Daemon command line arguments
-$daemon_args = "-ORBEndpoint iiop://localhost:10000 -o $daemon_ior -i CIAO_Installation_Data.ini -n $CIAO_ROOT/tools/ComponentServer/ComponentServer";
+$daemon_args = "-c $CIAO_ROOT/performance-tests/Benchmark/RoundTrip/svc.conf -ORBEndpoint iiop://localhost:10000 -o $daemon_ior -i CIAO_Installation_Data.ini -n $CIAO_ROOT/tools/ComponentServer/ComponentServer";
 
 $assembly_manager_args = "-o $am_ior -c test.dat";
 
