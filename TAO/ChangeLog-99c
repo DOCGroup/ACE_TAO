@@ -18,7 +18,7 @@ Fri Jun  4 00:32:04 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* tao/TAO_Static.dsp
 
 	The Mux strategies are over the Transport objects. So naming them
-	as Transport_Mux is more appropriate than Request_Mux. 
+	as Transport_Mux is more appropriate than Request_Mux.
 	Thanks Carlos!
 
 Thu Jun  3 23:27:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -46,41 +46,45 @@ Thu Jun 03 21:03:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tao/IIOP_Connect.cpp:
 	* tao/Wait_Strategy.h:
 	* tao/Wait_Strategy.cpp:
-	  Cleaned up the connection managment: there is no need to call
-	  inform the transport when the reactor invokes handle_close(),
-	  the Transport class is always the one that closes the
-	  connection.  Still the Wait_Strategy needs to know to wake up
-	  any threads that are waiting on the transport.
-	  Right now we don't send any messages to the Wait_Strategy if the
-	  connection is closed during a write (i.e. while sending a
-	  message), but in the future we may need to do so.
-	  Fixed crashes and infinite loops on the event of a write()
+
+	  Cleaned up the connection managment: there is no need to inform
+	  the transport when the reactor invokes handle_close(). The
+	  Transport class is always the one that closes the connection.
+	  Still the Wait_Strategy needs to know to wake up any threads
+	  that are waiting on the transport.  Right now we don't send any
+	  messages to the Wait_Strategy if the connection is closed during
+	  a write (i.e. while sending a message), but in the future we may
+	  need to do so.
+
+	  Also, fixed crashes and infinite loops on the event of a write()
 	  failure.  The system was not informing the
 	  Cached_Connect_Strategy that the transport was not useful
 	  anymore, and sometimes the same transport was attempted again,
 	  if it wasn't closed then we went into an infinite loop; if it
 	  was closed then we crashed.
 
-	* tao/GIOP.h:
-	* tao/GIOP.cpp:
-	  Cleaned up the implementation of
+	  Thanks to Kristopher Johnson <kjohnson@gardnersys.com> for
+	  pointing out the above problem.
+
+	* tao/GIOP: Cleaned up the implementation of
 	  TAO_GIOP::process_server_message(), checking that it handles all
 	  the errors conditions correctly and removing some error
-	  conditions that just could not happen.
-	  Also converted C++ exceptions into CORBA::UNKNOWN
-	  Make sure that send_message returns -1 if there is an error.
-	  Made several functions void because they raise exceptions
-	  instead of returning errors (and they shouldn't do both).
-	  Removed unused values for the Message_Type enum, they wre TAO
-	  extensions that nobody used anymore.
-	  Removed the TAO_GIOP::message_name() function, nobody was using it
+	  conditions that just could not happen.  Also converted C++
+	  exceptions into CORBA::UNKNOWN Make sure that send_message
+	  returns -1 if there is an error.  Made several functions return
+	  void because they raise exceptions instead of returning errors
+	  (and they shouldn't do both).
+
+	  Also, removed unused values for the Message_Type enum, they wre
+	  TAO extensions that nobody used anymore.  In addition, removed
+	  the TAO_GIOP::message_name() function, nobody was using it
 
 	* tao/corbafwd.h:
 	* tao/Exception.cpp:
 	  Added new exception minor code for the C++ to CORBA::UNKNOWN
 
 	* tao/ORB_Core.cpp:
-	  The POA_Current object was beign leak.
+	  Fixed the POA_Current object that was being leaked.
 
 	* tao/default_resource.cpp:
 	* tao/Acceptor_Registry.cpp:
