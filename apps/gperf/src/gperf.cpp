@@ -82,6 +82,9 @@ main (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
   ACE_ERROR ((LM_ERROR, "gperf is not operational because "
                         "ACE_HAS_GPERF was not enabled for the build\n"));
 
