@@ -1,10 +1,10 @@
 Wed May 27 13:45:24 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/ACE.cpp (handle_timed_complete): Fixed problem where
-	  successful connect was being reported as a failure (P90).
+        * ace/ACE.cpp (handle_timed_complete): Fixed problem where
+          successful connect was being reported as a failure (P90).
 
-	* tests/SOCK_Connector_Test.cpp: Added a test for a successful
-	  non-blocking connect (tests fix from above).
+        * tests/SOCK_Connector_Test.cpp: Added a test for a successful
+          non-blocking connect (tests fix from above).
 
 Wed May 27 07:04:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -25,6 +25,12 @@ Wed May 27 07:04:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Misc/context_switch_time.cpp: don't run the
           Yield_Test on VxWorks because it takes too long.
+
+        * ace/High_Res_Timer.*: moved calibration from constructor to
+          global_scale_factor () accessor.
+
+        * ace/Timeprobe.cpp: no longer need to explicitly calibrate the
+          High_Res_Timer.
 
 Tue May 26 22:25:18 1998  Stephen Coy  <stevec@wsa.com.au>
 
