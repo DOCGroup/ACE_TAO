@@ -1441,7 +1441,7 @@ struct strrecvfd {};
 #elif defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
 #    include /**/ <wchar.h>
 #elif defined (ACE_LACKS_WCHAR_T)
-typedef long wchar_t;
+typedef ACE_UINT32 wchar_t;
 #endif /* ACE_HAS_UNICODE */
 
 #if defined (ACE_HAS_BROKEN_WRITEV)
@@ -4675,7 +4675,6 @@ public:
   static int ace_isspace (const char s);
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-  // = These go here since they are needed for TAO.
   static size_t strlen (const wchar_t *s);
   static wchar_t *strcpy (wchar_t *s,
                           const wchar_t *t);
